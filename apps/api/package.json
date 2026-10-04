@@ -5,13 +5,16 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsx watch src/main.ts",
+    "db:seed": "prisma db seed",
     "lint": "eslint src test",
     "prisma": "prisma",
     "start": "node dist/main.js",
     "test": "vitest run",
+    "test:integration": "vitest run test/integration",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@worklingo/test-fixtures": "workspace:*",
     "@worklingo/contracts": "workspace:*",
     "@nestjs/config": "4.0.2",
     "@nestjs/common": "11.1.6",

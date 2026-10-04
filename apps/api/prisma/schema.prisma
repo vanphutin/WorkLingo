@@ -19,14 +19,14 @@ enum UserStatus {
 }
 
 model User {
-  id           String       @id @default(uuid()) @db.Uuid
-  email        String       @unique
+  id           String          @id @default(uuid()) @db.Uuid
+  email        String          @unique
   displayName  String
   passwordHash String
-  role         UserRole     @default(LEARNER)
-  status       UserStatus   @default(ACTIVE)
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  role         UserRole        @default(LEARNER)
+  status       UserStatus      @default(ACTIVE)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
   profile      LearnerProfile?
   sessions     UserSession[]
 }
@@ -53,4 +53,181 @@ model UserSession {
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+enum ContentStatus {
+  DRAFT
+  VALIDATED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ActivityType {
+  reading
+  listening
+  speaking
+  writing
+}
+
+enum LearningBlockType {
+  activate
+  readDecode
+  listenReason
+  respond
+}
+
+model LearningPath {
+  id        String        @id @default(uuid()) @db.Uuid
+  slug      String        @unique
+  name      String
+  status    ContentStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  levels    Level[]
+}
+
+model Level {
+  id            String       @id @default(uuid()) @db.Uuid
+  pathId        String       @db.Uuid
+  code          String       @unique
+  name          String
+  cefrReference String
+  order         Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  path          LearningPath @relation(fields: [pathId], references: [id], onDelete: Restrict)
+  missions      Mission[]
+
+  @@unique([pathId, order])
+}
+
+model Mission {
+  id        String          @id @default(uuid()) @db.Uuid
+  levelId   String          @db.Uuid
+  slug      String          @unique
+  title     String
+  objective String
+  order     Int
+  status    ContentStatus   @default(DRAFT)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  level     Level           @relation(fields: [levelId], references: [id], onDelete: Restrict)
+  lessons   MissionLesson[]
+
+  @@unique([levelId, order])
+}
+
+model Lesson {
+  id        String          @id @default(uuid()) @db.Uuid
+  slug      String          @unique
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  missions  MissionLesson[]
+  versions  LessonVersion[]
+}
+
+model MissionLesson {
+  missionId String  @db.Uuid
+  lessonId  String  @db.Uuid
+  order     Int
+  mission   Mission @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  lesson    Lesson  @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+
+  @@id([missionId, lessonId])
+  @@unique([missionId, order])
+  @@index([lessonId])
+}
+
+model LessonVersion {
+  id            String                  @id @default(uuid()) @db.Uuid
+  lessonId      String                  @db.Uuid
+  version       Int
+  title         String
+  status        ContentStatus           @default(DRAFT)
+  sourceHash    String
+  parsedContent Json
+  publishedAt   DateTime?
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+  lesson        Lesson                  @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+  contentBlocks ContentBlock[]
+  activities    Activity[]
+  wordBanks     LessonVersionWordBank[]
+
+  @@unique([lessonId, version])
+}
+
+model ContentBlock {
+  id              String        @id @default(uuid()) @db.Uuid
+  lessonVersionId String        @db.Uuid
+  slug            String
+  type            String
+  order           Int
+  text            String
+  metadata        Json
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  lessonVersion   LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([lessonVersionId, slug])
+  @@unique([lessonVersionId, order])
+}
+
+model Activity {
+  id                      String            @id @default(uuid()) @db.Uuid
+  lessonVersionId         String            @db.Uuid
+  slug                    String
+  activityType            ActivityType
+  learningBlock           LearningBlockType
+  order                   Int
+  skills                  ActivityType[]
+  contentReferences       String[]
+  languageBlockReferences String[]
+  payload                 Json
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  lessonVersion           LessonVersion     @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([lessonVersionId, slug])
+  @@unique([lessonVersionId, order])
+}
+
+model WordBank {
+  id             String                  @id @default(uuid()) @db.Uuid
+  slug           String                  @unique
+  name           String
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+  languageBlocks LanguageBlock[]
+  lessonVersions LessonVersionWordBank[]
+}
+
+model LessonVersionWordBank {
+  lessonVersionId String        @db.Uuid
+  wordBankId      String        @db.Uuid
+  lessonVersion   LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  wordBank        WordBank      @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+
+  @@id([lessonVersionId, wordBankId])
+  @@index([wordBankId])
+}
+
+model LanguageBlock {
+  id               String   @id @default(uuid()) @db.Uuid
+  wordBankId       String   @db.Uuid
+  slug             String   @unique
+  canonicalForm    String
+  meaning          String
+  pronunciation    String
+  collocations     String[]
+  grammarPattern   String
+  examples         String[]
+  commonErrors     String[]
+  cefrLevel        String
+  transferContexts String[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  wordBank         WordBank @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+
+  @@index([wordBankId])
 }

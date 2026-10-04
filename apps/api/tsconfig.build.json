@@ -3,5 +3,5 @@
   "compilerOptions": {
     "sourceMap": true
   },
-  "exclude": ["**/*.spec.ts", "test", "dist", "node_modules"]
+  "exclude": ["**/*.spec.ts", "test", "prisma", "prisma.config.ts", "dist", "node_modules"]
 }

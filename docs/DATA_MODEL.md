@@ -204,6 +204,18 @@ MasteryEvent *─1 MasteryRecord
 
 ## 10. Indexes ban đầu
 
+### Trạng thái triển khai — Foundation slice, Task 4
+
+Các entity curriculum đã có schema Prisma và migration PostgreSQL. Quan hệ
+Mission–Lesson và LessonVersion–WordBank dùng bảng liên kết; foreign key có
+index riêng hoặc được bao phủ bởi unique key. Activity có `activityType`,
+learning block, skill coverage và payload JSON được kiểm tra bằng Zod khi seed.
+
+`LessonVersion.parsedContent` lưu snapshot đầy đủ, gồm cả metadata của Word Bank
+và Language Blocks. Nội dung published và các bản ghi con trực tiếp được bảo vệ
+bằng database trigger. Thay đổi Word Bank dùng chung không đổi snapshot cũ.
+Chi tiết seed, contract nội bộ và giới hạn hiện tại ở [CURRICULUM.md](CURRICULUM.md).
+
 - `review_items(learner_id, due_at, priority)`.
 - `mastery_records(learner_id, state, next_review_at)`.
 - `learning_sessions(learner_id, status, updated_at)`.

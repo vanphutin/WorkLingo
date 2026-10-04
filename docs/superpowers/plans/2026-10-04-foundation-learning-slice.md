@@ -272,35 +272,35 @@ git commit -m "feat: add learner authentication"
 - Consumes: `PrismaService`; Foundation fixture from `@worklingo/test-fixtures`.
 - Produces: `getPublishedMissionForLevel(levelCode: string): Promise<PublishedMission>` and a repeatable `pnpm --filter api db:seed`; entities `LearningPath`, `Level`, `Mission`, `Lesson`, `LessonVersion`, `ContentBlock`, `Activity`, `WordBank`, and `LanguageBlock`.
 
-- [ ] **Step 1: Define the approved Foundation fixture**
+- [x] **Step 1: Define the approved Foundation fixture**
 
 Create one mission titled `Introduce yourself to a new colleague` with a published lesson version, one small Word Bank, at least four Language Blocks, and activities covering reading, listening, speaking, and writing. Use a local fixture audio file or a deterministic text-only audio placeholder contract; do not call TTS.
 
-- [ ] **Step 2: Write the failing repeatable-seed integration test**
+- [x] **Step 2: Write the failing repeatable-seed integration test**
 
 Run the seed twice and assert one path, one Foundation 1 level, one mission, one logical lesson, one version `1`, and stable activity IDs/slugs. Assert a published lesson version cannot be updated through `CurriculumService`.
 
-- [ ] **Step 3: Run the seed test and verify failure**
+- [x] **Step 3: Run the seed test and verify failure**
 
 Run: `pnpm --filter api test:integration -- curriculum-seed.integration.spec.ts`
 
 Expected: FAIL because schema, seed, and service do not exist.
 
-- [ ] **Step 4: Add curriculum schema and migration**
+- [x] **Step 4: Add curriculum schema and migration**
 
 Model the relationships and unique constraints from `docs/DATA_MODEL.md`. Store activity payload as validated JSON tied to an explicit `activityType`; defer generalized admin import fields to Increment 2.
 
-- [ ] **Step 5: Implement deterministic upsert seed and read service**
+- [x] **Step 5: Implement deterministic upsert seed and read service**
 
 Seed keys are stable slugs. Only draft content may be changed; published version writes require creating the next version.
 
-- [ ] **Step 6: Run migration, seed, and tests twice**
+- [x] **Step 6: Run migration, seed, and tests twice**
 
 Run: `pnpm --filter api prisma migrate deploy && pnpm --filter api db:seed && pnpm --filter api db:seed && pnpm --filter api test:integration -- curriculum-seed.integration.spec.ts`
 
 Expected: all commands exit 0; counts remain stable; immutability assertion PASS.
 
-- [ ] **Step 7: Commit curriculum seed**
+- [x] **Step 7: Commit curriculum seed**
 
 ```bash
 git add apps/api/prisma apps/api/src/curriculum packages/test-fixtures
