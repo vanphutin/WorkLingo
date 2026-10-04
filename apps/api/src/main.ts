@@ -1,9 +1,11 @@
 import 'reflect-metadata';
 
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
+import type { AppConfig } from './common/config/app-config.schema';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -17,7 +19,8 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  const port = Number.parseInt(process.env.API_PORT ?? '4000', 10);
+  const config = app.get<ConfigService<AppConfig, true>>(ConfigService);
+  const port = config.get('apiPort', { infer: true });
   await app.listen(port, '127.0.0.1');
 }
 
