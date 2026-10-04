@@ -1,0 +1,339 @@
+'use client';
+
+import Link from 'next/link';
+import React, { useEffect, useRef, useState } from 'react';
+
+import type {
+  ActivityAttemptDto,
+  LearnerActivityDto,
+  LearningSessionDto,
+} from '../../lib/api/api-client';
+import { ActivityRenderer, isActivityComplete } from './activity-renderer';
+
+interface SessionShellProps {
+  readonly session: LearningSessionDto;
+  readonly currentActivity: LearnerActivityDto | null;
+  readonly onSubmitAttempt: (
+    activityId: string,
+    response: Record<string, unknown>,
+    clientAttemptId: string,
+  ) => Promise<ActivityAttemptDto>;
+  readonly onPauseSession: () => Promise<void>;
+  readonly onResumeSession: () => Promise<void>;
+  readonly isCompleted?: boolean;
+}
+
+const blockLabels: Record<string, string> = {
+  activate: 'Activate',
+  readDecode: 'Read & Decode',
+  listenReason: 'Listen & Reason',
+  respond: 'Respond',
+};
+
+export function SessionShell({
+  session,
+  currentActivity,
+  onSubmitAttempt,
+  onPauseSession,
+  onResumeSession,
+  isCompleted = false,
+}: SessionShellProps) {
+  // Attempts arrive oldest-first; restore the latest response for this activity.
+  const previousAttempt = [...(session.attempts ?? [])]
+    .reverse()
+    .find((attempt) => attempt.activityId === currentActivity?.id);
+
+  const getInitialValue = (activity: LearnerActivityDto | null, raw: unknown): unknown => {
+    if (!activity) return '';
+    if (raw !== null && raw !== undefined) {
+      if (
+        (activity.activityType === 'reading' || activity.activityType === 'listening') &&
+        typeof raw === 'object' &&
+        'answerIndexes' in raw
+      ) {
+        return raw;
+      }
+      if (
+        (activity.activityType === 'speaking' || activity.activityType === 'writing') &&
+        typeof raw === 'object' &&
+        'text' in raw
+      ) {
+        return (raw as { text: string }).text;
+      }
+      if (typeof raw === 'string') {
+        return raw;
+      }
+    }
+
+    if (activity.activityType === 'reading' || activity.activityType === 'listening') {
+      return { answerIndexes: [] };
+    }
+    return '';
+  };
+
+  const [currentResponse, setCurrentResponse] = useState<unknown>(() =>
+    getInitialValue(currentActivity, previousAttempt?.rawResponse),
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [evaluationFeedback, setEvaluationFeedback] = useState<string | null>(null);
+  const [sessionAction, setSessionAction] = useState<'pause' | 'resume' | null>(null);
+  const [sessionActionError, setSessionActionError] = useState<string | null>(null);
+  const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
+  const pendingAttemptId = useRef<string | null>(null);
+
+  // Sync state when activity changes
+  useEffect(() => {
+    setCurrentResponse(getInitialValue(currentActivity, previousAttempt?.rawResponse));
+    setSubmitError(null);
+    pendingAttemptId.current = null;
+  }, [currentActivity?.id, previousAttempt?.id]);
+
+  const canContinue = currentActivity
+    ? isActivityComplete(currentActivity, currentResponse)
+    : false;
+
+  const handleSubmit = async () => {
+    if (!currentActivity || !canContinue || isSubmitting) return;
+
+    try {
+      setIsSubmitting(true);
+      setSubmitError(null);
+
+      let payload: Record<string, unknown>;
+      if (
+        currentActivity.activityType === 'reading' ||
+        currentActivity.activityType === 'listening'
+      ) {
+        payload = currentResponse as Record<string, unknown>;
+      } else {
+        payload = { text: currentResponse as string };
+      }
+
+      const clientAttemptId = pendingAttemptId.current ?? crypto.randomUUID();
+      pendingAttemptId.current = clientAttemptId;
+      const attempt = await onSubmitAttempt(currentActivity.id, payload, clientAttemptId);
+      pendingAttemptId.current = null;
+      setEvaluationFeedback(attempt.feedback);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : 'Submission failed. Please check your connection.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResponseChange = (nextResponse: unknown) => {
+    pendingAttemptId.current = null;
+    setSubmitError(null);
+    setEvaluationFeedback(null);
+    setCurrentResponse(nextResponse);
+  };
+
+  const handleSessionAction = async (action: 'pause' | 'resume') => {
+    if (sessionAction) return;
+    try {
+      setSessionAction(action);
+      setSessionActionError(null);
+      if (action === 'pause') {
+        await onPauseSession();
+      } else {
+        await onResumeSession();
+      }
+    } catch {
+      setSessionActionError(`Could not ${action} session. Try again.`);
+    } finally {
+      setSessionAction(null);
+    }
+  };
+
+  const currentBlockType =
+    currentActivity?.learningBlock ?? session.plan.blocks.at(-1)?.type ?? 'respond';
+  const currentBlockIndex = session.plan.blocks.findIndex(
+    (b) => b.type === currentBlockType,
+  );
+
+  return (
+    <div className="session-layout">
+      {/* Top Header */}
+      <header className="session-header">
+        <div className="session-header-content">
+          <div className="header-meta">
+            <span className="eyebrow">Workplace Learning Session</span>
+            <h1 className="session-mission-title">{session.mission.title}</h1>
+          </div>
+
+          {!isCompleted && <div className="session-actions">
+            {session.status === 'paused' ? (
+              <button
+                type="button"
+                className="secondary-action-button"
+                onClick={() => void handleSessionAction('resume')}
+                disabled={sessionAction !== null}
+              >
+                {sessionAction === 'resume' ? 'Resuming…' : 'Resume session'}
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="secondary-action-button"
+                onClick={() => void handleSessionAction('pause')}
+                disabled={sessionAction !== null}
+              >
+                {sessionAction === 'pause' ? 'Pausing…' : 'Pause session'}
+              </button>
+            )}
+          </div>}
+        </div>
+
+        {/* Four Block Progress Bar */}
+        <nav className="blocks-progress-nav" aria-label="Session blocks progress">
+          <ol className="blocks-progress-list">
+            {session.plan.blocks.map((block, idx) => {
+              const isActive = !isCompleted && block.type === currentBlockType;
+              const persistedBlock = session.blocks.find((item) => item.type === block.type);
+              const isPassed =
+                isCompleted || persistedBlock?.status === 'completed' || currentBlockIndex > idx;
+              return (
+                <li
+                  key={block.type}
+                  className={`block-progress-step ${isActive ? 'active' : ''} ${
+                    isPassed ? 'completed' : ''
+                  }`}
+                  aria-current={isActive ? 'step' : undefined}
+                >
+                  <span className="step-number">{idx + 1}</span>
+                  <span className="step-label">{blockLabels[block.type] ?? block.type}</span>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      </header>
+
+      {/* Main Content Area + Support Panel */}
+      <div className="session-body-grid">
+        <main className="session-main-content">
+          {session.status === 'paused' && (
+            <div className="session-paused-banner" role="status">
+              <p>Session is currently paused. Click &quot;Resume session&quot; to continue.</p>
+            </div>
+          )}
+
+          {sessionActionError && (
+            <div className="submit-error-banner" role="alert">
+              <p className="error-text">{sessionActionError}</p>
+            </div>
+          )}
+
+          {evaluationFeedback && (
+            <div className="evaluation-feedback-banner" role="status" aria-live="polite">
+              <p>{evaluationFeedback}</p>
+            </div>
+          )}
+
+          {isCompleted ? (
+            <section className="session-completed-card" aria-label="Session completed">
+              <h2>Session Completed!</h2>
+              <p>
+                Congratulations on finishing all 4 blocks of this 60-minute workplace session.
+              </p>
+              <Link href="/dashboard" className="primary-action-button inline-button">
+                Return to Dashboard
+              </Link>
+            </section>
+          ) : (
+            <>
+              {currentActivity && (
+                <ActivityRenderer
+                  activity={currentActivity}
+                  value={currentResponse}
+                  onChange={handleResponseChange}
+                  disabled={isSubmitting || session.status === 'paused'}
+                />
+              )}
+
+              {submitError && (
+                <div className="submit-error-banner" role="alert">
+                  <p className="error-text">Submission failed: {submitError}</p>
+                  <button
+                    type="button"
+                    className="retry-button"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                  >
+                    Retry
+                  </button>
+                </div>
+              )}
+
+              <footer className="activity-footer">
+                <button
+                  type="button"
+                  className="continue-button"
+                  onClick={handleSubmit}
+                  disabled={!canContinue || isSubmitting || session.status === 'paused'}
+                >
+                  {isSubmitting ? 'Submitting…' : 'Continue'}
+                </button>
+              </footer>
+            </>
+          )}
+        </main>
+
+        {/* Collapsible Support Panel */}
+        {!isCompleted && currentActivity && <aside
+          className={`session-support-panel ${isPanelCollapsed ? 'collapsed' : ''}`}
+          aria-label="Support and session information"
+        >
+          <div className="panel-header">
+            <h2 className="panel-title">Session Info</h2>
+            <button
+              type="button"
+              className="toggle-panel-button"
+              onClick={() => setIsPanelCollapsed((prev) => !prev)}
+              aria-expanded={!isPanelCollapsed}
+              aria-label={isPanelCollapsed ? 'Expand support panel' : 'Collapse support panel'}
+            >
+              {isPanelCollapsed ? 'Show info' : 'Hide info'}
+            </button>
+          </div>
+
+          {!isPanelCollapsed && (
+            <div className="panel-content">
+              <div className="info-block">
+                <h3>Duration</h3>
+                <p>60 minutes total (15 minutes per block)</p>
+              </div>
+
+              <div className="info-block">
+                <h3>Current Block</h3>
+                <p>
+                  {blockLabels[currentBlockType] ?? currentBlockType} (Block{' '}
+                  {currentBlockIndex + 1} of 4)
+                </p>
+              </div>
+
+              <div className="info-block">
+                <h3>Skills Covered</h3>
+                <p>{currentActivity.skills.join(', ')}</p>
+              </div>
+
+              {currentActivity.languageBlocks.length > 0 && (
+                <div className="info-block">
+                  <h3>Vocabulary / Language</h3>
+                  <ul className="info-vocab-list">
+                    {currentActivity.languageBlocks.map((lb, i) => (
+                      <li key={i}>{(lb.canonicalForm as string) || (lb.slug as string)}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </aside>}
+      </div>
+    </div>
+  );
+}
