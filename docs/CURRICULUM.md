@@ -55,9 +55,34 @@ learner endpoints must project learner-safe fields and omit answers until submis
 
 Listening uses an explicit `textPlaceholder` contract; there is no playable
 audio or TTS call yet. Speaking uses a shadowing prompt with a text placeholder
-response; recording and Teacher AI arrive later. Session allocation, progress,
+response; recording and Teacher AI arrive later. Session persistence, progress,
 and actual spaced review are subsequent tasks, not capabilities of this seed.
 
 The curriculum integration suite migrates a randomly named test schema from
 scratch and removes only that schema afterward. It does not truncate learner
 tables. `TEST_DATABASE_URL` can select another local test database.
+
+## Foundation session planning
+
+Task 5 adds the pure `planFoundationSession` function. It accepts a published
+mission and a duration of 60 minutes, allocating its activities to `activate`,
+`readDecode`, `listenReason`, and `respond` in that order. Each block has a
+15-minute target, and activities within a block follow their curriculum order.
+These are planning targets, not enforced timers or proof that the sample
+content takes an hour; learner workload still needs a pilot.
+
+The planner rejects unsupported durations, missing skills (including the list
+of missing skills), duplicate activity IDs, unknown blocks, empty blocks, and
+invalid UUID references. Multiple skills may be covered by a single activity.
+The returned plan and its nested reference lists are frozen and detached from
+the input. The shared contract also rejects reordered blocks, duplicate IDs,
+and incomplete skill coverage when parsing a saved or transported plan.
+
+Only mission/version IDs, activity IDs, block metadata, and skill names are
+included; no answers or evaluation rubrics leave the backend. Persistence and
+HTTP endpoints follow in Task 6, and the learner interface in Task 7.
+
+The shared package exports both auth and session contracts from its barrel.
+Explicit `.ts` relative imports work in the frontend bundler; TypeScript's
+[`rewriteRelativeImportExtensions`](https://www.typescriptlang.org/tsconfig/rewriteRelativeImportExtensions.html)
+setting rewrites those specifiers to `.js` when compiling the backend.

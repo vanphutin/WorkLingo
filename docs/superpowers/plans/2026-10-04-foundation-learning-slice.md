@@ -320,31 +320,31 @@ git commit -m "feat: seed the first Foundation mission"
 - Consumes: `PublishedMission` from Task 4.
 - Produces: `planFoundationSession(input: PlanFoundationSessionInput): SessionPlan`; `SessionPlan` contains exactly four ordered `SessionBlock`s of 15 target minutes and an immutable ordered list of activity IDs.
 
-- [ ] **Step 1: Write the failing happy-path planner test**
+- [x] **Step 1: Write the failing happy-path planner test**
 
 Assert `durationMinutes: 60` returns block types `activate`, `readDecode`, `listenReason`, `respond`; each block has `targetMinutes: 15`; the plan covers the four skills exactly as a set even if an activity covers more than one skill.
 
-- [ ] **Step 2: Write the failing invariant tests from Review Focus**
+- [x] **Step 2: Write the failing invariant tests from Review Focus**
 
 Assert unsupported duration returns `UnsupportedSessionDurationError`; missing speaking, writing, reading, or listening returns `IncompleteSkillCoverageError` naming missing skills; duplicate activity IDs return `InvalidLessonPlanError`.
 
-- [ ] **Step 3: Run planner tests and verify failure**
+- [x] **Step 3: Run planner tests and verify failure**
 
 Run: `pnpm --filter api test -- session-planner.spec.ts`
 
 Expected: FAIL because planner types and function do not exist.
 
-- [ ] **Step 4: Implement the pure planner**
+- [x] **Step 4: Implement the pure planner**
 
 Keep the planner deterministic and free of database/time access. It assigns seeded activities to the fixed four-block template and deep-freezes or treats the returned plan as readonly data.
 
-- [ ] **Step 5: Run planner tests and mutation/type checks**
+- [x] **Step 5: Run planner tests and mutation/type checks**
 
 Run: `pnpm --filter api test -- session-planner.spec.ts && pnpm --filter api typecheck`
 
 Expected: all planner tests PASS; no mutable contract mismatch.
 
-- [ ] **Step 6: Commit the planner**
+- [x] **Step 6: Commit the planner**
 
 ```bash
 git add apps/api/src/learning-sessions/domain packages/contracts/src
