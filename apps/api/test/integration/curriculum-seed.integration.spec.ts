@@ -208,4 +208,19 @@ describe('Foundation curriculum seed', () => {
       await expect(database.lesson.count()).resolves.toBe(0);
     },
   );
+
+  it('preserves database-generated UUIDs for existing auth tables after curriculum migration', async () => {
+    const [user] = await database.$queryRawUnsafe<Array<{ id: string }>>(
+      `INSERT INTO "${schemaName}"."User" ("email", "displayName", "passwordHash", "updatedAt")
+       VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING "id"`,
+      'database-default@example.test', 'Database default test', 'test-only-placeholder-hash',
+    );
+    expect(user?.id).toMatch(/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u);
+    const [session] = await database.$queryRawUnsafe<Array<{ id: string }>>(
+      `INSERT INTO "${schemaName}"."UserSession" ("userId", "tokenHash", "expiresAt", "updatedAt")
+       VALUES ($1::uuid, $2, CURRENT_TIMESTAMP + INTERVAL '1 hour', CURRENT_TIMESTAMP) RETURNING "id"`,
+      user!.id, 'test-only-placeholder-token-hash',
+    );
+    expect(session?.id).toMatch(/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u);
+  });
 });
