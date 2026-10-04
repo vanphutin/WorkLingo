@@ -1,0 +1,187 @@
+import { randomUUID } from 'node:crypto';
+
+import request from 'supertest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+
+import {
+  createLearningSessionTestContext,
+  registerLearner,
+  type LearningSessionTestContext,
+} from './learning-session-test-harness.js';
+
+describe('learning sessions', () => {
+  let context: LearningSessionTestContext;
+
+  beforeAll(async () => {
+    context = await createLearningSessionTestContext('learning_sessions_test');
+  }, 40_000);
+
+  beforeEach(async () => context.resetLearners());
+  afterAll(async () => context?.close());
+
+  it('creates and transactionally persists a complete 60-minute plan', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Session Learner', email: 'session@example.test',
+    });
+    const clientSessionId = randomUUID();
+    const response = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId, durationMinutes: 60,
+    }).expect(201);
+
+    expect(response.body).toMatchObject({
+      clientSessionId,
+      currentCheckpoint: 0,
+      durationMinutes: 60,
+      mission: { title: 'Introduce yourself to a new colleague' },
+      status: 'planned',
+    });
+    expect(response.body.plan.blocks.map((block: { order: number; targetMinutes: number; type: string }) =>
+      [block.type, block.order, block.targetMinutes])).toEqual([
+      ['activate', 1, 15], ['readDecode', 2, 15],
+      ['listenReason', 3, 15], ['respond', 4, 15],
+    ]);
+
+    const stored = await context.database.learningSession.findUniqueOrThrow({
+      where: { id: response.body.id }, include: { blocks: { orderBy: { order: 'asc' } } },
+    });
+    expect(stored).toMatchObject({
+      clientSessionId, currentCheckpoint: 0,
+      durationMinutes: 60, lessonVersionId: response.body.lessonVersionId,
+      planSnapshot: response.body.plan,
+    });
+    expect(stored.blocks).toHaveLength(4);
+  });
+
+  it('requires authentication and rejects unsupported durations with 422', async () => {
+    await request(context.app.getHttpServer()).post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(401);
+    const agent = await registerLearner(context.app, {
+      displayName: 'Duration Learner', email: 'duration@example.test',
+    });
+    const response = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 45,
+    }).expect(422);
+    expect(response.body).toMatchObject({ code: 'INVALID_SESSION_DURATION' });
+  });
+
+  it('returns the original session for a repeated clientSessionId', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Idempotent Learner', email: 'session-idempotent@example.test',
+    });
+    const input = { clientSessionId: randomUUID(), durationMinutes: 60 };
+    const first = await agent.post('/api/v1/learning-sessions').send(input).expect(201);
+    const second = await agent.post('/api/v1/learning-sessions').send(input).expect(201);
+    expect(second.body).toEqual(first.body);
+    await expect(context.database.learningSession.count()).resolves.toBe(1);
+  });
+
+  it('returns a learner-safe activity payload for the current session', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Activity Learner', email: 'activity@example.test',
+    });
+    const session = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(201);
+    const activityId = session.body.plan.blocks[1].activityIds[0] as string;
+
+    const response = await agent
+      .get(`/api/v1/learning-sessions/${session.body.id}/activities/${activityId}`)
+      .expect(200);
+
+    expect(response.body).toMatchObject({
+      activityType: 'reading',
+      content: [{ slug: 'welcome-email' }],
+      id: activityId,
+      payload: { questions: expect.any(Array) },
+    });
+    expect(JSON.stringify(response.body)).not.toMatch(/answerIndex|explanation|evidence|sampleAnswer/u);
+  });
+
+  it('stores raw answers before deterministic evaluation and advances a checkpoint once', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Attempt Learner', email: 'attempt@example.test',
+    });
+    const session = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(201);
+    await agent.post(`/api/v1/learning-sessions/${session.body.id}/start`).expect(200);
+
+    const activateId = session.body.plan.blocks[0].activityIds[0] as string;
+    await agent.post(`/api/v1/activities/${activateId}/attempts`).send({
+      clientAttemptId: randomUUID(), sessionId: session.body.id,
+      response: { text: 'My name is Session Learner.' },
+    }).expect(201);
+
+    const readingId = session.body.plan.blocks[1].activityIds[0] as string;
+    const incorrectResponse = { answerIndexes: [2, 2, 2] };
+    await agent.post(`/api/v1/activities/${readingId}/attempts`).send({
+      clientAttemptId: randomUUID(), sessionId: session.body.id, response: incorrectResponse,
+    }).expect(201);
+    const afterIncorrect = await agent.get(`/api/v1/learning-sessions/${session.body.id}`).expect(200);
+    expect(afterIncorrect.body.currentCheckpoint).toBe(1);
+    expect(afterIncorrect.body.attempts.at(-1)).toMatchObject({ rawResponse: incorrectResponse });
+
+    const clientAttemptId = randomUUID();
+    const rawResponse = { answerIndexes: [0, 1, 1] };
+    const first = await agent.post(`/api/v1/activities/${readingId}/attempts`).send({
+      clientAttemptId, sessionId: session.body.id, response: rawResponse,
+    }).expect(201);
+    expect(first.body).toMatchObject({
+      activityId: readingId, evaluationStatus: 'evaluated', score: 1,
+    });
+    const stored = await context.database.activityAttempt.findUniqueOrThrow({
+      where: { learnerId_clientAttemptId: {
+        learnerId: first.body.learnerId, clientAttemptId,
+      } },
+    });
+    expect(stored.rawResponse).toEqual(rawResponse);
+
+    const duplicate = await agent.post(`/api/v1/activities/${readingId}/attempts`).send({
+      clientAttemptId, sessionId: session.body.id, response: rawResponse,
+    }).expect(201);
+    expect(duplicate.body).toEqual(first.body);
+    const refreshed = await agent.get(`/api/v1/learning-sessions/${session.body.id}`).expect(200);
+    expect(refreshed.body.currentCheckpoint).toBe(2);
+    await expect(context.database.activityAttempt.count()).resolves.toBe(3);
+  });
+
+  it('persists pause/resume transitions and reports invalid transitions', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Pause Learner', email: 'pause@example.test',
+    });
+    const session = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(201);
+    const invalid = await agent.post(`/api/v1/learning-sessions/${session.body.id}/pause`).expect(409);
+    expect(invalid.body).toMatchObject({ code: 'INVALID_STATE_TRANSITION' });
+    await agent.post(`/api/v1/learning-sessions/${session.body.id}/start`).expect(200);
+    const paused = await agent.post(`/api/v1/learning-sessions/${session.body.id}/pause`).expect(200);
+    expect(paused.body.status).toBe('paused');
+    const resumed = await agent.post(`/api/v1/learning-sessions/${session.body.id}/resume`).expect(200);
+    expect(resumed.body.status).toBe('in_progress');
+  });
+
+  it('summarizes persisted learner progress', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Progress Learner', email: 'progress@example.test',
+    });
+    const session = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(201);
+    await agent.post(`/api/v1/learning-sessions/${session.body.id}/start`).expect(200);
+    const activityId = session.body.plan.blocks[0].activityIds[0] as string;
+    await agent.post(`/api/v1/activities/${activityId}/attempts`).send({
+      clientAttemptId: randomUUID(), sessionId: session.body.id,
+      response: { text: 'My name is Progress Learner.' },
+    }).expect(201);
+
+    const progress = await agent.get('/api/v1/me/progress').expect(200);
+    expect(progress.body).toEqual({
+      activityAttempts: 1,
+      completedActivities: 1,
+      currentLevelCode: 'FOUNDATION_1',
+      sessions: { completed: 0, inProgress: 1, paused: 0, planned: 0 },
+    });
+  });
+});

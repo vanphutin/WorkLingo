@@ -81,7 +81,8 @@ Trả trạng thái `processing` nếu có phần AI, sau đó client đọc sta
 
 ```json
 {
-  "durationMinutes": 60
+  "durationMinutes": 60,
+  "clientSessionId": "uuid"
 }
 ```
 
@@ -90,8 +91,10 @@ Response:
 ```json
 {
   "id": "uuid",
+  "clientSessionId": "uuid",
   "status": "planned",
   "durationMinutes": 60,
+  "currentCheckpoint": 0,
   "mission": {
     "id": "uuid",
     "title": "Request a deadline extension"
@@ -102,13 +105,16 @@ Response:
       "type": "activate",
       "order": 1,
       "targetMinutes": 15,
+      "activityIds": ["uuid"],
       "status": "available"
     }
   ]
 }
 ```
 
-Server MUST từ chối duration ngoài tập cho phép bằng `INVALID_SESSION_DURATION`.
+Trong increment đầu tiên server chỉ chấp nhận 60 phút và MUST từ chối duration khác bằng
+`INVALID_SESSION_DURATION`. `clientSessionId` là idempotency key theo learner; gửi lại cùng key trả
+về phiên đã tạo thay vì tạo bản ghi mới.
 
 ### `GET /learning-sessions/{id}`
 
@@ -122,17 +128,28 @@ Idempotent. Chuyển `planned` hoặc `paused` sang `in_progress`.
 
 Lưu checkpoint hiện tại và trạng thái paused.
 
+### `POST /learning-sessions/{id}/resume`
+
+Chuyển phiên `paused` sang `in_progress` và giữ nguyên checkpoint. `GET`, `start`, `pause`, `resume`
+và attempt đều trả `404` nếu phiên không thuộc learner đang đăng nhập.
+
 ### `GET /learning-sessions/{id}/activities/{activityId}`
 
-Trả activity payload theo discriminated union:
+Trả activity payload theo discriminated union, nội dung tham chiếu và các language block cần cho
+ngữ cảnh. Answer specification (`answerIndex`, explanation/evidence nội bộ, sample answer) không xuất
+hiện trong response trước khi learner nộp:
 
 ```json
 {
   "id": "uuid",
-  "type": "shortAnswer",
-  "prompt": "Why was the delivery delayed?",
-  "contentReferences": ["block-uuid"],
-  "attemptPolicy": { "maxAttempts": 2 }
+  "activityType": "reading",
+  "learningBlock": "readDecode",
+  "content": [{ "slug": "welcome-email", "type": "email", "text": "..." }],
+  "languageBlocks": [{ "slug": "welcome-to", "canonicalForm": "welcome to" }],
+  "payload": {
+    "prompt": "Read the email and answer every question.",
+    "questions": [{ "slug": "main-purpose", "prompt": "...", "options": ["...", "..."] }]
+  }
 }
 ```
 
@@ -150,7 +167,16 @@ Không trả answer specification trước khi learner nộp.
 }
 ```
 
-`clientAttemptId` là idempotency key. Response có thể là `evaluated` hoặc `processing`.
+`clientAttemptId` là idempotency key theo learner. Câu hỏi đọc/nghe được chấm deterministic; chỉ khi
+toàn bộ đáp án đúng checkpoint mới tăng. Speaking/writing được lưu với trạng thái `submitted` và vẫn
+được chuyển bước, nhưng không được biểu diễn là câu trả lời đúng hoặc có điểm AI. Session response
+trả `rawResponse` và `normalizedResponse` trong từng attempt để giao diện khôi phục phần learner đã
+nhập sau khi tải lại trang.
+
+### `GET /me/progress`
+
+Trả level gần nhất, tổng attempt, tổng activity hoàn thành và số phiên theo trạng thái
+`planned/inProgress/paused/completed` của learner đang đăng nhập.
 
 ## 6. Speaking upload
 

@@ -370,43 +370,43 @@ git commit -m "feat: plan complete 60-minute learning sessions"
 - Consumes: authenticated user, `CurriculumService.getPublishedMissionForLevel`, and `planFoundationSession`.
 - Produces: `createSession(userId: string, durationMinutes: 60): Promise<LearningSessionDto>`, `submitAttempt(userId: string, activityId: string, input: SubmitAttemptInput): Promise<ActivityAttemptDto>`, `pauseSession`, `resumeSession`, and `getProgress`; endpoints in `docs/API_CONTRACTS.md` for learning sessions, activity attempts, and `/me/progress`.
 
-- [ ] **Step 1: Write failing session creation integration tests**
+- [x] **Step 1: Write failing session creation integration tests**
 
 Assert authenticated creation persists the lesson version and plan snapshot; unauthenticated request is `401`; duration `45` is `422` in this increment rather than silently accepted; repeated creation requests with the same `clientSessionId` return the original session.
 
-- [ ] **Step 2: Write failing attempt/checkpoint tests**
+- [x] **Step 2: Write failing attempt/checkpoint tests**
 
 Assert a deterministic seeded question can be submitted, the raw answer persists before evaluation, repeated `clientAttemptId` returns the same attempt, and successful submission advances `currentCheckpoint` exactly once.
 
-- [ ] **Step 3: Write failing ownership and refresh tests**
+- [x] **Step 3: Write failing ownership and refresh tests**
 
 Create two learners. Assert learner B receives `404` for learner A's session and attempt endpoints. Recreate the HTTP client after submission and assert `GET /learning-sessions/{id}` returns the persisted next checkpoint.
 
-- [ ] **Step 4: Run integration tests and verify failure**
+- [x] **Step 4: Run integration tests and verify failure**
 
 Run: `pnpm --filter api test:integration -- learning-sessions.integration.spec.ts session-ownership.integration.spec.ts`
 
 Expected: FAIL because persistence and endpoints do not exist.
 
-- [ ] **Step 5: Add session schema and migration**
+- [x] **Step 5: Add session schema and migration**
 
 Create `LearningSession`, `SessionBlock`, and `ActivityAttempt`. Store `planSnapshot`, `lessonVersionId`, status, checkpoint, raw response, normalized response, evaluation status, score, and feedback. Add unique constraints for `(learnerId, clientSessionId)` and `(learnerId, clientAttemptId)`.
 
-- [ ] **Step 6: Implement create/start/read/pause/resume**
+- [x] **Step 6: Implement create/start/read/pause/resume**
 
 Use authenticated `userId`, never a learner ID from the body. Persist the complete plan transactionally. State transitions outside `planned → in_progress ↔ paused → completed` return `INVALID_STATE_TRANSITION`.
 
-- [ ] **Step 7: Implement deterministic attempt evaluation and progress summary**
+- [x] **Step 7: Implement deterministic attempt evaluation and progress summary**
 
 For this increment, evaluate only seeded exact/accepted-answer activities in-process. Speaking/writing attempts store submission and receive `submitted` credit without AI quality scoring; the UI labels them as awaiting advanced feedback, not as correct.
 
-- [ ] **Step 8: Run migrations and integration tests**
+- [x] **Step 8: Run migrations and integration tests**
 
 Run: `pnpm --filter api prisma migrate deploy && pnpm --filter api test:integration -- learning-sessions.integration.spec.ts session-ownership.integration.spec.ts`
 
 Expected: all tests PASS, including duplicate IDs, ownership, and refresh restore.
 
-- [ ] **Step 9: Commit session persistence**
+- [x] **Step 9: Commit session persistence**
 
 ```bash
 git add apps/api/prisma apps/api/src/learning-sessions apps/api/src/progress apps/api/src/app.module.ts apps/api/test/integration

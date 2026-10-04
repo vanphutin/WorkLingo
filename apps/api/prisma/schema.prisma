@@ -19,16 +19,17 @@ enum UserStatus {
 }
 
 model User {
-  id           String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email        String          @unique
-  displayName  String
-  passwordHash String
-  role         UserRole        @default(LEARNER)
-  status       UserStatus      @default(ACTIVE)
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
-  profile      LearnerProfile?
-  sessions     UserSession[]
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email            String            @unique
+  displayName      String
+  passwordHash     String
+  role             UserRole          @default(LEARNER)
+  status           UserStatus        @default(ACTIVE)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  profile          LearnerProfile?
+  sessions         UserSession[]
+  learningSessions LearningSession[]
 }
 
 model LearnerProfile {
@@ -102,17 +103,18 @@ model Level {
 }
 
 model Mission {
-  id        String          @id @default(uuid()) @db.Uuid
-  levelId   String          @db.Uuid
-  slug      String          @unique
-  title     String
-  objective String
-  order     Int
-  status    ContentStatus   @default(DRAFT)
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  level     Level           @relation(fields: [levelId], references: [id], onDelete: Restrict)
-  lessons   MissionLesson[]
+  id               String            @id @default(uuid()) @db.Uuid
+  levelId          String            @db.Uuid
+  slug             String            @unique
+  title            String
+  objective        String
+  order            Int
+  status           ContentStatus     @default(DRAFT)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  level            Level             @relation(fields: [levelId], references: [id], onDelete: Restrict)
+  lessons          MissionLesson[]
+  learningSessions LearningSession[]
 
   @@unique([levelId, order])
 }
@@ -139,20 +141,21 @@ model MissionLesson {
 }
 
 model LessonVersion {
-  id            String                  @id @default(uuid()) @db.Uuid
-  lessonId      String                  @db.Uuid
-  version       Int
-  title         String
-  status        ContentStatus           @default(DRAFT)
-  sourceHash    String
-  parsedContent Json
-  publishedAt   DateTime?
-  createdAt     DateTime                @default(now())
-  updatedAt     DateTime                @updatedAt
-  lesson        Lesson                  @relation(fields: [lessonId], references: [id], onDelete: Restrict)
-  contentBlocks ContentBlock[]
-  activities    Activity[]
-  wordBanks     LessonVersionWordBank[]
+  id               String                  @id @default(uuid()) @db.Uuid
+  lessonId         String                  @db.Uuid
+  version          Int
+  title            String
+  status           ContentStatus           @default(DRAFT)
+  sourceHash       String
+  parsedContent    Json
+  publishedAt      DateTime?
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  lesson           Lesson                  @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+  contentBlocks    ContentBlock[]
+  activities       Activity[]
+  wordBanks        LessonVersionWordBank[]
+  learningSessions LearningSession[]
 
   @@unique([lessonId, version])
 }
@@ -187,6 +190,7 @@ model Activity {
   createdAt               DateTime          @default(now())
   updatedAt               DateTime          @updatedAt
   lessonVersion           LessonVersion     @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  attempts                ActivityAttempt[]
 
   @@unique([lessonVersionId, slug])
   @@unique([lessonVersionId, order])
@@ -230,4 +234,86 @@ model LanguageBlock {
   wordBank         WordBank @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
 
   @@index([wordBankId])
+}
+
+enum LearningSessionStatus {
+  PLANNED
+  IN_PROGRESS
+  PAUSED
+  COMPLETED
+  ABANDONED
+}
+
+enum SessionBlockStatus {
+  AVAILABLE
+  COMPLETED
+}
+
+enum AttemptEvaluationStatus {
+  SUBMITTED
+  EVALUATED
+}
+
+model LearningSession {
+  id                String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId         String                @db.Uuid
+  clientSessionId   String                @db.Uuid
+  missionId         String                @db.Uuid
+  lessonVersionId   String                @db.Uuid
+  durationMinutes   Int
+  planSnapshot      Json
+  status            LearningSessionStatus @default(PLANNED)
+  currentCheckpoint Int                   @default(0)
+  startedAt         DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  learner           User                  @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  mission           Mission               @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  lessonVersion     LessonVersion         @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  blocks            SessionBlock[]
+  attempts          ActivityAttempt[]
+
+  @@unique([learnerId, clientSessionId])
+  @@unique([id, learnerId])
+  @@index([learnerId, status, createdAt])
+  @@index([missionId])
+  @@index([lessonVersionId])
+}
+
+model SessionBlock {
+  id            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionId     String             @db.Uuid
+  type          LearningBlockType
+  order         Int
+  targetMinutes Int
+  activityIds   String[]           @db.Uuid
+  status        SessionBlockStatus @default(AVAILABLE)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  session       LearningSession    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, order])
+}
+
+model ActivityAttempt {
+  id                 String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId          String                  @db.Uuid
+  sessionId          String                  @db.Uuid
+  activityId         String                  @db.Uuid
+  clientAttemptId    String                  @db.Uuid
+  rawResponse        Json
+  normalizedResponse Json?
+  evaluationStatus   AttemptEvaluationStatus
+  score              Float?
+  feedback           String?
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+  session            LearningSession         @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
+  activity           Activity                @relation(fields: [activityId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, clientAttemptId])
+  @@index([sessionId])
+  @@index([activityId])
+  @@index([sessionId, activityId])
 }

@@ -97,11 +97,12 @@ Lưu lựa chọn tự đánh giá hoặc bài test, score theo kỹ năng, leve
 | Field | Ý nghĩa |
 |---|---|
 | learner_id | Người học |
-| duration_minutes | 45/60/90/120/150 |
+| client_session_id | Idempotency key; unique cùng learner |
+| duration_minutes | 60 trong increment đầu tiên; mở rộng 45/90/120/150 sau |
 | lesson_version_id | Snapshot nội dung |
 | plan_snapshot | Kế hoạch block/activity bất biến |
 | status | planned/in_progress/paused/completed/abandoned |
-| current_checkpoint | Vị trí resume |
+| current_checkpoint | Chỉ số zero-based của activity kế tiếp; vị trí resume |
 | started/completed_at | Thời gian |
 
 ### session_blocks
@@ -110,7 +111,9 @@ Mỗi block có loại, thứ tự, thời lượng mục tiêu và trạng thá
 
 ### activity_attempts
 
-Mỗi lần learner nộp activity, gồm raw response, normalized response, trạng thái chấm, điểm và feedback summary.
+Mỗi lần learner nộp activity, gồm `client_attempt_id` (idempotency key theo learner), raw response,
+normalized response, trạng thái chấm, điểm và feedback summary. Attempt tham chiếu đồng thời session,
+learner và activity để ownership được kiểm tra ở cả tầng ứng dụng và ràng buộc dữ liệu.
 
 ### recordings
 
