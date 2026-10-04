@@ -22,3 +22,87 @@ main {
 a {
   color: #17643a;
 }
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: #17643a;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.auth-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.auth-panel {
+  width: min(100%, 30rem);
+  border: 1px solid #d9ddd8;
+  border-radius: 1rem;
+  background: #fffefb;
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.eyebrow {
+  color: #17643a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+  margin-block: 2rem;
+}
+
+.auth-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.auth-field label {
+  font-weight: 700;
+}
+
+.auth-field input {
+  min-height: 2.75rem;
+  border: 1px solid #9aa39d;
+  border-radius: 0.55rem;
+  padding-inline: 0.75rem;
+}
+
+.auth-field input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #efb744;
+  outline-offset: 2px;
+}
+
+.field-error,
+.form-error {
+  margin: 0;
+  color: #a12a2a;
+  font-size: 0.9rem;
+}
+
+.form-status {
+  margin: 0;
+  color: #17643a;
+}

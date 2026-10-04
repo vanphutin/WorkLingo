@@ -7,8 +7,10 @@ import {
 
 import { HealthResponseDto } from './dto/health-response.dto';
 import { HealthService } from './health.service';
+import { Public } from '../auth/public.decorator';
 
 @ApiTags('health')
+@Public()
 @Controller('health')
 export class HealthController {
   constructor(
