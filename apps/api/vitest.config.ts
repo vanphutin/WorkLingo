@@ -26,5 +26,9 @@ export default defineConfig({
   ],
   test: {
     environment: 'node',
+    // Integration suites share the local PostgreSQL instance and mutate schema data.
+    // Running files concurrently makes app bootstrap and cleanup contend for the
+    // same database, which causes nondeterministic hook timeouts on local machines.
+    fileParallelism: false,
   },
 });

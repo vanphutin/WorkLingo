@@ -1,0 +1,216 @@
+# WorkLingo Local Development Guide
+
+Welcome to WorkLingo! This guide explains how to set up, run, test, verify, backup, and restore the **Foundation Learning Slice** in a completely self-contained local environment.
+
+---
+
+## 1. Architectural Principles & Slice Scope
+
+WorkLingo is a local-first, communicative language learning system designed around 60-minute learning sessions spanning four core communicative skills:
+1. **Activate** (Warm-up & schema activation)
+2. **Read & Decode** (Comprehension & text analysis)
+3. **Listen & Reason** (Audio understanding & inference)
+4. **Respond** (Speaking placeholder & written synthesis)
+
+### No External Cloud Dependencies
+The Foundation Learning Slice is intentionally **100% provider-free**:
+- **No external AI APIs**: Does not require OpenAI, Anthropic, Gemini, or third-party LLM keys. Evaluation is deterministic and local.
+- **No cloud storage**: Audio and user artifacts are stored on the local filesystem via `WORKLINGO_DATA_DIR`. No AWS S3 or Google Cloud Storage required.
+- **No cloud caching / queues**: Session state and checkpoints are transactionally persisted in PostgreSQL. No Redis or external message brokers required.
+
+---
+
+## 2. Prerequisites
+
+Ensure the following tools are installed on your workstation:
+
+| Tool | Required Version | Verification Command |
+| :--- | :--- | :--- |
+| **Node.js** | `>= 20.0.0` and `< 21.0.0` | `node -v` |
+| **pnpm** | `>= 10.0.0` | `pnpm -v` |
+| **Docker** | Engine with Compose v2 | `docker compose version` |
+| **PowerShell** | Windows PowerShell 5.1+ or PowerShell 7+ | `$PSVersionTable.PSVersion` |
+
+---
+
+## 3. Quick Start (5 Commands)
+
+From the repository root, run:
+
+```powershell
+# 1. Install dependencies across the monorepo
+pnpm install
+
+# 2. Automated environment setup (starts Docker PostgreSQL, configures .env, runs migrations, seeds curriculum)
+pnpm setup:local
+
+# 3. Start development servers (API on http://127.0.0.1:4000, Web on http://127.0.0.1:3000)
+pnpm dev
+
+# 4. Run the full verification suite (format, lint, typecheck, unit, integration, build, Playwright E2E)
+pnpm verify
+
+# 5. Create an immutable local backup of the database and assets
+pnpm backup:local
+```
+
+---
+
+## 4. Environment Configuration (`.env`)
+
+Running `pnpm setup:local` automatically copies `.env.example` to `.env` if `.env` does not already exist. It **never** overwrites an existing `.env`.
+
+### Variables Reference
+
+| Variable | Default Value | Description |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | `postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo` | PostgreSQL connection string for Prisma. |
+| `API_PORT` | `4000` | Port for the NestJS API server. |
+| `WEB_PORT` | `3000` | Port for the Next.js web application. |
+| `WORKLINGO_DATA_DIR` | `./data` | Local directory for uploaded files and audio assets. |
+| `SESSION_SECRET` | `worklingo-local-development-secret-change-me` | Local-only key (minimum 32 characters) for signing learner session cookies. Replace it before any shared or deployed environment. |
+| `WORKLINGO_API_URL` | `http://127.0.0.1:4000` | Base URL used by the web application to reach the API. |
+
+---
+
+## 5. Database Management & Docker
+
+PostgreSQL 17 is containerized via Docker Compose (`infra/docker-compose.yml`).
+
+### Managing the Database Container
+
+```powershell
+# Start PostgreSQL in the background
+docker compose -f infra/docker-compose.yml up -d
+
+# Check PostgreSQL health
+docker compose -f infra/docker-compose.yml exec -T postgres pg_isready -U worklingo
+
+# Stop PostgreSQL
+docker compose -f infra/docker-compose.yml down
+
+# View database logs
+docker compose -f infra/docker-compose.yml logs -f postgres
+```
+
+### Applying Migrations and Seeding
+
+```powershell
+# Apply pending Prisma migrations
+pnpm --filter @worklingo/api prisma migrate deploy
+
+# Seed or re-seed the Foundation curriculum (idempotent, safe to re-run)
+pnpm --filter @worklingo/api prisma db seed
+```
+
+---
+
+## 6. Running Applications in Development
+
+Run both applications in parallel:
+```powershell
+pnpm dev
+```
+
+- **NestJS API**: `http://127.0.0.1:4000`
+  - Health endpoint: `http://127.0.0.1:4000/api/v1/health`
+- **Next.js Web UI**: `http://127.0.0.1:3000`
+  - Learner Registration: `http://127.0.0.1:3000/register`
+  - Learner Login: `http://127.0.0.1:3000/login`
+  - Learner Dashboard: `http://127.0.0.1:3000/dashboard`
+
+---
+
+## 7. Whole-Slice Verification (`pnpm verify`)
+
+The `pnpm verify` command runs the entire quality gate sequence:
+
+```powershell
+pnpm verify
+```
+
+The sequence includes:
+1. `pnpm format:check` — Git whitespace and formatting check.
+2. `pnpm lint` — ESLint rules across all apps and packages.
+3. `pnpm typecheck` — TypeScript compiler checks across all workspaces.
+4. `pnpm test` — Unit and integration tests (Vitest).
+5. `pnpm --filter @worklingo/api test:integration` — Integration tests (curriculum seed idempotency, session ownership, backup-restore rehearsal).
+6. `pnpm build` — Production build of the NestJS API and Next.js frontend.
+7. `pnpm --filter @worklingo/web e2e` — Playwright end-to-end tests for desktop and mobile viewports.
+
+---
+
+## 8. Backup and Restore
+
+WorkLingo includes robust PowerShell scripts for disaster recovery and rehearsal testing:
+
+### Create a Backup (`pnpm backup:local`)
+
+```powershell
+pnpm backup:local
+```
+
+Custom options:
+```powershell
+powershell -ExecutionPolicy Bypass -File ./scripts/backup-local.ps1 `
+  -BackupRoot "./backups" `
+  -DataDir "./data" `
+  -DatabaseUrl "postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo"
+```
+
+**What it does:**
+- Dumps PostgreSQL tables into `database.sql` (using local `pg_dump` or containerized fallback).
+- Copies all contents of `WORKLINGO_DATA_DIR` into a `data/` subdirectory.
+- Generates `manifest.json` containing SHA-256 hashes of every backed-up file.
+- Enforces path traversal safety (rejects paths outside `-AllowedRoot` if specified).
+
+### Restore a Backup (`pnpm restore:local`)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ./scripts/restore-local.ps1 `
+  -BackupDir "./backups/backup-20261005-191500-a1b2c3d4" `
+  -TargetDataDir "./data-restored" `
+  -TargetDatabaseUrl "postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo"
+```
+
+**Safety safeguards:**
+- **Integrity verification**: Validates all SHA-256 hashes against `manifest.json` before applying any changes.
+- **Empty target enforcement**: Fails immediately if the target data directory contains existing files or if the target database schema contains existing tables.
+- **Isolated schema remapping**: Restores a named source schema into a different empty target schema without changing values inside PostgreSQL `COPY` data.
+
+If database restore fails, discard the isolated target schema/directory and retry from the same verified backup. The script fails closed, but PostgreSQL and filesystem restoration are not one cross-system transaction.
+
+---
+
+## 9. Troubleshooting
+
+### 1. Port Conflicts (3000 or 4000 already in use)
+If port 4000 or 3000 is occupied by a previously running process:
+```powershell
+# Find process using port 4000 or 3000
+netstat -ano | findstr :4000
+netstat -ano | findstr :3000
+
+# Terminate process by PID
+taskkill /F /PID <PID>
+```
+
+### 2. Docker Daemon Not Running
+If `pnpm setup:local` reports `Docker is not found in PATH` or cannot connect:
+- Launch Docker Desktop on Windows.
+- Ensure Linux containers mode is enabled.
+- Verify with `docker info`.
+
+### 3. Playwright Chromium Missing
+If Playwright tests fail with browser executable not found:
+```powershell
+pnpm --filter @worklingo/web exec playwright install chromium
+```
+
+### 4. Restore Rejects Non-Empty Target
+Restore intentionally requires an empty target to avoid accidental data loss or partial state corruption:
+- For data files: Provide an empty directory or delete existing files inside the target directory.
+- For database: Drop or clear the target schema prior to restoration:
+```powershell
+docker compose -f infra/docker-compose.yml exec -T postgres psql -U worklingo -d worklingo -c "DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;"
+```

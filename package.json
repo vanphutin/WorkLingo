@@ -7,11 +7,16 @@
     "node": ">=20 <21"
   },
   "scripts": {
+    "backup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/backup-local.ps1",
     "build": "pnpm -r --if-present build",
     "dev": "pnpm --parallel --filter @worklingo/api --filter @worklingo/web dev",
+    "format:check": "git diff --check",
     "lint": "pnpm -r --if-present lint",
+    "restore:local": "powershell -ExecutionPolicy Bypass -File ./scripts/restore-local.ps1",
+    "setup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-local.ps1",
     "test": "pnpm -r --if-present test",
-    "typecheck": "pnpm -r --if-present typecheck"
+    "typecheck": "pnpm -r --if-present typecheck",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm --filter @worklingo/api test:integration && pnpm build && pnpm --filter @worklingo/web e2e"
   },
   "devDependencies": {
     "@eslint/js": "9.39.1",

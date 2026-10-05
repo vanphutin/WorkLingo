@@ -9,6 +9,7 @@ import { parseAppConfig } from './app-config.schema';
   imports: [
     ConfigModule.forRoot({
       cache: true,
+      envFilePath: ['.env', '../../.env'],
       isGlobal: true,
       validate: parseAppConfig,
     }),

@@ -17,5 +17,5 @@ describe('AppModule', () => {
     expect(moduleRef).toBeDefined();
 
     await moduleRef.close();
-  });
+  }, 30_000);
 });
