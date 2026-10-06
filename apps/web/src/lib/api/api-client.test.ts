@@ -278,4 +278,231 @@ describe('ApiClient', () => {
     expect(progress.completedActivities).toBe(2);
     expect(progress.currentLevelCode).toBe('FOUNDATION_1');
   });
+
+  describe('Content Authoring Admin Methods', () => {
+    const importId = '11111111-1111-4111-8111-111111111111';
+    const sampleImport = {
+      id: importId,
+      lessonId: null,
+      lessonVersionId: null,
+      rawSource: 'FORMAT: WorkLingoLesson/1.0',
+      sourceHash: 'hash-123',
+      status: 'DRAFT',
+      draftRevision: 1,
+      parserVersion: '1.0.0',
+      validationHash: null,
+      createdById: '22222222-2222-4222-8222-222222222222',
+      updatedById: '22222222-2222-4222-8222-222222222222',
+      createdAt: '2026-10-04T00:00:00.000Z',
+      updatedAt: '2026-10-04T00:00:00.000Z',
+    };
+
+    it('lists content imports from /admin/content-imports', async () => {
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(JSON.stringify([sampleImport]), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const list = await client.listContentImports();
+
+      expect(list).toHaveLength(1);
+      expect(list[0]?.id).toBe(importId);
+      expect(fetchSpy).toHaveBeenCalledWith('/api/v1/admin/content-imports', expect.objectContaining({ method: 'GET' }));
+    });
+
+    it('creates content import carrying rawSource', async () => {
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(JSON.stringify(sampleImport), {
+          status: 201,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const res = await client.createContentImport('FORMAT: WorkLingoLesson/1.0');
+
+      expect(res.id).toBe(importId);
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/v1/admin/content-imports',
+        expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({ rawSource: 'FORMAT: WorkLingoLesson/1.0' }),
+        }),
+      );
+    });
+
+    it('updates source with expectedDraftRevision', async () => {
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(JSON.stringify({ ...sampleImport, draftRevision: 2 }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const res = await client.updateContentSource(importId, {
+        rawSource: 'NEW SOURCE',
+        expectedDraftRevision: 1,
+      });
+
+      expect(res.draftRevision).toBe(2);
+      expect(fetchSpy).toHaveBeenCalledWith(
+        `/api/v1/admin/content-imports/${importId}/source`,
+        expect.objectContaining({
+          method: 'PATCH',
+          body: JSON.stringify({ rawSource: 'NEW SOURCE', expectedDraftRevision: 1 }),
+        }),
+      );
+    });
+
+    it('validates content import and parses result', async () => {
+      const valResult = {
+        importId,
+        draftRevision: 1,
+        sourceHash: 'hash-123',
+        status: 'VALIDATED',
+        canPublish: true,
+        issues: [],
+        issuesTruncated: false,
+      };
+
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(JSON.stringify(valResult), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const res = await client.validateContentImport(importId, { expectedDraftRevision: 1 });
+
+      expect(res.canPublish).toBe(true);
+      expect(fetchSpy).toHaveBeenCalledWith(
+        `/api/v1/admin/content-imports/${importId}/validate`,
+        expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({ expectedDraftRevision: 1 }),
+        }),
+      );
+    });
+
+    it('generates audio with 202 response and returns jobId', async () => {
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            jobId: '33333333-3333-4333-8333-333333333333',
+            status: 'PENDING',
+            audioScriptSlug: 'complaint-call',
+          }),
+          {
+            status: 202,
+            headers: { 'Content-Type': 'application/json' },
+          },
+        ),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const res = await client.generateAudio(importId, {
+        audioScriptSlug: 'complaint-call',
+        idempotencyKey: 'idemp-1',
+      });
+
+      expect(res.jobId).toBe('33333333-3333-4333-8333-333333333333');
+      expect(res.status).toBe('PENDING');
+      expect(fetchSpy).toHaveBeenCalledWith(
+        `/api/v1/admin/content-imports/${importId}/generate-audio`,
+        expect.objectContaining({ method: 'POST' }),
+      );
+    });
+
+    it('publishes content import carrying expected revision, hash, and idempotency key', async () => {
+      const pubResult = {
+        importId,
+        lessonId: '44444444-4444-4444-8444-444444444444',
+        lessonVersionId: '55555555-5555-4555-8555-555555555555',
+        version: 1,
+        status: 'PUBLISHED',
+        publishedAt: '2026-10-04T00:00:00.000Z',
+      };
+
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(JSON.stringify(pubResult), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const res = await client.publishContentImport(importId, {
+        expectedDraftRevision: 1,
+        expectedSourceHash: 'hash-123',
+        idempotencyKey: 'idemp-pub-1',
+      });
+
+      expect(res.version).toBe(1);
+      expect(fetchSpy).toHaveBeenCalledWith(
+        `/api/v1/admin/content-imports/${importId}/publish`,
+        expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({
+            expectedDraftRevision: 1,
+            expectedSourceHash: 'hash-123',
+            idempotencyKey: 'idemp-pub-1',
+          }),
+        }),
+      );
+    });
+
+    it('maps 403, 409, and 422 errors into ApiError with domain code and details', async () => {
+      // 409 conflict
+      vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            code: 'DRAFT_REVISION_CONFLICT',
+            message: 'Draft revision mismatch',
+            statusCode: 409,
+          }),
+          { status: 409, headers: { 'Content-Type': 'application/json' } },
+        ),
+      );
+
+      const client = new ApiClient('/api/v1');
+      await expect(
+        client.updateContentSource(importId, { rawSource: 'A', expectedDraftRevision: 1 }),
+      ).rejects.toMatchObject({
+        code: 'DRAFT_REVISION_CONFLICT',
+        status: 409,
+      });
+
+      // 422 validation failure with details
+      vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            code: 'CONTENT_VALIDATION_FAILED',
+            message: 'Validation failed',
+            statusCode: 422,
+            error: {
+              code: 'CONTENT_VALIDATION_FAILED',
+              message: 'Validation failed',
+              details: [{ code: 'VAL_MISSING_FIELD', message: 'Title missing' }],
+            },
+          }),
+          { status: 422, headers: { 'Content-Type': 'application/json' } },
+        ),
+      );
+
+      await expect(
+        client.validateContentImport(importId, { expectedDraftRevision: 1 }),
+      ).rejects.toMatchObject({
+        code: 'CONTENT_VALIDATION_FAILED',
+        status: 422,
+        details: expect.arrayContaining([
+          expect.objectContaining({ code: 'VAL_MISSING_FIELD' }),
+        ]),
+      });
+    });
+  });
 });

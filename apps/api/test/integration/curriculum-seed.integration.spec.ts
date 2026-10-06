@@ -80,6 +80,33 @@ describe('Foundation curriculum seed', () => {
     await expect(database.languageBlock.count()).resolves.toBe(4);
   });
 
+  it('repairs a stale current pointer without republishing an intentionally archived lesson', async () => {
+    await seedFoundationCurriculum(database);
+    const lesson = await database.lesson.findUniqueOrThrow({
+      where: { slug: foundationMissionFixture.lesson.slug },
+    });
+    const versionId = lesson.currentPublishedVersionId;
+    expect(versionId).toBeTruthy();
+
+    await database.lessonVersion.update({
+      where: { id: versionId! },
+      data: { status: 'ARCHIVED' },
+    });
+
+    await expect(seedFoundationCurriculum(database)).resolves.toBeUndefined();
+    await expect(
+      database.lesson.findUniqueOrThrow({ where: { id: lesson.id } }),
+    ).resolves.toMatchObject({ currentPublishedVersionId: null });
+    await expect(
+      database.lessonVersion.findUniqueOrThrow({ where: { id: versionId! } }),
+    ).resolves.toMatchObject({ status: 'ARCHIVED' });
+    await expect(
+      database.lessonVersion.count({
+        where: { lessonId: lesson.id, status: 'PUBLISHED' },
+      }),
+    ).resolves.toBe(0);
+  });
+
   it('rejects edits to a published lesson through the curriculum service', async () => {
     await seedFoundationCurriculum(database);
     const before = await curriculum.getPublishedMissionForLevel('FOUNDATION_1');
@@ -88,7 +115,7 @@ describe('Foundation curriculum seed', () => {
     await expect(curriculum.getPublishedMissionForLevel('FOUNDATION_1')).resolves.toEqual(before);
   });
 
-  it('updates a draft snapshot and selects the next published version without changing version one', async () => {
+  it('preserves a newer published version when the baseline seed runs again', async () => {
     await seedFoundationCurriculum(database);
     const original = await curriculum.getPublishedMissionForLevel('FOUNDATION_1');
     const stored = await database.lessonVersion.findUniqueOrThrow({ where: { id: original.lessonVersion.id } });
@@ -108,14 +135,23 @@ describe('Foundation curriculum seed', () => {
       wordBanks: { create: snapshot.wordBanks.map((bank) => ({ wordBankId: bank.id })) },
     } });
     await curriculum.updateLessonVersion(draft.id, { title: 'Introductions on a project call' });
+    await database.lessonVersion.update({ where: { id: stored.id }, data: { status: 'ARCHIVED' } });
     await database.lessonVersion.update({ where: { id: draft.id }, data: { status: 'PUBLISHED', publishedAt: new Date() } });
+    await database.lesson.update({
+      where: { id: stored.lessonId },
+      data: { currentPublishedVersionId: draft.id },
+    });
+    await seedFoundationCurriculum(database);
     const latest = await curriculum.getPublishedMissionForLevel('FOUNDATION_1');
     expect(latest.lessonVersion).toMatchObject({ id: draft.id, version: 2, title: 'Introductions on a project call' });
     for (const activity of latest.lessonVersion.activities) {
       await expect(database.activity.findUniqueOrThrow({ where: { id: activity.id } }))
         .resolves.toMatchObject({ lessonVersionId: draft.id });
     }
-    await expect(database.lessonVersion.findUniqueOrThrow({ where: { id: stored.id } })).resolves.toEqual(stored);
+    await expect(database.lessonVersion.findUniqueOrThrow({ where: { id: stored.id } }))
+      .resolves.toMatchObject({ id: stored.id, status: 'ARCHIVED' });
+    await expect(database.lesson.findUniqueOrThrow({ where: { id: stored.lessonId } }))
+      .resolves.toMatchObject({ currentPublishedVersionId: draft.id });
   });
 
   it('protects published snapshots and child records even when writing directly to PostgreSQL', async () => {
@@ -172,6 +208,7 @@ describe('Foundation curriculum seed', () => {
   it('rejects a published snapshot whose activities belong to another version', async () => {
     await seedFoundationCurriculum(database);
     const original = await database.lessonVersion.findFirstOrThrow({ where: { version: 1 } });
+    await database.lessonVersion.update({ where: { id: original.id }, data: { status: 'ARCHIVED' } });
     await database.lessonVersion.create({ data: {
       lessonId: original.lessonId, version: 2, title: original.title,
       sourceHash: original.sourceHash, parsedContent: original.parsedContent!,

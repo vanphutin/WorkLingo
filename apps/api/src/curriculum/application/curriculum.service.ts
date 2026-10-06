@@ -31,19 +31,46 @@ export class CurriculumService {
   async getPublishedMissionForLevel(levelCode: string): Promise<PublishedMission> {
     const mission = await this.database.mission.findFirst({
       where: {
-        status: 'PUBLISHED', level: { code: levelCode, path: { status: 'PUBLISHED' } },
-        lessons: { some: { lesson: { versions: { some: { status: 'PUBLISHED' } } } } },
+        status: 'PUBLISHED',
+        level: { code: levelCode, path: { status: 'PUBLISHED' } },
+        lessons: {
+          some: {
+            lesson: {
+              OR: [
+                { currentPublishedVersion: { status: 'PUBLISHED' } },
+                { versions: { some: { status: 'PUBLISHED' } } },
+              ],
+            },
+          },
+        },
       },
       orderBy: [{ order: 'asc' }, { id: 'asc' }],
       include: {
         lessons: {
-          where: { lesson: { versions: { some: { status: 'PUBLISHED' } } } },
-          orderBy: { order: 'asc' }, take: 1,
+          where: {
+            lesson: {
+              OR: [
+                { currentPublishedVersion: { status: 'PUBLISHED' } },
+                { versions: { some: { status: 'PUBLISHED' } } },
+              ],
+            },
+          },
+          orderBy: { order: 'asc' },
+          take: 1,
           include: {
             lesson: {
               include: {
+                currentPublishedVersion: {
+                  include: {
+                    activities: { orderBy: { order: 'asc' } },
+                    contentBlocks: { orderBy: { order: 'asc' } },
+                    wordBanks: { select: { wordBankId: true } },
+                  },
+                },
                 versions: {
-                  where: { status: 'PUBLISHED' }, orderBy: { version: 'desc' }, take: 1,
+                  where: { status: 'PUBLISHED' },
+                  orderBy: { version: 'desc' },
+                  take: 1,
                   include: {
                     activities: { orderBy: { order: 'asc' } },
                     contentBlocks: { orderBy: { order: 'asc' } },
@@ -56,7 +83,11 @@ export class CurriculumService {
         },
       },
     });
-    const version = mission?.lessons[0]?.lesson.versions[0];
+    const lesson = mission?.lessons[0]?.lesson;
+    const candidate = lesson?.currentPublishedVersion?.status === 'PUBLISHED'
+      ? lesson.currentPublishedVersion
+      : lesson?.versions[0];
+    const version = candidate?.status === 'PUBLISHED' ? candidate : undefined;
     if (!mission || !version) throw new NotFoundException('No published mission for this level');
     const parsed = lessonSnapshotSchema.safeParse(version.parsedContent);
     if (!parsed.success) throw new ConflictException('Published lesson snapshot is invalid');

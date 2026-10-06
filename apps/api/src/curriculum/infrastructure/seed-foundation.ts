@@ -35,15 +35,47 @@ export async function seedFoundationCurriculum(database: PrismaClient): Promise<
     });
     const existing = await tx.lessonVersion.findUnique({ where: { lessonId_version: { lessonId: lesson.id, version: fixture.lesson.version } } });
     if (existing) {
-      if (existing.status !== 'PUBLISHED' || existing.sourceHash !== sourceHash) {
+      if (
+        (existing.status !== 'PUBLISHED' && existing.status !== 'ARCHIVED') ||
+        existing.sourceHash !== sourceHash
+      ) {
         throw new ConflictException('Seed version differs from stored content; create a new lesson version');
       }
     }
-    const wordBanks = [];
+    const wordBanks: Array<{
+      id: string;
+      slug: string;
+      name: string;
+      bankVersionId: string;
+      languageBlocks: Array<(typeof fixture.lesson.wordBanks)[number]['languageBlocks'][number] & { id: string }>;
+    }> = [];
     for (const bankFixture of fixture.lesson.wordBanks) {
       const bank = await tx.wordBank.upsert({ where: { slug: bankFixture.slug }, update: {}, create: { slug: bankFixture.slug, name: bankFixture.name } });
+      const bankHash = createHash('sha256').update(JSON.stringify(bankFixture)).digest('hex');
+      const bankVersion = await tx.wordBankVersion.upsert({
+        where: { wordBankId_version: { wordBankId: bank.id, version: 1 } },
+        update: {},
+        create: {
+          wordBankId: bank.id,
+          name: bankFixture.name,
+          sourceHash: bankHash,
+          version: 1,
+        },
+      });
       const languageBlocks = [];
       for (const blockFixture of bankFixture.languageBlocks) {
+        await tx.languageBlockVersion.upsert({
+          where: { wordBankVersionId_slug: { wordBankVersionId: bankVersion.id, slug: blockFixture.slug } },
+          update: {},
+          create: {
+            ...blockFixture,
+            wordBankVersionId: bankVersion.id,
+            collocations: [...blockFixture.collocations],
+            examples: [...blockFixture.examples],
+            commonErrors: [...blockFixture.commonErrors],
+            transferContexts: [...blockFixture.transferContexts],
+          },
+        });
         const block = await tx.languageBlock.upsert({
           where: { slug: blockFixture.slug }, update: {},
           create: { ...blockFixture, wordBankId: bank.id, collocations: [...blockFixture.collocations], examples: [...blockFixture.examples], commonErrors: [...blockFixture.commonErrors], transferContexts: [...blockFixture.transferContexts] },
@@ -53,9 +85,37 @@ export async function seedFoundationCurriculum(database: PrismaClient): Promise<
         }
         languageBlocks.push({ ...blockFixture, id: block.id });
       }
-      wordBanks.push({ id: bank.id, slug: bank.slug, name: bank.name, languageBlocks });
+      wordBanks.push({ id: bank.id, slug: bank.slug, name: bank.name, bankVersionId: bankVersion.id, languageBlocks });
     }
-    if (existing) return;
+    if (existing) {
+      const currentVersion = lesson.currentPublishedVersionId
+        ? await tx.lessonVersion.findUnique({ where: { id: lesson.currentPublishedVersionId } })
+        : null;
+      if (currentVersion?.status === 'PUBLISHED') return;
+
+      const latestPublished = await tx.lessonVersion.findFirst({
+        where: { lessonId: lesson.id, status: 'PUBLISHED' },
+        orderBy: { version: 'desc' },
+      });
+      if (!latestPublished) {
+        if (lesson.currentPublishedVersionId) {
+          await tx.lesson.updateMany({
+            where: {
+              id: lesson.id,
+              currentPublishedVersionId: lesson.currentPublishedVersionId,
+            },
+            data: { currentPublishedVersionId: null },
+          });
+        }
+        return;
+      }
+
+      await tx.lesson.update({
+        where: { id: lesson.id },
+        data: { currentPublishedVersionId: latestPublished.id },
+      });
+      return;
+    }
     const snapshot = lessonSnapshotSchema.parse({
       title: fixture.lesson.title, wordBanks,
       contentBlocks: fixture.lesson.contentBlocks.map((block) => ({ ...block, id: randomUUID() })),
@@ -73,9 +133,16 @@ export async function seedFoundationCurriculum(database: PrismaClient): Promise<
     for (const activity of snapshot.activities) {
       await tx.activity.create({ data: { ...activity, lessonVersionId: version.id, payload: activity.payload as Prisma.InputJsonValue } });
     }
-    for (const bank of snapshot.wordBanks) {
-      await tx.lessonVersionWordBank.create({ data: { lessonVersionId: version.id, wordBankId: bank.id } });
+    for (const bank of wordBanks) {
+      await tx.lessonVersionWordBank.create({
+        data: {
+          lessonVersionId: version.id,
+          wordBankId: bank.id,
+          wordBankVersionId: bank.bankVersionId,
+        },
+      });
     }
+    await tx.lesson.update({ where: { id: lesson.id }, data: { currentPublishedVersionId: version.id } });
     // Publish only after every child and the validated snapshot exist, in one transaction.
     await tx.lessonVersion.update({ where: { id: version.id }, data: { status: 'PUBLISHED', publishedAt: new Date() } });
   }, { timeout: 15_000 });

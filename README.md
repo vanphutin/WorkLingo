@@ -21,4 +21,6 @@ pnpm verify
 pnpm backup:local
 ```
 
-For complete local architecture, environment configuration, database management, and troubleshooting instructions, please read [Local Development Guide](docs/LOCAL_DEVELOPMENT.md).
+For setup, environment configuration, Content Admin login, database management, and troubleshooting,
+read the [Local Development Guide](docs/LOCAL_DEVELOPMENT.md). Content authors should also use the
+[WorkLingo Lesson Format 1.0 guide](docs/LESSON_FORMAT.md).

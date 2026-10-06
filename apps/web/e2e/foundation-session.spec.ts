@@ -34,7 +34,7 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     await expect(page.getByText('Listen & Reason', { exact: true })).toBeVisible();
     await expect(page.getByText('Respond', { exact: true })).toBeVisible();
 
-    if (testInfo.project.name === 'mobile-chrome') {
+    if (testInfo.project.name === 'foundation-mobile') {
       const mainBox = await page.getByRole('main').boundingBox();
       const supportBox = await page.getByRole('complementary').boundingBox();
       expect(mainBox).not.toBeNull();

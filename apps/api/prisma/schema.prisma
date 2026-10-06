@@ -27,9 +27,14 @@ model User {
   status           UserStatus        @default(ACTIVE)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
-  profile          LearnerProfile?
-  sessions         UserSession[]
-  learningSessions LearningSession[]
+  profile               LearnerProfile?
+  sessions              UserSession[]
+  learningSessions      LearningSession[]
+  createdContentImports ContentImport[]   @relation("ContentImportCreatedBy")
+  updatedContentImports ContentImport[]   @relation("ContentImportUpdatedBy")
+  jobs                  Job[]
+  mutationReceipts      MutationReceipt[]
+  auditLogs             AuditLog[]
 }
 
 model LearnerProfile {
@@ -120,12 +125,15 @@ model Mission {
 }
 
 model Lesson {
-  id        String          @id @default(uuid()) @db.Uuid
-  slug      String          @unique
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  missions  MissionLesson[]
-  versions  LessonVersion[]
+  id                        String          @id @default(uuid()) @db.Uuid
+  slug                      String          @unique
+  currentPublishedVersionId String?         @db.Uuid
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt
+  currentPublishedVersion   LessonVersion?  @relation("LessonCurrentPublishedVersion", fields: [currentPublishedVersionId], references: [id], onDelete: SetNull)
+  missions                  MissionLesson[]
+  versions                  LessonVersion[]
+  contentImports            ContentImport[]
 }
 
 model MissionLesson {
@@ -141,21 +149,24 @@ model MissionLesson {
 }
 
 model LessonVersion {
-  id               String                  @id @default(uuid()) @db.Uuid
-  lessonId         String                  @db.Uuid
+  id               String                       @id @default(uuid()) @db.Uuid
+  lessonId         String                       @db.Uuid
   version          Int
   title            String
-  status           ContentStatus           @default(DRAFT)
+  status           ContentStatus                @default(DRAFT)
   sourceHash       String
   parsedContent    Json
   publishedAt      DateTime?
-  createdAt        DateTime                @default(now())
-  updatedAt        DateTime                @updatedAt
-  lesson           Lesson                  @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+  lesson           Lesson                       @relation(fields: [lessonId], references: [id], onDelete: Restrict)
   contentBlocks    ContentBlock[]
   activities       Activity[]
   wordBanks        LessonVersionWordBank[]
   learningSessions LearningSession[]
+  audioArtifacts   LessonVersionAudioArtifact[]
+  contentImports   ContentImport[]
+  currentForLesson Lesson[]                     @relation("LessonCurrentPublishedVersion")
 
   @@unique([lessonId, version])
 }
@@ -204,15 +215,55 @@ model WordBank {
   updatedAt      DateTime                @updatedAt
   languageBlocks LanguageBlock[]
   lessonVersions LessonVersionWordBank[]
+  versions       WordBankVersion[]
+}
+
+model WordBankVersion {
+  id             String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  wordBankId     String                  @db.Uuid
+  name           String
+  sourceHash     String
+  version        Int
+  createdAt      DateTime                @default(now())
+  wordBank       WordBank                @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  languageBlocks LanguageBlockVersion[]
+  lessonVersions LessonVersionWordBank[]
+
+  @@unique([wordBankId, version])
+  @@unique([wordBankId, sourceHash])
+  @@index([wordBankId])
+}
+
+model LanguageBlockVersion {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  wordBankVersionId String          @db.Uuid
+  slug              String
+  canonicalForm     String
+  meaning           String
+  pronunciation     String
+  collocations      String[]
+  grammarPattern    String
+  examples          String[]
+  commonErrors      String[]
+  cefrLevel         String
+  transferContexts  String[]
+  createdAt         DateTime        @default(now())
+  wordBankVersion   WordBankVersion @relation(fields: [wordBankVersionId], references: [id], onDelete: Cascade)
+
+  @@unique([wordBankVersionId, slug])
+  @@index([wordBankVersionId])
 }
 
 model LessonVersionWordBank {
-  lessonVersionId String        @db.Uuid
-  wordBankId      String        @db.Uuid
-  lessonVersion   LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
-  wordBank        WordBank      @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  lessonVersionId   String           @db.Uuid
+  wordBankId        String           @db.Uuid
+  wordBankVersionId String?          @db.Uuid
+  lessonVersion     LessonVersion    @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  wordBank          WordBank         @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  wordBankVersion   WordBankVersion? @relation(fields: [wordBankVersionId], references: [id], onDelete: Restrict)
 
   @@id([lessonVersionId, wordBankId])
+  @@index([wordBankVersionId])
   @@index([wordBankId])
 }
 
@@ -316,4 +367,136 @@ model ActivityAttempt {
   @@index([sessionId])
   @@index([activityId])
   @@index([sessionId, activityId])
+}
+
+model ContentImport {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lessonId          String?         @db.Uuid
+  lessonVersionId   String?         @db.Uuid
+  rawSource         String
+  sourceHash        String
+  status            ContentStatus   @default(DRAFT)
+  draftRevision     Int             @default(1)
+  parserVersion     String          @default("1.0.0")
+  parsedAst         Json?
+  normalizedPreview Json?
+  validationReport  Json?
+  validationHash    String?
+  createdById       String          @db.Uuid
+  updatedById       String          @db.Uuid
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  createdBy         User            @relation("ContentImportCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy         User            @relation("ContentImportUpdatedBy", fields: [updatedById], references: [id], onDelete: Restrict)
+  lesson            Lesson?         @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  publishedVersion  LessonVersion?  @relation(fields: [lessonVersionId], references: [id], onDelete: SetNull)
+  audioArtifacts    AudioArtifact[]
+  jobs              Job[]
+  auditLogs         AuditLog[]
+
+  @@index([lessonId])
+  @@index([status])
+}
+
+enum AudioArtifactStatus {
+  MISSING
+  GENERATING
+  READY
+  FAILED
+  STALE
+}
+
+model AudioArtifact {
+  id                      String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  contentImportId         String                       @db.Uuid
+  audioScriptSlug         String
+  scriptHash              String
+  adapterName             String
+  voiceConfig             Json
+  mimeType                String
+  byteSize                Int
+  checksum                String
+  storageKey              String
+  status                  AudioArtifactStatus          @default(MISSING)
+  failureSummary          String?
+  createdAt               DateTime                     @default(now())
+  updatedAt               DateTime                     @updatedAt
+  contentImport           ContentImport                @relation(fields: [contentImportId], references: [id], onDelete: Cascade)
+  lessonVersionReferences LessonVersionAudioArtifact[]
+
+  @@unique([contentImportId, audioScriptSlug, scriptHash])
+  @@index([contentImportId])
+  @@index([status])
+}
+
+model LessonVersionAudioArtifact {
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lessonVersionId String        @db.Uuid
+  audioArtifactId String        @db.Uuid
+  audioScriptSlug String
+  createdAt       DateTime      @default(now())
+  lessonVersion   LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  audioArtifact   AudioArtifact @relation(fields: [audioArtifactId], references: [id], onDelete: Restrict)
+
+  @@unique([lessonVersionId, audioScriptSlug])
+  @@index([lessonVersionId])
+  @@index([audioArtifactId])
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model Job {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type            String
+  status          JobStatus      @default(PENDING)
+  payload         Json
+  result          Json?
+  error           String?
+  contentImportId String?        @db.Uuid
+  createdById     String         @db.Uuid
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  contentImport   ContentImport? @relation(fields: [contentImportId], references: [id], onDelete: SetNull)
+  createdBy       User           @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([contentImportId])
+  @@index([status])
+}
+
+model MutationReceipt {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorId        String   @db.Uuid
+  operation      String
+  idempotencyKey String
+  requestHash    String
+  responseStatus Int
+  responseBody   Json
+  createdAt      DateTime @default(now())
+  actor          User     @relation(fields: [actorId], references: [id], onDelete: Restrict)
+
+  @@unique([actorId, operation, idempotencyKey])
+  @@index([actorId])
+}
+
+model AuditLog {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorId         String         @db.Uuid
+  action          String
+  resourceType    String
+  resourceId      String
+  oldState        Json?
+  newState        Json?
+  metadata        Json?
+  contentImportId String?        @db.Uuid
+  createdAt       DateTime       @default(now())
+  actor           User           @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  contentImport   ContentImport? @relation(fields: [contentImportId], references: [id], onDelete: SetNull)
+
+  @@index([actorId])
+  @@index([resourceType, resourceId])
 }

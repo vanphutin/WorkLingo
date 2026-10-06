@@ -229,40 +229,77 @@ Trả level, mission progress, skill summaries và evidence highlights.
 
 ## 8. Admin content import
 
+Tất cả endpoint trong phần này chỉ dành cho `CONTENT_ADMIN` hoặc `SYSTEM_ADMIN`.
+
 ### `POST /admin/content-imports`
 
 ```json
 {
-  "source": "TITLE: ...\nCONTENT: ...",
-  "formatVersion": "1.0"
+  "rawSource": "FORMAT: WorkLingoLesson/1.0\n\n[LESSON]\n..."
 }
 ```
 
-Tạo import draft, lưu source trước khi parse và trả parse/validation summary.
+Tạo `ContentImport` trạng thái `DRAFT`, lưu nguyên văn source và trả `draftRevision`, `sourceHash`,
+`parserVersion`. Danh sách và chi tiết dùng `GET /admin/content-imports` và
+`GET /admin/content-imports/{id}`.
 
-### `POST /admin/content-imports/{id}/validate`
-
-Idempotent theo source hash và parser version.
-
-### `GET /admin/content-imports/{id}/preview`
-
-Trả structured lesson draft, validation issues và warnings.
-
-### `POST /admin/content-imports/{id}/generate-audio`
-
-Tạo job TTS cho script hợp lệ. Không publish tự động sau khi hoàn thành.
-
-### `POST /admin/content-imports/{id}/publish`
-
-Yêu cầu validation pass, audio/rubric bắt buộc hợp lệ và `expectedDraftVersion` để chống overwrite.
+### `PATCH /admin/content-imports/{id}/source`
 
 ```json
 {
-  "expectedDraftVersion": 4
+  "rawSource": "FORMAT: WorkLingoLesson/1.0\n...",
+  "expectedDraftRevision": 3
 }
 ```
 
-Response trả lesson ID và published version.
+Optimistic concurrency: revision sai trả `DRAFT_REVISION_CONFLICT`. Source đã publish/archive là
+bất biến và trả `VERSION_ALREADY_PUBLISHED`.
+
+### `POST /admin/content-imports/{id}/validate`
+
+```json
+{ "expectedDraftRevision": 4 }
+```
+
+Trả `canPublish`, `issues`, `issuesTruncated`, revision và hash. Issue có `severity`, stable code và
+half-open range `start/end` gồm `line`, `column`, `offset`. Lỗi parse/semantic trả 422 với
+`CONTENT_PARSE_FAILED` hoặc `CONTENT_VALIDATION_FAILED`; warning không chặn publish.
+
+### `GET /admin/content-imports/{id}/preview`
+
+Trả normalized lesson draft từ backend, validation issues và `canPublish`.
+
+### `POST /admin/content-imports/{id}/generate-audio`
+
+```json
+{
+  "audioScriptSlug": "complaint-call",
+  "idempotencyKey": "uuid-or-client-operation-key",
+  "voiceConfig": {}
+}
+```
+
+Trả 202 với `jobId`. `GET /jobs/{id}` dùng để poll theo trạng thái; endpoint job trong Increment 2
+cũng chỉ dành cho Admin. `GET /admin/content-imports/{id}/audio` liệt kê artifact và
+`GET /admin/audio-artifacts/{id}/content` stream file đã được authorize. Fake output luôn có nhãn
+`Audio mô phỏng — chưa phải giọng đọc phát hành`.
+
+### `POST /admin/content-imports/{id}/publish`
+
+Yêu cầu validation/hash còn mới và mọi audio được tham chiếu ở trạng thái `READY` với script hash
+hiện tại.
+
+```json
+{
+  "expectedDraftRevision": 4,
+  "expectedSourceHash": "sha256-hex",
+  "idempotencyKey": "uuid-or-client-operation-key"
+}
+```
+
+Response trả `lessonId`, `lessonVersionId`, version và `publishedAt`. Publish đồng thời cùng key trả
+cùng response; key khác trên cùng draft chỉ cho một request thành công. Archive dùng
+`POST /admin/lesson-versions/{id}/archive`; thao tác này idempotent và xóa con trỏ current nếu archive phiên bản đang phát hành. Không có hard-delete endpoint.
 
 ## 9. Admin curriculum
 
@@ -278,7 +315,8 @@ Xóa resource đã được sử dụng trả `RESOURCE_IN_USE`; client đề xu
 
 ### `GET /jobs/{id}`
 
-Chỉ owner của tác vụ hoặc admin được xem. Trả `queued`, `running`, `completed`, `failed` và khả năng retry.
+Trong Increment 2 chỉ Admin được xem. Trả `PENDING`, `RUNNING`, `COMPLETED` hoặc `FAILED` cho job
+fake-audio cục bộ.
 
 ### `POST /jobs/{id}/retry`
 

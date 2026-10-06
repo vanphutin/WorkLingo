@@ -1,7 +1,26 @@
 import {
+  audioArtifactDtoSchema,
   authUserSchema,
+  contentImportSchema,
+  contentIssueSchema,
+  contentStatusSchema,
+  generateAudioResultSchema,
+  jobDtoSchema,
+  publishContentImportResultSchema,
   sessionPlanSchema,
+  validateContentImportResultSchema,
+  type AudioArtifactDto,
   type AuthUser,
+  type ContentImportDto,
+  type ContentPreviewDto,
+  type GenerateAudioInput,
+  type GenerateAudioResult,
+  type JobDto,
+  type PublishContentImportInput,
+  type PublishContentImportResult,
+  type UpdateContentSourceInput,
+  type ValidateContentImportInput,
+  type ValidateContentImportResult,
 } from '@worklingo/contracts';
 import { z } from 'zod';
 
@@ -111,6 +130,22 @@ export interface SubmitAttemptInput {
   readonly sessionId: string;
   readonly response: Record<string, unknown>;
 }
+
+export const contentPreviewDtoSchema = z.object({
+  importId: z.string().uuid(),
+  draftRevision: z.number().int().positive(),
+  sourceHash: z.string(),
+  status: contentStatusSchema,
+  normalizedDraft: z.unknown().nullable(),
+  issues: z.array(contentIssueSchema),
+  canPublish: z.boolean(),
+});
+
+export const archiveLessonVersionResultSchema = z.object({
+  id: z.string().uuid(),
+  status: z.literal('ARCHIVED'),
+});
+export type ArchiveLessonVersionResult = z.infer<typeof archiveLessonVersionResultSchema>;
 
 export class ApiClient {
   private readonly baseUrl: string;
@@ -243,6 +278,107 @@ export class ApiClient {
 
   async getProgress(): Promise<LearnerProgressDto> {
     return this.request('/me/progress', { method: 'GET' }, learnerProgressDtoSchema);
+  }
+
+  async listContentImports(): Promise<ContentImportDto[]> {
+    return this.request('/admin/content-imports', { method: 'GET' }, z.array(contentImportSchema));
+  }
+
+  async createContentImport(rawSource: string): Promise<ContentImportDto> {
+    return this.request(
+      '/admin/content-imports',
+      {
+        method: 'POST',
+        body: JSON.stringify({ rawSource }),
+      },
+      contentImportSchema,
+    );
+  }
+
+  async getContentImport(id: string): Promise<ContentImportDto> {
+    return this.request(`/admin/content-imports/${id}`, { method: 'GET' }, contentImportSchema);
+  }
+
+  async updateContentSource(id: string, input: UpdateContentSourceInput): Promise<ContentImportDto> {
+    return this.request(
+      `/admin/content-imports/${id}/source`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(input),
+      },
+      contentImportSchema,
+    );
+  }
+
+  async validateContentImport(
+    id: string,
+    input: ValidateContentImportInput,
+  ): Promise<ValidateContentImportResult> {
+    return this.request(
+      `/admin/content-imports/${id}/validate`,
+      {
+        method: 'POST',
+        body: JSON.stringify(input),
+      },
+      validateContentImportResultSchema,
+    );
+  }
+
+  async getContentPreview(id: string): Promise<ContentPreviewDto> {
+    return this.request(
+      `/admin/content-imports/${id}/preview`,
+      { method: 'GET' },
+      contentPreviewDtoSchema as unknown as z.ZodType<ContentPreviewDto>,
+    );
+  }
+
+  async generateAudio(id: string, input: GenerateAudioInput): Promise<GenerateAudioResult> {
+    return this.request(
+      `/admin/content-imports/${id}/generate-audio`,
+      {
+        method: 'POST',
+        body: JSON.stringify(input),
+      },
+      generateAudioResultSchema,
+    );
+  }
+
+  async listContentAudioArtifacts(importId: string): Promise<AudioArtifactDto[]> {
+    return this.request(
+      `/admin/content-imports/${importId}/audio`,
+      { method: 'GET' },
+      z.array(audioArtifactDtoSchema),
+    );
+  }
+
+  getAudioArtifactContentUrl(id: string): string {
+    return `${this.baseUrl}/admin/audio-artifacts/${id}/content`;
+  }
+
+  async getJob(id: string): Promise<JobDto> {
+    return this.request(`/jobs/${id}`, { method: 'GET' }, jobDtoSchema);
+  }
+
+  async publishContentImport(
+    id: string,
+    input: PublishContentImportInput,
+  ): Promise<PublishContentImportResult> {
+    return this.request(
+      `/admin/content-imports/${id}/publish`,
+      {
+        method: 'POST',
+        body: JSON.stringify(input),
+      },
+      publishContentImportResultSchema,
+    );
+  }
+
+  async archiveLessonVersion(id: string): Promise<ArchiveLessonVersionResult> {
+    return this.request(
+      `/admin/lesson-versions/${id}/archive`,
+      { method: 'POST' },
+      archiveLessonVersionResultSchema,
+    );
   }
 }
 

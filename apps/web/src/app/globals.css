@@ -817,12 +817,3 @@ a:focus-visible {
 .status-card.error-card {
   border-color: #f2bcbc;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}

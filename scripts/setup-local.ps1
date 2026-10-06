@@ -67,6 +67,38 @@ if (-not (Test-Path $envPath)) {
   Write-Host "    Using existing .env file." -ForegroundColor DarkGray
 }
 
+# Ensure local admin credentials exist in .env. The checked-in example contains
+# only a placeholder; setup replaces it without printing the generated password.
+if (Test-Path $envPath) {
+  $envContent = Get-Content $envPath -Raw
+  if ($envContent -notmatch "(?m)^WORKLINGO_ADMIN_EMAIL=.+$") {
+    Add-Content -Path $envPath -Value "`nWORKLINGO_ADMIN_EMAIL=admin@worklingo.local"
+  }
+
+  $passwordMatch = [regex]::Match($envContent, "(?m)^WORKLINGO_ADMIN_PASSWORD=(.*)$")
+  if (-not $passwordMatch.Success -or $passwordMatch.Groups[1].Value -eq "replace-with-a-local-admin-password" -or [string]::IsNullOrWhiteSpace($passwordMatch.Groups[1].Value)) {
+    $generatedPass = [System.Guid]::NewGuid().ToString("N").Substring(0, 16) + "!"
+    if ($passwordMatch.Success) {
+      $envContent = [regex]::Replace(
+        $envContent,
+        "(?m)^WORKLINGO_ADMIN_PASSWORD=.*$",
+        "WORKLINGO_ADMIN_PASSWORD=$generatedPass"
+      )
+      Set-Content -Path $envPath -Value $envContent -NoNewline
+    } else {
+      Add-Content -Path $envPath -Value "WORKLINGO_ADMIN_PASSWORD=$generatedPass"
+    }
+    Write-Host "    Generated local content admin credentials in ignored .env." -ForegroundColor Green
+  }
+
+  # Make the local environment available to Prisma seed commands in this process.
+  Get-Content $envPath | ForEach-Object {
+    if ($_ -match '^\s*([^#][^=]*)=(.*)$') {
+      [Environment]::SetEnvironmentVariable($matches[1].Trim(), $matches[2], 'Process')
+    }
+  }
+}
+
 # 4. Ensure local data directory exists
 Write-Host "--> Ensuring local storage directory..." -ForegroundColor Yellow
 $dataDir = Join-Path $repoRoot "data"

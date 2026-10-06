@@ -28,20 +28,26 @@ Thuộc level; mô tả tình huống công việc, mục tiêu, kết quả mon
 
 ### lessons
 
-Định danh logic của bài học. Nội dung thực tế nằm ở `lesson_versions`.
+Định danh logic của bài học. `current_published_version_id` trỏ tới snapshot hiện hành; nội dung
+thực tế nằm ở `lesson_versions`.
 
 ### lesson_versions
 
 | Field | Ý nghĩa |
 |---|---|
 | lesson_id, version | Khóa phiên bản |
-| status | draft/validated/published/archived |
-| raw_source | Nội dung admin đã dán |
+| status | draft/published/archived |
+| source_hash | Hash của source đã tạo snapshot |
 | parsed_content | Snapshot cấu trúc đã chuẩn hóa |
-| validation_report | Lỗi/cảnh báo gần nhất |
-| published_at/by | Audit publish |
+| published_at | Thời điểm publish |
 
 Published version không sửa tại chỗ.
+
+### word_bank_versions và language_block_versions
+
+`WordBankVersion` được nhận diện bởi `word_bank_id + version` và deduplicate bằng canonical
+`source_hash`. `LanguageBlockVersion` thuộc đúng Word Bank version. Cả hai loại version là bất biến;
+`LessonVersionWordBank` giữ đồng thời logical Word Bank ID và version ID để snapshot cũ không đổi.
 
 ### content_blocks
 
@@ -169,11 +175,25 @@ Audit các lần mở khóa, đề xuất học củng cố và chuyển level.
 
 ### content_imports
 
-Raw source, parser version, parse result, validation report, admin và trạng thái.
+Authoring record có `raw_source`, `source_hash`, `draft_revision`, `parser_version`, parsed AST,
+normalized preview, validation report/hash, actor tạo/cập nhật và trạng thái
+`DRAFT/VALIDATED/PUBLISHED/ARCHIVED`. Record published/archived không được sửa hoặc validate lại.
+
+### audio_artifacts và lesson_version_audio_artifacts
+
+Artifact fake-TTS lưu script hash, adapter/voice config, MIME, checksum, byte size, server-generated
+storage key và trạng thái `MISSING/GENERATING/READY/FAILED/STALE`. Join record gắn artifact `READY`
+vào immutable lesson version; không nhận storage path từ client.
 
 ### jobs
 
-Type, status, payload reference, attempts, `available_at`, idempotency key và lỗi cuối.
+Increment 2 lưu job fake-audio tối thiểu với type, trạng thái `PENDING/RUNNING/COMPLETED/FAILED`,
+payload/result, lỗi, Content Import và actor tạo.
+
+### mutation_receipts
+
+Khóa duy nhất `actor_id + operation + idempotency_key`, request hash và response đã commit. Receipt
+nằm cùng transaction publish để retry hoặc request đồng thời không tạo thêm version.
 
 ### audit_logs
 
@@ -204,6 +224,9 @@ MasteryEvent *─1 MasteryRecord
 5. Gateway pass phải thỏa ngưỡng từng kỹ năng của policy version.
 6. Xóa recording không xóa kết quả mastery tổng hợp nhưng phải xóa file và đánh dấu metadata.
 7. Archive content không làm hỏng session hoặc lịch sử đã tồn tại.
+8. Chỉ có một `PUBLISHED` LessonVersion cho mỗi logical Lesson; publish N+1 archive N và đổi pointer
+   trong cùng transaction.
+9. `LearningSession.lesson_version_id` và `plan_snapshot` không được đổi khi publish version mới.
 
 ## 10. Indexes ban đầu
 

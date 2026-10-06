@@ -1,0 +1,19 @@
+{
+  "name": "@worklingo/content-format",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@worklingo/test-fixtures": "workspace:*",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
+  }
+}
