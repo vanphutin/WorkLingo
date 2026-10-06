@@ -221,7 +221,91 @@ Trả số item đến hạn, lý do ưu tiên và thời lượng ôn ước t�
 
 ### `GET /me/error-bank`
 
-Trả lỗi nhóm theo speaking, writing, listening và reading; không trả provider internals.
+Yêu cầu xác thực bằng session cookie theo cơ chế đăng nhập hiện tại. Trả danh sách các điểm sai sót được tổng hợp theo nhóm của chính learner đã xác thực.
+
+Query parameters:
+- `skill` (tùy chọn): Lọc theo `reading | listening | speaking | writing`.
+- `page` (tùy chọn, mặc định: 1, tối thiểu: 1).
+- `limit` (tùy chọn, mặc định: 20, tối đa: 100).
+
+Sắp xếp ổn định: `lastOccurredAt DESC, id ASC`. Tuyệt đối không để lộ câu trả lời riêng tư (`rawResponse`, `normalizedResponse`) hoặc database/provider internals.
+
+Response `200`:
+```json
+{
+  "items": [
+    {
+      "id": "uuid",
+      "languageBlockId": "uuid",
+      "languageBlockSlug": "my-name-is",
+      "canonicalForm": "My name is ...",
+      "skill": "reading",
+      "errorType": "ACTIVITY_INCORRECT",
+      "evidenceGranularity": "ACTIVITY",
+      "contextKey": "lesson-uuid:greeting-activity",
+      "activityId": "uuid",
+      "activitySlug": "greeting-activity",
+      "occurrenceCount": 2,
+      "firstOccurredAt": "2026-10-06T12:00:00.000Z",
+      "lastOccurredAt": "2026-10-06T13:00:00.000Z",
+      "lessonVersionId": "uuid"
+    }
+  ],
+  "total": 1,
+  "page": 1,
+  "limit": 20,
+  "totalPages": 1
+}
+```
+
+### `GET /me/memory-health`
+
+Yêu cầu xác thực bằng session cookie theo cơ chế đăng nhập hiện tại. Trả về chỉ số sức khỏe trí nhớ tính toán tất định theo heuristic v1 cho từng kỹ năng và tổng thể.
+
+Heuristic formula v1:
+- `base = Math.round(100 * (0.7 * score + 0.3 * confidence))`
+- `overdueDays = Math.max(0, Math.floor(overdueMs / 86400000))` (ngày quá hạn trọn vẹn sau `nextReviewAt`)
+- `penalty = Math.min(40, overdueDays * 5)`
+- `health = Math.min(100, Math.max(0, base - penalty))`
+- Nếu `state === 'NEEDS_ATTENTION'`: `health = Math.min(40, health)`
+- Chỉ tính `MasteryRecord` có `lastEvidenceAt`; record `NEW` chưa có bằng chứng không được tính vào các chỉ số.
+- **Kỹ năng chưa được chấm/đánh giá:** Bắt buộc trả `health: null` (không được trả 0).
+
+Response `200`:
+```json
+{
+  "reading": {
+    "health": 71,
+    "evaluatedBlocksCount": 2,
+    "dueCount": 0,
+    "needsAttentionCount": 0
+  },
+  "listening": {
+    "health": 40,
+    "evaluatedBlocksCount": 1,
+    "dueCount": 1,
+    "needsAttentionCount": 1
+  },
+  "speaking": {
+    "health": null,
+    "evaluatedBlocksCount": 0,
+    "dueCount": 0,
+    "needsAttentionCount": 0
+  },
+  "writing": {
+    "health": null,
+    "evaluatedBlocksCount": 0,
+    "dueCount": 0,
+    "needsAttentionCount": 0
+  },
+  "overall": {
+    "health": 61,
+    "evaluatedBlocksCount": 3,
+    "dueCount": 1,
+    "needsAttentionCount": 1
+  }
+}
+```
 
 ### `GET /me/progress`
 
