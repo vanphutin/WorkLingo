@@ -104,16 +104,17 @@ Lưu lựa chọn tự đánh giá hoặc bài test, score theo kỹ năng, leve
 |---|---|
 | learner_id | Người học |
 | client_session_id | Idempotency key; unique cùng learner |
-| duration_minutes | 60 trong increment đầu tiên; mở rộng 45/90/120/150 sau |
+| duration_minutes | 45, 60, 90, 120, 150 phút (mặc định 60; ràng buộc CHECK trong DB) |
 | lesson_version_id | Snapshot nội dung |
-| plan_snapshot | Kế hoạch block/activity bất biến |
+| plan_snapshot | Kế hoạch block/activity bất biến; tùy chọn lưu reviewItemIds để truy vết |
 | status | planned/in_progress/paused/completed/abandoned |
 | current_checkpoint | Chỉ số zero-based của activity kế tiếp; vị trí resume |
 | started/completed_at | Thời gian |
 
 ### session_blocks
 
-Mỗi block có loại, thứ tự, thời lượng mục tiêu và trạng thái.
+Mỗi block có loại (`activate`, `readDecode`, `listenReason`, `respond`), thứ tự liên tiếp (1..10), thời lượng mục tiêu (cố định 15 phút) và trạng thái (`available`, `completed`).
+
 
 ### activity_attempts
 

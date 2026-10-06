@@ -112,9 +112,21 @@ Response:
 }
 ```
 
-Trong increment đầu tiên server chỉ chấp nhận 60 phút và MUST từ chối duration khác bằng
-`INVALID_SESSION_DURATION`. `clientSessionId` là idempotency key theo learner; gửi lại cùng key trả
-về phiên đã tạo thay vì tạo bản ghi mới.
+Trong Increment 3 (Task 15), hệ thống hỗ trợ chính xác các mốc: **45, 60, 90, 120, 150 phút** (mặc định 60 phút nếu bỏ trống).
+- Mỗi block có thời lượng cố định 15 phút (`targetMinutes = 15`), tổng `targetMinutes` bằng `durationMinutes`.
+- Toàn bộ 4 kỹ năng (nghe, nói, đọc, viết) được bao phủ trong mọi phiên học.
+- Chuỗi block canonical:
+  - 45 phút (3 blocks): `readDecode` (15m, Đọc), `listenReason` (15m, Nghe), `respond` (15m, Nói + Viết).
+  - 60 phút (4 blocks): `activate`, `readDecode`, `listenReason`, `respond`.
+  - 90 phút (6 blocks): `activate`, `readDecode`, `listenReason`, `readDecode`, `listenReason`, `respond`.
+  - 120 phút (8 blocks): `activate`, `readDecode`, `listenReason`, `respond`, `activate`, `readDecode`, `listenReason`, `respond`.
+  - 150 phút (10 blocks): `activate`, `readDecode`, `listenReason`, `respond`, `activate`, `readDecode`, `listenReason`, `readDecode`, `listenReason`, `respond`.
+- Mọi activity trong session plan là duy nhất (không nhân bản hay lặp activity).
+- Tích hợp ReviewScheduler: ưu tiên các mục `NEEDS_ATTENTION` hoặc đến hạn có LanguageBlock tương ứng trong `LessonVersion` **và** cùng kỹ năng với activity; chỉ lưu ID của các mục khớp vào `reviewItemIds` trong `planSnapshot` để phục vụ truy vết.
+- Khi thời lượng không hợp lệ (không thuộc 45, 60, 90, 120, 150), server trả `422 INVALID_SESSION_DURATION`.
+- Khi bài học đã publish không có đủ nội dung/hoạt động độc lập cho thời lượng yêu cầu, server trả `422 INSUFFICIENT_CONTENT_FOR_DURATION` kèm trường `availableDurations: number[]` (danh sách thời lượng thực tế khả dụng).
+- `clientSessionId` là idempotency key theo learner; gửi lại cùng key trả về phiên đã tạo thay vì tạo bản ghi mới.
+
 
 ### `GET /learning-sessions/{id}`
 

@@ -7,6 +7,7 @@ import {
   generateAudioResultSchema,
   jobDtoSchema,
   publishContentImportResultSchema,
+  sessionDurationSchema,
   sessionPlanSchema,
   validateContentImportResultSchema,
   type AudioArtifactDto,
@@ -96,7 +97,7 @@ export const learningSessionDtoSchema = z.object({
   id: z.string(),
   clientSessionId: z.string(),
   lessonVersionId: z.string(),
-  durationMinutes: z.literal(60),
+  durationMinutes: sessionDurationSchema,
   status: z.enum(['planned', 'in_progress', 'paused', 'completed', 'abandoned']),
   currentCheckpoint: z.number(),
   mission: z.object({

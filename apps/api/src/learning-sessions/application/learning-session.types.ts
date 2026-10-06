@@ -1,4 +1,4 @@
-import type { SessionPlan } from '@worklingo/contracts';
+import type { SessionDuration, SessionPlan } from '@worklingo/contracts';
 
 export interface ActivityAttemptDto {
   readonly id: string;
@@ -29,7 +29,7 @@ export interface LearningSessionDto {
   readonly id: string;
   readonly clientSessionId: string;
   readonly lessonVersionId: string;
-  readonly durationMinutes: 60;
+  readonly durationMinutes: SessionDuration;
   readonly status: 'planned' | 'in_progress' | 'paused' | 'completed' | 'abandoned';
   readonly currentCheckpoint: number;
   readonly mission: { readonly id: string; readonly title: string };

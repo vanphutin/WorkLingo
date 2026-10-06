@@ -7,7 +7,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma, type Activity, type ActivityAttempt } from '@prisma/client';
-import { sessionPlanSchema, type SessionPlan } from '@worklingo/contracts';
+import { sessionDurationSchema, sessionPlanSchema, type SessionPlan } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
@@ -17,6 +17,10 @@ import {
   lessonSnapshotSchema,
   type CurriculumActivity,
 } from '../../curriculum/domain/curriculum.types.js';
+import {
+  InsufficientContentForDurationError,
+  UnsupportedSessionDurationError,
+} from '../domain/session-plan.types.js';
 import { planFoundationSession } from '../domain/session-planner.js';
 import type {
   ActivityAttemptDto,
@@ -54,10 +58,10 @@ export class LearningSessionsService {
     durationMinutes: number,
     clientSessionId: string,
   ): Promise<LearningSessionDto> {
-    if (durationMinutes !== 60) {
+    if (!sessionDurationSchema.safeParse(durationMinutes).success) {
       throw new UnprocessableEntityException({
         code: 'INVALID_SESSION_DURATION',
-        message: 'Only 60-minute sessions are supported in this increment',
+        message: 'Session duration must be 45, 60, 90, 120, or 150 minutes',
         statusCode: 422,
       });
     }
@@ -68,7 +72,33 @@ export class LearningSessionsService {
     if (existing) return this.toSessionDto(existing);
 
     const mission = await this.curriculum.getPublishedMissionForLevel('FOUNDATION_1');
-    const plan = planFoundationSession({ mission, durationMinutes });
+    const reviewQueue = await this.mastery.getReviewQueue(learnerId);
+
+    let plan: SessionPlan;
+    try {
+      plan = planFoundationSession({
+        mission,
+        durationMinutes,
+        reviewItems: reviewQueue,
+      });
+    } catch (error) {
+      if (error instanceof InsufficientContentForDurationError) {
+        throw new UnprocessableEntityException({
+          availableDurations: error.availableDurations,
+          code: error.code,
+          message: error.message,
+          statusCode: 422,
+        });
+      }
+      if (error instanceof UnsupportedSessionDurationError) {
+        throw new UnprocessableEntityException({
+          code: 'INVALID_SESSION_DURATION',
+          message: error.message,
+          statusCode: 422,
+        });
+      }
+      throw error;
+    }
     try {
       const created = await this.database.learningSession.create({
         data: {
@@ -395,7 +425,7 @@ export class LearningSessionsService {
       })),
       clientSessionId: session.clientSessionId,
       currentCheckpoint: session.currentCheckpoint,
-      durationMinutes: 60,
+      durationMinutes: session.durationMinutes as LearningSessionDto['durationMinutes'],
       id: session.id,
       lessonVersionId: session.lessonVersionId,
       mission: { id: session.mission.id, title: session.mission.title },

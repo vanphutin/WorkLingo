@@ -1,14 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsUUID, Max, Min } from 'class-validator';
+import { supportedSessionDurations } from '@worklingo/contracts';
+import { IsInt, IsOptional, IsUUID, Max, Min } from 'class-validator';
 
 export class CreateLearningSessionDto {
   @ApiProperty({ format: 'uuid' })
   @IsUUID()
   clientSessionId!: string;
 
-  @ApiProperty({ example: 60 })
+  @ApiProperty({ default: 60, enum: [...supportedSessionDurations], example: 60, required: false })
+  @IsOptional()
   @IsInt()
   @Min(1)
   @Max(150)
-  durationMinutes!: number;
+  durationMinutes: number = 60;
 }

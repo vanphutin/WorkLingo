@@ -129,6 +129,30 @@ describe('ApiClient', () => {
     expect(result.durationMinutes).toBe(60);
   });
 
+  it('accepts a 45-minute session returned by the API', async () => {
+    const response = {
+      ...mockSession,
+      durationMinutes: 45,
+      plan: {
+        ...mockSession.plan,
+        durationMinutes: 45,
+        blocks: mockSession.plan.blocks.slice(1).map((block, index) => ({ ...block, order: index + 1 })),
+      },
+      blocks: mockSession.blocks.slice(1).map((block, index) => ({ ...block, order: index + 1 })),
+    };
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+      new Response(JSON.stringify(response), {
+        status: 201,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const result = await new ApiClient('/api/v1').createSession(mockSession.clientSessionId, 45);
+
+    expect(result.durationMinutes).toBe(45);
+    expect(result.plan.blocks.map((block) => block.type)).toEqual(['readDecode', 'listenReason', 'respond']);
+  });
+
   it('throws structured ApiError when backend returns an error envelope', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(

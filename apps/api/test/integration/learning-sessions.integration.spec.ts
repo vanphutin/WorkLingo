@@ -52,17 +52,92 @@ describe('learning sessions', () => {
     expect(stored.blocks).toHaveLength(4);
   });
 
-  it('requires authentication and rejects unsupported durations with 422', async () => {
+  it('creates and persists a 45-minute session with three canonical blocks', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: '45m Learner', email: 'session45@example.test',
+    });
+    const clientSessionId = randomUUID();
+    const response = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId, durationMinutes: 45,
+    }).expect(201);
+
+    expect(response.body).toMatchObject({
+      clientSessionId,
+      currentCheckpoint: 0,
+      durationMinutes: 45,
+      status: 'planned',
+    });
+    expect(response.body.plan.blocks.map((block: { order: number; targetMinutes: number; type: string }) =>
+      [block.type, block.order, block.targetMinutes])).toEqual([
+      ['readDecode', 1, 15],
+      ['listenReason', 2, 15],
+      ['respond', 3, 15],
+    ]);
+  });
+
+  it('defaults to 60-minute duration when durationMinutes is omitted', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Default Duration Learner', email: 'default-duration@example.test',
+    });
+    const clientSessionId = randomUUID();
+    const response = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId,
+    }).expect(201);
+
+    expect(response.body.durationMinutes).toBe(60);
+    expect(response.body.plan.blocks).toHaveLength(4);
+  });
+
+  it('brings a weak reading item back into the next session review snapshot', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Review Learner', email: 'session-review@example.test',
+    });
+    const learner = await context.database.user.findUniqueOrThrow({
+      where: { email: 'session-review@example.test' },
+    });
+    const first = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 45,
+    }).expect(201);
+    expect(first.body.plan.reviewItemIds).toBeUndefined();
+    await agent.post(`/api/v1/learning-sessions/${first.body.id}/start`).expect(200);
+    const readingId = first.body.plan.blocks[0].activityIds[0] as string;
+    await agent.post(`/api/v1/activities/${readingId}/attempts`).send({
+      clientAttemptId: randomUUID(), sessionId: first.body.id,
+      response: { answerIndexes: [2, 2, 2] },
+    }).expect(201);
+    const review = await context.database.masteryRecord.findFirstOrThrow({
+      where: { learnerId: learner.id, skill: 'reading' },
+    });
+
+    const second = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 45,
+    }).expect(201);
+    expect(second.body.plan.reviewItemIds).toContain(review.id);
+    expect(second.body.plan.blocks[0].activityIds).toContain(readingId);
+  });
+
+  it('requires authentication, returns 422 for insufficient content, and rejects unsupported durations', async () => {
     await request(context.app.getHttpServer()).post('/api/v1/learning-sessions').send({
       clientSessionId: randomUUID(), durationMinutes: 60,
     }).expect(401);
     const agent = await registerLearner(context.app, {
       displayName: 'Duration Learner', email: 'duration@example.test',
     });
-    const response = await agent.post('/api/v1/learning-sessions').send({
-      clientSessionId: randomUUID(), durationMinutes: 45,
+
+    // 90 minutes has insufficient content for seed lesson (needs 6 activities, only 5 available)
+    const insufficientRes = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 90,
     }).expect(422);
-    expect(response.body).toMatchObject({ code: 'INVALID_SESSION_DURATION' });
+    expect(insufficientRes.body).toMatchObject({
+      code: 'INSUFFICIENT_CONTENT_FOR_DURATION',
+      availableDurations: [45, 60],
+    });
+
+    // 30 minutes is not one of [45, 60, 90, 120, 150]
+    const unsupportedRes = await agent.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 30,
+    }).expect(422);
+    expect(unsupportedRes.body).toMatchObject({ code: 'INVALID_SESSION_DURATION' });
   });
 
   it('returns the original session for a repeated clientSessionId', async () => {

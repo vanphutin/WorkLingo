@@ -137,6 +137,20 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
   4. Bỏ qua `MasteryRecord` chưa có `lastEvidenceAt` khi tổng hợp để không coi record placeholder là bằng chứng đã học.
 - **Lý do:** Minh bạch trong sư phạm, tin cậy trong kiểm thử và phản ánh chính xác trạng thái thực tế của người học.
 
+## D-021 — Multi-duration Session Planner & Review Integration
+
+- **Trạng thái:** Accepted (Task 15, Increment 3)
+- **Quyết định:**
+  1. Hỗ trợ chính xác 5 mốc thời lượng: 45, 60, 90, 120, 150 phút (mỗi block cố định 15 phút, thứ tự liên tiếp từ 1 đến N). 60 phút là mặc định.
+  2. Phiên 45 phút gồm 3 blocks (`readDecode` 15m, `listenReason` 15m, `respond` 15m), bao phủ đầy đủ 4 kỹ năng (Nghe - Nói - Đọc - Viết).
+  3. Mọi phiên học đều kết thúc bằng block `respond` (vận dụng sản sinh: Speaking/Writing).
+  4. Mọi activity trong plan phải duy nhất (không trùng lặp ID qua các blocks).
+  5. Tích hợp ReviewScheduler: ưu tiên các LanguageBlock đến hạn/`NEEDS_ATTENTION`, lưu `reviewItemIds` vào `planSnapshot` để truy vết. Không tạo hoạt động ảo hoặc câu hỏi hallucinated.
+  6. Xử lý thiếu nội dung: Nếu `LessonVersion` không đủ hoạt động duy nhất hoặc không đủ 4 kỹ năng cho thời lượng yêu cầu, server trả 422 `INSUFFICIENT_CONTENT_FOR_DURATION` kèm mảng `availableDurations: number[]`. Tuyệt đối không lặp lại câu hỏi hay nhân bản activity để lấp thời gian.
+  7. Tương thích ngược: Duy trì khả năng parse và resume các `planSnapshot` 60 phút cũ mà không cần migrate hay rewrite dữ liệu.
+- **Lý do:** Đảm bảo tính linh hoạt về thời gian học tập theo FR-LEARN-001/002/003/004/007, đồng thời giữ vững nguyên tắc sư phạm và tính trung thực của dữ liệu học tập.
+- **Lý do chọn chuỗi 150 phút:** Hai chu trình có `activate` và `respond` giúp nhắc lại rồi vận dụng giữa phiên, thay vì dồn ba khối vận dụng về cuối. Lịch ôn chỉ gắn với activity tham chiếu đúng LanguageBlock **và** luyện đúng kỹ năng của MasteryRecord.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:
