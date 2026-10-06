@@ -116,6 +116,27 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Quyết định:** MVP hoàn thiện nền tảng Pre-A1 đến B1 trước. B2, TOEIC, IELTS, chuyên ngành, payment và cloud nằm sau MVP.
 - **Lý do:** Kiểm chứng learning loop trước khi mở rộng phạm vi.
 
+## D-019 — Phân loại trung thực Error Bank & Tính nguyên tử với MasteryEvent
+
+- **Trạng thái:** Accepted (Task 14, Increment 3)
+- **Quyết định:**
+  1. `MasteryEvent` loại `INCORRECT_ATTEMPT` là source of truth duy nhất phát sinh bản ghi Error Bank.
+  2. Bắt buộc phân loại trung thực ở mức độ hoạt động (`evidenceGranularity: ACTIVITY`, `errorType: ACTIVITY_INCORRECT`). Tuyệt đối không tự suy diễn lỗi ngữ pháp hay phát âm khi chưa có mô hình chấm chuyên biệt.
+  3. Chỉ những attempt đã `EVALUATED` với `score < 0.7` mới ghi nhận vào Error Bank. Các bài `SUBMITTED` hoặc `score === null` tuyệt đối không ghi nhận là đúng hay sai.
+  4. Lưu `ErrorBankEntry` trong cùng transaction với `MasteryEvent` và `MasteryRecord`, khóa unique trên `masteryEventId` đảm bảo tính lũy thừa khi retry.
+  5. Ngữ cảnh lỗi lấy từ `ActivityAttempt` đã lưu; timestamp lỗi đồng nhất với `MasteryEvent.createdAt`.
+- **Lý do:** Tránh hallucination về nguyên nhân lỗi, bảo toàn tính toàn vẹn dữ liệu sư phạm và nhất quán trạng thái học tập.
+
+## D-020 — Thuật toán tất định Memory Health v1 & Toàn vẹn kỹ năng chưa đánh giá
+
+- **Trạng thái:** Accepted (Task 14, Increment 3)
+- **Quyết định:**
+  1. Tính toán sức khỏe trí nhớ hoàn toàn tất định bằng hàm thuần túy với Clock được tiêm vào (không phụ thuộc thời gian thực hoặc gọi AI).
+  2. Áp dụng công thức heuristic v1 với trọng số score/confidence và mức phạt quá hạn theo ngày (`overdueDays * 5`), giới hạn trần 40 điểm khi trạng thái là `NEEDS_ATTENTION`.
+  3. Kỹ năng chưa được đánh giá có điểm số (`speaking`/`writing` chưa có MasteryRecord scored) bắt buộc trả về `health: null`, tuyệt đối không giả định điểm 0 để không gây hiểu lầm cho người học.
+  4. Bỏ qua `MasteryRecord` chưa có `lastEvidenceAt` khi tổng hợp để không coi record placeholder là bằng chứng đã học.
+- **Lý do:** Minh bạch trong sư phạm, tin cậy trong kiểm thử và phản ánh chính xác trạng thái thực tế của người học.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

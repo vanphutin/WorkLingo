@@ -184,7 +184,32 @@ Ràng buộc Idempotency:
 
 ### error_bank_entries
 
-Liên kết learner, skill, language block/question, error type, context, count, last occurrence và resolution state (phạm vi các task sau của Increment 3).
+Mô hình lưu vết sai sót (`ErrorBankEntry`) được liên kết 1:1 với `MasteryEvent` có `eventType = INCORRECT_ATTEMPT`.
+Chỉ những lần làm bài đã được đánh giá (`EVALUATED`) có `score < 0.7` mới sinh bản ghi Error Bank. Các bài nộp mới nộp (`SUBMITTED`), chưa chấm điểm (`score === null`), hoặc đạt yêu cầu (`score >= 0.7`) tuyệt đối không sinh bản ghi vào Error Bank.
+
+| Field | Kiểu | Ý nghĩa & Ràng buộc |
+|---|---|---|
+| id | UUID | Khóa chính |
+| learnerId | UUID | Tham chiếu `User(id)`, cascade on delete |
+| masteryEventId | UUID | Unique, tham chiếu `MasteryEvent(id)`, cascade on delete |
+| languageBlockId | UUID | Tham chiếu `LanguageBlock(id)`, restrict on delete |
+| skill | ActivityType | Kỹ năng liên quan (`reading`, `listening`, `speaking`, `writing`) |
+| errorType | ErrorType | Loại lỗi: `ACTIVITY_INCORRECT` (phân loại trung thực theo mức độ hoạt động) |
+| evidenceGranularity | EvidenceGranularity | Mức chi tiết bằng chứng: `ACTIVITY` (không tự suy diễn lỗi ngữ pháp/phát âm sớm) |
+| lessonVersionId | UUID | Tham chiếu `LessonVersion(id)`, restrict on delete |
+| activityId | UUID | Tham chiếu `Activity(id)`, restrict on delete |
+| activitySlug | Text | Slug của activity tại thời điểm làm bài |
+| contextKey | Text | Khóa ngữ cảnh bền vững: `${lessonId}:${activitySlug}` qua các version bài học |
+| occurredAt | Timestamp | Thời điểm phát sinh lỗi (đồng bộ từ MasteryEvent) |
+| createdAt | Timestamp | Thời điểm tạo |
+| updatedAt | Timestamp | Thời điểm cập nhật |
+
+Đặc tính kỹ thuật:
+- **Nguyên tử & Idempotency:** Lưu cùng transaction với `MasteryEvent`. Ràng buộc unique trên `masteryEventId` đảm bảo retry không tạo trùng lặp bản ghi.
+- **Backfill & Idempotency:** Migration chèn các sự kiện `INCORRECT_ATTEMPT` lịch sử; service có hàm đối soát chạy thủ công khi cần. Cả hai đều bỏ qua `masteryEventId` đã có.
+- **Nguồn ngữ cảnh:** `activityId`, `activitySlug` và `lessonId` được đọc từ `ActivityAttempt` đã lưu, không tin metadata do caller truyền vào. `occurredAt` bằng `MasteryEvent.createdAt`.
+- **Grouped Aggregation:** Truy vấn tổng hợp theo nhóm `(learnerId, languageBlockId, skill, errorType, evidenceGranularity, contextKey)` trả về: `occurrenceCount`, `firstOccurredAt`, `lastOccurredAt`, và `lessonVersionId` mới nhất, kèm thông tin canonical form từ Language Block. Sắp xếp ổn định (`lastOccurredAt DESC, id ASC`).
+- **Data Isolation & Leak Protection:** API bảo vệ nghiêm ngặt quyền riêng tư, cách ly hoàn toàn theo learner và không làm lộ câu trả lời thô hay provider internals.
 
 ### review_items
 

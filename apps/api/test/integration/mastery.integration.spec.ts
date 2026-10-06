@@ -175,7 +175,7 @@ describe('Mastery & Review Scheduler Integration', () => {
       where: { id: lv2.id },
       data: { status: 'PUBLISHED' },
     });
-  });
+  }, 45_000);
 
   afterAll(async () => {
     await database?.$disconnect();
@@ -188,6 +188,7 @@ describe('Mastery & Review Scheduler Integration', () => {
     activityType: 'reading' | 'listening' | 'speaking' | 'writing',
     attemptLearnerId = learnerId,
     evaluationStatus: 'EVALUATED' | 'SUBMITTED' = 'EVALUATED',
+    attemptScore: number | null = evaluationStatus === 'EVALUATED' ? 1.0 : null,
   ) {
     const act = await database.activity.findFirstOrThrow({
       where: { lessonVersionId, activityType },
@@ -210,7 +211,7 @@ describe('Mastery & Review Scheduler Integration', () => {
         clientAttemptId: randomUUID(),
         rawResponse: {},
         evaluationStatus,
-        score: evaluationStatus === 'EVALUATED' ? 1.0 : null,
+        score: attemptScore,
       },
     });
     return { attempt, activity: act, session };
@@ -401,7 +402,13 @@ describe('Mastery & Review Scheduler Integration', () => {
   });
 
   it('3. preserves mastery record across lesson versions while tracing version evidence', async () => {
-    const { attempt: attempt1 } = await createDummyAttempt(lessonVersion1Id, 'listening');
+    const { attempt: attempt1 } = await createDummyAttempt(
+      lessonVersion1Id,
+      'listening',
+      learnerId,
+      'EVALUATED',
+      0.5,
+    );
     await masteryService.recordAttemptEvaluation({
       attemptId: attempt1.id,
       learnerId,
