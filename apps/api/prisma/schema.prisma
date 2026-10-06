@@ -37,6 +37,7 @@ model User {
   auditLogs             AuditLog[]
   masteryRecords        MasteryRecord[]
   masteryEvents         MasteryEvent[]
+  errorBankEntries      ErrorBankEntry[]
 }
 
 model LearnerProfile {
@@ -171,6 +172,7 @@ model LessonVersion {
   currentForLesson Lesson[]                     @relation("LessonCurrentPublishedVersion")
   masteryRecords   MasteryRecord[]
   masteryEvents    MasteryEvent[]
+  errorBankEntries ErrorBankEntry[]
 
   @@unique([lessonId, version])
 }
@@ -206,6 +208,7 @@ model Activity {
   updatedAt               DateTime          @updatedAt
   lessonVersion           LessonVersion     @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
   attempts                ActivityAttempt[]
+  errorBankEntries        ErrorBankEntry[]
 
   @@unique([lessonVersionId, slug])
   @@unique([lessonVersionId, order])
@@ -289,6 +292,7 @@ model LanguageBlock {
   wordBank         WordBank        @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
   masteryRecords   MasteryRecord[]
   masteryEvents    MasteryEvent[]
+  errorBankEntries ErrorBankEntry[]
 
   @@index([wordBankId])
 }
@@ -566,10 +570,46 @@ model MasteryEvent {
   languageBlock   LanguageBlock    @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
   lessonVersion   LessonVersion    @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
   masteryRecord   MasteryRecord?   @relation(fields: [masteryRecordId], references: [id], onDelete: SetNull)
+  errorBankEntry  ErrorBankEntry?
 
   @@unique([attemptId, languageBlockId, skill])
   @@index([learnerId, createdAt])
   @@index([languageBlockId, skill])
   @@index([lessonVersionId])
   @@index([masteryRecordId])
+}
+
+enum ErrorType {
+  ACTIVITY_INCORRECT
+}
+
+enum EvidenceGranularity {
+  ACTIVITY
+}
+
+model ErrorBankEntry {
+  id                  String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId           String              @db.Uuid
+  masteryEventId      String              @unique @db.Uuid
+  languageBlockId     String              @db.Uuid
+  skill               ActivityType
+  errorType           ErrorType           @default(ACTIVITY_INCORRECT)
+  evidenceGranularity EvidenceGranularity @default(ACTIVITY)
+  lessonVersionId     String              @db.Uuid
+  activityId          String              @db.Uuid
+  activitySlug        String
+  contextKey          String
+  occurredAt          DateTime            @default(now())
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  learner             User                @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  masteryEvent        MasteryEvent        @relation(fields: [masteryEventId], references: [id], onDelete: Cascade)
+  languageBlock       LanguageBlock       @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
+  lessonVersion       LessonVersion       @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  activity            Activity            @relation(fields: [activityId], references: [id], onDelete: Restrict)
+
+  @@index([learnerId, skill])
+  @@index([learnerId, languageBlockId])
+  @@index([learnerId, contextKey])
+  @@index([occurredAt])
 }
