@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { CurriculumService } from '../../curriculum/application/curriculum.service.js';
+import type { MasteryService } from '../../mastery/application/mastery.service.js';
 import { LearningSessionsService } from './learning-sessions.service.js';
 
 describe('LearningSessionsService state transitions', () => {
@@ -13,7 +14,7 @@ describe('LearningSessionsService state transitions', () => {
       .mockResolvedValueOnce({ id: sessionId, learnerId, status: 'COMPLETED' });
     const updateMany = vi.fn().mockResolvedValue({ count: 0 });
     const database = { learningSession: { findFirst, updateMany } } as unknown as PrismaService;
-    const service = new LearningSessionsService(database, {} as CurriculumService);
+    const service = new LearningSessionsService(database, {} as CurriculumService, {} as MasteryService);
 
     await expect(service.pauseSession(learnerId, sessionId)).rejects.toMatchObject({
       response: { code: 'INVALID_STATE_TRANSITION' },

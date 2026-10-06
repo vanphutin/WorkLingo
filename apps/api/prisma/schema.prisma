@@ -35,6 +35,8 @@ model User {
   jobs                  Job[]
   mutationReceipts      MutationReceipt[]
   auditLogs             AuditLog[]
+  masteryRecords        MasteryRecord[]
+  masteryEvents         MasteryEvent[]
 }
 
 model LearnerProfile {
@@ -167,6 +169,8 @@ model LessonVersion {
   audioArtifacts   LessonVersionAudioArtifact[]
   contentImports   ContentImport[]
   currentForLesson Lesson[]                     @relation("LessonCurrentPublishedVersion")
+  masteryRecords   MasteryRecord[]
+  masteryEvents    MasteryEvent[]
 
   @@unique([lessonId, version])
 }
@@ -282,7 +286,9 @@ model LanguageBlock {
   transferContexts String[]
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  wordBank         WordBank @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  wordBank         WordBank        @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  masteryRecords   MasteryRecord[]
+  masteryEvents    MasteryEvent[]
 
   @@index([wordBankId])
 }
@@ -362,6 +368,7 @@ model ActivityAttempt {
   updatedAt          DateTime                @updatedAt
   session            LearningSession         @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
   activity           Activity                @relation(fields: [activityId], references: [id], onDelete: Restrict)
+  masteryEvents      MasteryEvent[]
 
   @@unique([learnerId, clientAttemptId])
   @@index([sessionId])
@@ -499,4 +506,70 @@ model AuditLog {
 
   @@index([actorId])
   @@index([resourceType, resourceId])
+}
+
+enum MasteryState {
+  NEW
+  LEARNING
+  REVIEW_DUE
+  STABLE
+  NEEDS_ATTENTION
+}
+
+enum MasteryEventType {
+  CORRECT_RECALL
+  ASSISTED_RECALL
+  INCORRECT_ATTEMPT
+  SUBMISSION_RECORDED
+}
+
+model MasteryRecord {
+  id                  String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId           String         @db.Uuid
+  languageBlockId     String         @db.Uuid
+  skill               ActivityType
+  state               MasteryState   @default(NEW)
+  score               Float          @default(0.0)
+  confidence          Float          @default(0.0)
+  intervalDays        Float          @default(1.0)
+  lastEvidenceAt      DateTime?
+  nextReviewAt        DateTime?
+  lastLessonVersionId String?        @db.Uuid
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  learner             User           @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  languageBlock       LanguageBlock  @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
+  lastLessonVersion   LessonVersion? @relation(fields: [lastLessonVersionId], references: [id], onDelete: SetNull)
+  events              MasteryEvent[]
+
+  @@unique([learnerId, languageBlockId, skill])
+  @@index([learnerId, state, nextReviewAt])
+  @@index([learnerId, skill])
+  @@index([languageBlockId])
+  @@index([nextReviewAt])
+}
+
+model MasteryEvent {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId       String           @db.Uuid
+  attemptId       String           @db.Uuid
+  languageBlockId String           @db.Uuid
+  skill           ActivityType
+  lessonVersionId String           @db.Uuid
+  masteryRecordId String?          @db.Uuid
+  eventType       MasteryEventType
+  score           Float
+  metadata        Json?
+  createdAt       DateTime         @default(now())
+  learner         User             @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  attempt         ActivityAttempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  languageBlock   LanguageBlock    @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
+  lessonVersion   LessonVersion    @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  masteryRecord   MasteryRecord?   @relation(fields: [masteryRecordId], references: [id], onDelete: SetNull)
+
+  @@unique([attemptId, languageBlockId, skill])
+  @@index([learnerId, createdAt])
+  @@index([languageBlockId, skill])
+  @@index([lessonVersionId])
+  @@index([masteryRecordId])
 }

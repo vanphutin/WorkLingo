@@ -102,6 +102,9 @@ describe('learning sessions', () => {
     const agent = await registerLearner(context.app, {
       displayName: 'Attempt Learner', email: 'attempt@example.test',
     });
+    const learner = await context.database.user.findUniqueOrThrow({
+      where: { email: 'attempt@example.test' },
+    });
     const session = await agent.post('/api/v1/learning-sessions').send({
       clientSessionId: randomUUID(), durationMinutes: 60,
     }).expect(201);
@@ -112,12 +115,18 @@ describe('learning sessions', () => {
       clientAttemptId: randomUUID(), sessionId: session.body.id,
       response: { text: 'My name is Session Learner.' },
     }).expect(201);
+    await expect(context.database.masteryEvent.count({
+      where: { learnerId: learner.id },
+    })).resolves.toBe(0);
 
     const readingId = session.body.plan.blocks[1].activityIds[0] as string;
     const incorrectResponse = { answerIndexes: [2, 2, 2] };
     await agent.post(`/api/v1/activities/${readingId}/attempts`).send({
       clientAttemptId: randomUUID(), sessionId: session.body.id, response: incorrectResponse,
     }).expect(201);
+    await expect(context.database.masteryEvent.count({
+      where: { learnerId: learner.id, skill: 'reading' },
+    })).resolves.toBe(1);
     const afterIncorrect = await agent.get(`/api/v1/learning-sessions/${session.body.id}`).expect(200);
     expect(afterIncorrect.body.currentCheckpoint).toBe(1);
     expect(afterIncorrect.body.attempts.at(-1)).toMatchObject({ rawResponse: incorrectResponse });
@@ -141,6 +150,9 @@ describe('learning sessions', () => {
       clientAttemptId, sessionId: session.body.id, response: rawResponse,
     }).expect(201);
     expect(duplicate.body).toEqual(first.body);
+    await expect(context.database.masteryEvent.count({
+      where: { learnerId: learner.id, skill: 'reading' },
+    })).resolves.toBe(2);
     const refreshed = await agent.get(`/api/v1/learning-sessions/${session.body.id}`).expect(200);
     expect(refreshed.body.currentCheckpoint).toBe(2);
     await expect(context.database.activityAttempt.count()).resolves.toBe(3);

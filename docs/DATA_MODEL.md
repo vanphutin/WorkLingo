@@ -133,29 +133,62 @@ Lưu kết quả deterministic/AI, provider, model/config, rubric version, score
 
 ### mastery_records
 
-Khóa logic: `learner_id + language_block_id + skill`.
+Khóa logic duy nhất: `learner_id + language_block_id + skill`.
+Lưu trữ trạng thái thành thạo hiện tại của learner đối với từng Language Block riêng biệt cho 4 kỹ năng (`reading`, `listening`, `speaking`, `writing`), ổn định qua các phiên bản `LessonVersion`.
 
-| Field | Ý nghĩa |
-|---|---|
-| skill | listening/speaking/reading/writing |
-| state | new/learning/review_due/stable/needs_attention |
-| score | Ước lượng mastery chuẩn hóa |
-| confidence | Độ tin cậy của ước lượng |
-| last_evidence_at | Lần có bằng chứng gần nhất |
-| next_review_at | Lịch ôn |
-| interval | Khoảng cách hiện tại |
+| Field | Kiểu | Ý nghĩa & Ràng buộc |
+|---|---|---|
+| id | UUID | Khóa chính |
+| learner_id | UUID | Tham chiếu `User(id)` (CASCADE) |
+| language_block_id | UUID | Tham chiếu `LanguageBlock(id)` (RESTRICT) |
+| skill | ActivityType | `reading`, `listening`, `speaking`, `writing` |
+| state | MasteryState | `NEW`, `LEARNING`, `REVIEW_DUE`, `STABLE`, `NEEDS_ATTENTION` |
+| score | Float | Điểm thành thạo ước lượng: 0.0 – 1.0 |
+| confidence | Float | Độ tin cậy ước lượng: 0.0 – 1.0 |
+| interval_days | Float | Khoảng cách giãn cách hiện tại (> 0 ngày) |
+| last_evidence_at | Timestamp | Thời điểm bằng chứng gần nhất |
+| next_review_at | Timestamp | Lịch đến hạn ôn tiếp theo |
+| last_lesson_version_id | UUID | Tham chiếu `LessonVersion(id)` gần nhất chứa bằng chứng |
+| created_at, updated_at | Timestamp | Thời gian tạo và cập nhật |
+
+Indexes:
+- Unique: `(learner_id, language_block_id, skill)`
+- `(learner_id, state, next_review_at)`
+- `(learner_id, skill)`
+- `(language_block_id)`
+- `(next_review_at)`
 
 ### mastery_events
 
-Event append-only từ activity attempt: correct recall, assisted recall, transfer success, pronunciation issue, grammar issue hoặc other evidence.
+Event append-only ghi nhận từng bằng chứng thành thạo từ `ActivityAttempt` đã đánh giá. Đảm bảo tính bất biến và truy vết ngược về đúng `LessonVersion`.
+Chỉ attempt ở trạng thái `EVALUATED` với điểm số mới tạo event và cập nhật record. Bài nói/viết mới nộp (`SUBMITTED`, chưa chấm) không được cộng điểm mastery. Trigger PostgreSQL chặn sửa/xóa event trực tiếp; xóa learner vẫn xóa dữ liệu liên quan theo cascade.
+
+| Field | Kiểu | Ý nghĩa & Ràng buộc |
+|---|---|---|
+| id | UUID | Khóa chính |
+| learner_id | UUID | Tham chiếu `User(id)` |
+| attempt_id | UUID | Tham chiếu `ActivityAttempt(id)` |
+| language_block_id | UUID | Tham chiếu `LanguageBlock(id)` |
+| skill | ActivityType | Kỹ năng liên quan |
+| lesson_version_id | UUID | Phiên bản bài học tại thời điểm sinh bằng chứng |
+| mastery_record_id | UUID | Tham chiếu `MasteryRecord(id)` liên quan (tùy chọn) |
+| event_type | MasteryEventType | Task 13 phát sinh `CORRECT_RECALL` hoặc `INCORRECT_ATTEMPT`; `ASSISTED_RECALL` và `SUBMISSION_RECORDED` được giữ trong enum cho các bước sau, chưa phát sinh ở luồng hiện tại |
+| score | Float | Điểm số của lần thử (0.0 – 1.0) |
+| metadata | JSONB | Chi tiết ngữ cảnh, câu hỏi hoặc thông tin phụ |
+| created_at | Timestamp | Thời điểm ghi nhận sự kiện |
+
+Ràng buộc Idempotency:
+- Unique: `(attempt_id, language_block_id, skill)` ngăn chặn nhân bản event khi retry.
+- Ghi event và cập nhật record trong cùng transaction, có khóa theo learner/block/skill để retry hoặc các attempt đồng thời không cộng điểm lặp, không mất tiến độ.
+- Migration backfill tạo `LanguageBlock` ổn định từ `LanguageBlockVersion` của bài đã publish trước Increment 3; publish mới tái sử dụng cùng ID block qua các phiên bản bài học.
 
 ### error_bank_entries
 
-Liên kết learner, skill, language block/question, error type, context, count, last occurrence và resolution state.
+Liên kết learner, skill, language block/question, error type, context, count, last occurrence và resolution state (phạm vi các task sau của Increment 3).
 
 ### review_items
 
-Hàng đợi ôn với priority reason, due time, preferred skill và context constraints.
+Mô hình hàng đợi ôn tập được scheduler tính toán tất định theo `next_review_at`, ưu tiên `NEEDS_ATTENTION` và các mục quá hạn; có bộ lọc theo kỹ năng. Cân đối bốn kỹ năng và chọn ngữ cảnh chuyển giao thuộc các task sau.
 
 ## 6. Progression và assessment
 

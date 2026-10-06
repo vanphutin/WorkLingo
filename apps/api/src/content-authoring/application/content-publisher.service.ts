@@ -275,6 +275,7 @@ export class ContentPublisherService {
         bank: { id: string; slug: string; name: string };
         versionId: string;
         wb: (typeof normalizedDraft.wordBanks)[number];
+        blocks: Array<(typeof normalizedDraft.wordBanks)[number]['languageBlocks'][number] & { id: string }>;
       }> = [];
 
       for (const wb of normalizedDraft.wordBanks) {
@@ -283,6 +284,31 @@ export class ContentPublisherService {
           update: {},
           create: { id: wb.id ?? randomUUID(), slug: wb.slug, name: wb.name },
         });
+
+        const blocks = [];
+        for (const lb of wb.languageBlocks) {
+          const canonical = await tx.languageBlock.upsert({
+            where: { slug: lb.slug },
+            update: {},
+            create: {
+              slug: lb.slug,
+              wordBankId: wordBank.id,
+              canonicalForm: lb.canonicalForm,
+              meaning: lb.meaning,
+              pronunciation: lb.pronunciation,
+              collocations: [...lb.collocations],
+              grammarPattern: lb.grammarPattern,
+              examples: [...lb.examples],
+              commonErrors: [...lb.commonErrors],
+              cefrLevel: lb.cefrLevel,
+              transferContexts: [...lb.transferContexts],
+            },
+          });
+          if (canonical.wordBankId !== wordBank.id) {
+            throw new ConflictException('Language Block belongs to another Word Bank');
+          }
+          blocks.push({ ...lb, id: canonical.id });
+        }
 
         const wbHash = createHash('sha256')
           .update(JSON.stringify(wb))
@@ -328,7 +354,7 @@ export class ContentPublisherService {
           }
         }
 
-        wordBankRecords.push({ bank: wordBank, versionId: wbVersion.id, wb });
+        wordBankRecords.push({ bank: wordBank, versionId: wbVersion.id, wb, blocks });
       }
 
       // Build UUID-backed snapshot conforming to lessonSnapshotSchema
@@ -341,12 +367,12 @@ export class ContentPublisherService {
           text: b.text,
           ...(b.audio ? { audio: b.audio } : {}),
         })),
-        wordBanks: wordBankRecords.map(({ bank, wb }) => ({
+        wordBanks: wordBankRecords.map(({ bank, wb, blocks }) => ({
           id: bank.id,
           slug: wb.slug,
           name: wb.name,
-          languageBlocks: wb.languageBlocks.map((lb) => ({
-            id: lb.id ?? randomUUID(),
+          languageBlocks: blocks.map((lb) => ({
+            id: lb.id,
             slug: lb.slug,
             canonicalForm: lb.canonicalForm,
             meaning: lb.meaning,

@@ -8,6 +8,7 @@ import { CurriculumModule } from './curriculum/curriculum.module';
 import { ContentAuthoringModule } from './content-authoring/content-authoring.module.js';
 import { JobsModule } from './jobs/jobs.module.js';
 import { LearningSessionsModule } from './learning-sessions/learning-sessions.module.js';
+import { MasteryModule } from './mastery/mastery.module.js';
 import { ProgressModule } from './progress/progress.module.js';
 
 @Module({
@@ -20,6 +21,7 @@ import { ProgressModule } from './progress/progress.module.js';
     ContentAuthoringModule,
     JobsModule,
     LearningSessionsModule,
+    MasteryModule,
     ProgressModule,
   ],
 })

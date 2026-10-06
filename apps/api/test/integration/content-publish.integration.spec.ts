@@ -193,6 +193,19 @@ describe('Transactional publish, archive, and session version isolation', () => 
     });
     expect(activities.length).toBeGreaterThan(0);
 
+    const canonicalBlock = await database.languageBlock.findUnique({
+      where: { slug: 'apologize' },
+    });
+    expect(canonicalBlock).toMatchObject({
+      slug: 'apologize',
+      canonicalForm: 'apologize',
+    });
+    const snapshot = await database.lessonVersion.findUniqueOrThrow({
+      where: { id: lessonVersionId },
+    });
+    const snapshotBank = (snapshot.parsedContent as { wordBanks: Array<{ languageBlocks: Array<{ id: string; slug: string }> }> }).wordBanks[0];
+    expect(snapshotBank?.languageBlocks.find((block) => block.slug === 'apologize')?.id).toBe(canonicalBlock?.id);
+
     const audioArtifacts = await database.lessonVersionAudioArtifact.findMany({
       where: { lessonVersionId },
     });
@@ -380,6 +393,18 @@ describe('Transactional publish, archive, and session version isolation', () => 
 
     expect(pub2.body.version).toBe(2);
     const v2Id = pub2.body.lessonVersionId;
+
+    const publishedVersions = await database.lessonVersion.findMany({
+      where: { id: { in: [v1Id, v2Id] } },
+    });
+    const blockIds = publishedVersions.map((version) => {
+      const content = version.parsedContent as {
+        wordBanks: Array<{ languageBlocks: Array<{ id: string; slug: string }> }>;
+      };
+      return content.wordBanks[0]?.languageBlocks.find((block) => block.slug === 'apologize')?.id;
+    });
+    expect(blockIds).toHaveLength(2);
+    expect(blockIds[0]).toBe(blockIds[1]);
 
     // Version 1 is now ARCHIVED
     const v1Record = await database.lessonVersion.findUniqueOrThrow({

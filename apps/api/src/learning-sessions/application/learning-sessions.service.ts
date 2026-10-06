@@ -11,6 +11,7 @@ import { sessionPlanSchema, type SessionPlan } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
+import { MasteryService } from '../../mastery/application/mastery.service.js';
 import {
   activitySchema,
   lessonSnapshotSchema,
@@ -45,6 +46,7 @@ export class LearningSessionsService {
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
+    @Inject(MasteryService) private readonly mastery: MasteryService,
   ) {}
 
   async createSession(
@@ -238,6 +240,16 @@ export class LearningSessionsService {
             normalizedResponse: evaluation.normalizedResponse,
             score: evaluation.score,
           },
+        });
+        await this.mastery.recordAttemptEvaluation({
+          attemptId: evaluated.id,
+          evaluationStatus: evaluation.evaluationStatus,
+          languageBlockSlugs: activity.languageBlockReferences,
+          learnerId,
+          lessonVersionId: session.lessonVersionId,
+          score: evaluation.score,
+          skills: activity.skills.length > 0 ? activity.skills : [activity.activityType],
+          tx: transaction,
         });
         if (evaluation.advance) {
           const nextCheckpoint = activityIndex + 1;
