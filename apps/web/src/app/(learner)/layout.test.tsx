@@ -8,9 +8,10 @@ import { ApiError, apiClient } from '../../lib/api/api-client';
 import LearnerLayout from './layout';
 
 const replace = vi.fn();
+const router = { push: vi.fn(), replace };
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: vi.fn(), replace }),
+  useRouter: () => router,
 }));
 
 vi.mock('../../lib/api/api-client', async (importOriginal) => {
