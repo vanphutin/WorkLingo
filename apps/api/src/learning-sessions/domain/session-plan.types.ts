@@ -1,19 +1,43 @@
 import type { PublishedMission } from '../../curriculum/domain/curriculum.types.js';
 import type { LearningSkill } from '@worklingo/contracts';
 
-export type { LearningSkill, SessionBlock, SessionBlockType, SessionPlan } from '@worklingo/contracts';
+export type { LearningSkill, SessionBlock, SessionBlockType, SessionPlan, SessionDuration } from '@worklingo/contracts';
+
+export interface ScheduledReviewItemReference {
+  readonly id: string;
+  readonly languageBlockId: string;
+  readonly skill: LearningSkill;
+  readonly priorityScore?: number;
+  readonly priorityReason?: 'NEEDS_ATTENTION' | 'OVERDUE' | 'DUE' | 'UPCOMING';
+}
 
 export interface PlanFoundationSessionInput {
   readonly mission: PublishedMission;
   readonly durationMinutes: number;
+  /** Items are ordered by ReviewScheduler, with NEEDS_ATTENTION before OVERDUE. */
+  readonly reviewItems?: readonly ScheduledReviewItemReference[];
 }
 
 export class UnsupportedSessionDurationError extends Error {
   readonly code = 'UNSUPPORTED_SESSION_DURATION';
 
   constructor(readonly durationMinutes: number) {
-    super('Only 60-minute Foundation sessions are supported in this increment');
+    super(`Unsupported session duration: ${durationMinutes}. Supported durations are 45, 60, 90, 120, 150 minutes.`);
     this.name = 'UnsupportedSessionDurationError';
+  }
+}
+
+export class InsufficientContentForDurationError extends Error {
+  readonly code = 'INSUFFICIENT_CONTENT_FOR_DURATION';
+
+  constructor(
+    readonly durationMinutes: number,
+    readonly availableDurations: readonly number[],
+  ) {
+    super(
+      `Published lesson does not have enough unique activities for ${durationMinutes} minutes. Available durations: ${availableDurations.join(', ')}`,
+    );
+    this.name = 'InsufficientContentForDurationError';
   }
 }
 
