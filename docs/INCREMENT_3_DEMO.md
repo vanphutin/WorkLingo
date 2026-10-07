@@ -15,6 +15,19 @@ pnpm dev
 
 Open `http://localhost:3000/register`. Existing accounts can use `/login`.
 
+### Resume the isolated demo from 2026-10-07
+
+The running demonstration uses schema `worklingo_increment3_demo_20261007`, because the old public-schema introduction lesson already had all six versions archived. Those versions were preserved. The ignored `.env` file was not changed; restarting without this override selects its original database/schema again.
+
+In the same PowerShell terminal, before the commands above or when restarting:
+
+```powershell
+$env:DATABASE_URL = 'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo?schema=worklingo_increment3_demo_20261007'
+pnpm dev
+```
+
+Demo registrations and progress persist in this local schema. It is not a recovery of the local learner history affected by the legacy auth-test incident.
+
 ## Learner journey
 
 1. Register a learner and open the dashboard. The server advertises five duration modes; only 45/60 are enabled by the development lessons. Unsupported workloads stay disabled, not padded with duplicate questions.
