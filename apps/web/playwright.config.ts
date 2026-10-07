@@ -35,6 +35,16 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'adaptive-desktop',
+      testMatch: /adaptive-learning\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'adaptive-mobile',
+      testMatch: /adaptive-learning\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
       name: 'foundation-desktop',
       testMatch: /foundation-session\.spec\.ts/u,
       use: { ...devices['Desktop Chrome'] },

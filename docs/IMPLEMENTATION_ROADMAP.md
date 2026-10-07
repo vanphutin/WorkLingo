@@ -85,6 +85,10 @@ WorkLingo/
 
 **Required gates:** deterministic scheduler tests, time-travel tests, four-skill minimum tests và E2E review recurrence.
 
+**Trạng thái 2026-10-07:** Hoàn tất Increment 3 trên local; independent review không còn Critical/Important findings, `pnpm verify` pass và 6 E2E desktop/mobile pass. Kế hoạch chi tiết: `docs/superpowers/plans/2026-10-07-increment-3-completion.md`; vận hành: `docs/INCREMENT_3_DEMO.md`; kết quả review và sự cố test isolation: `docs/INCREMENT_3_REVIEW.md`.
+
+Speaking/writing chưa có điểm AI thật nên checkpoint có thể còn chờ đánh giá; scoring thuộc Increment 4. Hai mission mẫu hỗ trợ 45/60 phút; 90/120/150 chỉ được bật khi có đủ activity độc lập. Hoàn tất Increment 3 không đồng nghĩa hoàn tất toàn bộ MVP/pilot.
+
 ## Increment 4 — Speech, TTS và Teacher AI
 
 **Kết quả:** learner làm shadowing và bài viết có cấu trúc; submission được lưu trước, chấm bất đồng bộ và retry được khi provider lỗi.

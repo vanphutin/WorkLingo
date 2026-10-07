@@ -27,41 +27,41 @@
 
 **Files:** existing availability, API client, dashboard and session-shell changes.
 **Interfaces:** consumes server availability; produces content-backed duration controls and order-based progress.
-- [ ] Add failing empty-availability and typed 422 tests; observe RED.
-- [ ] Fix only demonstrated behavior; run web unit tests and API availability integration tests. Expected: PASS.
-- [ ] Review existing diff and commit explicit Task 16 files after checks.
+- [x] Add failing empty-availability and typed 422 tests; observe RED.
+- [x] Fix only demonstrated behavior; run web unit tests and API availability integration tests. Expected: PASS.
+- [x] Review existing diff and commit explicit Task 16 files after checks.
 
 ### Task 2: Context-transfer selection and Mastery Map API
 
 **Files:** new `apps/api/src/learning-sessions/domain/context-transfer.ts` and tests; `curriculum.service.ts`, `mastery.service.ts`, `mastery.controller.ts`, session planner/service/types/contracts; integration tests.
 **Interfaces:** `selectMissionForReview(missions, reviews, completedMissionIds): PublishedMission`; reviews contain previous context signatures, stable block ID and skill. `GET /me/mastery-map` follows the spec.
-- [ ] Write failing deterministic selection tests for new context, changed slug/same text, absent transfer and unrelated skill; observe RED.
-- [ ] Implement context signatures, mission selection and frozen plan review metadata. Availability/creation use same selector and persisted current level.
-- [ ] Add integration tests for own curriculum map, cross-user isolation and time-travel recurrence; verify PASS.
-- [ ] Commit this slice after lint/typecheck/tests.
+- [x] Write failing deterministic selection tests for new context, changed slug/same text, absent transfer and unrelated skill; observe RED.
+- [x] Implement context signatures, mission selection and frozen plan review metadata. Availability/creation use same selector and persisted current level.
+- [x] Add integration tests for own curriculum map, cross-user isolation and time-travel recurrence; verify PASS.
+- [x] Commit this slice after lint/typecheck/tests.
 
 ### Task 3: Checkpoint assessment, reinforcement and progression
 
 **Files:** new `apps/api/src/progression/**`, Prisma additive migration/schema, `packages/contracts/src/progression.contracts.ts`, AppModule and ProgressService; integration tests.
 **Interfaces:** endpoints and exact shapes in spec. Other slices only read `LearnerProfile.currentLevelCode`, default FOUNDATION_1.
-- [ ] Test per-skill 0.7 boundary, pending null scores, first-attempt weakness, missing curriculum mastery and incomplete missions; observe RED.
-- [ ] Implement pure policy plus persisted assessment snapshots and actionable reinforcement; schema defaults preserve existing learners.
-- [ ] Integration-test ownership, UUID replay/conflict, rejecting client scores, published target level, confirmation transaction and stale requests. Expected: PASS.
-- [ ] Commit explicit files after checks.
+- [x] Test per-skill 0.7 boundary, pending null scores, first-attempt weakness, missing curriculum mastery and incomplete missions; observe RED.
+- [x] Implement pure policy plus persisted assessment snapshots and actionable reinforcement; schema defaults preserve existing learners.
+- [x] Integration-test ownership, UUID replay/conflict, rejecting client scores, published target level, confirmation transaction and stale requests. Expected: PASS.
+- [x] Commit explicit files after checks.
 
 ### Task 4: Learner mastery/progression UI
 
 **Files:** new learner mastery feature/page/tests; API client and dashboard links; dedicated CSS. Avoid backend and shared contract edits.
 **Interfaces:** consumes mastery-map, existing memory-health/error-bank, progression endpoints from spec.
-- [ ] Write failing UI tests for unassessed vs zero, empty/error/retry states, skill filtering/pagination, pending checkpoint and confirmation; observe RED.
-- [ ] Implement accessible responsive UI and server-authoritative duration corrections. Expected: web tests/typecheck/lint PASS.
-- [ ] Commit only UI slice after integration review.
+- [x] Write failing UI tests for unassessed vs zero, empty/error/retry states, skill filtering/pagination, pending checkpoint and confirmation; observe RED.
+- [x] Implement accessible responsive UI and server-authoritative duration corrections. Expected: web tests/typecheck/lint PASS.
+- [x] Commit only UI slice after integration review.
 
 ### Task 5: Full increment verification and handoff
 
 **Files:** Playwright adaptive-learning journey/config; documentation contracts/model/decisions/roadmap/local guide.
 **Interfaces:** tests actual learner APIs and DOM on desktop/mobile in isolated E2E schema.
-- [ ] Write E2E for review recurrence, mastery/errors, pending checkpoint and duration/resume; observe first relevant failure.
-- [ ] Complete wiring; update docs including pending speech limit and policy calibration.
-- [ ] Run `pnpm verify`. Expected: all gates PASS. Review branch independently and fix substantive findings with regression tests.
-- [ ] Commit explicit files, integrate through authorized Git workflow, and run the completed local demo.
+- [x] Write E2E for review recurrence, mastery/errors, pending checkpoint and duration/resume; observe first relevant failure.
+- [x] Complete wiring; update docs including pending speech limit and policy calibration.
+- [x] Run `pnpm verify`. Expected: all gates PASS. Review branch independently and fix substantive findings with regression tests.
+- [x] Commit explicit files, integrate through authorized Git workflow, and run the completed local demo.

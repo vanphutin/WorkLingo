@@ -1,5 +1,17 @@
 # Curriculum — Foundation seed
 
+## Increment 3 transfer mission
+
+The local seed additionally publishes **Welcome a customer to your workplace** with a visitor email and a reception conversation. It reuses the stable introduction/department/greeting/help Language Blocks in a distinct workplace situation. The original lesson remains immutable and old sessions continue using it.
+
+Selection preserves review-scheduler priority first, then prefers a new document context for that evidence, then unfinished missions and curriculum order. A lower-priority novel context cannot displace a higher-priority weak block. If no alternative exists, same-context review remains available and the plan records `transferred: false`. Renaming a document or publishing identical text does not constitute transfer.
+
+Both seed missions support 45/60 minutes. 90/120/150 remain available planner modes, but are disabled for these missions until authored unique activities provide sufficient content. Questions are never duplicated to fill duration.
+
+Increment 3 selects the first eligible published lesson per mission as its playable unit. Mastery-map and checkpoint requirements use that same unit; later linked lessons do not unlock a next level or add unreachable requirements. Multi-lesson mission sequencing needs an explicit future curriculum workflow.
+
+Speaking/writing submissions remain unscored until Increment 4. Consequently a real local learner checkpoint can remain pending even after completing both seed missions; the gate cannot be bypassed by entered text or external certificates.
+
 Task 4 adds the first provider-free curriculum under `English for Work` →
 `FOUNDATION_1` (Pre-A1) → `Introduce yourself to a new colleague`.
 
