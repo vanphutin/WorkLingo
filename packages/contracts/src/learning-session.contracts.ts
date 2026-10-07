@@ -39,6 +39,9 @@ export const sessionPlanSchema = z.object({
   lessonVersionId: z.uuid(),
   blocks: z.array(sessionBlockSchema).min(3).max(10).readonly(),
   reviewItemIds: z.array(z.uuid()).readonly().optional(),
+  reviewSelections: z.array(z.object({
+    reviewItemId: z.uuid(), activityId: z.uuid(), transferred: z.boolean(),
+  }).readonly()).readonly().optional(),
 }).superRefine((plan, context) => {
   const expectedBlockTypes = canonicalBlockTypesByDuration[plan.durationMinutes];
   if (!expectedBlockTypes || plan.blocks.length !== expectedBlockTypes.length) {
@@ -59,6 +62,12 @@ export const sessionPlanSchema = z.object({
     context.addIssue({ code: 'custom', path: ['blocks'], message: 'Sum of targetMinutes must equal durationMinutes' });
   }
   const activityIds = plan.blocks.flatMap((block) => block.activityIds);
+  const selections = plan.reviewSelections ?? [];
+  if (new Set(selections.map((selection) => selection.reviewItemId)).size !== selections.length ||
+      selections.some((selection) => !activityIds.includes(selection.activityId) ||
+        !plan.reviewItemIds?.includes(selection.reviewItemId))) {
+    context.addIssue({ code: 'custom', path: ['reviewSelections'], message: 'Review selections must uniquely reference included reviews and planned activities' });
+  }
   if (new Set(activityIds).size !== activityIds.length) {
     context.addIssue({ code: 'custom', path: ['blocks'], message: 'Activity IDs must be unique across the plan' });
   }
@@ -75,3 +84,15 @@ export const sessionPlanSchema = z.object({
 export type LearningSkill = z.infer<typeof learningSkillSchema>;
 export type SessionBlock = z.infer<typeof sessionBlockSchema>;
 export type SessionPlan = z.infer<typeof sessionPlanSchema>;
+
+export const sessionAvailabilitySchema = z.object({
+  mission: z.object({
+    id: z.string().uuid(),
+    title: z.string(),
+  }),
+  lessonVersionId: z.string().uuid(),
+  supportedDurations: z.array(sessionDurationSchema),
+  availableDurations: z.array(sessionDurationSchema),
+  defaultDurationMinutes: sessionDurationSchema,
+});
+export type SessionAvailabilityDto = z.infer<typeof sessionAvailabilitySchema>;

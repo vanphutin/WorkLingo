@@ -34,6 +34,7 @@ export interface ReviewCandidate {
 }
 
 export interface ScheduledReviewItem extends ReviewCandidate {
+  previousContextSignatures?: readonly string[];
   priorityReason: 'NEEDS_ATTENTION' | 'OVERDUE' | 'DUE' | 'UPCOMING';
   priorityScore: number;
 }

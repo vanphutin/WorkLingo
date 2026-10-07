@@ -19,7 +19,7 @@ export class ProgressService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
   async getProgress(learnerId: string): Promise<LearnerProgressDto> {
-    const [sessionGroups, activityAttempts, completedActivities, latestSession] = await Promise.all([
+    const [sessionGroups, activityAttempts, completedActivities, profile] = await Promise.all([
       this.database.learningSession.groupBy({
         by: ['status'], where: { learnerId }, _count: { _all: true },
       }),
@@ -30,10 +30,9 @@ export class ProgressService {
           OR: [{ evaluationStatus: 'SUBMITTED' }, { evaluationStatus: 'EVALUATED', score: 1 }],
         },
       }),
-      this.database.learningSession.findFirst({
-        where: { learnerId },
-        orderBy: { createdAt: 'desc' },
-        select: { mission: { select: { level: { select: { code: true } } } } },
+      this.database.learnerProfile.findUnique({
+        where: { userId: learnerId },
+        select: { currentLevelCode: true },
       }),
     ]);
     const count = (status: 'PLANNED' | 'IN_PROGRESS' | 'PAUSED' | 'COMPLETED') =>
@@ -41,7 +40,7 @@ export class ProgressService {
     return {
       activityAttempts,
       completedActivities,
-      currentLevelCode: latestSession?.mission.level.code ?? null,
+      currentLevelCode: profile?.currentLevelCode ?? 'FOUNDATION_1',
       sessions: {
         completed: count('COMPLETED'),
         inProgress: count('IN_PROGRESS'),

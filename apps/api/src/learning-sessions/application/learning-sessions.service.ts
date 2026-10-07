@@ -7,7 +7,12 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma, type Activity, type ActivityAttempt } from '@prisma/client';
-import { sessionDurationSchema, sessionPlanSchema, type SessionPlan } from '@worklingo/contracts';
+import {
+  sessionDurationSchema,
+  sessionPlanSchema,
+  supportedSessionDurations,
+  type SessionPlan,
+} from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
@@ -21,11 +26,13 @@ import {
   InsufficientContentForDurationError,
   UnsupportedSessionDurationError,
 } from '../domain/session-plan.types.js';
-import { planFoundationSession } from '../domain/session-planner.js';
+import { computeAvailableDurations, planFoundationSession } from '../domain/session-planner.js';
+import { selectMissionForReview } from '../domain/context-transfer.js';
 import type {
   ActivityAttemptDto,
   LearnerActivityDto,
   LearningSessionDto,
+  SessionAvailabilityDto,
   SubmitAttemptInput,
 } from './learning-session.types.js';
 
@@ -53,6 +60,32 @@ export class LearningSessionsService {
     @Inject(MasteryService) private readonly mastery: MasteryService,
   ) {}
 
+  private async selectCurriculum(learnerId: string) {
+    const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId } });
+    const [missions, reviewQueue, completed] = await Promise.all([
+      this.curriculum.getPublishedMissionsForLevel(profile?.currentLevelCode ?? 'FOUNDATION_1'),
+      this.mastery.getReviewQueue(learnerId),
+      this.database.learningSession.findMany({ where: { learnerId, status: 'COMPLETED' }, select: { missionId: true } }),
+    ]);
+    if (!missions.length) throw new NotFoundException('No published mission for this level');
+    return { mission: selectMissionForReview(missions, reviewQueue, completed.map((s) => s.missionId)), reviewQueue };
+  }
+
+  async getAvailability(learnerId: string): Promise<SessionAvailabilityDto> {
+    const { mission } = await this.selectCurriculum(learnerId);
+    const availableDurations = computeAvailableDurations(mission);
+    return {
+      mission: {
+        id: mission.id,
+        title: mission.title,
+      },
+      lessonVersionId: mission.lessonVersion.id,
+      supportedDurations: [...supportedSessionDurations],
+      availableDurations: [...availableDurations],
+      defaultDurationMinutes: 60,
+    };
+  }
+
   async createSession(
     learnerId: string,
     durationMinutes: number,
@@ -71,8 +104,7 @@ export class LearningSessionsService {
     });
     if (existing) return this.toSessionDto(existing);
 
-    const mission = await this.curriculum.getPublishedMissionForLevel('FOUNDATION_1');
-    const reviewQueue = await this.mastery.getReviewQueue(learnerId);
+    const { mission, reviewQueue } = await this.selectCurriculum(learnerId);
 
     let plan: SessionPlan;
     try {

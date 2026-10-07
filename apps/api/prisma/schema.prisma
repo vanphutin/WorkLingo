@@ -38,10 +38,13 @@ model User {
   masteryRecords        MasteryRecord[]
   masteryEvents         MasteryEvent[]
   errorBankEntries      ErrorBankEntry[]
+  checkpointAssessments CheckpointAssessment[]
+  progressionConfirmations ProgressionConfirmation[]
 }
 
 model LearnerProfile {
   userId           String   @id @db.Uuid
+  currentLevelCode String   @default("FOUNDATION_1")
   locale           String   @default("vi")
   timezone         String   @default("Asia/Ho_Chi_Minh")
   recordingConsent Boolean  @default(false)
@@ -173,6 +176,8 @@ model LessonVersion {
   masteryRecords   MasteryRecord[]
   masteryEvents    MasteryEvent[]
   errorBankEntries ErrorBankEntry[]
+
+  checkpointAssessments CheckpointAssessment[]
 
   @@unique([lessonId, version])
 }
@@ -334,12 +339,54 @@ model LearningSession {
   lessonVersion     LessonVersion         @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
   blocks            SessionBlock[]
   attempts          ActivityAttempt[]
+  checkpointAssessments CheckpointAssessment[]
 
   @@unique([learnerId, clientSessionId])
   @@unique([id, learnerId])
   @@index([learnerId, status, createdAt])
   @@index([missionId])
   @@index([lessonVersionId])
+}
+
+model CheckpointAssessment {
+  id                 String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId          String @db.Uuid
+  clientAssessmentId String @db.Uuid
+  sessionId          String @db.Uuid
+  lessonVersionId    String @db.Uuid
+  levelCode          String
+  policyVersion      String
+  status             String
+  skills             Json
+  reinforcement      Json
+  evidenceSnapshot   Json
+  canAdvance         Boolean
+  nextLevelCode      String?
+  createdAt          DateTime @default(now())
+  learner            User @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  session            LearningSession @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
+  lessonVersion      LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  confirmation       ProgressionConfirmation?
+
+  @@unique([learnerId, clientAssessmentId])
+  @@unique([id, learnerId])
+  @@index([learnerId, levelCode, createdAt])
+  @@index([sessionId, learnerId])
+  @@index([lessonVersionId])
+}
+
+model ProgressionConfirmation {
+  id             String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId      String @db.Uuid
+  assessmentId   String @unique @db.Uuid
+  fromLevelCode  String
+  toLevelCode    String?
+  createdAt      DateTime @default(now())
+  learner        User @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  assessment     CheckpointAssessment @relation(fields: [assessmentId, learnerId], references: [id, learnerId], onDelete: Cascade)
+
+  @@index([learnerId])
+  @@unique([assessmentId, learnerId])
 }
 
 model SessionBlock {

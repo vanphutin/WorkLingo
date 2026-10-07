@@ -29,7 +29,13 @@ export class CurriculumService {
   }
 
   async getPublishedMissionForLevel(levelCode: string): Promise<PublishedMission> {
-    const mission = await this.database.mission.findFirst({
+    const missions = await this.getPublishedMissionsForLevel(levelCode);
+    if (!missions[0]) throw new NotFoundException('No published mission for this level');
+    return missions[0];
+  }
+
+  async getPublishedMissionsForLevel(levelCode: string): Promise<PublishedMission[]> {
+    const missions = await this.database.mission.findMany({
       where: {
         status: 'PUBLISHED',
         level: { code: levelCode, path: { status: 'PUBLISHED' } },
@@ -83,39 +89,41 @@ export class CurriculumService {
         },
       },
     });
-    const lesson = mission?.lessons[0]?.lesson;
-    const candidate = lesson?.currentPublishedVersion?.status === 'PUBLISHED'
-      ? lesson.currentPublishedVersion
-      : lesson?.versions[0];
-    const version = candidate?.status === 'PUBLISHED' ? candidate : undefined;
-    if (!mission || !version) throw new NotFoundException('No published mission for this level');
-    const parsed = lessonSnapshotSchema.safeParse(version.parsedContent);
-    if (!parsed.success) throw new ConflictException('Published lesson snapshot is invalid');
-    const snapshot = parsed.data;
-    const activities = version.activities.map((activity) => ({
-      id: activity.id, slug: activity.slug, order: activity.order,
-      activityType: activity.activityType, learningBlock: activity.learningBlock,
-      skills: activity.skills, contentReferences: activity.contentReferences,
-      languageBlockReferences: activity.languageBlockReferences, payload: activity.payload,
-    }));
-    const contentMatches = version.contentBlocks.length === snapshot.contentBlocks.length &&
-      snapshot.contentBlocks.every((block, order) => {
-        const stored = version.contentBlocks[order];
-        return stored?.id === block.id && stored.slug === block.slug &&
-          stored.type === block.type && stored.text === block.text &&
-          isDeepStrictEqual(stored.metadata, block.audio ? { audio: block.audio } : {});
-      });
-    const banksMatch = isDeepStrictEqual(
-      version.wordBanks.map((bank) => bank.wordBankId).sort(),
-      snapshot.wordBanks.map((bank) => bank.id).sort(),
-    );
-    if (version.title !== snapshot.title || !contentMatches || !banksMatch ||
-        !isDeepStrictEqual(activities, snapshot.activities)) {
-      throw new ConflictException('Published lesson snapshot does not match its version records');
-    }
-    return {
-      id: mission.id, slug: mission.slug, title: mission.title, objective: mission.objective, levelCode,
-      lessonVersion: { ...snapshot, id: version.id, version: version.version },
-    };
+    return missions.map((mission) => {
+      const lesson = mission.lessons[0]?.lesson;
+      const candidate = lesson?.currentPublishedVersion?.status === 'PUBLISHED'
+        ? lesson.currentPublishedVersion
+        : lesson?.versions[0];
+      const version = candidate?.status === 'PUBLISHED' ? candidate : undefined;
+      if (!mission || !version) throw new NotFoundException('No published mission for this level');
+      const parsed = lessonSnapshotSchema.safeParse(version.parsedContent);
+      if (!parsed.success) throw new ConflictException('Published lesson snapshot is invalid');
+      const snapshot = parsed.data;
+      const activities = version.activities.map((activity) => ({
+        id: activity.id, slug: activity.slug, order: activity.order,
+        activityType: activity.activityType, learningBlock: activity.learningBlock,
+        skills: activity.skills, contentReferences: activity.contentReferences,
+        languageBlockReferences: activity.languageBlockReferences, payload: activity.payload,
+      }));
+      const contentMatches = version.contentBlocks.length === snapshot.contentBlocks.length &&
+        snapshot.contentBlocks.every((block, order) => {
+          const stored = version.contentBlocks[order];
+          return stored?.id === block.id && stored.slug === block.slug &&
+            stored.type === block.type && stored.text === block.text &&
+            isDeepStrictEqual(stored.metadata, block.audio ? { audio: block.audio } : {});
+        });
+      const banksMatch = isDeepStrictEqual(
+        version.wordBanks.map((bank) => bank.wordBankId).sort(),
+        snapshot.wordBanks.map((bank) => bank.id).sort(),
+      );
+      if (version.title !== snapshot.title || !contentMatches || !banksMatch ||
+          !isDeepStrictEqual(activities, snapshot.activities)) {
+        throw new ConflictException('Published lesson snapshot does not match its version records');
+      }
+      return {
+        id: mission.id, slug: mission.slug, title: mission.title, objective: mission.objective, levelCode,
+        lessonVersion: { ...snapshot, id: version.id, version: version.version },
+      };
+    });
   }
 }

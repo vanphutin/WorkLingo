@@ -29,6 +29,13 @@ function createMission(): PublishedMission {
 }
 
 describe('Foundation session planner', () => {
+  it('rejects review metadata pointing outside its frozen activity plan', () => {
+    const plan = planFoundationSession({ mission: createMission(), durationMinutes: 60 });
+    expect(sessionPlanSchema.safeParse({
+      ...plan, reviewItemIds: [fixtureId(777)],
+      reviewSelections: [{ reviewItemId: fixtureId(777), activityId: fixtureId(999), transferred: true }],
+    }).success).toBe(false);
+  });
   it('plans four ordered fifteen-minute blocks covering all four skills', () => {
     const mission = createMission();
     const plan = planFoundationSession({ mission, durationMinutes: 60 });

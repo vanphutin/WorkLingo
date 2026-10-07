@@ -271,4 +271,40 @@ describe('learning sessions', () => {
       sessions: { completed: 0, inProgress: 1, paused: 0, planned: 0 },
     });
   });
+
+  it('requires authentication for session availability query', async () => {
+    await request(context.app.getHttpServer())
+      .get('/api/v1/learning-sessions/availability')
+      .expect(401);
+  });
+
+  it('returns session availability without mutating database or triggering :id route', async () => {
+    const agent = await registerLearner(context.app, {
+      displayName: 'Availability Learner',
+      email: 'availability@example.test',
+    });
+
+    const sessionsBefore = await context.database.learningSession.count();
+    const attemptsBefore = await context.database.activityAttempt.count();
+
+    const response = await agent
+      .get('/api/v1/learning-sessions/availability')
+      .expect(200);
+
+    expect(response.body).toEqual({
+      mission: {
+        id: expect.any(String),
+        title: 'Introduce yourself to a new colleague',
+      },
+      lessonVersionId: expect.any(String),
+      supportedDurations: [45, 60, 90, 120, 150],
+      availableDurations: [45, 60],
+      defaultDurationMinutes: 60,
+    });
+
+    const sessionsAfter = await context.database.learningSession.count();
+    const attemptsAfter = await context.database.activityAttempt.count();
+    expect(sessionsAfter).toBe(sessionsBefore);
+    expect(attemptsAfter).toBe(attemptsBefore);
+  });
 });
