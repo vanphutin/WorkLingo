@@ -1,5 +1,21 @@
 # API Contracts
 
+## Increment 3 adaptive learner endpoints
+
+All endpoints require authentication and use the authenticated learner ID.
+
+- `GET /api/v1/learning-sessions/availability`: selected mission/version, supported durations 45/60/90/120/150, content-backed available durations and default 60. Creation reruns selection because publishing/evidence can change; a 422 response includes `availableDurations`.
+- `GET /api/v1/me/mastery-map`: current published curriculum Language Blocks with independent reading/listening/speaking/writing evidence. A null skill means unassessed, not zero. `reviewQueue` contains stable block ID, skill, `priorityReason` and review date.
+- `GET /api/v1/me/progression`: persisted current level, immediate available next level, assessable completed session, prerequisite reasons and latest assessment.
+- `POST /api/v1/me/checkpoint-assessments`: only `{ sessionId, clientAssessmentId }` UUIDs are accepted. Reads server evidence and the immutable session version. Same UUID/session replays the same snapshot; conflicting reuse returns 409. Incomplete/wrong-level sessions return 409, foreign session returns 404.
+- `POST /api/v1/me/checkpoint-assessments/{id}/confirm`: confirms a passed four-skill checkpoint transactionally. Does not skip an unpublished intermediate level; duplicate confirmation is idempotent and stale requests cannot downgrade.
+
+Checkpoint policy `workplace-checkpoint-v1` requires >=0.7 independently per skill, evaluated coverage of required blocks and completion of published missions. The first evaluated attempt of each checkpoint activity is used; correct retries do not erase weak first evidence. Unscored submissions keep `pending_evaluation`; known weak evidence still produces reinforcement actions. No speaking/writing score is inferred from saved text. A new request UUID creates a new assessment after real evaluation arrives, preserving old snapshots.
+
+Assessment states are `pending_evaluation`, `reinforcement_required`, `not_ready` (curriculum/mission prerequisites incomplete), and `passed`. Prerequisite reasons and reinforcement actions are returned separately. Passing does not change the level: learner confirmation is required, and the immediate next level must have published playable content. The server rechecks prerequisites when confirming.
+
+Session plans may include `reviewSelections: [{ reviewItemId, activityId, transferred }]`. IDs must refer to included reviews/planned activities. Transfer requires a different document context fingerprint, stable block and matching skill; same-context fallback is explicitly false.
+
 ## 1. Quy ước chung
 
 - Base path: `/api/v1`.

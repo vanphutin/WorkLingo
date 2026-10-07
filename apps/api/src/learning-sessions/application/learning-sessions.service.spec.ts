@@ -39,12 +39,13 @@ describe('LearningSessionsService state transitions', () => {
   it('passes reviewQueue into planner and handles insufficient content with 422', async () => {
     const learnerId = '018f06f6-4f68-7a72-9411-4bf894345678';
     const database = {
-      learningSession: { findUnique: vi.fn().mockResolvedValue(null) },
+      learningSession: { findUnique: vi.fn().mockResolvedValue(null), findMany: vi.fn().mockResolvedValue([]) },
+      learnerProfile: { findUnique: vi.fn().mockResolvedValue({ currentLevelCode: 'FOUNDATION_1' }) },
     } as unknown as PrismaService;
 
     const fixture = foundationMissionFixture;
     const curriculum = {
-      getPublishedMissionForLevel: vi.fn().mockResolvedValue({
+      getPublishedMissionsForLevel: vi.fn().mockResolvedValue([{
         id: '00000000-0000-4000-8000-000000000200',
         slug: fixture.slug,
         title: fixture.title,
@@ -62,7 +63,7 @@ describe('LearningSessionsService state transitions', () => {
           })),
           activities: fixture.lesson.activities.map((a, i) => ({ ...a, order: i, id: `00000000-0000-4000-8000-${(i + 100).toString().padStart(12, '0')}` })),
         },
-      }),
+      }]),
     } as unknown as CurriculumService;
     const getReviewQueue = vi.fn().mockResolvedValue([]);
     const mastery = { getReviewQueue } as unknown as MasteryService;

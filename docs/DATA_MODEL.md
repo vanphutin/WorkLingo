@@ -1,5 +1,15 @@
 # Data Model
 
+## Increment 3 checkpoint persistence
+
+`LearnerProfile.currentLevelCode` is the authoritative current level and defaults existing/new learners to `FOUNDATION_1`.
+
+`CheckpointAssessment` stores learner/client UUID, source session and lesson version, level, policy version, per-skill scores/threshold/pending counts, status, reinforcement actions and evidence snapshot. Unique learner/client UUIDs guarantee replay. Assessments are append-only; reassessment creates a new record. Scores come from persisted evaluated attempts, never request data.
+
+`ProgressionConfirmation` records one learner-confirmed decision per assessment, source and destination levels. Row locking on the learner profile serializes assess/confirm; conditional current-level updates prevent skipping or downgrading. Compound owner foreign keys enforce assessment/session and confirmation/assessment ownership.
+
+Published lesson versions and session plans remain unchanged. Review context fingerprints are derived from the last evaluated activity's versioned document type/text; optional `reviewSelections` in the plan records genuine transfer versus fallback.
+
 ## 1. Quy ước
 
 - Primary key dùng UUID.

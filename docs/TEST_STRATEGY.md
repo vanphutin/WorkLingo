@@ -1,5 +1,13 @@
 # Test Strategy
 
+## Increment 3 acceptance coverage
+
+`context-transfer.spec.ts` checks scheduler priority before novelty, stable block/skill matching, identical text under renamed versions and fallback. `adaptive-learning.integration.spec.ts` injects a clock for recurrence and checks learner isolation, unchanged old sessions and idempotent second-mission seed. `progression.integration.spec.ts` checks independent skill gates, pending evidence, replay/conflicts, append-only snapshots, concurrent confirmation and immediate-successor boundaries.
+
+`adaptive-learning.spec.ts` runs on desktop and mobile alongside the existing Foundation/Admin journeys. It exercises duration availability, refresh, weak evidence, Mastery/Memory Health/Error Bank, context transfer and blocked advancement for unscored submissions. Provider evaluation is simulated only inside isolated backend fixtures, never exposed as a learner API. Full required gate: `pnpm verify`.
+
+Auth integration uses the same migrated, randomly named schema harness as learner-session tests. Resets and teardown affect that generated schema only, never the default local learner database. Regression coverage asserts `current_schema()` and the Foundation profile default. Checkpoint boundary tests include zero/one floating-point bounds and targets with four skills but no canonical playable allocation.
+
 ## 1. Mục tiêu
 
 Kiểm thử phải bảo vệ ba điều:

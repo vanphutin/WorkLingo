@@ -1,4 +1,6 @@
-import type { SessionDuration, SessionPlan } from '@worklingo/contracts';
+import type { SessionAvailabilityDto, SessionDuration, SessionPlan } from '@worklingo/contracts';
+
+export type { SessionAvailabilityDto };
 
 export interface ActivityAttemptDto {
   readonly id: string;

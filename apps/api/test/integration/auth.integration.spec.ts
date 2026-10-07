@@ -1,58 +1,33 @@
-import { mkdtemp, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import path from 'node:path';
-
-import { ValidationPipe, type INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
+import type { INestApplication } from '@nestjs/common';
 import type { PrismaClient } from '@prisma/client';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { createLearningSessionTestContext, type LearningSessionTestContext } from './learning-session-test-harness.js';
+
 describe('authentication', () => {
   let app: INestApplication | undefined;
   let database: PrismaClient;
-  let dataDirectory: string;
+  let context: LearningSessionTestContext;
 
   beforeAll(async () => {
-    dataDirectory = await mkdtemp(path.join(tmpdir(), 'worklingo-auth-'));
-    process.env.DATABASE_URL =
-      'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
-    process.env.SESSION_SECRET =
-      'auth-test-secret-with-at-least-32-characters';
-    process.env.WORKLINGO_DATA_DIR = dataDirectory;
-
-    const [{ AppModule }, { PrismaService }] = await Promise.all([
-      import('../../src/app.module.js'),
-      import('../../src/common/database/prisma.service.js'),
-    ]);
-    const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleRef.createNestApplication();
-    app.setGlobalPrefix('api/v1');
-    app.useGlobalPipes(
-      new ValidationPipe({
-        forbidNonWhitelisted: true,
-        transform: true,
-        whitelist: true,
-      }),
-    );
-    await app.init();
-    database = app.get(PrismaService);
-  });
+    context = await createLearningSessionTestContext('auth');
+    app = context.app;
+    database = context.database;
+  }, 45_000);
 
   beforeEach(async () => {
-    await database
-      .$executeRawUnsafe(
-        'TRUNCATE TABLE "UserSession", "LearnerProfile", "User" CASCADE',
-      )
-      .catch(() => undefined);
+    await context.resetLearners();
   });
 
   afterAll(async () => {
-    await app?.close();
-    await rm(dataDirectory, { force: true, recursive: true });
+    await context?.close();
+  });
+
+  it('uses a migrated isolated schema rather than the local learner database', async () => {
+    const rows = await database.$queryRaw<{ schema: string }[]>`SELECT current_schema() AS schema`;
+    expect(rows[0]?.schema).toBe(context.schemaName);
+    expect(context.schemaName).toMatch(/^auth_[0-9a-f]{32}$/u);
   });
 
   it('registers a learner with a normalized email and session cookie', async () => {
@@ -73,6 +48,8 @@ describe('authentication', () => {
       roles: ['LEARNER'],
     });
     expect(response.body).not.toHaveProperty('passwordHash');
+    await expect(database.learnerProfile.findUnique({ where: { userId: response.body.id } }))
+      .resolves.toMatchObject({ currentLevelCode: 'FOUNDATION_1' });
     expect(response.headers['set-cookie']?.[0]).toMatch(
       /^worklingo_session=.*HttpOnly.*SameSite=Lax/iu,
     );

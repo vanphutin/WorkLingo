@@ -8,6 +8,7 @@ export interface ScheduledReviewItemReference {
   readonly languageBlockId: string;
   readonly skill: LearningSkill;
   readonly priorityScore?: number;
+  readonly previousContextSignatures?: readonly string[];
   readonly priorityReason?: 'NEEDS_ATTENTION' | 'OVERDUE' | 'DUE' | 'UPCOMING';
 }
 

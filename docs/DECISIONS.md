@@ -1,5 +1,15 @@
 # Architecture and Product Decisions
 
+## D-022 — Increment 3 evidence and progression policy
+
+- **Status:** Accepted for local Increment 3; scoring calibration remains a pilot prerequisite.
+- **Decision:** Use document type plus whitespace-normalized text fingerprints for review transfer. Stable Language Block ID and matching skill are required. Explicit same-context fallback preserves review opportunities when content is limited.
+- **Decision:** Checkpoint policy `workplace-checkpoint-v1` evaluates a completed mission session against immutable content and first evaluated activity attempts, then checks all required curriculum blocks and mission completion. Threshold is 0.7 separately per skill; it is an initial versioned policy, not a calibrated CEFR/B2 certification.
+- **Decision:** Pending/null speaking/writing scores prevent advancement. Missing or weak evidence produces a concrete reinforcement action; assessments are append-only and have idempotent request UUIDs.
+- **Decision:** Confirming advancement is an explicit learner action, serialized against their persisted current level. Only the immediate next level with published four-skill content is eligible.
+- **Review clarification:** Every required published mission at the target must form at least one canonical session according to the same duration planner. Four skill labels alone do not prove playability. Confirmation also rechecks current required missions and block scores, without rewriting the passed snapshot.
+- **Consequence:** Increment 3 supplies the full gate/UI/data workflow. Increment 4 supplies genuine evaluated speaking/writing evidence; no fake score is introduced to make the local demo pass.
+
 Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định mới nên thêm một mục thay vì sửa lịch sử; nếu bị thay thế, ghi rõ quyết định kế nhiệm.
 
 ## D-001 — English for Work là định vị cốt lõi

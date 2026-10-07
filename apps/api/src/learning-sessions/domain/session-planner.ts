@@ -19,6 +19,7 @@ import {
   type ScheduledReviewItemReference,
 } from './session-plan.types.js';
 import type { CurriculumActivity, PublishedMission } from '../../curriculum/domain/curriculum.types.js';
+import { isTransfer } from './context-transfer.js';
 
 function deepFreeze<T>(value: T): Readonly<T> {
   if (value && typeof value === 'object') {
@@ -48,7 +49,7 @@ function distributeActivities<T>(items: readonly T[], bucketCount: number): T[][
 }
 
 export function computeAvailableDurations(
-  mission: PublishedMission,
+  mission: { readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities'> },
 ): readonly SessionDuration[] {
   const activities = mission.lessonVersion.activities;
   const availableDurations: SessionDuration[] = [];
@@ -176,6 +177,9 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
       const leftRank = reviewRank(left);
       const rightRank = reviewRank(right);
       if (leftRank !== rightRank) return leftRank - rightRank;
+      const leftTransfer = matchingReviews(left).some((review) => isTransfer(input.mission, left, review));
+      const rightTransfer = matchingReviews(right).some((review) => isTransfer(input.mission, right, review));
+      if (leftTransfer !== rightTransfer) return Number(rightTransfer) - Number(leftTransfer);
       return left.order - right.order;
     });
 
@@ -214,6 +218,15 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
     lessonVersionId: input.mission.lessonVersion.id,
     blocks,
     ...(usedReviewItemIds.size > 0 ? { reviewItemIds: [...usedReviewItemIds] } : {}),
+    ...(usedReviewItemIds.size > 0 ? { reviewSelections: (input.reviewItems ?? [])
+      .filter((review) => usedReviewItemIds.has(review.id))
+      .map((review) => {
+        const activities = blocks.flatMap((block) => block.activityIds)
+          .map((id) => input.mission.lessonVersion.activities.find((activity) => activity.id === id)!)
+          .filter((activity) => matchingReviews(activity).some((item) => item.id === review.id));
+        const selected = activities.find((activity) => isTransfer(input.mission, activity, review)) ?? activities[0]!;
+        return { reviewItemId: review.id, activityId: selected.id, transferred: isTransfer(input.mission, selected, review) };
+      }) } : {}),
   };
 
   const result = sessionPlanSchema.safeParse(planPayload);

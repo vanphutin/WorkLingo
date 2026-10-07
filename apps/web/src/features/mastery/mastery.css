@@ -1,0 +1,246 @@
+.evidence-workspace {
+  display: grid;
+  gap: 1.5rem;
+  padding-block: 2.5rem 4rem;
+  min-width: 0;
+}
+
+.evidence-header {
+  display: grid;
+  gap: 0.9rem;
+  padding-bottom: 0.75rem;
+}
+
+.evidence-header h1 {
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  margin: 0;
+  letter-spacing: -0.035em;
+}
+
+.evidence-header p {
+  color: #556258;
+  max-width: 60ch;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.evidence-section-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.evidence-section-links a {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.evidence-panel {
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid #d9ddd8;
+  border-radius: 0.85rem;
+  background: #fffefb;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.evidence-panel h2,
+.evidence-panel h3,
+.evidence-panel h4 {
+  margin: 0 0 0.5rem;
+}
+
+.evidence-panel h2 {
+  font-size: 1.45rem;
+}
+
+.evidence-panel p {
+  margin-block: 0.5rem;
+}
+
+.evidence-note {
+  color: #556258;
+  font-size: 0.9rem;
+}
+
+.evidence-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1.25rem;
+}
+
+.evidence-skill-card {
+  padding: 1rem;
+  border: 1px solid #d9ddd8;
+  border-radius: 0.6rem;
+  background: #f7f8f3;
+  min-width: 0;
+}
+
+.evidence-skill-card h3,
+.evidence-skill-card h4 {
+  font-size: 1rem;
+}
+
+.evidence-skill-card p {
+  color: #556258;
+  font-size: 0.85rem;
+}
+
+.evidence-score {
+  display: block;
+  color: #17643a;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  line-height: 1.25;
+}
+
+.health-overall,
+.checkpoint-level {
+  padding-block: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.mastery-blocks,
+.checkpoint-content {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.mastery-block {
+  border-top: 1px solid #d9ddd8;
+  padding-top: 1.25rem;
+}
+
+.mastery-block:target {
+  border-top-color: #17643a;
+}
+
+.evidence-panel [id] {
+  scroll-margin-top: 2rem;
+}
+
+.evidence-list {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.evidence-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 0.5rem 1.25rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid #e7e3da;
+}
+
+.evidence-panel-header,
+.evidence-pagination,
+.checkpoint-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.evidence-panel-header {
+  align-items: flex-start;
+}
+
+.evidence-panel-header > div:first-child {
+  flex: 1 1 20rem;
+}
+
+.evidence-filter {
+  display: grid;
+  gap: 0.35rem;
+  min-width: min(12rem, 100%);
+  max-width: 100%;
+}
+
+.evidence-filter label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.evidence-filter select {
+  font: inherit;
+  color: #17211b;
+  background: white;
+  border: 1px solid #9aa39d;
+  border-radius: 0.55rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  max-width: 100%;
+}
+
+.evidence-filter select:focus-visible {
+  outline: 3px solid #efb744;
+  outline-offset: 2px;
+}
+
+.error-entries li {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.evidence-pagination {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d9ddd8;
+}
+
+.checkpoint-actions {
+  justify-content: flex-start;
+}
+
+.checkpoint-result,
+.advancement-panel {
+  border-left: 3px solid #17643a;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background: #eef4ee;
+  padding: 1rem;
+}
+
+.reinforcement-panel .evidence-list li {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.review-queue {
+  padding-top: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .evidence-skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  .evidence-workspace {
+    padding: 1.5rem 1rem 3rem;
+    gap: 1rem;
+  }
+
+  .evidence-skill-grid,
+  .evidence-list li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evidence-filter {
+    width: 100%;
+  }
+
+  .evidence-pagination button,
+  .checkpoint-actions button {
+    flex: 1 1 100%;
+  }
+
+  .evidence-pagination span {
+    text-align: center;
+    width: 100%;
+  }
+}

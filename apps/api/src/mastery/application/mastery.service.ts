@@ -1,6 +1,7 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../common/database/prisma.service';
+import { documentContextSignature } from '../../curriculum/domain/context-signature.js';
 import type { Clock } from '../domain/clock.port';
 import { SystemClock } from '../domain/clock.port';
 import { MasteryCalculator } from '../domain/mastery-calculator';
@@ -286,6 +287,14 @@ export class MasteryService {
         learnerId,
         ...(options.skill ? { skill: options.skill } : {}),
       },
+      include: {
+        events: {
+          orderBy: [{ createdAt: 'desc' }, { id: 'desc' }], take: 1,
+          include: { attempt: { include: { activity: { include: {
+            lessonVersion: { include: { contentBlocks: true } },
+          } } } } },
+        },
+      },
     });
 
     const candidates: ReviewCandidate[] = records.map((r) => ({
@@ -298,7 +307,15 @@ export class MasteryService {
       state: r.state,
     }));
 
-    return this.scheduler.selectReviewItems(candidates, options);
+    return this.scheduler.selectReviewItems(candidates, options).map((item) => {
+      const activity = records.find((record) => record.id === item.id)?.events?.[0]?.attempt.activity;
+      return {
+        ...item,
+        previousContextSignatures: activity?.lessonVersion.contentBlocks
+          .filter((block) => activity.contentReferences.includes(block.slug))
+          .map((block) => documentContextSignature(block.type, block.text)) ?? [],
+      };
+    });
   }
 
   async getMasteryRecords(learnerId: string, skill?: ActivityType) {

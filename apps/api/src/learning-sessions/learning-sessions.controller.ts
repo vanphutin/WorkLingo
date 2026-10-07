@@ -7,6 +7,7 @@ import type {
   ActivityAttemptDto,
   LearnerActivityDto,
   LearningSessionDto,
+  SessionAvailabilityDto,
 } from './application/learning-session.types.js';
 // Runtime import is required so Nest can emit DTO metadata for ValidationPipe.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -15,6 +16,7 @@ import {
   ActivityAttemptResponseDto,
   LearnerActivityResponseDto,
   LearningSessionResponseDto,
+  SessionAvailabilityResponseDto,
 } from './dto/learning-session-response.dto.js';
 // Runtime import is required so Nest can emit DTO metadata for ValidationPipe.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -30,6 +32,13 @@ export class LearningSessionsController {
   @ApiCreatedResponse({ type: LearningSessionResponseDto })
   create(@Req() request: AuthenticatedRequest, @Body() input: CreateLearningSessionDto): Promise<LearningSessionDto> {
     return this.sessions.createSession(request.authUser.id, input.durationMinutes, input.clientSessionId);
+  }
+
+  @Get('learning-sessions/availability')
+  @ApiOperation({ summary: 'Get session duration availability for the published mission' })
+  @ApiOkResponse({ type: SessionAvailabilityResponseDto })
+  getAvailability(@Req() request: AuthenticatedRequest): Promise<SessionAvailabilityDto> {
+    return this.sessions.getAvailability(request.authUser.id);
   }
 
   @Get('learning-sessions/:id')

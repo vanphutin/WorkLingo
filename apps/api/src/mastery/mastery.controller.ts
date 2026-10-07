@@ -7,11 +7,23 @@ import { MasteryService } from './application/mastery.service.js';
 import { ErrorBankQueryDto } from './dto/error-bank-query.dto.js';
 import { ErrorBankResponseDto } from './dto/error-bank-response.dto.js';
 import { MemoryHealthResponseDto } from './dto/memory-health-response.dto.js';
+import { MasteryMapService } from './application/mastery-map.service.js';
+import { MasteryMapResponseDto } from './dto/mastery-map-response.dto.js';
 
 @ApiTags('mastery')
 @Controller('me')
 export class MasteryController {
-  constructor(@Inject(MasteryService) private readonly mastery: MasteryService) {}
+  constructor(
+    @Inject(MasteryService) private readonly mastery: MasteryService,
+    @Inject(MasteryMapService) private readonly map: MasteryMapService,
+  ) {}
+
+  @Get('mastery-map')
+  @ApiOperation({ summary: 'Get current curriculum blocks with learner-owned four-skill evidence' })
+  @ApiOkResponse({ type: MasteryMapResponseDto })
+  getMap(@Req() request: AuthenticatedRequest): Promise<MasteryMapResponseDto> {
+    return this.map.getMap(request.authUser.id);
+  }
 
   @Get('error-bank')
   @ApiOperation({ summary: 'Get paginated Error Bank entries for the authenticated learner' })

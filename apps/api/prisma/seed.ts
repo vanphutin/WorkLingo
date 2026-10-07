@@ -2,11 +2,13 @@ import { PrismaClient } from '@prisma/client';
 
 import { seedFoundationCurriculum } from '../src/curriculum/infrastructure/seed-foundation.js';
 import { seedContentAdmin } from '../src/users/infrastructure/seed-content-admin.js';
+import { seedWorkplaceTransferCurriculum } from '../src/curriculum/infrastructure/seed-workplace-transfer.js';
 
 async function main(): Promise<void> {
   const database = new PrismaClient();
   try {
     await seedFoundationCurriculum(database);
+    await seedWorkplaceTransferCurriculum(database);
     await seedContentAdmin(database);
     console.info('Foundation curriculum and content admin seed complete.');
   } finally {

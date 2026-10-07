@@ -37,3 +37,11 @@ export class LearnerActivityResponseDto {
   @ApiProperty({ isArray: true, type: String }) skills!: string[];
   @ApiProperty() slug!: string;
 }
+
+export class SessionAvailabilityResponseDto {
+  @ApiProperty({ additionalProperties: true, type: 'object' }) mission!: { id: string; title: string };
+  @ApiProperty({ format: 'uuid' }) lessonVersionId!: string;
+  @ApiProperty({ example: [45, 60, 90, 120, 150], isArray: true, type: Number }) supportedDurations!: number[];
+  @ApiProperty({ example: [45, 60], isArray: true, type: Number }) availableDurations!: number[];
+  @ApiProperty({ example: 60 }) defaultDurationMinutes!: number;
+}
