@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 
+import { AiGatewayModule } from './ai-gateway/ai-gateway.module.js';
 import { AuthModule } from './auth/auth.module';
 import { AppConfigModule } from './common/config/app-config.module';
 import { DatabaseModule } from './common/database/database.module';
@@ -15,6 +16,7 @@ import { ProgressionModule } from './progression/progression.module.js';
 @Module({
   imports: [
     AppConfigModule,
+    AiGatewayModule,
     DatabaseModule,
     HealthModule,
     AuthModule,
