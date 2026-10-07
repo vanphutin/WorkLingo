@@ -528,5 +528,60 @@ describe('ApiClient', () => {
         ]),
       });
     });
+
+    it('fetches session availability and validates the response payload', async () => {
+      const mockAvailability = {
+        mission: {
+          id: 'c3d4e5f6-a7b8-49c0-81e2-3a4b5c6d7e8f',
+          title: 'Introduce yourself to a new colleague',
+        },
+        lessonVersionId: 'b2c3d4e5-f6a7-4b9c-8d1e-2f3a4b5c6d7e',
+        supportedDurations: [45, 60, 90, 120, 150],
+        availableDurations: [45, 60],
+        defaultDurationMinutes: 60,
+      };
+
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(JSON.stringify(mockAvailability), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+
+      const client = new ApiClient('/api/v1');
+      const availability = await client.getSessionAvailability();
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/v1/learning-sessions/availability',
+        expect.objectContaining({ method: 'GET' }),
+      );
+      expect(availability).toEqual(mockAvailability);
+    });
+
+    it('preserves availableDurations on ApiError when session creation returns 422', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            code: 'INSUFFICIENT_CONTENT_FOR_DURATION',
+            message: 'Lesson does not contain enough activities for 90 minutes',
+            statusCode: 422,
+            availableDurations: [45, 60],
+          }),
+          { status: 422, headers: { 'Content-Type': 'application/json' } },
+        ),
+      );
+
+      const client = new ApiClient('/api/v1');
+      try {
+        await client.createSession('client-session-123', 90);
+        expect.unreachable('Should have thrown an ApiError');
+      } catch (err) {
+        expect(err).toBeInstanceOf(ApiError);
+        const apiError = err as ApiError;
+        expect(apiError.code).toBe('INSUFFICIENT_CONTENT_FOR_DURATION');
+        expect(apiError.status).toBe(422);
+        expect(apiError.availableDurations).toEqual([45, 60]);
+      }
+    });
   });
 });

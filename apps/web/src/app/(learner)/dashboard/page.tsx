@@ -4,11 +4,16 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
-import { apiClient, type LearnerProgressDto } from '../../../lib/api/api-client';
+import {
+  apiClient,
+  type LearnerProgressDto,
+  type SessionAvailabilityDto,
+} from '../../../lib/api/api-client';
 
 export default function DashboardPage() {
   const router = useRouter();
   const [progress, setProgress] = useState<LearnerProgressDto | null>(null);
+  const [availability, setAvailability] = useState<SessionAvailabilityDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -16,8 +21,12 @@ export default function DashboardPage() {
     try {
       setIsLoading(true);
       setError(null);
-      const data = await apiClient.getProgress();
-      setProgress(data);
+      const [progressData, availabilityData] = await Promise.all([
+        apiClient.getProgress(),
+        apiClient.getSessionAvailability(),
+      ]);
+      setProgress(progressData);
+      setAvailability(availabilityData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load progress data');
     } finally {
@@ -37,7 +46,8 @@ export default function DashboardPage() {
   return (
     <DashboardView
       progress={progress}
-      nextMissionTitle="Introduce yourself to a new colleague"
+      availableDurations={availability?.availableDurations ?? []}
+      nextMissionTitle={availability?.mission.title ?? 'Introduce yourself to a new colleague'}
       onStartSession={handleStartSession}
       isLoading={isLoading}
       error={error}

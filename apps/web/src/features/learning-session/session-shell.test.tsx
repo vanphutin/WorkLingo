@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type {
@@ -521,5 +521,165 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.getByRole('heading', { name: 'Session Completed!' })).toBeInTheDocument();
     expect(document.querySelector('[aria-current="step"]')).not.toBeInTheDocument();
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+  });
+
+  it('correctly displays 45-minute session with 3 blocks and dynamic duration label in support panel', () => {
+    const session45: LearningSessionDto = {
+      id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
+      clientSessionId: 'f1e2d3c4-b5a6-7980-1234-56789abcdef0',
+      lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+      durationMinutes: 45,
+      status: 'in_progress',
+      currentCheckpoint: 0,
+      mission: {
+        id: 'c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f',
+        title: 'Introduce yourself to a new colleague',
+      },
+      plan: {
+        durationMinutes: 45,
+        missionId: 'c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f',
+        lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+        blocks: [
+          {
+            type: 'readDecode',
+            order: 1,
+            targetMinutes: 15,
+            activityIds: ['d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90'],
+            skills: ['reading'],
+          },
+          {
+            type: 'listenReason',
+            order: 2,
+            targetMinutes: 15,
+            activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+            skills: ['listening'],
+          },
+          {
+            type: 'respond',
+            order: 3,
+            targetMinutes: 15,
+            activityIds: [
+              '07a8b9c0-d1e2-3f4a-5b6c-7d8e9f0a1b2c',
+              '18b9c0d1-e2f3-4a5b-6c7d-8e9f0a1b2c3d',
+            ],
+            skills: ['speaking', 'writing'],
+          },
+        ],
+      },
+      blocks: [
+        {
+          id: 'b-1',
+          type: 'readDecode',
+          order: 1,
+          targetMinutes: 15,
+          activityIds: ['d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90'],
+          status: 'available',
+        },
+        {
+          id: 'b-2',
+          type: 'listenReason',
+          order: 2,
+          targetMinutes: 15,
+          activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+          status: 'available',
+        },
+        {
+          id: 'b-3',
+          type: 'respond',
+          order: 3,
+          targetMinutes: 15,
+          activityIds: [
+            '07a8b9c0-d1e2-3f4a-5b6c-7d8e9f0a1b2c',
+            '18b9c0d1-e2f3-4a5b-6c7d-8e9f0a1b2c3d',
+          ],
+          status: 'available',
+        },
+      ],
+      attempts: [],
+    };
+
+    render(
+      <SessionShell
+        session={session45}
+        currentActivity={mockReadingActivity}
+        onSubmitAttempt={vi.fn()}
+        onPauseSession={vi.fn()}
+        onResumeSession={vi.fn()}
+      />,
+    );
+
+    const nav = screen.getByRole('navigation', { name: /Session blocks progress/i });
+    const steps = within(nav).getAllByRole('listitem');
+    expect(steps).toHaveLength(3);
+    expect(screen.getByText('45 minutes total (15 minutes per block)')).toBeInTheDocument();
+    expect(screen.getByText(/Block 1 of 3/)).toBeInTheDocument();
+  });
+
+  it('tracks active block accurately using cumulative checkpoints rather than block type matching', () => {
+    const actIds = [
+      '11111111-1111-4111-8111-111111111111',
+      '22222222-2222-4222-8222-222222222222',
+      '33333333-3333-4333-8333-333333333333',
+      '44444444-4444-4444-8444-444444444444',
+      '55555555-5555-4555-8555-555555555555',
+      '66666666-6666-4666-8666-666666666666',
+    ] as const;
+    const session90: LearningSessionDto = {
+      id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
+      clientSessionId: 'f1e2d3c4-b5a6-7980-1234-56789abcdef0',
+      lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+      durationMinutes: 90,
+      status: 'in_progress',
+      currentCheckpoint: 3,
+      mission: {
+        id: 'c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f',
+        title: 'Introduce yourself to a new colleague',
+      },
+      plan: {
+        durationMinutes: 90,
+        missionId: 'c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f',
+        lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+        blocks: [
+          { type: 'activate', order: 1, targetMinutes: 15, activityIds: [actIds[0]], skills: ['reading'] },
+          { type: 'readDecode', order: 2, targetMinutes: 15, activityIds: [actIds[1]], skills: ['reading'] },
+          { type: 'listenReason', order: 3, targetMinutes: 15, activityIds: [actIds[2]], skills: ['listening'] },
+          { type: 'readDecode', order: 4, targetMinutes: 15, activityIds: [actIds[3]], skills: ['reading'] },
+          { type: 'listenReason', order: 5, targetMinutes: 15, activityIds: [actIds[4]], skills: ['listening'] },
+          { type: 'respond', order: 6, targetMinutes: 15, activityIds: [actIds[5]], skills: ['speaking', 'writing'] },
+        ],
+      },
+      blocks: [
+        { id: 'b-1', type: 'activate', order: 1, targetMinutes: 15, activityIds: [actIds[0]], status: 'completed' },
+        { id: 'b-2', type: 'readDecode', order: 2, targetMinutes: 15, activityIds: [actIds[1]], status: 'completed' },
+        { id: 'b-3', type: 'listenReason', order: 3, targetMinutes: 15, activityIds: [actIds[2]], status: 'completed' },
+        { id: 'b-4', type: 'readDecode', order: 4, targetMinutes: 15, activityIds: [actIds[3]], status: 'available' },
+        { id: 'b-5', type: 'listenReason', order: 5, targetMinutes: 15, activityIds: [actIds[4]], status: 'available' },
+        { id: 'b-6', type: 'respond', order: 6, targetMinutes: 15, activityIds: [actIds[5]], status: 'available' },
+      ],
+      attempts: [],
+    };
+
+    const secondReadActivity: LearnerActivityDto = {
+      ...mockReadingActivity,
+      id: actIds[3],
+    };
+
+    render(
+      <SessionShell
+        session={session90}
+        currentActivity={secondReadActivity}
+        onSubmitAttempt={vi.fn()}
+        onPauseSession={vi.fn()}
+        onResumeSession={vi.fn()}
+      />,
+    );
+
+    const nav = screen.getByRole('navigation', { name: /Session blocks progress/i });
+    const steps = within(nav).getAllByRole('listitem');
+    expect(steps).toHaveLength(6);
+    expect(steps[3]).toHaveAttribute('aria-current', 'step');
+    expect(steps[1]).not.toHaveAttribute('aria-current', 'step');
+    expect(steps[1]).toHaveClass('completed');
+    expect(screen.getByText(/Block 4 of 6/)).toBeInTheDocument();
   });
 });

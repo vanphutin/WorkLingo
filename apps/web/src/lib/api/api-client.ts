@@ -4,9 +4,11 @@ import {
   contentImportSchema,
   contentIssueSchema,
   contentStatusSchema,
+  createCheckpointAssessmentSchema,
   generateAudioResultSchema,
   jobDtoSchema,
   publishContentImportResultSchema,
+  sessionAvailabilitySchema,
   sessionDurationSchema,
   sessionPlanSchema,
   validateContentImportResultSchema,
@@ -14,22 +16,33 @@ import {
   type AuthUser,
   type ContentImportDto,
   type ContentPreviewDto,
+  type CreateCheckpointAssessment,
   type GenerateAudioInput,
   type GenerateAudioResult,
   type JobDto,
   type PublishContentImportInput,
   type PublishContentImportResult,
+  type SessionAvailabilityDto,
   type UpdateContentSourceInput,
   type ValidateContentImportInput,
   type ValidateContentImportResult,
 } from '@worklingo/contracts';
 import { z } from 'zod';
+import {
+  checkpointAssessmentSchema, progressionSummarySchema,
+  errorBankSchema, masteryMapSchema, memoryHealthSchema,
+  type CheckpointAssessmentDto, type ProgressionSummaryDto,
+  type ErrorBankDto, type ErrorBankQuery, type MasteryMapDto, type MemoryHealthDto,
+} from './learner-schemas';
+export type { CheckpointAssessmentDto, ProgressionSummaryDto, ErrorBankDto, ErrorBankQuery, LearningSkill, MasteryMapDto, MemoryHealthDto } from './learner-schemas';
+export type { SessionAvailabilityDto } from '@worklingo/contracts';
 
 export class ApiError extends Error {
   readonly code: string;
   readonly status: number;
   readonly details: readonly unknown[];
   readonly requestId: string | null;
+  readonly availableDurations: readonly number[] | undefined;
 
   constructor(options: {
     message: string;
@@ -37,6 +50,7 @@ export class ApiError extends Error {
     status: number;
     details?: readonly unknown[];
     requestId?: string | null;
+    availableDurations?: readonly number[] | undefined;
   }) {
     super(options.message);
     this.name = 'ApiError';
@@ -44,6 +58,7 @@ export class ApiError extends Error {
     this.status = options.status;
     this.details = options.details ?? [];
     this.requestId = options.requestId ?? null;
+    this.availableDurations = options.availableDurations;
   }
 }
 
@@ -53,10 +68,12 @@ const errorEnvelopeSchema = z.object({
     message: z.string().optional(),
     details: z.array(z.unknown()).optional(),
     requestId: z.string().optional(),
+    availableDurations: z.array(z.number()).optional(),
   }).optional(),
   code: z.string().optional(),
   message: z.union([z.string(), z.array(z.string())]).optional(),
   statusCode: z.number().optional(),
+  availableDurations: z.array(z.number()).optional(),
 });
 
 export const activityAttemptDtoSchema = z.object({
@@ -196,9 +213,11 @@ export class ApiClient {
       let message = `Request failed with status ${response.status}`;
       let details: unknown[] = [];
       let requestId: string | null = null;
+      let availableDurations: readonly number[] | undefined;
 
       if (parsedError.success && parsedError.data) {
         const data = parsedError.data;
+        availableDurations = data.availableDurations ?? data.error?.availableDurations;
         if (data.error) {
           code = data.error.code ?? code;
           message = data.error.message ?? message;
@@ -220,6 +239,7 @@ export class ApiClient {
         status: response.status,
         details,
         requestId,
+        availableDurations,
       });
     }
 
@@ -229,6 +249,14 @@ export class ApiClient {
 
   async getCurrentUser(): Promise<AuthUser> {
     return this.request('/me', { method: 'GET' }, authUserSchema);
+  }
+
+  async getSessionAvailability(): Promise<SessionAvailabilityDto> {
+    return this.request(
+      '/learning-sessions/availability',
+      { method: 'GET' },
+      sessionAvailabilitySchema,
+    );
   }
 
   async createSession(clientSessionId: string, durationMinutes = 60): Promise<LearningSessionDto> {
@@ -279,6 +307,38 @@ export class ApiClient {
 
   async getProgress(): Promise<LearnerProgressDto> {
     return this.request('/me/progress', { method: 'GET' }, learnerProgressDtoSchema);
+  }
+
+  async getMasteryMap(): Promise<MasteryMapDto> {
+    return this.request('/me/mastery-map', { method: 'GET' }, masteryMapSchema);
+  }
+
+  async getProgression(): Promise<ProgressionSummaryDto> {
+    return this.request('/me/progression', { method: 'GET' }, progressionSummarySchema);
+  }
+
+  async assessCheckpoint(input: CreateCheckpointAssessment): Promise<CheckpointAssessmentDto> {
+    return this.request('/me/checkpoint-assessments', {
+      method: 'POST', body: JSON.stringify(createCheckpointAssessmentSchema.parse(input)),
+    }, checkpointAssessmentSchema);
+  }
+
+  async confirmCheckpoint(id: string): Promise<ProgressionSummaryDto> {
+    return this.request(`/me/checkpoint-assessments/${z.uuid().parse(id)}/confirm`, {
+      method: 'POST',
+    }, progressionSummarySchema);
+  }
+
+  async getMemoryHealth(): Promise<MemoryHealthDto> {
+    return this.request('/me/memory-health', { method: 'GET' }, memoryHealthSchema);
+  }
+
+  async getErrorBank(query: ErrorBankQuery = {}): Promise<ErrorBankDto> {
+    const params = new URLSearchParams();
+    if (query.skill) params.set('skill', query.skill);
+    params.set('page', String(query.page ?? 1));
+    params.set('limit', String(query.limit ?? 20));
+    return this.request(`/me/error-bank?${params}`, { method: 'GET' }, errorBankSchema);
   }
 
   async listContentImports(): Promise<ContentImportDto[]> {

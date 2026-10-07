@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
 
 interface DashboardViewProps {
   readonly progress: LearnerProgressDto | null;
   readonly nextMissionTitle?: string;
+  readonly availableDurations?: readonly number[];
   readonly onStartSession: (
     durationMinutes: number,
     clientSessionId: string,
@@ -16,28 +18,71 @@ interface DashboardViewProps {
   readonly onRetry?: () => void;
 }
 
+const ALL_DURATIONS = [45, 60, 90, 120, 150] as const;
+const DEFAULT_DURATIONS = [45, 60] as const;
+
+function getDurationLabel(duration: number, isAvailable: boolean): string {
+  if (!isAvailable) {
+    return `${duration} minutes (Not enough practice available)`;
+  }
+  if (duration === 60) return '60 minutes (Foundation default)';
+  if (duration === 45) return '45 minutes (Express)';
+  if (duration === 90) return '90 minutes (Deep Dive)';
+  if (duration === 120) return '120 minutes (Intensive)';
+  if (duration === 150) return '150 minutes (Mastery)';
+  return `${duration} minutes`;
+}
+
 export function DashboardView({
   progress,
   nextMissionTitle = 'Introduce yourself to a new colleague',
+  availableDurations = DEFAULT_DURATIONS,
   onStartSession,
   isLoading = false,
   error = null,
   onRetry,
 }: DashboardViewProps) {
-  const [selectedDuration, setSelectedDuration] = useState<number>(60);
+  const [availabilityOverride, setAvailabilityOverride] = useState<{
+    source: readonly number[];
+    durations: readonly number[];
+  } | null>(null);
+  const availableDurationsState = availabilityOverride?.source === availableDurations
+    ? availabilityOverride.durations : availableDurations;
+  const [preferredDuration, setSelectedDuration] = useState<number>(60);
+  const selectedDuration = availableDurationsState.includes(preferredDuration)
+    ? preferredDuration
+    : availableDurationsState.includes(60) ? 60 : availableDurationsState[0] ?? 60;
   const [isStarting, setIsStarting] = useState(false);
   const [startError, setStartError] = useState<string | null>(null);
-  const pendingSessionId = useRef<string | null>(null);
+  const pendingSessionId = useRef<{ id: string; duration: number } | null>(null);
+  useEffect(() => {
+    if (pendingSessionId.current?.duration !== selectedDuration) pendingSessionId.current = null;
+  }, [selectedDuration]);
 
   const handleStart = async () => {
+    if (isStarting || !availableDurationsState.includes(selectedDuration)) return;
     try {
       setIsStarting(true);
       setStartError(null);
-      const clientSessionId = pendingSessionId.current ?? crypto.randomUUID();
-      pendingSessionId.current = clientSessionId;
+      const clientSessionId = pendingSessionId.current?.duration === selectedDuration
+        ? pendingSessionId.current.id : crypto.randomUUID();
+      pendingSessionId.current = { id: clientSessionId, duration: selectedDuration };
       await onStartSession(selectedDuration, clientSessionId);
       pendingSessionId.current = null;
     } catch (err) {
+      if (err && typeof err === 'object' && 'status' in err && err.status === 422) {
+        pendingSessionId.current = null;
+      }
+      if (
+        err &&
+        typeof err === 'object' &&
+        'availableDurations' in err &&
+        Array.isArray((err as { availableDurations?: unknown }).availableDurations)
+      ) {
+        pendingSessionId.current = null;
+        const freshAvailable = (err as { availableDurations: number[] }).availableDurations;
+        setAvailabilityOverride({ source: availableDurations, durations: freshAvailable });
+      }
       setStartError(err instanceof Error ? err.message : 'Failed to create session');
     } finally {
       setIsStarting(false);
@@ -76,8 +121,9 @@ export function DashboardView({
         <span className="eyebrow">Workplace English — Foundation Slice</span>
         <h1 className="dashboard-title">Learner Dashboard</h1>
         <p className="dashboard-subtitle">
-          Structured 60-minute workplace sessions covering listening, speaking, reading, and writing.
+          Structured workplace sessions covering listening, speaking, reading, and writing.
         </p>
+        <Link href="/mastery">View Mastery Map, Memory Health and Error Bank</Link>
       </header>
 
       {startError && (
@@ -110,21 +156,16 @@ export function DashboardView({
                   pendingSessionId.current = null;
                   setSelectedDuration(Number(e.target.value));
                 }}
-                disabled={isStarting}
+                disabled={isStarting || availableDurationsState.length === 0}
               >
-                <option value={60}>60 minutes (Foundation default)</option>
-                <option value={45} disabled>
-                  45 minutes (available in Increment 3)
-                </option>
-                <option value={90} disabled>
-                  90 minutes (available in Increment 3)
-                </option>
-                <option value={120} disabled>
-                  120 minutes (available in Increment 3)
-                </option>
-                <option value={150} disabled>
-                  150 minutes (available in Increment 3)
-                </option>
+                {ALL_DURATIONS.map((duration) => {
+                  const isAvailable = availableDurationsState.includes(duration);
+                  return (
+                    <option key={duration} value={duration} disabled={!isAvailable}>
+                      {getDurationLabel(duration, isAvailable)}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -132,11 +173,14 @@ export function DashboardView({
               type="button"
               className="primary-action-button"
               onClick={handleStart}
-              disabled={isStarting}
+              disabled={isStarting || !availableDurationsState.includes(selectedDuration)}
             >
-              {isStarting ? 'Starting session…' : 'Start 60-Minute Session'}
+              {isStarting ? 'Starting session…' : `Start ${selectedDuration}-Minute Session`}
             </button>
           </div>
+          {availableDurationsState.length === 0 && (
+            <p role="status">No sessions are available yet. Please check again later.</p>
+          )}
         </section>
 
         <section className="dashboard-card progress-card" aria-labelledby="progress-heading">

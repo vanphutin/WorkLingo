@@ -148,11 +148,27 @@ export function SessionShell({
     }
   };
 
-  const currentBlockType =
-    currentActivity?.learningBlock ?? session.plan.blocks.at(-1)?.type ?? 'respond';
-  const currentBlockIndex = session.plan.blocks.findIndex(
-    (b) => b.type === currentBlockType,
+  let accumulated = 0;
+  const blockRanges = session.plan.blocks.map((block) => {
+    const start = accumulated;
+    const count = block.activityIds.length;
+    accumulated += count;
+    return { ...block, start, end: accumulated };
+  });
+
+  const activeBlockIndex = blockRanges.findIndex(({ start, end }) =>
+    session.currentCheckpoint >= start && session.currentCheckpoint < end,
   );
+
+  const resolvedActiveBlockIndex =
+    activeBlockIndex >= 0
+      ? activeBlockIndex
+      : Math.min(session.plan.blocks.length - 1, Math.max(0, session.plan.blocks.length - 1));
+
+  const currentBlockType =
+    currentActivity?.learningBlock ??
+    session.plan.blocks[resolvedActiveBlockIndex]?.type ??
+    'respond';
 
   return (
     <div className="session-layout">
@@ -187,17 +203,21 @@ export function SessionShell({
           </div>}
         </div>
 
-        {/* Four Block Progress Bar */}
+        {/* Blocks Progress Bar */}
         <nav className="blocks-progress-nav" aria-label="Session blocks progress">
           <ol className="blocks-progress-list">
-            {session.plan.blocks.map((block, idx) => {
-              const isActive = !isCompleted && block.type === currentBlockType;
-              const persistedBlock = session.blocks.find((item) => item.type === block.type);
+            {blockRanges.map((block, idx) => {
+              const isActive = !isCompleted && idx === activeBlockIndex;
+              const persistedBlock =
+                session.blocks.find((item) => item.order === block.order) ??
+                session.blocks[idx];
               const isPassed =
-                isCompleted || persistedBlock?.status === 'completed' || currentBlockIndex > idx;
+                isCompleted ||
+                persistedBlock?.status === 'completed' ||
+                session.currentCheckpoint >= block.end;
               return (
                 <li
-                  key={block.type}
+                  key={persistedBlock?.id ?? `${block.type}-${block.order}`}
                   className={`block-progress-step ${isActive ? 'active' : ''} ${
                     isPassed ? 'completed' : ''
                   }`}
@@ -237,7 +257,8 @@ export function SessionShell({
             <section className="session-completed-card" aria-label="Session completed">
               <h2>Session Completed!</h2>
               <p>
-                Congratulations on finishing all 4 blocks of this 60-minute workplace session.
+                Congratulations on finishing all {session.plan.blocks.length} blocks of this{' '}
+                {session.durationMinutes}-minute workplace session.
               </p>
               <Link href="/dashboard" className="primary-action-button inline-button">
                 Return to Dashboard
@@ -304,14 +325,14 @@ export function SessionShell({
             <div className="panel-content">
               <div className="info-block">
                 <h3>Duration</h3>
-                <p>60 minutes total (15 minutes per block)</p>
+                <p>{session.durationMinutes} minutes total (15 minutes per block)</p>
               </div>
 
               <div className="info-block">
                 <h3>Current Block</h3>
                 <p>
                   {blockLabels[currentBlockType] ?? currentBlockType} (Block{' '}
-                  {currentBlockIndex + 1} of 4)
+                  {resolvedActiveBlockIndex + 1} of {session.plan.blocks.length})
                 </p>
               </div>
 
