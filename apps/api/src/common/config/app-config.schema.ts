@@ -40,6 +40,11 @@ export interface AppConfig {
   readonly apiPort: number;
   readonly dataDir: string;
   readonly databaseUrl: string;
+  readonly jobs: {
+    readonly leaseMs: number;
+    readonly pollIntervalMs: number;
+    readonly workerEnabled: boolean;
+  };
   readonly sessionSecret: string;
   readonly webPort: number;
 }
@@ -47,6 +52,9 @@ export interface AppConfig {
 const environmentSchema = z.object({
   API_PORT: z.coerce.number().int().min(1).max(65_535).default(4000),
   DATABASE_URL: z.string().min(1),
+  JOB_WORKER_ENABLED: z.enum(['true', 'false']).default('false'),
+  JOB_WORKER_LEASE_MS: z.coerce.number().int().min(5_000).max(300_000).default(30_000),
+  JOB_WORKER_POLL_INTERVAL_MS: z.coerce.number().int().min(100).max(60_000).default(1_000),
   MICROSOFT_SPEECH_KEY: z.string().min(1).optional(),
   MICROSOFT_SPEECH_LANGUAGE: z.string().min(2).default('en-US'),
   MICROSOFT_SPEECH_REGION: z.string().min(1).optional(),
@@ -145,6 +153,11 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
     apiPort: result.data.API_PORT,
     dataDir: path.resolve(result.data.WORKLINGO_DATA_DIR),
     databaseUrl: result.data.DATABASE_URL,
+    jobs: {
+      leaseMs: result.data.JOB_WORKER_LEASE_MS,
+      pollIntervalMs: result.data.JOB_WORKER_POLL_INTERVAL_MS,
+      workerEnabled: result.data.JOB_WORKER_ENABLED === 'true',
+    },
     sessionSecret: result.data.SESSION_SECRET,
     webPort: result.data.WEB_PORT,
   };

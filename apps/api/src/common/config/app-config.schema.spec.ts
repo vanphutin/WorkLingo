@@ -60,6 +60,11 @@ describe('parseAppConfig', () => {
       speechToText: { locale: 'en-US', provider: 'fake' },
       textToSpeech: { provider: 'fake', voice: 'en-US-JennyNeural' },
     });
+    expect(config.jobs).toEqual({
+      leaseMs: 30_000,
+      pollIntervalMs: 1_000,
+      workerEnabled: false,
+    });
   });
 
   it.each([
@@ -102,6 +107,8 @@ describe('parseAppConfig', () => {
     ['WRITING_DRAFT_RETENTION_DAYS', '366'],
     ['RECORDING_MAX_BYTES', '1023'],
     ['RECORDING_MAX_DURATION_SECONDS', '601'],
+    ['JOB_WORKER_POLL_INTERVAL_MS', '99'],
+    ['JOB_WORKER_LEASE_MS', '4999'],
   ] as const)('rejects unsafe %s=%s', (key, value) => {
     expect(() => parseAppConfig({ ...validEnvironment, [key]: value })).toThrow(key);
   });
