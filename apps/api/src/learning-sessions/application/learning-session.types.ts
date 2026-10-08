@@ -8,7 +8,7 @@ export interface ActivityAttemptDto {
   readonly sessionId: string;
   readonly activityId: string;
   readonly clientAttemptId: string;
-  readonly evaluationStatus: 'submitted' | 'evaluated';
+  readonly evaluationStatus: 'submitted' | 'queued' | 'processing' | 'evaluated' | 'evaluation_failed';
   readonly score: number | null;
   readonly feedback: string | null;
   readonly createdAt: string;

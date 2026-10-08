@@ -13,6 +13,7 @@ import { MasteryModule } from './mastery/mastery.module.js';
 import { MediaModule } from './media/media.module.js';
 import { ProgressModule } from './progress/progress.module.js';
 import { ProgressionModule } from './progression/progression.module.js';
+import { TeacherAiModule } from './teacher-ai/teacher-ai.module.js';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ProgressionModule } from './progression/progression.module.js';
     MediaModule,
     ProgressModule,
     ProgressionModule,
+    TeacherAiModule,
   ],
 })
 export class AppModule {}

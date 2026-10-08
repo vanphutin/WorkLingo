@@ -4,9 +4,84 @@ import { foundationMissionFixture } from '@worklingo/test-fixtures';
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import type { MasteryService } from '../../mastery/application/mastery.service.js';
+import type { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { LearningSessionsService } from './learning-sessions.service.js';
 
 describe('LearningSessionsService state transitions', () => {
+  it('queues writing evaluation in the attempt transaction before advancing', async () => {
+    const learnerId = '00000000-0000-4000-8000-000000000001';
+    const sessionId = '00000000-0000-4000-8000-000000000002';
+    const writingId = '00000000-0000-4000-8000-000000000005';
+    const plan = {
+      durationMinutes: 45,
+      missionId: '00000000-0000-4000-8000-000000000010',
+      lessonVersionId: '00000000-0000-4000-8000-000000000011',
+      blocks: [
+        { type: 'readDecode', order: 1, targetMinutes: 15, activityIds: ['00000000-0000-4000-8000-000000000003'], skills: ['reading'] },
+        { type: 'listenReason', order: 2, targetMinutes: 15, activityIds: ['00000000-0000-4000-8000-000000000004'], skills: ['listening'] },
+        { type: 'respond', order: 3, targetMinutes: 15, activityIds: [writingId], skills: ['speaking', 'writing'] },
+      ],
+    };
+    const now = new Date();
+    const created = {
+      id: '00000000-0000-4000-8000-000000000006', learnerId, sessionId,
+      activityId: writingId, clientAttemptId: '00000000-0000-4000-8000-000000000007',
+      rawResponse: { text: 'I will follow up with the customer.' }, normalizedResponse: null,
+      evaluationStatus: 'SUBMITTED', score: null, feedback: null, createdAt: now, updatedAt: now,
+    };
+    const evaluated = { ...created, evaluationStatus: 'QUEUED', normalizedResponse: created.rawResponse };
+    const transaction = {
+      activityAttempt: {
+        create: vi.fn().mockResolvedValue(created),
+        update: vi.fn().mockResolvedValue(evaluated),
+      },
+      learningSession: { updateMany: vi.fn().mockResolvedValue({ count: 1 }) },
+      sessionBlock: { update: vi.fn().mockResolvedValue({}) },
+    };
+    const database = {
+      activityAttempt: { findUnique: vi.fn().mockResolvedValue(null) },
+      activity: { findFirst: vi.fn().mockResolvedValue({
+        id: writingId,
+        lessonVersionId: plan.lessonVersionId,
+        slug: 'write-follow-up',
+        order: 2,
+        activityType: 'writing',
+        learningBlock: 'respond',
+        skills: ['writing'],
+        contentReferences: ['email-1'],
+        languageBlockReferences: ['follow-up'],
+        payload: {
+          prompt: 'Write a follow-up.', sampleAnswer: 'I will follow up tomorrow.',
+          requiredPhrases: ['follow up'], minWords: 5,
+        },
+      }) },
+      learningSession: { findFirst: vi.fn().mockResolvedValue({
+        id: sessionId, learnerId, status: 'IN_PROGRESS', currentCheckpoint: 2,
+        lessonVersionId: plan.lessonVersionId, planSnapshot: plan, attempts: [], blocks: [],
+        mission: { id: plan.missionId, title: 'Workplace follow-up' },
+      }) },
+      $transaction: vi.fn(async (work) => work(transaction)),
+    } as unknown as PrismaService;
+    const enqueue = vi.fn().mockResolvedValue({ id: 'evaluation-job' });
+    const jobs = { enqueue } as unknown as JobDispatcher;
+    const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
+    const service = new LearningSessionsService(database, {} as CurriculumService, mastery, jobs);
+
+    const result = await service.submitAttempt(learnerId, writingId, {
+      clientAttemptId: created.clientAttemptId,
+      sessionId,
+      response: created.rawResponse,
+    });
+
+    expect(enqueue).toHaveBeenCalledWith(expect.objectContaining({
+      idempotencyKey: `evaluate:${created.id}`,
+      payload: { attemptId: created.id },
+      type: 'EVALUATE_ATTEMPT',
+    }), transaction);
+    expect(mastery.recordAttemptEvaluation).not.toHaveBeenCalled();
+    expect(result.evaluationStatus).toBe('queued');
+  });
+
   it('does not overwrite a session that completed after a stale pause read', async () => {
     const sessionId = '018f06f6-4f68-7a72-9411-4bf894341234';
     const learnerId = '018f06f6-4f68-7a72-9411-4bf894345678';

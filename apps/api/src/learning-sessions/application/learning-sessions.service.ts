@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma, type Activity, type ActivityAttempt } from '@prisma/client';
@@ -17,6 +18,7 @@ import {
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
+import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import {
   activitySchema,
   lessonSnapshotSchema,
@@ -46,7 +48,7 @@ type SessionRecord = Prisma.LearningSessionGetPayload<{ include: typeof sessionI
 
 interface Evaluation {
   readonly advance: boolean;
-  readonly evaluationStatus: 'SUBMITTED' | 'EVALUATED';
+  readonly evaluationStatus: 'SUBMITTED' | 'QUEUED' | 'EVALUATED';
   readonly feedback: string;
   readonly normalizedResponse: Prisma.InputJsonValue;
   readonly score: number | null;
@@ -67,6 +69,7 @@ export class LearningSessionsService {
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(MasteryService) private readonly mastery: MasteryService,
+    @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
   ) {}
 
   private async selectCurriculum(learnerId: string) {
@@ -366,16 +369,28 @@ export class LearningSessionsService {
             score: evaluation.score,
           },
         });
-        await this.mastery.recordAttemptEvaluation({
-          attemptId: evaluated.id,
-          evaluationStatus: evaluation.evaluationStatus,
-          languageBlockSlugs: activity.languageBlockReferences,
-          learnerId,
-          lessonVersionId: session.lessonVersionId,
-          score: evaluation.score,
-          skills: activity.skills.length > 0 ? activity.skills : [activity.activityType],
-          tx: transaction,
-        });
+        if (evaluation.evaluationStatus === 'EVALUATED') {
+          await this.mastery.recordAttemptEvaluation({
+            attemptId: evaluated.id,
+            evaluationStatus: evaluation.evaluationStatus,
+            languageBlockSlugs: activity.languageBlockReferences,
+            learnerId,
+            lessonVersionId: session.lessonVersionId,
+            score: evaluation.score,
+            skills: activity.skills.length > 0 ? activity.skills : [activity.activityType],
+            tx: transaction,
+          });
+        }
+        if (evaluation.evaluationStatus === 'QUEUED') {
+          await this.jobs?.enqueue({
+            createdById: learnerId,
+            idempotencyKey: `evaluate:${evaluated.id}`,
+            payload: { attemptId: evaluated.id },
+            resourceId: evaluated.id,
+            resourceType: 'ActivityAttempt',
+            type: 'EVALUATE_ATTEMPT',
+          }, transaction);
+        }
         if (evaluation.advance) {
           const nextCheckpoint = activityIndex + 1;
           const update = await transaction.learningSession.updateMany({
@@ -455,10 +470,13 @@ export class LearningSessionsService {
     if (typeof text !== 'string' || text.trim().length === 0) {
       throw new BadRequestException('A non-empty text response is required');
     }
+    const queued = activity.activityType === 'writing' && this.jobs !== undefined;
     return {
       advance: true,
-      evaluationStatus: 'SUBMITTED',
-      feedback: 'Saved. Advanced speaking and writing feedback is not available yet.',
+      evaluationStatus: queued ? 'QUEUED' : 'SUBMITTED',
+      feedback: queued
+        ? 'Saved. Teacher AI evaluation is queued.'
+        : 'Saved. Advanced speaking and writing feedback is not available yet.',
       normalizedResponse: { text: text.trim() },
       score: null,
     };
@@ -534,7 +552,7 @@ export class LearningSessionsService {
       activityId: attempt.activityId,
       clientAttemptId: attempt.clientAttemptId,
       createdAt: attempt.createdAt.toISOString(),
-      evaluationStatus: attempt.evaluationStatus.toLowerCase() as 'submitted' | 'evaluated',
+      evaluationStatus: attempt.evaluationStatus.toLowerCase() as ActivityAttemptDto['evaluationStatus'],
       feedback: attempt.feedback,
       id: attempt.id,
       learnerId: attempt.learnerId,
