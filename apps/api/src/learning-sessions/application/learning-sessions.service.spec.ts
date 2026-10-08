@@ -35,6 +35,7 @@ describe('LearningSessionsService state transitions', () => {
         create: vi.fn().mockResolvedValue(created),
         update: vi.fn().mockResolvedValue(evaluated),
       },
+      activityDraft: { deleteMany: vi.fn().mockResolvedValue({ count: 1 }) },
       learningSession: { updateMany: vi.fn().mockResolvedValue({ count: 1 }) },
       sessionBlock: { update: vi.fn().mockResolvedValue({}) },
     };

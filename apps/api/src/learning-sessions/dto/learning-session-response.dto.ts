@@ -17,7 +17,7 @@ export class ActivityAttemptResponseDto {
   @ApiProperty({ format: 'uuid' }) id!: string;
   @ApiProperty({ format: 'uuid' }) activityId!: string;
   @ApiProperty({ format: 'uuid' }) clientAttemptId!: string;
-  @ApiProperty({ enum: ['submitted', 'evaluated'] }) evaluationStatus!: string;
+  @ApiProperty({ enum: ['submitted', 'queued', 'processing', 'evaluated', 'evaluation_failed'] }) evaluationStatus!: string;
   @ApiProperty({ nullable: true }) score!: number | null;
   @ApiProperty({ nullable: true }) feedback!: string | null;
   @ApiProperty({ format: 'uuid' }) learnerId!: string;

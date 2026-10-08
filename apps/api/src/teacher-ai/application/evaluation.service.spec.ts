@@ -51,6 +51,41 @@ const languageResult = {
 } as const;
 
 describe('EvaluationService', () => {
+  it('returns only learner-safe evaluation state and retry metadata', async () => {
+    const completedAt = new Date('2026-10-08T00:00:00Z');
+    const database = {
+      activityAttempt: { findFirst: vi.fn().mockResolvedValue({
+        id: writingAttempt.id,
+        evaluationStatus: 'EVALUATED',
+        score: 0.825,
+        evaluationResults: [{
+          completedAt,
+          feedback: languageResult.feedback,
+          score: 0.825,
+          scores: { ...languageResult.scores, pronunciationOrFluency: null },
+        }],
+        recording: null,
+      }) },
+      job: { findFirst: vi.fn() },
+    } as unknown as PrismaService;
+    const service = new EvaluationService(
+      database, {} as LanguageEvaluationPort, {} as MasteryService, { recordingRetentionDays: 7 },
+    );
+
+    await expect(service.getForLearner(writingAttempt.learnerId, writingAttempt.id)).resolves.toEqual({
+      attemptId: writingAttempt.id,
+      completedAt: completedAt.toISOString(),
+      feedback: languageResult.feedback,
+      recording: null,
+      retryable: false,
+      score: 0.825,
+      scores: { ...languageResult.scores, pronunciationOrFluency: null },
+      status: 'evaluated',
+      transcript: null,
+    });
+    expect(database.job.findFirst).not.toHaveBeenCalled();
+  });
+
   it('persists one immutable result and records mastery in the same transaction', async () => {
     const createResult = vi.fn().mockResolvedValue({
       id: '00000000-0000-4000-8000-000000000005', score: 0.825,

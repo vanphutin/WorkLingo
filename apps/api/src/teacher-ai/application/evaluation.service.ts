@@ -2,16 +2,20 @@ import { createHash } from 'node:crypto';
 
 import {
   ConflictException,
+  GoneException,
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { evaluationDtoSchema, type EvaluationDto } from '@worklingo/contracts';
 
 import { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
+import { JobsService } from '../../jobs/application/jobs.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
 import { aggregateEvaluation, resolveFoundationRubric } from '../domain/foundation-rubrics.js';
 
@@ -39,7 +43,88 @@ export class EvaluationService {
     @Inject(LanguageEvaluationPort) private readonly language: LanguageEvaluationPort,
     @Inject(MasteryService) private readonly mastery: MasteryService,
     @Inject(EVALUATION_SERVICE_OPTIONS) private readonly options: EvaluationServiceOptions,
+    @Optional() @Inject(JobsService) private readonly jobs?: JobsService,
   ) {}
+
+  async getForLearner(learnerId: string, attemptId: string): Promise<EvaluationDto> {
+    const attempt = await this.database.activityAttempt.findFirst({
+      where: { id: attemptId, learnerId },
+      include: {
+        evaluationResults: { orderBy: { completedAt: 'desc' }, take: 1 },
+        recording: true,
+      },
+    });
+    if (!attempt) throw new NotFoundException('Evaluation not found');
+    const result = attempt.evaluationResults[0];
+    const failedJob = attempt.evaluationStatus === 'EVALUATION_FAILED'
+      ? await this.database.job.findFirst({
+          where: {
+            resourceId: attempt.id,
+            resourceType: 'ActivityAttempt',
+            status: 'FAILED',
+          },
+          orderBy: { updatedAt: 'desc' },
+          select: { retryable: true, type: true },
+        })
+      : null;
+    const sourceAvailable = failedJob?.type !== 'TRANSCRIBE_SPEECH'
+      || Boolean(attempt.recording
+        && !attempt.recording.deletedAt
+        && !attempt.recording.deletionRequestedAt);
+    return evaluationDtoSchema.parse({
+      attemptId: attempt.id,
+      completedAt: result?.completedAt.toISOString() ?? null,
+      feedback: result?.feedback ?? null,
+      recording: attempt.recording
+        ? {
+            deletedAt: attempt.recording.deletedAt?.toISOString() ?? null,
+            id: attempt.recording.id,
+            retentionUntil: attempt.recording.retentionUntil?.toISOString() ?? null,
+          }
+        : null,
+      retryable: Boolean(failedJob?.retryable && sourceAvailable),
+      score: result?.score ?? attempt.score,
+      scores: result?.scores ?? null,
+      status: attempt.evaluationStatus.toLowerCase(),
+      transcript: attempt.recording?.transcript ?? null,
+    });
+  }
+
+  async retryForLearner(learnerId: string, attemptId: string): Promise<EvaluationDto> {
+    const attempt = await this.database.activityAttempt.findFirst({
+      where: { id: attemptId, learnerId }, include: { recording: true },
+    });
+    if (!attempt) throw new NotFoundException('Evaluation not found');
+    if (attempt.evaluationStatus !== 'EVALUATION_FAILED' || !this.jobs) {
+      throw this.notRetryable();
+    }
+    const failedJob = await this.database.job.findFirst({
+      where: {
+        resourceId: attempt.id,
+        resourceType: 'ActivityAttempt',
+        retryable: true,
+        status: 'FAILED',
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+    if (!failedJob) throw this.notRetryable();
+    if (failedJob.type === 'TRANSCRIBE_SPEECH'
+      && (!attempt.recording
+        || attempt.recording.deletedAt
+        || attempt.recording.deletionRequestedAt)) {
+      throw new GoneException({
+        code: 'RECORDING_EXPIRED',
+        message: 'The recording required for this retry is no longer available.',
+        statusCode: 410,
+      });
+    }
+    await this.jobs.retryJob(failedJob.id, learnerId);
+    await this.database.activityAttempt.updateMany({
+      where: { id: attempt.id, learnerId, evaluationStatus: 'EVALUATION_FAILED' },
+      data: { evaluationStatus: 'QUEUED' },
+    });
+    return this.getForLearner(learnerId, attemptId);
+  }
 
   async evaluateAttempt(attemptId: string): Promise<EvaluationOutcome> {
     const attempt = await this.database.activityAttempt.findUnique({
@@ -184,5 +269,13 @@ export class EvaluationService {
       }
       throw error;
     }
+  }
+
+  private notRetryable(): ConflictException {
+    return new ConflictException({
+      code: 'EVALUATION_NOT_RETRYABLE',
+      message: 'This evaluation cannot be retried.',
+      statusCode: 409,
+    });
   }
 }

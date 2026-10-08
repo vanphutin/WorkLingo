@@ -5,6 +5,7 @@ export type ProviderErrorCode =
   | 'PROVIDER_RESPONSE_INVALID'
   | 'PROVIDER_REFUSED'
   | 'PROVIDER_AUTH_FAILED'
+  | 'RECORDING_EXPIRED'
   | 'INVALID_AUDIO';
 
 export interface ProviderErrorOptions {

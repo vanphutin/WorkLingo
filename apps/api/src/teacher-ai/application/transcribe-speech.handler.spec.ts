@@ -7,6 +7,33 @@ import { describe, expect, it, vi } from 'vitest';
 import { TranscribeSpeechHandler } from './transcribe-speech.handler.js';
 
 describe('TranscribeSpeechHandler', () => {
+  it('marks the attempt failed when retained audio was deleted before transcription', async () => {
+    const updateMany = vi.fn().mockResolvedValue({ count: 1 });
+    const database = {
+      activityAttempt: { updateMany },
+      recording: { findUnique: vi.fn().mockResolvedValue({
+        id: 'recording-id', attemptId: 'attempt-id', deletionRequestedAt: new Date(), deletedAt: null,
+      }) },
+    } as unknown as PrismaService;
+    const handler = new TranscribeSpeechHandler(
+      database,
+      {} as ObjectStorage,
+      {} as SpeechToTextPort,
+      {} as JobDispatcher,
+      { locale: 'en-US' },
+    );
+
+    await expect(handler.handle({
+      attemptNumber: 1, id: 'job-id', maxAttempts: 3,
+      payload: { attemptId: 'attempt-id', recordingId: 'recording-id' },
+      type: 'TRANSCRIBE_SPEECH',
+    })).rejects.toMatchObject({ code: 'RECORDING_EXPIRED', retryable: false });
+    expect(updateMany).toHaveBeenCalledWith({
+      where: { id: 'attempt-id', evaluationStatus: { not: 'EVALUATED' } },
+      data: { evaluationStatus: 'EVALUATION_FAILED' },
+    });
+  });
+
   it('reuses a persisted transcript on retry and only enqueues evaluation', async () => {
     const recording = {
       id: 'recording-id',
@@ -15,7 +42,10 @@ describe('TranscribeSpeechHandler', () => {
       speechMetrics: { accuracy: 0.92, completeness: 0.96, fluency: 0.84 },
       providerName: 'fake-microsoft-speech',
     };
-    const transaction = { activityAttempt: { update: vi.fn() } };
+    const transaction = {
+      activityAttempt: { update: vi.fn() },
+      recording: { findUnique: vi.fn().mockResolvedValue({ deletedAt: null, deletionRequestedAt: null }) },
+    };
     const database = {
       recording: { findUnique: vi.fn().mockResolvedValue(recording) },
       $transaction: vi.fn(async (work) => work(transaction)),

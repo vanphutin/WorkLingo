@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   HttpCode,
   HttpStatus,
   Inject,
@@ -69,5 +70,21 @@ export class RecordingsController {
       body: file?.buffer ?? Buffer.alloc(0),
       mimeType: file?.mimetype ?? 'application/octet-stream',
     });
+  }
+}
+
+@ApiTags('recordings')
+@Controller('recordings')
+export class RecordingControlsController {
+  constructor(@Inject(RecordingsService) private readonly recordings: RecordingsService) {}
+
+  @Delete(':recordingId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete retained recording audio early' })
+  delete(
+    @Req() request: AuthenticatedRequest,
+    @Param('recordingId', ParseUUIDPipe) recordingId: string,
+  ): Promise<void> {
+    return this.recordings.deleteOwned(request.authUser.id, recordingId);
   }
 }

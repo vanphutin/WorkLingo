@@ -1,7 +1,13 @@
-import { Body, Controller, Get, HttpCode, Inject, Param, ParseUUIDPipe, Post, Req } from '@nestjs/common';
+import {
+  Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseUUIDPipe, Post, Put, Req, Res,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import type { WritingDraft } from '@worklingo/contracts';
+import type { Response } from 'express';
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
+import { ActivityDraftsService } from './application/activity-drafts.service.js';
+import { LearnerAudioService } from './application/learner-audio.service.js';
 import { LearningSessionsService } from './application/learning-sessions.service.js';
 import type {
   ActivityAttemptDto,
@@ -21,11 +27,64 @@ import {
 // Runtime import is required so Nest can emit DTO metadata for ValidationPipe.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { SubmitAttemptDto } from './dto/submit-attempt.dto.js';
+// Runtime import is required so Nest can emit DTO metadata for ValidationPipe.
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { SaveActivityDraftDto } from './dto/save-activity-draft.dto.js';
 
 @ApiTags('learning sessions')
 @Controller()
 export class LearningSessionsController {
-  constructor(@Inject(LearningSessionsService) private readonly sessions: LearningSessionsService) {}
+  constructor(
+    @Inject(LearningSessionsService) private readonly sessions: LearningSessionsService,
+    @Inject(ActivityDraftsService) private readonly drafts: ActivityDraftsService,
+    @Inject(LearnerAudioService) private readonly audio: LearnerAudioService,
+  ) {}
+
+  @Get('learning-sessions/:id/activities/:activityId/draft')
+  getDraft(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('activityId', ParseUUIDPipe) activityId: string,
+  ): Promise<WritingDraft | null> {
+    return this.drafts.get(request.authUser.id, id, activityId);
+  }
+
+  @Put('learning-sessions/:id/activities/:activityId/draft')
+  saveDraft(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('activityId', ParseUUIDPipe) activityId: string,
+    @Body() input: SaveActivityDraftDto,
+  ): Promise<WritingDraft> {
+    return this.drafts.save({
+      activityId, expectedRevision: input.expectedRevision, learnerId: request.authUser.id,
+      sessionId: id, text: input.text,
+    });
+  }
+
+  @Delete('learning-sessions/:id/activities/:activityId/draft')
+  @HttpCode(204)
+  deleteDraft(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('activityId', ParseUUIDPipe) activityId: string,
+  ): Promise<void> {
+    return this.drafts.delete(request.authUser.id, id, activityId);
+  }
+
+  @Get('learning-sessions/:id/activities/:activityId/audio')
+  async streamActivityAudio(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('activityId', ParseUUIDPipe) activityId: string,
+    @Res() response: Response,
+  ): Promise<void> {
+    const audio = await this.audio.getActivityAudio(request.authUser.id, id, activityId);
+    response.setHeader('Content-Type', audio.mimeType);
+    response.setHeader('Content-Length', audio.byteSize);
+    response.setHeader('Accept-Ranges', 'bytes');
+    response.end(audio.body);
+  }
 
   @Post('learning-sessions')
   @ApiOperation({ summary: 'Create an idempotent 60-minute learning session' })

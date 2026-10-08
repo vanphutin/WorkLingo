@@ -390,6 +390,9 @@ export class LearningSessionsService {
             resourceType: 'ActivityAttempt',
             type: 'EVALUATE_ATTEMPT',
           }, transaction);
+          await transaction.activityDraft.deleteMany({
+            where: { activityId, learnerId, sessionId: session.id },
+          });
         }
         if (evaluation.advance) {
           const nextCheckpoint = activityIndex + 1;

@@ -3,6 +3,7 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 
 import { SpeechToTextPort } from '../../ai-gateway/domain/speech-to-text.port.js';
+import { ProviderError } from '../../ai-gateway/domain/provider-errors.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
@@ -32,12 +33,34 @@ export class TranscribeSpeechHandler implements JobHandler {
 
   async handle(job: ClaimedJob): Promise<Readonly<Record<string, unknown>>> {
     const payload = payloadSchema.parse(job.payload);
+    try {
+      return await this.process(payload);
+    } catch (error) {
+      const canRetry = error instanceof ProviderError
+        && error.retryable
+        && job.attemptNumber < job.maxAttempts;
+      await this.database.activityAttempt.updateMany({
+        where: { id: payload.attemptId, evaluationStatus: { not: 'EVALUATED' } },
+        data: { evaluationStatus: canRetry ? 'QUEUED' : 'EVALUATION_FAILED' },
+      }).catch(() => undefined);
+      throw error;
+    }
+  }
+
+  private async process(
+    payload: { readonly attemptId: string; readonly recordingId: string },
+  ): Promise<Readonly<Record<string, unknown>>> {
     const recording = await this.database.recording.findUnique({
       where: { id: payload.recordingId },
       include: { activity: true },
     });
     if (!recording || recording.attemptId !== payload.attemptId) {
       throw new NotFoundException('Recording for transcription was not found');
+    }
+    if (recording.deletionRequestedAt || recording.deletedAt) {
+      throw new ProviderError('Recording is no longer available.', {
+        code: 'RECORDING_EXPIRED', retryable: false,
+      });
     }
 
     const transcriptReused = typeof recording.transcript === 'string'
@@ -77,6 +100,14 @@ export class TranscribeSpeechHandler implements JobHandler {
     }
 
     const evaluationJob = await this.database.$transaction(async (transaction) => {
+      const current = await transaction.recording.findUnique({
+        where: { id: recording.id }, select: { deletedAt: true, deletionRequestedAt: true },
+      });
+      if (!current || current.deletionRequestedAt || current.deletedAt) {
+        throw new ProviderError('Recording is no longer available.', {
+          code: 'RECORDING_EXPIRED', retryable: false,
+        });
+      }
       await transaction.activityAttempt.update({
         where: { id: payload.attemptId },
         data: { evaluationStatus: 'PROCESSING' },

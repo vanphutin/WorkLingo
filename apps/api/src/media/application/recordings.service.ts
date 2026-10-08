@@ -5,6 +5,7 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma, type ActivityAttempt } from '@prisma/client';
@@ -46,6 +47,51 @@ export class RecordingsService {
     @Inject(AUDIO_UPLOAD_LIMITS) private readonly limits: AudioUploadLimits,
     @Inject(AUDIO_DURATION_READER) private readonly readDuration: AudioDurationReader,
   ) {}
+
+  async deleteOwned(learnerId: string, recordingId: string): Promise<void> {
+    const recording = await this.database.recording.findFirst({
+      where: { id: recordingId, learnerId },
+    });
+    if (!recording) throw new NotFoundException('Recording not found');
+    if (recording.deletedAt) return;
+
+    await this.database.$transaction(async (transaction) => {
+      await transaction.recording.update({
+        where: { id: recording.id },
+        data: { deletionRequestedAt: recording.deletionRequestedAt ?? new Date() },
+      });
+      await transaction.job.updateMany({
+        where: {
+          resourceId: recording.attemptId,
+          resourceType: 'ActivityAttempt',
+          status: { in: ['PENDING', 'RETRY_WAIT'] },
+          type: 'TRANSCRIBE_SPEECH',
+        },
+        data: {
+          completedAt: new Date(),
+          error: 'Recording was deleted by the learner.',
+          errorCode: 'RECORDING_EXPIRED',
+          errorSummary: 'Recording is no longer available.',
+          retryable: false,
+          status: 'FAILED',
+        },
+      });
+      await transaction.activityAttempt.updateMany({
+        where: { id: recording.attemptId, evaluationStatus: { not: 'EVALUATED' } },
+        data: { evaluationStatus: 'EVALUATION_FAILED' },
+      });
+    });
+
+    try {
+      await this.storage.delete(recording.storageKey);
+    } catch (error) {
+      if (!(error instanceof Error && 'code' in error && error.code === 'ENOENT')) throw error;
+    }
+    await this.database.recording.update({
+      where: { id: recording.id },
+      data: { deletedAt: new Date() },
+    });
+  }
 
   async submit(
     input: SubmitRecordingInput,

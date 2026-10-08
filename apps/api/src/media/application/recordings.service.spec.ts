@@ -63,6 +63,37 @@ const createService = (overrides: {
 };
 
 describe('RecordingsService', () => {
+  it('deletes owned audio idempotently and cancels queued transcription retries', async () => {
+    const recording = {
+      id: ids.recording, learnerId: ids.learner, attemptId: ids.attempt,
+      storageKey: 'recordings/existing', deletedAt: null,
+    };
+    const transaction = {
+      activityAttempt: { updateMany: vi.fn().mockResolvedValue({ count: 1 }) },
+      recording: { update: vi.fn().mockResolvedValue(recording) },
+      job: { updateMany: vi.fn().mockResolvedValue({ count: 1 }) },
+    };
+    const setup = createService({
+      database: {
+        recording: {
+          findFirst: vi.fn()
+            .mockResolvedValueOnce(recording)
+            .mockResolvedValueOnce({ ...recording, deletedAt: new Date() }),
+          update: vi.fn().mockResolvedValue({ ...recording, deletedAt: new Date() }),
+        },
+        $transaction: vi.fn(async (callback) => callback(transaction)),
+      } as unknown as PrismaService,
+      storage: { delete: vi.fn().mockResolvedValue(undefined) },
+    });
+
+    await expect(setup.service.deleteOwned(ids.learner, ids.recording)).resolves.toBeUndefined();
+    await expect(setup.service.deleteOwned(ids.learner, ids.recording)).resolves.toBeUndefined();
+    expect(transaction.job.updateMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ resourceId: ids.attempt, type: 'TRANSCRIBE_SPEECH' }),
+    }));
+    expect(setup.storage.delete).toHaveBeenCalledTimes(1);
+  });
+
   it('rejects invalid audio before storage or database use', async () => {
     const setup = createService();
 

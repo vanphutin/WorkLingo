@@ -17,6 +17,7 @@ import {
   TRANSCRIPTION_HANDLER_OPTIONS,
   TranscribeSpeechHandler,
 } from './application/transcribe-speech.handler.js';
+import { EvaluationsController } from './evaluations.controller.js';
 
 @Injectable()
 class TeacherAiHandlerRegistration implements OnModuleInit {
@@ -33,6 +34,7 @@ class TeacherAiHandlerRegistration implements OnModuleInit {
 }
 
 @Module({
+  controllers: [EvaluationsController],
   imports: [AiGatewayModule, DatabaseModule, JobsModule, MasteryModule, StorageModule],
   providers: [
     EvaluationService,

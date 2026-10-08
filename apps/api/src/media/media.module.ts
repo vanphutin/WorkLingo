@@ -12,11 +12,11 @@ import {
   RecordingsService,
 } from './application/recordings.service.js';
 import { readAudioDuration } from './domain/audio-upload-policy.js';
-import { RecordingsController } from './recordings.controller.js';
+import { RecordingControlsController, RecordingsController } from './recordings.controller.js';
 
 @Module({
   imports: [DatabaseModule, JobsModule, LearningSessionsModule, StorageModule],
-  controllers: [RecordingsController],
+  controllers: [RecordingsController, RecordingControlsController],
   providers: [
     RecordingsService,
     { provide: AUDIO_DURATION_READER, useValue: readAudioDuration },
