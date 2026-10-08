@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import type { LearnerActivityDto } from '../../lib/api/api-client';
+import type { LearnerActivityDto, RecordingSubmissionResult, SubmitRecordingInput } from '../../lib/api/api-client';
 import { ListeningActivity, type ListeningResponseValue } from './activity-renderers/listening-activity';
 import { ReadingActivity, type ReadingResponseValue } from './activity-renderers/reading-activity';
 import { SpeakingActivity } from './activity-renderers/speaking-activity';
@@ -20,6 +20,7 @@ interface ActivityRendererProps {
   readonly savedResponse?: unknown;
   readonly disabled?: boolean;
   readonly sessionId: string;
+  readonly onSubmitRecording?: (input: SubmitRecordingInput) => Promise<RecordingSubmissionResult>;
 }
 
 export function isActivityComplete(activity: LearnerActivityDto, value: unknown): boolean {
@@ -81,6 +82,7 @@ export function ActivityRenderer({
   onChange,
   disabled = false,
   sessionId,
+  onSubmitRecording,
 }: ActivityRendererProps) {
   switch (activity.activityType) {
     case 'reading': {
@@ -107,6 +109,7 @@ export function ActivityRenderer({
       return (
         <ListeningActivity
           activity={activity}
+          sessionId={sessionId}
           value={listeningValue}
           onChange={onChange}
           disabled={disabled}
@@ -118,6 +121,10 @@ export function ActivityRenderer({
       return (
         <SpeakingActivity
           activity={activity}
+          sessionId={sessionId}
+          onSubmitRecording={onSubmitRecording ?? (async () => {
+            throw new Error('Speaking recording submission is not configured.');
+          })}
           value={speakingValue}
           onChange={onChange}
           disabled={disabled}

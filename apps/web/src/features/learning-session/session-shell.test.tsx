@@ -56,7 +56,7 @@ const mockWritingActivity: LearnerActivityDto = {
 };
 
 const mockListeningActivity: LearnerActivityDto = {
-  id: 'f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2',
+  id: 'f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2',
   slug: 'listen-dialogue',
   activityType: 'listening',
   learningBlock: 'listenReason',
@@ -128,7 +128,7 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
         type: 'listenReason',
         order: 3,
         targetMinutes: 15,
-        activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+        activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
         skills: ['listening'],
       },
       {
@@ -165,7 +165,7 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
       type: 'listenReason',
       order: 3,
       targetMinutes: 15,
-      activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+      activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
       status: 'available',
     },
     {
@@ -432,7 +432,7 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.getByLabelText('Team introduction')).toBeChecked();
   });
 
-  it('renders speaking activity with clear notification that recording arrives in Increment 4', () => {
+  it('renders an explicitly unscored fallback when browser recording is unavailable', () => {
     render(
       <ActivityRenderer
         activity={mockSpeakingActivity}
@@ -443,11 +443,11 @@ describe('SessionShell and Activity Renderers', () => {
       />,
     );
 
-    expect(screen.getAllByText(/increment 4/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/unscored/i).length).toBeGreaterThan(0);
     expect(screen.getByLabelText(/spoken response/i)).toBeInTheDocument();
   });
 
-  it('renders a truthful listening placeholder without a fake playback control', () => {
+  it('renders version-bound listening audio without autoplay', () => {
     const { container } = render(
       <ActivityRenderer
         activity={mockListeningActivity}
@@ -458,10 +458,9 @@ describe('SessionShell and Activity Renderers', () => {
       />,
     );
 
-    expect(screen.getByText(/placeholder audio/i)).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /play audio/i })).not.toBeInTheDocument();
     const audioElement = container.querySelector('audio');
-    expect(audioElement).not.toBeInTheDocument();
+    expect(audioElement).toBeInTheDocument();
+    expect(audioElement?.autoplay).toBe(false);
   });
 
   it('exposes semantic landmarks in reading order', () => {
@@ -553,7 +552,7 @@ describe('SessionShell and Activity Renderers', () => {
             type: 'listenReason',
             order: 2,
             targetMinutes: 15,
-            activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+            activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
             skills: ['listening'],
           },
           {
@@ -582,7 +581,7 @@ describe('SessionShell and Activity Renderers', () => {
           type: 'listenReason',
           order: 2,
           targetMinutes: 15,
-          activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+          activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
           status: 'available',
         },
         {

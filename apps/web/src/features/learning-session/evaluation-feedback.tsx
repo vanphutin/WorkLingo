@@ -7,6 +7,10 @@ interface EvaluationFeedbackProps {
   readonly evaluation: EvaluationDto | null;
   readonly isRetrying?: boolean;
   readonly onRetry?: () => void;
+  readonly onDeleteRecording?: (recordingId: string) => void;
+  readonly isDeletingRecording?: boolean;
+  readonly recordingDeleted?: boolean;
+  readonly deletionError?: string | null;
 }
 
 const dimensionLabels: Record<string, string> = {
@@ -22,6 +26,10 @@ export function EvaluationFeedback({
   evaluation,
   isRetrying = false,
   onRetry,
+  onDeleteRecording,
+  isDeletingRecording = false,
+  recordingDeleted = false,
+  deletionError = null,
 }: EvaluationFeedbackProps) {
   if (!evaluation && !error) return null;
   const pending = evaluation?.status === 'queued' || evaluation?.status === 'processing';
@@ -74,6 +82,24 @@ export function EvaluationFeedback({
         <button type="button" className="secondary-action-button" onClick={onRetry} disabled={isRetrying}>
           {isRetrying ? 'Đang thử lại…' : 'Thử đánh giá lại'}
         </button>
+      ) : null}
+      {evaluation?.recording ? (
+        <div className="recording-retention-controls">
+          {evaluation.recording.deletedAt || recordingDeleted ? (
+            <p role="status">Recording audio has been deleted. Your transcript and feedback remain available.</p>
+          ) : (
+            <>
+              <p>Recording audio is retained temporarily so a failed evaluation can be retried.</p>
+              {onDeleteRecording ? (
+                <button type="button" className="secondary-action-button"
+                  onClick={() => onDeleteRecording(evaluation.recording!.id)} disabled={isDeletingRecording}>
+                  {isDeletingRecording ? 'Deleting recording…' : 'Delete recording now'}
+                </button>
+              ) : null}
+            </>
+          )}
+          {deletionError ? <p className="feedback-error" role="alert">{deletionError}</p> : null}
+        </div>
       ) : null}
     </section>
   );

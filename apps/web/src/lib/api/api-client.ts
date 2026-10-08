@@ -9,6 +9,7 @@ import {
   evaluationDtoSchema,
   jobDtoSchema,
   publishContentImportResultSchema,
+  recordingSubmissionResultSchema,
   sessionAvailabilitySchema,
   sessionDurationSchema,
   sessionPlanSchema,
@@ -25,6 +26,7 @@ import {
   type JobDto,
   type PublishContentImportInput,
   type PublishContentImportResult,
+  type RecordingSubmissionResult,
   type SessionAvailabilityDto,
   type WritingDraft,
   type UpdateContentSourceInput,
@@ -39,7 +41,7 @@ import {
   type ErrorBankDto, type ErrorBankQuery, type MasteryMapDto, type MemoryHealthDto,
 } from './learner-schemas';
 export type { CheckpointAssessmentDto, ProgressionSummaryDto, ErrorBankDto, ErrorBankQuery, LearningSkill, MasteryMapDto, MemoryHealthDto } from './learner-schemas';
-export type { SessionAvailabilityDto } from '@worklingo/contracts';
+export type { RecordingSubmissionResult, SessionAvailabilityDto } from '@worklingo/contracts';
 
 export class ApiError extends Error {
   readonly code: string;
@@ -153,6 +155,16 @@ export interface SubmitAttemptInput {
   readonly response: Record<string, unknown>;
 }
 
+export interface SubmitRecordingInput {
+  readonly activityId: string;
+  readonly audio: Blob;
+  readonly clientAttemptId: string;
+  readonly consentAccepted: true;
+  readonly consentPolicyVersion: string;
+  readonly consentScope: string;
+  readonly sessionId: string;
+}
+
 export const contentPreviewDtoSchema = z.object({
   importId: z.string().uuid(),
   draftRevision: z.number().int().positive(),
@@ -247,6 +259,7 @@ export class ApiClient {
       });
     }
 
+    if (response.status === 204) return schema.parse(undefined);
     const json = await response.json();
     return schema.parse(json);
   }
@@ -306,6 +319,31 @@ export class ApiClient {
         body: JSON.stringify(input),
       },
       activityAttemptDtoSchema,
+    );
+  }
+
+  async submitRecording(input: SubmitRecordingInput): Promise<RecordingSubmissionResult> {
+    const form = new FormData();
+    const mimeType = input.audio.type || 'audio/webm';
+    const extension = mimeType.includes('ogg') ? 'ogg' : mimeType.includes('wav') ? 'wav' : 'webm';
+    form.append('audio', input.audio, `recording.${extension}`);
+    form.append('sessionId', z.uuid().parse(input.sessionId));
+    form.append('clientAttemptId', z.uuid().parse(input.clientAttemptId));
+    form.append('consentAccepted', String(input.consentAccepted));
+    form.append('consentPolicyVersion', input.consentPolicyVersion);
+    form.append('consentScope', input.consentScope);
+    return this.request(
+      `/activities/${z.uuid().parse(input.activityId)}/recordings`,
+      { method: 'POST', body: form },
+      recordingSubmissionResultSchema,
+    );
+  }
+
+  async deleteRecording(recordingId: string): Promise<void> {
+    await this.request(
+      `/recordings/${z.uuid().parse(recordingId)}`,
+      { method: 'DELETE' },
+      z.undefined(),
     );
   }
 

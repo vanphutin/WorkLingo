@@ -7,7 +7,10 @@ import type {
   ActivityAttemptDto,
   LearnerActivityDto,
   LearningSessionDto,
+  RecordingSubmissionResult,
+  SubmitRecordingInput,
 } from '../../lib/api/api-client';
+import { apiClient } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
 import { EvaluationFeedback } from './evaluation-feedback';
 import { useEvaluation } from './use-evaluation';
@@ -22,6 +25,7 @@ interface SessionShellProps {
   ) => Promise<ActivityAttemptDto>;
   readonly onPauseSession: () => Promise<void>;
   readonly onResumeSession: () => Promise<void>;
+  readonly onSubmitRecording?: (input: SubmitRecordingInput) => Promise<RecordingSubmissionResult>;
   readonly isCompleted?: boolean;
 }
 
@@ -38,6 +42,7 @@ export function SessionShell({
   onSubmitAttempt,
   onPauseSession,
   onResumeSession,
+  onSubmitRecording,
   isCompleted = false,
 }: SessionShellProps) {
   // Attempts arrive oldest-first; restore the latest response for this activity.
@@ -92,6 +97,9 @@ export function SessionShell({
   const [sessionAction, setSessionAction] = useState<'pause' | 'resume' | null>(null);
   const [sessionActionError, setSessionActionError] = useState<string | null>(null);
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
+  const [deletingRecordingId, setDeletingRecordingId] = useState<string | null>(null);
+  const [deletedRecordingId, setDeletedRecordingId] = useState<string | null>(null);
+  const [recordingDeleteError, setRecordingDeleteError] = useState<string | null>(null);
   const pendingAttemptId = useRef<string | null>(null);
   const asyncEvaluation = useEvaluation(evaluationAttemptId);
 
@@ -147,6 +155,28 @@ export function SessionShell({
     setSubmitError(null);
     setEvaluationFeedback(null);
     setCurrentResponse(nextResponse);
+  };
+
+  const handleSubmitRecording = async (input: SubmitRecordingInput): Promise<RecordingSubmissionResult> => {
+    if (!onSubmitRecording) throw new Error('Speaking recording is not available.');
+    const result = await onSubmitRecording(input);
+    setEvaluationFeedback(null);
+    setEvaluationAttemptId(result.attemptId);
+    return result;
+  };
+
+  const handleDeleteRecording = async (recordingId: string): Promise<void> => {
+    if (deletingRecordingId) return;
+    setDeletingRecordingId(recordingId);
+    setRecordingDeleteError(null);
+    try {
+      await apiClient.deleteRecording(recordingId);
+      setDeletedRecordingId(recordingId);
+    } catch (caught) {
+      setRecordingDeleteError(caught instanceof Error ? caught.message : 'Could not delete recording.');
+    } finally {
+      setDeletingRecordingId(null);
+    }
   };
 
   const handleSessionAction = async (action: 'pause' | 'resume') => {
@@ -276,6 +306,10 @@ export function SessionShell({
             error={asyncEvaluation.error}
             isRetrying={asyncEvaluation.isRetrying}
             onRetry={() => void asyncEvaluation.retry()}
+            onDeleteRecording={(recordingId) => void handleDeleteRecording(recordingId)}
+            isDeletingRecording={deletingRecordingId !== null}
+            recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
+            deletionError={recordingDeleteError}
           />
 
           {isCompleted ? (
@@ -295,6 +329,7 @@ export function SessionShell({
                 <ActivityRenderer
                   activity={currentActivity}
                   sessionId={session.id}
+                  onSubmitRecording={handleSubmitRecording}
                   value={currentResponse}
                   onChange={handleResponseChange}
                   disabled={isSubmitting || session.status === 'paused'}

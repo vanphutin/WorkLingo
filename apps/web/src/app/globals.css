@@ -868,6 +868,74 @@ a:focus-visible {
   padding: 0.7rem 1rem;
 }
 
+.recording-retention-controls {
+  border-top: 1px solid #dce7df;
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem 1.25rem;
+}
+
+.recording-retention-controls p {
+  color: #536158;
+  font-size: 0.9rem;
+}
+
+.speaking-recorder,
+.recording-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+.speaking-recorder {
+  background: #f6faf7;
+  border: 1px solid #cbdcd0;
+  border-radius: 0.75rem;
+  padding: 1.15rem;
+}
+
+.recorder-status,
+.speaking-fallback-notice {
+  color: #3f4d44;
+  margin: 0;
+}
+
+.recording-preview audio,
+.audio-player-panel audio {
+  width: 100%;
+}
+
+.recording-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.recording-consent {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #d9ddd8;
+  border-radius: 0.55rem;
+  display: flex;
+  gap: 0.65rem;
+  line-height: 1.45;
+  padding: 0.85rem;
+}
+
+.recording-consent input {
+  margin-top: 0.2rem;
+}
+
+.recording-stop-button {
+  background: #a12a2a;
+  color: white;
+}
+
+.speaking-fallback-notice {
+  background: #fff8eb;
+  border-left: 3px solid #efb744;
+  padding: 0.75rem 1rem;
+}
+
 @keyframes feedback-pulse {
   50% { opacity: 0.35; transform: scale(0.8); }
 }

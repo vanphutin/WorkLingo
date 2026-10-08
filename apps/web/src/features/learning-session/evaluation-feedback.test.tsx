@@ -63,4 +63,23 @@ describe('EvaluationFeedback', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Thử đánh giá lại' }));
     expect(onRetry).toHaveBeenCalledOnce();
   });
+
+  it('lets the learner delete retained audio early', () => {
+    const onDeleteRecording = vi.fn();
+    render(
+      <EvaluationFeedback
+        evaluation={{
+          attemptId: '00000000-0000-4000-8000-000000000001', status: 'evaluated',
+          transcript: 'Status update', scores: null, score: 0.8,
+          feedback: { summary: 'Clear update', strengths: [], improvements: [], correctedExample: null },
+          retryable: false, completedAt: '2026-10-08T08:00:00.000Z',
+          recording: { id: '00000000-0000-4000-8000-000000000002', retentionUntil: '2026-10-15T08:00:00.000Z', deletedAt: null },
+        }}
+        onDeleteRecording={onDeleteRecording}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /delete recording/i }));
+    expect(onDeleteRecording).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000002');
+  });
 });
