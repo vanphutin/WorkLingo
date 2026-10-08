@@ -15,6 +15,7 @@ const payloadSchema = z.object({ attemptId: z.string().min(1), recordingId: z.st
 export interface TranscriptionHandlerOptions {
   readonly locale: string;
   readonly providerConfigVersion?: string;
+  readonly recordingRetentionDays?: number;
 }
 
 export const TRANSCRIPTION_HANDLER_OPTIONS = Symbol('TRANSCRIPTION_HANDLER_OPTIONS');
@@ -43,6 +44,16 @@ export class TranscribeSpeechHandler implements JobHandler {
         where: { id: payload.attemptId, evaluationStatus: { not: 'EVALUATED' } },
         data: { evaluationStatus: canRetry ? 'QUEUED' : 'EVALUATION_FAILED' },
       }).catch(() => undefined);
+      if (!canRetry) {
+        const retentionUntil = new Date();
+        retentionUntil.setUTCDate(
+          retentionUntil.getUTCDate() + (this.options.recordingRetentionDays ?? 7),
+        );
+        await this.database.recording.updateMany({
+          where: { id: payload.recordingId, retentionUntil: null },
+          data: { retentionUntil },
+        }).catch(() => undefined);
+      }
       throw error;
     }
   }

@@ -73,6 +73,8 @@ describe('AudioPreview', () => {
 
     expect(screen.getByText('audio-dialogue-1')).toBeInTheDocument();
     expect(screen.getByText('READY')).toBeInTheDocument();
+    expect(screen.getByText('fake-tts')).toBeInTheDocument();
+    expect(screen.getByText('fake-neutral')).toBeInTheDocument();
 
     const audioEl = screen.getByTestId('audio-player-audio-dialogue-1') as HTMLAudioElement;
     expect(audioEl).toBeInTheDocument();
@@ -116,6 +118,8 @@ describe('AudioPreview', () => {
         payload: {},
         result: null,
         error: null,
+        errorCode: null,
+        retryable: false,
         createdAt: '2026-10-04T00:00:00.000Z',
         updatedAt: '2026-10-04T00:00:00.000Z',
       })
@@ -126,6 +130,8 @@ describe('AudioPreview', () => {
         payload: {},
         result: { artifactId: '33333333-3333-4333-8333-333333333333' },
         error: null,
+        errorCode: null,
+        retryable: false,
         createdAt: '2026-10-04T00:00:00.000Z',
         updatedAt: '2026-10-04T00:00:00.000Z',
       });

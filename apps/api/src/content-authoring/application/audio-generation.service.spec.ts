@@ -4,7 +4,7 @@ import { ContentAuthoringErrorCode } from '@worklingo/contracts';
 
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
-import type { TextToSpeechPort } from '../domain/text-to-speech.port.js';
+import type { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
 import { AudioGenerationService } from './audio-generation.service.js';
 
 describe('AudioGenerationService', () => {

@@ -47,6 +47,7 @@ class TeacherAiHandlerRegistration implements OnModuleInit {
       useFactory: (config: ConfigService<AppConfig, true>) => ({
         locale: config.get('ai', { infer: true }).speechToText.locale,
         providerConfigVersion: '1',
+        recordingRetentionDays: config.get('ai', { infer: true }).recordingRetentionDays,
       }),
     },
     {

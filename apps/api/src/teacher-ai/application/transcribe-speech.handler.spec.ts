@@ -11,7 +11,7 @@ describe('TranscribeSpeechHandler', () => {
     const updateMany = vi.fn().mockResolvedValue({ count: 1 });
     const database = {
       activityAttempt: { updateMany },
-      recording: { findUnique: vi.fn().mockResolvedValue({
+      recording: { updateMany: vi.fn().mockResolvedValue({ count: 1 }), findUnique: vi.fn().mockResolvedValue({
         id: 'recording-id', attemptId: 'attempt-id', deletionRequestedAt: new Date(), deletedAt: null,
       }) },
     } as unknown as PrismaService;
@@ -47,7 +47,7 @@ describe('TranscribeSpeechHandler', () => {
       recording: { findUnique: vi.fn().mockResolvedValue({ deletedAt: null, deletionRequestedAt: null }) },
     };
     const database = {
-      recording: { findUnique: vi.fn().mockResolvedValue(recording) },
+      recording: { findUnique: vi.fn().mockResolvedValue(recording), updateMany: vi.fn() },
       $transaction: vi.fn(async (work) => work(transaction)),
     } as unknown as PrismaService;
     const storage = { read: vi.fn() } as unknown as ObjectStorage;

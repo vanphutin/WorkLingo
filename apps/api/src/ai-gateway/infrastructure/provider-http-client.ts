@@ -107,3 +107,41 @@ export async function requestProviderJson(request: ProviderHttpRequest): Promise
     clearTimeout(timeout);
   }
 }
+
+export interface ProviderBytesResponse {
+  readonly body: Buffer;
+  readonly headers: Headers;
+}
+
+export async function requestProviderBytes(
+  request: ProviderHttpRequest,
+): Promise<ProviderBytesResponse> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), request.timeoutMs);
+  try {
+    const response = await fetch(request.url, {
+      method: 'POST', headers: request.headers, body: request.body, signal: controller.signal,
+    });
+    if (!response.ok) throw statusError(response);
+    const maxBytes = request.maxResponseBytes ?? DEFAULT_MAX_RESPONSE_BYTES;
+    const declaredLength = Number(response.headers.get('content-length'));
+    if (Number.isFinite(declaredLength) && declaredLength > maxBytes) {
+      throw new ProviderError('The provider response exceeded the allowed size.', {
+        code: 'PROVIDER_RESPONSE_INVALID', retryable: true,
+      });
+    }
+    return { body: await readBoundedBody(response, maxBytes), headers: response.headers };
+  } catch (error) {
+    if (error instanceof ProviderError) throw error;
+    if (controller.signal.aborted) {
+      throw new ProviderError('The provider request timed out.', {
+        code: 'PROVIDER_TIMEOUT', retryable: true, cause: error,
+      });
+    }
+    throw new ProviderError('The provider could not be reached.', {
+      code: 'PROVIDER_UPSTREAM', retryable: true, cause: error,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+}

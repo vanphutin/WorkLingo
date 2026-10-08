@@ -4,10 +4,13 @@ import { ConfigService } from '@nestjs/config';
 import type { AppConfig } from '../common/config/app-config.schema.js';
 import { LanguageEvaluationPort } from './domain/language-evaluation.port.js';
 import { SpeechToTextPort } from './domain/speech-to-text.port.js';
+import { TextToSpeechPort } from './domain/text-to-speech.port.js';
+import { FakeTextToSpeechAdapter } from './infrastructure/fake-tts.adapter.js';
 import { FakeLanguageEvaluationAdapter } from './infrastructure/fake-language-evaluation.adapter.js';
 import { FakeSpeechToTextAdapter } from './infrastructure/fake-speech-to-text.adapter.js';
 import { MicrosoftSpeechAdapter } from './infrastructure/microsoft-speech.adapter.js';
 import { OpenAiLanguageEvaluationAdapter } from './infrastructure/openai-language-evaluation.adapter.js';
+import { MicrosoftTextToSpeechAdapter } from './infrastructure/microsoft-tts.adapter.js';
 
 @Module({
   providers: [
@@ -40,7 +43,22 @@ import { OpenAiLanguageEvaluationAdapter } from './infrastructure/openai-languag
           : new FakeLanguageEvaluationAdapter();
       },
     },
+    {
+      provide: TextToSpeechPort,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<AppConfig, true>): TextToSpeechPort => {
+        const ai = config.get('ai', { infer: true });
+        return ai.textToSpeech.provider === 'microsoft'
+          ? new MicrosoftTextToSpeechAdapter({
+              key: ai.textToSpeech.key,
+              region: ai.textToSpeech.region,
+              timeoutMs: ai.providerTimeoutMs,
+              voice: ai.textToSpeech.voice,
+            })
+          : new FakeTextToSpeechAdapter();
+      },
+    },
   ],
-  exports: [SpeechToTextPort, LanguageEvaluationPort],
+  exports: [SpeechToTextPort, LanguageEvaluationPort, TextToSpeechPort],
 })
 export class AiGatewayModule {}

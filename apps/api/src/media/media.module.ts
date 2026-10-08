@@ -11,6 +11,7 @@ import {
   AUDIO_UPLOAD_LIMITS,
   RecordingsService,
 } from './application/recordings.service.js';
+import { RetentionCleanupHandler } from './application/retention-cleanup.handler.js';
 import { readAudioDuration } from './domain/audio-upload-policy.js';
 import { RecordingControlsController, RecordingsController } from './recordings.controller.js';
 
@@ -19,6 +20,7 @@ import { RecordingControlsController, RecordingsController } from './recordings.
   controllers: [RecordingsController, RecordingControlsController],
   providers: [
     RecordingsService,
+    RetentionCleanupHandler,
     { provide: AUDIO_DURATION_READER, useValue: readAudioDuration },
     {
       provide: AUDIO_UPLOAD_LIMITS,

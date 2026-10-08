@@ -10,8 +10,14 @@ export interface SynthesizedAudio {
   readonly checksum: string;
   readonly sampleRate: number;
   readonly durationSeconds: number;
+  readonly provider?: {
+    readonly name: string;
+    readonly requestId: string | null;
+    readonly voice: string;
+  };
 }
 
 export abstract class TextToSpeechPort {
+  abstract readonly providerName: string;
   abstract synthesize(input: SynthesizeAudioInput): Promise<SynthesizedAudio>;
 }
