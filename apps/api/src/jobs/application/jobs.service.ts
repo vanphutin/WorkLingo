@@ -49,9 +49,13 @@ export class JobsService extends JobDispatcher {
     super();
   }
 
-  async enqueue(input: EnqueueJobInput): Promise<JobReference> {
+  async enqueue(
+    input: EnqueueJobInput,
+    transaction?: Prisma.TransactionClient,
+  ): Promise<JobReference> {
+    const database = transaction ?? this.database;
     try {
-      const job = await this.database.job.create({
+      const job = await database.job.create({
         data: {
           type: input.type,
           payload: input.payload as Prisma.InputJsonValue,
@@ -68,7 +72,7 @@ export class JobsService extends JobDispatcher {
       if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== 'P2002') {
         throw error;
       }
-      const existing = await this.database.job.findUnique({
+      const existing = await database.job.findUnique({
         where: { idempotencyKey: input.idempotencyKey },
       });
       if (!existing

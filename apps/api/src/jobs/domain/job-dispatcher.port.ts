@@ -1,3 +1,5 @@
+import type { Prisma } from '@prisma/client';
+
 export interface EnqueueJobInput {
   readonly contentImportId?: string;
   readonly createdById: string;
@@ -16,5 +18,8 @@ export interface JobReference {
 }
 
 export abstract class JobDispatcher {
-  abstract enqueue(input: EnqueueJobInput): Promise<JobReference>;
+  abstract enqueue(
+    input: EnqueueJobInput,
+    transaction?: Prisma.TransactionClient,
+  ): Promise<JobReference>;
 }

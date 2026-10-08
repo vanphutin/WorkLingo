@@ -52,6 +52,15 @@ interface Evaluation {
   readonly score: number | null;
 }
 
+export interface CurrentActivitySubmission {
+  readonly activityId: string;
+  readonly activityIndex: number;
+  readonly activityIds: readonly string[];
+  readonly lessonVersionId: string;
+  readonly plan: SessionPlan;
+  readonly sessionId: string;
+}
+
 @Injectable()
 export class LearningSessionsService {
   constructor(
@@ -253,6 +262,60 @@ export class LearningSessionsService {
       throw this.invalidTransition(latest.status, 'IN_PROGRESS');
     }
     return this.getSession(learnerId, id);
+  }
+
+  async requireCurrentActivity(
+    learnerId: string,
+    sessionId: string,
+    activityId: string,
+    expectedType: 'speaking' | 'writing',
+  ): Promise<CurrentActivitySubmission> {
+    const session = await this.findOwnedSession(learnerId, sessionId);
+    if (session.status !== 'IN_PROGRESS') throw this.invalidTransition(session.status, 'IN_PROGRESS');
+    const plan = sessionPlanSchema.parse(session.planSnapshot);
+    const activityIds = plan.blocks.flatMap((block) => block.activityIds);
+    const activityIndex = activityIds.indexOf(activityId);
+    if (activityIndex < 0) throw new NotFoundException('Activity not found in this session');
+    if (activityIndex !== session.currentCheckpoint) {
+      throw new ConflictException({
+        code: 'INVALID_CHECKPOINT', message: 'Submit the current activity before continuing', statusCode: 409,
+      });
+    }
+    const activity = await this.database.activity.findFirst({
+      where: { id: activityId, lessonVersionId: session.lessonVersionId },
+      select: { activityType: true },
+    });
+    if (!activity) throw new NotFoundException('Activity not found in this session');
+    if (activity.activityType !== expectedType) {
+      throw new BadRequestException(`Activity must be ${expectedType}`);
+    }
+    return {
+      activityId, activityIndex, activityIds, lessonVersionId: session.lessonVersionId,
+      plan, sessionId: session.id,
+    };
+  }
+
+  async advanceSubmittedActivity(
+    transaction: Prisma.TransactionClient,
+    learnerId: string,
+    context: CurrentActivitySubmission,
+  ): Promise<void> {
+    const nextCheckpoint = context.activityIndex + 1;
+    const update = await transaction.learningSession.updateMany({
+      where: {
+        currentCheckpoint: context.activityIndex,
+        id: context.sessionId,
+        learnerId,
+        status: 'IN_PROGRESS',
+      },
+      data: {
+        currentCheckpoint: nextCheckpoint,
+        status: nextCheckpoint === context.activityIds.length ? 'COMPLETED' : 'IN_PROGRESS',
+        ...(nextCheckpoint === context.activityIds.length ? { completedAt: new Date() } : {}),
+      },
+    });
+    if (update.count !== 1) throw new ConflictException('Session checkpoint changed while submitting');
+    await this.completeFinishedBlock(transaction, context.sessionId, context.plan, nextCheckpoint);
   }
 
   async submitAttempt(
