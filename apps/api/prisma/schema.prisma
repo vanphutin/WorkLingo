@@ -19,26 +19,28 @@ enum UserStatus {
 }
 
 model User {
-  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email            String            @unique
-  displayName      String
-  passwordHash     String
-  role             UserRole          @default(LEARNER)
-  status           UserStatus        @default(ACTIVE)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  profile               LearnerProfile?
-  sessions              UserSession[]
-  learningSessions      LearningSession[]
-  createdContentImports ContentImport[]   @relation("ContentImportCreatedBy")
-  updatedContentImports ContentImport[]   @relation("ContentImportUpdatedBy")
-  jobs                  Job[]
-  mutationReceipts      MutationReceipt[]
-  auditLogs             AuditLog[]
-  masteryRecords        MasteryRecord[]
-  masteryEvents         MasteryEvent[]
-  errorBankEntries      ErrorBankEntry[]
-  checkpointAssessments CheckpointAssessment[]
+  id                       String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                    String                    @unique
+  displayName              String
+  passwordHash             String
+  role                     UserRole                  @default(LEARNER)
+  status                   UserStatus                @default(ACTIVE)
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  profile                  LearnerProfile?
+  sessions                 UserSession[]
+  learningSessions         LearningSession[]
+  createdContentImports    ContentImport[]           @relation("ContentImportCreatedBy")
+  updatedContentImports    ContentImport[]           @relation("ContentImportUpdatedBy")
+  jobs                     Job[]
+  recordings               Recording[]
+  activityDrafts           ActivityDraft[]
+  mutationReceipts         MutationReceipt[]
+  auditLogs                AuditLog[]
+  masteryRecords           MasteryRecord[]
+  masteryEvents            MasteryEvent[]
+  errorBankEntries         ErrorBankEntry[]
+  checkpointAssessments    CheckpointAssessment[]
   progressionConfirmations ProgressionConfirmation[]
 }
 
@@ -178,6 +180,7 @@ model LessonVersion {
   errorBankEntries ErrorBankEntry[]
 
   checkpointAssessments CheckpointAssessment[]
+  evaluationResults     EvaluationResult[]
 
   @@unique([lessonId, version])
 }
@@ -214,6 +217,8 @@ model Activity {
   lessonVersion           LessonVersion     @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
   attempts                ActivityAttempt[]
   errorBankEntries        ErrorBankEntry[]
+  recordings              Recording[]
+  activityDrafts          ActivityDraft[]
 
   @@unique([lessonVersionId, slug])
   @@unique([lessonVersionId, order])
@@ -280,9 +285,9 @@ model LessonVersionWordBank {
 }
 
 model LanguageBlock {
-  id               String   @id @default(uuid()) @db.Uuid
-  wordBankId       String   @db.Uuid
-  slug             String   @unique
+  id               String           @id @default(uuid()) @db.Uuid
+  wordBankId       String           @db.Uuid
+  slug             String           @unique
   canonicalForm    String
   meaning          String
   pronunciation    String
@@ -292,9 +297,9 @@ model LanguageBlock {
   commonErrors     String[]
   cefrLevel        String
   transferContexts String[]
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  wordBank         WordBank        @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  wordBank         WordBank         @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
   masteryRecords   MasteryRecord[]
   masteryEvents    MasteryEvent[]
   errorBankEntries ErrorBankEntry[]
@@ -317,28 +322,33 @@ enum SessionBlockStatus {
 
 enum AttemptEvaluationStatus {
   SUBMITTED
+  QUEUED
+  PROCESSING
   EVALUATED
+  EVALUATION_FAILED
 }
 
 model LearningSession {
-  id                String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  learnerId         String                @db.Uuid
-  clientSessionId   String                @db.Uuid
-  missionId         String                @db.Uuid
-  lessonVersionId   String                @db.Uuid
-  durationMinutes   Int
-  planSnapshot      Json
-  status            LearningSessionStatus @default(PLANNED)
-  currentCheckpoint Int                   @default(0)
-  startedAt         DateTime?
-  completedAt       DateTime?
-  createdAt         DateTime              @default(now())
-  updatedAt         DateTime              @updatedAt
-  learner           User                  @relation(fields: [learnerId], references: [id], onDelete: Cascade)
-  mission           Mission               @relation(fields: [missionId], references: [id], onDelete: Restrict)
-  lessonVersion     LessonVersion         @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
-  blocks            SessionBlock[]
-  attempts          ActivityAttempt[]
+  id                    String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId             String                 @db.Uuid
+  clientSessionId       String                 @db.Uuid
+  missionId             String                 @db.Uuid
+  lessonVersionId       String                 @db.Uuid
+  durationMinutes       Int
+  planSnapshot          Json
+  status                LearningSessionStatus  @default(PLANNED)
+  currentCheckpoint     Int                    @default(0)
+  startedAt             DateTime?
+  completedAt           DateTime?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  learner               User                   @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  mission               Mission                @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  lessonVersion         LessonVersion          @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  blocks                SessionBlock[]
+  attempts              ActivityAttempt[]
+  recordings            Recording[]
+  activityDrafts        ActivityDraft[]
   checkpointAssessments CheckpointAssessment[]
 
   @@unique([learnerId, clientSessionId])
@@ -349,11 +359,11 @@ model LearningSession {
 }
 
 model CheckpointAssessment {
-  id                 String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  learnerId          String @db.Uuid
-  clientAssessmentId String @db.Uuid
-  sessionId          String @db.Uuid
-  lessonVersionId    String @db.Uuid
+  id                 String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId          String                   @db.Uuid
+  clientAssessmentId String                   @db.Uuid
+  sessionId          String                   @db.Uuid
+  lessonVersionId    String                   @db.Uuid
   levelCode          String
   policyVersion      String
   status             String
@@ -362,10 +372,10 @@ model CheckpointAssessment {
   evidenceSnapshot   Json
   canAdvance         Boolean
   nextLevelCode      String?
-  createdAt          DateTime @default(now())
-  learner            User @relation(fields: [learnerId], references: [id], onDelete: Cascade)
-  session            LearningSession @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
-  lessonVersion      LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  createdAt          DateTime                 @default(now())
+  learner            User                     @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  session            LearningSession          @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
+  lessonVersion      LessonVersion            @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
   confirmation       ProgressionConfirmation?
 
   @@unique([learnerId, clientAssessmentId])
@@ -376,17 +386,17 @@ model CheckpointAssessment {
 }
 
 model ProgressionConfirmation {
-  id             String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  learnerId      String @db.Uuid
-  assessmentId   String @unique @db.Uuid
-  fromLevelCode  String
-  toLevelCode    String?
-  createdAt      DateTime @default(now())
-  learner        User @relation(fields: [learnerId], references: [id], onDelete: Cascade)
-  assessment     CheckpointAssessment @relation(fields: [assessmentId, learnerId], references: [id, learnerId], onDelete: Cascade)
+  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId     String               @db.Uuid
+  assessmentId  String               @unique @db.Uuid
+  fromLevelCode String
+  toLevelCode   String?
+  createdAt     DateTime             @default(now())
+  learner       User                 @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  assessment    CheckpointAssessment @relation(fields: [assessmentId, learnerId], references: [id, learnerId], onDelete: Cascade)
 
-  @@index([learnerId])
   @@unique([assessmentId, learnerId])
+  @@index([learnerId])
 }
 
 model SessionBlock {
@@ -420,11 +430,92 @@ model ActivityAttempt {
   session            LearningSession         @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
   activity           Activity                @relation(fields: [activityId], references: [id], onDelete: Restrict)
   masteryEvents      MasteryEvent[]
+  recording          Recording?
+  evaluationResults  EvaluationResult[]
 
   @@unique([learnerId, clientAttemptId])
   @@index([sessionId])
   @@index([activityId])
   @@index([sessionId, activityId])
+}
+
+model Recording {
+  id                    String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId             String          @db.Uuid
+  sessionId             String          @db.Uuid
+  activityId            String          @db.Uuid
+  attemptId             String          @unique @db.Uuid
+  storageKey            String          @unique
+  mimeType              String
+  byteSize              Int
+  checksum              String
+  durationSeconds       Float?
+  consentPolicyVersion  String
+  consentScope          String
+  consentAcceptedAt     DateTime
+  transcript            String?
+  speechMetrics         Json?
+  providerName          String?
+  providerConfigVersion String?
+  retentionUntil        DateTime?
+  deletionRequestedAt   DateTime?
+  deletedAt             DateTime?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  learner               User            @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  session               LearningSession @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
+  activity              Activity        @relation(fields: [activityId], references: [id], onDelete: Restrict)
+  attempt               ActivityAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@index([learnerId, createdAt])
+  @@index([sessionId, learnerId])
+  @@index([activityId])
+  @@index([retentionUntil, deletedAt])
+}
+
+model EvaluationResult {
+  id                      String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  attemptId               String          @db.Uuid
+  lessonVersionId         String          @db.Uuid
+  rubricId                String
+  rubricVersion           String
+  inputHash               String
+  providerName            String
+  providerModel           String?
+  providerConfigVersion   String
+  scores                  Json
+  score                   Float
+  feedback                Json
+  speechMetricsProvenance Json?
+  completedAt             DateTime
+  createdAt               DateTime        @default(now())
+  attempt                 ActivityAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  lessonVersion           LessonVersion   @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, rubricVersion])
+  @@index([attemptId, createdAt])
+  @@index([lessonVersionId])
+  @@index([completedAt])
+}
+
+model ActivityDraft {
+  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId  String          @db.Uuid
+  sessionId  String          @db.Uuid
+  activityId String          @db.Uuid
+  text       String
+  revision   Int             @default(1)
+  expiresAt  DateTime
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  learner    User            @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  session    LearningSession @relation(fields: [sessionId, learnerId], references: [id, learnerId], onDelete: Cascade)
+  activity   Activity        @relation(fields: [activityId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, sessionId, activityId])
+  @@index([sessionId, learnerId])
+  @@index([activityId])
+  @@index([expiresAt])
 }
 
 model ContentImport {
@@ -504,7 +595,14 @@ model LessonVersionAudioArtifact {
 enum JobStatus {
   PENDING
   RUNNING
+  RETRY_WAIT
   COMPLETED
+  FAILED
+}
+
+enum JobAttemptOutcome {
+  RUNNING
+  SUCCEEDED
   FAILED
 }
 
@@ -515,15 +613,50 @@ model Job {
   payload         Json
   result          Json?
   error           String?
+  idempotencyKey  String         @unique @default(dbgenerated("gen_random_uuid()::text"))
+  resourceType    String?
+  resourceId      String?
+  attemptCount    Int            @default(0)
+  maxAttempts     Int            @default(3)
+  availableAt     DateTime       @default(now())
+  leaseOwner      String?
+  leaseExpiresAt  DateTime?
+  retryable       Boolean        @default(true)
+  errorCode       String?
+  errorSummary    String?
+  startedAt       DateTime?
+  completedAt     DateTime?
   contentImportId String?        @db.Uuid
   createdById     String         @db.Uuid
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   contentImport   ContentImport? @relation(fields: [contentImportId], references: [id], onDelete: SetNull)
   createdBy       User           @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  attempts        JobAttempt[]
 
   @@index([contentImportId])
   @@index([status])
+  @@index([status, availableAt, leaseExpiresAt])
+  @@index([resourceType, resourceId])
+}
+
+model JobAttempt {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  jobId         String            @db.Uuid
+  attemptNumber Int
+  outcome       JobAttemptOutcome @default(RUNNING)
+  providerName  String?
+  providerModel String?
+  configVersion String?
+  httpStatus    Int?
+  errorCode     String?
+  errorSummary  String?
+  startedAt     DateTime          @default(now())
+  completedAt   DateTime?
+  job           Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, attemptNumber])
+  @@index([jobId, startedAt])
 }
 
 model MutationReceipt {

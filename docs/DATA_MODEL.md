@@ -134,11 +134,25 @@ learner và activity để ownership được kiểm tra ở cả tầng ứng d
 
 ### recordings
 
-Metadata file, consent scope, provider processing status, retention deadline và deleted timestamp. Không lưu secret/provider token.
+Mỗi speaking attempt có tối đa một `Recording`. Bảng lưu learner/session/activity ownership,
+server-generated storage key, MIME, byte size, checksum, duration, consent policy/scope/time,
+transcript chuẩn hóa, speech metrics và provider provenance không chứa secret. `retentionUntil`,
+`deletionRequestedAt` và `deletedAt` điều khiển vòng đời file; audio bytes không nằm trong PostgreSQL.
+Xóa learner/session/attempt cascade metadata; activity và lesson content vẫn dùng `RESTRICT` để
+không làm hỏng lịch sử.
 
 ### evaluation_results
 
-Lưu kết quả deterministic/AI, provider, model/config, rubric version, score dimensions, feedback và raw response đã redacted khi cần audit.
+Kết quả chấm chính thức bất biến theo `attemptId + rubricVersion`: lesson version, rubric ID/version,
+input hash, provider/model/config version không bí mật, dimension scores, aggregate score, feedback
+có cấu trúc và speech provenance. Raw provider response không được lưu. Lesson version dùng
+`RESTRICT`; attempt deletion cascade kết quả cùng learner history.
+
+### activity_drafts
+
+Draft writing duy nhất theo `learnerId + sessionId + activityId`. `revision` hỗ trợ optimistic
+concurrency, `expiresAt` phục vụ cleanup sau 30 ngày. Draft thuộc learner/session theo `CASCADE`,
+nhưng activity dùng `RESTRICT`.
 
 ## 5. Mastery và review
 
@@ -256,8 +270,17 @@ vào immutable lesson version; không nhận storage path từ client.
 
 ### jobs
 
-Increment 2 lưu job fake-audio tối thiểu với type, trạng thái `PENDING/RUNNING/COMPLETED/FAILED`,
-payload/result, lỗi, Content Import và actor tạo.
+Job dùng state machine `PENDING → RUNNING → COMPLETED`, với nhánh `RETRY_WAIT` hoặc `FAILED`.
+`idempotencyKey` là duy nhất; migration gán `legacy:<job-id>` ổn định cho job Increment 2. Queue scan
+dùng `status + availableAt + leaseExpiresAt`; lease owner/expiry cho phép worker reclaim sau crash.
+`attemptCount`, `maxAttempts`, `retryable`, safe error code/summary và resource identity hỗ trợ retry
+mà không đưa credential, raw audio hay learner response vào payload công khai.
+
+### job_attempts
+
+Audit append-only cho mỗi provider invocation: attempt number, outcome, provider/model/config version,
+HTTP status khi có, safe error code/summary và thời gian. Unique `jobId + attemptNumber`; xóa job
+cascade audit. Bảng này không lưu secret, raw audio, transcript hay bài viết của learner.
 
 ### mutation_receipts
 
