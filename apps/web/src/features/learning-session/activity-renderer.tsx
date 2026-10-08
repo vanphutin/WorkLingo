@@ -19,6 +19,7 @@ interface ActivityRendererProps {
   readonly onChange: (value: unknown) => void;
   readonly savedResponse?: unknown;
   readonly disabled?: boolean;
+  readonly sessionId: string;
 }
 
 export function isActivityComplete(activity: LearnerActivityDto, value: unknown): boolean {
@@ -79,6 +80,7 @@ export function ActivityRenderer({
   value,
   onChange,
   disabled = false,
+  sessionId,
 }: ActivityRendererProps) {
   switch (activity.activityType) {
     case 'reading': {
@@ -130,6 +132,7 @@ export function ActivityRenderer({
           value={writingValue}
           onChange={onChange}
           disabled={disabled}
+          sessionId={sessionId}
         />
       );
     }

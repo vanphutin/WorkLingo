@@ -9,6 +9,8 @@ import type {
   LearningSessionDto,
 } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
+import { EvaluationFeedback } from './evaluation-feedback';
+import { useEvaluation } from './use-evaluation';
 
 interface SessionShellProps {
   readonly session: LearningSessionDto;
@@ -77,10 +79,21 @@ export function SessionShell({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [evaluationFeedback, setEvaluationFeedback] = useState<string | null>(null);
+  const [evaluationAttemptId, setEvaluationAttemptId] = useState<string | null>(() => {
+    const pendingAttempt = [...(session.attempts ?? [])]
+      .reverse()
+      .find((attempt) =>
+        attempt.evaluationStatus === 'queued' ||
+        attempt.evaluationStatus === 'processing' ||
+        attempt.evaluationStatus === 'evaluation_failed',
+      );
+    return pendingAttempt?.id ?? null;
+  });
   const [sessionAction, setSessionAction] = useState<'pause' | 'resume' | null>(null);
   const [sessionActionError, setSessionActionError] = useState<string | null>(null);
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
   const pendingAttemptId = useRef<string | null>(null);
+  const asyncEvaluation = useEvaluation(evaluationAttemptId);
 
   // Sync state when activity changes
   useEffect(() => {
@@ -114,7 +127,12 @@ export function SessionShell({
       pendingAttemptId.current = clientAttemptId;
       const attempt = await onSubmitAttempt(currentActivity.id, payload, clientAttemptId);
       pendingAttemptId.current = null;
-      setEvaluationFeedback(attempt.feedback);
+      const hasAsyncEvaluation =
+        attempt.evaluationStatus === 'queued' ||
+        attempt.evaluationStatus === 'processing' ||
+        attempt.evaluationStatus === 'evaluation_failed';
+      setEvaluationAttemptId(hasAsyncEvaluation ? attempt.id : null);
+      setEvaluationFeedback(hasAsyncEvaluation ? null : attempt.feedback);
     } catch (err) {
       setSubmitError(
         err instanceof Error ? err.message : 'Submission failed. Please check your connection.',
@@ -253,6 +271,13 @@ export function SessionShell({
             </div>
           )}
 
+          <EvaluationFeedback
+            evaluation={asyncEvaluation.evaluation}
+            error={asyncEvaluation.error}
+            isRetrying={asyncEvaluation.isRetrying}
+            onRetry={() => void asyncEvaluation.retry()}
+          />
+
           {isCompleted ? (
             <section className="session-completed-card" aria-label="Session completed">
               <h2>Session Completed!</h2>
@@ -269,6 +294,7 @@ export function SessionShell({
               {currentActivity && (
                 <ActivityRenderer
                   activity={currentActivity}
+                  sessionId={session.id}
                   value={currentResponse}
                   onChange={handleResponseChange}
                   disabled={isSubmitting || session.status === 'paused'}

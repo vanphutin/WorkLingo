@@ -6,11 +6,13 @@ import {
   contentStatusSchema,
   createCheckpointAssessmentSchema,
   generateAudioResultSchema,
+  evaluationDtoSchema,
   jobDtoSchema,
   publishContentImportResultSchema,
   sessionAvailabilitySchema,
   sessionDurationSchema,
   sessionPlanSchema,
+  writingDraftSchema,
   validateContentImportResultSchema,
   type AudioArtifactDto,
   type AuthUser,
@@ -19,10 +21,12 @@ import {
   type CreateCheckpointAssessment,
   type GenerateAudioInput,
   type GenerateAudioResult,
+  type EvaluationDto,
   type JobDto,
   type PublishContentImportInput,
   type PublishContentImportResult,
   type SessionAvailabilityDto,
+  type WritingDraft,
   type UpdateContentSourceInput,
   type ValidateContentImportInput,
   type ValidateContentImportResult,
@@ -82,7 +86,7 @@ export const activityAttemptDtoSchema = z.object({
   sessionId: z.string(),
   activityId: z.string(),
   clientAttemptId: z.string(),
-  evaluationStatus: z.enum(['submitted', 'evaluated']),
+  evaluationStatus: z.enum(['submitted', 'queued', 'processing', 'evaluated', 'evaluation_failed']),
   score: z.number().nullable(),
   feedback: z.string().nullable(),
   createdAt: z.string(),
@@ -303,6 +307,46 @@ export class ApiClient {
       },
       activityAttemptDtoSchema,
     );
+  }
+
+  async getEvaluation(attemptId: string): Promise<EvaluationDto> {
+    return this.request(
+      `/attempts/${z.uuid().parse(attemptId)}/evaluation`,
+      { method: 'GET' },
+      evaluationDtoSchema,
+    );
+  }
+
+  async retryEvaluation(attemptId: string): Promise<EvaluationDto> {
+    return this.request(
+      `/attempts/${z.uuid().parse(attemptId)}/evaluation/retry`,
+      { method: 'POST' },
+      evaluationDtoSchema,
+    );
+  }
+
+  async getActivityDraft(sessionId: string, activityId: string): Promise<WritingDraft | null> {
+    return this.request(
+      `/learning-sessions/${z.uuid().parse(sessionId)}/activities/${z.uuid().parse(activityId)}/draft`,
+      { method: 'GET' },
+      writingDraftSchema.nullable(),
+    );
+  }
+
+  async saveActivityDraft(
+    sessionId: string,
+    activityId: string,
+    input: { readonly expectedRevision: number; readonly text: string },
+  ): Promise<WritingDraft> {
+    return this.request(
+      `/learning-sessions/${z.uuid().parse(sessionId)}/activities/${z.uuid().parse(activityId)}/draft`,
+      { method: 'PUT', body: JSON.stringify(input) },
+      writingDraftSchema,
+    );
+  }
+
+  getActivityAudioUrl(sessionId: string, activityId: string): string {
+    return `${this.baseUrl}/learning-sessions/${z.uuid().parse(sessionId)}/activities/${z.uuid().parse(activityId)}/audio`;
   }
 
   async getProgress(): Promise<LearnerProgressDto> {

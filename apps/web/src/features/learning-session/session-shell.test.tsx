@@ -318,7 +318,7 @@ describe('SessionShell and Activity Renderers', () => {
     await waitFor(() => expect(onSubmitAttempt).toHaveBeenCalledTimes(2));
     expect(onSubmitAttempt.mock.calls[0]?.[2]).toBeTruthy();
     expect(onSubmitAttempt.mock.calls[1]?.[2]).toBe(onSubmitAttempt.mock.calls[0]?.[2]);
-    expect(screen.getByRole('status')).toHaveTextContent('Saved');
+    expect(screen.getByText('Saved')).toBeInTheDocument();
   });
 
   it('shows evaluation feedback when a comprehension answer needs another attempt', async () => {
@@ -436,6 +436,7 @@ describe('SessionShell and Activity Renderers', () => {
     render(
       <ActivityRenderer
         activity={mockSpeakingActivity}
+        sessionId={createMockSession().id}
         value=""
         onChange={vi.fn()}
         savedResponse={null}
@@ -450,6 +451,7 @@ describe('SessionShell and Activity Renderers', () => {
     const { container } = render(
       <ActivityRenderer
         activity={mockListeningActivity}
+        sessionId={createMockSession().id}
         value={{ answerIndexes: [] }}
         onChange={vi.fn()}
         savedResponse={null}
