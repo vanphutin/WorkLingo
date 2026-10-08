@@ -40,7 +40,9 @@ import { MicrosoftTextToSpeechAdapter } from './infrastructure/microsoft-tts.ada
               model: ai.languageEvaluation.model,
               timeoutMs: ai.providerTimeoutMs,
             })
-          : new FakeLanguageEvaluationAdapter();
+          : new FakeLanguageEvaluationAdapter({
+              rateLimitFailures: ai.fakeEvaluationRateLimitFailures,
+            });
       },
     },
     {

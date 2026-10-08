@@ -129,6 +129,11 @@ record locally in browser
 → apply retention policy to audio
 ```
 
+Speaking và writing dùng cùng state machine nghiệp vụ `queued → processing → evaluated | evaluation_failed`.
+Lỗi provider còn automatic retry đưa attempt về `queued`, tránh client hiểu nhầm là terminal. Kết quả
+và MasteryEvent được ghi đúng một lần theo attempt/rubric; refresh chỉ đọc lại durable state. Browser
+audio không bao giờ tự phát hoặc tự xin microphone.
+
 ### Import lesson
 
 ```text
@@ -151,6 +156,8 @@ Job table tối thiểu chứa type, payload reference, status, attempts, availa
 - Tác vụ không retry tự động vô hạn.
 - Tạo audio và AI evaluation phải có idempotency key.
 - API trả `202 Accepted` cho tác vụ nền và endpoint status để frontend theo dõi; SSE có thể bổ sung sau.
+- Local demo bật worker trong API process bằng `JOB_WORKER_ENABLED=true`; trạng thái job vẫn ở PostgreSQL,
+  nên restart không làm mất hàng đợi.
 
 ## 8. Reliability và lỗi
 

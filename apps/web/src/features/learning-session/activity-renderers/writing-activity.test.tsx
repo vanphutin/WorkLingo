@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -107,5 +107,57 @@ describe('WritingActivity', () => {
         { expectedRevision: 0, text: 'We are on track today.' },
       );
     });
+  });
+
+  it('serializes overlapping autosaves so newer text uses the saved revision', async () => {
+    vi.mocked(apiClient.getActivityDraft).mockResolvedValue(null);
+    let resolveFirstSave!: (value: Awaited<ReturnType<typeof apiClient.saveActivityDraft>>) => void;
+    vi.mocked(apiClient.saveActivityDraft)
+      .mockImplementationOnce(() => new Promise((resolve) => { resolveFirstSave = resolve; }))
+      .mockResolvedValueOnce({
+        sessionId: '00000000-0000-4000-8000-000000000020',
+        activityId: activity.id,
+        text: 'We are on track and ready.',
+        revision: 2,
+        updatedAt: '2026-10-08T08:00:02.000Z',
+      });
+
+    function ControlledWritingActivity() {
+      const [value, setValue] = useState('');
+      return (
+        <WritingActivity
+          activity={activity}
+          sessionId="00000000-0000-4000-8000-000000000020"
+          value={value}
+          onChange={setValue}
+          autosaveDelayMs={10}
+        />
+      );
+    }
+    render(<ControlledWritingActivity />);
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Đã lưu bản nháp'));
+
+    const textarea = screen.getByLabelText(/your written response/i);
+    fireEvent.change(textarea, { target: { value: 'We are on track.' } });
+    await waitFor(() => expect(apiClient.saveActivityDraft).toHaveBeenCalledTimes(1));
+    fireEvent.change(textarea, { target: { value: 'We are on track and ready.' } });
+
+    await new Promise((resolve) => setTimeout(resolve, 30));
+    expect(apiClient.saveActivityDraft).toHaveBeenCalledTimes(1);
+
+    await act(async () => resolveFirstSave({
+      sessionId: '00000000-0000-4000-8000-000000000020',
+      activityId: activity.id,
+      text: 'We are on track.',
+      revision: 1,
+      updatedAt: '2026-10-08T08:00:01.000Z',
+    }));
+
+    await waitFor(() => expect(apiClient.saveActivityDraft).toHaveBeenCalledTimes(2));
+    expect(apiClient.saveActivityDraft).toHaveBeenLastCalledWith(
+      '00000000-0000-4000-8000-000000000020',
+      activity.id,
+      { expectedRevision: 1, text: 'We are on track and ready.' },
+    );
   });
 });

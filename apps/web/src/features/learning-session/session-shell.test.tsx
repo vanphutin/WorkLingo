@@ -4,11 +4,12 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-li
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type {
+  ActivityAttemptDto,
   LearnerActivityDto,
   LearningSessionDto,
 } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
-import { SessionShell } from './session-shell';
+import { findRestorableEvaluationAttemptId, SessionShell } from './session-shell';
 
 const mockReadingActivity: LearnerActivityDto = {
   id: 'd4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90',
@@ -186,6 +187,45 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('restores pending and completed Teacher AI evaluations without selecting comprehension attempts', () => {
+    const baseAttempt: ActivityAttemptDto = {
+      id: 'reading-attempt',
+      learnerId: 'learner-1',
+      sessionId: createMockSession().id,
+      activityId: mockReadingActivity.id,
+      clientAttemptId: 'reading-client-attempt',
+      evaluationStatus: 'evaluated',
+      score: 1,
+      feedback: 'Correct',
+      createdAt: '2026-10-08T08:00:00.000Z',
+      rawResponse: { answerIndexes: [1] },
+      normalizedResponse: { answerIndexes: [1] },
+    };
+
+    expect(findRestorableEvaluationAttemptId([baseAttempt])).toBeNull();
+    expect(findRestorableEvaluationAttemptId([
+      baseAttempt,
+      {
+        ...baseAttempt,
+        id: 'writing-attempt',
+        activityId: mockWritingActivity.id,
+        clientAttemptId: 'writing-client-attempt',
+        rawResponse: { text: 'The launch remains on track.' },
+      },
+    ])).toBe('writing-attempt');
+    expect(findRestorableEvaluationAttemptId([
+      baseAttempt,
+      {
+        ...baseAttempt,
+        id: 'speaking-attempt',
+        activityId: mockSpeakingActivity.id,
+        clientAttemptId: 'speaking-client-attempt',
+        evaluationStatus: 'processing',
+        rawResponse: { durationSeconds: 2, kind: 'recording', mimeType: 'audio/webm' },
+      },
+    ])).toBe('speaking-attempt');
+  });
+
   it('requires every comprehension answer even when questions are answered out of order', () => {
     const twoQuestionActivity: LearnerActivityDto = {
       ...mockReadingActivity,

@@ -1,4 +1,8 @@
 import { parseBuffer } from 'music-metadata';
+import {
+  RECORDING_CONSENT_POLICY_VERSION,
+  RECORDING_CONSENT_SCOPE,
+} from '@worklingo/contracts';
 
 export const SUPPORTED_RECORDING_MIME_TYPES = [
   'audio/webm;codecs=opus',
@@ -102,7 +106,11 @@ export function validateRecordingConsent(input: RecordingConsentInput): {
 } {
   const policyVersion = input.policyVersion.trim();
   const scope = input.scope.trim();
-  if (!input.accepted || !policyVersion || !scope) {
+  if (
+    !input.accepted ||
+    policyVersion !== RECORDING_CONSENT_POLICY_VERSION ||
+    scope !== RECORDING_CONSENT_SCOPE
+  ) {
     throw new AudioUploadPolicyError(
       'RECORDING_CONSENT_REQUIRED',
       'Explicit versioned recording consent is required.',

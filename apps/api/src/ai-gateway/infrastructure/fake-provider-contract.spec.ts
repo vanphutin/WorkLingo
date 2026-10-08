@@ -60,5 +60,19 @@ describe('fake AI provider contracts', () => {
     expect(result.feedback.improvements).toHaveLength(1);
     expect(result.feedback.summary).toContain('chưa hoàn thành');
   });
+
+  it('can inject a bounded retryable rate limit only for deterministic E2E control', async () => {
+    const provider = new FakeLanguageEvaluationAdapter({ rateLimitFailures: 2 });
+    const input = {
+      activityType: 'writing' as const,
+      learnerResponse: 'The project is on track and I will send the report today. [e2e-rate-limit:test]',
+      levelCode: 'FOUNDATION_1', prompt: 'Write a status update.', requiredPhrases: ['on track'],
+      rubricId: 'foundation-workplace-writing', rubricVersion: '1',
+    };
+
+    await expect(provider.evaluate(input)).rejects.toMatchObject({ code: 'PROVIDER_RATE_LIMITED', retryable: true });
+    await expect(provider.evaluate(input)).rejects.toMatchObject({ code: 'PROVIDER_RATE_LIMITED', retryable: true });
+    await expect(provider.evaluate(input)).resolves.toMatchObject({ scores: { taskCompletion: 0.8 } });
+  });
 });
 

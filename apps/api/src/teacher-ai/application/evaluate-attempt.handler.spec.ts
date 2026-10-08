@@ -1,6 +1,7 @@
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import { describe, expect, it, vi } from 'vitest';
 
+import { ProviderError } from '../../ai-gateway/domain/provider-errors.js';
 import type { EvaluationService } from './evaluation.service.js';
 import { EvaluateAttemptHandler } from './evaluate-attempt.handler.js';
 
@@ -25,5 +26,59 @@ describe('EvaluateAttemptHandler', () => {
       where: { id: 'attempt-id', evaluationStatus: { not: 'EVALUATED' } },
       data: { evaluationStatus: 'PROCESSING' },
     });
+  });
+
+  it('returns a retryable attempt to queued until the durable job reaches its last attempt', async () => {
+    const updateMany = vi.fn().mockResolvedValue({ count: 1 });
+    const handler = new EvaluateAttemptHandler(
+      { activityAttempt: { updateMany } } as unknown as PrismaService,
+      { evaluateAttempt: vi.fn().mockRejectedValue(new ProviderError('limited', {
+        code: 'PROVIDER_RATE_LIMITED', retryable: true,
+      })) } as unknown as EvaluationService,
+    );
+
+    await expect(handler.handle({
+      attemptNumber: 1, id: 'job-id', maxAttempts: 3,
+      payload: { attemptId: 'attempt-id' }, type: 'EVALUATE_ATTEMPT',
+    })).rejects.toMatchObject({ code: 'PROVIDER_RATE_LIMITED' });
+    expect(updateMany).toHaveBeenLastCalledWith({
+      where: { id: 'attempt-id', evaluationStatus: { not: 'EVALUATED' } },
+      data: { evaluationStatus: 'QUEUED' },
+    });
+  });
+
+  it('marks the attempt failed when the provider error is terminal for the durable job', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-10-08T00:00:00.000Z'));
+    const updateMany = vi.fn().mockResolvedValue({ count: 1 });
+    const updateRecording = vi.fn().mockResolvedValue({ count: 1 });
+    const transaction = {
+      activityAttempt: { updateMany },
+      recording: { updateMany: updateRecording },
+    };
+    const handler = new EvaluateAttemptHandler(
+      {
+        activityAttempt: { updateMany },
+        $transaction: vi.fn((work) => work(transaction)),
+      } as unknown as PrismaService,
+      { evaluateAttempt: vi.fn().mockRejectedValue(new ProviderError('limited', {
+        code: 'PROVIDER_RATE_LIMITED', retryable: true,
+      })) } as unknown as EvaluationService,
+      { recordingRetentionDays: 7 },
+    );
+
+    await expect(handler.handle({
+      attemptNumber: 3, id: 'job-id', maxAttempts: 3,
+      payload: { attemptId: 'attempt-id' }, type: 'EVALUATE_ATTEMPT',
+    })).rejects.toMatchObject({ code: 'PROVIDER_RATE_LIMITED' });
+    expect(updateMany).toHaveBeenLastCalledWith({
+      where: { id: 'attempt-id', evaluationStatus: { not: 'EVALUATED' } },
+      data: { evaluationStatus: 'EVALUATION_FAILED' },
+    });
+    expect(updateRecording).toHaveBeenCalledWith({
+      where: { attemptId: 'attempt-id', retentionUntil: null },
+      data: { retentionUntil: new Date('2026-10-15T00:00:00.000Z') },
+    });
+    vi.useRealTimers();
   });
 });

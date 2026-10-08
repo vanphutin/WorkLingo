@@ -31,6 +31,10 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:3000',
+    permissions: ['microphone'],
+    launchOptions: {
+      args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
+    },
     trace: 'retain-on-failure',
   },
   projects: [
@@ -66,6 +70,16 @@ export default defineConfig({
       dependencies: ['admin-desktop'],
       use: { ...devices['Pixel 5'] },
     },
+    {
+      name: 'teacher-ai-desktop',
+      testMatch: /teacher-ai-learning\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'teacher-ai-mobile',
+      testMatch: /teacher-ai-learning\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
   ],
   webServer: [
     {
@@ -74,9 +88,14 @@ export default defineConfig({
       env: {
         API_PORT: '4000',
         DATABASE_URL: databaseUrl.toString(),
+        JOB_WORKER_ENABLED: 'true',
+        JOB_WORKER_POLL_INTERVAL_MS: '500',
+        NODE_ENV: 'test',
         SESSION_SECRET:
           process.env.SESSION_SECRET ?? 'worklingo-playwright-local-secret-change-me',
         WORKLINGO_DATA_DIR: dataDirectory,
+        WORKLINGO_E2E_MODE: 'true',
+        WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: '3',
       },
       url: 'http://127.0.0.1:4000/api/v1/health',
       reuseExistingServer: false,

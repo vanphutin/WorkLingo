@@ -196,8 +196,9 @@ Không trả answer specification trước khi learner nộp.
 ```
 
 `clientAttemptId` là idempotency key theo learner. Câu hỏi đọc/nghe được chấm deterministic; chỉ khi
-toàn bộ đáp án đúng checkpoint mới tăng. Speaking/writing được lưu với trạng thái `submitted` và vẫn
-được chuyển bước, nhưng không được biểu diễn là câu trả lời đúng hoặc có điểm AI. Session response
+toàn bộ đáp án đúng checkpoint mới tăng. Writing được lưu trước với trạng thái `queued`, enqueue
+`EVALUATE_ATTEMPT`, rồi chuyển bước mà không bịa điểm trong lúc chờ. Speaking text fallback được lưu
+như luyện tập không chấm điểm. Session response
 trả `rawResponse` và `normalizedResponse` trong từng attempt để giao diện khôi phục phần learner đã
 nhập sau khi tải lại trang.
 
@@ -217,6 +218,7 @@ Response `202`:
 ```json
 {
   "attemptId": "uuid",
+  "recordingId": "uuid",
   "jobId": "uuid",
   "status": "processing"
 }
@@ -226,16 +228,37 @@ Response `202`:
 
 ```json
 {
-  "status": "completed",
+  "attemptId": "uuid",
+  "status": "evaluated",
+  "transcript": "Hello, I am Lan from support.",
   "scores": {
-    "content": 0.82,
-    "pronunciation": 0.74,
-    "fluency": 0.69
+    "taskCompletion": 0.82,
+    "meaningAndLogic": 0.78,
+    "targetLanguage": 0.85,
+    "clarity": 0.8,
+    "pronunciationOrFluency": 0.74
   },
-  "feedback": [],
+  "score": 0.8,
+  "feedback": {
+    "summary": "...",
+    "strengths": ["..."],
+    "improvements": ["..."],
+    "correctedExample": "..."
+  },
+  "recording": { "id": "uuid", "retentionUntil": "ISO-8601", "deletedAt": null },
   "retryable": false
 }
 ```
+
+Trạng thái là `queued | processing | evaluated | evaluation_failed`. Chỉ failure terminal có source
+còn giữ và job cho phép retry mới trả `retryable: true`. Retry dùng
+`POST /attempts/{attemptId}/evaluation/retry`; không yêu cầu upload lại nếu recording còn retention.
+`DELETE /recordings/{recordingId}` xóa audio sớm, hủy retry đang chờ và trả 204 idempotently.
+
+Writing autosave dùng `GET/PUT/DELETE /learning-sessions/{sessionId}/activities/{activityId}/draft`.
+PUT nhận `expectedRevision` và trả `DRAFT_REVISION_CONFLICT` nếu client cũ. Audio Listening dùng
+`GET /learning-sessions/{sessionId}/activities/{activityId}/audio`; server chỉ stream artifact READY
+của đúng `LessonVersion` đã khóa trong session.
 
 ## 7. Progress và mastery
 

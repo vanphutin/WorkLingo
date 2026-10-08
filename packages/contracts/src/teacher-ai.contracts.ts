@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+export const RECORDING_CONSENT_POLICY_VERSION = 'recording-v1' as const;
+export const RECORDING_CONSENT_SCOPE = 'teacher-ai' as const;
+
 export const evaluationStatusSchema = z.enum([
   'submitted',
   'queued',

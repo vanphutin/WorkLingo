@@ -5,6 +5,7 @@ import { z } from 'zod';
 export interface AppConfig {
   readonly ai: {
     readonly draftRetentionDays: number;
+    readonly fakeEvaluationRateLimitFailures: number;
     readonly languageEvaluation:
       | { readonly provider: 'fake' }
       | {
@@ -49,19 +50,28 @@ export interface AppConfig {
   readonly webPort: number;
 }
 
+const blankAsUndefined = (value: unknown): unknown =>
+  typeof value === 'string' && value.trim().length === 0 ? undefined : value;
+const optionalNonBlankString = z.preprocess(
+  blankAsUndefined,
+  z.string().min(1).optional(),
+);
+const optionalUrl = z.preprocess(blankAsUndefined, z.url().optional());
+
 const environmentSchema = z.object({
   API_PORT: z.coerce.number().int().min(1).max(65_535).default(4000),
   DATABASE_URL: z.string().min(1),
   JOB_WORKER_ENABLED: z.enum(['true', 'false']).default('false'),
   JOB_WORKER_LEASE_MS: z.coerce.number().int().min(5_000).max(300_000).default(30_000),
   JOB_WORKER_POLL_INTERVAL_MS: z.coerce.number().int().min(100).max(60_000).default(1_000),
-  MICROSOFT_SPEECH_KEY: z.string().min(1).optional(),
+  MICROSOFT_SPEECH_KEY: optionalNonBlankString,
   MICROSOFT_SPEECH_LANGUAGE: z.string().min(2).default('en-US'),
-  MICROSOFT_SPEECH_REGION: z.string().min(1).optional(),
+  MICROSOFT_SPEECH_REGION: optionalNonBlankString,
   MICROSOFT_SPEECH_VOICE: z.string().min(1).default('en-US-JennyNeural'),
-  OPENAI_API_KEY: z.string().min(1).optional(),
-  OPENAI_BASE_URL: z.url().optional(),
-  OPENAI_MODEL: z.string().min(1).optional(),
+  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+  OPENAI_API_KEY: optionalNonBlankString,
+  OPENAI_BASE_URL: optionalUrl,
+  OPENAI_MODEL: optionalNonBlankString,
   PROVIDER_MAX_ATTEMPTS: z.coerce.number().int().min(1).max(5).default(3),
   PROVIDER_TIMEOUT_MS: z.coerce.number().int().min(1_000).max(120_000).default(30_000),
   RECORDING_MAX_BYTES: z.coerce.number().int().min(1_024).max(50 * 1024 * 1024).default(10 * 1024 * 1024),
@@ -78,9 +88,11 @@ const environmentSchema = z.object({
   WORKLINGO_ADMIN_EMAIL: z.string().email().optional(),
   WORKLINGO_ADMIN_PASSWORD: z.string().min(8).optional(),
   WORKLINGO_DATA_DIR: z.string().min(1),
+  WORKLINGO_E2E_MODE: z.enum(['true', 'false']).default('false'),
   WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: z.enum(['fake', 'openai-compatible']).default('fake'),
   WORKLINGO_STT_PROVIDER: z.enum(['fake', 'microsoft']).default('fake'),
   WORKLINGO_TTS_PROVIDER: z.enum(['fake', 'microsoft']).default('fake'),
+  WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: z.coerce.number().int().min(0).max(5).default(0),
   WRITING_DRAFT_RETENTION_DAYS: z.coerce.number().int().min(1).max(365).default(30),
 }).superRefine((environment, context) => {
   if (environment.WORKLINGO_STT_PROVIDER === 'microsoft' ||
@@ -98,6 +110,16 @@ const environmentSchema = z.object({
         context.addIssue({ code: 'custom', path: [field], message: 'is required for OpenAI-compatible evaluation' });
       }
     }
+  }
+  if (environment.WORKLINGO_TEST_FAKE_EVALUATION_FAILURES > 0 &&
+      (environment.NODE_ENV !== 'test' ||
+       environment.WORKLINGO_E2E_MODE !== 'true' ||
+       environment.WORKLINGO_LANGUAGE_EVALUATION_PROVIDER !== 'fake')) {
+    context.addIssue({
+      code: 'custom',
+      path: ['WORKLINGO_TEST_FAKE_EVALUATION_FAILURES'],
+      message: 'is allowed only with fake evaluation in an explicit test E2E process',
+    });
   }
 });
 
@@ -141,6 +163,7 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
     adminPassword: result.data.WORKLINGO_ADMIN_PASSWORD,
     ai: {
       draftRetentionDays: result.data.WRITING_DRAFT_RETENTION_DAYS,
+      fakeEvaluationRateLimitFailures: result.data.WORKLINGO_TEST_FAKE_EVALUATION_FAILURES,
       languageEvaluation,
       maxAttempts: result.data.PROVIDER_MAX_ATTEMPTS,
       providerTimeoutMs: result.data.PROVIDER_TIMEOUT_MS,

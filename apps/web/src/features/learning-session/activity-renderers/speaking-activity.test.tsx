@@ -45,6 +45,11 @@ describe('SpeakingActivity', () => {
       <SpeakingActivity activity={activity} sessionId="00000000-0000-4000-8000-000000000020"
         value="" onChange={vi.fn()} onSubmitRecording={onSubmitRecording} />,
     );
+    expect(screen.getByText(/stored locally/i)).toBeInTheDocument();
+    expect(screen.getByText(/external speech provider/i)).toBeInTheDocument();
+    expect(screen.getByText(/seven days/i)).toBeInTheDocument();
+    expect(screen.getByText(/transcript and feedback remain/i)).toBeInTheDocument();
+    expect(screen.getByText(/already in flight cannot be recalled/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /send for evaluation/i })).toBeDisabled();
     fireEvent.click(screen.getByRole('checkbox', { name: /consent/i }));
     fireEvent.click(screen.getByRole('button', { name: /send for evaluation/i }));

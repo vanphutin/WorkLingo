@@ -1,6 +1,10 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import {
+  RECORDING_CONSENT_POLICY_VERSION,
+  RECORDING_CONSENT_SCOPE,
+} from '@worklingo/contracts';
 
 import type {
   LearnerActivityDto,
@@ -43,8 +47,8 @@ export function SpeakingActivity({
         audio: recorder.blob,
         clientAttemptId: clientAttemptIdRef.current ??= crypto.randomUUID(),
         consentAccepted: true,
-        consentPolicyVersion: 'recording-v1',
-        consentScope: 'teacher-ai',
+        consentPolicyVersion: RECORDING_CONSENT_POLICY_VERSION,
+        consentScope: RECORDING_CONSENT_SCOPE,
         sessionId,
       });
     } catch (caught) {
@@ -105,9 +109,15 @@ export function SpeakingActivity({
                 <button type="button" className="secondary-action-button" onClick={() => void rerecord()} disabled={isUploading}>Re-record</button>
                 <button type="button" className="secondary-action-button" onClick={discardRecording} disabled={isUploading}>Discard</button>
               </div>
+              <p className="recording-consent-details">
+                Your audio is stored locally for Teacher AI evaluation. If configured, it may be
+                sent to an external speech provider. Audio is kept for up to seven days after
+                processing and can be deleted early; your transcript and feedback remain. A
+                provider request already in flight cannot be recalled.
+              </p>
               <label className="recording-consent">
                 <input type="checkbox" checked={consentAccepted} onChange={(event) => setConsentAccepted(event.target.checked)} />
-                I consent to upload this recording for Teacher AI evaluation under policy recording-v1.
+                I consent to this use under policy {RECORDING_CONSENT_POLICY_VERSION}.
               </label>
               <button type="button" className="continue-button" onClick={() => void submitRecording()}
                 disabled={!consentAccepted || isUploading || disabled}>

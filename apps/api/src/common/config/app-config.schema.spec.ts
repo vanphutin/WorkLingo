@@ -51,6 +51,7 @@ describe('parseAppConfig', () => {
 
     expect(config.ai).toEqual({
       draftRetentionDays: 30,
+      fakeEvaluationRateLimitFailures: 0,
       languageEvaluation: { provider: 'fake' },
       maxAttempts: 3,
       providerTimeoutMs: 30_000,
@@ -65,6 +66,42 @@ describe('parseAppConfig', () => {
       pollIntervalMs: 1_000,
       workerEnabled: false,
     });
+  });
+
+  it('treats blank optional provider values from .env.example as unconfigured', () => {
+    const config = parseAppConfig({
+      ...validEnvironment,
+      MICROSOFT_SPEECH_KEY: '',
+      MICROSOFT_SPEECH_REGION: '',
+      OPENAI_API_KEY: '',
+      OPENAI_BASE_URL: '',
+      OPENAI_MODEL: '',
+    });
+
+    expect(config.ai.speechToText.provider).toBe('fake');
+    expect(config.ai.languageEvaluation.provider).toBe('fake');
+    expect(config.ai.textToSpeech.provider).toBe('fake');
+  });
+
+  it('permits deterministic fake failures only in explicit E2E mode', () => {
+    expect(() => parseAppConfig({
+      ...validEnvironment,
+      WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: '3',
+    })).toThrow('WORKLINGO_TEST_FAKE_EVALUATION_FAILURES');
+
+    expect(parseAppConfig({
+      ...validEnvironment,
+      NODE_ENV: 'test',
+      WORKLINGO_E2E_MODE: 'true',
+      WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: '3',
+    }).ai.fakeEvaluationRateLimitFailures).toBe(3);
+
+    expect(() => parseAppConfig({
+      ...validEnvironment,
+      NODE_ENV: 'production',
+      WORKLINGO_E2E_MODE: 'true',
+      WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: '3',
+    })).toThrow('WORKLINGO_TEST_FAKE_EVALUATION_FAILURES');
   });
 
   it.each([

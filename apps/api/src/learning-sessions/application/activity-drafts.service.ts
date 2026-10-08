@@ -1,5 +1,5 @@
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import type { WritingDraft } from '@worklingo/contracts';
+import { sessionPlanSchema, type WritingDraft } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 
@@ -82,9 +82,13 @@ export class ActivityDraftsService {
   ): Promise<void> {
     const session = await this.database.learningSession.findFirst({
       where: { id: sessionId, learnerId },
-      select: { lessonVersionId: true },
+      select: { lessonVersionId: true, planSnapshot: true },
     });
     if (!session) throw new NotFoundException('Learning session not found');
+    const plan = sessionPlanSchema.parse(session.planSnapshot);
+    if (!plan.blocks.some((block) => block.activityIds.includes(activityId))) {
+      throw new NotFoundException('Writing activity not found in this session');
+    }
     const activity = await this.database.activity.findFirst({
       where: { id: activityId, lessonVersionId: session.lessonVersionId, activityType: 'writing' },
       select: { id: true },

@@ -3,11 +3,32 @@ import {
   type LanguageEvaluationInput,
 } from '../domain/language-evaluation.port.js';
 import type { LanguageEvaluation } from '../domain/language-evaluation.schema.js';
+import { ProviderError } from '../domain/provider-errors.js';
 
 const PROMPT_INJECTION = /ignore (?:the |all )?(?:previous )?(?:rubric|instructions?)/i;
 
 export class FakeLanguageEvaluationAdapter extends LanguageEvaluationPort {
+  private readonly rateLimitFailures: number;
+  private readonly rateLimitFailuresByResponse = new Map<string, number>();
+
+  constructor(options: { readonly rateLimitFailures?: number } = {}) {
+    super();
+    this.rateLimitFailures = options.rateLimitFailures ?? 0;
+  }
+
   async evaluate(input: LanguageEvaluationInput): Promise<LanguageEvaluation> {
+    const usesRateLimitFixture = this.rateLimitFailures > 0 &&
+      input.learnerResponse.includes('[e2e-rate-limit');
+    const remainingFailures = usesRateLimitFixture
+      ? (this.rateLimitFailuresByResponse.get(input.learnerResponse) ?? this.rateLimitFailures)
+      : 0;
+    if (remainingFailures > 0) {
+      this.rateLimitFailuresByResponse.set(input.learnerResponse, remainingFailures - 1);
+      throw new ProviderError('Deterministic E2E provider rate limit.', {
+        code: 'PROVIDER_RATE_LIMITED',
+        retryable: true,
+      });
+    }
     const response = input.learnerResponse.trim();
     const normalizedResponse = response.toLocaleLowerCase('en-US');
     const hasRequiredPhrases = input.requiredPhrases.every((phrase) => (

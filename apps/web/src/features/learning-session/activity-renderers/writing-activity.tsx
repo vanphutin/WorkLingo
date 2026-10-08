@@ -28,17 +28,24 @@ export function WritingActivity({
     : [];
   const wordCount = value.trim() ? value.trim().split(/\s+/u).length : 0;
   const revisionRef = useRef(0);
+  const editVersionRef = useRef(0);
+  const scopeRef = useRef(0);
+  const saveChainRef = useRef<Promise<void>>(Promise.resolve());
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const mountedRef = useRef(true);
   const [draftStatus, setDraftStatus] = useState<'loading' | 'saved' | 'saving' | 'error'>('loading');
 
   useEffect(() => {
     mountedRef.current = true;
+    const scope = ++scopeRef.current;
+    editVersionRef.current = 0;
+    revisionRef.current = 0;
+    saveChainRef.current = Promise.resolve();
     let active = true;
     void apiClient.getActivityDraft(sessionId, activity.id).then((draft) => {
-      if (!active) return;
+      if (!active || scope !== scopeRef.current) return;
       revisionRef.current = draft?.revision ?? 0;
-      if (draft?.text && draft.text !== value) onChange(draft.text);
+      if (editVersionRef.current === 0 && draft?.text && draft.text !== value) onChange(draft.text);
       setDraftStatus('saved');
     }).catch(() => {
       if (active) setDraftStatus('error');
@@ -50,34 +57,47 @@ export function WritingActivity({
     };
   }, [activity.id, sessionId]);
 
-  const saveDraft = async (text: string): Promise<void> => {
+  const saveDraft = async (text: string, editVersion: number, scope: number): Promise<void> => {
+    if (scope !== scopeRef.current) return;
     setDraftStatus('saving');
     try {
       const saved = await apiClient.saveActivityDraft(sessionId, activity.id, {
         expectedRevision: revisionRef.current,
         text,
       });
+      if (scope !== scopeRef.current) return;
       revisionRef.current = saved.revision;
-      if (mountedRef.current) setDraftStatus('saved');
+      if (mountedRef.current && editVersion === editVersionRef.current) setDraftStatus('saved');
     } catch (caught) {
       if (caught instanceof ApiError && caught.code === 'DRAFT_REVISION_CONFLICT') {
         const newest = await apiClient.getActivityDraft(sessionId, activity.id);
-        if (newest && mountedRef.current) {
+        if (newest && mountedRef.current && scope === scopeRef.current) {
           revisionRef.current = newest.revision;
-          onChange(newest.text);
-          setDraftStatus('saved');
+          if (editVersion === editVersionRef.current) {
+            onChange(newest.text);
+            setDraftStatus('saved');
+          }
           return;
         }
       }
-      if (mountedRef.current) setDraftStatus('error');
+      if (mountedRef.current && scope === scopeRef.current && editVersion === editVersionRef.current) {
+        setDraftStatus('error');
+      }
     }
   };
 
   const handleChange = (next: string): void => {
+    const editVersion = ++editVersionRef.current;
+    const scope = scopeRef.current;
     onChange(next);
     setDraftStatus('saving');
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => void saveDraft(next), autosaveDelayMs);
+    timerRef.current = setTimeout(() => {
+      saveChainRef.current = saveChainRef.current.then(
+        () => saveDraft(next, editVersion, scope),
+        () => saveDraft(next, editVersion, scope),
+      );
+    }, autosaveDelayMs);
   };
 
   return (

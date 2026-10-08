@@ -10,7 +10,7 @@ import {
   JobRunnerService,
   createJobRunnerOptions,
 } from './application/job-runner.service.js';
-import { JobsService } from './application/jobs.service.js';
+import { JOB_DEFAULT_OPTIONS, JobsService } from './application/jobs.service.js';
 import { JobDispatcher } from './domain/job-dispatcher.port.js';
 
 @Module({
@@ -18,6 +18,13 @@ import { JobDispatcher } from './domain/job-dispatcher.port.js';
   controllers: [JobsController],
   providers: [
     JobsService,
+    {
+      provide: JOB_DEFAULT_OPTIONS,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<AppConfig, true>) => ({
+        maxAttempts: config.get('ai', { infer: true }).maxAttempts,
+      }),
+    },
     JobHandlerRegistry,
     JobRunnerService,
     { provide: JobDispatcher, useExisting: JobsService },

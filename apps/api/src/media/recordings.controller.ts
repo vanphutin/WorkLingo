@@ -27,6 +27,8 @@ interface MultipartAudioFile {
   readonly mimetype: string;
 }
 
+const MAX_CONFIGURABLE_RECORDING_BYTES = 50 * 1024 * 1024;
+
 @ApiTags('recordings')
 @Controller('activities/:activityId/recordings')
 export class RecordingsController {
@@ -34,7 +36,9 @@ export class RecordingsController {
 
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  @UseInterceptors(FileInterceptor('audio', { limits: { files: 1, fileSize: 10 * 1024 * 1024 } }))
+  @UseInterceptors(FileInterceptor('audio', {
+    limits: { files: 1, fileSize: MAX_CONFIGURABLE_RECORDING_BYTES },
+  }))
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Submit a consented speaking recording for asynchronous evaluation' })
   @ApiAcceptedResponse({ description: 'Recording and transcription job saved' })

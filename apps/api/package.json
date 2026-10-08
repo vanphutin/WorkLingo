@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "ai:calibrate": "tsx src/teacher-ai/evaluation-harness.ts",
     "build": "tsc -p tsconfig.build.json",
     "dev": "node scripts/run-api.mjs dev",
     "db:seed": "prisma db seed",

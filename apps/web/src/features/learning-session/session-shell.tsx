@@ -36,6 +36,33 @@ const blockLabels: Record<string, string> = {
   respond: 'Respond',
 };
 
+export function findRestorableEvaluationAttemptId(
+  attempts: readonly ActivityAttemptDto[],
+): string | null {
+  const attempt = [...attempts].reverse().find((candidate) => {
+    if (
+      candidate.evaluationStatus === 'queued' ||
+      candidate.evaluationStatus === 'processing' ||
+      candidate.evaluationStatus === 'evaluation_failed'
+    ) {
+      return true;
+    }
+
+    if (
+      candidate.evaluationStatus !== 'evaluated' ||
+      typeof candidate.rawResponse !== 'object' ||
+      candidate.rawResponse === null
+    ) {
+      return false;
+    }
+
+    const response = candidate.rawResponse as Record<string, unknown>;
+    return 'text' in response || response.kind === 'recording';
+  });
+
+  return attempt?.id ?? null;
+}
+
 export function SessionShell({
   session,
   currentActivity,
@@ -84,16 +111,9 @@ export function SessionShell({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [evaluationFeedback, setEvaluationFeedback] = useState<string | null>(null);
-  const [evaluationAttemptId, setEvaluationAttemptId] = useState<string | null>(() => {
-    const pendingAttempt = [...(session.attempts ?? [])]
-      .reverse()
-      .find((attempt) =>
-        attempt.evaluationStatus === 'queued' ||
-        attempt.evaluationStatus === 'processing' ||
-        attempt.evaluationStatus === 'evaluation_failed',
-      );
-    return pendingAttempt?.id ?? null;
-  });
+  const [evaluationAttemptId, setEvaluationAttemptId] = useState<string | null>(() =>
+    findRestorableEvaluationAttemptId(session.attempts ?? []),
+  );
   const [sessionAction, setSessionAction] = useState<'pause' | 'resume' | null>(null);
   const [sessionActionError, setSessionActionError] = useState<string | null>(null);
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);

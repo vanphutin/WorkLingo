@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { Prisma, type JobStatus as PrismaJobStatus } from '@prisma/client';
 import type { JobDto, JobStatus } from '@worklingo/contracts';
 
@@ -17,6 +17,11 @@ interface ClaimedJobRow {
   readonly payload: Prisma.JsonValue;
   readonly status: PrismaJobStatus;
   readonly type: string;
+}
+
+export const JOB_DEFAULT_OPTIONS = Symbol('JOB_DEFAULT_OPTIONS');
+export interface JobDefaultOptions {
+  readonly maxAttempts: number;
 }
 
 export interface CompleteClaimInput {
@@ -45,7 +50,10 @@ const recordPayload = (value: Prisma.JsonValue): Readonly<Record<string, unknown
 
 @Injectable()
 export class JobsService extends JobDispatcher {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {
+  constructor(
+    @Inject(PrismaService) private readonly database: PrismaService,
+    @Optional() @Inject(JOB_DEFAULT_OPTIONS) private readonly defaults?: JobDefaultOptions,
+  ) {
     super();
   }
 
@@ -61,7 +69,7 @@ export class JobsService extends JobDispatcher {
           payload: input.payload as Prisma.InputJsonValue,
           createdById: input.createdById,
           idempotencyKey: input.idempotencyKey,
-          maxAttempts: input.maxAttempts ?? 3,
+          maxAttempts: input.maxAttempts ?? this.defaults?.maxAttempts ?? 3,
           ...(input.contentImportId ? { contentImportId: input.contentImportId } : {}),
           ...(input.resourceId ? { resourceId: input.resourceId } : {}),
           ...(input.resourceType ? { resourceType: input.resourceType } : {}),
@@ -232,9 +240,11 @@ export class JobsService extends JobDispatcher {
     });
   }
 
-  async retryJob(jobId: string, _actorId: string): Promise<JobReference> {
+  async retryJob(jobId: string, actorId: string): Promise<JobReference> {
     return this.database.$transaction(async (transaction) => {
-      const job = await transaction.job.findUnique({ where: { id: jobId } });
+      const job = await transaction.job.findFirst({
+        where: { createdById: actorId, id: jobId },
+      });
       if (!job) {
         throw new NotFoundException({
           code: 'NOT_FOUND', message: `Job ${jobId} not found`, statusCode: 404,
@@ -264,8 +274,10 @@ export class JobsService extends JobDispatcher {
     });
   }
 
-  async getJob(jobId: string, _actorId: string): Promise<JobDto> {
-    const job = await this.database.job.findUnique({ where: { id: jobId } });
+  async getJob(jobId: string, actorId: string): Promise<JobDto> {
+    const job = await this.database.job.findFirst({
+      where: { createdById: actorId, id: jobId },
+    });
     if (!job) {
       throw new NotFoundException({
         code: 'NOT_FOUND', message: `Job ${jobId} not found`, statusCode: 404,

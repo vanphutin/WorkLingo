@@ -62,6 +62,8 @@ describe('recording upload policy', () => {
       .toThrow(expect.objectContaining({ code: 'RECORDING_CONSENT_REQUIRED' }));
     expect(() => validateRecordingConsent({ accepted: true, policyVersion: '', scope: 'teacher-ai' }))
       .toThrow(expect.objectContaining({ code: 'RECORDING_CONSENT_REQUIRED' }));
+    expect(() => validateRecordingConsent({ accepted: true, policyVersion: 'invented-v9', scope: 'anything' }))
+      .toThrow(expect.objectContaining({ code: 'RECORDING_CONSENT_REQUIRED' }));
     expect(validateRecordingConsent({ accepted: true, policyVersion: 'recording-v1', scope: 'teacher-ai' }))
       .toEqual({ policyVersion: 'recording-v1', scope: 'teacher-ai' });
   });
