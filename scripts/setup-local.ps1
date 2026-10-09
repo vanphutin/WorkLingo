@@ -76,7 +76,8 @@ if (Test-Path $envPath) {
   }
 
   $passwordMatch = [regex]::Match($envContent, "(?m)^WORKLINGO_ADMIN_PASSWORD=(.*)$")
-  if (-not $passwordMatch.Success -or $passwordMatch.Groups[1].Value -eq "replace-with-a-local-admin-password" -or [string]::IsNullOrWhiteSpace($passwordMatch.Groups[1].Value)) {
+  $currentPassword = if ($passwordMatch.Success) { $passwordMatch.Groups[1].Value.Trim() } else { "" }
+  if (-not $passwordMatch.Success -or $currentPassword -eq "replace-with-a-local-admin-password" -or [string]::IsNullOrWhiteSpace($currentPassword)) {
     $generatedPass = [System.Guid]::NewGuid().ToString("N").Substring(0, 16) + "!"
     if ($passwordMatch.Success) {
       $envContent = [regex]::Replace(

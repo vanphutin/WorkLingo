@@ -71,7 +71,7 @@ describe('Error Bank & Memory Health HTTP API Integration', () => {
     const sessionId = sessionRes.body.id;
     await learnerA.post(`/api/v1/learning-sessions/${sessionId}/start`).expect(200);
 
-    // Activity 0 is writing (activate) -> SUBMITTED only
+    // Activity 0 is writing (activate) -> durably queued for Teacher AI.
     const writingActivityId = sessionRes.body.plan.blocks[0].activityIds[0];
     const submittedAttempt = await learnerA
       .post(`/api/v1/activities/${writingActivityId}/attempts`)
@@ -82,10 +82,10 @@ describe('Error Bank & Memory Health HTTP API Integration', () => {
       })
       .expect(201);
 
-    expect(submittedAttempt.body.evaluationStatus).toBe('submitted');
+    expect(submittedAttempt.body.evaluationStatus).toBe('queued');
     expect(submittedAttempt.body.score).toBeNull();
 
-    // Verify Error Bank is still empty (writing was only submitted, unassessed)
+    // Verify Error Bank is still empty (writing is queued and remains unassessed).
     const errorBankEmpty = await learnerA.get('/api/v1/me/error-bank').expect(200);
     expect(errorBankEmpty.body.total).toBe(0);
 

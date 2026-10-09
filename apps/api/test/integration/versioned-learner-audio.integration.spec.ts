@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import type { Prisma } from '@prisma/client';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { lessonSnapshotSchema } from '../../src/curriculum/domain/curriculum.types.js';
 import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
 import {
   createLearningSessionTestContext,
@@ -23,18 +24,50 @@ describe('version-bound learner audio', () => {
     const learner = await registerLearner(context.app, {
       displayName: 'Versioned Audio Learner', email: 'versioned-audio@example.test',
     });
-    const created = await learner.post('/api/v1/learning-sessions').send({
-      clientSessionId: randomUUID(), durationMinutes: 60,
-    }).expect(201);
-    const session = await context.database.learningSession.findUniqueOrThrow({
-      where: { id: created.body.id },
-      include: { lessonVersion: true },
+    const actor = await context.database.user.findUniqueOrThrow({
+      where: { email: 'versioned-audio@example.test' },
     });
-    const activityIds = (created.body.plan.blocks as Array<{ activityIds: string[] }>)
-      .flatMap((block) => block.activityIds);
-    const listening = await context.database.activity.findFirstOrThrow({
-      where: { id: { in: activityIds }, activityType: 'listening' },
+    const lesson = await context.database.lesson.findFirstOrThrow({
+      where: { currentPublishedVersionId: { not: null } },
+      include: { currentPublishedVersion: true },
     });
+    const baseVersion = lesson.currentPublishedVersion!;
+    const source = lessonSnapshotSchema.parse(baseVersion.parsedContent);
+    const snapshot = {
+      ...source,
+      activities: source.activities.map((activity) => ({ ...activity, id: randomUUID() })),
+      contentBlocks: source.contentBlocks.map((block) => ({ ...block, id: randomUUID() })),
+    };
+    const version = await context.database.lessonVersion.create({
+      data: {
+        lessonId: lesson.id,
+        parsedContent: snapshot as Prisma.InputJsonValue,
+        sourceHash: randomUUID(),
+        title: snapshot.title,
+        version: baseVersion.version + 1,
+      },
+    });
+    await context.database.contentBlock.createMany({
+      data: snapshot.contentBlocks.map((block, order) => ({
+        id: block.id,
+        lessonVersionId: version.id,
+        metadata: block.audio ? { audio: block.audio } : {},
+        order,
+        slug: block.slug,
+        text: block.text,
+        type: block.type,
+      })),
+    });
+    await context.database.activity.createMany({
+      data: snapshot.activities.map((activity) => ({ ...activity, lessonVersionId: version.id })),
+    });
+    await context.database.lessonVersionWordBank.createMany({
+      data: snapshot.wordBanks.map((bank) => ({
+        lessonVersionId: version.id,
+        wordBankId: bank.id,
+      })),
+    });
+    const listening = snapshot.activities.find((activity) => activity.activityType === 'listening')!;
     const payload = listening.payload as { questions: Array<{ evidence: string }> };
     const audioScriptSlug = payload.questions[0]!.evidence.split(':', 1)[0]!;
     const storage = context.app.get(ObjectStorage);
@@ -43,11 +76,13 @@ describe('version-bound learner audio', () => {
     });
     const contentImport = await context.database.contentImport.create({
       data: {
-        createdById: session.learnerId,
+        createdById: actor.id,
+        lessonId: lesson.id,
+        lessonVersionId: version.id,
         rawSource: 'versioned audio integration fixture',
         sourceHash: randomUUID(),
-        status: 'PUBLISHED',
-        updatedById: session.learnerId,
+        status: 'VALIDATED',
+        updatedById: actor.id,
       },
     });
     const oldArtifact = await context.database.audioArtifact.create({
@@ -68,12 +103,38 @@ describe('version-bound learner audio', () => {
       data: {
         audioArtifactId: oldArtifact.id,
         audioScriptSlug,
-        lessonVersionId: session.lessonVersionId,
+        lessonVersionId: version.id,
       },
+    });
+    await context.database.lessonVersion.update({
+      where: { id: baseVersion.id },
+      data: { status: 'ARCHIVED' },
+    });
+    await context.database.lessonVersion.update({
+      where: { id: version.id },
+      data: { publishedAt: new Date(), status: 'PUBLISHED' },
+    });
+    await context.database.lesson.update({
+      where: { id: lesson.id },
+      data: { currentPublishedVersionId: version.id },
+    });
+
+    const created = await learner.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(201);
+    const session = await context.database.learningSession.findUniqueOrThrow({
+      where: { id: created.body.id },
+      include: { lessonVersion: true },
+    });
+    expect(session.lessonVersionId).toBe(version.id);
+
+    await context.database.lessonVersion.update({
+      where: { id: version.id },
+      data: { status: 'ARCHIVED' },
     });
     const nextVersion = await context.database.lessonVersion.create({
       data: {
-        lessonId: session.lessonVersion.lessonId,
+        lessonId: lesson.id,
         parsedContent: session.lessonVersion.parsedContent as Prisma.InputJsonValue,
         publishedAt: new Date(),
         sourceHash: randomUUID(),
@@ -83,7 +144,7 @@ describe('version-bound learner audio', () => {
       },
     });
     await context.database.lesson.update({
-      where: { id: session.lessonVersion.lessonId },
+      where: { id: lesson.id },
       data: { currentPublishedVersionId: nextVersion.id },
     });
 

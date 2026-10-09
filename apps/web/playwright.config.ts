@@ -15,6 +15,8 @@ const baseDatabaseUrl = process.env.TEST_DATABASE_URL ?? process.env.DATABASE_UR
 const databaseUrl = new URL(baseDatabaseUrl);
 databaseUrl.searchParams.set('schema', schemaName);
 const dataDirectory = path.join(tmpdir(), schemaName);
+const webPort = process.env.WORKLINGO_E2E_WEB_PORT ?? '3100';
+const webBaseUrl = `http://127.0.0.1:${webPort}`;
 
 process.env.WORKLINGO_E2E_SCHEMA = schemaName;
 process.env.WORKLINGO_E2E_BASE_DATABASE_URL = baseDatabaseUrl;
@@ -30,7 +32,7 @@ export default defineConfig({
   workers: 1,
   reporter: 'list',
   use: {
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: webBaseUrl,
     permissions: ['microphone'],
     launchOptions: {
       args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
@@ -102,9 +104,9 @@ export default defineConfig({
       timeout: 60_000,
     },
     {
-      command: 'pnpm exec next dev -H 127.0.0.1 -p 3000',
+      command: `pnpm exec next dev -H 127.0.0.1 -p ${webPort}`,
       env: { WORKLINGO_API_URL: 'http://127.0.0.1:4000' },
-      url: 'http://127.0.0.1:3000',
+      url: webBaseUrl,
       reuseExistingServer: false,
       timeout: 60_000,
     },

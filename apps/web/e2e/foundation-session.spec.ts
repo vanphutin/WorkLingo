@@ -85,10 +85,11 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     await page.getByRole('link', { name: 'Return to Dashboard' }).click();
     await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
 
-    // 10. Verify persisted progress summary
+    // 10. Verify persisted progress summary. Reading and listening finish
+    // synchronously; Teacher AI work remains queued and must not be counted yet.
     await expect(page.getByText('Current Level')).toBeVisible();
     await expect(page.getByText('FOUNDATION_1')).toBeVisible();
-    await expect(page.getByText('Completed Activities').locator('..')).toContainText('5');
+    await expect(page.getByText('Completed Activities').locator('..')).toContainText('2');
     await expect(page.getByText('Completed Sessions').locator('..')).toContainText('1');
   });
 });

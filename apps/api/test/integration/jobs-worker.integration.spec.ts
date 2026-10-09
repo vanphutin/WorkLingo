@@ -55,14 +55,19 @@ describe('leased PostgreSQL job worker', () => {
     await admin.$disconnect();
   });
 
-  const enqueue = (idempotencyKey: string) => first.enqueue({
-    createdById: actorId,
-    idempotencyKey,
-    payload: { fixture: true },
-    resourceId: idempotencyKey,
-    resourceType: 'test',
-    type: 'TEST_JOB',
-  });
+  const availableAt = new Date('2026-10-08T00:00:00.000Z');
+  const enqueue = async (idempotencyKey: string) => {
+    const job = await first.enqueue({
+      createdById: actorId,
+      idempotencyKey,
+      payload: { fixture: true },
+      resourceId: idempotencyKey,
+      resourceType: 'test',
+      type: 'TEST_JOB',
+    });
+    await firstDatabase.job.update({ where: { id: job.id }, data: { availableAt } });
+    return job;
+  };
 
   it('allows only one concurrent runner to claim a row', async () => {
     const job = await enqueue(`claim-${randomUUID()}`);

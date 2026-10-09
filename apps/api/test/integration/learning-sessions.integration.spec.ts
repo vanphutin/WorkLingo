@@ -249,7 +249,7 @@ describe('learning sessions', () => {
     expect(resumed.body.status).toBe('in_progress');
   });
 
-  it('summarizes persisted learner progress', async () => {
+  it('does not count a queued Teacher AI attempt as a completed activity', async () => {
     const agent = await registerLearner(context.app, {
       displayName: 'Progress Learner', email: 'progress@example.test',
     });
@@ -266,7 +266,7 @@ describe('learning sessions', () => {
     const progress = await agent.get('/api/v1/me/progress').expect(200);
     expect(progress.body).toEqual({
       activityAttempts: 1,
-      completedActivities: 1,
+      completedActivities: 0,
       currentLevelCode: 'FOUNDATION_1',
       sessions: { completed: 0, inProgress: 1, paused: 0, planned: 0 },
     });

@@ -5,6 +5,7 @@ import {
   Injectable,
   NotFoundException,
   Optional,
+  type OnApplicationShutdown,
 } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { parseLessonSource } from '@worklingo/content-format';
@@ -24,7 +25,7 @@ import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { JobRunnerService } from '../../jobs/application/job-runner.service.js';
 
 @Injectable()
-export class AudioGenerationService {
+export class AudioGenerationService implements OnApplicationShutdown {
   private readonly activeJobs = new Map<string, Promise<void>>();
 
   constructor(
@@ -37,6 +38,10 @@ export class AudioGenerationService {
 
   waitForJob(jobId: string): Promise<void> {
     return this.activeJobs.get(jobId) ?? Promise.resolve();
+  }
+
+  async onApplicationShutdown(): Promise<void> {
+    await Promise.allSettled([...this.activeJobs.values()]);
   }
 
   async generateAudio(
@@ -183,7 +188,10 @@ export class AudioGenerationService {
       });
       const run = this.runQueuedJob(job.id);
       this.activeJobs.set(job.id, run);
-      void run.finally(() => this.activeJobs.delete(job.id));
+      void run.then(
+        () => this.activeJobs.delete(job.id),
+        () => this.activeJobs.delete(job.id),
+      );
       return result;
     }
 
@@ -231,9 +239,10 @@ export class AudioGenerationService {
       input.voiceConfig ?? {},
     );
     this.activeJobs.set(job.id, jobPromise);
-    void jobPromise.finally(() => {
-      this.activeJobs.delete(job.id);
-    });
+    void jobPromise.then(
+      () => this.activeJobs.delete(job.id),
+      () => this.activeJobs.delete(job.id),
+    );
 
     return result;
   }

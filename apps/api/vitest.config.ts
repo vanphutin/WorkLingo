@@ -25,6 +25,9 @@ export default defineConfig({
     },
   ],
   test: {
+    env: {
+      JOB_WORKER_ENABLED: 'false',
+    },
     environment: 'node',
     // Integration suites share the local PostgreSQL instance and mutate schema data.
     // Running files concurrently makes app bootstrap and cleanup contend for the

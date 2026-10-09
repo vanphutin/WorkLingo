@@ -56,7 +56,11 @@ describe('learner progression HTTP API', () => {
   async function evaluatedSession() {
     const completed = await completedSession();
     const attempts = await context.database.activityAttempt.findMany({
-      where: { sessionId: completed.sessionId, evaluationStatus: 'SUBMITTED' }, include: { activity: true },
+      where: {
+        sessionId: completed.sessionId,
+        evaluationStatus: { in: ['SUBMITTED', 'QUEUED'] },
+      },
+      include: { activity: true },
     });
     // Simulate server/provider evaluation, never a learner-supplied score.
     for (const attempt of attempts) {
@@ -189,8 +193,11 @@ describe('learner progression HTTP API', () => {
     const { agent, sessionId, plan, learnerId } = await completedSession();
     const clientAssessmentId = randomUUID();
     const pending = await agent.post('/api/v1/me/checkpoint-assessments').send({ sessionId, clientAssessmentId }).expect(201);
-    const submitted = await context.database.activityAttempt.findMany({ where: { sessionId, evaluationStatus: 'SUBMITTED' }, include: { activity: true } });
-    for (const attempt of submitted) {
+    const pendingAttempts = await context.database.activityAttempt.findMany({
+      where: { sessionId, evaluationStatus: { in: ['SUBMITTED', 'QUEUED'] } },
+      include: { activity: true },
+    });
+    for (const attempt of pendingAttempts) {
       await context.database.activityAttempt.update({ where: { id: attempt.id }, data: { evaluationStatus: 'EVALUATED', score: 0.9 } });
       await context.app.get(MasteryService).recordAttemptEvaluation({
         attemptId: attempt.id, learnerId, lessonVersionId: plan.lessonVersionId, skills: attempt.activity.skills,
