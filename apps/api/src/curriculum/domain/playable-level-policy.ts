@@ -1,10 +1,14 @@
 import type { PublishedMission } from './curriculum.types.js';
 import { computeAvailableDurations } from '../../learning-sessions/domain/session-planner.js';
 
+type PlayableMission = Pick<PublishedMission, 'purpose'> & {
+  readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities'>;
+};
+
 export interface PlayableLevelCandidate {
   readonly cefrReference: string;
   readonly code: string;
-  readonly missions: readonly PublishedMission[];
+  readonly missions: readonly PlayableMission[];
   readonly name: string;
 }
 

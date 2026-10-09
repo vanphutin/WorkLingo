@@ -65,6 +65,7 @@ export const placementAttemptSchema = z.object({
 
 export const eligiblePlacementLevelSchema = z.object({
   available: z.boolean(),
+  cefrReference: z.string().min(1).max(80),
   code: z.string().min(1).max(80),
   name: z.string().min(1).max(160),
   reason: z.string().min(1).max(300),

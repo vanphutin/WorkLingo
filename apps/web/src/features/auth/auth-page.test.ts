@@ -9,6 +9,7 @@ describe('getPostAuthenticationPath', () => {
         displayName: 'Content Admin',
         email: 'admin@example.test',
         id: '4b5bc25f-8058-4df5-a0e2-68bf8a5b963e',
+        onboardingStatus: null,
         roles: ['CONTENT_ADMIN'],
       }),
     ).toBe('/admin/content');
@@ -20,6 +21,7 @@ describe('getPostAuthenticationPath', () => {
         displayName: 'An Nguyen',
         email: 'an@example.test',
         id: '4b5bc25f-8058-4df5-a0e2-68bf8a5b963e',
+        onboardingStatus: 'COMPLETE',
         roles: ['LEARNER'],
       }),
     ).toBe('/dashboard');

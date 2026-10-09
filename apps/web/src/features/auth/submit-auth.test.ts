@@ -14,6 +14,7 @@ describe('submitAuth', () => {
           displayName: 'An Nguyen',
           email: 'an@example.com',
           id: '4b5bc25f-8058-4df5-a0e2-68bf8a5b963e',
+          onboardingStatus: 'PENDING',
           roles: ['LEARNER'],
         }),
         { status: 200 },
