@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-09
 
-**Status:** Approved conversational design, pending written-spec review
+**Status:** Approved
 
 **Scope:** Local-first learner onboarding, self-placement, a four-skill placement journey, explainable level recommendation and confirmation, weekly consistency goals, and evidence-of-progress
 
