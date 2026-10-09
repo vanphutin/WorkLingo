@@ -33,5 +33,8 @@ export default defineConfig({
     // Running files concurrently makes app bootstrap and cleanup contend for the
     // same database, which causes nondeterministic hook timeouts on local machines.
     fileParallelism: false,
+    // A progression journey intentionally issues concurrent HTTP transactions.
+    // Keep a bounded margin for Docker Desktop and the concurrent web test worker.
+    testTimeout: 15_000,
   },
 });

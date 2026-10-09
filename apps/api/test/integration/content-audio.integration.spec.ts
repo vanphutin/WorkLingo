@@ -177,7 +177,7 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
     expect(artifact.byteSize).toBeGreaterThan(44);
     expect(artifact.storageKey).toMatch(/^generated-audio\//);
     expect(artifact.simulationLabel).toBe(
-      'Audio mô phỏng — chưa phải giọng đọc phát hành',
+      'Simulation audio — not a release voice',
     );
 
     // 6. Authorized audio playback stream via GET /admin/audio-artifacts/:id/content

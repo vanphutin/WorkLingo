@@ -2,6 +2,14 @@ import { expect, test, type Page } from '@playwright/test';
 
 import { createValidLessonSource, loginAsContentAdmin } from './helpers/content-admin';
 
+async function expectNoHorizontalOverflow(page: Page): Promise<void> {
+  const dimensions = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+}
+
 interface SessionVersionSnapshot {
   readonly id: string;
   readonly lessonVersionId: string;
@@ -51,8 +59,16 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
 
     try {
       await loginAsContentAdmin(adminPage);
+      await expect(adminPage).toHaveTitle('Content Admin | WorkLingo');
       await adminPage.getByRole('link', { name: /new import/i }).click();
       await expect(adminPage).toHaveURL(/.*\/admin\/content\/new/);
+      if (testInfo.project.name === 'admin-mobile') {
+        await expectNoHorizontalOverflow(adminPage);
+        const fontSize = await adminPage.getByLabel(/lesson source/i).evaluate(
+          (element) => Number.parseFloat(getComputedStyle(element).fontSize),
+        );
+        expect(fontSize).toBeGreaterThanOrEqual(16);
+      }
 
       const invalidSource = `FORMAT: WorkLingoLesson/1.0\n\n[LESSON]\nslug: first-day-introductions\n`;
       await adminPage.getByLabel(/lesson source/i).fill(invalidSource);
@@ -65,6 +81,9 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await adminPage.getByRole('button', { name: /validate draft/i }).click();
       const errorItem = adminPage.getByRole('button', { name: /VAL_|title/i }).first();
       await expect(errorItem).toBeVisible();
+      if (testInfo.project.name === 'admin-mobile') {
+        await expectNoHorizontalOverflow(adminPage);
+      }
       await errorItem.click();
 
       const editorTextarea = adminPage.getByLabel(/lesson source editor/i);
@@ -90,7 +109,7 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await adminPage.getByRole('tab', { name: /^preview/i }).click();
       await expect(adminPage.getByRole('heading', { name: updatedTitle })).toBeVisible();
       await expect(
-        adminPage.getByText('Audio mô phỏng — chưa phải giọng đọc phát hành'),
+        adminPage.getByText('Simulation audio — not a release voice'),
       ).toBeVisible();
 
       await adminPage.getByRole('button', { name: /generate audio/i }).first().click();
@@ -98,7 +117,7 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await expect(adminPage.locator('audio').first()).toBeVisible();
 
       await adminPage.getByRole('tab', { name: /^publish/i }).click();
-      await expect(adminPage.getByText('Kiểm tra định dạng (Validation)')).toBeVisible();
+      await expect(adminPage.getByText('Format validation')).toBeVisible();
 
       const publishButton = adminPage.getByRole('button', { name: /publish lesson/i });
       await expect(publishButton).toBeEnabled();

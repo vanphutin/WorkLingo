@@ -557,7 +557,7 @@ enum AudioArtifactStatus {
 
 model AudioArtifact {
   id                      String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  contentImportId         String                       @db.Uuid
+  contentImportId         String?                      @db.Uuid
   audioScriptSlug         String
   scriptHash              String
   adapterName             String
@@ -570,7 +570,7 @@ model AudioArtifact {
   failureSummary          String?
   createdAt               DateTime                     @default(now())
   updatedAt               DateTime                     @updatedAt
-  contentImport           ContentImport                @relation(fields: [contentImportId], references: [id], onDelete: Cascade)
+  contentImport           ContentImport?               @relation(fields: [contentImportId], references: [id], onDelete: SetNull)
   lessonVersionReferences LessonVersionAudioArtifact[]
 
   @@unique([contentImportId, audioScriptSlug, scriptHash])

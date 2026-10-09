@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { LearnerActivityDto } from '../../../lib/api/api-client';
@@ -28,5 +28,30 @@ describe('ListeningActivity', () => {
     const audio = screen.getByLabelText('Lesson audio') as HTMLAudioElement;
     expect(audio.autoplay).toBe(false);
     expect(audio.getAttribute('src')).toContain(`/learning-sessions/00000000-0000-4000-8000-000000000020/activities/${activity.id}/audio`);
+  });
+
+  it('replaces a failed audio player with an actionable transcript fallback', () => {
+    const activity = {
+      id: '00000000-0000-4000-8000-000000000010', slug: 'listen', activityType: 'listening',
+      learningBlock: 'listenReason', skills: ['listening'],
+      content: [{ slug: 'dialogue', type: 'dialogue', text: 'Mai: Welcome to the team.' }],
+      languageBlocks: [], payload: { prompt: 'Listen carefully', questions: [] },
+    } satisfies LearnerActivityDto;
+
+    render(
+      <ListeningActivity
+        activity={activity}
+        sessionId="00000000-0000-4000-8000-000000000020"
+        value={{ answerIndexes: [] }}
+        onChange={vi.fn()}
+      />,
+    );
+
+    fireEvent.error(screen.getByLabelText('Lesson audio'));
+
+    expect(screen.queryByLabelText('Lesson audio')).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Audio is unavailable. Continue with the transcript below.',
+    );
   });
 });

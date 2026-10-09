@@ -13,6 +13,7 @@ import request from 'supertest';
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { seedFoundationCurriculum } from '../../src/curriculum/infrastructure/seed-foundation.js';
+import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
 
 export interface LearningSessionTestContext {
   readonly app: INestApplication;
@@ -50,14 +51,21 @@ export async function createLearningSessionTestContext(prefix: string): Promise<
     forbidNonWhitelisted: true, transform: true, whitelist: true,
   }));
   await app.init();
-  await seedFoundationCurriculum(database);
+  await seedFoundationCurriculum(database, app.get(ObjectStorage));
 
   return {
     app,
     database,
     schemaName,
     async resetLearners() {
-      await database.$executeRawUnsafe(`TRUNCATE "${schemaName}"."User" CASCADE`);
+      // Restrict-linked audit/authoring rows must be removed before users.
+      // Row deletes preserve system audio, unlike TRUNCATE User CASCADE, which
+      // truncates the entire AudioArtifact table through ContentImport.
+      await database.auditLog.deleteMany();
+      await database.mutationReceipt.deleteMany();
+      await database.job.deleteMany();
+      await database.contentImport.deleteMany();
+      await database.user.deleteMany();
     },
     async close() {
       await app.close();

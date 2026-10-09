@@ -55,7 +55,7 @@ export function PublishPanel({
       if (err instanceof ApiError) {
         setPublishError(err.message);
       } else {
-        setPublishError('Lỗi xảy ra trong quá trình phát hành bài học');
+        setPublishError('Unable to publish the lesson.');
       }
     } finally {
       setIsPublishing(false);
@@ -75,7 +75,7 @@ export function PublishPanel({
       if (err instanceof ApiError) {
         setArchiveError(err.message);
       } else {
-        setArchiveError('Lỗi khi lưu trữ phiên bản bài học');
+        setArchiveError('Unable to archive the lesson version.');
       }
     } finally {
       setIsArchiving(false);
@@ -87,7 +87,7 @@ export function PublishPanel({
       <div className="publish-panel-container" role="region" aria-label="Publish details">
         <div className="published-card">
           <div className="published-header">
-            <h3>Phiên bản bài học phát hành</h3>
+            <h3>Published lesson version</h3>
             <span className={`status-pill pill-${status.toLowerCase()}`}>{status}</span>
           </div>
 
@@ -95,7 +95,8 @@ export function PublishPanel({
             <p>Published Version: {publishedVersion ?? 'N/A'}</p>
             {publishedLessonId && <p>Lesson ID: {publishedLessonId}</p>}
             <p className="immutable-notice">
-              Phiên bản này là bất biến (immutable). Người học trong phiên hiện tại sẽ không bị ảnh hưởng bởi bản thảo mới.
+              This version is immutable. Existing learner sessions remain bound to the version
+              they started with.
             </p>
           </div>
 
@@ -113,7 +114,7 @@ export function PublishPanel({
                 disabled={isArchiving}
                 onClick={handleArchive}
               >
-                {isArchiving ? 'Đang lưu trữ...' : 'Archive Version'}
+                {isArchiving ? 'Archiving…' : 'Archive Version'}
               </button>
             </div>
           )}
@@ -127,25 +128,26 @@ export function PublishPanel({
   return (
     <div className="publish-panel-container" role="region" aria-label="Publish panel">
       <div className="publish-card">
-        <h3>Điều kiện phát hành bài học</h3>
+        <h3>Lesson publishing requirements</h3>
         <p className="publish-desc">
-          Bài học cần vượt qua kiểm tra cú pháp định dạng và tạo đủ âm thanh mô phỏng trước khi có thể phát hành cho học viên.
+          Validate the lesson format and generate every required audio artifact before publishing
+          it to learners.
         </p>
 
         <div className="readiness-checklist">
           <div className={`readiness-item ${canPublish ? 'is-ready' : 'not-ready'}`}>
             <span className="readiness-icon">{canPublish ? '✓' : '✗'}</span>
             <div className="readiness-info">
-              <strong>Kiểm tra định dạng (Validation)</strong>
-              <p>{canPublish ? 'Hợp lệ và sẵn sàng phát hành' : 'Bản thảo còn lỗi hoặc chưa được kiểm tra'}</p>
+              <strong>Format validation</strong>
+              <p>{canPublish ? 'Valid and ready to publish' : 'Draft has errors or has not been validated'}</p>
             </div>
           </div>
 
           <div className={`readiness-item ${isAudioReady ? 'is-ready' : 'not-ready'}`}>
             <span className="readiness-icon">{isAudioReady ? '✓' : '✗'}</span>
             <div className="readiness-info">
-              <strong>Âm thanh mô phỏng (Audio)</strong>
-              <p>{isAudioReady ? 'Tất cả các đoạn audio đã sẵn sàng' : 'Còn đoạn audio chưa được tạo'}</p>
+              <strong>Simulation audio</strong>
+              <p>{isAudioReady ? 'All required audio is ready' : 'One or more audio scripts still need generation'}</p>
             </div>
           </div>
         </div>
@@ -168,7 +170,7 @@ export function PublishPanel({
             disabled={!isReadyToPublish || isPublishing}
             onClick={handlePublish}
           >
-            {isPublishing ? 'Đang phát hành...' : 'Publish Lesson'}
+            {isPublishing ? 'Publishing…' : 'Publish Lesson'}
           </button>
         </div>
       </div>

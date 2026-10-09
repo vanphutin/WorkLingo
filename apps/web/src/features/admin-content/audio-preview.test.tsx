@@ -43,7 +43,7 @@ describe('AudioPreview', () => {
         storageKey: 'audio/1.wav',
         status: 'READY',
         failureSummary: null,
-        simulationLabel: 'Audio mô phỏng — chưa phải giọng đọc phát hành',
+        simulationLabel: 'Simulation audio — not a release voice',
         createdAt: '2026-10-04T00:00:00.000Z',
         updatedAt: '2026-10-04T00:00:00.000Z',
       },
@@ -68,7 +68,7 @@ describe('AudioPreview', () => {
     );
 
     expect(
-      await screen.findByText('Audio mô phỏng — chưa phải giọng đọc phát hành'),
+      await screen.findByText('Simulation audio — not a release voice'),
     ).toBeInTheDocument();
 
     expect(screen.getByText('audio-dialogue-1')).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe('AudioPreview', () => {
           storageKey: 'audio/2.wav',
           status: 'READY',
           failureSummary: null,
-          simulationLabel: 'Audio mô phỏng — chưa phải giọng đọc phát hành',
+          simulationLabel: 'Simulation audio — not a release voice',
           createdAt: '2026-10-04T00:00:00.000Z',
           updatedAt: '2026-10-04T00:00:00.000Z',
         },

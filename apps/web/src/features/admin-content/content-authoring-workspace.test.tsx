@@ -183,7 +183,7 @@ describe('ContentAuthoringWorkspace', () => {
 
     expect(await screen.findByText('Preview Lesson Title')).toBeInTheDocument();
     expect(
-      screen.getByText('Audio mô phỏng — chưa phải giọng đọc phát hành'),
+      screen.getByText('Simulation audio — not a release voice'),
     ).toBeInTheDocument();
   });
 

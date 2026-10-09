@@ -48,7 +48,7 @@ export function AudioPreview({
       }
     } catch (err: unknown) {
       if (isMountedRef.current) {
-        setErrorMessage(err instanceof ApiError ? err.message : 'Không thể tải danh sách âm thanh');
+        setErrorMessage(err instanceof ApiError ? err.message : 'Unable to load audio artifacts.');
       }
     } finally {
       if (isMountedRef.current) {
@@ -95,7 +95,7 @@ export function AudioPreview({
     } catch (err: unknown) {
       if (isMountedRef.current) {
         setErrorMessage(
-          err instanceof ApiError ? err.message : 'Lỗi khi tạo âm thanh mô phỏng',
+          err instanceof ApiError ? err.message : 'Unable to generate simulation audio.',
         );
       }
     } finally {
@@ -118,9 +118,10 @@ export function AudioPreview({
   return (
     <div className="audio-preview-panel" role="region" aria-label="Audio controls">
       <div className="audio-simulation-banner" role="note">
-        <strong>Audio mô phỏng — chưa phải giọng đọc phát hành</strong>
+        <strong>Simulation audio — not a release voice</strong>
         <p>
-          Các tệp âm thanh này được tổng hợp mô phỏng để kiểm tra định dạng và luồng học. Giọng đọc phát hành sẽ được cập nhật ở phân đoạn sau.
+          These generated files let you verify lesson structure and the learner flow locally.
+          Replace them with an approved release voice before production launch.
         </p>
       </div>
 
@@ -131,9 +132,9 @@ export function AudioPreview({
       )}
 
       {isLoading && artifacts.length === 0 ? (
-        <p className="loading-text">Đang tải danh sách âm thanh...</p>
+        <p className="loading-text">Loading audio artifacts…</p>
       ) : scriptsToDisplay.length === 0 ? (
-        <p className="empty-text">Bài học không khai báo đoạn audio nào.</p>
+        <p className="empty-text">This lesson does not declare any audio scripts.</p>
       ) : (
         <div className="audio-scripts-grid">
           {scriptsToDisplay.map((item) => {
@@ -186,11 +187,11 @@ export function AudioPreview({
                     onClick={() => handleGenerate(item.slug)}
                   >
                     {isGenerating
-                      ? 'Đang xử lý...'
+                      ? 'Generating…'
                       : artifact?.status === 'READY'
-                        ? 'Tạo lại Audio'
+                        ? 'Regenerate Audio'
                         : artifact?.status === 'FAILED'
-                          ? 'Thử lại Audio'
+                          ? 'Retry Audio'
                           : 'Generate Audio'}
                   </button>
                 </div>

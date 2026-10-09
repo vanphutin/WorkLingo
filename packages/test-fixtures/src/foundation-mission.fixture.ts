@@ -17,7 +17,7 @@ export const foundationMissionFixture = {
       {
         slug: 'desk-conversation', type: 'dialogue',
         text: 'Mai: Hello! My name is Mai. I work in support. What is your name?\nAn: My name is An. I work in sales.\nMai: Nice to meet you, An. Do you need help?\nAn: Yes, please. Where is the meeting room?\nMai: It is next to my desk. Let us go together.',
-        audio: { kind: 'textPlaceholder', notice: 'Audio is not available in this local increment. Use the script for now.' },
+        audio: { kind: 'textPlaceholder', notice: 'A local simulated voice is available. Use the transcript if playback fails.' },
       },
     ],
     wordBanks: [{
@@ -79,7 +79,7 @@ export const foundationMissionFixture = {
         slug: 'understand-colleague', activityType: 'listening', learningBlock: 'listenReason',
         skills: ['listening'], contentReferences: ['desk-conversation'], languageBlockReferences: ['i-work-in', 'do-you-need-help'],
         payload: {
-          prompt: 'Khi có audio, nghe hội thoại trước khi xem script. Trong phiên bản local này, dùng script thay thế.',
+          prompt: 'Nghe hội thoại trước, sau đó dùng script để kiểm tra lại những gì bạn hiểu.',
           questions: [
             { slug: 'different-teams', prompt: 'Which statement correctly describes Mai and An?', options: ['They both work in sales.', 'Mai works in sales and An works in support.', 'Mai works in support and An works in sales.'], answerIndex: 2, explanation: 'Each speaker introduces a different department.', evidence: 'Mai: I work in support. ... An: I work in sales.' },
             { slug: 'why-together', prompt: 'Why do Mai and An go together?', options: ['An needs help finding the meeting room.', 'Mai needs help with a customer.', 'An asks Mai to join sales.'], answerIndex: 0, explanation: 'An asks where the room is, and Mai responds by offering to go together.', evidence: 'Where is the meeting room? ... Let us go together.' },
@@ -89,7 +89,7 @@ export const foundationMissionFixture = {
       {
         slug: 'shadow-introduction', activityType: 'speaking', learningBlock: 'respond',
         skills: ['speaking'], contentReferences: ['desk-conversation'], languageBlockReferences: ['my-name-is', 'i-work-in', 'nice-to-meet-you'],
-        payload: { prompt: 'Đọc theo câu mẫu. Sau đó thay tên và bộ phận bằng thông tin của bạn. Phiên bản này lưu câu trả lời dạng text; ghi âm sẽ đến ở increment sau.', mode: 'shadowing', sampleAnswer: 'My name is An. I work in sales. Nice to meet you.', requiredPhrases: ['my name is', 'i work in', 'nice to meet you'], minWords: 12 },
+        payload: { prompt: 'Đọc theo câu mẫu. Sau đó thay tên và bộ phận bằng thông tin của bạn rồi ghi âm câu trả lời.', mode: 'shadowing', sampleAnswer: 'My name is An. I work in sales. Nice to meet you.', requiredPhrases: ['my name is', 'i work in', 'nice to meet you'], minWords: 12 },
       },
       {
         slug: 'write-first-message', activityType: 'writing', learningBlock: 'respond',

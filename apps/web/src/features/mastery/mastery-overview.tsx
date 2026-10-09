@@ -45,7 +45,7 @@ export function MasteryOverview() {
           <div className="mastery-blocks">{map.data.items.map((block) => (
             <div className="mastery-block" id={`block-${block.languageBlockId}`} key={block.languageBlockId}>
               <h3>{block.canonicalForm}</h3>
-              <p>{block.meaning}</p>
+              <p lang="vi">{block.meaning}</p>
               <div className="evidence-skill-grid">{SKILLS.map((skill) => {
                 const evidence = block.skills[skill];
                 return <article className="evidence-skill-card" key={skill} aria-label={`${skillLabels[skill]} mastery: ${block.canonicalForm}`}>

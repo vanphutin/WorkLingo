@@ -26,8 +26,7 @@ export async function loginAsContentAdmin(
   await page.getByLabel('Password').fill(password);
   await page.getByRole('button', { name: 'Log in' }).click();
 
-  await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
-  await page.goto('/admin/content');
+  await page.waitForURL(/\/admin\/content/, { timeout: 15_000 });
   await expect(page.getByRole('region', { name: 'Content imports' })).toBeVisible();
 }
 

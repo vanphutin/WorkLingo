@@ -20,6 +20,47 @@ describe('version-bound learner audio', () => {
   beforeEach(async () => context.resetLearners());
   afterAll(async () => context?.close());
 
+  it('streams playable WAV audio for the seeded listening activity', async () => {
+    const learner = await registerLearner(context.app, {
+      displayName: 'Seed Audio Learner', email: 'seed-audio@example.test',
+    });
+    const created = await learner.post('/api/v1/learning-sessions').send({
+      clientSessionId: randomUUID(), durationMinutes: 60,
+    }).expect(201);
+    const session = await context.database.learningSession.findUniqueOrThrow({
+      where: { id: created.body.id },
+    });
+    const listening = await context.database.activity.findFirstOrThrow({
+      where: { lessonVersionId: session.lessonVersionId, activityType: 'listening' },
+    });
+    const seededReferences = await context.database.lessonVersionAudioArtifact.findMany({
+      include: { audioArtifact: true },
+    });
+    expect(
+      seededReferences.some((reference) =>
+        reference.lessonVersionId === session.lessonVersionId &&
+        listening.contentReferences.includes(reference.audioScriptSlug) &&
+        reference.audioArtifact.status === 'READY'),
+      JSON.stringify({
+        contentReferences: listening.contentReferences,
+        seededReferences,
+        sessionLessonVersionId: session.lessonVersionId,
+      }),
+    ).toBe(true);
+
+    const response = await learner.get(
+      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
+    ).buffer(true).parse((res, callback) => {
+      const chunks: Buffer[] = [];
+      res.on('data', (chunk: Buffer) => chunks.push(chunk));
+      res.on('end', () => callback(null, Buffer.concat(chunks)));
+    });
+
+    expect(response.status, JSON.stringify(response.body)).toBe(200);
+    expect(response.headers['content-type']).toContain('audio/wav');
+    expect(response.body.subarray(0, 4).toString('ascii')).toBe('RIFF');
+  });
+
   it('streams the artifact attached to the session version after the lesson current version changes', async () => {
     const learner = await registerLearner(context.app, {
       displayName: 'Versioned Audio Learner', email: 'versioned-audio@example.test',

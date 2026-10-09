@@ -1,5 +1,13 @@
 import { expect, test } from '@playwright/test';
 
+async function expectNoHorizontalOverflow(page: import('@playwright/test').Page): Promise<void> {
+  const dimensions = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+}
+
 test.describe('Foundation 60-Minute Learning Session Journey', () => {
   test('learner restores the checkpoint, completes the seeded session, and sees progress', async ({
     page,
@@ -18,7 +26,14 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
 
     // Verify redirected to dashboard
     await expect(page).toHaveURL(/.*\/dashboard/);
+    await expect(page).toHaveTitle('Learner Dashboard | WorkLingo');
     await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
+
+    if (testInfo.project.name === 'foundation-mobile') {
+      await expectNoHorizontalOverflow(page);
+      const signOutBox = await page.getByRole('button', { name: 'Sign out' }).boundingBox();
+      expect(signOutBox?.height).toBeGreaterThanOrEqual(44);
+    }
 
     // 2. Verify 60-minute default duration and launcher
     const durationSelect = page.getByLabel(/session duration/i);
@@ -37,8 +52,10 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     if (testInfo.project.name === 'foundation-mobile') {
       const mainBox = await page.getByRole('main').boundingBox();
       const supportBox = await page.getByRole('complementary').boundingBox();
+      const pauseBox = await page.getByRole('button', { name: 'Pause session' }).boundingBox();
       expect(mainBox).not.toBeNull();
       expect(supportBox).not.toBeNull();
+      expect(pauseBox?.height).toBeGreaterThanOrEqual(44);
       expect(supportBox!.y).toBeGreaterThan(mainBox!.y);
     }
 
@@ -66,6 +83,14 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     // 8. Complete Listen & Reason
     await page.getByLabel('Mai works in support and An works in sales.').check();
     await page.getByLabel('An needs help finding the meeting room.').check();
+    const lessonAudio = page.getByLabel('Lesson audio');
+    await expect(lessonAudio).toBeVisible();
+    const audioUrl = await lessonAudio.getAttribute('src');
+    expect(audioUrl).toBeTruthy();
+    const audioResponse = await page.request.get(audioUrl!);
+    expect(audioResponse.status()).toBe(200);
+    expect(audioResponse.headers()['content-type']).toContain('audio/wav');
+    expect((await audioResponse.body()).subarray(0, 4).toString('ascii')).toBe('RIFF');
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.locator('[aria-current="step"]')).toContainText('Respond');
 
