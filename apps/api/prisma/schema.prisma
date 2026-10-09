@@ -18,6 +18,17 @@ enum UserStatus {
   DISABLED
 }
 
+enum OnboardingStatus {
+  PENDING
+  COMPLETE
+}
+
+enum OnboardingMethod {
+  SELF_SELECTED
+  PLACEMENT
+  MIGRATED
+}
+
 model User {
   id                       String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email                    String                    @unique
@@ -42,17 +53,21 @@ model User {
   errorBankEntries         ErrorBankEntry[]
   checkpointAssessments    CheckpointAssessment[]
   progressionConfirmations ProgressionConfirmation[]
+  placementAttempts        PlacementAttempt[]
 }
 
 model LearnerProfile {
-  userId           String   @id @db.Uuid
-  currentLevelCode String   @default("FOUNDATION_1")
-  locale           String   @default("vi")
-  timezone         String   @default("Asia/Ho_Chi_Minh")
-  recordingConsent Boolean  @default(false)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String            @id @db.Uuid
+  currentLevelCode String            @default("FOUNDATION_1")
+  onboardingStatus OnboardingStatus  @default(PENDING)
+  onboardingMethod OnboardingMethod?
+  onboardedAt      DateTime?
+  locale           String            @default("vi")
+  timezone         String            @default("Asia/Ho_Chi_Minh")
+  recordingConsent Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserSession {
@@ -90,6 +105,11 @@ enum LearningBlockType {
   respond
 }
 
+enum MissionPurpose {
+  LEARNING
+  PLACEMENT
+}
+
 model LearningPath {
   id        String        @id @default(uuid()) @db.Uuid
   slug      String        @unique
@@ -122,6 +142,7 @@ model Mission {
   title            String
   objective        String
   order            Int
+  purpose          MissionPurpose    @default(LEARNING)
   status           ContentStatus     @default(DRAFT)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
@@ -157,27 +178,28 @@ model MissionLesson {
 }
 
 model LessonVersion {
-  id               String                       @id @default(uuid()) @db.Uuid
-  lessonId         String                       @db.Uuid
-  version          Int
-  title            String
-  status           ContentStatus                @default(DRAFT)
-  sourceHash       String
-  parsedContent    Json
-  publishedAt      DateTime?
-  createdAt        DateTime                     @default(now())
-  updatedAt        DateTime                     @updatedAt
-  lesson           Lesson                       @relation(fields: [lessonId], references: [id], onDelete: Restrict)
-  contentBlocks    ContentBlock[]
-  activities       Activity[]
-  wordBanks        LessonVersionWordBank[]
-  learningSessions LearningSession[]
-  audioArtifacts   LessonVersionAudioArtifact[]
-  contentImports   ContentImport[]
-  currentForLesson Lesson[]                     @relation("LessonCurrentPublishedVersion")
-  masteryRecords   MasteryRecord[]
-  masteryEvents    MasteryEvent[]
-  errorBankEntries ErrorBankEntry[]
+  id                String                       @id @default(uuid()) @db.Uuid
+  lessonId          String                       @db.Uuid
+  version           Int
+  title             String
+  status            ContentStatus                @default(DRAFT)
+  sourceHash        String
+  parsedContent     Json
+  publishedAt       DateTime?
+  createdAt         DateTime                     @default(now())
+  updatedAt         DateTime                     @updatedAt
+  lesson            Lesson                       @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+  contentBlocks     ContentBlock[]
+  activities        Activity[]
+  wordBanks         LessonVersionWordBank[]
+  learningSessions  LearningSession[]
+  audioArtifacts    LessonVersionAudioArtifact[]
+  contentImports    ContentImport[]
+  currentForLesson  Lesson[]                     @relation("LessonCurrentPublishedVersion")
+  masteryRecords    MasteryRecord[]
+  masteryEvents     MasteryEvent[]
+  errorBankEntries  ErrorBankEntry[]
+  placementAttempts PlacementAttempt[]
 
   checkpointAssessments CheckpointAssessment[]
   evaluationResults     EvaluationResult[]
@@ -328,6 +350,14 @@ enum AttemptEvaluationStatus {
   EVALUATION_FAILED
 }
 
+enum PlacementAttemptStatus {
+  IN_PROGRESS
+  PROCESSING
+  ACTION_REQUIRED
+  RECOMMENDED
+  CONFIRMED
+}
+
 model LearningSession {
   id                    String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   learnerId             String                 @db.Uuid
@@ -350,11 +380,37 @@ model LearningSession {
   recordings            Recording[]
   activityDrafts        ActivityDraft[]
   checkpointAssessments CheckpointAssessment[]
+  placementAttempt      PlacementAttempt?
 
   @@unique([learnerId, clientSessionId])
   @@unique([id, learnerId])
+  @@unique([id, learnerId, lessonVersionId])
   @@index([learnerId, status, createdAt])
   @@index([missionId])
+  @@index([lessonVersionId])
+}
+
+model PlacementAttempt {
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId            String                 @db.Uuid
+  clientAttemptId      String                 @db.Uuid
+  learningSessionId    String                 @unique @db.Uuid
+  lessonVersionId      String                 @db.Uuid
+  policyVersion        String                 @default("workplace-placement-v1")
+  status               PlacementAttemptStatus @default(IN_PROGRESS)
+  skillResults         Json                   @default("{}")
+  recommendedLevelCode String?
+  explanation          Json?
+  confirmedAt          DateTime?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  learner              User                   @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  learningSession      LearningSession        @relation(fields: [learningSessionId, learnerId, lessonVersionId], references: [id, learnerId, lessonVersionId], onDelete: Cascade)
+  lessonVersion        LessonVersion          @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, clientAttemptId])
+  @@unique([learningSessionId, learnerId, lessonVersionId])
+  @@index([learnerId, status, updatedAt])
   @@index([lessonVersionId])
 }
 

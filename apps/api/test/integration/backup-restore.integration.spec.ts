@@ -2,11 +2,14 @@ import { spawnSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
 import { PrismaClient } from '@prisma/client';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+
+import { seedFoundationCurriculum } from '../../src/curriculum/infrastructure/seed-foundation.js';
 
 function runPowerShellScript(
   scriptRelativePath: string,
@@ -46,6 +49,7 @@ describe('backup and restore rehearsal', () => {
   let outsideSiblingRoot: string;
   let sourcePrisma: PrismaClient;
   let targetPrisma: PrismaClient;
+  let sourcePlacementAttemptId: string;
 
   const baseDbUrl =
     process.env.TEST_DATABASE_URL ??
@@ -284,6 +288,14 @@ describe('backup and restore rehearsal', () => {
   it('backs up test database records and files with manifest and sha256 checksums', async () => {
     // 1. Prepare test database data
     await sourcePrisma.$executeRawUnsafe(`CREATE SCHEMA IF NOT EXISTS "${sourceSchema}"`);
+    const prismaCli = createRequire(path.resolve('package.json')).resolve('prisma/build/index.js');
+    const migration = spawnSync(process.execPath, [prismaCli, 'migrate', 'deploy'], {
+      cwd: path.resolve(__dirname, '../..'),
+      encoding: 'utf8',
+      env: { ...process.env, DATABASE_URL: sourceDbUrl },
+      timeout: 45_000,
+    });
+    expect(migration.status, migration.stderr || migration.stdout).toBe(0);
     await sourcePrisma.$executeRawUnsafe(`
       CREATE TABLE "${sourceSchema}"."TestRecord" (
         "id" TEXT PRIMARY KEY,
@@ -299,6 +311,41 @@ describe('backup and restore rehearsal', () => {
     await sourcePrisma.$executeRawUnsafe(`
       INSERT INTO "${sourceSchema}"."TestRecord" ("id", "name") VALUES ('${randomUUID()}', '${literalSchemaName}')
     `);
+
+    await seedFoundationCurriculum(sourcePrisma);
+    const learner = await sourcePrisma.user.create({
+      data: {
+        displayName: 'Backup placement learner',
+        email: `backup-placement-${randomUUID()}@example.com`,
+        passwordHash: 'test-hash',
+        profile: { create: {} },
+      },
+    });
+    const mission = await sourcePrisma.mission.findFirstOrThrow({
+      include: { lessons: { include: { lesson: true }, orderBy: { order: 'asc' }, take: 1 } },
+      where: { status: 'PUBLISHED' },
+    });
+    const lessonVersionId = mission.lessons[0]!.lesson.currentPublishedVersionId!;
+    const session = await sourcePrisma.learningSession.create({
+      data: {
+        clientSessionId: randomUUID(),
+        durationMinutes: 45,
+        learnerId: learner.id,
+        lessonVersionId,
+        missionId: mission.id,
+        planSnapshot: {},
+      },
+    });
+    const placementAttempt = await sourcePrisma.placementAttempt.create({
+      data: {
+        clientAttemptId: randomUUID(),
+        learnerId: learner.id,
+        learningSessionId: session.id,
+        lessonVersionId,
+        skillResults: {},
+      },
+    });
+    sourcePlacementAttemptId = placementAttempt.id;
 
     // 2. Prepare test file in source data dir
     const testFileContent = 'Hello WorkLingo storage test asset';
@@ -416,5 +463,14 @@ describe('backup and restore rehearsal', () => {
     expect(records.map((record) => record.name)).toContain(
       `Literal ${sourceSchema}. must stay unchanged`,
     );
+    await expect(targetPrisma.placementAttempt.findUniqueOrThrow({
+      include: { learningSession: true },
+      where: { id: sourcePlacementAttemptId },
+    })).resolves.toMatchObject({
+      id: sourcePlacementAttemptId,
+      learningSession: {
+        lessonVersionId: expect.any(String),
+      },
+    });
   }, 30_000);
 });
