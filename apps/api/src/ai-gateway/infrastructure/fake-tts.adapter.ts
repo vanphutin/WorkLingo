@@ -8,7 +8,7 @@ import {
 } from '../domain/text-to-speech.port.js';
 
 export const SIMULATION_AUDIO_LABEL =
-  'Audio mô phỏng — chưa phải giọng đọc phát hành';
+  'Simulation audio — not a release voice';
 
 @Injectable()
 export class FakeTextToSpeechAdapter extends TextToSpeechPort {

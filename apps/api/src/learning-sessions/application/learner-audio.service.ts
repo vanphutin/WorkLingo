@@ -50,9 +50,10 @@ export class LearnerAudioService {
     if (activity.activityType !== 'listening') {
       throw new NotFoundException('Audio is not available for this activity');
     }
-    const scriptSlugs = activity.payload.questions
+    const evidenceSlugs = activity.payload.questions
       .map((question) => question.evidence.split(':', 1)[0])
       .filter((slug): slug is string => Boolean(slug));
+    const scriptSlugs = [...new Set([...activity.contentReferences, ...evidenceSlugs])];
     const reference = await this.database.lessonVersionAudioArtifact.findFirst({
       where: {
         lessonVersionId: session.lessonVersionId,

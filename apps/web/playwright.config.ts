@@ -15,7 +15,7 @@ const baseDatabaseUrl = process.env.TEST_DATABASE_URL ?? process.env.DATABASE_UR
 const databaseUrl = new URL(baseDatabaseUrl);
 databaseUrl.searchParams.set('schema', schemaName);
 const dataDirectory = path.join(tmpdir(), schemaName);
-const webPort = process.env.WORKLINGO_E2E_WEB_PORT ?? '3100';
+const webPort = process.env.WORKLINGO_E2E_WEB_PORT ?? '33100';
 const webBaseUrl = `http://127.0.0.1:${webPort}`;
 
 process.env.WORKLINGO_E2E_SCHEMA = schemaName;
@@ -85,7 +85,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: 'pnpm --filter @worklingo/api exec tsx src/main.ts',
+      command: 'pnpm --filter @worklingo/api exec prisma migrate deploy && pnpm --filter @worklingo/api exec prisma db seed && pnpm --filter @worklingo/api exec tsx src/main.ts',
       cwd: '../..',
       env: {
         API_PORT: '4000',

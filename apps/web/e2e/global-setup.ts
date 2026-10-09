@@ -1,24 +1,4 @@
-import { spawnSync } from 'node:child_process';
 import { mkdir } from 'node:fs/promises';
-import path from 'node:path';
-
-function runApiCommand(args: string[]): void {
-  const workspaceRoot = path.resolve(__dirname, '../../..');
-  const command = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
-  const result = spawnSync(command, ['--filter', '@worklingo/api', ...args], {
-    cwd: workspaceRoot,
-    encoding: 'utf8',
-    env: {
-      ...process.env,
-      DATABASE_URL: process.env.WORKLINGO_E2E_DATABASE_URL,
-    },
-    shell: process.platform === 'win32',
-    timeout: 90_000,
-  });
-  if (result.status !== 0) {
-    throw new Error(`${args.join(' ')} failed:\n${result.stderr || result.stdout || result.error}`);
-  }
-}
 
 export default async function globalSetup(): Promise<void> {
   const schemaName = process.env.WORKLINGO_E2E_SCHEMA;
@@ -31,6 +11,4 @@ export default async function globalSetup(): Promise<void> {
   }
 
   await mkdir(dataDirectory, { recursive: true });
-  runApiCommand(['prisma', 'migrate', 'deploy']);
-  runApiCommand(['prisma', 'db', 'seed']);
 }

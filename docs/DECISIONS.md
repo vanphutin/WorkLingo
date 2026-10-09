@@ -169,6 +169,15 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Lý do:** Provider không được làm mất tiến độ; local development phải chạy không cần cloud/key; dữ liệu giọng nói cần retention tối thiểu và consent rõ ràng.
 - **Hệ quả:** `JOB_WORKER_ENABLED=true` là cấu hình demo local. Automatic retry giữ attempt ở `queued`; chỉ failure terminal mới thành `evaluation_failed`. Golden fake harness bảo vệ wiring nhưng không thay thế human calibration.
 
+## D-023 — Audio seed local là artifact bất biến theo LessonVersion
+
+- **Trạng thái:** Accepted (hardening trước Increment 5)
+- **Ngày:** 2026-10-09
+- **Quyết định:** Bài học seed có listening phải tạo một WAV hợp lệ bằng fake TTS, lưu qua local object storage và liên kết với `LessonVersionAudioArtifact` trước khi publish. Artifact do hệ thống seed không cần `ContentImport`; vì vậy `AudioArtifact.contentImportId` có thể null, nhưng API Content Admin không được trả các artifact hệ thống này.
+- **Nâng cấp dữ liệu:** Khi nội dung seed thay đổi, hệ thống tạo version kế tiếp và archive version cũ; không sửa child record của version đã publish. Session đang chạy tiếp tục dùng version cũ theo D-016.
+- **Lý do:** Learner không được nhìn thấy audio player hỏng trong dữ liệu mặc định, đồng thời local-first vẫn chạy không cần provider hoặc cloud storage.
+- **Hệ quả:** Fake TTS chỉ xác nhận vòng đời và khả năng phát WAV, không đại diện chất lượng giọng đọc production. UI luôn có transcript fallback nếu file không thể phát.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

@@ -13,6 +13,7 @@ interface CapturedRequest {
 }
 
 const servers: Array<ReturnType<typeof createServer>> = [];
+const LOCAL_PROVIDER_TIMEOUT_MS = 5_000;
 
 async function startServer(
   handler: (request: IncomingMessage, response: ServerResponse, captured: CapturedRequest) => void,
@@ -82,7 +83,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
       }));
     });
     const adapter = new OpenAiLanguageEvaluationAdapter({
-      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: 1_000,
+      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: LOCAL_PROVIDER_TIMEOUT_MS,
     });
 
     const result = await adapter.evaluate(input);
@@ -120,7 +121,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
       }));
     });
     const adapter = new OpenAiLanguageEvaluationAdapter({
-      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: 1_000,
+      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: LOCAL_PROVIDER_TIMEOUT_MS,
     });
 
     await expect(adapter.evaluate(input)).rejects.toMatchObject({
@@ -138,7 +139,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
       response.end(JSON.stringify(providerBody));
     });
     const adapter = new OpenAiLanguageEvaluationAdapter({
-      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: 1_000,
+      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: LOCAL_PROVIDER_TIMEOUT_MS,
     });
 
     await expect(adapter.evaluate(input)).rejects.toMatchObject({ code, retryable: true });
@@ -154,7 +155,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
       response.end('diagnostic test-openai-secret');
     });
     const adapter = new OpenAiLanguageEvaluationAdapter({
-      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: 1_000,
+      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: LOCAL_PROVIDER_TIMEOUT_MS,
     });
 
     const error = await adapter.evaluate(input).catch((caught: unknown) => caught);
@@ -181,7 +182,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
       response.end(`${'x'.repeat(1_048_576)}"}`);
     });
     const adapter = new OpenAiLanguageEvaluationAdapter({
-      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: 1_000,
+      apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: LOCAL_PROVIDER_TIMEOUT_MS,
     });
 
     await expect(adapter.evaluate(input)).rejects.toMatchObject({

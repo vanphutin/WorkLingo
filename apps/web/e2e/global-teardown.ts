@@ -8,6 +8,16 @@ interface SchemaAdmin {
   $disconnect(): Promise<void>;
 }
 
+const isDeadlock = (error: unknown): boolean => (
+  typeof error === 'object' && error !== null && 'meta' in error
+  && typeof error.meta === 'object' && error.meta !== null && 'code' in error.meta
+  && error.meta.code === '40P01'
+);
+
+const wait = (milliseconds: number): Promise<void> => new Promise((resolve) => {
+  setTimeout(resolve, milliseconds);
+});
+
 export default async function globalTeardown(): Promise<void> {
   const schemaName = process.env.WORKLINGO_E2E_SCHEMA;
   const baseDatabaseUrl = process.env.WORKLINGO_E2E_BASE_DATABASE_URL;
@@ -28,7 +38,15 @@ export default async function globalTeardown(): Promise<void> {
   };
   const database = new PrismaClient({ datasourceUrl: baseDatabaseUrl });
   try {
-    await database.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaName}" CASCADE`);
+    for (let attempt = 1; attempt <= 5; attempt += 1) {
+      try {
+        await database.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaName}" CASCADE`);
+        break;
+      } catch (error) {
+        if (!isDeadlock(error) || attempt === 5) throw error;
+        await wait(attempt * 100);
+      }
+    }
   } finally {
     await database.$disconnect();
   }

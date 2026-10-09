@@ -38,6 +38,9 @@ describe('PublishPanel', () => {
       />,
     );
 
+    expect(screen.getByRole('heading', { name: 'Lesson publishing requirements' }))
+      .toBeInTheDocument();
+
     const publishBtn = screen.getByRole('button', { name: /publish lesson/i });
     expect(publishBtn).toBeDisabled();
 

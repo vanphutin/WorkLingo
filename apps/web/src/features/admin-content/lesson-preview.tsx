@@ -61,7 +61,7 @@ export function LessonPreview({ preview }: LessonPreviewProps) {
                         <span className="pronunciation">{lb.pronunciation}</span>
                         <span className="cefr-badge">{lb.cefrLevel}</span>
                       </div>
-                      <p className="meaning">{lb.meaning}</p>
+                      <p className="meaning" lang="vi">{lb.meaning}</p>
                       {lb.grammarPattern && (
                         <p className="pattern">
                           <strong>Pattern:</strong> {lb.grammarPattern}

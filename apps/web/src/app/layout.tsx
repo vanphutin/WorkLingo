@@ -4,7 +4,10 @@ import type { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'WorkLingo',
+  title: {
+    default: 'WorkLingo',
+    template: '%s | WorkLingo',
+  },
   description: 'English for work, learned in context.',
 };
 
@@ -14,7 +17,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="vi">
+    <html lang="en">
       <body>{children}</body>
     </html>
   );

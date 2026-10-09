@@ -390,23 +390,26 @@ export class AudioGenerationService implements OnApplicationShutdown {
       orderBy: { createdAt: 'asc' },
     });
 
-    return records.map((record) => ({
-      id: record.id,
-      contentImportId: record.contentImportId,
-      audioScriptSlug: record.audioScriptSlug,
-      scriptHash: record.scriptHash,
-      adapterName: record.adapterName,
-      voiceConfig: record.voiceConfig as Record<string, unknown>,
-      mimeType: record.mimeType,
-      byteSize: record.byteSize,
-      checksum: record.checksum,
-      storageKey: record.storageKey,
-      status: record.status as AudioArtifactStatus,
-      failureSummary: record.failureSummary,
-      ...(record.adapterName === 'fake-tts' ? { simulationLabel: SIMULATION_AUDIO_LABEL } : {}),
-      createdAt: record.createdAt.toISOString(),
-      updatedAt: record.updatedAt.toISOString(),
-    }));
+    return records
+      .filter((record): record is typeof record & { contentImportId: string } =>
+        record.contentImportId !== null)
+      .map((record) => ({
+        id: record.id,
+        contentImportId: record.contentImportId,
+        audioScriptSlug: record.audioScriptSlug,
+        scriptHash: record.scriptHash,
+        adapterName: record.adapterName,
+        voiceConfig: record.voiceConfig as Record<string, unknown>,
+        mimeType: record.mimeType,
+        byteSize: record.byteSize,
+        checksum: record.checksum,
+        storageKey: record.storageKey,
+        status: record.status as AudioArtifactStatus,
+        failureSummary: record.failureSummary,
+        ...(record.adapterName === 'fake-tts' ? { simulationLabel: SIMULATION_AUDIO_LABEL } : {}),
+        createdAt: record.createdAt.toISOString(),
+        updatedAt: record.updatedAt.toISOString(),
+      }));
   }
 
   async getArtifact(
@@ -420,7 +423,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
       where: { id: artifactId },
     });
 
-    if (!record) {
+    if (!record || record.contentImportId === null) {
       throw new NotFoundException({
         code: 'NOT_FOUND',
         message: `Audio artifact ${artifactId} not found`,

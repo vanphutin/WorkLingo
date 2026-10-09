@@ -4,9 +4,14 @@ import { ConflictException } from '@nestjs/common';
 import type { Prisma, PrismaClient } from '@prisma/client';
 import { foundationMissionFixture } from '@worklingo/test-fixtures';
 
+import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { lessonSnapshotSchema } from '../domain/curriculum.types.js';
+import { createLocalSeedStorage, createSeededAudioArtifact } from './seed-audio.js';
 
-export async function seedFoundationCurriculum(database: PrismaClient): Promise<void> {
+export async function seedFoundationCurriculum(
+  database: PrismaClient,
+  storage: ObjectStorage = createLocalSeedStorage(),
+): Promise<void> {
   const fixture = foundationMissionFixture;
   const sourceHash = createHash('sha256').update(JSON.stringify(fixture.lesson)).digest('hex');
   await database.$transaction(async (tx) => {
@@ -33,15 +38,10 @@ export async function seedFoundationCurriculum(database: PrismaClient): Promise<
       where: { missionId_lessonId: { missionId: mission.id, lessonId: lesson.id } },
       update: {}, create: { missionId: mission.id, lessonId: lesson.id, order: 0 },
     });
-    const existing = await tx.lessonVersion.findUnique({ where: { lessonId_version: { lessonId: lesson.id, version: fixture.lesson.version } } });
-    if (existing) {
-      if (
-        (existing.status !== 'PUBLISHED' && existing.status !== 'ARCHIVED') ||
-        existing.sourceHash !== sourceHash
-      ) {
-        throw new ConflictException('Seed version differs from stored content; create a new lesson version');
-      }
-    }
+    const existing = await tx.lessonVersion.findFirst({
+      where: { lessonId: lesson.id, sourceHash },
+      orderBy: { version: 'desc' },
+    });
     const wordBanks: Array<{
       id: string;
       slug: string;
@@ -121,9 +121,13 @@ export async function seedFoundationCurriculum(database: PrismaClient): Promise<
       contentBlocks: fixture.lesson.contentBlocks.map((block) => ({ ...block, id: randomUUID() })),
       activities: fixture.lesson.activities.map((activity, order) => ({ ...activity, order, id: randomUUID() })),
     });
+    const latestVersion = await tx.lessonVersion.findFirst({
+      where: { lessonId: lesson.id },
+      orderBy: { version: 'desc' },
+    });
     const version = await tx.lessonVersion.create({
       data: {
-        lessonId: lesson.id, version: fixture.lesson.version, title: snapshot.title,
+        lessonId: lesson.id, version: (latestVersion?.version ?? 0) + 1, title: snapshot.title,
         sourceHash, parsedContent: snapshot as Prisma.InputJsonValue,
       },
     });
@@ -140,6 +144,29 @@ export async function seedFoundationCurriculum(database: PrismaClient): Promise<
           wordBankId: bank.id,
           wordBankVersionId: bank.bankVersionId,
         },
+      });
+    }
+    const listeningBlock = snapshot.contentBlocks.find(
+      (block) => snapshot.activities.some(
+        (activity) => activity.activityType === 'listening' &&
+          activity.contentReferences.includes(block.slug),
+      ),
+    );
+    if (!listeningBlock) {
+      throw new ConflictException('Foundation listening activity requires referenced content');
+    }
+    await createSeededAudioArtifact(tx, storage, {
+      audioScriptSlug: listeningBlock.slug,
+      lessonVersionId: version.id,
+      script: listeningBlock.text,
+    });
+    const currentPublishedVersion = lesson.currentPublishedVersionId
+      ? await tx.lessonVersion.findUnique({ where: { id: lesson.currentPublishedVersionId } })
+      : null;
+    if (currentPublishedVersion?.status === 'PUBLISHED') {
+      await tx.lessonVersion.update({
+        where: { id: currentPublishedVersion.id },
+        data: { status: 'ARCHIVED' },
       });
     }
     await tx.lesson.update({ where: { id: lesson.id }, data: { currentPublishedVersionId: version.id } });

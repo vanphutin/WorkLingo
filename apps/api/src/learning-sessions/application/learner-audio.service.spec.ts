@@ -42,7 +42,10 @@ describe('LearnerAudioService', () => {
       body: Buffer.from('old'), byteSize: 3, mimeType: 'audio/wav',
     });
     expect(database.lessonVersionAudioArtifact.findFirst).toHaveBeenCalledWith(expect.objectContaining({
-      where: expect.objectContaining({ lessonVersionId, audioScriptSlug: { in: ['call-v1'] } }),
+      where: expect.objectContaining({
+        lessonVersionId,
+        audioScriptSlug: { in: expect.arrayContaining(['dialogue', 'call-v1']) },
+      }),
     }));
     expect(storage.read).toHaveBeenCalledWith('generated-audio/version-n');
   });

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { apiClient, type LearnerActivityDto } from '../../../lib/api/api-client';
 
@@ -23,6 +23,7 @@ export function ListeningActivity({
   disabled = false,
   sessionId,
 }: ListeningActivityProps) {
+  const [hasAudioError, setHasAudioError] = useState(false);
   const contentItems = activity.content as ReadonlyArray<{
     slug?: string;
     type?: string;
@@ -48,6 +49,10 @@ export function ListeningActivity({
 
   const audioUrl = apiClient.getActivityAudioUrl(sessionId, activity.id);
 
+  useEffect(() => {
+    setHasAudioError(false);
+  }, [activity.id, sessionId]);
+
   return (
     <article className="activity-container listening-activity" aria-labelledby="listening-prompt">
       <div className="activity-header">
@@ -57,9 +62,21 @@ export function ListeningActivity({
       </div>
 
       <section className="audio-player-panel" aria-label="Audio player">
-        <audio aria-label="Lesson audio" controls preload="metadata" src={audioUrl}>
-          Your browser does not support lesson audio playback.
-        </audio>
+        {hasAudioError ? (
+          <p className="audio-fallback-notice" role="status">
+            Audio is unavailable. Continue with the transcript below.
+          </p>
+        ) : (
+          <audio
+            aria-label="Lesson audio"
+            controls
+            onError={() => setHasAudioError(true)}
+            preload="metadata"
+            src={audioUrl}
+          >
+            Your browser does not support lesson audio playback.
+          </audio>
+        )}
 
         {contentItems.length > 0 && (
           <div className="audio-transcript-box">
