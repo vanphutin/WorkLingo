@@ -28,9 +28,9 @@ export async function seedFoundationCurriculum(
     }
     const mission = await tx.mission.upsert({
       where: { slug: fixture.slug }, update: {},
-      create: { slug: fixture.slug, title: fixture.title, objective: fixture.objective, levelId: level.id, order: 0, status: 'PUBLISHED' },
+      create: { slug: fixture.slug, title: fixture.title, objective: fixture.objective, levelId: level.id, order: 0, purpose: 'LEARNING', status: 'PUBLISHED' },
     });
-    if (mission.levelId !== level.id) {
+    if (mission.levelId !== level.id || mission.purpose !== 'LEARNING') {
       throw new ConflictException('Foundation mission belongs to another level');
     }
     const lesson = await tx.lesson.upsert({ where: { slug: fixture.lesson.slug }, update: {}, create: { slug: fixture.lesson.slug } });

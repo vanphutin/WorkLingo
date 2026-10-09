@@ -23,7 +23,7 @@ function createMission(): PublishedMission {
   });
   return {
     id: fixtureId(200), slug: fixture.slug, title: fixture.title,
-    objective: fixture.objective, levelCode: fixture.level.code,
+    objective: fixture.objective, levelCode: fixture.level.code, purpose: 'learning',
     lessonVersion: { ...snapshot, id: fixtureId(201), version: 1 },
   };
 }
@@ -68,6 +68,18 @@ describe('Foundation session planner', () => {
     ]);
     expect(new Set(plan.blocks.flatMap((block) => block.skills)))
       .toEqual(new Set(['reading', 'listening', 'speaking', 'writing']));
+  });
+
+  it('plans a purpose-bound placement diagnostic at 45 minutes without changing its mission identity', () => {
+    const mission = { ...createMission(), purpose: 'placement' as const };
+
+    const plan = planFoundationSession({ mission, durationMinutes: 45 });
+
+    expect(mission.purpose).toBe('placement');
+    expect(plan.missionId).toBe(mission.id);
+    expect(new Set(plan.blocks.flatMap((block) => block.skills))).toEqual(
+      new Set(['reading', 'listening', 'speaking', 'writing']),
+    );
   });
 
   it.each([90, 120, 150])(
