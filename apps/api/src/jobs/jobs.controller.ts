@@ -1,18 +1,23 @@
 import {
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Inject,
   Param,
   ParseUUIDPipe,
+  Post,
   Req,
 } from '@nestjs/common';
 import {
   ApiOkResponse,
   ApiOperation,
+  ApiAcceptedResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import type { JobDto } from '@worklingo/contracts';
+import type { JobReference } from './domain/job-dispatcher.port.js';
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
@@ -33,5 +38,16 @@ export class JobsController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<JobDto> {
     return this.jobsService.getJob(id, request.authUser.id);
+  }
+
+  @Post(':id/retry')
+  @HttpCode(HttpStatus.ACCEPTED)
+  @ApiOperation({ summary: 'Retry a failed retryable background job' })
+  @ApiAcceptedResponse({ description: 'Job scheduled with its existing identity' })
+  retryJob(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<JobReference> {
+    return this.jobsService.retryJob(id, request.authUser.id);
   }
 }

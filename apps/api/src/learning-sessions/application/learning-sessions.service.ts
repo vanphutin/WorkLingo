@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma, type Activity, type ActivityAttempt } from '@prisma/client';
@@ -17,6 +18,7 @@ import {
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
+import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import {
   activitySchema,
   lessonSnapshotSchema,
@@ -46,10 +48,19 @@ type SessionRecord = Prisma.LearningSessionGetPayload<{ include: typeof sessionI
 
 interface Evaluation {
   readonly advance: boolean;
-  readonly evaluationStatus: 'SUBMITTED' | 'EVALUATED';
+  readonly evaluationStatus: 'SUBMITTED' | 'QUEUED' | 'EVALUATED';
   readonly feedback: string;
   readonly normalizedResponse: Prisma.InputJsonValue;
   readonly score: number | null;
+}
+
+export interface CurrentActivitySubmission {
+  readonly activityId: string;
+  readonly activityIndex: number;
+  readonly activityIds: readonly string[];
+  readonly lessonVersionId: string;
+  readonly plan: SessionPlan;
+  readonly sessionId: string;
 }
 
 @Injectable()
@@ -58,6 +69,7 @@ export class LearningSessionsService {
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(MasteryService) private readonly mastery: MasteryService,
+    @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
   ) {}
 
   private async selectCurriculum(learnerId: string) {
@@ -255,6 +267,60 @@ export class LearningSessionsService {
     return this.getSession(learnerId, id);
   }
 
+  async requireCurrentActivity(
+    learnerId: string,
+    sessionId: string,
+    activityId: string,
+    expectedType: 'speaking' | 'writing',
+  ): Promise<CurrentActivitySubmission> {
+    const session = await this.findOwnedSession(learnerId, sessionId);
+    if (session.status !== 'IN_PROGRESS') throw this.invalidTransition(session.status, 'IN_PROGRESS');
+    const plan = sessionPlanSchema.parse(session.planSnapshot);
+    const activityIds = plan.blocks.flatMap((block) => block.activityIds);
+    const activityIndex = activityIds.indexOf(activityId);
+    if (activityIndex < 0) throw new NotFoundException('Activity not found in this session');
+    if (activityIndex !== session.currentCheckpoint) {
+      throw new ConflictException({
+        code: 'INVALID_CHECKPOINT', message: 'Submit the current activity before continuing', statusCode: 409,
+      });
+    }
+    const activity = await this.database.activity.findFirst({
+      where: { id: activityId, lessonVersionId: session.lessonVersionId },
+      select: { activityType: true },
+    });
+    if (!activity) throw new NotFoundException('Activity not found in this session');
+    if (activity.activityType !== expectedType) {
+      throw new BadRequestException(`Activity must be ${expectedType}`);
+    }
+    return {
+      activityId, activityIndex, activityIds, lessonVersionId: session.lessonVersionId,
+      plan, sessionId: session.id,
+    };
+  }
+
+  async advanceSubmittedActivity(
+    transaction: Prisma.TransactionClient,
+    learnerId: string,
+    context: CurrentActivitySubmission,
+  ): Promise<void> {
+    const nextCheckpoint = context.activityIndex + 1;
+    const update = await transaction.learningSession.updateMany({
+      where: {
+        currentCheckpoint: context.activityIndex,
+        id: context.sessionId,
+        learnerId,
+        status: 'IN_PROGRESS',
+      },
+      data: {
+        currentCheckpoint: nextCheckpoint,
+        status: nextCheckpoint === context.activityIds.length ? 'COMPLETED' : 'IN_PROGRESS',
+        ...(nextCheckpoint === context.activityIds.length ? { completedAt: new Date() } : {}),
+      },
+    });
+    if (update.count !== 1) throw new ConflictException('Session checkpoint changed while submitting');
+    await this.completeFinishedBlock(transaction, context.sessionId, context.plan, nextCheckpoint);
+  }
+
   async submitAttempt(
     learnerId: string,
     activityId: string,
@@ -303,16 +369,31 @@ export class LearningSessionsService {
             score: evaluation.score,
           },
         });
-        await this.mastery.recordAttemptEvaluation({
-          attemptId: evaluated.id,
-          evaluationStatus: evaluation.evaluationStatus,
-          languageBlockSlugs: activity.languageBlockReferences,
-          learnerId,
-          lessonVersionId: session.lessonVersionId,
-          score: evaluation.score,
-          skills: activity.skills.length > 0 ? activity.skills : [activity.activityType],
-          tx: transaction,
-        });
+        if (evaluation.evaluationStatus === 'EVALUATED') {
+          await this.mastery.recordAttemptEvaluation({
+            attemptId: evaluated.id,
+            evaluationStatus: evaluation.evaluationStatus,
+            languageBlockSlugs: activity.languageBlockReferences,
+            learnerId,
+            lessonVersionId: session.lessonVersionId,
+            score: evaluation.score,
+            skills: activity.skills.length > 0 ? activity.skills : [activity.activityType],
+            tx: transaction,
+          });
+        }
+        if (evaluation.evaluationStatus === 'QUEUED') {
+          await this.jobs?.enqueue({
+            createdById: learnerId,
+            idempotencyKey: `evaluate:${evaluated.id}`,
+            payload: { attemptId: evaluated.id },
+            resourceId: evaluated.id,
+            resourceType: 'ActivityAttempt',
+            type: 'EVALUATE_ATTEMPT',
+          }, transaction);
+          await transaction.activityDraft.deleteMany({
+            where: { activityId, learnerId, sessionId: session.id },
+          });
+        }
         if (evaluation.advance) {
           const nextCheckpoint = activityIndex + 1;
           const update = await transaction.learningSession.updateMany({
@@ -392,10 +473,13 @@ export class LearningSessionsService {
     if (typeof text !== 'string' || text.trim().length === 0) {
       throw new BadRequestException('A non-empty text response is required');
     }
+    const queued = activity.activityType === 'writing' && this.jobs !== undefined;
     return {
       advance: true,
-      evaluationStatus: 'SUBMITTED',
-      feedback: 'Saved. Advanced speaking and writing feedback is not available yet.',
+      evaluationStatus: queued ? 'QUEUED' : 'SUBMITTED',
+      feedback: queued
+        ? 'Saved. Teacher AI evaluation is queued.'
+        : 'Saved. Advanced speaking and writing feedback is not available yet.',
       normalizedResponse: { text: text.trim() },
       score: null,
     };
@@ -471,7 +555,7 @@ export class LearningSessionsService {
       activityId: attempt.activityId,
       clientAttemptId: attempt.clientAttemptId,
       createdAt: attempt.createdAt.toISOString(),
-      evaluationStatus: attempt.evaluationStatus.toLowerCase() as 'submitted' | 'evaluated',
+      evaluationStatus: attempt.evaluationStatus.toLowerCase() as ActivityAttemptDto['evaluationStatus'],
       feedback: attempt.feedback,
       id: attempt.id,
       learnerId: attempt.learnerId,

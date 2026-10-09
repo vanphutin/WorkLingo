@@ -69,11 +69,13 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.locator('[aria-current="step"]')).toContainText('Respond');
 
-    // 9. Complete speaking placeholder and final writing transfer task
-    await page
-      .getByLabel(/spoken response/i)
-      .fill('My name is An. I work in sales. Nice to meet you and the team today.');
-    await page.getByRole('button', { name: 'Continue' }).click();
+    // 9. Complete the speaking recording and final writing transfer task
+    await page.getByRole('button', { name: 'Record response' }).click();
+    await page.waitForTimeout(750);
+    await page.getByRole('button', { name: 'Stop recording' }).click();
+    await page.getByLabel('Recording preview').waitFor();
+    await page.getByRole('checkbox', { name: /consent/i }).check();
+    await page.getByRole('button', { name: 'Send for evaluation' }).click();
     await page
       .getByLabel('Your written response:')
       .fill('Hello Linh. My name is An. I work in sales. Do you need help with this project today?');
@@ -83,10 +85,11 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     await page.getByRole('link', { name: 'Return to Dashboard' }).click();
     await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
 
-    // 10. Verify persisted progress summary
+    // 10. Verify persisted progress summary. Reading and listening finish
+    // synchronously; Teacher AI work remains queued and must not be counted yet.
     await expect(page.getByText('Current Level')).toBeVisible();
     await expect(page.getByText('FOUNDATION_1')).toBeVisible();
-    await expect(page.getByText('Completed Activities').locator('..')).toContainText('5');
+    await expect(page.getByText('Completed Activities').locator('..')).toContainText('2');
     await expect(page.getByText('Completed Sessions').locator('..')).toContainText('1');
   });
 });

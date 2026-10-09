@@ -4,6 +4,8 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
+  type OnApplicationShutdown,
 } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { parseLessonSource } from '@worklingo/content-format';
@@ -16,22 +18,30 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
+import { SIMULATION_AUDIO_LABEL } from '../../ai-gateway/infrastructure/fake-tts.adapter.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
-import { TextToSpeechPort } from '../domain/text-to-speech.port.js';
-import { SIMULATION_AUDIO_LABEL } from '../infrastructure/fake-tts.adapter.js';
+import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
+import { JobRunnerService } from '../../jobs/application/job-runner.service.js';
 
 @Injectable()
-export class AudioGenerationService {
+export class AudioGenerationService implements OnApplicationShutdown {
   private readonly activeJobs = new Map<string, Promise<void>>();
 
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(ObjectStorage) private readonly storage: ObjectStorage,
     @Inject(TextToSpeechPort) private readonly tts: TextToSpeechPort,
+    @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
+    @Optional() @Inject(JobRunnerService) private readonly runner?: JobRunnerService,
   ) {}
 
   waitForJob(jobId: string): Promise<void> {
     return this.activeJobs.get(jobId) ?? Promise.resolve();
+  }
+
+  async onApplicationShutdown(): Promise<void> {
+    await Promise.allSettled([...this.activeJobs.values()]);
   }
 
   async generateAudio(
@@ -132,7 +142,7 @@ export class AudioGenerationService {
         contentImportId,
         audioScriptSlug: targetSlug,
         scriptHash,
-        adapterName: 'fake-tts',
+        adapterName: this.tts.providerName ?? 'tts',
         voiceConfig: (input.voiceConfig ?? {}) as Prisma.InputJsonValue,
         mimeType: 'audio/wav',
         byteSize: 0,
@@ -146,7 +156,46 @@ export class AudioGenerationService {
       },
     });
 
-    // 5. Create Job record
+    if (this.jobs && this.runner) {
+      const job = await this.jobs.enqueue({
+        contentImportId,
+        createdById: actorId,
+        idempotencyKey: `tts:${actorId}:${input.idempotencyKey}`,
+        payload: {
+          audioScriptSlug: targetSlug,
+          contentImportId,
+          scriptHash,
+          voiceConfig: input.voiceConfig ?? {},
+        },
+        resourceId: contentImportId,
+        resourceType: 'ContentImport',
+        type: 'GENERATE_AUDIO',
+      });
+      const result: GenerateAudioResult = {
+        jobId: job.id,
+        status: job.status === 'RETRY_WAIT' ? 'PENDING' : job.status,
+        audioScriptSlug: targetSlug,
+      };
+      await this.database.mutationReceipt.create({
+        data: {
+          actorId,
+          operation: 'generate-audio',
+          idempotencyKey: input.idempotencyKey,
+          requestHash,
+          responseStatus: 202,
+          responseBody: result as unknown as Prisma.InputJsonValue,
+        },
+      });
+      const run = this.runQueuedJob(job.id);
+      this.activeJobs.set(job.id, run);
+      void run.then(
+        () => this.activeJobs.delete(job.id),
+        () => this.activeJobs.delete(job.id),
+      );
+      return result;
+    }
+
+    // Legacy unit-test fallback when the durable runner is not injected.
     const job = await this.database.job.create({
       data: {
         type: 'generate-audio',
@@ -190,11 +239,22 @@ export class AudioGenerationService {
       input.voiceConfig ?? {},
     );
     this.activeJobs.set(job.id, jobPromise);
-    void jobPromise.finally(() => {
-      this.activeJobs.delete(job.id);
-    });
+    void jobPromise.then(
+      () => this.activeJobs.delete(job.id),
+      () => this.activeJobs.delete(job.id),
+    );
 
     return result;
+  }
+
+  private async runQueuedJob(jobId: string): Promise<void> {
+    if (!this.runner) return;
+    for (let iteration = 0; iteration < 20; iteration += 1) {
+      const row = await this.database.job.findUnique({ where: { id: jobId } });
+      if (row?.status === 'COMPLETED' || row?.status === 'FAILED') return;
+      const ran = await this.runner.runOnce();
+      if (!ran) return;
+    }
   }
 
   private async runGenerationJob(
@@ -255,11 +315,16 @@ export class AudioGenerationService {
           },
         },
         data: {
+          adapterName: synthesized.provider?.name ?? this.tts.providerName ?? 'tts',
           status: finalStatus,
           mimeType: synthesized.mimeType,
           byteSize: storageResult.size,
           checksum: synthesized.checksum,
           storageKey: storageResult.key,
+          voiceConfig: {
+            ...voiceConfig,
+            ...(synthesized.provider ? { voice: synthesized.provider.voice } : {}),
+          },
           failureSummary: isStale ? 'Script changed during generation' : null,
         },
       });
@@ -338,7 +403,7 @@ export class AudioGenerationService {
       storageKey: record.storageKey,
       status: record.status as AudioArtifactStatus,
       failureSummary: record.failureSummary,
-      simulationLabel: SIMULATION_AUDIO_LABEL,
+      ...(record.adapterName === 'fake-tts' ? { simulationLabel: SIMULATION_AUDIO_LABEL } : {}),
       createdAt: record.createdAt.toISOString(),
       updatedAt: record.updatedAt.toISOString(),
     }));
@@ -379,7 +444,7 @@ export class AudioGenerationService {
         storageKey: record.storageKey,
         status: record.status as AudioArtifactStatus,
         failureSummary: record.failureSummary,
-        simulationLabel: SIMULATION_AUDIO_LABEL,
+        ...(record.adapterName === 'fake-tts' ? { simulationLabel: SIMULATION_AUDIO_LABEL } : {}),
         createdAt: record.createdAt.toISOString(),
         updatedAt: record.updatedAt.toISOString(),
       },

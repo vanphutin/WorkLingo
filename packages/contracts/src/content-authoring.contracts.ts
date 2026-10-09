@@ -161,7 +161,9 @@ export const generateAudioResultSchema = z.object({
 });
 export type GenerateAudioResult = z.infer<typeof generateAudioResultSchema>;
 
-export const jobStatusSchema = z.enum(['PENDING', 'RUNNING', 'COMPLETED', 'FAILED']);
+export const jobStatusSchema = z.enum([
+  'PENDING', 'RUNNING', 'RETRY_WAIT', 'COMPLETED', 'FAILED',
+]);
 export type JobStatus = z.infer<typeof jobStatusSchema>;
 
 export const jobDtoSchema = z.object({
@@ -171,6 +173,8 @@ export const jobDtoSchema = z.object({
   payload: z.record(z.string(), z.unknown()),
   result: z.record(z.string(), z.unknown()).nullable(),
   error: z.string().nullable(),
+  errorCode: z.string().nullable(),
+  retryable: z.boolean(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

@@ -68,3 +68,40 @@ describe('checkpoint API', () => {
     await expect(client.assessCheckpoint({ sessionId, clientAssessmentId: assessmentId })).rejects.toThrow();
   });
 });
+
+describe('Teacher AI learner API', () => {
+  const activityId = '00000000-0000-4000-8000-000000000010';
+  const learnerSessionId = '00000000-0000-4000-8000-000000000020';
+  const attemptId = '00000000-0000-4000-8000-000000000030';
+  const recordingId = '00000000-0000-4000-8000-000000000040';
+
+  it('uploads recording bytes and versioned consent as multipart without forcing JSON headers', async () => {
+    const network = respond({
+      attemptId, recordingId, jobId: '00000000-0000-4000-8000-000000000050', status: 'processing',
+    });
+
+    await client.submitRecording({
+      activityId, sessionId: learnerSessionId, clientAttemptId: attemptId,
+      audio: new Blob(['audio'], { type: 'audio/webm' }), consentAccepted: true,
+      consentPolicyVersion: 'recording-v1', consentScope: 'teacher-ai',
+    });
+
+    const [, options] = network.mock.calls[0] ?? [];
+    expect(options?.body).toBeInstanceOf(FormData);
+    expect((options?.headers as Record<string, string>)['content-type']).toBeUndefined();
+  });
+
+  it('accepts the recording delete endpoint no-content response', async () => {
+    const network = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    vi.stubGlobal('fetch', network);
+
+    await expect(client.deleteRecording(recordingId)).resolves.toBeUndefined();
+    expect(network).toHaveBeenCalledWith(`/api/v1/recordings/${recordingId}`, expect.objectContaining({ method: 'DELETE' }));
+  });
+
+  it('builds listening audio URLs at the session-version boundary', () => {
+    expect(client.getActivityAudioUrl(learnerSessionId, activityId)).toBe(
+      `/api/v1/learning-sessions/${learnerSessionId}/activities/${activityId}/audio`,
+    );
+  });
+});

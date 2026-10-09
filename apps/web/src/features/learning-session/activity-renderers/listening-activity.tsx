@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import type { LearnerActivityDto } from '../../../lib/api/api-client';
+import { apiClient, type LearnerActivityDto } from '../../../lib/api/api-client';
 
 export interface ListeningResponseValue {
   answerIndexes: number[];
@@ -13,6 +13,7 @@ interface ListeningActivityProps {
   readonly value: ListeningResponseValue;
   readonly onChange: (value: ListeningResponseValue) => void;
   readonly disabled?: boolean;
+  readonly sessionId: string;
 }
 
 export function ListeningActivity({
@@ -20,6 +21,7 @@ export function ListeningActivity({
   value,
   onChange,
   disabled = false,
+  sessionId,
 }: ListeningActivityProps) {
   const contentItems = activity.content as ReadonlyArray<{
     slug?: string;
@@ -44,9 +46,7 @@ export function ListeningActivity({
     onChange({ answerIndexes: nextAnswers });
   };
 
-  const audioNotice =
-    contentItems.find((item) => item.audio?.notice)?.audio?.notice ??
-    'Audio is not available in this local increment. Use the transcript for now.';
+  const audioUrl = apiClient.getActivityAudioUrl(sessionId, activity.id);
 
   return (
     <article className="activity-container listening-activity" aria-labelledby="listening-prompt">
@@ -57,16 +57,9 @@ export function ListeningActivity({
       </div>
 
       <section className="audio-player-panel" aria-label="Audio player">
-        <div className="audio-notice">
-          <p className="notice-badge">Local placeholder audio for development</p>
-          <p className="notice-description">
-            Live audio streaming and speech generation arrive in Increment 4.
-          </p>
-        </div>
-
-        <p className="audio-status" role="status">
-          {audioNotice}
-        </p>
+        <audio aria-label="Lesson audio" controls preload="metadata" src={audioUrl}>
+          Your browser does not support lesson audio playback.
+        </audio>
 
         {contentItems.length > 0 && (
           <div className="audio-transcript-box">

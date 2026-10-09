@@ -106,6 +106,10 @@ Speaking/writing chưa có điểm AI thật nên checkpoint có thể còn ch�
 
 **Required gates:** fake-provider contract tests, timeout/429/malformed-response tests, duplicate-attempt test và human calibration report.
 
+**Trạng thái 2026-10-09:** Implementation Tasks 1–12 đã được hoàn thiện trên branch Increment 4: contracts/config, adapters, PostgreSQL jobs, recording/draft/evaluation persistence, consent/retention, learner recorder/audio/writing UI, golden harness và Teacher AI E2E desktop/mobile. Fake calibration pass 3/3 expected ranges. Sau khi khôi phục PostgreSQL local, full `pnpm verify` đã pass: lint/typecheck, 352 API tests, 136 web tests, 138 integration tests, production build và 8 Playwright journeys trên desktop/mobile. **Human calibration pending** và live-provider calibration chưa chạy; hai mục này chặn tuyên bố pilot-ready/live-provider, không chặn hoàn tất kỹ thuật Increment 4 trên local.
+
+Vận hành: `docs/INCREMENT_4_DEMO.md`. Calibration: `docs/AI_CALIBRATION.md`. Detailed plan: `docs/superpowers/plans/2026-10-07-increment-4-speech-teacher-ai.md`.
+
 ## Increment 5 — Admin, quality và pilot readiness
 
 **Kết quả:** local MVP đủ ổn định để chạy pilot có kiểm soát với bộ Foundation content đầu tiên.

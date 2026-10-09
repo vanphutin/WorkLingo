@@ -7,6 +7,7 @@ import {
   apiClient,
   type LearnerActivityDto,
   type LearningSessionDto,
+  type SubmitRecordingInput,
 } from '../../../../lib/api/api-client';
 
 export default function SessionPage({
@@ -91,6 +92,15 @@ export default function SessionPage({
     setSession(updated);
   };
 
+  const handleSubmitRecording = async (input: SubmitRecordingInput) => {
+    if (!session) throw new Error('Session is not ready');
+    const result = await apiClient.submitRecording(input);
+    const updatedSession = await apiClient.getSession(session.id);
+    setSession(updatedSession);
+    await loadActivityForSession(updatedSession);
+    return result;
+  };
+
   const handleResumeSession = async () => {
     if (!session) return;
     const updated = await apiClient.resumeSession(session.id);
@@ -130,6 +140,7 @@ export default function SessionPage({
       session={session}
       currentActivity={currentActivity}
       onSubmitAttempt={handleSubmitAttempt}
+      onSubmitRecording={handleSubmitRecording}
       onPauseSession={handlePauseSession}
       onResumeSession={handleResumeSession}
       isCompleted={isCompleted}

@@ -70,6 +70,8 @@ MVP MUST cung cấp trải nghiệm English for Work từ Foundation 1 đến Wo
 - **FR-AI-007:** Learner MUST có thể retry tác vụ AI thất bại.
 - **FR-AI-008:** Teacher AI MUST giới hạn feedback theo level, rubric và nội dung liên quan.
 - **FR-AI-009:** AI score quan trọng SHOULD có khả năng được admin xem lại.
+- **FR-AI-010:** Speaking/writing attempt MUST được lưu trước khi enqueue provider work và client MUST khôi phục được trạng thái sau refresh.
+- **FR-AI-011:** Foundation feedback MUST có score dimensions, điểm mạnh, điểm cần cải thiện và corrected example có giới hạn kích thước.
 
 ### FR-ADMIN — Quản trị
 
@@ -84,6 +86,7 @@ MVP MUST cung cấp trải nghiệm English for Work từ Foundation 1 đến Wo
 - **FR-PRIVACY-002:** Bản ghi âm tạm MUST có chính sách xóa cấu hình được.
 - **FR-PRIVACY-003:** Lưu bản ghi dài hạn MUST cần sự đồng ý của learner.
 - **FR-PRIVACY-004:** Learner MUST xóa được bản ghi đã lưu.
+- **FR-PRIVACY-005:** Microphone MUST chỉ được yêu cầu sau thao tác rõ ràng; playback MUST không autoplay.
 
 ## 3. Yêu cầu phi chức năng
 

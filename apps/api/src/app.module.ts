@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 
+import { AiGatewayModule } from './ai-gateway/ai-gateway.module.js';
 import { AuthModule } from './auth/auth.module';
 import { AppConfigModule } from './common/config/app-config.module';
 import { DatabaseModule } from './common/database/database.module';
@@ -9,12 +10,15 @@ import { ContentAuthoringModule } from './content-authoring/content-authoring.mo
 import { JobsModule } from './jobs/jobs.module.js';
 import { LearningSessionsModule } from './learning-sessions/learning-sessions.module.js';
 import { MasteryModule } from './mastery/mastery.module.js';
+import { MediaModule } from './media/media.module.js';
 import { ProgressModule } from './progress/progress.module.js';
 import { ProgressionModule } from './progression/progression.module.js';
+import { TeacherAiModule } from './teacher-ai/teacher-ai.module.js';
 
 @Module({
   imports: [
     AppConfigModule,
+    AiGatewayModule,
     DatabaseModule,
     HealthModule,
     AuthModule,
@@ -23,8 +27,10 @@ import { ProgressionModule } from './progression/progression.module.js';
     JobsModule,
     LearningSessionsModule,
     MasteryModule,
+    MediaModule,
     ProgressModule,
     ProgressionModule,
+    TeacherAiModule,
   ],
 })
 export class AppModule {}

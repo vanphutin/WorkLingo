@@ -174,6 +174,15 @@ Khi CI được thiết lập:
 
 AI live tests không chạy ở mọi commit để tránh chi phí và không ổn định; chạy thủ công hoặc theo lịch với quota kiểm soát.
 
+## Increment 4 acceptance coverage
+
+- `evaluation-harness.spec.ts` và `ai:calibrate` khóa fixture/rubric version, tính tất định và expected ranges; human calibration vẫn được ghi rõ là pending.
+- Adapter contract tests bao phủ Microsoft/OpenAI-compatible success, timeout, 429, malformed output và fake prompt-injection fixtures.
+- Job tests bao phủ lease, backoff, terminal/manual retry, exactly-once evaluation/mastery và trạng thái attempt không terminal giả trong automatic retry.
+- Media tests bao phủ MIME/signature/duration/size, consent, duplicate idempotency, compensation, ownership, early delete và retention cleanup.
+- Web tests bao phủ microphone permission, track/object-URL cleanup, consent, multipart retry key, version-bound audio, writing revision autosave, polling và structured feedback.
+- `teacher-ai-learning.spec.ts` chạy desktop/mobile với fake microphone và E2E-only deterministic 429. Failure injection bị config từ chối nếu không đồng thời có `NODE_ENV=test`, explicit E2E mode và fake language provider.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:

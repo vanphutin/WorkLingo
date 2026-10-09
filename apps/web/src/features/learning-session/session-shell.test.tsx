@@ -4,11 +4,12 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-li
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type {
+  ActivityAttemptDto,
   LearnerActivityDto,
   LearningSessionDto,
 } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
-import { SessionShell } from './session-shell';
+import { findRestorableEvaluationAttemptId, SessionShell } from './session-shell';
 
 const mockReadingActivity: LearnerActivityDto = {
   id: 'd4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90',
@@ -56,7 +57,7 @@ const mockWritingActivity: LearnerActivityDto = {
 };
 
 const mockListeningActivity: LearnerActivityDto = {
-  id: 'f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2',
+  id: 'f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2',
   slug: 'listen-dialogue',
   activityType: 'listening',
   learningBlock: 'listenReason',
@@ -128,7 +129,7 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
         type: 'listenReason',
         order: 3,
         targetMinutes: 15,
-        activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+        activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
         skills: ['listening'],
       },
       {
@@ -165,7 +166,7 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
       type: 'listenReason',
       order: 3,
       targetMinutes: 15,
-      activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+      activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
       status: 'available',
     },
     {
@@ -186,6 +187,45 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('restores pending and completed Teacher AI evaluations without selecting comprehension attempts', () => {
+    const baseAttempt: ActivityAttemptDto = {
+      id: 'reading-attempt',
+      learnerId: 'learner-1',
+      sessionId: createMockSession().id,
+      activityId: mockReadingActivity.id,
+      clientAttemptId: 'reading-client-attempt',
+      evaluationStatus: 'evaluated',
+      score: 1,
+      feedback: 'Correct',
+      createdAt: '2026-10-08T08:00:00.000Z',
+      rawResponse: { answerIndexes: [1] },
+      normalizedResponse: { answerIndexes: [1] },
+    };
+
+    expect(findRestorableEvaluationAttemptId([baseAttempt])).toBeNull();
+    expect(findRestorableEvaluationAttemptId([
+      baseAttempt,
+      {
+        ...baseAttempt,
+        id: 'writing-attempt',
+        activityId: mockWritingActivity.id,
+        clientAttemptId: 'writing-client-attempt',
+        rawResponse: { text: 'The launch remains on track.' },
+      },
+    ])).toBe('writing-attempt');
+    expect(findRestorableEvaluationAttemptId([
+      baseAttempt,
+      {
+        ...baseAttempt,
+        id: 'speaking-attempt',
+        activityId: mockSpeakingActivity.id,
+        clientAttemptId: 'speaking-client-attempt',
+        evaluationStatus: 'processing',
+        rawResponse: { durationSeconds: 2, kind: 'recording', mimeType: 'audio/webm' },
+      },
+    ])).toBe('speaking-attempt');
+  });
+
   it('requires every comprehension answer even when questions are answered out of order', () => {
     const twoQuestionActivity: LearnerActivityDto = {
       ...mockReadingActivity,
@@ -318,7 +358,7 @@ describe('SessionShell and Activity Renderers', () => {
     await waitFor(() => expect(onSubmitAttempt).toHaveBeenCalledTimes(2));
     expect(onSubmitAttempt.mock.calls[0]?.[2]).toBeTruthy();
     expect(onSubmitAttempt.mock.calls[1]?.[2]).toBe(onSubmitAttempt.mock.calls[0]?.[2]);
-    expect(screen.getByRole('status')).toHaveTextContent('Saved');
+    expect(screen.getByText('Saved')).toBeInTheDocument();
   });
 
   it('shows evaluation feedback when a comprehension answer needs another attempt', async () => {
@@ -432,34 +472,35 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.getByLabelText('Team introduction')).toBeChecked();
   });
 
-  it('renders speaking activity with clear notification that recording arrives in Increment 4', () => {
+  it('renders an explicitly unscored fallback when browser recording is unavailable', () => {
     render(
       <ActivityRenderer
         activity={mockSpeakingActivity}
+        sessionId={createMockSession().id}
         value=""
         onChange={vi.fn()}
         savedResponse={null}
       />,
     );
 
-    expect(screen.getAllByText(/increment 4/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/unscored/i).length).toBeGreaterThan(0);
     expect(screen.getByLabelText(/spoken response/i)).toBeInTheDocument();
   });
 
-  it('renders a truthful listening placeholder without a fake playback control', () => {
+  it('renders version-bound listening audio without autoplay', () => {
     const { container } = render(
       <ActivityRenderer
         activity={mockListeningActivity}
+        sessionId={createMockSession().id}
         value={{ answerIndexes: [] }}
         onChange={vi.fn()}
         savedResponse={null}
       />,
     );
 
-    expect(screen.getByText(/placeholder audio/i)).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /play audio/i })).not.toBeInTheDocument();
     const audioElement = container.querySelector('audio');
-    expect(audioElement).not.toBeInTheDocument();
+    expect(audioElement).toBeInTheDocument();
+    expect(audioElement?.autoplay).toBe(false);
   });
 
   it('exposes semantic landmarks in reading order', () => {
@@ -551,7 +592,7 @@ describe('SessionShell and Activity Renderers', () => {
             type: 'listenReason',
             order: 2,
             targetMinutes: 15,
-            activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+            activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
             skills: ['listening'],
           },
           {
@@ -580,7 +621,7 @@ describe('SessionShell and Activity Renderers', () => {
           type: 'listenReason',
           order: 2,
           targetMinutes: 15,
-          activityIds: ['f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f90a1b2'],
+          activityIds: ['f6a7b8c9-d0e1-2f3a-8b5c-6d7e8f90a1b2'],
           status: 'available',
         },
         {

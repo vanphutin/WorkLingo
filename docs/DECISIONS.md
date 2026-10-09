@@ -161,14 +161,20 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Lý do:** Đảm bảo tính linh hoạt về thời gian học tập theo FR-LEARN-001/002/003/004/007, đồng thời giữ vững nguyên tắc sư phạm và tính trung thực của dữ liệu học tập.
 - **Lý do chọn chuỗi 150 phút:** Hai chu trình có `activate` và `respond` giúp nhắc lại rồi vận dụng giữa phiên, thay vì dồn ba khối vận dụng về cuối. Lịch ôn chỉ gắn với activity tham chiếu đúng LanguageBlock **và** luyện đúng kỹ năng của MasteryRecord.
 
+## D-022 — Durable Teacher AI với fake mặc định và retention hữu hạn
+
+- **Trạng thái:** Accepted (Increment 4)
+- **Ngày:** 2026-10-08
+- **Quyết định:** Speaking/writing được lưu trước, xử lý qua PostgreSQL jobs và adapter-neutral AI Gateway. Fake STT/language/TTS là mặc định local; Microsoft Speech và OpenAI-compatible chỉ bật bằng cấu hình có credential. Recording terminal giữ 7 ngày, draft bỏ dở giữ 30 ngày, learner được xóa recording sớm.
+- **Lý do:** Provider không được làm mất tiến độ; local development phải chạy không cần cloud/key; dữ liệu giọng nói cần retention tối thiểu và consent rõ ràng.
+- **Hệ quả:** `JOB_WORKER_ENABLED=true` là cấu hình demo local. Automatic retry giữ attempt ở `queued`; chỉ failure terminal mới thành `evaluation_failed`. Golden fake harness bảo vệ wiring nhưng không thay thế human calibration.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:
 
 - Cú pháp chính xác và version 1.0 của lesson import format.
 - Thuật toán mastery/review ban đầu và ngưỡng calibration.
-- Provider TTS ban đầu.
-- Chính sách retention mặc định cho recordings.
 - Authentication strategy cụ thể cho local MVP.
 - Bộ màu, typography và component library sau prototype UI.
 - Ngưỡng quality của AI golden set trước pilot.

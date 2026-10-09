@@ -6,11 +6,14 @@ import {
   contentStatusSchema,
   createCheckpointAssessmentSchema,
   generateAudioResultSchema,
+  evaluationDtoSchema,
   jobDtoSchema,
   publishContentImportResultSchema,
+  recordingSubmissionResultSchema,
   sessionAvailabilitySchema,
   sessionDurationSchema,
   sessionPlanSchema,
+  writingDraftSchema,
   validateContentImportResultSchema,
   type AudioArtifactDto,
   type AuthUser,
@@ -19,10 +22,13 @@ import {
   type CreateCheckpointAssessment,
   type GenerateAudioInput,
   type GenerateAudioResult,
+  type EvaluationDto,
   type JobDto,
   type PublishContentImportInput,
   type PublishContentImportResult,
+  type RecordingSubmissionResult,
   type SessionAvailabilityDto,
+  type WritingDraft,
   type UpdateContentSourceInput,
   type ValidateContentImportInput,
   type ValidateContentImportResult,
@@ -35,7 +41,7 @@ import {
   type ErrorBankDto, type ErrorBankQuery, type MasteryMapDto, type MemoryHealthDto,
 } from './learner-schemas';
 export type { CheckpointAssessmentDto, ProgressionSummaryDto, ErrorBankDto, ErrorBankQuery, LearningSkill, MasteryMapDto, MemoryHealthDto } from './learner-schemas';
-export type { SessionAvailabilityDto } from '@worklingo/contracts';
+export type { RecordingSubmissionResult, SessionAvailabilityDto } from '@worklingo/contracts';
 
 export class ApiError extends Error {
   readonly code: string;
@@ -82,7 +88,7 @@ export const activityAttemptDtoSchema = z.object({
   sessionId: z.string(),
   activityId: z.string(),
   clientAttemptId: z.string(),
-  evaluationStatus: z.enum(['submitted', 'evaluated']),
+  evaluationStatus: z.enum(['submitted', 'queued', 'processing', 'evaluated', 'evaluation_failed']),
   score: z.number().nullable(),
   feedback: z.string().nullable(),
   createdAt: z.string(),
@@ -147,6 +153,16 @@ export interface SubmitAttemptInput {
   readonly clientAttemptId: string;
   readonly sessionId: string;
   readonly response: Record<string, unknown>;
+}
+
+export interface SubmitRecordingInput {
+  readonly activityId: string;
+  readonly audio: Blob;
+  readonly clientAttemptId: string;
+  readonly consentAccepted: true;
+  readonly consentPolicyVersion: string;
+  readonly consentScope: string;
+  readonly sessionId: string;
 }
 
 export const contentPreviewDtoSchema = z.object({
@@ -243,6 +259,7 @@ export class ApiClient {
       });
     }
 
+    if (response.status === 204) return schema.parse(undefined);
     const json = await response.json();
     return schema.parse(json);
   }
@@ -303,6 +320,71 @@ export class ApiClient {
       },
       activityAttemptDtoSchema,
     );
+  }
+
+  async submitRecording(input: SubmitRecordingInput): Promise<RecordingSubmissionResult> {
+    const form = new FormData();
+    const mimeType = input.audio.type || 'audio/webm';
+    const extension = mimeType.includes('ogg') ? 'ogg' : mimeType.includes('wav') ? 'wav' : 'webm';
+    form.append('audio', input.audio, `recording.${extension}`);
+    form.append('sessionId', z.uuid().parse(input.sessionId));
+    form.append('clientAttemptId', z.uuid().parse(input.clientAttemptId));
+    form.append('consentAccepted', String(input.consentAccepted));
+    form.append('consentPolicyVersion', input.consentPolicyVersion);
+    form.append('consentScope', input.consentScope);
+    return this.request(
+      `/activities/${z.uuid().parse(input.activityId)}/recordings`,
+      { method: 'POST', body: form },
+      recordingSubmissionResultSchema,
+    );
+  }
+
+  async deleteRecording(recordingId: string): Promise<void> {
+    await this.request(
+      `/recordings/${z.uuid().parse(recordingId)}`,
+      { method: 'DELETE' },
+      z.undefined(),
+    );
+  }
+
+  async getEvaluation(attemptId: string): Promise<EvaluationDto> {
+    return this.request(
+      `/attempts/${z.uuid().parse(attemptId)}/evaluation`,
+      { method: 'GET' },
+      evaluationDtoSchema,
+    );
+  }
+
+  async retryEvaluation(attemptId: string): Promise<EvaluationDto> {
+    return this.request(
+      `/attempts/${z.uuid().parse(attemptId)}/evaluation/retry`,
+      { method: 'POST' },
+      evaluationDtoSchema,
+    );
+  }
+
+  async getActivityDraft(sessionId: string, activityId: string): Promise<WritingDraft | null> {
+    return this.request(
+      `/learning-sessions/${z.uuid().parse(sessionId)}/activities/${z.uuid().parse(activityId)}/draft`,
+      { method: 'GET' },
+      writingDraftSchema.nullable(),
+    );
+  }
+
+  async saveActivityDraft(
+    sessionId: string,
+    activityId: string,
+    input: { readonly expectedRevision: number; readonly text: string },
+  ): Promise<WritingDraft> {
+    return this.request(
+      `/learning-sessions/${z.uuid().parse(sessionId)}/activities/${z.uuid().parse(activityId)}/draft`,
+      { method: 'PUT', body: JSON.stringify(input) },
+      writingDraftSchema,
+    );
+  }
+
+  getActivityAudioUrl(sessionId: string, activityId: string): string {
+    return `${this.baseUrl}/learning-sessions/${z.uuid().parse(sessionId)}/activities/${z.uuid().parse(activityId)}/audio`;
   }
 
   async getProgress(): Promise<LearnerProgressDto> {

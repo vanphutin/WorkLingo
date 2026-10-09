@@ -155,6 +155,13 @@ export function AudioPreview({
 
                 <p className="audio-script-excerpt">{item.script}</p>
 
+                {artifact ? (
+                  <p className="audio-provider-meta">
+                    Adapter: <strong>{artifact.adapterName}</strong>
+                    {' · '}Voice: <strong>{String(artifact.voiceConfig.voice ?? artifact.voiceConfig.voiceId ?? 'default')}</strong>
+                  </p>
+                ) : null}
+
                 {artifact?.status === 'READY' && (
                   <div className="audio-player-wrapper">
                     <audio

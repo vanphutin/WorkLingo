@@ -4,7 +4,9 @@ import { ContentAuthoringErrorCode } from '@worklingo/contracts';
 
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
-import type { TextToSpeechPort } from '../domain/text-to-speech.port.js';
+import type { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
+import type { JobRunnerService } from '../../jobs/application/job-runner.service.js';
+import type { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { AudioGenerationService } from './audio-generation.service.js';
 
 describe('AudioGenerationService', () => {
@@ -324,5 +326,50 @@ ${scriptB}
     await service.waitForJob(jobId);
 
     expect(artifactStatus).toBe('FAILED');
+  });
+
+  it('waits for active durable audio work before application shutdown completes', async () => {
+    let finishLookup!: (value: { status: 'COMPLETED' }) => void;
+    const lookup = new Promise<{ status: 'COMPLETED' }>((resolve) => {
+      finishLookup = resolve;
+    });
+    const jobId = randomUUID();
+    const database = {
+      audioArtifact: { upsert: vi.fn().mockResolvedValue({}) },
+      contentImport: {
+        findUnique: vi.fn().mockResolvedValue({ rawSource: lessonSourceWithScriptA }),
+      },
+      job: { findUnique: vi.fn().mockReturnValue(lookup) },
+      mutationReceipt: {
+        create: vi.fn().mockResolvedValue({}),
+        findUnique: vi.fn().mockResolvedValue(null),
+      },
+    } as unknown as PrismaService;
+    const jobs = {
+      enqueue: vi.fn().mockResolvedValue({ id: jobId, status: 'PENDING', type: 'GENERATE_AUDIO' }),
+    } as unknown as JobDispatcher;
+    const runner = { runOnce: vi.fn() } as unknown as JobRunnerService;
+    const service = new AudioGenerationService(
+      database,
+      {} as ObjectStorage,
+      { providerName: 'fake-tts' } as TextToSpeechPort,
+      jobs,
+      runner,
+    );
+
+    await service.generateAudio(importId, actorId, {
+      audioScriptSlug,
+      idempotencyKey: 'shutdown-drain',
+    });
+    let shutdownComplete = false;
+    const shutdown = service.onApplicationShutdown().then(() => {
+      shutdownComplete = true;
+    });
+    await Promise.resolve();
+    expect(shutdownComplete).toBe(false);
+
+    finishLookup({ status: 'COMPLETED' });
+    await shutdown;
+    expect(shutdownComplete).toBe(true);
   });
 });
