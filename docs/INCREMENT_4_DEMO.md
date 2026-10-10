@@ -20,6 +20,21 @@ No Microsoft or OpenAI credential is required for this demo. Fake STT, language 
 
 If browser recording is unsupported, the UI offers clearly unscored text practice. It never presents that fallback as a speaking score.
 
+## Audio and TTS journey
+
+1. Open `/settings/audio`, choose Browser voice, play the test sentence manually, save and reload.
+2. Choose Automatic to prefer immutable lesson audio with Browser Speech as an explicit fallback.
+   Published lesson audio never autoplays.
+3. Sign in as Content Admin, open `/admin/settings/audio` and keep Simulation audio for an offline demo.
+4. In lesson Preview, use Browser Speech without creating a file, generate a fake candidate, inspect
+   its simulation label, select the READY candidate and publish.
+5. Existing learner sessions remain bound to their previous LessonVersion/audio; new sessions can use
+   the newly published binding. Admin and Learner media endpoints support authenticated byte ranges.
+
+Azure AI Speech F0 is optional and not part of the offline demo. Configure it only in ignored backend
+environment values described in [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md). To recover from quota,
+credential or network failure, return Admin to `fake-tts` and learners to Automatic.
+
 ## Failure and retry
 
 Provider failures never roll back the saved attempt or session checkpoint. Retryable terminal failures expose **Thử đánh giá lại**. Automatic retries keep the learner state `queued`; `evaluation_failed` is used only after the durable job exhausts its automatic attempts.

@@ -410,14 +410,31 @@ Trả normalized lesson draft từ backend, validation issues và `canPublish`.
 {
   "audioScriptSlug": "complaint-call",
   "idempotencyKey": "uuid-or-client-operation-key",
-  "voiceConfig": {}
+  "providerId": "fake-tts",
+  "voiceId": "fake-neutral"
 }
 ```
 
 Trả 202 với `jobId`. `GET /jobs/{id}` dùng để poll theo trạng thái; endpoint job trong Increment 2
 cũng chỉ dành cho Admin. `GET /admin/content-imports/{id}/audio` liệt kê artifact và
 `GET /admin/audio-artifacts/{id}/content` stream file đã được authorize. Fake output luôn có nhãn
-`Audio mô phỏng — chưa phải giọng đọc phát hành`.
+`Simulation audio — not a release voice`. Mỗi lần generate tạo một candidate mới; không ghi
+đè bytes hoặc metadata của candidate cũ. Polling phải có giới hạn và job `FAILED`/timeout phải hiển thị
+lỗi có thể hành động.
+
+### `GET|PATCH /me/audio-settings`
+
+Learner đọc hoặc lưu `{ "sourceId": "system-default | published-audio | browser-tts",
+"browserVoiceId": "string | null" }`. Dữ liệu luôn owner-scoped. `system-default` thử audio đã publish
+trước rồi mới cho phép Browser Speech fallback; `published-audio` không tự đổi nguồn khi file lỗi;
+`browser-tts` không request media URL và không autoplay.
+
+### `GET|PATCH /admin/audio-settings`
+
+Admin đọc readiness an toàn của provider và lưu `{ "providerId": "fake-tts | azure-speech",
+"defaultVoiceId": "string | null" }`. Response có display name, locale, trạng thái available và cờ
+simulation; tuyệt đối không trả key, region secret hoặc credential metadata. Provider thiếu cấu hình
+hoặc không được đăng ký trả 422 khi PATCH.
 
 ### `POST /admin/content-imports/{id}/publish`
 
@@ -428,13 +445,24 @@ hiện tại.
 {
   "expectedDraftRevision": 4,
   "expectedSourceHash": "sha256-hex",
-  "idempotencyKey": "uuid-or-client-operation-key"
+  "idempotencyKey": "uuid-or-client-operation-key",
+  "selectedAudioArtifacts": {
+    "complaint-call": "audio-artifact-uuid"
+  }
 }
 ```
 
 Response trả `lessonId`, `lessonVersionId`, version và `publishedAt`. Publish đồng thời cùng key trả
 cùng response; key khác trên cùng draft chỉ cho một request thành công. Archive dùng
 `POST /admin/lesson-versions/{id}/archive`; thao tác này idempotent và xóa con trỏ current nếu archive phiên bản đang phát hành. Không có hard-delete endpoint.
+
+### Audio byte ranges
+
+`GET /admin/audio-artifacts/{id}/content` và
+`GET /learning-sessions/{sessionId}/activities/{activityId}/audio` kiểm tra role/ownership trước khi
+phân tích `Range`. Không có range trả 200; một byte range hợp lệ trả 206 cùng `Accept-Ranges`,
+`Content-Range`, `Content-Length`, MIME và `Cache-Control: private, no-store`. Range sai hoặc ngoài file
+trả 416 cùng `Content-Range: bytes */{size}`. Multiple ranges không được hỗ trợ.
 
 ## 9. Admin curriculum
 

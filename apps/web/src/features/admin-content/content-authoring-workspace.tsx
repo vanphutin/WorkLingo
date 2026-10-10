@@ -54,7 +54,6 @@ export function ContentAuthoringWorkspace({
 
   const [preview, setPreview] = useState<ContentPreviewDto | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
-  const [isAudioReady, setIsAudioReady] = useState(false);
   const [selectedAudioArtifacts, setSelectedAudioArtifacts] = useState<Record<string, string>>({});
 
   const [activeTab, setActiveTab] = useState<WorkspaceTab>('source');
@@ -65,6 +64,11 @@ export function ContentAuthoringWorkspace({
   const isMountedRef = useRef(true);
 
   const isReadOnly = status === 'PUBLISHED' || status === 'ARCHIVED';
+  const previewAudioScripts = preview?.normalizedDraft?.audioScripts ?? [];
+  const isAudioReady = preview !== null && (
+    previewAudioScripts.length === 0
+    || previewAudioScripts.every((script) => Boolean(selectedAudioArtifacts[script.slug]))
+  );
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -123,7 +127,7 @@ export function ContentAuthoringWorkspace({
   function handleSourceChange(newSource: string) {
     setLocalSource(newSource);
     setSelectedAudioArtifacts({});
-    setIsAudioReady(false);
+    setPreview(null);
 
     if (isReadOnly) return;
 
@@ -136,35 +140,12 @@ export function ContentAuthoringWorkspace({
     }, debounceMs);
   }
 
-  const checkAudioReadiness = useCallback(
-    async (audioScripts?: readonly { slug: string }[]) => {
-      try {
-        const artifacts = await apiClient.listContentAudioArtifacts(initialImport.id);
-        if (!audioScripts || audioScripts.length === 0) {
-          setIsAudioReady(true);
-        } else {
-          const allScriptsReady = audioScripts.every((s) =>
-            artifacts.some((a) =>
-              a.id === selectedAudioArtifacts[s.slug]
-              && a.audioScriptSlug === s.slug
-              && a.status === 'READY'),
-          );
-          setIsAudioReady(allScriptsReady);
-        }
-      } catch {
-        setIsAudioReady(false);
-      }
-    },
-    [initialImport.id, selectedAudioArtifacts],
-  );
-
   const fetchPreview = useCallback(async () => {
     try {
       setIsLoadingPreview(true);
       const prev = await apiClient.getContentPreview(initialImport.id);
       if (isMountedRef.current) {
         setPreview(prev);
-        void checkAudioReadiness(prev.normalizedDraft?.audioScripts);
       }
     } catch {
       // preview error handled gracefully
@@ -173,14 +154,13 @@ export function ContentAuthoringWorkspace({
         setIsLoadingPreview(false);
       }
     }
-  }, [checkAudioReadiness, initialImport.id]);
+  }, [initialImport.id]);
 
   useEffect(() => {
     if (activeTab === 'preview' || activeTab === 'publish') {
       void fetchPreview();
-      void checkAudioReadiness(preview?.normalizedDraft?.audioScripts);
     }
-  }, [activeTab, checkAudioReadiness, fetchPreview, preview?.normalizedDraft?.audioScripts]);
+  }, [activeTab, fetchPreview]);
 
   useEffect(() => {
     if (activeTab !== 'source' || pendingSelectionOffsetRef.current === null) return;
@@ -207,7 +187,6 @@ export function ContentAuthoringWorkspace({
         setStatus(result.status);
         setSourceHash(result.sourceHash);
         setIsValidating(false);
-        void checkAudioReadiness();
       }
     } catch (err) {
       if (!isMountedRef.current) return;
@@ -374,10 +353,8 @@ export function ContentAuthoringWorkspace({
                 importId={initialImport.id}
                 draftRevision={currentDraftRevision}
                 audioScripts={preview.normalizedDraft?.audioScripts}
-                onAudioStateChange={() => void checkAudioReadiness(preview.normalizedDraft?.audioScripts)}
                 selectedAudioArtifacts={selectedAudioArtifacts}
                 onSelectedAudioArtifactsChange={setSelectedAudioArtifacts}
-                onAudioReadinessChange={setIsAudioReady}
               />
             </div>
           ) : (

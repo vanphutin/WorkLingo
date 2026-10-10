@@ -15,7 +15,9 @@ const baseDatabaseUrl = process.env.TEST_DATABASE_URL ?? process.env.DATABASE_UR
 const databaseUrl = new URL(baseDatabaseUrl);
 databaseUrl.searchParams.set('schema', schemaName);
 const dataDirectory = path.join(tmpdir(), schemaName);
+const apiPort = process.env.WORKLINGO_E2E_API_PORT ?? '34100';
 const webPort = process.env.WORKLINGO_E2E_WEB_PORT ?? '33100';
+const apiBaseUrl = `http://127.0.0.1:${apiPort}`;
 const webBaseUrl = `http://127.0.0.1:${webPort}`;
 
 process.env.WORKLINGO_E2E_SCHEMA = schemaName;
@@ -40,6 +42,16 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
+    {
+      name: 'audio-desktop',
+      testMatch: /audio-settings\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'audio-mobile',
+      testMatch: /audio-settings\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
     {
       name: 'adaptive-desktop',
       testMatch: /adaptive-learning\.spec\.ts/u,
@@ -88,7 +100,7 @@ export default defineConfig({
       command: 'pnpm --filter @worklingo/api exec prisma migrate deploy && pnpm --filter @worklingo/api exec prisma db seed && pnpm --filter @worklingo/api exec tsx src/main.ts',
       cwd: '../..',
       env: {
-        API_PORT: '4000',
+        API_PORT: apiPort,
         DATABASE_URL: databaseUrl.toString(),
         JOB_WORKER_ENABLED: 'true',
         JOB_WORKER_POLL_INTERVAL_MS: '500',
@@ -99,13 +111,13 @@ export default defineConfig({
         WORKLINGO_E2E_MODE: 'true',
         WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: '3',
       },
-      url: 'http://127.0.0.1:4000/api/v1/health',
+      url: `${apiBaseUrl}/api/v1/health`,
       reuseExistingServer: false,
       timeout: 60_000,
     },
     {
       command: `pnpm exec next dev -H 127.0.0.1 -p ${webPort}`,
-      env: { WORKLINGO_API_URL: 'http://127.0.0.1:4000' },
+      env: { WORKLINGO_API_URL: apiBaseUrl },
       url: webBaseUrl,
       reuseExistingServer: false,
       timeout: 60_000,

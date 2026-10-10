@@ -178,6 +178,15 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Lý do:** Learner không được nhìn thấy audio player hỏng trong dữ liệu mặc định, đồng thời local-first vẫn chạy không cần provider hoặc cloud storage.
 - **Hệ quả:** Fake TTS chỉ xác nhận vòng đời và khả năng phát WAV, không đại diện chất lượng giọng đọc production. UI luôn có transcript fallback nếu file không thể phát.
 
+## D-024 — Nguồn audio do người dùng chọn và TTS candidate bất biến
+
+- **Trạng thái:** Accepted (audio hardening trước Increment 5)
+- **Ngày:** 2026-10-10
+- **Quyết định:** Learner chọn `system-default`, `published-audio` hoặc `browser-tts`; mặc định Automatic ưu tiên audio đã bind rồi mới fallback sang Browser Speech. Admin preview bằng Browser Speech không tạo artifact. Mỗi lần server TTS tạo candidate mới và publish bắt buộc chọn tường minh một candidate READY cho từng audio script.
+- **Provider:** Fake TTS là mặc định local. Azure AI Speech F0 được phép như một external allowance giới hạn khi operator tự cấu hình key/region ở backend; credential không đi vào database, browser, log hoặc audit metadata.
+- **Lý do:** Tách playback preference khỏi authoring provider, tránh silent source switching, giữ reproducibility của LessonVersion và cho phép mở rộng provider sau này mà không đổi UI contract.
+- **Rollback:** Đổi learner về `system-default` và admin về `fake-tts`; các LessonVersion đã publish vẫn giữ audio artifact cũ, không cần migration hay ghi đè file.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

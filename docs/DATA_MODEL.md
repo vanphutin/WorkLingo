@@ -264,9 +264,15 @@ normalized preview, validation report/hash, actor tạo/cập nhật và trạng
 
 ### audio_artifacts và lesson_version_audio_artifacts
 
-Artifact fake-TTS lưu script hash, adapter/voice config, MIME, checksum, byte size, server-generated
-storage key và trạng thái `MISSING/GENERATING/READY/FAILED/STALE`. Join record gắn artifact `READY`
-vào immutable lesson version; không nhận storage path từ client.
+Mỗi lần generate tạo một candidate riêng lưu script hash, `variantKey`, adapter/voice config, MIME,
+checksum, byte size, server-generated storage key và trạng thái
+`MISSING/GENERATING/READY/FAILED/STALE`. Candidate cũ không bị update thành nội dung của candidate mới.
+Join record gắn đúng một artifact `READY` cho mỗi audio script vào immutable lesson version; publish
+không nhận storage path từ client và khóa lại selected IDs trong transaction.
+
+`learner_profiles.audioSourceId/browserVoiceId` lưu preference owner-scoped. `audio_system_settings`
+lưu default provider/voice không bí mật; key và region chỉ tồn tại trong process environment. Audit log
+chỉ ghi provider/voice ID an toàn, không ghi credential.
 
 ### jobs
 

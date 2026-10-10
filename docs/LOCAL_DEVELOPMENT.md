@@ -75,7 +75,13 @@ Running `pnpm setup:local` automatically copies `.env.example` to `.env` if `.en
 | `JOB_WORKER_ENABLED` | `true` in `.env.example` | Runs durable STT/evaluation/TTS jobs in the local API process. Disable only when operating a separate worker. |
 | `WORKLINGO_STT_PROVIDER` | `fake` | `fake` or `microsoft`; Microsoft additionally requires key and region. |
 | `WORKLINGO_LANGUAGE_EVALUATION_PROVIDER` | `fake` | `fake` or `openai-compatible`; live mode requires key, base URL and model. |
-| `WORKLINGO_TTS_PROVIDER` | `fake` | `fake` or `microsoft`. |
+| `WORKLINGO_TTS_PROVIDER` | `fake-tts` | `fake`/`fake-tts` hoặc `microsoft`/`azure-speech`. Azure yêu cầu key và region. |
+| `MICROSOFT_SPEECH_KEY` | blank | Backend-only Azure Speech key; không dùng prefix `NEXT_PUBLIC_` và không commit giá trị. |
+| `MICROSOFT_SPEECH_REGION` | blank | Azure region đi cùng key, ví dụ region của Speech resource. |
+| `MICROSOFT_SPEECH_LANGUAGE` | `en-US` | Locale mặc định cho Speech adapters. |
+| `MICROSOFT_SPEECH_VOICE` | `en-US-JennyNeural` | Voice mặc định cho Azure TTS candidate mới. |
+| `WORKLINGO_E2E_API_PORT` | `34100` | Port API riêng cho Playwright để không va chạm `pnpm dev`. |
+| `WORKLINGO_E2E_WEB_PORT` | `33100` | Port web riêng cho Playwright. |
 | `RECORDING_RETENTION_DAYS` | `7` | Retention after terminal speaking processing. |
 | `WRITING_DRAFT_RETENTION_DAYS` | `30` | Abandoned server-draft retention. |
 
@@ -136,7 +142,21 @@ pnpm dev
 4. Use [LESSON_FORMAT.md](LESSON_FORMAT.md) as the Format 1.0 authoring reference.
 
 The fake audio label explicitly says it is simulated. Files remain under `WORKLINGO_DATA_DIR`; no
-cloud storage or live TTS provider is used.
+cloud storage or live TTS provider is used. Browser preview never creates an artifact. After generation,
+select one READY candidate for every script before opening Publish.
+
+### Audio settings and optional Azure F0
+
+- Learner: `/settings/audio` chooses Automatic, published-only or a browser-installed voice.
+- Admin: `/admin/settings/audio` chooses the provider/voice used for future candidates only.
+- Browser Speech is device-dependent, requires an explicit Play action and may choose the first
+  English voice when a previously saved voice is missing.
+- To try Azure F0, set `WORKLINGO_TTS_PROVIDER=azure-speech`, `MICROSOFT_SPEECH_KEY`,
+  `MICROSOFT_SPEECH_REGION` and optionally `MICROSOFT_SPEECH_VOICE` in ignored `.env`, then restart
+  the API. Azure quotas/rate limits remain external; fake TTS stays the offline development path.
+- Roll back by setting `WORKLINGO_TTS_PROVIDER=fake-tts`, restarting the API, selecting Simulation
+  audio in Admin settings and choosing Automatic in learner settings. Existing published versions
+  are unchanged.
 
 ### Teacher AI local workflow
 
@@ -247,3 +267,13 @@ Restore intentionally requires an empty target to avoid accidental data loss or 
 ```powershell
 docker compose -f infra/docker-compose.yml exec -T postgres psql -U worklingo -d worklingo -c "DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;"
 ```
+
+### 5. Audio generation or playback fails
+
+- Confirm `JOB_WORKER_ENABLED=true`; a disabled worker leaves generation jobs pending.
+- For Azure, verify key, region and voice belong to the same Speech resource, then restart the API.
+- A 422 on provider settings means the provider is unavailable or unsupported; switch back to
+  `fake-tts` rather than copying credentials into the browser.
+- A 416 response means the client requested an invalid byte range. Reload the player; do not edit
+  local WAV files in place because checksums and immutable bindings would no longer match.
+- If a saved browser voice disappeared after an OS/browser update, choose Automatic English voice.

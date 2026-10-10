@@ -115,6 +115,7 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await adminPage.getByRole('button', { name: /generate audio/i }).first().click();
       await expect(adminPage.getByText('READY')).toBeVisible({ timeout: 20_000 });
       await expect(adminPage.locator('audio').first()).toBeVisible();
+      await adminPage.getByRole('radio', { name: /fake-tts.*fake-neutral/i }).check();
 
       await adminPage.getByRole('tab', { name: /^publish/i }).click();
       await expect(adminPage.getByText('Format validation')).toBeVisible();

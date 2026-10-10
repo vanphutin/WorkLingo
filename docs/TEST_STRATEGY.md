@@ -183,6 +183,19 @@ AI live tests không chạy ở mọi commit để tránh chi phí và không �
 - Web tests bao phủ microphone permission, track/object-URL cleanup, consent, multipart retry key, version-bound audio, writing revision autosave, polling và structured feedback.
 - `teacher-ai-learning.spec.ts` chạy desktop/mobile với fake microphone và E2E-only deterministic 429. Failure injection bị config từ chối nếu không đồng thời có `NODE_ENV=test`, explicit E2E mode và fake language provider.
 
+### Audio/TTS hardening coverage
+
+- Contract/service tests khóa enum source/provider, owner/admin authorization, fail-closed provider
+  readiness, safe audit metadata và selected candidate publish binding.
+- Media tests chạy cả Admin/Learner cho 200, 206, 416, cache privacy, MIME và kiểm tra authorization
+  trước range parsing.
+- React tests khóa no-autoplay, browser voice fallback, published-only explicit failure, bounded job
+  polling, candidate isolation và readiness derived từ explicit selection.
+- `audio-settings.spec.ts` chạy Desktop Chrome và Pixel 5: settings qua reload, keyboard, 44px target,
+  no horizontal overflow, fake generation/publish/archive, Admin/Learner authenticated 206 và Azure
+  readiness bằng route stub chỉ tồn tại trong test. Test không chứa credential hoặc provider control
+  endpoint production.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:
