@@ -12,6 +12,7 @@ import type { LearnerProfile, Prisma } from '@prisma/client';
 import {
   onboardingStateSchema,
   type OnboardingStateDto,
+  type PlacementAttemptDto,
   type SelfPlacementInput,
 } from '@worklingo/contracts';
 
@@ -22,6 +23,7 @@ import {
   type PlayableLevel,
   type PlayableLevelCandidate,
 } from '../../curriculum/domain/playable-level-policy.js';
+import { toPlacementAttemptDto } from './placement-attempt.mapper.js';
 
 const SELF_PLACEMENT_OPERATION = 'onboarding:self-placement';
 
@@ -37,8 +39,20 @@ export class OnboardingService {
     if (!profile) throw new NotFoundException('Learner profile not found');
     if (profile.user.role !== 'LEARNER') throw new ForbiddenException('Learner onboarding is required');
 
-    const levels = await this.loadPlayableLevels(this.database);
-    return this.buildState(profile, levels);
+    const [levels, activeAttempt] = await Promise.all([
+      this.findPlayableLevels(this.database),
+      profile.onboardingStatus === 'PENDING'
+        ? this.database.placementAttempt.findFirst({
+            where: { learnerId, status: { not: 'CONFIRMED' } },
+            orderBy: { updatedAt: 'desc' },
+          })
+        : null,
+    ]);
+    return this.buildState(
+      profile,
+      levels,
+      activeAttempt ? toPlacementAttemptDto(activeAttempt) : null,
+    );
   }
 
   async confirmSelfPlacement(
@@ -96,7 +110,7 @@ export class OnboardingService {
         });
       }
 
-      const levels = await this.loadPlayableLevels(transaction);
+      const levels = await this.findPlayableLevels(transaction);
       const selected = levels.find((level) => level.code === selectedLevelCode);
       if (!selected?.available) {
         throw new UnprocessableEntityException({
@@ -142,23 +156,29 @@ export class OnboardingService {
     }, { timeout: 15_000 });
   }
 
-  private buildState(
+  buildState(
     profile: LearnerProfile,
     eligibleLevels: readonly PlayableLevel[],
+    activePlacementAttempt: PlacementAttemptDto | null = null,
   ): OnboardingStateDto {
+    const nextAction = profile.onboardingStatus === 'COMPLETE'
+      ? 'open_dashboard'
+      : activePlacementAttempt?.nextAction === 'continue_assessment'
+        ? 'resume_placement'
+        : activePlacementAttempt?.nextAction ?? 'choose_method';
     return onboardingStateSchema.parse({
-      activePlacementAttempt: null,
+      activePlacementAttempt: profile.onboardingStatus === 'COMPLETE' ? null : activePlacementAttempt,
       currentLevelCode: profile.onboardingStatus === 'COMPLETE'
         ? profile.currentLevelCode
         : null,
       eligibleLevels,
-      nextAction: profile.onboardingStatus === 'COMPLETE' ? 'open_dashboard' : 'choose_method',
+      nextAction,
       onboardingMethod: profile.onboardingMethod,
       onboardingStatus: profile.onboardingStatus,
     });
   }
 
-  private async loadPlayableLevels(
+  async findPlayableLevels(
     database: Prisma.TransactionClient,
   ): Promise<PlayableLevel[]> {
     const levels = await database.level.findMany({
