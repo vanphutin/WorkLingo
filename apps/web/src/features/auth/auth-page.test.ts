@@ -26,4 +26,16 @@ describe('getPostAuthenticationPath', () => {
       }),
     ).toBe('/dashboard');
   });
+
+  it('opens onboarding for a learner who has not chosen a starting level', () => {
+    expect(
+      getPostAuthenticationPath({
+        displayName: 'Minh Tran',
+        email: 'minh@example.test',
+        id: 'd9313851-b36a-480d-a760-095a0fd7699d',
+        onboardingStatus: 'PENDING',
+        roles: ['LEARNER'],
+      }),
+    ).toBe('/onboarding');
+  });
 });
