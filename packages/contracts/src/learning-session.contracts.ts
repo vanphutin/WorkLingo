@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const learningSkillSchema = z.enum(['reading', 'listening', 'speaking', 'writing']);
+export const missionPurposeSchema = z.enum(['learning', 'placement']);
 export const sessionBlockTypeSchema = z.enum(['activate', 'readDecode', 'listenReason', 'respond']);
 
 export const supportedSessionDurations = [45, 60, 90, 120, 150] as const;
@@ -82,6 +83,7 @@ export const sessionPlanSchema = z.object({
 }).readonly();
 
 export type LearningSkill = z.infer<typeof learningSkillSchema>;
+export type MissionPurpose = z.infer<typeof missionPurposeSchema>;
 export type SessionBlock = z.infer<typeof sessionBlockSchema>;
 export type SessionPlan = z.infer<typeof sessionPlanSchema>;
 

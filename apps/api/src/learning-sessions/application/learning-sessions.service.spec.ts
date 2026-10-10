@@ -6,6 +6,7 @@ import type { CurriculumService } from '../../curriculum/application/curriculum.
 import type { MasteryService } from '../../mastery/application/mastery.service.js';
 import type { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { LearningSessionsService } from './learning-sessions.service.js';
+import { SessionCreationService } from './session-creation.service.js';
 
 describe('LearningSessionsService state transitions', () => {
   it('queues writing evaluation in the attempt transaction before advancing', async () => {
@@ -66,7 +67,9 @@ describe('LearningSessionsService state transitions', () => {
     const enqueue = vi.fn().mockResolvedValue({ id: 'evaluation-job' });
     const jobs = { enqueue } as unknown as JobDispatcher;
     const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
-    const service = new LearningSessionsService(database, {} as CurriculumService, mastery, jobs);
+    const service = new LearningSessionsService(
+      database, {} as CurriculumService, mastery, {} as SessionCreationService, jobs,
+    );
 
     const result = await service.submitAttempt(learnerId, writingId, {
       clientAttemptId: created.clientAttemptId,
@@ -91,7 +94,9 @@ describe('LearningSessionsService state transitions', () => {
       .mockResolvedValueOnce({ id: sessionId, learnerId, status: 'COMPLETED' });
     const updateMany = vi.fn().mockResolvedValue({ count: 0 });
     const database = { learningSession: { findFirst, updateMany } } as unknown as PrismaService;
-    const service = new LearningSessionsService(database, {} as CurriculumService, {} as MasteryService);
+    const service = new LearningSessionsService(
+      database, {} as CurriculumService, {} as MasteryService, {} as SessionCreationService,
+    );
 
     await expect(service.pauseSession(learnerId, sessionId)).rejects.toMatchObject({
       response: { code: 'INVALID_STATE_TRANSITION' },
@@ -103,7 +108,9 @@ describe('LearningSessionsService state transitions', () => {
   });
 
   it('rejects unsupported session durations with 422 and typed code', async () => {
-    const service = new LearningSessionsService({} as PrismaService, {} as CurriculumService, {} as MasteryService);
+    const service = new LearningSessionsService(
+      {} as PrismaService, {} as CurriculumService, {} as MasteryService, {} as SessionCreationService,
+    );
     await expect(
       service.createSession('learner-id', 30, '018f06f6-4f68-7a72-9411-4bf894341234'),
     ).rejects.toMatchObject({
@@ -116,7 +123,10 @@ describe('LearningSessionsService state transitions', () => {
     const learnerId = '018f06f6-4f68-7a72-9411-4bf894345678';
     const database = {
       learningSession: { findUnique: vi.fn().mockResolvedValue(null), findMany: vi.fn().mockResolvedValue([]) },
-      learnerProfile: { findUnique: vi.fn().mockResolvedValue({ currentLevelCode: 'FOUNDATION_1' }) },
+      learnerProfile: { findUnique: vi.fn().mockResolvedValue({ currentLevelCode: 'FOUNDATION_1', onboardingStatus: 'COMPLETE' }) },
+      $transaction: vi.fn(async (work) => work({
+        learningSession: { findUnique: vi.fn().mockResolvedValue(null) },
+      })),
     } as unknown as PrismaService;
 
     const fixture = foundationMissionFixture;
@@ -144,7 +154,7 @@ describe('LearningSessionsService state transitions', () => {
     const getReviewQueue = vi.fn().mockResolvedValue([]);
     const mastery = { getReviewQueue } as unknown as MasteryService;
 
-    const service = new LearningSessionsService(database, curriculum, mastery);
+    const service = new LearningSessionsService(database, curriculum, mastery, new SessionCreationService());
 
     await expect(
       service.createSession(learnerId, 90, '018f06f6-4f68-7a72-9411-4bf894341234'),

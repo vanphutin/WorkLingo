@@ -13,14 +13,16 @@ import {
 } from './application/activity-drafts.service.js';
 import { LearnerAudioService } from './application/learner-audio.service.js';
 import { LearningSessionsService } from './application/learning-sessions.service.js';
+import { SessionCreationService } from './application/session-creation.service.js';
 import { LearningSessionsController } from './learning-sessions.controller.js';
 
 @Module({
   controllers: [LearningSessionsController],
-  exports: [LearningSessionsService],
+  exports: [LearningSessionsService, SessionCreationService],
   imports: [DatabaseModule, CurriculumModule, MasteryModule, JobsModule, StorageModule],
   providers: [
     LearningSessionsService,
+    SessionCreationService,
     ActivityDraftsService,
     LearnerAudioService,
     {

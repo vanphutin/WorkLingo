@@ -365,6 +365,12 @@ describe('Transactional publish, archive, and session version isolation', () => 
       data: { missionId: mission.id, lessonId, order: 0 },
     });
 
+    await request(app.getHttpServer())
+      .post('/api/v1/me/onboarding/self-placement')
+      .set('Cookie', learnerCookie)
+      .send({ clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' })
+      .expect(200);
+
     // 2. Learner creates session S1 before publish of version 2
     const clientSessionId1 = randomUUID();
     const session1Res = await request(app.getHttpServer())

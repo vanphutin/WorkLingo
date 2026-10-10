@@ -39,8 +39,9 @@ export class CurriculumService {
   async getPublishedMissionsForLevel(
     levelCode: string,
     purpose: MissionPurpose = 'learning',
+    database: Pick<Prisma.TransactionClient, 'mission'> = this.database,
   ): Promise<PublishedMission[]> {
-    const missions = await this.database.mission.findMany({
+    const missions = await database.mission.findMany({
       where: {
         purpose: purpose === 'learning' ? 'LEARNING' : 'PLACEMENT',
         status: 'PUBLISHED',
@@ -134,8 +135,10 @@ export class CurriculumService {
     });
   }
 
-  async getPublishedPlacementMission(): Promise<PublishedMission> {
-    const missions = await this.getPublishedMissionsForLevel('FOUNDATION_1', 'placement');
+  async getPublishedPlacementMission(
+    database: Pick<Prisma.TransactionClient, 'mission'> = this.database,
+  ): Promise<PublishedMission> {
+    const missions = await this.getPublishedMissionsForLevel('FOUNDATION_1', 'placement', database);
     if (!missions[0]) throw new NotFoundException('No published placement mission');
     return missions[0];
   }

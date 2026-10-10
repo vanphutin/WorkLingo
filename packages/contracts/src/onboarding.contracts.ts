@@ -2,9 +2,11 @@ import { z } from 'zod';
 
 import type { learningSkillSchema } from './learning-session.contracts.ts';
 
+export { missionPurposeSchema } from './learning-session.contracts.ts';
+export type { MissionPurpose } from './learning-session.contracts.ts';
+
 export const onboardingStatusSchema = z.enum(['PENDING', 'COMPLETE']);
 export const onboardingMethodSchema = z.enum(['SELF_SELECTED', 'PLACEMENT', 'MIGRATED']);
-export const missionPurposeSchema = z.enum(['learning', 'placement']);
 export const placementAttemptStatusSchema = z.enum([
   'IN_PROGRESS',
   'PROCESSING',
@@ -104,7 +106,6 @@ export const confirmPlacementInputSchema = z.object({
 
 export type OnboardingStatus = z.infer<typeof onboardingStatusSchema>;
 export type OnboardingMethod = z.infer<typeof onboardingMethodSchema>;
-export type MissionPurpose = z.infer<typeof missionPurposeSchema>;
 export type PlacementAttemptStatus = z.infer<typeof placementAttemptStatusSchema>;
 export type PlacementSkill = z.infer<typeof learningSkillSchema>;
 export type PlacementSkillResult = z.infer<typeof placementSkillResultSchema>;

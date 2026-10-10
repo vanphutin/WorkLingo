@@ -7,10 +7,15 @@ import {
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import type { OnboardingStateDto } from '@worklingo/contracts';
+import type { PlacementAttemptDto } from '@worklingo/contracts';
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
 import { OnboardingService } from './application/onboarding.service.js';
+import { PlacementAttemptsService } from './application/placement-attempts.service.js';
+// Runtime DTO import supplies ValidationPipe metadata.
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { CreatePlacementAttemptDto } from './dto/create-placement-attempt.dto.js';
 // Runtime DTO import supplies ValidationPipe metadata.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { SelfPlacementDto } from './dto/self-placement.dto.js';
@@ -19,7 +24,10 @@ import { SelfPlacementDto } from './dto/self-placement.dto.js';
 @Roles('LEARNER')
 @Controller('me/onboarding')
 export class OnboardingController {
-  constructor(@Inject(OnboardingService) private readonly onboarding: OnboardingService) {}
+  constructor(
+    @Inject(OnboardingService) private readonly onboarding: OnboardingService,
+    @Inject(PlacementAttemptsService) private readonly placementAttempts: PlacementAttemptsService,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'Get resumable onboarding state for the authenticated learner' })
@@ -39,5 +47,14 @@ export class OnboardingController {
     @Body() input: SelfPlacementDto,
   ): Promise<OnboardingStateDto> {
     return this.onboarding.confirmSelfPlacement(request.authUser.id, input);
+  }
+
+  @Post('placement-attempts')
+  @ApiOperation({ summary: 'Create or resume a version-bound placement assessment' })
+  createPlacementAttempt(
+    @Req() request: AuthenticatedRequest,
+    @Body() input: CreatePlacementAttemptDto,
+  ): Promise<PlacementAttemptDto> {
+    return this.placementAttempts.create(request.authUser.id, input);
   }
 }

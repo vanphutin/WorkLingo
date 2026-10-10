@@ -5,6 +5,7 @@ import { TestClock } from '../../src/mastery/domain/clock.port.js';
 import { MasteryService } from '../../src/mastery/application/mastery.service.js';
 import { CurriculumService } from '../../src/curriculum/application/curriculum.service.js';
 import { LearningSessionsService } from '../../src/learning-sessions/application/learning-sessions.service.js';
+import { SessionCreationService } from '../../src/learning-sessions/application/session-creation.service.js';
 import { seedWorkplaceTransferCurriculum } from '../../src/curriculum/infrastructure/seed-workplace-transfer.js';
 import { createLearningSessionTestContext, registerLearner, type LearningSessionTestContext } from './learning-session-test-harness.js';
 
@@ -52,7 +53,9 @@ describe('adaptive learning visibility and recurrence', () => {
     } });
     const clock = new TestClock(new Date('2026-10-08T00:00:00Z'));
     const service = new MasteryService(context.database, clock);
-    const sessions = new LearningSessionsService(context.database, context.app.get(CurriculumService), service);
+    const sessions = new LearningSessionsService(
+      context.database, context.app.get(CurriculumService), service, new SessionCreationService(),
+    );
     expect(await service.getReviewQueue(user.body.id)).toEqual([]);
     const before = await sessions.createSession(user.body.id, 60, randomUUID());
     expect(before.plan.reviewItemIds).toBeUndefined();

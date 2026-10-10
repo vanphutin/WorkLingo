@@ -28,8 +28,14 @@ import {
   InsufficientContentForDurationError,
   UnsupportedSessionDurationError,
 } from '../domain/session-plan.types.js';
-import { computeAvailableDurations, planFoundationSession } from '../domain/session-planner.js';
+import { computeAvailableDurations } from '../domain/session-planner.js';
 import { selectMissionForReview } from '../domain/context-transfer.js';
+import {
+  learningSessionInclude,
+  type LearningSessionRecord,
+  SessionCreationService,
+  toLearningSessionDto,
+} from './session-creation.service.js';
 import type {
   ActivityAttemptDto,
   LearnerActivityDto,
@@ -37,14 +43,6 @@ import type {
   SessionAvailabilityDto,
   SubmitAttemptInput,
 } from './learning-session.types.js';
-
-const sessionInclude = {
-  attempts: { orderBy: { createdAt: 'asc' as const } },
-  blocks: { orderBy: { order: 'asc' as const } },
-  mission: true,
-} satisfies Prisma.LearningSessionInclude;
-
-type SessionRecord = Prisma.LearningSessionGetPayload<{ include: typeof sessionInclude }>;
 
 interface Evaluation {
   readonly advance: boolean;
@@ -69,11 +67,12 @@ export class LearningSessionsService {
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(MasteryService) private readonly mastery: MasteryService,
+    @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
   ) {}
 
   private async selectCurriculum(learnerId: string) {
-    const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId } });
+    const profile = await this.requireCompletedOnboarding(learnerId);
     const [missions, reviewQueue, completed] = await Promise.all([
       this.curriculum.getPublishedMissionsForLevel(profile?.currentLevelCode ?? 'FOUNDATION_1'),
       this.mastery.getReviewQueue(learnerId),
@@ -110,21 +109,23 @@ export class LearningSessionsService {
         statusCode: 422,
       });
     }
+    await this.requireCompletedOnboarding(learnerId);
     const existing = await this.database.learningSession.findUnique({
       where: { learnerId_clientSessionId: { learnerId, clientSessionId } },
-      include: sessionInclude,
+      include: learningSessionInclude,
     });
     if (existing) return this.toSessionDto(existing);
 
     const { mission, reviewQueue } = await this.selectCurriculum(learnerId);
 
-    let plan: SessionPlan;
     try {
-      plan = planFoundationSession({
+      return await this.database.$transaction((transaction) => this.sessionCreation.create(transaction, {
+        clientSessionId,
+        learnerId,
         mission,
         durationMinutes,
         reviewItems: reviewQueue,
-      });
+      }));
     } catch (error) {
       if (error instanceof InsufficientContentForDurationError) {
         throw new UnprocessableEntityException({
@@ -141,34 +142,10 @@ export class LearningSessionsService {
           statusCode: 422,
         });
       }
-      throw error;
-    }
-    try {
-      const created = await this.database.learningSession.create({
-        data: {
-          learnerId,
-          clientSessionId,
-          missionId: mission.id,
-          lessonVersionId: mission.lessonVersion.id,
-          durationMinutes,
-          planSnapshot: plan as unknown as Prisma.InputJsonValue,
-          blocks: {
-            create: plan.blocks.map((block) => ({
-              activityIds: [...block.activityIds],
-              order: block.order,
-              targetMinutes: block.targetMinutes,
-              type: block.type,
-            })),
-          },
-        },
-        include: sessionInclude,
-      });
-      return this.toSessionDto(created);
-    } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         const duplicate = await this.database.learningSession.findUnique({
           where: { learnerId_clientSessionId: { learnerId, clientSessionId } },
-          include: sessionInclude,
+          include: learningSessionInclude,
         });
         if (duplicate) return this.toSessionDto(duplicate);
       }
@@ -426,12 +403,24 @@ export class LearningSessionsService {
     }
   }
 
-  private async findOwnedSession(learnerId: string, id: string): Promise<SessionRecord> {
+  private async findOwnedSession(learnerId: string, id: string): Promise<LearningSessionRecord> {
     const session = await this.database.learningSession.findFirst({
-      where: { id, learnerId }, include: sessionInclude,
+      where: { id, learnerId }, include: learningSessionInclude,
     });
     if (!session) throw new NotFoundException('Learning session not found');
     return session;
+  }
+
+  private async requireCompletedOnboarding(learnerId: string) {
+    const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId } });
+    if (profile?.onboardingStatus !== 'COMPLETE') {
+      throw new ConflictException({
+        code: 'ONBOARDING_REQUIRED',
+        message: 'Complete onboarding before starting a learning session',
+        statusCode: 409,
+      });
+    }
+    return profile;
   }
 
   private parseActivity(activity: Activity): CurriculumActivity {
@@ -527,27 +516,8 @@ export class LearningSessionsService {
     return this.toAttemptDto(attempt);
   }
 
-  private toSessionDto(session: SessionRecord): LearningSessionDto {
-    const plan = sessionPlanSchema.parse(session.planSnapshot);
-    return {
-      attempts: session.attempts.map((attempt) => this.toAttemptDto(attempt)),
-      blocks: session.blocks.map((block) => ({
-        activityIds: block.activityIds,
-        id: block.id,
-        order: block.order,
-        status: block.status.toLowerCase() as 'available' | 'completed',
-        targetMinutes: 15,
-        type: block.type,
-      })),
-      clientSessionId: session.clientSessionId,
-      currentCheckpoint: session.currentCheckpoint,
-      durationMinutes: session.durationMinutes as LearningSessionDto['durationMinutes'],
-      id: session.id,
-      lessonVersionId: session.lessonVersionId,
-      mission: { id: session.mission.id, title: session.mission.title },
-      plan,
-      status: session.status.toLowerCase() as LearningSessionDto['status'],
-    };
+  private toSessionDto(session: LearningSessionRecord): LearningSessionDto {
+    return toLearningSessionDto(session);
   }
 
   private toAttemptDto(attempt: ActivityAttempt): ActivityAttemptDto {
