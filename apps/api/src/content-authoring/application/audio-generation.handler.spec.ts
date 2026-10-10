@@ -31,17 +31,21 @@ describe('AudioGenerationHandler', () => {
     const update = vi.fn().mockResolvedValue({ id: 'artifact-id', status: 'READY' });
     const database = {
       contentImport: { findUnique: vi.fn().mockResolvedValue({ rawSource: source }) },
-      audioArtifact: { update, updateMany: vi.fn().mockResolvedValue({ count: 0 }) },
+      audioArtifact: {
+        findFirstOrThrow: vi.fn().mockResolvedValue({ id: 'artifact-id' }),
+        update,
+        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+      },
     } as unknown as PrismaService;
     const storage = {
       put: vi.fn().mockResolvedValue({ key: 'generated-audio/id', size: 48 }),
     } as unknown as ObjectStorage;
     const tts = {
-      providerName: 'microsoft-tts',
+      providerName: 'azure-speech',
       synthesize: vi.fn().mockResolvedValue({
         audioBytes: Buffer.alloc(48), checksum: 'checksum', durationSeconds: 1,
         mimeType: 'audio/wav', sampleRate: 24_000,
-        provider: { name: 'microsoft-tts', requestId: 'request-id', voice: 'en-US-JennyNeural' },
+        provider: { name: 'azure-speech', requestId: 'request-id', voice: 'en-US-JennyNeural' },
       }),
     } as unknown as TextToSpeechPort;
     const handler = new AudioGenerationHandler(
@@ -56,7 +60,7 @@ describe('AudioGenerationHandler', () => {
       },
     })).resolves.toEqual({ artifactId: 'artifact-id', status: 'READY' });
     expect(update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({
-      adapterName: 'microsoft-tts', status: 'READY',
+      adapterName: 'azure-speech', status: 'READY',
       voiceConfig: { voice: 'en-US-JennyNeural' },
     }) }));
   });

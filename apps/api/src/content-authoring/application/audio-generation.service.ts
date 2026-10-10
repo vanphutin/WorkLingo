@@ -130,31 +130,31 @@ export class AudioGenerationService implements OnApplicationShutdown {
       .digest('hex');
 
     // 4. Initial AudioArtifact record (GENERATING)
-    await this.database.audioArtifact.upsert({
-      where: {
-        contentImportId_audioScriptSlug_scriptHash: {
+    const existingArtifact = await this.database.audioArtifact.findFirst({
+      where: { contentImportId, audioScriptSlug: targetSlug, scriptHash },
+      orderBy: { createdAt: 'desc' },
+    });
+    if (existingArtifact) {
+      await this.database.audioArtifact.update({
+        where: { id: existingArtifact.id },
+        data: { status: 'GENERATING', failureSummary: null },
+      });
+    } else {
+      await this.database.audioArtifact.create({
+        data: {
           contentImportId,
           audioScriptSlug: targetSlug,
           scriptHash,
+          adapterName: this.tts.providerName ?? 'tts',
+          voiceConfig: (input.voiceConfig ?? {}) as Prisma.InputJsonValue,
+          mimeType: 'audio/wav',
+          byteSize: 0,
+          checksum: '',
+          storageKey: '',
+          status: 'GENERATING',
         },
-      },
-      create: {
-        contentImportId,
-        audioScriptSlug: targetSlug,
-        scriptHash,
-        adapterName: this.tts.providerName ?? 'tts',
-        voiceConfig: (input.voiceConfig ?? {}) as Prisma.InputJsonValue,
-        mimeType: 'audio/wav',
-        byteSize: 0,
-        checksum: '',
-        storageKey: '',
-        status: 'GENERATING',
-      },
-      update: {
-        status: 'GENERATING',
-        failureSummary: null,
-      },
-    });
+      });
+    }
 
     if (this.jobs && this.runner) {
       const job = await this.jobs.enqueue({
@@ -306,14 +306,12 @@ export class AudioGenerationService implements OnApplicationShutdown {
       }
 
       const finalStatus: AudioArtifactStatus = isStale ? 'STALE' : 'READY';
+      const artifact = await this.database.audioArtifact.findFirstOrThrow({
+        where: { contentImportId, audioScriptSlug, scriptHash },
+        orderBy: { createdAt: 'desc' },
+      });
       const updatedArtifact = await this.database.audioArtifact.update({
-        where: {
-          contentImportId_audioScriptSlug_scriptHash: {
-            contentImportId,
-            audioScriptSlug,
-            scriptHash,
-          },
-        },
+        where: { id: artifact.id },
         data: {
           adapterName: synthesized.provider?.name ?? this.tts.providerName ?? 'tts',
           status: finalStatus,
@@ -364,14 +362,8 @@ export class AudioGenerationService implements OnApplicationShutdown {
         .catch(() => undefined);
 
       await this.database.audioArtifact
-        .update({
-          where: {
-            contentImportId_audioScriptSlug_scriptHash: {
-              contentImportId,
-              audioScriptSlug,
-              scriptHash,
-            },
-          },
+        .updateMany({
+          where: { contentImportId, audioScriptSlug, scriptHash },
           data: {
             status: 'FAILED',
             failureSummary: message,

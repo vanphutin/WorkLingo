@@ -64,12 +64,16 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
         : undefined;
       const stale = !latestScript
         || createHash('sha256').update(latestScript.script).digest('hex') !== payload.scriptHash;
-      const artifact = await this.database.audioArtifact.update({
-        where: { contentImportId_audioScriptSlug_scriptHash: {
+      const candidate = await this.database.audioArtifact.findFirstOrThrow({
+        where: {
           audioScriptSlug: payload.audioScriptSlug,
           contentImportId: payload.contentImportId,
           scriptHash: payload.scriptHash,
-        } },
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+      const artifact = await this.database.audioArtifact.update({
+        where: { id: candidate.id },
         data: {
           adapterName: synthesized.provider?.name ?? this.tts.providerName,
           byteSize: stored.size,
@@ -111,12 +115,12 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
     payload: z.infer<typeof payloadSchema>,
     data: { readonly failureSummary: string; readonly status: 'FAILED' | 'STALE' },
   ) {
-    return this.database.audioArtifact.update({
-      where: { contentImportId_audioScriptSlug_scriptHash: {
+    return this.database.audioArtifact.updateMany({
+      where: {
         audioScriptSlug: payload.audioScriptSlug,
         contentImportId: payload.contentImportId,
         scriptHash: payload.scriptHash,
-      } },
+      },
       data,
     });
   }

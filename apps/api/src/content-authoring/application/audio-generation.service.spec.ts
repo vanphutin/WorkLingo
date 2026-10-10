@@ -59,6 +59,12 @@ ${scriptA}
         create: vi.fn().mockResolvedValue({ id: randomUUID() }),
       },
       audioArtifact: {
+        create: vi.fn().mockImplementation(async () => {
+          artifactStatus = 'GENERATING';
+          return { id: artifactId, status: artifactStatus };
+        }),
+        findFirst: vi.fn().mockResolvedValue(null),
+        findFirstOrThrow: vi.fn().mockResolvedValue({ id: artifactId }),
         findUnique: vi.fn().mockImplementation(() => null),
         upsert: vi.fn().mockImplementation(async () => {
           artifactStatus = 'GENERATING';
@@ -223,6 +229,9 @@ ${scriptB}
         create: vi.fn().mockResolvedValue({ id: randomUUID() }),
       },
       audioArtifact: {
+        create: vi.fn().mockResolvedValue({ id: artifactId, status: 'GENERATING' }),
+        findFirst: vi.fn().mockResolvedValue(null),
+        findFirstOrThrow: vi.fn().mockResolvedValue({ id: artifactId }),
         upsert: vi.fn().mockResolvedValue({
           id: artifactId,
           contentImportId: importId,
@@ -292,6 +301,8 @@ ${scriptB}
         create: vi.fn().mockResolvedValue({ id: randomUUID() }),
       },
       audioArtifact: {
+        create: vi.fn().mockResolvedValue({ id: artifactId, status: 'GENERATING' }),
+        findFirst: vi.fn().mockResolvedValue(null),
         upsert: vi.fn().mockResolvedValue({
           id: artifactId,
           contentImportId: importId,
@@ -303,7 +314,10 @@ ${scriptB}
           artifactStatus = data.status;
           return { id: artifactId, ...data };
         }),
-        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+        updateMany: vi.fn().mockImplementation(async ({ data }) => {
+          artifactStatus = data.status;
+          return { count: 1 };
+        }),
       },
       job: {
         create: vi.fn().mockResolvedValue({ id: jobId, status: 'PENDING' }),
@@ -335,7 +349,10 @@ ${scriptB}
     });
     const jobId = randomUUID();
     const database = {
-      audioArtifact: { upsert: vi.fn().mockResolvedValue({}) },
+      audioArtifact: {
+        create: vi.fn().mockResolvedValue({}),
+        findFirst: vi.fn().mockResolvedValue(null),
+      },
       contentImport: {
         findUnique: vi.fn().mockResolvedValue({ rawSource: lessonSourceWithScriptA }),
       },
