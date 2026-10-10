@@ -50,6 +50,8 @@ describe('backup and restore rehearsal', () => {
   let sourcePrisma: PrismaClient;
   let targetPrisma: PrismaClient;
   let sourcePlacementAttemptId: string;
+  let sourceAudioArtifactId: string;
+  let sourceLearnerId: string;
 
   const baseDbUrl =
     process.env.TEST_DATABASE_URL ??
@@ -321,6 +323,47 @@ describe('backup and restore rehearsal', () => {
         profile: { create: {} },
       },
     });
+    sourceLearnerId = learner.id;
+    await sourcePrisma.learnerProfile.update({
+      data: {
+        audioSourceId: 'browser-tts',
+        browserVoiceId: 'Microsoft Jenny Online (Natural) - English (United States)',
+      },
+      where: { userId: learner.id },
+    });
+    await sourcePrisma.audioSystemSetting.create({
+      data: {
+        defaultVoiceId: 'en-US-JennyNeural',
+        id: 'default',
+        providerId: 'azure-speech',
+        updatedById: learner.id,
+      },
+    });
+    const contentImport = await sourcePrisma.contentImport.create({
+      data: {
+        createdById: learner.id,
+        rawSource: 'CONTENT\nBackup audio candidate',
+        sourceHash: 'backup-source-hash',
+        updatedById: learner.id,
+      },
+    });
+    const audioArtifact = await sourcePrisma.audioArtifact.create({
+      data: {
+        adapterName: 'azure-speech',
+        audioScriptSlug: 'backup-audio',
+        byteSize: 32,
+        checksum: 'backup-audio-checksum',
+        contentImportId: contentImport.id,
+        generationKey: `backup-${randomUUID()}`,
+        mimeType: 'audio/wav',
+        scriptHash: 'backup-script-hash',
+        status: 'READY',
+        storageKey: 'audio/backup.wav',
+        variantKey: 'azure-speech:en-US-JennyNeural:default',
+        voiceConfig: {},
+      },
+    });
+    sourceAudioArtifactId = audioArtifact.id;
     const mission = await sourcePrisma.mission.findFirstOrThrow({
       include: { lessons: { include: { lesson: true }, orderBy: { order: 'asc' }, take: 1 } },
       where: { status: 'PUBLISHED' },
@@ -471,6 +514,24 @@ describe('backup and restore rehearsal', () => {
       learningSession: {
         lessonVersionId: expect.any(String),
       },
+    });
+    await expect(targetPrisma.learnerProfile.findUniqueOrThrow({
+      where: { userId: sourceLearnerId },
+    })).resolves.toMatchObject({
+      audioSourceId: 'browser-tts',
+      browserVoiceId: 'Microsoft Jenny Online (Natural) - English (United States)',
+    });
+    await expect(targetPrisma.audioSystemSetting.findUniqueOrThrow({
+      where: { id: 'default' },
+    })).resolves.toMatchObject({
+      defaultVoiceId: 'en-US-JennyNeural',
+      providerId: 'azure-speech',
+    });
+    await expect(targetPrisma.audioArtifact.findUniqueOrThrow({
+      where: { id: sourceAudioArtifactId },
+    })).resolves.toMatchObject({
+      generationKey: expect.stringMatching(/^backup-/),
+      variantKey: 'azure-speech:en-US-JennyNeural:default',
     });
   }, 30_000);
 });

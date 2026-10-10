@@ -30,30 +30,31 @@ enum OnboardingMethod {
 }
 
 model User {
-  id                       String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email                    String                    @unique
-  displayName              String
-  passwordHash             String
-  role                     UserRole                  @default(LEARNER)
-  status                   UserStatus                @default(ACTIVE)
-  createdAt                DateTime                  @default(now())
-  updatedAt                DateTime                  @updatedAt
-  profile                  LearnerProfile?
-  sessions                 UserSession[]
-  learningSessions         LearningSession[]
-  createdContentImports    ContentImport[]           @relation("ContentImportCreatedBy")
-  updatedContentImports    ContentImport[]           @relation("ContentImportUpdatedBy")
-  jobs                     Job[]
-  recordings               Recording[]
-  activityDrafts           ActivityDraft[]
-  mutationReceipts         MutationReceipt[]
-  auditLogs                AuditLog[]
-  masteryRecords           MasteryRecord[]
-  masteryEvents            MasteryEvent[]
-  errorBankEntries         ErrorBankEntry[]
-  checkpointAssessments    CheckpointAssessment[]
-  progressionConfirmations ProgressionConfirmation[]
-  placementAttempts        PlacementAttempt[]
+  id                         String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                      String                    @unique
+  displayName                String
+  passwordHash               String
+  role                       UserRole                  @default(LEARNER)
+  status                     UserStatus                @default(ACTIVE)
+  createdAt                  DateTime                  @default(now())
+  updatedAt                  DateTime                  @updatedAt
+  profile                    LearnerProfile?
+  sessions                   UserSession[]
+  learningSessions           LearningSession[]
+  createdContentImports      ContentImport[]           @relation("ContentImportCreatedBy")
+  updatedContentImports      ContentImport[]           @relation("ContentImportUpdatedBy")
+  jobs                       Job[]
+  recordings                 Recording[]
+  activityDrafts             ActivityDraft[]
+  mutationReceipts           MutationReceipt[]
+  auditLogs                  AuditLog[]
+  masteryRecords             MasteryRecord[]
+  masteryEvents              MasteryEvent[]
+  errorBankEntries           ErrorBankEntry[]
+  checkpointAssessments      CheckpointAssessment[]
+  progressionConfirmations   ProgressionConfirmation[]
+  placementAttempts          PlacementAttempt[]
+  updatedAudioSystemSettings AudioSystemSetting[]      @relation("AudioSystemSettingUpdatedBy")
 }
 
 model LearnerProfile {
@@ -65,6 +66,8 @@ model LearnerProfile {
   locale           String            @default("vi")
   timezone         String            @default("Asia/Ho_Chi_Minh")
   recordingConsent Boolean           @default(false)
+  audioSourceId    String            @default("system-default")
+  browserVoiceId   String?
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -616,6 +619,8 @@ model AudioArtifact {
   contentImportId         String?                      @db.Uuid
   audioScriptSlug         String
   scriptHash              String
+  variantKey              String                       @default("legacy:unclassified")
+  generationKey           String                       @unique @default(dbgenerated("gen_random_uuid()::text"))
   adapterName             String
   voiceConfig             Json
   mimeType                String
@@ -629,9 +634,21 @@ model AudioArtifact {
   contentImport           ContentImport?               @relation(fields: [contentImportId], references: [id], onDelete: SetNull)
   lessonVersionReferences LessonVersionAudioArtifact[]
 
-  @@unique([contentImportId, audioScriptSlug, scriptHash])
   @@index([contentImportId])
+  @@index([contentImportId, audioScriptSlug, scriptHash])
   @@index([status])
+}
+
+model AudioSystemSetting {
+  id             String   @id @default("default")
+  providerId     String
+  defaultVoiceId String?
+  updatedById    String?  @db.Uuid
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  updatedBy      User?    @relation("AudioSystemSettingUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([updatedById])
 }
 
 model LessonVersionAudioArtifact {
