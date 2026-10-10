@@ -6,6 +6,7 @@ import type { WritingDraft } from '@worklingo/contracts';
 import type { Response } from 'express';
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
+import { sendAudioStream } from '../media/application/audio-stream-response.js';
 import { ActivityDraftsService } from './application/activity-drafts.service.js';
 import { LearnerAudioService } from './application/learner-audio.service.js';
 import { LearningSessionsService } from './application/learning-sessions.service.js';
@@ -80,10 +81,7 @@ export class LearningSessionsController {
     @Res() response: Response,
   ): Promise<void> {
     const audio = await this.audio.getActivityAudio(request.authUser.id, id, activityId);
-    response.setHeader('Content-Type', audio.mimeType);
-    response.setHeader('Content-Length', audio.byteSize);
-    response.setHeader('Accept-Ranges', 'bytes');
-    response.end(audio.body);
+    sendAudioStream(response, audio, request.headers.range);
   }
 
   @Post('learning-sessions')

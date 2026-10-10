@@ -196,8 +196,39 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
       .expect(200);
 
     expect(streamRes.headers['content-type']).toContain('audio/wav');
+    expect(streamRes.headers['accept-ranges']).toBe('bytes');
+    expect(streamRes.headers['cache-control']).toBe('private, no-store');
+    expect(streamRes.headers['x-content-type-options']).toBe('nosniff');
     expect(streamRes.body).toBeInstanceOf(Buffer);
     expect(streamRes.body.subarray(0, 4).toString('ascii')).toBe('RIFF');
+    expect(JSON.stringify(streamRes.headers)).not.toContain(artifact.storageKey);
+
+    const partial = await request(app.getHttpServer())
+      .get(`/api/v1/admin/audio-artifacts/${artifact.id}/content`)
+      .set('Cookie', adminCookie)
+      .set('Range', 'bytes=0-3')
+      .expect(206);
+    expect(partial.headers['content-range']).toBe(`bytes 0-3/${artifact.byteSize}`);
+    expect(partial.headers['content-length']).toBe('4');
+    expect(partial.body.toString('ascii')).toBe('RIFF');
+
+    const suffix = await request(app.getHttpServer())
+      .get(`/api/v1/admin/audio-artifacts/${artifact.id}/content`)
+      .set('Cookie', adminCookie)
+      .set('Range', 'bytes=-4')
+      .expect(206);
+    expect(suffix.headers['content-range']).toBe(
+      `bytes ${artifact.byteSize - 4}-${artifact.byteSize - 1}/${artifact.byteSize}`,
+    );
+    expect(suffix.body).toHaveLength(4);
+
+    const invalidRange = await request(app.getHttpServer())
+      .get(`/api/v1/admin/audio-artifacts/${artifact.id}/content`)
+      .set('Cookie', adminCookie)
+      .set('Range', 'bytes=999999-')
+      .expect(416);
+    expect(invalidRange.headers['content-range']).toBe(`bytes */${artifact.byteSize}`);
+    expect(invalidRange.headers['content-length']).toBe('0');
 
     // 7. Security: learner is forbidden from streaming admin audio
     await request(app.getHttpServer())

@@ -58,7 +58,37 @@ describe('version-bound learner audio', () => {
 
     expect(response.status, JSON.stringify(response.body)).toBe(200);
     expect(response.headers['content-type']).toContain('audio/wav');
+    expect(response.headers['accept-ranges']).toBe('bytes');
+    expect(response.headers['cache-control']).toBe('private, no-store');
     expect(response.body.subarray(0, 4).toString('ascii')).toBe('RIFF');
+
+    const partial = await learner.get(
+      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
+    ).set('Range', 'bytes=0-3').expect(206);
+    expect(partial.headers['content-range']).toBe(
+      `bytes 0-3/${response.body.length}`,
+    );
+    expect(partial.body.toString('ascii')).toBe('RIFF');
+
+    const suffix = await learner.get(
+      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
+    ).set('Range', 'bytes=-4').expect(206);
+    expect(suffix.headers['content-range']).toBe(
+      `bytes ${response.body.length - 4}-${response.body.length - 1}/${response.body.length}`,
+    );
+    expect(suffix.body).toHaveLength(4);
+
+    const invalidRange = await learner.get(
+      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
+    ).set('Range', 'bytes=999999-').expect(416);
+    expect(invalidRange.headers['content-range']).toBe(`bytes */${response.body.length}`);
+
+    const other = await registerLearner(context.app, {
+      displayName: 'Foreign Audio Learner', email: 'foreign-audio@example.test',
+    });
+    await other.get(
+      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
+    ).set('Range', 'bytes=999999-').expect(404);
   });
 
   it('streams the artifact attached to the session version after the lesson current version changes', async () => {
