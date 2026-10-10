@@ -58,6 +58,7 @@ export interface CurrentActivitySubmission {
   readonly activityIds: readonly string[];
   readonly lessonVersionId: string;
   readonly plan: SessionPlan;
+  readonly purpose: 'learning' | 'placement';
   readonly sessionId: string;
 }
 
@@ -76,7 +77,10 @@ export class LearningSessionsService {
     const [missions, reviewQueue, completed] = await Promise.all([
       this.curriculum.getPublishedMissionsForLevel(profile?.currentLevelCode ?? 'FOUNDATION_1'),
       this.mastery.getReviewQueue(learnerId),
-      this.database.learningSession.findMany({ where: { learnerId, status: 'COMPLETED' }, select: { missionId: true } }),
+      this.database.learningSession.findMany({
+        where: { learnerId, status: 'COMPLETED', mission: { purpose: 'LEARNING' } },
+        select: { missionId: true },
+      }),
     ]);
     if (!missions.length) throw new NotFoundException('No published mission for this level');
     return { mission: selectMissionForReview(missions, reviewQueue, completed.map((s) => s.missionId)), reviewQueue };
@@ -272,6 +276,7 @@ export class LearningSessionsService {
     return {
       activityId, activityIndex, activityIds, lessonVersionId: session.lessonVersionId,
       plan, sessionId: session.id,
+      purpose: session.mission.purpose === 'PLACEMENT' ? 'placement' : 'learning',
     };
   }
 
@@ -346,7 +351,7 @@ export class LearningSessionsService {
             score: evaluation.score,
           },
         });
-        if (evaluation.evaluationStatus === 'EVALUATED') {
+        if (evaluation.evaluationStatus === 'EVALUATED' && session.mission.purpose === 'LEARNING') {
           await this.mastery.recordAttemptEvaluation({
             attemptId: evaluated.id,
             evaluationStatus: evaluation.evaluationStatus,

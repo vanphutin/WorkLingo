@@ -14,7 +14,10 @@ export class MasteryMapService {
 
   async getMap(learnerId: string): Promise<MasteryMapResponseDto> {
     const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId } });
-    const missions = await this.curriculum.getPublishedMissionsForLevel(profile?.currentLevelCode ?? 'FOUNDATION_1');
+    const missions = await this.curriculum.getPublishedMissionsForLevel(
+      profile?.currentLevelCode ?? 'FOUNDATION_1',
+      'learning',
+    );
     const [records, queue] = await Promise.all([
       this.mastery.getMasteryRecords(learnerId), this.mastery.getReviewQueue(learnerId),
     ]);

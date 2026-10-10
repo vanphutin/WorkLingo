@@ -21,12 +21,15 @@ export class ProgressService {
   async getProgress(learnerId: string): Promise<LearnerProgressDto> {
     const [sessionGroups, activityAttempts, completedActivities, profile] = await Promise.all([
       this.database.learningSession.groupBy({
-        by: ['status'], where: { learnerId }, _count: { _all: true },
+        by: ['status'], where: { learnerId, mission: { purpose: 'LEARNING' } }, _count: { _all: true },
       }),
-      this.database.activityAttempt.count({ where: { learnerId } }),
+      this.database.activityAttempt.count({
+        where: { learnerId, session: { mission: { purpose: 'LEARNING' } } },
+      }),
       this.database.activityAttempt.count({
         where: {
           learnerId,
+          session: { mission: { purpose: 'LEARNING' } },
           OR: [{ evaluationStatus: 'SUBMITTED' }, { evaluationStatus: 'EVALUATED', score: 1 }],
         },
       }),
