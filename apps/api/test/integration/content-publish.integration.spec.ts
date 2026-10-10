@@ -139,11 +139,20 @@ describe('Transactional publish, archive, and session version isolation', () => 
       await new Promise((r) => setTimeout(r, 100));
     }
 
-    return { importId, revision: rev, sourceHash: hash };
+    const artifact = await database.audioArtifact.findFirstOrThrow({
+      orderBy: { createdAt: 'desc' },
+      where: { contentImportId: importId, audioScriptSlug: 'complaint-call', status: 'READY' },
+    });
+    return {
+      importId,
+      revision: rev,
+      selectedAudioArtifacts: { 'complaint-call': artifact.id },
+      sourceHash: hash,
+    };
   }
 
   it('atomically publishes a validated lesson version with child records', async () => {
-    const { importId, revision, sourceHash } =
+    const { importId, revision, selectedAudioArtifacts, sourceHash } =
       await prepareValidatedDraftWithAudio(canonicalLessonSource);
 
     const idempotencyKey = `pub-${randomUUID()}`;
@@ -154,6 +163,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
         expectedDraftRevision: revision,
         expectedSourceHash: sourceHash,
         idempotencyKey,
+        selectedAudioArtifacts,
       })
       .expect(200);
 
@@ -232,6 +242,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
       expectedDraftRevision: draft.revision,
       expectedSourceHash: draft.sourceHash,
       idempotencyKey,
+      selectedAudioArtifacts: draft.selectedAudioArtifacts,
     };
 
     const [first, second] = await Promise.all([
@@ -257,6 +268,30 @@ describe('Transactional publish, archive, and session version isolation', () => 
     ).resolves.toBe(1);
   });
 
+  it('rejects a READY candidate owned by another content import', async () => {
+    const first = await prepareValidatedDraftWithAudio(
+      canonicalLessonSource.replace('handling-customer-complaints', `owner-a-${randomUUID()}`),
+    );
+    const second = await prepareValidatedDraftWithAudio(
+      canonicalLessonSource.replace('handling-customer-complaints', `owner-b-${randomUUID()}`),
+    );
+
+    const referenceCountBefore = await database.lessonVersionAudioArtifact.count();
+    const response = await request(app.getHttpServer())
+      .post(`/api/v1/admin/content-imports/${first.importId}/publish`)
+      .set('Cookie', adminCookie)
+      .send({
+        expectedDraftRevision: first.revision,
+        expectedSourceHash: first.sourceHash,
+        idempotencyKey: `foreign-audio-${randomUUID()}`,
+        selectedAudioArtifacts: second.selectedAudioArtifacts,
+      })
+      .expect(422);
+
+    expect(response.body).toMatchObject({ code: 'AUDIO_NOT_READY', statusCode: 422 });
+    await expect(database.lessonVersionAudioArtifact.count()).resolves.toBe(referenceCountBefore);
+  });
+
   it('allows only one concurrent publish with different keys for the same draft', async () => {
     const slug = `different-keys-${randomUUID()}`;
     const source = canonicalLessonSource.replace('handling-customer-complaints', slug);
@@ -269,6 +304,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
           expectedDraftRevision: draft.revision,
           expectedSourceHash: draft.sourceHash,
           idempotencyKey,
+          selectedAudioArtifacts: draft.selectedAudioArtifacts,
         });
 
     const responses = await Promise.all([
@@ -295,6 +331,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
         expectedDraftRevision: draft.revision,
         expectedSourceHash: draft.sourceHash,
         idempotencyKey: `archive-current-publish-${randomUUID()}`,
+        selectedAudioArtifacts: draft.selectedAudioArtifacts,
       })
       .expect(200);
 
@@ -332,6 +369,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
         expectedDraftRevision: v1.revision,
         expectedSourceHash: v1.sourceHash,
         idempotencyKey: `pub-v1-${randomUUID()}`,
+        selectedAudioArtifacts: v1.selectedAudioArtifacts,
       })
       .expect(200);
 
@@ -394,6 +432,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
         expectedDraftRevision: v2.revision,
         expectedSourceHash: v2.sourceHash,
         idempotencyKey: `pub-v2-${randomUUID()}`,
+        selectedAudioArtifacts: v2.selectedAudioArtifacts,
       })
       .expect(200);
 

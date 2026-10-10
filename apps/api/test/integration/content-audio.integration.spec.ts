@@ -136,6 +136,14 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
     });
 
     const jobId = genRes.body.jobId;
+    const acceptedJob = await database.job.findUniqueOrThrow({ where: { id: jobId } });
+    const acceptedPayload = acceptedJob.payload as Record<string, unknown>;
+    expect(acceptedPayload).toMatchObject({
+      artifactId: expect.any(String),
+      providerId: 'fake-tts',
+      variantKey: expect.stringMatching(/^fake-tts:fake-neutral:/),
+      voiceId: 'fake-neutral',
+    });
 
     // 4. Poll job status via GET /jobs/:id
     let jobCompleted = false;
@@ -176,6 +184,7 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
     expect(artifact.mimeType).toBe('audio/wav');
     expect(artifact.byteSize).toBeGreaterThan(44);
     expect(artifact.storageKey).toMatch(/^generated-audio\//);
+    expect(artifact.variantKey).toMatch(/^fake-tts:fake-neutral:/);
     expect(artifact.simulationLabel).toBe(
       'Simulation audio — not a release voice',
     );
@@ -234,6 +243,22 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
 
     expect(replayRes.body.jobId).toBe(firstRes.body.jobId);
 
+    const voiceConflict = await request(app.getHttpServer())
+      .post(`/api/v1/admin/content-imports/${importId}/generate-audio`)
+      .set('Cookie', adminCookie)
+      .send({
+        audioScriptSlug: 'complaint-call',
+        idempotencyKey,
+        providerId: 'fake-tts',
+        voiceId: 'another-voice',
+      })
+      .expect(409);
+
+    expect(voiceConflict.body).toMatchObject({
+      code: ContentAuthoringErrorCode.IDEMPOTENCY_KEY_REUSED,
+      statusCode: 409,
+    });
+
     // Request with same key but different payload -> 409 IDEMPOTENCY_KEY_REUSED
     const conflictRes = await request(app.getHttpServer())
       .post(`/api/v1/admin/content-imports/${importId}/generate-audio`)
@@ -248,5 +273,77 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
       code: ContentAuthoringErrorCode.IDEMPOTENCY_KEY_REUSED,
       statusCode: 409,
     });
+  });
+
+  it('creates a new immutable candidate for regeneration without changing prior READY bytes', async () => {
+    const created = await request(app.getHttpServer())
+      .post('/api/v1/admin/content-imports')
+      .set('Cookie', adminCookie)
+      .send({ rawSource: canonicalLessonSource })
+      .expect(201);
+    const importId = created.body.id as string;
+
+    const generate = async (key: string) => {
+      const response = await request(app.getHttpServer())
+        .post(`/api/v1/admin/content-imports/${importId}/generate-audio`)
+        .set('Cookie', adminCookie)
+        .send({
+          audioScriptSlug: 'complaint-call',
+          idempotencyKey: key,
+          providerId: 'fake-tts',
+          voiceId: 'fake-neutral',
+        })
+        .expect(202);
+      for (let attempt = 0; attempt < 20; attempt += 1) {
+        const job = await request(app.getHttpServer())
+          .get(`/api/v1/jobs/${response.body.jobId}`)
+          .set('Cookie', adminCookie)
+          .expect(200);
+        if (job.body.status === 'COMPLETED') return;
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+      throw new Error('Audio generation did not complete');
+    };
+
+    await generate(`first-${randomUUID()}`);
+    const [first] = await database.audioArtifact.findMany({ where: { contentImportId: importId } });
+    expect(first).toMatchObject({ status: 'READY' });
+
+    await generate(`second-${randomUUID()}`);
+    const candidates = await database.audioArtifact.findMany({
+      orderBy: { createdAt: 'asc' },
+      where: { contentImportId: importId },
+    });
+
+    expect(candidates).toHaveLength(2);
+    expect(candidates[0]).toMatchObject({
+      checksum: first!.checksum,
+      id: first!.id,
+      status: 'READY',
+      storageKey: first!.storageKey,
+    });
+    expect(candidates[1]!.id).not.toBe(first!.id);
+    expect(candidates[1]!.generationKey).not.toBe(first!.generationKey);
+  });
+
+  it('returns one job and one candidate for concurrent requests with the same key', async () => {
+    const created = await request(app.getHttpServer())
+      .post('/api/v1/admin/content-imports')
+      .set('Cookie', adminCookie)
+      .send({ rawSource: canonicalLessonSource })
+      .expect(201);
+    const importId = created.body.id as string;
+    const idempotencyKey = `concurrent-${randomUUID()}`;
+    const generate = () => request(app.getHttpServer())
+      .post(`/api/v1/admin/content-imports/${importId}/generate-audio`)
+      .set('Cookie', adminCookie)
+      .send({ audioScriptSlug: 'complaint-call', idempotencyKey });
+
+    const [first, second] = await Promise.all([generate(), generate()]);
+
+    expect([first.status, second.status]).toEqual([202, 202]);
+    expect(second.body.jobId).toBe(first.body.jobId);
+    await expect(database.audioArtifact.count({ where: { contentImportId: importId } }))
+      .resolves.toBe(1);
   });
 });

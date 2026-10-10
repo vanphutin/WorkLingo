@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common';
 
 import type {
   TextToSpeechPort,
@@ -49,12 +49,12 @@ export type TtsProviderSelectionErrorCode =
   | 'TTS_PROVIDER_UNAVAILABLE'
   | 'TTS_VOICE_UNSUPPORTED';
 
-export class TtsProviderSelectionError extends Error {
+export class TtsProviderSelectionError extends UnprocessableEntityException {
   constructor(
     readonly code: TtsProviderSelectionErrorCode,
     message: string,
   ) {
-    super(message);
+    super({ code, message, statusCode: 422 });
     this.name = 'TtsProviderSelectionError';
   }
 }

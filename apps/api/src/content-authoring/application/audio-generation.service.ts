@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import {
   ConflictException,
   Inject,
@@ -7,7 +7,7 @@ import {
   Optional,
   type OnApplicationShutdown,
 } from '@nestjs/common';
-import type { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { parseLessonSource } from '@worklingo/content-format';
 import {
   ContentAuthoringErrorCode,
@@ -18,11 +18,24 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { TextToSpeechProviderRegistry } from '../../ai-gateway/application/text-to-speech-provider.registry.js';
 import { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
 import { SIMULATION_AUDIO_LABEL } from '../../ai-gateway/infrastructure/fake-tts.adapter.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { JobRunnerService } from '../../jobs/application/job-runner.service.js';
+
+const canonicalizeJson = (value: unknown): unknown => {
+  if (Array.isArray(value)) return value.map(canonicalizeJson);
+  if (value !== null && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, nested]) => [key, canonicalizeJson(nested)]),
+    );
+  }
+  return value;
+};
 
 @Injectable()
 export class AudioGenerationService implements OnApplicationShutdown {
@@ -32,6 +45,8 @@ export class AudioGenerationService implements OnApplicationShutdown {
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(ObjectStorage) private readonly storage: ObjectStorage,
     @Inject(TextToSpeechPort) private readonly tts: TextToSpeechPort,
+    @Inject(TextToSpeechProviderRegistry)
+    private readonly ttsProviders: TextToSpeechProviderRegistry,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
     @Optional() @Inject(JobRunnerService) private readonly runner?: JobRunnerService,
   ) {}
@@ -49,12 +64,22 @@ export class AudioGenerationService implements OnApplicationShutdown {
     actorId: string,
     input: GenerateAudioInput,
   ): Promise<GenerateAudioResult> {
+    const providerId = input.providerId ?? this.tts.providerName;
+    const descriptor = this.ttsProviders.list().find((candidate) => candidate.id === providerId);
+    const voiceId = input.voiceId ?? descriptor?.defaultVoiceId ?? '';
+    const voiceConfig = { ...(input.voiceConfig ?? {}), voice: voiceId };
+    const normalizedVoiceConfig = canonicalizeJson(voiceConfig) as Record<string, unknown>;
+    const variantKey = `${providerId}:${voiceId}:${createHash('sha256')
+      .update(JSON.stringify(normalizedVoiceConfig)).digest('hex')}`;
     const requestHash = createHash('sha256')
       .update(
         JSON.stringify({
           audioScriptSlug: input.audioScriptSlug,
+          contentImportId,
           idempotencyKey: input.idempotencyKey,
-          voiceConfig: input.voiceConfig,
+          providerId,
+          voiceConfig: normalizedVoiceConfig,
+          voiceId,
         }),
       )
       .digest('hex');
@@ -80,6 +105,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
         statusCode: 409,
       });
     }
+    this.ttsProviders.assertVoiceSupported(providerId, voiceId);
 
     // 2. ContentImport lookup
     const contentImport = await this.database.contentImport.findUnique({
@@ -129,119 +155,142 @@ export class AudioGenerationService implements OnApplicationShutdown {
       .update(targetScriptText)
       .digest('hex');
 
-    // 4. Initial AudioArtifact record (GENERATING)
-    const existingArtifact = await this.database.audioArtifact.findFirst({
-      where: { contentImportId, audioScriptSlug: targetSlug, scriptHash },
-      orderBy: { createdAt: 'desc' },
-    });
-    if (existingArtifact) {
-      await this.database.audioArtifact.update({
-        where: { id: existingArtifact.id },
-        data: { status: 'GENERATING', failureSummary: null },
-      });
-    } else {
-      await this.database.audioArtifact.create({
-        data: {
-          contentImportId,
-          audioScriptSlug: targetSlug,
-          scriptHash,
-          adapterName: this.tts.providerName ?? 'tts',
-          voiceConfig: (input.voiceConfig ?? {}) as Prisma.InputJsonValue,
-          mimeType: 'audio/wav',
-          byteSize: 0,
-          checksum: '',
-          storageKey: '',
-          status: 'GENERATING',
-        },
-      });
-    }
+    const artifactId = randomUUID();
+    const generationKey = createHash('sha256')
+      .update(`${actorId}:generate-audio:${input.idempotencyKey}`)
+      .digest('hex');
+    let result: GenerateAudioResult;
+    try {
+      result = await this.database.$transaction(async (transaction) => {
+        const receiptAfterLock = await transaction.mutationReceipt.findUnique({
+          where: {
+            actorId_operation_idempotencyKey: {
+              actorId,
+              operation: 'generate-audio',
+              idempotencyKey: input.idempotencyKey,
+            },
+          },
+        });
+        if (receiptAfterLock) {
+          if (receiptAfterLock.requestHash === requestHash) {
+            return receiptAfterLock.responseBody as unknown as GenerateAudioResult;
+          }
+          throw new ConflictException({
+            code: ContentAuthoringErrorCode.IDEMPOTENCY_KEY_REUSED,
+            message: 'Idempotency key reused with different request payload',
+            statusCode: 409,
+          });
+        }
 
-    if (this.jobs && this.runner) {
-      const job = await this.jobs.enqueue({
-        contentImportId,
-        createdById: actorId,
-        idempotencyKey: `tts:${actorId}:${input.idempotencyKey}`,
-        payload: {
+        await transaction.audioArtifact.create({
+          data: {
+            id: artifactId,
+            contentImportId,
+            audioScriptSlug: targetSlug,
+            scriptHash,
+            adapterName: providerId,
+            generationKey,
+            variantKey,
+            voiceConfig: normalizedVoiceConfig as Prisma.InputJsonValue,
+            mimeType: 'audio/wav',
+            byteSize: 0,
+            checksum: '',
+            storageKey: '',
+            status: 'GENERATING',
+          },
+        });
+
+        const payload = {
+          artifactId,
           audioScriptSlug: targetSlug,
           contentImportId,
+          providerId,
           scriptHash,
-          voiceConfig: input.voiceConfig ?? {},
-        },
-        resourceId: contentImportId,
-        resourceType: 'ContentImport',
-        type: 'GENERATE_AUDIO',
+          variantKey,
+          voiceConfig: normalizedVoiceConfig,
+          voiceId,
+        };
+        const job = this.jobs
+          ? await this.jobs.enqueue({
+              contentImportId,
+              createdById: actorId,
+              idempotencyKey: `tts:${actorId}:${input.idempotencyKey}`,
+              payload,
+              resourceId: contentImportId,
+              resourceType: 'ContentImport',
+              type: 'GENERATE_AUDIO',
+            }, transaction)
+          : await transaction.job.create({
+              data: {
+                type: 'generate-audio',
+                status: 'PENDING',
+                payload: payload as Prisma.InputJsonValue,
+                contentImportId,
+                createdById: actorId,
+              },
+            });
+        const accepted: GenerateAudioResult = {
+          jobId: job.id,
+          status: job.status === 'RETRY_WAIT' ? 'PENDING' : job.status,
+          audioScriptSlug: targetSlug,
+        };
+        await transaction.mutationReceipt.create({
+          data: {
+            actorId,
+            operation: 'generate-audio',
+            idempotencyKey: input.idempotencyKey,
+            requestHash,
+            responseStatus: 202,
+            responseBody: accepted as unknown as Prisma.InputJsonValue,
+          },
+        });
+        return accepted;
       });
-      const result: GenerateAudioResult = {
-        jobId: job.id,
-        status: job.status === 'RETRY_WAIT' ? 'PENDING' : job.status,
-        audioScriptSlug: targetSlug,
-      };
-      await this.database.mutationReceipt.create({
-        data: {
+    } catch (error) {
+      if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== 'P2002') {
+        throw error;
+      }
+      const concurrentReceipt = await this.database.mutationReceipt.findUnique({
+        where: { actorId_operation_idempotencyKey: {
           actorId,
           operation: 'generate-audio',
           idempotencyKey: input.idempotencyKey,
-          requestHash,
-          responseStatus: 202,
-          responseBody: result as unknown as Prisma.InputJsonValue,
-        },
+        } },
       });
-      const run = this.runQueuedJob(job.id);
-      this.activeJobs.set(job.id, run);
+      if (!concurrentReceipt || concurrentReceipt.requestHash !== requestHash) {
+        throw new ConflictException({
+          code: ContentAuthoringErrorCode.IDEMPOTENCY_KEY_REUSED,
+          message: 'Idempotency key reused with different request payload',
+          statusCode: 409,
+        });
+      }
+      result = concurrentReceipt.responseBody as unknown as GenerateAudioResult;
+    }
+
+    if (this.jobs && this.runner) {
+      const run = this.runQueuedJob(result.jobId);
+      this.activeJobs.set(result.jobId, run);
       void run.then(
-        () => this.activeJobs.delete(job.id),
-        () => this.activeJobs.delete(job.id),
+        () => this.activeJobs.delete(result.jobId),
+        () => this.activeJobs.delete(result.jobId),
       );
       return result;
     }
 
-    // Legacy unit-test fallback when the durable runner is not injected.
-    const job = await this.database.job.create({
-      data: {
-        type: 'generate-audio',
-        status: 'PENDING',
-        payload: {
-          contentImportId,
-          audioScriptSlug: targetSlug,
-          scriptHash,
-          voiceConfig: (input.voiceConfig ?? {}) as Prisma.InputJsonValue,
-        } as unknown as Prisma.InputJsonValue,
-        contentImportId,
-        createdById: actorId,
-      },
-    });
-
-    const result: GenerateAudioResult = {
-      jobId: job.id,
-      status: 'PENDING',
-      audioScriptSlug: targetSlug,
-    };
-
-    // 6. Record receipt
-    await this.database.mutationReceipt.create({
-      data: {
-        actorId,
-        operation: 'generate-audio',
-        idempotencyKey: input.idempotencyKey,
-        requestHash,
-        responseStatus: 202,
-        responseBody: result as unknown as Prisma.InputJsonValue,
-      },
-    });
-
-    // 7. Dispatch background execution
     const jobPromise = this.runGenerationJob(
-      job.id,
+      result.jobId,
+      artifactId,
       contentImportId,
       targetSlug,
       targetScriptText,
       scriptHash,
-      input.voiceConfig ?? {},
+      providerId,
+      normalizedVoiceConfig,
     );
-    this.activeJobs.set(job.id, jobPromise);
+    this.activeJobs.set(result.jobId, jobPromise);
     void jobPromise.then(
-      () => this.activeJobs.delete(job.id),
-      () => this.activeJobs.delete(job.id),
+      () => this.activeJobs.delete(result.jobId),
+      () => this.activeJobs.delete(result.jobId),
     );
 
     return result;
@@ -259,10 +308,12 @@ export class AudioGenerationService implements OnApplicationShutdown {
 
   private async runGenerationJob(
     jobId: string,
+    artifactId: string,
     contentImportId: string,
     audioScriptSlug: string,
     scriptText: string,
     scriptHash: string,
+    providerId: string,
     voiceConfig: Record<string, unknown>,
   ): Promise<void> {
     try {
@@ -271,7 +322,8 @@ export class AudioGenerationService implements OnApplicationShutdown {
         data: { status: 'RUNNING' },
       });
 
-      const synthesized = await this.tts.synthesize({
+      const provider = this.ttsProviders.resolve(providerId);
+      const synthesized = await provider.synthesize({
         script: scriptText,
         voiceConfig,
       });
@@ -306,14 +358,10 @@ export class AudioGenerationService implements OnApplicationShutdown {
       }
 
       const finalStatus: AudioArtifactStatus = isStale ? 'STALE' : 'READY';
-      const artifact = await this.database.audioArtifact.findFirstOrThrow({
-        where: { contentImportId, audioScriptSlug, scriptHash },
-        orderBy: { createdAt: 'desc' },
-      });
-      const updatedArtifact = await this.database.audioArtifact.update({
-        where: { id: artifact.id },
+      const updatedArtifact = await this.database.audioArtifact.updateMany({
+        where: { id: artifactId, status: 'GENERATING' },
         data: {
-          adapterName: synthesized.provider?.name ?? this.tts.providerName ?? 'tts',
+          adapterName: synthesized.provider?.name ?? provider.providerName,
           status: finalStatus,
           mimeType: synthesized.mimeType,
           byteSize: storageResult.size,
@@ -326,18 +374,8 @@ export class AudioGenerationService implements OnApplicationShutdown {
           failureSummary: isStale ? 'Script changed during generation' : null,
         },
       });
-
-      // If READY, mark any prior artifacts for this slug with a different scriptHash as STALE
-      if (!isStale) {
-        await this.database.audioArtifact.updateMany({
-          where: {
-            contentImportId,
-            audioScriptSlug,
-            scriptHash: { not: scriptHash },
-            status: { not: 'STALE' },
-          },
-          data: { status: 'STALE' },
-        });
+      if (updatedArtifact.count !== 1) {
+        throw new Error('Audio candidate is no longer mutable');
       }
 
       await this.database.job.update({
@@ -345,7 +383,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
         data: {
           status: 'COMPLETED',
           result: {
-            artifactId: updatedArtifact.id,
+            artifactId,
             status: finalStatus,
           },
         },
@@ -363,7 +401,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
 
       await this.database.audioArtifact
         .updateMany({
-          where: { contentImportId, audioScriptSlug, scriptHash },
+          where: { id: artifactId, status: 'GENERATING' },
           data: {
             status: 'FAILED',
             failureSummary: message,
@@ -390,6 +428,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
         contentImportId: record.contentImportId,
         audioScriptSlug: record.audioScriptSlug,
         scriptHash: record.scriptHash,
+        variantKey: record.variantKey,
         adapterName: record.adapterName,
         voiceConfig: record.voiceConfig as Record<string, unknown>,
         mimeType: record.mimeType,
@@ -431,6 +470,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
         contentImportId: record.contentImportId,
         audioScriptSlug: record.audioScriptSlug,
         scriptHash: record.scriptHash,
+        variantKey: record.variantKey,
         adapterName: record.adapterName,
         voiceConfig: record.voiceConfig as Record<string, unknown>,
         mimeType: record.mimeType,
