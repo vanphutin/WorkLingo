@@ -5,6 +5,7 @@ describe('FakeTextToSpeechAdapter', () => {
   const adapter = new FakeTextToSpeechAdapter();
 
   it('produces deterministic WAV bytes with provider metadata', async () => {
+    expect(adapter.providerName).toBe('fake-tts');
     const input = { script: 'Hello, this is customer support.', voiceConfig: { voice: 'fake-neutral' } };
     const first = await adapter.synthesize(input);
     const second = await adapter.synthesize(input);

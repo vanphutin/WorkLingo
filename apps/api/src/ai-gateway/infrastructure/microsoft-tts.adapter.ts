@@ -43,7 +43,7 @@ const inspectPcmWav = (audio: Buffer): { durationSeconds: number; sampleRate: nu
 };
 
 export class MicrosoftTextToSpeechAdapter extends TextToSpeechPort {
-  readonly providerName = 'microsoft-tts';
+  readonly providerName = 'azure-speech';
 
   constructor(private readonly config: MicrosoftTextToSpeechConfig) {
     super();
@@ -79,7 +79,7 @@ export class MicrosoftTextToSpeechAdapter extends TextToSpeechPort {
       durationSeconds: inspected.durationSeconds,
       mimeType: 'audio/wav',
       provider: {
-        name: 'microsoft-tts',
+        name: 'azure-speech',
         requestId: response.headers.get('x-requestid'),
         voice,
       },
