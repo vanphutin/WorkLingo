@@ -9,7 +9,7 @@ import { ListeningActivity } from './listening-activity';
 afterEach(cleanup);
 
 describe('ListeningActivity', () => {
-  it('uses session-bound audio without autoplay', () => {
+  it('uses session-bound audio without autoplay', async () => {
     const activity = {
       id: '00000000-0000-4000-8000-000000000010', slug: 'listen', activityType: 'listening',
       learningBlock: 'listenReason', skills: ['listening'], content: [], languageBlocks: [],
@@ -25,12 +25,12 @@ describe('ListeningActivity', () => {
       />,
     );
 
-    const audio = screen.getByLabelText('Lesson audio') as HTMLAudioElement;
+    const audio = await screen.findByLabelText('Lesson audio') as HTMLAudioElement;
     expect(audio.autoplay).toBe(false);
     expect(audio.getAttribute('src')).toContain(`/learning-sessions/00000000-0000-4000-8000-000000000020/activities/${activity.id}/audio`);
   });
 
-  it('replaces a failed audio player with an actionable transcript fallback', () => {
+  it('replaces a failed audio player with an actionable browser speech fallback', async () => {
     const activity = {
       id: '00000000-0000-4000-8000-000000000010', slug: 'listen', activityType: 'listening',
       learningBlock: 'listenReason', skills: ['listening'],
@@ -47,11 +47,10 @@ describe('ListeningActivity', () => {
       />,
     );
 
-    fireEvent.error(screen.getByLabelText('Lesson audio'));
+    fireEvent.error(await screen.findByLabelText('Lesson audio'));
 
     expect(screen.queryByLabelText('Lesson audio')).not.toBeInTheDocument();
-    expect(screen.getByRole('status')).toHaveTextContent(
-      'Audio is unavailable. Continue with the transcript below.',
-    );
+    expect(await screen.findByText(/browser speech is ready as a fallback/i)).toBeInTheDocument();
+    expect(screen.getByText('Mai: Welcome to the team.')).toBeInTheDocument();
   });
 });

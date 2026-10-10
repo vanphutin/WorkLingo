@@ -964,6 +964,37 @@
   width: 100%;
 }
 
+.audio-candidate {
+  display: grid;
+  gap: 0.65rem;
+  border: 1px solid #d9ddd8;
+  border-radius: 0.65rem;
+  background: #fffefb;
+  padding: 1rem;
+}
+
+.audio-candidate label {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.audio-candidate input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: #17643a;
+}
+
+.audio-candidate audio { width: 100%; }
+
+.audio-browser-fallback {
+  display: grid;
+  gap: 0.75rem;
+}
+
 .audio-failure-text {
   margin: 0;
   color: #a12a2a;

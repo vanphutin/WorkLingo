@@ -54,7 +54,8 @@ export function ContentAuthoringWorkspace({
 
   const [preview, setPreview] = useState<ContentPreviewDto | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
-  const [isAudioReady, setIsAudioReady] = useState(true);
+  const [isAudioReady, setIsAudioReady] = useState(false);
+  const [selectedAudioArtifacts, setSelectedAudioArtifacts] = useState<Record<string, string>>({});
 
   const [activeTab, setActiveTab] = useState<WorkspaceTab>('source');
 
@@ -121,6 +122,8 @@ export function ContentAuthoringWorkspace({
 
   function handleSourceChange(newSource: string) {
     setLocalSource(newSource);
+    setSelectedAudioArtifacts({});
+    setIsAudioReady(false);
 
     if (isReadOnly) return;
 
@@ -138,10 +141,13 @@ export function ContentAuthoringWorkspace({
       try {
         const artifacts = await apiClient.listContentAudioArtifacts(initialImport.id);
         if (!audioScripts || audioScripts.length === 0) {
-          setIsAudioReady(artifacts.length === 0 || artifacts.every((a) => a.status === 'READY'));
+          setIsAudioReady(true);
         } else {
           const allScriptsReady = audioScripts.every((s) =>
-            artifacts.some((a) => a.audioScriptSlug === s.slug && a.status === 'READY'),
+            artifacts.some((a) =>
+              a.id === selectedAudioArtifacts[s.slug]
+              && a.audioScriptSlug === s.slug
+              && a.status === 'READY'),
           );
           setIsAudioReady(allScriptsReady);
         }
@@ -149,7 +155,7 @@ export function ContentAuthoringWorkspace({
         setIsAudioReady(false);
       }
     },
-    [initialImport.id],
+    [initialImport.id, selectedAudioArtifacts],
   );
 
   const fetchPreview = useCallback(async () => {
@@ -369,6 +375,9 @@ export function ContentAuthoringWorkspace({
                 draftRevision={currentDraftRevision}
                 audioScripts={preview.normalizedDraft?.audioScripts}
                 onAudioStateChange={() => void checkAudioReadiness(preview.normalizedDraft?.audioScripts)}
+                selectedAudioArtifacts={selectedAudioArtifacts}
+                onSelectedAudioArtifactsChange={setSelectedAudioArtifacts}
+                onAudioReadinessChange={setIsAudioReady}
               />
             </div>
           ) : (
@@ -387,6 +396,7 @@ export function ContentAuthoringWorkspace({
             sourceHash={sourceHash}
             canPublish={canPublish}
             isAudioReady={isAudioReady}
+            selectedAudioArtifacts={selectedAudioArtifacts}
             status={status}
             publishedVersion={publishedVersion}
             publishedLessonId={publishedLessonId}
