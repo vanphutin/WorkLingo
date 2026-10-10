@@ -1,7 +1,9 @@
 # Audio Playback, TTS Providers, and Settings Design
 
-**Date:** 2026-10-10  
-**Status:** Approved direction; implementation pending  
+**Date:** 2026-10-10
+
+**Status:** Approved direction; implementation pending
+
 **Scope:** Repair Admin and Learner audio, prefer Azure Speech when configured, provide a zero-credential browser fallback, and add extensible audio settings.
 
 ## 1. Problem
@@ -325,4 +327,3 @@ The final repository gate remains `pnpm verify`.
 
 - Azure Speech pricing and F0 allowance: https://azure.microsoft.com/en-us/pricing/details/speech/
 - Azure Text to Speech REST API: https://learn.microsoft.com/azure/ai-services/speech-service/rest-text-to-speech
-
