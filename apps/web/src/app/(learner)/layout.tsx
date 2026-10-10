@@ -89,6 +89,9 @@ export default function LearnerLayout({
           </Link>
 
           <div className="nav-user-meta">
+            <Link href="/settings/audio" className="nav-link">
+              Audio settings
+            </Link>
             <span className="user-greeting">
               Learner: <strong>{currentUser?.displayName}</strong>
             </span>

@@ -75,6 +75,8 @@ describe('AdminLayout', () => {
       'href',
       '/admin/content',
     );
+    expect(screen.getByRole('link', { name: 'Audio settings' }))
+      .toHaveAttribute('href', '/admin/settings/audio');
     expect(replace).not.toHaveBeenCalled();
   });
 

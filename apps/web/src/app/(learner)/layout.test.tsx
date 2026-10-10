@@ -98,4 +98,15 @@ describe('LearnerLayout', () => {
     expect(await screen.findByText('Onboarding content')).toBeInTheDocument();
     expect(replace).not.toHaveBeenCalled();
   });
+
+  it('links authenticated learners to audio settings', async () => {
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({
+      displayName: 'An Nguyen', email: 'an@example.test',
+      id: '828a1927-c4fa-487f-93d5-96c556667869',
+      onboardingStatus: 'COMPLETE', roles: ['LEARNER'],
+    });
+    render(<LearnerLayout>Dashboard content</LearnerLayout>);
+    expect(await screen.findByRole('link', { name: 'Audio settings' }))
+      .toHaveAttribute('href', '/settings/audio');
+  });
 });
