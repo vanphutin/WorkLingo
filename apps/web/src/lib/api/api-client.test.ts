@@ -10,6 +10,7 @@ const mockSession: LearningSessionDto = {
   id: 'a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d',
   clientSessionId: 'f1e2d3c4-b5a6-4980-8234-56789abcdef0',
   lessonVersionId: 'b2c3d4e5-f6a7-4b9c-8d1e-2f3a4b5c6d7e',
+  purpose: 'learning',
   durationMinutes: 60,
   status: 'planned',
   currentCheckpoint: 0,
@@ -127,6 +128,16 @@ describe('ApiClient', () => {
     );
     expect(result.id).toBe(mockSession.id);
     expect(result.durationMinutes).toBe(60);
+  });
+
+  it('preserves the server-bound placement purpose when restoring a session', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+      Response.json({ ...mockSession, purpose: 'placement' }),
+    );
+
+    const result = await new ApiClient('/api/v1').getSession(mockSession.id);
+
+    expect(result.purpose).toBe('placement');
   });
 
   it('accepts a 45-minute session returned by the API', async () => {

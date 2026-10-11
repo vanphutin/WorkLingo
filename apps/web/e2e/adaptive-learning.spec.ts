@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { completeSelfPlacementViaApi } from './helpers/learner-onboarding';
+
 test('learner sees own evidence, transfers a review, and cannot advance on unscored work', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const suffix = `${Date.now()}_${testInfo.project.name}`;
@@ -8,6 +10,9 @@ test('learner sees own evidence, transfers a review, and cannot advance on unsco
   await page.getByLabel('Email').fill(`adaptive_${suffix}@example.test`);
   await page.getByLabel('Password').fill('Adaptive-local-password-123!');
   await page.getByRole('button', { name: 'Create account' }).click();
+  await expect(page).toHaveURL(/\/onboarding$/u);
+  await completeSelfPlacementViaApi(page);
+  await page.goto('/dashboard');
   await expect(page).toHaveURL(/\/dashboard$/u);
   const durations = page.getByLabel(/session duration/i);
   await expect(durations).toHaveValue('60');

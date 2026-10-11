@@ -100,6 +100,9 @@ export default function AdminLayout({
               <Link href="/admin/content" className="nav-link">
                 Content
               </Link>
+              <Link href="/admin/settings/audio" className="nav-link">
+                Audio settings
+              </Link>
               <Link href="/dashboard" className="nav-link nav-link-secondary">
                 Learner View
               </Link>

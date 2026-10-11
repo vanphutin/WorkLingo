@@ -48,6 +48,7 @@ describe('AdminLayout', () => {
       id: '11111111-1111-4111-8111-111111111111',
       email: 'learner@worklingo.test',
       displayName: 'Learner User',
+      onboardingStatus: 'COMPLETE',
       roles: ['LEARNER'],
     });
 
@@ -62,6 +63,7 @@ describe('AdminLayout', () => {
       id: '22222222-2222-4222-8222-222222222222',
       email: 'admin@worklingo.test',
       displayName: 'Admin User',
+      onboardingStatus: null,
       roles: ['CONTENT_ADMIN'],
     });
 
@@ -73,6 +75,8 @@ describe('AdminLayout', () => {
       'href',
       '/admin/content',
     );
+    expect(screen.getByRole('link', { name: 'Audio settings' }))
+      .toHaveAttribute('href', '/admin/settings/audio');
     expect(replace).not.toHaveBeenCalled();
   });
 
@@ -85,6 +89,7 @@ describe('AdminLayout', () => {
         id: '22222222-2222-4222-8222-222222222222',
         email: 'admin@worklingo.test',
         displayName: 'Admin User',
+        onboardingStatus: null,
         roles: ['CONTENT_ADMIN'],
       });
 

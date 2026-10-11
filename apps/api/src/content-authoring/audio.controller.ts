@@ -26,6 +26,7 @@ import type {
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
+import { sendAudioStream } from '../media/application/audio-stream-response.js';
 import { AudioGenerationService } from './application/audio-generation.service.js';
 // Runtime import is required so Nest can emit DTO metadata for ValidationPipe.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -77,9 +78,10 @@ export class AudioController {
       request.authUser.id,
     );
 
-    response.setHeader('Content-Type', artifact.mimeType);
-    response.setHeader('Content-Length', artifact.byteSize);
-    response.setHeader('Accept-Ranges', 'bytes');
-    response.end(audioBytes);
+    sendAudioStream(
+      response,
+      { body: audioBytes, mimeType: artifact.mimeType },
+      request.headers.range,
+    );
   }
 }

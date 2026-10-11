@@ -178,6 +178,32 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Lý do:** Learner không được nhìn thấy audio player hỏng trong dữ liệu mặc định, đồng thời local-first vẫn chạy không cần provider hoặc cloud storage.
 - **Hệ quả:** Fake TTS chỉ xác nhận vòng đời và khả năng phát WAV, không đại diện chất lượng giọng đọc production. UI luôn có transcript fallback nếu file không thể phát.
 
+## D-024 — Nguồn audio do người dùng chọn và TTS candidate bất biến
+
+- **Trạng thái:** Accepted (audio hardening trước Increment 5)
+- **Ngày:** 2026-10-10
+- **Quyết định:** Learner chọn `system-default`, `published-audio` hoặc `browser-tts`; mặc định Automatic ưu tiên audio đã bind rồi mới fallback sang Browser Speech. Admin preview bằng Browser Speech không tạo artifact. Mỗi lần server TTS tạo candidate mới và publish bắt buộc chọn tường minh một candidate READY cho từng audio script.
+- **Provider:** Fake TTS là mặc định local. Azure AI Speech F0 được phép như một external allowance giới hạn khi operator tự cấu hình key/region ở backend; credential không đi vào database, browser, log hoặc audit metadata.
+- **Lý do:** Tách playback preference khỏi authoring provider, tránh silent source switching, giữ reproducibility của LessonVersion và cho phép mở rộng provider sau này mà không đổi UI contract.
+- **Rollback:** Đổi learner về `system-default` và admin về `fake-tts`; các LessonVersion đã publish vẫn giữ audio artifact cũ, không cần migration hay ghi đè file.
+
+## D-025 — Onboarding bắt buộc và placement evidence cách ly
+
+- **Trạng thái:** Accepted (Increment 5A1)
+- **Ngày:** 2026-10-11
+- **Quyết định:** Learner mới bắt đầu ở `PENDING` và phải tự chọn một level playable hoặc hoàn thành
+  placement 45 phút bốn kỹ năng. Placement dùng mission/lesson version riêng, checkpoint bền vững và
+  state machine `IN_PROGRESS → PROCESSING | ACTION_REQUIRED → RECOMMENDED → CONFIRMED`. Mọi quyết
+  định thay level cần confirmation UUID idempotent và transaction khóa learner profile.
+- **Cách ly:** Placement attempt không được tạo mastery, Error Bank, review schedule hoặc progression
+  evidence. Mọi consumer đó lọc tường minh `Mission.purpose=LEARNING`; onboarding query reconcile
+  trạng thái evaluation để reload không quay lại một session đã hoàn tất.
+- **Policy:** `workplace-placement-v1` cần bằng chứng evaluated riêng cho cả bốn kỹ năng và hiện chỉ
+  quảng bá candidate Foundation đã publish. Recommendation là heuristic workplace local,
+  **human calibration pending**, không tương đương chứng chỉ CEFR/TOEIC/IELTS.
+- **Lý do:** Chứng chỉ/keyword test không đảm bảo năng lực giao tiếp thực tế; learner vẫn cần quyền
+  chọn nhanh, nhưng assessment nội bộ phải bền vững, giải thích được và không làm sai lịch sử học.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

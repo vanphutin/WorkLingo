@@ -10,6 +10,9 @@ export class AuthUserDto {
   @ApiProperty({ format: 'uuid' })
   id!: string;
 
+  @ApiProperty({ enum: ['PENDING', 'COMPLETE'], nullable: true })
+  onboardingStatus!: 'PENDING' | 'COMPLETE' | null;
+
   @ApiProperty({
     enum: ['LEARNER', 'CONTENT_ADMIN', 'SYSTEM_ADMIN'],
     isArray: true,

@@ -81,11 +81,23 @@ export async function registerLearner(
   app: INestApplication,
   input: { displayName: string; email: string; password?: string },
 ) {
+  const registration = await registerPendingLearner(app, input);
+  await registration.agent.post('/api/v1/me/onboarding/self-placement').send({
+    clientConfirmationId: randomUUID(),
+    selectedLevelCode: 'FOUNDATION_1',
+  }).expect(200);
+  return registration.agent;
+}
+
+export async function registerPendingLearner(
+  app: INestApplication,
+  input: { displayName: string; email: string; password?: string },
+) {
   const agent = request.agent(app.getHttpServer());
-  await agent.post('/api/v1/auth/register').send({
+  const response = await agent.post('/api/v1/auth/register').send({
     displayName: input.displayName,
     email: input.email,
     password: input.password ?? 'a-secure-local-password',
   }).expect(201);
-  return agent;
+  return { agent, user: response.body as { id: string } };
 }

@@ -1,4 +1,4 @@
-import type { SessionAvailabilityDto, SessionDuration, SessionPlan } from '@worklingo/contracts';
+import type { MissionPurpose, SessionAvailabilityDto, SessionDuration, SessionPlan } from '@worklingo/contracts';
 
 export type { SessionAvailabilityDto };
 
@@ -36,6 +36,7 @@ export interface LearningSessionDto {
   readonly currentCheckpoint: number;
   readonly mission: { readonly id: string; readonly title: string };
   readonly plan: SessionPlan;
+  readonly purpose: MissionPurpose;
   readonly blocks: ReadonlyArray<{
     readonly id: string;
     readonly type: 'activate' | 'readDecode' | 'listenReason' | 'respond';

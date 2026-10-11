@@ -248,16 +248,18 @@ export class EvaluationService {
             data: { retentionUntil },
           });
         }
-        await this.mastery.recordAttemptEvaluation({
-          attemptId,
-          evaluationStatus: 'EVALUATED',
-          languageBlockSlugs: activity.languageBlockReferences,
-          learnerId: attempt.learnerId,
-          lessonVersionId: attempt.session.lessonVersionId,
-          score: aggregated.score,
-          skills: activity.skills,
-          tx: transaction,
-        });
+        if (attempt.session.mission.purpose === 'LEARNING') {
+          await this.mastery.recordAttemptEvaluation({
+            attemptId,
+            evaluationStatus: 'EVALUATED',
+            languageBlockSlugs: activity.languageBlockReferences,
+            learnerId: attempt.learnerId,
+            lessonVersionId: attempt.session.lessonVersionId,
+            score: aggregated.score,
+            skills: activity.skills,
+            tx: transaction,
+          });
+        }
         return { id: result.id, score: result.score };
       });
     } catch (error) {

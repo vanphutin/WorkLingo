@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 import { createValidLessonSource, loginAsContentAdmin } from './helpers/content-admin';
+import { completeSelfPlacementViaApi } from './helpers/learner-onboarding';
 
 async function expectNoHorizontalOverflow(page: Page): Promise<void> {
   const dimensions = await page.evaluate(() => ({
@@ -42,6 +43,9 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
     await page.getByLabel('Password').fill(learnerPassword);
     await page.getByRole('button', { name: 'Create account' }).click();
 
+    await expect(page).toHaveURL(/.*\/onboarding/);
+    await completeSelfPlacementViaApi(page);
+    await page.goto('/dashboard');
     await expect(page).toHaveURL(/.*\/dashboard/);
     await page.getByRole('button', { name: /start 60-minute session/i }).click();
     await expect(page).toHaveURL(/.*\/sessions\/.+/);
@@ -113,8 +117,12 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       ).toBeVisible();
 
       await adminPage.getByRole('button', { name: /generate audio/i }).first().click();
-      await expect(adminPage.getByText('READY')).toBeVisible({ timeout: 20_000 });
-      await expect(adminPage.locator('audio').first()).toBeVisible();
+      await expect(adminPage.locator('.audio-status-pill.status-ready')).toHaveText('READY', {
+        timeout: 20_000,
+      });
+      await expect(adminPage.locator('.audio-candidate audio')).toHaveCount(0);
+      await expect(adminPage.getByText(/diagnostic tone, not speech/i)).toBeVisible();
+      await adminPage.getByRole('radio', { name: /fake-tts.*fake-neutral/i }).check();
 
       await adminPage.getByRole('tab', { name: /^publish/i }).click();
       await expect(adminPage.getByText('Format validation')).toBeVisible();
@@ -170,6 +178,9 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await learner2Page.getByLabel('Password').fill(learnerPassword);
       await learner2Page.getByRole('button', { name: 'Create account' }).click();
 
+      await expect(learner2Page).toHaveURL(/.*\/onboarding/);
+      await completeSelfPlacementViaApi(learner2Page);
+      await learner2Page.goto('/dashboard');
       await expect(learner2Page).toHaveURL(/.*\/dashboard/);
       await learner2Page.getByRole('button', { name: /start 60-minute session/i }).click();
       await expect(learner2Page).toHaveURL(/.*\/sessions\/.+/);

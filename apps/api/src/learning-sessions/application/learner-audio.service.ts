@@ -58,7 +58,10 @@ export class LearnerAudioService {
       where: {
         lessonVersionId: session.lessonVersionId,
         audioScriptSlug: { in: scriptSlugs },
-        audioArtifact: { status: 'READY' },
+        audioArtifact: {
+          status: 'READY',
+          adapterName: { not: 'fake-tts' },
+        },
       },
       include: { audioArtifact: true },
     });

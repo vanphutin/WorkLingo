@@ -99,6 +99,7 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
   id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
   clientSessionId: 'f1e2d3c4-b5a6-7980-1234-56789abcdef0',
   lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+  purpose: 'learning',
   durationMinutes: 60,
   status: 'in_progress',
   currentCheckpoint,
@@ -487,8 +488,8 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.getByLabelText(/spoken response/i)).toBeInTheDocument();
   });
 
-  it('renders version-bound listening audio without autoplay', () => {
-    const { container } = render(
+  it('renders version-bound listening audio without autoplay', async () => {
+    render(
       <ActivityRenderer
         activity={mockListeningActivity}
         sessionId={createMockSession().id}
@@ -498,9 +499,9 @@ describe('SessionShell and Activity Renderers', () => {
       />,
     );
 
-    const audioElement = container.querySelector('audio');
+    const audioElement = await screen.findByLabelText('Lesson audio') as HTMLAudioElement;
     expect(audioElement).toBeInTheDocument();
-    expect(audioElement?.autoplay).toBe(false);
+    expect(audioElement.autoplay).toBe(false);
   });
 
   it('exposes semantic landmarks in reading order', () => {
@@ -564,11 +565,57 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
   });
 
+  it('uses placement context and completion destination without changing learning defaults', () => {
+    const completedSession: LearningSessionDto = {
+      ...createMockSession(5),
+      status: 'completed',
+      blocks: createMockSession(5).blocks.map((block) => ({
+        ...block,
+        status: 'completed' as const,
+      })),
+    };
+
+    const { rerender } = render(
+      <SessionShell
+        session={completedSession}
+        currentActivity={null}
+        onSubmitAttempt={vi.fn()}
+        onPauseSession={vi.fn()}
+        onResumeSession={vi.fn()}
+        isCompleted
+        contextLabel="Placement assessment"
+        completionHref="/onboarding"
+      />,
+    );
+
+    expect(screen.getByText('Placement assessment')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Placement assessment complete' }))
+      .toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Review assessment status' }))
+      .toHaveAttribute('href', '/onboarding');
+
+    rerender(
+      <SessionShell
+        session={completedSession}
+        currentActivity={null}
+        onSubmitAttempt={vi.fn()}
+        onPauseSession={vi.fn()}
+        onResumeSession={vi.fn()}
+        isCompleted
+      />,
+    );
+    expect(screen.getByText('Workplace Learning Session')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Session Completed!' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Return to Dashboard' }))
+      .toHaveAttribute('href', '/dashboard');
+  });
+
   it('correctly displays 45-minute session with 3 blocks and dynamic duration label in support panel', () => {
     const session45: LearningSessionDto = {
       id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
       clientSessionId: 'f1e2d3c4-b5a6-7980-1234-56789abcdef0',
       lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+      purpose: 'learning',
       durationMinutes: 45,
       status: 'in_progress',
       currentCheckpoint: 0,
@@ -669,6 +716,7 @@ describe('SessionShell and Activity Renderers', () => {
       id: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
       clientSessionId: 'f1e2d3c4-b5a6-7980-1234-56789abcdef0',
       lessonVersionId: 'b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e',
+      purpose: 'learning',
       durationMinutes: 90,
       status: 'in_progress',
       currentCheckpoint: 3,

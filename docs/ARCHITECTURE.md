@@ -147,6 +147,42 @@ raw source
 → publish transaction
 ```
 
+### Onboarding và placement
+
+```text
+register learner (PENDING)
+→ choose playable level ───────────────────────────────→ confirm + open dashboard
+└→ create version-bound PLACEMENT session (45 minutes)
+   → resume from durable checkpoint
+   → collect separate reading/listening/speaking/writing evidence
+   → durable provider jobs + bounded retry
+   → recommendation snapshot (workplace-placement-v1)
+   → explicit learner confirmation → open dashboard
+```
+
+`GET /me/onboarding` reconciles the active attempt with its session/evaluation state before returning
+`nextAction`; reload therefore cannot send a completed placement back into the assessment. Placement
+sessions reuse the learning-session engine but every mastery/progression consumer filters
+`Mission.purpose=LEARNING`. Recommendation evidence is isolated and never becomes ordinary mastery.
+The placement mission and `LessonVersion` are immutable for the life of the attempt.
+
+### Audio source resolution và publish binding
+
+```text
+Admin script → Browser Speech preview (không tạo artifact)
+             → selected TTS provider → immutable candidate in local storage
+             → explicit READY candidate selection → atomic LessonVersion binding
+
+Learner setting
+  browser-tts     → Web Speech API only
+  published-audio → version-bound media or explicit error
+  system-default  → version-bound media, then Browser Speech fallback on playback error
+```
+
+Frontend không nhận provider credential và không autoplay. Admin/Learner media URL đều qua API đã
+xác thực; authorization chạy trước range parsing. Session đã tạo giữ nguyên `LessonVersion` và audio
+candidate đã bind, kể cả khi Admin generate hoặc publish candidate mới.
+
 ## 7. Job processing
 
 Job table tối thiểu chứa type, payload reference, status, attempts, available time, idempotency key và error summary.

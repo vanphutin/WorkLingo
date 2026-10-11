@@ -84,7 +84,9 @@ export async function availableNextLevel(database: Prisma.TransactionClient, lev
   const next = await database.level.findFirst({
     where: { pathId: current.pathId, order: { gt: current.order }, path: { status: 'PUBLISHED' } },
     orderBy: { order: 'asc' },
-    include: { missions: { where: { status: 'PUBLISHED' }, include: publishedLessonsInclude } },
+    include: {
+      missions: { where: { purpose: 'LEARNING', status: 'PUBLISHED' }, include: publishedLessonsInclude },
+    },
   });
   if (!next) return null;
   // Every required published mission must be startable, not merely contain four skill names.
@@ -98,7 +100,11 @@ export async function readCheckpointEvidence(
   database: Prisma.TransactionClient, learnerId: string, levelCode: string, session?: CheckpointSession,
 ): Promise<CheckpointEvidence> {
   const missions = await database.mission.findMany({
-    where: { status: 'PUBLISHED', level: { code: levelCode, path: { status: 'PUBLISHED' } } },
+    where: {
+      purpose: 'LEARNING',
+      status: 'PUBLISHED',
+      level: { code: levelCode, path: { status: 'PUBLISHED' } },
+    },
     include: publishedLessonsInclude,
     orderBy: [{ order: 'asc' }, { id: 'asc' }],
   });

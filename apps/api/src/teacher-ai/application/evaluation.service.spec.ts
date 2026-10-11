@@ -31,7 +31,7 @@ const writingAttempt = {
   recording: null,
   session: {
     lessonVersionId: '00000000-0000-4000-8000-000000000004',
-    mission: { level: { code: 'FOUNDATION_1' } },
+    mission: { level: { code: 'FOUNDATION_1' }, purpose: 'LEARNING' },
   },
 } as const;
 
@@ -158,6 +158,35 @@ describe('EvaluationService', () => {
 
     await expect(service.evaluateAttempt(writingAttempt.id)).resolves.toEqual(existing);
     expect(language.evaluate).not.toHaveBeenCalled();
+    expect(mastery.recordAttemptEvaluation).not.toHaveBeenCalled();
+  });
+
+  it('persists placement evaluation without writing learning mastery', async () => {
+    const transaction = {
+      activityAttempt: { update: vi.fn().mockResolvedValue({}) },
+      evaluationResult: {
+        create: vi.fn().mockResolvedValue({ id: 'placement-result', score: 0.825 }),
+        findUnique: vi.fn().mockResolvedValue(null),
+      },
+      recording: { update: vi.fn() },
+    };
+    const database = {
+      activityAttempt: { findUnique: vi.fn().mockResolvedValue({
+        ...writingAttempt,
+        session: { ...writingAttempt.session, mission: { ...writingAttempt.session.mission, purpose: 'PLACEMENT' } },
+      }) },
+      $transaction: vi.fn(async (work) => work(transaction)),
+    } as unknown as PrismaService;
+    const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
+    const service = new EvaluationService(
+      database,
+      { evaluate: vi.fn().mockResolvedValue(languageResult) } as unknown as LanguageEvaluationPort,
+      mastery,
+      { recordingRetentionDays: 7 },
+    );
+
+    await service.evaluateAttempt(writingAttempt.id);
+
     expect(mastery.recordAttemptEvaluation).not.toHaveBeenCalled();
   });
 });

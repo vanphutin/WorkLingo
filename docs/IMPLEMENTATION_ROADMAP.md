@@ -127,6 +127,18 @@ Vận hành: `docs/INCREMENT_4_DEMO.md`. Calibration: `docs/AI_CALIBRATION.md`. 
 
 **Required gates:** toàn bộ MVP E2E journeys, backup/restore rehearsal, accessibility smoke, security review và release checklist.
 
+**Trạng thái Increment 5A1 (2026-10-11):** Luồng onboarding bắt buộc đã hoàn thiện cho learner mới:
+self-placement vào level playable hoặc placement 45 phút bốn kỹ năng, resume/checkpoint, durable
+evaluation, recommendation và explicit confirmation. Placement evidence được cách ly khỏi
+mastery/progression; route guard, idempotency, ownership và desktop/mobile journey đã có test. Policy
+`workplace-placement-v1` hiện chỉ đưa ra candidate Foundation có nội dung đã publish và vẫn
+**human calibration pending**; chưa đủ điều kiện tuyên bố CEFR/certification equivalence hay pilot-ready.
+Các phần engagement, admin curriculum/audit/observability, security/performance và release rehearsal
+còn lại tiếp tục ở 5A2+.
+
+Vận hành: `docs/INCREMENT_5A_DEMO.md`. Kế hoạch chi tiết:
+`docs/superpowers/plans/2026-10-09-increment-5a1-onboarding-placement.md`.
+
 ## Thứ tự phụ thuộc
 
 ```text

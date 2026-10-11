@@ -59,7 +59,10 @@ describe('parseAppConfig', () => {
       recordingMaxDurationSeconds: 120,
       recordingRetentionDays: 7,
       speechToText: { locale: 'en-US', provider: 'fake' },
-      textToSpeech: { provider: 'fake', voice: 'en-US-JennyNeural' },
+      textToSpeech: {
+        azure: { voice: 'en-US-JennyNeural' },
+        defaultProviderId: 'fake-tts',
+      },
     });
     expect(config.jobs).toEqual({
       leaseMs: 30_000,
@@ -80,7 +83,8 @@ describe('parseAppConfig', () => {
 
     expect(config.ai.speechToText.provider).toBe('fake');
     expect(config.ai.languageEvaluation.provider).toBe('fake');
-    expect(config.ai.textToSpeech.provider).toBe('fake');
+    expect(config.ai.textToSpeech.defaultProviderId).toBe('fake-tts');
+    expect(config.ai.textToSpeech.azure).toEqual({ voice: 'en-US-JennyNeural' });
   });
 
   it('permits deterministic fake failures only in explicit E2E mode', () => {
@@ -112,6 +116,44 @@ describe('parseAppConfig', () => {
     expect(() => parseAppConfig({ ...validEnvironment, [key]: value })).toThrow(missingField);
   });
 
+  it.each(['microsoft', 'azure-speech'] as const)(
+    'maps WORKLINGO_TTS_PROVIDER=%s to the canonical Azure provider ID',
+    (provider) => {
+      const config = parseAppConfig({
+        ...validEnvironment,
+        MICROSOFT_SPEECH_KEY: 'test-only-key',
+        MICROSOFT_SPEECH_REGION: 'southeastasia',
+        WORKLINGO_TTS_PROVIDER: provider,
+      });
+
+      expect(config.ai.textToSpeech).toEqual({
+        azure: {
+          key: 'test-only-key',
+          region: 'southeastasia',
+          voice: 'en-US-JennyNeural',
+        },
+        defaultProviderId: 'azure-speech',
+      });
+    },
+  );
+
+  it('retains optional Azure capability configuration while fake remains the default', () => {
+    const config = parseAppConfig({
+      ...validEnvironment,
+      MICROSOFT_SPEECH_KEY: 'test-only-key',
+      MICROSOFT_SPEECH_REGION: 'southeastasia',
+    });
+
+    expect(config.ai.textToSpeech).toEqual({
+      azure: {
+        key: 'test-only-key',
+        region: 'southeastasia',
+        voice: 'en-US-JennyNeural',
+      },
+      defaultProviderId: 'fake-tts',
+    });
+  });
+
   it('accepts independently configured Microsoft Speech and OpenAI-compatible providers', () => {
     const config = parseAppConfig({
       ...validEnvironment,
@@ -134,7 +176,7 @@ describe('parseAppConfig', () => {
       model: 'evaluation-model',
       provider: 'openai-compatible',
     });
-    expect(config.ai.textToSpeech).toMatchObject({ provider: 'microsoft' });
+    expect(config.ai.textToSpeech).toMatchObject({ defaultProviderId: 'azure-speech' });
   });
 
   it.each([

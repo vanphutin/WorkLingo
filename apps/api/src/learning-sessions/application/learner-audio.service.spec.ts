@@ -45,6 +45,10 @@ describe('LearnerAudioService', () => {
       where: expect.objectContaining({
         lessonVersionId,
         audioScriptSlug: { in: expect.arrayContaining(['dialogue', 'call-v1']) },
+        audioArtifact: {
+          status: 'READY',
+          adapterName: { not: 'fake-tts' },
+        },
       }),
     }));
     expect(storage.read).toHaveBeenCalledWith('generated-audio/version-n');

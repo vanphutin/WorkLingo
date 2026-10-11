@@ -10,6 +10,7 @@ export class LearningSessionResponseDto {
   @ApiProperty({ format: 'uuid' }) lessonVersionId!: string;
   @ApiProperty({ additionalProperties: true, type: 'object' }) mission!: { id: string; title: string };
   @ApiProperty({ additionalProperties: true, type: 'object' }) plan!: object;
+  @ApiProperty({ enum: ['learning', 'placement'] }) purpose!: string;
   @ApiProperty({ enum: ['planned', 'in_progress', 'paused', 'completed', 'abandoned'] }) status!: string;
 }
 

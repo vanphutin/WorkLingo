@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import type { AuthUser } from '@worklingo/contracts';
@@ -14,6 +14,7 @@ export default function LearnerLayout({
   readonly children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -28,6 +29,10 @@ export default function LearnerLayout({
         setAuthError(false);
         const user = await apiClient.getCurrentUser();
         if (isMounted) {
+          if (user.onboardingStatus === 'PENDING' && !pathname.startsWith('/onboarding')) {
+            router.replace('/onboarding');
+            return;
+          }
           setCurrentUser(user);
           setIsLoading(false);
         }
@@ -48,7 +53,7 @@ export default function LearnerLayout({
     return () => {
       isMounted = false;
     };
-  }, [authRetryKey, router]);
+  }, [authRetryKey, pathname, router]);
 
   if (isLoading) {
     return (
@@ -84,6 +89,9 @@ export default function LearnerLayout({
           </Link>
 
           <div className="nav-user-meta">
+            <Link href="/settings/audio" className="nav-link">
+              Audio settings
+            </Link>
             <span className="user-greeting">
               Learner: <strong>{currentUser?.displayName}</strong>
             </span>

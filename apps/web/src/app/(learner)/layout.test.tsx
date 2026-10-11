@@ -9,8 +9,10 @@ import LearnerLayout from './layout';
 
 const replace = vi.fn();
 const router = { push: vi.fn(), replace };
+let pathname = '/dashboard';
 
 vi.mock('next/navigation', () => ({
+  usePathname: () => pathname,
   useRouter: () => router,
 }));
 
@@ -28,6 +30,7 @@ vi.mock('../../lib/api/api-client', async (importOriginal) => {
 afterEach(() => {
   cleanup();
   vi.resetAllMocks();
+  pathname = '/dashboard';
 });
 
 describe('LearnerLayout', () => {
@@ -51,6 +54,7 @@ describe('LearnerLayout', () => {
         displayName: 'An Nguyen',
         email: 'an@example.test',
         id: '828a1927-c4fa-487f-93d5-96c556667869',
+        onboardingStatus: 'COMPLETE',
         roles: ['LEARNER'],
       });
 
@@ -62,5 +66,47 @@ describe('LearnerLayout', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
     expect(await screen.findByText('Protected content')).toBeInTheDocument();
+  });
+
+  it('redirects a pending learner away from ordinary learner routes', async () => {
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({
+      displayName: 'Minh Tran',
+      email: 'minh@example.test',
+      id: 'ea7c96fc-4360-4861-9340-2324b97bacb9',
+      onboardingStatus: 'PENDING',
+      roles: ['LEARNER'],
+    });
+
+    render(<LearnerLayout>Dashboard content</LearnerLayout>);
+
+    await waitFor(() => expect(replace).toHaveBeenCalledWith('/onboarding'));
+    expect(screen.queryByText('Dashboard content')).not.toBeInTheDocument();
+  });
+
+  it('allows a pending learner to use onboarding routes', async () => {
+    pathname = '/onboarding';
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({
+      displayName: 'Minh Tran',
+      email: 'minh@example.test',
+      id: 'c2c43608-7a78-4984-a8d0-33a768ce072b',
+      onboardingStatus: 'PENDING',
+      roles: ['LEARNER'],
+    });
+
+    render(<LearnerLayout>Onboarding content</LearnerLayout>);
+
+    expect(await screen.findByText('Onboarding content')).toBeInTheDocument();
+    expect(replace).not.toHaveBeenCalled();
+  });
+
+  it('links authenticated learners to audio settings', async () => {
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({
+      displayName: 'An Nguyen', email: 'an@example.test',
+      id: '828a1927-c4fa-487f-93d5-96c556667869',
+      onboardingStatus: 'COMPLETE', roles: ['LEARNER'],
+    });
+    render(<LearnerLayout>Dashboard content</LearnerLayout>);
+    expect(await screen.findByRole('link', { name: 'Audio settings' }))
+      .toHaveAttribute('href', '/settings/audio');
   });
 });

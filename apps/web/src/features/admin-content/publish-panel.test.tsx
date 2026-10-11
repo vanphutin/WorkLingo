@@ -87,6 +87,7 @@ describe('PublishPanel', () => {
         sourceHash="hash-3"
         canPublish={true}
         isAudioReady={true}
+        selectedAudioArtifacts={{ 'complaint-call': '77777777-7777-4777-8777-777777777777' }}
         status="VALIDATED"
         onPublished={onPublished}
       />,
@@ -107,6 +108,9 @@ describe('PublishPanel', () => {
           expectedDraftRevision: 3,
           expectedSourceHash: 'hash-3',
           idempotencyKey: expect.stringContaining('pub-11111111-1111-4111-8111-111111111111-3'),
+          selectedAudioArtifacts: {
+            'complaint-call': '77777777-7777-4777-8777-777777777777',
+          },
         },
       );
       expect(onPublished).toHaveBeenCalledWith(

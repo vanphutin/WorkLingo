@@ -20,7 +20,7 @@ describe('version-bound learner audio', () => {
   beforeEach(async () => context.resetLearners());
   afterAll(async () => context?.close());
 
-  it('streams playable WAV audio for the seeded listening activity', async () => {
+  it('does not expose seeded simulation tones as learner speech', async () => {
     const learner = await registerLearner(context.app, {
       displayName: 'Seed Audio Learner', email: 'seed-audio@example.test',
     });
@@ -40,7 +40,8 @@ describe('version-bound learner audio', () => {
       seededReferences.some((reference) =>
         reference.lessonVersionId === session.lessonVersionId &&
         listening.contentReferences.includes(reference.audioScriptSlug) &&
-        reference.audioArtifact.status === 'READY'),
+        reference.audioArtifact.status === 'READY' &&
+        reference.audioArtifact.adapterName === 'fake-tts'),
       JSON.stringify({
         contentReferences: listening.contentReferences,
         seededReferences,
@@ -48,17 +49,16 @@ describe('version-bound learner audio', () => {
       }),
     ).toBe(true);
 
-    const response = await learner.get(
+    await learner.get(
       `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
-    ).buffer(true).parse((res, callback) => {
-      const chunks: Buffer[] = [];
-      res.on('data', (chunk: Buffer) => chunks.push(chunk));
-      res.on('end', () => callback(null, Buffer.concat(chunks)));
-    });
+    ).expect(404);
 
-    expect(response.status, JSON.stringify(response.body)).toBe(200);
-    expect(response.headers['content-type']).toContain('audio/wav');
-    expect(response.body.subarray(0, 4).toString('ascii')).toBe('RIFF');
+    const other = await registerLearner(context.app, {
+      displayName: 'Foreign Audio Learner', email: 'foreign-audio@example.test',
+    });
+    await other.get(
+      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
+    ).set('Range', 'bytes=999999-').expect(404);
   });
 
   it('streams the artifact attached to the session version after the lesson current version changes', async () => {
@@ -128,7 +128,7 @@ describe('version-bound learner audio', () => {
     });
     const oldArtifact = await context.database.audioArtifact.create({
       data: {
-        adapterName: 'fake-tts',
+        adapterName: 'azure-speech',
         audioScriptSlug,
         byteSize: oldObject.size,
         checksum: randomUUID(),

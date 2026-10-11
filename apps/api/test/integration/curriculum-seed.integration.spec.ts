@@ -6,7 +6,7 @@ import path from 'node:path';
 import { Test, type TestingModule } from '@nestjs/testing';
 import { BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaClient, type Prisma } from '@prisma/client';
-import { foundationMissionFixture } from '@worklingo/test-fixtures';
+import { foundationMissionFixture, placementMissionFixture } from '@worklingo/test-fixtures';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { PrismaService } from '../../src/common/database/prisma.service.js';
@@ -14,6 +14,8 @@ import { CurriculumService } from '../../src/curriculum/application/curriculum.s
 import { CurriculumModule } from '../../src/curriculum/curriculum.module.js';
 import { lessonSnapshotSchema } from '../../src/curriculum/domain/curriculum.types.js';
 import { seedFoundationCurriculum } from '../../src/curriculum/infrastructure/seed-foundation.js';
+import { seedPlacementCurriculum } from '../../src/curriculum/infrastructure/seed-placement.js';
+import { planFoundationSession } from '../../src/learning-sessions/domain/session-planner.js';
 
 // Database persistence and the application read/write boundary are approved Task 4 seams.
 describe('Foundation curriculum seed', () => {
@@ -78,6 +80,42 @@ describe('Foundation curriculum seed', () => {
     await expect(database.lessonVersion.count()).resolves.toBe(1);
     await expect(database.activity.count()).resolves.toBe(5);
     await expect(database.languageBlock.count()).resolves.toBe(4);
+  });
+
+  it('isolates the idempotent placement seed and plans its four skills at 45 minutes', async () => {
+    await seedFoundationCurriculum(database);
+    await seedPlacementCurriculum(database);
+    await seedPlacementCurriculum(database);
+
+    const normalMissions = await curriculum.getPublishedMissionsForLevel('FOUNDATION_1');
+    const placement = await curriculum.getPublishedPlacementMission();
+    const placementMissions = await curriculum.getPublishedMissionsForLevel('FOUNDATION_1', 'placement');
+
+    expect(normalMissions.map((mission) => mission.slug)).toEqual([foundationMissionFixture.slug]);
+    expect(normalMissions.every((mission) => mission.purpose === 'learning')).toBe(true);
+    expect(placementMissions).toEqual([placement]);
+    expect(placement).toMatchObject({
+      purpose: 'placement',
+      slug: placementMissionFixture.slug,
+      levelCode: 'FOUNDATION_1',
+    });
+
+    const plan = planFoundationSession({ mission: placement, durationMinutes: 45 });
+    expect(plan.blocks.map((block) => block.type)).toEqual(['readDecode', 'listenReason', 'respond']);
+    expect(new Set(plan.blocks.flatMap((block) => block.skills))).toEqual(
+      new Set(['reading', 'listening', 'speaking', 'writing']),
+    );
+    await expect(database.mission.count({ where: { purpose: 'PLACEMENT' } })).resolves.toBe(1);
+    await expect(database.lessonVersion.count({
+      where: { lesson: { slug: placementMissionFixture.lesson.slug } },
+    })).resolves.toBe(1);
+    await expect(database.audioArtifact.findFirstOrThrow({
+      where: {
+        lessonVersionReferences: {
+          some: { lessonVersionId: placement.lessonVersion.id },
+        },
+      },
+    })).resolves.toMatchObject({ mimeType: 'audio/wav', status: 'READY' });
   });
 
   it('repairs a stale current pointer without republishing an intentionally archived lesson', async () => {

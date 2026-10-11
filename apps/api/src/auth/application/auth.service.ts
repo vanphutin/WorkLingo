@@ -81,7 +81,7 @@ export class AuthService {
 
   async authenticate(sessionToken: string): Promise<AuthUser> {
     const session = await this.database.userSession.findUnique({
-      include: { user: true },
+      include: { user: { include: { profile: true } } },
       where: { tokenHash: this.hashSessionToken(sessionToken) },
     });
 

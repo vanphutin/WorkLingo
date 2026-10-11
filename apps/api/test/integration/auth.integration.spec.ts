@@ -45,11 +45,12 @@ describe('authentication', () => {
     expect(response.body).toMatchObject({
       displayName: 'An Nguyen',
       email: 'an@example.com',
+      onboardingStatus: 'PENDING',
       roles: ['LEARNER'],
     });
     expect(response.body).not.toHaveProperty('passwordHash');
     await expect(database.learnerProfile.findUnique({ where: { userId: response.body.id } }))
-      .resolves.toMatchObject({ currentLevelCode: 'FOUNDATION_1' });
+      .resolves.toMatchObject({ currentLevelCode: 'FOUNDATION_1', onboardingStatus: 'PENDING' });
     expect(response.headers['set-cookie']?.[0]).toMatch(
       /^worklingo_session=.*HttpOnly.*SameSite=Lax/iu,
     );

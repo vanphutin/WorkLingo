@@ -8,7 +8,7 @@ function mission(n: number, text: string): PublishedMission {
   const source = foundationMissionFixture;
   return {
     id: id(n), slug: `mission-${n}`, title: 'Workplace mission', objective: 'Use language at work',
-    levelCode: 'FOUNDATION_1',
+    levelCode: 'FOUNDATION_1', purpose: 'learning',
     lessonVersion: { ...lessonSnapshotSchema.parse({
       ...source.lesson,
       contentBlocks: source.lesson.contentBlocks.map((c, i) => ({ ...c, id: id(n + i + 20), text })),

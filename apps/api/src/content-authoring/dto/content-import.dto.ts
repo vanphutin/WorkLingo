@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsString, MaxLength, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsObject, IsString, MaxLength, Min } from 'class-validator';
 
 export class CreateContentImportDto {
   @ApiProperty({ description: 'Raw lesson format source text' })
@@ -44,4 +44,12 @@ export class PublishContentImportDto {
   @IsString()
   @IsNotEmpty()
   idempotencyKey!: string;
+
+  @ApiProperty({
+    description: 'READY audio artifact selected for each required script slug',
+    type: 'object',
+    additionalProperties: { type: 'string', format: 'uuid' },
+  })
+  @IsObject()
+  selectedAudioArtifacts!: Record<string, string>;
 }

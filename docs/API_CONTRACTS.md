@@ -72,24 +72,51 @@ Thu hồi session hiện tại.
 
 Trả profile, roles, preferences và enrollment summary.
 
-## 4. Onboarding
+## 4. Onboarding và placement
 
-### `POST /onboarding/self-placement`
+Tài khoản Learner mới có `onboardingStatus=PENDING`; dashboard, mastery và learning session thông
+thường chuyển hướng về `/onboarding` cho đến khi learner hoàn tất một trong hai đường dưới đây.
+
+### `GET /me/onboarding`
+
+Trả level có nội dung workplace đủ bốn kỹ năng, placement attempt đang hoạt động và `nextAction`.
+Khi attempt tồn tại, endpoint đồng bộ trạng thái session/evaluation trước khi trả dữ liệu để một phiên
+đã hoàn tất không bị hiển thị sai là cần tiếp tục.
+
+### `POST /me/onboarding/self-placement`
 
 ```json
 {
-  "selectedLevelCode": "FOUNDATION_1",
-  "reason": "learner_choice"
+  "clientConfirmationId": "uuid",
+  "selectedLevelCode": "FOUNDATION_1"
 }
 ```
 
-### `POST /assessments/{assessmentId}/attempts`
+Chỉ level `available=true` mới được chọn. UUID là idempotency key: replay cùng payload trả cùng kết
+quả; tái sử dụng UUID cho payload khác trả 409.
 
-Tạo attempt cho placement/checkpoint/gateway.
+### `POST /me/onboarding/placement-attempts`
 
-### `POST /assessment-attempts/{attemptId}/submit`
+Nhận `{ "clientAttemptId": "uuid" }`, tạo đúng một learning session 45 phút từ mission
+`purpose=PLACEMENT` và bind `LessonVersion` bất biến. Nếu learner đã có attempt chưa xác nhận, API
+trả 409 `PLACEMENT_ATTEMPT_ACTIVE` để client tải lại trạng thái và resume.
 
-Trả trạng thái `processing` nếu có phần AI, sau đó client đọc status endpoint.
+### `GET /me/onboarding/placement-attempts/{id}`
+
+Refresh evidence bốn kỹ năng và trả state machine:
+`IN_PROGRESS → PROCESSING | ACTION_REQUIRED → RECOMMENDED → CONFIRMED`. `nextAction` tương ứng là
+`continue_assessment`, `wait_for_evaluation`, `retry_evaluation`, `review_recommendation` hoặc
+`open_dashboard`. Chỉ attempt của learner hiện tại được phép đọc.
+
+### `POST /me/onboarding/placement-attempts/{id}/confirm`
+
+Nhận `{ "clientConfirmationId": "uuid" }`. Chỉ recommendation còn hợp lệ và level vẫn playable
+mới được xác nhận; transaction khóa learner profile, cập nhật level/onboarding, ghi audit và mutation
+receipt đúng một lần. Placement evidence không tạo MasteryEvent, Error Bank hoặc progression evidence.
+
+Policy `workplace-placement-v1` yêu cầu ít nhất một kết quả evaluated riêng cho reading, listening,
+speaking và writing. Hiện policy chỉ quảng bá candidate Foundation đã publish; đây là heuristic local,
+không phải chứng nhận CEFR/TOEIC/IELTS và vẫn **human calibration pending**.
 
 ## 5. Learning session
 
@@ -410,14 +437,31 @@ Trả normalized lesson draft từ backend, validation issues và `canPublish`.
 {
   "audioScriptSlug": "complaint-call",
   "idempotencyKey": "uuid-or-client-operation-key",
-  "voiceConfig": {}
+  "providerId": "fake-tts",
+  "voiceId": "fake-neutral"
 }
 ```
 
 Trả 202 với `jobId`. `GET /jobs/{id}` dùng để poll theo trạng thái; endpoint job trong Increment 2
 cũng chỉ dành cho Admin. `GET /admin/content-imports/{id}/audio` liệt kê artifact và
 `GET /admin/audio-artifacts/{id}/content` stream file đã được authorize. Fake output luôn có nhãn
-`Audio mô phỏng — chưa phải giọng đọc phát hành`.
+`Simulation audio — not a release voice`. Mỗi lần generate tạo một candidate mới; không ghi
+đè bytes hoặc metadata của candidate cũ. Polling phải có giới hạn và job `FAILED`/timeout phải hiển thị
+lỗi có thể hành động.
+
+### `GET|PATCH /me/audio-settings`
+
+Learner đọc hoặc lưu `{ "sourceId": "system-default | published-audio | browser-tts",
+"browserVoiceId": "string | null" }`. Dữ liệu luôn owner-scoped. `system-default` thử audio đã publish
+trước rồi mới cho phép Browser Speech fallback; `published-audio` không tự đổi nguồn khi file lỗi;
+`browser-tts` không request media URL và không autoplay.
+
+### `GET|PATCH /admin/audio-settings`
+
+Admin đọc readiness an toàn của provider và lưu `{ "providerId": "fake-tts | azure-speech",
+"defaultVoiceId": "string | null" }`. Response có display name, locale, trạng thái available và cờ
+simulation; tuyệt đối không trả key, region secret hoặc credential metadata. Provider thiếu cấu hình
+hoặc không được đăng ký trả 422 khi PATCH.
 
 ### `POST /admin/content-imports/{id}/publish`
 
@@ -428,13 +472,24 @@ hiện tại.
 {
   "expectedDraftRevision": 4,
   "expectedSourceHash": "sha256-hex",
-  "idempotencyKey": "uuid-or-client-operation-key"
+  "idempotencyKey": "uuid-or-client-operation-key",
+  "selectedAudioArtifacts": {
+    "complaint-call": "audio-artifact-uuid"
+  }
 }
 ```
 
 Response trả `lessonId`, `lessonVersionId`, version và `publishedAt`. Publish đồng thời cùng key trả
 cùng response; key khác trên cùng draft chỉ cho một request thành công. Archive dùng
 `POST /admin/lesson-versions/{id}/archive`; thao tác này idempotent và xóa con trỏ current nếu archive phiên bản đang phát hành. Không có hard-delete endpoint.
+
+### Audio byte ranges
+
+`GET /admin/audio-artifacts/{id}/content` và
+`GET /learning-sessions/{sessionId}/activities/{activityId}/audio` kiểm tra role/ownership trước khi
+phân tích `Range`. Không có range trả 200; một byte range hợp lệ trả 206 cùng `Accept-Ranges`,
+`Content-Range`, `Content-Length`, MIME và `Cache-Control: private, no-store`. Range sai hoặc ngoài file
+trả 416 cùng `Content-Range: bytes */{size}`. Multiple ranges không được hỗ trợ.
 
 ## 9. Admin curriculum
 

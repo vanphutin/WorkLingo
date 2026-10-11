@@ -53,13 +53,19 @@ export async function seedWorkplaceTransferCurriculum(
     };
     const sourceHash = createHash('sha256').update(JSON.stringify(template)).digest('hex');
     const level = await tx.level.findUniqueOrThrow({ where: { code: 'FOUNDATION_1' } });
-    const last = await tx.mission.findFirst({ where: { levelId: level.id }, orderBy: { order: 'desc' } });
+    const last = await tx.mission.findFirst({
+      where: { levelId: level.id, purpose: 'LEARNING' },
+      orderBy: { order: 'desc' },
+    });
     const mission = await tx.mission.upsert({
       where: { slug: 'welcome-a-workplace-customer' }, update: {},
       create: { slug: 'welcome-a-workplace-customer', title: 'Welcome a customer to your workplace',
         objective: 'Use introductions and offers of help with a workplace visitor.', levelId: level.id,
-        order: (last?.order ?? 0) + 1, status: 'PUBLISHED' },
+        order: (last?.order ?? 0) + 1, purpose: 'LEARNING', status: 'PUBLISHED' },
     });
+    if (mission.levelId !== level.id || mission.purpose !== 'LEARNING') {
+      throw new ConflictException('Transfer mission belongs to another level or purpose');
+    }
     const lesson = await tx.lesson.upsert({ where: { slug: 'customer-visit' }, update: {}, create: { slug: 'customer-visit' } });
     await tx.missionLesson.upsert({ where: { missionId_lessonId: { missionId: mission.id, lessonId: lesson.id } },
       update: {}, create: { missionId: mission.id, lessonId: lesson.id, order: 0 } });

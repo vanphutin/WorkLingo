@@ -12,6 +12,16 @@ export class GenerateAudioDto {
   @IsNotEmpty()
   idempotencyKey!: string;
 
+  @ApiPropertyOptional({ description: 'Canonical server TTS provider ID' })
+  @IsString()
+  @IsOptional()
+  providerId?: string;
+
+  @ApiPropertyOptional({ description: 'Provider voice ID' })
+  @IsString()
+  @IsOptional()
+  voiceId?: string;
+
   @ApiPropertyOptional({ description: 'Voice configuration object' })
   @IsObject()
   @IsOptional()

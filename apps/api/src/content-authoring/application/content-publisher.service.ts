@@ -36,6 +36,7 @@ export class ContentPublisherService {
           expectedDraftRevision: input.expectedDraftRevision,
           expectedSourceHash: input.expectedSourceHash,
           idempotencyKey: input.idempotencyKey,
+          selectedAudioArtifacts: input.selectedAudioArtifacts,
         }),
       )
       .digest('hex');
@@ -145,6 +146,16 @@ export class ContentPublisherService {
       });
     }
 
+    const selectedAudioArtifacts = input.selectedAudioArtifacts ?? {};
+    const selectedIds = Object.values(selectedAudioArtifacts);
+    if (new Set(selectedIds).size !== selectedIds.length) {
+      throw new UnprocessableEntityException({
+        code: ContentAuthoringErrorCode.AUDIO_NOT_READY,
+        message: 'Each audio script must select a distinct artifact.',
+        statusCode: 422,
+      });
+    }
+    const requiredAudioRefs = new Set<string>();
     for (const act of parseRes.document.activities) {
       if (act.activityType === 'listening') {
         const audioRef = act.audioRef;
@@ -163,11 +174,13 @@ export class ContentPublisherService {
             statusCode: 422,
           });
         }
+        requiredAudioRefs.add(audioRef);
 
         const artifact = contentImport.audioArtifacts.find(
-          (a) => a.audioScriptSlug === audioRef && a.status === 'READY',
+          (candidate) => candidate.id === selectedAudioArtifacts[audioRef],
         );
-        if (!artifact) {
+        if (!artifact || artifact.contentImportId !== importId ||
+            artifact.audioScriptSlug !== audioRef || artifact.status !== 'READY') {
           throw new UnprocessableEntityException({
             code: ContentAuthoringErrorCode.AUDIO_NOT_READY,
             message: `Audio artifact for script "${audioRef}" is not ready`,
@@ -183,6 +196,13 @@ export class ContentPublisherService {
           });
         }
       }
+    }
+    if (Object.keys(selectedAudioArtifacts).some((slug) => !requiredAudioRefs.has(slug))) {
+      throw new UnprocessableEntityException({
+        code: ContentAuthoringErrorCode.AUDIO_NOT_READY,
+        message: 'Audio selection contains an unreferenced script.',
+        statusCode: 422,
+      });
     }
 
     // 4. Execute publication transaction with PostgreSQL advisory lock
@@ -254,6 +274,30 @@ export class ContentPublisherService {
           message: 'Content import must be validated before publish',
           statusCode: 422,
         });
+      }
+
+      const lockedSelectedArtifacts = await tx.audioArtifact.findMany({
+        where: { id: { in: selectedIds } },
+      });
+      for (const audioRef of requiredAudioRefs) {
+        const selectedId = selectedAudioArtifacts[audioRef];
+        const artifact = lockedSelectedArtifacts.find((candidate) => candidate.id === selectedId);
+        const scriptInfo = audioScriptsMap.get(audioRef);
+        if (!artifact || !scriptInfo || artifact.contentImportId !== importId ||
+            artifact.audioScriptSlug !== audioRef || artifact.status !== 'READY') {
+          throw new UnprocessableEntityException({
+            code: ContentAuthoringErrorCode.AUDIO_NOT_READY,
+            message: `Selected audio artifact for script "${audioRef}" is not ready`,
+            statusCode: 422,
+          });
+        }
+        if (artifact.scriptHash !== scriptInfo.hash) {
+          throw new UnprocessableEntityException({
+            code: ContentAuthoringErrorCode.AUDIO_SCRIPT_STALE,
+            message: `Selected audio artifact for script "${audioRef}" is stale`,
+            statusCode: 422,
+          });
+        }
       }
 
       // Find or create logical lesson
@@ -480,16 +524,14 @@ export class ContentPublisherService {
       }
 
       // Materialize LessonVersionAudioArtifacts
-      for (const artifact of contentImport.audioArtifacts) {
-        if (artifact.status === 'READY') {
-          await tx.lessonVersionAudioArtifact.create({
-            data: {
-              lessonVersionId: newVersion.id,
-              audioArtifactId: artifact.id,
-              audioScriptSlug: artifact.audioScriptSlug,
-            },
-          });
-        }
+      for (const audioRef of requiredAudioRefs) {
+        await tx.lessonVersionAudioArtifact.create({
+          data: {
+            lessonVersionId: newVersion.id,
+            audioArtifactId: selectedAudioArtifacts[audioRef]!,
+            audioScriptSlug: audioRef,
+          },
+        });
       }
 
       // Archive prior current published version atomically

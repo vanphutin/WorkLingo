@@ -5,9 +5,23 @@ import { ContentAuthoringErrorCode } from '@worklingo/contracts';
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import type { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
+import type { TextToSpeechProviderRegistry } from '../../ai-gateway/application/text-to-speech-provider.registry.js';
 import type { JobRunnerService } from '../../jobs/application/job-runner.service.js';
 import type { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { AudioGenerationService } from './audio-generation.service.js';
+
+const registryFor = (provider: TextToSpeechPort): TextToSpeechProviderRegistry => ({
+  assertVoiceSupported: vi.fn(),
+  list: vi.fn().mockReturnValue([{
+    available: true,
+    defaultVoiceId: 'fake-neutral',
+    displayName: 'Simulation audio',
+    id: 'fake-tts',
+    releaseQuality: false,
+    supportedVoiceIds: ['fake-neutral'],
+  }]),
+  resolve: vi.fn().mockReturnValue(provider),
+} as unknown as TextToSpeechProviderRegistry);
 
 describe('AudioGenerationService', () => {
   const actorId = randomUUID();
@@ -59,6 +73,12 @@ ${scriptA}
         create: vi.fn().mockResolvedValue({ id: randomUUID() }),
       },
       audioArtifact: {
+        create: vi.fn().mockImplementation(async () => {
+          artifactStatus = 'GENERATING';
+          return { id: artifactId, status: artifactStatus };
+        }),
+        findFirst: vi.fn().mockResolvedValue(null),
+        findFirstOrThrow: vi.fn().mockResolvedValue({ id: artifactId }),
         findUnique: vi.fn().mockImplementation(() => null),
         upsert: vi.fn().mockImplementation(async () => {
           artifactStatus = 'GENERATING';
@@ -79,7 +99,10 @@ ${scriptA}
             ...data,
           };
         }),
-        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+        updateMany: vi.fn().mockImplementation(async ({ data }) => {
+          artifactStatus = data.status;
+          return { count: 1 };
+        }),
       },
       job: {
         create: vi.fn().mockResolvedValue({ id: jobId, status: 'PENDING' }),
@@ -105,7 +128,8 @@ ${scriptA}
       }),
     } as unknown as TextToSpeechPort;
 
-    const service = new AudioGenerationService(database, storage, tts);
+    Object.assign(database, { $transaction: vi.fn((work) => work(database)) });
+    const service = new AudioGenerationService(database, storage, tts, registryFor(tts));
 
     const result = await service.generateAudio(importId, actorId, {
       audioScriptSlug,
@@ -134,7 +158,14 @@ ${scriptA}
       operation: 'generate-audio',
       idempotencyKey: 'same-key',
       requestHash: createHash('sha256')
-        .update(JSON.stringify({ audioScriptSlug, idempotencyKey: 'same-key' }))
+        .update(JSON.stringify({
+          audioScriptSlug,
+          contentImportId: importId,
+          idempotencyKey: 'same-key',
+          providerId: 'fake-tts',
+          voiceConfig: { voice: 'fake-neutral' },
+          voiceId: 'fake-neutral',
+        }))
         .digest('hex'),
       responseStatus: 202,
       responseBody: { jobId: 'existing-job-id', status: 'PENDING' },
@@ -149,7 +180,8 @@ ${scriptA}
     const service = new AudioGenerationService(
       database,
       {} as ObjectStorage,
-      {} as TextToSpeechPort,
+      { providerName: 'fake-tts' } as TextToSpeechPort,
+      registryFor({ providerName: 'fake-tts' } as TextToSpeechPort),
     );
 
     // 1. Same key and same request returns identical cached response
@@ -223,6 +255,9 @@ ${scriptB}
         create: vi.fn().mockResolvedValue({ id: randomUUID() }),
       },
       audioArtifact: {
+        create: vi.fn().mockResolvedValue({ id: artifactId, status: 'GENERATING' }),
+        findFirst: vi.fn().mockResolvedValue(null),
+        findFirstOrThrow: vi.fn().mockResolvedValue({ id: artifactId }),
         upsert: vi.fn().mockResolvedValue({
           id: artifactId,
           contentImportId: importId,
@@ -234,7 +269,10 @@ ${scriptB}
           finalArtifactStatus = data.status;
           return { id: artifactId, ...data };
         }),
-        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+        updateMany: vi.fn().mockImplementation(async ({ data }) => {
+          finalArtifactStatus = data.status;
+          return { count: 1 };
+        }),
       },
       job: {
         create: vi.fn().mockResolvedValue({ id: jobId, status: 'PENDING' }),
@@ -260,7 +298,8 @@ ${scriptB}
       }),
     } as unknown as TextToSpeechPort;
 
-    const service = new AudioGenerationService(database, storage, tts);
+    Object.assign(database, { $transaction: vi.fn((work) => work(database)) });
+    const service = new AudioGenerationService(database, storage, tts, registryFor(tts));
 
     await service.generateAudio(importId, actorId, {
       audioScriptSlug,
@@ -292,6 +331,8 @@ ${scriptB}
         create: vi.fn().mockResolvedValue({ id: randomUUID() }),
       },
       audioArtifact: {
+        create: vi.fn().mockResolvedValue({ id: artifactId, status: 'GENERATING' }),
+        findFirst: vi.fn().mockResolvedValue(null),
         upsert: vi.fn().mockResolvedValue({
           id: artifactId,
           contentImportId: importId,
@@ -303,7 +344,10 @@ ${scriptB}
           artifactStatus = data.status;
           return { id: artifactId, ...data };
         }),
-        updateMany: vi.fn().mockResolvedValue({ count: 0 }),
+        updateMany: vi.fn().mockImplementation(async ({ data }) => {
+          artifactStatus = data.status;
+          return { count: 1 };
+        }),
       },
       job: {
         create: vi.fn().mockResolvedValue({ id: jobId, status: 'PENDING' }),
@@ -316,7 +360,8 @@ ${scriptB}
       synthesize: vi.fn().mockRejectedValue(new Error('TTS provider synthesis error')),
     } as unknown as TextToSpeechPort;
 
-    const service = new AudioGenerationService(database, storage, tts);
+    Object.assign(database, { $transaction: vi.fn((work) => work(database)) });
+    const service = new AudioGenerationService(database, storage, tts, registryFor(tts));
 
     await service.generateAudio(importId, actorId, {
       audioScriptSlug,
@@ -335,7 +380,10 @@ ${scriptB}
     });
     const jobId = randomUUID();
     const database = {
-      audioArtifact: { upsert: vi.fn().mockResolvedValue({}) },
+      audioArtifact: {
+        create: vi.fn().mockResolvedValue({}),
+        findFirst: vi.fn().mockResolvedValue(null),
+      },
       contentImport: {
         findUnique: vi.fn().mockResolvedValue({ rawSource: lessonSourceWithScriptA }),
       },
@@ -349,10 +397,12 @@ ${scriptB}
       enqueue: vi.fn().mockResolvedValue({ id: jobId, status: 'PENDING', type: 'GENERATE_AUDIO' }),
     } as unknown as JobDispatcher;
     const runner = { runOnce: vi.fn() } as unknown as JobRunnerService;
+    Object.assign(database, { $transaction: vi.fn((work) => work(database)) });
     const service = new AudioGenerationService(
       database,
       {} as ObjectStorage,
       { providerName: 'fake-tts' } as TextToSpeechPort,
+      registryFor({ providerName: 'fake-tts' } as TextToSpeechPort),
       jobs,
       runner,
     );

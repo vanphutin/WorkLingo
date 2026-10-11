@@ -11,6 +11,7 @@ export interface PublishPanelProps {
   readonly canPublish: boolean;
   readonly isAudioReady: boolean;
   readonly status: ContentStatus;
+  readonly selectedAudioArtifacts?: Readonly<Record<string, string>>;
   readonly publishedVersion?: number | null;
   readonly publishedLessonId?: string | null;
   readonly publishedLessonVersionId?: string | null;
@@ -25,6 +26,7 @@ export function PublishPanel({
   canPublish,
   isAudioReady,
   status,
+  selectedAudioArtifacts = {},
   publishedVersion,
   publishedLessonId,
   publishedLessonVersionId,
@@ -48,6 +50,7 @@ export function PublishPanel({
         expectedDraftRevision: draftRevision,
         expectedSourceHash: sourceHash,
         idempotencyKey: `pub-${importId}-${draftRevision}`,
+        selectedAudioArtifacts: { ...selectedAudioArtifacts },
       });
 
       onPublished?.(result);

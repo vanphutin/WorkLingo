@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import type { MissionPurpose } from '@worklingo/contracts';
+
 const text = z.string().min(1);
 const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
 const skill = z.enum(['reading', 'listening', 'speaking', 'writing']);
@@ -61,5 +63,6 @@ export interface PublishedMission {
   readonly title: string;
   readonly objective: string;
   readonly levelCode: string;
+  readonly purpose: MissionPurpose;
   readonly lessonVersion: LessonSnapshot & { readonly id: string; readonly version: number };
 }

@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { completeSelfPlacementViaApi } from './helpers/learner-onboarding';
+
 async function expectNoHorizontalOverflow(page: import('@playwright/test').Page): Promise<void> {
   const dimensions = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
@@ -24,7 +26,11 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     await page.getByLabel('Password').fill(password);
     await page.getByRole('button', { name: 'Create account' }).click();
 
-    // Verify redirected to dashboard
+    await expect(page).toHaveURL(/.*\/onboarding/);
+    await completeSelfPlacementViaApi(page);
+    await page.goto('/dashboard');
+
+    // Verify redirected to dashboard after onboarding
     await expect(page).toHaveURL(/.*\/dashboard/);
     await expect(page).toHaveTitle('Learner Dashboard | WorkLingo');
     await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
@@ -83,14 +89,8 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     // 8. Complete Listen & Reason
     await page.getByLabel('Mai works in support and An works in sales.').check();
     await page.getByLabel('An needs help finding the meeting room.').check();
-    const lessonAudio = page.getByLabel('Lesson audio');
-    await expect(lessonAudio).toBeVisible();
-    const audioUrl = await lessonAudio.getAttribute('src');
-    expect(audioUrl).toBeTruthy();
-    const audioResponse = await page.request.get(audioUrl!);
-    expect(audioResponse.status()).toBe(200);
-    expect(audioResponse.headers()['content-type']).toContain('audio/wav');
-    expect((await audioResponse.body()).subarray(0, 4).toString('ascii')).toBe('RIFF');
+    await expect(page.getByLabel('Lesson audio')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Play preview' })).toBeVisible();
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.locator('[aria-current="step"]')).toContainText('Respond');
 

@@ -17,6 +17,7 @@ const learner: AuthUser = {
   displayName: 'An Nguyen',
   email: 'an@example.com',
   id: '828a1927-c4fa-487f-93d5-96c556667869',
+  onboardingStatus: 'PENDING',
   roles: ['LEARNER'],
 };
 

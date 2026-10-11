@@ -27,14 +27,14 @@ export interface AppConfig {
           readonly provider: 'microsoft';
           readonly region: string;
         };
-    readonly textToSpeech:
-      | { readonly provider: 'fake'; readonly voice: string }
-      | {
-          readonly key: string;
-          readonly provider: 'microsoft';
-          readonly region: string;
-          readonly voice: string;
-        };
+    readonly textToSpeech: {
+      readonly defaultProviderId: 'azure-speech' | 'fake-tts';
+      readonly azure: {
+        readonly key?: string;
+        readonly region?: string;
+        readonly voice: string;
+      };
+    };
   };
   readonly adminEmail?: string | undefined;
   readonly adminPassword?: string | undefined;
@@ -91,12 +91,15 @@ const environmentSchema = z.object({
   WORKLINGO_E2E_MODE: z.enum(['true', 'false']).default('false'),
   WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: z.enum(['fake', 'openai-compatible']).default('fake'),
   WORKLINGO_STT_PROVIDER: z.enum(['fake', 'microsoft']).default('fake'),
-  WORKLINGO_TTS_PROVIDER: z.enum(['fake', 'microsoft']).default('fake'),
+  WORKLINGO_TTS_PROVIDER: z
+    .enum(['fake', 'fake-tts', 'microsoft', 'azure-speech'])
+    .default('fake'),
   WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: z.coerce.number().int().min(0).max(5).default(0),
   WRITING_DRAFT_RETENTION_DAYS: z.coerce.number().int().min(1).max(365).default(30),
 }).superRefine((environment, context) => {
   if (environment.WORKLINGO_STT_PROVIDER === 'microsoft' ||
-      environment.WORKLINGO_TTS_PROVIDER === 'microsoft') {
+      environment.WORKLINGO_TTS_PROVIDER === 'microsoft' ||
+      environment.WORKLINGO_TTS_PROVIDER === 'azure-speech') {
     if (!environment.MICROSOFT_SPEECH_KEY) {
       context.addIssue({ code: 'custom', path: ['MICROSOFT_SPEECH_KEY'], message: 'is required for Microsoft Speech' });
     }
@@ -141,14 +144,24 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
         region: result.data.MICROSOFT_SPEECH_REGION as string,
       }
     : { locale: result.data.MICROSOFT_SPEECH_LANGUAGE, provider: 'fake' as const };
-  const textToSpeech = result.data.WORKLINGO_TTS_PROVIDER === 'microsoft'
+  const azureCredentials = result.data.MICROSOFT_SPEECH_KEY &&
+    result.data.MICROSOFT_SPEECH_REGION
     ? {
-        key: result.data.MICROSOFT_SPEECH_KEY as string,
-        provider: 'microsoft' as const,
-        region: result.data.MICROSOFT_SPEECH_REGION as string,
-        voice: result.data.MICROSOFT_SPEECH_VOICE,
+        key: result.data.MICROSOFT_SPEECH_KEY,
+        region: result.data.MICROSOFT_SPEECH_REGION,
       }
-    : { provider: 'fake' as const, voice: result.data.MICROSOFT_SPEECH_VOICE };
+    : {};
+  const textToSpeech = {
+    azure: {
+      ...azureCredentials,
+      voice: result.data.MICROSOFT_SPEECH_VOICE,
+    },
+    defaultProviderId:
+      result.data.WORKLINGO_TTS_PROVIDER === 'microsoft' ||
+      result.data.WORKLINGO_TTS_PROVIDER === 'azure-speech'
+        ? 'azure-speech' as const
+        : 'fake-tts' as const,
+  };
   const languageEvaluation = result.data.WORKLINGO_LANGUAGE_EVALUATION_PROVIDER === 'openai-compatible'
     ? {
         apiKey: result.data.OPENAI_API_KEY as string,

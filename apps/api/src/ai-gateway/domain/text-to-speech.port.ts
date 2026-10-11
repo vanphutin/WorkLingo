@@ -17,7 +17,18 @@ export interface SynthesizedAudio {
   };
 }
 
+export type TtsProviderId = 'azure-speech' | 'fake-tts';
+
+export interface TtsProviderDescriptor {
+  readonly id: TtsProviderId;
+  readonly displayName: string;
+  readonly available: boolean;
+  readonly defaultVoiceId: string;
+  readonly supportedVoiceIds: readonly string[];
+  readonly releaseQuality: boolean;
+}
+
 export abstract class TextToSpeechPort {
-  abstract readonly providerName: string;
+  abstract readonly providerName: TtsProviderId;
   abstract synthesize(input: SynthesizeAudioInput): Promise<SynthesizedAudio>;
 }

@@ -106,6 +106,7 @@ export const publishContentImportSchema = z.object({
   expectedDraftRevision: z.number().int().positive(),
   expectedSourceHash: z.string().min(1),
   idempotencyKey: z.string().min(1),
+  selectedAudioArtifacts: z.record(z.string().min(1), z.string().uuid()).optional(),
 });
 export type PublishContentImportInput = z.infer<typeof publishContentImportSchema>;
 
@@ -133,6 +134,7 @@ export const audioArtifactDtoSchema = z.object({
   contentImportId: z.string().uuid(),
   audioScriptSlug: z.string(),
   scriptHash: z.string(),
+  variantKey: z.string().min(1).optional(),
   adapterName: z.string(),
   voiceConfig: z.record(z.string(), z.unknown()),
   mimeType: z.string(),
@@ -150,6 +152,8 @@ export type AudioArtifactDto = z.infer<typeof audioArtifactDtoSchema>;
 export const generateAudioSchema = z.object({
   audioScriptSlug: z.string().min(1).optional(),
   idempotencyKey: z.string().min(1),
+  providerId: z.string().min(1).optional(),
+  voiceId: z.string().min(1).optional(),
   voiceConfig: z.record(z.string(), z.unknown()).optional(),
 });
 export type GenerateAudioInput = z.infer<typeof generateAudioSchema>;

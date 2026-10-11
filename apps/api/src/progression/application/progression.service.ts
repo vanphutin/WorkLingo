@@ -37,7 +37,11 @@ export class ProgressionService {
     let cursor: string | undefined;
     for (;;) {
       const sessions = await this.database.learningSession.findMany({
-        where: { learnerId, status: 'COMPLETED', mission: { level: { code: levelCode } } },
+        where: {
+          learnerId,
+          status: 'COMPLETED',
+          mission: { level: { code: levelCode }, purpose: 'LEARNING' },
+        },
         include: { mission: { include: { level: true } }, lessonVersion: true },
         orderBy: [{ completedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }],
         take: 25,
@@ -67,7 +71,8 @@ export class ProgressionService {
         return this.toAssessment(replay);
       }
       const session = await transaction.learningSession.findFirst({
-        where: { id: input.sessionId, learnerId }, include: checkpointSessionInclude,
+        where: { id: input.sessionId, learnerId, mission: { purpose: 'LEARNING' } },
+        include: checkpointSessionInclude,
       });
       if (!session) throw new NotFoundException('Learning session not found');
       if (session.status !== 'COMPLETED') throw new ConflictException('Complete the session before assessing');

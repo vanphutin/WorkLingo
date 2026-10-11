@@ -4,6 +4,8 @@ import { BadRequestException, ConflictException, Inject, Injectable, NotFoundExc
 import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 
+import type { MissionPurpose } from '@worklingo/contracts';
+
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { lessonSnapshotSchema, type PublishedMission } from '../domain/curriculum.types.js';
 
@@ -34,9 +36,14 @@ export class CurriculumService {
     return missions[0];
   }
 
-  async getPublishedMissionsForLevel(levelCode: string): Promise<PublishedMission[]> {
-    const missions = await this.database.mission.findMany({
+  async getPublishedMissionsForLevel(
+    levelCode: string,
+    purpose: MissionPurpose = 'learning',
+    database: Pick<Prisma.TransactionClient, 'mission'> = this.database,
+  ): Promise<PublishedMission[]> {
+    const missions = await database.mission.findMany({
       where: {
+        purpose: purpose === 'learning' ? 'LEARNING' : 'PLACEMENT',
         status: 'PUBLISHED',
         level: { code: levelCode, path: { status: 'PUBLISHED' } },
         lessons: {
@@ -122,8 +129,17 @@ export class CurriculumService {
       }
       return {
         id: mission.id, slug: mission.slug, title: mission.title, objective: mission.objective, levelCode,
+        purpose: mission.purpose === 'LEARNING' ? 'learning' : 'placement',
         lessonVersion: { ...snapshot, id: version.id, version: version.version },
       };
     });
+  }
+
+  async getPublishedPlacementMission(
+    database: Pick<Prisma.TransactionClient, 'mission'> = this.database,
+  ): Promise<PublishedMission> {
+    const missions = await this.getPublishedMissionsForLevel('FOUNDATION_1', 'placement', database);
+    if (!missions[0]) throw new NotFoundException('No published placement mission');
+    return missions[0];
   }
 }

@@ -5,7 +5,7 @@ import type { Prisma } from '@prisma/client';
 import { parseLessonSource } from '@worklingo/content-format';
 import { z } from 'zod';
 
-import { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
+import { TextToSpeechProviderRegistry } from '../../ai-gateway/application/text-to-speech-provider.registry.js';
 import { ProviderError } from '../../ai-gateway/domain/provider-errors.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { JobHandlerRegistry } from '../../jobs/application/job-runner.service.js';
@@ -13,10 +13,14 @@ import type { ClaimedJob, JobHandler } from '../../jobs/domain/job-handler.port.
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 
 const payloadSchema = z.object({
+  artifactId: z.string().uuid(),
   audioScriptSlug: z.string().min(1),
   contentImportId: z.string().uuid(),
+  providerId: z.string().min(1),
   scriptHash: z.string().min(1),
+  variantKey: z.string().min(1),
   voiceConfig: z.record(z.string(), z.unknown()),
+  voiceId: z.string().min(1),
 }).strict();
 
 @Injectable()
@@ -26,7 +30,8 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(ObjectStorage) private readonly storage: ObjectStorage,
-    @Inject(TextToSpeechPort) private readonly tts: TextToSpeechPort,
+    @Inject(TextToSpeechProviderRegistry)
+    private readonly ttsProviders: TextToSpeechProviderRegistry,
     @Inject(JobHandlerRegistry) private readonly registry: JobHandlerRegistry,
   ) {}
 
@@ -49,7 +54,20 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
         await this.markArtifact(payload, { status: 'STALE', failureSummary: 'Script changed before generation' });
         return { audioScriptSlug: payload.audioScriptSlug, status: 'STALE' };
       }
-      const synthesized = await this.tts.synthesize({
+      this.ttsProviders.assertVoiceSupported(payload.providerId, payload.voiceId);
+      const provider = this.ttsProviders.resolve(payload.providerId);
+      const candidate = await this.database.audioArtifact.findFirstOrThrow({
+        where: {
+          adapterName: payload.providerId,
+          audioScriptSlug: payload.audioScriptSlug,
+          contentImportId: payload.contentImportId,
+          id: payload.artifactId,
+          scriptHash: payload.scriptHash,
+          status: 'GENERATING',
+          variantKey: payload.variantKey,
+        },
+      });
+      const synthesized = await provider.synthesize({
         script: script.script,
         voiceConfig: payload.voiceConfig,
         ...(script.speaker ? { speaker: script.speaker } : {}),
@@ -64,14 +82,10 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
         : undefined;
       const stale = !latestScript
         || createHash('sha256').update(latestScript.script).digest('hex') !== payload.scriptHash;
-      const artifact = await this.database.audioArtifact.update({
-        where: { contentImportId_audioScriptSlug_scriptHash: {
-          audioScriptSlug: payload.audioScriptSlug,
-          contentImportId: payload.contentImportId,
-          scriptHash: payload.scriptHash,
-        } },
+      const artifact = await this.database.audioArtifact.updateMany({
+        where: { id: candidate.id, status: 'GENERATING' },
         data: {
-          adapterName: synthesized.provider?.name ?? this.tts.providerName,
+          adapterName: synthesized.provider?.name ?? provider.providerName,
           byteSize: stored.size,
           checksum: synthesized.checksum,
           failureSummary: stale ? 'Script changed during generation' : null,
@@ -84,18 +98,8 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
           } as Prisma.InputJsonValue,
         },
       });
-      if (!stale) {
-        await this.database.audioArtifact.updateMany({
-          where: {
-            audioScriptSlug: payload.audioScriptSlug,
-            contentImportId: payload.contentImportId,
-            scriptHash: { not: payload.scriptHash },
-            status: { not: 'STALE' },
-          },
-          data: { status: 'STALE' },
-        });
-      }
-      return { artifactId: artifact.id, status: artifact.status };
+      if (artifact.count !== 1) throw new Error('Audio candidate is no longer mutable');
+      return { artifactId: candidate.id, status: stale ? 'STALE' : 'READY' };
     } catch (error) {
       const retryable = error instanceof ProviderError && error.retryable;
       if (!retryable || job.attemptNumber >= job.maxAttempts) {
@@ -111,12 +115,11 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
     payload: z.infer<typeof payloadSchema>,
     data: { readonly failureSummary: string; readonly status: 'FAILED' | 'STALE' },
   ) {
-    return this.database.audioArtifact.update({
-      where: { contentImportId_audioScriptSlug_scriptHash: {
-        audioScriptSlug: payload.audioScriptSlug,
-        contentImportId: payload.contentImportId,
-        scriptHash: payload.scriptHash,
-      } },
+    return this.database.audioArtifact.updateMany({
+      where: {
+        id: payload.artifactId,
+        status: 'GENERATING',
+      },
       data,
     });
   }

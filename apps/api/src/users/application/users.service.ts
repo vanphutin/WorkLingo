@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { User } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 
 import type { AuthUser } from '@worklingo/contracts';
 
@@ -11,11 +11,15 @@ interface CreateLearnerInput {
   readonly passwordHash: string;
 }
 
+export type UserWithProfile = Prisma.UserGetPayload<{
+  include: { profile: true };
+}>;
+
 @Injectable()
 export class UsersService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
-  createLearner(input: CreateLearnerInput): Promise<User> {
+  createLearner(input: CreateLearnerInput): Promise<UserWithProfile> {
     return this.database.user.create({
       data: {
         displayName: input.displayName,
@@ -23,18 +27,25 @@ export class UsersService {
         passwordHash: input.passwordHash,
         profile: { create: {} },
       },
+      include: { profile: true },
     });
   }
 
-  findByEmail(email: string): Promise<User | null> {
-    return this.database.user.findUnique({ where: { email } });
+  findByEmail(email: string): Promise<UserWithProfile | null> {
+    return this.database.user.findUnique({
+      where: { email },
+      include: { profile: true },
+    });
   }
 
-  toAuthUser(user: User): AuthUser {
+  toAuthUser(user: UserWithProfile): AuthUser {
     return {
       displayName: user.displayName,
       email: user.email,
       id: user.id,
+      onboardingStatus: user.role === 'LEARNER'
+        ? (user.profile?.onboardingStatus ?? 'PENDING')
+        : null,
       roles: [user.role],
     };
   }

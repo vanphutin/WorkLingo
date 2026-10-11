@@ -12,10 +12,11 @@ interface AuthPageProps {
 
 const ADMIN_ROLES = new Set(['CONTENT_ADMIN', 'SYSTEM_ADMIN']);
 
-export function getPostAuthenticationPath(user: AuthUser): '/admin/content' | '/dashboard' {
-  return user.roles.some((role) => ADMIN_ROLES.has(role))
-    ? '/admin/content'
-    : '/dashboard';
+export function getPostAuthenticationPath(
+  user: AuthUser,
+): '/admin/content' | '/dashboard' | '/onboarding' {
+  if (user.roles.some((role) => ADMIN_ROLES.has(role))) return '/admin/content';
+  return user.onboardingStatus === 'PENDING' ? '/onboarding' : '/dashboard';
 }
 
 export function AuthPage({ mode }: AuthPageProps) {

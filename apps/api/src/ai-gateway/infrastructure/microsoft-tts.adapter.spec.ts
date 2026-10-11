@@ -50,12 +50,13 @@ describe('MicrosoftTextToSpeechAdapter', () => {
 
     const result = await adapter.synthesize({ script: 'Support <team> & customer' });
 
+    expect(adapter.providerName).toBe('azure-speech');
     expect(capturedBody).toContain('Support &lt;team&gt; &amp; customer');
     expect(capturedHeaders['ocp-apim-subscription-key']).toBe('test-secret');
     expect(capturedHeaders['x-microsoft-outputformat']).toBe('riff-24khz-16bit-mono-pcm');
     expect(result).toMatchObject({
       mimeType: 'audio/wav', sampleRate: 24_000,
-      provider: { name: 'microsoft-tts', requestId: 'request-1', voice: 'en-US-JennyNeural' },
+      provider: { name: 'azure-speech', requestId: 'request-1', voice: 'en-US-JennyNeural' },
     });
   });
 
@@ -83,5 +84,22 @@ describe('MicrosoftTextToSpeechAdapter', () => {
     await expect(adapter.synthesize({ script: 'Hello' })).rejects.toMatchObject({
       code: 'PROVIDER_RESPONSE_INVALID', retryable: true,
     });
+  });
+
+  it('maps a timed out request without exposing its key or endpoint', async () => {
+    const url = await endpoint(() => undefined);
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url,
+      key: 'timeout-secret',
+      region: 'test',
+      timeoutMs: 20,
+      voice: 'voice',
+    });
+
+    const error = await adapter.synthesize({ script: 'Hello' }).catch((caught: unknown) => caught);
+
+    expect(error).toMatchObject({ code: 'PROVIDER_TIMEOUT', retryable: true });
+    expect(String(error)).not.toContain('timeout-secret');
+    expect(String(error)).not.toContain(url);
   });
 });

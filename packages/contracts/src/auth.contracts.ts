@@ -15,6 +15,7 @@ export const authUserSchema = z.object({
   displayName: z.string(),
   email: z.string().email(),
   id: z.string().uuid(),
+  onboardingStatus: z.enum(['PENDING', 'COMPLETE']).nullable(),
   roles: z.array(z.enum(['LEARNER', 'CONTENT_ADMIN', 'SYSTEM_ADMIN'])),
 });
 

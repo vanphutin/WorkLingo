@@ -180,6 +180,8 @@ describe('ContentPublisherService', () => {
           validationReport: { issues: [], issuesTruncated: false },
           audioArtifacts: [
             {
+              id: '00000000-0000-4000-8000-000000000003',
+              contentImportId: importId,
               audioScriptSlug: 'complaint-call',
               scriptHash: 'stale-old-hash',
               status: 'READY',
@@ -196,6 +198,9 @@ describe('ContentPublisherService', () => {
         expectedDraftRevision: 1,
         expectedSourceHash: validHash,
         idempotencyKey: 'idemp-stale-audio',
+        selectedAudioArtifacts: {
+          'complaint-call': '00000000-0000-4000-8000-000000000003',
+        },
       }),
     ).rejects.toMatchObject({
       response: expect.objectContaining({
