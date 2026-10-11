@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { completeSelfPlacementViaApi } from './helpers/learner-onboarding';
+
 test.describe('Teacher AI speaking and writing journey', () => {
   test('records, resumes processing, retries safely and preserves a writing draft', async ({ page }, testInfo) => {
     test.setTimeout(150_000);
@@ -10,10 +12,12 @@ test.describe('Teacher AI speaking and writing journey', () => {
     await page.getByLabel('Email').fill(`teacher_ai_${suffix}@example.test`);
     await page.getByLabel('Password').fill('Teacher-AI-local-password-123!');
     await page.getByRole('button', { name: 'Create account' }).click();
+    await expect(page).toHaveURL(/\/onboarding$/u);
+    await completeSelfPlacementViaApi(page);
+    await page.goto('/dashboard');
     await expect(page).toHaveURL(/\/dashboard$/u);
     await page.getByRole('button', { name: /start 60-minute session/i }).click();
     await expect(page).toHaveURL(/\/sessions\//u);
-    const sessionId = new URL(page.url()).pathname.split('/').at(-1)!;
 
     await page.getByLabel('Your written response:').fill(
       `My name is An and I am happy to meet the team today. [e2e-rate-limit:${suffix}]`,
@@ -28,9 +32,8 @@ test.describe('Teacher AI speaking and writing journey', () => {
     await page.getByLabel('Ask Mai for help.').check();
     await page.getByRole('button', { name: 'Continue' }).click();
 
-    const lessonAudio = page.getByLabel('Lesson audio');
-    await expect(lessonAudio).toHaveAttribute('src', new RegExp(`/learning-sessions/${sessionId}/activities/.+/audio$`, 'u'));
-    await expect(lessonAudio).not.toHaveAttribute('autoplay', /.*/u);
+    await expect(page.getByLabel('Lesson audio')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Play preview' })).toBeVisible();
     await page.getByLabel('Mai works in support and An works in sales.').check();
     await page.getByLabel('An needs help finding the meeting room.').check();
     await page.getByRole('button', { name: 'Continue' }).click();

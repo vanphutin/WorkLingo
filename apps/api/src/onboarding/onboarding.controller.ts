@@ -38,7 +38,7 @@ export class OnboardingController {
   @ApiOperation({ summary: 'Get resumable onboarding state for the authenticated learner' })
   @ApiOkResponse({ description: 'Current onboarding state and playable self-placement levels' })
   getState(@Req() request: AuthenticatedRequest): Promise<OnboardingStateDto> {
-    return this.onboarding.getState(request.authUser.id);
+    return this.placementRecommendation.getState(request.authUser.id);
   }
 
   @Post('self-placement')

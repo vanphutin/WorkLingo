@@ -2,6 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import {
   learningSkillSchema,
+  type OnboardingStateDto,
   type PlacementAttemptDto,
   type PlacementSkillResults,
 } from '@worklingo/contracts';
@@ -21,6 +22,13 @@ export class PlacementRecommendationService {
     @Inject(OnboardingService) private readonly onboarding: OnboardingService,
     @Inject(PlacementAttemptsService) private readonly attempts: PlacementAttemptsService,
   ) {}
+
+  async getState(learnerId: string): Promise<OnboardingStateDto> {
+    const state = await this.onboarding.getState(learnerId);
+    if (!state.activePlacementAttempt) return state;
+    const refreshedAttempt = await this.refresh(learnerId, state.activePlacementAttempt.id);
+    return this.onboarding.withActivePlacementAttempt(state, refreshedAttempt);
+  }
 
   async refresh(learnerId: string, attemptId: string): Promise<PlacementAttemptDto> {
     const placement = await this.database.placementAttempt.findFirst({

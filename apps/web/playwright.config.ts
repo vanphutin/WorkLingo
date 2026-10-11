@@ -43,6 +43,16 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'onboarding-desktop',
+      testMatch: /onboarding-placement\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'onboarding-mobile',
+      testMatch: /onboarding-placement\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
       name: 'audio-desktop',
       testMatch: /audio-settings\.spec\.ts/u,
       use: { ...devices['Desktop Chrome'] },

@@ -196,6 +196,25 @@ AI live tests không chạy ở mọi commit để tránh chi phí và không �
   readiness bằng route stub chỉ tồn tại trong test. Test không chứa credential hoặc provider control
   endpoint production.
 
+## Increment 5A1 acceptance coverage
+
+- Contract/unit tests khóa onboarding DTO, playable-level policy, highest-eligible placement policy,
+  four-skill evidence và immutable recommendation.
+- PostgreSQL integration tests khóa migration từ learner cũ (`MIGRATED`), self-placement replay,
+  concurrent confirmation, ownership/IDOR, placement/session version binding, retry eligibility và
+  placement exclusion khỏi mastery, Error Bank và progression.
+- Mutation checks đã chứng minh rằng bỏ purpose guard làm placement tạo MasteryEvent; guard được khôi
+  phục và regression test bắt được thay đổi đó.
+- `onboarding-placement.spec.ts` chạy Desktop Chrome và Pixel 5: self-placement bằng keyboard,
+  pending-route guard, completed-learner bypass, refresh/resume, bốn kỹ năng, fake-provider automatic
+  retry/processing, explicit recommendation confirmation, touch target 44px, no horizontal overflow
+  và placement mastery isolation.
+- Existing Foundation, adaptive và Teacher AI E2E đăng ký qua public API rồi self-place; không có
+  test-only bypass cho product rule mới.
+
+Fake provider chỉ kiểm chứng wiring/retry. `workplace-placement-v1` và quality của recommendation vẫn
+**human calibration pending**; không dùng E2E xanh để tuyên bố độ chính xác ngôn ngữ thực tế.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:

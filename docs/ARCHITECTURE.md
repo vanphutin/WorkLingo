@@ -147,6 +147,25 @@ raw source
 → publish transaction
 ```
 
+### Onboarding và placement
+
+```text
+register learner (PENDING)
+→ choose playable level ───────────────────────────────→ confirm + open dashboard
+└→ create version-bound PLACEMENT session (45 minutes)
+   → resume from durable checkpoint
+   → collect separate reading/listening/speaking/writing evidence
+   → durable provider jobs + bounded retry
+   → recommendation snapshot (workplace-placement-v1)
+   → explicit learner confirmation → open dashboard
+```
+
+`GET /me/onboarding` reconciles the active attempt with its session/evaluation state before returning
+`nextAction`; reload therefore cannot send a completed placement back into the assessment. Placement
+sessions reuse the learning-session engine but every mastery/progression consumer filters
+`Mission.purpose=LEARNING`. Recommendation evidence is isolated and never becomes ordinary mastery.
+The placement mission and `LessonVersion` are immutable for the life of the attempt.
+
 ### Audio source resolution và publish binding
 
 ```text

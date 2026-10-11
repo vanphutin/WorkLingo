@@ -72,24 +72,51 @@ Thu hồi session hiện tại.
 
 Trả profile, roles, preferences và enrollment summary.
 
-## 4. Onboarding
+## 4. Onboarding và placement
 
-### `POST /onboarding/self-placement`
+Tài khoản Learner mới có `onboardingStatus=PENDING`; dashboard, mastery và learning session thông
+thường chuyển hướng về `/onboarding` cho đến khi learner hoàn tất một trong hai đường dưới đây.
+
+### `GET /me/onboarding`
+
+Trả level có nội dung workplace đủ bốn kỹ năng, placement attempt đang hoạt động và `nextAction`.
+Khi attempt tồn tại, endpoint đồng bộ trạng thái session/evaluation trước khi trả dữ liệu để một phiên
+đã hoàn tất không bị hiển thị sai là cần tiếp tục.
+
+### `POST /me/onboarding/self-placement`
 
 ```json
 {
-  "selectedLevelCode": "FOUNDATION_1",
-  "reason": "learner_choice"
+  "clientConfirmationId": "uuid",
+  "selectedLevelCode": "FOUNDATION_1"
 }
 ```
 
-### `POST /assessments/{assessmentId}/attempts`
+Chỉ level `available=true` mới được chọn. UUID là idempotency key: replay cùng payload trả cùng kết
+quả; tái sử dụng UUID cho payload khác trả 409.
 
-Tạo attempt cho placement/checkpoint/gateway.
+### `POST /me/onboarding/placement-attempts`
 
-### `POST /assessment-attempts/{attemptId}/submit`
+Nhận `{ "clientAttemptId": "uuid" }`, tạo đúng một learning session 45 phút từ mission
+`purpose=PLACEMENT` và bind `LessonVersion` bất biến. Nếu learner đã có attempt chưa xác nhận, API
+trả 409 `PLACEMENT_ATTEMPT_ACTIVE` để client tải lại trạng thái và resume.
 
-Trả trạng thái `processing` nếu có phần AI, sau đó client đọc status endpoint.
+### `GET /me/onboarding/placement-attempts/{id}`
+
+Refresh evidence bốn kỹ năng và trả state machine:
+`IN_PROGRESS → PROCESSING | ACTION_REQUIRED → RECOMMENDED → CONFIRMED`. `nextAction` tương ứng là
+`continue_assessment`, `wait_for_evaluation`, `retry_evaluation`, `review_recommendation` hoặc
+`open_dashboard`. Chỉ attempt của learner hiện tại được phép đọc.
+
+### `POST /me/onboarding/placement-attempts/{id}/confirm`
+
+Nhận `{ "clientConfirmationId": "uuid" }`. Chỉ recommendation còn hợp lệ và level vẫn playable
+mới được xác nhận; transaction khóa learner profile, cập nhật level/onboarding, ghi audit và mutation
+receipt đúng một lần. Placement evidence không tạo MasteryEvent, Error Bank hoặc progression evidence.
+
+Policy `workplace-placement-v1` yêu cầu ít nhất một kết quả evaluated riêng cho reading, listening,
+speaking và writing. Hiện policy chỉ quảng bá candidate Foundation đã publish; đây là heuristic local,
+không phải chứng nhận CEFR/TOEIC/IELTS và vẫn **human calibration pending**.
 
 ## 5. Learning session
 

@@ -1,4 +1,4 @@
-import type { PlacementAttemptDto } from '@worklingo/contracts';
+import type { OnboardingStateDto, PlacementAttemptDto } from '@worklingo/contracts';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { PrismaService } from '../../common/database/prisma.service.js';
@@ -12,6 +12,51 @@ const attemptId = '00000000-0000-4000-8000-000000000002';
 const ownedDto = { id: attemptId, status: 'RECOMMENDED' } as PlacementAttemptDto;
 
 describe('PlacementRecommendationService', () => {
+  it('refreshes an active placement before returning resumable onboarding state', async () => {
+    const activeAttempt = {
+      id: attemptId,
+      nextAction: 'continue_assessment',
+      status: 'IN_PROGRESS',
+    } as PlacementAttemptDto;
+    const refreshedAttempt = {
+      ...activeAttempt,
+      nextAction: 'wait_for_evaluation',
+      status: 'PROCESSING',
+    } as PlacementAttemptDto;
+    const pendingState = {
+      activePlacementAttempt: activeAttempt,
+      currentLevelCode: null,
+      eligibleLevels: [],
+      nextAction: 'resume_placement',
+      onboardingMethod: null,
+      onboardingStatus: 'PENDING',
+    } as OnboardingStateDto;
+    const onboarding = {
+      getState: vi.fn().mockResolvedValue(pendingState),
+      withActivePlacementAttempt: vi.fn().mockReturnValue({
+        ...pendingState,
+        activePlacementAttempt: refreshedAttempt,
+        nextAction: 'wait_for_evaluation',
+      }),
+    } as unknown as OnboardingService;
+    const service = new PlacementRecommendationService(
+      {} as PrismaService,
+      onboarding,
+      {} as PlacementAttemptsService,
+    );
+    vi.spyOn(service, 'refresh').mockResolvedValue(refreshedAttempt);
+
+    await expect(service.getState(learnerId)).resolves.toMatchObject({
+      activePlacementAttempt: refreshedAttempt,
+      nextAction: 'wait_for_evaluation',
+    });
+    expect(service.refresh).toHaveBeenCalledWith(learnerId, attemptId);
+    expect(onboarding.withActivePlacementAttempt).toHaveBeenCalledWith(
+      pendingState,
+      refreshedAttempt,
+    );
+  });
+
   it('persists one recommendation only after all four skill scores exist', async () => {
     const updateMany = vi.fn().mockResolvedValue({ count: 1 });
     const database = {

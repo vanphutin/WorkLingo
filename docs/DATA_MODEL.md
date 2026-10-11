@@ -97,6 +97,9 @@ Thông tin xác thực tối thiểu, role và trạng thái tài khoản.
 ### learner_profiles
 
 Mục tiêu, locale, timezone, assistance language, preferences và recording consent.
+`onboardingStatus` là `PENDING | COMPLETE`; `onboardingMethod` là `SELF_SELECTED | PLACEMENT |
+MIGRATED`; `onboardedAt` và `currentLevelCode` chỉ trở thành quyết định learner hiện hành sau một
+confirmation transaction hợp lệ.
 
 ### enrollments
 
@@ -104,7 +107,15 @@ Liên kết learner với path/level hiện tại, trạng thái và ngày bắt
 
 ### placement_attempts
 
-Lưu lựa chọn tự đánh giá hoặc bài test, score theo kỹ năng, level đề xuất và quyết định cuối của learner.
+Mỗi attempt thuộc một learner và đúng một version-bound placement learning session. Bảng lưu
+`clientAttemptId` idempotent, `lessonVersionId`, `policyVersion`, snapshot `skillResults`, level đề
+xuất, explanation và `confirmedAt`. Trạng thái là `IN_PROGRESS`, `PROCESSING`, `ACTION_REQUIRED`,
+`RECOMMENDED`, `CONFIRMED`. Unique keys trên learner/client UUID và session bảo vệ replay/cardinality;
+foreign key gồm session + learner + lesson version ngăn trộn ownership hoặc version.
+
+Tự chọn level không tạo `PlacementAttempt`; quyết định idempotent được lưu trong `MutationReceipt` và
+audit log. Placement `ActivityAttempt` vẫn được giữ làm bằng chứng đánh giá nhưng không sinh
+`MasteryEvent`, `MasteryRecord`, `ErrorBankEntry` hoặc checkpoint progression.
 
 ## 4. Session và submission
 

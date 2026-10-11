@@ -132,7 +132,26 @@ pnpm dev
   - Learner Registration: `http://127.0.0.1:3000/register`
   - Learner Login: `http://127.0.0.1:3000/login`
   - Learner Dashboard: `http://127.0.0.1:3000/dashboard`
+  - Learner Onboarding: `http://127.0.0.1:3000/onboarding`
   - Content Admin: `http://127.0.0.1:3000/admin/content`
+
+### Local learner onboarding workflow
+
+1. Re-run `pnpm --filter @worklingo/api prisma db seed` after migrations. The seed publishes one
+   Foundation learning mission and one four-skill `PLACEMENT` mission; re-running is idempotent.
+2. Register a new learner at `/register`. The learner is redirected to `/onboarding` and cannot open
+   dashboard, mastery or an ordinary session while status is `PENDING`.
+3. Choose an available Foundation level, or start the 45-minute placement assessment. Reloading the
+   placement route resumes the persisted checkpoint and immutable lesson version.
+4. Keep `JOB_WORKER_ENABLED=true` for speaking/writing evaluation. Leaving the status page is safe;
+   `/onboarding` refreshes durable processing/retry/recommendation state on return.
+5. Confirm the recommendation explicitly to unlock the dashboard. Placement answers remain separate
+   from mastery/progression evidence.
+
+For deterministic E2E only, Playwright sets `NODE_ENV=test`, `WORKLINGO_E2E_MODE=true` and a bounded
+`WORKLINGO_TEST_FAKE_EVALUATION_FAILURES`; application config rejects that failure switch otherwise.
+Never treat the seeded `workplace-placement-v1` result as CEFR, TOEIC or IELTS certification. Human
+calibration is still pending. See [INCREMENT_5A_DEMO.md](INCREMENT_5A_DEMO.md).
 
 ### Local Content Admin workflow
 

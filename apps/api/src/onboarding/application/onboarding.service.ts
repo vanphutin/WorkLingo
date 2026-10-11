@@ -178,6 +178,19 @@ export class OnboardingService {
     });
   }
 
+  withActivePlacementAttempt(
+    state: OnboardingStateDto,
+    activePlacementAttempt: PlacementAttemptDto,
+  ): OnboardingStateDto {
+    return onboardingStateSchema.parse({
+      ...state,
+      activePlacementAttempt,
+      nextAction: activePlacementAttempt.nextAction === 'continue_assessment'
+        ? 'resume_placement'
+        : activePlacementAttempt.nextAction,
+    });
+  }
+
   async findPlayableLevels(
     database: Prisma.TransactionClient,
   ): Promise<PlayableLevel[]> {
