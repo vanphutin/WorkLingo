@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-11
 
-**Status:** Proposed for review
+**Status:** Approved on 2026-10-11
 
 **Scope:** Local-first abuse controls, safe request logging, Admin operational visibility and aggregate pilot metrics
 

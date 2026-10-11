@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-11
 
-**Status:** Proposed for review
+**Status:** Approved on 2026-10-11
 
 **Scope:** Local-first administration of paths, levels, missions and their lesson relationships, plus a privacy-safe audit browser
 
