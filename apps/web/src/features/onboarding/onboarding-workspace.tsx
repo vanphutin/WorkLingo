@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ApiError } from '../../lib/api/api-client';
 import { onboardingClient } from '../../lib/api/onboarding-client';
+import { PlacementStatus } from './placement-status';
 
 type OnboardingMethodChoice = 'self-placement' | 'assessment';
 
@@ -127,7 +128,7 @@ export function OnboardingWorkspace() {
 
       {actionError ? <div className="onboarding-action-error" role="alert">{actionError}</div> : null}
 
-      {activeAttempt ? (
+      {activeAttempt?.nextAction === 'continue_assessment' ? (
         <section className="onboarding-resume" aria-labelledby="resume-heading">
           <div>
             <p className="onboarding-section-label">Assessment in progress</p>
@@ -141,6 +142,8 @@ export function OnboardingWorkspace() {
             Resume assessment
           </Link>
         </section>
+      ) : activeAttempt ? (
+        <PlacementStatus initialAttempt={activeAttempt} />
       ) : (
         <fieldset className="onboarding-methods">
           <legend>Choose one option</legend>

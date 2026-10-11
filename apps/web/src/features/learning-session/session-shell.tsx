@@ -27,6 +27,8 @@ interface SessionShellProps {
   readonly onResumeSession: () => Promise<void>;
   readonly onSubmitRecording?: (input: SubmitRecordingInput) => Promise<RecordingSubmissionResult>;
   readonly isCompleted?: boolean;
+  readonly contextLabel?: string;
+  readonly completionHref?: string;
 }
 
 const blockLabels: Record<string, string> = {
@@ -71,7 +73,10 @@ export function SessionShell({
   onResumeSession,
   onSubmitRecording,
   isCompleted = false,
+  contextLabel = 'Workplace Learning Session',
+  completionHref = '/dashboard',
 }: SessionShellProps) {
+  const isPlacement = contextLabel === 'Placement assessment';
   // Attempts arrive oldest-first; restore the latest response for this activity.
   const previousAttempt = [...(session.attempts ?? [])]
     .reverse()
@@ -244,7 +249,7 @@ export function SessionShell({
       <header className="session-header">
         <div className="session-header-content">
           <div className="header-meta">
-            <span className="eyebrow">Workplace Learning Session</span>
+            <span className="eyebrow">{contextLabel}</span>
             <h1 className="session-mission-title">{session.mission.title}</h1>
           </div>
 
@@ -334,13 +339,14 @@ export function SessionShell({
 
           {isCompleted ? (
             <section className="session-completed-card" aria-label="Session completed">
-              <h2>Session Completed!</h2>
-              <p>
-                Congratulations on finishing all {session.plan.blocks.length} blocks of this{' '}
-                {session.durationMinutes}-minute workplace session.
+              <h2>{isPlacement ? 'Placement assessment complete' : 'Session Completed!'}</h2>
+              <p>{isPlacement
+                ? 'Your responses are saved. Continue to review evaluation status and your recommendation.'
+                : <>Congratulations on finishing all {session.plan.blocks.length} blocks of this{' '}
+                    {session.durationMinutes}-minute workplace session.</>}
               </p>
-              <Link href="/dashboard" className="primary-action-button inline-button">
-                Return to Dashboard
+              <Link href={completionHref} className="primary-action-button inline-button">
+                {isPlacement ? 'Review assessment status' : 'Return to Dashboard'}
               </Link>
             </section>
           ) : (
