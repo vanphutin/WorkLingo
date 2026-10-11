@@ -29,6 +29,7 @@ export function ListeningActivity({
     type?: string;
     text?: string;
     audio?: {
+      kind?: string;
       notice?: string;
     };
   }>;
@@ -50,6 +51,9 @@ export function ListeningActivity({
   const audioUrl = apiClient.getActivityAudioUrl(sessionId, activity.id);
 
   const transcript = contentItems.map((item) => item.text ?? '').filter(Boolean).join('\n');
+  const usesSimulationPlaceholder = contentItems.some(
+    (item) => item.audio?.kind === 'textPlaceholder',
+  );
 
   return (
     <article className="activity-container listening-activity" aria-labelledby="listening-prompt">
@@ -60,7 +64,11 @@ export function ListeningActivity({
       </div>
 
       <section className="audio-player-panel" aria-label="Audio player">
-        <LessonAudioPlayer audioUrl={audioUrl} text={transcript} />
+        <LessonAudioPlayer
+          audioUrl={audioUrl}
+          preferBrowserSpeech={usesSimulationPlaceholder}
+          text={transcript}
+        />
 
         {contentItems.length > 0 && (
           <div className="audio-transcript-box">

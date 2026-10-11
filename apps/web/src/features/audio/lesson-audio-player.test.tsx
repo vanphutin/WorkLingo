@@ -28,6 +28,23 @@ describe('LessonAudioPlayer', () => {
     expect(screen.queryByLabelText('Lesson audio')).not.toBeInTheDocument();
   });
 
+  it('skips simulated media and uses browser speech in automatic mode', async () => {
+    vi.spyOn(audioSettingsClient, 'getLearnerSettings').mockResolvedValue({
+      browserVoiceId: null, sourceId: 'system-default',
+    });
+
+    render(
+      <LessonAudioPlayer
+        audioUrl="/private/simulated-audio"
+        preferBrowserSpeech
+        text="Meeting transcript"
+      />,
+    );
+
+    expect(await screen.findByTestId('browser-speech')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Lesson audio')).not.toBeInTheDocument();
+  });
+
   it('keeps published-only failures explicit without silently changing source', async () => {
     vi.spyOn(audioSettingsClient, 'getLearnerSettings').mockResolvedValue({
       browserVoiceId: null, sourceId: 'published-audio',

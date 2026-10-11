@@ -13,6 +13,7 @@ const DEFAULT_SETTINGS: AudioSettings = {
 
 export function LessonAudioPlayer(props: {
   readonly audioUrl: string;
+  readonly preferBrowserSpeech?: boolean;
   readonly text: string;
 }) {
   const [settings, setSettings] = useState<AudioSettings | null>(null);
@@ -32,7 +33,10 @@ export function LessonAudioPlayer(props: {
     return <p className="audio-fallback-notice" role="status">Loading audio preferences…</p>;
   }
 
-  if (settings.sourceId === 'browser-tts') {
+  if (
+    settings.sourceId === 'browser-tts'
+    || (props.preferBrowserSpeech && settings.sourceId !== 'published-audio')
+  ) {
     return (
       <BrowserSpeechControls
         lang="en-US"

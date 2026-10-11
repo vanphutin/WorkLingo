@@ -59,27 +59,21 @@ test.describe('Audio source and publishing journeys', () => {
     await page.getByLabel('Ask Mai for help.').check();
     await page.getByRole('button', { name: 'Continue' }).click();
 
-    const lessonAudio = page.getByLabel('Lesson audio');
-    await expect(lessonAudio).toBeVisible();
-    const audioUrl = await lessonAudio.getAttribute('src');
-    expect(audioUrl).toBeTruthy();
-    const partial = await page.request.get(audioUrl!, { headers: { Range: 'bytes=0-15' } });
-    expect(partial.status()).toBe(206);
-    expect(partial.headers()['content-range']).toMatch(/^bytes 0-15\/\d+$/u);
-    expect(partial.headers()['cache-control']).toContain('private');
-
-    await lessonAudio.evaluate((element) => element.dispatchEvent(new Event('error')));
-    await expect(page.getByText(/browser speech is ready as a fallback/i)).toBeVisible();
+    await expect(page.getByLabel('Lesson audio')).toHaveCount(0);
+    const lessonPreview = page.getByRole('button', { name: 'Play preview' });
+    await expect(lessonPreview).toBeVisible();
+    await lessonPreview.click();
+    expect(await page.evaluate(() =>
+      (window as Window & { __worklingoSpeechCalls?: number }).__worklingoSpeechCalls ?? 0,
+    )).toBe(1);
 
     const publishedOnly = await page.request.patch('/api/v1/me/audio-settings', {
       data: { browserVoiceId: 'worklingo-test-voice', sourceId: 'published-audio' },
     });
     expect(publishedOnly.status()).toBe(200);
     await page.reload();
-    const publishedAudio = page.getByLabel('Lesson audio');
-    await expect(publishedAudio).toBeVisible();
-    await publishedAudio.evaluate((element) => element.dispatchEvent(new Event('error')));
     await expect(page.getByText(/Published audio is unavailable/i)).toBeVisible();
+    await expect(page.getByLabel('Lesson audio')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Play preview' })).toHaveCount(0);
     await expectNoHorizontalOverflow(page);
   });
@@ -125,12 +119,8 @@ test.describe('Audio source and publishing journeys', () => {
     const candidate = page.getByRole('radio', { name: /fake-tts.*fake-neutral/i });
     await expect(candidate).toBeEnabled({ timeout: 20_000 });
     await candidate.check();
-    const artifactAudio = page.locator('.audio-candidate audio');
-    const artifactUrl = await artifactAudio.getAttribute('src');
-    expect(artifactUrl).toBeTruthy();
-    const partial = await page.request.get(artifactUrl!, { headers: { Range: 'bytes=0-15' } });
-    expect(partial.status()).toBe(206);
-    expect(partial.headers()['content-range']).toMatch(/^bytes 0-15\/\d+$/u);
+    await expect(page.locator('.audio-candidate audio')).toHaveCount(0);
+    await expect(page.getByText(/diagnostic tone, not speech/i)).toBeVisible();
 
     await page.getByRole('tab', { name: /^publish/i }).click();
     await expect(page.getByText('Valid and ready to publish')).toBeVisible();

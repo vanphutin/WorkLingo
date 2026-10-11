@@ -20,7 +20,7 @@ describe('version-bound learner audio', () => {
   beforeEach(async () => context.resetLearners());
   afterAll(async () => context?.close());
 
-  it('streams playable WAV audio for the seeded listening activity', async () => {
+  it('does not expose seeded simulation tones as learner speech', async () => {
     const learner = await registerLearner(context.app, {
       displayName: 'Seed Audio Learner', email: 'seed-audio@example.test',
     });
@@ -40,7 +40,8 @@ describe('version-bound learner audio', () => {
       seededReferences.some((reference) =>
         reference.lessonVersionId === session.lessonVersionId &&
         listening.contentReferences.includes(reference.audioScriptSlug) &&
-        reference.audioArtifact.status === 'READY'),
+        reference.audioArtifact.status === 'READY' &&
+        reference.audioArtifact.adapterName === 'fake-tts'),
       JSON.stringify({
         contentReferences: listening.contentReferences,
         seededReferences,
@@ -48,40 +49,9 @@ describe('version-bound learner audio', () => {
       }),
     ).toBe(true);
 
-    const response = await learner.get(
+    await learner.get(
       `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
-    ).buffer(true).parse((res, callback) => {
-      const chunks: Buffer[] = [];
-      res.on('data', (chunk: Buffer) => chunks.push(chunk));
-      res.on('end', () => callback(null, Buffer.concat(chunks)));
-    });
-
-    expect(response.status, JSON.stringify(response.body)).toBe(200);
-    expect(response.headers['content-type']).toContain('audio/wav');
-    expect(response.headers['accept-ranges']).toBe('bytes');
-    expect(response.headers['cache-control']).toBe('private, no-store');
-    expect(response.body.subarray(0, 4).toString('ascii')).toBe('RIFF');
-
-    const partial = await learner.get(
-      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
-    ).set('Range', 'bytes=0-3').expect(206);
-    expect(partial.headers['content-range']).toBe(
-      `bytes 0-3/${response.body.length}`,
-    );
-    expect(partial.body.toString('ascii')).toBe('RIFF');
-
-    const suffix = await learner.get(
-      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
-    ).set('Range', 'bytes=-4').expect(206);
-    expect(suffix.headers['content-range']).toBe(
-      `bytes ${response.body.length - 4}-${response.body.length - 1}/${response.body.length}`,
-    );
-    expect(suffix.body).toHaveLength(4);
-
-    const invalidRange = await learner.get(
-      `/api/v1/learning-sessions/${session.id}/activities/${listening.id}/audio`,
-    ).set('Range', 'bytes=999999-').expect(416);
-    expect(invalidRange.headers['content-range']).toBe(`bytes */${response.body.length}`);
+    ).expect(404);
 
     const other = await registerLearner(context.app, {
       displayName: 'Foreign Audio Learner', email: 'foreign-audio@example.test',
@@ -158,7 +128,7 @@ describe('version-bound learner audio', () => {
     });
     const oldArtifact = await context.database.audioArtifact.create({
       data: {
-        adapterName: 'fake-tts',
+        adapterName: 'azure-speech',
         audioScriptSlug,
         byteSize: oldObject.size,
         checksum: randomUUID(),
