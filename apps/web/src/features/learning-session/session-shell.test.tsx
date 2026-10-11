@@ -488,8 +488,8 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.getByLabelText(/spoken response/i)).toBeInTheDocument();
   });
 
-  it('renders version-bound listening audio without autoplay', () => {
-    const { container } = render(
+  it('renders version-bound listening audio without autoplay', async () => {
+    render(
       <ActivityRenderer
         activity={mockListeningActivity}
         sessionId={createMockSession().id}
@@ -499,9 +499,9 @@ describe('SessionShell and Activity Renderers', () => {
       />,
     );
 
-    const audioElement = container.querySelector('audio');
+    const audioElement = await screen.findByLabelText('Lesson audio') as HTMLAudioElement;
     expect(audioElement).toBeInTheDocument();
-    expect(audioElement?.autoplay).toBe(false);
+    expect(audioElement.autoplay).toBe(false);
   });
 
   it('exposes semantic landmarks in reading order', () => {

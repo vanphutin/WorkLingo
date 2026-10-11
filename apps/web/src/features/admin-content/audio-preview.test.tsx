@@ -52,7 +52,7 @@ afterEach(() => {
 });
 
 describe('AudioPreview', () => {
-  it('displays simulation label, existing ready artifact, and audio player with authorized url', async () => {
+  it('labels simulation artifacts as diagnostic tones and does not expose them in an audio player', async () => {
     vi.mocked(apiClient.listContentAudioArtifacts).mockResolvedValueOnce([
       {
         id: '22222222-2222-4222-8222-222222222222',
@@ -99,11 +99,11 @@ describe('AudioPreview', () => {
     expect(screen.getAllByText('READY')).toHaveLength(2);
     expect(screen.getByRole('radio', { name: /fake-tts.*fake-neutral/i })).toBeInTheDocument();
 
-    const audioEl = screen.getByTestId(
+    expect(screen.queryByTestId(
       'audio-player-audio-dialogue-1-22222222-2222-4222-8222-222222222222',
-    ) as HTMLAudioElement;
-    expect(audioEl).toBeInTheDocument();
-    expect(audioEl.src).toContain('/audio/22222222-2222-4222-8222-222222222222/content');
+    )).not.toBeInTheDocument();
+    expect(screen.getByText(/diagnostic tone, not speech/i)).toBeInTheDocument();
+    expect(apiClient.getAudioArtifactContentUrl).not.toHaveBeenCalled();
   });
 
   it('triggers generate audio, polls job by status until completion, and refreshes artifact list', async () => {
@@ -233,6 +233,12 @@ describe('AudioPreview', () => {
     );
     const choices = await screen.findAllByRole('radio');
     expect(choices).toHaveLength(2);
+    expect(screen.queryByTestId(
+      'audio-player-audio-dialogue-1-22222222-2222-4222-8222-222222222222',
+    )).not.toBeInTheDocument();
+    expect(screen.getByTestId(
+      'audio-player-audio-dialogue-1-33333333-3333-4333-8333-333333333333',
+    )).toBeInTheDocument();
     fireEvent.click(choices[1]!);
     expect(onSelection).toHaveBeenLastCalledWith({
       'audio-dialogue-1': '33333333-3333-4333-8333-333333333333',

@@ -53,4 +53,28 @@ describe('ListeningActivity', () => {
     expect(await screen.findByText(/browser speech is ready as a fallback/i)).toBeInTheDocument();
     expect(screen.getByText('Mai: Welcome to the team.')).toBeInTheDocument();
   });
+
+  it('uses browser speech immediately for a text-placeholder listening activity', async () => {
+    const activity = {
+      id: '00000000-0000-4000-8000-000000000010', slug: 'listen', activityType: 'listening',
+      learningBlock: 'listenReason', skills: ['listening'],
+      content: [{
+        slug: 'dialogue', type: 'dialogue', text: 'Mai: Welcome to the team.',
+        audio: { kind: 'textPlaceholder', notice: 'Use a local simulated voice.' },
+      }],
+      languageBlocks: [], payload: { prompt: 'Listen carefully', questions: [] },
+    } satisfies LearnerActivityDto;
+
+    render(
+      <ListeningActivity
+        activity={activity}
+        sessionId="00000000-0000-4000-8000-000000000020"
+        value={{ answerIndexes: [] }}
+        onChange={vi.fn()}
+      />,
+    );
+
+    expect(await screen.findByRole('button', { name: 'Play preview' })).toBeInTheDocument();
+    expect(screen.queryByLabelText('Lesson audio')).not.toBeInTheDocument();
+  });
 });

@@ -247,7 +247,13 @@ export function AudioPreview({
                     </label>
                     <span>{candidate.status}</span>
                     {candidate.simulationLabel ? <p>{candidate.simulationLabel}</p> : null}
-                    {candidate.status === 'READY' ? (
+                    {candidate.status === 'READY' && candidate.adapterName === 'fake-tts' ? (
+                      <p className="audio-settings-note">
+                        This simulation file is a diagnostic tone, not speech. Use Play preview
+                        above to hear the script with a browser voice.
+                      </p>
+                    ) : null}
+                    {candidate.status === 'READY' && candidate.adapterName !== 'fake-tts' ? (
                       <audio
                         controls
                         data-testid={`audio-player-${item.slug}-${candidate.id}`}
