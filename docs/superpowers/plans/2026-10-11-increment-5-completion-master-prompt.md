@@ -31,7 +31,39 @@ Work from the latest `origin/main` of WorkLingo. Before substantive work:
    - `docs/superpowers/plans/2026-10-11-increment-5d-pilot-qualification.md`
 5. Read current architecture, data, API, test, decision and local-operation docs relevant to each phase. Inspect implementation before deciding exact edits.
 
-Use `superpowers:executing-plans` as the primary execution workflow. Use `superpowers:test-driven-development` for every behavior change and bug fix. Use `superpowers:systematic-debugging` or the installed equivalent before changing code in response to an unexpected failure. Route NestJS, PostgreSQL, React/Next.js, UI accessibility and code-review responsibilities to exact installed domain skills when applicable. Use `superpowers:verification-before-completion` before any completion claim.
+## Mandatory skill routing matrix
+
+Skills are execution requirements, not labels for the final report. Before each phase, discover the actual installed names and paths, select the smallest sufficient set, read each selected `SKILL.md` completely and follow its required order/checks. If an exact skill below is unavailable, report it as missing and use one installed equivalent for the same responsibility; never claim the missing skill was used. Do not load every skill at once.
+
+| Trigger or phase | Required primary skill | Responsibility |
+|---|---|---|
+| Start of the assignment | `superpowers:using-superpowers` | Discover skills before questions, exploration or edits and enforce skill-first routing. |
+| Execute any approved Increment 5 plan | `superpowers:executing-plans` | Track plan tasks in order, preserve interfaces between tasks and continue through all four increments. |
+| Every feature or defect repair | `superpowers:test-driven-development` | Enforce RED → GREEN → REFACTOR; prove the test fails for the intended missing behavior before implementation. |
+| Unexpected test/build/runtime behavior | `superpowers:systematic-debugging` | Reproduce, collect evidence, identify root cause and test the fix. If this exact skill is absent, use `debugging-and-error-recovery`; never use both for the same failure. |
+| Any Git inspection or workspace change | `git-workflow-and-versioning` | Preserve unrelated work, inspect status/diff and maintain a reviewable uncommitted handoff. The assignment-specific no-commit/no-push rule overrides commit suggestions in this skill. |
+| NestJS controllers, modules, DTOs, guards and services | `nestjs-expert` | Keep dependency injection, validation, authorization, error contracts and NestJS test structure correct. |
+| Prisma schema, PostgreSQL transactions, locks, indexes and query plans | `supabase-postgres-best-practices` | Review integrity, concurrency, bounded queries, indexes, migration compatibility and explain plans. |
+| Cross-cutting Node/Express request context, logging and rate limiting in 5C | `nodejs-backend-patterns` | Review middleware ordering, safe errors, request boundaries and abuse-control behavior. Use it only for this distinct cross-cutting responsibility. |
+| React/Next.js implementation in 5A2, 5B and 5C | `vercel-react-best-practices` | Control data fetching, rendering, state, bundle impact and request waterfalls. |
+| New Admin/Learner interface composition | `design-taste-frontend` | Preserve the WorkLingo design system, responsive hierarchy and intentional product UI. Do not redesign unrelated screens. |
+| Accessibility/UX review in every UI task and 5D | `web-design-guidelines` | Audit semantics, keyboard/focus, zoom, motion, contrast, target size and responsive behavior. |
+| End of each increment and whole-diff gate | `code-review-and-quality` | Perform five-axis review: correctness, readability, architecture, security and performance; fix every Critical/Important finding. |
+| Before any pass/fixed/complete statement | `superpowers:verification-before-completion` | Run fresh proving commands, read exit codes/counts and base every claim on current evidence. |
+
+Do not invoke `superpowers:brainstorming` merely to reopen approved product decisions. Invoke it only if implementation reveals a truly new subsystem or an irreversible architecture choice outside the approved specs; record the exact conflict and continue every independent in-scope task first.
+
+At the start of each major phase, the required report must name the skills actually selected for that phase:
+
+```text
+SKILL ROUTING
+Task: <5A2, 5B, 5C, 5D or final review>
+Selected: <exact installed skill names>
+Reason: <one responsibility per selected skill>
+Execution order: <process skill → domain skill → review/verification skill>
+```
+
+At final handoff, map every claimed skill to the concrete files/actions/checks it governed. A skill listed without evidence counts as not used.
 
 ## Git and workspace rules
 
