@@ -27,6 +27,7 @@ import { SafeLoggerService } from './common/logging/safe-logger.service.js';
 import { SafeExceptionFilter } from './common/http/safe-exception.filter.js';
 import { RateLimitModule } from './common/rate-limit/rate-limit.module.js';
 import { AnalyticsModule } from './analytics/analytics.module.js';
+import { LearningProgramsModule } from './learning-programs/learning-programs.module.js';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { AnalyticsModule } from './analytics/analytics.module.js';
     AdminCurriculumModule,
     AuditQueryModule,
     OperationsModule,
+    LearningProgramsModule,
   ],
   providers: [
     SafeLoggerService,
