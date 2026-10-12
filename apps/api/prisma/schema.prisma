@@ -117,15 +117,42 @@ enum MissionPurpose {
   PLACEMENT
 }
 
+enum ProgramAvailabilityStatus {
+  AVAILABLE
+  COMING_SOON
+  IN_DEVELOPMENT
+  BETA
+  DISABLED
+}
+
+model LearningProgram {
+  id                 String                    @id @default(uuid()) @db.Uuid
+  slug               String                    @unique
+  name               String
+  description        String
+  learningGoal       String
+  proficiencyLabel   String
+  iconKey            String
+  availabilityStatus ProgramAvailabilityStatus
+  displayOrder       Int                       @unique
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+  paths              LearningPath[]
+}
+
 model LearningPath {
-  id        String        @id @default(uuid()) @db.Uuid
-  slug      String        @unique
+  id        String          @id @default(uuid()) @db.Uuid
+  programId String          @default("10000000-0000-4000-8000-000000000002") @db.Uuid
+  slug      String          @unique
   name      String
-  status    ContentStatus @default(DRAFT)
-  revision  Int           @default(1)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  status    ContentStatus   @default(DRAFT)
+  revision  Int             @default(1)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  program   LearningProgram @relation(fields: [programId], references: [id], onDelete: Restrict)
   levels    Level[]
+
+  @@index([programId, status])
 }
 
 model Level {

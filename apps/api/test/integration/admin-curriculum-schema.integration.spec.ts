@@ -43,6 +43,7 @@ describe('Admin Curriculum and Audit Schema Integration', () => {
     });
     expect(path.revision).toBe(1);
     expect(path.status).toBe('DRAFT');
+    expect(path.programId).toBe('10000000-0000-4000-8000-000000000002');
 
     // 2. Check Level revision and status
     const level = await database.level.create({

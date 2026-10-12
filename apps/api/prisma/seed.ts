@@ -5,16 +5,18 @@ import { seedContentAdmin } from '../src/users/infrastructure/seed-content-admin
 import { seedWorkplaceTransferCurriculum } from '../src/curriculum/infrastructure/seed-workplace-transfer.js';
 import { createLocalSeedStorage } from '../src/curriculum/infrastructure/seed-audio.js';
 import { seedPlacementCurriculum } from '../src/curriculum/infrastructure/seed-placement.js';
+import { seedLearningPrograms } from '../src/learning-programs/infrastructure/seed-learning-programs.js';
 
 async function main(): Promise<void> {
   const database = new PrismaClient();
   const storage = createLocalSeedStorage();
   try {
+    await seedLearningPrograms(database);
     await seedFoundationCurriculum(database, storage);
     await seedWorkplaceTransferCurriculum(database, storage);
     await seedPlacementCurriculum(database, storage);
     await seedContentAdmin(database);
-    console.info('Learning and placement curriculum plus content admin seed complete.');
+    console.info('Program catalog, learning curriculum, placement, and content admin seed complete.');
   } finally {
     await database.$disconnect();
   }

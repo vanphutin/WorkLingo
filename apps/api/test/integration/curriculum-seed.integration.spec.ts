@@ -80,6 +80,11 @@ describe('Foundation curriculum seed', () => {
     await expect(database.lessonVersion.count()).resolves.toBe(1);
     await expect(database.activity.count()).resolves.toBe(5);
     await expect(database.languageBlock.count()).resolves.toBe(4);
+    await expect(database.learningProgram.count()).resolves.toBe(4);
+    await expect(database.learningPath.findUniqueOrThrow({
+      include: { program: true },
+      where: { slug: foundationMissionFixture.path.slug },
+    })).resolves.toMatchObject({ program: { slug: 'intermediate' } });
   });
 
   it('isolates the idempotent placement seed and plans its four skills at 45 minutes', async () => {
