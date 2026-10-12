@@ -12,3 +12,4 @@ export * from './admin-operations.contracts.ts';
 export * from './admin-analytics.contracts.ts';
 export * from './learning-program.contracts.ts';
 export * from './program-context.contracts.ts';
+export * from './curriculum-foundation.contracts.ts';

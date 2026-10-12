@@ -158,6 +158,7 @@ model LearnerProgramEnrollment {
   learner        User            @relation(fields: [learnerId], references: [id], onDelete: Cascade)
   program        LearningProgram @relation(fields: [programId], references: [id], onDelete: Restrict)
   currentLevel   Level?          @relation(fields: [currentLevelId], references: [id], onDelete: Restrict)
+  curriculumCompletions CurriculumCompletion[]
 
   @@unique([learnerId, programId])
   @@index([programId])
@@ -213,6 +214,8 @@ model Mission {
   level            Level             @relation(fields: [levelId], references: [id], onDelete: Restrict)
   lessons          MissionLesson[]
   learningSessions LearningSession[]
+  curriculumDefinition CurriculumDefinition?
+  curriculumRevisions CurriculumRevision[]
 
   @@unique([levelId, order])
   @@index([levelId, order])
@@ -269,6 +272,7 @@ model LessonVersion {
 
   checkpointAssessments CheckpointAssessment[]
   evaluationResults     EvaluationResult[]
+  curriculumBindings    CurriculumRevisionLesson[]
 
   @@unique([lessonId, version])
 }
@@ -430,6 +434,7 @@ model LearningSession {
   clientSessionId       String                 @db.Uuid
   missionId             String                 @db.Uuid
   lessonVersionId       String                 @db.Uuid
+  curriculumRevisionId  String?                @db.Uuid
   durationMinutes       Int
   planSnapshot          Json
   status                LearningSessionStatus  @default(PLANNED)
@@ -441,6 +446,7 @@ model LearningSession {
   learner               User                   @relation(fields: [learnerId], references: [id], onDelete: Cascade)
   mission               Mission                @relation(fields: [missionId], references: [id], onDelete: Restrict)
   lessonVersion         LessonVersion          @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  curriculumRevision    CurriculumRevision?    @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
   blocks                SessionBlock[]
   attempts              ActivityAttempt[]
   recordings            Recording[]
@@ -455,6 +461,73 @@ model LearningSession {
   @@index([learnerId, status, createdAt])
   @@index([missionId])
   @@index([lessonVersionId])
+  @@index([curriculumRevisionId])
+}
+
+model CurriculumDefinition {
+  id String @id @default(uuid()) @db.Uuid
+  missionId String @unique @db.Uuid
+  revision Int @default(1)
+  status ContentStatus @default(DRAFT)
+  content Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  mission Mission @relation(fields: [missionId], references: [id], onDelete: Restrict)
+}
+
+model CurriculumRevision {
+  id String @id @default(uuid()) @db.Uuid
+  missionId String @db.Uuid
+  revision Int
+  snapshot Json
+  status ContentStatus @default(PUBLISHED)
+  publishedAt DateTime @default(now())
+  archivedAt DateTime?
+  mission Mission @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  lessons CurriculumRevisionLesson[]
+  prerequisites CurriculumPrerequisite[] @relation("CurriculumDependencies")
+  dependents CurriculumPrerequisite[] @relation("CurriculumDependents")
+  sessions LearningSession[]
+  completions CurriculumCompletion[]
+
+  @@unique([missionId, revision])
+  @@index([missionId, status])
+}
+
+model CurriculumRevisionLesson {
+  curriculumRevisionId String @db.Uuid
+  lessonVersionId String @db.Uuid
+  order Int
+  curriculumRevision CurriculumRevision @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+  lessonVersion LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+
+  @@id([curriculumRevisionId, lessonVersionId])
+  @@unique([curriculumRevisionId, order])
+  @@index([lessonVersionId])
+}
+
+model CurriculumPrerequisite {
+  curriculumRevisionId String @db.Uuid
+  prerequisiteRevisionId String @db.Uuid
+  curriculumRevision CurriculumRevision @relation("CurriculumDependencies", fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+  prerequisiteRevision CurriculumRevision @relation("CurriculumDependents", fields: [prerequisiteRevisionId], references: [id], onDelete: Restrict)
+
+  @@id([curriculumRevisionId, prerequisiteRevisionId])
+  @@index([prerequisiteRevisionId])
+}
+
+model CurriculumCompletion {
+  id String @id @default(uuid()) @db.Uuid
+  enrollmentId String @db.Uuid
+  curriculumRevisionId String @db.Uuid
+  policyVersion String
+  evidenceSnapshot Json
+  completedAt DateTime @default(now())
+  enrollment LearnerProgramEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  curriculumRevision CurriculumRevision @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+
+  @@unique([enrollmentId, curriculumRevisionId])
+  @@index([curriculumRevisionId])
 }
 
 model PlacementAttempt {
