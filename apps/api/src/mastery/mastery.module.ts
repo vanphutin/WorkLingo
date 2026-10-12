@@ -5,9 +5,10 @@ import { MasteryService } from './application/mastery.service.js';
 import { MasteryController } from './mastery.controller.js';
 import { CurriculumModule } from '../curriculum/curriculum.module.js';
 import { MasteryMapService } from './application/mastery-map.service.js';
+import { LearningProgramsModule } from '../learning-programs/learning-programs.module.js';
 
 @Module({
-  imports: [DatabaseModule, CurriculumModule],
+  imports: [DatabaseModule, CurriculumModule, LearningProgramsModule],
   controllers: [MasteryController],
   providers: [
     {

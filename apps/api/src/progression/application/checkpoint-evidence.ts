@@ -7,7 +7,7 @@ import type { CheckpointEvidence } from '../domain/checkpoint-policy.js';
 import { computeAvailableDurations } from '../../learning-sessions/domain/session-planner.js';
 
 export const checkpointSessionInclude = {
-  mission: { include: { level: true } },
+  mission: { include: { level: { include: { path: true } } } },
   lessonVersion: true,
   attempts: { orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] },
 } satisfies Prisma.LearningSessionInclude;
@@ -77,9 +77,9 @@ function publishedSnapshots(mission: PublishedMission): LessonSnapshot[] {
   });
 }
 
-export async function availableNextLevel(database: Prisma.TransactionClient, levelCode: string): Promise<string | null> {
-  const current = await database.level.findUnique({ where: { code: levelCode } });
-  if (!current) return null;
+export async function availableNextLevel(database: Prisma.TransactionClient, levelCode: string, programId?: string): Promise<string | null> {
+  const current = await database.level.findUnique({ where: { code: levelCode }, include: { path: true } });
+  if (!current || current.status !== 'PUBLISHED' || (programId && current.path.programId !== programId)) return null;
   // Resolve the immediate successor first. Filtering by content here could skip an unready level.
   const next = await database.level.findFirst({
     where: { pathId: current.pathId, order: { gt: current.order }, path: { status: 'PUBLISHED' } },
@@ -88,7 +88,7 @@ export async function availableNextLevel(database: Prisma.TransactionClient, lev
       missions: { where: { purpose: 'LEARNING', status: 'PUBLISHED' }, include: publishedLessonsInclude },
     },
   });
-  if (!next) return null;
+  if (!next || next.status !== 'PUBLISHED') return null;
   // Every required published mission must be startable, not merely contain four skill names.
   const hasContent = next.missions.length > 0 && next.missions.every((mission) => publishedSnapshots(mission).some((snapshot) =>
     computeAvailableDurations({ lessonVersion: snapshot }).length > 0,
@@ -97,13 +97,13 @@ export async function availableNextLevel(database: Prisma.TransactionClient, lev
 }
 
 export async function readCheckpointEvidence(
-  database: Prisma.TransactionClient, learnerId: string, levelCode: string, session?: CheckpointSession,
+  database: Prisma.TransactionClient, learnerId: string, levelCode: string, session?: CheckpointSession, programId?: string,
 ): Promise<CheckpointEvidence> {
   const missions = await database.mission.findMany({
     where: {
       purpose: 'LEARNING',
       status: 'PUBLISHED',
-      level: { code: levelCode, path: { status: 'PUBLISHED' } },
+      level: { code: levelCode, status: 'PUBLISHED', path: { status: 'PUBLISHED', ...(programId ? { programId } : {}) } },
     },
     include: publishedLessonsInclude,
     orderBy: [{ order: 'asc' }, { id: 'asc' }],

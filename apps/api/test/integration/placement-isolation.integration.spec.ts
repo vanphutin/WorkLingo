@@ -87,10 +87,10 @@ describe('placement evidence isolation', () => {
       completedActivities: 0,
       sessions: { completed: 0, inProgress: 0, paused: 0, planned: 0 },
     });
-    const progression = await agent.get('/api/v1/me/progression').expect(200);
-    expect(progression.body.eligibleSessionId).toBeNull();
-    const mastery = await agent.get('/api/v1/me/mastery-map').expect(200);
-    expect(mastery.body.reviewQueue).toEqual([]);
+    const progression = await agent.get('/api/v1/me/progression').expect(409);
+    expect(progression.body.code).toBe('ONBOARDING_REQUIRED');
+    const mastery = await agent.get('/api/v1/me/mastery-map').expect(409);
+    expect(mastery.body.code).toBe('ONBOARDING_REQUIRED');
   });
 
   it('preserves ordinary learning evidence and progress side effects', async () => {

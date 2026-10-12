@@ -7,11 +7,12 @@ import { OnboardingService } from './application/onboarding.service.js';
 import { PlacementAttemptsService } from './application/placement-attempts.service.js';
 import { PlacementRecommendationService } from './application/placement-recommendation.service.js';
 import { OnboardingController } from './onboarding.controller.js';
+import { LearningProgramsModule } from '../learning-programs/learning-programs.module.js';
 
 @Module({
   controllers: [OnboardingController],
   exports: [OnboardingService, PlacementRecommendationService],
-  imports: [DatabaseModule, CurriculumModule, LearningSessionsModule],
+  imports: [DatabaseModule, CurriculumModule, LearningSessionsModule, LearningProgramsModule],
   providers: [OnboardingService, PlacementAttemptsService, PlacementRecommendationService],
 })
 export class OnboardingModule {}

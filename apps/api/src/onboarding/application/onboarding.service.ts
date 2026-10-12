@@ -18,6 +18,8 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
+import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import {
@@ -33,6 +35,7 @@ const SELF_PLACEMENT_OPERATION = 'onboarding:self-placement';
 export class OnboardingService {
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
+    @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
@@ -126,6 +129,7 @@ export class OnboardingService {
       }
 
       const onboardedAt = new Date();
+      await this.programContext.initializeIntermediate(transaction, learnerId, selected.code);
       const updated = await transaction.learnerProfile.update({
         where: { userId: learnerId },
         data: {
@@ -209,7 +213,7 @@ export class OnboardingService {
     database: Prisma.TransactionClient,
   ): Promise<PlayableLevel[]> {
     const levels = await database.level.findMany({
-      where: { path: { status: 'PUBLISHED' } },
+      where: { path: { status: 'PUBLISHED', programId: INTERMEDIATE_PROGRAM_ID } },
       orderBy: [{ order: 'asc' }, { code: 'asc' }],
       include: {
         missions: {
@@ -239,7 +243,7 @@ export class OnboardingService {
     const candidates: PlayableLevelCandidate[] = levels.map((level) => ({
       cefrReference: level.cefrReference,
       code: level.code,
-      missions: level.missions.flatMap((mission) => {
+      missions: level.status !== 'PUBLISHED' ? [] : level.missions.flatMap((mission) => {
         const lesson = mission.lessons[0]?.lesson;
         const version = lesson?.currentPublishedVersion?.status === 'PUBLISHED'
           ? lesson.currentPublishedVersion

@@ -27,6 +27,7 @@ describe('learner progression HTTP API', () => {
     shiftedLessonLinks.length = 0;
     await context.database.missionLesson.deleteMany({ where: { missionId: { in: createdMissionIds } } });
     await context.database.mission.deleteMany({ where: { id: { in: createdMissionIds } } });
+    await context.database.learnerProgramEnrollment.deleteMany({ where: { currentLevelId: { in: createdLevelIds } } });
     await context.database.level.deleteMany({ where: { id: { in: createdLevelIds } } });
     createdMissionIds.length = 0;
     createdLevelIds.length = 0;
@@ -76,7 +77,7 @@ describe('learner progression HTTP API', () => {
 
   async function nextLevel(code: string, order: number, hasPublishedContent = true) {
     const current = await context.database.level.findUniqueOrThrow({ where: { code: 'FOUNDATION_1' } });
-    const level = await context.database.level.create({ data: { code, order, pathId: current.pathId, name: code, cefrReference: 'A1' } });
+    const level = await context.database.level.create({ data: { code, order, pathId: current.pathId, name: code, cefrReference: 'A1', status: 'PUBLISHED' } });
     createdLevelIds.push(level.id);
     if (hasPublishedContent) {
       const mission = await context.database.mission.create({ data: {
@@ -153,13 +154,13 @@ describe('learner progression HTTP API', () => {
     expect(replay.body).toEqual(confirmed.body);
   });
 
-  it('uses persisted current level in the existing progress API even without sessions', async () => {
+  it('uses enrollment current level in the existing progress API even when the legacy mirror disagrees', async () => {
     const email = 'persisted-progress@example.test';
     const agent = await registerLearner(context.app, { displayName: 'Persisted Level', email });
     const learner = await context.database.user.findUniqueOrThrow({ where: { email } });
     await context.database.learnerProfile.update({ where: { userId: learner.id }, data: { currentLevelCode: 'FOUNDATION_2' } });
     const response = await agent.get('/api/v1/me/progress').expect(200);
-    expect(response.body.currentLevelCode).toBe('FOUNDATION_2');
+    expect(response.body.currentLevelCode).toBe('FOUNDATION_1');
   });
 
   it('serializes UUID replay and rejects reuse for a different session', async () => {
@@ -239,12 +240,68 @@ describe('learner progression HTTP API', () => {
     expect(first.body).toMatchObject({ status: 'passed', nextLevelCode: 'FOUNDATION_2', canAdvance: true });
     const confirmations = await Promise.all(Array.from({ length: 4 }, () => agent.post(`/api/v1/me/checkpoint-assessments/${first.body.id}/confirm`).expect(200)));
     for (const response of confirmations) expect(response.body.currentLevelCode).toBe('FOUNDATION_2');
+    const programContext = await agent.get('/api/v1/me/program-context').expect(200);
+    expect(programContext.body.enrollment).toMatchObject({ revision: 2, currentLevel: { code: 'FOUNDATION_2' } });
     await agent.post(`/api/v1/me/checkpoint-assessments/${second.body.id}/confirm`).expect(409);
     const replay = await agent.post('/api/v1/me/checkpoint-assessments').send({ sessionId, clientAssessmentId: firstKey }).expect(201);
     expect(replay.body).toEqual(first.body);
     await agent.post('/api/v1/me/checkpoint-assessments').send({ sessionId, clientAssessmentId: randomUUID() }).expect(409);
     const progress = await agent.get('/api/v1/me/progress').expect(200);
     expect(progress.body.currentLevelCode).toBe('FOUNDATION_2');
+  });
+
+  it('uses enrollment level for progression even when the compatibility mirror is stale', async () => {
+    const { agent, learnerId } = await evaluatedSession();
+    await context.database.learnerProfile.update({ where: { userId: learnerId }, data: { currentLevelCode: 'STALE_MIRROR' } });
+    const summary = await agent.get('/api/v1/me/progression').expect(200);
+    expect(summary.body.currentLevelCode).toBe('FOUNDATION_1');
+    expect(summary.body.canAssess).toBe(true);
+  });
+
+  it('serializes activation with advancement and rolls back enrollment when confirmation persistence fails', async () => {
+    const { agent, learnerId, sessionId } = await evaluatedSession();
+    await nextLevel('FOUNDATION_2', 1);
+    const assessment = await agent.post('/api/v1/me/checkpoint-assessments').send({ sessionId, clientAssessmentId: randomUUID() }).expect(201);
+    const before = (await agent.get('/api/v1/me/program-context').expect(200)).body;
+    await context.database.$executeRawUnsafe(`CREATE FUNCTION fail_program_confirmation() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'forced confirmation persistence failure'; END $$`);
+    await context.database.$executeRawUnsafe('CREATE TRIGGER fail_program_confirmation BEFORE INSERT ON "ProgressionConfirmation" FOR EACH ROW EXECUTE FUNCTION fail_program_confirmation()');
+    try {
+      await agent.post(`/api/v1/me/checkpoint-assessments/${assessment.body.id}/confirm`).expect(500);
+      expect((await agent.get('/api/v1/me/program-context').expect(200)).body).toEqual(before);
+      expect((await context.database.learnerProfile.findUniqueOrThrow({ where: { userId: learnerId } })).currentLevelCode).toBe('FOUNDATION_1');
+    } finally {
+      await context.database.$executeRawUnsafe('DROP TRIGGER fail_program_confirmation ON "ProgressionConfirmation"');
+      await context.database.$executeRawUnsafe('DROP FUNCTION fail_program_confirmation()');
+    }
+    const [activation, confirmation] = await Promise.all([
+      agent.put('/api/v1/me/program-context').send({ programSlug: 'intermediate', expectedRevision: 1 }),
+      agent.post(`/api/v1/me/checkpoint-assessments/${assessment.body.id}/confirm`),
+    ]);
+    expect([200, 409]).toContain(activation.status);
+    expect(confirmation.status).toBe(200);
+    expect((await agent.get('/api/v1/me/program-context').expect(200)).body.enrollment).toMatchObject({ revision: 2, currentLevel: { code: 'FOUNDATION_2' } });
+    expect((await agent.put('/api/v1/me/program-context').send({ programSlug: 'intermediate', expectedRevision: 1 }).expect(409)).body.code).toBe('PROGRAM_CONTEXT_STALE');
+  });
+
+  it('resumes historical work but rejects new and replayed assessment or confirmation across program contexts', async () => {
+    const { agent, learnerId, sessionId } = await evaluatedSession();
+    const key = randomUUID();
+    const assessment = await agent.post('/api/v1/me/checkpoint-assessments').send({ sessionId, clientAssessmentId: key }).expect(201);
+    const foreignProgram = '10000000-0000-4000-8000-000000000004';
+    const foreignPath = await context.database.learningPath.create({ data: { programId: foreignProgram, slug: randomUUID(), name: 'IELTS fixture', status: 'PUBLISHED' } });
+    const level = await context.database.level.create({ data: { pathId: foreignPath.id, code: `FOREIGN_${Date.now()}`, name: 'Foreign level', cefrReference: 'B1', order: 0, status: 'PUBLISHED' } });
+    createdLevelIds.push(level.id);
+    await context.database.learnerProgramEnrollment.create({ data: { learnerId, programId: foreignProgram, currentLevelId: level.id } });
+    await context.database.learnerProfile.update({ where: { userId: learnerId }, data: { activeProgramId: foreignProgram } });
+    await agent.get(`/api/v1/learning-sessions/${sessionId}`).expect(200);
+    const progress = await agent.get('/api/v1/me/progress').expect(200);
+    expect(progress.body.sessions.completed).toBe(0);
+    for (const clientAssessmentId of [key, randomUUID()]) {
+      const rejected = await agent.post('/api/v1/me/checkpoint-assessments').send({ sessionId, clientAssessmentId }).expect(409);
+      expect(rejected.body.code).toBe('PROGRAM_CONTEXT_MISMATCH');
+    }
+    const confirmation = await agent.post(`/api/v1/me/checkpoint-assessments/${assessment.body.id}/confirm`).expect(409);
+    expect(confirmation.body.code).toBe('PROGRAM_CONTEXT_MISMATCH');
   });
 
   it('never skips an immediate next level that has no published content', async () => {

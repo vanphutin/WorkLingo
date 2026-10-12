@@ -40,12 +40,17 @@ export class CurriculumService {
     levelCode: string,
     purpose: MissionPurpose = 'learning',
     database: Pick<Prisma.TransactionClient, 'mission'> = this.database,
+    programId?: string,
   ): Promise<PublishedMission[]> {
     const missions = await database.mission.findMany({
       where: {
         purpose: purpose === 'learning' ? 'LEARNING' : 'PLACEMENT',
         status: 'PUBLISHED',
-        level: { code: levelCode, path: { status: 'PUBLISHED' } },
+        level: {
+          code: levelCode,
+          ...(purpose === 'learning' ? { status: 'PUBLISHED' } : {}),
+          path: { status: 'PUBLISHED', ...(programId ? { programId } : {}) },
+        },
         lessons: {
           some: {
             lesson: {

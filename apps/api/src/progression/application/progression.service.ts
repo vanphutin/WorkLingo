@@ -3,46 +3,52 @@ import type { Prisma, CheckpointAssessment as AssessmentRecord } from '@prisma/c
 import { checkpointAssessmentSchema, type CheckpointAssessment, type CreateCheckpointAssessment, type ProgressionSummary } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
 import { evaluateCheckpoint } from '../domain/checkpoint-policy.js';
 import { availableNextLevel, checkpointSessionInclude, frozenActivities, readCheckpointEvidence } from './checkpoint-evidence.js';
 
 @Injectable()
 export class ProgressionService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly database: PrismaService,
+    @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
+  ) {}
 
   async getSummary(learnerId: string): Promise<ProgressionSummary> {
-    const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId } });
-    const currentLevelCode = profile?.currentLevelCode ?? 'FOUNDATION_1';
-    const [eligibleSessionId, latest, nextLevelCode] = await Promise.all([
-      this.findEligibleSessionId(learnerId, currentLevelCode),
-      this.database.checkpointAssessment.findFirst({
-        where: { learnerId, levelCode: currentLevelCode }, orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
-      }),
-      availableNextLevel(this.database, currentLevelCode),
-    ]);
-    const prerequisites = await readCheckpointEvidence(this.database, learnerId, currentLevelCode);
-    const reasons = [
-      ...(eligibleSessionId ? [] : ['no_valid_completed_session']),
-      ...(prerequisites.allMissionsCompleted ? [] : ['incomplete_missions']),
-      ...(prerequisites.curriculumReady ? [] : ['curriculum_unavailable']),
-    ];
-    return {
-      currentLevelCode, nextLevelCode, eligibleSessionId, canAssess: eligibleSessionId !== null,
-      reasons,
-      latestAssessment: latest ? this.toAssessment(latest) : null,
-    };
+    return this.database.$transaction(async (transaction) => {
+      const context = await this.programContext.resolve(learnerId, transaction);
+      const currentLevelCode = context.levelCode;
+      const [eligibleSessionId, latest, nextLevelCode] = await Promise.all([
+        this.findEligibleSessionId(transaction, learnerId, currentLevelCode, context.programId),
+        transaction.checkpointAssessment.findFirst({
+          where: { learnerId, levelCode: currentLevelCode }, orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+        }),
+        availableNextLevel(transaction, currentLevelCode, context.programId),
+      ]);
+      const prerequisites = await readCheckpointEvidence(transaction, learnerId, currentLevelCode, undefined, context.programId);
+      const reasons = [
+        ...(eligibleSessionId ? [] : ['no_valid_completed_session']),
+        ...(prerequisites.allMissionsCompleted ? [] : ['incomplete_missions']),
+        ...(prerequisites.curriculumReady ? [] : ['curriculum_unavailable']),
+      ];
+      return {
+        currentLevelCode, nextLevelCode, eligibleSessionId, canAssess: eligibleSessionId !== null,
+        reasons,
+        latestAssessment: latest ? this.toAssessment(latest) : null,
+      };
+    }, { isolationLevel: 'RepeatableRead', timeout: 15_000 });
   }
 
-  private async findEligibleSessionId(learnerId: string, levelCode: string): Promise<string | null> {
+  private async findEligibleSessionId(transaction: Prisma.TransactionClient, learnerId: string, levelCode: string, programId: string): Promise<string | null> {
     let cursor: string | undefined;
     for (;;) {
-      const sessions = await this.database.learningSession.findMany({
+      const sessions = await transaction.learningSession.findMany({
         where: {
           learnerId,
           status: 'COMPLETED',
-          mission: { level: { code: levelCode }, purpose: 'LEARNING' },
+          mission: { level: { code: levelCode, path: { programId } }, purpose: 'LEARNING' },
         },
-        include: { mission: { include: { level: true } }, lessonVersion: true },
+        include: { mission: { include: { level: { include: { path: true } } } }, lessonVersion: true },
         orderBy: [{ completedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }],
         take: 25,
         ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
@@ -62,32 +68,32 @@ export class ProgressionService {
 
   async assess(learnerId: string, input: CreateCheckpointAssessment): Promise<CheckpointAssessment> {
     return this.database.$transaction(async (transaction) => {
-      const profile = await this.lockProfile(transaction, learnerId);
+      await this.lockProfile(transaction, learnerId);
+      const context = await this.programContext.resolve(learnerId, transaction);
       const replay = await transaction.checkpointAssessment.findUnique({
         where: { learnerId_clientAssessmentId: { learnerId, clientAssessmentId: input.clientAssessmentId } },
       });
-      if (replay) {
-        if (replay.sessionId !== input.sessionId.toLowerCase()) throw new ConflictException('Assessment UUID is already associated with another session');
-        return this.toAssessment(replay);
-      }
+      if (replay && replay.sessionId !== input.sessionId.toLowerCase()) throw new ConflictException('Assessment UUID is already associated with another session');
       const session = await transaction.learningSession.findFirst({
         where: { id: input.sessionId, learnerId, mission: { purpose: 'LEARNING' } },
         include: checkpointSessionInclude,
       });
       if (!session) throw new NotFoundException('Learning session not found');
+      if (session.mission.level.path.programId !== context.programId) throw this.contextMismatch();
+      if (replay) return this.toAssessment(replay);
       if (session.status !== 'COMPLETED') throw new ConflictException('Complete the session before assessing');
-      if (session.mission.level.code !== profile.currentLevelCode) throw new ConflictException('Session is not at the learner current level');
-      const evidence = await readCheckpointEvidence(transaction, learnerId, profile.currentLevelCode, session);
+      if (session.mission.level.id !== context.levelId) throw new ConflictException('Session is not at the learner current level');
+      const evidence = await readCheckpointEvidence(transaction, learnerId, context.levelCode, session, context.programId);
       const decision = evaluateCheckpoint(evidence);
-      const nextLevelCode = await availableNextLevel(transaction, profile.currentLevelCode);
+      const nextLevelCode = await availableNextLevel(transaction, context.levelCode, context.programId);
       const assessment = await transaction.checkpointAssessment.create({
         data: {
           learnerId, clientAssessmentId: input.clientAssessmentId, sessionId: session.id,
-          lessonVersionId: session.lessonVersionId, levelCode: profile.currentLevelCode,
+          lessonVersionId: session.lessonVersionId, levelCode: context.levelCode,
           policyVersion: 'workplace-checkpoint-v1', status: decision.status,
           skills: decision.skills as Prisma.InputJsonValue,
           reinforcement: decision.reinforcement as Prisma.InputJsonValue,
-          evidenceSnapshot: { ...evidence, plan: session.planSnapshot } as unknown as Prisma.InputJsonValue,
+          evidenceSnapshot: { ...evidence, plan: session.planSnapshot, programId: context.programId, enrollmentId: context.enrollmentId, enrollmentRevision: context.revision } as unknown as Prisma.InputJsonValue,
           canAdvance: decision.status === 'passed' && nextLevelCode !== null, nextLevelCode,
         },
       });
@@ -97,9 +103,14 @@ export class ProgressionService {
 
   async confirm(learnerId: string, assessmentId: string): Promise<ProgressionSummary> {
     await this.database.$transaction(async (transaction) => {
-      const profile = await this.lockProfile(transaction, learnerId);
+      await this.lockProfile(transaction, learnerId);
+      const context = await this.programContext.resolve(learnerId, transaction);
       const record = await transaction.checkpointAssessment.findFirst({ where: { id: assessmentId, learnerId } });
       if (!record) throw new NotFoundException('Checkpoint assessment not found');
+      const session = await transaction.learningSession.findFirst({
+        where: { id: record.sessionId, learnerId }, include: { mission: { include: { level: { include: { path: true } } } } },
+      });
+      if (!session || session.mission.level.path.programId !== context.programId) throw this.contextMismatch();
       const confirmed = await transaction.progressionConfirmation.findUnique({ where: { assessmentId: record.id } });
       if (confirmed) return;
       const assessment = this.toAssessment(record);
@@ -113,22 +124,31 @@ export class ProgressionService {
           evidence.allMissionsCompleted !== true || evidence.curriculumReady !== true) {
         throw new ConflictException('Checkpoint prerequisites were not met');
       }
-      if (profile.currentLevelCode !== record.levelCode) throw new ConflictException('Learner level changed after this assessment');
+      if (context.levelCode !== record.levelCode ||
+          (typeof evidence.enrollmentRevision === 'number' && evidence.enrollmentRevision !== context.revision)) {
+        throw new ConflictException('Learner enrollment changed after this assessment');
+      }
       // The immutable decision must already pass. Live curriculum can add blockers,
       // but new attempts must never upgrade an old failed or pending snapshot.
-      const prerequisites = await readCheckpointEvidence(transaction, learnerId, profile.currentLevelCode);
+      const prerequisites = await readCheckpointEvidence(transaction, learnerId, context.levelCode, undefined, context.programId);
       if (!prerequisites.curriculumReady || !prerequisites.allMissionsCompleted ||
           prerequisites.requiredBlocks.some((block) => block.score === null || block.score < 0.7)) {
         throw new ConflictException('Current curriculum prerequisites changed; complete required missions and scored Language Blocks before confirming');
       }
-      const nextLevelCode = await availableNextLevel(transaction, profile.currentLevelCode);
+      const nextLevelCode = await availableNextLevel(transaction, context.levelCode, context.programId);
       if (nextLevelCode !== record.nextLevelCode) throw new ConflictException('Next-level availability changed; reassess before confirming');
       if (nextLevelCode !== null) {
         if (!assessment.canAdvance) throw new ConflictException('Assessment cannot advance');
-        const update = await transaction.learnerProfile.updateMany({
-          where: { userId: learnerId, currentLevelCode: record.levelCode }, data: { currentLevelCode: nextLevelCode },
+        const next = await transaction.level.findUniqueOrThrow({ where: { code: nextLevelCode }, include: { path: true } });
+        if (next.path.programId !== context.programId) throw this.contextMismatch();
+        const update = await transaction.learnerProgramEnrollment.updateMany({
+          where: { id: context.enrollmentId, learnerId, currentLevelId: context.levelId, revision: context.revision },
+          data: { currentLevelId: next.id, revision: { increment: 1 } },
         });
         if (update.count !== 1) throw new ConflictException('Learner level changed while confirming');
+        if (context.programSlug === 'intermediate') {
+          await transaction.learnerProfile.update({ where: { userId: learnerId }, data: { currentLevelCode: nextLevelCode } });
+        }
       }
       await transaction.progressionConfirmation.create({
         data: { learnerId, assessmentId: record.id, fromLevelCode: record.levelCode, toLevelCode: nextLevelCode },
@@ -141,6 +161,10 @@ export class ProgressionService {
     await transaction.learnerProfile.upsert({ where: { userId: learnerId }, create: { userId: learnerId }, update: {} });
     await transaction.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
     return transaction.learnerProfile.findUniqueOrThrow({ where: { userId: learnerId } });
+  }
+
+  private contextMismatch() {
+    return new ConflictException({ code: 'PROGRAM_CONTEXT_MISMATCH', message: 'This assessment belongs to a different learning program.' });
   }
 
   private toAssessment(record: AssessmentRecord): CheckpointAssessment {

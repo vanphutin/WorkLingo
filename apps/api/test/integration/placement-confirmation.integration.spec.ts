@@ -221,6 +221,11 @@ describe('placement status and confirmation', () => {
       .send(input).expect(200);
 
     expect(replay.body).toEqual(first.body);
+    const programContext = await learner.agent.get('/api/v1/me/program-context').expect(200);
+    expect(programContext.body).toMatchObject({
+      activeProgram: { slug: 'intermediate' },
+      enrollment: { revision: 1, currentLevel: { code: 'FOUNDATION_1' } },
+    });
     expect(first.body).toMatchObject({
       currentLevelCode: 'FOUNDATION_1', nextAction: 'open_dashboard',
       onboardingMethod: 'PLACEMENT', onboardingStatus: 'COMPLETE',

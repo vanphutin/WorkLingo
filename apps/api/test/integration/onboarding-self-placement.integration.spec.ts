@@ -71,6 +71,11 @@ describe('learner onboarding and self-placement HTTP API', () => {
     const replay = await agent.post('/api/v1/me/onboarding/self-placement').send(input).expect(200);
 
     expect(replay.body).toEqual(first.body);
+    const programContext = await agent.get('/api/v1/me/program-context').expect(200);
+    expect(programContext.body).toMatchObject({
+      activeProgram: { slug: 'intermediate' },
+      enrollment: { revision: 1, currentLevel: { code: 'FOUNDATION_1' } },
+    });
     expect(first.body).toMatchObject({
       currentLevelCode: 'FOUNDATION_1',
       nextAction: 'open_dashboard',

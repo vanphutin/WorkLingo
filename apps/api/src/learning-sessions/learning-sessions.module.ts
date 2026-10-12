@@ -17,11 +17,12 @@ import { SessionCreationService } from './application/session-creation.service.j
 import { LearningSessionsController } from './learning-sessions.controller.js';
 
 import { EngagementModule } from '../engagement/engagement.module.js';
+import { LearningProgramsModule } from '../learning-programs/learning-programs.module.js';
 
 @Module({
   controllers: [LearningSessionsController],
   exports: [LearningSessionsService, SessionCreationService],
-  imports: [DatabaseModule, CurriculumModule, MasteryModule, JobsModule, StorageModule, EngagementModule],
+  imports: [DatabaseModule, CurriculumModule, MasteryModule, JobsModule, StorageModule, EngagementModule, LearningProgramsModule],
   providers: [
     LearningSessionsService,
     SessionCreationService,
