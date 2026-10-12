@@ -1,6 +1,6 @@
 # IELTS Phase 2 — Learner program enrollment
 
-Status: Design approved by the user on 2026-10-12. Implementation complete; final review and verification in progress.
+Status: Design approved by the user on 2026-10-12. Implementation, independent review and composed verification gate complete on 2026-10-13. See `docs/IELTS_PHASE_2_REVIEW.md` for the original verify failure and focused recovery.
 
 ## Outcome and constraints
 

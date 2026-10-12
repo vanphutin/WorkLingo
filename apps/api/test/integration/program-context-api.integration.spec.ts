@@ -72,6 +72,14 @@ describe('Learner program context API', () => {
     const learner = await completeLearner();
     await database.learnerProgramEnrollment.update({ where: { id: learner.enrollmentId }, data: { currentLevelId: null } });
     expect((await get(learner.cookies).expect(409)).body.code).toBe('PROGRAM_CONTEXT_INVALID');
+    const foreignPath = await database.learningPath.create({ data: {
+      programId: '10000000-0000-4000-8000-000000000004', slug: randomUUID(), name: 'Foreign membership fixture',
+    } });
+    const foreignLevel = await database.level.create({ data: {
+      pathId: foreignPath.id, code: randomUUID(), name: 'Foreign membership level', cefrReference: 'B1', order: 0,
+    } });
+    await database.learnerProgramEnrollment.update({ where: { id: learner.enrollmentId }, data: { currentLevelId: foreignLevel.id } });
+    expect((await get(learner.cookies).expect(409)).body.code).toBe('PROGRAM_CONTEXT_INVALID');
     await database.learnerProfile.update({ where: { userId: learner.id }, data: { activeProgramId: '10000000-0000-4000-8000-000000000004' } });
     expect((await get(learner.cookies).expect(409)).body.code).toBe('PROGRAM_CONTEXT_INVALID');
   });
