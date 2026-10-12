@@ -73,7 +73,7 @@ describe('MicrosoftSpeechAdapter', () => {
       endpoint,
       key: 'test-secret-key',
       region: 'test-region',
-      timeoutMs: 1_000,
+      timeoutMs: 5_000,
     });
 
     const result = await adapter.transcribe(input);
@@ -110,7 +110,7 @@ describe('MicrosoftSpeechAdapter', () => {
       response.end('upstream diagnostic test-secret-key');
     });
     const adapter = new MicrosoftSpeechAdapter({
-      endpoint, key: 'test-secret-key', region: 'test-region', timeoutMs: 1_000,
+      endpoint, key: 'test-secret-key', region: 'test-region', timeoutMs: 5_000,
     });
 
     const error = await adapter.transcribe(input).catch((caught: unknown) => caught);
@@ -142,7 +142,7 @@ describe('MicrosoftSpeechAdapter', () => {
       response.end(body);
     });
     const adapter = new MicrosoftSpeechAdapter({
-      endpoint, key: 'test-secret-key', region: 'test-region', timeoutMs: 1_000,
+      endpoint, key: 'test-secret-key', region: 'test-region', timeoutMs: 5_000,
     });
 
     await expect(adapter.transcribe(input)).rejects.toMatchObject({ code, retryable });

@@ -538,3 +538,142 @@ Mã lỗi ổn định gồm `VALIDATION_ERROR`, `INVALID_STATE_TRANSITION`, `CO
 - Activity payload thêm field theo hướng backward-compatible.
 - `formatVersion` của content import độc lập với API version.
 - Rubric, parser và lesson version phải được lưu trong kết quả liên quan để tái hiện quyết định.
+
+## 13. Weekly engagement and progress evidence (Increment 5A2)
+
+### `GET /api/v1/me/engagement`
+
+Returns learner weekly consistency streak, current weekly target progress, and four-skill progress evidence compared across two 28-day windows.
+
+Requires `LEARNER` role authentication.
+
+**Response `200 OK`:**
+```json
+{
+  "currentWeek": {
+    "weekStartKey": "2026-10-12",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "targetDays": 3,
+    "completedDays": 1,
+    "remainingDays": 2,
+    "status": "ACTIVE",
+    "targetChangeAppliesImmediately": false,
+    "effectiveTargetNextWeek": 4
+  },
+  "consistency": {
+    "currentStreakWeeks": 2,
+    "bestStreakWeeks": 5
+  },
+  "evidenceOfProgress": {
+    "completedSessions": 8,
+    "distinctStudyDays": 6,
+    "evaluatedBlocksCount": 14,
+    "completedReviewsCount": 10,
+    "skills": {
+      "reading": {
+        "status": "IMPROVING",
+        "currentAverage": 0.85,
+        "previousAverage": 0.75,
+        "change": 0.1,
+        "currentSamples": 4,
+        "previousSamples": 3
+      },
+      "listening": {
+        "status": "STEADY",
+        "currentAverage": 0.80,
+        "previousAverage": 0.80,
+        "change": 0.0,
+        "currentSamples": 3,
+        "previousSamples": 2
+      },
+      "speaking": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "currentAverage": null,
+        "previousAverage": null,
+        "change": null,
+        "currentSamples": 1,
+        "previousSamples": 0
+      },
+      "writing": {
+        "status": "NEEDS_ATTENTION",
+        "currentAverage": 0.65,
+        "previousAverage": 0.75,
+        "change": -0.1,
+        "currentSamples": 2,
+        "previousSamples": 2
+      }
+    }
+  }
+}
+```
+
+### `PATCH /api/v1/me/engagement/weekly-target`
+
+Updates learner weekly study target days (accepted integer values: 2, 3, 4, 5).
+
+Requires `LEARNER` role authentication.
+
+**Request body:**
+```json
+{
+  "targetDays": 4
+}
+```
+
+**Semantics:**
+- If 0 study days have been completed in the active week, target changes immediately for the current week (`targetChangeAppliesImmediately: true`, `effectiveTargetNextWeek: null`).
+- If >= 1 study day has already been completed in the active week, current week target remains protected and unchanged, and change is deferred to next week (`targetChangeAppliesImmediately: false`, `effectiveTargetNextWeek: 4`).
+
+**Response `200 OK`:** Returns fresh `EngagementSummaryDto`.
+**Response `400 Bad Request`:** Target days outside 2–5.
+
+## 14. Admin curriculum operations and privacy-safe audit browser (Increment 5B)
+
+### `GET /api/v1/admin/curriculum`
+
+Returns the hierarchical curriculum tree (`paths` -> `levels` -> `missions` -> `lessons`) with computed playability flags, playability reasons, and archive blockers.
+
+Requires `CONTENT_ADMIN` or `SYSTEM_ADMIN` role.
+
+### Path Mutations
+
+- `POST /api/v1/admin/curriculum/paths`: Create learning path (`name`, `slug`, `idempotencyKey`).
+- `PATCH /api/v1/admin/curriculum/paths/{id}`: Update learning path (`expectedRevision`, `name`, `idempotencyKey`).
+- `POST /api/v1/admin/curriculum/paths/{id}/publish`: Publish learning path. Requires path to contain at least one published, playable level.
+- `POST /api/v1/admin/curriculum/paths/{id}/archive`: Archive learning path. Blocked if active learners are enrolled.
+- `PUT /api/v1/admin/curriculum/paths/{id}/level-order`: Reorder levels within path (`orderedIds`, `idempotencyKey`).
+
+### Level Mutations
+
+- `POST /api/v1/admin/curriculum/levels`: Create level under path (`pathId`, `code`, `name`, `cefrReference`, `idempotencyKey`).
+- `PATCH /api/v1/admin/curriculum/levels/{id}`: Update level (`expectedRevision`, `name`, `cefrReference`, `idempotencyKey`).
+- `POST /api/v1/admin/curriculum/levels/{id}/publish`: Publish level. Requires at least one published, playable mission.
+- `POST /api/v1/admin/curriculum/levels/{id}/archive`: Archive level. Blocked if active learners are currently on this level.
+- `PUT /api/v1/admin/curriculum/levels/{id}/mission-order`: Reorder missions within level (`orderedIds`, `idempotencyKey`).
+
+### Mission Mutations
+
+- `POST /api/v1/admin/curriculum/missions`: Create mission under level (`levelId`, `title`, `slug`, `objective`, `purpose`, `idempotencyKey`).
+- `PATCH /api/v1/admin/curriculum/missions/{id}`: Update mission (`expectedRevision`, `title`, `objective`, `idempotencyKey`).
+- `POST /api/v1/admin/curriculum/missions/{id}/publish`: Publish mission. Validates playability (must contain published lessons with audio covering 4 skills and capable of forming a 60-min session).
+- `POST /api/v1/admin/curriculum/missions/{id}/archive`: Archive mission. Blocked if in-progress learning sessions reference it.
+- `PUT /api/v1/admin/curriculum/missions/{id}/lessons`: Replace lessons for mission (`expectedRevision`, `lessonIds`, `idempotencyKey`).
+
+### Audit Event Browser
+
+### `GET /api/v1/admin/audit-events`
+
+Query audit logs with cursor pagination and optional filters.
+
+**Query Parameters:**
+- `action` (optional string): e.g. `CREATE_PATH`, `PUBLISH_MISSION`
+- `resourceType` (optional string): e.g. `LearningPath`, `Level`, `Mission`
+- `resourceId` (optional string)
+- `actorId` (optional UUID)
+- `from`, `to` (optional ISO 8601 UTC datetimes)
+- `cursor` (optional opaque cursor token based on `createdAt` + `id`)
+- `limit` (optional integer, 1–100, default 25)
+
+**Privacy Guarantee:**
+- The audit browser exposes only `actorDisplayName` and `actorId`.
+- Actor email addresses, tokens, credentials, raw transcripts, and audio payloads are NEVER returned.

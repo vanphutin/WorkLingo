@@ -78,6 +78,7 @@ const errorEnvelopeSchema = z.object({
     availableDurations: z.array(z.number()).optional(),
   }).optional(),
   code: z.string().optional(),
+  details: z.array(z.unknown()).optional(),
   message: z.union([z.string(), z.array(z.string())]).optional(),
   statusCode: z.number().optional(),
   availableDurations: z.array(z.number()).optional(),
@@ -243,6 +244,7 @@ export class ApiClient {
           requestId = data.error.requestId ?? null;
         } else {
           code = data.code ?? code;
+          details = (data.details as unknown[]) ?? [];
           if (Array.isArray(data.message)) {
             message = data.message.join('; ');
           } else if (data.message) {

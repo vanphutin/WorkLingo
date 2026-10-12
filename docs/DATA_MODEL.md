@@ -357,3 +357,100 @@ Chi tiết seed, contract nội bộ và giới hạn hiện tại ở [CURRICUL
 - `jobs(status, available_at)` và unique `idempotency_key` khi có.
 - `lesson_versions(lesson_id, version)` unique.
 - Full-text index cho admin search chỉ thêm khi có nhu cầu thực tế.
+
+## 11. Engagement and Progress Evidence Models (Increment 5A2)
+
+### `LearnerProfile` extensions
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `weeklyTargetDays` | `Int` | `3` | Learner's target study days per week (2–5) |
+
+### `EngagementWeekStatus` (Enum)
+
+Values: `ACTIVE`, `MET`, `MISSED`.
+
+### `LearnerStudyDay`
+
+Represents a distinct calendar day on which the learner completed at least one learning session.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` (UUID) | Primary key |
+| `learnerId` | `String` (UUID) | Foreign key to `LearnerProfile` |
+| `studyDateKey` | `String` (`YYYY-MM-DD`) | Local calendar date in learner's timezone |
+| `studyDate` | `DateTime` | UTC timestamp |
+| `sessionsCount` | `Int` | Count of completed sessions on this day |
+
+**Indexes & Constraints:**
+- `@@unique([learnerId, studyDateKey])`
+- `@@index([learnerId, studyDateKey])`
+
+### `LearnerStudySession`
+
+Tracks completed sessions mapped to study days for idempotent deduplication.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` (UUID) | Primary key |
+| `studyDayId` | `String` (UUID) | Foreign key to `LearnerStudyDay` |
+| `learnerId` | `String` (UUID) | Foreign key to `LearnerProfile` |
+| `sessionId` | `String` (UUID) | Foreign key to `LearningSession` |
+| `completedAt` | `DateTime` | Completion timestamp |
+
+**Indexes & Constraints:**
+- `@@unique([learnerId, sessionId])`
+- `@@index([studyDayId])`
+
+### `LearnerEngagementWeek`
+
+Stores historical and active weekly mission progress and consistency statuses.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` (UUID) | Primary key |
+| `learnerId` | `String` (UUID) | Foreign key to `LearnerProfile` |
+| `weekStartKey` | `String` (`YYYY-MM-DD`) | Local Monday date string |
+| `weekStartDate` | `DateTime` | UTC timestamp of week start |
+| `targetDays` | `Int` | Target study days for this specific week |
+| `completedDays` | `Int` | Distinct completed study days in this week |
+| `status` | `EngagementWeekStatus` | `ACTIVE`, `MET`, or `MISSED` |
+| `finalizedAt` | `DateTime?` | When past week was reconciled |
+
+**Indexes & Constraints:**
+- `@@unique([learnerId, weekStartKey])`
+- `@@index([learnerId, weekStartKey])`
+
+## 8. Curriculum Administration and Audit Data Model (Increment 5B)
+
+### Entity Revisions and Statuses
+
+To ensure optimistic concurrency control and playability guarantees across curriculum hierarchy:
+
+- **`LearningPath.revision`**: `Int @default(1)` incremented on every path modification.
+- **`Level.revision`**: `Int @default(1)` incremented on every level modification.
+- **`Level.status`**: `ContentStatus @default(DRAFT)` with transitions `DRAFT -> PUBLISHED -> ARCHIVED`.
+- **`Mission.revision`**: `Int @default(1)` incremented on every mission modification.
+- **`MissionLesson.revision`**: `Int @default(1)` for mission-lesson association tracking.
+
+### `AuditLog`
+
+Stores immutable audit records of administrative operations with compound cursor and filter indexes:
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` (UUID) | Primary key |
+| `actorId` | `String` (UUID) | ID of the administrative user |
+| `action` | `String` | E.g. `CREATE_PATH`, `PUBLISH_LEVEL`, `UPDATE_MISSION` |
+| `resourceType` | `String` | E.g. `LearningPath`, `Level`, `Mission` |
+| `resourceId` | `String` | Identifier of the affected entity |
+| `oldState` | `Json?` | Snapshot before mutation |
+| `newState` | `Json?` | Snapshot after mutation |
+| `metadata` | `Json?` | Sanitized metadata (e.g. client IP, user agent) |
+| `createdAt` | `DateTime` | UTC timestamp |
+
+**Indexes & Constraints:**
+- `@@index([createdAt(sort: Desc), id(sort: Desc)])` for stable cursor pagination.
+- `@@index([action, createdAt(sort: Desc)])`
+- `@@index([resourceType, createdAt(sort: Desc)])`
+- `@@index([actorId, createdAt(sort: Desc)])`

@@ -36,6 +36,8 @@ import {
   SessionCreationService,
   toLearningSessionDto,
 } from './session-creation.service.js';
+import { StudyDayProjectorService } from '../../engagement/application/study-day-projector.service.js';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import type {
   ActivityAttemptDto,
   LearnerActivityDto,
@@ -70,6 +72,8 @@ export class LearningSessionsService {
     @Inject(MasteryService) private readonly mastery: MasteryService,
     @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
+    @Optional() @Inject(StudyDayProjectorService) private readonly studyDayProjector?: StudyDayProjectorService,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
   private async selectCurriculum(learnerId: string) {
@@ -217,7 +221,19 @@ export class LearningSessionsService {
       if (latest.status === 'IN_PROGRESS') return this.toSessionDto(latest);
       throw this.invalidTransition(latest.status, 'IN_PROGRESS');
     }
-    return this.getSession(learnerId, id);
+    const started = await this.getSession(learnerId, id);
+    if (session.mission.purpose === 'LEARNING') {
+      await this.pilotMetrics?.recordBestEffort({
+        dimensions: {
+          durationBucket: String(started.durationMinutes) as '45' | '60' | '90' | '120' | '150',
+          levelCode: session.mission.level.code,
+          missionCode: session.mission.slug,
+        },
+        eventType: 'LEARNING_SESSION_STARTED',
+        sourceKey: `session:${id}:started`,
+      });
+    }
+    return started;
   }
 
   async pauseSession(learnerId: string, id: string): Promise<LearningSessionDto> {
@@ -245,7 +261,19 @@ export class LearningSessionsService {
       if (latest.status === 'IN_PROGRESS') return this.toSessionDto(latest);
       throw this.invalidTransition(latest.status, 'IN_PROGRESS');
     }
-    return this.getSession(learnerId, id);
+    const resumed = await this.getSession(learnerId, id);
+    if (session.mission.purpose === 'LEARNING') {
+      await this.pilotMetrics?.recordBestEffort({
+        dimensions: {
+          durationBucket: String(resumed.durationMinutes) as '45' | '60' | '90' | '120' | '150',
+          levelCode: session.mission.level.code,
+          missionCode: session.mission.slug,
+        },
+        eventType: 'LEARNING_SESSION_RESUMED',
+        sourceKey: `session:${id}:resumed:${session.updatedAt.toISOString()}`,
+      });
+    }
+    return resumed;
   }
 
   async requireCurrentActivity(
@@ -286,6 +314,8 @@ export class LearningSessionsService {
     context: CurrentActivitySubmission,
   ): Promise<void> {
     const nextCheckpoint = context.activityIndex + 1;
+    const isCompleted = nextCheckpoint === context.activityIds.length;
+    const completedAt = isCompleted ? new Date() : null;
     const update = await transaction.learningSession.updateMany({
       where: {
         currentCheckpoint: context.activityIndex,
@@ -293,14 +323,27 @@ export class LearningSessionsService {
         learnerId,
         status: 'IN_PROGRESS',
       },
-      data: {
-        currentCheckpoint: nextCheckpoint,
-        status: nextCheckpoint === context.activityIds.length ? 'COMPLETED' : 'IN_PROGRESS',
-        ...(nextCheckpoint === context.activityIds.length ? { completedAt: new Date() } : {}),
-      },
+      data: isCompleted
+        ? {
+            completedAt,
+            currentCheckpoint: nextCheckpoint,
+            status: 'COMPLETED',
+          }
+        : {
+            currentCheckpoint: nextCheckpoint,
+            status: 'IN_PROGRESS',
+          },
     });
     if (update.count !== 1) throw new ConflictException('Session checkpoint changed while submitting');
     await this.completeFinishedBlock(transaction, context.sessionId, context.plan, nextCheckpoint);
+    if (isCompleted && completedAt) {
+      await this.studyDayProjector?.recordCompletion(transaction, {
+        completedAt,
+        learnerId,
+        purpose: context.purpose,
+        sessionId: context.sessionId,
+      });
+    }
   }
 
   async submitAttempt(
@@ -377,25 +420,53 @@ export class LearningSessionsService {
           });
         }
         if (evaluation.advance) {
-          const nextCheckpoint = activityIndex + 1;
-          const update = await transaction.learningSession.updateMany({
-            where: {
-              currentCheckpoint: activityIndex,
-              id: session.id,
-              learnerId,
-              status: 'IN_PROGRESS',
-            },
-            data: {
-              currentCheckpoint: nextCheckpoint,
-              status: nextCheckpoint === activityIds.length ? 'COMPLETED' : 'IN_PROGRESS',
-              ...(nextCheckpoint === activityIds.length ? { completedAt: new Date() } : {}),
-            },
+          await this.advanceSubmittedActivity(transaction, learnerId, {
+            activityId,
+            activityIds,
+            activityIndex,
+            lessonVersionId: session.lessonVersionId,
+            plan,
+            purpose: session.mission.purpose === 'PLACEMENT' ? 'placement' : 'learning',
+            sessionId: session.id,
           });
-          if (update.count !== 1) throw new ConflictException('Session checkpoint changed while submitting');
-          await this.completeFinishedBlock(transaction, session.id, plan, nextCheckpoint);
         }
         return evaluated;
       });
+      if (
+        activityIndex + 1 === activityIds.length
+        && session.mission.purpose === 'LEARNING'
+      ) {
+        const completed = await this.database.learningSession.findUnique({
+          select: { completedAt: true, status: true },
+          where: { id: session.id },
+        });
+        if (completed?.status === 'COMPLETED' && completed.completedAt) {
+          await this.pilotMetrics?.recordBestEffort({
+            dimensions: {
+              durationBucket: String(session.durationMinutes) as '45' | '60' | '90' | '120' | '150',
+              levelCode: session.mission.level.code,
+              missionCode: session.mission.slug,
+              outcome: 'completed',
+            },
+            eventType: 'LEARNING_SESSION_COMPLETED',
+            occurredAt: completed.completedAt,
+            sourceKey: `session:${session.id}:completed`,
+          });
+          const metWeek = await this.database.learnerEngagementWeek.findFirst({
+            orderBy: { metAt: 'desc' },
+            select: { id: true, metAt: true },
+            where: { learnerId, status: 'MET' },
+          });
+          if (metWeek?.metAt) {
+            await this.pilotMetrics?.recordBestEffort({
+              dimensions: { outcome: 'completed' },
+              eventType: 'ENGAGEMENT_TARGET_MET',
+              occurredAt: metWeek.metAt,
+              sourceKey: `engagement-week:${metWeek.id}:met`,
+            });
+          }
+        }
+      }
       return this.toAttemptDto(attempt);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {

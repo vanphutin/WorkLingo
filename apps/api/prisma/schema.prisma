@@ -55,6 +55,9 @@ model User {
   progressionConfirmations   ProgressionConfirmation[]
   placementAttempts          PlacementAttempt[]
   updatedAudioSystemSettings AudioSystemSetting[]      @relation("AudioSystemSettingUpdatedBy")
+  studyDays                  LearnerStudyDay[]
+  studySessions              LearnerStudySession[]
+  engagementWeeks            LearnerEngagementWeek[]
 }
 
 model LearnerProfile {
@@ -63,6 +66,7 @@ model LearnerProfile {
   onboardingStatus OnboardingStatus  @default(PENDING)
   onboardingMethod OnboardingMethod?
   onboardedAt      DateTime?
+  weeklyTargetDays Int               @default(3)
   locale           String            @default("vi")
   timezone         String            @default("Asia/Ho_Chi_Minh")
   recordingConsent Boolean           @default(false)
@@ -118,24 +122,28 @@ model LearningPath {
   slug      String        @unique
   name      String
   status    ContentStatus @default(DRAFT)
+  revision  Int           @default(1)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   levels    Level[]
 }
 
 model Level {
-  id            String       @id @default(uuid()) @db.Uuid
-  pathId        String       @db.Uuid
-  code          String       @unique
+  id            String        @id @default(uuid()) @db.Uuid
+  pathId        String        @db.Uuid
+  code          String        @unique
   name          String
   cefrReference String
   order         Int
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  path          LearningPath @relation(fields: [pathId], references: [id], onDelete: Restrict)
+  status        ContentStatus @default(DRAFT)
+  revision      Int           @default(1)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  path          LearningPath  @relation(fields: [pathId], references: [id], onDelete: Restrict)
   missions      Mission[]
 
   @@unique([pathId, order])
+  @@index([pathId, order])
 }
 
 model Mission {
@@ -147,6 +155,7 @@ model Mission {
   order            Int
   purpose          MissionPurpose    @default(LEARNING)
   status           ContentStatus     @default(DRAFT)
+  revision         Int               @default(1)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   level            Level             @relation(fields: [levelId], references: [id], onDelete: Restrict)
@@ -154,6 +163,7 @@ model Mission {
   learningSessions LearningSession[]
 
   @@unique([levelId, order])
+  @@index([levelId, order])
 }
 
 model Lesson {
@@ -172,6 +182,7 @@ model MissionLesson {
   missionId String  @db.Uuid
   lessonId  String  @db.Uuid
   order     Int
+  revision  Int     @default(1)
   mission   Mission @relation(fields: [missionId], references: [id], onDelete: Restrict)
   lesson    Lesson  @relation(fields: [lessonId], references: [id], onDelete: Restrict)
 
@@ -384,6 +395,7 @@ model LearningSession {
   activityDrafts        ActivityDraft[]
   checkpointAssessments CheckpointAssessment[]
   placementAttempt      PlacementAttempt?
+  studySession          LearnerStudySession?
 
   @@unique([learnerId, clientSessionId])
   @@unique([id, learnerId])
@@ -763,6 +775,10 @@ model AuditLog {
 
   @@index([actorId])
   @@index([resourceType, resourceId])
+  @@index([createdAt, id])
+  @@index([action, createdAt])
+  @@index([resourceType, createdAt])
+  @@index([actorId, createdAt])
 }
 
 enum MasteryState {
@@ -865,4 +881,110 @@ model ErrorBankEntry {
   @@index([learnerId, languageBlockId])
   @@index([learnerId, contextKey])
   @@index([occurredAt])
+}
+
+enum EngagementWeekStatus {
+  ACTIVE
+  MET
+  MISSED
+}
+
+model LearnerStudyDay {
+  id                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId             String                @db.Uuid
+  dateKey               String
+  timezone              String
+  completedSessionCount Int                   @default(0)
+  firstCompletedAt      DateTime              @default(now())
+  lastCompletedAt       DateTime              @default(now())
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  learner               User                  @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  sessions              LearnerStudySession[]
+
+  @@unique([learnerId, dateKey])
+  @@index([learnerId, dateKey])
+}
+
+model LearnerStudySession {
+  id          String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId   String          @db.Uuid
+  studyDayId  String          @db.Uuid
+  sessionId   String          @unique @db.Uuid
+  completedAt DateTime        @default(now())
+  createdAt   DateTime        @default(now())
+  learner     User            @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  studyDay    LearnerStudyDay @relation(fields: [studyDayId], references: [id], onDelete: Cascade)
+  session     LearningSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([learnerId, studyDayId])
+  @@index([studyDayId])
+}
+
+model LearnerEngagementWeek {
+  id           String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId    String               @db.Uuid
+  weekStartKey String
+  timezone     String
+  targetDays   Int
+  status       EngagementWeekStatus @default(ACTIVE)
+  metAt        DateTime?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  learner      User                 @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+
+  @@unique([learnerId, weekStartKey])
+  @@index([learnerId, weekStartKey])
+  @@index([learnerId, status])
+}
+
+model RateLimitBucket {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  scope       String
+  subjectHash String
+  windowStart DateTime
+  consumed    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([scope, subjectHash, windowStart])
+  @@index([scope, subjectHash])
+  @@index([windowStart])
+}
+
+enum PilotMetricEventType {
+  REGISTRATION_COMPLETED
+  ONBOARDING_CONFIRMED
+  LEARNING_SESSION_STARTED
+  LEARNING_SESSION_COMPLETED
+  LEARNING_SESSION_RESUMED
+  PLACEMENT_CONFIRMED
+  EVALUATION_TERMINAL
+  CONTENT_IMPORT_VALIDATED
+  CONTENT_PUBLISHED
+  ENGAGEMENT_TARGET_MET
+}
+
+model PilotMetricDaily {
+  id           String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateKey      String
+  eventType    PilotMetricEventType
+  dimensionKey String
+  dimensions   Json
+  count        Int                  @default(0)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  @@unique([dateKey, eventType, dimensionKey])
+  @@index([dateKey, eventType])
+  @@index([updatedAt])
+}
+
+model PilotMetricReceipt {
+  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sourceHash String               @unique
+  eventType  PilotMetricEventType
+  createdAt  DateTime             @default(now())
+
+  @@index([createdAt])
 }

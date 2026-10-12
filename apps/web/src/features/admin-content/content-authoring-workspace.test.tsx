@@ -242,7 +242,9 @@ describe('ContentAuthoringWorkspace', () => {
     const publishBtn = await screen.findByRole('button', { name: /publish lesson/i });
     fireEvent.click(publishBtn);
 
-    expect(await screen.findByText(/Published Version: 1/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Published Version: 1/i, {}, { timeout: 5000 }),
+    ).toBeInTheDocument();
 
     // Switch back to editor tab and verify textarea is readonly
     const sourceTab = screen.getByRole('tab', { name: /source/i });

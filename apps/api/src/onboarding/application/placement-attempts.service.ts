@@ -6,6 +6,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
 } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import {
@@ -18,6 +19,7 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { SessionCreationService } from '../../learning-sessions/application/session-creation.service.js';
 import { OnboardingService } from './onboarding.service.js';
@@ -39,6 +41,7 @@ export class PlacementAttemptsService {
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
     @Inject(OnboardingService) private readonly onboarding: OnboardingService,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
   async create(
@@ -55,7 +58,7 @@ export class PlacementAttemptsService {
     });
     if (replay) return toPlacementAttemptDto(replay);
 
-    return this.database.$transaction(async (transaction) => {
+    const response = await this.database.$transaction(async (transaction) => {
       await transaction.$queryRaw`
         SELECT "userId"
         FROM "LearnerProfile"
@@ -119,6 +122,7 @@ export class PlacementAttemptsService {
       });
       return toPlacementAttemptDto(attempt);
     }, { timeout: 15_000 });
+    return response;
   }
 
   async getOwned(learnerId: string, id: string): Promise<PlacementAttemptDto> {
@@ -149,7 +153,7 @@ export class PlacementAttemptsService {
     });
     if (replay) return this.replayConfirmation(replay.requestHash, requestHash, replay.responseBody);
 
-    return this.database.$transaction(async (transaction) => {
+    const response = await this.database.$transaction(async (transaction) => {
       await transaction.$queryRaw`
         SELECT "userId"
         FROM "LearnerProfile"
@@ -257,6 +261,23 @@ export class PlacementAttemptsService {
       });
       return response;
     }, { timeout: 15_000 });
+    await this.pilotMetrics?.recordBestEffort({
+      dimensions: {
+        ...(response.currentLevelCode ? { levelCode: response.currentLevelCode } : {}),
+        outcome: 'test_placement',
+      },
+      eventType: 'ONBOARDING_CONFIRMED',
+      sourceKey: `placement:${attemptId}:onboarding-confirmed`,
+    });
+    await this.pilotMetrics?.recordBestEffort({
+      dimensions: {
+        ...(response.currentLevelCode ? { levelCode: response.currentLevelCode } : {}),
+        outcome: 'passed',
+      },
+      eventType: 'PLACEMENT_CONFIRMED',
+      sourceKey: `placement:${attemptId}:confirmed`,
+    });
+    return response;
   }
 
   private async findRetryableAttemptIds(

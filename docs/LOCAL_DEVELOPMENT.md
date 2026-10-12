@@ -296,3 +296,21 @@ docker compose -f infra/docker-compose.yml exec -T postgres psql -U worklingo -d
 - A 416 response means the client requested an invalid byte range. Reload the player; do not edit
   local WAV files in place because checksums and immutable bindings would no longer match.
 - If a saved browser voice disappeared after an OS/browser update, choose Automatic English voice.
+
+---
+
+## 10. Pilot qualification commands
+
+Run these from the repository root with Docker/PostgreSQL available:
+
+```powershell
+pnpm qualify:performance
+pnpm qualify:security
+pnpm qualify:recovery
+pnpm verify
+```
+
+Qualification uses generated schemas and temporary data roots. It must not point `AllowedRoot`,
+`TargetDataDir` or `DATABASE_URL` at a user's normal data when rehearsing restore. See
+`docs/PILOT_RUNBOOK.md` and `docs/RELEASE_CHECKLIST.md` for operator steps and the human approvals
+that remain after technical gates pass.

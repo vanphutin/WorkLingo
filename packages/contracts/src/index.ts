@@ -5,3 +5,8 @@ export * from './progression.contracts.ts';
 export * from './teacher-ai.contracts.ts';
 export * from './onboarding.contracts.ts';
 export * from './audio-settings.contracts.ts';
+export * from './engagement.contracts.ts';
+export * from './admin-curriculum.contracts.ts';
+export * from './admin-audit.contracts.ts';
+export * from './admin-operations.contracts.ts';
+export * from './admin-analytics.contracts.ts';

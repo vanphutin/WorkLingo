@@ -100,6 +100,18 @@ export default function AdminLayout({
               <Link href="/admin/content" className="nav-link">
                 Content
               </Link>
+              <Link href="/admin/curriculum" className="nav-link">
+                Curriculum
+              </Link>
+              <Link href="/admin/audit" className="nav-link">
+                Audit log
+              </Link>
+              <Link href="/admin/operations" className="nav-link">
+                Operations
+              </Link>
+              <Link href="/admin/analytics" className="nav-link">
+                Analytics
+              </Link>
               <Link href="/admin/settings/audio" className="nav-link">
                 Audio settings
               </Link>

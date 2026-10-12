@@ -4,18 +4,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
+import type { EngagementSummaryDto } from '@worklingo/contracts';
+import { EngagementPanel } from '../engagement/engagement-panel';
 
 interface DashboardViewProps {
   readonly progress: LearnerProgressDto | null;
-  readonly nextMissionTitle?: string;
-  readonly availableDurations?: readonly number[];
+  readonly nextMissionTitle?: string | undefined;
+  readonly availableDurations?: readonly number[] | undefined;
   readonly onStartSession: (
     durationMinutes: number,
     clientSessionId: string,
   ) => Promise<void>;
-  readonly isLoading?: boolean;
-  readonly error?: string | null;
-  readonly onRetry?: () => void;
+  readonly isLoading?: boolean | undefined;
+  readonly error?: string | null | undefined;
+  readonly onRetry?: (() => void) | undefined;
+  readonly engagement?: EngagementSummaryDto | null | undefined;
+  readonly engagementLoading?: boolean | undefined;
+  readonly engagementError?: string | null | undefined;
+  readonly onRetryEngagement?: (() => void) | undefined;
+  readonly onUpdateTarget?: ((targetDays: number) => Promise<void> | void) | undefined;
 }
 
 const ALL_DURATIONS = [45, 60, 90, 120, 150] as const;
@@ -41,6 +48,11 @@ export function DashboardView({
   isLoading = false,
   error = null,
   onRetry,
+  engagement,
+  engagementLoading = false,
+  engagementError = null,
+  onRetryEngagement,
+  onUpdateTarget,
 }: DashboardViewProps) {
   const [availabilityOverride, setAvailabilityOverride] = useState<{
     source: readonly number[];
@@ -212,6 +224,16 @@ export function DashboardView({
           </div>
         </section>
       </div>
+
+      {(engagement !== undefined || engagementLoading || engagementError !== null) && (
+        <EngagementPanel
+          engagement={engagement ?? null}
+          isLoading={engagementLoading}
+          error={engagementError}
+          onRetry={onRetryEngagement}
+          onUpdateTarget={onUpdateTarget ?? (() => {})}
+        />
+      )}
     </main>
   );
 }

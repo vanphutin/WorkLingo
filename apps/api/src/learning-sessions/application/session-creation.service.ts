@@ -10,7 +10,7 @@ import type { ActivityAttemptDto, LearningSessionDto } from './learning-session.
 export const learningSessionInclude = {
   attempts: { orderBy: { createdAt: 'asc' as const } },
   blocks: { orderBy: { order: 'asc' as const } },
-  mission: true,
+  mission: { include: { level: { select: { code: true } } } },
 } satisfies Prisma.LearningSessionInclude;
 
 export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{

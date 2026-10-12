@@ -237,7 +237,41 @@ Job table tối thiểu chứa type, payload reference, status, attempts, availa
 
 - Local filesystem → S3-compatible storage.
 - In-process/database worker → dedicated queue worker.
-- Modular monolith → tách Media/Teacher AI khi tải hoặc ownership yêu cầu.
-- Single local deployment → cloud deployment có managed database.
-
 Các thay đổi này chỉ thực hiện khi có bằng chứng về nhu cầu, không phải điều kiện của MVP.
+
+## 13. Engagement and Evidence Architecture (Increment 5A2)
+
+- **Engagement Module:** Encapsulates study day projections, weekly mission reconciliation, and four-skill evidence comparison.
+- **Single Canonical Projection Transaction:** Learning session completions route through `StudyDayProjectorService.recordCompletion` within the `LearningSessionsService.advanceSubmittedActivity` completion transaction.
+- **Idempotent Study Day Deduplication:** Unique constraint `LearnerStudySession(learnerId, sessionId)` and unique index `LearnerStudyDay(learnerId, studyDateKey)` ensure each completed session is projected exactly once, preventing double-counting across retries or replays.
+- **Deterministic Monday-Start Calendar Weeks:** Weeks are calculated from the learner profile timezone (`Asia/Ho_Chi_Minh`) using `toWeekStartKey(date, tz)`.
+- **Active-Week Target Protection:** Weekly targets (2–5) update immediately if 0 study days have been completed in the current week. Once study has commenced in the active week, the target change is deferred to next week (`effectiveTargetNextWeek`) to protect ongoing weekly targets.
+- **Evidence Comparison Windows:** Two 28-day windows (recent 28 days vs preceding 28 days) are compared across four skills with a minimum threshold of 2 evaluated samples per skill. Placement sessions (`purpose = 'PLACEMENT'`) are excluded.
+
+## 14. Curriculum Operations and Audit Architecture (Increment 5B)
+
+- **Curriculum Mutation Policy:** Pure domain rules in `curriculum-mutation-policy.ts` govern publishability, playability, and archive operations:
+  - Paths require at least one published, playable CEFR level.
+  - Levels require at least one published, playable mission.
+  - Missions require published lessons with audio artifacts covering four skills and forming a 60-minute session.
+  - Archive is blocked when active learners are currently enrolled or in-progress sessions exist.
+- **Transactional Idempotency & Concurrency:** Commands are guarded by optimistic revision concurrency (`expectedRevision`) and unique SHA-256 payload receipts; database constraints serialize competing receipts and versions.
+- **Atomic Audit Trail:** Every administrative command emits an audit log record within the same database transaction.
+- **Privacy-Safe Audit Browser:** Cursor pagination query service scrubs metadata to ensure actor emails, raw lesson scripts, user voice recordings, and sensitive tokens are never exposed.
+
+## 15. Security, Operations and Pilot Analytics (Increment 5C)
+
+- Correlation middleware and the global exception filter return safe IDs while structured logging
+  recursively redacts sensitive keys and infrastructure identifiers.
+- Durable rate-limit buckets use route/actor scopes and HMAC subjects; trusted proxy hops default to
+  zero and production requires a dedicated hash key.
+- Admin Operations reads selected job/attempt fields only. It cannot replay jobs or expose raw
+  payload/result/provider bodies.
+- Pilot Analytics has no ingestion endpoint. Server-owned transitions write idempotency receipts and
+  daily aggregates with a closed dimension union; retention queries return cohort counts only.
+
+## 16. Pilot qualification boundary (Increment 5D)
+
+Qualification runs on fresh schemas and temporary data roots. Performance, security, recovery,
+accessibility and end-to-end gates produce versioned evidence in `docs/`. Technical success does not
+approve language calibration, content quality, cloud deployment or public release.

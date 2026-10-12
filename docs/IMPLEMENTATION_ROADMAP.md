@@ -133,11 +133,22 @@ evaluation, recommendation và explicit confirmation. Placement evidence đượ
 mastery/progression; route guard, idempotency, ownership và desktop/mobile journey đã có test. Policy
 `workplace-placement-v1` hiện chỉ đưa ra candidate Foundation có nội dung đã publish và vẫn
 **human calibration pending**; chưa đủ điều kiện tuyên bố CEFR/certification equivalence hay pilot-ready.
-Các phần engagement, admin curriculum/audit/observability, security/performance và release rehearsal
-còn lại tiếp tục ở 5A2+.
+
+**Trạng thái Increment 5A2 (2026-10-11):** Đã hoàn thiện toàn diện Weekly Mission, flexible consistency streak và Evidence of Progress:
+- Schema, contracts, và deterministic projection: `LearnerStudyDay`, `LearnerStudySession`, `LearnerEngagementWeek`, `weeklyTargetDays`.
+- Exactly-once session projection trong completion transaction với unique constraint chống double counting.
+- Bảo vệ mục tiêu tuần hiện tại khi đã bắt đầu học (chuyển thay đổi sang tuần kế tiếp `effectiveTargetNextWeek`).
+- Evidence of Progress so sánh 2 cửa sổ 28 ngày qua 4 kỹ năng với quy tắc trung thực: >= 2 mẫu đánh giá mới tính % thay đổi, còn lại gắn cờ `Insufficient evidence`.
+- Dashboard UI hỗ trợ độc lập, retryable, 44px touch targets, 16px mobile select, kiểm thử vitest 182 passed, Playwright desktop/mobile E2E passed.
+
+**Trạng thái Increment 5B–5D (2026-10-12):** Curriculum/Audit, request safety, durable rate limiting,
+Operations, aggregate Pilot Analytics và bộ qualification local đã hoàn thiện. Các lệnh
+`pnpm qualify:performance`, `pnpm qualify:security`, `pnpm qualify:recovery` và `pnpm verify` là
+bằng chứng kỹ thuật. Trạng thái tối đa từ automation là `TECHNICALLY_QUALIFIED`; Teacher AI,
+placement, content và pilot operations vẫn cần named human approval trước controlled pilot.
 
 Vận hành: `docs/INCREMENT_5A_DEMO.md`. Kế hoạch chi tiết:
-`docs/superpowers/plans/2026-10-09-increment-5a1-onboarding-placement.md`.
+`docs/superpowers/plans/2026-10-09-increment-5a1-onboarding-placement.md` & `docs/superpowers/plans/2026-10-09-increment-5a2-engagement-progress.md`.
 
 ## Thứ tự phụ thuộc
 

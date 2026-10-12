@@ -75,6 +75,22 @@ describe('AdminLayout', () => {
       'href',
       '/admin/content',
     );
+    expect(screen.getByRole('link', { name: 'Curriculum' })).toHaveAttribute(
+      'href',
+      '/admin/curriculum',
+    );
+    expect(screen.getByRole('link', { name: 'Audit log' })).toHaveAttribute(
+      'href',
+      '/admin/audit',
+    );
+    expect(screen.getByRole('link', { name: 'Operations' })).toHaveAttribute(
+      'href',
+      '/admin/operations',
+    );
+    expect(screen.getByRole('link', { name: 'Analytics' })).toHaveAttribute(
+      'href',
+      '/admin/analytics',
+    );
     expect(screen.getByRole('link', { name: 'Audio settings' }))
       .toHaveAttribute('href', '/admin/settings/audio');
     expect(replace).not.toHaveBeenCalled();

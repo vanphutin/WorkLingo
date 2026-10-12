@@ -156,6 +156,23 @@
     align-items: stretch;
   }
 
+  .admin-top-nav .nav-left {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-top-nav .admin-nav-links {
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    width: 100%;
+  }
+
+  .admin-top-nav .nav-link {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
+  }
+
   .content-list-header .btn {
     width: 100%;
   }

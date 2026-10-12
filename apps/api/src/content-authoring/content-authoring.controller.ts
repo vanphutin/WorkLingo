@@ -30,6 +30,7 @@ import {
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
+import { RateLimit } from '../common/rate-limit/rate-limit.decorator.js';
 import { ContentImportsService } from './application/content-imports.service.js';
 import { ContentPublisherService } from './application/content-publisher.service.js';
 // Runtime imports are required so Nest can emit DTO metadata for ValidationPipe.
@@ -52,6 +53,12 @@ export class ContentAuthoringController {
     private readonly contentPublisherService: ContentPublisherService,
   ) {}
 
+  @RateLimit({
+    keyType: 'USER_AND_OPERATION',
+    limit: 60,
+    scope: 'admin:content-imports:create',
+    windowSeconds: 60,
+  })
   @Post()
   @ApiOperation({ summary: 'Create a new content import draft' })
   @ApiCreatedResponse({ description: 'Draft created successfully' })
