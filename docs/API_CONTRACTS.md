@@ -677,3 +677,23 @@ Query audit logs with cursor pagination and optional filters.
 **Privacy Guarantee:**
 - The audit browser exposes only `actorDisplayName` and `actorId`.
 - Actor email addresses, tokens, credentials, raw transcripts, and audio payloads are NEVER returned.
+
+## 15. Learning program catalog (IELTS Phase 1)
+
+### `GET /api/v1/learning-programs`
+
+Returns the learner-visible canonical catalog ordered by `displayOrder`. Requires the `LEARNER`
+role. Every item contains `slug`, `name`, `description`, `learningGoal`, `proficiencyLabel`,
+`iconKey`, `availabilityStatus`, published path/level counts, `isSelectable`, and `destination`.
+
+Only server-authorized programs receive `isSelectable: true` and a non-null destination. In Phase 1,
+Intermediate is selectable with destination `/dashboard`; Beginner, TOEIC, and IELTS return
+`destination: null`. A catalog dependency failure returns a safe `503` without database details.
+
+### Admin path categorization
+
+`GET /api/v1/admin/curriculum` now returns top-level `programs` options and includes a compact
+`program` object on each path. `POST /api/v1/admin/curriculum/paths` accepts optional UUID
+`programId`; omission defaults to Intermediate for backward compatibility. Unknown and disabled
+programs return `422 INVALID_CURRICULUM_RELATIONSHIP`. The normalized program ID participates in
+the idempotency hash and the selected program is captured in audit state.

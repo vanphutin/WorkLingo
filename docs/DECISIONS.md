@@ -239,6 +239,24 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Lý do:** Local-first vẫn cần điều tra lỗi và bằng chứng sản phẩm mà không xây kho dữ liệu người
   học hoặc biến test xanh thành tuyên bố chất lượng ngôn ngữ.
 
+## D-029 — Program catalog là ranh giới sản phẩm phía trên curriculum
+
+- **Trạng thái:** Accepted (IELTS Phase 1)
+- **Ngày:** 2026-10-12
+- **Quyết định:** Thêm `LearningProgram` làm cha bắt buộc của `LearningPath`, với bốn chương trình
+  canonical Beginner, Intermediate, TOEIC và IELTS. UUID và thứ tự hiển thị được seed ổn định;
+  seed không ghi đè metadata do operator quản lý.
+- **Access policy:** Trạng thái catalog chỉ là dữ liệu đầu vào; server suy ra `isSelectable` và
+  `destination`. Phase 1 chỉ Intermediate được mở. UI của chương trình chưa sẵn sàng là disabled,
+  không tạo session và không dùng URL client để vượt policy.
+- **Admin compatibility:** Tạo Path nhận `programId`; request cũ thiếu field mặc định về
+  Intermediate. Program không tồn tại hoặc `DISABLED` trả 422. Program đã chọn nằm trong
+  idempotency fingerprint và audit snapshot.
+- **Version boundary:** Program phân loại curriculum, còn phiên học vẫn khóa vào
+  `LessonVersion`; thay đổi catalog không làm biến đổi session đang học.
+- **Lý do:** Cho phép xây IELTS theo từng phase mà không trộn curriculum, không quảng cáo chương
+  trình chưa đủ nội dung như đã sẵn sàng, đồng thời giữ tương thích dữ liệu MVP hiện có.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

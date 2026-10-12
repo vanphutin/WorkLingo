@@ -371,7 +371,7 @@ export function CurriculumWorkspace() {
             >
               {tree?.programs.map((program) => (
                 <option key={program.id} value={program.id}>
-                  {program.name} — {program.availabilityStatus}
+                  {program.name} - {program.availabilityStatus}
                 </option>
               ))}
             </select>

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { learningProgramAvailabilityStatusSchema } from './learning-program.contracts.js';
+import { learningProgramAvailabilityStatusSchema } from './learning-program.contracts';
 
 export const adminCurriculumErrorCodes = [
   'NOT_FOUND',

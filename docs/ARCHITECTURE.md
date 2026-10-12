@@ -275,3 +275,18 @@ Các thay đổi này chỉ thực hiện khi có bằng chứng về nhu cầu,
 Qualification runs on fresh schemas and temporary data roots. Performance, security, recovery,
 accessibility and end-to-end gates produce versioned evidence in `docs/`. Technical success does not
 approve language calibration, content quality, cloud deployment or public release.
+
+## 17. Learning program boundary (IELTS Phase 1)
+
+- `LearningProgram` là aggregate phân loại cấp cao hơn `LearningPath`; curriculum vẫn giữ cấu trúc
+  Program -> Path -> Level -> Mission -> Lesson.
+- Catalog canonical gồm Beginner, Intermediate, TOEIC và IELTS, được seed bằng UUID ổn định và
+  thứ tự hiển thị cố định. Seed chỉ tạo bản ghi thiếu, không ghi đè nội dung do operator đã sửa.
+- Learner đọc catalog qua module `LearningPrograms`. Quyền truy cập được suy ra phía server từ
+  `availabilityStatus`; client không tự quyết định chương trình nào có thể mở.
+- Phase 1 chỉ mở Intermediate tới dashboard. Beginner/TOEIC/IELTS vẫn xuất hiện minh bạch nhưng
+  không điều hướng và không tạo learning session.
+- Content Admin phải chọn program khi tạo path; request cũ không có `programId` được gắn
+  Intermediate để giữ tương thích. Program `DISABLED` hoặc ID không tồn tại bị từ chối.
+- Session hiện tại tiếp tục bất biến theo `LessonVersion`; việc phân loại program không thay đổi
+  version đã gắn vào session.
