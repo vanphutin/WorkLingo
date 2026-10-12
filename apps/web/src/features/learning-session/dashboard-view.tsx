@@ -130,12 +130,15 @@ export function DashboardView({
   return (
     <main className="dashboard-container">
       <header className="dashboard-header">
-        <span className="eyebrow">Workplace English — Foundation Slice</span>
+        <span className="eyebrow">Workplace English - Foundation Slice</span>
         <h1 className="dashboard-title">Learner Dashboard</h1>
         <p className="dashboard-subtitle">
           Structured workplace sessions covering listening, speaking, reading, and writing.
         </p>
-        <Link href="/mastery">View Mastery Map, Memory Health and Error Bank</Link>
+        <nav className="dashboard-shortcuts" aria-label="Dashboard shortcuts">
+          <Link href="/programs">Explore learning programs</Link>
+          <Link href="/mastery">View Mastery Map, Memory Health and Error Bank</Link>
+        </nav>
       </header>
 
       {startError && (

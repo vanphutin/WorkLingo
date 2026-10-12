@@ -302,6 +302,19 @@ a:focus-visible {
   line-height: 1.5;
 }
 
+.dashboard-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin-top: 0.9rem;
+}
+
+.dashboard-shortcuts a {
+  color: #17643a;
+  font-weight: 700;
+  text-underline-offset: 0.2rem;
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);

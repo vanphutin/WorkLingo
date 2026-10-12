@@ -1,0 +1,230 @@
+.program-catalog-page {
+  box-sizing: border-box;
+  width: min(100%, 72rem);
+  min-width: 0;
+  padding-block: clamp(1.5rem, 5vw, 4rem);
+}
+.program-catalog-header {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.program-catalog-header h1,
+.program-catalog-header p,
+.program-card h2,
+.program-card p,
+.program-catalog-state h2,
+.program-catalog-state p {
+  margin: 0;
+}
+
+.program-catalog-header h1 {
+  color: #17211b;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.05;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+
+.program-catalog-header > p:last-child {
+  color: #556258;
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.program-catalog-kicker,
+.program-proficiency {
+  color: #17643a;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.program-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.program-card {
+  box-sizing: border-box;
+  display: grid;
+  gap: 1.1rem;
+  min-width: 0;
+  border: 1px solid #d9ddd8;
+  border-radius: 0.85rem;
+  background: #fffefb;
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+}
+
+.program-card-intermediate {
+  border-color: #7ea28a;
+  background: #f6faf7;
+}
+
+.program-card-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.program-card h2 {
+  color: #17211b;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.program-icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 0.65rem;
+  background: #e4efe6;
+  color: #17643a;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.program-status {
+  border: 1px solid #d9ddd8;
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.45rem;
+  color: #465249;
+  background: #f7f6f2;
+  font-size: 0.75rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.program-status-AVAILABLE,
+.program-status-BETA {
+  border-color: #9ac2a6;
+  color: #155331;
+  background: #eaf5ee;
+}
+
+.program-description,
+.program-goal {
+  color: #465249;
+  line-height: 1.55;
+}
+
+.program-content-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.program-content-summary div {
+  border-left: 3px solid #b7cbbd;
+  padding-left: 0.75rem;
+}
+
+.program-content-summary dt {
+  color: #68736c;
+  font-size: 0.78rem;
+}
+
+.program-content-summary dd {
+  margin: 0.2rem 0 0;
+  color: #17211b;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.program-action,
+.program-retry {
+  box-sizing: border-box;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  align-self: end;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.program-action-primary,
+.program-retry {
+  background: #17643a;
+  color: #fffefb;
+  cursor: pointer;
+}
+
+.program-action-disabled {
+  border-color: #d9ddd8;
+  background: #ecefeb;
+  color: #667168;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.program-action-primary:hover,
+.program-retry:hover {
+  background: #0f4b2a;
+}
+
+.program-action:focus-visible,
+.program-retry:focus-visible {
+  outline: 3px solid #efb744;
+  outline-offset: 3px;
+}
+
+.program-catalog-state {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid #d9ddd8;
+  border-radius: 0.85rem;
+  background: #fffefb;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.program-catalog-state p {
+  color: #556258;
+}
+
+.program-catalog-error {
+  border-color: #e5b3b3;
+}
+
+.program-retry {
+  width: fit-content;
+}
+
+@media (max-width: 720px) {
+  .program-catalog-page {
+    padding: 1rem 0;
+  }
+
+  .program-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .program-card-heading {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .program-status {
+    grid-column: 1 / -1;
+    width: fit-content;
+  }
+
+  .program-content-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
