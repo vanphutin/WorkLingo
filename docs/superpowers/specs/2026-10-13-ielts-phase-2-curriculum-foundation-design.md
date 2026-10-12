@@ -1,6 +1,6 @@
 # IELTS Phase 2 — Complete curriculum foundation architecture
 
-Status: Scope approved on 2026-10-13. Written design awaiting user review; implementation has not started.
+Status: Scope and written design approved on 2026-10-13. Implementation plan awaiting review; implementation has not started.
 
 ## Intent and phase boundary
 
