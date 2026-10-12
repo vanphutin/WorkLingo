@@ -3,6 +3,9 @@ import { AdminCurriculumQueryService } from './admin-curriculum-query.service.js
 import type { PrismaService } from '../../common/database/prisma.service.js';
 
 interface MockPrisma {
+  learningProgram: {
+    findMany: ReturnType<typeof vi.fn>;
+  };
   learningPath: {
     findMany: ReturnType<typeof vi.fn>;
   };
@@ -14,6 +17,9 @@ describe('AdminCurriculumQueryService Unit Tests', () => {
 
   beforeEach(() => {
     mockPrisma = {
+      learningProgram: {
+        findMany: vi.fn(),
+      },
       learningPath: {
         findMany: vi.fn(),
       },
@@ -22,6 +28,13 @@ describe('AdminCurriculumQueryService Unit Tests', () => {
   });
 
   it('builds a hierarchical curriculum tree with playability and archive blockers', async () => {
+    const intermediateProgram = {
+      availabilityStatus: 'AVAILABLE',
+      id: '10000000-0000-4000-8000-000000000002',
+      name: 'Intermediate',
+      slug: 'intermediate',
+    };
+    mockPrisma.learningProgram.findMany.mockResolvedValue([intermediateProgram]);
     mockPrisma.learningPath.findMany.mockResolvedValue([
       {
         id: 'path-1',
@@ -75,6 +88,7 @@ describe('AdminCurriculumQueryService Unit Tests', () => {
           },
         ],
         name: 'Workplace English',
+        program: intermediateProgram,
         revision: 1,
         slug: 'workplace-english',
         status: 'PUBLISHED',
@@ -84,8 +98,10 @@ describe('AdminCurriculumQueryService Unit Tests', () => {
     const result = await service.getTree();
 
     expect(result.paths).toHaveLength(1);
+    expect(result.programs).toEqual([intermediateProgram]);
     const path = result.paths[0]!;
     expect(path.name).toBe('Workplace English');
+    expect(path.program).toEqual(intermediateProgram);
     expect(path.archiveBlockers).toContain('HAS_PUBLISHED_LEVELS');
 
     const level = path.levels[0]!;

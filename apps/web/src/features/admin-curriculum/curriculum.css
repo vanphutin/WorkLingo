@@ -209,6 +209,12 @@
   color: #556258;
 }
 
+.program-label {
+  color: #24563b;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .status-badge {
   display: inline-block;
   padding: 0.25rem 0.5rem;

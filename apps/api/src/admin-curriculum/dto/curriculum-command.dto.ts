@@ -36,6 +36,10 @@ export class CreateLearningPathDto implements CreateLearningPathInput {
   @IsNotEmpty({ message: 'Path name is required' })
   name!: string;
 
+  @IsOptional()
+  @IsUUID('4', { message: 'programId must be a valid UUID' })
+  programId?: string;
+
   @IsString()
   @Matches(/^[a-z0-9-]+$/u, {
     message: 'Slug must contain only lowercase letters, numbers and hyphens',

@@ -115,11 +115,21 @@ describe('Admin Curriculum Query HTTP Integration', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.paths).toBeDefined();
+    expect(res.body.programs.map((program: { slug: string }) => program.slug)).toEqual([
+      'beginner',
+      'intermediate',
+      'toeic',
+      'ielts',
+    ]);
     expect(Array.isArray(res.body.paths)).toBe(true);
     expect(res.body.paths.length).toBeGreaterThan(0);
 
     const foundationPath = res.body.paths.find((p: { slug: string }) => p.slug === 'english-for-work');
     expect(foundationPath).toBeDefined();
+    expect(foundationPath.program).toMatchObject({
+      id: '10000000-0000-4000-8000-000000000002',
+      slug: 'intermediate',
+    });
     expect(foundationPath.levels.length).toBeGreaterThan(0);
 
     const level = foundationPath.levels[0];

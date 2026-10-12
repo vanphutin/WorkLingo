@@ -10,6 +10,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { seedContentAdmin } from '../../src/users/infrastructure/seed-content-admin.js';
+import { INTERMEDIATE_PROGRAM_ID } from '../../src/learning-programs/domain/program-catalog.js';
 
 describe('Admin Curriculum Commands HTTP Integration', () => {
   const schemaName = `admin_curriculum_${randomUUID().replaceAll('-', '')}`;
@@ -127,6 +128,10 @@ describe('Admin Curriculum Commands HTTP Integration', () => {
     expect(createPathRes.body.slug).toBe('ielts-preparation');
     expect(createPathRes.body.revision).toBe(1);
     expect(createPathRes.body.status).toBe('DRAFT');
+    expect(createPathRes.body.program).toMatchObject({
+      id: INTERMEDIATE_PROGRAM_ID,
+      slug: 'intermediate',
+    });
     const pathId = createPathRes.body.id;
 
     // 2. Create Level
@@ -195,7 +200,7 @@ describe('Admin Curriculum Commands HTTP Integration', () => {
     const replayRes = await request(app.getHttpServer())
       .post('/api/v1/admin/curriculum/paths')
       .set('Cookie', adminCookies)
-      .send(payload);
+      .send({ ...payload, programId: INTERMEDIATE_PROGRAM_ID });
     expect(replayRes.status).toBe(201);
     expect(replayRes.body).toEqual(firstRes.body);
 
@@ -209,6 +214,51 @@ describe('Admin Curriculum Commands HTTP Integration', () => {
       });
     expect(conflictRes.status).toBe(409);
     expect(conflictRes.body.code).toBe('IDEMPOTENCY_CONFLICT');
+  });
+
+  it('supports explicit program assignment and rejects missing or disabled programs', async () => {
+    const ielts = await database.learningProgram.findUniqueOrThrow({
+      where: { slug: 'ielts' },
+    });
+    const explicit = await request(app.getHttpServer())
+      .post('/api/v1/admin/curriculum/paths')
+      .set('Cookie', adminCookies)
+      .send({
+        idempotencyKey: randomUUID(),
+        name: 'IELTS Program Path',
+        programId: ielts.id,
+        slug: 'ielts-program-path',
+      });
+    expect(explicit.status).toBe(201);
+    expect(explicit.body.program).toMatchObject({ id: ielts.id, slug: 'ielts' });
+
+    const missing = await request(app.getHttpServer())
+      .post('/api/v1/admin/curriculum/paths')
+      .set('Cookie', adminCookies)
+      .send({
+        idempotencyKey: randomUUID(),
+        name: 'Missing Program Path',
+        programId: randomUUID(),
+        slug: 'missing-program-path',
+      });
+    expect(missing.status).toBe(422);
+    expect(missing.body.code).toBe('INVALID_CURRICULUM_RELATIONSHIP');
+
+    const toeic = await database.learningProgram.update({
+      data: { availabilityStatus: 'DISABLED' },
+      where: { slug: 'toeic' },
+    });
+    const disabled = await request(app.getHttpServer())
+      .post('/api/v1/admin/curriculum/paths')
+      .set('Cookie', adminCookies)
+      .send({
+        idempotencyKey: randomUUID(),
+        name: 'Disabled Program Path',
+        programId: toeic.id,
+        slug: 'disabled-program-path',
+      });
+    expect(disabled.status).toBe(422);
+    expect(disabled.body.code).toBe('INVALID_CURRICULUM_RELATIONSHIP');
   });
 
   it('rejects stale expectedRevision with 409 CURRICULUM_REVISION_CONFLICT', async () => {

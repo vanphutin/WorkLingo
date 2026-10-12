@@ -20,6 +20,7 @@ export function CurriculumWorkspace() {
   // Forms state
   const [isCreatingPath, setIsCreatingPath] = useState(false);
   const [pathName, setPathName] = useState('');
+  const [pathProgramId, setPathProgramId] = useState('');
   const [pathSlug, setPathSlug] = useState('');
 
   const [activeLevelFormPathId, setActiveLevelFormPathId] = useState<string | null>(null);
@@ -38,6 +39,12 @@ export function CurriculumWorkspace() {
       setErrorMessage(null);
       const data = await adminCurriculumClient.getTree();
       setTree(data);
+      setPathProgramId((current) => {
+        if (current) return current;
+        return data.programs.find((program) => program.slug === 'intermediate')?.id
+          ?? data.programs[0]?.id
+          ?? '';
+      });
     } catch (err) {
       setErrorMessage(
         err instanceof Error ? err.message : 'Failed to load curriculum tree',
@@ -58,11 +65,13 @@ export function CurriculumWorkspace() {
       await adminCurriculumClient.createPath({
         idempotencyKey: crypto.randomUUID(),
         name: pathName.trim(),
+        programId: pathProgramId,
         slug: pathSlug.trim(),
       });
       setSuccessMessage(`Path "${pathName}" created successfully.`);
       setIsCreatingPath(false);
       setPathName('');
+      setPathProgramId('');
       setPathSlug('');
       await loadTree();
     } catch (err) {
@@ -352,6 +361,22 @@ export function CurriculumWorkspace() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="path-program">Learning Program</label>
+            <select
+              id="path-program"
+              className="form-control"
+              value={pathProgramId}
+              onChange={(e) => setPathProgramId(e.target.value)}
+              required
+            >
+              {tree?.programs.map((program) => (
+                <option key={program.id} value={program.id}>
+                  {program.name} — {program.availabilityStatus}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
             <label htmlFor="path-slug">Slug</label>
             <input
               id="path-slug"
@@ -385,6 +410,9 @@ export function CurriculumWorkspace() {
               <div className="node-title-group">
                 <h2 className="node-title">{path.name}</h2>
                 <span className="node-meta">({path.slug})</span>
+                <span className="program-label">
+                  Program: {path.program.name} ({path.program.availabilityStatus})
+                </span>
                 <span className={`status-badge status-${path.status}`}>{path.status}</span>
                 <span className="node-meta">rev {path.revision}</span>
                 {path.archiveBlockers.length > 0 && (

@@ -39,6 +39,14 @@ import {
   validateCompleteOrder,
 } from '../domain/curriculum-reorder-policy.js';
 import { sanitizeAuditState } from '../../audit/domain/audit-metadata-policy.js';
+import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
+
+const PROGRAM_OPTION_SELECT = {
+  availabilityStatus: true,
+  id: true,
+  name: true,
+  slug: true,
+} as const;
 
 @Injectable()
 export class AdminCurriculumCommandService {
@@ -124,8 +132,10 @@ export class AdminCurriculumCommandService {
     actorId: string,
     input: CreateLearningPathInput,
   ): Promise<AdminLearningPathItemDto> {
+    const programId = input.programId ?? INTERMEDIATE_PROGRAM_ID;
     const requestHash = this.computeRequestHash({
       name: input.name,
+      programId,
       slug: input.slug,
     });
 
@@ -138,6 +148,18 @@ export class AdminCurriculumCommandService {
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      const program = await tx.learningProgram.findUnique({
+        select: PROGRAM_OPTION_SELECT,
+        where: { id: programId },
+      });
+      if (!program || program.availabilityStatus === 'DISABLED') {
+        throw new UnprocessableEntityException({
+          code: 'INVALID_CURRICULUM_RELATIONSHIP',
+          message: 'Selected learning program is unavailable',
+          statusCode: 422,
+        });
+      }
+
       const existingSlug = await tx.learningPath.findUnique({
         where: { slug: input.slug },
       });
@@ -152,10 +174,12 @@ export class AdminCurriculumCommandService {
       const path = await tx.learningPath.create({
         data: {
           name: input.name,
+          programId,
           revision: 1,
           slug: input.slug,
           status: 'DRAFT',
         },
+        include: { program: { select: PROGRAM_OPTION_SELECT } },
       });
 
       const response: AdminLearningPathItemDto = {
@@ -163,6 +187,7 @@ export class AdminCurriculumCommandService {
         id: path.id,
         levels: [],
         name: path.name,
+        program: path.program,
         revision: path.revision,
         slug: path.slug,
         status: path.status,
@@ -179,7 +204,7 @@ export class AdminCurriculumCommandService {
         path.id,
         null,
         response,
-        { slug: path.slug },
+        { programId: program.id, programSlug: program.slug },
         response,
         201,
       );
@@ -209,6 +234,7 @@ export class AdminCurriculumCommandService {
 
     return this.database.$transaction(async (tx) => {
       const current = await tx.learningPath.findUnique({
+        include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
       });
       if (!current) {
@@ -253,6 +279,7 @@ export class AdminCurriculumCommandService {
           name: input.name ?? current.name,
           revision: current.revision + 1,
         },
+        include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
       });
 
@@ -261,6 +288,7 @@ export class AdminCurriculumCommandService {
         id: updated.id,
         levels: [],
         name: updated.name,
+        program: updated.program,
         revision: updated.revision,
         slug: updated.slug,
         status: updated.status,
@@ -306,6 +334,7 @@ export class AdminCurriculumCommandService {
 
     return this.database.$transaction(async (tx) => {
       const current = await tx.learningPath.findUnique({
+        include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
       });
       if (!current) {
@@ -329,6 +358,7 @@ export class AdminCurriculumCommandService {
           revision: current.revision + 1,
           status: 'PUBLISHED',
         },
+        include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
       });
 
@@ -337,6 +367,7 @@ export class AdminCurriculumCommandService {
         id: updated.id,
         levels: [],
         name: updated.name,
+        program: updated.program,
         revision: updated.revision,
         slug: updated.slug,
         status: updated.status,
@@ -384,6 +415,7 @@ export class AdminCurriculumCommandService {
       const current = await tx.learningPath.findUnique({
         include: {
           levels: { where: { status: 'PUBLISHED' } },
+          program: { select: PROGRAM_OPTION_SELECT },
         },
         where: { id: pathId },
       });
@@ -423,6 +455,7 @@ export class AdminCurriculumCommandService {
           revision: current.revision + 1,
           status: 'ARCHIVED',
         },
+        include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
       });
 
@@ -431,6 +464,7 @@ export class AdminCurriculumCommandService {
         id: updated.id,
         levels: [],
         name: updated.name,
+        program: updated.program,
         revision: updated.revision,
         slug: updated.slug,
         status: updated.status,

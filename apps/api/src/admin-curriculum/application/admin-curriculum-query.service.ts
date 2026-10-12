@@ -12,41 +12,56 @@ import { findPlayableLevels } from '../../curriculum/domain/playable-level-polic
 import { computeAvailableDurations } from '../../learning-sessions/domain/session-planner.js';
 import { findArchiveBlockers } from '../domain/curriculum-mutation-policy.js';
 
+const PROGRAM_OPTION_SELECT = {
+  availabilityStatus: true,
+  id: true,
+  name: true,
+  slug: true,
+} as const;
+
 @Injectable()
 export class AdminCurriculumQueryService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
   async getTree(): Promise<AdminCurriculumTreeDto> {
-    const rawPaths = await this.database.learningPath.findMany({
-      include: {
-        levels: {
-          include: {
-            missions: {
-              include: {
-                lessons: {
-                  include: {
-                    lesson: {
-                      include: {
-                        currentPublishedVersion: {
-                          include: {
-                            activities: true,
-                            audioArtifacts: true,
+    const [programs, rawPaths] = await Promise.all([
+      this.database.learningProgram.findMany({
+        orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }],
+        select: PROGRAM_OPTION_SELECT,
+        where: { availabilityStatus: { not: 'DISABLED' } },
+      }),
+      this.database.learningPath.findMany({
+        include: {
+          levels: {
+            include: {
+              missions: {
+                include: {
+                  lessons: {
+                    include: {
+                      lesson: {
+                        include: {
+                          currentPublishedVersion: {
+                            include: {
+                              activities: true,
+                              audioArtifacts: true,
+                            },
                           },
                         },
                       },
                     },
+                    orderBy: { order: 'asc' },
                   },
-                  orderBy: { order: 'asc' },
+                },
+                orderBy: { order: 'asc' },
                 },
               },
               orderBy: { order: 'asc' },
             },
+            program: { select: PROGRAM_OPTION_SELECT },
           },
-          orderBy: { order: 'asc' },
-        },
-      },
-      orderBy: { createdAt: 'asc' },
-    });
+          orderBy: { createdAt: 'asc' },
+        }),
+    ]);
 
     const paths: AdminLearningPathItemDto[] = rawPaths.map((path) => {
       const publishedLevels = path.levels.filter((l) => l.status === 'PUBLISHED');
@@ -171,12 +186,13 @@ export class AdminCurriculumQueryService {
         id: path.id,
         levels,
         name: path.name,
+        program: path.program,
         revision: path.revision,
         slug: path.slug,
         status: path.status,
       };
     });
 
-    return { paths };
+    return { paths, programs };
   }
 }

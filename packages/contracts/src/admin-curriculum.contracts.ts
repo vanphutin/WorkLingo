@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { learningProgramAvailabilityStatusSchema } from './learning-program.contracts.js';
 
 export const adminCurriculumErrorCodes = [
   'NOT_FOUND',
@@ -21,6 +22,7 @@ export type MissionPurposeDto = z.infer<typeof missionPurposeEnum>;
 export const createLearningPathInputSchema = z.object({
   idempotencyKey: z.string().uuid(),
   name: z.string().trim().min(1, 'Path name is required'),
+  programId: z.string().uuid().optional(),
   slug: z
     .string()
     .trim()
@@ -184,11 +186,22 @@ export const adminLevelItemSchema = z.object({
 });
 export type AdminLevelItemDto = z.infer<typeof adminLevelItemSchema>;
 
+export const adminProgramOptionSchema = z
+  .object({
+    availabilityStatus: learningProgramAvailabilityStatusSchema,
+    id: z.string().uuid(),
+    name: z.string(),
+    slug: z.string(),
+  })
+  .strict();
+export type AdminProgramOptionDto = z.infer<typeof adminProgramOptionSchema>;
+
 export const adminLearningPathItemSchema = z.object({
   archiveBlockers: z.array(z.string()),
   id: z.string().uuid(),
   levels: z.array(adminLevelItemSchema),
   name: z.string(),
+  program: adminProgramOptionSchema,
   revision: z.number().int(),
   slug: z.string(),
   status: contentStatusEnum,
@@ -197,5 +210,6 @@ export type AdminLearningPathItemDto = z.infer<typeof adminLearningPathItemSchem
 
 export const adminCurriculumTreeSchema = z.object({
   paths: z.array(adminLearningPathItemSchema),
+  programs: z.array(adminProgramOptionSchema),
 });
 export type AdminCurriculumTreeDto = z.infer<typeof adminCurriculumTreeSchema>;
