@@ -50,6 +50,7 @@ describe('LearningProgram migration', () => {
       process.execPath,
       [cli, 'migrate', 'deploy', '--schema', temporarySchemaPath],
       {
+        cwd: tmpdir(),
         encoding: 'utf8',
         env: { ...process.env, DATABASE_URL: schemaUrl.toString() },
         timeout: 60_000,
@@ -66,7 +67,7 @@ describe('LearningProgram migration', () => {
       path.join(temporaryMigrationsDir, 'migration_lock.toml'),
     );
     for (const migrationName of readdirSync(path.join(sourcePrismaDir, 'migrations'))) {
-      if (migrationName === MIGRATION_NAME || migrationName === 'migration_lock.toml') continue;
+      if (migrationName >= MIGRATION_NAME || migrationName === 'migration_lock.toml') continue;
       cpSync(
         path.join(sourcePrismaDir, 'migrations', migrationName),
         path.join(temporaryMigrationsDir, migrationName),
@@ -137,7 +138,7 @@ describe('LearningProgram migration', () => {
     await database.$disconnect();
     await admin.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaName}" CASCADE`);
     await admin.$disconnect();
-    rmSync(temporaryRoot, { force: true, recursive: true });
+    rmSync(temporaryRoot, { force: true, recursive: true, maxRetries: 10, retryDelay: 200 });
   });
 
   it('backfills an existing path to Intermediate without changing historical identifiers', async () => {

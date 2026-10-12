@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { MasteryService } from './mastery.service.js';
 import type { MasteryMapResponseDto } from '../dto/mastery-map-response.dto.js';
@@ -10,14 +11,14 @@ export class MasteryMapService {
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(MasteryService) private readonly mastery: MasteryService,
+    @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
   ) {}
 
   async getMap(learnerId: string): Promise<MasteryMapResponseDto> {
-    const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId } });
-    const missions = await this.curriculum.getPublishedMissionsForLevel(
-      profile?.currentLevelCode ?? 'FOUNDATION_1',
-      'learning',
-    );
+    const missions = await this.database.$transaction(async (tx) => {
+      const context = await this.programContext.resolve(learnerId, tx);
+      return this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', tx, context.programId);
+    }, { isolationLevel: 'RepeatableRead' });
     const [records, queue] = await Promise.all([
       this.mastery.getMasteryRecords(learnerId), this.mastery.getReviewQueue(learnerId),
     ]);

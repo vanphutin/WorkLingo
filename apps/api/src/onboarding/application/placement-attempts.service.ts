@@ -23,6 +23,7 @@ import { PilotMetricsService } from '../../analytics/application/pilot-metrics.s
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { SessionCreationService } from '../../learning-sessions/application/session-creation.service.js';
 import { OnboardingService } from './onboarding.service.js';
+import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
 import { toPlacementAttemptDto } from './placement-attempt.mapper.js';
 
 const PLACEMENT_CONFIRMATION_OPERATION = 'onboarding:placement-confirmation';
@@ -41,6 +42,7 @@ export class PlacementAttemptsService {
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
     @Inject(OnboardingService) private readonly onboarding: OnboardingService,
+    @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
@@ -220,6 +222,7 @@ export class PlacementAttemptsService {
       }
 
       const confirmedAt = new Date();
+      await this.programContext.initializeIntermediate(transaction, learnerId, attempt.recommendedLevelCode);
       await transaction.placementAttempt.update({
         where: { id: attempt.id },
         data: { confirmedAt, status: 'CONFIRMED' },

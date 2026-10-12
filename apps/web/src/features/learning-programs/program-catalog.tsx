@@ -1,15 +1,17 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import type {
   LearningProgramCatalogDto,
   LearningProgramCatalogItemDto,
   LearningProgramAvailabilityStatusDto,
   LearningProgramIconKeyDto,
+  ProgramContextDto,
 } from '@worklingo/contracts';
 
 import { learningProgramClient } from '../../lib/api/learning-program-client';
+import { ApiError } from '../../lib/api/api-client';
 import './program-catalog.css';
 
 const STATUS_LABELS: Readonly<Record<LearningProgramAvailabilityStatusDto, string>> = {
@@ -35,16 +37,22 @@ function ProgramIcon({ iconKey }: { readonly iconKey: LearningProgramIconKeyDto 
   );
 }
 
-function ProgramAction({ program }: { readonly program: LearningProgramCatalogItemDto }) {
+function ProgramAction({ program, pending, onActivate }: {
+  readonly program: LearningProgramCatalogItemDto;
+  readonly pending: boolean;
+  readonly onActivate: () => void;
+}) {
   if (program.isSelectable && program.destination) {
     return (
-      <Link
+      <button
+        type="button"
         className="program-action program-action-primary"
-        href={program.destination}
+        onClick={onActivate}
+        disabled={pending}
         aria-label={`Open ${program.name} program`}
       >
         Continue with {program.name}
-      </Link>
+      </button>
     );
   }
 
@@ -61,7 +69,13 @@ function ProgramAction({ program }: { readonly program: LearningProgramCatalogIt
 }
 
 export function ProgramCatalog() {
+  const router = useRouter();
   const [catalog, setCatalog] = useState<LearningProgramCatalogDto | null>(null);
+  const [context, setContext] = useState<ProgramContextDto | null>(null);
+  const [activationError, setActivationError] = useState<string | null>(null);
+  const [isActivating, setIsActivating] = useState(false);
+  const [needsRefresh, setNeedsRefresh] = useState(false);
+  const activationPending = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [requestKey, setRequestKey] = useState(0);
@@ -73,8 +87,15 @@ export function ProgramCatalog() {
       try {
         setIsLoading(true);
         setHasError(false);
-        const nextCatalog = await learningProgramClient.getCatalog();
-        if (isActive) setCatalog(nextCatalog);
+        const [nextCatalog, nextContext] = await Promise.all([
+          learningProgramClient.getCatalog(), learningProgramClient.getContext(),
+        ]);
+        if (isActive) {
+          setCatalog(nextCatalog);
+          setContext(nextContext);
+          setActivationError(null);
+          setNeedsRefresh(false);
+        }
       } catch {
         if (isActive) setHasError(true);
       } finally {
@@ -88,6 +109,36 @@ export function ProgramCatalog() {
     };
   }, [requestKey]);
 
+  async function activate(program: LearningProgramCatalogItemDto) {
+    if (activationPending.current || needsRefresh || !program.isSelectable || !program.destination) return;
+    activationPending.current = true;
+    setIsActivating(true);
+    setActivationError(null);
+    try {
+      const activated = await learningProgramClient.activateProgram({ programSlug: program.slug, expectedRevision: context?.enrollment?.revision ?? null });
+      if (activated.activeProgram?.slug !== program.slug || !activated.enrollment) {
+        throw new Error('Program activation returned an inconsistent context.');
+      }
+      setContext(activated);
+      router.push(program.destination);
+    } catch (error) {
+      if (error instanceof ApiError && error.code === 'PROGRAM_CONTEXT_STALE') {
+        try {
+          setContext(await learningProgramClient.getContext());
+          setActivationError('Learning context changed. Review the updated program and try again.');
+        } catch {
+          setNeedsRefresh(true);
+          setActivationError('Unable to refresh learning context. Reload programs before trying again.');
+        }
+      } else {
+        setActivationError(error instanceof ApiError ? error.message : 'Unable to open learning program. Try again.');
+      }
+    } finally {
+      activationPending.current = false;
+      setIsActivating(false);
+    }
+  }
+
   return (
     <main className="program-catalog-page">
       <header className="program-catalog-header">
@@ -98,6 +149,13 @@ export function ProgramCatalog() {
           open only when their learning experience is ready.
         </p>
       </header>
+
+      {context?.activeProgram && <p>Active program: <strong>{context.activeProgram.name}</strong></p>}
+      {isActivating && <p role="status" aria-live="polite">Opening your learning program…</p>}
+      {activationError && <div role="alert">
+        <p>{activationError}</p>
+        {needsRefresh && <button type="button" className="program-retry" onClick={() => setRequestKey((key) => key + 1)}>Reload programs</button>}
+      </div>}
 
       {isLoading ? (
         <section className="program-catalog-state" role="status" aria-live="polite">
@@ -149,7 +207,7 @@ export function ProgramCatalog() {
                   <dd>{program.publishedLevelCount}</dd>
                 </div>
               </dl>
-              <ProgramAction program={program} />
+              <ProgramAction program={program} pending={isActivating || needsRefresh} onActivate={() => { void activate(program); }} />
             </li>
           ))}
         </ul>

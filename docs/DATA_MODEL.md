@@ -2,11 +2,12 @@
 
 ## Increment 3 checkpoint persistence
 
-`LearnerProfile.currentLevelCode` is the authoritative current level and defaults existing/new learners to `FOUNDATION_1`.
+As of IELTS Phase 2, `LearnerProgramEnrollment.currentLevelId` is authoritative for each program.
+`LearnerProfile.currentLevelCode` retains the Intermediate compatibility mirror; it is not IELTS placement evidence.
 
 `CheckpointAssessment` stores learner/client UUID, source session and lesson version, level, policy version, per-skill scores/threshold/pending counts, status, reinforcement actions and evidence snapshot. Unique learner/client UUIDs guarantee replay. Assessments are append-only; reassessment creates a new record. Scores come from persisted evaluated attempts, never request data.
 
-`ProgressionConfirmation` records one learner-confirmed decision per assessment, source and destination levels. Row locking on the learner profile serializes assess/confirm; conditional current-level updates prevent skipping or downgrading. Compound owner foreign keys enforce assessment/session and confirmation/assessment ownership.
+`ProgressionConfirmation` records one learner-confirmed decision per assessment, source and destination levels. Row locking on the learner profile serializes assess/confirm and program activation; conditional enrollment level/revision updates prevent skipping or downgrading. Compound owner foreign keys enforce assessment/session and confirmation/assessment ownership.
 
 Published lesson versions and session plans remain unchanged. Review context fingerprints are derived from the last evaluated activity's versioned document type/text; optional `reviewSelections` in the plan records genuine transfer versus fallback.
 
@@ -475,3 +476,21 @@ Stores immutable audit records of administrative operations with compound cursor
 with path status. The database default points to the canonical Intermediate UUID so historical
 inserts and migrations remain compatible. New application commands normalize an omitted program to
 the same ID, while rejecting unknown or disabled programs before creating a path.
+
+## 13. Program enrollment (IELTS Phase 2)
+
+`LearnerProgramEnrollment` stores UUID id, learnerId, programId, nullable currentLevelId,
+positive revision (default 1), createdAt and updatedAt. `(learnerId, programId)` is unique.
+Foreign-key indexes cover learner/program/level lookups; learner deletion cascades, while
+program and current-level deletion is restricted. Service writes validate level/program membership.
+
+`LearnerProfile.activeProgramId` is nullable and indexed. PENDING learners remain unassigned.
+The atomic upgrade enrolls existing COMPLETE learners into Intermediate at their exact historical
+level, including archived levels. Missing or foreign-program legacy levels abort the upgrade
+instead of resetting progress. Both onboarding confirmation methods initialize enrollment in
+their existing transaction.
+
+Advancement conditionally updates enrollment level and increments revision, then mirrors the
+Intermediate level to the profile and persists confirmation in the same transaction. New
+assessment evidence snapshots include program/enrollment IDs and enrollment revision. Legacy
+snapshots remain readable, and program ownership is derived from their source session.

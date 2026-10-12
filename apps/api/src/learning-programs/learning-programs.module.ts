@@ -3,10 +3,13 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../common/database/database.module.js';
 import { LearningProgramsService } from './application/learning-programs.service.js';
 import { LearningProgramsController } from './learning-programs.controller.js';
+import { ProgramContextService } from './application/program-context.service.js';
+import { ProgramContextController } from './program-context.controller.js';
 
 @Module({
-  controllers: [LearningProgramsController],
+  controllers: [LearningProgramsController, ProgramContextController],
+  exports: [ProgramContextService],
   imports: [DatabaseModule],
-  providers: [LearningProgramsService],
+  providers: [LearningProgramsService, ProgramContextService],
 })
 export class LearningProgramsModule {}

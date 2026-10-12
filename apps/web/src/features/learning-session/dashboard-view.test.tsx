@@ -21,6 +21,10 @@ const mockProgress: LearnerProgressDto = {
 afterEach(cleanup);
 
 describe('DashboardView', () => {
+  it('shows the active program supplied by server context', () => {
+    render(<DashboardView progress={mockProgress} onStartSession={vi.fn()} activeProgramName="Intermediate" />);
+    expect(screen.getByText(/Active program:/)).toHaveTextContent('Intermediate');
+  });
   it('links learners to the program catalog', () => {
     render(
       <DashboardView progress={mockProgress} onStartSession={vi.fn()} />,

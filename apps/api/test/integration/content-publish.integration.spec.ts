@@ -383,6 +383,7 @@ describe('Transactional publish, archive, and session version isolation', () => 
     const level = await database.level.create({
       data: {
         code: 'FOUNDATION_1',
+        status: 'PUBLISHED',
         name: 'Foundation 1',
         cefrReference: 'A1',
         pathId: path.id,

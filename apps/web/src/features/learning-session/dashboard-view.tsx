@@ -9,6 +9,7 @@ import { EngagementPanel } from '../engagement/engagement-panel';
 
 interface DashboardViewProps {
   readonly progress: LearnerProgressDto | null;
+  readonly activeProgramName?: string | undefined;
   readonly nextMissionTitle?: string | undefined;
   readonly availableDurations?: readonly number[] | undefined;
   readonly onStartSession: (
@@ -42,6 +43,7 @@ function getDurationLabel(duration: number, isAvailable: boolean): string {
 
 export function DashboardView({
   progress,
+  activeProgramName,
   nextMissionTitle = 'Introduce yourself to a new colleague',
   availableDurations = DEFAULT_DURATIONS,
   onStartSession,
@@ -132,6 +134,7 @@ export function DashboardView({
       <header className="dashboard-header">
         <span className="eyebrow">Workplace English - Foundation Slice</span>
         <h1 className="dashboard-title">Learner Dashboard</h1>
+        {activeProgramName && <p>Active program: <strong>{activeProgramName}</strong></p>}
         <p className="dashboard-subtitle">
           Structured workplace sessions covering listening, speaking, reading, and writing.
         </p>

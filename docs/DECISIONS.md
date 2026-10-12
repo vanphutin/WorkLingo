@@ -257,6 +257,22 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Lý do:** Cho phép xây IELTS theo từng phase mà không trộn curriculum, không quảng cáo chương
   trình chưa đủ nội dung như đã sẵn sàng, đồng thời giữ tương thích dữ liệu MVP hiện có.
 
+## D-030 — Enrollment là nguồn tiến độ theo chương trình
+
+- **Trạng thái:** Accepted (IELTS Phase 2)
+- **Ngày:** 2026-10-13
+- **Quyết định:** `LearnerProgramEnrollment` lưu level và revision riêng cho mỗi learner/program;
+  profile lưu activeProgramId. `currentLevelCode` chỉ còn là mirror tương thích Intermediate.
+- **Concurrency:** Activation, onboarding và progression khóa cùng profile; advancement cập nhật
+  enrollment, mirror và confirmation trong một transaction. Revision khi đổi context tăng vượt
+  cả revision nguồn và đích để không tái sử dụng token cũ.
+- **Isolation:** Curriculum/mastery/progress dùng active context; session cũ vẫn resume theo version
+  bất biến. Đánh giá và confirm chéo chương trình bị từ chối, kể cả replay.
+- **Migration:** Giữ nguyên level lịch sử khi backfill, kể cả archived; level bị thiếu hoặc sai
+  chương trình khiến migration rollback thay vì tự reset người học.
+- **Release:** Chỉ Intermediate được chọn. B2 admission, IELTS content và band scoring cần
+  thiết kế/calibration riêng trước khi mở IELTS.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

@@ -290,3 +290,20 @@ approve language calibration, content quality, cloud deployment or public releas
   Intermediate để giữ tương thích. Program `DISABLED` hoặc ID không tồn tại bị từ chối.
 - Session hiện tại tiếp tục bất biến theo `LessonVersion`; việc phân loại program không thay đổi
   version đã gắn vào session.
+
+## 18. Learner program context (IELTS Phase 2)
+
+- `LearningProgramsModule` exports `ProgramContextService`, which validates active program,
+  enrollment and level membership. Onboarding, sessions, mastery and progression consume this
+  boundary; new learning does not infer the current level from the compatibility mirror.
+- Activation, onboarding and progression lock the same learner profile row and resolve context
+  within the transaction. Read-only context and learning summaries use repeatable-read snapshots.
+- Curriculum selection requires the resolved program plus published level/path. Review selections
+  are restricted to language blocks in that curriculum.
+- Historical sessions continue to resume against their frozen mission/version. Assessment and
+  confirmation reject another active program, including replay requests.
+- Dashboard progress counts the active program; weekly engagement retains the existing learner-wide
+  calendar model. PENDING learners receive empty progress and cannot open program-scoped mastery
+  or progression before onboarding.
+- Intermediate remains the only selectable program. IELTS content and calibrated admission are
+  separate capabilities; changing a catalog status cannot bypass the server release policy.

@@ -58,11 +58,13 @@ model User {
   studyDays                  LearnerStudyDay[]
   studySessions              LearnerStudySession[]
   engagementWeeks            LearnerEngagementWeek[]
+  programEnrollments         LearnerProgramEnrollment[]
 }
 
 model LearnerProfile {
   userId           String            @id @db.Uuid
   currentLevelCode String            @default("FOUNDATION_1")
+  activeProgramId  String?           @db.Uuid
   onboardingStatus OnboardingStatus  @default(PENDING)
   onboardingMethod OnboardingMethod?
   onboardedAt      DateTime?
@@ -75,6 +77,9 @@ model LearnerProfile {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activeProgram    LearningProgram?  @relation(fields: [activeProgramId], references: [id], onDelete: Restrict)
+
+  @@index([activeProgramId])
 }
 
 model UserSession {
@@ -138,6 +143,25 @@ model LearningProgram {
   createdAt          DateTime                  @default(now())
   updatedAt          DateTime                  @updatedAt
   paths              LearningPath[]
+  enrollments        LearnerProgramEnrollment[]
+  activeProfiles     LearnerProfile[]
+}
+
+model LearnerProgramEnrollment {
+  id             String          @id @default(uuid()) @db.Uuid
+  learnerId      String          @db.Uuid
+  programId      String          @db.Uuid
+  currentLevelId String?         @db.Uuid
+  revision       Int             @default(1)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  learner        User            @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  program        LearningProgram @relation(fields: [programId], references: [id], onDelete: Restrict)
+  currentLevel   Level?          @relation(fields: [currentLevelId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, programId])
+  @@index([programId])
+  @@index([currentLevelId])
 }
 
 model LearningPath {
@@ -168,6 +192,7 @@ model Level {
   updatedAt     DateTime      @updatedAt
   path          LearningPath  @relation(fields: [pathId], references: [id], onDelete: Restrict)
   missions      Mission[]
+  enrollments   LearnerProgramEnrollment[]
 
   @@unique([pathId, order])
   @@index([pathId, order])

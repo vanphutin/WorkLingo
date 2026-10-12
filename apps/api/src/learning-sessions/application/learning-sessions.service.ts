@@ -16,6 +16,7 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
@@ -71,27 +72,30 @@ export class LearningSessionsService {
     @Inject(CurriculumService) private readonly curriculum: CurriculumService,
     @Inject(MasteryService) private readonly mastery: MasteryService,
     @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
+    @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
     @Optional() @Inject(StudyDayProjectorService) private readonly studyDayProjector?: StudyDayProjectorService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
-  private async selectCurriculum(learnerId: string) {
-    const profile = await this.requireCompletedOnboarding(learnerId);
+  private async selectCurriculum(learnerId: string, transaction: Prisma.TransactionClient) {
+    const context = await this.programContext.resolve(learnerId, transaction);
     const [missions, reviewQueue, completed] = await Promise.all([
-      this.curriculum.getPublishedMissionsForLevel(profile?.currentLevelCode ?? 'FOUNDATION_1'),
+      this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', transaction, context.programId),
       this.mastery.getReviewQueue(learnerId),
-      this.database.learningSession.findMany({
-        where: { learnerId, status: 'COMPLETED', mission: { purpose: 'LEARNING' } },
+      transaction.learningSession.findMany({
+        where: { learnerId, status: 'COMPLETED', mission: { purpose: 'LEARNING', level: { path: { programId: context.programId } } } },
         select: { missionId: true },
       }),
     ]);
     if (!missions.length) throw new NotFoundException('No published mission for this level');
-    return { mission: selectMissionForReview(missions, reviewQueue, completed.map((s) => s.missionId)), reviewQueue };
+    const blockIds = new Set(missions.flatMap((mission) => mission.lessonVersion.wordBanks.flatMap((bank) => bank.languageBlocks.map((block) => block.id))));
+    const scopedReview = reviewQueue.filter((item) => blockIds.has(item.languageBlockId));
+    return { mission: selectMissionForReview(missions, scopedReview, completed.map((s) => s.missionId)), reviewQueue: scopedReview };
   }
 
   async getAvailability(learnerId: string): Promise<SessionAvailabilityDto> {
-    const { mission } = await this.selectCurriculum(learnerId);
+    const { mission } = await this.database.$transaction((tx) => this.selectCurriculum(learnerId, tx), { isolationLevel: 'RepeatableRead' });
     const availableDurations = computeAvailableDurations(mission);
     return {
       mission: {
@@ -124,16 +128,12 @@ export class LearningSessionsService {
     });
     if (existing) return this.toSessionDto(existing);
 
-    const { mission, reviewQueue } = await this.selectCurriculum(learnerId);
-
     try {
-      return await this.database.$transaction((transaction) => this.sessionCreation.create(transaction, {
-        clientSessionId,
-        learnerId,
-        mission,
-        durationMinutes,
-        reviewItems: reviewQueue,
-      }));
+      return await this.database.$transaction(async (transaction) => {
+        await transaction.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
+        const { mission, reviewQueue } = await this.selectCurriculum(learnerId, transaction);
+        return this.sessionCreation.create(transaction, { clientSessionId, learnerId, mission, durationMinutes, reviewItems: reviewQueue });
+      }, { timeout: 15_000 });
     } catch (error) {
       if (error instanceof InsufficientContentForDurationError) {
         throw new UnprocessableEntityException({
