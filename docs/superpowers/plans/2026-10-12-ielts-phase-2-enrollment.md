@@ -140,4 +140,4 @@
 
 Spec sections map to Tasks 1 (migration/compatibility), 2 (strict contracts), 3 (API/locking/access), 4 (onboarding/session/mastery), 5 (progression), and 6 (UI/docs/end-to-end verification). Review Focus conditions have explicit owning tests. The rollout is intentionally integrated only after all consumers stop using the legacy field as their authoritative context.
 
-Implementation status: not started. Execution method: native/direct, preserving the user's quota preference. Written plan review is the next prerequisite under the writing-plans workflow.
+Implementation status: Tasks 1–5 implemented and verified with focused checks. Task 6 UI/client tests and desktop/mobile E2E passed; final branch review and full verification pending. Execution method: native/direct, preserving the user's quota preference. The user approved the written plan before implementation.

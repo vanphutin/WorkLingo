@@ -697,3 +697,31 @@ Intermediate is selectable with destination `/dashboard`; Beginner, TOEIC, and I
 `programId`; omission defaults to Intermediate for backward compatibility. Unknown and disabled
 programs return `422 INVALID_CURRICULUM_RELATIONSHIP`. The normalized program ID participates in
 the idempotency hash and the selected program is captured in audit state.
+
+## 16. Learner program context (IELTS Phase 2)
+
+### `GET /api/v1/me/program-context`
+
+Requires authenticated LEARNER. Returns strict `{ activeProgram, enrollment }`.
+`activeProgram` is null or `{ id, slug, name }`; `enrollment` is null or
+`{ id, revision, currentLevel: { id, code, name } | null }`. Both outer fields are null
+before onboarding. An inconsistent COMPLETE enrollment returns `409 PROGRAM_CONTEXT_INVALID`.
+
+### `PUT /api/v1/me/program-context`
+
+Accepts strict `{ programSlug, expectedRevision }`; expectedRevision is a positive integer or
+explicit null. Learner identity is derived from authentication. The profile is locked, access
+is rechecked server-side and the active revision is checked before mutation. Activating the
+same valid active program is a no-op; switching to an existing authorized enrollment increases
+its revision above both the old active revision and target revision, preventing old-token reuse.
+Successful responses use the GET shape. The selected program is persisted before UI navigation.
+
+Errors: `409 ONBOARDING_REQUIRED`, `409 PROGRAM_CONTEXT_INVALID`, `409 PROGRAM_CONTEXT_STALE`,
+`404 PROGRAM_NOT_FOUND` for missing/disabled targets, and `422 PROGRAM_UNAVAILABLE` for unfinished
+programs. Unknown body fields, missing revisions and malformed values return 400.
+Intermediate is the only selectable target in Phase 2.
+
+`GET /me/progress` now returns active-program counts and enrollment level; PENDING learners get
+zero counters and null level. Program-scoped mastery/progression require completed onboarding.
+Assessment and confirmation reject cross-program requests with `409 PROGRAM_CONTEXT_MISMATCH`,
+including replay. Ordinary historical session reads/resume remain bound to the owned session.

@@ -1,6 +1,10 @@
 import {
   learningProgramCatalogSchema,
+  activateProgramSchema,
+  programContextSchema,
+  type ActivateProgramInput,
   type LearningProgramCatalogDto,
+  type ProgramContextDto,
 } from '@worklingo/contracts';
 import { z } from 'zod';
 
@@ -22,11 +26,25 @@ export class LearningProgramClient {
   }
 
   async getCatalog(): Promise<LearningProgramCatalogDto> {
+    return learningProgramCatalogSchema.parse(await (await this.request('/learning-programs', 'GET')).json());
+  }
+
+  async getContext(): Promise<ProgramContextDto> {
+    return programContextSchema.parse(await (await this.request('/me/program-context', 'GET')).json());
+  }
+
+  async activateProgram(input: ActivateProgramInput): Promise<ProgramContextDto> {
+    const body = activateProgramSchema.parse(input);
+    return programContextSchema.parse(await (await this.request('/me/program-context', 'PUT', body)).json());
+  }
+
+  private async request(path: string, method: 'GET' | 'PUT', body?: ActivateProgramInput): Promise<Response> {
     let response: Response;
     try {
-      response = await fetch(`${this.baseUrl}/learning-programs`, {
+      response = await fetch(`${this.baseUrl}${path}`, {
         credentials: 'include',
-        method: 'GET',
+        method,
+        ...(body ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
       });
     } catch {
       throw new ApiError({
@@ -49,7 +67,7 @@ export class LearningProgramClient {
       });
     }
 
-    return learningProgramCatalogSchema.parse(await response.json());
+    return response;
   }
 }
 

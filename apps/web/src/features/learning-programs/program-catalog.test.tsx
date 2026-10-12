@@ -1,12 +1,19 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { LearningProgramCatalogDto } from '@worklingo/contracts';
+import type { LearningProgramCatalogDto, ProgramContextDto } from '@worklingo/contracts';
 import { ApiError } from '../../lib/api/api-client';
 import { learningProgramClient } from '../../lib/api/learning-program-client';
 import { ProgramCatalog } from './program-catalog';
+
+const { push } = vi.hoisted(() => ({ push: vi.fn() }));
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
+const context: ProgramContextDto = {
+  activeProgram: { id: '10000000-0000-4000-8000-000000000002', slug: 'intermediate', name: 'Intermediate' },
+  enrollment: { id: '20000000-0000-4000-8000-000000000001', revision: 1, currentLevel: { id: '20000000-0000-4000-8000-000000000002', code: 'FOUNDATION_1', name: 'Foundation' } },
+};
 
 const catalog: LearningProgramCatalogDto = {
   programs: [
@@ -66,7 +73,11 @@ const catalog: LearningProgramCatalogDto = {
 };
 
 describe('ProgramCatalog', () => {
-  beforeEach(() => vi.restoreAllMocks());
+  beforeEach(() => {
+    vi.restoreAllMocks();
+    push.mockReset();
+    vi.spyOn(learningProgramClient, 'getContext').mockResolvedValue(context);
+  });
   afterEach(cleanup);
 
   it('keeps a usable heading while loading', () => {
@@ -90,10 +101,8 @@ describe('ProgramCatalog', () => {
       'TOEIC',
       'IELTS',
     ]);
-    expect(screen.getByRole('link', { name: 'Open Intermediate program' })).toHaveAttribute(
-      'href',
-      '/dashboard',
-    );
+    expect(screen.getByRole('button', { name: 'Open Intermediate program' })).toBeEnabled();
+    expect(screen.getByText(/Active program:/)).toHaveTextContent('Intermediate');
 
     for (const name of ['Beginner', 'TOEIC', 'IELTS']) {
       const action = screen.getByRole('button', { name: `${name} program unavailable` });
@@ -138,6 +147,51 @@ describe('ProgramCatalog', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Unable to load learning programs');
     expect(screen.getByRole('heading', { name: 'Choose your learning program' })).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
-    expect(await screen.findByRole('link', { name: 'Open Intermediate program' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Open Intermediate program' })).toBeInTheDocument();
+  });
+
+  it('persists activation before navigation and prevents repeated submission while pending', async () => {
+    vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue(catalog);
+    let complete!: (value: ProgramContextDto) => void;
+    const activation = vi.spyOn(learningProgramClient, 'activateProgram').mockReturnValue(new Promise((resolve) => { complete = resolve; }));
+    render(<ProgramCatalog />);
+    const button = await screen.findByRole('button', { name: 'Open Intermediate program' });
+    fireEvent.click(button);
+    expect(button).toBeDisabled();
+    fireEvent.click(button);
+    expect(push).not.toHaveBeenCalled();
+    expect(activation).toHaveBeenCalledTimes(1);
+    await act(async () => complete(context));
+    expect(push).toHaveBeenCalledWith('/dashboard');
+    expect(activation).toHaveBeenCalledWith({ programSlug: 'intermediate', expectedRevision: 1 });
+  });
+
+  it('keeps cards available for explicit retry after an activation error', async () => {
+    vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue(catalog);
+    vi.spyOn(learningProgramClient, 'activateProgram').mockRejectedValueOnce(new ApiError({ code: 'NETWORK_ERROR', status: 0, message: 'Connection lost' })).mockResolvedValueOnce(context);
+    render(<ProgramCatalog />);
+    const button = await screen.findByRole('button', { name: 'Open Intermediate program' });
+    fireEvent.click(button);
+    expect(await screen.findByRole('alert')).toHaveTextContent('Connection lost');
+    expect(push).not.toHaveBeenCalled();
+    await waitFor(() => expect(button).toBeEnabled());
+    fireEvent.click(button);
+    await waitFor(() => expect(push).toHaveBeenCalledWith('/dashboard'));
+  });
+
+  it('refreshes stale context and requires a new click with the fresh revision', async () => {
+    vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue(catalog);
+    const fresh = { ...context, enrollment: { ...context.enrollment!, revision: 2 } };
+    vi.mocked(learningProgramClient.getContext).mockResolvedValueOnce(context).mockResolvedValueOnce(fresh);
+    const activation = vi.spyOn(learningProgramClient, 'activateProgram').mockRejectedValueOnce(new ApiError({ code: 'PROGRAM_CONTEXT_STALE', status: 409, message: 'Stale' })).mockResolvedValueOnce(fresh);
+    render(<ProgramCatalog />);
+    const button = await screen.findByRole('button', { name: 'Open Intermediate program' });
+    fireEvent.click(button);
+    expect(await screen.findByRole('alert')).toHaveTextContent('Learning context changed');
+    expect(push).not.toHaveBeenCalled();
+    await waitFor(() => expect(button).toBeEnabled());
+    fireEvent.click(button);
+    await waitFor(() => expect(push).toHaveBeenCalledWith('/dashboard'));
+    expect(activation).toHaveBeenLastCalledWith({ programSlug: 'intermediate', expectedRevision: 2 });
   });
 });

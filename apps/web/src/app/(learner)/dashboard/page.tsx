@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import type { EngagementSummaryDto } from '@worklingo/contracts';
+import type { EngagementSummaryDto, ProgramContextDto } from '@worklingo/contracts';
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
 import {
   apiClient,
@@ -11,10 +11,12 @@ import {
   type SessionAvailabilityDto,
 } from '../../../lib/api/api-client';
 import { engagementClient } from '../../../lib/api/engagement-client';
+import { learningProgramClient } from '../../../lib/api/learning-program-client';
 
 export default function DashboardPage() {
   const router = useRouter();
   const [progress, setProgress] = useState<LearnerProgressDto | null>(null);
+  const [programContext, setProgramContext] = useState<ProgramContextDto | null>(null);
   const [availability, setAvailability] = useState<SessionAvailabilityDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,12 +29,14 @@ export default function DashboardPage() {
     try {
       setIsLoading(true);
       setError(null);
-      const [progressData, availabilityData] = await Promise.all([
+      const [progressData, availabilityData, contextData] = await Promise.all([
         apiClient.getProgress(),
         apiClient.getSessionAvailability(),
+        learningProgramClient.getContext(),
       ]);
       setProgress(progressData);
       setAvailability(availabilityData);
+      setProgramContext(contextData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load progress data');
     } finally {
@@ -77,6 +81,7 @@ export default function DashboardPage() {
   return (
     <DashboardView
       progress={progress}
+      activeProgramName={programContext?.activeProgram?.name}
       availableDurations={availability?.availableDurations ?? []}
       nextMissionTitle={availability?.mission.title ?? 'Introduce yourself to a new colleague'}
       onStartSession={handleStartSession}

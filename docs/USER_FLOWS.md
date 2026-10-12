@@ -155,10 +155,18 @@ Gọi AI Gateway
 Hoàn tất onboarding
 -> mở Learning Programs
 -> xem Beginner, Intermediate, TOEIC và IELTS theo thứ tự cố định
-├── Intermediate khả dụng -> tiếp tục tới dashboard
+├── Intermediate khả dụng -> xác nhận/lưu active program -> tiếp tục tới dashboard
 └── Chương trình chưa mở -> xem trạng thái, không điều hướng, không tạo session
 ```
 
 Phase 1 hiển thị sớm toàn bộ định hướng sản phẩm nhưng chỉ cho phép server mở chương trình đã sẵn
 sàng. Admin có thể phân loại curriculum mới vào IELTS hoặc chương trình khác ngay từ lúc tạo Path;
 việc đó không tự động mở chương trình cho Learner.
+
+Phase 2 hiển thị active program trên catalog và dashboard. Hai cách hoàn tất onboarding đều tạo
+enrollment Intermediate tại level đã chọn. Khi mở chương trình, UI chờ API lưu thành công rồi
+mới điều hướng; nút bị khóa trong lúc gửi. Nếu revision đã đổi, UI tải context mới và người học
+bấm lại sau khi xem trạng thái. Lỗi kết nối giữ nguyên các card để retry.
+
+Tải lại trang giữ nguyên chương trình/level. Phiên học cũ tiếp tục dùng checkpoint và phiên bản
+bài đã lưu; phiên thuộc chương trình khác không được dùng để tăng level của active program.
