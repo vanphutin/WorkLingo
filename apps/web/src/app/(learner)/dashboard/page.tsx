@@ -3,12 +3,14 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
+import type { EngagementSummaryDto } from '@worklingo/contracts';
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
 import {
   apiClient,
   type LearnerProgressDto,
   type SessionAvailabilityDto,
 } from '../../../lib/api/api-client';
+import { engagementClient } from '../../../lib/api/engagement-client';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -17,7 +19,11 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadData = async () => {
+  const [engagement, setEngagement] = useState<EngagementSummaryDto | null>(null);
+  const [engagementLoading, setEngagementLoading] = useState(true);
+  const [engagementError, setEngagementError] = useState<string | null>(null);
+
+  const loadProgressAndAvailability = async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -34,9 +40,34 @@ export default function DashboardPage() {
     }
   };
 
+  const loadEngagement = async () => {
+    try {
+      setEngagementLoading(true);
+      setEngagementError(null);
+      const data = await engagementClient.getSummary();
+      setEngagement(data);
+    } catch (err) {
+      setEngagementError(err instanceof Error ? err.message : 'Failed to load engagement data');
+    } finally {
+      setEngagementLoading(false);
+    }
+  };
+
+  const loadData = async () => {
+    await Promise.allSettled([
+      loadProgressAndAvailability(),
+      loadEngagement(),
+    ]);
+  };
+
   useEffect(() => {
     void loadData();
   }, []);
+
+  const handleUpdateTarget = async (targetDays: number) => {
+    const updated = await engagementClient.updateWeeklyTarget(targetDays);
+    setEngagement(updated);
+  };
 
   const handleStartSession = async (durationMinutes: number, clientSessionId: string) => {
     const session = await apiClient.createSession(clientSessionId, durationMinutes);
@@ -51,7 +82,12 @@ export default function DashboardPage() {
       onStartSession={handleStartSession}
       isLoading={isLoading}
       error={error}
-      onRetry={loadData}
+      onRetry={loadProgressAndAvailability}
+      engagement={engagement}
+      engagementLoading={engagementLoading}
+      engagementError={engagementError}
+      onRetryEngagement={loadEngagement}
+      onUpdateTarget={handleUpdateTarget}
     />
   );
 }

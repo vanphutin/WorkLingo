@@ -390,6 +390,33 @@ describe('backup and restore rehearsal', () => {
     });
     sourcePlacementAttemptId = placementAttempt.id;
 
+    const studyDay = await sourcePrisma.learnerStudyDay.create({
+      data: {
+        completedSessionCount: 1,
+        dateKey: '2026-10-12',
+        firstCompletedAt: new Date(),
+        lastCompletedAt: new Date(),
+        learnerId: learner.id,
+        timezone: 'Asia/Ho_Chi_Minh',
+      },
+    });
+    await sourcePrisma.learnerStudySession.create({
+      data: {
+        learnerId: learner.id,
+        sessionId: session.id,
+        studyDayId: studyDay.id,
+      },
+    });
+    await sourcePrisma.learnerEngagementWeek.create({
+      data: {
+        learnerId: learner.id,
+        status: 'ACTIVE',
+        targetDays: 3,
+        timezone: 'Asia/Ho_Chi_Minh',
+        weekStartKey: '2026-10-12',
+      },
+    });
+
     // 2. Prepare test file in source data dir
     const testFileContent = 'Hello WorkLingo storage test asset';
     const testFilePath = path.join(sourceDataDir, 'sample-audio.txt');
@@ -532,6 +559,42 @@ describe('backup and restore rehearsal', () => {
     })).resolves.toMatchObject({
       generationKey: expect.stringMatching(/^backup-/),
       variantKey: 'azure-speech:en-US-JennyNeural:default',
+    });
+    await expect(targetPrisma.learnerStudyDay.findUniqueOrThrow({
+      where: {
+        learnerId_dateKey: {
+          dateKey: '2026-10-12',
+          learnerId: sourceLearnerId,
+        },
+      },
+    })).resolves.toMatchObject({
+      completedSessionCount: 1,
+      dateKey: '2026-10-12',
+      timezone: 'Asia/Ho_Chi_Minh',
+    });
+    await expect(targetPrisma.learnerEngagementWeek.findUniqueOrThrow({
+      where: {
+        learnerId_weekStartKey: {
+          learnerId: sourceLearnerId,
+          weekStartKey: '2026-10-12',
+        },
+      },
+    })).resolves.toMatchObject({
+      status: 'ACTIVE',
+      targetDays: 3,
+      weekStartKey: '2026-10-12',
+    });
+    await expect(targetPrisma.learningPath.findFirstOrThrow({
+      where: { slug: 'english-for-work' },
+    })).resolves.toMatchObject({
+      revision: 1,
+      status: 'PUBLISHED',
+    });
+    await expect(targetPrisma.level.findFirstOrThrow({
+      where: { code: 'FOUNDATION_1' },
+    })).resolves.toMatchObject({
+      revision: 1,
+      status: 'PUBLISHED',
     });
   }, 30_000);
 });

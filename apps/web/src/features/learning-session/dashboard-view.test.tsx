@@ -209,4 +209,41 @@ describe('DashboardView', () => {
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent(/not contain enough activities/i);
   });
+
+  it('keeps dashboard and start button usable when engagement loading fails', async () => {
+    const onStartSession = vi.fn().mockResolvedValue(undefined);
+    const onRetryEngagement = vi.fn();
+
+    render(
+      <DashboardView
+        progress={mockProgress}
+        availableDurations={[45, 60]}
+        nextMissionTitle="Introduce yourself to a new colleague"
+        onStartSession={onStartSession}
+        engagement={null}
+        engagementLoading={false}
+        engagementError="Failed to load engagement data"
+        onRetryEngagement={onRetryEngagement}
+      />,
+    );
+
+    // Engagement error is surfaced
+    expect(screen.getByText('Unable to load engagement progress')).toBeInTheDocument();
+    expect(screen.getByText('Failed to load engagement data')).toBeInTheDocument();
+
+    // Session launcher and Start button remain enabled and usable
+    const startButton = screen.getByRole('button', { name: 'Start 60-Minute Session' });
+    expect(startButton).toBeInTheDocument();
+    expect(startButton).not.toBeDisabled();
+
+    fireEvent.click(startButton);
+    await waitFor(() => {
+      expect(onStartSession).toHaveBeenCalledWith(60, expect.any(String));
+    });
+
+    // Retry button reloads engagement
+    const retryButton = screen.getByRole('button', { name: /retry/i });
+    fireEvent.click(retryButton);
+    expect(onRetryEngagement).toHaveBeenCalledTimes(1);
+  });
 });

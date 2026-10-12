@@ -31,6 +31,7 @@ import { LoginDto } from './dto/login.dto';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { RegisterDto } from './dto/register.dto';
 import { Public } from './public.decorator';
+import { RateLimit } from '../common/rate-limit/rate-limit.decorator.js';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -38,6 +39,12 @@ export class AuthController {
   constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
   @Public()
+  @RateLimit({
+    keyType: 'IP_AND_ROUTE',
+    limit: 30,
+    scope: 'auth:register',
+    windowSeconds: 60,
+  })
   @Post('register')
   @ApiOperation({ summary: 'Register a learner account' })
   @ApiCreatedResponse({ type: AuthUserDto })
@@ -52,6 +59,12 @@ export class AuthController {
   }
 
   @Public()
+  @RateLimit({
+    keyType: 'IP_AND_ROUTE',
+    limit: 30,
+    scope: 'auth:login',
+    windowSeconds: 60,
+  })
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Log in with email and password' })

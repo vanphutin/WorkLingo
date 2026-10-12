@@ -259,4 +259,42 @@ describe('Teacher AI shared contracts', () => {
       }).revision,
     ).toBe(2);
   });
+
+  it('uses default rate limit settings and accepts explicit key and proxy hops', () => {
+    const configDefault = parseAppConfig(validEnvironment);
+    expect(configDefault.rateLimit.hashKey).toBe('local-development-rate-limit-hash-key');
+    expect(configDefault.rateLimit.trustProxyHops).toBe(0);
+
+    const configCustom = parseAppConfig({
+      ...validEnvironment,
+      RATE_LIMIT_HASH_KEY: 'custom-secret-key-at-least-16-chars',
+      TRUST_PROXY_HOPS: '2',
+    });
+    expect(configCustom.rateLimit.hashKey).toBe('custom-secret-key-at-least-16-chars');
+    expect(configCustom.rateLimit.trustProxyHops).toBe(2);
+  });
+
+  it('requires at least 16 character RATE_LIMIT_HASH_KEY in production mode', () => {
+    expect(() =>
+      parseAppConfig({
+        ...validEnvironment,
+        NODE_ENV: 'production',
+      }),
+    ).toThrow('RATE_LIMIT_HASH_KEY');
+
+    expect(() =>
+      parseAppConfig({
+        ...validEnvironment,
+        NODE_ENV: 'production',
+        RATE_LIMIT_HASH_KEY: 'short-key',
+      }),
+    ).toThrow('RATE_LIMIT_HASH_KEY');
+
+    const prodConfig = parseAppConfig({
+      ...validEnvironment,
+      NODE_ENV: 'production',
+      RATE_LIMIT_HASH_KEY: 'secure-production-hash-key-123456',
+    });
+    expect(prodConfig.rateLimit.hashKey).toBe('secure-production-hash-key-123456');
+  });
 });

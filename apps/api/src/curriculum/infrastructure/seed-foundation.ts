@@ -21,7 +21,9 @@ export async function seedFoundationCurriculum(
       where: { slug: fixture.path.slug }, update: {}, create: { ...fixture.path, status: 'PUBLISHED' },
     });
     const level = await tx.level.upsert({
-      where: { code: fixture.level.code }, update: {}, create: { ...fixture.level, pathId: path.id, order: 0 },
+      where: { code: fixture.level.code },
+      update: { status: 'PUBLISHED' },
+      create: { ...fixture.level, pathId: path.id, order: 0, status: 'PUBLISHED' },
     });
     if (level.pathId !== path.id) {
       throw new ConflictException('Foundation level belongs to another learning path');

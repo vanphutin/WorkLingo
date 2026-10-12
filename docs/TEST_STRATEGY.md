@@ -215,6 +215,36 @@ AI live tests không chạy ở mọi commit để tránh chi phí và không �
 Fake provider chỉ kiểm chứng wiring/retry. `workplace-placement-v1` và quality của recommendation vẫn
 **human calibration pending**; không dùng E2E xanh để tuyên bố độ chính xác ngôn ngữ thực tế.
 
+### Trạng thái triển khai — Increment 5A2 (Weekly Engagement & Progress Evidence)
+
+- **Domain/Policy Unit Tests:** `engagement-week.spec.ts` (timezone keys, Monday bounds, streak calculation, target updates, invalid timezone error), `evidence-of-progress.spec.ts` (two 28-day windows, minimum 2 evaluated samples threshold, placement purpose exclusion, four-skill delta). Mutation checks đã kiểm chứng độ nhạy của ngưỡng mẫu và offset ngày.
+- **Application/Integration Tests:** `study-day-projector.service.spec.ts`, `engagement.service.spec.ts`, `engagement-projection.integration.spec.ts` (idempotent duplicate session completion projection, distinct-day projection, weekly reconciliation, rollback isolation), `engagement-api.integration.spec.ts` (GET summary, PATCH weekly-target immediate vs deferred updates, 2–5 boundary validation, learner isolation, backup-restore schema integrity).
+- **Web Feature Tests:** `engagement-panel.test.tsx` (5 tests), `dashboard-view.test.tsx` (13 tests: independent retryable engagement loading, dashboard usability when engagement fails, start button resilience, target change).
+- **Desktop/Mobile E2E:** `engagement-progress.spec.ts` trên Desktop Chrome và Pixel 5 (onboarding -> initial mission/consistency empty states -> immediate target update before study -> ordinary 60-min session completion across 4 activities -> exactly-once study day projection -> deferred target update notice after study -> touch target >= 44px, 16px mobile select, no horizontal overflow).
+
+### Trạng thái triển khai — Increment 5B (Admin Curriculum Operations & Audit Browser)
+
+- **Domain/Policy Unit Tests:** `curriculum-mutation-policy.spec.ts` (15 tests: playability, 4-skill coverage, archive blockers, revision checks), `curriculum-reorder-policy.spec.ts` (6 tests: order continuity, level & mission reordering), `audit-metadata-policy.spec.ts` (9 tests: email scrub, privacy masking, actor display name).
+- **Application/Integration Tests:** `admin-curriculum-command.service.spec.ts` (7 tests), `admin-curriculum-commands.integration.spec.ts` (5 tests), `admin-curriculum-query.integration.spec.ts` (2 tests), `admin-audit-api.integration.spec.ts` (2 tests), `admin-curriculum-schema.integration.spec.ts` (2 tests).
+- **Web Feature Tests:** `admin-curriculum-client.test.ts` (4 tests), `admin-audit-client.test.ts` (2 tests), `curriculum-workspace.test.tsx` (4 tests: tree rendering, path creation, conflict handling without crash, accessible reorder), `audit-workspace.test.tsx` (4 tests: privacy safety, filtering, cursor pagination, retryable error handling).
+- **Desktop/Mobile E2E:** `admin-curriculum-audit.spec.ts` (login as content admin -> create path, level, mission -> 44px min touch targets -> privacy-safe audit browser navigation -> filter by action -> zero horizontal overflow).
+
+### Increment 5C–5D qualification coverage
+
+- Correlation/safe-error/log tests use forbidden fixtures for credentials, bearer tokens, email,
+  address/connection data, transcript and raw response fields.
+- Rate-limit integration proves atomic limits, scope isolation, bounded retry and untrusted proxy
+  behavior with PostgreSQL persistence.
+- Operations and Analytics contract/unit/integration/E2E tests cover Admin authorization, scrubbed
+  payloads, bounded pages/date ranges, aggregate-only responses and desktop/mobile navigation.
+- `pnpm qualify:performance` verifies deterministic volume generation and the 500 KB-class parser
+  budget; browser qualification guards interaction-blocking navigation.
+- `pnpm qualify:security` runs abuse/redaction/rate-limit suites and a tracked-file secret scan.
+- `pnpm qualify:recovery` rehearses containment, manifest checksums and restore into isolated empty
+  schema/data targets.
+- Qualification Playwright covers keyboard/reflow/reduced-motion and a registration → onboarding →
+  dashboard journey. Automated checks do not replace human language/content calibration.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:

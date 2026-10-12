@@ -8,9 +8,15 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import type { AppConfig } from './common/config/app-config.schema';
 import { configureContentSourceBodyParser } from './common/http/content-source-body-parser';
+import { SafeLoggerService } from './common/logging/safe-logger.service';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
+
+  const logger = app.get(SafeLoggerService);
+  app.useLogger(logger);
 
   configureContentSourceBodyParser(app);
   app.setGlobalPrefix('api/v1');

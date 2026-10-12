@@ -83,18 +83,6 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
     },
     {
-      name: 'admin-desktop',
-      testMatch: /admin-content-authoring\.spec\.ts/u,
-      dependencies: ['foundation-desktop', 'foundation-mobile'],
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'admin-mobile',
-      testMatch: /admin-content-authoring\.spec\.ts/u,
-      dependencies: ['admin-desktop'],
-      use: { ...devices['Pixel 5'] },
-    },
-    {
       name: 'teacher-ai-desktop',
       testMatch: /teacher-ai-learning\.spec\.ts/u,
       use: { ...devices['Desktop Chrome'] },
@@ -102,6 +90,40 @@ export default defineConfig({
     {
       name: 'teacher-ai-mobile',
       testMatch: /teacher-ai-learning\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'engagement-desktop',
+      testMatch: /engagement-progress\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'engagement-mobile',
+      testMatch: /engagement-progress\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'admin-desktop',
+      testMatch: /admin-(?:content-authoring|curriculum-audit|observability)\.spec\.ts/u,
+      dependencies: ['foundation-desktop', 'foundation-mobile', 'teacher-ai-mobile', 'engagement-mobile'],
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'admin-mobile',
+      testMatch: /admin-(?:content-authoring|curriculum-audit|observability)\.spec\.ts/u,
+      dependencies: ['admin-desktop'],
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'qualification-desktop',
+      testMatch: /(?:accessibility|performance|pilot-journey)\.qualification\.spec\.ts/u,
+      dependencies: ['admin-mobile'],
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'qualification-mobile',
+      testMatch: /accessibility\.qualification\.spec\.ts/u,
+      dependencies: ['qualification-desktop'],
       use: { ...devices['Pixel 5'] },
     },
   ],

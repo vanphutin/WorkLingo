@@ -46,6 +46,10 @@ export interface AppConfig {
     readonly pollIntervalMs: number;
     readonly workerEnabled: boolean;
   };
+  readonly rateLimit: {
+    readonly hashKey: string;
+    readonly trustProxyHops: number;
+  };
   readonly sessionSecret: string;
   readonly webPort: number;
 }
@@ -74,6 +78,7 @@ const environmentSchema = z.object({
   OPENAI_MODEL: optionalNonBlankString,
   PROVIDER_MAX_ATTEMPTS: z.coerce.number().int().min(1).max(5).default(3),
   PROVIDER_TIMEOUT_MS: z.coerce.number().int().min(1_000).max(120_000).default(30_000),
+  RATE_LIMIT_HASH_KEY: optionalNonBlankString,
   RECORDING_MAX_BYTES: z.coerce.number().int().min(1_024).max(50 * 1024 * 1024).default(10 * 1024 * 1024),
   RECORDING_MAX_DURATION_SECONDS: z.coerce.number().int().min(1).max(600).default(120),
   RECORDING_RETENTION_DAYS: z.coerce.number().int().min(1).max(30).default(7),
@@ -84,6 +89,7 @@ const environmentSchema = z.object({
       (value) => value !== 'replace-with-a-local-development-secret',
       'must not use the documented placeholder',
     ),
+  TRUST_PROXY_HOPS: z.coerce.number().int().min(0).max(10).default(0),
   WEB_PORT: z.coerce.number().int().min(1).max(65_535).default(3000),
   WORKLINGO_ADMIN_EMAIL: z.string().email().optional(),
   WORKLINGO_ADMIN_PASSWORD: z.string().min(8).optional(),
@@ -97,6 +103,15 @@ const environmentSchema = z.object({
   WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: z.coerce.number().int().min(0).max(5).default(0),
   WRITING_DRAFT_RETENTION_DAYS: z.coerce.number().int().min(1).max(365).default(30),
 }).superRefine((environment, context) => {
+  if (environment.NODE_ENV === 'production') {
+    if (!environment.RATE_LIMIT_HASH_KEY || environment.RATE_LIMIT_HASH_KEY.length < 16) {
+      context.addIssue({
+        code: 'custom',
+        message: 'is required in production and must be at least 16 characters',
+        path: ['RATE_LIMIT_HASH_KEY'],
+      });
+    }
+  }
   if (environment.WORKLINGO_STT_PROVIDER === 'microsoft' ||
       environment.WORKLINGO_TTS_PROVIDER === 'microsoft' ||
       environment.WORKLINGO_TTS_PROVIDER === 'azure-speech') {
@@ -193,6 +208,12 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
       leaseMs: result.data.JOB_WORKER_LEASE_MS,
       pollIntervalMs: result.data.JOB_WORKER_POLL_INTERVAL_MS,
       workerEnabled: result.data.JOB_WORKER_ENABLED === 'true',
+    },
+    rateLimit: {
+      hashKey:
+        result.data.RATE_LIMIT_HASH_KEY ??
+        'local-development-rate-limit-hash-key',
+      trustProxyHops: result.data.TRUST_PROXY_HOPS,
     },
     sessionSecret: result.data.SESSION_SECRET,
     webPort: result.data.WEB_PORT,

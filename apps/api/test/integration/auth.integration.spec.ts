@@ -101,10 +101,12 @@ describe('authentication', () => {
 
     const unknown = await request(app.getHttpServer())
       .post('/api/v1/auth/login')
+      .set('x-correlation-id', 'test-auth-corr-id')
       .send({ email: 'unknown@example.com', password: 'wrong-password-value' })
       .expect(401);
     const wrongPassword = await request(app.getHttpServer())
       .post('/api/v1/auth/login')
+      .set('x-correlation-id', 'test-auth-corr-id')
       .send({ email: 'an@example.com', password: 'wrong-password-value' })
       .expect(401);
 

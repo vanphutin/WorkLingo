@@ -61,6 +61,7 @@ export async function createLearningSessionTestContext(prefix: string): Promise<
       // Restrict-linked audit/authoring rows must be removed before users.
       // Row deletes preserve system audio, unlike TRUNCATE User CASCADE, which
       // truncates the entire AudioArtifact table through ContentImport.
+      await database.rateLimitBucket.deleteMany();
       await database.auditLog.deleteMany();
       await database.mutationReceipt.deleteMany();
       await database.job.deleteMany();

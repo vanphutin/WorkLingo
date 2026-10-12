@@ -6,6 +6,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import type { LearnerProfile, Prisma } from '@prisma/client';
@@ -17,6 +18,7 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import {
   findPlayableLevels,
@@ -29,7 +31,10 @@ const SELF_PLACEMENT_OPERATION = 'onboarding:self-placement';
 
 @Injectable()
 export class OnboardingService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly database: PrismaService,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
+  ) {}
 
   async getState(learnerId: string): Promise<OnboardingStateDto> {
     const profile = await this.database.learnerProfile.findUnique({
@@ -72,7 +77,7 @@ export class OnboardingService {
     });
     if (replay) return this.replayOrThrow(replay.requestHash, requestHash, replay.responseBody);
 
-    return this.database.$transaction(async (transaction) => {
+    const response = await this.database.$transaction(async (transaction) => {
       await transaction.$queryRaw`
         SELECT "userId"
         FROM "LearnerProfile"
@@ -154,6 +159,15 @@ export class OnboardingService {
       });
       return response;
     }, { timeout: 15_000 });
+    await this.pilotMetrics?.recordBestEffort({
+      dimensions: {
+        levelCode: selectedLevelCode,
+        outcome: 'self_placement',
+      },
+      eventType: 'ONBOARDING_CONFIRMED',
+      sourceKey: `learner:${learnerId}:onboarding:self-placement`,
+    });
+    return response;
   }
 
   buildState(

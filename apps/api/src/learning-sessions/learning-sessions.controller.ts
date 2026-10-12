@@ -32,6 +32,8 @@ import { SubmitAttemptDto } from './dto/submit-attempt.dto.js';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { SaveActivityDraftDto } from './dto/save-activity-draft.dto.js';
 
+import { RateLimit } from '../common/rate-limit/rate-limit.decorator.js';
+
 @ApiTags('learning sessions')
 @Controller()
 export class LearningSessionsController {
@@ -84,6 +86,12 @@ export class LearningSessionsController {
     sendAudioStream(response, audio, request.headers.range);
   }
 
+  @RateLimit({
+    keyType: 'USER_AND_OPERATION',
+    limit: 30,
+    scope: 'learning-sessions:create',
+    windowSeconds: 60,
+  })
   @Post('learning-sessions')
   @ApiOperation({ summary: 'Create an idempotent 60-minute learning session' })
   @ApiCreatedResponse({ type: LearningSessionResponseDto })
@@ -143,6 +151,12 @@ export class LearningSessionsController {
     return this.sessions.resumeSession(request.authUser.id, id);
   }
 
+  @RateLimit({
+    keyType: 'USER_AND_OPERATION',
+    limit: 60,
+    scope: 'learning-sessions:submit',
+    windowSeconds: 60,
+  })
   @Post('activities/:activityId/attempts')
   @ApiOperation({ summary: 'Persist and evaluate an idempotent activity attempt' })
   @ApiCreatedResponse({ type: ActivityAttemptResponseDto })

@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import type { ActivityType, LearningBlockType, Prisma } from '@prisma/client';
@@ -19,11 +20,15 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 
 @Injectable()
 export class ContentPublisherService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly database: PrismaService,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
+  ) {}
 
   async publish(
     importId: string,
@@ -206,7 +211,7 @@ export class ContentPublisherService {
     }
 
     // 4. Execute publication transaction with PostgreSQL advisory lock
-    return this.database.$transaction(async (tx) => {
+    const published = await this.database.$transaction(async (tx) => {
       // Advisory transaction lock scoped to lesson slug
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${normalizedDraft.slug}))`;
 
@@ -613,6 +618,13 @@ export class ContentPublisherService {
 
       return responseBody;
     });
+    await this.pilotMetrics?.recordBestEffort({
+      dimensions: { outcome: 'completed' },
+      eventType: 'CONTENT_PUBLISHED',
+      occurredAt: new Date(published.publishedAt),
+      sourceKey: `lesson-version:${published.lessonVersionId}:published`,
+    });
+    return published;
   }
 
   async archiveLessonVersion(

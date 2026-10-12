@@ -48,17 +48,43 @@ The session keeps the `LessonVersion` selected at creation even if an Admin publ
 Refreshing `/onboarding` reconciles the attempt so a completed session cannot incorrectly return to
 the resume step.
 
+## Demo C — Weekly engagement, target adjustment, and progress evidence (Increment 5A2)
+
+1. Navigate to `/dashboard` after completing onboarding.
+2. Verify the **Weekly Consistency & Progress** panel displays:
+   - This Week: `0 of 3 learning days` (or chosen target).
+   - Consistency: `0-week consistency` (neutral language, never guilt or punitive phrasing).
+   - Weekly learning target selector with choices 2, 3, 4, 5.
+   - Evidence of Progress: 4 skills (Reading, Listening, Speaking, Writing) each displaying `Insufficient evidence` with `0 recent samples`. Placement attempts are strictly excluded.
+3. Change weekly learning target before completing any study days in the current week:
+   - Target changes immediately (e.g. from 3 to 4) and displays `0 of 4 learning days`.
+4. Complete an ordinary 60-minute session.
+5. Return to `/dashboard`:
+   - This Week displays `1 of 4 learning days`.
+   - Evidence of Progress updates to show 1 session and 1 distinct study day.
+6. Change weekly learning target after completing a study day:
+   - Current week target is protected and remains 4 days.
+   - An informative notice appears: `Target will update to 2 days next week`.
+
 ## Automated acceptance
 
 ```powershell
 $env:TEST_DATABASE_URL='postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo'
 pnpm --filter @worklingo/web exec playwright test e2e/onboarding-placement.spec.ts
+pnpm --filter @worklingo/web exec playwright test e2e/engagement-progress.spec.ts
 pnpm verify
 ```
 
 Playwright uses an isolated PostgreSQL schema and temporary local data directory. It covers desktop
 and mobile, keyboard activation, 44px controls, route guards, refresh/resume, deterministic fake
-provider retries, confirmation and placement/mastery isolation.
+provider retries, confirmation, placement/mastery isolation, weekly mission projections, target protection, and evidence windows.
+
+## Weekly semantics, timezones, and evidence policies
+
+- **Timezone & Week Bounds:** Determined deterministically using learner profile timezone (`Asia/Ho_Chi_Minh` default), with Monday-start calendar weeks (`YYYY-MM-DD`).
+- **Target Timing:** Profile target modifications apply immediately if 0 study days have been recorded in the active week. Once study has commenced in the active week, the current week target is locked and changes take effect the following Monday.
+- **Evidence Comparison Windows:** Compares two 28-day windows (recent 28 days vs preceding 28 days). Requires a minimum of 2 evaluated samples per skill; otherwise honest `Insufficient evidence` is displayed.
+- **Placement Exclusion:** Placement sessions and attempts (`purpose = 'PLACEMENT'`) are strictly excluded from ordinary mastery, review scheduling, study days, consistency streaks, and progress evidence.
 
 ## Recovery and limitations
 
@@ -69,3 +95,4 @@ provider retries, confirmation and placement/mastery isolation.
 - Missing placement content: reseed locally or publish a complete `PLACEMENT` mission; the server does
   not fabricate activities.
 - Human calibration and live-provider calibration remain required before pilot or proficiency claims.
+- Non-certification: Progress evidence and consistency streaks represent supportive formative engagement, not certified proficiency claims (CEFR/IELTS/TOEIC). Local clock control is used only in isolated automated tests and never exposed via production endpoints.

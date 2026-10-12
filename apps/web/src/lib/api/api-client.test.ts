@@ -517,13 +517,9 @@ describe('ApiClient', () => {
         new Response(
           JSON.stringify({
             code: 'CONTENT_VALIDATION_FAILED',
+            details: [{ code: 'VAL_MISSING_FIELD', message: 'Title missing' }],
             message: 'Validation failed',
             statusCode: 422,
-            error: {
-              code: 'CONTENT_VALIDATION_FAILED',
-              message: 'Validation failed',
-              details: [{ code: 'VAL_MISSING_FIELD', message: 'Title missing' }],
-            },
           }),
           { status: 422, headers: { 'Content-Type': 'application/json' } },
         ),

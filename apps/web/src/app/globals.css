@@ -1322,3 +1322,257 @@ a:focus-visible {
   .audio-source-option,
   .audio-settings-actions button { transition: none; }
 }
+
+/* ==========================================================================
+   Weekly Engagement & Evidence of Progress (Increment 5A2)
+   ========================================================================== */
+
+.engagement-card {
+  margin-top: 1.5rem;
+  border: 1px solid #d9ddd8;
+  border-radius: 1rem;
+  background: #fffefb;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 0.5rem 1.5rem rgb(23 33 27 / 5%);
+}
+
+.engagement-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.engagement-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid #e5e8e3;
+  border-radius: 0.75rem;
+  background: #fdfdfc;
+  padding: 1.25rem;
+}
+
+.engagement-stat-card .stat-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5a685e;
+}
+
+.engagement-stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #17211b;
+  line-height: 1.2;
+}
+
+.engagement-stat-card .stat-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #5a685e;
+}
+
+.neutral-subtext {
+  margin: 0.25rem 0 0;
+  font-size: 0.825rem;
+  color: #6a786e;
+  line-height: 1.4;
+}
+
+.target-selector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+}
+
+.target-select {
+  min-height: 2.75rem;
+  min-width: 5rem;
+  border: 1px solid #9aa39d;
+  border-radius: 0.55rem;
+  background: white;
+  padding: 0.55rem 0.75rem;
+  color: #17211b;
+  font-size: 1rem; /* 16px prevents mobile safari auto-zoom */
+  cursor: pointer;
+}
+
+.target-select:focus-visible {
+  outline: 3px solid #17643a;
+  outline-offset: 2px;
+}
+
+.effective-target-notice {
+  margin: 0.35rem 0 0;
+  font-size: 0.825rem;
+  color: #17643a;
+  font-weight: 600;
+}
+
+/* Evidence of Progress Section */
+.evidence-progress-section {
+  margin-top: 2rem;
+  border-top: 1px solid #e5e8e3;
+  padding-top: 1.5rem;
+}
+
+.evidence-header {
+  margin-bottom: 1rem;
+}
+
+.evidence-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #17211b;
+}
+
+.evidence-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #5a685e;
+}
+
+.evidence-summary-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.summary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #d9ddd8;
+  border-radius: 2rem;
+  background: #f7f6f2;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.825rem;
+  color: #404c44;
+}
+
+.evidence-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.skill-evidence-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #e5e8e3;
+  border-radius: 0.75rem;
+  background: white;
+  padding: 1rem;
+  min-height: 7.5rem;
+}
+
+.skill-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.skill-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #17211b;
+}
+
+.status-badge {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.status-improving {
+  background: #eaf5ee;
+  color: #17643a;
+  border-color: #b8e2c8;
+}
+
+.status-needs_attention {
+  background: #fff8eb;
+  color: #8c5b00;
+  border-color: #fed7aa;
+}
+
+.status-steady {
+  background: #edf2f7;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+.status-insufficient_evidence {
+  background: #f1f5f9;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+.insufficient-evidence-box,
+.score-delta-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.insufficient-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.score-delta {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #17211b;
+}
+
+.status-improving + .skill-card-score .score-delta {
+  color: #17643a;
+}
+
+.sample-count-detail {
+  font-size: 0.785rem;
+  color: #738077;
+}
+
+.evidence-footer {
+  margin-top: 1.25rem;
+  text-align: right;
+}
+
+.mastery-drilldown-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #17643a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mastery-drilldown-link:hover {
+  color: #0f4427;
+}
+
+@media (max-width: 640px) {
+  .engagement-overview-grid {
+    grid-template-columns: 1fr;
+  }
+  .evidence-skills-grid {
+    grid-template-columns: 1fr;
+  }
+  .evidence-footer {
+    text-align: left;
+  }
+}

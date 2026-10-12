@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Optional,
 } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import {
@@ -22,11 +23,15 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { mapContentImportToDto } from '../infrastructure/content-analysis.mapper.js';
 
 @Injectable()
 export class ContentImportsService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly database: PrismaService,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
+  ) {}
 
   async create(actorId: string, rawSource: string): Promise<ContentImportDto> {
     const sourceHash = createHash('sha256').update(rawSource).digest('hex');
@@ -208,7 +213,7 @@ export class ContentImportsService {
       });
     }
 
-    return {
+    const result = {
       importId: id,
       draftRevision: expectedDraftRevision,
       sourceHash,
@@ -217,6 +222,14 @@ export class ContentImportsService {
       issues: (analysis.issues as unknown) as ContentIssueDto[],
       issuesTruncated: analysis.issuesTruncated,
     };
+    if (analysis.canPublish) {
+      await this.pilotMetrics?.recordBestEffort({
+        dimensions: { outcome: 'passed' },
+        eventType: 'CONTENT_IMPORT_VALIDATED',
+        sourceKey: `content-import:${id}:validated:${sourceHash}`,
+      });
+    }
+    return result;
   }
 
   async getPreview(id: string, _actorId: string): Promise<ContentPreviewDto> {

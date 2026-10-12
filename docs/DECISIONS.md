@@ -201,8 +201,43 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Policy:** `workplace-placement-v1` cần bằng chứng evaluated riêng cho cả bốn kỹ năng và hiện chỉ
   quảng bá candidate Foundation đã publish. Recommendation là heuristic workplace local,
   **human calibration pending**, không tương đương chứng chỉ CEFR/TOEIC/IELTS.
-- **Lý do:** Chứng chỉ/keyword test không đảm bảo năng lực giao tiếp thực tế; learner vẫn cần quyền
-  chọn nhanh, nhưng assessment nội bộ phải bền vững, giải thích được và không làm sai lịch sử học.
+## D-026 — Weekly mission, flexible consistency streak và evidence of progress
+
+- **Trạng thái:** Accepted (Increment 5A2)
+- **Ngày:** 2026-10-11
+- **Quyết định:** Thay thế daily streak trừng phạt bằng weekly consistency streak linh hoạt và Evidence of Progress:
+  1. **Weekly Mission:** Learner đặt mục tiêu 2–5 ngày học/tuần (mặc định 3). Đếm số ngày học riêng biệt trong tuần theo lịch địa phương (Monday-start).
+  2. **Active-Week Target Protection:** Đổi mục tiêu khi chưa học ngày nào trong tuần hiện tại áp dụng ngay lập tức; khi đã học >= 1 ngày, mục tiêu tuần hiện tại được bảo vệ và thay đổi hoãn sang thứ Hai tuần sau (`effectiveTargetNextWeek`).
+  3. **Neutral Streak Model:** Đếm số tuần liên tiếp đạt mục tiêu. Sử dụng ngôn ngữ trung tính, hoàn toàn không dùng từ ngữ gây áp lực hoặc tội lỗi ("lost", "failed", "broken streak").
+  4. **Exactly-Once Session Projection:** Mọi hoàn thành learning session ghi nhận vào bảng chiếu `LearnerStudyDay` và `LearnerStudySession` với unique constraint chống double-counting trong transaction duy nhất.
+  5. **Four-Skill Evidence Windows:** So sánh hai cửa sổ 28 ngày (28 ngày gần nhất so với 28 ngày trước đó). Chỉ công bố delta phần trăm khi có tối thiểu 2 mẫu đã được đánh giá cho mỗi kỹ năng; nếu không, hiển thị trung thực `Insufficient evidence`.
+  6. **Placement Exclusion:** Phiên placement assessment (`purpose = 'PLACEMENT'`) bị loại trừ hoàn toàn khỏi ngày học, streak, và bằng chứng tiến bộ.
+- **Lý do:** Người đi làm học tiếng Anh công sở cần sự kiên trì bền vững thay vì áp lực streak hằng ngày dẫn đến bỏ cuộc khi bận rộn; dữ liệu tiến bộ phải trung thực, không giả lập điểm số khi thiếu bằng chứng.
+
+## D-027 — Admin curriculum hierarchy operations, playability rules, and privacy-safe audit browser
+
+- **Trạng thái:** Accepted (Increment 5B)
+- **Ngày:** 2026-10-12
+- **Quyết định:**
+  1. **Optimistic Revision Concurrency:** Mọi mutation cấp Path, Level, Mission và MissionLesson yêu cầu `expectedRevision` khớp chính xác với DB; mismatch trả `409 Conflict` (`CURRICULUM_REVISION_CONFLICT`).
+  2. **Playability Enforcements:** Chỉ cho phép publish một Mission khi các lesson đính kèm đã `PUBLISHED`, có audio artifact đầy đủ, bao phủ 4 kỹ năng và có khả năng lập kế hoạch cho phiên học 60 phút. Level và Path chỉ được publish khi chứa con playable.
+  3. **Strict Archive Blockers:** Chặn archive Path và Level nếu có học viên đang được ghi danh/đặt tại đó; chặn archive Mission nếu có learning session đang dở dang.
+  4. **Idempotency Receipt Hash:** Nhận diện trùng lặp qua SHA-256 payload hash kết hợp `idempotencyKey`, trả lại cached response mà không tái thực thi mutation.
+  5. **Privacy-Safe Audit Browser:** Tuyệt đối không trả về địa chỉ email của actor trong audit response; chỉ hiển thị `actorDisplayName`. Metadata được lọc bỏ toàn bộ secret, token, và nội dung học viên.
+
+## D-028 — Privacy-safe observability and technical qualification boundary
+
+- **Trạng thái:** Accepted (Increment 5C–5D)
+- **Ngày:** 2026-10-12
+- **Quyết định:** Correlation/logging/rate limits chạy local bằng PostgreSQL và HMAC; raw IP,
+  credentials, learner text/audio/transcript và provider body không được persist/log. Operations là
+  Admin GET-only; Pilot Analytics chỉ nhận closed server-owned dimensions, aggregate rows và
+  idempotency receipts với range tối đa 180 ngày.
+- **Release boundary:** Repository automation chỉ được gán `TECHNICALLY_QUALIFIED`. Trạng thái
+  `CONTROLLED_PILOT_APPROVED` bắt buộc named human approvals cho Teacher AI/placement calibration,
+  Foundation content và pilot operations.
+- **Lý do:** Local-first vẫn cần điều tra lỗi và bằng chứng sản phẩm mà không xây kho dữ liệu người
+  học hoặc biến test xanh thành tuyên bố chất lượng ngôn ngữ.
 
 ## Các quyết định còn mở
 

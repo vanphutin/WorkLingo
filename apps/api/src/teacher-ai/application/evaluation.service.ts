@@ -13,6 +13,7 @@ import { Prisma } from '@prisma/client';
 import { evaluationDtoSchema, type EvaluationDto } from '@worklingo/contracts';
 
 import { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
 import { JobsService } from '../../jobs/application/jobs.service.js';
@@ -33,6 +34,16 @@ export interface EvaluationOutcome {
   readonly score: number;
 }
 
+interface MetricAttempt {
+  readonly id: string;
+  readonly session: {
+    readonly mission: {
+      readonly level: { readonly code: string };
+      readonly slug: string;
+    };
+  };
+}
+
 const hashEvaluationInput = (input: Readonly<Record<string, unknown>>): string =>
   createHash('sha256').update(JSON.stringify(input)).digest('hex');
 
@@ -44,6 +55,7 @@ export class EvaluationService {
     @Inject(MasteryService) private readonly mastery: MasteryService,
     @Inject(EVALUATION_SERVICE_OPTIONS) private readonly options: EvaluationServiceOptions,
     @Optional() @Inject(JobsService) private readonly jobs?: JobsService,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
   async getForLearner(learnerId: string, attemptId: string): Promise<EvaluationDto> {
@@ -179,6 +191,7 @@ export class EvaluationService {
       if (existing.inputHash !== inputHash) {
         throw new ConflictException('Completed evaluation input no longer matches the attempt');
       }
+      await this.recordTerminalMetric(attempt, activity.activityType, existing.completedAt);
       return { id: existing.id, score: existing.score };
     }
 
@@ -200,7 +213,7 @@ export class EvaluationService {
         : undefined,
     );
     try {
-      return await this.database.$transaction(async (transaction) => {
+      const outcome = await this.database.$transaction(async (transaction) => {
         const duplicate = await transaction.evaluationResult.findUnique({
           where: { attemptId_rubricVersion: { attemptId, rubricVersion: rubric.version } },
         });
@@ -262,15 +275,38 @@ export class EvaluationService {
         }
         return { id: result.id, score: result.score };
       });
+      await this.recordTerminalMetric(attempt, activity.activityType, new Date());
+      return outcome;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         const winner = await this.database.evaluationResult.findUnique({
           where: { attemptId_rubricVersion: { attemptId, rubricVersion: rubric.version } },
         });
-        if (winner && winner.inputHash === inputHash) return { id: winner.id, score: winner.score };
+        if (winner && winner.inputHash === inputHash) {
+          await this.recordTerminalMetric(attempt, activity.activityType, winner.completedAt);
+          return { id: winner.id, score: winner.score };
+        }
       }
       throw error;
     }
+  }
+
+  private async recordTerminalMetric(
+    attempt: MetricAttempt,
+    skill: 'speaking' | 'writing',
+    occurredAt: Date,
+  ): Promise<void> {
+    await this.pilotMetrics?.recordBestEffort({
+      dimensions: {
+        levelCode: attempt.session.mission.level.code,
+        missionCode: attempt.session.mission.slug,
+        outcome: 'completed',
+        skill,
+      },
+      eventType: 'EVALUATION_TERMINAL',
+      occurredAt,
+      sourceKey: `attempt:${attempt.id}:evaluation-terminal`,
+    });
   }
 
   private notRetryable(): ConflictException {

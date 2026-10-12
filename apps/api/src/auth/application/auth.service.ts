@@ -4,6 +4,7 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  Optional,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -18,6 +19,7 @@ import type {
 import type { AppConfig } from '../../common/config/app-config.schema';
 import { PrismaService } from '../../common/database/prisma.service';
 import { UsersService } from '../../users/application/users.service';
+import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { SESSION_DURATION_MS } from '../auth.constants';
 import { PasswordHasher } from '../infrastructure/password-hasher';
 
@@ -35,6 +37,7 @@ export class AuthService {
     @Inject(PasswordHasher) private readonly passwordHasher: PasswordHasher,
     @Inject(UsersService) private readonly users: UsersService,
     @Inject(ConfigService) config: ConfigService<AppConfig, true>,
+    @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {
     this.sessionSecret = config.get('sessionSecret', { infer: true });
   }
@@ -48,7 +51,14 @@ export class AuthService {
         email: input.email.trim().toLowerCase(),
         passwordHash,
       });
-      return this.createAuthenticatedSession(this.users.toAuthUser(user));
+      const result = await this.createAuthenticatedSession(this.users.toAuthUser(user));
+      await this.pilotMetrics?.recordBestEffort({
+        dimensions: { outcome: 'completed' },
+        eventType: 'REGISTRATION_COMPLETED',
+        occurredAt: user.createdAt,
+        sourceKey: `user:${user.id}:registered`,
+      });
+      return result;
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
