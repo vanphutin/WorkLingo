@@ -148,3 +148,17 @@ Gọi AI Gateway
 - Bản ghi tạm được xóa sau khi chấm theo chính sách cấu hình.
 - Chỉ lưu lâu dài khi người dùng đồng ý dùng cho lịch sử tiến bộ.
 - Người dùng có thể xóa bản ghi đã lưu mà không xóa kết quả học tổng hợp.
+
+## 13. Chọn chương trình học
+
+```text
+Hoàn tất onboarding
+-> mở Learning Programs
+-> xem Beginner, Intermediate, TOEIC và IELTS theo thứ tự cố định
+├── Intermediate khả dụng -> tiếp tục tới dashboard
+└── Chương trình chưa mở -> xem trạng thái, không điều hướng, không tạo session
+```
+
+Phase 1 hiển thị sớm toàn bộ định hướng sản phẩm nhưng chỉ cho phép server mở chương trình đã sẵn
+sàng. Admin có thể phân loại curriculum mới vào IELTS hoặc chương trình khác ngay từ lúc tạo Path;
+việc đó không tự động mở chương trình cho Learner.

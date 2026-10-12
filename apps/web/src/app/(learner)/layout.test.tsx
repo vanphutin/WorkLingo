@@ -108,5 +108,7 @@ describe('LearnerLayout', () => {
     render(<LearnerLayout>Dashboard content</LearnerLayout>);
     expect(await screen.findByRole('link', { name: 'Audio settings' }))
       .toHaveAttribute('href', '/settings/audio');
+    expect(screen.getByRole('link', { name: 'Programs' }))
+      .toHaveAttribute('href', '/programs');
   });
 });

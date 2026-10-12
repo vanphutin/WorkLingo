@@ -89,6 +89,9 @@ export default function LearnerLayout({
           </Link>
 
           <div className="nav-user-meta">
+            <Link href="/programs" className="nav-link">
+              Programs
+            </Link>
             <Link href="/settings/audio" className="nav-link">
               Audio settings
             </Link>

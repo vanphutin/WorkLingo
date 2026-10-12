@@ -454,3 +454,24 @@ Stores immutable audit records of administrative operations with compound cursor
 - `@@index([action, createdAt(sort: Desc)])`
 - `@@index([resourceType, createdAt(sort: Desc)])`
 - `@@index([actorId, createdAt(sort: Desc)])`
+
+## 12. Learning Program Catalog (IELTS Phase 1)
+
+### `LearningProgram`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` (UUID) | Stable canonical identifier |
+| `slug` | `String` unique | `beginner`, `intermediate`, `toeic`, or `ielts` |
+| `name` | `String` | Learner-facing name |
+| `description` | `String` | Program overview |
+| `learningGoal` | `String` | Expected learning outcome |
+| `proficiencyLabel` | `String` | Human-readable entry/proficiency range |
+| `iconKey` | `String` | Closed UI icon token |
+| `availabilityStatus` | `ProgramAvailabilityStatus` | `AVAILABLE`, `BETA`, `COMING_SOON`, `IN_DEVELOPMENT`, or `DISABLED` |
+| `displayOrder` | `Int` unique | Deterministic catalog ordering |
+
+`LearningPath.programId` is a required foreign key with `onDelete: Restrict` and an index combined
+with path status. The database default points to the canonical Intermediate UUID so historical
+inserts and migrations remain compatible. New application commands normalize an omitted program to
+the same ID, while rejecting unknown or disabled programs before creating a path.

@@ -10,3 +10,4 @@ export * from './admin-curriculum.contracts.ts';
 export * from './admin-audit.contracts.ts';
 export * from './admin-operations.contracts.ts';
 export * from './admin-analytics.contracts.ts';
+export * from './learning-program.contracts.ts';

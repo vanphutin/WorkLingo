@@ -7,6 +7,19 @@ import { ApiError } from '../../lib/api/api-client';
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
 import { CurriculumWorkspace } from './curriculum-workspace';
 
+const intermediateProgram = {
+  availabilityStatus: 'AVAILABLE',
+  id: '10000000-0000-4000-8000-000000000002',
+  name: 'Intermediate',
+  slug: 'intermediate',
+} as const;
+const ieltsProgram = {
+  availabilityStatus: 'IN_DEVELOPMENT',
+  id: '10000000-0000-4000-8000-000000000004',
+  name: 'IELTS',
+  slug: 'ielts',
+} as const;
+
 const mockTree: AdminCurriculumTreeDto = {
   paths: [
     {
@@ -70,10 +83,27 @@ const mockTree: AdminCurriculumTreeDto = {
         },
       ],
       name: 'General English',
+      program: intermediateProgram,
       revision: 3,
       slug: 'general-english',
       status: 'PUBLISHED',
     },
+  ],
+  programs: [
+    {
+      availabilityStatus: 'COMING_SOON',
+      id: '10000000-0000-4000-8000-000000000001',
+      name: 'Beginner',
+      slug: 'beginner',
+    },
+    intermediateProgram,
+    {
+      availabilityStatus: 'COMING_SOON',
+      id: '10000000-0000-4000-8000-000000000003',
+      name: 'TOEIC',
+      slug: 'toeic',
+    },
+    ieltsProgram,
   ],
 };
 
@@ -91,6 +121,7 @@ describe('CurriculumWorkspace', () => {
     render(<CurriculumWorkspace />);
 
     expect(await screen.findByText('General English')).toBeInTheDocument();
+    expect(screen.getByText(/Program: Intermediate/)).toBeInTheDocument();
     expect(screen.getByText(/Beginner 1/)).toBeInTheDocument();
     expect(screen.getByText('Greetings Mission')).toBeInTheDocument();
     expect(screen.getByText(/Hello World/)).toBeInTheDocument();
@@ -108,6 +139,7 @@ describe('CurriculumWorkspace', () => {
       id: '99999999-9999-4999-8999-999999999999',
       levels: [],
       name: 'IELTS Prep',
+      program: ieltsProgram,
       revision: 1,
       slug: 'ielts-prep',
       status: 'DRAFT',
@@ -118,8 +150,13 @@ describe('CurriculumWorkspace', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /New Path/i }));
 
+    const programSelect = screen.getByLabelText(/Learning Program/i);
+    expect(programSelect).toHaveValue(intermediateProgram.id);
+    expect(screen.getByRole('option', { name: /IELTS.*IN_DEVELOPMENT/i })).toBeInTheDocument();
+
     fireEvent.change(screen.getByLabelText(/Path Name/i), { target: { value: 'IELTS Prep' } });
     fireEvent.change(screen.getByLabelText(/Slug/i), { target: { value: 'ielts-prep' } });
+    fireEvent.change(programSelect, { target: { value: ieltsProgram.id } });
 
     fireEvent.click(screen.getByRole('button', { name: /Create Path/i }));
 
@@ -127,10 +164,29 @@ describe('CurriculumWorkspace', () => {
       expect(createSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           name: 'IELTS Prep',
+          programId: ieltsProgram.id,
           slug: 'ielts-prep',
         }),
       );
     });
+  });
+
+  it('preserves the selected program after a recoverable create error', async () => {
+    vi.spyOn(adminCurriculumClient, 'createPath').mockRejectedValue(
+      new ApiError({ code: 'API_ERROR', message: 'Please try again', status: 503 }),
+    );
+
+    render(<CurriculumWorkspace />);
+    await screen.findByText('General English');
+    fireEvent.click(screen.getByRole('button', { name: /New Path/i }));
+    fireEvent.change(screen.getByLabelText(/Path Name/i), { target: { value: 'IELTS Retry' } });
+    fireEvent.change(screen.getByLabelText(/Slug/i), { target: { value: 'ielts-retry' } });
+    const programSelect = screen.getByLabelText(/Learning Program/i);
+    fireEvent.change(programSelect, { target: { value: ieltsProgram.id } });
+    fireEvent.click(screen.getByRole('button', { name: /Create Path/i }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Please try again');
+    expect(programSelect).toHaveValue(ieltsProgram.id);
   });
 
   it('displays conflict error without crashing when publish fails with 409', async () => {
@@ -142,6 +198,7 @@ describe('CurriculumWorkspace', () => {
           status: 'DRAFT',
         },
       ],
+      programs: mockTree.programs,
     };
     vi.spyOn(adminCurriculumClient, 'getTree').mockResolvedValue(draftTree);
 

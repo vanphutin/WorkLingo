@@ -2,6 +2,7 @@ import { ConflictException, UnprocessableEntityException } from '@nestjs/common'
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AdminCurriculumCommandService } from './admin-curriculum-command.service.js';
 import type { PrismaService } from '../../common/database/prisma.service.js';
+import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
 
 interface MockPrisma {
   $queryRaw: ReturnType<typeof vi.fn>;
@@ -11,6 +12,9 @@ interface MockPrisma {
     create: ReturnType<typeof vi.fn>;
     findUnique: ReturnType<typeof vi.fn>;
     update: ReturnType<typeof vi.fn>;
+  };
+  learningProgram: {
+    findUnique: ReturnType<typeof vi.fn>;
   };
   level: {
     count: ReturnType<typeof vi.fn>;
@@ -43,6 +47,18 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
   const actorId = '11111111-1111-4111-8111-111111111111';
   const idempotencyKey = '22222222-2222-4222-8222-222222222222';
   const pathId = '33333333-3333-4333-8333-333333333333';
+  const ieltsProgram = {
+    availabilityStatus: 'IN_DEVELOPMENT',
+    id: '10000000-0000-4000-8000-000000000004',
+    name: 'IELTS',
+    slug: 'ielts',
+  } as const;
+  const intermediateProgram = {
+    availabilityStatus: 'AVAILABLE',
+    id: INTERMEDIATE_PROGRAM_ID,
+    name: 'Intermediate',
+    slug: 'intermediate',
+  } as const;
 
   beforeEach(() => {
     mockPrisma = {
@@ -55,6 +71,9 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
         create: vi.fn(),
         findUnique: vi.fn(),
         update: vi.fn(),
+      },
+      learningProgram: {
+        findUnique: vi.fn().mockResolvedValue(intermediateProgram),
       },
       level: {
         count: vi.fn(),
@@ -90,6 +109,7 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
         id: pathId,
         levels: [],
         name: 'Business English',
+        program: intermediateProgram,
         revision: 1,
         slug: 'business-english',
         status: 'DRAFT',
@@ -104,6 +124,12 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
       expect(result.id).toBe(pathId);
       expect(result.revision).toBe(1);
       expect(result.status).toBe('DRAFT');
+      expect(result.program).toEqual(intermediateProgram);
+      expect(mockPrisma.learningPath.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ programId: INTERMEDIATE_PROGRAM_ID }),
+        }),
+      );
       expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
@@ -111,6 +137,10 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
             actorId,
             resourceId: pathId,
             resourceType: 'LearningPath',
+            metadata: {
+              programId: INTERMEDIATE_PROGRAM_ID,
+              programSlug: 'intermediate',
+            },
           }),
         }),
       );
@@ -123,6 +153,7 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
         id: pathId,
         levels: [],
         name: 'Business English',
+        program: intermediateProgram,
         revision: 1,
         slug: 'business-english',
         status: 'DRAFT',
@@ -132,6 +163,7 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
         idempotencyKey,
         requestHash: service.computeRequestHash({
           name: 'Business English',
+          programId: INTERMEDIATE_PROGRAM_ID,
           slug: 'business-english',
         }),
         responseBody: cached,
@@ -144,6 +176,55 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
       });
 
       expect(result).toEqual(cached);
+      expect(mockPrisma.learningPath.create).not.toHaveBeenCalled();
+    });
+
+    it('assigns a path to an explicitly selected program', async () => {
+      mockPrisma.learningProgram.findUnique.mockResolvedValue(ieltsProgram);
+      mockPrisma.learningPath.findUnique.mockResolvedValue(null);
+      mockPrisma.learningPath.create.mockResolvedValue({
+        id: pathId,
+        name: 'IELTS Preparation',
+        program: ieltsProgram,
+        revision: 1,
+        slug: 'ielts-preparation',
+        status: 'DRAFT',
+      });
+
+      const result = await service.createPath(actorId, {
+        idempotencyKey,
+        name: 'IELTS Preparation',
+        programId: ieltsProgram.id,
+        slug: 'ielts-preparation',
+      });
+
+      expect(result.program).toEqual(ieltsProgram);
+      expect(mockPrisma.learningPath.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ programId: ieltsProgram.id }),
+        }),
+      );
+    });
+
+    it.each([
+      ['missing', null],
+      ['disabled', { ...ieltsProgram, availabilityStatus: 'DISABLED' }],
+    ])('rejects a %s learning program', async (_label, program) => {
+      mockPrisma.learningProgram.findUnique.mockResolvedValue(program);
+
+      await expect(
+        service.createPath(actorId, {
+          idempotencyKey,
+          name: 'Invalid Program Path',
+          programId: ieltsProgram.id,
+          slug: 'invalid-program-path',
+        }),
+      ).rejects.toMatchObject({
+        response: expect.objectContaining({
+          code: 'INVALID_CURRICULUM_RELATIONSHIP',
+          statusCode: 422,
+        }),
+      });
       expect(mockPrisma.learningPath.create).not.toHaveBeenCalled();
     });
 

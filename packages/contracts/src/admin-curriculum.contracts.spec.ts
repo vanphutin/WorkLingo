@@ -16,6 +16,7 @@ describe('Admin Curriculum Contracts', () => {
     const valid = {
       idempotencyKey: 'a1b2c3d4-e5f6-4a1b-8c2d-3e4f5a6b7c8d',
       name: 'General Business English',
+      programId: '10000000-0000-4000-8000-000000000004',
       slug: 'general-business-english',
     };
     expect(createLearningPathInputSchema.parse(valid)).toEqual(valid);
@@ -31,6 +32,13 @@ describe('Admin Curriculum Contracts', () => {
       createLearningPathInputSchema.parse({
         ...valid,
         slug: 'INVALID SLUG!',
+      }),
+    ).toThrow();
+
+    expect(() =>
+      createLearningPathInputSchema.parse({
+        ...valid,
+        programId: 'not-a-uuid',
       }),
     ).toThrow();
   });
@@ -226,9 +234,23 @@ describe('Admin Curriculum Contracts', () => {
             },
           ],
           name: 'Business English',
+          program: {
+            availabilityStatus: 'AVAILABLE',
+            id: '10000000-0000-4000-8000-000000000002',
+            name: 'Intermediate',
+            slug: 'intermediate',
+          },
           revision: 1,
           slug: 'business-english',
           status: 'PUBLISHED',
+        },
+      ],
+      programs: [
+        {
+          availabilityStatus: 'AVAILABLE',
+          id: '10000000-0000-4000-8000-000000000002',
+          name: 'Intermediate',
+          slug: 'intermediate',
         },
       ],
     };

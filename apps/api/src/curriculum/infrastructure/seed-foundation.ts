@@ -5,6 +5,7 @@ import type { Prisma, PrismaClient } from '@prisma/client';
 import { foundationMissionFixture } from '@worklingo/test-fixtures';
 
 import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
+import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
 import { lessonSnapshotSchema } from '../domain/curriculum.types.js';
 import { createLocalSeedStorage, createSeededAudioArtifact } from './seed-audio.js';
 
@@ -18,7 +19,13 @@ export async function seedFoundationCurriculum(
     // Serialize concurrent seed runs before checking stable keys.
     await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext('worklingo:foundation-seed'))`;
     const path = await tx.learningPath.upsert({
-      where: { slug: fixture.path.slug }, update: {}, create: { ...fixture.path, status: 'PUBLISHED' },
+      where: { slug: fixture.path.slug },
+      update: {},
+      create: {
+        ...fixture.path,
+        programId: INTERMEDIATE_PROGRAM_ID,
+        status: 'PUBLISHED',
+      },
     });
     const level = await tx.level.upsert({
       where: { code: fixture.level.code },

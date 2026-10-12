@@ -21,6 +21,15 @@ const mockProgress: LearnerProgressDto = {
 afterEach(cleanup);
 
 describe('DashboardView', () => {
+  it('links learners to the program catalog', () => {
+    render(
+      <DashboardView progress={mockProgress} onStartSession={vi.fn()} />,
+    );
+
+    expect(screen.getByRole('link', { name: 'Explore learning programs' }))
+      .toHaveAttribute('href', '/programs');
+  });
+
   it('disables Start when no durations are available', () => {
     render(<DashboardView progress={mockProgress} availableDurations={[]} onStartSession={vi.fn()} />);
     expect(screen.getByRole('button', { name: /start/i })).toBeDisabled();
