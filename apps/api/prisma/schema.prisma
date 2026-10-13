@@ -61,6 +61,7 @@ model User {
   programEnrollments         LearnerProgramEnrollment[]
   createdOrientationMedia    OrientationMediaAsset[]    @relation("OrientationMediaCreatedBy")
   orientationProgress        OrientationProgress[]
+  ieltsBridgeProgress        IeltsBridgeProgress[]
 }
 
 model LearnerProfile {
@@ -875,6 +876,64 @@ model OrientationProgress {
   @@unique([learnerId, orientationVersionId])
   @@index([orientationVersionId])
   @@index([learnerId, completedAt])
+}
+
+model IeltsBridgeModule {
+  id                        String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String                     @unique
+  status                    ContentStatus              @default(DRAFT)
+  draftRevision             Int                        @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                    @unique @db.Uuid
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  currentPublishedVersion   IeltsBridgeModuleVersion?  @relation("IeltsBridgeCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, moduleId], onDelete: Restrict)
+  versions                  IeltsBridgeModuleVersion[] @relation("IeltsBridgeVersions")
+}
+
+model IeltsBridgeModuleVersion {
+  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  moduleId        String                @db.Uuid
+  version         Int
+  title           String
+  skill           String
+  questionType    String
+  required        Boolean               @default(false)
+  sourceHash      String
+  content         Json
+  status          ContentStatus         @default(PUBLISHED)
+  publishedAt     DateTime              @default(now())
+  archivedAt      DateTime?
+  module          IeltsBridgeModule     @relation("IeltsBridgeVersions", fields: [moduleId], references: [id], onDelete: Restrict)
+  currentFor      IeltsBridgeModule[]   @relation("IeltsBridgeCurrentVersion")
+  learnerProgress IeltsBridgeProgress[]
+
+  @@unique([moduleId, version])
+  @@unique([id, moduleId])
+  @@index([moduleId, status])
+  @@index([skill, questionType, status])
+}
+
+model IeltsBridgeProgress {
+  id                  String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId           String                   @db.Uuid
+  moduleId            String                   @db.Uuid
+  moduleVersionId     String                   @db.Uuid
+  currentStageIndex   Int                      @default(0)
+  revision            Int                      @default(1)
+  stageResults        Json                     @default("[]")
+  timedStageStartedAt DateTime?
+  timedStageDeadlineAt DateTime?
+  completedAt         DateTime?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+  learner             User                     @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  moduleVersion       IeltsBridgeModuleVersion @relation(fields: [moduleVersionId, moduleId], references: [id, moduleId], onDelete: Restrict)
+
+  @@unique([learnerId, moduleId])
+  @@index([moduleVersionId, moduleId])
+  @@index([learnerId, completedAt])
+  @@index([moduleId, completedAt])
 }
 
 enum JobStatus {

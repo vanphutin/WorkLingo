@@ -183,4 +183,3 @@ export const ieltsBridgeProgressUpdateSchema = z.object({
   expectedRevision: z.number().int().positive(), stageIndex: z.number().int().min(0).max(9),
   startTimer: z.boolean().optional(), answer: z.unknown().optional(), completeStage: z.boolean().optional(),
 }).strict();
-
