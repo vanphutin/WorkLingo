@@ -106,3 +106,41 @@ export const publishIeltsIntegratedResultSchema = z.object({
   profileId: z.uuid(), profileVersionId: z.uuid(), version: z.number().int().positive(), publishedAt: z.iso.datetime(),
 }).strict();
 export type PublishIeltsIntegratedResult = z.infer<typeof publishIeltsIntegratedResultSchema>;
+
+export const ieltsIntegratedAvailabilitySchema = z.object({
+  eligible: z.boolean(), lockedReason: z.enum(['BRIDGE_REQUIRED', 'PROFILES_NOT_PUBLISHED']).nullable(),
+  durations: z.array(ieltsIntegratedSessionDurationSchema), difficulties: z.array(ieltsIntegratedDifficultySchema),
+  activeSessionId: z.uuid().nullable(),
+}).strict();
+export type IeltsIntegratedAvailabilityDto = z.infer<typeof ieltsIntegratedAvailabilitySchema>;
+export const startIeltsIntegratedSessionSchema = z.object({
+  clientSessionId: z.uuid(), durationMinutes: ieltsIntegratedSessionDurationSchema, difficulty: ieltsIntegratedDifficultySchema,
+}).strict();
+export type StartIeltsIntegratedSessionInput = z.infer<typeof startIeltsIntegratedSessionSchema>;
+
+const learnerIntegratedTaskSchema = z.union([
+  z.object({ kind: z.literal('instruction') }).strict(),
+  z.object({ kind: z.literal('single_choice'), prompt: z.string(), options: z.array(z.string()).min(2) }).strict(),
+  z.object({ kind: z.literal('multi_choice'), prompt: z.string(), options: z.array(z.string()).min(2) }).strict(),
+  z.object({ kind: z.literal('short_text'), prompt: z.string(), minWords: z.number().int().positive() }).strict(),
+  z.object({ kind: z.literal('spoken_response'), prompt: z.string(), preparationSeconds: z.number().int().nonnegative(), responseSeconds: z.number().int().positive() }).strict(),
+]);
+export const ieltsIntegratedLearnerBlockSchema = z.object({
+  order: z.number().int().min(1).max(4), skill: learningSkillSchema,
+  targetMinutes: z.number().int().positive().max(150), moduleVersionId: z.uuid(),
+  questionType: ieltsBridgeQuestionTypeSchema, mode: ieltsIntegratedBlockModeSchema,
+  title: z.string(), instruction: z.string(), task: learnerIntegratedTaskSchema,
+  completedAt: z.iso.datetime().nullable(), correct: z.boolean().nullable(), timedOut: z.boolean().nullable(),
+}).strict().readonly();
+export const ieltsIntegratedSessionSchema = z.object({
+  id: z.uuid(), plan: ieltsIntegratedPlanSchema, currentBlockIndex: z.number().int().min(0).max(3),
+  revision: z.number().int().positive(), startedAt: z.iso.datetime(), completedAt: z.iso.datetime().nullable(),
+  blocks: z.array(ieltsIntegratedLearnerBlockSchema).length(4),
+}).strict();
+export type IeltsIntegratedSessionDto = z.infer<typeof ieltsIntegratedSessionSchema>;
+export const updateIeltsIntegratedProgressSchema = z.object({
+  expectedRevision: z.number().int().positive(), blockIndex: z.number().int().min(0).max(3), answer: z.unknown().optional(),
+}).strict();
+export type UpdateIeltsIntegratedProgressInput = z.infer<typeof updateIeltsIntegratedProgressSchema>;
+export const ieltsIntegratedProgressResultSchema = z.object({ session: ieltsIntegratedSessionSchema, feedbackMessage: z.string().nullable(), nextStep: z.string().nullable() }).strict();
+export type IeltsIntegratedProgressResult = z.infer<typeof ieltsIntegratedProgressResultSchema>;
