@@ -4,6 +4,7 @@ import React from 'react';
 
 import type { LearnerActivityDto } from '../../../lib/api/api-client';
 import { LanguageFocusPanel } from './language-focus-panel';
+import { VocabularyFocusPanel } from './vocabulary-focus-panel';
 
 export interface ReadingResponseValue {
   answerIndexes: number[];
@@ -78,6 +79,7 @@ export function ReadingActivity({
       )}
 
       <LanguageFocusPanel activity={activity} />
+      <VocabularyFocusPanel activity={activity} />
 
       <div className="questions-list">
         {questions.map((question, qIdx) => {

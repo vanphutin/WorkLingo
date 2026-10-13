@@ -26,6 +26,7 @@ export function WritingActivity({
   const requiredPhrases = Array.isArray(activity.payload.requiredPhrases)
     ? activity.payload.requiredPhrases.filter((phrase): phrase is string => typeof phrase === 'string')
     : [];
+  const requiresVocabularyRecall = activity.foundationCategory === 'vocabulary';
   const wordCount = value.trim() ? value.trim().split(/\s+/u).length : 0;
   const revisionRef = useRef(0);
   const editVersionRef = useRef(0);
@@ -111,7 +112,12 @@ export function WritingActivity({
       <section className="writing-rubric-box" aria-label="Writing guidelines">
           <h3 className="section-subtitle">Mục tiêu bài viết</h3>
           <p className="rubric-text">Viết ít nhất {minWords} từ và dùng ngôn ngữ phù hợp với công việc.</p>
-          {requiredPhrases.length > 0 ? (
+          {requiredPhrases.length > 0 && requiresVocabularyRecall ? (
+            <p className="rubric-text">
+              Recall {requiredPhrases.length} target {requiredPhrases.length === 1 ? 'phrase' : 'phrases'} from the lesson without copying.
+            </p>
+          ) : null}
+          {requiredPhrases.length > 0 && !requiresVocabularyRecall ? (
             <ul className="writing-required-phrases">
               {requiredPhrases.map((phrase) => <li key={phrase}>{phrase}</li>)}
             </ul>

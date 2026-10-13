@@ -220,6 +220,10 @@ before recording, respects learner Audio Settings, and uses session-bound publis
 Browser TTS fallback. STT pronunciation metrics continue through the existing Teacher AI and mastery
 pipeline.
 
+The Vocabulary slice now teaches reusable chunks, meanings, and transfer contexts during contextual
+reading. Vocabulary writing requires active recall without exposing `requiredPhrases`; Teacher AI and
+the existing review selector still evaluate those hidden targets and prefer a new workplace context.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

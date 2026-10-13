@@ -46,6 +46,22 @@ describe('WritingActivity', () => {
     vi.useRealTimers();
   });
 
+  it('requires active recall without exposing target phrases in a vocabulary lesson', async () => {
+    vi.mocked(apiClient.getActivityDraft).mockResolvedValue(null);
+    render(
+      <WritingActivity
+        activity={{ ...activity, foundationCategory: 'vocabulary' }}
+        sessionId="00000000-0000-4000-8000-000000000020"
+        value=""
+        onChange={vi.fn()}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Đã lưu bản nháp'));
+    expect(screen.queryByText('on track')).not.toBeInTheDocument();
+    expect(screen.getByText(/recall 1 target phrase/i)).toBeVisible();
+  });
+
   it('restores the latest server draft and its revision', async () => {
     const onChange = vi.fn();
     vi.mocked(apiClient.getActivityDraft).mockResolvedValue({

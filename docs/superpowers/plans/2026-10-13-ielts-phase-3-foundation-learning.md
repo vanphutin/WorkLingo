@@ -21,6 +21,8 @@ shadowing journey after the remaining Foundation categories are present.
 
 Teach Word Bank expressions in context, require retrieval rather than recognition alone, and verify that review selection transfers the same Language Block into a new workplace context.
 
+Status: implemented and covered at component/domain seams.
+
 ## Task 4 — Four-skill Foundation completion
 
 Complete focused reading, listening, speaking, and writing lesson variants, then verify persistence, feedback, mastery isolation, scheduled review, responsive behavior, and accessibility.

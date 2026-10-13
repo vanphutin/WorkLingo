@@ -209,6 +209,34 @@ describe('SessionShell and Activity Renderers', () => {
     expect(within(focus).getByText(/I eager to start/)).toBeVisible();
   });
 
+  it('teaches vocabulary as reusable workplace chunks in context', () => {
+    const vocabularyActivity = {
+      ...mockReadingActivity,
+      foundationCategory: 'vocabulary' as const,
+      languageBlocks: [{
+        slug: 'do-you-need-help',
+        canonicalForm: 'Do you need help?',
+        meaning: 'Bạn có cần giúp đỡ không?',
+        collocations: ['need help', 'ask for help'],
+        transferContexts: ['helping a customer', 'supporting a teammate'],
+      }],
+    } satisfies LearnerActivityDto;
+
+    render(
+      <ActivityRenderer
+        activity={vocabularyActivity}
+        sessionId={createMockSession().id}
+        value={{ answerIndexes: [] }}
+        onChange={vi.fn()}
+      />,
+    );
+
+    const focus = screen.getByRole('region', { name: 'Vocabulary focus' });
+    expect(within(focus).getByText('Do you need help?')).toBeVisible();
+    expect(within(focus).getByText('ask for help')).toBeVisible();
+    expect(within(focus).getByText('helping a customer')).toBeVisible();
+  });
+
   it('restores pending and completed Teacher AI evaluations without selecting comprehension attempts', () => {
     const baseAttempt: ActivityAttemptDto = {
       id: 'reading-attempt',
