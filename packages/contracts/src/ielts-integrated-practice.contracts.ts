@@ -78,3 +78,31 @@ export const INITIAL_IELTS_INTEGRATED_PROFILES = initialProfiles.map((profile) =
     allocations: integratedAllocationOrder.map((skill, index) => ({ skill, targetMinutes: profile.minutes[index] })),
   }),
 );
+
+export const ieltsIntegratedVersionSummarySchema = z.object({
+  id: z.uuid(), version: z.number().int().positive(), status: z.enum(['PUBLISHED', 'ARCHIVED']),
+  publishedAt: z.iso.datetime(), archivedAt: z.iso.datetime().nullable(),
+}).strict();
+export const adminIeltsIntegratedProfileSchema = z.object({
+  id: z.uuid(), durationMinutes: ieltsIntegratedSessionDurationSchema,
+  status: z.enum(['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED']), draftRevision: z.number().int().positive(),
+  draft: ieltsIntegratedProfileContentSchema, currentPublishedVersion: ieltsIntegratedVersionSummarySchema.nullable(),
+  versions: z.array(ieltsIntegratedVersionSummarySchema), updatedAt: z.iso.datetime(),
+}).strict();
+export type AdminIeltsIntegratedProfileDto = z.infer<typeof adminIeltsIntegratedProfileSchema>;
+
+export const ieltsIntegratedValidationResultSchema = z.object({
+  profileId: z.uuid(), draftRevision: z.number().int().positive(), status: z.enum(['DRAFT', 'VALIDATED']),
+  canPublish: z.boolean(), issues: z.array(z.object({ code: z.string(), path: z.string(), message: z.string() }).strict()),
+}).strict();
+export type IeltsIntegratedValidationResult = z.infer<typeof ieltsIntegratedValidationResultSchema>;
+export const saveIeltsIntegratedDraftSchema = z.object({
+  expectedRevision: z.number().int().positive(), idempotencyKey: z.uuid(), content: ieltsIntegratedProfileContentSchema,
+}).strict();
+export type SaveIeltsIntegratedDraftInput = z.infer<typeof saveIeltsIntegratedDraftSchema>;
+export const ieltsIntegratedCommandSchema = z.object({ expectedRevision: z.number().int().positive(), idempotencyKey: z.uuid() }).strict();
+export type IeltsIntegratedCommandInput = z.infer<typeof ieltsIntegratedCommandSchema>;
+export const publishIeltsIntegratedResultSchema = z.object({
+  profileId: z.uuid(), profileVersionId: z.uuid(), version: z.number().int().positive(), publishedAt: z.iso.datetime(),
+}).strict();
+export type PublishIeltsIntegratedResult = z.infer<typeof publishIeltsIntegratedResultSchema>;
