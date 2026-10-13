@@ -4,7 +4,7 @@ import {
   ieltsBridgeModuleContentSchema, ieltsIntegratedAvailabilitySchema, ieltsIntegratedProfileContentSchema,
   ieltsIntegratedProgressResultSchema, ieltsIntegratedSessionSchema, startIeltsIntegratedSessionSchema,
   updateIeltsIntegratedProgressSchema, type IeltsIntegratedAvailabilityDto, type IeltsIntegratedProgressResult,
-  type IeltsIntegratedSessionDto, type LearnerIeltsBridgeTask,
+  type IeltsIntegratedSessionDto, type LearnerIeltsBridgeTask, type LearningSkill, learningSkillSchema,
 } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { planIntegratedSession } from '../domain/integrated-session-planner.js';
@@ -36,7 +36,20 @@ export class IeltsIntegratedLearnerService {
       if (!profile?.currentPublishedVersion || profile.status !== 'PUBLISHED') throw new ConflictException({ code: 'IELTS_INTEGRATED_PROFILE_UNAVAILABLE' });
       const modules = await tx.ieltsBridgeModule.findMany({ where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } }, include: { currentPublishedVersion: true } });
       const candidates = modules.flatMap((module) => module.currentPublishedVersion ? [{ id: module.currentPublishedVersion.id, skill: ieltsBridgeModuleContentSchema.parse(module.currentPublishedVersion.content).skill, questionType: ieltsBridgeModuleContentSchema.parse(module.currentPublishedVersion.content).questionType }] : []);
-      const plan = planIntegratedSession({ profileVersionId: profile.currentPublishedVersion.id, profile: ieltsIntegratedProfileContentSchema.parse(profile.currentPublishedVersion.content), difficulty: parsed.difficulty, versions: candidates, dueReviewSkills: new Set() });
+      const recentBlocks = await tx.ieltsIntegratedSessionBlock.findMany({
+        where: { session: { learnerId }, completedAt: { not: null } },
+        select: { skill: true, questionType: true, result: true }, orderBy: { completedAt: 'desc' }, take: 12,
+      });
+      const dueReviewSkills = new Set<LearningSkill>(recentBlocks.filter((block) => {
+        const result = block.result as { correct?: boolean } | null;
+        return result?.correct === false;
+      }).map((block) => learningSkillSchema.parse(block.skill)));
+      const plan = planIntegratedSession({
+        profileVersionId: profile.currentPublishedVersion.id,
+        profile: ieltsIntegratedProfileContentSchema.parse(profile.currentPublishedVersion.content),
+        difficulty: parsed.difficulty, versions: candidates, dueReviewSkills,
+        recentQuestionTypes: new Set(recentBlocks.map((block) => block.questionType)),
+      });
       const created = await tx.ieltsIntegratedSession.create({ data: { learnerId, clientSessionId: parsed.clientSessionId, profileVersionId: profile.currentPublishedVersion.id, durationMinutes: parsed.durationMinutes, difficulty: parsed.difficulty, planSnapshot: plan as unknown as Prisma.InputJsonValue, blocks: { create: plan.blocks.map((block) => ({ moduleVersionId: block.moduleVersionId, order: block.order, skill: block.skill, targetMinutes: block.targetMinutes, questionType: block.questionType, mode: block.mode })) } }, include: includeSession });
       return this.toDto(created);
     });

@@ -43,7 +43,7 @@ async function setup(options: { bridgeCount?: number; existing?: typeof session 
       create: vi.fn().mockResolvedValue(session), updateMany: vi.fn().mockResolvedValue({ count: 1 }),
       findUniqueOrThrow: vi.fn().mockResolvedValue({ ...session, revision: 2, currentBlockIndex: 1 }),
     },
-    ieltsIntegratedSessionBlock: { update: vi.fn() },
+    ieltsIntegratedSessionBlock: { update: vi.fn(), findMany: vi.fn().mockResolvedValue([]) },
     ieltsIntegratedProfile: { findUnique: vi.fn().mockResolvedValue({ status: 'PUBLISHED', currentPublishedVersion: { id: profileVersionId, content: profileContent } }) },
     ieltsBridgeModule: { findMany: vi.fn().mockResolvedValue(moduleVersions.map((currentPublishedVersion) => ({ status: 'PUBLISHED', currentPublishedVersion }))) },
   };
@@ -70,6 +70,16 @@ describe('IeltsIntegratedLearnerService', () => {
     expect(result.blocks).toHaveLength(4);
     expect(result.blocks[0]?.task).not.toHaveProperty('answerIndex');
     expect(tx.ieltsIntegratedSession.create).toHaveBeenCalledOnce();
+  });
+
+  it('marks skills with recent incorrect evidence for review', async () => {
+    const { service, tx } = await setup();
+    tx.ieltsIntegratedSessionBlock.findMany.mockResolvedValue([{
+      skill: 'reading', questionType: 'reading_matching_headings', result: { correct: false },
+    }]);
+    await service.start(learnerId, { clientSessionId: session.clientSessionId, durationMinutes: 60, difficulty: 'foundation' });
+    const createInput = tx.ieltsIntegratedSession.create.mock.calls[0]?.[0] as { data: { planSnapshot: typeof plan } };
+    expect(createInput.data.planSnapshot.blocks.find((block) => block.skill === 'reading')?.mode).toBe('review');
   });
 
   it('replays an existing client session id without rebuilding its version-bound plan', async () => {
