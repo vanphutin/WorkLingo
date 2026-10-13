@@ -5,6 +5,7 @@ const nullableUuidSchema = z.uuid().nullable();
 
 export const orientationStatusSchema = z.enum(['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED']);
 export const orientationMediaKindSchema = z.enum(['AUDIO', 'IMAGE']);
+export type OrientationMediaKind = z.infer<typeof orientationMediaKindSchema>;
 
 export const orientationQuestionBaseSchema = z.object({
   slug: slugSchema,
@@ -34,6 +35,7 @@ export const orientationSlideSchema = z.object({
   audioAssetId: nullableUuidSchema,
   question: orientationQuestionSchema.nullable(),
 }).strict();
+export type OrientationSlide = z.infer<typeof orientationSlideSchema>;
 
 export const orientationContentSchema = z.object({
   title: z.string().trim().min(1).max(160),

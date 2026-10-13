@@ -103,6 +103,9 @@ export default function AdminLayout({
               <Link href="/admin/curriculum" className="nav-link">
                 Curriculum
               </Link>
+              <Link href="/admin/ielts-orientation" className="nav-link">
+                IELTS orientation
+              </Link>
               <Link href="/admin/audit" className="nav-link">
                 Audit log
               </Link>
