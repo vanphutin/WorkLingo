@@ -8,7 +8,7 @@ export const foundationMissionFixture = {
   lesson: {
     slug: 'first-day-introductions',
     title: 'Your first day at work',
-    version: 1,
+    version: 2,
     foundation: {
       category: 'grammar',
       templateId: 'foundation-grammar',

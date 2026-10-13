@@ -215,6 +215,11 @@ common errors before practice, returns authored feedback after submission, and r
 mastery/review pipeline. Pronunciation, Vocabulary, and the four focused skill slices follow in that
 order. See `docs/superpowers/specs/2026-10-13-ielts-phase-3-foundation-learning-design.md`.
 
+Grammar and Pronunciation slices are now implemented. Shadowing teaches the versioned model and IPA
+before recording, respects learner Audio Settings, and uses session-bound published audio with free
+Browser TTS fallback. STT pronunciation metrics continue through the existing Teacher AI and mastery
+pipeline.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

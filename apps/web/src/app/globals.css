@@ -785,6 +785,20 @@ a:focus-visible {
   color: #7c2d12;
 }
 
+.pronunciation-guide {
+  color: #17643a;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.pronunciation-model {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.pronunciation-model > p {
+  margin: 0;
+}
+
 .questions-list {
   display: grid;
   gap: 1.5rem;

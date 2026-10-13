@@ -12,6 +12,7 @@ import type {
   SubmitRecordingInput,
 } from '../../../lib/api/api-client';
 import { useAudioRecorder } from '../use-audio-recorder';
+import { PronunciationFocusPanel } from './pronunciation-focus-panel';
 
 interface SpeakingActivityProps {
   readonly activity: LearnerActivityDto;
@@ -85,6 +86,8 @@ export function SpeakingActivity({
           {prompt}
         </h2>
       </div>
+
+      <PronunciationFocusPanel activity={activity} sessionId={sessionId} />
 
       {recorder.supported ? (
         <section className="speaking-recorder" aria-label="Speaking recorder" aria-busy={isUploading}>

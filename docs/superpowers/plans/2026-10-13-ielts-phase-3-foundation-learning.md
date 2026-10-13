@@ -14,6 +14,9 @@
 
 Reuse speaking recording, consent, STT pronunciation metrics, immutable lesson audio, Teacher AI feedback, mastery, and review. Add a pronunciation-focused teaching panel and one end-to-end shadowing journey. Do not derive an official IELTS score.
 
+Status: implemented at component/service seams. The final Phase 3 E2E gate will exercise the complete
+shadowing journey after the remaining Foundation categories are present.
+
 ## Task 3 — Vocabulary vertical slice
 
 Teach Word Bank expressions in context, require retrieval rather than recognition alone, and verify that review selection transfers the same Language Block into a new workplace context.

@@ -16,17 +16,58 @@ vi.mock('../use-audio-recorder', async (importOriginal) => {
 
 vi.mock('../../../lib/api/api-client', async (importOriginal) => {
   const actual = await importOriginal<typeof ApiClientModule>();
-  return { ...actual, apiClient: { ...actual.apiClient, submitRecording: vi.fn() } };
+  return {
+    ...actual,
+    apiClient: {
+      ...actual.apiClient,
+      getActivityAudioUrl: vi.fn(() => '/api/v1/shadowing-model.wav'),
+      submitRecording: vi.fn(),
+    },
+  };
 });
+
+vi.mock('../../../lib/api/audio-settings-client', () => ({
+  audioSettingsClient: {
+    getLearnerSettings: vi.fn().mockResolvedValue({
+      browserVoiceId: null,
+      sourceId: 'system-default',
+    }),
+  },
+}));
 
 const activity = {
   id: '00000000-0000-4000-8000-000000000010', slug: 'speak', activityType: 'speaking',
   learningBlock: 'respond', skills: ['speaking'], content: [], languageBlocks: [],
-  payload: { prompt: 'Give a concise update.' },
+  payload: { prompt: 'Give a concise update.', mode: 'shadowing', sampleAnswer: 'My name is An.' },
 } satisfies LearnerActivityDto;
 
 describe('SpeakingActivity', () => {
   afterEach(() => { cleanup(); vi.clearAllMocks(); });
+
+  it('teaches pronunciation and offers the version-bound shadowing model before recording', async () => {
+    const recorder = await import('../use-audio-recorder');
+    vi.mocked(recorder.useAudioRecorder).mockReturnValue({
+      status: 'idle', blob: null, previewUrl: null, error: null, mimeType: 'audio/webm',
+      start: vi.fn(), stop: vi.fn(), discard: vi.fn(), supported: true,
+    });
+    const pronunciationActivity = {
+      ...activity,
+      foundationCategory: 'pronunciation' as const,
+      languageBlocks: [{
+        slug: 'my-name-is', canonicalForm: 'My name is ...', pronunciation: '/maɪ neɪm ɪz/',
+        examples: ['My name is An.'],
+      }],
+    } satisfies LearnerActivityDto;
+
+    render(
+      <SpeakingActivity activity={pronunciationActivity} sessionId="00000000-0000-4000-8000-000000000020"
+        value="" onChange={vi.fn()} onSubmitRecording={vi.fn()} />,
+    );
+
+    expect(screen.getByRole('region', { name: 'Pronunciation focus' })).toHaveTextContent('/maɪ neɪm ɪz/');
+    expect(screen.getByText('My name is An.')).toBeVisible();
+    expect(await screen.findByRole('button', { name: 'Play preview' })).toBeVisible();
+  });
 
   it('requires versioned consent before uploading a preview', async () => {
     const recorder = await import('../use-audio-recorder');

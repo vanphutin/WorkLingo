@@ -170,6 +170,17 @@ export async function seedFoundationCurriculum(
       lessonVersionId: version.id,
       script: listeningBlock.text,
     });
+    const shadowingActivity = snapshot.activities.find(
+      (activity) => activity.activityType === 'speaking' && activity.payload.mode === 'shadowing',
+    );
+    if (!shadowingActivity || shadowingActivity.activityType !== 'speaking') {
+      throw new ConflictException('Foundation curriculum requires a shadowing model');
+    }
+    await createSeededAudioArtifact(tx, storage, {
+      audioScriptSlug: shadowingActivity.slug,
+      lessonVersionId: version.id,
+      script: shadowingActivity.payload.sampleAnswer,
+    });
     const currentPublishedVersion = lesson.currentPublishedVersionId
       ? await tx.lessonVersion.findUnique({ where: { id: lesson.currentPublishedVersionId } })
       : null;

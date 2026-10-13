@@ -47,13 +47,21 @@ export class LearnerAudioService {
       skills: stored.skills,
       slug: stored.slug,
     });
-    if (activity.activityType !== 'listening') {
+    const isListening = activity.activityType === 'listening';
+    const isShadowing = activity.activityType === 'speaking' && activity.payload.mode === 'shadowing';
+    if (!isListening && !isShadowing) {
       throw new NotFoundException('Audio is not available for this activity');
     }
-    const evidenceSlugs = activity.payload.questions
-      .map((question) => question.evidence.split(':', 1)[0])
-      .filter((slug): slug is string => Boolean(slug));
-    const scriptSlugs = [...new Set([...activity.contentReferences, ...evidenceSlugs])];
+    const evidenceSlugs = isListening
+      ? activity.payload.questions
+        .map((question) => question.evidence.split(':', 1)[0])
+        .filter((slug): slug is string => Boolean(slug))
+      : [];
+    const scriptSlugs = [...new Set([
+      ...(isShadowing ? [activity.slug] : []),
+      ...activity.contentReferences,
+      ...evidenceSlugs,
+    ])];
     const reference = await this.database.lessonVersionAudioArtifact.findFirst({
       where: {
         lessonVersionId: session.lessonVersionId,

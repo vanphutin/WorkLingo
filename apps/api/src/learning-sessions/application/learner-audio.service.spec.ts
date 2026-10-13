@@ -53,4 +53,48 @@ describe('LearnerAudioService', () => {
     }));
     expect(storage.read).toHaveBeenCalledWith('generated-audio/version-n');
   });
+
+  it('serves a version-bound model for a shadowing activity', async () => {
+    const activityId = '00000000-0000-4000-8000-000000000011';
+    const lessonVersionId = '00000000-0000-4000-8000-000000000012';
+    const database = {
+      learningSession: { findFirst: vi.fn().mockResolvedValue({
+        lessonVersionId,
+        planSnapshot: {
+          durationMinutes: 45,
+          missionId: '00000000-0000-4000-8000-000000000013',
+          lessonVersionId,
+          blocks: [
+            { type: 'readDecode', order: 1, targetMinutes: 15, activityIds: ['00000000-0000-4000-8000-000000000014'], skills: ['reading'] },
+            { type: 'listenReason', order: 2, targetMinutes: 15, activityIds: ['00000000-0000-4000-8000-000000000015'], skills: ['listening'] },
+            { type: 'respond', order: 3, targetMinutes: 15, activityIds: [activityId, '00000000-0000-4000-8000-000000000016'], skills: ['speaking', 'writing'] },
+          ],
+        },
+      }) },
+      activity: { findFirst: vi.fn().mockResolvedValue({
+        id: activityId, lessonVersionId, slug: 'shadow-introduction', order: 3,
+        activityType: 'speaking', learningBlock: 'respond', skills: ['speaking'],
+        contentReferences: ['dialogue'], languageBlockReferences: ['my-name-is'],
+        payload: {
+          prompt: 'Shadow the model.', mode: 'shadowing', sampleAnswer: 'My name is An.',
+          requiredPhrases: ['my name is'], minWords: 4,
+        },
+      }) },
+      lessonVersionAudioArtifact: { findFirst: vi.fn().mockResolvedValue({
+        audioArtifact: { storageKey: 'generated-audio/shadow-model', byteSize: 5, mimeType: 'audio/wav' },
+      }) },
+    } as unknown as PrismaService;
+    const storage = { read: vi.fn().mockResolvedValue(Buffer.from('model')) } as unknown as ObjectStorage;
+    const service = new LearnerAudioService(database, storage);
+
+    await expect(service.getActivityAudio('learner', 'session', activityId)).resolves.toMatchObject({
+      body: Buffer.from('model'), byteSize: 5, mimeType: 'audio/wav',
+    });
+    expect(database.lessonVersionAudioArtifact.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({
+        lessonVersionId,
+        audioScriptSlug: { in: expect.arrayContaining(['shadow-introduction', 'dialogue']) },
+      }),
+    }));
+  });
 });
