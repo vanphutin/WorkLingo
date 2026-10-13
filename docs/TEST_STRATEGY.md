@@ -265,6 +265,17 @@ Fake provider chỉ kiểm chứng wiring/retry. `workplace-placement-v1` và qu
 - `ielts-bridge.spec.ts` runs on Desktop Chrome and Pixel 5 and proves onboarding-compatible access,
   responsive layout, reload resume, Admin republish, and learner version isolation.
 
+### IELTS Phase 6 Integrated Practice coverage
+
+- Contract and planner tests protect configurable exact allocations, four-skill coverage, independent
+  difficulty, review intent, missing-content failure, and learner-safe task projections.
+- Service/schema tests cover Bridge gating, idempotent starts, owner scope, optimistic revisions,
+  immutable version pins, recent-error review selection, and resumable block timers.
+- React/client tests cover locked/resume states, owner routes, and accessible timer rendering.
+- `ielts-integrated-practice.spec.ts` runs on Desktop Chrome and Pixel 5 and verifies 60-minute exact
+  allocation, independent Advanced difficulty, responsive layout, reload resume, version isolation,
+  and the no-band-score boundary.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:

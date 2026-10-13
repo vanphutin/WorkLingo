@@ -980,6 +980,7 @@ model IeltsIntegratedSessionBlock {
   questionType    String
   mode            String
   result           Json?
+  startedAt        DateTime?
   completedAt      DateTime?
   session          IeltsIntegratedSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   moduleVersion    IeltsBridgeModuleVersion @relation(fields: [moduleVersionId], references: [id], onDelete: Restrict)

@@ -245,6 +245,13 @@ Orientation-gated learner access, ten-stage guided practice, durable timed work,
 and responsive Admin/learner interfaces. Desktop and mobile E2E preserve a learner's pinned version
 while Admin publishes a replacement. See `docs/IELTS_PHASE_5_BRIDGE_REVIEW.md`.
 
+## IELTS Phase 6 — Integrated Practice (completed 2026-10-13)
+
+Phase 6 adds configurable immutable 60/90/120/150-minute profiles, independent difficulty, a
+four-skill planner mixing review and new practice, idempotent/version-bound sessions, server-owned
+evaluation, durable block timers, Admin authoring, responsive learner journeys, and desktop/mobile
+qualification. See `docs/IELTS_PHASE_6_INTEGRATED_PRACTICE_REVIEW.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

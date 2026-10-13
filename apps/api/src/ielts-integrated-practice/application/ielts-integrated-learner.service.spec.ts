@@ -29,7 +29,7 @@ const session = {
   currentBlockIndex: 0, revision: 1, startedAt: now, completedAt: null, profileVersion: {},
   blocks: plan.blocks.map((block, index) => ({
     id: `9${index}000000-0000-4000-8000-000000000000`, ...block,
-    result: null, completedAt: null, moduleVersion: moduleVersions[index]!,
+    result: null, startedAt: index === 0 ? now : null, completedAt: null, moduleVersion: moduleVersions[index]!,
   })),
 };
 
@@ -70,6 +70,8 @@ describe('IeltsIntegratedLearnerService', () => {
     expect(result.blocks).toHaveLength(4);
     expect(result.blocks[0]?.task).not.toHaveProperty('answerIndex');
     expect(tx.ieltsIntegratedSession.create).toHaveBeenCalledOnce();
+    const createInput = tx.ieltsIntegratedSession.create.mock.calls[0]?.[0] as { data: { blocks: { create: Array<{ startedAt: Date | null }> } } };
+    expect(createInput.data.blocks.create.map((block) => block.startedAt instanceof Date)).toEqual([true, false, false, false]);
   });
 
   it('marks skills with recent incorrect evidence for review', async () => {

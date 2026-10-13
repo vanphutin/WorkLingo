@@ -341,3 +341,14 @@ approve language calibration, content quality, cloud deployment or public releas
   Evaluation remains server-side; feedback is returned only after a valid stage submission.
 - Timed practice has an explicit server write for start and persists both start and deadline. Reloads
   cannot reset the clock. Progress uses optimistic revisions and is owner-scoped.
+
+## 22. IELTS Integrated Practice boundary (IELTS Phase 6)
+
+- Integrated Practice composes one published Bridge module version per skill with a published,
+  versioned allocation profile. The resulting plan snapshot is immutable for the learner session.
+- New starts require completion of all required Bridge modules. Resume remains owner-scoped and
+  valid after profile or module republishing.
+- Duration and difficulty are independent session inputs. Recent incorrect evidence marks a skill
+  for review; recent question types are avoided when another published candidate exists.
+- Each block has a server timestamp and target duration, so the accessible web timer survives reload.
+  Answer evaluation remains server-side and Phase 6 never estimates an IELTS band.

@@ -764,3 +764,15 @@ Learner endpoints are `GET /api/v1/me/ielts-bridge/catalog`, `POST /modules/{id}
 Orientation, while an existing pinned session can always resume. Progress updates identify the exact
 stage and revision, optionally start its timer, and explicitly complete it. Learner DTOs contain no
 answer keys or rubrics.
+
+## 20. IELTS Integrated Practice (IELTS Phase 6)
+
+Admin endpoints under `/api/v1/admin/ielts-integrated/profiles` provide list/get, draft replacement,
+validation, and immutable publish. Draft and command requests require optimistic revisions and
+idempotency UUIDs. Validation requires exactly one positive allocation for every skill and an exact
+sum equal to 60, 90, 120, or 150 minutes.
+
+Learner endpoints are `GET /api/v1/me/ielts-integrated/availability`, `POST /sessions`,
+`GET /sessions/{id}`, and `PUT /sessions/{id}/progress`. Start accepts an independent duration and
+difficulty plus client-session UUID. Progress is owner-scoped, block-ordered, revision-checked, and
+returns authored feedback without answer keys, rubrics, or band scores.

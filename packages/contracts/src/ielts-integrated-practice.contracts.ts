@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { ieltsBridgeQuestionTypeSchema } from './ielts-bridge.contracts.js';
-import { learningSkillSchema } from './learning-session.contracts.js';
+import { ieltsBridgeQuestionTypeSchema } from './ielts-bridge.contracts.ts';
+import { learningSkillSchema } from './learning-session.contracts.ts';
 
 export const ieltsIntegratedSessionDurationSchema = z.union([
   z.literal(60), z.literal(90), z.literal(120), z.literal(150),
@@ -130,6 +130,7 @@ export const ieltsIntegratedLearnerBlockSchema = z.object({
   targetMinutes: z.number().int().positive().max(150), moduleVersionId: z.uuid(),
   questionType: ieltsBridgeQuestionTypeSchema, mode: ieltsIntegratedBlockModeSchema,
   title: z.string(), instruction: z.string(), task: learnerIntegratedTaskSchema,
+  startedAt: z.iso.datetime().nullable(),
   completedAt: z.iso.datetime().nullable(), correct: z.boolean().nullable(), timedOut: z.boolean().nullable(),
 }).strict().readonly();
 export const ieltsIntegratedSessionSchema = z.object({
