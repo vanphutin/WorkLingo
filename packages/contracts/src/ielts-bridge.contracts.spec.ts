@@ -16,10 +16,13 @@ const stages = ieltsBridgeStageTypes.map((type, index) => ({
   instruction: 'Use the strategy before answering.',
   strategySteps: ['Read the complete prompt.', 'Explain the evidence.'],
   timeLimitSeconds: type === 'timed_practice' ? 120 : null,
-  task: type === 'timed_practice'
+  task: ['analysed_example', 'easy_practice', 'increased_practice', 'timed_practice'].includes(type)
     ? { kind: 'single_choice' as const, prompt: 'Choose one.', options: ['A', 'B'], answerIndex: 1 }
-    : { kind: 'instruction' as const },
-  feedback: type === 'timed_practice' ? { correct: 'Correct with evidence.', incorrect: 'Review the evidence.' } : null,
+    : type === 'independent_practice'
+      ? { kind: 'short_text' as const, prompt: 'Explain the evidence.', minWords: 10, rubric: { criteria: ['Use complete evidence.'] } }
+      : { kind: 'instruction' as const },
+  feedback: ['analysed_example', 'easy_practice', 'increased_practice', 'independent_practice', 'timed_practice'].includes(type)
+    ? { correct: 'Correct with evidence.', incorrect: 'Review the evidence.' } : null,
 }));
 
 const moduleContent = {
@@ -52,6 +55,10 @@ describe('IELTS Bridge contracts', () => {
       stages: stages.map((stage) => stage.type === 'easy_practice' ? { ...stage, timeLimitSeconds: 60 } : stage),
     }).success).toBe(false);
     expect(ieltsBridgeModuleContentSchema.safeParse({ ...moduleContent, questionType: 'listening_multiple_choice' }).success).toBe(false);
+    expect(ieltsBridgeModuleContentSchema.safeParse({
+      ...moduleContent,
+      stages: stages.map((stage) => stage.type === 'easy_practice' ? { ...stage, task: { kind: 'instruction' }, feedback: null } : stage),
+    }).success).toBe(false);
   });
 
   it('keeps answer keys and hidden rubrics out of learner modules', () => {
@@ -68,6 +75,8 @@ describe('IELTS Bridge contracts', () => {
         feedback: null,
         task: task.kind === 'single_choice'
           ? { kind: task.kind, prompt: task.prompt, options: task.options }
+          : task.kind === 'short_text'
+            ? { kind: task.kind, prompt: task.prompt, minWords: task.minWords }
           : task,
       })),
     }).success).toBe(true);

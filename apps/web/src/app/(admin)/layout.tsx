@@ -106,6 +106,9 @@ export default function AdminLayout({
               <Link href="/admin/ielts-orientation" className="nav-link">
                 IELTS orientation
               </Link>
+              <Link href="/admin/ielts-bridge" className="nav-link">
+                IELTS Bridge
+              </Link>
               <Link href="/admin/audit" className="nav-link">
                 Audit log
               </Link>

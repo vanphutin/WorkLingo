@@ -15,10 +15,11 @@ const content = {
     slug: type.replaceAll('_', '-'), type, title: `Stage ${index + 1}`,
     instruction: 'Use meaning, grammar and context together.', strategySteps: ['Read the complete prompt.'],
     timeLimitSeconds: type === 'timed_practice' ? 90 : null,
-    task: type === 'timed_practice'
+    task: ['analysed_example', 'easy_practice', 'increased_practice', 'independent_practice', 'timed_practice'].includes(type)
       ? { kind: 'single_choice' as const, prompt: 'Choose the supported answer.', options: ['A', 'B'], answerIndex: 0 }
       : { kind: 'instruction' as const },
-    feedback: type === 'timed_practice' ? { correct: 'The evidence supports A.', incorrect: 'Review the evidence.' } : null,
+    feedback: ['analysed_example', 'easy_practice', 'increased_practice', 'independent_practice', 'timed_practice'].includes(type)
+      ? { correct: 'The evidence supports A.', incorrect: 'Review the evidence.' } : null,
   })),
 };
 const now = new Date('2026-10-13T00:00:00.000Z');

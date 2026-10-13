@@ -108,6 +108,14 @@ export const ieltsBridgeStageSchema = z.object({
   if ((stage.type === 'timed_practice') !== (stage.timeLimitSeconds !== null)) {
     context.addIssue({ code: 'custom', path: ['timeLimitSeconds'], message: 'Only timed practice must define a time limit' });
   }
+  if (['analysed_example', 'easy_practice', 'increased_practice', 'independent_practice', 'timed_practice'].includes(stage.type)) {
+    if (stage.task.kind === 'instruction') {
+      context.addIssue({ code: 'custom', path: ['task'], message: 'Practice stages require an answerable task' });
+    }
+    if (stage.feedback === null) {
+      context.addIssue({ code: 'custom', path: ['feedback'], message: 'Practice stages require authored feedback' });
+    }
+  }
 });
 
 const questionTypeSkill = (questionType: IeltsBridgeQuestionType) => questionType.split('_', 1)[0];
