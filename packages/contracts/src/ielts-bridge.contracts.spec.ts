@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  adminIeltsBridgeModuleSchema,
   ieltsBridgeModuleContentSchema,
   ieltsBridgeQuestionTypeSchema,
   ieltsBridgeStageTypes,
@@ -61,7 +62,7 @@ describe('IELTS Bridge contracts', () => {
       description: moduleContent.description,
       skill: moduleContent.skill,
       questionType: moduleContent.questionType,
-      stages: stages.map(({ task, feedback, ...stage }) => ({
+      stages: stages.map(({ task, feedback: _feedback, ...stage }) => ({
         ...stage,
         feedback: null,
         task: task.kind === 'single_choice'
@@ -76,5 +77,13 @@ describe('IELTS Bridge contracts', () => {
       skill: moduleContent.skill, questionType: moduleContent.questionType,
       stages,
     }).success).toBe(false);
+  });
+
+  it('defines the admin authoring envelope with immutable version history', () => {
+    expect(adminIeltsBridgeModuleSchema.parse({
+      id: crypto.randomUUID(), slug: moduleContent.questionType.replaceAll('_', '-'), status: 'DRAFT',
+      draftRevision: 1, draft: moduleContent, currentPublishedVersion: null, versions: [],
+      updatedAt: new Date().toISOString(),
+    })).toMatchObject({ draftRevision: 1, status: 'DRAFT' });
   });
 });

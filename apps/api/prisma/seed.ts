@@ -7,6 +7,7 @@ import { createLocalSeedStorage } from '../src/curriculum/infrastructure/seed-au
 import { seedPlacementCurriculum } from '../src/curriculum/infrastructure/seed-placement.js';
 import { seedLearningPrograms } from '../src/learning-programs/infrastructure/seed-learning-programs.js';
 import { seedIeltsOrientation } from '../src/ielts-orientation/infrastructure/seed-ielts-orientation.js';
+import { seedIeltsBridge } from '../src/ielts-bridge/infrastructure/seed-ielts-bridge.js';
 
 async function main(): Promise<void> {
   const database = new PrismaClient();
@@ -14,11 +15,12 @@ async function main(): Promise<void> {
   try {
     await seedLearningPrograms(database);
     await seedIeltsOrientation(database);
+    await seedIeltsBridge(database);
     await seedFoundationCurriculum(database, storage);
     await seedWorkplaceTransferCurriculum(database, storage);
     await seedPlacementCurriculum(database, storage);
     await seedContentAdmin(database);
-    console.info('Program catalog, IELTS orientation, learning curriculum, placement, and content admin seed complete.');
+    console.info('Program catalog, IELTS orientation and bridge, learning curriculum, placement, and content admin seed complete.');
   } finally {
     await database.$disconnect();
   }

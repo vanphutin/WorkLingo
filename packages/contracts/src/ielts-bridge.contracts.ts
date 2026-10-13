@@ -131,6 +131,34 @@ export const ieltsBridgeModuleContentSchema = z.object({
 });
 export type IeltsBridgeModuleContent = z.infer<typeof ieltsBridgeModuleContentSchema>;
 
+export const ieltsBridgeStatusSchema = z.enum(['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED']);
+export const ieltsBridgeVersionSummarySchema = z.object({
+  id: z.uuid(), version: z.number().int().positive(), publishedAt: z.iso.datetime(),
+  status: z.enum(['PUBLISHED', 'ARCHIVED']),
+}).strict();
+export const adminIeltsBridgeModuleSchema = z.object({
+  id: z.uuid(), slug: slugSchema, status: ieltsBridgeStatusSchema,
+  draftRevision: z.number().int().positive(), draft: ieltsBridgeModuleContentSchema,
+  currentPublishedVersion: ieltsBridgeVersionSummarySchema.nullable(),
+  versions: z.array(ieltsBridgeVersionSummarySchema), updatedAt: z.iso.datetime(),
+}).strict();
+export type AdminIeltsBridgeModuleDto = z.infer<typeof adminIeltsBridgeModuleSchema>;
+
+export const ieltsBridgeValidationIssueSchema = z.object({
+  code: z.string().min(1), path: z.string().min(1), message: z.string().min(1),
+}).strict();
+export const ieltsBridgeValidationResultSchema = z.object({
+  moduleId: z.uuid(), draftRevision: z.number().int().positive(), status: ieltsBridgeStatusSchema,
+  canPublish: z.boolean(), issues: z.array(ieltsBridgeValidationIssueSchema),
+}).strict();
+export type IeltsBridgeValidationResult = z.infer<typeof ieltsBridgeValidationResultSchema>;
+
+export const publishIeltsBridgeResultSchema = z.object({
+  moduleId: z.uuid(), moduleVersionId: z.uuid(), version: z.number().int().positive(),
+  publishedAt: z.iso.datetime(),
+}).strict();
+export type PublishIeltsBridgeResult = z.infer<typeof publishIeltsBridgeResultSchema>;
+
 const learnerSingleChoiceTaskSchema = z.object({
   kind: z.literal('single_choice'), prompt: z.string(), options: z.array(z.string()).min(2).max(10),
 }).strict();
@@ -178,7 +206,9 @@ export type IeltsBridgeProgressDto = z.infer<typeof ieltsBridgeProgressSchema>;
 export const saveIeltsBridgeDraftSchema = z.object({
   expectedRevision: z.number().int().positive().nullable(), idempotencyKey: z.uuid(), content: ieltsBridgeModuleContentSchema,
 }).strict();
+export type SaveIeltsBridgeDraftInput = z.infer<typeof saveIeltsBridgeDraftSchema>;
 export const ieltsBridgeCommandSchema = z.object({ expectedRevision: z.number().int().positive(), idempotencyKey: z.uuid() }).strict();
+export type IeltsBridgeCommandInput = z.infer<typeof ieltsBridgeCommandSchema>;
 export const ieltsBridgeProgressUpdateSchema = z.object({
   expectedRevision: z.number().int().positive(), stageIndex: z.number().int().min(0).max(9),
   startTimer: z.boolean().optional(), answer: z.unknown().optional(), completeStage: z.boolean().optional(),

@@ -30,6 +30,7 @@ import { AnalyticsModule } from './analytics/analytics.module.js';
 import { LearningProgramsModule } from './learning-programs/learning-programs.module.js';
 import { CurriculumFoundationModule } from './curriculum-foundation/curriculum-foundation.module.js';
 import { IeltsOrientationModule } from './ielts-orientation/ielts-orientation.module.js';
+import { IeltsBridgeModule } from './ielts-bridge/ielts-bridge.module.js';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { IeltsOrientationModule } from './ielts-orientation/ielts-orientation.mo
     LearningProgramsModule,
     CurriculumFoundationModule,
     IeltsOrientationModule,
+    IeltsBridgeModule,
   ],
   providers: [
     SafeLoggerService,
