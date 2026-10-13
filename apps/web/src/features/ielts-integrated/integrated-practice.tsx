@@ -1,0 +1,47 @@
+'use client';
+
+import type { IeltsIntegratedDifficulty, IeltsIntegratedSessionDto, LearnerIeltsBridgeTask } from '@worklingo/contracts';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { ieltsIntegratedClient } from '../../lib/api/ielts-integrated-client';
+import '../ielts-bridge/ielts-bridge.css';
+
+type Answer = number | number[] | string | undefined;
+const labels: Record<IeltsIntegratedDifficulty, string> = { foundation: 'Foundation', developing: 'Developing', competent: 'Competent', advanced: 'Advanced' };
+
+function Task({ task, answer, onChange }: { readonly task: LearnerIeltsBridgeTask; readonly answer: Answer; readonly onChange: (value: Answer) => void }) {
+  if (task.kind === 'instruction') return <p>Read the guidance and complete this block when ready.</p>;
+  if (task.kind === 'single_choice') return <fieldset className="bridge-options"><legend>{task.prompt}</legend>{task.options.map((option, index) => <label key={option}><input type="radio" name="integrated-answer" checked={answer === index} onChange={() => onChange(index)} />{option}</label>)}</fieldset>;
+  if (task.kind === 'multi_choice') { const selected = Array.isArray(answer) ? answer : []; return <fieldset className="bridge-options"><legend>{task.prompt}</legend>{task.options.map((option, index) => <label key={option}><input type="checkbox" checked={selected.includes(index)} onChange={() => onChange(selected.includes(index) ? selected.filter((item) => item !== index) : [...selected, index])} />{option}</label>)}</fieldset>; }
+  return <label className="bridge-response"><span>{task.prompt}</span><small>{task.kind === 'spoken_response' ? `Prepare for ${task.preparationSeconds}s, then speak for ${task.responseSeconds}s. Enter your transcript.` : `Write at least ${task.minWords} words.`}</small><textarea rows={8} value={typeof answer === 'string' ? answer : ''} onChange={(event) => onChange(event.target.value)} /></label>;
+}
+
+export function IntegratedPracticeLauncher() {
+  const router = useRouter(); const [availability, setAvailability] = useState<Awaited<ReturnType<typeof ieltsIntegratedClient.availability>> | null>(null);
+  const [duration, setDuration] = useState<60 | 90 | 120 | 150>(60); const [difficulty, setDifficulty] = useState<IeltsIntegratedDifficulty>('foundation'); const [error, setError] = useState<string | null>(null); const [busy, setBusy] = useState(false);
+  useEffect(() => { void ieltsIntegratedClient.availability().then((value) => { setAvailability(value); if (value.durations[0]) setDuration(value.durations[0]); }).catch((cause) => setError(cause instanceof Error ? cause.message : 'Unable to check availability.')); }, []);
+  if (!availability && !error) return <main className="bridge-shell bridge-state"><p role="status">Preparing Integrated Practice...</p></main>;
+  return <main className="bridge-shell"><header className="bridge-heading"><div><p className="bridge-kicker">IELTS four-skill training</p><h1>Integrated Practice</h1><p>Choose time and challenge independently. Every session includes listening, reading, writing and speaking.</p></div></header>
+    {error ? <p className="bridge-error" role="alert">{error}</p> : null}
+    {availability?.activeSessionId ? <section className="bridge-stage-card"><h2>Continue your saved session</h2><Link className="bridge-primary" href={`/ielts/practice/${availability.activeSessionId}`}>Resume session</Link></section> : null}
+    {availability && !availability.eligible ? <section className="bridge-stage-card"><h2>Practice is locked</h2><p>{availability.lockedReason === 'BRIDGE_REQUIRED' ? 'Complete all required IELTS Bridge modules first.' : 'The four duration profiles are not published yet.'}</p></section> : null}
+    {availability?.eligible ? <section className="bridge-stage-card"><h2>Build a session</h2><label>Duration<select value={duration} onChange={(event) => setDuration(Number(event.target.value) as typeof duration)}>{availability.durations.map((value) => <option key={value} value={value}>{value} minutes</option>)}</select></label><label>Difficulty<select value={difficulty} onChange={(event) => setDifficulty(event.target.value as IeltsIntegratedDifficulty)}>{availability.difficulties.map((value) => <option key={value} value={value}>{labels[value]}</option>)}</select></label><button className="bridge-primary" type="button" disabled={busy} onClick={() => { setBusy(true); void ieltsIntegratedClient.start({ clientSessionId: crypto.randomUUID(), durationMinutes: duration, difficulty }).then((session) => router.push(`/ielts/practice/${session.id}`)).catch((cause) => { setError(cause instanceof Error ? cause.message : 'Unable to start practice.'); setBusy(false); }); }}>{busy ? 'Building session...' : 'Start four-skill session'}</button></section> : null}
+  </main>;
+}
+
+export function IntegratedPracticePlayer({ sessionId }: { readonly sessionId: string }) {
+  const [session, setSession] = useState<IeltsIntegratedSessionDto | null>(null); const [answer, setAnswer] = useState<Answer>(); const [error, setError] = useState<string | null>(null); const [feedback, setFeedback] = useState<string | null>(null); const [busy, setBusy] = useState(false);
+  useEffect(() => { void ieltsIntegratedClient.get(sessionId).then(setSession).catch((cause) => setError(cause instanceof Error ? cause.message : 'Unable to resume session.')); }, [sessionId]);
+  const block = session?.blocks[session.currentBlockIndex]; const hasAnswer = useMemo(() => typeof answer === 'number' || (typeof answer === 'string' && answer.trim().length > 0) || (Array.isArray(answer) && answer.length > 0), [answer]);
+  if (error && !session) return <main className="bridge-shell bridge-state"><h1>Integrated Practice</h1><p role="alert">{error}</p></main>;
+  if (!session || !block) return <main className="bridge-shell bridge-state"><p role="status">Restoring your session...</p></main>;
+  if (session.completedAt) return <main className="bridge-shell bridge-state"><p className="bridge-kicker">Session complete</p><h1>Four-skill evidence saved</h1><p>No band score is estimated here. Review your evidence and continue the recommended targeted practice.</p><Link className="bridge-primary" href="/ielts/practice">Start another session</Link></main>;
+  return <main className="bridge-shell bridge-player"><header className="bridge-heading"><div><p className="bridge-kicker">{session.plan.durationMinutes} minutes · {labels[session.plan.difficulty]}</p><h1>Integrated Practice</h1></div><Link href="/dashboard">Save and exit</Link></header><nav className="bridge-stage-nav" aria-label="Four skill blocks">{session.blocks.map((item, index) => <span key={item.skill} aria-current={index === session.currentBlockIndex ? 'step' : undefined} className={index < session.currentBlockIndex ? 'done' : ''}>{item.order}<span className="sr-only"> {item.skill}</span></span>)}</nav><article className="bridge-stage-card"><p className="bridge-kicker">{block.skill} · {block.targetMinutes} minutes · {block.mode.replace('_', ' ')}</p><h2>{block.title}</h2><p>{block.instruction}</p><Task task={block.task} answer={answer} onChange={setAnswer} />{feedback ? <p className="bridge-feedback" role="status">{feedback}</p> : null}{error ? <p className="bridge-error" role="alert">{error}</p> : null}<button className="bridge-primary" type="button" disabled={busy || (block.task.kind !== 'instruction' && !hasAnswer)} onClick={() => { setBusy(true); setError(null); void ieltsIntegratedClient.update(sessionId, { expectedRevision: session.revision, blockIndex: session.currentBlockIndex, answer }).then((result) => { setSession(result.session); setFeedback(result.feedbackMessage); setAnswer(undefined); }).catch((cause) => setError(cause instanceof Error ? cause.message : 'Unable to save progress.')).finally(() => setBusy(false)); }}>{busy ? 'Saving...' : block.order === 4 ? 'Complete session' : 'Complete block'}</button></article></main>;
+}
+
+export function IntegratedPracticeDashboardCard() {
+  const [availability, setAvailability] = useState<Awaited<ReturnType<typeof ieltsIntegratedClient.availability>> | null>(null); const [failed, setFailed] = useState(false);
+  useEffect(() => { void ieltsIntegratedClient.availability().then(setAvailability).catch(() => setFailed(true)); }, []);
+  return <section className="dashboard-card" aria-labelledby="integrated-card-heading"><span className="card-tag">IELTS pathway</span><h2 id="integrated-card-heading" className="section-title">Integrated Practice</h2>{!availability && !failed ? <p role="status">Checking four-skill practice...</p> : null}{failed ? <p className="form-error">Practice status is temporarily unavailable.</p> : null}{availability?.eligible ? <><p>Train all four IELTS skills in one configurable 60–150 minute session.</p><Link className="primary-action-button" href={availability.activeSessionId ? `/ielts/practice/${availability.activeSessionId}` : '/ielts/practice'}>{availability.activeSessionId ? 'Resume Integrated Practice' : 'Build Integrated Practice'}</Link></> : null}{availability && !availability.eligible ? <p>Complete IELTS Bridge to unlock integrated four-skill practice.</p> : null}</section>;
+}

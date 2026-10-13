@@ -9,6 +9,7 @@ import { EngagementPanel } from '../engagement/engagement-panel';
 import { CurriculumRoadmap } from '../curriculum-roadmap/curriculum-roadmap';
 import { OrientationDashboardCard } from '../ielts-orientation/orientation-dashboard-card';
 import { IeltsBridgeDashboardCard } from '../ielts-bridge/ielts-bridge-dashboard-card';
+import { IntegratedPracticeDashboardCard } from '../ielts-integrated/integrated-practice';
 
 interface DashboardViewProps {
   readonly progress: LearnerProgressDto | null;
@@ -164,6 +165,7 @@ export function DashboardView({
       <div className="dashboard-grid">
         <OrientationDashboardCard />
         <IeltsBridgeDashboardCard />
+        <IntegratedPracticeDashboardCard />
         <section className="dashboard-card next-mission-card" aria-labelledby="mission-heading">
           <span className="card-tag">Current Mission</span>
           <h2 id="mission-heading" className="mission-title">
