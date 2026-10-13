@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   adminIeltsBridgeModuleSchema,
+  ieltsBridgeCatalogSchema,
   ieltsBridgeModuleContentSchema,
   ieltsBridgeQuestionTypeSchema,
   ieltsBridgeStageTypes,
@@ -85,5 +86,11 @@ describe('IELTS Bridge contracts', () => {
       draftRevision: 1, draft: moduleContent, currentPublishedVersion: null, versions: [],
       updatedAt: new Date().toISOString(),
     })).toMatchObject({ draftRevision: 1, status: 'DRAFT' });
+  });
+
+  it('keeps locked learner catalogs free of unpublished module content', () => {
+    expect(ieltsBridgeCatalogSchema.parse({
+      eligible: false, lockedReason: 'ORIENTATION_REQUIRED', bridgeCompleted: false, modules: [],
+    })).toEqual({ eligible: false, lockedReason: 'ORIENTATION_REQUIRED', bridgeCompleted: false, modules: [] });
   });
 });

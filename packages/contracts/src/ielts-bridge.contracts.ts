@@ -197,11 +197,32 @@ export type LearnerIeltsBridgeModuleDto = z.infer<typeof learnerIeltsBridgeModul
 export const ieltsBridgeProgressSchema = z.object({
   moduleId: z.uuid(), moduleVersionId: z.uuid(), currentStageIndex: z.number().int().min(0).max(9),
   revision: z.number().int().positive(), startedAt: z.iso.datetime(), completedAt: z.iso.datetime().nullable(),
-  timedStageStartedAt: z.iso.datetime().nullable(), stageResults: z.array(z.object({
+  timedStageStartedAt: z.iso.datetime().nullable(), timedStageDeadlineAt: z.iso.datetime().nullable(), stageResults: z.array(z.object({
     stageSlug: slugSchema, correct: z.boolean().nullable(), timedOut: z.boolean(), submittedAt: z.iso.datetime(),
   }).strict()).max(10),
 }).strict();
 export type IeltsBridgeProgressDto = z.infer<typeof ieltsBridgeProgressSchema>;
+
+export const ieltsBridgeCatalogModuleSchema = z.object({
+  moduleId: z.uuid(), moduleVersionId: z.uuid(), title: z.string(), description: z.string(),
+  skill: learningSkillSchema, questionType: ieltsBridgeQuestionTypeSchema, required: z.boolean(),
+  progress: ieltsBridgeProgressSchema.nullable(),
+}).strict();
+export const ieltsBridgeCatalogSchema = z.object({
+  eligible: z.boolean(), lockedReason: z.enum(['ORIENTATION_REQUIRED']).nullable(), bridgeCompleted: z.boolean(),
+  modules: z.array(ieltsBridgeCatalogModuleSchema),
+}).strict();
+export type IeltsBridgeCatalogDto = z.infer<typeof ieltsBridgeCatalogSchema>;
+
+export const ieltsBridgeSessionSchema = z.object({
+  module: learnerIeltsBridgeModuleSchema, progress: ieltsBridgeProgressSchema,
+}).strict();
+export type IeltsBridgeSessionDto = z.infer<typeof ieltsBridgeSessionSchema>;
+
+export const ieltsBridgeProgressResultSchema = z.object({
+  progress: ieltsBridgeProgressSchema, feedbackMessage: z.string().nullable(),
+}).strict();
+export type IeltsBridgeProgressResult = z.infer<typeof ieltsBridgeProgressResultSchema>;
 
 export const saveIeltsBridgeDraftSchema = z.object({
   expectedRevision: z.number().int().positive().nullable(), idempotencyKey: z.uuid(), content: ieltsBridgeModuleContentSchema,
