@@ -228,6 +228,14 @@ Phase 3 Foundation implementation is complete. The final repository gate passed 
 integration, production build, and all 36 desktop/mobile Playwright journeys; see
 `docs/IELTS_PHASE_3_FOUNDATION_REVIEW.md`.
 
+## IELTS Phase 4 — Orientation (started 2026-10-13)
+
+The approved implementation is a data-driven, narrated presentation with Admin authoring,
+immutable publish versions, local media, Foundation-checkpoint eligibility, version-bound learner
+resume, knowledge checks, and durable completion. It extends the existing local-first monolith and
+does not introduce IELTS scoring or a second learning engine. See
+`docs/superpowers/specs/2026-10-13-ielts-phase-4-orientation-design.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.
