@@ -27,6 +27,10 @@ Status: implemented and covered at component/domain seams.
 
 Complete focused reading, listening, speaking, and writing lesson variants, then verify persistence, feedback, mastery isolation, scheduled review, responsive behavior, and accessibility.
 
+Status: implemented. The seeded 60-minute journey now proves Grammar instruction, contextual reading,
+version-bound listening, pronunciation shadowing, recording consent, writing transfer, checkpoint
+restore, progress persistence, and responsive desktop/mobile behavior.
+
 ## Verification policy
 
 - Run only touched component/domain/integration tests during each task.

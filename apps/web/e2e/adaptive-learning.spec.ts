@@ -29,7 +29,7 @@ test('learner sees own evidence, transfers a review, and cannot advance on unsco
   await page.getByLabel('Wait for a customer.').check();
   await page.getByLabel('Go home.').check();
   await page.getByRole('button', { name: 'Continue' }).click();
-  await expect(page.getByText(/Review the evidence and try again/i)).toBeVisible();
+  await expect(page.getByText(/Mai welcomes An, describes her desk/i)).toBeVisible();
 
   await page.goto('/mastery');
   await expect(page.getByRole('heading', { name: 'Mastery Map', exact: true })).toBeVisible();

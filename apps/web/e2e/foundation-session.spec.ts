@@ -78,6 +78,9 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     // 6. Confirm the server checkpoint restores the second activity, not the first
     await expect(page.locator('[aria-current="step"]')).toContainText('Read & Decode');
     await expect(page.getByLabel('Your written response:')).toHaveCount(0);
+    await expect(page.getByRole('region', { name: 'Grammar focus' })).toContainText(
+      'Do + you + base verb + object?',
+    );
 
     // 7. Complete Read & Decode
     await page.getByLabel('To welcome An and help An meet the team.').check();
@@ -95,6 +98,11 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     await expect(page.locator('[aria-current="step"]')).toContainText('Respond');
 
     // 9. Complete the speaking recording and final writing transfer task
+    await expect(page.getByRole('region', { name: 'Pronunciation focus' })).toContainText(
+      '/maɪ neɪm ɪz/',
+    );
+    await expect(page.getByRole('region', { name: 'Pronunciation focus' }))
+      .toContainText('My name is An. I work in sales. Nice to meet you.');
     await page.getByRole('button', { name: 'Record response' }).click();
     await page.waitForTimeout(750);
     await page.getByRole('button', { name: 'Stop recording' }).click();

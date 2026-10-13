@@ -224,6 +224,10 @@ The Vocabulary slice now teaches reusable chunks, meanings, and transfer context
 reading. Vocabulary writing requires active recall without exposing `requiredPhrases`; Teacher AI and
 the existing review selector still evaluate those hidden targets and prefer a new workplace context.
 
+Phase 3 Foundation implementation is complete. The final repository gate passed across unit,
+integration, production build, and all 36 desktop/mobile Playwright journeys; see
+`docs/IELTS_PHASE_3_FOUNDATION_REVIEW.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

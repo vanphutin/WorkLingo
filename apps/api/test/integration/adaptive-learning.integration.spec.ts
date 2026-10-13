@@ -38,6 +38,16 @@ describe('adaptive learning visibility and recurrence', () => {
         slug: 'do-you-need-help',
       })],
     });
+    const shadowingPractice = await learner
+      .get(`/api/v1/learning-sessions/${session.body.id}/activities/${ids[3]}`)
+      .expect(200);
+    expect(shadowingPractice.body).toMatchObject({
+      activityType: 'speaking',
+      payload: {
+        mode: 'shadowing',
+        sampleAnswer: 'My name is An. I work in sales. Nice to meet you.',
+      },
+    });
     await learner.post(`/api/v1/activities/${ids[0]}/attempts`).send({
       sessionId: session.body.id, clientAttemptId: randomUUID(), response: { text: 'My name is An.' },
     }).expect(201);

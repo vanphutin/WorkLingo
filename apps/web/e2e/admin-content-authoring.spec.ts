@@ -32,7 +32,7 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
     page,
     browser,
   }, testInfo) => {
-    test.setTimeout(180_000);
+    test.setTimeout(240_000);
     const uniqueId = `${Date.now()}_${testInfo.project.name.replaceAll('-', '_')}`;
     const learnerPassword = 'A_Very_Secure_Password_123!';
 

@@ -211,7 +211,14 @@ export class LearningSessionsService {
           prompt: activity.payload.prompt,
           requiredPhrases: activity.payload.requiredPhrases,
           minWords: activity.payload.minWords,
-          ...(activity.activityType === 'speaking' ? { mode: activity.payload.mode } : {}),
+          ...(activity.activityType === 'speaking'
+            ? {
+                mode: activity.payload.mode,
+                ...(activity.payload.mode === 'shadowing'
+                  ? { sampleAnswer: activity.payload.sampleAnswer }
+                  : {}),
+              }
+            : {}),
         };
     return {
       activityType: activity.activityType,
