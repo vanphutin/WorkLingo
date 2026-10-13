@@ -184,6 +184,7 @@ export const learnerIeltsBridgeTaskSchema = z.union([
   instructionTaskSchema, learnerSingleChoiceTaskSchema, learnerMultiChoiceTaskSchema,
   learnerShortTextTaskSchema, learnerSpokenResponseTaskSchema,
 ]);
+export type LearnerIeltsBridgeTask = z.infer<typeof learnerIeltsBridgeTaskSchema>;
 export const learnerIeltsBridgeStageSchema = z.object({
   slug: slugSchema,
   type: ieltsBridgeStageTypeSchema,
@@ -242,3 +243,4 @@ export const ieltsBridgeProgressUpdateSchema = z.object({
   expectedRevision: z.number().int().positive(), stageIndex: z.number().int().min(0).max(9),
   startTimer: z.boolean().optional(), answer: z.unknown().optional(), completeStage: z.boolean().optional(),
 }).strict();
+export type IeltsBridgeProgressUpdateInput = z.infer<typeof ieltsBridgeProgressUpdateSchema>;
