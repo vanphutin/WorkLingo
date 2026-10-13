@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { foundationCategories, getFoundationTemplate, type FoundationCategory } from '@worklingo/content-format';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
 
@@ -53,6 +54,12 @@ export function NewContentImport() {
   const [rawSource, setRawSource] = useState(DEFAULT_TEMPLATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState('legacy');
+
+  function handleTemplateChange(value: string) {
+    setSelectedTemplate(value);
+    if (value !== 'legacy') setRawSource(getFoundationTemplate(value as FoundationCategory).source);
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -78,7 +85,7 @@ export function NewContentImport() {
       <div className="new-import-header">
         <h1>New Content Import</h1>
         <p>
-          Paste or write lesson text in the WorkLingo Lesson Format 1.0. Exact source will be
+          Start from Format 1.0 or a Foundation 1.1 scaffold. Exact source will be
           preserved for editing and validation.
         </p>
       </div>
@@ -91,8 +98,16 @@ export function NewContentImport() {
 
       <form onSubmit={handleSubmit} className="new-import-form">
         <div className="form-group">
+          <label htmlFor="lesson-template" className="form-label">Lesson template</label>
+          <select id="lesson-template" aria-label="Lesson template" value={selectedTemplate} onChange={(event) => handleTemplateChange(event.target.value)} disabled={isSubmitting}>
+            <option value="legacy">Format 1.0 blank lesson</option>
+            {foundationCategories.map((category) => <option key={category} value={category}>Foundation: {category}</option>)}
+          </select>
+          {selectedTemplate !== 'legacy' ? <p className="form-help">Draft scaffold selected. Replace every TODO and validate before publishing.</p> : null}
+        </div>
+        <div className="form-group">
           <label htmlFor="raw-source-input" className="form-label">
-            Lesson Source (WorkLingoLesson/1.0)
+            Lesson Source (WorkLingoLesson/1.0 or 1.1)
           </label>
           <textarea
             id="raw-source-input"

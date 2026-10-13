@@ -9,6 +9,8 @@ import type {
 } from '@worklingo/contracts';
 
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
+import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
+import { FoundationDefinitionEditor, type PrerequisiteOption } from './foundation-definition-editor';
 import './curriculum.css';
 
 export function CurriculumWorkspace() {
@@ -32,6 +34,25 @@ export function CurriculumWorkspace() {
   const [missionTitle, setMissionTitle] = useState('');
   const [missionSlug, setMissionSlug] = useState('');
   const [missionObjective, setMissionObjective] = useState('');
+  const [activeFoundationMissionId, setActiveFoundationMissionId] = useState<string | null>(null);
+  const [prerequisiteOptions, setPrerequisiteOptions] = useState<PrerequisiteOption[]>([]);
+  const [isOpeningFoundation, setIsOpeningFoundation] = useState(false);
+
+  const handleOpenFoundation = async (mission: AdminMissionItemDto) => {
+    if (activeFoundationMissionId === mission.id) { setActiveFoundationMissionId(null); return; }
+    setIsOpeningFoundation(true); setErrorMessage(null);
+    try {
+      const candidates = tree?.paths.flatMap((path) => path.levels.flatMap((level) => level.missions))
+        .filter((candidate) => candidate.id !== mission.id) ?? [];
+      const drafts = await Promise.all(candidates.map(async (candidate) => ({
+        candidate, draft: await curriculumFoundationClient.getDraft(candidate.id).catch(() => null),
+      })));
+      setPrerequisiteOptions(drafts.flatMap(({ candidate, draft }) => draft?.publishedRevisions
+        .filter((revision) => revision.status === 'PUBLISHED')
+        .map((revision) => ({ id: revision.id, label: `${candidate.title} · revision ${revision.revision}` })) ?? []));
+      setActiveFoundationMissionId(mission.id);
+    } finally { setIsOpeningFoundation(false); }
+  };
 
   const loadTree = async () => {
     try {
@@ -671,6 +692,15 @@ export function CurriculumWorkspace() {
                           <div className="curriculum-actions">
                             <button
                               type="button"
+                              className="action-button action-button-secondary"
+                              disabled={isOpeningFoundation}
+                              onClick={() => void handleOpenFoundation(mission)}
+                              aria-label={`Edit Foundation definition for ${mission.title}`}
+                            >
+                              Foundation
+                            </button>
+                            <button
+                              type="button"
                               className="action-button-icon"
                               onClick={() =>
                                 handleReorderMission(
@@ -724,6 +754,15 @@ export function CurriculumWorkspace() {
                             )}
                           </div>
                         </div>
+
+                        {activeFoundationMissionId === mission.id ? (
+                          <FoundationDefinitionEditor
+                            missionId={mission.id}
+                            missionTitle={mission.title}
+                            prerequisiteOptions={prerequisiteOptions}
+                            onClose={() => setActiveFoundationMissionId(null)}
+                          />
+                        ) : null}
 
                         {mission.lessons.length > 0 && (
                           <ul className="lessons-list">

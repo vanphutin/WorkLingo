@@ -128,6 +128,9 @@ export function ContentAuthoringWorkspace({
     setLocalSource(newSource);
     setSelectedAudioArtifacts({});
     setPreview(null);
+    setCanPublish(false);
+    setLastValidatedRevision(null);
+    if (status === 'VALIDATED') setStatus('DRAFT');
 
     if (isReadOnly) return;
 

@@ -86,6 +86,13 @@ describe('ContentAuthoringWorkspace', () => {
     expect(screen.getByText(/saved/i)).toBeInTheDocument();
   });
 
+  it('invalidates prior validation immediately when source changes', () => {
+    render(<ContentAuthoringWorkspace initialImport={{ ...initialImport, status: 'VALIDATED', validationHash: 'old-hash' }} debounceMs={500} />);
+    fireEvent.change(screen.getByRole('textbox', { name: /lesson source editor/i }), { target: { value: 'edited after validation' } });
+    fireEvent.click(screen.getByRole('tab', { name: /^publish/i }));
+    expect(screen.getByRole('button', { name: /publish lesson/i })).toBeDisabled();
+  });
+
   it('handles 409 revision conflict by preserving local work and displaying conflict alert', async () => {
     vi.mocked(apiClient.updateContentSource).mockRejectedValueOnce(
       new ApiError({

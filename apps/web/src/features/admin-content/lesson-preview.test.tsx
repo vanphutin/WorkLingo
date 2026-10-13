@@ -102,6 +102,17 @@ const mockPreview: ContentPreviewDto = {
 };
 
 describe('LessonPreview', () => {
+  it('shows Foundation pedagogy metadata as validated draft state', () => {
+    render(<LessonPreview preview={{ ...mockPreview, normalizedDraft: { ...mockPreview.normalizedDraft!, foundation: {
+      category: 'grammar', templateId: 'foundation-grammar', templateVersion: 1,
+      objectives: [{ slug: 'clarify-request', statement: 'Clarify a workplace request.', skills: ['reading'], required: true }],
+      activityObjectives: { 'reading-comp-1': ['clarify-request'] }, responseRubrics: {},
+    } } }} />);
+    expect(screen.getByRole('heading', { name: /foundation pedagogy/i })).toBeInTheDocument();
+    expect(screen.getByText(/validated draft preview/i)).toBeInTheDocument();
+    expect(screen.getByText(/Clarify a workplace request\./)).toBeInTheDocument();
+    expect(screen.queryByText(/published successfully/i)).not.toBeInTheDocument();
+  });
   it('renders structured preview with metadata, content blocks, word banks, and activities', () => {
     render(<LessonPreview preview={mockPreview} />);
 

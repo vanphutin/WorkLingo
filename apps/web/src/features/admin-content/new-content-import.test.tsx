@@ -31,6 +31,13 @@ afterEach(() => {
 });
 
 describe('NewContentImport', () => {
+  it('fills the editable source from a selected Foundation template', () => {
+    render(<NewContentImport />);
+    fireEvent.change(screen.getByLabelText(/lesson template/i), { target: { value: 'grammar' } });
+    expect((screen.getByLabelText(/lesson source/i) as HTMLTextAreaElement).value).toContain('FORMAT: WorkLingoLesson/1.1');
+    expect((screen.getByLabelText(/lesson source/i) as HTMLTextAreaElement).value).toContain('category: grammar');
+    expect(screen.getByText(/draft scaffold/i)).toBeInTheDocument();
+  });
   it('submits rawSource and navigates to the created import id', async () => {
     vi.mocked(apiClient.createContentImport).mockResolvedValueOnce({
       id: '99999999-9999-4999-8999-999999999999',

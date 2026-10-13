@@ -105,6 +105,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@worklingo/content-format':
+        specifier: workspace:*
+        version: link:../../packages/content-format
       '@worklingo/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts

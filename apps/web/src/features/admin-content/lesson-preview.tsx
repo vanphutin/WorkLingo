@@ -29,6 +29,20 @@ export function LessonPreview({ preview }: LessonPreviewProps) {
         <p className="preview-objective">{normalizedDraft.objective}</p>
       </div>
 
+      {normalizedDraft.foundation ? (
+        <section className="preview-section" aria-label="Foundation pedagogy">
+          <h3 className="section-title">Foundation Pedagogy</h3>
+          <p><strong>Validated draft preview</strong> · {normalizedDraft.foundation.category} · {normalizedDraft.foundation.templateId} v{normalizedDraft.foundation.templateVersion}</p>
+          <ul>
+            {normalizedDraft.foundation.objectives.map((objective) => (
+              <li key={objective.slug}>
+                <strong>{objective.slug}</strong>: {objective.statement} ({objective.skills.join(', ')}){objective.required ? ' · required' : ''}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       {normalizedDraft.contentBlocks.length > 0 && (
         <section className="preview-section" aria-label="Content blocks">
           <h3 className="section-title">Content Blocks</h3>
