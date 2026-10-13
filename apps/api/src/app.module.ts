@@ -29,6 +29,7 @@ import { RateLimitModule } from './common/rate-limit/rate-limit.module.js';
 import { AnalyticsModule } from './analytics/analytics.module.js';
 import { LearningProgramsModule } from './learning-programs/learning-programs.module.js';
 import { CurriculumFoundationModule } from './curriculum-foundation/curriculum-foundation.module.js';
+import { IeltsOrientationModule } from './ielts-orientation/ielts-orientation.module.js';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { CurriculumFoundationModule } from './curriculum-foundation/curriculum-f
     OperationsModule,
     LearningProgramsModule,
     CurriculumFoundationModule,
+    IeltsOrientationModule,
   ],
   providers: [
     SafeLoggerService,
