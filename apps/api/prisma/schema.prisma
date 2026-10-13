@@ -59,6 +59,8 @@ model User {
   studySessions              LearnerStudySession[]
   engagementWeeks            LearnerEngagementWeek[]
   programEnrollments         LearnerProgramEnrollment[]
+  createdOrientationMedia    OrientationMediaAsset[]    @relation("OrientationMediaCreatedBy")
+  orientationProgress        OrientationProgress[]
 }
 
 model LearnerProfile {
@@ -101,6 +103,11 @@ enum ContentStatus {
   VALIDATED
   PUBLISHED
   ARCHIVED
+}
+
+enum OrientationMediaKind {
+  AUDIO
+  IMAGE
 }
 
 enum ActivityType {
@@ -800,6 +807,74 @@ model LessonVersionAudioArtifact {
   @@unique([lessonVersionId, audioScriptSlug])
   @@index([lessonVersionId])
   @@index([audioArtifactId])
+}
+
+model IeltsOrientation {
+  id                        String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String                    @unique
+  status                    ContentStatus             @default(DRAFT)
+  draftRevision             Int                       @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                   @unique @db.Uuid
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  currentPublishedVersion   IeltsOrientationVersion?  @relation("OrientationCurrentPublishedVersion", fields: [currentPublishedVersionId], references: [id], onDelete: Restrict)
+  versions                  IeltsOrientationVersion[] @relation("OrientationVersions")
+  mediaAssets               OrientationMediaAsset[]
+}
+
+model IeltsOrientationVersion {
+  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orientationId   String                @db.Uuid
+  version         Int
+  title           String
+  sourceHash      String
+  content         Json
+  status          ContentStatus         @default(PUBLISHED)
+  publishedAt     DateTime              @default(now())
+  archivedAt      DateTime?
+  orientation     IeltsOrientation      @relation("OrientationVersions", fields: [orientationId], references: [id], onDelete: Restrict)
+  currentFor      IeltsOrientation[]    @relation("OrientationCurrentPublishedVersion")
+  learnerProgress OrientationProgress[]
+
+  @@unique([orientationId, version])
+  @@index([orientationId, status])
+}
+
+model OrientationMediaAsset {
+  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orientationId String               @db.Uuid
+  kind          OrientationMediaKind
+  fileName      String
+  mimeType      String
+  byteSize      Int
+  checksum      String
+  storageKey    String               @unique
+  createdById   String               @db.Uuid
+  createdAt     DateTime             @default(now())
+  orientation   IeltsOrientation     @relation(fields: [orientationId], references: [id], onDelete: Restrict)
+  createdBy     User                 @relation("OrientationMediaCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([orientationId, kind])
+  @@index([createdById])
+}
+
+model OrientationProgress {
+  id                   String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId            String                  @db.Uuid
+  orientationVersionId String                  @db.Uuid
+  currentSlideIndex    Int                     @default(0)
+  revision             Int                     @default(1)
+  answers              Json
+  completedAt          DateTime?
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  learner              User                    @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  orientationVersion   IeltsOrientationVersion @relation(fields: [orientationVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, orientationVersionId])
+  @@index([orientationVersionId])
+  @@index([learnerId, completedAt])
 }
 
 enum JobStatus {
