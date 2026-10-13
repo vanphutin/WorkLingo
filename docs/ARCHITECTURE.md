@@ -307,3 +307,14 @@ approve language calibration, content quality, cloud deployment or public releas
   or progression before onboarding.
 - Intermediate remains the only selectable program. IELTS content and calibrated admission are
   separate capabilities; changing a catalog status cannot bypass the server release policy.
+
+## 19. Curriculum foundation progression (IELTS Phase 2)
+
+- Authoring separates mutable definitions from immutable published revision snapshots. Validation
+  resolves every lesson/activity/block reference before publication.
+- Eligibility resolves the latest published revision in the learner's active program and requires
+  exact prerequisite-revision completions. Session creation persists the chosen revision ID.
+- Completion is projected transactionally from completed-session evaluated evidence. The roadmap
+  derives objective progress from stored attempts and never trusts client-supplied progress.
+- Republishing affects future selection only; historical sessions and completion evidence remain
+  bound to their original revision.

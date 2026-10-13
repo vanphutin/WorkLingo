@@ -201,6 +201,13 @@ Các hạng mục hậu MVP trong `VISION.md` và `PRODUCT.md` như TOEIC/IELTS 
 - Fixture/acceptance examples tồn tại.
 - Không còn quyết định sản phẩm ảnh hưởng lớn bị để mở trong phạm vi increment.
 
+## IELTS Phase 2 — Curriculum foundation (2026-10-13)
+
+Đã hoàn thành authoring/validation/publish revision, prerequisite eligibility, session pinning,
+objective evidence projection và learner roadmap responsive. Acceptance E2E mới pass trên desktop
+và mobile; regression program catalog cũng pass trên cả hai viewport. Chi tiết bàn giao nằm tại
+`docs/IELTS_PHASE_2_CURRICULUM_REVIEW.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

@@ -99,6 +99,7 @@ export function toLearningSessionDto(session: LearningSessionRecord): LearningSe
       type: block.type,
     })),
     clientSessionId: session.clientSessionId,
+    curriculumRevisionId: session.curriculumRevisionId,
     currentCheckpoint: session.currentCheckpoint,
     durationMinutes: session.durationMinutes as LearningSessionDto['durationMinutes'],
     id: session.id,

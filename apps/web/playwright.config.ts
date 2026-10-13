@@ -113,6 +113,16 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
     },
     {
+      name: 'curriculum-foundation-desktop',
+      testMatch: /curriculum-foundation\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'curriculum-foundation-mobile',
+      testMatch: /curriculum-foundation\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
       name: 'admin-desktop',
       testMatch: /admin-(?:content-authoring|curriculum-audit|observability)\.spec\.ts/u,
       dependencies: ['foundation-desktop', 'foundation-mobile', 'teacher-ai-mobile', 'engagement-mobile'],
@@ -151,6 +161,7 @@ export default defineConfig({
           process.env.SESSION_SECRET ?? 'worklingo-playwright-local-secret-change-me',
         WORKLINGO_DATA_DIR: dataDirectory,
         WORKLINGO_E2E_MODE: 'true',
+        WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'fake',
         WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: '3',
       },
       url: `${apiBaseUrl}/api/v1/health`,

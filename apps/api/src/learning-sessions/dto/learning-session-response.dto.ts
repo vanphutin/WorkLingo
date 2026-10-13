@@ -5,6 +5,7 @@ export class LearningSessionResponseDto {
   @ApiProperty({ items: { additionalProperties: true, type: 'object' }, type: 'array' }) blocks!: object[];
   @ApiProperty({ format: 'uuid' }) id!: string;
   @ApiProperty({ format: 'uuid' }) clientSessionId!: string;
+  @ApiProperty({ format: 'uuid', nullable: true }) curriculumRevisionId!: string | null;
   @ApiProperty() currentCheckpoint!: number;
   @ApiProperty({ example: 60 }) durationMinutes!: number;
   @ApiProperty({ format: 'uuid' }) lessonVersionId!: string;

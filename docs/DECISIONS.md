@@ -273,6 +273,16 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Release:** Chỉ Intermediate được chọn. B2 admission, IELTS content và band scoring cần
   thiết kế/calibration riêng trước khi mở IELTS.
 
+## D-031 — Objective graph dùng revision bất biến và evidence phía server
+
+- **Trạng thái:** Accepted (IELTS Phase 2)
+- **Ngày:** 2026-10-13
+- **Quyết định:** Mỗi lần publish tạo một curriculum revision bất biến; prerequisite trỏ tới revision
+  cụ thể. Session khóa revision khi tạo và completion chỉ được suy ra từ attempt đã đánh giá của
+  lesson/activity/Language Block đã khai báo trong snapshot.
+- **Hệ quả:** Publish mới không đổi session cũ; roadmap chỉ hiển thị revision mới nhất nhưng vẫn dùng
+  completion lịch sử để mở prerequisite chính xác. Client không thể tự khai báo objective đã hoàn tất.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

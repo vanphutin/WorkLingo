@@ -30,6 +30,7 @@ export interface LearnerActivityDto {
 export interface LearningSessionDto {
   readonly id: string;
   readonly clientSessionId: string;
+  readonly curriculumRevisionId: string | null;
   readonly lessonVersionId: string;
   readonly durationMinutes: SessionDuration;
   readonly status: 'planned' | 'in_progress' | 'paused' | 'completed' | 'abandoned';

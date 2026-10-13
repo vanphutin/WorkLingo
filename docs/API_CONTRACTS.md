@@ -725,3 +725,17 @@ Intermediate is the only selectable target in Phase 2.
 zero counters and null level. Program-scoped mastery/progression require completed onboarding.
 Assessment and confirmation reject cross-program requests with `409 PROGRAM_CONTEXT_MISMATCH`,
 including replay. Ordinary historical session reads/resume remain bound to the owned session.
+
+## 17. Curriculum foundation revisions (IELTS Phase 2)
+
+Content Admins manage a mission definition through `GET|PUT /admin/curriculum/missions/{id}/foundation`,
+validate it with `POST .../validate`, and publish an immutable revision with `POST .../publish`.
+Writes require `expectedRevision` and an `idempotencyKey`. A definition contains category,
+prerequisite revision IDs, and required objectives whose evidence references published lesson
+versions, activity slugs, and optional Language Block slugs.
+
+`GET /api/v1/me/curriculum-roadmap` returns only the latest published revision per mission in the
+active program. Each item reports `locked`, `available`, `in_progress`, or `completed`, prerequisite
+reasons, and objective progress derived from evaluated attempts. Learner responses and answer keys
+are never included. New sessions select an eligible revision and expose nullable
+`curriculumRevisionId`; existing sessions keep that value after later publications.

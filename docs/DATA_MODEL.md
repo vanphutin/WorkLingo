@@ -494,3 +494,12 @@ Advancement conditionally updates enrollment level and increments revision, then
 Intermediate level to the profile and persists confirmation in the same transaction. New
 assessment evidence snapshots include program/enrollment IDs and enrollment revision. Legacy
 snapshots remain readable, and program ownership is derived from their source session.
+
+## 14. Curriculum foundation revisions (IELTS Phase 2)
+
+`CurriculumDefinition` owns the mutable mission draft and optimistic revision. Publishing creates
+an immutable `CurriculumRevision` snapshot plus normalized objective, evidence, lesson-version, and
+prerequisite relations. A prerequisite points to a specific published revision, not a moving mission.
+`LearningSession.curriculumRevisionId` freezes the selected revision; legacy and placement sessions
+may remain null. `CurriculumCompletion` is unique per enrollment/revision and stores the policy and
+evidence snapshot that completed all required objectives.

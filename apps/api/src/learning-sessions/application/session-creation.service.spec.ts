@@ -62,6 +62,7 @@ function storedSession(mission = placementMission()) {
     clientSessionId: ids.client,
     completedAt: null,
     createdAt: now,
+    curriculumRevisionId: null,
     currentCheckpoint: 0,
     durationMinutes: 45,
     id: ids.session,
@@ -99,6 +100,7 @@ describe('SessionCreationService', () => {
 
     const result = await new SessionCreationService().create(transaction, {
       clientSessionId: ids.client,
+      curriculumRevisionId: null,
       durationMinutes: 45,
       learnerId: ids.learner,
       mission,
@@ -107,6 +109,7 @@ describe('SessionCreationService', () => {
 
     expect(result).toMatchObject({
       clientSessionId: ids.client,
+      curriculumRevisionId: null,
       durationMinutes: 45,
       lessonVersionId: ids.version,
       purpose: 'placement',
