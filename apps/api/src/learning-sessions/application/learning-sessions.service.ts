@@ -17,6 +17,7 @@ import {
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
+import { CurriculumEligibilityService } from '../../curriculum-foundation/application/curriculum-eligibility.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
@@ -73,6 +74,7 @@ export class LearningSessionsService {
     @Inject(MasteryService) private readonly mastery: MasteryService,
     @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
     @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
+    @Inject(CurriculumEligibilityService) private readonly curriculumEligibility: CurriculumEligibilityService,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
     @Optional() @Inject(StudyDayProjectorService) private readonly studyDayProjector?: StudyDayProjectorService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
@@ -91,7 +93,20 @@ export class LearningSessionsService {
     if (!missions.length) throw new NotFoundException('No published mission for this level');
     const blockIds = new Set(missions.flatMap((mission) => mission.lessonVersion.wordBanks.flatMap((bank) => bank.languageBlocks.map((block) => block.id))));
     const scopedReview = reviewQueue.filter((item) => blockIds.has(item.languageBlockId));
-    return { mission: selectMissionForReview(missions, scopedReview, completed.map((s) => s.missionId)), reviewQueue: scopedReview };
+    const selected = selectMissionForReview(missions, scopedReview, completed.map((s) => s.missionId));
+    const eligibility = await this.curriculumEligibility.resolve(learnerId, selected.id, transaction);
+    if (!eligibility.available) {
+      throw new UnprocessableEntityException({
+        code: 'CURRICULUM_UNAVAILABLE',
+        message: 'The selected curriculum is not currently available',
+        reasons: eligibility.reasons,
+        statusCode: 422,
+      });
+    }
+    const mission = eligibility.revisionId
+      ? await this.curriculum.getPublishedMissionForRevision(eligibility.revisionId, transaction)
+      : selected;
+    return { curriculumRevisionId: eligibility.revisionId, mission, reviewQueue: scopedReview };
   }
 
   async getAvailability(learnerId: string): Promise<SessionAvailabilityDto> {
@@ -131,8 +146,10 @@ export class LearningSessionsService {
     try {
       return await this.database.$transaction(async (transaction) => {
         await transaction.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
-        const { mission, reviewQueue } = await this.selectCurriculum(learnerId, transaction);
-        return this.sessionCreation.create(transaction, { clientSessionId, learnerId, mission, durationMinutes, reviewItems: reviewQueue });
+        const { curriculumRevisionId, mission, reviewQueue } = await this.selectCurriculum(learnerId, transaction);
+        return this.sessionCreation.create(transaction, {
+          clientSessionId, curriculumRevisionId, learnerId, mission, durationMinutes, reviewItems: reviewQueue,
+        });
       }, { timeout: 15_000 });
     } catch (error) {
       if (error instanceof InsufficientContentForDurationError) {

@@ -19,6 +19,7 @@ export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{
 
 export interface CreateMissionSessionInput {
   readonly clientSessionId: string;
+  readonly curriculumRevisionId?: string | null;
   readonly durationMinutes: number;
   readonly learnerId: string;
   readonly mission: PublishedMission;
@@ -43,6 +44,7 @@ export class SessionCreationService {
     if (existing) {
       if (
         existing.durationMinutes !== input.durationMinutes ||
+        (existing.curriculumRevisionId ?? null) !== (input.curriculumRevisionId ?? null) ||
         existing.lessonVersionId !== input.mission.lessonVersion.id ||
         existing.missionId !== input.mission.id
       ) {
@@ -71,6 +73,7 @@ export class SessionCreationService {
           })),
         },
         clientSessionId: input.clientSessionId,
+        curriculumRevisionId: input.curriculumRevisionId ?? null,
         durationMinutes: input.durationMinutes,
         learnerId: input.learnerId,
         lessonVersionId: input.mission.lessonVersion.id,

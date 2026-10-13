@@ -36,6 +36,36 @@ export class CurriculumService {
     return missions[0];
   }
 
+  async getPublishedMissionForRevision(
+    revisionId: string,
+    database: Pick<Prisma.TransactionClient, 'curriculumRevision'> = this.database,
+  ): Promise<PublishedMission> {
+    const revision = await database.curriculumRevision.findUnique({
+      where: { id: revisionId },
+      include: {
+        mission: { include: { level: { select: { code: true } } } },
+        lessons: {
+          orderBy: { order: 'asc' },
+          take: 1,
+          include: {
+            lessonVersion: {
+              include: {
+                activities: { orderBy: { order: 'asc' } },
+                contentBlocks: { orderBy: { order: 'asc' } },
+                wordBanks: { select: { wordBankId: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+    const version = revision?.lessons[0]?.lessonVersion;
+    if (!revision || revision.status !== 'PUBLISHED' || !version || version.status !== 'PUBLISHED') {
+      throw new ConflictException('Published curriculum revision binding is unavailable');
+    }
+    return this.toPublishedMission(revision.mission, revision.mission.level.code, version);
+  }
+
   async getPublishedMissionsForLevel(
     levelCode: string,
     purpose: MissionPurpose = 'learning',
@@ -108,6 +138,20 @@ export class CurriculumService {
         : lesson?.versions[0];
       const version = candidate?.status === 'PUBLISHED' ? candidate : undefined;
       if (!mission || !version) throw new NotFoundException('No published mission for this level');
+      return this.toPublishedMission(mission, levelCode, version);
+    });
+  }
+
+  private toPublishedMission(
+    mission: { id: string; slug: string; title: string; objective: string; purpose: 'LEARNING' | 'PLACEMENT' },
+    levelCode: string,
+    version: {
+      id: string; version: number; title: string; parsedContent: Prisma.JsonValue;
+      activities: Array<{ id: string; slug: string; order: number; activityType: string; learningBlock: string; skills: string[]; contentReferences: string[]; languageBlockReferences: string[]; payload: Prisma.JsonValue }>;
+      contentBlocks: Array<{ id: string; slug: string; type: string; text: string; metadata: Prisma.JsonValue }>;
+      wordBanks: Array<{ wordBankId: string }>;
+    },
+  ): PublishedMission {
       const parsed = lessonSnapshotSchema.safeParse(version.parsedContent);
       if (!parsed.success) throw new ConflictException('Published lesson snapshot is invalid');
       const snapshot = parsed.data;
@@ -137,7 +181,6 @@ export class CurriculumService {
         purpose: mission.purpose === 'LEARNING' ? 'learning' : 'placement',
         lessonVersion: { ...snapshot, id: version.id, version: version.version },
       };
-    });
   }
 
   async getPublishedPlacementMission(

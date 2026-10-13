@@ -18,11 +18,12 @@ import { LearningSessionsController } from './learning-sessions.controller.js';
 
 import { EngagementModule } from '../engagement/engagement.module.js';
 import { LearningProgramsModule } from '../learning-programs/learning-programs.module.js';
+import { CurriculumFoundationModule } from '../curriculum-foundation/curriculum-foundation.module.js';
 
 @Module({
   controllers: [LearningSessionsController],
   exports: [LearningSessionsService, SessionCreationService],
-  imports: [DatabaseModule, CurriculumModule, MasteryModule, JobsModule, StorageModule, EngagementModule, LearningProgramsModule],
+  imports: [DatabaseModule, CurriculumModule, CurriculumFoundationModule, MasteryModule, JobsModule, StorageModule, EngagementModule, LearningProgramsModule],
   providers: [
     LearningSessionsService,
     SessionCreationService,
