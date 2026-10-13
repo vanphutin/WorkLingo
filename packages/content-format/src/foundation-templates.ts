@@ -1,4 +1,4 @@
-import { foundationCategories, type FoundationCategory } from './foundation-metadata.js';
+import { foundationCategories, type FoundationCategory } from './foundation-metadata.ts';
 
 const guidance: Record<FoundationCategory, string> = {
   grammar: 'Explain a form, contrast its meaning, then use it in a new workplace context.',

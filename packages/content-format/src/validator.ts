@@ -2,12 +2,12 @@ import type {
   ContentNode,
   LanguageBlockNode,
   LessonDocumentNode,
-} from './ast.js';
-import type { ContentIssue } from './issues.js';
-import { parseLessonSource } from './parser.js';
-import type { NormalizedLessonDraft } from './normalizer.js';
-import { normalizeLessonDocument } from './normalizer.js';
-import { validateFoundation } from './foundation-metadata.js';
+} from './ast.ts';
+import type { ContentIssue } from './issues.ts';
+import { parseLessonSource } from './parser.ts';
+import type { NormalizedLessonDraft } from './normalizer.ts';
+import { normalizeLessonDocument } from './normalizer.ts';
+import { validateFoundation } from './foundation-metadata.ts';
 
 export const PARSER_VERSION = '1.1.0';
 

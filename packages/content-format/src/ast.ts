@@ -1,4 +1,4 @@
-import type { SourceRange } from './source-location.js';
+import type { SourceRange } from './source-location.ts';
 
 export interface AstNode {
   readonly range: SourceRange;

@@ -1,9 +1,9 @@
 import type {
   LanguageBlockNode,
   LessonDocumentNode,
-} from './ast.js';
-import { validateLessonDocument } from './validator.js';
-import { normalizeFoundation, type FoundationMetadata } from './foundation-metadata.js';
+} from './ast.ts';
+import { validateLessonDocument } from './validator.ts';
+import { normalizeFoundation, type FoundationMetadata } from './foundation-metadata.ts';
 
 export interface NormalizedContentBlock {
   readonly id?: string | undefined;

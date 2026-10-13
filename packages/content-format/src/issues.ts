@@ -1,4 +1,4 @@
-import type { SourceRange } from './source-location.js';
+import type { SourceRange } from './source-location.ts';
 
 export type ContentIssueSeverity = 'error' | 'warning';
 

@@ -9,9 +9,9 @@ import {
   type WordBankNode,
   type FoundationNode,
   type ObjectiveNode,
-} from './ast.js';
-import type { ContentIssue } from './issues.js';
-import { createSourceLocator, type SourceRange } from './source-location.js';
+} from './ast.ts';
+import type { ContentIssue } from './issues.ts';
+import { createSourceLocator, type SourceRange } from './source-location.ts';
 
 export type ParseLessonResult = {
   readonly document: LessonDocumentNode;

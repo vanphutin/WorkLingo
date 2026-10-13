@@ -1,5 +1,5 @@
-import type { LessonDocumentNode } from './ast.js';
-import type { ContentIssue } from './issues.js';
+import type { LessonDocumentNode } from './ast.ts';
+import type { ContentIssue } from './issues.ts';
 
 export const foundationCategories = ['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'] as const;
 export type FoundationCategory = typeof foundationCategories[number];
