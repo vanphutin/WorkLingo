@@ -9,6 +9,9 @@ import { LearningSessionsService } from './learning-sessions.service.js';
 import { SessionCreationService } from './session-creation.service.js';
 import type { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
 import type { CurriculumEligibilityService } from '../../curriculum-foundation/application/curriculum-eligibility.service.js';
+import type { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
+
+const progress = { projectSession: vi.fn() } as unknown as CurriculumProgressService;
 
 describe('LearningSessionsService state transitions', () => {
   it('queues writing evaluation in the attempt transaction before advancing', async () => {
@@ -71,7 +74,7 @@ describe('LearningSessionsService state transitions', () => {
     const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
     const service = new LearningSessionsService(
       database, {} as CurriculumService, mastery, {} as SessionCreationService, {} as ProgramContextService,
-      {} as CurriculumEligibilityService, jobs,
+      {} as CurriculumEligibilityService, progress, jobs,
     );
 
     const result = await service.submitAttempt(learnerId, writingId, {
@@ -99,7 +102,7 @@ describe('LearningSessionsService state transitions', () => {
     const database = { learningSession: { findFirst, updateMany } } as unknown as PrismaService;
     const service = new LearningSessionsService(
       database, {} as CurriculumService, {} as MasteryService, {} as SessionCreationService, {} as ProgramContextService,
-      {} as CurriculumEligibilityService,
+      {} as CurriculumEligibilityService, progress,
     );
 
     await expect(service.pauseSession(learnerId, sessionId)).rejects.toMatchObject({
@@ -114,7 +117,7 @@ describe('LearningSessionsService state transitions', () => {
   it('rejects unsupported session durations with 422 and typed code', async () => {
     const service = new LearningSessionsService(
       {} as PrismaService, {} as CurriculumService, {} as MasteryService, {} as SessionCreationService, {} as ProgramContextService,
-      {} as CurriculumEligibilityService,
+      {} as CurriculumEligibilityService, progress,
     );
     await expect(
       service.createSession('learner-id', 30, '018f06f6-4f68-7a72-9411-4bf894341234'),
@@ -162,7 +165,7 @@ describe('LearningSessionsService state transitions', () => {
 
     const programContext = { resolve: vi.fn().mockResolvedValue({ levelCode: 'FOUNDATION_1', programId: '10000000-0000-4000-8000-000000000002' }) } as unknown as ProgramContextService;
     const eligibility = { resolve: vi.fn().mockResolvedValue({ revisionId: null, available: true, reasons: [] }) } as unknown as CurriculumEligibilityService;
-    const service = new LearningSessionsService(database, curriculum, mastery, new SessionCreationService(), programContext, eligibility);
+    const service = new LearningSessionsService(database, curriculum, mastery, new SessionCreationService(), programContext, eligibility, progress);
 
     await expect(
       service.createSession(learnerId, 90, '018f06f6-4f68-7a72-9411-4bf894341234'),

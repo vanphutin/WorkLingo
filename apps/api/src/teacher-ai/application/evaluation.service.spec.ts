@@ -3,9 +3,12 @@ import { createHash } from 'node:crypto';
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
 import type { MasteryService } from '../../mastery/application/mastery.service.js';
+import type { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
 import { describe, expect, it, vi } from 'vitest';
 
 import { EvaluationService } from './evaluation.service.js';
+
+const progress = { projectSession: vi.fn() } as unknown as CurriculumProgressService;
 
 const writingAttempt = {
   id: '00000000-0000-4000-8000-000000000001',
@@ -69,7 +72,7 @@ describe('EvaluationService', () => {
       job: { findFirst: vi.fn() },
     } as unknown as PrismaService;
     const service = new EvaluationService(
-      database, {} as LanguageEvaluationPort, {} as MasteryService, { recordingRetentionDays: 7 },
+      database, {} as LanguageEvaluationPort, {} as MasteryService, { recordingRetentionDays: 7 }, progress,
     );
 
     await expect(service.getForLearner(writingAttempt.learnerId, writingAttempt.id)).resolves.toEqual({
@@ -101,7 +104,7 @@ describe('EvaluationService', () => {
     } as unknown as PrismaService;
     const language = { evaluate: vi.fn().mockResolvedValue(languageResult) } as unknown as LanguageEvaluationPort;
     const mastery = { recordAttemptEvaluation: vi.fn().mockResolvedValue([]) } as unknown as MasteryService;
-    const service = new EvaluationService(database, language, mastery, { recordingRetentionDays: 7 });
+    const service = new EvaluationService(database, language, mastery, { recordingRetentionDays: 7 }, progress);
 
     const result = await service.evaluateAttempt(writingAttempt.id);
 
@@ -154,7 +157,7 @@ describe('EvaluationService', () => {
     } as unknown as PrismaService;
     const language = { evaluate: vi.fn() } as unknown as LanguageEvaluationPort;
     const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
-    const service = new EvaluationService(database, language, mastery, { recordingRetentionDays: 7 });
+    const service = new EvaluationService(database, language, mastery, { recordingRetentionDays: 7 }, progress);
 
     await expect(service.evaluateAttempt(writingAttempt.id)).resolves.toEqual(existing);
     expect(language.evaluate).not.toHaveBeenCalled();
@@ -183,6 +186,7 @@ describe('EvaluationService', () => {
       { evaluate: vi.fn().mockResolvedValue(languageResult) } as unknown as LanguageEvaluationPort,
       mastery,
       { recordingRetentionDays: 7 },
+      progress,
     );
 
     await service.evaluateAttempt(writingAttempt.id);

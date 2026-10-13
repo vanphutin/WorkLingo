@@ -27,6 +27,7 @@ export const curriculumDefinitionInputSchema = z.object({
   prerequisiteRevisionIds: z.array(z.uuid()).max(50).refine(uniqueStrings, 'Duplicate prerequisite'),
 }).strict();
 export type CurriculumDefinitionInput = z.infer<typeof curriculumDefinitionInputSchema>;
+export type CurriculumObjective = z.infer<typeof curriculumObjectiveSchema>;
 export type FoundationCategory = z.infer<typeof foundationCategorySchema>;
 
 export const foundationCommandSchema = z.object({
@@ -52,3 +53,19 @@ export type FoundationCommand = z.infer<typeof foundationCommandSchema>;
 export type SaveFoundationDraftInput = z.infer<typeof saveFoundationDraftSchema>;
 export type CurriculumRevisionDto = z.infer<typeof curriculumRevisionSchema>;
 export type CurriculumDraftDto = z.infer<typeof curriculumDraftSchema>;
+
+export const curriculumRoadmapSchema = z.object({
+  programId: z.uuid(),
+  enrollmentId: z.uuid(),
+  items: z.array(z.object({
+    missionId: z.uuid(), revisionId: z.uuid(), title: z.string(),
+    state: z.enum(['locked', 'available', 'in_progress', 'completed']),
+    unmetPrerequisites: z.array(z.string()),
+    reviewDue: z.boolean(),
+    activeSessionId: z.uuid().nullable(),
+    objectives: z.array(z.object({
+      slug, statement: z.string(), skills: z.array(skill), required: z.boolean(), completed: z.boolean(),
+    }).strict()),
+  }).strict()),
+}).strict();
+export type CurriculumRoadmapDto = z.infer<typeof curriculumRoadmapSchema>;

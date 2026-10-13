@@ -7,6 +7,7 @@ import { DatabaseModule } from '../common/database/database.module.js';
 import { JobHandlerRegistry } from '../jobs/application/job-runner.service.js';
 import { JobsModule } from '../jobs/jobs.module.js';
 import { MasteryModule } from '../mastery/mastery.module.js';
+import { CurriculumFoundationModule } from '../curriculum-foundation/curriculum-foundation.module.js';
 import { StorageModule } from '../storage/storage.module.js';
 import { EvaluateAttemptHandler } from './application/evaluate-attempt.handler.js';
 import {
@@ -35,7 +36,7 @@ class TeacherAiHandlerRegistration implements OnModuleInit {
 
 @Module({
   controllers: [EvaluationsController],
-  imports: [AiGatewayModule, DatabaseModule, JobsModule, MasteryModule, StorageModule],
+  imports: [AiGatewayModule, CurriculumFoundationModule, DatabaseModule, JobsModule, MasteryModule, StorageModule],
   providers: [
     EvaluationService,
     TranscribeSpeechHandler,

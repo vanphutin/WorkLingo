@@ -18,6 +18,7 @@ import {
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
 import { CurriculumEligibilityService } from '../../curriculum-foundation/application/curriculum-eligibility.service.js';
+import { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
 import { CurriculumService } from '../../curriculum/application/curriculum.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
@@ -75,6 +76,7 @@ export class LearningSessionsService {
     @Inject(SessionCreationService) private readonly sessionCreation: SessionCreationService,
     @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
     @Inject(CurriculumEligibilityService) private readonly curriculumEligibility: CurriculumEligibilityService,
+    @Inject(CurriculumProgressService) private readonly curriculumProgress: CurriculumProgressService,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
     @Optional() @Inject(StudyDayProjectorService) private readonly studyDayProjector?: StudyDayProjectorService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
@@ -447,6 +449,7 @@ export class LearningSessionsService {
             sessionId: session.id,
           });
         }
+        await this.curriculumProgress.projectSession(session.id, transaction);
         return evaluated;
       });
       if (

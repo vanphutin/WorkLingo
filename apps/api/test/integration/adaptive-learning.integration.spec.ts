@@ -8,6 +8,7 @@ import { LearningSessionsService } from '../../src/learning-sessions/application
 import { SessionCreationService } from '../../src/learning-sessions/application/session-creation.service.js';
 import { ProgramContextService } from '../../src/learning-programs/application/program-context.service.js';
 import { CurriculumEligibilityService } from '../../src/curriculum-foundation/application/curriculum-eligibility.service.js';
+import { CurriculumProgressService } from '../../src/curriculum-foundation/application/curriculum-progress.service.js';
 import { seedWorkplaceTransferCurriculum } from '../../src/curriculum/infrastructure/seed-workplace-transfer.js';
 import { createLearningSessionTestContext, registerLearner, type LearningSessionTestContext } from './learning-session-test-harness.js';
 
@@ -58,6 +59,7 @@ describe('adaptive learning visibility and recurrence', () => {
     const sessions = new LearningSessionsService(
       context.database, context.app.get(CurriculumService), service, new SessionCreationService(), context.app.get(ProgramContextService),
       context.app.get(CurriculumEligibilityService),
+      context.app.get(CurriculumProgressService),
     );
     expect(await service.getReviewQueue(user.body.id)).toEqual([]);
     const before = await sessions.createSession(user.body.id, 60, randomUUID());

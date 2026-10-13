@@ -13,6 +13,9 @@ export interface CheckpointEvidence {
   readonly curriculumReady: boolean;
 }
 
+export const passesEvaluatedEvidence = (evaluationStatus: string, score: number | null): boolean =>
+  evaluationStatus === 'EVALUATED' && score !== null && score >= 0.7;
+
 export function evaluateCheckpoint(evidence: CheckpointEvidence) {
   const reinforcement: CheckpointReinforcement[] = [];
   const skills = Object.fromEntries(['reading', 'listening', 'speaking', 'writing'].map((skill) => {
@@ -26,7 +29,7 @@ export function evaluateCheckpoint(evidence: CheckpointEvidence) {
     const score = evaluated.length === 0 ? null : Math.min(1, Math.max(0,
       0.7 + evaluated.reduce((sum, value) => sum + (value - 0.7), 0) / evaluated.length,
     ));
-    const weakBlocks = blocks.filter((block) => block.score !== null && block.score < 0.7);
+    const weakBlocks = blocks.filter((block) => block.score !== null && !passesEvaluatedEvidence('EVALUATED', block.score));
     if ((score !== null && score < 0.7) || weakBlocks.length > 0) {
       reinforcement.push({
         skill: skill as LearningSkill,
@@ -45,7 +48,8 @@ export function evaluateCheckpoint(evidence: CheckpointEvidence) {
         action: 'Complete practice for these Language Blocks and wait for scored evaluation before reassessing.',
       });
     }
-    return [skill, { score, threshold: 0.7, pendingCount, evaluatedCount: evaluated.length, passed: pendingCount === 0 && score !== null && score >= 0.7 && weakBlocks.length === 0 }];
+    return [skill, { score, threshold: 0.7, pendingCount, evaluatedCount: evaluated.length,
+      passed: pendingCount === 0 && passesEvaluatedEvidence('EVALUATED', score) && weakBlocks.length === 0 }];
   })) as CheckpointSkills;
   return {
     status: !evidence.allMissionsCompleted || !evidence.curriculumReady ? 'not_ready' :

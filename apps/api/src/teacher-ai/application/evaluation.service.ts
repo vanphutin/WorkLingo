@@ -18,6 +18,7 @@ import { PrismaService } from '../../common/database/prisma.service.js';
 import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
 import { JobsService } from '../../jobs/application/jobs.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
+import { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
 import { aggregateEvaluation, resolveFoundationRubric } from '../domain/foundation-rubrics.js';
 
 export interface EvaluationServiceOptions {
@@ -54,6 +55,7 @@ export class EvaluationService {
     @Inject(LanguageEvaluationPort) private readonly language: LanguageEvaluationPort,
     @Inject(MasteryService) private readonly mastery: MasteryService,
     @Inject(EVALUATION_SERVICE_OPTIONS) private readonly options: EvaluationServiceOptions,
+    @Inject(CurriculumProgressService) private readonly curriculumProgress: CurriculumProgressService,
     @Optional() @Inject(JobsService) private readonly jobs?: JobsService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
@@ -272,6 +274,7 @@ export class EvaluationService {
             skills: activity.skills,
             tx: transaction,
           });
+          await this.curriculumProgress.projectSession(attempt.session.id, transaction);
         }
         return { id: result.id, score: result.score };
       });
