@@ -40,15 +40,22 @@ export class IeltsIntegratedLearnerService {
         where: { session: { learnerId }, completedAt: { not: null } },
         select: { skill: true, questionType: true, result: true }, orderBy: { completedAt: 'desc' }, take: 12,
       });
+      const bridgeEvidence = await tx.ieltsBridgeProgress.findMany({
+        where: { learnerId }, select: { stageResults: true, moduleVersion: { select: { skill: true } } },
+      });
       const dueReviewSkills = new Set<LearningSkill>(recentBlocks.filter((block) => {
         const result = block.result as { correct?: boolean } | null;
         return result?.correct === false;
       }).map((block) => learningSkillSchema.parse(block.skill)));
+      for (const evidence of bridgeEvidence) {
+        const results = Array.isArray(evidence.stageResults) ? evidence.stageResults : [];
+        if (results.some((item) => typeof item === 'object' && item !== null && 'correct' in item && item.correct === false)) dueReviewSkills.add(learningSkillSchema.parse(evidence.moduleVersion.skill));
+      }
       const plan = planIntegratedSession({
         profileVersionId: profile.currentPublishedVersion.id,
         profile: ieltsIntegratedProfileContentSchema.parse(profile.currentPublishedVersion.content),
         difficulty: parsed.difficulty, versions: candidates, dueReviewSkills,
-        recentQuestionTypes: new Set(recentBlocks.map((block) => block.questionType)),
+        recentQuestionTypes: recentBlocks.map((block) => block.questionType),
       });
       const startedAt = new Date();
       const created = await tx.ieltsIntegratedSession.create({ data: { learnerId, clientSessionId: parsed.clientSessionId, profileVersionId: profile.currentPublishedVersion.id, durationMinutes: parsed.durationMinutes, difficulty: parsed.difficulty, planSnapshot: plan as unknown as Prisma.InputJsonValue, startedAt, blocks: { create: plan.blocks.map((block) => ({ moduleVersionId: block.moduleVersionId, order: block.order, skill: block.skill, targetMinutes: block.targetMinutes, questionType: block.questionType, mode: block.mode, startedAt: block.order === 1 ? startedAt : null })) } }, include: includeSession });
@@ -69,7 +76,8 @@ export class IeltsIntegratedLearnerService {
       if (session.currentBlockIndex !== parsed.blockIndex) throw new UnprocessableEntityException({ code: 'IELTS_INTEGRATED_BLOCK_LOCKED' });
       const block = session.blocks[parsed.blockIndex]!; const stage = this.practiceStage(block.moduleVersion.content);
       const correct = this.evaluate(stage.task, parsed.answer); const now = new Date(); const last = parsed.blockIndex === 3;
-      await tx.ieltsIntegratedSessionBlock.update({ where: { id: block.id }, data: { result: { correct, timedOut: false } as Prisma.InputJsonValue, completedAt: now } });
+      const timedOut = !!block.startedAt && now.getTime() > block.startedAt.getTime() + block.targetMinutes * 60_000;
+      await tx.ieltsIntegratedSessionBlock.update({ where: { id: block.id }, data: { result: { correct, timedOut } as Prisma.InputJsonValue, completedAt: now } });
       if (!last) await tx.ieltsIntegratedSessionBlock.update({ where: { id: session.blocks[parsed.blockIndex + 1]!.id }, data: { startedAt: now } });
       const updatedCount = await tx.ieltsIntegratedSession.updateMany({ where: { id: session.id, revision: parsed.expectedRevision }, data: { currentBlockIndex: last ? 3 : parsed.blockIndex + 1, completedAt: last ? now : null, revision: { increment: 1 } } });
       if (updatedCount.count !== 1) throw new ConflictException({ code: 'IELTS_INTEGRATED_REVISION_STALE' });

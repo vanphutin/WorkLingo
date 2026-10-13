@@ -16,4 +16,9 @@ describe('planIntegratedSession', () => {
   it('fails closed when one skill has no published content', () => {
     expect(() => planIntegratedSession({ profileVersionId: crypto.randomUUID(), profile: INITIAL_IELTS_INTEGRATED_PROFILES[0]!, difficulty: 'foundation', versions: versions.slice(0, 3), dueReviewSkills: new Set() })).toThrow('Missing published IELTS Bridge content for speaking');
   });
+  it('chooses the least recently used question type when every candidate is recent', () => {
+    const alternative = { id: crypto.randomUUID(), skill: 'listening' as const, questionType: 'listening_multiple_choice' as const };
+    const plan = planIntegratedSession({ profileVersionId: crypto.randomUUID(), profile: INITIAL_IELTS_INTEGRATED_PROFILES[0]!, difficulty: 'foundation', versions: [versions[0]!, alternative, ...versions.slice(1)], dueReviewSkills: new Set(), recentQuestionTypes: ['listening_form_completion', 'listening_multiple_choice'] });
+    expect(plan.blocks[0]?.moduleVersionId).toBe(alternative.id);
+  });
 });

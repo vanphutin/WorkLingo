@@ -37,7 +37,7 @@ async function setup(options: { bridgeCount?: number; existing?: typeof session 
   const existing = options.existing ?? null;
   const tx = {
     $executeRaw: vi.fn(),
-    ieltsBridgeProgress: { count: vi.fn().mockResolvedValue(options.bridgeCount ?? 4) },
+    ieltsBridgeProgress: { count: vi.fn().mockResolvedValue(options.bridgeCount ?? 4), findMany: vi.fn().mockResolvedValue([]) },
     ieltsIntegratedSession: {
       findUnique: vi.fn().mockResolvedValue(existing), findFirst: vi.fn().mockResolvedValue(existing),
       create: vi.fn().mockResolvedValue(session), updateMany: vi.fn().mockResolvedValue({ count: 1 }),
