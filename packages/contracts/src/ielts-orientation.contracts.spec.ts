@@ -52,15 +52,18 @@ describe('IELTS orientation contracts', () => {
   });
 
   it('keeps learner presentation payloads free of answer keys', () => {
+    const { imageAssetId: _imageAssetId, audioAssetId: _audioAssetId, ...learnerSlide } = slide;
     const learner = orientationLearnerPresentationSchema.parse({
       id: '44444444-4444-4444-8444-444444444444',
       orientationId: '55555555-5555-4555-8555-555555555555',
       title: 'IELTS Orientation',
       version: 1,
-      slides: [{ ...slide, question: { slug: 'safe-check', prompt: 'Choose.', options: ['A', 'B'] } }],
+      slides: [{ ...learnerSlide, imageUrl: null, audioUrl: null, question: { slug: 'safe-check', prompt: 'Choose.', options: ['A', 'B'] } }],
     });
 
     expect(learner.slides[0]?.question).not.toHaveProperty('answerIndex');
+    expect(learner.slides[0]).not.toHaveProperty('audioAssetId');
+    expect(learner.slides[0]).not.toHaveProperty('imageAssetId');
   });
 
   it('requires version and optimistic revision on every progress write', () => {
@@ -69,6 +72,7 @@ describe('IELTS orientation contracts', () => {
       orientationVersionId: '44444444-4444-4444-8444-444444444444',
       expectedRevision: 2,
       targetSlideIndex: 1,
-    }).expectedRevision).toBe(2);
+      complete: true,
+    }).complete).toBe(true);
   });
 });

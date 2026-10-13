@@ -128,7 +128,11 @@ export const orientationLearnerQuestionSchema = orientationQuestionBaseSchema.om
   answerIndex: true,
   explanation: true,
 });
-export const orientationLearnerSlideSchema = orientationSlideSchema.omit({ question: true }).extend({
+export const orientationLearnerSlideSchema = orientationSlideSchema.omit({
+  question: true,
+  imageAssetId: true,
+  audioAssetId: true,
+}).extend({
   imageUrl: z.string().min(1).nullable().default(null),
   audioUrl: z.string().min(1).nullable().default(null),
   question: orientationLearnerQuestionSchema.nullable(),
@@ -149,6 +153,7 @@ export const orientationAnswerRecordSchema = z.object({
   correct: z.boolean(),
   answeredAt: z.iso.datetime(),
 }).strict();
+export type OrientationAnswerRecord = z.infer<typeof orientationAnswerRecordSchema>;
 
 export const orientationProgressSchema = z.object({
   orientationVersionId: z.uuid(),
@@ -176,6 +181,7 @@ export const orientationProgressUpdateSchema = z.object({
     questionSlug: slugSchema,
     selectedIndex: z.number().int().nonnegative(),
   }).strict().optional(),
+  complete: z.boolean().default(false),
 }).strict();
 export type OrientationProgressUpdateInput = z.infer<typeof orientationProgressUpdateSchema>;
 
