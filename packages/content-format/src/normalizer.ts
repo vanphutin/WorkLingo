@@ -3,6 +3,7 @@ import type {
   LessonDocumentNode,
 } from './ast.js';
 import { validateLessonDocument } from './validator.js';
+import { normalizeFoundation, type FoundationMetadata } from './foundation-metadata.js';
 
 export interface NormalizedContentBlock {
   readonly id?: string | undefined;
@@ -77,6 +78,7 @@ export interface NormalizedAudioScript {
 }
 
 export interface NormalizedLessonDraft {
+  readonly foundation?: FoundationMetadata | undefined;
   readonly slug: string;
   readonly title: string;
   readonly level: string;
@@ -238,6 +240,7 @@ export function normalizeLessonDocument(
 
   return {
     slug: lesson.slug,
+    ...(document.foundation ? { foundation: normalizeFoundation(document) } : {}),
     title: lesson.title,
     level: lesson.level,
     durationMinutes: lesson.durationMinutes,

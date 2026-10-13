@@ -8,7 +8,8 @@ import { Test } from '@nestjs/testing';
 import { PrismaClient } from '@prisma/client';
 import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { canonicalLessonSource } from '@worklingo/test-fixtures';
+import { canonicalLessonSource, foundationLessonSource } from '@worklingo/test-fixtures';
+import { lessonSnapshotSchema } from '../../src/curriculum/domain/curriculum.types.js';
 
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
@@ -150,6 +151,24 @@ describe('Transactional publish, archive, and session version isolation', () => 
       sourceHash: hash,
     };
   }
+
+  it('preserves Foundation 1.1 metadata through publish and snapshot decoding', async () => {
+    const draft = await prepareValidatedDraftWithAudio(foundationLessonSource.replace('slug: handling-customer-complaints', 'slug: foundation-metadata-roundtrip'));
+    const result = await request(app.getHttpServer())
+      .post(`/api/v1/admin/content-imports/${draft.importId}/publish`)
+      .set('Cookie', adminCookie)
+      .send({ expectedDraftRevision: draft.revision, expectedSourceHash: draft.sourceHash,
+        idempotencyKey: `foundation-${randomUUID()}`, selectedAudioArtifacts: draft.selectedAudioArtifacts })
+      .expect(200);
+    const version = await database.lessonVersion.findUniqueOrThrow({ where: { id: result.body.lessonVersionId } });
+    expect(version.parsedContent).toMatchObject({ foundation: {
+      category: 'grammar', templateId: 'foundation-grammar', templateVersion: 1,
+      objectives: [{ slug: 'explain-complaint', required: true }],
+      activityObjectives: { 'reading-comprehension': ['explain-complaint'] },
+      responseRubrics: { 'activate-warmup': 'Explain the delay and use apologize for correctly.' },
+    } });
+    expect(lessonSnapshotSchema.parse(version.parsedContent)).toEqual(version.parsedContent);
+  });
 
   it('atomically publishes a validated lesson version with child records', async () => {
     const { importId, revision, selectedAudioArtifacts, sourceHash } =

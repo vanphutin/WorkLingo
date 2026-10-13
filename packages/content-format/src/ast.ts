@@ -4,6 +4,19 @@ export interface AstNode {
   readonly range: SourceRange;
 }
 
+export interface FoundationNode extends AstNode {
+  readonly category: string;
+  readonly templateId: string;
+  readonly templateVersion: number;
+}
+
+export interface ObjectiveNode extends AstNode {
+  readonly slug: string;
+  readonly statement: string;
+  readonly skills: readonly string[];
+  readonly required: string;
+}
+
 export interface LessonNode extends AstNode {
   readonly kind: 'lesson';
   readonly slug: string;
@@ -64,6 +77,7 @@ export interface ActivityNode extends AstNode {
   readonly skills: readonly string[];
   readonly contentRefs: readonly string[];
   readonly languageBlockRefs: readonly string[];
+  readonly objectiveRefs?: readonly string[] | undefined;
   readonly audioRef?: string | undefined;
   readonly question?: string | undefined;
   readonly options: readonly ActivityOptionNode[];
@@ -77,6 +91,8 @@ export interface ActivityNode extends AstNode {
 export interface LessonDocumentNode extends AstNode {
   readonly kind: 'document';
   readonly formatVersion: string;
+  readonly foundation?: FoundationNode | undefined;
+  readonly objectives?: readonly ObjectiveNode[] | undefined;
   readonly lesson?: LessonNode | undefined;
   readonly wordBanks: readonly WordBankNode[];
   readonly contents: readonly ContentNode[];

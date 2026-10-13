@@ -7,8 +7,9 @@ import type { ContentIssue } from './issues.js';
 import { parseLessonSource } from './parser.js';
 import type { NormalizedLessonDraft } from './normalizer.js';
 import { normalizeLessonDocument } from './normalizer.js';
+import { validateFoundation } from './foundation-metadata.js';
 
-export const PARSER_VERSION = '1.0.0';
+export const PARSER_VERSION = '1.1.0';
 
 export interface ValidationResult {
   readonly issues: readonly ContentIssue[];
@@ -37,7 +38,7 @@ export function validateLessonDocument(
   document: LessonDocumentNode,
   options?: { maxIssues?: number },
 ): ValidationResult {
-  const issues: ContentIssue[] = [];
+  const issues: ContentIssue[] = validateFoundation(document);
   const maxIssues = options?.maxIssues ?? 100;
 
   function addIssue(
@@ -65,7 +66,7 @@ export function validateLessonDocument(
     document.wordBanks.length +
     document.contents.length +
     document.audioScripts.length +
-    document.activities.length;
+    document.activities.length + (document.foundation ? 1 : 0) + (document.objectives?.length ?? 0);
 
   if (totalSections > MAX_SECTIONS) {
     addIssue(
@@ -391,6 +392,8 @@ export function validateLessonDocument(
 
     // Evidence checks
     for (const ev of act.evidence) {
+      // Format 1.1 validates exact activity-bound content/audio lines in validateFoundation.
+      if (document.formatVersion === 'WorkLingoLesson/1.1') continue;
       const parts = ev.split(':');
       const cSlug = parts[0]!;
       const lineNumStr = parts[1];

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import type { MissionPurpose } from '@worklingo/contracts';
+import { foundationCategories } from '@worklingo/content-format';
 
 const text = z.string().min(1);
 const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
@@ -26,6 +27,12 @@ export const activitySchema = z.discriminatedUnion('activityType', [
   z.object({ ...activityBase, activityType: z.literal('writing'), payload: responsePayload }),
 ]);
 export const lessonSnapshotSchema = z.object({
+  foundation: z.object({
+    category: z.enum(foundationCategories), templateId: slug, templateVersion: z.literal(1),
+    objectives: z.array(z.object({ slug, statement: text, skills: z.array(skill).min(1).max(4), required: z.boolean() })).min(1).max(50),
+    activityObjectives: z.record(slug, z.array(slug).min(1).max(50)),
+    responseRubrics: z.record(slug, text),
+  }).optional(),
   title: text,
   contentBlocks: z.array(z.object({
     id: z.uuid(), slug, type: z.enum(['email', 'dialogue']), text,

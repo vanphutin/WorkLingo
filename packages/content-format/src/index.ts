@@ -4,3 +4,5 @@ export * from './ast.js';
 export * from './parser.js';
 export * from './validator.js';
 export * from './normalizer.js';
+export * from './foundation-metadata.js';
+export * from './foundation-templates.js';

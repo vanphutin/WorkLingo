@@ -1,4 +1,5 @@
 export { foundationMissionFixture } from './foundation-mission.fixture.js';
+export { foundationLessonSource } from './foundation-authoring.fixture.js';
 export { placementMissionFixture } from './placement-mission.fixture.js';
 export {
   canonicalLessonSource,

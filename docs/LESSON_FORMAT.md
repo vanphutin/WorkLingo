@@ -1,4 +1,39 @@
-# WorkLingo Lesson Format 1.0
+# WorkLingo Lesson Format 1.0 and Foundation 1.1
+
+## Foundation extension — Format 1.1
+
+Existing Format 1.0 sources remain supported without Foundation metadata. To author a Foundation lesson, use `FORMAT: WorkLingoLesson/1.1` and add these case-sensitive sections (the lowercase names in the implementation plan were conceptual):
+
+```text
+[FOUNDATION]
+category: grammar
+template_id: foundation-grammar
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE explain-request]
+statement: Understand a workplace request and respond with a justified next action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+```
+
+Use exactly one `[FOUNDATION]`; supported categories are `grammar`, `pronunciation`, `vocabulary`, `reading`, `listening`, `speaking`, `writing`. `template_id` is a kebab-case provenance identifier; version currently must be `1`. Metadata sections require closing tags. Declare 1–50 unique lesson-local objectives, each with a nonempty statement (maximum 1,000 characters), unique skills, and literal `true` or `false`. At least one objective must be required.
+
+Each `[ACTIVITY slug]` declares `objective_refs: explain-request` (multiple references separated by `|`). Every required objective skill must have a referencing activity of that actual type; labelling a reading question with extra skills is insufficient. These references are **lesson-local**. Admin must explicitly map published lesson activities to mission curriculum objectives; identical slugs across lessons never create automatic curriculum links.
+
+Format 1.1 keeps the existing four-skill execution model:
+
+- Reading/listening use `multiple_choice`, a nonempty `QUESTION`, valid answer/options, `EXPLANATION`, and `EVIDENCE`.
+- Evidence is an exact `slug:line` reference with a positive 1-based line. Reading references its declared content; listening references its own `audio_ref` script. Unknown, unrelated or out-of-range references are errors.
+- Speaking uses `shadowing`; writing uses `short_text`. Both need `QUESTION` (learner task), `prompt` (model response) and `rubric` (observable assessment criteria). Rubrics are preserved as authoring metadata; they do not change the current Teacher AI scoring policy.
+- All activities need explicit content/language-block references. Language blocks need pronunciation, grammar pattern and contextual examples so publication does not depend on fallback values.
+
+`getFoundationTemplate(category)` from `@worklingo/content-format` returns `{ id, version: 1, source }` for each of the seven categories. Sources are editable, four-skill **draft scaffolds**, not a completed curriculum. Replace every `TODO` marker, review all content and assessment criteria, validate, generate/select suitable audio, and publish through the normal Admin pipeline. Missing fields and scaffold markers block publication. Structural validation cannot establish educational quality; Admin must review accuracy and reasoning depth.
+
+Normalized and published snapshots retain `foundation`: category, template provenance, objectives, activity-objective mappings and response rubrics. Existing snapshots have no such field and remain readable. Format 1.1 adds no new activity executor. Parser version is `1.1.0`; source positions retain BOM/CRLF offsets and Vietnamese text.
+
+## Base Format 1.0
 
 Format 1.0 is the plain-text authoring contract used by the local Content Admin pipeline:
 

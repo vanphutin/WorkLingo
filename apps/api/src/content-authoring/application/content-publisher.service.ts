@@ -408,6 +408,7 @@ export class ContentPublisherService {
 
       // Build UUID-backed snapshot conforming to lessonSnapshotSchema
       const snapshot = {
+        ...(normalizedDraft.foundation ? { foundation: normalizedDraft.foundation } : {}),
         title: normalizedDraft.title,
         contentBlocks: normalizedDraft.contentBlocks.map((b) => ({
           id: b.id ?? randomUUID(),

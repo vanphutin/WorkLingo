@@ -7,6 +7,8 @@ import {
   type LessonDocumentNode,
   type LessonNode,
   type WordBankNode,
+  type FoundationNode,
+  type ObjectiveNode,
 } from './ast.js';
 import type { ContentIssue } from './issues.js';
 import { createSourceLocator, type SourceRange } from './source-location.js';
@@ -27,6 +29,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
   const audioScripts: AudioScriptNode[] = [];
   const activities: ActivityNode[] = [];
   let lesson: LessonNode | undefined;
+  let foundation: FoundationNode | undefined;
+  const objectives: ObjectiveNode[] = [];
 
   // Split into lines while tracking line offsets in source
   // We can scan line by line
@@ -108,13 +112,13 @@ export function parseLessonSource(source: string): ParseLessonResult {
     if (cleanText.startsWith('FORMAT:')) {
       const parts = cleanText.split(':');
       const val = parts.slice(1).join(':').trim();
-      if (val === 'WorkLingoLesson/1.0') {
+      if (val === 'WorkLingoLesson/1.0' || val === 'WorkLingoLesson/1.1') {
         formatFound = true;
         formatVersion = val;
       } else {
         addIssue(
           'PARSE_UNSUPPORTED_FORMAT',
-          `Unsupported format: '${val}'. Expected 'WorkLingoLesson/1.0'`,
+          `Unsupported format: '${val}'. Expected 'WorkLingoLesson/1.0' or 'WorkLingoLesson/1.1'`,
           line.startOffset,
           line.endOffset,
         );
@@ -198,7 +202,21 @@ export function parseLessonSource(source: string): ParseLessonResult {
 
       lineIdx++;
 
-      if (sectionType === 'LESSON') {
+      if (sectionType === 'FOUNDATION' || sectionType === 'OBJECTIVE') {
+        if (formatVersion !== 'WorkLingoLesson/1.1') {
+          addIssue('PARSE_UNSUPPORTED_SECTION', 'Foundation metadata requires Format 1.1', line.startOffset, line.endOffset);
+        }
+        const fields = parseScalarSection(sectionType === 'FOUNDATION'
+          ? ['category', 'template_id', 'template_version']
+          : ['statement', 'skills', 'required'], sectionType, true);
+        const range = locator.range(sectionStartOffset, lines[lineIdx - 1]!.fullEndOffset);
+        if (sectionType === 'FOUNDATION') {
+          if (foundation || sectionSlug) addIssue('PARSE_INVALID_FOUNDATION', 'Exactly one unlabelled FOUNDATION section is allowed', line.startOffset, line.endOffset);
+          foundation = { range, category: fields['category']?.value ?? '', templateId: fields['template_id']?.value ?? '', templateVersion: Number(fields['template_version']?.value) };
+        } else {
+          objectives.push({ range, slug: sectionSlug ?? '', statement: fields['statement']?.value ?? '', skills: (fields['skills']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean), required: fields['required']?.value ?? '' });
+        }
+      } else if (sectionType === 'LESSON') {
         const fields = parseScalarSection(['slug', 'title', 'level', 'duration_minutes', 'objective']);
         const endOffset = lineIdx > 0 ? lines[lineIdx - 1]!.fullEndOffset : sectionStartOffset;
         const slugVal = fields['slug']?.value || sectionSlug || '';
@@ -553,6 +571,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
           'rubric',
           'prompt',
           'answer',
+          ...(formatVersion === 'WorkLingoLesson/1.1' ? ['objective_refs'] : []),
         ]);
 
         while (lineIdx < lines.length) {
@@ -740,6 +759,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
           skills,
           contentRefs,
           languageBlockRefs,
+          ...(formatVersion === 'WorkLingoLesson/1.1' ? { objectiveRefs: (scalarFields['objective_refs']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean) } : {}),
           audioRef: scalarFields['audio_ref']?.value,
           question: questionText,
           options,
@@ -758,9 +778,11 @@ export function parseLessonSource(source: string): ParseLessonResult {
     }
   }
 
-  function parseScalarSection(allowedKeys: string[]): Record<string, { value: string; range: SourceRange }> {
+  function parseScalarSection(allowedKeys: string[], sectionType = 'LESSON', requireClosing = false): Record<string, { value: string; range: SourceRange }> {
     const fields: Record<string, { value: string; range: SourceRange }> = {};
     const allowed = new Set(allowedKeys);
+    const startOffset = lines[lineIdx - 1]!.startOffset;
+    let closed = false;
 
     while (lineIdx < lines.length) {
       const line = lines[lineIdx]!;
@@ -772,7 +794,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
       }
 
       if (trimmed.startsWith('[')) {
-        if (trimmed === '[/LESSON]') {
+        if (trimmed === `[/${sectionType}]`) {
+          closed = true;
           lineIdx++;
           break;
         }
@@ -803,6 +826,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
       lineIdx++;
     }
 
+    if (requireClosing && !closed) addIssue('PARSE_UNCLOSED_SECTION', `Unclosed [${sectionType}]`, startOffset, lines[lineIdx - 1]!.endOffset);
     return fields;
   }
 
@@ -813,6 +837,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
     kind: 'document',
     range: locator.range(0, len),
     formatVersion,
+    ...(formatVersion === 'WorkLingoLesson/1.1' ? { foundation, objectives } : {}),
     lesson,
     wordBanks,
     contents,
