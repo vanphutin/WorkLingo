@@ -28,3 +28,27 @@ export const curriculumDefinitionInputSchema = z.object({
 }).strict();
 export type CurriculumDefinitionInput = z.infer<typeof curriculumDefinitionInputSchema>;
 export type FoundationCategory = z.infer<typeof foundationCategorySchema>;
+
+export const foundationCommandSchema = z.object({
+  expectedRevision: z.number().int().positive(),
+  idempotencyKey: z.uuid(),
+}).strict();
+export const saveFoundationDraftSchema = z.object({
+  definition: curriculumDefinitionInputSchema,
+  expectedRevision: z.number().int().positive().nullable(),
+  idempotencyKey: z.uuid(),
+}).strict();
+export const curriculumRevisionSchema = curriculumDefinitionInputSchema.extend({
+  id: z.uuid(), missionId: z.uuid(), revision: z.number().int().positive(),
+  status: z.enum(['PUBLISHED', 'ARCHIVED']),
+}).strict();
+export const curriculumDraftSchema = z.object({
+  missionId: z.uuid(), revision: z.number().int().positive().nullable(),
+  status: z.enum(['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED']).nullable(),
+  definition: curriculumDefinitionInputSchema.nullable(),
+  publishedRevisions: z.array(curriculumRevisionSchema),
+}).strict();
+export type FoundationCommand = z.infer<typeof foundationCommandSchema>;
+export type SaveFoundationDraftInput = z.infer<typeof saveFoundationDraftSchema>;
+export type CurriculumRevisionDto = z.infer<typeof curriculumRevisionSchema>;
+export type CurriculumDraftDto = z.infer<typeof curriculumDraftSchema>;
