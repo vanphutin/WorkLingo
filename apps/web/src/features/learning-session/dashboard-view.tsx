@@ -4,8 +4,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
-import type { EngagementSummaryDto } from '@worklingo/contracts';
+import type { CurriculumRoadmapDto, EngagementSummaryDto } from '@worklingo/contracts';
 import { EngagementPanel } from '../engagement/engagement-panel';
+import { CurriculumRoadmap } from '../curriculum-roadmap/curriculum-roadmap';
 
 interface DashboardViewProps {
   readonly progress: LearnerProgressDto | null;
@@ -24,6 +25,10 @@ interface DashboardViewProps {
   readonly engagementError?: string | null | undefined;
   readonly onRetryEngagement?: (() => void) | undefined;
   readonly onUpdateTarget?: ((targetDays: number) => Promise<void> | void) | undefined;
+  readonly roadmap?: CurriculumRoadmapDto | null | undefined;
+  readonly roadmapLoading?: boolean | undefined;
+  readonly roadmapError?: string | null | undefined;
+  readonly onRetryRoadmap?: (() => void) | undefined;
 }
 
 const ALL_DURATIONS = [45, 60, 90, 120, 150] as const;
@@ -55,6 +60,10 @@ export function DashboardView({
   engagementError = null,
   onRetryEngagement,
   onUpdateTarget,
+  roadmap,
+  roadmapLoading = false,
+  roadmapError = null,
+  onRetryRoadmap,
 }: DashboardViewProps) {
   const [availabilityOverride, setAvailabilityOverride] = useState<{
     source: readonly number[];
@@ -230,6 +239,15 @@ export function DashboardView({
           </div>
         </section>
       </div>
+
+      {(roadmap !== undefined || roadmapLoading || roadmapError !== null) ? (
+        <CurriculumRoadmap
+          roadmap={roadmap ?? null}
+          isLoading={roadmapLoading}
+          error={roadmapError}
+          onRetry={onRetryRoadmap}
+        />
+      ) : null}
 
       {(engagement !== undefined || engagementLoading || engagementError !== null) && (
         <EngagementPanel

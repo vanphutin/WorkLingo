@@ -5,6 +5,7 @@ import {
   contentIssueSchema,
   contentStatusSchema,
   createCheckpointAssessmentSchema,
+  curriculumRoadmapSchema,
   generateAudioResultSchema,
   evaluationDtoSchema,
   jobDtoSchema,
@@ -21,6 +22,7 @@ import {
   type ContentImportDto,
   type ContentPreviewDto,
   type CreateCheckpointAssessment,
+  type CurriculumRoadmapDto,
   type GenerateAudioInput,
   type GenerateAudioResult,
   type EvaluationDto,
@@ -43,6 +45,7 @@ import {
 } from './learner-schemas';
 export type { CheckpointAssessmentDto, ProgressionSummaryDto, ErrorBankDto, ErrorBankQuery, LearningSkill, MasteryMapDto, MemoryHealthDto } from './learner-schemas';
 export type { RecordingSubmissionResult, SessionAvailabilityDto } from '@worklingo/contracts';
+export type { CurriculumRoadmapDto } from '@worklingo/contracts';
 
 export class ApiError extends Error {
   readonly code: string;
@@ -393,6 +396,10 @@ export class ApiClient {
 
   async getProgress(): Promise<LearnerProgressDto> {
     return this.request('/me/progress', { method: 'GET' }, learnerProgressDtoSchema);
+  }
+
+  async getCurriculumRoadmap(): Promise<CurriculumRoadmapDto> {
+    return this.request('/me/curriculum-roadmap', { method: 'GET' }, curriculumRoadmapSchema);
   }
 
   async getMasteryMap(): Promise<MasteryMapDto> {

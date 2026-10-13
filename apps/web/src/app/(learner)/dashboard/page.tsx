@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import type { EngagementSummaryDto, ProgramContextDto } from '@worklingo/contracts';
+import type { CurriculumRoadmapDto, EngagementSummaryDto, ProgramContextDto } from '@worklingo/contracts';
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
 import {
   apiClient,
@@ -20,6 +20,9 @@ export default function DashboardPage() {
   const [availability, setAvailability] = useState<SessionAvailabilityDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [roadmap, setRoadmap] = useState<CurriculumRoadmapDto | null>(null);
+  const [roadmapLoading, setRoadmapLoading] = useState(true);
+  const [roadmapError, setRoadmapError] = useState<string | null>(null);
 
   const [engagement, setEngagement] = useState<EngagementSummaryDto | null>(null);
   const [engagementLoading, setEngagementLoading] = useState(true);
@@ -57,10 +60,23 @@ export default function DashboardPage() {
     }
   };
 
+  const loadRoadmap = async () => {
+    try {
+      setRoadmapLoading(true);
+      setRoadmapError(null);
+      setRoadmap(await apiClient.getCurriculumRoadmap());
+    } catch (err) {
+      setRoadmapError(err instanceof Error ? err.message : 'Failed to load curriculum roadmap');
+    } finally {
+      setRoadmapLoading(false);
+    }
+  };
+
   const loadData = async () => {
     await Promise.allSettled([
       loadProgressAndAvailability(),
       loadEngagement(),
+      loadRoadmap(),
     ]);
   };
 
@@ -93,6 +109,10 @@ export default function DashboardPage() {
       engagementError={engagementError}
       onRetryEngagement={loadEngagement}
       onUpdateTarget={handleUpdateTarget}
+      roadmap={roadmap}
+      roadmapLoading={roadmapLoading}
+      roadmapError={roadmapError}
+      onRetryRoadmap={loadRoadmap}
     />
   );
 }

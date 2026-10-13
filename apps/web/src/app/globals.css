@@ -338,6 +338,68 @@ a:focus-visible {
   gap: 1rem;
 }
 
+.roadmap-panel {
+  margin-top: 1.5rem;
+}
+
+.roadmap-heading-row,
+.roadmap-card-header,
+.roadmap-objectives li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.roadmap-heading-row > p {
+  max-width: 34rem;
+  color: #546158;
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+.roadmap-card {
+  border-top: 0.25rem solid #aeb8b1;
+}
+
+.roadmap-card-completed { border-top-color: #17643a; }
+.roadmap-card-in_progress { border-top-color: #2769a8; }
+.roadmap-card-locked { opacity: 0.82; }
+
+.roadmap-state,
+.roadmap-review-due {
+  font-weight: 700;
+}
+
+.secondary-action-link {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.roadmap-objectives,
+.roadmap-reasons {
+  padding-left: 1.25rem;
+}
+
+.roadmap-objectives li + li,
+.roadmap-reasons li + li {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .roadmap-heading-row,
+  .roadmap-card-header,
+  .roadmap-objectives li {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}
+
 .card-tag {
   color: #17643a;
   font-size: 0.75rem;

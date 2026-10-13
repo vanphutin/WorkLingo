@@ -11,6 +11,21 @@ function respond(body: unknown) {
 }
 
 describe('learner evidence API', () => {
+  it('loads the curriculum roadmap with strict parsing and credentials', async () => {
+    const body = {
+      programId: '11111111-1111-4111-8111-111111111111', enrollmentId: '22222222-2222-4222-8222-222222222222',
+      items: [{
+        missionId: '33333333-3333-4333-8333-333333333333', revisionId: '44444444-4444-4444-8444-444444444444',
+        title: 'Workplace requests', state: 'available', unmetPrerequisites: [], reviewDue: false, activeSessionId: null,
+        objectives: [{ slug: 'request', statement: 'Handle a request', skills: ['reading'], required: true, completed: false }],
+      }],
+    };
+    const network = respond(body);
+    expect((await client.getCurriculumRoadmap()).items[0]?.state).toBe('available');
+    expect(network).toHaveBeenCalledWith('/api/v1/me/curriculum-roadmap', expect.objectContaining({ credentials: 'include', method: 'GET' }));
+    respond({ ...body, items: [{ ...body.items[0], state: 'complete' }] });
+    await expect(client.getCurriculumRoadmap()).rejects.toThrow();
+  });
   it('preserves unassessed skills and a scored zero in the exact mastery-map response', async () => {
     respond(masteryMap);
     const map = await client.getMasteryMap();
