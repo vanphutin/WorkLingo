@@ -15,3 +15,4 @@ export * from './program-context.contracts.ts';
 export * from './curriculum-foundation.contracts.ts';
 export * from './ielts-orientation.contracts.ts';
 export * from './ielts-bridge.contracts.ts';
+export * from './ielts-integrated-practice.contracts.ts';
