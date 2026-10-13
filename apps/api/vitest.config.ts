@@ -27,6 +27,17 @@ export default defineConfig({
   test: {
     env: {
       JOB_WORKER_ENABLED: 'false',
+      MICROSOFT_SPEECH_KEY: '',
+      MICROSOFT_SPEECH_REGION: '',
+      NODE_ENV: 'test',
+      OPENAI_API_KEY: '',
+      OPENAI_BASE_URL: '',
+      OPENAI_MODEL: '',
+      // Automated tests must stay deterministic and must never inherit paid or
+      // network-backed providers from a developer's local .env file.
+      WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'fake',
+      WORKLINGO_STT_PROVIDER: 'fake',
+      WORKLINGO_TTS_PROVIDER: 'fake-tts',
     },
     environment: 'node',
     // Integration suites share the local PostgreSQL instance and mutate schema data.

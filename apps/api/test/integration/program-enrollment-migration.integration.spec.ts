@@ -25,10 +25,19 @@ describe('Program enrollment migration', () => {
       const version = await database.lessonVersion.create({ data: {
         lessonId: lesson.id, version: 1, title: 'Legacy lesson', sourceHash: randomUUID(), parsedContent: {},
       } });
-      const session = await database.learningSession.create({ data: {
-        learnerId: learner, clientSessionId: randomUUID(), missionId: mission.id,
-        lessonVersionId: version.id, durationMinutes: 60, planSnapshot: {}, currentCheckpoint: 3,
-      } });
+      const session = { id: randomUUID() };
+      // This rehearsal intentionally runs against the pre-Phase-2 schema. Using
+      // the current generated Prisma model here would include columns that do
+      // not exist until later migrations, defeating the migration boundary.
+      await database.$executeRaw`
+        INSERT INTO "LearningSession" (
+          "id", "learnerId", "clientSessionId", "missionId", "lessonVersionId",
+          "durationMinutes", "planSnapshot", "currentCheckpoint", "updatedAt"
+        ) VALUES (
+          ${session.id}::uuid, ${learner}::uuid, ${randomUUID()}::uuid, ${mission.id}::uuid,
+          ${version.id}::uuid, 60, ${JSON.stringify({})}::jsonb, 3, CURRENT_TIMESTAMP
+        )
+      `;
       await apply();
       const rows = await database.$queryRawUnsafe<Array<{ learnerId: string; currentLevelId: string; revision: number }>>(
         'SELECT "learnerId", "currentLevelId", "revision" FROM "LearnerProgramEnrollment"',
@@ -40,9 +49,18 @@ describe('Program enrollment migration', () => {
       expect(profiles).toEqual(expect.arrayContaining([
         { userId: learner, activeProgramId: INTERMEDIATE }, { userId: pending, activeProgramId: null },
       ]));
-      expect(await database.learningSession.findUnique({ where: { id: session.id } })).toMatchObject({
+      const sessions = await database.$queryRaw<Array<{
+        currentCheckpoint: number;
+        id: string;
+        lessonVersionId: string;
+        missionId: string;
+      }>>`
+        SELECT "id", "missionId", "lessonVersionId", "currentCheckpoint"
+        FROM "LearningSession" WHERE "id" = ${session.id}::uuid
+      `;
+      expect(sessions).toEqual([{
         id: session.id, missionId: mission.id, lessonVersionId: version.id, currentCheckpoint: 3,
-      });
+      }]);
     });
   }, 60_000);
 
