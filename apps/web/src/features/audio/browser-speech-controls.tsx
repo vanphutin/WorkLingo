@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useBrowserSpeech } from './use-browser-speech';
 
 export function BrowserSpeechControls(props: {
@@ -7,7 +8,9 @@ export function BrowserSpeechControls(props: {
   readonly preferredVoiceId?: string | null;
   readonly text: string;
 }) {
-  const speech = useBrowserSpeech(props);
+  const [rate, setRate] = useState(1);
+  const [volume, setVolume] = useState(1);
+  const speech = useBrowserSpeech({ ...props, rate, volume });
   if (!speech.supported) {
     return (
       <div className="audio-speech-controls">
@@ -42,6 +45,10 @@ export function BrowserSpeechControls(props: {
         >
           Stop
         </button>
+      </div>
+      <div className="audio-settings-actions">
+        <label>Speed<select value={rate} onChange={(event) => setRate(Number(event.target.value))}><option value="0.75">0.75×</option><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></label>
+        <label>Volume<input type="range" min="0" max="1" step="0.1" value={volume} onChange={(event) => setVolume(Number(event.target.value))} /></label>
       </div>
       <p className="audio-settings-note" aria-live="polite">
         {speech.error ?? (

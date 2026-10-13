@@ -18,7 +18,9 @@ export interface BrowserSpeechController {
 export function useBrowserSpeech(input: {
   readonly lang: string;
   readonly preferredVoiceId?: string | null;
+  readonly rate?: number;
   readonly text: string;
+  readonly volume?: number;
 }): BrowserSpeechController {
   const supported = typeof window !== 'undefined'
     && 'speechSynthesis' in window
@@ -63,7 +65,7 @@ export function useBrowserSpeech(input: {
         window.speechSynthesis.cancel();
       }
     };
-  }, [input.lang, input.preferredVoiceId, input.text, supported]);
+  }, [input.lang, input.preferredVoiceId, input.rate, input.text, input.volume, supported]);
 
   const play = useCallback(() => {
     if (!supported) {
@@ -75,6 +77,8 @@ export function useBrowserSpeech(input: {
     synthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(input.text);
     utterance.lang = input.lang;
+    utterance.rate = input.rate ?? 1;
+    utterance.volume = input.volume ?? 1;
     utterance.voice = resolvedVoice;
     activeUtterance.current = utterance;
     utterance.onend = () => {
@@ -91,7 +95,7 @@ export function useBrowserSpeech(input: {
     setError(null);
     setStatus('speaking');
     synthesis.speak(utterance);
-  }, [input.lang, input.text, resolvedVoice, supported]);
+  }, [input.lang, input.rate, input.text, input.volume, resolvedVoice, supported]);
 
   const pauseOrResume = useCallback(() => {
     if (!supported || status === 'idle' || status === 'error') return;

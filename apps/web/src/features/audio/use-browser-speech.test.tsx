@@ -11,6 +11,8 @@ class FakeUtterance {
   onerror: (() => void) | null = null;
   text: string;
   voice: SpeechSynthesisVoice | null = null;
+  rate = 1;
+  volume = 1;
 
   constructor(text: string) { this.text = text; }
 }
@@ -20,8 +22,8 @@ const englishVoice = {
   name: 'English Voice', voiceURI: 'voice-en',
 } as SpeechSynthesisVoice;
 
-function Harness({ text = 'Hello team' }: { readonly text?: string }) {
-  const speech = useBrowserSpeech({ lang: 'en-US', preferredVoiceId: 'missing', text });
+function Harness({ text = 'Hello team', rate, volume }: { readonly text?: string; readonly rate?: number; readonly volume?: number }) {
+  const speech = useBrowserSpeech({ lang: 'en-US', preferredVoiceId: 'missing', text, ...(rate === undefined ? {} : { rate }), ...(volume === undefined ? {} : { volume }) });
   return (
     <div>
       <p>{speech.status}</p>
@@ -83,5 +85,11 @@ describe('useBrowserSpeech', () => {
     expect(cancel).toHaveBeenCalled();
     unmount();
     expect(cancel).toHaveBeenCalledTimes(3);
+  });
+
+  it('applies learner playback speed and volume to browser speech', () => {
+    render(<Harness rate={1.25} volume={0.6} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+    expect(speak.mock.calls[0]?.[0]).toMatchObject({ rate: 1.25, volume: 0.6 });
   });
 });
