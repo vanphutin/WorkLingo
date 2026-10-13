@@ -296,6 +296,17 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Giới hạn:** Completion Orientation không phải band score, IELTS admission cuối cùng hay Phase 5
   Bridge. Các capability đó cần policy/calibration riêng.
 
+## D-033 — IELTS Bridge dùng ten-stage pedagogy và version-bound progress
+
+- **Trạng thái:** Accepted (IELTS Phase 5)
+- **Ngày:** 2026-10-13
+- **Quyết định:** Mỗi Bridge module dùng đúng mười stage từ introduction đến review. Admin publish
+  snapshot bất biến; learner start ghim version và mọi progress, timer, evaluation bám version đó.
+- **Bảo mật nội dung:** Learner chỉ nhận task an toàn. Answer key, rubric và feedback authored ở server;
+  feedback chỉ xuất hiện sau submission.
+- **Completion:** Bridge hoàn tất khi bốn module required đại diện Listening, Reading, Writing và
+  Speaking hoàn tất. Đây là evidence cho Phase 6, không phải IELTS band score.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

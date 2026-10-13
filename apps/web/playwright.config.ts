@@ -133,6 +133,16 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
     },
     {
+      name: 'ielts-bridge-desktop',
+      testMatch: /ielts-bridge\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'ielts-bridge-mobile',
+      testMatch: /ielts-bridge\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
       name: 'admin-desktop',
       testMatch: /admin-(?:content-authoring|curriculum-audit|observability)\.spec\.ts/u,
       dependencies: ['foundation-desktop', 'foundation-mobile', 'teacher-ai-mobile', 'engagement-mobile'],

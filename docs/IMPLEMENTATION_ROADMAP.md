@@ -238,6 +238,13 @@ does not introduce IELTS scoring or a second learning engine. See
 Implementation evidence and remaining non-code release constraints are recorded in
 `docs/IELTS_PHASE_4_ORIENTATION_REVIEW.md`.
 
+## IELTS Phase 5 — Bridge (completed 2026-10-13)
+
+Phase 5 adds four seeded skill modules, a 31-question-type taxonomy, immutable Admin publishing,
+Orientation-gated learner access, ten-stage guided practice, durable timed work, version-bound resume,
+and responsive Admin/learner interfaces. Desktop and mobile E2E preserve a learner's pinned version
+while Admin publishes a replacement. See `docs/IELTS_PHASE_5_BRIDGE_REVIEW.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

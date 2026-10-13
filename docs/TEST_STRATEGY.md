@@ -255,6 +255,16 @@ Fake provider chỉ kiểm chứng wiring/retry. `workplace-placement-v1` và qu
 - `ielts-orientation.spec.ts` runs independently on Desktop Chrome and Pixel 5: Admin publish,
   learner locked state, evidence unlock, start/resume, responsive overflow, and version isolation.
 
+### IELTS Phase 5 Bridge coverage
+
+- Contract tests protect the 31-question taxonomy, exact ten-stage order, semantic task requirements,
+  and learner-safe DTOs.
+- Service/integration tests cover Orientation gating, ownership, pinned resumes, optimistic conflicts,
+  answer evaluation, durable timers, completion, seed idempotency, and immutable snapshots.
+- React tests cover Admin authoring and learner lock/start/resume/task/timer/feedback states.
+- `ielts-bridge.spec.ts` runs on Desktop Chrome and Pixel 5 and proves onboarding-compatible access,
+  responsive layout, reload resume, Admin republish, and learner version isolation.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:

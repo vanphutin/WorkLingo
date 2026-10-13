@@ -752,3 +752,15 @@ authorized `GET /media/{assetId}/content`. Status is `locked`, `available`, `in_
 `completed`. Progress writes require the pinned version ID, positive expected revision, target slide,
 optional answer, and explicit completion flag. Forward movement is one slide at a time; a knowledge
 check must be correct before advancing. Answer keys and internal asset IDs are never returned.
+
+## 19. IELTS Bridge (IELTS Phase 5)
+
+Admin endpoints under `/api/v1/admin/ielts-bridge/modules` provide list/get/create, draft replacement,
+validation, publish, and archive. Mutations use optimistic `expectedRevision`; create/save/publish use
+idempotency UUIDs. Publish returns the immutable version identity.
+
+Learner endpoints are `GET /api/v1/me/ielts-bridge/catalog`, `POST /modules/{id}/start`,
+`GET /modules/{id}/session`, and `PUT /modules/{id}/progress`. New starts require completed
+Orientation, while an existing pinned session can always resume. Progress updates identify the exact
+stage and revision, optionally start its timer, and explicitly complete it. Learner DTOs contain no
+answer keys or rubrics.

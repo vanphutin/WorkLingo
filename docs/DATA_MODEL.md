@@ -514,3 +514,13 @@ evidence snapshot that completed all required objectives.
   `WORKLINGO_DATA_DIR`; learner responses never expose the storage key.
 - `OrientationProgress` is unique per learner/version and stores current slide, optimistic revision,
   answer evidence, and nullable completion time. The version foreign key uses `Restrict` deletion.
+
+## 16. IELTS Bridge (IELTS Phase 5)
+
+- `IeltsBridgeModule` stores one mutable draft, lifecycle status, optimistic draft revision, and the
+  current published-version pointer.
+- `IeltsBridgeModuleVersion` stores the immutable content snapshot, skill, question type, requirement
+  flag, source hash, publication time, and archive state. Database constraints preserve module/version
+  identity, and the migration rejects update/delete of published snapshots.
+- `IeltsBridgeProgress` is unique per learner/module and pins `moduleVersionId`. It stores stage index,
+  optimistic revision, evaluated stage results, durable timer timestamps, and completion time.

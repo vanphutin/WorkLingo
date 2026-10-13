@@ -331,3 +331,13 @@ approve language calibration, content quality, cloud deployment or public releas
   Media streaming authorizes each asset against a version already pinned to that learner.
 - Uploaded local narration is preferred. If absent, the web client reads the authored transcript
   through browser speech; fake TTS output is never presented as release audio.
+
+## 21. IELTS Bridge boundary (IELTS Phase 5)
+
+- Bridge is a versioned ten-stage learning layer between Orientation and future IELTS coursework.
+- Admin drafts are mutable; each publish creates an immutable module version. A learner start pins
+  that version, and later publications affect only learners who have not started that module.
+- The learner projection removes answer keys, answer indexes, rubrics, and authored feedback.
+  Evaluation remains server-side; feedback is returned only after a valid stage submission.
+- Timed practice has an explicit server write for start and persists both start and deadline. Reloads
+  cannot reset the clock. Progress uses optimistic revisions and is owner-scoped.
