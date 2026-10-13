@@ -68,7 +68,14 @@ describe('IELTS orientation learner API', () => {
     await registration.agent.get('/api/v1/me/ielts-orientation').expect(200).expect(({ body }) => {
       expect(body).toMatchObject({ state: 'available', reasons: [], presentation: null, progress: null });
     });
-    const started = await registration.agent.post('/api/v1/me/ielts-orientation/start').expect(200);
+    const [started, replayedStart] = await Promise.all([
+      registration.agent.post('/api/v1/me/ielts-orientation/start'),
+      registration.agent.post('/api/v1/me/ielts-orientation/start'),
+    ]);
+    expect(started.status).toBe(200);
+    expect(replayedStart.status).toBe(200);
+    expect(replayedStart.body.progress.orientationVersionId).toBe(started.body.progress.orientationVersionId);
+    expect(await context.database.orientationProgress.count({ where: { learnerId: registration.user.id } })).toBe(1);
     expect(started.body).toMatchObject({ state: 'in_progress', presentation: { id: versionOne.id, version: 1 }, progress: { revision: 1, currentSlideIndex: 0 } });
     expect(started.body.presentation.slides[1].question).not.toHaveProperty('answerIndex');
     expect(started.body.presentation.slides[0]).not.toHaveProperty('audioAssetId');

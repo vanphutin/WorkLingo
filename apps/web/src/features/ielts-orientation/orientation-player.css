@@ -23,6 +23,7 @@
 .orientation-player button, .orientation-player__primary { min-height: 44px; border: 1px solid #17643a; border-radius: 6px; padding: .65rem 1rem; font-weight: 700; text-decoration: none; cursor: pointer; }
 .orientation-player__primary { background: #17643a; color: #fff; }
 .orientation-player button:disabled { opacity: .5; cursor: not-allowed; }
+.orientation-player button:focus-visible, .orientation-player a:focus-visible, .orientation-player input:focus-visible, .orientation-player select:focus-visible, .orientation-player summary:focus-visible { outline: 3px solid #2f7d50; outline-offset: 3px; }
 .orientation-player__actions { margin-top: 2rem; }
 @media (max-width: 620px) { .orientation-player { padding: .75rem; } .orientation-player__slide { border-radius: 8px; } .orientation-player__actions button { flex: 1; } }
 @media (prefers-reduced-motion: reduce) { .orientation-player__progress span { transition: none; } }

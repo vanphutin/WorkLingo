@@ -182,7 +182,9 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await completeSelfPlacementViaApi(learner2Page);
       await learner2Page.goto('/dashboard');
       await expect(learner2Page).toHaveURL(/.*\/dashboard/);
-      await learner2Page.getByRole('button', { name: /start 60-minute session/i }).click();
+      // The SPA route can replace the dashboard button before Playwright's
+      // navigation-aware click settles; the API request has already succeeded.
+      await learner2Page.getByRole('button', { name: /start 60-minute session/i }).click({ noWaitAfter: true });
       await expect(learner2Page).toHaveURL(/.*\/sessions\/.+/);
 
       const s2 = await readCurrentSession(learner2Page);

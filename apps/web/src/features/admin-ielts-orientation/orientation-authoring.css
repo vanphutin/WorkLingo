@@ -10,6 +10,7 @@
 .orientation-admin button { min-height: 44px; padding: .55rem .9rem; border: 1px solid #aeb8b0; border-radius: 6px; background: #fff; color: #1a241e; font-weight: 650; cursor: pointer; }
 .orientation-admin button.primary, .orientation-slide-list__heading button { background: #17643a; color: #fff; border-color: #17643a; }
 .orientation-admin button:disabled { opacity: .48; cursor: not-allowed; }
+.orientation-admin button:focus-visible, .orientation-admin input:focus-visible, .orientation-admin textarea:focus-visible, .orientation-admin select:focus-visible { outline: 3px solid #2f7d50; outline-offset: 2px; }
 .orientation-notice, .orientation-issues { padding: .85rem 1rem; border-left: 4px solid #17643a; background: #eef5ef; }
 .orientation-notice--error, .orientation-issues { border-color: #a12a2a; background: #fff2f2; }
 .orientation-admin__grid { display: grid; grid-template-columns: minmax(210px, .7fr) minmax(340px, 1.35fr) minmax(280px, 1fr); gap: 1rem; align-items: start; }

@@ -63,6 +63,7 @@ export function OrientationAuthoringWorkspace() {
   };
   const removeSlide = () => {
     if (draft.slides.length <= 3) return;
+    if (!window.confirm(`Delete slide "${selected.title}"? This change is not saved yet.`)) return;
     setDraft({ ...draft, slides: draft.slides.filter((_, index) => index !== selectedIndex) });
     setSelectedIndex(Math.max(0, selectedIndex - 1)); setValidatedRevision(null);
   };
@@ -87,7 +88,7 @@ export function OrientationAuthoringWorkspace() {
       <button type="button" onClick={() => void run(async () => { const saved = await adminIeltsOrientationClient.updateDraft({ expectedRevision: revision, content: draft }); setRevision(saved.draftRevision); setStatus(saved.status); setValidatedRevision(null); setMessage('Draft saved.'); })} disabled={busy}>Save draft</button>
       <button type="button" onClick={() => void run(async () => { const result = await adminIeltsOrientationClient.validate({ expectedRevision: revision }); setIssues(result.issues); setStatus(result.status); setValidatedRevision(result.canPublish ? revision : null); setMessage(result.canPublish ? 'Draft is ready to publish.' : 'Resolve validation issues before publishing.'); })} disabled={busy}>Validate draft</button>
       <button type="button" className="primary" onClick={() => void run(async () => { const result = await adminIeltsOrientationClient.publish({ expectedRevision: revision, idempotencyKey: crypto.randomUUID() }); setMessage(`Published version ${result.version}.`); await load(); })} disabled={busy || validatedRevision !== revision}>Publish version</button>
-      <button type="button" onClick={() => void run(async () => { await adminIeltsOrientationClient.archive(); setMessage('Published version archived.'); await load(); })} disabled={busy || versions.length === 0}>Archive release</button>
+      <button type="button" onClick={() => { if (window.confirm('Archive the current published release? Existing learner progress will remain pinned to its version.')) void run(async () => { await adminIeltsOrientationClient.archive(); setMessage('Published version archived.'); await load(); }); }} disabled={busy || versions.length === 0}>Archive release</button>
     </div>
     {issues.length > 0 ? <section className="orientation-issues" aria-label="Validation issues"><h2>Validation issues</h2><ul>{issues.map((issue) => <li key={`${issue.path}-${issue.message}`}><code>{issue.path}</code> {issue.message}</li>)}</ul></section> : null}
     <div className="orientation-admin__grid">
@@ -100,9 +101,9 @@ export function OrientationAuthoringWorkspace() {
           <button type="button" onClick={removeSlide} disabled={draft.slides.length <= 3}>Delete slide</button>
         </div>
       </aside>
-      <form className="orientation-editor" onSubmit={(event) => event.preventDefault()}>
-        <label>Course title<input value={draft.title} onChange={(event) => { setDraft({ ...draft, title: event.target.value }); setValidatedRevision(null); }} /></label>
-        <label>Course description<textarea value={draft.description} onChange={(event) => { setDraft({ ...draft, description: event.target.value }); setValidatedRevision(null); }} /></label>
+      <form className="orientation-editor" autoComplete="off" onSubmit={(event) => event.preventDefault()}>
+        <label>Course title<input name="courseTitle" value={draft.title} onChange={(event) => { setDraft({ ...draft, title: event.target.value }); setValidatedRevision(null); }} /></label>
+        <label>Course description<textarea name="courseDescription" value={draft.description} onChange={(event) => { setDraft({ ...draft, description: event.target.value }); setValidatedRevision(null); }} /></label>
         <hr />
         <label>Slide title<input value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
         <label>Stable slug<input value={selected.slug} onChange={(event) => updateSelected({ slug: event.target.value })} /></label>
@@ -120,7 +121,7 @@ export function OrientationAuthoringWorkspace() {
           <label>Explanation<textarea value={selected.question.explanation} onChange={(event) => updateSelected({ question: { ...selected.question!, explanation: event.target.value } })} /></label>
         </fieldset> : null}
       </form>
-      <aside className="orientation-preview" aria-label="Learner preview"><p>Slide {selectedIndex + 1} of {draft.slides.length}</p><h2>{selected.title}</h2>{selected.imageAssetId && mediaUrls[selected.imageAssetId] ? <img src={mediaUrls[selected.imageAssetId]} alt="Uploaded slide preview" /> : null}<p>{selected.body}</p><details><summary>Transcript</summary><p>{selected.transcript}</p></details>{selected.audioAssetId && mediaUrls[selected.audioAssetId] ? <audio controls src={mediaUrls[selected.audioAssetId]} /> : <p className="orientation-preview__fallback">Browser speech will read this transcript until narration is uploaded.</p>}</aside>
+      <aside className="orientation-preview" aria-label="Learner preview"><p>Slide {selectedIndex + 1} of {draft.slides.length}</p><h2>{selected.title}</h2>{selected.imageAssetId && mediaUrls[selected.imageAssetId] ? <img src={mediaUrls[selected.imageAssetId]} alt="Uploaded slide preview" width="1200" height="675" loading="lazy" /> : null}<p>{selected.body}</p><details><summary>Transcript</summary><p>{selected.transcript}</p></details>{selected.audioAssetId && mediaUrls[selected.audioAssetId] ? <audio controls src={mediaUrls[selected.audioAssetId]} /> : <p className="orientation-preview__fallback">Browser speech will read this transcript until narration is uploaded.</p>}</aside>
     </div>
     <section className="orientation-versions"><h2>Published versions</h2>{versions.length === 0 ? <p>No version published yet.</p> : <ul>{versions.map((version) => <li key={version.id}>Version {version.version} · {version.status} · {new Date(version.publishedAt).toLocaleString()}</li>)}</ul>}</section>
   </section>;

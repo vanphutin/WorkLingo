@@ -129,16 +129,20 @@ describe('Transactional publish, archive, and session version isolation', () => 
       })
       .expect(202);
 
-    // Poll until audio is ready
-    for (let i = 0; i < 20; i++) {
+    // Allow the local worker extra time when the full integration suite is
+    // competing for CPU and database connections. Never silently fall through.
+    let jobStatus = 'PENDING';
+    for (let i = 0; i < 100; i++) {
       const jobRes = await request(app.getHttpServer())
         .get(`/api/v1/jobs/${genRes.body.jobId}`)
         .set('Cookie', adminCookie)
         .expect(200);
 
-      if (jobRes.body.status === 'COMPLETED') break;
+      jobStatus = jobRes.body.status;
+      if (jobStatus === 'COMPLETED' || jobStatus === 'FAILED') break;
       await new Promise((r) => setTimeout(r, 100));
     }
+    expect(jobStatus).toBe('COMPLETED');
 
     const artifact = await database.audioArtifact.findFirstOrThrow({
       orderBy: { createdAt: 'desc' },

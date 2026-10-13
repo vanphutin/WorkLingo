@@ -8,7 +8,8 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 it('refreshes the current curriculum after confirmation and hides the old map while loading', async () => {
   let advanced = false;
-  let finishNewMap: (response: Response) => void = () => undefined;
+  let finishNewMap!: (response: Response) => void;
+  const newMapResponse = new Promise<Response>((resolve) => { finishNewMap = resolve; });
   const passedAssessment = { ...pendingAssessment, status: 'passed', canAdvance: true, nextLevelCode: 'FOUNDATION_2',
     skills: { reading: passedSkill, listening: passedSkill, speaking: passedSkill, writing: passedSkill } };
   vi.stubGlobal('fetch', vi.fn((url: string) => {
@@ -19,7 +20,7 @@ it('refreshes the current curriculum after confirmation and hides the old map wh
     if (url.endsWith('/progression')) return Promise.resolve(Response.json({ ...progression, latestAssessment: passedAssessment }));
     if (url.endsWith('/memory-health')) return Promise.resolve(Response.json(memoryHealth));
     if (url.endsWith('/mastery-map')) {
-      if (advanced) return new Promise<Response>((resolve) => { finishNewMap = resolve; });
+      if (advanced) return newMapResponse;
       return Promise.resolve(Response.json(masteryMap));
     }
     return Promise.resolve(Response.json(emptyErrorBank));

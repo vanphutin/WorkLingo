@@ -50,4 +50,22 @@ describe('OrientationAuthoringWorkspace', () => {
     expect(await screen.findByText('The draft changed elsewhere. Latest revision loaded; review before retrying.')).not.toBeNull();
     expect(adminIeltsOrientationClient.get).toHaveBeenCalledTimes(2);
   });
+
+  it('requires confirmation before deleting a slide or archiving a release', async () => {
+    const fourthSlide = { ...slide, id: '55555555-5555-4555-8555-555555555555', slug: 'extra' };
+    vi.mocked(adminIeltsOrientationClient.get).mockResolvedValue({
+      ...orientation,
+      draft: { ...orientation.draft, slides: [...orientation.draft.slides, fourthSlide] },
+      versions: [{ id: crypto.randomUUID(), version: 1, status: 'PUBLISHED', publishedAt: new Date().toISOString() }],
+    });
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<OrientationAuthoringWorkspace />);
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Delete slide' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Archive release' }));
+
+    expect(confirm).toHaveBeenCalledTimes(2);
+    expect(adminIeltsOrientationClient.archive).not.toHaveBeenCalled();
+    expect(screen.getAllByRole('button', { name: /Welcome$/ })).toHaveLength(4);
+  });
 });

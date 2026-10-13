@@ -69,7 +69,7 @@ export function OrientationPlayer() {
     <article className="orientation-player__slide">
       <div className="orientation-player__meta"><span>Slide {index + 1} / {status.presentation.slides.length}</span><span>{status.presentation.title}</span></div>
       <h1>{slide.title}</h1>
-      {slide.imageUrl ? <img src={slide.imageUrl} alt="" /> : null}
+      {slide.imageUrl ? <img src={slide.imageUrl} alt="" width="1200" height="675" loading="lazy" /> : null}
       <p className="orientation-player__body">{slide.body}</p>
       <Narration key={slide.id} audioUrl={slide.audioUrl} transcript={slide.transcript} />
       <details open className="orientation-transcript"><summary>Transcript and captions</summary><p>{slide.transcript}</p></details>

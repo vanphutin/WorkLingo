@@ -62,18 +62,21 @@ export class OrientationLearnerService {
   }
 
   async start(learnerId: string): Promise<OrientationLearnerStatusDto> {
-    const existing = await this.findPinnedProgress(this.database, learnerId);
-    if (existing) return this.statusFromProgress(existing);
+    return this.database.$transaction(async (transaction) => {
+      await transaction.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-orientation-start:' + learnerId}))`;
+      const existing = await this.findPinnedProgress(transaction, learnerId);
+      if (existing) return this.statusFromProgress(existing);
 
-    const eligibility = await this.readEligibility(learnerId);
-    if (eligibility.reasons.length > 0 || !eligibility.version) {
-      throw new ConflictException({ code: 'ORIENTATION_LOCKED', reasons: eligibility.reasons });
-    }
-    const created = await this.database.orientationProgress.create({
-      data: { learnerId, orientationVersionId: eligibility.version.id, answers: [] },
-      include: { orientationVersion: true },
+      const eligibility = await this.readEligibility(learnerId, transaction);
+      if (eligibility.reasons.length > 0 || !eligibility.version) {
+        throw new ConflictException({ code: 'ORIENTATION_LOCKED', reasons: eligibility.reasons });
+      }
+      const created = await transaction.orientationProgress.create({
+        data: { learnerId, orientationVersionId: eligibility.version.id, answers: [] },
+        include: { orientationVersion: true },
+      });
+      return this.statusFromProgress(created);
     });
-    return this.statusFromProgress(created);
   }
 
   async updateProgress(learnerId: string, input: OrientationProgressUpdateInput): Promise<OrientationProgressResult> {
@@ -167,15 +170,18 @@ export class OrientationLearnerService {
     return { body: await this.storage.read(asset.storageKey), mimeType: asset.mimeType };
   }
 
-  private async readEligibility(learnerId: string): Promise<{ reasons: string[]; version: OrientationVersionRecord | null }> {
+  private async readEligibility(
+    learnerId: string,
+    database: PrismaService | Prisma.TransactionClient = this.database,
+  ): Promise<{ reasons: string[]; version: OrientationVersionRecord | null }> {
     const [profile, enrollment, checkpoint, orientation] = await Promise.all([
-      this.database.learnerProfile.findUnique({ where: { userId: learnerId } }),
-      this.database.learnerProgramEnrollment.findUnique({ where: { learnerId_programId: { learnerId, programId: INTERMEDIATE_PROGRAM_ID } } }),
-      this.database.checkpointAssessment.findFirst({
+      database.learnerProfile.findUnique({ where: { userId: learnerId } }),
+      database.learnerProgramEnrollment.findUnique({ where: { learnerId_programId: { learnerId, programId: INTERMEDIATE_PROGRAM_ID } } }),
+      database.checkpointAssessment.findFirst({
         where: { learnerId, levelCode: { startsWith: FOUNDATION_PREFIX } },
         orderBy: { createdAt: 'desc' },
       }),
-      this.database.ieltsOrientation.findUnique({ where: { slug: ORIENTATION_SLUG }, include: { currentPublishedVersion: true } }),
+      database.ieltsOrientation.findUnique({ where: { slug: ORIENTATION_SLUG }, include: { currentPublishedVersion: true } }),
     ]);
     const reasons: string[] = [];
     if (profile?.onboardingStatus !== 'COMPLETE') reasons.push('ONBOARDING_REQUIRED');

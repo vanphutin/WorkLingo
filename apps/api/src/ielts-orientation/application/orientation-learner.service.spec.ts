@@ -26,9 +26,14 @@ const passedSkills = Object.fromEntries(['reading', 'listening', 'speaking', 'wr
 
 async function setup(overrides: { profile?: unknown; enrollment?: unknown; checkpoint?: unknown; existingProgress?: unknown } = {}) {
   const tx = {
+    $executeRaw: vi.fn(),
     $queryRaw: vi.fn(),
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(overrides.profile === undefined ? { onboardingStatus: 'COMPLETE' } : overrides.profile) },
+    learnerProgramEnrollment: { findUnique: vi.fn().mockResolvedValue(overrides.enrollment === undefined ? { id: 'enrollment' } : overrides.enrollment) },
+    checkpointAssessment: { findFirst: vi.fn().mockResolvedValue(overrides.checkpoint === undefined ? { status: 'passed', canAdvance: true, skills: passedSkills } : overrides.checkpoint) },
+    ieltsOrientation: { findUnique: vi.fn().mockResolvedValue({ id: orientationId, currentPublishedVersion: version }) },
     orientationProgress: {
-      findFirst: vi.fn().mockResolvedValue(overrides.existingProgress ?? progress),
+      findFirst: vi.fn().mockResolvedValue(overrides.existingProgress ?? null),
       findUnique: vi.fn().mockResolvedValue(progress),
       create: vi.fn().mockResolvedValue(progress),
       updateMany: vi.fn().mockResolvedValue({ count: 1 }),
@@ -72,9 +77,9 @@ describe('OrientationLearnerService', () => {
   });
 
   it('starts an eligible learner on the current immutable version without answer keys', async () => {
-    const { database, service } = await setup();
+    const { service, tx } = await setup();
     const result = await service.start(learnerId);
-    expect(database.learnerProgramEnrollment.findUnique).toHaveBeenCalledWith({ where: { learnerId_programId: { learnerId, programId: INTERMEDIATE_PROGRAM_ID } } });
+    expect(tx.learnerProgramEnrollment.findUnique).toHaveBeenCalledWith({ where: { learnerId_programId: { learnerId, programId: INTERMEDIATE_PROGRAM_ID } } });
     expect(result).toMatchObject({ state: 'in_progress', progress: { orientationVersionId: versionId, currentSlideIndex: 0 } });
     expect(result.presentation?.slides[1]?.question).not.toHaveProperty('answerIndex');
     expect(result.presentation?.slides[0]).not.toHaveProperty('audioAssetId');
