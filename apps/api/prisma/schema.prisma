@@ -62,6 +62,7 @@ model User {
   createdOrientationMedia    OrientationMediaAsset[]    @relation("OrientationMediaCreatedBy")
   orientationProgress        OrientationProgress[]
   ieltsBridgeProgress        IeltsBridgeProgress[]
+  ieltsIntegratedSessions   IeltsIntegratedSession[]
 }
 
 model LearnerProfile {
@@ -907,11 +908,84 @@ model IeltsBridgeModuleVersion {
   module          IeltsBridgeModule     @relation("IeltsBridgeVersions", fields: [moduleId], references: [id], onDelete: Restrict)
   currentFor      IeltsBridgeModule[]   @relation("IeltsBridgeCurrentVersion")
   learnerProgress IeltsBridgeProgress[]
+  integratedBlocks IeltsIntegratedSessionBlock[]
 
   @@unique([moduleId, version])
   @@unique([id, moduleId])
   @@index([moduleId, status])
   @@index([skill, questionType, status])
+}
+
+model IeltsIntegratedProfile {
+  id                        String                          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  durationMinutes           Int                             @unique
+  status                    ContentStatus                   @default(DRAFT)
+  draftRevision             Int                             @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                         @unique @db.Uuid
+  createdAt                 DateTime                        @default(now())
+  updatedAt                 DateTime                        @updatedAt
+  currentPublishedVersion   IeltsIntegratedProfileVersion? @relation("IeltsIntegratedCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, profileId], onDelete: Restrict)
+  versions                  IeltsIntegratedProfileVersion[] @relation("IeltsIntegratedProfileVersions")
+}
+
+model IeltsIntegratedProfileVersion {
+  id            String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  profileId     String                   @db.Uuid
+  version       Int
+  durationMinutes Int
+  sourceHash    String
+  content       Json
+  status        ContentStatus            @default(PUBLISHED)
+  publishedAt   DateTime                 @default(now())
+  archivedAt    DateTime?
+  profile       IeltsIntegratedProfile   @relation("IeltsIntegratedProfileVersions", fields: [profileId], references: [id], onDelete: Restrict)
+  currentFor    IeltsIntegratedProfile[] @relation("IeltsIntegratedCurrentVersion")
+  sessions      IeltsIntegratedSession[]
+
+  @@unique([profileId, version])
+  @@unique([id, profileId])
+  @@index([durationMinutes, status])
+}
+
+model IeltsIntegratedSession {
+  id               String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId        String                         @db.Uuid
+  clientSessionId  String                         @db.Uuid
+  profileVersionId String                         @db.Uuid
+  durationMinutes  Int
+  difficulty       String
+  planSnapshot     Json
+  currentBlockIndex Int                           @default(0)
+  revision         Int                            @default(1)
+  startedAt        DateTime                       @default(now())
+  completedAt      DateTime?
+  updatedAt        DateTime                       @updatedAt
+  learner          User                           @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  profileVersion   IeltsIntegratedProfileVersion  @relation(fields: [profileVersionId], references: [id], onDelete: Restrict)
+  blocks           IeltsIntegratedSessionBlock[]
+
+  @@unique([learnerId, clientSessionId])
+  @@index([learnerId, completedAt])
+  @@index([profileVersionId])
+}
+
+model IeltsIntegratedSessionBlock {
+  id              String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionId       String                   @db.Uuid
+  moduleVersionId String                   @db.Uuid
+  order           Int
+  skill           String
+  targetMinutes   Int
+  questionType    String
+  mode            String
+  result           Json?
+  completedAt      DateTime?
+  session          IeltsIntegratedSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  moduleVersion    IeltsBridgeModuleVersion @relation(fields: [moduleVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([sessionId, order])
+  @@index([moduleVersionId])
 }
 
 model IeltsBridgeProgress {
