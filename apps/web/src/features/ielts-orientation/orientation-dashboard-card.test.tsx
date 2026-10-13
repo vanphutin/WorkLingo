@@ -3,10 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ieltsOrientationClient } from '../../lib/api/ielts-orientation-client';
 import { OrientationDashboardCard } from './orientation-dashboard-card';
 
-vi.mock('../../lib/api/ielts-orientation-client', async () => {
-  const actual = await vi.importActual<typeof import('../../lib/api/ielts-orientation-client')>('../../lib/api/ielts-orientation-client');
-  return { ...actual, ieltsOrientationClient: { getStatus: vi.fn() } };
-});
+vi.mock('../../lib/api/ielts-orientation-client', () => ({ ieltsOrientationClient: { getStatus: vi.fn() } }));
 afterEach(cleanup);
 
 describe('OrientationDashboardCard', () => {

@@ -3,10 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ieltsOrientationClient } from '../../lib/api/ielts-orientation-client';
 import { OrientationPlayer } from './orientation-player';
 
-vi.mock('../../lib/api/ielts-orientation-client', async () => {
-  const actual = await vi.importActual<typeof import('../../lib/api/ielts-orientation-client')>('../../lib/api/ielts-orientation-client');
-  return { ...actual, ieltsOrientationClient: { getStatus: vi.fn(), start: vi.fn(), updateProgress: vi.fn() } };
-});
+vi.mock('../../lib/api/ielts-orientation-client', () => ({ ieltsOrientationClient: { getStatus: vi.fn(), start: vi.fn(), updateProgress: vi.fn() } }));
 vi.mock('../audio/browser-speech-controls', () => ({ BrowserSpeechControls: ({ text }: { text: string }) => <button type="button">Read transcript: {text}</button> }));
 
 const versionId = '11111111-1111-4111-8111-111111111111';

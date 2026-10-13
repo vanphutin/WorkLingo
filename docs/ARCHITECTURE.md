@@ -318,3 +318,16 @@ approve language calibration, content quality, cloud deployment or public releas
   derives objective progress from stored attempts and never trusts client-supplied progress.
 - Republishing affects future selection only; historical sessions and completion evidence remain
   bound to their original revision.
+
+## 20. IELTS Orientation boundary (IELTS Phase 4)
+
+- `IeltsOrientationModule` owns one mutable Admin draft, immutable published versions, local media,
+  and learner progress. It does not create IELTS band scores or learning sessions.
+- A learner can start only after completed onboarding, Intermediate enrollment, and a latest
+  passing Foundation checkpoint with evaluated Reading, Listening, Speaking, and Writing evidence.
+- Starting pins an `IeltsOrientationVersion`. Later publications affect new learners only; resume,
+  knowledge-check answers, media access, and completion remain version-bound.
+- Learner projections strip answer indexes, explanations, storage keys, and internal asset IDs.
+  Media streaming authorizes each asset against a version already pinned to that learner.
+- Uploaded local narration is preferred. If absent, the web client reads the authored transcript
+  through browser speech; fake TTS output is never presented as release audio.

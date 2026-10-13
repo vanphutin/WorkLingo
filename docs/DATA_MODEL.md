@@ -503,3 +503,14 @@ prerequisite relations. A prerequisite points to a specific published revision, 
 `LearningSession.curriculumRevisionId` freezes the selected revision; legacy and placement sessions
 may remain null. `CurriculumCompletion` is unique per enrollment/revision and stores the policy and
 evidence snapshot that completed all required objectives.
+
+## 15. IELTS Orientation (IELTS Phase 4)
+
+- `IeltsOrientation` stores the mutable `draftContent`, optimistic `draftRevision`, lifecycle status,
+  and nullable pointer to the current published version.
+- `IeltsOrientationVersion` stores title, content snapshot, source hash, version number, publish time,
+  and archive state. A database trigger rejects update/delete, preserving immutable learner history.
+- `OrientationMediaAsset` stores metadata and an opaque local-storage key. Binary content remains in
+  `WORKLINGO_DATA_DIR`; learner responses never expose the storage key.
+- `OrientationProgress` is unique per learner/version and stores current slide, optimistic revision,
+  answer evidence, and nullable completion time. The version foreign key uses `Restrict` deletion.

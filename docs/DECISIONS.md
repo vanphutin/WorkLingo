@@ -283,6 +283,19 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Hệ quả:** Publish mới không đổi session cũ; roadmap chỉ hiển thị revision mới nhất nhưng vẫn dùng
   completion lịch sử để mở prerequisite chính xác. Client không thể tự khai báo objective đã hoàn tất.
 
+## D-032 — IELTS Orientation dùng version bất biến và admission evidence nội bộ
+
+- **Trạng thái:** Accepted (IELTS Phase 4)
+- **Ngày:** 2026-10-13
+- **Quyết định:** Orientation là presentation do Admin quản lý, có transcript, media tùy chọn và
+  knowledge check. Learner bắt đầu trên một published version bất biến và resume đúng version đó.
+- **Admission:** Chỉ latest Foundation checkpoint được xét; checkpoint cũ từng pass không vượt qua
+  reassessment mới hơn bị fail/pending. Cả bốn kỹ năng phải pass và không còn evaluation pending.
+- **Audio:** Ưu tiên narration upload local; browser speech đọc transcript là fallback minh bạch.
+  Fake TTS không được dùng như release voice.
+- **Giới hạn:** Completion Orientation không phải band score, IELTS admission cuối cùng hay Phase 5
+  Bridge. Các capability đó cần policy/calibration riêng.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

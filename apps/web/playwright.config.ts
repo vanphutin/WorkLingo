@@ -123,6 +123,16 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
     },
     {
+      name: 'ielts-orientation-desktop',
+      testMatch: /ielts-orientation\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'ielts-orientation-mobile',
+      testMatch: /ielts-orientation\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
       name: 'admin-desktop',
       testMatch: /admin-(?:content-authoring|curriculum-audit|observability)\.spec\.ts/u,
       dependencies: ['foundation-desktop', 'foundation-mobile', 'teacher-ai-mobile', 'engagement-mobile'],

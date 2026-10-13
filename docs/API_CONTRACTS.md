@@ -739,3 +739,16 @@ active program. Each item reports `locked`, `available`, `in_progress`, or `comp
 reasons, and objective progress derived from evaluated attempts. Learner responses and answer keys
 are never included. New sessions select an eligible revision and expose nullable
 `curriculumRevisionId`; existing sessions keep that value after later publications.
+
+## 18. IELTS Orientation (IELTS Phase 4)
+
+Admin endpoints under `/api/v1/admin/ielts-orientation` expose `GET`, `PUT /draft`,
+`POST /validate`, `POST /publish`, `POST /archive`, `POST /media`, and media streaming. Draft writes
+require `expectedRevision`; publish additionally requires an idempotency UUID. Validation returns
+field-addressable `{ code, path, message }` issues. Publish creates an immutable version.
+
+Learner endpoints are `GET /api/v1/me/ielts-orientation`, `POST /start`, `PUT /progress`, and
+authorized `GET /media/{assetId}/content`. Status is `locked`, `available`, `in_progress`, or
+`completed`. Progress writes require the pinned version ID, positive expected revision, target slide,
+optional answer, and explicit completion flag. Forward movement is one slide at a time; a knowledge
+check must be correct before advancing. Answer keys and internal asset IDs are never returned.

@@ -5,10 +5,9 @@ import { adminIeltsOrientationClient } from '../../lib/api/admin-ielts-orientati
 import { ApiError } from '../../lib/api/api-client';
 import { OrientationAuthoringWorkspace } from './orientation-authoring-workspace';
 
-vi.mock('../../lib/api/admin-ielts-orientation-client', async () => {
-  const actual = await vi.importActual<typeof import('../../lib/api/admin-ielts-orientation-client')>('../../lib/api/admin-ielts-orientation-client');
-  return { ...actual, adminIeltsOrientationClient: { get: vi.fn(), updateDraft: vi.fn(), validate: vi.fn(), publish: vi.fn(), archive: vi.fn(), uploadMedia: vi.fn() } };
-});
+vi.mock('../../lib/api/admin-ielts-orientation-client', () => ({
+  adminIeltsOrientationClient: { get: vi.fn(), updateDraft: vi.fn(), validate: vi.fn(), publish: vi.fn(), archive: vi.fn(), uploadMedia: vi.fn() },
+}));
 
 const slide = { id: '11111111-1111-4111-8111-111111111111', slug: 'welcome', title: 'Welcome', body: 'Body', transcript: 'Transcript', imageAssetId: null, audioAssetId: null, question: null };
 const orientation = { id: '22222222-2222-4222-8222-222222222222', slug: 'ielts-orientation', status: 'DRAFT' as const, draftRevision: 1, draft: { title: 'IELTS Orientation', description: 'Introduction', slides: [slide, { ...slide, id: '33333333-3333-4333-8333-333333333333', slug: 'format' }, { ...slide, id: '44444444-4444-4444-8444-444444444444', slug: 'ready' }] }, currentPublishedVersion: null, versions: [], updatedAt: new Date().toISOString() };

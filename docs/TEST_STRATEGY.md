@@ -245,6 +245,16 @@ Fake provider chỉ kiểm chứng wiring/retry. `workplace-placement-v1` và qu
 - Qualification Playwright covers keyboard/reflow/reduced-motion and a registration → onboarding →
   dashboard journey. Automated checks do not replace human language/content calibration.
 
+### IELTS Phase 4 Orientation coverage
+
+- Contract tests protect semantic bounds and learner answer-key/asset-ID redaction.
+- Service and integration tests cover latest-checkpoint eligibility, optimistic revisions, wrong and
+  correct knowledge checks, explicit completion, learner-authorized media, resume, and N/N+1 isolation.
+- React tests cover Admin authoring/conflict recovery, learner locked/resume states, captions,
+  narration fallback controls, question gating, and final completion.
+- `ielts-orientation.spec.ts` runs independently on Desktop Chrome and Pixel 5: Admin publish,
+  learner locked state, evidence unlock, start/resume, responsive overflow, and version isolation.
+
 ## 11. Definition of Done
 
 Một increment chỉ hoàn tất khi:
