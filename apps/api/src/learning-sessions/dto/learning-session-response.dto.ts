@@ -32,6 +32,7 @@ export class ActivityAttemptResponseDto {
 export class LearnerActivityResponseDto {
   @ApiProperty({ enum: ['reading', 'listening', 'speaking', 'writing'] }) activityType!: string;
   @ApiProperty({ items: { additionalProperties: true, type: 'object' }, type: 'array' }) content!: object[];
+  @ApiProperty({ enum: ['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'], nullable: true }) foundationCategory!: string | null;
   @ApiProperty({ format: 'uuid' }) id!: string;
   @ApiProperty({ items: { additionalProperties: true, type: 'object' }, type: 'array' }) languageBlocks!: object[];
   @ApiProperty({ enum: ['activate', 'readDecode', 'listenReason', 'respond'] }) learningBlock!: string;

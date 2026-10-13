@@ -17,6 +17,7 @@ const mockReadingActivity: LearnerActivityDto = {
   activityType: 'reading',
   learningBlock: 'readDecode',
   skills: ['reading'],
+  foundationCategory: 'grammar',
   content: [
     {
       slug: 'intro-email',
@@ -28,6 +29,10 @@ const mockReadingActivity: LearnerActivityDto = {
     {
       slug: 'eager-to',
       canonicalForm: 'eager to',
+      meaning: 'háo hức làm gì',
+      grammarPattern: 'be + eager + to + base verb',
+      examples: ['I am eager to start.'],
+      commonErrors: ['I eager to start. → I am eager to start.'],
     },
   ],
   payload: {
@@ -188,6 +193,22 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('teaches the grammar pattern in context before the learner submits practice', () => {
+    render(
+      <ActivityRenderer
+        activity={mockReadingActivity}
+        sessionId={createMockSession().id}
+        value={{ answerIndexes: [] }}
+        onChange={vi.fn()}
+      />,
+    );
+
+    const focus = screen.getByRole('region', { name: 'Grammar focus' });
+    expect(within(focus).getByText('be + eager + to + base verb')).toBeVisible();
+    expect(within(focus).getByText('I am eager to start.')).toBeVisible();
+    expect(within(focus).getByText(/I eager to start/)).toBeVisible();
+  });
+
   it('restores pending and completed Teacher AI evaluations without selecting comprehension attempts', () => {
     const baseAttempt: ActivityAttemptDto = {
       id: 'reading-attempt',

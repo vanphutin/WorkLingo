@@ -22,6 +22,7 @@ export interface LearnerActivityDto {
   readonly activityType: 'reading' | 'listening' | 'speaking' | 'writing';
   readonly learningBlock: 'activate' | 'readDecode' | 'listenReason' | 'respond';
   readonly skills: ReadonlyArray<'reading' | 'listening' | 'speaking' | 'writing'>;
+  readonly foundationCategory: 'grammar' | 'pronunciation' | 'vocabulary' | 'reading' | 'listening' | 'speaking' | 'writing' | null;
   readonly content: ReadonlyArray<Record<string, unknown>>;
   readonly languageBlocks: ReadonlyArray<Record<string, unknown>>;
   readonly payload: Record<string, unknown>;

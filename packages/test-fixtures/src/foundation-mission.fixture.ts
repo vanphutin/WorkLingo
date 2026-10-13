@@ -9,6 +9,28 @@ export const foundationMissionFixture = {
     slug: 'first-day-introductions',
     title: 'Your first day at work',
     version: 1,
+    foundation: {
+      category: 'grammar',
+      templateId: 'foundation-grammar',
+      templateVersion: 1,
+      objectives: [{
+        slug: 'introduce-yourself-at-work',
+        statement: 'Use complete introduction and help-question patterns in a workplace context.',
+        skills: ['reading', 'listening', 'speaking', 'writing'],
+        required: true,
+      }],
+      activityObjectives: {
+        'recall-introduction': ['introduce-yourself-at-work'],
+        'understand-welcome': ['introduce-yourself-at-work'],
+        'understand-colleague': ['introduce-yourself-at-work'],
+        'shadow-introduction': ['introduce-yourself-at-work'],
+        'write-first-message': ['introduce-yourself-at-work'],
+      },
+      responseRubrics: {
+        'shadow-introduction': 'Use the complete patterns accurately and speak clearly.',
+        'write-first-message': 'Use the complete patterns accurately in a coherent workplace message.',
+      },
+    },
     contentBlocks: [
       {
         slug: 'welcome-email', type: 'email',

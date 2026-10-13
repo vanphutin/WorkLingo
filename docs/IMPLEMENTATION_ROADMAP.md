@@ -208,6 +208,13 @@ objective evidence projection và learner roadmap responsive. Acceptance E2E m�
 và mobile; regression program catalog cũng pass trên cả hai viewport. Chi tiết bàn giao nằm tại
 `docs/IELTS_PHASE_2_CURRICULUM_REVIEW.md`.
 
+## IELTS Phase 3 — Foundation learning (started 2026-10-13)
+
+The first vertical slice is Grammar: a versioned Foundation lesson teaches contextual patterns and
+common errors before practice, returns authored feedback after submission, and reuses the existing
+mastery/review pipeline. Pronunciation, Vocabulary, and the four focused skill slices follow in that
+order. See `docs/superpowers/specs/2026-10-13-ielts-phase-3-foundation-learning-design.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

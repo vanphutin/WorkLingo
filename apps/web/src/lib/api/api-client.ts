@@ -107,6 +107,9 @@ export const learnerActivityDtoSchema = z.object({
   activityType: z.enum(['reading', 'listening', 'speaking', 'writing']),
   learningBlock: z.enum(['activate', 'readDecode', 'listenReason', 'respond']),
   skills: z.array(z.enum(['reading', 'listening', 'speaking', 'writing'])),
+  foundationCategory: z.enum([
+    'grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing',
+  ]).nullable().optional(),
   content: z.array(z.record(z.string(), z.unknown())),
   languageBlocks: z.array(z.record(z.string(), z.unknown())),
   payload: z.record(z.string(), z.unknown()),

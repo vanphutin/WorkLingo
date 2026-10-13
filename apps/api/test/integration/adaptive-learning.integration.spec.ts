@@ -28,12 +28,25 @@ describe('adaptive learning visibility and recurrence', () => {
     const session = await learner.post('/api/v1/learning-sessions').send({ clientSessionId: randomUUID() }).expect(201);
     await learner.post(`/api/v1/learning-sessions/${session.body.id}/start`).expect(200);
     const ids = session.body.plan.blocks.flatMap((block: { activityIds: string[] }) => block.activityIds);
+    const grammarPractice = await learner
+      .get(`/api/v1/learning-sessions/${session.body.id}/activities/${ids[1]}`)
+      .expect(200);
+    expect(grammarPractice.body).toMatchObject({
+      foundationCategory: 'grammar',
+      languageBlocks: [expect.objectContaining({
+        grammarPattern: 'Do + you + base verb + object?',
+        slug: 'do-you-need-help',
+      })],
+    });
     await learner.post(`/api/v1/activities/${ids[0]}/attempts`).send({
       sessionId: session.body.id, clientAttemptId: randomUUID(), response: { text: 'My name is An.' },
     }).expect(201);
-    await learner.post(`/api/v1/activities/${ids[1]}/attempts`).send({
+    const grammarAttempt = await learner.post(`/api/v1/activities/${ids[1]}/attempts`).send({
       sessionId: session.body.id, clientAttemptId: randomUUID(), response: { answerIndexes: [1, 0, 0] },
     }).expect(201);
+    expect(grammarAttempt.body.feedback).toContain(
+      'Mai welcomes An, describes her desk, and offers to meet the team together.',
+    );
     const own = await learner.get('/api/v1/me/mastery-map').expect(200);
     const block = own.body.items.find((item: { slug: string }) => item.slug === 'do-you-need-help');
     expect(block.skills.reading).toMatchObject({ state: 'NEEDS_ATTENTION', score: 0 });

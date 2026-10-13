@@ -216,6 +216,7 @@ export class LearningSessionsService {
     return {
       activityType: activity.activityType,
       content,
+      foundationCategory: snapshot.foundation?.category ?? null,
       id: activity.id,
       languageBlocks,
       learningBlock: activity.learningBlock,
@@ -546,10 +547,15 @@ export class LearningSessionsService {
         0,
       );
       const score = correct / activity.payload.questions.length;
+      const missedExplanations = activity.payload.questions
+        .filter((question, index) => answerIndexes[index] !== question.answerIndex)
+        .map((question) => question.explanation);
       return {
         advance: score === 1,
         evaluationStatus: 'EVALUATED',
-        feedback: score === 1 ? 'Correct' : 'Review the evidence and try again',
+        feedback: score === 1
+          ? 'Correct'
+          : `Review: ${missedExplanations.join(' ')}`,
         normalizedResponse: { answerIndexes: [...answerIndexes] } as Prisma.InputJsonValue,
         score,
       };

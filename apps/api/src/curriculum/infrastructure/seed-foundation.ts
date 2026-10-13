@@ -126,6 +126,7 @@ export async function seedFoundationCurriculum(
       return;
     }
     const snapshot = lessonSnapshotSchema.parse({
+      foundation: fixture.lesson.foundation,
       title: fixture.lesson.title, wordBanks,
       contentBlocks: fixture.lesson.contentBlocks.map((block) => ({ ...block, id: randomUUID() })),
       activities: fixture.lesson.activities.map((activity, order) => ({ ...activity, order, id: randomUUID() })),
