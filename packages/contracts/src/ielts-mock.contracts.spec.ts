@@ -38,7 +38,7 @@ describe('IELTS full mock contracts', () => {
 
   it('does not allow pending productive skills to masquerade as a completed mock estimate', () => {
     const report = {
-      attemptId: crypto.randomUUID(), status: 'EVALUATION_PENDING', disclosure: 'Mock estimate — not an official IELTS result.',
+      attemptId: crypto.randomUUID(), status: 'EVALUATION_PENDING', scoringPolicyVersion: 1, disclosure: 'Mock estimate — not an official IELTS result.',
       skills: {
         listening: { status: 'SCORED', rawScore: 30, mockBand: 7 },
         reading: { status: 'SCORED', rawScore: 30, mockBand: 7 },

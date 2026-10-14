@@ -4,6 +4,7 @@ import { INITIAL_IELTS_ACADEMIC_MOCK } from '@worklingo/contracts';
 import { describe, expect, it, vi } from 'vitest';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { IeltsMockLearnerService } from './ielts-mock-learner.service.js';
 
 const learnerId = '11111111-1111-4111-8111-111111111111';
@@ -12,7 +13,7 @@ const versionId = '33333333-3333-4333-8333-333333333333';
 const attemptId = '44444444-4444-4444-8444-444444444444';
 const clientAttemptId = '55555555-5555-4555-8555-555555555555';
 const startedAt = new Date('2026-10-14T00:00:00.000Z');
-const version = { id: versionId, version: 1, content: INITIAL_IELTS_ACADEMIC_MOCK };
+  const version = { id: versionId, mockTestId: mockId, version: 1, content: INITIAL_IELTS_ACADEMIC_MOCK };
 const attempt = {
   id: attemptId, learnerId, clientAttemptId, mockTestVersionId: versionId, mode: 'EXAM_SIMULATION', status: 'IN_PROGRESS',
   currentSection: 'LISTENING', revision: 1, responses: {}, submittedSections: [], objectiveScore: null, productiveEvaluation: null,
@@ -35,9 +36,10 @@ async function setup(options: { journey?: boolean; existing?: typeof attempt | n
     ieltsBandJourney: { findUnique: vi.fn().mockResolvedValue(options.journey === false ? null : { id: 'journey' }) },
     ieltsMockTest: { findMany: vi.fn().mockResolvedValue([{ id: mockId, status: 'PUBLISHED', currentPublishedVersion: version }]) },
     ieltsMockAttempt: { findFirst: vi.fn().mockResolvedValue(existing), findMany: vi.fn().mockResolvedValue([]) },
+    audioArtifact: { findFirst: vi.fn() },
     $transaction: vi.fn((work: (value: typeof tx) => unknown) => work(tx)),
   };
-  const module = await Test.createTestingModule({ providers: [IeltsMockLearnerService, { provide: PrismaService, useValue: database }] }).compile();
+  const module = await Test.createTestingModule({ providers: [IeltsMockLearnerService, { provide: PrismaService, useValue: database }, { provide: ObjectStorage, useValue: { read: vi.fn() } }] }).compile();
   return { service: module.get(IeltsMockLearnerService), tx };
 }
 
@@ -51,16 +53,24 @@ describe('IeltsMockLearnerService', () => {
     const { service, tx } = await setup();
     const result = await service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'EXAM_SIMULATION' });
     expect(result.mockTestVersionId).toBe(versionId);
-    expect(result.sectionContent.listening[0]).not.toHaveProperty('answerPolicy');
-    expect(result.sectionContent.listening[0]).not.toHaveProperty('explanation');
+    expect(result.sectionContent.listening[0]?.questions[0]).not.toHaveProperty('answerPolicy');
+    expect(result.sectionContent.listening[0]?.questions[0]).not.toHaveProperty('explanation');
+    expect(result.sectionContent.reading).toEqual([]);
+    expect(result.sectionContent.writing).toEqual([]);
+    expect(result.sectionContent.speaking).toEqual([]);
     expect(tx.ieltsMockAttempt.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ mockTestVersionId: versionId }) }));
   });
 
   it('replays the same client attempt without selecting a newer version', async () => {
     const { service, tx } = await setup({ existing: attempt });
-    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'PRACTICE' })).resolves.toMatchObject({ id: attemptId, mockTestVersionId: versionId });
+    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'EXAM_SIMULATION' })).resolves.toMatchObject({ id: attemptId, mockTestVersionId: versionId });
     expect(tx.ieltsMockTest.findUnique).not.toHaveBeenCalled();
     expect(tx.ieltsMockAttempt.create).not.toHaveBeenCalled();
+  });
+
+  it('rejects a reused client attempt id with a conflicting command', async () => {
+    const { service } = await setup({ existing: attempt });
+    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'PRACTICE' })).rejects.toBeInstanceOf(ConflictException);
   });
 
   it('rejects stale response saves and out-of-order section submissions', async () => {
@@ -72,5 +82,16 @@ describe('IeltsMockLearnerService', () => {
   it('enforces owner scope when resuming an attempt', async () => {
     const { service } = await setup();
     await expect(service.get(learnerId, attemptId)).rejects.toBeInstanceOf(NotFoundException);
+  });
+
+  it('does not create a misleading report before all sections are submitted', async () => {
+    const { service } = await setup({ existing: attempt });
+    await expect(service.report(learnerId, attemptId)).rejects.toBeInstanceOf(ConflictException);
+  });
+
+  it('rejects response changes after the server deadline', async () => {
+    const expired = { ...attempt, sectionDeadlineAt: new Date('2020-01-01T00:00:00.000Z') };
+    const { service } = await setup({ existing: expired });
+    await expect(service.saveResponses(learnerId, attemptId, { expectedRevision: 1, responses: {} })).rejects.toBeInstanceOf(ConflictException);
   });
 });

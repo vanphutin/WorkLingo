@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { adminIeltsMockSchema, ieltsMockContentSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
@@ -10,7 +10,7 @@ type VersionRecord = Prisma.IeltsMockTestVersionGetPayload<Record<string, never>
 @Injectable()
 export class IeltsMockAdminService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
-  async list() { return Promise.all((await this.database.ieltsMockTest.findMany({ include: includeMock })).map((row) => this.dto(row))); }
+  async list() { return Promise.all((await this.database.ieltsMockTest.findMany({ include: includeMock, orderBy: { updatedAt: 'desc' }, take: 100 })).map((row) => this.dto(row))); }
   async save(actorId: string, id: string, input: { expectedRevision: number; idempotencyKey: string; content: unknown }) {
     const content = ieltsMockContentSchema.parse(input.content);
     await this.database.$transaction(async (tx) => {
@@ -34,7 +34,12 @@ export class IeltsMockAdminService {
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-mock:' + id}))`; const operation = 'publish-ielts-mock'; const requestHash = this.hash(input);
       const replay = await tx.mutationReceipt.findUnique({ where: { actorId_operation_idempotencyKey: { actorId, operation, idempotencyKey: input.idempotencyKey } } }); if (replay) { if (replay.requestHash !== requestHash) throw new ConflictException('Idempotency key reused.'); return publishIeltsMockResultSchema.parse(replay.responseBody); }
       const mock = await tx.ieltsMockTest.findUnique({ where: { id }, include: { versions: { orderBy: { version: 'desc' }, take: 1 } } }); if (!mock) throw new NotFoundException('IELTS mock not found.'); if (mock.draftRevision !== input.expectedRevision) throw new ConflictException('IELTS mock revision is stale.');
-      const content = ieltsMockContentSchema.parse(mock.draftContent); const publishedAt = new Date(); const version = await tx.ieltsMockTestVersion.create({ data: { mockTestId: id, version: (mock.versions[0]?.version ?? 0) + 1, sourceHash: this.hash(content), content: content as Prisma.InputJsonValue, publishedAt } });
+      if (mock.status !== 'VALIDATED') throw new ConflictException('IELTS mock must be validated before publication.');
+      const content = ieltsMockContentSchema.parse(mock.draftContent); const audioIds = content.listening.parts.map((part) => part.audioAssetId);
+      if (audioIds.some((assetId) => assetId === null)) throw new UnprocessableEntityException('Every Listening part requires release-ready audio.');
+      const readyAudio = await tx.audioArtifact.count({ where: { id: { in: audioIds as string[] }, status: 'READY', adapterName: { not: 'fake-tts' } } });
+      if (readyAudio !== new Set(audioIds).size) throw new UnprocessableEntityException('Every Listening part requires release-ready audio.');
+      const publishedAt = new Date(); const version = await tx.ieltsMockTestVersion.create({ data: { mockTestId: id, version: (mock.versions[0]?.version ?? 0) + 1, sourceHash: this.hash(content), content: content as Prisma.InputJsonValue, publishedAt } });
       if (mock.currentPublishedVersionId) await tx.ieltsMockTestVersion.update({ where: { id: mock.currentPublishedVersionId }, data: { status: 'ARCHIVED', archivedAt: publishedAt } });
       await tx.ieltsMockTest.update({ where: { id }, data: { currentPublishedVersionId: version.id, status: 'PUBLISHED' } }); await tx.auditLog.create({ data: { actorId, action: 'PUBLISH_IELTS_MOCK', resourceType: 'IeltsMockTestVersion', resourceId: version.id } });
       const response = publishIeltsMockResultSchema.parse({ mockTestId: id, mockTestVersionId: version.id, version: version.version, publishedAt: publishedAt.toISOString() }); await tx.mutationReceipt.create({ data: { actorId, operation, idempotencyKey: input.idempotencyKey, requestHash, responseStatus: 201, responseBody: response } }); return response;

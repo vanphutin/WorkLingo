@@ -11,7 +11,7 @@ export class IeltsMockReviewService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
   listPending() {
-    return this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING' }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true, content: true } } }, orderBy: { submittedAt: 'asc' } });
+    return this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING' }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: { submittedAt: 'asc' }, take: 100 });
   }
 
   async review(reviewerId: string, attemptId: string, input: unknown): Promise<IeltsMockReportDto> {
@@ -26,7 +26,7 @@ export class IeltsMockReviewService {
       const objective = attempt.objectiveScore as { listening?: { rawScore: number; mockBand: number }; reading?: { rawScore: number; mockBand: number } } | null;
       if (!objective?.listening || !objective.reading) throw new ConflictException({ code: 'IELTS_MOCK_OBJECTIVE_SCORE_MISSING' });
       const productive = scoreProductiveSkills(parsed); const completedAt = new Date();
-      const report = ieltsMockReportSchema.parse({ attemptId, status: 'COMPLETED', disclosure: ieltsMockContentSchema.parse(attempt.mockTestVersion.content).disclosure,
+      const report = ieltsMockReportSchema.parse({ attemptId, status: 'COMPLETED', scoringPolicyVersion: 1, disclosure: ieltsMockContentSchema.parse(attempt.mockTestVersion.content).disclosure,
         skills: { listening: { status: 'SCORED', ...objective.listening }, reading: { status: 'SCORED', ...objective.reading }, writing: { status: 'TEACHER_REVIEWED', rawScore: null, mockBand: productive.writing }, speaking: { status: 'TEACHER_REVIEWED', rawScore: null, mockBand: productive.speaking } },
         overallMockBand: toOverallMockBand([objective.listening.mockBand, objective.reading.mockBand, productive.writing, productive.speaking]), strengths: parsed.strengths, gaps: parsed.gaps, nextActions: parsed.nextActions, completedAt: completedAt.toISOString() });
       const updated = await tx.ieltsMockAttempt.updateMany({ where: { id: attemptId, revision: parsed.expectedRevision, status: 'EVALUATION_PENDING' }, data: { status: 'COMPLETED', productiveEvaluation: parsed as unknown as Prisma.InputJsonValue, reportSnapshot: report as Prisma.InputJsonValue, completedAt, revision: { increment: 1 } } });

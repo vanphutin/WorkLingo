@@ -16,3 +16,4 @@ export class SubmitIeltsMockSectionDto {
   @ApiProperty({ minimum: 1 }) @IsInt() @Min(1) expectedRevision!: number;
   @ApiProperty({ enum: ['LISTENING', 'READING', 'WRITING', 'SPEAKING'] }) @IsEnum(['LISTENING', 'READING', 'WRITING', 'SPEAKING']) section!: 'LISTENING' | 'READING' | 'WRITING' | 'SPEAKING';
 }
+export class IeltsMockRevisionDto { @ApiProperty({ minimum: 1 }) @IsInt() @Min(1) expectedRevision!: number; }

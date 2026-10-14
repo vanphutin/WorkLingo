@@ -56,11 +56,11 @@ export const INITIAL_IELTS_ACADEMIC_MOCK: IeltsMockContent = ieltsMockContentSch
 
 const skillResultSchema = z.object({ status: z.enum(['SCORED', 'PENDING_EVALUATION', 'ESTIMATED_FEEDBACK', 'TEACHER_REVIEWED']), rawScore: z.number().int().min(0).max(40).nullable(), mockBand: mockBandSchema.nullable() }).strict();
 export const ieltsMockReportSchema = z.object({
-  attemptId: z.uuid(), status: z.enum(['EVALUATION_PENDING', 'COMPLETED']), disclosure: z.string().min(20), skills: z.object({ listening: skillResultSchema, reading: skillResultSchema, writing: skillResultSchema, speaking: skillResultSchema }).strict(), overallMockBand: mockBandSchema.nullable(), strengths: z.array(z.string()), gaps: z.array(z.string()), nextActions: z.array(z.string()), completedAt: z.iso.datetime().nullable(),
+  attemptId: z.uuid(), status: z.enum(['EVALUATION_PENDING', 'COMPLETED']), scoringPolicyVersion: z.literal(1), disclosure: z.string().min(20), skills: z.object({ listening: skillResultSchema, reading: skillResultSchema, writing: skillResultSchema, speaking: skillResultSchema }).strict(), overallMockBand: mockBandSchema.nullable(), strengths: z.array(z.string()), gaps: z.array(z.string()), nextActions: z.array(z.string()), completedAt: z.iso.datetime().nullable(),
 }).strict().superRefine((report, context) => {
   const complete = report.skills.listening.mockBand !== null && report.skills.reading.mockBand !== null && report.skills.writing.status === 'TEACHER_REVIEWED' && report.skills.writing.mockBand !== null && report.skills.speaking.status === 'TEACHER_REVIEWED' && report.skills.speaking.mockBand !== null;
   if (report.overallMockBand !== null && !complete) context.addIssue({ code: 'custom', path: ['overallMockBand'], message: 'Overall mock band requires four completed skill bands and reviewed productive skills' });
-  if (report.status === 'COMPLETED' && (!complete || report.completedAt === null)) context.addIssue({ code: 'custom', path: ['status'], message: 'Completed report requires all reviewed skill bands' });
+  if (report.status === 'COMPLETED' && (!complete || report.overallMockBand === null || report.completedAt === null)) context.addIssue({ code: 'custom', path: ['status'], message: 'Completed report requires all reviewed skill bands and an overall band' });
 }).readonly();
 export type IeltsMockReportDto = z.infer<typeof ieltsMockReportSchema>;
 
@@ -81,7 +81,12 @@ export const ieltsMockAttemptSchema = z.object({
   id: z.uuid(), mockTestVersionId: z.uuid(), mockTestVersion: z.number().int().positive(), title: z.string(), mode: ieltsMockModeSchema,
   status: z.enum(['IN_PROGRESS', 'SUBMITTED', 'EVALUATION_PENDING', 'COMPLETED']), currentSection: z.enum(['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPLETE']), revision: z.number().int().positive(),
   responses: z.record(z.string(), z.string()), submittedSections: z.array(z.string()), sectionStartedAt: z.iso.datetime(), sectionDeadlineAt: z.iso.datetime(), startedAt: z.iso.datetime(), submittedAt: z.iso.datetime().nullable(),
-  sectionContent: z.object({ listening: z.array(learnerQuestionSchema), reading: z.array(learnerQuestionSchema), writing: z.array(z.object({ task: z.number(), title: z.string(), prompt: z.string(), minimumWords: z.number() }).strict()), speaking: z.array(z.object({ part: z.number(), title: z.string(), prompts: z.array(z.string()), preparationSeconds: z.number(), responseSeconds: z.number() }).strict()) }).strict(),
+  sectionContent: z.object({
+    listening: z.array(z.object({ part: z.number(), audioUrl: z.string(), questions: z.array(learnerQuestionSchema) }).strict()),
+    reading: z.array(z.object({ section: z.number(), title: z.string(), passage: z.string(), questions: z.array(learnerQuestionSchema) }).strict()),
+    writing: z.array(z.object({ task: z.number(), title: z.string(), prompt: z.string(), minimumWords: z.number() }).strict()),
+    speaking: z.array(z.object({ part: z.number(), title: z.string(), prompts: z.array(z.string()), preparationSeconds: z.number(), responseSeconds: z.number() }).strict()),
+  }).strict(),
 }).strict();
 export type IeltsMockAttemptDto = z.infer<typeof ieltsMockAttemptSchema>;
 

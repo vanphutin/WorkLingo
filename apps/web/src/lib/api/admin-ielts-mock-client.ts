@@ -2,7 +2,7 @@ import { adminIeltsMockSchema, ieltsMockReportSchema, ieltsMockValidationSchema,
 import { z } from 'zod';
 import { ApiError } from './api-client';
 
-const pendingSchema = z.array(z.object({ id: z.string(), learnerId: z.string(), revision: z.number(), responses: z.record(z.string(), z.string()), submittedAt: z.union([z.string(), z.date(), z.null()]), mockTestVersion: z.object({ version: z.number(), content: z.unknown() }) }));
+const pendingSchema = z.array(z.object({ id: z.string(), learnerId: z.string(), revision: z.number(), responses: z.record(z.string(), z.string()), submittedAt: z.union([z.string(), z.date(), z.null()]), mockTestVersion: z.object({ version: z.number() }) }));
 const errorSchema = z.object({ code: z.string().optional(), message: z.union([z.string(), z.array(z.string())]).optional() });
 export class AdminIeltsMockClient {
   private readonly baseUrl: string;
