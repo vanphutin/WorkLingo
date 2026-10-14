@@ -20,10 +20,15 @@ describe('IELTS band-oriented curriculum contracts', () => {
   });
 
   it('rejects incomplete skills, broken prerequisites and impossible thresholds', () => {
-    const content = structuredClone(INITIAL_IELTS_BAND_CURRICULUM);
-    content.stages[1]!.prerequisiteStageCodes = ['band_8_to_9'];
-    content.stages[2]!.competencies = content.stages[2]!.competencies.slice(0, 3);
-    content.stages[3]!.exitCriteria.minimumCorrectRate = 1.2;
+    const content = {
+      ...INITIAL_IELTS_BAND_CURRICULUM,
+      stages: INITIAL_IELTS_BAND_CURRICULUM.stages.map((stage, index) => {
+        if (index === 1) return { ...stage, prerequisiteStageCodes: ['band_8_to_9'] };
+        if (index === 2) return { ...stage, competencies: stage.competencies.slice(0, 3) };
+        if (index === 3) return { ...stage, exitCriteria: { ...stage.exitCriteria, minimumCorrectRate: 1.2 } };
+        return stage;
+      }),
+    };
     expect(ieltsBandCurriculumContentSchema.safeParse(content).success).toBe(false);
   });
 
