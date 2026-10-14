@@ -182,9 +182,9 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
       await completeSelfPlacementViaApi(learner2Page);
       await learner2Page.goto('/dashboard');
       await expect(learner2Page).toHaveURL(/.*\/dashboard/);
-      // Dispatch the DOM click directly because the successful SPA transition replaces
-      // the button before Playwright's actionability click can settle.
-      await learner2Page.getByRole('button', { name: /start 60-minute session/i }).evaluate((button: HTMLButtonElement) => button.click());
+      // The SPA replaces this button during navigation, so do not couple the click's
+      // completion to that navigation; the URL assertion below owns the transition wait.
+      await learner2Page.getByRole('button', { name: /start 60-minute session/i }).click({ noWaitAfter: true });
       await expect(learner2Page).toHaveURL(/.*\/sessions\/.+/, { timeout: 15_000 });
 
       const s2 = await readCurrentSession(learner2Page);
