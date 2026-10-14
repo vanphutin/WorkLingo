@@ -14,3 +14,20 @@ describe('IeltsMockAdminService publish gate', () => {
   it('rejects publication when listening audio is absent or not release-ready', async () => { const { service } = await setup('VALIDATED'); await expect(service.publish(actorId, mockId, command)).rejects.toBeInstanceOf(UnprocessableEntityException); });
   it('locks and conditionally validates the same draft revision', async () => { const { service, tx } = await setup(); await service.validate(mockId, command); expect(tx.$executeRaw).toHaveBeenCalledOnce(); expect(tx.ieltsMockTest.updateMany).toHaveBeenCalledWith(expect.objectContaining({ where: { id: mockId, draftRevision: 1 } })); });
 });
+
+describe('IeltsMockAdminService list', () => {
+  it('returns a bounded page and a next offset when more mocks exist', async () => {
+    const rows = Array.from({ length: 51 }, (_, index) => ({
+      id: `00000000-0000-4000-8000-${String(index).padStart(12, '0')}`, slug: `mock-${index}`, status: 'DRAFT', draftRevision: 1,
+      draftContent: INITIAL_IELTS_ACADEMIC_MOCK, currentPublishedVersion: null, versions: [], createdAt: new Date(index), updatedAt: new Date(0),
+    }));
+    const database = { ieltsMockTest: { findMany: vi.fn().mockResolvedValue(rows) } };
+    const module = await Test.createTestingModule({ providers: [IeltsMockAdminService, { provide: PrismaService, useValue: database }] }).compile();
+
+    const page = await module.get(IeltsMockAdminService).list();
+
+    expect(page.items).toHaveLength(50);
+    expect(page.nextCursor).toEqual(expect.any(String));
+    expect(database.ieltsMockTest.findMany).toHaveBeenCalledWith(expect.objectContaining({ orderBy: [{ createdAt: 'desc' }, { id: 'asc' }], take: 51 }));
+  });
+});

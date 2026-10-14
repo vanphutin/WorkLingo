@@ -1,4 +1,4 @@
-import { Body, Controller, DefaultValuePipe, Get, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Post, Query, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
@@ -10,6 +10,6 @@ import { ReviewIeltsMockAttemptDto } from './dto/ielts-mock-admin.dto.js';
 @ApiTags('admin-ielts-mock-reviews') @Roles('CONTENT_ADMIN', 'SYSTEM_ADMIN') @Controller('admin/ielts-mock-attempts')
 export class IeltsMockReviewController {
   constructor(@Inject(IeltsMockReviewService) private readonly reviews: IeltsMockReviewService) {}
-  @Get() listPending(@Query('offset', new DefaultValuePipe(0), ParseIntPipe) offset: number) { return this.reviews.listPending(Math.max(0, offset)); }
+  @Get() listPending(@Query('cursor') cursor?: string) { return this.reviews.listPending(cursor); }
   @Post(':attemptId/reviews') review(@Req() request: AuthenticatedRequest, @Param('attemptId', ParseUUIDPipe) attemptId: string, @Body() input: ReviewIeltsMockAttemptDto) { return this.reviews.review(request.authUser.id, attemptId, input); }
 }

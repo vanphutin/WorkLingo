@@ -1,16 +1,21 @@
 import { createHash } from 'node:crypto';
-import { ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { adminIeltsMockSchema, ieltsMockContentSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
-const includeMock = { currentPublishedVersion: true, versions: { orderBy: { version: 'desc' as const } } } as const;
+const includeMock = { currentPublishedVersion: true, versions: { orderBy: { version: 'desc' as const }, take: 20 } } as const;
 type MockRecord = Prisma.IeltsMockTestGetPayload<{ include: typeof includeMock }>;
 type VersionRecord = Prisma.IeltsMockTestVersionGetPayload<Record<string, never>>;
 
 @Injectable()
 export class IeltsMockAdminService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
-  async list(offset = 0) { return Promise.all((await this.database.ieltsMockTest.findMany({ include: includeMock, orderBy: { updatedAt: 'desc' }, skip: offset, take: 50 })).map((row) => this.dto(row))); }
+  async list(cursor?: string) {
+    const after = cursor ? this.decodeCursor(cursor) : null;
+    const rows = await this.database.ieltsMockTest.findMany({ ...(after ? { where: { OR: [{ createdAt: { lt: after.at } }, { createdAt: after.at, id: { gt: after.id } }] } } : {}), include: includeMock, orderBy: [{ createdAt: 'desc' }, { id: 'asc' }], take: 51 });
+    const items = rows.slice(0, 50); const last = items.at(-1);
+    return { items: items.map((row) => this.dto(row)), nextCursor: rows.length > 50 && last ? this.encodeCursor(last.createdAt, last.id) : null };
+  }
   async save(actorId: string, id: string, input: { expectedRevision: number; idempotencyKey: string; content: unknown }) {
     const content = ieltsMockContentSchema.parse(input.content);
     await this.database.$transaction(async (tx) => {
@@ -52,4 +57,6 @@ export class IeltsMockAdminService {
   private async get(id: string) { const row = await this.database.ieltsMockTest.findUnique({ where: { id }, include: includeMock }); if (!row) throw new NotFoundException('IELTS mock not found.'); return this.dto(row); }
   private dto(row: MockRecord) { const version = (item: VersionRecord) => ({ id: item.id, version: item.version, status: item.status, publishedAt: item.publishedAt.toISOString(), archivedAt: item.archivedAt?.toISOString() ?? null }); return adminIeltsMockSchema.parse({ id: row.id, slug: row.slug, status: row.status, draftRevision: row.draftRevision, draft: row.draftContent, currentPublishedVersion: row.currentPublishedVersion ? version(row.currentPublishedVersion) : null, versions: row.versions.map(version), updatedAt: row.updatedAt.toISOString() }); }
   private hash(value: unknown) { return createHash('sha256').update(JSON.stringify(value)).digest('hex'); }
+  private encodeCursor(at: Date, id: string) { return Buffer.from(JSON.stringify({ at: at.toISOString(), id })).toString('base64url'); }
+  private decodeCursor(cursor: string) { try { const value = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8')) as { at?: unknown; id?: unknown }; const at = typeof value.at === 'string' ? new Date(value.at) : null; if (!at || Number.isNaN(at.getTime()) || typeof value.id !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(value.id)) throw new Error('invalid'); return { at, id: value.id }; } catch { throw new BadRequestException('Invalid IELTS mock cursor.'); } }
 }

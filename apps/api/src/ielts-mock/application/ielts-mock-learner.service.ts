@@ -124,10 +124,18 @@ export class IeltsMockLearnerService {
       if (!ready) throw new NotFoundException('IELTS mock audio was not found.');
       const plays = this.jsonNumbers(attempt.audioPlayEvents); const count = plays[assetId] ?? 0;
       if (attempt.mode === 'EXAM_SIMULATION' && count >= 1) throw new ConflictException({ code: 'IELTS_MOCK_AUDIO_PLAY_LIMIT' });
-      await tx.ieltsMockAttempt.update({ where: { id: attempt.id }, data: { audioPlayEvents: { ...plays, [assetId]: count + 1 } } });
-      return ready;
+      return { ...ready, mode: attempt.mode };
     });
-    return { body: await this.storage.read(artifact.storageKey), byteSize: artifact.byteSize, mimeType: artifact.mimeType };
+    const body = await this.storage.read(artifact.storageKey);
+    await this.database.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-mock-audio:' + attemptId + ':' + assetId}))`;
+      const attempt = await tx.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId } });
+      if (!attempt) throw new NotFoundException('IELTS mock audio was not found.');
+      const plays = this.jsonNumbers(attempt.audioPlayEvents); const count = plays[assetId] ?? 0;
+      if (attempt.mode === 'EXAM_SIMULATION' && count >= 1) throw new ConflictException({ code: 'IELTS_MOCK_AUDIO_PLAY_LIMIT' });
+      await tx.ieltsMockAttempt.update({ where: { id: attempt.id }, data: { audioPlayEvents: { ...plays, [assetId]: count + 1 } } });
+    });
+    return { body, byteSize: artifact.byteSize, mimeType: artifact.mimeType, allowRange: artifact.mode !== 'EXAM_SIMULATION' };
   }
 
   private requireWritable(attempt: AttemptRecord, revision: number) { if (attempt.status !== 'IN_PROGRESS' || attempt.revision !== revision) this.stale(); }

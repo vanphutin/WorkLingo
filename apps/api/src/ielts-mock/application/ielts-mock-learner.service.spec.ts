@@ -41,8 +41,9 @@ async function setup(options: { journey?: boolean; existing?: typeof attempt | n
     audioArtifact: { findFirst: vi.fn() },
     $transaction: vi.fn((work: (value: typeof tx) => unknown) => work(tx)),
   };
-  const module = await Test.createTestingModule({ providers: [IeltsMockLearnerService, { provide: PrismaService, useValue: database }, { provide: ObjectStorage, useValue: { read: vi.fn() } }] }).compile();
-  return { service: module.get(IeltsMockLearnerService), tx };
+  const storage = { read: vi.fn() };
+  const module = await Test.createTestingModule({ providers: [IeltsMockLearnerService, { provide: PrismaService, useValue: database }, { provide: ObjectStorage, useValue: storage }] }).compile();
+  return { service: module.get(IeltsMockLearnerService), tx, storage };
 }
 
 describe('IeltsMockLearnerService', () => {
@@ -110,5 +111,23 @@ describe('IeltsMockLearnerService', () => {
     const { service, tx } = await setup({ existing: played });
     tx.audioArtifact = { findFirst: vi.fn().mockResolvedValue({ id: assetId, status: 'READY', adapterName: 'azure-speech', storageKey: 'audio.wav', byteSize: 10, mimeType: 'audio/wav' }) };
     await expect(service.getAudio(learnerId, attemptId, assetId)).rejects.toBeInstanceOf(ConflictException);
+  });
+
+  it('serves the first exam play as one full response without range follow-ups', async () => {
+    const assetId = crypto.randomUUID(); const content = { ...INITIAL_IELTS_ACADEMIC_MOCK, listening: { ...INITIAL_IELTS_ACADEMIC_MOCK.listening, parts: INITIAL_IELTS_ACADEMIC_MOCK.listening.parts.map((part, index) => index === 0 ? { ...part, audioAssetId: assetId } : part) } };
+    const fresh = { ...attempt, audioPlayEvents: {}, mockTestVersion: { ...version, content } }; const { service, tx } = await setup({ existing: fresh });
+    tx.audioArtifact.findFirst.mockResolvedValue({ id: assetId, status: 'READY', adapterName: 'azure-speech', storageKey: 'audio.wav', byteSize: 10, mimeType: 'audio/wav' });
+    await expect(service.getAudio(learnerId, attemptId, assetId)).resolves.toMatchObject({ allowRange: false, byteSize: 10 });
+    expect(tx.ieltsMockAttempt.update).toHaveBeenCalledWith(expect.objectContaining({ data: { audioPlayEvents: { [assetId]: 1 } } }));
+  });
+
+  it('does not consume the exam play when storage cannot return audio', async () => {
+    const assetId = crypto.randomUUID(); const content = { ...INITIAL_IELTS_ACADEMIC_MOCK, listening: { ...INITIAL_IELTS_ACADEMIC_MOCK.listening, parts: INITIAL_IELTS_ACADEMIC_MOCK.listening.parts.map((part, index) => index === 0 ? { ...part, audioAssetId: assetId } : part) } };
+    const fresh = { ...attempt, audioPlayEvents: {}, mockTestVersion: { ...version, content } }; const { service, tx, storage } = await setup({ existing: fresh });
+    tx.audioArtifact.findFirst.mockResolvedValue({ id: assetId, status: 'READY', adapterName: 'azure-speech', storageKey: 'audio.wav', byteSize: 10, mimeType: 'audio/wav' });
+    storage.read.mockRejectedValueOnce(new Error('storage unavailable'));
+
+    await expect(service.getAudio(learnerId, attemptId, assetId)).rejects.toThrow('storage unavailable');
+    expect(tx.ieltsMockAttempt.update).not.toHaveBeenCalled();
   });
 });

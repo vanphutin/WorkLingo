@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { ieltsMockContentSchema, ieltsMockReportSchema, reviewIeltsMockAttemptSchema, type IeltsMockReportDto } from '@worklingo/contracts';
 
@@ -10,8 +10,11 @@ import { scoreProductiveSkills, toOverallMockBand } from '../domain/ielts-mock-s
 export class IeltsMockReviewService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
-  listPending(offset = 0) {
-    return this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING' }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: { submittedAt: 'asc' }, skip: offset, take: 50 });
+  async listPending(cursor?: string) {
+    const after = cursor ? this.decodeCursor(cursor) : null;
+    const rows = await this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING', submittedAt: { not: null }, ...(after ? { OR: [{ submittedAt: { gt: after.at } }, { submittedAt: after.at, id: { gt: after.id } }] } : {}) }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: [{ submittedAt: 'asc' }, { id: 'asc' }], take: 51 });
+    const items = rows.slice(0, 50); const last = items.at(-1);
+    return { items, nextCursor: rows.length > 50 && last?.submittedAt ? this.encodeCursor(last.submittedAt, last.id) : null };
   }
 
   async review(reviewerId: string, attemptId: string, input: unknown): Promise<IeltsMockReportDto> {
@@ -38,4 +41,6 @@ export class IeltsMockReviewService {
     });
   }
   private hash(value: unknown) { return createHash('sha256').update(JSON.stringify(value)).digest('hex'); }
+  private encodeCursor(at: Date, id: string) { return Buffer.from(JSON.stringify({ at: at.toISOString(), id })).toString('base64url'); }
+  private decodeCursor(cursor: string) { try { const value = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8')) as { at?: unknown; id?: unknown }; const at = typeof value.at === 'string' ? new Date(value.at) : null; if (!at || Number.isNaN(at.getTime()) || typeof value.id !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(value.id)) throw new Error('invalid'); return { at, id: value.id }; } catch { throw new BadRequestException('Invalid IELTS mock review cursor.'); } }
 }

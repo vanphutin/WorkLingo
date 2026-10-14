@@ -31,4 +31,16 @@ describe('IeltsMockReviewService', () => {
     const { service } = await setup('IN_PROGRESS');
     await expect(service.review(reviewerId, attemptId, input)).rejects.toBeInstanceOf(ConflictException);
   });
+
+  it('returns a bounded review page with an explicit next offset', async () => {
+    const { service } = await setup();
+    const findMany = (service as unknown as { database: { ieltsMockAttempt: { findMany: ReturnType<typeof vi.fn> } } }).database.ieltsMockAttempt.findMany;
+    findMany.mockResolvedValue(Array.from({ length: 51 }, (_, index) => ({ id: String(index), submittedAt: new Date(index) })));
+
+    const page = await service.listPending();
+
+    expect(page.items).toHaveLength(50);
+    expect(page.nextCursor).toEqual(expect.any(String));
+    expect(findMany).toHaveBeenCalledWith(expect.objectContaining({ orderBy: [{ submittedAt: 'asc' }, { id: 'asc' }], take: 51 }));
+  });
 });
