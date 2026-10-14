@@ -1,8 +1,11 @@
 # IELTS Beta Release Design
 
-**Status:** Proposed for product-owner approval  
-**Target cohort:** 20–30 invited adult learners  
-**Pilot duration:** Four weeks  
+**Status:** Proposed for product-owner approval
+
+**Target cohort:** 20–30 invited adult learners
+
+**Pilot duration:** Four weeks
+
 **Release posture:** Controlled hosted Beta, not general availability
 
 ## Intent
@@ -374,4 +377,3 @@ multi-region, Kubernetes or microservices.
 5. Privacy/consent/deletion and support workflows.
 6. Aggregate pilot analytics and operations alerts.
 7. Staged rollout, rollback and four-week pilot report template.
-
