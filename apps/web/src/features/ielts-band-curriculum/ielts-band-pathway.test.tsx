@@ -25,6 +25,12 @@ describe('IELTS band pathway', () => {
     expect(screen.getByText('Complete at least 2 integrated sessions.')).not.toBeNull();
   });
 
+  it('restores the saved target instead of replacing it with the default', async () => {
+    vi.mocked(ieltsBandClient.availability).mockResolvedValue({ eligible: true, lockedReason: null, targetBands: [3, 4, 5, 6, 7, 8, 9], journey: { ...pathway, targetBand: 3 } });
+    render(<IeltsBandPathway />);
+    expect((await screen.findByLabelText('Update target band') as HTMLSelectElement).value).toBe('3');
+  });
+
   it('starts a pathway only after the learner chooses a target', async () => {
     vi.mocked(ieltsBandClient.availability).mockResolvedValue({ eligible: true, lockedReason: null, targetBands: [3, 4, 5, 6, 7, 8, 9], journey: null });
     vi.mocked(ieltsBandClient.start).mockResolvedValue(pathway);
