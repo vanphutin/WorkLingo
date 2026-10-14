@@ -296,3 +296,14 @@ Một increment chỉ hoàn tất khi:
 - Golden set AI đạt ngưỡng đồng thuận do đội sản phẩm đặt trước pilot.
 - Backup/restore local được diễn tập thành công.
 - Các luồng chính đáp ứng responsive và accessibility smoke checks.
+
+### IELTS Phase 7 Band Curriculum coverage
+
+- Contract tests enforce seven contiguous stages, all four skill competencies and authored
+  remediation/exit criteria.
+- Policy tests prove advancement needs minimum sessions, per-skill samples and correct rate.
+- Schema tests verify immutable published versions, owner-scoped journeys and database constraints.
+- Service tests cover optimistic revisions, idempotent publishing, audit and evidence projection.
+- React tests cover Admin authoring and Learner target/proficiency separation.
+- Desktop/mobile Playwright covers publishing, Bridge-gated start, responsive layout, insufficient
+  evidence and learner version isolation across a later Admin publish.

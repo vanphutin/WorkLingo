@@ -533,3 +533,13 @@ evidence snapshot that completed all required objectives.
   difficulty, profile version, immutable plan snapshot, current block, revision, and completion.
 - `IeltsIntegratedSessionBlock` pins the selected Bridge module version and stores skill, question
   type, review/new mode, target minutes, start/completion timestamps, and server-evaluated result.
+
+## 18. IELTS Band-Oriented Curriculum (IELTS Phase 7)
+
+- `IeltsBandCurriculum` owns the editable seven-stage draft, optimistic `draftRevision`, status and
+  pointer to the current published version.
+- `IeltsBandCurriculumVersion` is an immutable content snapshot. Publishing archives the previous
+  current version without rewriting learner history.
+- `IeltsBandJourney` is unique per learner and stores `clientJourneyId`, pinned curriculum version,
+  current stage, target band, revision, completion and an evidence snapshot. Target band is a goal,
+  not an estimated or official result.

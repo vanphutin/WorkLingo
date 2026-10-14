@@ -252,6 +252,13 @@ four-skill planner mixing review and new practice, idempotent/version-bound sess
 evaluation, durable block timers, Admin authoring, responsive learner journeys, and desktop/mobile
 qualification. See `docs/IELTS_PHASE_6_INTEGRATED_PRACTICE_REVIEW.md`.
 
+## IELTS Phase 7 — Band-Oriented Curriculum (completed 2026-10-14)
+
+Phase 7 adds a complete seven-stage competency map through Band 9.0, immutable Admin publishing,
+Bridge-gated version-bound learner journeys and an evidence progression engine across all four
+skills. Target band remains a learner goal and no mock-test or official band score is inferred. See
+`docs/IELTS_PHASE_7_BAND_CURRICULUM_REVIEW.md`.
+
 ## Definition of Done cho roadmap
 
 - Các acceptance criteria trong `docs/REQUIREMENTS.md` có bằng chứng test.

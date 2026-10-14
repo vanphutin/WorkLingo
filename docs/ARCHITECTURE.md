@@ -352,3 +352,13 @@ approve language calibration, content quality, cloud deployment or public releas
   for review; recent question types are avoided when another published candidate exists.
 - Each block has a server timestamp and target duration, so the accessible web timer survives reload.
   Answer evaluation remains server-side and Phase 6 never estimates an IELTS band.
+
+## 23. IELTS Band-Oriented Curriculum boundary (IELTS Phase 7)
+
+- A single Admin-owned curriculum contains seven contiguous stages from Foundation→3.0 through
+  8.0→9.0. Published versions are immutable; a learner journey pins the version active at start.
+- The progression engine consumes only completed Integrated Practice evidence created after the
+  journey starts. It advances at most one stage per evaluation and never emits an estimated band.
+- Target band, curriculum stage, evidence-backed proficiency descriptor, practice performance,
+  future mock-test estimates and official IELTS results are separate concepts and data boundaries.
+- Learner access requires completed IELTS Bridge evidence and an active published curriculum.

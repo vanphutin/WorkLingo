@@ -153,6 +153,16 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
     },
     {
+      name: 'ielts-band-curriculum-desktop',
+      testMatch: /ielts-band-curriculum\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'ielts-band-curriculum-mobile',
+      testMatch: /ielts-band-curriculum\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
       name: 'admin-desktop',
       testMatch: /admin-(?:content-authoring|curriculum-audit|observability)\.spec\.ts/u,
       dependencies: ['foundation-desktop', 'foundation-mobile', 'teacher-ai-mobile', 'engagement-mobile'],

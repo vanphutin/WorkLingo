@@ -320,6 +320,16 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Giới hạn:** Đây là learning mode, không phải mock test và không sinh band score. Phase 7 sở hữu
   band-oriented curriculum; Phase 8 sở hữu full mock và score report.
 
+## D-035 — Phase 7 separates target, stage and evidence-backed proficiency
+
+- **Trạng thái:** Accepted (IELTS Phase 7)
+- **Quyết định:** Band Curriculum có bảy stage versioned. Learner chọn target band nhưng chỉ tiến
+  stage khi server đánh giá đủ Integrated Practice evidence ở cả bốn kỹ năng.
+- **Lý do:** Tránh biến mục tiêu hoặc tỷ lệ đúng trong bài luyện thành tuyên bố band IELTS thiếu
+  calibration; đồng thời giữ hành trình ổn định khi Admin publish nội dung mới.
+- **Giới hạn:** Mock test, band estimate đã calibration và official result thuộc Phase 8 hoặc nguồn
+  dữ liệu riêng; Phase 7 không ghi hay hiển thị các giá trị đó.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:
