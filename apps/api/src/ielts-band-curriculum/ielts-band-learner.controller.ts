@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
 import { IeltsBandLearnerService } from './application/ielts-band-learner.service.js';
-import { EvaluateIeltsBandPathwayDto, StartIeltsBandPathwayDto, UpdateIeltsBandTargetDto } from './dto/ielts-band-learner.dto.js';
+import type { EvaluateIeltsBandPathwayDto, StartIeltsBandPathwayDto, UpdateIeltsBandTargetDto } from './dto/ielts-band-learner.dto.js';
 
 @ApiTags('IELTS band pathway learner')
 @Roles('LEARNER')

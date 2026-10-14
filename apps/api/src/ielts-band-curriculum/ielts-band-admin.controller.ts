@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
 import { IeltsBandAdminService } from './application/ielts-band-admin.service.js';
-import { IeltsBandCurriculumCommandDto, SaveIeltsBandCurriculumDraftDto } from './dto/ielts-band-admin.dto.js';
+import type { IeltsBandCurriculumCommandDto, SaveIeltsBandCurriculumDraftDto } from './dto/ielts-band-admin.dto.js';
 
 @ApiTags('admin-ielts-band-curriculum')
 @Roles('CONTENT_ADMIN', 'SYSTEM_ADMIN')
