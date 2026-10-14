@@ -17,3 +17,4 @@ export * from './ielts-orientation.contracts.ts';
 export * from './ielts-bridge.contracts.ts';
 export * from './ielts-integrated-practice.contracts.ts';
 export * from './ielts-band-curriculum.contracts.ts';
+export * from './ielts-mock.contracts.ts';
