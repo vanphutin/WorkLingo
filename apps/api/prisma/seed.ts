@@ -10,6 +10,7 @@ import { seedIeltsOrientation } from '../src/ielts-orientation/infrastructure/se
 import { seedIeltsBridge } from '../src/ielts-bridge/infrastructure/seed-ielts-bridge.js';
 import { seedIeltsIntegratedProfiles } from '../src/ielts-integrated-practice/infrastructure/seed-ielts-integrated-profiles.js';
 import { seedIeltsBandCurriculum } from '../src/ielts-band-curriculum/infrastructure/seed-ielts-band-curriculum.js';
+import { seedIeltsMocks } from '../src/ielts-mock/infrastructure/seed-ielts-mocks.js';
 
 async function main(): Promise<void> {
   const database = new PrismaClient();
@@ -20,6 +21,7 @@ async function main(): Promise<void> {
     await seedIeltsBridge(database);
     await seedIeltsIntegratedProfiles(database);
     await seedIeltsBandCurriculum(database);
+    await seedIeltsMocks(database);
     await seedFoundationCurriculum(database, storage);
     await seedWorkplaceTransferCurriculum(database, storage);
     await seedPlacementCurriculum(database, storage);
