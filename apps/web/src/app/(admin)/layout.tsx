@@ -112,6 +112,7 @@ export default function AdminLayout({
               <Link href="/admin/ielts-integrated" className="nav-link">
                 Integrated Practice
               </Link>
+              <Link href="/admin/ielts-mocks" className="nav-link">IELTS Full Mocks</Link>
               <Link href="/admin/ielts-band-curriculum" className="nav-link">
                 Band Curriculum
               </Link>

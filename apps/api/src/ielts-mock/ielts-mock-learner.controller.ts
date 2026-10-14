@@ -5,6 +5,8 @@ import type { IeltsMockAttemptDto, IeltsMockReportDto } from '@worklingo/contrac
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { Roles } from '../auth/roles.decorator.js';
 import { IeltsMockLearnerService } from './application/ielts-mock-learner.service.js';
+// Runtime DTO imports provide ValidationPipe metadata.
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { SaveIeltsMockResponsesDto, StartIeltsMockAttemptDto, SubmitIeltsMockSectionDto } from './dto/ielts-mock-learner.dto.js';
 
 @ApiTags('IELTS Full Mock learner') @Roles('LEARNER') @Controller('me/ielts-mocks')

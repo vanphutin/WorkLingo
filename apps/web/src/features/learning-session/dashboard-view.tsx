@@ -10,6 +10,7 @@ import { CurriculumRoadmap } from '../curriculum-roadmap/curriculum-roadmap';
 import { OrientationDashboardCard } from '../ielts-orientation/orientation-dashboard-card';
 import { IeltsBridgeDashboardCard } from '../ielts-bridge/ielts-bridge-dashboard-card';
 import { IntegratedPracticeDashboardCard } from '../ielts-integrated/integrated-practice';
+import { IeltsMockDashboardCard } from '../ielts-mock/ielts-mock';
 import { IeltsBandDashboardCard } from '../ielts-band-curriculum/ielts-band-pathway';
 
 interface DashboardViewProps {
@@ -167,6 +168,7 @@ export function DashboardView({
         <OrientationDashboardCard />
         <IeltsBridgeDashboardCard />
         <IntegratedPracticeDashboardCard />
+        <IeltsMockDashboardCard />
         <IeltsBandDashboardCard />
         <section className="dashboard-card next-mission-card" aria-labelledby="mission-heading">
           <span className="card-tag">Current Mission</span>
