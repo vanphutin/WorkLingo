@@ -94,4 +94,11 @@ describe('IeltsMockLearnerService', () => {
     const { service } = await setup({ existing: expired });
     await expect(service.saveResponses(learnerId, attemptId, { expectedRevision: 1, responses: {} })).rejects.toBeInstanceOf(ConflictException);
   });
+
+  it('server-submits an expired section when the learner resumes', async () => {
+    const expired = { ...attempt, sectionDeadlineAt: new Date('2020-01-01T00:00:00.000Z') };
+    const { service, tx } = await setup({ existing: expired });
+    await service.get(learnerId, attemptId);
+    expect(tx.ieltsMockAttempt.updateMany).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ currentSection: 'READING' }) }));
+  });
 });

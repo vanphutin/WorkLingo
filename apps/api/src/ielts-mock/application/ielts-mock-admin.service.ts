@@ -25,9 +25,13 @@ export class IeltsMockAdminService {
     return this.get(id);
   }
   async validate(id: string, input: { expectedRevision: number }) {
-    const mock = await this.database.ieltsMockTest.findUnique({ where: { id } }); if (!mock) throw new NotFoundException('IELTS mock not found.'); if (mock.draftRevision !== input.expectedRevision) throw new ConflictException('IELTS mock revision is stale.');
-    const parsed = ieltsMockContentSchema.safeParse(mock.draftContent); const issues = parsed.success ? [] : parsed.error.issues.map((issue) => ({ path: issue.path.join('.'), message: issue.message })); const status = issues.length ? 'DRAFT' as const : 'VALIDATED' as const;
-    await this.database.ieltsMockTest.update({ where: { id }, data: { status } }); return ieltsMockValidationSchema.parse({ mockTestId: id, draftRevision: mock.draftRevision, status, canPublish: !issues.length, issues });
+    return this.database.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-mock:' + id}))`;
+      const mock = await tx.ieltsMockTest.findUnique({ where: { id } }); if (!mock) throw new NotFoundException('IELTS mock not found.'); if (mock.draftRevision !== input.expectedRevision) throw new ConflictException('IELTS mock revision is stale.');
+      const parsed = ieltsMockContentSchema.safeParse(mock.draftContent); const issues = parsed.success ? [] : parsed.error.issues.map((issue) => ({ path: issue.path.join('.'), message: issue.message })); const status = issues.length ? 'DRAFT' as const : 'VALIDATED' as const;
+      const updated = await tx.ieltsMockTest.updateMany({ where: { id, draftRevision: input.expectedRevision }, data: { status } }); if (updated.count !== 1) throw new ConflictException('IELTS mock revision is stale.');
+      return ieltsMockValidationSchema.parse({ mockTestId: id, draftRevision: mock.draftRevision, status, canPublish: !issues.length, issues });
+    });
   }
   async publish(actorId: string, id: string, input: { expectedRevision: number; idempotencyKey: string }) {
     return this.database.$transaction(async (tx) => {

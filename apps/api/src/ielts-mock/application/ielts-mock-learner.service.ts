@@ -58,6 +58,7 @@ export class IeltsMockLearnerService {
   async get(learnerId: string, attemptId: string): Promise<IeltsMockAttemptDto> {
     const attempt = await this.database.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
     if (!attempt) throw new NotFoundException('IELTS mock attempt was not found.');
+    if (attempt.status === 'IN_PROGRESS' && Date.now() > attempt.sectionDeadlineAt.getTime()) return this.submitSection(learnerId, attemptId, { expectedRevision: attempt.revision, section: attempt.currentSection });
     return this.toDto(attempt);
   }
 
