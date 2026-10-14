@@ -63,6 +63,7 @@ model User {
   orientationProgress        OrientationProgress[]
   ieltsBridgeProgress        IeltsBridgeProgress[]
   ieltsIntegratedSessions    IeltsIntegratedSession[]
+  ieltsBandJourneys          IeltsBandJourney[]
 }
 
 model LearnerProfile {
@@ -987,6 +988,57 @@ model IeltsIntegratedSessionBlock {
 
   @@unique([sessionId, order])
   @@index([moduleVersionId])
+}
+
+model IeltsBandCurriculum {
+  id                        String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String                       @unique @default("ielts-band-pathway")
+  status                    ContentStatus                @default(DRAFT)
+  draftRevision             Int                          @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                      @unique @db.Uuid
+  createdAt                 DateTime                     @default(now())
+  updatedAt                 DateTime                     @updatedAt
+  currentPublishedVersion   IeltsBandCurriculumVersion?  @relation("IeltsBandCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, curriculumId], onDelete: Restrict)
+  versions                  IeltsBandCurriculumVersion[] @relation("IeltsBandVersions")
+}
+
+model IeltsBandCurriculumVersion {
+  id           String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  curriculumId String                @db.Uuid
+  version      Int
+  sourceHash   String
+  content      Json
+  status       ContentStatus         @default(PUBLISHED)
+  publishedAt  DateTime              @default(now())
+  archivedAt   DateTime?
+  curriculum   IeltsBandCurriculum   @relation("IeltsBandVersions", fields: [curriculumId], references: [id], onDelete: Restrict)
+  currentFor   IeltsBandCurriculum[] @relation("IeltsBandCurrentVersion")
+  journeys     IeltsBandJourney[]
+
+  @@unique([curriculumId, version])
+  @@unique([id, curriculumId])
+  @@index([status, publishedAt])
+}
+
+model IeltsBandJourney {
+  id                  String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId           String                     @unique @db.Uuid
+  clientJourneyId     String                     @db.Uuid
+  curriculumVersionId String                     @db.Uuid
+  currentStageCode    String
+  targetBand          Int
+  revision            Int                        @default(1)
+  evidenceSnapshot    Json                       @default("{}")
+  startedAt           DateTime                   @default(now())
+  completedAt         DateTime?
+  updatedAt           DateTime                   @updatedAt
+  learner             User                       @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  curriculumVersion   IeltsBandCurriculumVersion @relation(fields: [curriculumVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, clientJourneyId])
+  @@index([curriculumVersionId])
+  @@index([currentStageCode, completedAt])
 }
 
 model IeltsBridgeProgress {
