@@ -114,12 +114,19 @@ export class IeltsMockLearnerService {
   }
 
   async getAudio(learnerId: string, attemptId: string, assetId: string) {
-    const attempt = await this.database.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
-    if (!attempt || attempt.currentSection !== 'LISTENING') throw new NotFoundException('IELTS mock audio was not found.');
-    const content = ieltsMockContentSchema.parse(attempt.mockTestVersion.content);
-    if (!content.listening.parts.some((part) => part.audioAssetId === assetId)) throw new NotFoundException('IELTS mock audio was not found.');
-    const artifact = await this.database.audioArtifact.findFirst({ where: { id: assetId, status: 'READY', adapterName: { not: 'fake-tts' } } });
-    if (!artifact) throw new NotFoundException('IELTS mock audio was not found.');
+    const artifact = await this.database.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-mock-audio:' + attemptId + ':' + assetId}))`;
+      const attempt = await tx.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
+      if (!attempt || attempt.currentSection !== 'LISTENING') throw new NotFoundException('IELTS mock audio was not found.');
+      const content = ieltsMockContentSchema.parse(attempt.mockTestVersion.content);
+      if (!content.listening.parts.some((part) => part.audioAssetId === assetId)) throw new NotFoundException('IELTS mock audio was not found.');
+      const ready = await tx.audioArtifact.findFirst({ where: { id: assetId, status: 'READY', adapterName: { not: 'fake-tts' } } });
+      if (!ready) throw new NotFoundException('IELTS mock audio was not found.');
+      const plays = this.jsonNumbers(attempt.audioPlayEvents); const count = plays[assetId] ?? 0;
+      if (attempt.mode === 'EXAM_SIMULATION' && count >= 1) throw new ConflictException({ code: 'IELTS_MOCK_AUDIO_PLAY_LIMIT' });
+      await tx.ieltsMockAttempt.update({ where: { id: attempt.id }, data: { audioPlayEvents: { ...plays, [assetId]: count + 1 } } });
+      return ready;
+    });
     return { body: await this.storage.read(artifact.storageKey), byteSize: artifact.byteSize, mimeType: artifact.mimeType };
   }
 
@@ -128,6 +135,7 @@ export class IeltsMockLearnerService {
   private deadline(now: Date, section: Section) { return new Date(now.getTime() + durations[section] * 60_000); }
   private jsonRecord(value: Prisma.JsonValue | null): Record<string, string> { return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, string> : {}; }
   private jsonStrings(value: Prisma.JsonValue): string[] { return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : []; }
+  private jsonNumbers(value: Prisma.JsonValue): Record<string, number> { if (!value || typeof value !== 'object' || Array.isArray(value)) return {}; return Object.fromEntries(Object.entries(value).filter((entry): entry is [string, number] => typeof entry[1] === 'number')); }
   private responseIds(content: ReturnType<typeof ieltsMockContentSchema.parse>, section: Section): string[] {
     if (section === 'LISTENING') return content.listening.parts.flatMap((part) => part.questions.map((question) => question.id));
     if (section === 'READING') return content.reading.passages.flatMap((passage) => passage.questions.map((question) => question.id));

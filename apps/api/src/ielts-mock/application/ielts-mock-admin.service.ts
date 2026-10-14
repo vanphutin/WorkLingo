@@ -10,7 +10,7 @@ type VersionRecord = Prisma.IeltsMockTestVersionGetPayload<Record<string, never>
 @Injectable()
 export class IeltsMockAdminService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
-  async list() { return Promise.all((await this.database.ieltsMockTest.findMany({ include: includeMock, orderBy: { updatedAt: 'desc' }, take: 100 })).map((row) => this.dto(row))); }
+  async list(offset = 0) { return Promise.all((await this.database.ieltsMockTest.findMany({ include: includeMock, orderBy: { updatedAt: 'desc' }, skip: offset, take: 50 })).map((row) => this.dto(row))); }
   async save(actorId: string, id: string, input: { expectedRevision: number; idempotencyKey: string; content: unknown }) {
     const content = ieltsMockContentSchema.parse(input.content);
     await this.database.$transaction(async (tx) => {

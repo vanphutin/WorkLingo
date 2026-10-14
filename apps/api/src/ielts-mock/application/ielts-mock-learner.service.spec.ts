@@ -18,6 +18,7 @@ const attempt = {
   id: attemptId, learnerId, clientAttemptId, mockTestVersionId: versionId, mode: 'EXAM_SIMULATION', status: 'IN_PROGRESS',
   currentSection: 'LISTENING', revision: 1, responses: {}, submittedSections: [], objectiveScore: null, productiveEvaluation: null,
   reportSnapshot: null, sectionStartedAt: startedAt, sectionDeadlineAt: new Date(startedAt.getTime() + 30 * 60_000),
+  audioPlayEvents: {},
   startedAt, submittedAt: null, completedAt: null, updatedAt: startedAt, mockTestVersion: version,
 };
 
@@ -28,9 +29,10 @@ async function setup(options: { journey?: boolean; existing?: typeof attempt | n
     ieltsBandJourney: { findUnique: vi.fn().mockResolvedValue(options.journey === false ? null : { id: 'journey' }) },
     ieltsMockAttempt: {
       findUnique: vi.fn().mockResolvedValue(existing), findFirst: vi.fn().mockResolvedValue(existing), create: vi.fn().mockResolvedValue(attempt),
-      updateMany: vi.fn().mockResolvedValue({ count: 1 }), findUniqueOrThrow: vi.fn().mockResolvedValue({ ...attempt, revision: 2 }),
+      update: vi.fn(), updateMany: vi.fn().mockResolvedValue({ count: 1 }), findUniqueOrThrow: vi.fn().mockResolvedValue({ ...attempt, revision: 2 }),
     },
     ieltsMockTest: { findUnique: vi.fn().mockResolvedValue({ id: mockId, status: 'PUBLISHED', currentPublishedVersion: version }) },
+    audioArtifact: { findFirst: vi.fn() },
   };
   const database = {
     ieltsBandJourney: { findUnique: vi.fn().mockResolvedValue(options.journey === false ? null : { id: 'journey' }) },
@@ -100,5 +102,13 @@ describe('IeltsMockLearnerService', () => {
     const { service, tx } = await setup({ existing: expired });
     await service.get(learnerId, attemptId);
     expect(tx.ieltsMockAttempt.updateMany).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ currentSection: 'READING' }) }));
+  });
+
+  it('allows only one server-recorded audio play in exam simulation', async () => {
+    const assetId = crypto.randomUUID(); const content = { ...INITIAL_IELTS_ACADEMIC_MOCK, listening: { ...INITIAL_IELTS_ACADEMIC_MOCK.listening, parts: INITIAL_IELTS_ACADEMIC_MOCK.listening.parts.map((part, index) => index === 0 ? { ...part, audioAssetId: assetId } : part) } };
+    const played = { ...attempt, audioPlayEvents: { [assetId]: 1 }, mockTestVersion: { ...version, content } };
+    const { service, tx } = await setup({ existing: played });
+    tx.audioArtifact = { findFirst: vi.fn().mockResolvedValue({ id: assetId, status: 'READY', adapterName: 'azure-speech', storageKey: 'audio.wav', byteSize: 10, mimeType: 'audio/wav' }) };
+    await expect(service.getAudio(learnerId, attemptId, assetId)).rejects.toBeInstanceOf(ConflictException);
   });
 });

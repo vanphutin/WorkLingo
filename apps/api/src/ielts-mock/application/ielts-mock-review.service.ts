@@ -10,8 +10,8 @@ import { scoreProductiveSkills, toOverallMockBand } from '../domain/ielts-mock-s
 export class IeltsMockReviewService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
-  listPending() {
-    return this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING' }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: { submittedAt: 'asc' }, take: 100 });
+  listPending(offset = 0) {
+    return this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING' }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: { submittedAt: 'asc' }, skip: offset, take: 50 });
   }
 
   async review(reviewerId: string, attemptId: string, input: unknown): Promise<IeltsMockReportDto> {

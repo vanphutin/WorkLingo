@@ -1086,6 +1086,7 @@ model IeltsMockAttempt {
   responses            Json                 @default("{}")
   submittedSections    Json                 @default("[]")
   objectiveScore       Json?
+  audioPlayEvents      Json                 @default("{}")
   productiveEvaluation Json?
   reportSnapshot       Json?
   sectionStartedAt     DateTime             @default(now())
