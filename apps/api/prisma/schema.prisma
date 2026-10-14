@@ -64,6 +64,8 @@ model User {
   ieltsBridgeProgress        IeltsBridgeProgress[]
   ieltsIntegratedSessions    IeltsIntegratedSession[]
   ieltsBandJourneys          IeltsBandJourney[]
+  ieltsMockAttempts          IeltsMockAttempt[]
+  ieltsMockReviews           IeltsMockReview[]          @relation("IeltsMockReviewReviewer")
 }
 
 model LearnerProfile {
@@ -1039,6 +1041,80 @@ model IeltsBandJourney {
   @@unique([learnerId, clientJourneyId])
   @@index([curriculumVersionId])
   @@index([currentStageCode, completedAt])
+}
+
+model IeltsMockTest {
+  id                        String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String                 @unique
+  status                    ContentStatus          @default(DRAFT)
+  draftRevision             Int                    @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                @unique @db.Uuid
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+  currentPublishedVersion   IeltsMockTestVersion?  @relation("IeltsMockCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, mockTestId], onDelete: Restrict)
+  versions                  IeltsMockTestVersion[] @relation("IeltsMockVersions")
+}
+
+model IeltsMockTestVersion {
+  id          String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mockTestId  String             @db.Uuid
+  version     Int
+  sourceHash  String
+  content     Json
+  status      ContentStatus      @default(PUBLISHED)
+  publishedAt DateTime           @default(now())
+  archivedAt  DateTime?
+  mockTest    IeltsMockTest      @relation("IeltsMockVersions", fields: [mockTestId], references: [id], onDelete: Restrict)
+  currentFor  IeltsMockTest[]    @relation("IeltsMockCurrentVersion")
+  attempts    IeltsMockAttempt[]
+
+  @@unique([mockTestId, version])
+  @@unique([id, mockTestId])
+  @@index([status, publishedAt])
+}
+
+model IeltsMockAttempt {
+  id                   String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId            String               @db.Uuid
+  clientAttemptId      String               @db.Uuid
+  mockTestVersionId    String               @db.Uuid
+  mode                 String
+  status               String               @default("IN_PROGRESS")
+  currentSection       String               @default("LISTENING")
+  revision             Int                  @default(1)
+  responses            Json                 @default("{}")
+  submittedSections    Json                 @default("[]")
+  objectiveScore       Json?
+  productiveEvaluation Json?
+  reportSnapshot       Json?
+  sectionStartedAt     DateTime             @default(now())
+  sectionDeadlineAt    DateTime
+  startedAt            DateTime             @default(now())
+  submittedAt          DateTime?
+  completedAt          DateTime?
+  updatedAt            DateTime             @updatedAt
+  learner              User                 @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  mockTestVersion      IeltsMockTestVersion @relation(fields: [mockTestVersionId], references: [id], onDelete: Restrict)
+  reviews              IeltsMockReview[]
+
+  @@unique([learnerId, clientAttemptId])
+  @@index([learnerId, status, updatedAt])
+  @@index([mockTestVersionId])
+}
+
+model IeltsMockReview {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  attemptId       String           @db.Uuid
+  reviewerId      String           @db.Uuid
+  attemptRevision Int
+  evaluation      Json
+  createdAt       DateTime         @default(now())
+  attempt         IeltsMockAttempt @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+  reviewer        User             @relation("IeltsMockReviewReviewer", fields: [reviewerId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, attemptRevision])
+  @@index([reviewerId, createdAt])
 }
 
 model IeltsBridgeProgress {
