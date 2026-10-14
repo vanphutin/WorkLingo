@@ -4,11 +4,12 @@ export const ieltsMockModeSchema = z.enum(['LEARNING', 'PRACTICE', 'EXAM_SIMULAT
 export const ieltsMockVariantSchema = z.enum(['ACADEMIC', 'GENERAL_TRAINING']);
 const mockBandSchema = z.number().min(0).max(9).refine((value) => Number.isInteger(value * 2), 'Mock band must use whole or half bands');
 const answerPolicySchema = z.object({ acceptedAnswers: z.array(z.string().min(1).max(160)).min(1).max(12), caseSensitive: z.boolean(), maxWords: z.number().int().min(1).max(10).nullable() }).strict();
-const questionSchema = z.object({
+const questionObjectSchema = z.object({
   id: z.uuid(), order: z.number().int().min(1).max(40), type: z.enum(['multiple_choice', 'matching', 'gap_fill', 'short_answer']),
   prompt: z.string().min(3).max(1000), options: z.array(z.string().min(1).max(300)).max(12), answerPolicy: answerPolicySchema,
   competencyTags: z.array(z.string().min(2).max(80)).min(1).max(8), explanation: z.string().min(10).max(1200),
-}).strict().readonly();
+}).strict();
+const questionSchema = questionObjectSchema.readonly();
 const conversionSchema = z.array(z.object({ rawScore: z.number().int().min(0).max(40), mockBand: mockBandSchema }).strict()).length(41).superRefine((rows, context) => rows.forEach((row, index) => {
   if (row.rawScore !== index) context.addIssue({ code: 'custom', path: [index, 'rawScore'], message: 'Conversion must cover raw scores 0 through 40 in order' });
   if (index > 0 && row.mockBand < rows[index - 1]!.mockBand) context.addIssue({ code: 'custom', path: [index, 'mockBand'], message: 'Conversion bands must not decrease' });
@@ -62,3 +63,27 @@ export const ieltsMockReportSchema = z.object({
   if (report.status === 'COMPLETED' && (!complete || report.completedAt === null)) context.addIssue({ code: 'custom', path: ['status'], message: 'Completed report requires all reviewed skill bands' });
 }).readonly();
 export type IeltsMockReportDto = z.infer<typeof ieltsMockReportSchema>;
+
+const mockVersionSummarySchema = z.object({ id: z.uuid(), version: z.number().int().positive(), status: z.enum(['PUBLISHED', 'ARCHIVED']), publishedAt: z.iso.datetime(), archivedAt: z.iso.datetime().nullable() }).strict();
+export const adminIeltsMockSchema = z.object({ id: z.uuid(), slug: z.string(), status: z.enum(['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED']), draftRevision: z.number().int().positive(), draft: ieltsMockContentSchema, currentPublishedVersion: mockVersionSummarySchema.nullable(), versions: z.array(mockVersionSummarySchema), updatedAt: z.iso.datetime() }).strict();
+export type AdminIeltsMockDto = z.infer<typeof adminIeltsMockSchema>;
+export const saveIeltsMockDraftSchema = z.object({ expectedRevision: z.number().int().positive(), idempotencyKey: z.uuid(), content: ieltsMockContentSchema }).strict();
+export const ieltsMockCommandSchema = z.object({ expectedRevision: z.number().int().positive(), idempotencyKey: z.uuid() }).strict();
+export const ieltsMockValidationSchema = z.object({ mockTestId: z.uuid(), draftRevision: z.number().int().positive(), status: z.enum(['DRAFT', 'VALIDATED']), canPublish: z.boolean(), issues: z.array(z.object({ path: z.string(), message: z.string() }).strict()) }).strict();
+export const publishIeltsMockResultSchema = z.object({ mockTestId: z.uuid(), mockTestVersionId: z.uuid(), version: z.number().int().positive(), publishedAt: z.iso.datetime() }).strict();
+
+export const ieltsMockCatalogSchema = z.object({ eligible: z.boolean(), lockedReason: z.enum(['BAND_PATHWAY_REQUIRED', 'MOCK_NOT_PUBLISHED']).nullable(), mocks: z.array(z.object({ id: z.uuid(), title: z.string(), variant: ieltsMockVariantSchema, version: z.number().int().positive(), allowedModes: z.array(ieltsMockModeSchema), activeAttemptId: z.uuid().nullable() }).strict()) }).strict();
+export const startIeltsMockAttemptSchema = z.object({ clientAttemptId: z.uuid(), mockTestId: z.uuid(), mode: ieltsMockModeSchema }).strict();
+export const saveIeltsMockResponsesSchema = z.object({ expectedRevision: z.number().int().positive(), responses: z.record(z.string(), z.string().max(20_000)) }).strict();
+export const submitIeltsMockSectionSchema = z.object({ expectedRevision: z.number().int().positive(), section: z.enum(['LISTENING', 'READING', 'WRITING', 'SPEAKING']) }).strict();
+const learnerQuestionSchema = questionObjectSchema.omit({ answerPolicy: true, explanation: true });
+export const ieltsMockAttemptSchema = z.object({
+  id: z.uuid(), mockTestVersionId: z.uuid(), mockTestVersion: z.number().int().positive(), title: z.string(), mode: ieltsMockModeSchema,
+  status: z.enum(['IN_PROGRESS', 'SUBMITTED', 'EVALUATION_PENDING', 'COMPLETED']), currentSection: z.enum(['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPLETE']), revision: z.number().int().positive(),
+  responses: z.record(z.string(), z.string()), submittedSections: z.array(z.string()), sectionStartedAt: z.iso.datetime(), sectionDeadlineAt: z.iso.datetime(), startedAt: z.iso.datetime(), submittedAt: z.iso.datetime().nullable(),
+  sectionContent: z.object({ listening: z.array(learnerQuestionSchema), reading: z.array(learnerQuestionSchema), writing: z.array(z.object({ task: z.number(), title: z.string(), prompt: z.string(), minimumWords: z.number() }).strict()), speaking: z.array(z.object({ part: z.number(), title: z.string(), prompts: z.array(z.string()), preparationSeconds: z.number(), responseSeconds: z.number() }).strict()) }).strict(),
+}).strict();
+export type IeltsMockAttemptDto = z.infer<typeof ieltsMockAttemptSchema>;
+
+const rubricScoresSchema = z.tuple([mockBandSchema, mockBandSchema, mockBandSchema, mockBandSchema]);
+export const reviewIeltsMockAttemptSchema = z.object({ expectedRevision: z.number().int().positive(), idempotencyKey: z.uuid(), writingTask1: rubricScoresSchema, writingTask2: rubricScoresSchema, speaking: rubricScoresSchema, strengths: z.array(z.string().min(3).max(300)).max(12), gaps: z.array(z.string().min(3).max(300)).max(12), nextActions: z.array(z.string().min(3).max(300)).min(1).max(12) }).strict();
