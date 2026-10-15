@@ -58,7 +58,7 @@ test('learner configures and resumes an immutable four-skill session without a b
     await expect(adminPage.getByRole('heading', { level: 1, name: 'Integrated Practice profiles' })).toBeVisible();
     await expectNoHorizontalOverflow(adminPage);
   } finally { await admin.close(); }
-  const registration = await page.request.post('/api/v1/auth/register', { data: { displayName: 'Integrated E2E Learner', email: `integrated-${randomUUID()}@test.local`, password: 'integrated-e2e-password' } });
+  const registration = await page.request.post('/api/v1/auth/register', { data: { locale: 'en', displayName: 'Integrated E2E Learner', email: `integrated-${randomUUID()}@test.local`, password: 'integrated-e2e-password' } });
   expect(registration.ok()).toBeTruthy();
   const learner = await registration.json() as { id: string };
   expect((await page.request.post('/api/v1/me/onboarding/self-placement', { data: { clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' } })).ok()).toBeTruthy();

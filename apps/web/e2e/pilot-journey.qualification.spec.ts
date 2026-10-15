@@ -12,6 +12,6 @@ test('learner can register, onboard, and see durable pilot progress surfaces', a
   await expect(page).toHaveURL(/\/onboarding$/u);
   await completeSelfPlacementViaApi(page);
   await page.goto('/dashboard');
-  await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
   await expect(page.getByText(/weekly|mission|progress/iu).first()).toBeVisible();
 });

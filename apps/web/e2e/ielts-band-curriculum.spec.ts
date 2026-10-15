@@ -59,7 +59,7 @@ test('Admin publishes seven stages and learner remains pinned to the started cur
     await expect(adminPage.getByRole('button', { name: '8.0 to 9.0' })).toBeVisible();
     await expectNoHorizontalOverflow(adminPage);
 
-    const registration = await page.request.post('/api/v1/auth/register', { data: { displayName: 'Band E2E Learner', email: `band-${randomUUID()}@test.local`, password: 'band-e2e-password' } });
+    const registration = await page.request.post('/api/v1/auth/register', { data: { locale: 'en', displayName: 'Band E2E Learner', email: `band-${randomUUID()}@test.local`, password: 'band-e2e-password' } });
     expect(registration.ok()).toBeTruthy();
     const learner = await registration.json() as { id: string };
     expect((await page.request.post('/api/v1/me/onboarding/self-placement', { data: { clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' } })).ok()).toBeTruthy();

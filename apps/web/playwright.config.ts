@@ -35,6 +35,8 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: webBaseUrl,
+    // Existing regression journeys explicitly exercise English. i18n projects override this with an empty guest state.
+    storageState: { cookies: [{ name: 'worklingo_locale', value: 'en', domain: '127.0.0.1', path: '/', expires: -1, httpOnly: false, secure: false, sameSite: 'Lax' }], origins: [] },
     permissions: ['microphone'],
     launchOptions: {
       args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
@@ -42,6 +44,23 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
+    { name: 'ai-settings-desktop', testMatch: /ai-settings\.spec\.ts/u, use: { ...devices['Desktop Chrome'] } },
+    { name: 'ai-settings-mobile', testMatch: /ai-settings\.spec\.ts/u, use: { ...devices['Pixel 5'] } },
+    {
+      name: 'i18n-desktop',
+      testMatch: /i18n\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'], storageState: { cookies: [], origins: [] } },
+    },
+    {
+      name: 'i18n-mobile',
+      testMatch: /i18n\.spec\.ts/u,
+      use: { ...devices['Pixel 5'], storageState: { cookies: [], origins: [] } },
+    },
+    {
+      name: 'ui-redesign',
+      testMatch: /ui-redesign\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
     {
       name: 'onboarding-desktop',
       testMatch: /onboarding-placement\.spec\.ts/u,
@@ -227,7 +246,7 @@ export default defineConfig({
     },
     {
       command: `pnpm exec next dev -H 127.0.0.1 -p ${webPort}`,
-      env: { WORKLINGO_API_URL: apiBaseUrl },
+      env: { WORKLINGO_API_URL: apiBaseUrl, WORKLINGO_E2E_MODE: 'true' },
       url: webBaseUrl,
       reuseExistingServer: false,
       timeout: 60_000,

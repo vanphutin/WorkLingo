@@ -23,8 +23,8 @@ test.describe('Teacher AI speaking and writing journey', () => {
       `My name is An and I am happy to meet the team today. [e2e-rate-limit:${suffix}]`,
     );
     await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page.getByRole('button', { name: /thử đánh giá lại/i })).toBeVisible({ timeout: 20_000 });
-    await page.getByRole('button', { name: /thử đánh giá lại/i }).click();
+    await expect(page.getByRole('button', { name: /retry evaluation/i })).toBeVisible({ timeout: 20_000 });
+    await page.getByRole('button', { name: /retry evaluation/i }).click();
     await expect(page.locator('.teacher-feedback-result')).toBeVisible({ timeout: 15_000 });
 
     await page.getByLabel('To welcome An and help An meet the team.').check();
@@ -55,7 +55,7 @@ test.describe('Teacher AI speaking and writing journey', () => {
 
     const finalWriting = 'Hello Mai. My name is An. I work in sales. Do you need help with the customer report today?';
     await page.getByLabel('Your written response:').fill(finalWriting);
-    await expect(page.getByText('Đã lưu bản nháp')).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText('Draft saved')).toBeVisible({ timeout: 5_000 });
     await page.reload();
     await expect(page.getByLabel('Your written response:')).toHaveValue(finalWriting);
     await page.getByRole('button', { name: 'Continue' }).click();

@@ -1,5 +1,13 @@
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 import ts from 'typescript';
 import { defineConfig } from 'vitest/config';
+
+const workspaceEnv = fileURLToPath(new URL('../../.env', import.meta.url));
+if (existsSync(workspaceEnv)) process.loadEnvFile(workspaceEnv);
+const testDatabaseUrl = process.env.TEST_DATABASE_URL ?? process.env.DATABASE_URL ??
+  'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
 
 export default defineConfig({
   plugins: [
@@ -26,6 +34,7 @@ export default defineConfig({
   ],
   test: {
     env: {
+      TEST_DATABASE_URL: testDatabaseUrl,
       JOB_WORKER_ENABLED: 'false',
       MICROSOFT_SPEECH_KEY: '',
       MICROSOFT_SPEECH_REGION: '',

@@ -11,16 +11,21 @@
     "build": "pnpm -r --if-present build",
     "dev": "pnpm --parallel --filter @worklingo/api --filter @worklingo/web dev",
     "format:check": "git diff --check",
+    "i18n:check": "node scripts/i18n-check.mjs",
+    "test:i18n": "node --test scripts/i18n-check.test.mjs",
     "lint": "pnpm -r --if-present lint",
+    "mandate:check": "node .agents/skills/mandate-steward/scripts/mandate.mjs validate",
     "qualify:performance": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/qualification/run-performance.ps1",
     "qualify:recovery": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/qualification/rehearse-recovery.ps1",
     "qualify:security": "pnpm --filter @worklingo/api exec vitest run test/qualification/security.qualification.spec.ts src/common/logging/safe-logger.service.spec.ts src/common/http/safe-exception.filter.spec.ts src/common/rate-limit test/integration/rate-limit.integration.spec.ts && powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/qualification/scan-secrets.ps1",
     "restore:local": "powershell -ExecutionPolicy Bypass -File ./scripts/restore-local.ps1",
     "setup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-local.ps1",
-    "test": "pnpm -r --if-present test",
+    "test": "pnpm -r --workspace-concurrency=1 --if-present test",
+    "test:mandate": "node --test .agents/skills/mandate-steward/scripts/mandate.test.mjs",
+    "test:postgres-client": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/postgres-client.test.ps1",
     "test:setup-local": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-local.credentials.test.ps1",
     "typecheck": "pnpm -r --if-present typecheck",
-    "verify": "pnpm format:check && pnpm test:setup-local && pnpm lint && pnpm typecheck && pnpm test && pnpm --filter @worklingo/api test:integration && pnpm build && pnpm --filter @worklingo/web e2e"
+    "verify": "pnpm format:check && pnpm i18n:check && pnpm test:i18n && pnpm mandate:check && pnpm test:mandate && pnpm test:setup-local && pnpm test:postgres-client && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm --filter @worklingo/web e2e"
   },
   "devDependencies": {
     "@eslint/js": "9.39.1",

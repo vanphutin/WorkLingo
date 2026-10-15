@@ -1,5 +1,9 @@
 # WorkLingo MVP Implementation Roadmap
 
+## UI internationalization — 2026-10-14
+
+Explicit user mandate: production Vietnamese / English UI across auth, learner, IELTS and Admin, preserving URLs and immutable educational data. Canonical [design](superpowers/specs/2026-10-14-i18n-design.md), [execution plan](superpowers/plans/2026-10-14-i18n.md), [developer guide](I18N.md), and [verification report](I18N_IMPLEMENTATION_REPORT.md). Foundation, account/guest persistence and UI migration are implemented in the current dirty feature checkout; independent review fixes and feature QA are verified; the repository release gate remains blocked by the preexisting API/curriculum regressions documented in the report. This entry does not mark release or public deployment approved.
+
 ## Mục tiêu
 
 Triển khai MVP theo các vertical increments nhỏ. Mỗi increment phải chạy được trên local, có test, có dữ liệu mẫu và tạo ra một luồng người dùng có thể kiểm chứng. Không xây toàn bộ backend trước rồi mới nối giao diện.
@@ -109,6 +113,8 @@ Speaking/writing chưa có điểm AI thật nên checkpoint có thể còn ch�
 **Trạng thái 2026-10-09:** Implementation Tasks 1–12 đã được hoàn thiện trên branch Increment 4: contracts/config, adapters, PostgreSQL jobs, recording/draft/evaluation persistence, consent/retention, learner recorder/audio/writing UI, golden harness và Teacher AI E2E desktop/mobile. Fake calibration pass 3/3 expected ranges. Sau khi khôi phục PostgreSQL local, full `pnpm verify` đã pass: lint/typecheck, 352 API tests, 136 web tests, 138 integration tests, production build và 8 Playwright journeys trên desktop/mobile. **Human calibration pending** và live-provider calibration chưa chạy; hai mục này chặn tuyên bố pilot-ready/live-provider, không chặn hoàn tất kỹ thuật Increment 4 trên local.
 
 Vận hành: `docs/INCREMENT_4_DEMO.md`. Calibration: `docs/AI_CALIBRATION.md`. Detailed plan: `docs/superpowers/plans/2026-10-07-increment-4-speech-teacher-ai.md`.
+
+**Bổ sung 2026-10-14:** Tích hợp Discovery Chat Completions cho Teacher AI; Qwen3.8-27B là mặc định local sau synthetic schema check. Có settings cho tài khoản/admin, dự phòng hai chiều có giới hạn và provenance theo provider thực tế. Chatbot hoãn theo xác nhận của người dùng; human calibration vẫn pending. Thiết kế và giá/giới hạn: `docs/AI_PROVIDER_STRATEGY.md`; kết quả kiểm tra: `docs/DISCOVERY_AI_IMPLEMENTATION_REPORT.md`.
 
 ## Increment 5 — Admin, quality và pilot readiness
 

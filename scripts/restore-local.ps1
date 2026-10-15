@@ -81,6 +81,7 @@ function Convert-PgDumpSchema(
 # 1. Resolve and validate paths
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 Set-Location $repoRoot
+. (Join-Path $PSScriptRoot "postgres-client.ps1")
 
 $resolvedBackupDir = Get-SafeFullPath $BackupDir
 
@@ -180,12 +181,12 @@ if (-not $TargetDatabaseUrl) {
   }
 }
 
-$cleanUrl = $TargetDatabaseUrl -replace '^postgresql://', 'http://' -replace '^postgres://', 'http://'
-$uri = [System.Uri]$cleanUrl
+$connection = Get-PostgresConnection $TargetDatabaseUrl
+$uri = $connection.Uri
 $user = $uri.UserInfo.Split(':')[0]
 $pass = if ($uri.UserInfo.Contains(':')) { $uri.UserInfo.Split(':')[1] } else { "" }
-$hostName = $uri.Host
-$port = if ($uri.Port -gt 0) { $uri.Port } else { 5432 }
+$hostName = $connection.HostName
+$port = $connection.Port
 $dbName = $uri.AbsolutePath.TrimStart('/')
 
 if (-not $TargetSchema -and $uri.Query) {
@@ -204,9 +205,10 @@ if (-not (Test-Path $sqlFile)) {
   exit 1
 }
 
-$composeFile = Join-Path $repoRoot "infra/docker-compose.yml"
 $dockerCmd = Get-Command docker -ErrorAction SilentlyContinue
 $psqlCmd = Get-Command psql -ErrorAction SilentlyContinue
+$env:PGPASSWORD = [System.Uri]::UnescapeDataString($pass)
+$dockerPsqlArgs = @(Get-DockerPostgresArguments "psql" $hostName $port $user $dbName)
 
 # Check if target schema is non-empty
 $schemaToCheck = if ($TargetSchema) { $TargetSchema } else { "public" }
@@ -215,11 +217,10 @@ $checkQuery = "SELECT count(*) FROM information_schema.tables WHERE table_schema
 $countExitCode = $null
 $countOutput = $null
 if ($psqlCmd) {
-  $env:PGPASSWORD = $pass
   $countOutput = & $psqlCmd.Source -h $hostName -p "$port" -U $user -d $dbName -t -A -c $checkQuery
   $countExitCode = $LASTEXITCODE
 } elseif ($dockerCmd) {
-  $countOutput = & $dockerCmd.Source compose -f "$composeFile" exec -T postgres psql -U $user -d $dbName -t -A -c $checkQuery
+  $countOutput = & $dockerCmd.Source @dockerPsqlArgs -t -A -c $checkQuery
   $countExitCode = $LASTEXITCODE
 } else {
   Write-Error "Unable to verify target database schema is empty: neither local psql nor docker is available."
@@ -257,11 +258,9 @@ $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 try {
   if ($psqlCmd) {
-    $env:PGPASSWORD = $pass
     & $psqlCmd.Source -h $hostName -p "$port" -U $user -d $dbName -v ON_ERROR_STOP=1 -f $tempRestoreSql
   } elseif ($dockerCmd) {
-    $composeFile = Join-Path $repoRoot "infra/docker-compose.yml"
-    Get-Content $tempRestoreSql -Raw -Encoding UTF8 | & $dockerCmd.Source compose -f "$composeFile" exec -T postgres psql -U $user -d $dbName -v ON_ERROR_STOP=1
+    Get-Content $tempRestoreSql -Raw -Encoding UTF8 | & $dockerCmd.Source @dockerPsqlArgs -v ON_ERROR_STOP=1
   } else {
     Write-Error "Neither local psql nor docker is available for PostgreSQL restore."
     exit 1

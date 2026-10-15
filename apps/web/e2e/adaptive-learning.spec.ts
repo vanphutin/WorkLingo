@@ -15,8 +15,17 @@ test('learner sees own evidence, transfers a review, and cannot advance on unsco
   await page.goto('/dashboard');
   await expect(page).toHaveURL(/\/dashboard$/u);
   const durations = page.getByLabel(/session duration/i);
-  await expect(durations).toHaveValue('60');
-  await expect(durations.locator('option[value="90"]')).toBeDisabled();
+  const availabilityResponse = await page.request.get('/api/v1/learning-sessions/availability');
+  expect(availabilityResponse.status()).toBe(200);
+  const availability = await availabilityResponse.json() as {
+    supportedDurations: number[]; availableDurations: number[]; defaultDurationMinutes: number;
+  };
+  await expect(durations).toHaveValue(String(availability.defaultDurationMinutes));
+  await expect(durations.locator('option')).toHaveCount(availability.supportedDurations.length);
+  for (const duration of availability.supportedDurations) {
+    await expect(durations.locator(`option[value="${duration}"]`))
+      .toBeEnabled({ enabled: availability.availableDurations.includes(duration) });
+  }
   await durations.selectOption('45');
   await page.getByRole('button', { name: /start 45-minute session/i }).click();
   await expect(page).toHaveURL(/\/sessions\//u);
