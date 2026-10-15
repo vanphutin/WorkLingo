@@ -6,6 +6,11 @@
   "engines": {
     "node": ">=20 <21"
   },
+  "pnpm": {
+    "overrides": {
+      "@nestjs/platform-express>multer": "2.3.0"
+    }
+  },
   "scripts": {
     "backup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/backup-local.ps1",
     "build": "pnpm -r --if-present build",

@@ -147,6 +147,34 @@ describe('SafeExceptionFilter', () => {
     );
   });
 
+  it.each([
+    { name: 'MulterError', code: 'LIMIT_FIELD_ARRAY_INDEX', expectedStatus: 400 },
+    { name: 'Error', code: 'LIMIT_FIELD_ARRAY_INDEX', expectedStatus: 500 },
+    { name: 'MulterError', code: 'OTHER_ERROR', expectedStatus: 500 },
+  ])('returns $expectedStatus for $name/$code without reflecting parser details', ({ name, code, expectedStatus }) => {
+    const logger = new SafeLoggerService();
+    vi.spyOn(logger, 'error').mockImplementation(() => undefined);
+    const filter = new SafeExceptionFilter(logger);
+    const json = vi.fn();
+    const status = vi.fn().mockReturnValue({ json });
+    const exception = Object.assign(new Error('private-parser-detail'), {
+      name, code, field: 'private-field-name',
+    });
+
+    filter.catch(exception, createMockHost(
+      { method: 'POST', url: '/upload', headers: {} },
+      { status, json, setHeader: vi.fn() },
+    ));
+
+    expect(status).toHaveBeenCalledWith(expectedStatus);
+    expect(json).toHaveBeenCalledWith(expect.objectContaining({
+      statusCode: expectedStatus,
+      code: expectedStatus === 400 ? 'BAD_REQUEST' : 'INTERNAL_SERVER_ERROR',
+    }));
+    expect(JSON.stringify(json.mock.calls[0])).not.toContain('private-');
+    expect(json.mock.calls[0]?.[0]).not.toHaveProperty('stack');
+  });
+
   it('masks unexpected errors with 500 INTERNAL_SERVER_ERROR and never leaks stack or database internals', () => {
     const logger = new SafeLoggerService();
     const filter = new SafeExceptionFilter(logger);
