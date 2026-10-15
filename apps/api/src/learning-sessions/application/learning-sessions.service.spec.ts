@@ -138,7 +138,16 @@ describe('LearningSessionsService state transitions', () => {
       })),
     } as unknown as PrismaService;
 
+    // One activity per block, plus separate speaking/writing responses, supports
+    // 45/60 minutes but cannot fill the repeated reading/listening blocks at 90.
     const fixture = foundationMissionFixture;
+    const activities = [
+      ...(['activate', 'readDecode', 'listenReason'] as const).map((type) =>
+        fixture.lesson.activities.find((activity) => activity.learningBlock === type)!),
+      ...(['speaking', 'writing'] as const).map((skill) =>
+        fixture.lesson.activities.find((activity) =>
+          activity.learningBlock === 'respond' && activity.skills.some((candidate) => candidate === skill))!),
+    ];
     const curriculum = {
       getPublishedMissionsForLevel: vi.fn().mockResolvedValue([{
         id: '00000000-0000-4000-8000-000000000200',
@@ -156,7 +165,7 @@ describe('LearningSessionsService state transitions', () => {
             id: '00000000-0000-4000-8000-000000000010',
             languageBlocks: wb.languageBlocks.map((lb, i) => ({ ...lb, id: `00000000-0000-4000-8000-${(i + 20).toString().padStart(12, '0')}` })),
           })),
-          activities: fixture.lesson.activities.map((a, i) => ({ ...a, order: i, id: `00000000-0000-4000-8000-${(i + 100).toString().padStart(12, '0')}` })),
+          activities: activities.map((a, i) => ({ ...a, order: i, id: `00000000-0000-4000-8000-${(i + 100).toString().padStart(12, '0')}` })),
         },
       }]),
     } as unknown as CurriculumService;

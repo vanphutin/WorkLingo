@@ -1,8 +1,10 @@
 import { randomUUID } from 'node:crypto';
 
 import request from 'supertest';
+import type { Prisma } from '@prisma/client';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { lessonSnapshotSchema } from '../../src/curriculum/domain/curriculum.types.js';
 import {
   createLearningSessionTestContext,
   registerLearner,
@@ -11,12 +13,62 @@ import {
 
 describe('learning sessions', () => {
   let context: LearningSessionTestContext;
+  let missionId: string;
+  let limitedLessonId: string;
+  let limitedVersionId: string;
+
+  async function setLimitedLessonOrder(order: number) {
+    await context.database.missionLesson.update({
+      where: { missionId_lessonId: { missionId, lessonId: limitedLessonId } }, data: { order },
+    });
+  }
 
   beforeAll(async () => {
     context = await createLearningSessionTestContext('learning_sessions_test');
+    const original = await context.database.lessonVersion.findFirstOrThrow({ where: { status: 'PUBLISHED' } });
+    const link = await context.database.missionLesson.findFirstOrThrow({ where: { lessonId: original.lessonId } });
+    missionId = link.missionId;
+    const lesson = await context.database.lesson.create({ data: {
+      slug: 'controlled-duration-boundary',
+      missions: { create: { missionId, order: 1 } },
+    } });
+    limitedLessonId = lesson.id;
+    const snapshot = lessonSnapshotSchema.parse(original.parsedContent);
+    // Publish a controlled five-activity lesson for duration-boundary tests.
+    // Keep four skills while deliberately lacking repeated reading/listening.
+    snapshot.activities = [
+      ...(['activate', 'readDecode', 'listenReason'] as const).map((type) =>
+        snapshot.activities.find((activity) => activity.learningBlock === type)!),
+      ...(['speaking', 'writing'] as const).map((skill) =>
+        snapshot.activities.find((activity) =>
+          activity.learningBlock === 'respond' && activity.skills.includes(skill))!),
+    ].map((activity, order) => ({ ...activity, id: randomUUID(), order }));
+    snapshot.contentBlocks.forEach((block) => { block.id = randomUUID(); });
+    const limited = await context.database.lessonVersion.create({ data: {
+      lessonId: limitedLessonId, version: 1, title: original.title,
+      sourceHash: 'controlled-duration-boundary', parsedContent: snapshot as Prisma.InputJsonValue,
+      contentBlocks: { create: snapshot.contentBlocks.map((block, order) => ({
+        id: block.id, slug: block.slug, type: block.type, text: block.text, order,
+        metadata: block.audio ? { audio: block.audio } : {},
+      })) },
+      activities: { create: snapshot.activities.map((activity) => ({
+        ...activity, payload: activity.payload as Prisma.InputJsonValue,
+      })) },
+      wordBanks: { create: snapshot.wordBanks.map((bank) => ({ wordBankId: bank.id })) },
+    } });
+    await context.database.lessonVersion.update({
+      where: { id: limited.id }, data: { status: 'PUBLISHED', publishedAt: new Date() },
+    });
+    await context.database.lesson.update({
+      where: { id: limitedLessonId }, data: { currentPublishedVersionId: limited.id },
+    });
+    limitedVersionId = limited.id;
   }, 40_000);
 
-  beforeEach(async () => context.resetLearners());
+  beforeEach(async () => {
+    await context.resetLearners();
+    await setLimitedLessonOrder(1);
+  });
   afterAll(async () => context?.close());
 
   it('creates and transactionally persists a complete 60-minute plan', async () => {
@@ -124,7 +176,8 @@ describe('learning sessions', () => {
       displayName: 'Duration Learner', email: 'duration@example.test',
     });
 
-    // 90 minutes has insufficient content for seed lesson (needs 6 activities, only 5 available)
+    await setLimitedLessonOrder(-1);
+    // 90 minutes needs repeated reading/listening blocks; this lesson has one each.
     const insufficientRes = await agent.post('/api/v1/learning-sessions').send({
       clientSessionId: randomUUID(), durationMinutes: 90,
     }).expect(422);
@@ -132,12 +185,24 @@ describe('learning sessions', () => {
       code: 'INSUFFICIENT_CONTENT_FOR_DURATION',
       availableDurations: [45, 60],
     });
+    await expect(context.database.learningSession.count()).resolves.toBe(0);
 
     // 30 minutes is not one of [45, 60, 90, 120, 150]
     const unsupportedRes = await agent.post('/api/v1/learning-sessions').send({
       clientSessionId: randomUUID(), durationMinutes: 30,
     }).expect(422);
     expect(unsupportedRes.body).toMatchObject({ code: 'INVALID_SESSION_DURATION' });
+    await expect(context.database.learningSession.count()).resolves.toBe(0);
+
+    // The same lesson remains usable for both advertised shorter durations.
+    for (const durationMinutes of [45, 60]) {
+      const created = await agent.post('/api/v1/learning-sessions').send({
+        clientSessionId: randomUUID(), durationMinutes,
+      }).expect(201);
+      expect(created.body.lessonVersionId).toBe(limitedVersionId);
+      expect(new Set(created.body.plan.blocks.flatMap((block: { skills: string[] }) => block.skills)))
+        .toEqual(new Set(['reading', 'listening', 'speaking', 'writing']));
+    }
   });
 
   it('returns the original session for a repeated clientSessionId', async () => {
@@ -279,6 +344,7 @@ describe('learning sessions', () => {
   });
 
   it('returns session availability without mutating database or triggering :id route', async () => {
+    await setLimitedLessonOrder(-1);
     const agent = await registerLearner(context.app, {
       displayName: 'Availability Learner',
       email: 'availability@example.test',
@@ -296,7 +362,7 @@ describe('learning sessions', () => {
         id: expect.any(String),
         title: 'Introduce yourself to a new colleague',
       },
-      lessonVersionId: expect.any(String),
+      lessonVersionId: limitedVersionId,
       supportedDurations: [45, 60, 90, 120, 150],
       availableDurations: [45, 60],
       defaultDurationMinutes: 60,

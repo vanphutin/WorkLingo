@@ -3,15 +3,22 @@ import { sessionPlanSchema } from '@worklingo/contracts';
 import { describe, expect, it } from 'vitest';
 
 import { lessonSnapshotSchema, type PublishedMission } from '../../curriculum/domain/curriculum.types.js';
-import { planFoundationSession } from './session-planner.js';
+import { computeAvailableDurations, planFoundationSession } from './session-planner.js';
 
 // Approved Task 5 seam: published curriculum -> pure, deterministic session plan.
 function fixtureId(value: number): string {
   return `00000000-0000-4000-8000-${value.toString().padStart(12, '0')}`;
 }
 
-function createMission(): PublishedMission {
+function createMission(useExtendedFixture = false): PublishedMission {
   const fixture = foundationMissionFixture;
+  const legacySlugs = new Set([
+    'recall-introduction', 'understand-welcome', 'understand-colleague',
+    'shadow-introduction', 'write-first-message',
+  ]);
+  const activities = useExtendedFixture
+    ? fixture.lesson.activities
+    : fixture.lesson.activities.filter((activity) => legacySlugs.has(activity.slug));
   const snapshot = lessonSnapshotSchema.parse({
     ...fixture.lesson,
     contentBlocks: fixture.lesson.contentBlocks.map((block, index) => ({ ...block, id: fixtureId(index + 1) })),
@@ -19,7 +26,7 @@ function createMission(): PublishedMission {
       ...bank, id: fixtureId(10),
       languageBlocks: bank.languageBlocks.map((block, index) => ({ ...block, id: fixtureId(index + 20) })),
     })),
-    activities: fixture.lesson.activities.map((activity, order) => ({ ...activity, order, id: fixtureId(order + 100) })),
+    activities: activities.map((activity, order) => ({ ...activity, order, id: fixtureId(order + 100) })),
   });
   return {
     id: fixtureId(200), slug: fixture.slug, title: fixture.title,
@@ -29,6 +36,9 @@ function createMission(): PublishedMission {
 }
 
 describe('Foundation session planner', () => {
+  it('offers every learner-selected duration for the published Foundation fixture', () => {
+    expect(computeAvailableDurations(createMission(true))).toEqual([45, 60, 90, 120, 150]);
+  });
   it('rejects review metadata pointing outside its frozen activity plan', () => {
     const plan = planFoundationSession({ mission: createMission(), durationMinutes: 60 });
     expect(sessionPlanSchema.safeParse({
@@ -339,8 +349,8 @@ describe('Foundation session planner', () => {
       }],
     });
 
-    expect(withoutReview.blocks[1]!.activityIds).toEqual([newerActivity.id, reviewedActivity.id]);
-    expect(withReview.blocks[1]!.activityIds).toEqual([reviewedActivity.id, newerActivity.id]);
+    expect(withoutReview.blocks[1]!.activityIds).toEqual([newerActivity.id]);
+    expect(withReview.blocks[1]!.activityIds).toEqual([reviewedActivity.id]);
   });
 
   it('keeps NEEDS_ATTENTION ahead of an older OVERDUE item even when its score is lower', () => {
@@ -365,7 +375,7 @@ describe('Foundation session planner', () => {
       ],
     });
 
-    expect(plan.blocks[1]!.activityIds).toEqual([weakActivity.id, overdueActivity.id]);
+    expect(plan.blocks[1]!.activityIds).toEqual([weakActivity.id]);
   });
 
   it('parses an existing 60-minute session plan snapshot with complete backward compatibility', () => {
