@@ -6,6 +6,12 @@
   "engines": {
     "node": ">=20 <21"
   },
+  "pnpm": {
+    "overrides": {
+      "@nestjs/platform-express>multer": "2.3.0",
+      "vitest>tinypool": "2.1.2"
+    }
+  },
   "scripts": {
     "backup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/backup-local.ps1",
     "build": "pnpm -r --if-present build",
@@ -23,9 +29,10 @@
     "test": "pnpm -r --workspace-concurrency=1 --if-present test",
     "test:mandate": "node --test .agents/skills/mandate-steward/scripts/mandate.test.mjs",
     "test:postgres-client": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/postgres-client.test.ps1",
+    "test:secret-scan": "node --test scripts/qualification/scan-secrets.test.mjs",
     "test:setup-local": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-local.credentials.test.ps1",
     "typecheck": "pnpm -r --if-present typecheck",
-    "verify": "pnpm format:check && pnpm i18n:check && pnpm test:i18n && pnpm mandate:check && pnpm test:mandate && pnpm test:setup-local && pnpm test:postgres-client && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm --filter @worklingo/web e2e"
+    "verify": "pnpm format:check && pnpm i18n:check && pnpm test:i18n && pnpm mandate:check && pnpm test:mandate && pnpm test:setup-local && pnpm test:postgres-client && pnpm test:secret-scan && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm --filter @worklingo/web e2e"
   },
   "devDependencies": {
     "@eslint/js": "9.39.1",

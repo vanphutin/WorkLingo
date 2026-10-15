@@ -8,7 +8,7 @@ if ($trackedEnv.Count -gt 0) {
   exit 1
 }
 
-$privateKeys = @(& git grep -l -- 'BEGIN .*PRIVATE KEY' -- ':!pnpm-lock.yaml' 2>$null)
+$privateKeys = @(& git grep -l -- '-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----' -- ':!pnpm-lock.yaml' 2>$null)
 if ($privateKeys.Count -gt 0) {
   Write-Error 'Security qualification failed: private-key material was found in tracked files.'
   exit 1

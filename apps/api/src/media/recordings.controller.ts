@@ -28,6 +28,10 @@ interface MultipartAudioFile {
 }
 
 const MAX_CONFIGURABLE_RECORDING_BYTES = 50 * 1024 * 1024;
+// This form has scalar fields only; reject numeric indexes before field expansion.
+const RECORDING_MULTIPART_LIMITS = {
+  fieldArrayIndexLimit: 0, files: 1, fileSize: MAX_CONFIGURABLE_RECORDING_BYTES,
+};
 
 @ApiTags('recordings')
 @Controller('activities/:activityId/recordings')
@@ -37,7 +41,7 @@ export class RecordingsController {
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
   @UseInterceptors(FileInterceptor('audio', {
-    limits: { files: 1, fileSize: MAX_CONFIGURABLE_RECORDING_BYTES },
+    limits: RECORDING_MULTIPART_LIMITS,
   }))
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Submit a consented speaking recording for asynchronous evaluation' })

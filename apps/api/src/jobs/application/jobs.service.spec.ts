@@ -6,11 +6,11 @@ import { JobsService } from './jobs.service.js';
 
 describe('JobsService provider retry defaults', () => {
   it('uses the configured provider max attempts unless enqueue explicitly overrides it', async () => {
-    const create = vi.fn().mockImplementation(({ data }) => Promise.resolve({
-      id: 'job-id', status: 'PENDING', type: data.type,
-    }));
+    const create = vi.fn().mockImplementation(({ data }) => Promise.resolve([{
+      ...data, id: 'job-id', status: 'PENDING',
+    }]));
     const service = new JobsService(
-      { job: { create } } as unknown as PrismaService,
+      { job: { createManyAndReturn: create } } as unknown as PrismaService,
       { maxAttempts: 5 },
     );
     const base = {
