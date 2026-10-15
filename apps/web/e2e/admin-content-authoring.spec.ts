@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
 
 import { createValidLessonSource, loginAsContentAdmin } from './helpers/content-admin';
 import { completeSelfPlacementViaApi } from './helpers/learner-onboarding';
@@ -14,6 +14,36 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
 interface SessionVersionSnapshot {
   readonly id: string;
   readonly lessonVersionId: string;
+  readonly mission: { readonly id: string };
+  readonly blocks: readonly { readonly type: string; readonly activityIds: readonly string[] }[];
+}
+
+async function publishCurriculumBinding(
+  request: APIRequestContext, missionId: string, lessonVersionId: string, activitySlug: string,
+): Promise<void> {
+  const path = `/api/v1/admin/curriculum/missions/${missionId}/foundation`;
+  const draftResponse = await request.get(path);
+  expect(draftResponse.status(), await draftResponse.text()).toBe(200);
+  const draft = await draftResponse.json() as { revision: number | null };
+  const savedResponse = await request.put(path, { data: {
+    expectedRevision: draft.revision, idempotencyKey: crypto.randomUUID(),
+    definition: {
+      category: 'reading', prerequisiteRevisionIds: [],
+      objectives: [{
+        slug: 'understand-published-message', statement: 'Understand the published workplace message.',
+        skills: ['reading'], required: true,
+        evidence: [{ lessonVersionId, activitySlug, languageBlockSlugs: [] }],
+      }],
+    },
+  } });
+  expect(savedResponse.status(), await savedResponse.text()).toBe(200);
+  const saved = await savedResponse.json() as { revision: number };
+  for (const action of ['validate', 'publish']) {
+    const response = await request.post(`${path}/${action}`, { data: {
+      expectedRevision: saved.revision, idempotencyKey: crypto.randomUUID(),
+    } });
+    expect(response.status(), await response.text()).toBe(200);
+  }
 }
 
 async function readCurrentSession(page: Page): Promise<SessionVersionSnapshot> {
@@ -52,6 +82,13 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
 
     const s1Url = page.url();
     const s1BeforePublish = await readCurrentSession(page);
+    const readingActivityId = s1BeforePublish.blocks.find(block => block.type === 'readDecode')?.activityIds[0];
+    expect(readingActivityId).toBeTruthy();
+    const readingActivityResponse = await page.request.get(
+      `/api/v1/learning-sessions/${s1BeforePublish.id}/activities/${readingActivityId}`,
+    );
+    expect(readingActivityResponse.status()).toBe(200);
+    const readingActivity = await readingActivityResponse.json() as { slug: string };
     await expect(page.getByText('Introduce yourself to a new colleague')).toBeVisible();
 
     const adminContext = await browser.newContext({
@@ -63,6 +100,10 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
 
     try {
       await loginAsContentAdmin(adminPage);
+      // Reproduce a curriculum revision bound to N even when this test runs alone.
+      await publishCurriculumBinding(
+        adminPage.request, s1BeforePublish.mission.id, s1BeforePublish.lessonVersionId, readingActivity.slug,
+      );
       await expect(adminPage).toHaveTitle('Content Admin | WorkLingo');
       await adminPage.getByRole('link', { name: /new import/i }).click();
       await expect(adminPage).toHaveURL(/.*\/admin\/content\/new/);
@@ -150,6 +191,17 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
 
       await adminPage.getByRole('tab', { name: /source/i }).click();
       await expect(editorTextarea).toHaveAttribute('readonly');
+
+      // Publishing N+1 archives N. Its curriculum binding must also be republished;
+      // the old revision correctly becomes unavailable until that explicit step.
+      const unavailable = await page.request.get('/api/v1/learning-sessions/availability');
+      expect(unavailable.status()).toBe(422);
+      expect(await unavailable.json()).toMatchObject({
+        code: 'CURRICULUM_UNAVAILABLE', reasons: ['bound_lesson_unavailable'],
+      });
+      await publishCurriculumBinding(
+        adminPage.request, s1BeforePublish.mission.id, published.lessonVersionId, 'check-sync-understanding',
+      );
     } finally {
       await adminContext.close().catch(() => undefined);
     }

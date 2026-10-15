@@ -6,6 +6,12 @@
   "engines": {
     "node": ">=20 <21"
   },
+  "pnpm": {
+    "overrides": {
+      "@nestjs/platform-express>multer": "2.3.0",
+      "vitest>tinypool": "2.1.2"
+    }
+  },
   "scripts": {
     "backup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/backup-local.ps1",
     "build": "pnpm -r --if-present build",
@@ -17,10 +23,12 @@
     "qualify:security": "pnpm --filter @worklingo/api exec vitest run test/qualification/security.qualification.spec.ts src/common/logging/safe-logger.service.spec.ts src/common/http/safe-exception.filter.spec.ts src/common/rate-limit test/integration/rate-limit.integration.spec.ts && powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/qualification/scan-secrets.ps1",
     "restore:local": "powershell -ExecutionPolicy Bypass -File ./scripts/restore-local.ps1",
     "setup:local": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-local.ps1",
-    "test": "pnpm -r --if-present test",
+    "test": "pnpm -r --workspace-concurrency=1 --if-present test",
+    "test:postgres-client": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/postgres-client.test.ps1",
+    "test:secret-scan": "node --test scripts/qualification/scan-secrets.test.mjs",
     "test:setup-local": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-local.credentials.test.ps1",
     "typecheck": "pnpm -r --if-present typecheck",
-    "verify": "pnpm format:check && pnpm test:setup-local && pnpm lint && pnpm typecheck && pnpm test && pnpm --filter @worklingo/api test:integration && pnpm build && pnpm --filter @worklingo/web e2e"
+    "verify": "pnpm format:check && pnpm test:setup-local && pnpm test:postgres-client && pnpm test:secret-scan && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm --filter @worklingo/web e2e"
   },
   "devDependencies": {
     "@eslint/js": "9.39.1",

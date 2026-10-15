@@ -23,6 +23,11 @@ interface MultipartOrientationMedia {
   readonly originalname: string;
 }
 
+// This form has scalar fields only; reject numeric indexes before field expansion.
+const ORIENTATION_MULTIPART_LIMITS = {
+  fieldArrayIndexLimit: 0, files: 1, fileSize: 20 * 1024 * 1024,
+};
+
 @ApiTags('IELTS orientation admin')
 @Roles('CONTENT_ADMIN', 'SYSTEM_ADMIN')
 @Controller('admin/ielts-orientation')
@@ -69,7 +74,7 @@ export class OrientationAdminController {
   }
 
   @Post('media')
-  @UseInterceptors(FileInterceptor('file', { limits: { files: 1, fileSize: 20 * 1024 * 1024 } }))
+  @UseInterceptors(FileInterceptor('file', { limits: ORIENTATION_MULTIPART_LIMITS }))
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Upload local image or narration media for IELTS orientation authoring' })
   @ApiCreatedResponse({ description: 'Immutable local media metadata' })

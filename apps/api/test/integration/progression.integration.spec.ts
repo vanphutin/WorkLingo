@@ -37,7 +37,11 @@ describe('learner progression HTTP API', () => {
     const email = `checkpoint-${randomUUID()}@example.test`;
     const agent = await registerLearner(context.app, { displayName: 'Checkpoint Learner', email });
     const learner = await context.database.user.findUniqueOrThrow({ where: { email } });
-    const created = await agent.post('/api/v1/learning-sessions').send({ clientSessionId: randomUUID(), durationMinutes: 60 }).expect(201);
+    // Progression needs scored evidence for all required Language Blocks. A
+    // short session may select only part of an expanded published lesson.
+    const availability = await agent.get('/api/v1/learning-sessions/availability').expect(200);
+    const durationMinutes = Math.max(...availability.body.availableDurations as number[]);
+    const created = await agent.post('/api/v1/learning-sessions').send({ clientSessionId: randomUUID(), durationMinutes }).expect(201);
     const plan = sessionPlanSchema.parse(created.body.plan);
     const sessionId = String(created.body.id);
     await agent.post(`/api/v1/learning-sessions/${sessionId}/start`).expect(200);

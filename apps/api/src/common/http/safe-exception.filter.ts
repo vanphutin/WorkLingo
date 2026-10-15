@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Catch,
   HttpException,
   HttpStatus,
@@ -47,6 +48,11 @@ export class SafeExceptionFilter implements ExceptionFilter {
     const correlationId = getCorrelationId(req);
     if (correlationId && !res.headersSent) {
       res.setHeader('X-Correlation-ID', correlationId);
+    }
+
+    if (exception instanceof Error && exception.name === 'MulterError' &&
+      'code' in exception && exception.code === 'LIMIT_FIELD_ARRAY_INDEX') {
+      exception = new BadRequestException('Invalid multipart field.');
     }
 
     if (exception instanceof HttpException) {

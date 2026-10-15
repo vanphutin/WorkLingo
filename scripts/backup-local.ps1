@@ -51,6 +51,7 @@ function Assert-SafePgIdentifier([string]$identifier, [string]$label) {
 # 1. Resolve and validate paths
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 Set-Location $repoRoot
+. (Join-Path $PSScriptRoot "postgres-client.ps1")
 
 if (-not $DataDir) {
   if ($env:WORKLINGO_DATA_DIR) {
@@ -95,12 +96,12 @@ try {
   $dumpFile = Join-Path $targetBackupDir "database.sql"
 
 # Parse connection string
-$cleanUrl = $DatabaseUrl -replace '^postgresql://', 'http://' -replace '^postgres://', 'http://'
-$uri = [System.Uri]$cleanUrl
+$connection = Get-PostgresConnection $DatabaseUrl
+$uri = $connection.Uri
 $user = $uri.UserInfo.Split(':')[0]
 $pass = if ($uri.UserInfo.Contains(':')) { $uri.UserInfo.Split(':')[1] } else { "" }
-$hostName = $uri.Host
-$port = if ($uri.Port -gt 0) { $uri.Port } else { 5432 }
+$hostName = $connection.HostName
+$port = $connection.Port
 $dbName = $uri.AbsolutePath.TrimStart('/')
 
 if (-not $Schema -and $uri.Query) {
@@ -115,9 +116,9 @@ Assert-SafePgIdentifier $Schema "Schema"
 
 $pgDumpCmd = Get-Command pg_dump -ErrorAction SilentlyContinue
 $dumpExitCode = 0
+$env:PGPASSWORD = [System.Uri]::UnescapeDataString($pass)
 
 if ($pgDumpCmd) {
-  $env:PGPASSWORD = $pass
   $dumpArgs = @("-h", $hostName, "-p", "$port", "-U", $user, "-d", $dbName)
   if ($Schema) {
     $dumpArgs += @("-n", $Schema)
@@ -125,12 +126,11 @@ if ($pgDumpCmd) {
   & $pgDumpCmd.Source @dumpArgs | Set-Content -Path $dumpFile -Encoding UTF8
   $dumpExitCode = $LASTEXITCODE
 } else {
-  # Fallback to docker compose
+  # Use a disposable client for the explicitly requested database.
   $dockerCmd = Get-Command docker -ErrorAction SilentlyContinue
   if ($dockerCmd) {
-    $composeFile = Join-Path $repoRoot "infra/docker-compose.yml"
     $schemaArg = if ($Schema) { @("-n", $Schema) } else { @() }
-    $execArgs = @("compose", "-f", $composeFile, "exec", "-T", "postgres", "pg_dump", "-U", $user, "-d", $dbName) + $schemaArg
+    $execArgs = @(Get-DockerPostgresArguments "pg_dump" $hostName $port $user $dbName) + $schemaArg
     & $dockerCmd.Source @execArgs | Set-Content -Path $dumpFile -Encoding UTF8
     $dumpExitCode = $LASTEXITCODE
   } else {

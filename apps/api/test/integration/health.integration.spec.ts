@@ -1,45 +1,28 @@
-import { mkdtemp, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import path from 'node:path';
-
-import type { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
+import {
+  createLearningSessionTestContext,
+  type LearningSessionTestContext,
+} from './learning-session-test-harness.js';
+
 describe('GET /api/v1/health', () => {
-  let app: INestApplication | undefined;
-  let dataDirectory: string;
+  let context: LearningSessionTestContext | undefined;
 
   beforeAll(async () => {
-    dataDirectory = await mkdtemp(path.join(tmpdir(), 'worklingo-health-'));
-    process.env.DATABASE_URL =
-      'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
-    process.env.SESSION_SECRET =
-      'health-test-secret-with-at-least-32-characters';
-    process.env.WORKLINGO_DATA_DIR = dataDirectory;
-    const { AppModule } = await import('../../src/app.module.js');
-
-    const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleRef.createNestApplication();
-    app.setGlobalPrefix('api/v1');
-    await app.init();
-  });
+    context = await createLearningSessionTestContext('health_test');
+  }, 40_000);
 
   afterAll(async () => {
-    await app?.close();
-    await rm(dataDirectory, { force: true, recursive: true });
+    await context?.close();
   });
 
   it('reports database and storage readiness without leaking config', async () => {
-    if (!app) {
+    if (!context) {
       throw new Error('Test application was not initialized');
     }
 
-    const response = await request(app.getHttpServer())
+    const response = await request(context.app.getHttpServer())
       .get('/api/v1/health')
       .expect(200);
 
@@ -50,7 +33,7 @@ describe('GET /api/v1/health', () => {
       },
       status: 'ok',
     });
-    expect(JSON.stringify(response.body)).not.toContain(dataDirectory);
+    expect(JSON.stringify(response.body)).not.toContain(process.env.WORKLINGO_DATA_DIR);
     expect(JSON.stringify(response.body)).not.toContain(
       process.env.DATABASE_URL,
     );
