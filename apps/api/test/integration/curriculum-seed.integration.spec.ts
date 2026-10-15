@@ -65,21 +65,22 @@ describe('Foundation curriculum seed', () => {
     const second = await curriculum.getPublishedMissionForLevel('FOUNDATION_1');
 
     expect(second).toEqual(first);
-    expect(first.title).toBe('Introduce yourself to a new colleague');
+    expect(first.title).toBe(foundationMissionFixture.title);
     expect(first.lessonVersion.version).toBe(1);
     expect(new Set(first.lessonVersion.activities.flatMap((a) => a.skills)))
       .toEqual(new Set(['reading', 'listening', 'speaking', 'writing']));
-    expect(first.lessonVersion.activities.map((a) => a.slug)).toEqual([
-      'recall-introduction', 'understand-welcome', 'understand-colleague',
-      'shadow-introduction', 'write-first-message',
-    ]);
+    expect(first.lessonVersion.activities).toHaveLength(foundationMissionFixture.lesson.activities.length);
+    expect(first.lessonVersion.activities.map((a) => a.slug))
+      .toEqual(foundationMissionFixture.lesson.activities.map((a) => a.slug));
     await expect(database.learningPath.count()).resolves.toBe(1);
     await expect(database.level.count()).resolves.toBe(1);
     await expect(database.mission.count()).resolves.toBe(1);
     await expect(database.lesson.count()).resolves.toBe(1);
     await expect(database.lessonVersion.count()).resolves.toBe(1);
-    await expect(database.activity.count()).resolves.toBe(5);
-    await expect(database.languageBlock.count()).resolves.toBe(4);
+    await expect(database.activity.count()).resolves.toBe(foundationMissionFixture.lesson.activities.length);
+    await expect(database.languageBlock.count()).resolves.toBe(
+      foundationMissionFixture.lesson.wordBanks.reduce((count, bank) => count + bank.languageBlocks.length, 0),
+    );
     await expect(database.learningProgram.count()).resolves.toBe(4);
     await expect(database.learningPath.findUniqueOrThrow({
       include: { program: true },
@@ -241,8 +242,8 @@ describe('Foundation curriculum seed', () => {
   it('serializes concurrent seed calls without creating duplicate versions', async () => {
     await Promise.all([seedFoundationCurriculum(database), seedFoundationCurriculum(database)]);
     await expect(database.lessonVersion.count({ where: { version: 1 } })).resolves.toBe(1);
-    await expect(database.activity.count()).resolves.toBe(5);
-    await expect(database.contentBlock.count()).resolves.toBe(2);
+    await expect(database.activity.count()).resolves.toBe(foundationMissionFixture.lesson.activities.length);
+    await expect(database.contentBlock.count()).resolves.toBe(foundationMissionFixture.lesson.contentBlocks.length);
     const first = await curriculum.getPublishedMissionForLevel('FOUNDATION_1');
     await seedFoundationCurriculum(database);
     await expect(curriculum.getPublishedMissionForLevel('FOUNDATION_1')).resolves.toEqual(first);
