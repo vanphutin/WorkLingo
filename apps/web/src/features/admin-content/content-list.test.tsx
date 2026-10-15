@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import type { ContentImportDto } from '@worklingo/contracts';
 
 import { ContentList } from './content-list';
+import { LocaleProvider } from '../../i18n/provider';
 
 afterEach(() => {
   cleanup();
@@ -54,11 +55,20 @@ describe('ContentList', () => {
     );
   });
 
+  it('localizes import statuses and dates while preserving lesson source titles and links', () => {
+    render(<LocaleProvider initialLocale="vi"><ContentList imports={sampleImports} /></LocaleProvider>);
+    expect(screen.getByText('Bản nháp')).toBeInTheDocument();
+    expect(screen.getByText('Đã xuất bản')).toBeInTheDocument();
+    expect(screen.getByText('Lesson One')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Mở bản nháp' })).toHaveAttribute('href', '/admin/content/11111111-1111-4111-8111-111111111111');
+    expect(screen.getByText(new Date(sampleImports[0]!.updatedAt).toLocaleString('vi-VN'))).toHaveAttribute('dateTime', sampleImports[0]!.updatedAt);
+  });
+
   it('renders list of imports with status, revision, and links to edit or view', () => {
     render(<ContentList imports={sampleImports} />);
 
-    expect(screen.getByText('DRAFT')).toBeInTheDocument();
-    expect(screen.getByText('PUBLISHED')).toBeInTheDocument();
+    expect(screen.getByText('Draft')).toBeInTheDocument();
+    expect(screen.getByText('Published')).toBeInTheDocument();
     expect(screen.getByText(/lesson-one/)).toBeInTheDocument();
     expect(screen.getByText(/lesson-two/)).toBeInTheDocument();
     expect(screen.getByText(/Rev 1/)).toBeInTheDocument();

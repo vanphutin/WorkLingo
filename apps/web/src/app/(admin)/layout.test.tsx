@@ -13,6 +13,7 @@ const mockRouter = { push, replace };
 
 vi.mock('next/navigation', () => ({
   useRouter: () => mockRouter,
+  usePathname: () => '/admin/content',
 }));
 
 vi.mock('../../lib/api/api-client', async (importOriginal) => {
@@ -75,6 +76,7 @@ describe('AdminLayout', () => {
       'href',
       '/admin/content',
     );
+    expect(screen.getByRole('link', { name: 'Content' })).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', { name: 'Curriculum' })).toHaveAttribute(
       'href',
       '/admin/curriculum',

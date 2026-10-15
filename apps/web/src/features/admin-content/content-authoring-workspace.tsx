@@ -1,5 +1,7 @@
 'use client';
 
+import { useAdminContent } from './i18n';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import type {
@@ -28,6 +30,7 @@ export function ContentAuthoringWorkspace({
   initialImport,
   debounceMs = 1000,
 }: ContentAuthoringWorkspaceProps) {
+  const { t, label, message } = useAdminContent();
   const [localSource, setLocalSource] = useState(initialImport.rawSource);
   const [_lastSavedSource, setLastSavedSource] = useState(initialImport.rawSource);
   const [currentDraftRevision, setCurrentDraftRevision] = useState(initialImport.draftRevision);
@@ -43,7 +46,7 @@ export function ContentAuthoringWorkspace({
   const [savingState, setSavingState] = useState<'idle' | 'saving' | 'saved' | 'error' | 'conflict'>(
     'idle',
   );
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<unknown>(null);
 
   const [isValidating, setIsValidating] = useState(false);
   const [canPublish, setCanPublish] = useState(initialImport.status === 'VALIDATED');
@@ -117,7 +120,7 @@ export function ContentAuthoringWorkspace({
           );
         } else {
           setSavingState('error');
-          setErrorMessage(err instanceof Error ? err.message : 'Failed to autosave changes.');
+          setErrorMessage(err);
         }
       }
     },
@@ -203,7 +206,8 @@ export function ContentAuthoringWorkspace({
         setSavingState('conflict');
         setErrorMessage('Conflict: Draft revision changed before validation.');
       } else {
-        setErrorMessage(err instanceof Error ? err.message : 'Validation failed.');
+        setSavingState('error');
+        setErrorMessage(err);
       }
     }
   }
@@ -241,25 +245,25 @@ export function ContentAuthoringWorkspace({
     <div className="content-authoring-workspace">
       <div className="workspace-header">
         <div className="workspace-title-row">
-          <h1>Lesson Authoring</h1>
+          <h1>{t('authoringTitle')}</h1>
           <div className="workspace-badges">
-            <span className={`status-pill pill-${status.toLowerCase()}`}>{status}</span>
-            <span className="revision-badge">Revision {currentDraftRevision}</span>
-            {savingState === 'saving' && <span className="save-status saving">Saving…</span>}
-            {savingState === 'saved' && <span className="save-status saved">Saved</span>}
+            <span className={`status-pill pill-${status.toLowerCase()}`}>{label(status)}</span>
+            <span className="revision-badge">{t('revision', { count: currentDraftRevision })}</span>
+            {savingState === 'saving' && <span className="save-status saving">{t('saving')}</span>}
+            {savingState === 'saved' && <span className="save-status saved">{t('saved')}</span>}
           </div>
         </div>
 
-        {savingState === 'conflict' && errorMessage && (
+        {savingState === 'conflict' && errorMessage != null && (
           <div className="status-card error-card conflict-alert" role="alert">
-            <strong>Edit Conflict Detected</strong>
-            <p>{errorMessage}</p>
+            <strong>{t('editConflict')}</strong>
+            <p>{message(errorMessage)}</p>
           </div>
         )}
 
-        {savingState === 'error' && errorMessage && (
+        {savingState === 'error' && errorMessage != null && (
           <div className="status-card error-card" role="alert">
-            <p>{errorMessage}</p>
+            <p>{message(errorMessage)}</p>
           </div>
         )}
       </div>
@@ -271,9 +275,7 @@ export function ContentAuthoringWorkspace({
           aria-selected={activeTab === 'source'}
           className={`tab-btn ${activeTab === 'source' ? 'active' : ''}`}
           onClick={() => setActiveTab('source')}
-        >
-          Source Editor
-        </button>
+        >{t('sourceEditorTab')}</button>
         <button
           type="button"
           role="tab"
@@ -281,7 +283,7 @@ export function ContentAuthoringWorkspace({
           className={`tab-btn ${activeTab === 'validation' ? 'active' : ''}`}
           onClick={() => setActiveTab('validation')}
         >
-          Validation ({issues.length})
+          {t('validationTab', { count: issues.length })}
         </button>
         <button
           type="button"
@@ -289,18 +291,14 @@ export function ContentAuthoringWorkspace({
           aria-selected={activeTab === 'preview'}
           className={`tab-btn ${activeTab === 'preview' ? 'active' : ''}`}
           onClick={() => setActiveTab('preview')}
-        >
-          Preview
-        </button>
+        >{t('previewTab')}</button>
         <button
           type="button"
           role="tab"
           aria-selected={activeTab === 'publish'}
           className={`tab-btn ${activeTab === 'publish' ? 'active' : ''}`}
           onClick={() => setActiveTab('publish')}
-        >
-          Publish
-        </button>
+        >{t('publishTab')}</button>
       </div>
 
       {activeTab === 'source' && (
@@ -348,7 +346,7 @@ export function ContentAuthoringWorkspace({
       {activeTab === 'preview' && (
         <div className="workspace-view preview-view">
           {isLoadingPreview && !preview ? (
-            <p className="loading-text">Đang tải bản xem trước...</p>
+            <p className="loading-text">{t('loadingPreview')}</p>
           ) : preview ? (
             <div className="preview-grid">
               <LessonPreview preview={preview} />
@@ -361,8 +359,8 @@ export function ContentAuthoringWorkspace({
               />
             </div>
           ) : (
-            <div className="preview-empty" role="region" aria-label="Lesson preview">
-              <p>No preview available. Validate your lesson draft without errors to generate a structured preview.</p>
+            <div className="preview-empty" role="region" aria-label={t('previewRegion')}>
+              <p>{t('noPreview')}</p>
             </div>
           )}
         </div>

@@ -60,7 +60,7 @@ test('learner starts, resumes and remains pinned while Admin publishes a new Bri
   const setupContext = await browser.newContext({ baseURL: new URL(page.url()).origin });
   try { await ensureOrientationPublished(setupContext); }
   finally { await setupContext.close(); }
-  const registration = await page.request.post('/api/v1/auth/register', { data: { displayName: 'Bridge E2E Learner', email: `bridge-${randomUUID()}@test.local`, password: 'bridge-e2e-password' } });
+  const registration = await page.request.post('/api/v1/auth/register', { data: { locale: 'en', displayName: 'Bridge E2E Learner', email: `bridge-${randomUUID()}@test.local`, password: 'bridge-e2e-password' } });
   expect(registration.ok()).toBeTruthy();
   const learner = await registration.json() as { id: string };
   expect((await page.request.post('/api/v1/me/onboarding/self-placement', { data: { clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' } })).ok()).toBeTruthy();

@@ -1,5 +1,8 @@
 'use client';
 
+import { useT } from '../../i18n/provider';
+import { learningSessionMessages } from '../../i18n/messages/learningSession';
+
 import React from 'react';
 
 import type { LearnerActivityDto, RecordingSubmissionResult, SubmitRecordingInput } from '../../lib/api/api-client';
@@ -84,6 +87,7 @@ export function ActivityRenderer({
   sessionId,
   onSubmitRecording,
 }: ActivityRendererProps) {
+  const t = useT('learningSession', learningSessionMessages);
   switch (activity.activityType) {
     case 'reading': {
       const readingValue: ReadingResponseValue =
@@ -123,7 +127,7 @@ export function ActivityRenderer({
           activity={activity}
           sessionId={sessionId}
           onSubmitRecording={onSubmitRecording ?? (async () => {
-            throw new Error('Speaking recording submission is not configured.');
+            throw new Error(t('recordingNotConfigured'));
           })}
           value={speakingValue}
           onChange={onChange}

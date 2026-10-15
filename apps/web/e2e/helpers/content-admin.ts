@@ -27,6 +27,8 @@ export async function loginAsContentAdmin(
   await page.getByRole('button', { name: 'Log in' }).click();
 
   await page.waitForURL(/\/admin\/content/, { timeout: 15_000 });
+  await page.locator('.language-control select').first().selectOption('en');
+  await expect(page.locator('.language-control select').first()).toHaveAttribute('aria-busy', 'false');
   await expect(page.getByRole('region', { name: 'Content imports' })).toBeVisible();
 }
 

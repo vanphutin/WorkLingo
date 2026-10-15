@@ -6,6 +6,7 @@ import type { AdminCurriculumTreeDto } from '@worklingo/contracts';
 import { ApiError } from '../../lib/api/api-client';
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
 import { CurriculumWorkspace } from './curriculum-workspace';
+import { LocaleProvider } from '../../i18n/provider';
 
 const intermediateProgram = {
   availabilityStatus: 'AVAILABLE',
@@ -116,6 +117,11 @@ describe('CurriculumWorkspace', () => {
   afterEach(() => {
     cleanup();
   });
+  it('keeps status styling keyed to machine states when the displayed label is Vietnamese', async () => {
+    render(<LocaleProvider initialLocale="vi"><CurriculumWorkspace /></LocaleProvider>);
+    const badges = await screen.findAllByText('Đã xuất bản', { selector: '.status-badge' });
+    for (const badge of badges) expect(badge).toHaveClass('status-PUBLISHED');
+  });
 
   it('renders curriculum tree with path, level, mission, and playability indicators', async () => {
     render(<CurriculumWorkspace />);
@@ -152,7 +158,7 @@ describe('CurriculumWorkspace', () => {
 
     const programSelect = screen.getByLabelText(/Learning Program/i);
     expect(programSelect).toHaveValue(intermediateProgram.id);
-    expect(screen.getByRole('option', { name: /IELTS.*IN_DEVELOPMENT/i })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: /IELTS.*In development/i })).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText(/Path Name/i), { target: { value: 'IELTS Prep' } });
     fireEvent.change(screen.getByLabelText(/Slug/i), { target: { value: 'ielts-prep' } });
@@ -217,7 +223,7 @@ describe('CurriculumWorkspace', () => {
     fireEvent.click(publishButton);
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Path revision has changed on the server',
+      'This information has changed. Reload and try again.',
     );
     expect(screen.getByText('General English')).toBeInTheDocument();
   });

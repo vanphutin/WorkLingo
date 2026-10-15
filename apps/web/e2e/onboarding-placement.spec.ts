@@ -37,7 +37,7 @@ test.describe('Onboarding and placement assessment journey', () => {
     await expect(confirmButton).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(/\/dashboard$/u);
-    await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
 
     await expectNoHorizontalOverflow(page);
   });
@@ -155,7 +155,7 @@ test.describe('Onboarding and placement assessment journey', () => {
     }
 
     // Terminal provider failures expose an explicit manual retry instead of silently restarting.
-    const retryButton = page.getByRole('button', { name: 'Thử đánh giá lại' });
+    const retryButton = page.getByRole('button', { name: 'Retry evaluation' });
     if (await retryButton.isVisible({ timeout: 5_000 }).catch(() => false)) {
       await retryButton.click();
     }
@@ -169,7 +169,7 @@ test.describe('Onboarding and placement assessment journey', () => {
 
     await confirmRecommendedButton.click();
     await expect(page).toHaveURL(/\/dashboard$/u);
-    await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
 
     // Verify placement evidence is isolated from ordinary learning mastery
     await page.goto('/mastery');

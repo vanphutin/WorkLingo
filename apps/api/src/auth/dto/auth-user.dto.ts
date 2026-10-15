@@ -1,4 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import type { UiLocale } from '@worklingo/contracts';
 
 export class AuthUserDto {
   @ApiProperty({ example: 'An Nguyen' })
@@ -9,6 +10,9 @@ export class AuthUserDto {
 
   @ApiProperty({ format: 'uuid' })
   id!: string;
+
+  @ApiPropertyOptional({ enum: ['vi', 'en'], default: 'vi' })
+  locale?: UiLocale | undefined;
 
   @ApiProperty({ enum: ['PENDING', 'COMPLETE'], nullable: true })
   onboardingStatus!: 'PENDING' | 'COMPLETE' | null;

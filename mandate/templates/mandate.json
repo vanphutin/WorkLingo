@@ -1,0 +1,36 @@
+{
+  "title": "REPLACE with a concrete evidenced problem",
+  "type": "bug",
+  "owner": null,
+  "priority": "P2",
+  "confidence": "low",
+  "effort": "s",
+  "impact": 1,
+  "problem": "REPLACE with verified expected and observed behavior",
+  "value": "REPLACE with beneficiary and measurable improvement",
+  "scope": [
+    "REPLACE with affected module/journey"
+  ],
+  "dedupe_key": "REPLACE with stable problem-and-scope key",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "REPLACE with existing repository path:line",
+      "observation": "REPLACE with observed fact verified in cited source"
+    }
+  ],
+  "acceptance": [
+    "REPLACE with observable acceptance criterion"
+  ],
+  "risk": {
+    "level": "low",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "REPLACE with rollback proposal"
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": null,
+  "sprint_reference": null,
+  "body": "## Analysis\n\nREPLACE with facts and alternatives.\n\n## Unknowns\n\nREPLACE with limitations, dependencies and verification proposal."
+}

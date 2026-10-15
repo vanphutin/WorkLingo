@@ -30,19 +30,20 @@ enum OnboardingMethod {
 }
 
 model User {
-  id                         String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email                      String                    @unique
+  id                         String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                      String                     @unique
   displayName                String
   passwordHash               String
-  role                       UserRole                  @default(LEARNER)
-  status                     UserStatus                @default(ACTIVE)
-  createdAt                  DateTime                  @default(now())
-  updatedAt                  DateTime                  @updatedAt
+  role                       UserRole                   @default(LEARNER)
+  status                     UserStatus                 @default(ACTIVE)
+  createdAt                  DateTime                   @default(now())
+  updatedAt                  DateTime                   @updatedAt
   profile                    LearnerProfile?
+  aiRoutingSetting           AiRoutingSetting?
   sessions                   UserSession[]
   learningSessions           LearningSession[]
-  createdContentImports      ContentImport[]           @relation("ContentImportCreatedBy")
-  updatedContentImports      ContentImport[]           @relation("ContentImportUpdatedBy")
+  createdContentImports      ContentImport[]            @relation("ContentImportCreatedBy")
+  updatedContentImports      ContentImport[]            @relation("ContentImportUpdatedBy")
   jobs                       Job[]
   recordings                 Recording[]
   activityDrafts             ActivityDraft[]
@@ -54,7 +55,7 @@ model User {
   checkpointAssessments      CheckpointAssessment[]
   progressionConfirmations   ProgressionConfirmation[]
   placementAttempts          PlacementAttempt[]
-  updatedAudioSystemSettings AudioSystemSetting[]      @relation("AudioSystemSettingUpdatedBy")
+  updatedAudioSystemSettings AudioSystemSetting[]       @relation("AudioSystemSettingUpdatedBy")
   studyDays                  LearnerStudyDay[]
   studySessions              LearnerStudySession[]
   engagementWeeks            LearnerEngagementWeek[]
@@ -62,6 +63,19 @@ model User {
   createdOrientationMedia    OrientationMediaAsset[]    @relation("OrientationMediaCreatedBy")
   orientationProgress        OrientationProgress[]
   ieltsBridgeProgress        IeltsBridgeProgress[]
+  ieltsIntegratedSessions    IeltsIntegratedSession[]
+  ieltsBandJourneys          IeltsBandJourney[]
+  ieltsMockAttempts          IeltsMockAttempt[]
+  ieltsMockReviews           IeltsMockReview[]          @relation("IeltsMockReviewReviewer")
+}
+
+model AiRoutingSetting {
+  id                String   @id
+  userId            String?  @unique @db.Uuid
+  preferredProvider String   @default("system-default")
+  fallbackEnabled   Boolean  @default(true)
+  updatedAt         DateTime @updatedAt
+  user              User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model LearnerProfile {
@@ -139,33 +153,33 @@ enum ProgramAvailabilityStatus {
 }
 
 model LearningProgram {
-  id                 String                    @id @default(uuid()) @db.Uuid
-  slug               String                    @unique
+  id                 String                     @id @default(uuid()) @db.Uuid
+  slug               String                     @unique
   name               String
   description        String
   learningGoal       String
   proficiencyLabel   String
   iconKey            String
   availabilityStatus ProgramAvailabilityStatus
-  displayOrder       Int                       @unique
-  createdAt          DateTime                  @default(now())
-  updatedAt          DateTime                  @updatedAt
+  displayOrder       Int                        @unique
+  createdAt          DateTime                   @default(now())
+  updatedAt          DateTime                   @updatedAt
   paths              LearningPath[]
   enrollments        LearnerProgramEnrollment[]
   activeProfiles     LearnerProfile[]
 }
 
 model LearnerProgramEnrollment {
-  id             String          @id @default(uuid()) @db.Uuid
-  learnerId      String          @db.Uuid
-  programId      String          @db.Uuid
-  currentLevelId String?         @db.Uuid
-  revision       Int             @default(1)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  learner        User            @relation(fields: [learnerId], references: [id], onDelete: Cascade)
-  program        LearningProgram @relation(fields: [programId], references: [id], onDelete: Restrict)
-  currentLevel   Level?          @relation(fields: [currentLevelId], references: [id], onDelete: Restrict)
+  id                    String                 @id @default(uuid()) @db.Uuid
+  learnerId             String                 @db.Uuid
+  programId             String                 @db.Uuid
+  currentLevelId        String?                @db.Uuid
+  revision              Int                    @default(1)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  learner               User                   @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  program               LearningProgram        @relation(fields: [programId], references: [id], onDelete: Restrict)
+  currentLevel          Level?                 @relation(fields: [currentLevelId], references: [id], onDelete: Restrict)
   curriculumCompletions CurriculumCompletion[]
 
   @@unique([learnerId, programId])
@@ -189,17 +203,17 @@ model LearningPath {
 }
 
 model Level {
-  id            String        @id @default(uuid()) @db.Uuid
-  pathId        String        @db.Uuid
-  code          String        @unique
+  id            String                     @id @default(uuid()) @db.Uuid
+  pathId        String                     @db.Uuid
+  code          String                     @unique
   name          String
   cefrReference String
   order         Int
-  status        ContentStatus @default(DRAFT)
-  revision      Int           @default(1)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  path          LearningPath  @relation(fields: [pathId], references: [id], onDelete: Restrict)
+  status        ContentStatus              @default(DRAFT)
+  revision      Int                        @default(1)
+  createdAt     DateTime                   @default(now())
+  updatedAt     DateTime                   @updatedAt
+  path          LearningPath               @relation(fields: [pathId], references: [id], onDelete: Restrict)
   missions      Mission[]
   enrollments   LearnerProgramEnrollment[]
 
@@ -208,22 +222,22 @@ model Level {
 }
 
 model Mission {
-  id               String            @id @default(uuid()) @db.Uuid
-  levelId          String            @db.Uuid
-  slug             String            @unique
-  title            String
-  objective        String
-  order            Int
-  purpose          MissionPurpose    @default(LEARNING)
-  status           ContentStatus     @default(DRAFT)
-  revision         Int               @default(1)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  level            Level             @relation(fields: [levelId], references: [id], onDelete: Restrict)
-  lessons          MissionLesson[]
-  learningSessions LearningSession[]
+  id                   String                @id @default(uuid()) @db.Uuid
+  levelId              String                @db.Uuid
+  slug                 String                @unique
+  title                String
+  objective            String
+  order                Int
+  purpose              MissionPurpose        @default(LEARNING)
+  status               ContentStatus         @default(DRAFT)
+  revision             Int                   @default(1)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  level                Level                 @relation(fields: [levelId], references: [id], onDelete: Restrict)
+  lessons              MissionLesson[]
+  learningSessions     LearningSession[]
   curriculumDefinition CurriculumDefinition?
-  curriculumRevisions CurriculumRevision[]
+  curriculumRevisions  CurriculumRevision[]
 
   @@unique([levelId, order])
   @@index([levelId, order])
@@ -473,41 +487,41 @@ model LearningSession {
 }
 
 model CurriculumDefinition {
-  id String @id @default(uuid()) @db.Uuid
-  missionId String @unique @db.Uuid
-  revision Int @default(1)
-  status ContentStatus @default(DRAFT)
-  content Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  mission Mission @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  id        String        @id @default(uuid()) @db.Uuid
+  missionId String        @unique @db.Uuid
+  revision  Int           @default(1)
+  status    ContentStatus @default(DRAFT)
+  content   Json
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  mission   Mission       @relation(fields: [missionId], references: [id], onDelete: Restrict)
 }
 
 model CurriculumRevision {
-  id String @id @default(uuid()) @db.Uuid
-  missionId String @db.Uuid
-  revision Int
-  snapshot Json
-  status ContentStatus @default(PUBLISHED)
-  publishedAt DateTime @default(now())
-  archivedAt DateTime?
-  mission Mission @relation(fields: [missionId], references: [id], onDelete: Restrict)
-  lessons CurriculumRevisionLesson[]
-  prerequisites CurriculumPrerequisite[] @relation("CurriculumDependencies")
-  dependents CurriculumPrerequisite[] @relation("CurriculumDependents")
-  sessions LearningSession[]
-  completions CurriculumCompletion[]
+  id            String                     @id @default(uuid()) @db.Uuid
+  missionId     String                     @db.Uuid
+  revision      Int
+  snapshot      Json
+  status        ContentStatus              @default(PUBLISHED)
+  publishedAt   DateTime                   @default(now())
+  archivedAt    DateTime?
+  mission       Mission                    @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  lessons       CurriculumRevisionLesson[]
+  prerequisites CurriculumPrerequisite[]   @relation("CurriculumDependencies")
+  dependents    CurriculumPrerequisite[]   @relation("CurriculumDependents")
+  sessions      LearningSession[]
+  completions   CurriculumCompletion[]
 
   @@unique([missionId, revision])
   @@index([missionId, status])
 }
 
 model CurriculumRevisionLesson {
-  curriculumRevisionId String @db.Uuid
-  lessonVersionId String @db.Uuid
-  order Int
-  curriculumRevision CurriculumRevision @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
-  lessonVersion LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  curriculumRevisionId String             @db.Uuid
+  lessonVersionId      String             @db.Uuid
+  order                Int
+  curriculumRevision   CurriculumRevision @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+  lessonVersion        LessonVersion      @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
 
   @@id([curriculumRevisionId, lessonVersionId])
   @@unique([curriculumRevisionId, order])
@@ -515,24 +529,24 @@ model CurriculumRevisionLesson {
 }
 
 model CurriculumPrerequisite {
-  curriculumRevisionId String @db.Uuid
-  prerequisiteRevisionId String @db.Uuid
-  curriculumRevision CurriculumRevision @relation("CurriculumDependencies", fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
-  prerequisiteRevision CurriculumRevision @relation("CurriculumDependents", fields: [prerequisiteRevisionId], references: [id], onDelete: Restrict)
+  curriculumRevisionId   String             @db.Uuid
+  prerequisiteRevisionId String             @db.Uuid
+  curriculumRevision     CurriculumRevision @relation("CurriculumDependencies", fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+  prerequisiteRevision   CurriculumRevision @relation("CurriculumDependents", fields: [prerequisiteRevisionId], references: [id], onDelete: Restrict)
 
   @@id([curriculumRevisionId, prerequisiteRevisionId])
   @@index([prerequisiteRevisionId])
 }
 
 model CurriculumCompletion {
-  id String @id @default(uuid()) @db.Uuid
-  enrollmentId String @db.Uuid
-  curriculumRevisionId String @db.Uuid
-  policyVersion String
-  evidenceSnapshot Json
-  completedAt DateTime @default(now())
-  enrollment LearnerProgramEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
-  curriculumRevision CurriculumRevision @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+  id                   String                   @id @default(uuid()) @db.Uuid
+  enrollmentId         String                   @db.Uuid
+  curriculumRevisionId String                   @db.Uuid
+  policyVersion        String
+  evidenceSnapshot     Json
+  completedAt          DateTime                 @default(now())
+  enrollment           LearnerProgramEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  curriculumRevision   CurriculumRevision       @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
 
   @@unique([enrollmentId, curriculumRevisionId])
   @@index([curriculumRevisionId])
@@ -892,21 +906,22 @@ model IeltsBridgeModule {
 }
 
 model IeltsBridgeModuleVersion {
-  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  moduleId        String                @db.Uuid
-  version         Int
-  title           String
-  skill           String
-  questionType    String
-  required        Boolean               @default(false)
-  sourceHash      String
-  content         Json
-  status          ContentStatus         @default(PUBLISHED)
-  publishedAt     DateTime              @default(now())
-  archivedAt      DateTime?
-  module          IeltsBridgeModule     @relation("IeltsBridgeVersions", fields: [moduleId], references: [id], onDelete: Restrict)
-  currentFor      IeltsBridgeModule[]   @relation("IeltsBridgeCurrentVersion")
-  learnerProgress IeltsBridgeProgress[]
+  id               String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  moduleId         String                        @db.Uuid
+  version          Int
+  title            String
+  skill            String
+  questionType     String
+  required         Boolean                       @default(false)
+  sourceHash       String
+  content          Json
+  status           ContentStatus                 @default(PUBLISHED)
+  publishedAt      DateTime                      @default(now())
+  archivedAt       DateTime?
+  module           IeltsBridgeModule             @relation("IeltsBridgeVersions", fields: [moduleId], references: [id], onDelete: Restrict)
+  currentFor       IeltsBridgeModule[]           @relation("IeltsBridgeCurrentVersion")
+  learnerProgress  IeltsBridgeProgress[]
+  integratedBlocks IeltsIntegratedSessionBlock[]
 
   @@unique([moduleId, version])
   @@unique([id, moduleId])
@@ -914,21 +929,220 @@ model IeltsBridgeModuleVersion {
   @@index([skill, questionType, status])
 }
 
-model IeltsBridgeProgress {
-  id                  String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  learnerId           String                   @db.Uuid
-  moduleId            String                   @db.Uuid
-  moduleVersionId     String                   @db.Uuid
-  currentStageIndex   Int                      @default(0)
-  revision            Int                      @default(1)
-  stageResults        Json                     @default("[]")
-  timedStageStartedAt DateTime?
-  timedStageDeadlineAt DateTime?
+model IeltsIntegratedProfile {
+  id                        String                          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  durationMinutes           Int                             @unique
+  status                    ContentStatus                   @default(DRAFT)
+  draftRevision             Int                             @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                         @unique @db.Uuid
+  createdAt                 DateTime                        @default(now())
+  updatedAt                 DateTime                        @updatedAt
+  currentPublishedVersion   IeltsIntegratedProfileVersion?  @relation("IeltsIntegratedCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, profileId], onDelete: Restrict)
+  versions                  IeltsIntegratedProfileVersion[] @relation("IeltsIntegratedProfileVersions")
+}
+
+model IeltsIntegratedProfileVersion {
+  id              String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  profileId       String                   @db.Uuid
+  version         Int
+  durationMinutes Int
+  sourceHash      String
+  content         Json
+  status          ContentStatus            @default(PUBLISHED)
+  publishedAt     DateTime                 @default(now())
+  archivedAt      DateTime?
+  profile         IeltsIntegratedProfile   @relation("IeltsIntegratedProfileVersions", fields: [profileId], references: [id], onDelete: Restrict)
+  currentFor      IeltsIntegratedProfile[] @relation("IeltsIntegratedCurrentVersion")
+  sessions        IeltsIntegratedSession[]
+
+  @@unique([profileId, version])
+  @@unique([id, profileId])
+  @@index([durationMinutes, status])
+}
+
+model IeltsIntegratedSession {
+  id                String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId         String                        @db.Uuid
+  clientSessionId   String                        @db.Uuid
+  profileVersionId  String                        @db.Uuid
+  durationMinutes   Int
+  difficulty        String
+  planSnapshot      Json
+  currentBlockIndex Int                           @default(0)
+  revision          Int                           @default(1)
+  startedAt         DateTime                      @default(now())
+  completedAt       DateTime?
+  updatedAt         DateTime                      @updatedAt
+  learner           User                          @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  profileVersion    IeltsIntegratedProfileVersion @relation(fields: [profileVersionId], references: [id], onDelete: Restrict)
+  blocks            IeltsIntegratedSessionBlock[]
+
+  @@unique([learnerId, clientSessionId])
+  @@index([learnerId, completedAt])
+  @@index([profileVersionId])
+}
+
+model IeltsIntegratedSessionBlock {
+  id              String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionId       String                   @db.Uuid
+  moduleVersionId String                   @db.Uuid
+  order           Int
+  skill           String
+  targetMinutes   Int
+  questionType    String
+  mode            String
+  result          Json?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  session         IeltsIntegratedSession   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  moduleVersion   IeltsBridgeModuleVersion @relation(fields: [moduleVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([sessionId, order])
+  @@index([moduleVersionId])
+}
+
+model IeltsBandCurriculum {
+  id                        String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String                       @unique @default("ielts-band-pathway")
+  status                    ContentStatus                @default(DRAFT)
+  draftRevision             Int                          @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                      @unique @db.Uuid
+  createdAt                 DateTime                     @default(now())
+  updatedAt                 DateTime                     @updatedAt
+  currentPublishedVersion   IeltsBandCurriculumVersion?  @relation("IeltsBandCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, curriculumId], onDelete: Restrict)
+  versions                  IeltsBandCurriculumVersion[] @relation("IeltsBandVersions")
+}
+
+model IeltsBandCurriculumVersion {
+  id           String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  curriculumId String                @db.Uuid
+  version      Int
+  sourceHash   String
+  content      Json
+  status       ContentStatus         @default(PUBLISHED)
+  publishedAt  DateTime              @default(now())
+  archivedAt   DateTime?
+  curriculum   IeltsBandCurriculum   @relation("IeltsBandVersions", fields: [curriculumId], references: [id], onDelete: Restrict)
+  currentFor   IeltsBandCurriculum[] @relation("IeltsBandCurrentVersion")
+  journeys     IeltsBandJourney[]
+
+  @@unique([curriculumId, version])
+  @@unique([id, curriculumId])
+  @@index([status, publishedAt])
+}
+
+model IeltsBandJourney {
+  id                  String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId           String                     @unique @db.Uuid
+  clientJourneyId     String                     @db.Uuid
+  curriculumVersionId String                     @db.Uuid
+  currentStageCode    String
+  targetBand          Int
+  revision            Int                        @default(1)
+  evidenceSnapshot    Json                       @default("{}")
+  startedAt           DateTime                   @default(now())
   completedAt         DateTime?
-  createdAt           DateTime                 @default(now())
-  updatedAt           DateTime                 @updatedAt
-  learner             User                     @relation(fields: [learnerId], references: [id], onDelete: Cascade)
-  moduleVersion       IeltsBridgeModuleVersion @relation(fields: [moduleVersionId, moduleId], references: [id, moduleId], onDelete: Restrict)
+  updatedAt           DateTime                   @updatedAt
+  learner             User                       @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  curriculumVersion   IeltsBandCurriculumVersion @relation(fields: [curriculumVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, clientJourneyId])
+  @@index([curriculumVersionId])
+  @@index([currentStageCode, completedAt])
+}
+
+model IeltsMockTest {
+  id                        String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String                 @unique
+  status                    ContentStatus          @default(DRAFT)
+  draftRevision             Int                    @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?                @unique @db.Uuid
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+  currentPublishedVersion   IeltsMockTestVersion?  @relation("IeltsMockCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, mockTestId], onDelete: Restrict)
+  versions                  IeltsMockTestVersion[] @relation("IeltsMockVersions")
+}
+
+model IeltsMockTestVersion {
+  id          String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mockTestId  String             @db.Uuid
+  version     Int
+  sourceHash  String
+  content     Json
+  status      ContentStatus      @default(PUBLISHED)
+  publishedAt DateTime           @default(now())
+  archivedAt  DateTime?
+  mockTest    IeltsMockTest      @relation("IeltsMockVersions", fields: [mockTestId], references: [id], onDelete: Restrict)
+  currentFor  IeltsMockTest[]    @relation("IeltsMockCurrentVersion")
+  attempts    IeltsMockAttempt[]
+
+  @@unique([mockTestId, version])
+  @@unique([id, mockTestId])
+  @@index([status, publishedAt])
+}
+
+model IeltsMockAttempt {
+  id                   String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId            String               @db.Uuid
+  clientAttemptId      String               @db.Uuid
+  mockTestVersionId    String               @db.Uuid
+  mode                 String
+  status               String               @default("IN_PROGRESS")
+  currentSection       String               @default("LISTENING")
+  revision             Int                  @default(1)
+  responses            Json                 @default("{}")
+  submittedSections    Json                 @default("[]")
+  objectiveScore       Json?
+  audioPlayEvents      Json                 @default("{}")
+  productiveEvaluation Json?
+  reportSnapshot       Json?
+  sectionStartedAt     DateTime             @default(now())
+  sectionDeadlineAt    DateTime
+  startedAt            DateTime             @default(now())
+  submittedAt          DateTime?
+  completedAt          DateTime?
+  updatedAt            DateTime             @updatedAt
+  learner              User                 @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  mockTestVersion      IeltsMockTestVersion @relation(fields: [mockTestVersionId], references: [id], onDelete: Restrict)
+  reviews              IeltsMockReview[]
+
+  @@unique([learnerId, clientAttemptId])
+  @@index([learnerId, status, updatedAt])
+  @@index([mockTestVersionId])
+}
+
+model IeltsMockReview {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  attemptId       String           @db.Uuid
+  reviewerId      String           @db.Uuid
+  attemptRevision Int
+  evaluation      Json
+  createdAt       DateTime         @default(now())
+  attempt         IeltsMockAttempt @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+  reviewer        User             @relation("IeltsMockReviewReviewer", fields: [reviewerId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, attemptRevision])
+  @@index([reviewerId, createdAt])
+}
+
+model IeltsBridgeProgress {
+  id                   String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId            String                   @db.Uuid
+  moduleId             String                   @db.Uuid
+  moduleVersionId      String                   @db.Uuid
+  currentStageIndex    Int                      @default(0)
+  revision             Int                      @default(1)
+  stageResults         Json                     @default("[]")
+  timedStageStartedAt  DateTime?
+  timedStageDeadlineAt DateTime?
+  completedAt          DateTime?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+  learner              User                     @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  moduleVersion        IeltsBridgeModuleVersion @relation(fields: [moduleVersionId, moduleId], references: [id, moduleId], onDelete: Restrict)
 
   @@unique([learnerId, moduleId])
   @@index([moduleVersionId, moduleId])

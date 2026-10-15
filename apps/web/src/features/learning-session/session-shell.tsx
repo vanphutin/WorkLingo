@@ -1,5 +1,9 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { localizedError } from '../../i18n/errors';
+import { learningSessionMessages } from '../../i18n/messages/learningSession';
+
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -31,12 +35,7 @@ interface SessionShellProps {
   readonly completionHref?: string;
 }
 
-const blockLabels: Record<string, string> = {
-  activate: 'Activate',
-  readDecode: 'Read & Decode',
-  listenReason: 'Listen & Reason',
-  respond: 'Respond',
-};
+
 
 export function findRestorableEvaluationAttemptId(
   attempts: readonly ActivityAttemptDto[],
@@ -76,7 +75,17 @@ export function SessionShell({
   contextLabel = 'Workplace Learning Session',
   completionHref = '/dashboard',
 }: SessionShellProps) {
+  const t = useT('learningSession', learningSessionMessages);
+  const { locale } = useLocalePreference();
+  const blockLabels: Record<string, string> = {
+    activate: t('activate'),
+    readDecode: t('readDecode'),
+    listenReason: t('listenReason'),
+    respond: t('respond'),
+  };
   const isPlacement = contextLabel === 'Placement assessment';
+  const displayContext = isPlacement ? t('placementAssessment')
+    : contextLabel === 'Workplace Learning Session' ? t('workplaceSession') : contextLabel;
   // Attempts arrive oldest-first; restore the latest response for this activity.
   const previousAttempt = [...(session.attempts ?? [])]
     .reverse()
@@ -114,17 +123,17 @@ export function SessionShell({
     getInitialValue(currentActivity, previousAttempt?.rawResponse),
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<{ cause: unknown } | null>(null);
   const [evaluationFeedback, setEvaluationFeedback] = useState<string | null>(null);
   const [evaluationAttemptId, setEvaluationAttemptId] = useState<string | null>(() =>
     findRestorableEvaluationAttemptId(session.attempts ?? []),
   );
   const [sessionAction, setSessionAction] = useState<'pause' | 'resume' | null>(null);
-  const [sessionActionError, setSessionActionError] = useState<string | null>(null);
+  const [sessionActionError, setSessionActionError] = useState<'pause' | 'resume' | null>(null);
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
   const [deletingRecordingId, setDeletingRecordingId] = useState<string | null>(null);
   const [deletedRecordingId, setDeletedRecordingId] = useState<string | null>(null);
-  const [recordingDeleteError, setRecordingDeleteError] = useState<string | null>(null);
+  const [recordingDeleteError, setRecordingDeleteError] = useState<{ cause: unknown } | null>(null);
   const pendingAttemptId = useRef<string | null>(null);
   const asyncEvaluation = useEvaluation(evaluationAttemptId);
 
@@ -167,9 +176,7 @@ export function SessionShell({
       setEvaluationAttemptId(hasAsyncEvaluation ? attempt.id : null);
       setEvaluationFeedback(hasAsyncEvaluation ? null : attempt.feedback);
     } catch (err) {
-      setSubmitError(
-        err instanceof Error ? err.message : 'Submission failed. Please check your connection.',
-      );
+      setSubmitError({ cause: err });
     } finally {
       setIsSubmitting(false);
     }
@@ -183,7 +190,7 @@ export function SessionShell({
   };
 
   const handleSubmitRecording = async (input: SubmitRecordingInput): Promise<RecordingSubmissionResult> => {
-    if (!onSubmitRecording) throw new Error('Speaking recording is not available.');
+    if (!onSubmitRecording) throw new Error(t('recordingNotAvailable'));
     const result = await onSubmitRecording(input);
     setEvaluationFeedback(null);
     setEvaluationAttemptId(result.attemptId);
@@ -198,7 +205,7 @@ export function SessionShell({
       await apiClient.deleteRecording(recordingId);
       setDeletedRecordingId(recordingId);
     } catch (caught) {
-      setRecordingDeleteError(caught instanceof Error ? caught.message : 'Could not delete recording.');
+      setRecordingDeleteError({ cause: caught });
     } finally {
       setDeletingRecordingId(null);
     }
@@ -215,7 +222,7 @@ export function SessionShell({
         await onResumeSession();
       }
     } catch {
-      setSessionActionError(`Could not ${action} session. Try again.`);
+      setSessionActionError(action);
     } finally {
       setSessionAction(null);
     }
@@ -249,8 +256,8 @@ export function SessionShell({
       <header className="session-header">
         <div className="session-header-content">
           <div className="header-meta">
-            <span className="eyebrow">{contextLabel}</span>
-            <h1 className="session-mission-title">{session.mission.title}</h1>
+            <span className="eyebrow">{displayContext}</span>
+            <h1 className="session-mission-title" lang="en">{session.mission.title}</h1>
           </div>
 
           {!isCompleted && <div className="session-actions">
@@ -261,7 +268,7 @@ export function SessionShell({
                 onClick={() => void handleSessionAction('resume')}
                 disabled={sessionAction !== null}
               >
-                {sessionAction === 'resume' ? 'Resuming…' : 'Resume session'}
+                {sessionAction === 'resume' ? t('resuming') : t('resumeSession')}
               </button>
             ) : (
               <button
@@ -270,14 +277,14 @@ export function SessionShell({
                 onClick={() => void handleSessionAction('pause')}
                 disabled={sessionAction !== null}
               >
-                {sessionAction === 'pause' ? 'Pausing…' : 'Pause session'}
+                {sessionAction === 'pause' ? t('pausing') : t('pauseSession')}
               </button>
             )}
           </div>}
         </div>
 
         {/* Blocks Progress Bar */}
-        <nav className="blocks-progress-nav" aria-label="Session blocks progress">
+        <nav className="blocks-progress-nav" aria-label={t('blocksProgress')}>
           <ol className="blocks-progress-list">
             {blockRanges.map((block, idx) => {
               const isActive = !isCompleted && idx === activeBlockIndex;
@@ -303,6 +310,9 @@ export function SessionShell({
             })}
           </ol>
         </nav>
+        <p className="session-progress-note">
+          {t('savedActivities', { saved: Math.min(session.currentCheckpoint, accumulated), total: accumulated, minutes: session.durationMinutes })}
+        </p>
       </header>
 
       {/* Main Content Area + Support Panel */}
@@ -310,13 +320,13 @@ export function SessionShell({
         <main className="session-main-content">
           {session.status === 'paused' && (
             <div className="session-paused-banner" role="status">
-              <p>Session is currently paused. Click &quot;Resume session&quot; to continue.</p>
+              <p>{t('pausedNotice')}</p>
             </div>
           )}
 
           {sessionActionError && (
             <div className="submit-error-banner" role="alert">
-              <p className="error-text">{sessionActionError}</p>
+              <p className="error-text">{t(sessionActionError === 'pause' ? 'pauseError' : 'resumeError')}</p>
             </div>
           )}
 
@@ -334,19 +344,18 @@ export function SessionShell({
             onDeleteRecording={(recordingId) => void handleDeleteRecording(recordingId)}
             isDeletingRecording={deletingRecordingId !== null}
             recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
-            deletionError={recordingDeleteError}
+            deletionError={recordingDeleteError ? localizedError(recordingDeleteError.cause, locale) : null}
           />
 
           {isCompleted ? (
-            <section className="session-completed-card" aria-label="Session completed">
-              <h2>{isPlacement ? 'Placement assessment complete' : 'Session Completed!'}</h2>
+            <section className="session-completed-card" aria-label={t('sessionCompletedLabel')}>
+              <h2>{isPlacement ? t('placementComplete') : t('sessionComplete')}</h2>
               <p>{isPlacement
-                ? 'Your responses are saved. Continue to review evaluation status and your recommendation.'
-                : <>Congratulations on finishing all {session.plan.blocks.length} blocks of this{' '}
-                    {session.durationMinutes}-minute workplace session.</>}
+                ? t('placementCompleteDescription')
+                : t('sessionCompleteDescription', { count: session.plan.blocks.length, minutes: session.durationMinutes })}
               </p>
               <Link href={completionHref} className="primary-action-button inline-button">
-                {isPlacement ? 'Review assessment status' : 'Return to Dashboard'}
+                {isPlacement ? t('reviewAssessment') : t('returnDashboard')}
               </Link>
             </section>
           ) : (
@@ -364,14 +373,14 @@ export function SessionShell({
 
               {submitError && (
                 <div className="submit-error-banner" role="alert">
-                  <p className="error-text">Submission failed: {submitError}</p>
+                  <p className="error-text">{t('submissionFailed', { error: localizedError(submitError.cause, locale) })}</p>
                   <button
                     type="button"
                     className="retry-button"
                     onClick={handleSubmit}
                     disabled={isSubmitting}
                   >
-                    Retry
+                    {t('retry')}
                   </button>
                 </div>
               )}
@@ -383,7 +392,7 @@ export function SessionShell({
                   onClick={handleSubmit}
                   disabled={!canContinue || isSubmitting || session.status === 'paused'}
                 >
-                  {isSubmitting ? 'Submitting…' : 'Continue'}
+                  {isSubmitting ? t('submitting') : t('continue')}
                 </button>
               </footer>
             </>
@@ -393,47 +402,47 @@ export function SessionShell({
         {/* Collapsible Support Panel */}
         {!isCompleted && currentActivity && <aside
           className={`session-support-panel ${isPanelCollapsed ? 'collapsed' : ''}`}
-          aria-label="Support and session information"
+          aria-label={t('supportInfo')}
         >
           <div className="panel-header">
-            <h2 className="panel-title">Session Info</h2>
+            <h2 className="panel-title">{t('sessionInfo')}</h2>
             <button
               type="button"
               className="toggle-panel-button"
               onClick={() => setIsPanelCollapsed((prev) => !prev)}
               aria-expanded={!isPanelCollapsed}
-              aria-label={isPanelCollapsed ? 'Expand support panel' : 'Collapse support panel'}
+              aria-controls="session-support-content"
+              aria-label={isPanelCollapsed ? t('expandSupport') : t('collapseSupport')}
             >
-              {isPanelCollapsed ? 'Show info' : 'Hide info'}
+              {isPanelCollapsed ? t('showInfo') : t('hideInfo')}
             </button>
           </div>
 
           {!isPanelCollapsed && (
-            <div className="panel-content">
+            <div className="panel-content" id="session-support-content">
               <div className="info-block">
-                <h3>Duration</h3>
-                <p>{session.durationMinutes} minutes total (15 minutes per block)</p>
+                <h3>{t('duration')}</h3>
+                <p>{t('totalDuration', { minutes: session.durationMinutes })}</p>
               </div>
 
               <div className="info-block">
-                <h3>Current Block</h3>
+                <h3>{t('currentBlock')}</h3>
                 <p>
-                  {blockLabels[currentBlockType] ?? currentBlockType} (Block{' '}
-                  {resolvedActiveBlockIndex + 1} of {session.plan.blocks.length})
+                  {t('blockPosition', { label: blockLabels[currentBlockType] ?? currentBlockType, current: resolvedActiveBlockIndex + 1, total: session.plan.blocks.length })}
                 </p>
               </div>
 
               <div className="info-block">
-                <h3>Skills Covered</h3>
-                <p>{currentActivity.skills.join(', ')}</p>
+                <h3>{t('skillsCovered')}</h3>
+                <p>{currentActivity.skills.map((skill) => t(skill)).join(', ')}</p>
               </div>
 
               {currentActivity.languageBlocks.length > 0 && (
                 <div className="info-block">
-                  <h3>Vocabulary / Language</h3>
+                  <h3>{t('vocabularyLanguage')}</h3>
                   <ul className="info-vocab-list">
                     {currentActivity.languageBlocks.map((lb, i) => (
-                      <li key={i}>{(lb.canonicalForm as string) || (lb.slug as string)}</li>
+                      <li key={i} lang="en">{(lb.canonicalForm as string) || (lb.slug as string)}</li>
                     ))}
                   </ul>
                 </div>

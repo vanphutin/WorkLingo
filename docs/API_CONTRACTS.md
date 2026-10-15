@@ -764,3 +764,35 @@ Learner endpoints are `GET /api/v1/me/ielts-bridge/catalog`, `POST /modules/{id}
 Orientation, while an existing pinned session can always resume. Progress updates identify the exact
 stage and revision, optionally start its timer, and explicitly complete it. Learner DTOs contain no
 answer keys or rubrics.
+
+## 20. IELTS Integrated Practice (IELTS Phase 6)
+
+Admin endpoints under `/api/v1/admin/ielts-integrated/profiles` provide list/get, draft replacement,
+validation, and immutable publish. Draft and command requests require optimistic revisions and
+idempotency UUIDs. Validation requires exactly one positive allocation for every skill and an exact
+sum equal to 60, 90, 120, or 150 minutes.
+
+Learner endpoints are `GET /api/v1/me/ielts-integrated/availability`, `POST /sessions`,
+`GET /sessions/{id}`, and `PUT /sessions/{id}/progress`. Start accepts an independent duration and
+difficulty plus client-session UUID. Progress is owner-scoped, block-ordered, revision-checked, and
+returns authored feedback without answer keys, rubrics, or band scores.
+
+## 21. IELTS Band-Oriented Curriculum (IELTS Phase 7)
+
+Admin (`CONTENT_ADMIN` or `SYSTEM_ADMIN`):
+
+- `GET /api/v1/admin/ielts-band-curriculum`
+- `PUT /api/v1/admin/ielts-band-curriculum/draft`
+- `POST /api/v1/admin/ielts-band-curriculum/validate`
+- `POST /api/v1/admin/ielts-band-curriculum/publish`
+
+Learner (`LEARNER`):
+
+- `GET /api/v1/me/ielts-band-pathway`
+- `POST /api/v1/me/ielts-band-pathway/start`
+- `PUT /api/v1/me/ielts-band-pathway/target`
+- `POST /api/v1/me/ielts-band-pathway/evaluate`
+
+Writes use optimistic revisions; draft and publish mutations use UUID idempotency keys. The learner
+DTO reports descriptors, confidence, sample counts and practice evidence only. It intentionally has
+no `estimatedBand` or official-result field.

@@ -1,5 +1,12 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { adminIeltsBridgeMessages } from '../../i18n/messages/adminIeltsBridge';
+import { localizedError } from '../../i18n/errors';
+import { formatNumber } from '../../i18n/translator';
+import type { MessageValues } from '../../i18n/translator';
+
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ieltsBridgeQuestionTypeSchema,
@@ -13,6 +20,8 @@ import {
 import { adminIeltsBridgeClient } from '../../lib/api/admin-ielts-bridge-client';
 import { ApiError } from '../../lib/api/api-client';
 import './ielts-bridge-authoring.css';
+
+type Notice = { key: keyof typeof adminIeltsBridgeMessages['en']; values?: MessageValues };
 
 type Stage = IeltsBridgeModuleContent['stages'][number];
 
@@ -44,36 +53,40 @@ const createDraft = (questionType: IeltsBridgeQuestionType): IeltsBridgeModuleCo
 };
 
 function TaskEditor({ task, onChange }: { readonly task: IeltsBridgeTask; readonly onChange: (task: IeltsBridgeTask) => void }) {
+  const t = useT('adminIeltsBridge', adminIeltsBridgeMessages);
   const updateOptions = (value: string) => value.split('\n').map((item) => item.trim()).filter(Boolean);
   return <fieldset className="bridge-task-editor">
-    <legend>Stage task</legend>
-    <label>Task kind<select aria-label="Task kind" value={task.kind} onChange={(event) => onChange(defaultTask(event.target.value as IeltsBridgeTask['kind']))}>
-      <option value="instruction">Instruction only</option><option value="single_choice">Single choice</option>
-      <option value="multi_choice">Multiple choice</option><option value="short_text">Written response</option>
-      <option value="spoken_response">Spoken response</option>
+    <legend>{t('taskEditor')}</legend>
+    <label>{t('taskKind')}<select aria-label={t('taskKind')} value={task.kind} onChange={(event) => onChange(defaultTask(event.target.value as IeltsBridgeTask['kind']))}>
+      <option value="instruction">{t('instruction')}</option><option value="single_choice">{t('single_choice')}</option>
+      <option value="multi_choice">{t('multi_choice')}</option><option value="short_text">{t('short_text')}</option>
+      <option value="spoken_response">{t('spoken_response')}</option>
     </select></label>
-    {task.kind !== 'instruction' ? <label>Prompt<textarea value={task.prompt} onChange={(event) => onChange({ ...task, prompt: event.target.value })} /></label> : null}
+    {task.kind !== 'instruction' ? <label>{t('prompt')}<textarea lang="en" value={task.prompt} onChange={(event) => onChange({ ...task, prompt: event.target.value })} /></label> : null}
     {task.kind === 'single_choice' ? <>
-      <label>Options, one per line<textarea value={task.options.join('\n')} onChange={(event) => onChange({ ...task, options: updateOptions(event.target.value) })} /></label>
-      <label>Correct option index<input type="number" min="0" value={task.answerIndex} onChange={(event) => onChange({ ...task, answerIndex: Number(event.target.value) })} /></label>
+      <label>{t('options')}<textarea lang="en" value={task.options.join('\n')} onChange={(event) => onChange({ ...task, options: updateOptions(event.target.value) })} /></label>
+      <label>{t('answerIndex')}<input type="number" min="0" value={task.answerIndex} onChange={(event) => onChange({ ...task, answerIndex: Number(event.target.value) })} /></label>
     </> : null}
     {task.kind === 'multi_choice' ? <>
-      <label>Options, one per line<textarea value={task.options.join('\n')} onChange={(event) => onChange({ ...task, options: updateOptions(event.target.value) })} /></label>
-      <label>Correct indexes, comma separated<input value={task.answerIndexes.join(',')} onChange={(event) => onChange({ ...task, answerIndexes: event.target.value.split(',').map(Number).filter(Number.isInteger) })} /></label>
+      <label>{t('options')}<textarea lang="en" value={task.options.join('\n')} onChange={(event) => onChange({ ...task, options: updateOptions(event.target.value) })} /></label>
+      <label>{t('answerIndexes')}<input value={task.answerIndexes.join(',')} onChange={(event) => onChange({ ...task, answerIndexes: event.target.value.split(',').map(Number).filter(Number.isInteger) })} /></label>
     </> : null}
-    {task.kind === 'short_text' ? <label>Minimum words<input type="number" min="1" value={task.minWords} onChange={(event) => onChange({ ...task, minWords: Number(event.target.value) })} /></label> : null}
+    {task.kind === 'short_text' ? <label>{t('minWords')}<input type="number" min="1" value={task.minWords} onChange={(event) => onChange({ ...task, minWords: Number(event.target.value) })} /></label> : null}
     {task.kind === 'spoken_response' ? <div className="bridge-editor__split">
-      <label>Preparation seconds<input type="number" min="0" value={task.preparationSeconds} onChange={(event) => onChange({ ...task, preparationSeconds: Number(event.target.value) })} /></label>
-      <label>Response seconds<input type="number" min="10" value={task.responseSeconds} onChange={(event) => onChange({ ...task, responseSeconds: Number(event.target.value) })} /></label>
+      <label>{t('preparationSeconds')}<input type="number" min="0" value={task.preparationSeconds} onChange={(event) => onChange({ ...task, preparationSeconds: Number(event.target.value) })} /></label>
+      <label>{t('responseSeconds')}<input type="number" min="10" value={task.responseSeconds} onChange={(event) => onChange({ ...task, responseSeconds: Number(event.target.value) })} /></label>
     </div> : null}
     {task.kind === 'short_text' || task.kind === 'spoken_response' ? <>
-      <label>Rubric criteria, one per line<textarea value={task.rubric.criteria.join('\n')} onChange={(event) => onChange({ ...task, rubric: { ...task.rubric, criteria: updateOptions(event.target.value) } })} /></label>
-      <label>Model response<textarea value={task.rubric.modelAnswer ?? ''} onChange={(event) => onChange({ ...task, rubric: { ...task.rubric, modelAnswer: event.target.value || undefined } })} /></label>
+      <label>{t('rubric')}<textarea lang="en" value={task.rubric.criteria.join('\n')} onChange={(event) => onChange({ ...task, rubric: { ...task.rubric, criteria: updateOptions(event.target.value) } })} /></label>
+      <label>{t('modelResponse')}<textarea lang="en" value={task.rubric.modelAnswer ?? ''} onChange={(event) => onChange({ ...task, rubric: { ...task.rubric, modelAnswer: event.target.value || undefined } })} /></label>
     </> : null}
   </fieldset>;
 }
 
 export function IeltsBridgeAuthoringWorkspace() {
+  const t = useT('adminIeltsBridge', adminIeltsBridgeMessages);
+  const { locale } = useLocalePreference();
+  const statusLabel = (value: string) => ['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED'].includes(value) ? t(value as 'DRAFT' | 'VALIDATED' | 'PUBLISHED' | 'ARCHIVED') : value;
   const [modules, setModules] = useState<AdminIeltsBridgeModuleDto[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedStageIndex, setSelectedStageIndex] = useState(0);
@@ -82,12 +95,27 @@ export function IeltsBridgeAuthoringWorkspace() {
   const [validatedRevision, setValidatedRevision] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<Notice | null>(null);
+  const [error, setError] = useState<unknown>(null);
 
   const selected = useMemo(() => modules.find((module) => module.id === selectedId) ?? null, [modules, selectedId]);
   const stage = selected?.draft.stages[selectedStageIndex] ?? null;
   const questionTypeExists = modules.some((module) => module.draft.questionType === newQuestionType);
+  const validationMessage = (issue: { message: string }) => {
+    if (locale === 'en') return issue.message;
+    switch (issue.message) {
+      case 'Answer index is outside options': return t('invalidAnswerIndex');
+      case 'Only timed practice must define a time limit':
+      case 'Timed practice needs a limit.': return t('invalidTimer');
+      case 'Practice stages require an answerable task': return t('taskRequired');
+      case 'Practice stages require authored feedback': return t('feedbackRequired');
+      case 'Question type must belong to the selected skill': return t('invalidSkill');
+      case 'Options must be unique': return t('uniqueOptions');
+    }
+    const expected = issue.message.startsWith('Expected ') ? issue.message.slice(9) : null;
+    if (expected && ieltsBridgeStageTypes.includes(expected as Stage['type'])) return t('expectedStage', { stage: t(expected as Stage['type']) });
+    return t('invalidField');
+  };
 
   const load = useCallback(async () => {
     const data = await adminIeltsBridgeClient.list();
@@ -97,7 +125,7 @@ export function IeltsBridgeAuthoringWorkspace() {
   }, []);
 
   useEffect(() => {
-    void load().catch((cause) => setError(cause instanceof Error ? cause.message : 'Unable to load IELTS Bridge modules.')).finally(() => setLoading(false));
+    void load().catch((cause) => setError(cause)).finally(() => setLoading(false));
   }, [load]);
 
   const run = async (work: () => Promise<void>) => {
@@ -105,8 +133,8 @@ export function IeltsBridgeAuthoringWorkspace() {
     try { await work(); }
     catch (cause) {
       if (cause instanceof ApiError && cause.status === 409) {
-        await load(); setError('This draft changed elsewhere. The latest revision was loaded; review it before retrying.');
-      } else setError(cause instanceof Error ? cause.message : 'Operation failed.');
+        await load(); setError('revisionConflict');
+      } else setError(cause);
     } finally { setBusy(false); }
   };
 
@@ -120,84 +148,84 @@ export function IeltsBridgeAuthoringWorkspace() {
     ...draft, stages: draft.stages.map((item, index) => index === selectedStageIndex ? { ...item, ...patch } as Stage : item),
   }));
 
-  if (loading) return <section className="bridge-admin-loading" aria-busy="true">Loading IELTS Bridge authoring...</section>;
+  if (loading) return <section className="bridge-admin-loading" aria-busy="true">{t('loading')}</section>;
 
   return <section className="bridge-admin">
     <header className="bridge-admin__header">
-      <div><p className="bridge-admin__kicker">IELTS curriculum</p><h1>Bridge authoring</h1><p>Teach one question type through ten ordered stages, then publish an immutable learner version.</p></div>
-      {selected ? <div className="bridge-admin__status"><strong>{selected.status}</strong><span>Draft revision {selected.draftRevision}</span></div> : null}
+      <div><p className="bridge-admin__kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
+      {selected ? <div className="bridge-admin__status"><strong>{statusLabel(selected.status)}</strong><span>{t('draftRevision', { revision: selected.draftRevision })}</span></div> : null}
     </header>
-    {error ? <p className="bridge-notice bridge-notice--error" role="alert">{error}</p> : null}
-    {message ? <p className="bridge-notice" role="status">{message}</p> : null}
+    {error ? <p className="bridge-notice bridge-notice--error" role="alert">{error === 'revisionConflict' ? t('revisionConflict') : localizedError(error, locale)}</p> : null}
+    {message ? <p className="bridge-notice" role="status">{t(message.key, message.values)}</p> : null}
     <div className="bridge-create">
-      <label>Question type<select value={newQuestionType} onChange={(event) => setNewQuestionType(event.target.value as IeltsBridgeQuestionType)}>
-        {ieltsBridgeQuestionTypeSchema.options.map((type) => <option key={type} value={type}>{label(type)}</option>)}
+      <label>{t('questionType')}<select value={newQuestionType} onChange={(event) => setNewQuestionType(event.target.value as IeltsBridgeQuestionType)}>
+        {ieltsBridgeQuestionTypeSchema.options.map((type) => <option key={type} value={type}>{t(type)}</option>)}
       </select></label>
       <button type="button" onClick={() => void run(async () => {
         const created = await adminIeltsBridgeClient.create({ expectedRevision: null, idempotencyKey: crypto.randomUUID(), content: createDraft(newQuestionType) });
-        setModules((current) => [...current, created]); setSelectedId(created.id); setSelectedStageIndex(0); setMessage('Module draft created.');
-      })} disabled={busy || questionTypeExists}>Create module</button>
-      {questionTypeExists ? <span className="bridge-create__hint">This question type already has a module.</span> : null}
+        setModules((current) => [...current, created]); setSelectedId(created.id); setSelectedStageIndex(0); setMessage({ key: 'moduleCreated' });
+      })} disabled={busy || questionTypeExists}>{t('createModule')}</button>
+      {questionTypeExists ? <span className="bridge-create__hint">{t('questionTypeExists')}</span> : null}
     </div>
     {selected && stage ? <>
       <div className="bridge-admin__toolbar">
         <button type="button" onClick={() => void run(async () => {
           const saved = await adminIeltsBridgeClient.updateDraft(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID(), content: selected.draft });
-          replaceModule(saved); setValidatedRevision(null); setMessage('Draft saved.');
-        })} disabled={busy}>Save draft</button>
+          replaceModule(saved); setValidatedRevision(null); setMessage({ key: 'draftSaved' });
+        })} disabled={busy}>{t('saveDraft')}</button>
         <button type="button" onClick={() => void run(async () => {
           const result = await adminIeltsBridgeClient.validate(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID() });
           setIssues(result.issues); setValidatedRevision(result.canPublish ? selected.draftRevision : null);
           setModules((current) => current.map((module) => module.id === selected.id ? { ...module, status: result.status } : module));
-          setMessage(result.canPublish ? 'Draft is ready to publish.' : 'Resolve the validation issues before publishing.');
-        })} disabled={busy}>Validate draft</button>
+          setMessage({ key: result.canPublish ? 'readyToPublish' : 'resolveIssues' });
+        })} disabled={busy}>{t('validateDraft')}</button>
         <button type="button" className="primary" onClick={() => void run(async () => {
           const result = await adminIeltsBridgeClient.publish(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID() });
-          setMessage(`Published version ${result.version}.`); await load();
-        })} disabled={busy || validatedRevision !== selected.draftRevision}>Publish version</button>
+          setMessage({ key: 'publishedVersion', values: { version: result.version } }); await load();
+        })} disabled={busy || validatedRevision !== selected.draftRevision}>{t('publishVersion')}</button>
         <button type="button" onClick={() => {
-          if (window.confirm(`Archive the published release for "${selected.draft.title}"? Learners already started will remain on their pinned version.`)) {
-            void run(async () => { replaceModule(await adminIeltsBridgeClient.archive(selected.id)); setMessage('Published release archived.'); });
+          if (window.confirm(t('archiveConfirm', { title: selected.draft.title }))) {
+            void run(async () => { replaceModule(await adminIeltsBridgeClient.archive(selected.id)); setMessage({ key: 'archived' }); });
           }
-        }} disabled={busy || selected.currentPublishedVersion === null}>Archive release</button>
+        }} disabled={busy || selected.currentPublishedVersion === null}>{t('archiveRelease')}</button>
       </div>
-      {issues.length > 0 ? <section className="bridge-issues" aria-label="Validation issues"><h2>Validation issues</h2><ul>{issues.map((issue) => <li key={`${issue.path}-${issue.message}`}><code>{issue.path}</code> {issue.message}</li>)}</ul></section> : null}
+      {issues.length > 0 ? <section className="bridge-issues" aria-label={t('validationIssues')}><h2>{t('validationIssues')}</h2><ul>{issues.map((issue) => <li key={`${issue.path}-${issue.message}`}><code>{issue.path}</code> {validationMessage(issue)}</li>)}</ul></section> : null}
       <div className="bridge-admin__grid">
-        <aside className="bridge-module-list" aria-label="IELTS Bridge modules">
-          <h2>Modules</h2>
-          <ul>{modules.map((module) => <li key={module.id}><button type="button" className={module.id === selected.id ? 'active' : ''} aria-current={module.id === selected.id ? 'page' : undefined} onClick={() => { setSelectedId(module.id); setSelectedStageIndex(0); setValidatedRevision(null); setIssues([]); }}><span>{label(module.draft.skill)}</span>{module.draft.title}</button></li>)}</ul>
+        <aside className="bridge-module-list" aria-label={t('modulesLabel')}>
+          <h2>{t('modules')}</h2>
+          <ul>{modules.map((module) => <li key={module.id}><button type="button" className={module.id === selected.id ? 'active' : ''} aria-current={module.id === selected.id ? 'page' : undefined} onClick={() => { setSelectedId(module.id); setSelectedStageIndex(0); setValidatedRevision(null); setIssues([]); }}><span>{t(module.draft.skill)}</span><span lang="en">{module.draft.title}</span></button></li>)}</ul>
         </aside>
-        <aside className="bridge-stage-list" aria-label="Ten learning stages">
-          <h2>Learning stages</h2>
-          <ol>{selected.draft.stages.map((item, index) => <li key={item.slug}><button type="button" className={index === selectedStageIndex ? 'active' : ''} aria-current={index === selectedStageIndex ? 'step' : undefined} onClick={() => setSelectedStageIndex(index)}><span>{index + 1}</span>{item.title}</button></li>)}</ol>
+        <aside className="bridge-stage-list" aria-label={t('tenStages')}>
+          <h2>{t('stages')}</h2>
+          <ol>{selected.draft.stages.map((item, index) => <li key={item.slug}><button type="button" className={index === selectedStageIndex ? 'active' : ''} aria-current={index === selectedStageIndex ? 'step' : undefined} onClick={() => setSelectedStageIndex(index)}><span>{formatNumber(locale, index + 1)}</span><span lang="en">{item.title}</span></button></li>)}</ol>
         </aside>
         <form className="bridge-editor" autoComplete="off" onSubmit={(event) => event.preventDefault()}>
-          <section className="bridge-editor__module"><h2>Module details</h2>
-            <label>Module title<input value={selected.draft.title} onChange={(event) => updateDraft((draft) => ({ ...draft, title: event.target.value }))} /></label>
-            <label>Description<textarea value={selected.draft.description} onChange={(event) => updateDraft((draft) => ({ ...draft, description: event.target.value }))} /></label>
-            <div className="bridge-editor__split"><label>Skill<input value={label(selected.draft.skill)} readOnly /></label><label>Question type<input value={label(selected.draft.questionType)} readOnly /></label></div>
-            <label className="bridge-checkbox"><input type="checkbox" checked={selected.draft.required} onChange={(event) => updateDraft((draft) => ({ ...draft, required: event.target.checked }))} /> Required for Bridge completion</label>
+          <section className="bridge-editor__module"><h2>{t('moduleDetails')}</h2>
+            <label>{t('moduleTitle')}<input lang="en" value={selected.draft.title} onChange={(event) => updateDraft((draft) => ({ ...draft, title: event.target.value }))} /></label>
+            <label>{t('moduleDescription')}<textarea lang="en" value={selected.draft.description} onChange={(event) => updateDraft((draft) => ({ ...draft, description: event.target.value }))} /></label>
+            <div className="bridge-editor__split"><label>{t('skill')}<input value={t(selected.draft.skill)} readOnly /></label><label>{t('questionType')}<input value={t(selected.draft.questionType)} readOnly /></label></div>
+            <label className="bridge-checkbox"><input type="checkbox" checked={selected.draft.required} onChange={(event) => updateDraft((draft) => ({ ...draft, required: event.target.checked }))} /> {t('required')}</label>
           </section>
-          <section><h2>{label(stage.type)}</h2>
-            <label>Stage title<input value={stage.title} onChange={(event) => updateStage({ title: event.target.value })} /></label>
-            <label>Stable slug<input value={stage.slug} onChange={(event) => updateStage({ slug: event.target.value })} /></label>
-            <label>Instruction<textarea rows={5} value={stage.instruction} onChange={(event) => updateStage({ instruction: event.target.value })} /></label>
-            <label>Strategy steps, one per line<textarea value={stage.strategySteps.join('\n')} onChange={(event) => updateStage({ strategySteps: event.target.value.split('\n').map((item) => item.trim()).filter(Boolean) })} /></label>
-            {stage.type === 'timed_practice' ? <label>Time limit in seconds<input type="number" min="30" max="1800" value={stage.timeLimitSeconds ?? 120} onChange={(event) => updateStage({ timeLimitSeconds: Number(event.target.value) })} /></label> : null}
+          <section><h2>{t(stage.type)}</h2>
+            <label>{t('stageTitle')}<input lang="en" value={stage.title} onChange={(event) => updateStage({ title: event.target.value })} /></label>
+            <label>{t('stableSlug')}<input value={stage.slug} onChange={(event) => updateStage({ slug: event.target.value })} /></label>
+            <label>{t('stageInstruction')}<textarea lang="en" rows={5} value={stage.instruction} onChange={(event) => updateStage({ instruction: event.target.value })} /></label>
+            <label>{t('strategySteps')}<textarea lang="en" value={stage.strategySteps.join('\n')} onChange={(event) => updateStage({ strategySteps: event.target.value.split('\n').map((item) => item.trim()).filter(Boolean) })} /></label>
+            {stage.type === 'timed_practice' ? <label>{t('timeLimit')}<input type="number" min="30" max="1800" value={stage.timeLimitSeconds ?? 120} onChange={(event) => updateStage({ timeLimitSeconds: Number(event.target.value) })} /></label> : null}
             <TaskEditor task={stage.task} onChange={(task) => updateStage({ task })} />
-            {stage.task.kind !== 'instruction' ? <fieldset><legend>Authored feedback</legend>
-              <label>Correct or coaching feedback<textarea value={stage.feedback?.correct ?? ''} onChange={(event) => updateStage({ feedback: { correct: event.target.value, incorrect: stage.feedback?.incorrect ?? '' } })} /></label>
-              <label>Incorrect feedback<textarea value={stage.feedback?.incorrect ?? ''} onChange={(event) => updateStage({ feedback: { correct: stage.feedback?.correct ?? '', incorrect: event.target.value } })} /></label>
+            {stage.task.kind !== 'instruction' ? <fieldset><legend>{t('feedbackEditor')}</legend>
+              <label>{t('correctFeedback')}<textarea lang="en" value={stage.feedback?.correct ?? ''} onChange={(event) => updateStage({ feedback: { correct: event.target.value, incorrect: stage.feedback?.incorrect ?? '' } })} /></label>
+              <label>{t('incorrectFeedback')}<textarea lang="en" value={stage.feedback?.incorrect ?? ''} onChange={(event) => updateStage({ feedback: { correct: stage.feedback?.correct ?? '', incorrect: event.target.value } })} /></label>
             </fieldset> : null}
           </section>
         </form>
-        <aside className="bridge-preview" aria-label="Learner preview">
-          <p>Stage {selectedStageIndex + 1} of 10</p><h2>{stage.title}</h2><p>{stage.instruction}</p>
-          {stage.strategySteps.length > 0 ? <ol>{stage.strategySteps.map((step) => <li key={step}>{step}</li>)}</ol> : null}
-          <div className="bridge-preview__task"><strong>{label(stage.task.kind)}</strong>{stage.task.kind !== 'instruction' ? <p>{stage.task.prompt}</p> : <p>Learner reads this guidance and continues.</p>}</div>
-          {stage.timeLimitSeconds ? <p><strong>Timer:</strong> {stage.timeLimitSeconds} seconds</p> : null}
+        <aside className="bridge-preview" aria-label={t('learnerPreview')}>
+          <p>{t('stageProgress', { current: selectedStageIndex + 1 })}</p><h2 lang="en">{stage.title}</h2><p lang="en">{stage.instruction}</p>
+          {stage.strategySteps.length > 0 ? <ol>{stage.strategySteps.map((step) => <li key={step} lang="en">{step}</li>)}</ol> : null}
+          <div className="bridge-preview__task"><strong>{t(stage.task.kind)}</strong>{stage.task.kind !== 'instruction' ? <p lang="en">{stage.task.prompt}</p> : <p>{t('instructionPreview')}</p>}</div>
+          {stage.timeLimitSeconds ? <p><strong>{t('timer')}</strong> {t('seconds', { count: stage.timeLimitSeconds })}</p> : null}
         </aside>
       </div>
-    </> : <div className="bridge-empty"><h2>No Bridge modules yet</h2><p>Choose a question type and create the first ten-stage module.</p></div>}
+    </> : <div className="bridge-empty"><h2>{t('emptyTitle')}</h2><p>{t('emptyDescription')}</p></div>}
   </section>;
 }

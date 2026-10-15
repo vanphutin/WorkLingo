@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "codex-quota-optimizer": {
+      "source": "ctdaniel/codex-quota-optimizer",
+      "sourceType": "github",
+      "skillPath": "skills/codex-quota-optimizer/SKILL.md",
+      "computedHash": "13f9554fc6b41ddb4b754a72f64cc977fea46ace01ded3b9877d425308b6502d"
+    }
+  }
+}

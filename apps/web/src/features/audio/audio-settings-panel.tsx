@@ -1,5 +1,9 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { localizedError } from '../../i18n/errors';
+import { audioMessages } from '../../i18n/messages/audio';
+
 import { useCallback, useEffect, useState } from 'react';
 import type { AudioSettings, AudioSourceId } from '@worklingo/contracts';
 
@@ -8,42 +12,45 @@ import { BrowserSpeechControls } from './browser-speech-controls';
 import { useBrowserSpeech } from './use-browser-speech';
 
 const PREVIEW_TEXT = 'Could you share the updated project timeline with the team?';
-const SOURCES: ReadonlyArray<{
-  description: string;
-  id: AudioSourceId;
-  label: string;
-}> = [
-  {
-    description: 'Use lesson audio first, then offer browser speech if playback fails.',
-    id: 'system-default', label: 'Automatic',
-  },
-  {
-    description: 'Use only the audio selected and published with the lesson.',
-    id: 'published-audio', label: 'Published lesson audio',
-  },
-  {
-    description: 'Read lesson text using a voice installed in this browser.',
-    id: 'browser-tts', label: 'Browser voice',
-  },
-];
+
 
 export function AudioSettingsPanel() {
+  const t = useT('audio', audioMessages);
+  const { locale } = useLocalePreference();
+  const SOURCES: ReadonlyArray<{
+    description: string;
+    id: AudioSourceId;
+    label: string;
+  }> = [
+    {
+      description: t('automaticDescription'),
+      id: 'system-default', label: t('automatic'),
+    },
+    {
+      description: t('publishedDescription'),
+      id: 'published-audio', label: t('publishedAudio'),
+    },
+    {
+      description: t('browserDescription'),
+      id: 'browser-tts', label: t('browserVoice'),
+    },
+  ];
   const [settings, setSettings] = useState<AudioSettings | null>(null);
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState<{ cause: unknown } | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [saveError, setSaveError] = useState(false);
+  const [saveError, setSaveError] = useState<{ cause: unknown } | null>(null);
   const speech = useBrowserSpeech({
     lang: 'en-US', preferredVoiceId: settings?.browserVoiceId ?? null, text: PREVIEW_TEXT,
   });
 
   const load = useCallback(async () => {
-    setLoadError(false);
+    setLoadError(null);
     setSaved(false);
     try {
       setSettings(await audioSettingsClient.getLearnerSettings());
-    } catch {
-      setLoadError(true);
+    } catch (cause) {
+      setLoadError({ cause });
     }
   }, []);
 
@@ -52,25 +59,26 @@ export function AudioSettingsPanel() {
   if (loadError) {
     return (
       <section className="audio-settings-state" aria-labelledby="audio-settings-title">
-        <h1 id="audio-settings-title">Audio settings</h1>
+        <h1 id="audio-settings-title">{t('audioSettings')}</h1>
         <div role="alert">
-          <p>We could not load your audio settings. Your learning pages can still use automatic playback.</p>
-          <button type="button" onClick={() => void load()}>Retry</button>
+          <p>{t('learnerLoadError')}</p>
+          <p>{localizedError(loadError.cause, locale)}</p>
+          <button type="button" onClick={() => void load()}>{t('retry')}</button>
         </div>
       </section>
     );
   }
-  if (!settings) return <p className="audio-settings-state" role="status">Loading audio settings…</p>;
+  if (!settings) return <p className="audio-settings-state" role="status">{t('loadingSettings')}</p>;
 
   const save = async () => {
     setSaving(true);
     setSaved(false);
-    setSaveError(false);
+    setSaveError(null);
     try {
       setSettings(await audioSettingsClient.updateLearnerSettings(settings));
       setSaved(true);
-    } catch {
-      setSaveError(true);
+    } catch (cause) {
+      setSaveError({ cause });
     } finally {
       setSaving(false);
     }
@@ -79,13 +87,13 @@ export function AudioSettingsPanel() {
   return (
     <section className="audio-settings-panel" aria-labelledby="audio-settings-title">
       <header>
-        <p className="eyebrow">Playback</p>
-        <h1 id="audio-settings-title">Audio settings</h1>
-        <p>Choose how WorkLingo plays English in lessons. Nothing starts without your action.</p>
+        <p className="eyebrow">{t('playback')}</p>
+        <h1 id="audio-settings-title">{t('audioSettings')}</h1>
+        <p>{t('settingsDescription')}</p>
       </header>
 
       <fieldset className="audio-source-list">
-        <legend>Preferred audio source</legend>
+        <legend>{t('preferredSource')}</legend>
         {SOURCES.map((source) => (
           <label className="audio-source-option" key={source.id}>
             <input
@@ -104,7 +112,7 @@ export function AudioSettingsPanel() {
 
       {settings.sourceId === 'browser-tts' ? (
         <div className="audio-voice-settings">
-          <label htmlFor="browser-voice">Voice on this device</label>
+          <label htmlFor="browser-voice">{t('deviceVoice')}</label>
           <select
             className="audio-settings-select"
             id="browser-voice"
@@ -114,12 +122,12 @@ export function AudioSettingsPanel() {
               ...current, browserVoiceId: event.target.value || null,
             }))}
           >
-            <option value="">Automatic English voice</option>
+            <option value="">{t('automaticVoice')}</option>
             {speech.voices.filter((voice) => voice.lang.toLowerCase().startsWith('en')).map((voice) => (
               <option key={voice.voiceURI} value={voice.voiceURI}>{voice.name} ({voice.lang})</option>
             ))}
           </select>
-          <p className="audio-preview-sentence">Test sentence: “{PREVIEW_TEXT}”</p>
+          <p className="audio-preview-sentence"><span>{t('testSentence')}</span> “<span lang="en">{PREVIEW_TEXT}</span>”</p>
           <BrowserSpeechControls
             lang="en-US"
             preferredVoiceId={settings.browserVoiceId}
@@ -130,10 +138,10 @@ export function AudioSettingsPanel() {
 
       <div className="audio-settings-footer">
         <button type="button" disabled={saving} onClick={() => void save()}>
-          {saving ? 'Saving…' : 'Save audio settings'}
+          {saving ? t('saving') : t('saveAudio')}
         </button>
-        {saved ? <p role="status">Audio settings saved.</p> : null}
-        {saveError ? <p className="field-error" role="alert">Could not save. Try again.</p> : null}
+        {saved ? <p role="status">{t('audioSaved')}</p> : null}
+        {saveError ? <p className="field-error" role="alert">{localizedError(saveError.cause, locale)}</p> : null}
       </div>
     </section>
   );

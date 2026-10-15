@@ -1,0 +1,116 @@
+[
+  {
+    "cwd": "D:\\Projects\\WorkLingo",
+    "skills": [
+      {
+        "name": "brainstorming",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\brainstorming\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "codex-quota-optimizer",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\codex-quota-optimizer\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "diagnosing-superpowers",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\diagnosing-superpowers\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "dispatching-parallel-agents",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\dispatching-parallel-agents\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "executing-plans",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\executing-plans\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "finishing-a-development-branch",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\finishing-a-development-branch\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "frontend-design",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\frontend-design\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "receiving-code-review",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\receiving-code-review\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "requesting-code-review",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\requesting-code-review\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "subagent-driven-development",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\subagent-driven-development\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "systematic-debugging",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\systematic-debugging\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "test-driven-development",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\test-driven-development\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "ui-ux-pro-max",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\ui-ux-pro-max\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "using-git-worktrees",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\using-git-worktrees\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "using-superpowers",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\using-superpowers\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "verification-before-completion",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\verification-before-completion\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "writing-plans",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\writing-plans\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      },
+      {
+        "name": "writing-skills",
+        "path": "D:\\Projects\\WorkLingo\\.agents\\skills\\superpowers\\writing-skills\\SKILL.md",
+        "scope": "repo",
+        "enabled": true
+      }
+    ],
+    "errors": []
+  }
+]

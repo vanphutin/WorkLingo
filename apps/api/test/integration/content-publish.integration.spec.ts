@@ -13,6 +13,7 @@ import { lessonSnapshotSchema } from '../../src/curriculum/domain/curriculum.typ
 
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
+import { JobRunnerService } from '../../src/jobs/application/job-runner.service.js';
 import { seedContentAdmin } from '../../src/users/infrastructure/seed-content-admin.js';
 
 describe('Transactional publish, archive, and session version isolation', () => {
@@ -133,6 +134,8 @@ describe('Transactional publish, archive, and session version isolation', () => 
     // competing for CPU and database connections. Never silently fall through.
     let jobStatus = 'PENDING';
     for (let i = 0; i < 100; i++) {
+      // Periodic workers are disabled in tests, so drive the actual runner.
+      await app.get(JobRunnerService).runOnce();
       const jobRes = await request(app.getHttpServer())
         .get(`/api/v1/jobs/${genRes.body.jobId}`)
         .set('Cookie', adminCookie)

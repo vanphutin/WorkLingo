@@ -1,8 +1,10 @@
+import { useAdminContent } from './i18n';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { AdminAudioSettings, AudioArtifactDto } from '@worklingo/contracts';
 
-import { ApiError, apiClient } from '../../lib/api/api-client';
+import { apiClient } from '../../lib/api/api-client';
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import { BrowserSpeechControls } from '../audio/browser-speech-controls';
 
@@ -38,12 +40,13 @@ export function AudioPreview({
   onSelectedAudioArtifactsChange,
   selectedAudioArtifacts: selectedAudioArtifactsInput,
 }: AudioPreviewProps) {
+  const { t, locale, label, message } = useAdminContent();
   const selectedAudioArtifacts: Readonly<Record<string, string>> =
     selectedAudioArtifactsInput ?? EMPTY_SELECTION;
   const [artifacts, setArtifacts] = useState<AudioArtifactDto[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [generatingSlugs, setGeneratingSlugs] = useState<Record<string, boolean>>({});
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<unknown>(null);
   const [generationSettings, setGenerationSettings] = useState<AdminAudioSettings | null>(null);
   const [settingsError, setSettingsError] = useState(false);
   const configuredProvider = generationSettings?.providers.find(
@@ -101,7 +104,7 @@ export function AudioPreview({
       }
     } catch (err: unknown) {
       if (isMountedRef.current) {
-        setErrorMessage(err instanceof ApiError ? err.message : 'Unable to load audio artifacts.');
+        setErrorMessage(err);
       }
     } finally {
       if (isMountedRef.current) {
@@ -150,9 +153,7 @@ export function AudioPreview({
       onAudioStateChange?.();
     } catch (err: unknown) {
       if (isMountedRef.current) {
-        setErrorMessage(
-          err instanceof Error ? err.message : 'Unable to generate simulation audio.',
-        );
+        setErrorMessage(err);
       }
     } finally {
       if (isMountedRef.current) {
@@ -172,34 +173,27 @@ export function AudioPreview({
         }));
 
   return (
-    <div className="audio-preview-panel" role="region" aria-label="Audio controls">
+    <div className="audio-preview-panel" role="region" aria-label={t('audioControls')}>
       <div className="audio-simulation-banner" role="note">
-        <strong>Simulation audio — not a release voice</strong>
-        <p>
-          These generated files let you verify lesson structure and the learner flow locally.
-          Replace them with an approved release voice before production launch.
-        </p>
+        <strong>{t('simulationBanner')}</strong>
+        <p>{t('simulationHelp')}</p>
       </div>
 
       {settingsError ? (
-        <div className="alert alert-error" role="alert">
-          Provider settings are unavailable. Browser preview still works.
-          <button type="button" className="btn btn-secondary" onClick={() => void fetchGenerationSettings()}>
-            Retry provider settings
-          </button>
+        <div className="alert alert-error" role="alert">{t('settingsUnavailable')}<button type="button" className="btn btn-secondary" onClick={() => void fetchGenerationSettings()}>{t('retrySettings')}</button>
         </div>
       ) : null}
 
-      {errorMessage && (
+      {Boolean(errorMessage) && (
         <div className="alert alert-error" role="alert">
-          {errorMessage}
+          {message(errorMessage)}
         </div>
       )}
 
       {isLoading && artifacts.length === 0 ? (
-        <p className="loading-text">Loading audio artifacts…</p>
+        <p className="loading-text">{t('loadingAudio')}</p>
       ) : scriptsToDisplay.length === 0 ? (
-        <p className="empty-text">This lesson does not declare any audio scripts.</p>
+        <p className="empty-text">{t('noAudioScripts')}</p>
       ) : (
         <div className="audio-scripts-grid">
           {scriptsToDisplay.map((item) => {
@@ -216,11 +210,11 @@ export function AudioPreview({
                     {item.speaker && <span className="audio-speaker">{item.speaker}</span>}
                   </div>
                   <span className={`audio-status-pill status-${currentStatus.toLowerCase()}`}>
-                    {currentStatus}
+                    {label(currentStatus)}
                   </span>
                 </div>
 
-                <p className="audio-script-excerpt">{item.script}</p>
+                <p className="audio-script-excerpt" lang="en">{audioScripts.length > 0 ? item.script : t('scriptFallback', { slug: item.slug })}</p>
 
                 <BrowserSpeechControls lang="en-US" text={item.script} />
 
@@ -242,16 +236,12 @@ export function AudioPreview({
                             Boolean(next[script.slug])));
                         }}
                       />
-                      Select candidate from {candidate.adapterName}, voice{' '}
-                      {String(candidate.voiceConfig.voice ?? candidate.voiceConfig.voiceId ?? 'default')}
+                      {t('selectCandidate', { adapter: candidate.adapterName, voice: String(candidate.voiceConfig.voice ?? candidate.voiceConfig.voiceId ?? t('defaultVoice')) })}
                     </label>
-                    <span>{candidate.status}</span>
-                    {candidate.simulationLabel ? <p>{candidate.simulationLabel}</p> : null}
+                    <span>{label(candidate.status)}</span>
+                    {candidate.simulationLabel ? <p>{locale === 'vi' ? t('simulationAudio') : candidate.simulationLabel}</p> : null}
                     {candidate.status === 'READY' && candidate.adapterName === 'fake-tts' ? (
-                      <p className="audio-settings-note">
-                        This simulation file is a diagnostic tone, not speech. Use Play preview
-                        above to hear the script with a browser voice.
-                      </p>
+                      <p className="audio-settings-note">{t('diagnosticTone')}</p>
                     ) : null}
                     {candidate.status === 'READY' && candidate.adapterName !== 'fake-tts' ? (
                       <audio
@@ -261,7 +251,7 @@ export function AudioPreview({
                       />
                     ) : null}
                     {candidate.status === 'FAILED' && candidate.failureSummary ? (
-                      <p className="audio-failure-text" role="alert">{candidate.failureSummary}</p>
+                      <p className="audio-failure-text" role="alert">{t('audioGenerationFailed')} <code lang="en">{candidate.failureSummary}</code></p>
                     ) : null}
                   </div>
                 ))}
@@ -274,12 +264,12 @@ export function AudioPreview({
                     onClick={() => handleGenerate(item.slug)}
                   >
                     {isGenerating
-                      ? 'Generating…'
+                      ? t('generating')
                       : artifact?.status === 'READY'
-                        ? 'Regenerate Audio'
+                        ? t('regenerateAudio')
                         : artifact?.status === 'FAILED'
-                          ? 'Retry Audio'
-                          : 'Generate Audio'}
+                          ? t('retryAudio')
+                          : t('generateAudio')}
                   </button>
                 </div>
               </div>

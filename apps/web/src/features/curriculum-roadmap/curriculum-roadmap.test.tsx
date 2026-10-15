@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { CurriculumRoadmapDto } from '@worklingo/contracts';
 
 import { CurriculumRoadmap } from './curriculum-roadmap';
+import { LocaleProvider } from '../../i18n/provider';
 
 const roadmap: CurriculumRoadmapDto = {
   programId: '11111111-1111-4111-8111-111111111111',
@@ -28,6 +29,13 @@ const roadmap: CurriculumRoadmapDto = {
 afterEach(cleanup);
 
 describe('CurriculumRoadmap', () => {
+  it('localizes roadmap status and actions without translating curriculum content', () => {
+    render(<LocaleProvider initialLocale="vi"><CurriculumRoadmap roadmap={roadmap} /></LocaleProvider>);
+    expect(screen.getByRole('article', { name: 'Handle a workplace request' })).toHaveTextContent('Đang học');
+    expect(screen.getByText('Clarify a request')).toHaveAttribute('lang', 'en');
+    expect(screen.getByRole('link', { name: 'Tiếp tục Handle a workplace request' })).toHaveAttribute('href', '/sessions/55555555-5555-4555-8555-555555555555');
+    expect(screen.getByText('Hoàn thành phần học tiên quyết để mở nhiệm vụ này.')).toBeInTheDocument();
+  });
   it('shows authoritative states, unmet prerequisites, pending objectives, review due, and an owned resume link', () => {
     render(<CurriculumRoadmap roadmap={roadmap} />);
     expect(screen.getByRole('article', { name: 'Handle a workplace request' })).toHaveTextContent('In progress');

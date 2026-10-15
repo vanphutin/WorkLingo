@@ -99,12 +99,12 @@ test.describe('Weekly Engagement and Progress Evidence Journey', () => {
     // Session completion confirmation
     await expect(page.getByRole('heading', { name: 'Session Completed!' })).toBeVisible();
     await page.getByRole('link', { name: 'Return to Dashboard' }).click();
-    await expect(page.getByRole('heading', { name: 'Learner Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
 
     // 5. Verify updated engagement projections
     await expect(page.getByText('1 of 4 learning days')).toBeVisible();
-    await expect(page.getByText('1 sessions')).toBeVisible();
-    await expect(page.getByText('1 study days')).toBeVisible();
+    await expect(page.getByText('1 session', { exact: true })).toBeVisible();
+    await expect(page.getByText('1 study day', { exact: true })).toBeVisible();
 
     // 6. Update target after study has started: must protect current week and defer to next week
     await targetSelect.selectOption('2');

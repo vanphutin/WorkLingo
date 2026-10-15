@@ -54,6 +54,21 @@ const languageResult = {
 } as const;
 
 describe('EvaluationService', () => {
+  it('persists actual routed provenance with scores and uses the attempt owner for routing', async () => {
+    let persisted: Record<string, unknown> | undefined;
+    const transaction = {
+      evaluationResult: { findUnique: async () => null, create: async ({ data }: { data: Record<string, unknown> }) => { persisted = data; return { id: 'routed-result', score: data.score }; } },
+      activityAttempt: { update: async () => ({}) },
+    };
+    const database = { activityAttempt: { findUnique: async () => writingAttempt }, $transaction: async (work: (tx: unknown) => Promise<unknown>) => work(transaction) } as unknown as PrismaService;
+    const language = { evaluateWithProvenance: async (input: { routing?: { userId?: string } }) => {
+      expect(input.routing?.userId).toBe(writingAttempt.learnerId);
+      return { evaluation: languageResult, provenance: { providerName: 'discovery', providerModel: 'qwen3.8-27b', providerConfigVersion: 'routing-test' } };
+    } } as unknown as LanguageEvaluationPort;
+    const mastery = { recordAttemptEvaluation: async () => [] } as unknown as MasteryService;
+    await new EvaluationService(database, language, mastery, { recordingRetentionDays: 7, languageProviderName: 'openai-compatible', languageProviderModel: 'configured-but-unused' }, progress).evaluateAttempt(writingAttempt.id);
+    expect(persisted).toMatchObject({ providerName: 'discovery', providerModel: 'qwen3.8-27b', providerConfigVersion: 'routing-test', score: expect.closeTo(0.825) });
+  });
   it('returns only learner-safe evaluation state and retry metadata', async () => {
     const completedAt = new Date('2026-10-08T00:00:00Z');
     const database = {

@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .next/
+.next-e2e/
 coverage/
 test-results/
 playwright-report/
@@ -10,6 +11,9 @@ playwright-report/
 !.env.example
 
 data/
+# Vendor catalog data is required by the repository's UI/UX skill.
+!/.agents/skills/ui-ux-pro-max/data/
+!/.agents/skills/ui-ux-pro-max/data/**
 *.log
 *.tsbuildinfo
 

@@ -4,6 +4,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { adminIeltsBridgeClient } from '../../lib/api/admin-ielts-bridge-client';
 import { IeltsBridgeAuthoringWorkspace } from './ielts-bridge-authoring-workspace';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+
+function LocaleToggle() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => void setLocale('en')}>Switch to English</button>;
+}
 
 vi.mock('../../lib/api/admin-ielts-bridge-client', () => ({
   adminIeltsBridgeClient: {
@@ -38,6 +44,31 @@ describe('IeltsBridgeAuthoringWorkspace', () => {
     vi.mocked(adminIeltsBridgeClient.validate).mockResolvedValue({
       moduleId: moduleDto.id, draftRevision: 2, status: 'VALIDATED', canPublish: true, issues: [],
     });
+  });
+
+  it('localizes taxonomy and task controls without replacing authored stage content or edits', async () => {
+    render(<LocaleProvider initialLocale="vi"><LocaleToggle /><IeltsBridgeAuthoringWorkspace /></LocaleProvider>);
+    const title = await screen.findByLabelText('Tiêu đề giai đoạn');
+    fireEvent.change(title, { target: { value: 'Keep my English guidance' } });
+    expect(screen.getByLabelText('Kỹ năng').getAttribute('value')).toBe('Đọc');
+    expect(screen.getByRole('option', { name: 'Chỉ hướng dẫn' })).not.toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to English' }));
+    expect(await screen.findByLabelText('Stage title')).toBe(title);
+    expect((title as HTMLInputElement).value).toBe('Keep my English guidance');
+    expect((screen.getByLabelText('Instruction') as HTMLTextAreaElement).value).toBe('Use complete evidence.');
+    expect(adminIeltsBridgeClient.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('localizes answerable task editors and preserves English prompts, choices and feedback', async () => {
+    render(<LocaleProvider initialLocale="vi"><IeltsBridgeAuthoringWorkspace /></LocaleProvider>);
+    fireEvent.click(await screen.findByRole('button', { name: /Stage 3$/ }));
+    expect((screen.getByLabelText('Đề bài') as HTMLTextAreaElement).value).toBe('Choose one.');
+    expect((screen.getByLabelText('Các lựa chọn, mỗi dòng một lựa chọn') as HTMLTextAreaElement).value).toBe('TRUE\nFALSE\nNOT GIVEN');
+    expect(screen.getByLabelText('Phản hồi khi trả lời sai').getAttribute('lang')).toBe('en');
+    fireEvent.change(screen.getByLabelText('Loại bài tập'), { target: { value: 'spoken_response' } });
+    expect(screen.getByLabelText('Thời gian chuẩn bị (giây)')).not.toBeNull();
+    expect(screen.getByLabelText('Câu trả lời mẫu')).not.toBeNull();
+    expect(screen.getByRole('option', { name: 'Nói: phạm vi ngữ pháp' }).getAttribute('value')).toBe('speaking_grammar_range');
   });
 
   it('creates a complete ten-stage draft for a selected taxonomy item', async () => {

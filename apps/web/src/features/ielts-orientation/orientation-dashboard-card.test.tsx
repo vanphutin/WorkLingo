@@ -1,12 +1,19 @@
+import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ieltsOrientationClient } from '../../lib/api/ielts-orientation-client';
 import { OrientationDashboardCard } from './orientation-dashboard-card';
+import { LocaleProvider } from '../../i18n/provider';
 
 vi.mock('../../lib/api/ielts-orientation-client', () => ({ ieltsOrientationClient: { getStatus: vi.fn() } }));
 afterEach(cleanup);
 
 describe('OrientationDashboardCard', () => {
+  it('explains the readiness gate in Vietnamese', async () => {
+    vi.mocked(ieltsOrientationClient.getStatus).mockResolvedValue({ state: 'locked', reasons: ['FOUNDATION_CHECKPOINT_REQUIRED'], presentation: null, progress: null });
+    render(<LocaleProvider initialLocale="vi"><OrientationDashboardCard /></LocaleProvider>);
+    expect(await screen.findByText('Hoàn thành bài kiểm tra nền tảng để mở khóa phần Định hướng IELTS.')).toBeVisible();
+  });
   it('explains a locked checkpoint without presenting a false start action', async () => {
     vi.mocked(ieltsOrientationClient.getStatus).mockResolvedValue({ state: 'locked', reasons: ['FOUNDATION_CHECKPOINT_REQUIRED'], presentation: null, progress: null });
     render(<OrientationDashboardCard />);

@@ -1,5 +1,7 @@
 'use client';
 
+import { useAdminCurriculum } from './i18n';
+
 import React, { useEffect, useState } from 'react';
 import type {
   AdminCurriculumTreeDto,
@@ -14,10 +16,11 @@ import { FoundationDefinitionEditor, type PrerequisiteOption } from './foundatio
 import './curriculum.css';
 
 export function CurriculumWorkspace() {
+  const { t, number, label, message: displayMessage } = useAdminCurriculum();
   const [tree, setTree] = useState<AdminCurriculumTreeDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<unknown>(null);
+  const [successMessage, setSuccessMessage] = useState<unknown>(null);
 
   // Forms state
   const [isCreatingPath, setIsCreatingPath] = useState(false);
@@ -49,7 +52,7 @@ export function CurriculumWorkspace() {
       })));
       setPrerequisiteOptions(drafts.flatMap(({ candidate, draft }) => draft?.publishedRevisions
         .filter((revision) => revision.status === 'PUBLISHED')
-        .map((revision) => ({ id: revision.id, label: `${candidate.title} · revision ${revision.revision}` })) ?? []));
+        .map((revision) => ({ id: revision.id, label: candidate.title, title: candidate.title, revision: revision.revision })) ?? []));
       setActiveFoundationMissionId(mission.id);
     } finally { setIsOpeningFoundation(false); }
   };
@@ -68,7 +71,7 @@ export function CurriculumWorkspace() {
       });
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to load curriculum tree',
+        err
       );
     } finally {
       setIsLoading(false);
@@ -89,7 +92,7 @@ export function CurriculumWorkspace() {
         programId: pathProgramId,
         slug: pathSlug.trim(),
       });
-      setSuccessMessage(`Path "${pathName}" created successfully.`);
+      setSuccessMessage({ key: 'pathCreated', values: { name: pathName } });
       setIsCreatingPath(false);
       setPathName('');
       setPathProgramId('');
@@ -97,7 +100,7 @@ export function CurriculumWorkspace() {
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to create learning path',
+        err
       );
     }
   };
@@ -109,11 +112,11 @@ export function CurriculumWorkspace() {
         expectedRevision: path.revision,
         idempotencyKey: crypto.randomUUID(),
       });
-      setSuccessMessage(`Path "${path.name}" published successfully.`);
+      setSuccessMessage({ key: 'pathPublished', values: { name: path.name } });
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to publish path',
+        err
       );
     }
   };
@@ -125,11 +128,11 @@ export function CurriculumWorkspace() {
         expectedRevision: path.revision,
         idempotencyKey: crypto.randomUUID(),
       });
-      setSuccessMessage(`Path "${path.name}" archived successfully.`);
+      setSuccessMessage({ key: 'pathArchived', values: { name: path.name } });
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to archive path',
+        err
       );
     }
   };
@@ -145,7 +148,7 @@ export function CurriculumWorkspace() {
         name: levelName.trim(),
         pathId,
       });
-      setSuccessMessage(`Level "${levelName}" created successfully.`);
+      setSuccessMessage({ key: 'levelCreated', values: { name: levelName } });
       setActiveLevelFormPathId(null);
       setLevelCode('');
       setLevelName('');
@@ -153,7 +156,7 @@ export function CurriculumWorkspace() {
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to create level',
+        err
       );
     }
   };
@@ -165,11 +168,11 @@ export function CurriculumWorkspace() {
         expectedRevision: level.revision,
         idempotencyKey: crypto.randomUUID(),
       });
-      setSuccessMessage(`Level "${level.name}" published successfully.`);
+      setSuccessMessage({ key: 'levelPublished', values: { name: level.name } });
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to publish level',
+        err
       );
     }
   };
@@ -181,11 +184,11 @@ export function CurriculumWorkspace() {
         expectedRevision: level.revision,
         idempotencyKey: crypto.randomUUID(),
       });
-      setSuccessMessage(`Level "${level.name}" archived successfully.`);
+      setSuccessMessage({ key: 'levelArchived', values: { name: level.name } });
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to archive level',
+        err
       );
     }
   };
@@ -213,7 +216,7 @@ export function CurriculumWorkspace() {
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to reorder levels',
+        err
       );
     }
   };
@@ -230,7 +233,7 @@ export function CurriculumWorkspace() {
         slug: missionSlug.trim(),
         title: missionTitle.trim(),
       });
-      setSuccessMessage(`Mission "${missionTitle}" created successfully.`);
+      setSuccessMessage({ key: 'missionCreated', values: { name: missionTitle } });
       setActiveMissionFormLevelId(null);
       setMissionTitle('');
       setMissionSlug('');
@@ -238,7 +241,7 @@ export function CurriculumWorkspace() {
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to create mission',
+        err
       );
     }
   };
@@ -250,11 +253,11 @@ export function CurriculumWorkspace() {
         expectedRevision: mission.revision,
         idempotencyKey: crypto.randomUUID(),
       });
-      setSuccessMessage(`Mission "${mission.title}" published successfully.`);
+      setSuccessMessage({ key: 'missionPublished', values: { name: mission.title } });
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to publish mission',
+        err
       );
     }
   };
@@ -266,11 +269,11 @@ export function CurriculumWorkspace() {
         expectedRevision: mission.revision,
         idempotencyKey: crypto.randomUUID(),
       });
-      setSuccessMessage(`Mission "${mission.title}" archived successfully.`);
+      setSuccessMessage({ key: 'missionArchived', values: { name: mission.title } });
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to archive mission',
+        err
       );
     }
   };
@@ -298,7 +301,7 @@ export function CurriculumWorkspace() {
       await loadTree();
     } catch (err) {
       setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to reorder missions',
+        err
       );
     }
   };
@@ -306,7 +309,7 @@ export function CurriculumWorkspace() {
   if (isLoading && !tree) {
     return (
       <div className="curriculum-container" role="status">
-        <p>Loading curriculum tree…</p>
+        <p>{t('loadingTree')}</p>
       </div>
     );
   }
@@ -315,51 +318,47 @@ export function CurriculumWorkspace() {
     <div className="curriculum-container">
       <header className="curriculum-header">
         <div>
-          <h1>Curriculum Management</h1>
-          <p className="node-meta">
-            Manage learning paths, CEFR levels, and published missions with playability rules.
-          </p>
+          <h1>{t('title')}</h1>
+          <p className="node-meta">{t('help')}</p>
         </div>
         <div className="curriculum-actions">
           <button
             type="button"
             className="action-button action-button-secondary"
             onClick={loadTree}
-          >
-            Refresh Tree
-          </button>
+          >{t('refreshTree')}</button>
           <button
             type="button"
             className="action-button action-button-primary"
             onClick={() => setIsCreatingPath((prev) => !prev)}
           >
-            {isCreatingPath ? 'Cancel New Path' : '+ New Path'}
+            {isCreatingPath ? t('cancelNewPath') : t('newPath')}
           </button>
         </div>
       </header>
 
-      {errorMessage && (
+      {Boolean(errorMessage) && (
         <div className="curriculum-alert curriculum-alert-error" role="alert">
-          <span>{errorMessage}</span>
+          <span>{displayMessage(errorMessage)}</span>
           <button
             type="button"
             className="action-button-icon"
             onClick={() => setErrorMessage(null)}
-            aria-label="Dismiss error"
+            aria-label={t('dismissError')}
           >
             ✕
           </button>
         </div>
       )}
 
-      {successMessage && (
+      {Boolean(successMessage) && (
         <div className="curriculum-alert curriculum-alert-success" role="status">
-          <span>{successMessage}</span>
+          <span>{displayMessage(successMessage)}</span>
           <button
             type="button"
             className="action-button-icon"
             onClick={() => setSuccessMessage(null)}
-            aria-label="Dismiss message"
+            aria-label={t('dismissMessage')}
           >
             ✕
           </button>
@@ -368,21 +367,21 @@ export function CurriculumWorkspace() {
 
       {isCreatingPath && (
         <form onSubmit={handleCreatePath} className="curriculum-form-card">
-          <h2>Create Learning Path</h2>
+          <h2>{t('createPathTitle')}</h2>
           <div className="form-group">
-            <label htmlFor="path-name">Path Name</label>
+            <label htmlFor="path-name">{t('pathName')}</label>
             <input
               id="path-name"
               type="text"
               className="form-control"
               value={pathName}
               onChange={(e) => setPathName(e.target.value)}
-              placeholder="e.g. General English"
+              placeholder={t('pathNamePlaceholder')}
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="path-program">Learning Program</label>
+            <label htmlFor="path-program">{t('learningProgram')}</label>
             <select
               id="path-program"
               className="form-control"
@@ -392,53 +391,49 @@ export function CurriculumWorkspace() {
             >
               {tree?.programs.map((program) => (
                 <option key={program.id} value={program.id}>
-                  {program.name} - {program.availabilityStatus}
+                  {program.name} - {label(program.availabilityStatus)}
                 </option>
               ))}
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="path-slug">Slug</label>
+            <label htmlFor="path-slug">{t('slug')}</label>
             <input
               id="path-slug"
               type="text"
               className="form-control"
               value={pathSlug}
               onChange={(e) => setPathSlug(e.target.value)}
-              placeholder="e.g. general-english"
+              placeholder={t('slugPlaceholder')}
               required
             />
           </div>
           <div className="curriculum-actions">
-            <button type="submit" className="action-button action-button-primary">
-              Create Path
-            </button>
+            <button type="submit" className="action-button action-button-primary">{t('createPath')}</button>
             <button
               type="button"
               className="action-button action-button-secondary"
               onClick={() => setIsCreatingPath(false)}
-            >
-              Cancel
-            </button>
+            >{t('cancel')}</button>
           </div>
         </form>
       )}
 
       <div className="curriculum-tree">
         {tree?.paths.map((path) => (
-          <section key={path.id} className="path-card" aria-label={`Learning Path ${path.name}`}>
+          <section key={path.id} className="path-card" aria-label={t('pathRegion', { name: path.name })}>
             <div className="path-header">
               <div className="node-title-group">
                 <h2 className="node-title">{path.name}</h2>
                 <span className="node-meta">({path.slug})</span>
                 <span className="program-label">
-                  Program: {path.program.name} ({path.program.availabilityStatus})
+                  {t('program')} {path.program.name} ({label(path.program.availabilityStatus)})
                 </span>
-                <span className={`status-badge status-${path.status}`}>{path.status}</span>
-                <span className="node-meta">rev {path.revision}</span>
+                <span className={`status-badge status-${path.status}`}>{label(path.status)}</span>
+                <span className="node-meta">{t('revisionShort', { count: path.revision })}</span>
                 {path.archiveBlockers.length > 0 && (
                   <span className="blocker-tag">
-                    Archive Blockers: {path.archiveBlockers.join(', ')}
+                    {t('archiveBlockers')} {path.archiveBlockers.map(label).join(', ')}
                   </span>
                 )}
               </div>
@@ -448,10 +443,8 @@ export function CurriculumWorkspace() {
                     type="button"
                     className="action-button action-button-primary"
                     onClick={() => handlePublishPath(path)}
-                    aria-label={`Publish Path ${path.name}`}
-                  >
-                    Publish Path
-                  </button>
+                    aria-label={t('publishPathAria', { name: path.name })}
+                  >{t('publishPath')}</button>
                 )}
                 {path.status !== 'ARCHIVED' && (
                   <button
@@ -459,10 +452,8 @@ export function CurriculumWorkspace() {
                     className="action-button action-button-danger"
                     onClick={() => handleArchivePath(path)}
                     disabled={path.archiveBlockers.length > 0}
-                    aria-label={`Archive Path ${path.name}`}
-                  >
-                    Archive Path
-                  </button>
+                    aria-label={t('archivePathAria', { name: path.name })}
+                  >{t('archivePath')}</button>
                 )}
                 <button
                   type="button"
@@ -473,7 +464,7 @@ export function CurriculumWorkspace() {
                     )
                   }
                 >
-                  {activeLevelFormPathId === path.id ? 'Cancel Level' : '+ Add Level'}
+                  {activeLevelFormPathId === path.id ? t('cancelLevel') : t('addLevel')}
                 </button>
               </div>
             </div>
@@ -484,9 +475,9 @@ export function CurriculumWorkspace() {
                 className="curriculum-form-card"
                 style={{ margin: '1rem 1.25rem' }}
               >
-                <h3>Add Level to {path.name}</h3>
+                <h3>{t('addLevelTitle', { name: path.name })}</h3>
                 <div className="form-group">
-                  <label htmlFor="level-code">Level Code (e.g. BEG_1)</label>
+                  <label htmlFor="level-code">{t('levelCode')}</label>
                   <input
                     id="level-code"
                     type="text"
@@ -497,7 +488,7 @@ export function CurriculumWorkspace() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="level-name">Level Name</label>
+                  <label htmlFor="level-name">{t('levelName')}</label>
                   <input
                     id="level-name"
                     type="text"
@@ -508,7 +499,7 @@ export function CurriculumWorkspace() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="level-cefr">CEFR Reference (e.g. A1)</label>
+                  <label htmlFor="level-cefr">{t('cefrReference')}</label>
                   <input
                     id="level-cefr"
                     type="text"
@@ -519,16 +510,12 @@ export function CurriculumWorkspace() {
                   />
                 </div>
                 <div className="curriculum-actions">
-                  <button type="submit" className="action-button action-button-primary">
-                    Create Level
-                  </button>
+                  <button type="submit" className="action-button action-button-primary">{t('createLevel')}</button>
                   <button
                     type="button"
                     className="action-button action-button-secondary"
                     onClick={() => setActiveLevelFormPathId(null)}
-                  >
-                    Cancel
-                  </button>
+                  >{t('cancel')}</button>
                 </div>
               </form>
             )}
@@ -541,17 +528,17 @@ export function CurriculumWorkspace() {
                       <h3 className="node-title">
                         {level.name} ({level.code})
                       </h3>
-                      <span className="node-meta">CEFR {level.cefrReference}</span>
-                      <span className={`status-badge status-${level.status}`}>{level.status}</span>
-                      <span className="node-meta">rev {level.revision}</span>
+                      <span className="node-meta" translate="no">CEFR {level.cefrReference}</span>
+                      <span className={`status-badge status-${level.status}`}>{label(level.status)}</span>
+                      <span className="node-meta">{t('revisionShort', { count: level.revision })}</span>
                       {!level.isPlayable && level.playabilityReasons.length > 0 && (
                         <span className="playability-tag">
-                          {level.playabilityReasons.join(', ')}
+                          {level.playabilityReasons.map(label).join(', ')}
                         </span>
                       )}
                       {level.archiveBlockers.length > 0 && (
                         <span className="blocker-tag">
-                          Archive Blockers: {level.archiveBlockers.join(', ')}
+                          {t('archiveBlockers')} {level.archiveBlockers.map(label).join(', ')}
                         </span>
                       )}
                     </div>
@@ -561,7 +548,7 @@ export function CurriculumWorkspace() {
                         className="action-button-icon"
                         onClick={() => handleReorderLevel(path.id, path.levels, levelIndex, 'up')}
                         disabled={levelIndex === 0}
-                        aria-label={`Move level ${level.name} up`}
+                        aria-label={t('levelUp', { name: level.name })}
                       >
                         ▲
                       </button>
@@ -572,7 +559,7 @@ export function CurriculumWorkspace() {
                           handleReorderLevel(path.id, path.levels, levelIndex, 'down')
                         }
                         disabled={levelIndex === path.levels.length - 1}
-                        aria-label={`Move level ${level.name} down`}
+                        aria-label={t('levelDown', { name: level.name })}
                       >
                         ▼
                       </button>
@@ -581,10 +568,8 @@ export function CurriculumWorkspace() {
                           type="button"
                           className="action-button action-button-primary"
                           onClick={() => handlePublishLevel(level)}
-                          aria-label={`Publish Level ${level.name}`}
-                        >
-                          Publish
-                        </button>
+                          aria-label={t('publishLevelAria', { name: level.name })}
+                        >{t('publish')}</button>
                       )}
                       {level.status !== 'ARCHIVED' && (
                         <button
@@ -592,10 +577,8 @@ export function CurriculumWorkspace() {
                           className="action-button action-button-danger"
                           onClick={() => handleArchiveLevel(level)}
                           disabled={level.archiveBlockers.length > 0}
-                          aria-label={`Archive Level ${level.name}`}
-                        >
-                          Archive
-                        </button>
+                          aria-label={t('archiveLevelAria', { name: level.name })}
+                        >{t('archive')}</button>
                       )}
                       <button
                         type="button"
@@ -607,8 +590,8 @@ export function CurriculumWorkspace() {
                         }
                       >
                         {activeMissionFormLevelId === level.id
-                          ? 'Cancel Mission'
-                          : '+ Add Mission'}
+                          ? t('cancelMission')
+                          : t('addMission')}
                       </button>
                     </div>
                   </div>
@@ -618,9 +601,9 @@ export function CurriculumWorkspace() {
                       onSubmit={(e) => handleCreateMission(level.id, e)}
                       className="curriculum-form-card"
                     >
-                      <h4>Add Mission to {level.name}</h4>
+                      <h4>{t('addMissionTitle', { name: level.name })}</h4>
                       <div className="form-group">
-                        <label htmlFor="mission-title">Mission Title</label>
+                        <label htmlFor="mission-title">{t('missionTitle')}</label>
                         <input
                           id="mission-title"
                           type="text"
@@ -631,7 +614,7 @@ export function CurriculumWorkspace() {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="mission-slug">Slug</label>
+                        <label htmlFor="mission-slug">{t('slug')}</label>
                         <input
                           id="mission-slug"
                           type="text"
@@ -642,7 +625,7 @@ export function CurriculumWorkspace() {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="mission-objective">Objective</label>
+                        <label htmlFor="mission-objective">{t('objective')}</label>
                         <textarea
                           id="mission-objective"
                           className="form-control"
@@ -653,16 +636,12 @@ export function CurriculumWorkspace() {
                         />
                       </div>
                       <div className="curriculum-actions">
-                        <button type="submit" className="action-button action-button-primary">
-                          Create Mission
-                        </button>
+                        <button type="submit" className="action-button action-button-primary">{t('createMission')}</button>
                         <button
                           type="button"
                           className="action-button action-button-secondary"
                           onClick={() => setActiveMissionFormLevelId(null)}
-                        >
-                          Cancel
-                        </button>
+                        >{t('cancel')}</button>
                       </div>
                     </form>
                   )}
@@ -675,17 +654,17 @@ export function CurriculumWorkspace() {
                             <h4 className="node-title">{mission.title}</h4>
                             <span className="node-meta">({mission.slug})</span>
                             <span className={`status-badge status-${mission.status}`}>
-                              {mission.status}
+                              {label(mission.status)}
                             </span>
-                            <span className="node-meta">rev {mission.revision}</span>
+                            <span className="node-meta">{t('revisionShort', { count: mission.revision })}</span>
                             {!mission.isPlayable && mission.playabilityReasons.length > 0 && (
                               <span className="playability-tag">
-                                {mission.playabilityReasons.join(', ')}
+                                {mission.playabilityReasons.map(label).join(', ')}
                               </span>
                             )}
                             {mission.archiveBlockers.length > 0 && (
                               <span className="blocker-tag">
-                                Archive Blockers: {mission.archiveBlockers.join(', ')}
+                                {t('archiveBlockers')} {mission.archiveBlockers.map(label).join(', ')}
                               </span>
                             )}
                           </div>
@@ -695,10 +674,8 @@ export function CurriculumWorkspace() {
                               className="action-button action-button-secondary"
                               disabled={isOpeningFoundation}
                               onClick={() => void handleOpenFoundation(mission)}
-                              aria-label={`Edit Foundation definition for ${mission.title}`}
-                            >
-                              Foundation
-                            </button>
+                              aria-label={t('editFoundation', { name: mission.title })}
+                            >{t('foundation')}</button>
                             <button
                               type="button"
                               className="action-button-icon"
@@ -711,7 +688,7 @@ export function CurriculumWorkspace() {
                                 )
                               }
                               disabled={missionIndex === 0}
-                              aria-label={`Move mission ${mission.title} up`}
+                              aria-label={t('missionUp', { name: mission.title })}
                             >
                               ▲
                             </button>
@@ -727,7 +704,7 @@ export function CurriculumWorkspace() {
                                 )
                               }
                               disabled={missionIndex === level.missions.length - 1}
-                              aria-label={`Move mission ${mission.title} down`}
+                              aria-label={t('missionDown', { name: mission.title })}
                             >
                               ▼
                             </button>
@@ -736,10 +713,8 @@ export function CurriculumWorkspace() {
                                 type="button"
                                 className="action-button action-button-primary"
                                 onClick={() => handlePublishMission(mission)}
-                                aria-label={`Publish Mission ${mission.title}`}
-                              >
-                                Publish
-                              </button>
+                                aria-label={t('publishMissionAria', { name: mission.title })}
+                              >{t('publish')}</button>
                             )}
                             {mission.status !== 'ARCHIVED' && (
                               <button
@@ -747,10 +722,8 @@ export function CurriculumWorkspace() {
                                 className="action-button action-button-danger"
                                 onClick={() => handleArchiveMission(mission)}
                                 disabled={mission.archiveBlockers.length > 0}
-                                aria-label={`Archive Mission ${mission.title}`}
-                              >
-                                Archive
-                              </button>
+                                aria-label={t('archiveMissionAria', { name: mission.title })}
+                              >{t('archive')}</button>
                             )}
                           </div>
                         </div>
@@ -769,11 +742,10 @@ export function CurriculumWorkspace() {
                             {mission.lessons.map((lesson) => (
                               <li key={lesson.id} className="lesson-item">
                                 <span>
-                                  {lesson.title ?? lesson.slug} (v
-                                  {lesson.currentPublishedVersionNumber ?? '-'})
+                                  {lesson.title ?? lesson.slug} (<code>v{lesson.currentPublishedVersionNumber !== null ? number(lesson.currentPublishedVersionNumber) : '-'}</code>)
                                 </span>
                                 <span className="node-meta">
-                                  {lesson.hasAudio ? '🎧 Audio ready' : '⚠️ No audio'}
+                                  {lesson.hasAudio ? t('audioReady') : t('noAudio')}
                                 </span>
                               </li>
                             ))}

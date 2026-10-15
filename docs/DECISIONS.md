@@ -307,6 +307,29 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Completion:** Bridge hoàn tất khi bốn module required đại diện Listening, Reading, Writing và
   Speaking hoàn tất. Đây là evidence cho Phase 6, không phải IELTS band score.
 
+## D-034 — Integrated Practice dùng profile cấu hình và snapshot bất biến
+
+- **Trạng thái:** Accepted (IELTS Phase 6)
+- **Ngày:** 2026-10-13
+- **Quyết định:** 60/90/120/150 phút là published profile data, không phải hằng số planner. Difficulty
+  là input độc lập. Session khóa profile version, bốn Bridge module version và plan snapshot khi tạo.
+- **Ôn tập:** Evidence sai gần đây chuyển skill sang review; question type gần đây bị tránh khi có
+  phương án published thay thế. Thiếu content cho bất kỳ skill nào khiến start fail closed.
+- **Thời gian:** Mỗi block lưu start timestamp phía server; reload không reset timer. Hết target time
+  không tự nộp bài để tránh mất câu trả lời đang viết/nói.
+- **Giới hạn:** Đây là learning mode, không phải mock test và không sinh band score. Phase 7 sở hữu
+  band-oriented curriculum; Phase 8 sở hữu full mock và score report.
+
+## D-035 — Phase 7 separates target, stage and evidence-backed proficiency
+
+- **Trạng thái:** Accepted (IELTS Phase 7)
+- **Quyết định:** Band Curriculum có bảy stage versioned. Learner chọn target band nhưng chỉ tiến
+  stage khi server đánh giá đủ Integrated Practice evidence ở cả bốn kỹ năng.
+- **Lý do:** Tránh biến mục tiêu hoặc tỷ lệ đúng trong bài luyện thành tuyên bố band IELTS thiếu
+  calibration; đồng thời giữ hành trình ổn định khi Admin publish nội dung mới.
+- **Giới hạn:** Mock test, band estimate đã calibration và official result thuộc Phase 8 hoặc nguồn
+  dữ liệu riêng; Phase 7 không ghi hay hiển thị các giá trị đó.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

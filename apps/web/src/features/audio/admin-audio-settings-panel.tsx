@@ -1,23 +1,29 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { localizedError } from '../../i18n/errors';
+import { audioMessages } from '../../i18n/messages/audio';
+
 import { useCallback, useEffect, useState } from 'react';
 import type { AdminAudioSettings } from '@worklingo/contracts';
 
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 
 export function AdminAudioSettingsPanel() {
+  const t = useT('audio', audioMessages);
+  const { locale } = useLocalePreference();
   const [settings, setSettings] = useState<AdminAudioSettings | null>(null);
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState<{ cause: unknown } | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [saveError, setSaveError] = useState(false);
+  const [saveError, setSaveError] = useState<{ cause: unknown } | null>(null);
 
   const load = useCallback(async () => {
-    setLoadError(false);
+    setLoadError(null);
     try {
       setSettings(await audioSettingsClient.getAdminSettings());
-    } catch {
-      setLoadError(true);
+    } catch (cause) {
+      setLoadError({ cause });
     }
   }, []);
   useEffect(() => { void load(); }, [load]);
@@ -25,29 +31,30 @@ export function AdminAudioSettingsPanel() {
   if (loadError) {
     return (
       <section className="audio-settings-state" aria-labelledby="admin-audio-settings-title">
-        <h1 id="admin-audio-settings-title">Audio generation settings</h1>
+        <h1 id="admin-audio-settings-title">{t('generationSettings')}</h1>
         <div role="alert">
-          <p>Provider readiness is temporarily unavailable.</p>
-          <button type="button" onClick={() => void load()}>Retry</button>
+          <p>{t('providerLoadError')}</p>
+          <p>{localizedError(loadError.cause, locale)}</p>
+          <button type="button" onClick={() => void load()}>{t('retry')}</button>
         </div>
       </section>
     );
   }
-  if (!settings) return <p className="audio-settings-state" role="status">Loading provider settings…</p>;
+  if (!settings) return <p className="audio-settings-state" role="status">{t('loadingProviders')}</p>;
 
   const selected = settings.providers.find((provider) => provider.id === settings.providerId);
   const save = async () => {
     setSaving(true);
     setSaved(false);
-    setSaveError(false);
+    setSaveError(null);
     try {
       setSettings(await audioSettingsClient.updateAdminSettings({
         defaultVoiceId: settings.defaultVoiceId,
         providerId: settings.providerId,
       }));
       setSaved(true);
-    } catch {
-      setSaveError(true);
+    } catch (cause) {
+      setSaveError({ cause });
     } finally {
       setSaving(false);
     }
@@ -56,12 +63,12 @@ export function AdminAudioSettingsPanel() {
   return (
     <section className="audio-settings-panel" aria-labelledby="admin-audio-settings-title">
       <header>
-        <p className="eyebrow">Generation</p>
-        <h1 id="admin-audio-settings-title">Audio generation settings</h1>
-        <p>Set non-secret defaults for future audio candidates. Existing releases do not change.</p>
+        <p className="eyebrow">{t('generation')}</p>
+        <h1 id="admin-audio-settings-title">{t('generationSettings')}</h1>
+        <p>{t('generationDescription')}</p>
       </header>
       <fieldset className="audio-source-list">
-        <legend>Text to speech provider</legend>
+        <legend>{t('ttsProvider')}</legend>
         {settings.providers.map((provider) => (
           <label className="audio-source-option" key={provider.id}>
             <input
@@ -77,17 +84,17 @@ export function AdminAudioSettingsPanel() {
               }))}
             />
             <span>
-              <strong>{provider.displayName}</strong>
+              <strong>{provider.simulation ? t('simulationAudio') : provider.displayName}</strong>
               <small>{provider.available
-                ? provider.simulation ? 'Available for local simulation' : 'Configured and available'
-                : 'Unavailable until configured on the server'}</small>
+                ? provider.simulation ? t('simulationAvailable') : t('providerAvailable')
+                : t('providerUnavailable')}</small>
             </span>
           </label>
         ))}
       </fieldset>
       {selected ? (
         <div className="audio-voice-settings">
-          <label htmlFor="server-voice">Default server voice</label>
+          <label htmlFor="server-voice">{t('serverVoice')}</label>
           <select
             className="audio-settings-select"
             id="server-voice"
@@ -98,20 +105,20 @@ export function AdminAudioSettingsPanel() {
             }))}
           >
             <option value={selected.defaultVoiceId ?? ''}>
-              {selected.defaultVoiceId ?? 'Provider default'}
+              {selected.defaultVoiceId ?? t('providerDefault')}
             </option>
           </select>
           {selected.simulation ? (
-            <p className="audio-settings-warning">Simulation audio is for local review, not release voice quality.</p>
+            <p className="audio-settings-warning">{t('simulationWarning')}</p>
           ) : null}
         </div>
       ) : null}
       <div className="audio-settings-footer">
         <button type="button" disabled={saving || !selected?.available} onClick={() => void save()}>
-          {saving ? 'Saving…' : 'Save provider settings'}
+          {saving ? t('saving') : t('saveProvider')}
         </button>
-        {saved ? <p role="status">Provider settings saved.</p> : null}
-        {saveError ? <p className="field-error" role="alert">Could not save. Try again.</p> : null}
+        {saved ? <p role="status">{t('providerSaved')}</p> : null}
+        {saveError ? <p className="field-error" role="alert">{localizedError(saveError.cause, locale)}</p> : null}
       </div>
     </section>
   );

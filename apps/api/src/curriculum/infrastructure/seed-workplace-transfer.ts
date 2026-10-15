@@ -22,6 +22,12 @@ export async function seedWorkplaceTransferCurriculum(
     });
     if (!base) throw new ConflictException('Seed Foundation before its transfer mission');
     const source = lessonSnapshotSchema.parse(base.parsedContent);
+    const sourceActivities = new Map(source.activities.map((activity) => [activity.slug, activity]));
+    const requireSourceActivity = (slug: string) => {
+      const activity = sourceActivities.get(slug);
+      if (!activity) throw new ConflictException(`Foundation source activity is missing: ${slug}`);
+      return activity;
+    };
     const template = {
       ...source, title: 'A customer visit',
       contentBlocks: [
@@ -32,23 +38,42 @@ export async function seedWorkplaceTransferCurriculum(
           audio: { kind: 'textPlaceholder' as const, notice: 'A local simulated voice is available. Use the transcript if playback fails.' } },
       ],
       activities: [
-        { ...source.activities[0]!, slug: 'recall-customer-greeting', contentReferences: ['visitor-email'],
+        { ...requireSourceActivity('recall-introduction'), slug: 'recall-customer-greeting', contentReferences: ['visitor-email'],
           payload: { prompt: 'Introduce your name before welcoming a customer.', sampleAnswer: 'My name is An.', requiredPhrases: ['my name is'], minWords: 4 } },
-        { ...source.activities[1]!, slug: 'understand-visitor-plan', contentReferences: ['visitor-email'],
+        { ...requireSourceActivity('understand-welcome'), slug: 'understand-visitor-plan', contentReferences: ['visitor-email'],
           payload: { prompt: 'Read the visit plan and connect its purpose, instructions and offer of help.', questions: [
             { slug: 'visitor-purpose', prompt: 'Why is Linh visiting?', options: ['To discuss an order with support.', 'To apply for a sales job.', 'To move her desk.'], answerIndex: 0, explanation: 'The email links her visit to a new order and the support team.', evidence: 'She wants to meet the support team about a new order.' },
             { slug: 'welcome-sequence', prompt: 'What should An do before taking Linh to Mai?', options: ['Send Linh home.', 'Welcome her at reception and introduce himself.', 'Ask Linh to find the room alone.'], answerIndex: 1, explanation: 'The instructions put greeting and introduction before escorting the visitor.', evidence: 'Please welcome her at reception. Tell her your name and department, then take her to Mai.' },
             { slug: 'visitor-inference', prompt: 'Linh seems unsure where to go. What fits Mai’s instructions?', options: ['Wait without speaking.', 'Offer help and ask what Linh needs.', 'Cancel the visit.'], answerIndex: 1, explanation: 'A visitor who does not know the building may need guidance.', evidence: 'Linh does not know our building. If she needs help, please ask her what she needs.' },
           ] } },
-        { ...source.activities[2]!, slug: 'understand-visitor-call', contentReferences: ['visitor-call'],
+        { ...requireSourceActivity('understand-colleague'), slug: 'understand-visitor-call', contentReferences: ['visitor-call'],
           payload: { prompt: 'Follow the customer conversation and identify why An offers help.', questions: [
             { slug: 'visitor-contact', prompt: 'Who does Linh want to meet?', options: ['An in support.', 'Mai in sales.', 'Mai in support.'], answerIndex: 2, explanation: 'Linh states her contact and department.', evidence: 'I am here to meet Mai in support.' },
             { slug: 'escort-reason', prompt: 'Why does An offer to take Linh to Mai?', options: ['It is her first visit and she needs directions.', 'Linh works in sales.', 'Mai cancelled the order.'], answerIndex: 0, explanation: 'Her first visit explains the need for guidance.', evidence: 'Yes, please. This is my first visit.' },
           ] } },
-        { ...source.activities[3]!, slug: 'practice-visitor-welcome', contentReferences: ['visitor-call'],
+        { ...requireSourceActivity('shadow-introduction'), slug: 'practice-visitor-welcome', contentReferences: ['visitor-call'],
           payload: { prompt: 'Say the greeting, then use your own name and department and record your response.', mode: 'shadowing' as const, sampleAnswer: 'My name is An. I work in sales. Nice to meet you.', requiredPhrases: ['my name is', 'i work in', 'nice to meet you'], minWords: 12 } },
-        { ...source.activities[4]!, slug: 'write-visitor-message', contentReferences: ['visitor-email', 'visitor-call'],
+        { ...requireSourceActivity('write-first-message'), slug: 'write-visitor-message', contentReferences: ['visitor-email', 'visitor-call'],
           payload: { prompt: 'Send Linh a welcome message before her visit. Introduce yourself and offer help finding reception.', sampleAnswer: 'Hello Linh. My name is An. I work in sales. Do you need help finding reception?', requiredPhrases: ['my name is', 'i work in', 'do you need help'], minWords: 14 } },
+        { ...requireSourceActivity('prepare-help-question'), slug: 'prepare-customer-help', contentReferences: ['visitor-call'],
+          payload: { prompt: 'Before the customer arrives, write one polite question that offers help.', sampleAnswer: 'Do you need help finding reception?', requiredPhrases: ['do you need help'], minWords: 6 } },
+        { ...requireSourceActivity('read-team-details'), slug: 'read-visitor-details', contentReferences: ['visitor-email'],
+          payload: { prompt: 'Read the email again and connect the visitor, team and meeting details.', questions: [
+            { slug: 'visitor-time', prompt: 'When will Linh visit?', options: ['At nine', 'At ten', 'At noon'], answerIndex: 1, explanation: 'The visit time is stated directly.', evidence: 'Linh, will visit our office at ten.' },
+            { slug: 'visitor-team', prompt: 'Which team will Linh meet?', options: ['Support', 'Sales', 'Finance'], answerIndex: 0, explanation: 'The email identifies the support team.', evidence: 'She wants to meet the support team.' },
+          ] } },
+        { ...requireSourceActivity('read-support-inference'), slug: 'read-visitor-inference', contentReferences: ['visitor-email'],
+          payload: { prompt: 'Use the full email to infer the clearest response to a visitor who looks lost.', questions: [
+            { slug: 'lost-visitor', prompt: 'What should An do if Linh cannot find reception?', options: ['Offer help and ask what she needs', 'Tell her to return tomorrow', 'Ignore her'], answerIndex: 0, explanation: 'Mai explicitly asks An to help because Linh does not know the building.', evidence: 'Linh does not know our building. If she needs help, please ask her what she needs.' },
+          ] } },
+        { ...requireSourceActivity('listen-for-departments'), slug: 'listen-visitor-roles', contentReferences: ['visitor-call'],
+          payload: { prompt: 'Listen and identify each person’s role before checking the transcript.', questions: [
+            { slug: 'an-department', prompt: 'Which department does An work in?', options: ['Sales', 'Support', 'Reception'], answerIndex: 0, explanation: 'An introduces his department.', evidence: 'I work in sales.' },
+          ] } },
+        { ...requireSourceActivity('listen-and-reason-help'), slug: 'listen-visitor-help', contentReferences: ['visitor-call'],
+          payload: { prompt: 'Listen to the complete exchange and identify why the offer of help matters.', questions: [
+            { slug: 'help-reason', prompt: 'Why does Linh accept An’s help?', options: ['It is her first visit', 'She works in sales', 'Mai is absent'], answerIndex: 0, explanation: 'Linh explains that she does not know the workplace yet.', evidence: 'Yes, please. This is my first visit.' },
+          ] } },
       ],
     };
     const sourceHash = createHash('sha256').update(JSON.stringify(template)).digest('hex');

@@ -1,42 +1,42 @@
-.bridge-admin { max-width: 1540px; margin: 0 auto; color: #19241d; }
+.bridge-admin { max-width: 1540px; margin: 0 auto; color: var(--foreground); }
 .bridge-admin__header, .bridge-admin__toolbar, .bridge-create { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.bridge-admin__header { padding-bottom: 1.25rem; border-bottom: 1px solid #d6ddd8; }
+.bridge-admin__header { padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
 .bridge-admin__header h1 { margin: .1rem 0 .4rem; font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .bridge-admin__header p { margin: 0; max-width: 68ch; }
-.bridge-admin__kicker { color: #17643a; font-size: .78rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
-.bridge-admin__status { min-width: 155px; padding: .8rem 1rem; border-left: 4px solid #17643a; background: #edf5ef; }
-.bridge-admin__status span { display: block; margin-top: .2rem; color: #566159; }
-.bridge-create { justify-content: flex-start; margin: 1rem 0; padding: .8rem; background: #f5f7f5; border: 1px solid #d6ddd8; border-radius: 8px; }
+.bridge-admin__kicker { color: var(--primary); font-size: .78rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.bridge-admin__status { min-width: 155px; padding: .8rem 1rem; border-left: 4px solid var(--primary); background: var(--primary-soft); }
+.bridge-admin__status span { display: block; margin-top: .2rem; color: var(--muted); }
+.bridge-create { justify-content: flex-start; margin: 1rem 0; padding: .8rem; background: var(--surface-soft); border: 1px solid var(--border); border-radius: 8px; }
 .bridge-create label { display: flex; align-items: center; gap: .6rem; font-weight: 650; }
-.bridge-create__hint { color: #566159; font-size: .9rem; }
+.bridge-create__hint { color: var(--muted); font-size: .9rem; }
 .bridge-admin__toolbar { justify-content: flex-start; margin: 1rem 0; }
-.bridge-admin button { min-height: 44px; padding: .55rem .85rem; border: 1px solid #aab6ad; border-radius: 6px; background: #fff; color: #19241d; font: inherit; font-weight: 650; cursor: pointer; }
-.bridge-admin button.primary, .bridge-create button { border-color: #17643a; background: #17643a; color: #fff; }
+.bridge-admin button { min-height: 44px; padding: .55rem .85rem; border: 1px solid var(--control-border); border-radius: 6px; background: var(--surface); color: var(--foreground); font: inherit; font-weight: 650; cursor: pointer; }
+.bridge-admin button.primary, .bridge-create button { border-color: var(--primary); background: var(--primary-fill); color: var(--on-primary); }
 .bridge-admin button:disabled { opacity: .48; cursor: not-allowed; }
-.bridge-admin button:focus-visible, .bridge-admin input:focus-visible, .bridge-admin textarea:focus-visible, .bridge-admin select:focus-visible { outline: 3px solid #2f7d50; outline-offset: 2px; }
-.bridge-notice, .bridge-issues { margin: 1rem 0; padding: .85rem 1rem; border-left: 4px solid #17643a; background: #edf5ef; }
-.bridge-notice--error, .bridge-issues { border-color: #9f2d2d; background: #fff2f2; }
+.bridge-admin button:focus-visible, .bridge-admin input:focus-visible, .bridge-admin textarea:focus-visible, .bridge-admin select:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.bridge-notice, .bridge-issues { margin: 1rem 0; padding: .85rem 1rem; border-left: 4px solid var(--primary); background: var(--primary-soft); }
+.bridge-notice--error, .bridge-issues { border-color: var(--danger); background: var(--danger-soft); }
 .bridge-admin__grid { display: grid; grid-template-columns: minmax(190px,.62fr) minmax(210px,.72fr) minmax(360px,1.45fr) minmax(270px,1fr); gap: .9rem; align-items: start; }
-.bridge-module-list, .bridge-stage-list, .bridge-editor, .bridge-preview, .bridge-empty { padding: 1rem; border: 1px solid #d6ddd8; border-radius: 8px; background: #fff; }
+.bridge-module-list, .bridge-stage-list, .bridge-editor, .bridge-preview, .bridge-empty { padding: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
 .bridge-module-list h2, .bridge-stage-list h2, .bridge-editor h2, .bridge-preview h2 { margin-top: 0; }
 .bridge-module-list ul, .bridge-stage-list ol { display: grid; gap: .35rem; margin: 0; padding: 0; list-style: none; }
 .bridge-module-list button, .bridge-stage-list button { width: 100%; text-align: left; }
-.bridge-module-list button span { display: block; margin-bottom: .15rem; color: #566159; font-size: .75rem; }
+.bridge-module-list button span { display: block; margin-bottom: .15rem; color: var(--muted); font-size: .75rem; }
 .bridge-stage-list button { display: grid; grid-template-columns: 1.5rem 1fr; gap: .4rem; align-items: center; }
-.bridge-module-list button.active, .bridge-stage-list button.active { border-color: #17643a; background: #edf5ef; }
+.bridge-module-list button.active, .bridge-stage-list button.active { border-color: var(--primary); background: var(--primary-soft); }
 .bridge-editor { display: grid; gap: 1.2rem; }
 .bridge-editor section, .bridge-task-editor, .bridge-editor fieldset { display: grid; gap: .75rem; min-width: 0; }
-.bridge-editor__module { padding-bottom: 1rem; border-bottom: 1px solid #d6ddd8; }
+.bridge-editor__module { padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 .bridge-editor label { display: grid; gap: .35rem; font-weight: 650; }
-.bridge-editor input, .bridge-editor textarea, .bridge-editor select, .bridge-create select { width: 100%; box-sizing: border-box; padding: .65rem; border: 1px solid #aab6ad; border-radius: 5px; background: #fff; color: inherit; font: inherit; }
-.bridge-editor input[readonly] { background: #f3f5f3; color: #566159; }
+.bridge-editor input, .bridge-editor textarea, .bridge-editor select, .bridge-create select { width: 100%; box-sizing: border-box; padding: .65rem; border: 1px solid var(--control-border); border-radius: 5px; background: var(--surface); color: inherit; font: inherit; }
+.bridge-editor input[readonly] { background: var(--surface-soft); color: var(--muted); }
 .bridge-editor__split { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
 .bridge-editor .bridge-checkbox { display: flex; align-items: center; }
 .bridge-editor .bridge-checkbox input { width: auto; }
-.bridge-task-editor { border: 1px solid #c9d2cb; }
-.bridge-preview { position: sticky; top: 1rem; background: #f7f6f1; }
+.bridge-task-editor { border: 1px solid var(--border); }
+.bridge-preview { position: sticky; top: 1rem; background: var(--background); }
 .bridge-preview ol { padding-left: 1.2rem; }
-.bridge-preview__task { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #d6ddd8; }
+.bridge-preview__task { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
 .bridge-admin-loading, .bridge-empty { padding: 2rem; }
 @media (max-width: 1250px) { .bridge-admin__grid { grid-template-columns: 220px 250px 1fr; } .bridge-preview { grid-column: 1 / -1; position: static; } }
 @media (max-width: 820px) { .bridge-admin__grid { grid-template-columns: 1fr 1fr; } .bridge-editor, .bridge-preview { grid-column: 1 / -1; } }

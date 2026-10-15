@@ -1,5 +1,8 @@
 'use client';
 
+import { useT } from '../../i18n/provider';
+import { learningSessionMessages } from '../../i18n/messages/learningSession';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const SUPPORTED_MIME_TYPES = [
@@ -43,12 +46,13 @@ const selectMimeType = (): string | null => {
 };
 
 export function useAudioRecorder(): AudioRecorderState {
+  const t = useT('learningSession', learningSessionMessages);
   const supported = hasRecorderSupport();
   const [status, setStatus] = useState<AudioRecorderStatus>(supported ? 'idle' : 'unsupported');
   const [blob, setBlob] = useState<Blob | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [mimeType, setMimeType] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setError] = useState<'microphoneDenied' | 'microphoneError' | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const previewUrlRef = useRef<string | null>(null);
@@ -106,8 +110,8 @@ export function useAudioRecorder(): AudioRecorderState {
       releaseStream();
       const denied = caught instanceof DOMException && caught.name === 'NotAllowedError';
       setError(denied
-        ? 'Microphone permission was denied. Allow microphone access and try again.'
-        : 'The microphone could not be started. Check your device and try again.');
+        ? 'microphoneDenied'
+        : 'microphoneError');
       setStatus('error');
     }
   }, [releaseStream, revokePreview, supported]);
@@ -126,5 +130,5 @@ export function useAudioRecorder(): AudioRecorderState {
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
   }, [releaseStream]);
 
-  return { blob, discard, error, mimeType, previewUrl, start, status, stop, supported };
+  return { blob, discard, error: errorKey ? t(errorKey) : null, mimeType, previewUrl, start, status, stop, supported };
 }

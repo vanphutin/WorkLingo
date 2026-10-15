@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { useBrowserSpeech } from './use-browser-speech';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
 
 class FakeUtterance {
   lang = '';
@@ -33,6 +34,11 @@ function Harness({ text = 'Hello team', rate, volume }: { readonly text?: string
       <button type="button" onClick={speech.stop}>Stop</button>
     </div>
   );
+}
+
+function SwitchLocale() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => void setLocale('vi')}>Switch language</button>;
 }
 
 describe('useBrowserSpeech', () => {
@@ -91,5 +97,15 @@ describe('useBrowserSpeech', () => {
     render(<Harness rate={1.25} volume={0.6} />);
     fireEvent.click(screen.getByRole('button', { name: 'Play' }));
     expect(speak.mock.calls[0]?.[0]).toMatchObject({ rate: 1.25, volume: 0.6 });
+  });
+
+  it('keeps active English speech playing when the interface switches to Vietnamese', () => {
+    render(<LocaleProvider initialLocale="en"><SwitchLocale /><Harness /></LocaleProvider>);
+    fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+    const cancelsBeforeSwitch = cancel.mock.calls.length;
+    fireEvent.click(screen.getByRole('button', { name: 'Switch language' }));
+    expect(screen.getByText('speaking')).toBeInTheDocument();
+    expect(cancel).toHaveBeenCalledTimes(cancelsBeforeSwitch);
+    expect(speak.mock.calls.at(-1)?.[0]).toMatchObject({ lang: 'en-US', text: 'Hello team', voice: englishVoice });
   });
 });

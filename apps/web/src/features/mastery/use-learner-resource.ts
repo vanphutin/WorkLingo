@@ -10,15 +10,16 @@ export function useLearnerResource<T>(load: () => Promise<T>) {
     revision: number;
     data: T | null;
     failed: boolean;
+    error: unknown;
   } | null>(null);
 
   useEffect(() => {
     let active = true;
     void load().then(
-      (data) => { if (active) setResult({ load, revision, data, failed: false }); },
-      () => {
+      (data) => { if (active) setResult({ load, revision, data, failed: false, error: null }); },
+      (error: unknown) => {
         if (active) setResult((previous) => ({
-          load, revision, data: previous?.load === load ? previous.data : null, failed: true,
+          load, revision, data: previous?.load === load ? previous.data : null, failed: true, error,
         }));
       },
     );
@@ -31,7 +32,8 @@ export function useLearnerResource<T>(load: () => Promise<T>) {
     previousData: result?.load === load ? result.data : null,
     isLoading: current === null,
     failed: current?.failed ?? false,
+    error: current?.error ?? null,
     retry: () => setRevision((value) => value + 1),
-    replaceData: (data: T) => setResult({ load, revision, data, failed: false }),
+    replaceData: (data: T) => setResult({ load, revision, data, failed: false, error: null }),
   };
 }

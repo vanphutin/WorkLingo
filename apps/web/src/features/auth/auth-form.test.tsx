@@ -40,6 +40,7 @@ describe('AuthForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Create account' }));
 
     expect(await screen.findAllByRole('alert')).toHaveLength(3);
+    expect(screen.getByLabelText('Display name')).toHaveFocus();
   });
 
   it('disables submission while the request is pending', async () => {

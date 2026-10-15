@@ -86,6 +86,6 @@ describe('NewContentImport', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /import draft/i }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(/raw source exceeds maximum limit/i);
+    expect(await screen.findByRole('alert')).toHaveTextContent(/check the information you entered and try again/i);
   });
 });

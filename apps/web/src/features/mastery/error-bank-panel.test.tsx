@@ -2,10 +2,26 @@ import '@testing-library/jest-dom/vitest';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ErrorBankPanel } from './error-bank-panel';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
 import { emptyErrorBank, errorItem } from './test-fixtures';
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe('Error Bank', () => {
+  it('preserves the selected skill while localizing pagination and untouched phrases', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ items: [errorItem], page: 1, limit: 20, total: 21, totalPages: 2 })));
+    function Switch() {
+      const { setLocale } = useLocalePreference();
+      return <button onClick={() => setLocale('en')}>English</button>;
+    }
+    render(<LocaleProvider initialLocale="vi"><Switch /><ErrorBankPanel /></LocaleProvider>);
+    const filter = screen.getByLabelText('Lọc lỗi theo kỹ năng');
+    fireEvent.change(filter, { target: { value: 'writing' } });
+    expect(await screen.findByRole('heading', { name: 'follow up' })).toHaveAttribute('lang', 'en');
+    expect(screen.getByText('Trang 1 trên 2')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+    expect(screen.getByLabelText('Filter errors by skill')).toBe(filter);
+    expect(filter).toHaveValue('writing');
+  });
   it('loads server pages, filters by skill and resets pagination when the filter changes', async () => {
     const network = vi.fn(async (url: string) => {
       if (url.includes('skill=writing')) return Response.json(emptyErrorBank);

@@ -21,8 +21,13 @@ export const foundationMissionFixture = {
       }],
       activityObjectives: {
         'recall-introduction': ['introduce-yourself-at-work'],
+        'prepare-help-question': ['introduce-yourself-at-work'],
         'understand-welcome': ['introduce-yourself-at-work'],
+        'read-team-details': ['introduce-yourself-at-work'],
+        'read-support-inference': ['introduce-yourself-at-work'],
         'understand-colleague': ['introduce-yourself-at-work'],
+        'listen-for-departments': ['introduce-yourself-at-work'],
+        'listen-and-reason-help': ['introduce-yourself-at-work'],
         'shadow-introduction': ['introduce-yourself-at-work'],
         'write-first-message': ['introduce-yourself-at-work'],
       },
@@ -117,6 +122,40 @@ export const foundationMissionFixture = {
         slug: 'write-first-message', activityType: 'writing', learningBlock: 'respond',
         skills: ['writing'], contentReferences: ['welcome-email', 'desk-conversation'], languageBlockReferences: ['my-name-is', 'i-work-in', 'do-you-need-help'],
         payload: { prompt: 'Bạn gặp Linh qua chat trong một dự án mới. Viết lời chào, giới thiệu tên và bộ phận, rồi hỏi Linh có cần giúp đỡ không. Đây là ngữ cảnh mới so với email và hội thoại.', sampleAnswer: 'Hello Linh. My name is An. I work in sales. Do you need help?', requiredPhrases: ['my name is', 'i work in', 'do you need help'], minWords: 14 },
+      },
+      {
+        slug: 'prepare-help-question', activityType: 'writing', learningBlock: 'activate',
+        skills: ['writing'], contentReferences: ['desk-conversation'], languageBlockReferences: ['do-you-need-help'],
+        payload: { prompt: 'Trước khi nghe, viết câu hỏi lịch sự để đề nghị giúp một đồng nghiệp mới.', sampleAnswer: 'Do you need help?', requiredPhrases: ['do you need help'], minWords: 4 },
+      },
+      {
+        slug: 'read-team-details', activityType: 'reading', learningBlock: 'readDecode',
+        skills: ['reading'], contentReferences: ['welcome-email'], languageBlockReferences: ['i-work-in'],
+        payload: { prompt: 'Đọc lại email và nối thông tin về người, bộ phận và địa điểm.', questions: [
+          { slug: 'mai-team', prompt: 'Which team does Mai work in?', options: ['Sales', 'Support', 'Finance'], answerIndex: 1, explanation: 'Mai introduces her department directly.', evidence: 'I work in support.' },
+          { slug: 'desk-location', prompt: 'Where is An’s desk?', options: ['Next to Mai’s desk', 'In the meeting room', 'At reception'], answerIndex: 0, explanation: 'The email describes the desk location.', evidence: 'Your desk is next to mine.' },
+        ] },
+      },
+      {
+        slug: 'read-support-inference', activityType: 'reading', learningBlock: 'readDecode',
+        skills: ['reading'], contentReferences: ['welcome-email'], languageBlockReferences: ['do-you-need-help'],
+        payload: { prompt: 'Đọc email và suy luận cách phản hồi phù hợp trong ngày đầu.', questions: [
+          { slug: 'late-arrival', prompt: 'If An cannot arrive at nine, what should An do?', options: ['Say nothing', 'Contact Mai and explain', 'Go home'], answerIndex: 1, explanation: 'Mai is the contact person offering support, so informing her is the clearest workplace response.', evidence: 'Please come to my desk at nine. ... If you need help, please ask me.' },
+        ] },
+      },
+      {
+        slug: 'listen-for-departments', activityType: 'listening', learningBlock: 'listenReason',
+        skills: ['listening'], contentReferences: ['desk-conversation'], languageBlockReferences: ['i-work-in'],
+        payload: { prompt: 'Nghe và xác định vai trò của từng người trước khi xem script.', questions: [
+          { slug: 'an-team', prompt: 'Where does An work?', options: ['In sales', 'In support', 'In reception'], answerIndex: 0, explanation: 'An names his department.', evidence: 'I work in sales.' },
+        ] },
+      },
+      {
+        slug: 'listen-and-reason-help', activityType: 'listening', learningBlock: 'listenReason',
+        skills: ['listening'], contentReferences: ['desk-conversation'], languageBlockReferences: ['do-you-need-help'],
+        payload: { prompt: 'Nghe toàn bộ hội thoại và xác định vấn đề được giải quyết.', questions: [
+          { slug: 'resolved-problem', prompt: 'What problem is resolved by the end?', options: ['Finding the meeting room', 'Changing departments', 'Calling a customer'], answerIndex: 0, explanation: 'Mai responds to An’s request for directions and takes him there.', evidence: 'Where is the meeting room? ... Let us go together.' },
+        ] },
       },
     ],
   },

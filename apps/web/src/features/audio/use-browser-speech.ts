@@ -1,5 +1,8 @@
 'use client';
 
+import { useT } from '../../i18n/provider';
+import { audioMessages } from '../../i18n/messages/audio';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export type BrowserSpeechStatus = 'idle' | 'speaking' | 'paused' | 'error';
@@ -22,6 +25,7 @@ export function useBrowserSpeech(input: {
   readonly text: string;
   readonly volume?: number;
 }): BrowserSpeechController {
+  const t = useT('audio', audioMessages);
   const supported = typeof window !== 'undefined'
     && 'speechSynthesis' in window
     && typeof SpeechSynthesisUtterance !== 'undefined';
@@ -29,7 +33,7 @@ export function useBrowserSpeech(input: {
     supported ? window.speechSynthesis.getVoices() : [],
   );
   const [status, setStatus] = useState<BrowserSpeechStatus>('idle');
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setError] = useState<'speechUnsupported' | 'speechError' | null>(null);
   const activeUtterance = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
@@ -69,7 +73,7 @@ export function useBrowserSpeech(input: {
 
   const play = useCallback(() => {
     if (!supported) {
-      setError('Browser speech is not supported on this device.');
+      setError('speechUnsupported');
       setStatus('error');
       return;
     }
@@ -89,7 +93,7 @@ export function useBrowserSpeech(input: {
     utterance.onerror = () => {
       if (activeUtterance.current !== utterance) return;
       activeUtterance.current = null;
-      setError('The browser could not speak this text. Try another voice.');
+      setError('speechError');
       setStatus('error');
     };
     setError(null);
@@ -109,7 +113,7 @@ export function useBrowserSpeech(input: {
   }, [status, supported]);
 
   return {
-    error,
+    error: errorKey ? t(errorKey) : null,
     pauseOrResume,
     play,
     resolvedVoice,

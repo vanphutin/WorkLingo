@@ -7,6 +7,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import type { ContentPreviewDto } from '@worklingo/contracts';
 
 import { LessonPreview } from './lesson-preview';
+import { LocaleProvider } from '../../i18n/provider';
 
 afterEach(() => {
   cleanup();
@@ -102,6 +103,16 @@ const mockPreview: ContentPreviewDto = {
 };
 
 describe('LessonPreview', () => {
+  it('localizes educational wrappers while preserving English passages, prompts, vocabulary and answers', () => {
+    render(<LocaleProvider initialLocale="vi"><LessonPreview preview={mockPreview} /></LocaleProvider>);
+    expect(screen.getByRole('heading', { name: 'Các khối nội dung' })).toBeInTheDocument();
+    expect(screen.getByText('15 phút')).toBeInTheDocument();
+    expect(screen.getByText('Hội thoại')).toBeInTheDocument();
+    expect(screen.getByText('Read the dialogue and answer the question below.')).toHaveAttribute('lang', 'en');
+    expect(screen.getByText('push back a deadline')).toHaveAttribute('lang', 'en');
+    expect(screen.getByText('Dear team, I would like to request pushing back our sprint deadline by three days.')).toHaveAttribute('lang', 'en');
+    expect(screen.getByText('Learn how to politely negotiate deadlines with international stakeholders.')).toHaveAttribute('lang', 'en');
+  });
   it('shows Foundation pedagogy metadata as validated draft state', () => {
     render(<LessonPreview preview={{ ...mockPreview, normalizedDraft: { ...mockPreview.normalizedDraft!, foundation: {
       category: 'grammar', templateId: 'foundation-grammar', templateVersion: 1,
@@ -136,8 +147,8 @@ describe('LessonPreview', () => {
 
     // Activity Comprehension
     expect(screen.getByText(/Why does Alex want to extend the deadline\?/i)).toBeInTheDocument();
-    expect(screen.getByText(/Explanation: Alex indicates sprint deliverables/i)).toBeInTheDocument();
-    expect(screen.getByText(/Evidence: Could we extend the sprint deadline\?/i)).toBeInTheDocument();
+    expect(screen.getByText('Alex indicates sprint deliverables require more time.').parentElement).toBeInTheDocument();
+    expect(screen.getByText('Could we extend the sprint deadline?').parentElement).toBeInTheDocument();
 
     // Activity Response
     expect(screen.getByText('Write an email requesting a deadline extension.')).toBeInTheDocument();

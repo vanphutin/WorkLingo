@@ -9,8 +9,29 @@ import React, { useEffect, useState } from 'react';
 import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
+import { ThemeControl } from '../../components/theme-control';
+import { WorkspaceNavigation } from '../../components/workspace-navigation';
+import { LanguageSwitcher } from '../../components/language-switcher';
+import { useLocalePreference, useT } from '../../i18n/provider';
+import { commonMessages } from '../../i18n/messages/common';
 
 const ADMIN_ROLES = new Set(['CONTENT_ADMIN', 'SYSTEM_ADMIN']);
+
+const adminDestinations = [
+  { href: '/admin/content', label: 'content' },
+  { href: '/admin/curriculum', label: 'curriculum' },
+  { href: '/admin/ielts-orientation', label: 'ieltsOrientation' },
+  { href: '/admin/ielts-bridge', label: 'ieltsBridge' },
+  { href: '/admin/ielts-integrated', label: 'integrated' },
+  { href: '/admin/ielts-mocks', label: 'mocks' },
+  { href: '/admin/ielts-band-curriculum', label: 'bandCurriculum' },
+  { href: '/admin/audit', label: 'audit' },
+  { href: '/admin/operations', label: 'operations' },
+  { href: '/admin/analytics', label: 'analytics' },
+  { href: '/admin/settings/audio', label: 'audioSettings' },
+  { href: '/admin/settings/ai', label: 'aiSettings' },
+  { href: '/dashboard', label: 'learnerView' },
+] as const;
 
 export default function AdminLayout({
   children,
@@ -18,6 +39,9 @@ export default function AdminLayout({
   readonly children: React.ReactNode;
 }) {
   const router = useRouter();
+  const t = useT('common', commonMessages);
+  const { synchronizeUser, clearUser } = useLocalePreference();
+  const destinations = adminDestinations.map((item) => ({ href: item.href, label: t(item.label) }));
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -38,11 +62,13 @@ export default function AdminLayout({
             return;
           }
           setCurrentUser(user);
+          synchronizeUser(user);
           setIsLoading(false);
         }
       } catch (error) {
         if (isMounted) {
           if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+            clearUser();
             router.replace('/login');
           } else {
             setAuthError(true);
@@ -57,12 +83,12 @@ export default function AdminLayout({
     return () => {
       isMounted = false;
     };
-  }, [authRetryKey, router]);
+  }, [authRetryKey, router, synchronizeUser, clearUser]);
 
   if (isLoading) {
     return (
       <div className="admin-loading-screen" role="status">
-        <p>Loading administration workspace…</p>
+        <p>{t('loadingAdmin')}</p>
       </div>
     );
   }
@@ -71,14 +97,14 @@ export default function AdminLayout({
     return (
       <main className="admin-error-container">
         <div className="status-card error-card" role="alert">
-          <h1>Unable to open admin workspace</h1>
-          <p>We could not verify your session. Check your connection and try again.</p>
+          <h1>{t('unableAdmin')}</h1>
+          <p>{t('verifySession')}</p>
           <button
             type="button"
             className="retry-button"
             onClick={() => setAuthRetryKey((key) => key + 1)}
           >
-            Retry
+            {t('retry')}
           </button>
         </div>
       </main>
@@ -88,69 +114,44 @@ export default function AdminLayout({
   return (
     <div className="admin-shell">
       <a className="skip-link" href="#admin-main-content">
-        Skip to administrative content
+        {t('skipAdmin')}
       </a>
       <header className="admin-top-nav">
         <div className="nav-container">
           <div className="nav-left">
             <Link href="/admin/content" className="brand-logo">
-              WorkLingo <span className="admin-badge">Admin</span>
+              <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
             </Link>
-            <nav className="admin-nav-links">
-              <Link href="/admin/content" className="nav-link">
-                Content
-              </Link>
-              <Link href="/admin/curriculum" className="nav-link">
-                Curriculum
-              </Link>
-              <Link href="/admin/ielts-orientation" className="nav-link">
-                IELTS orientation
-              </Link>
-              <Link href="/admin/ielts-bridge" className="nav-link">
-                IELTS Bridge
-              </Link>
-              <Link href="/admin/audit" className="nav-link">
-                Audit log
-              </Link>
-              <Link href="/admin/operations" className="nav-link">
-                Operations
-              </Link>
-              <Link href="/admin/analytics" className="nav-link">
-                Analytics
-              </Link>
-              <Link href="/admin/settings/audio" className="nav-link">
-                Audio settings
-              </Link>
-              <Link href="/dashboard" className="nav-link nav-link-secondary">
-                Learner View
-              </Link>
-            </nav>
           </div>
 
           <div className="nav-user-meta">
+            <ThemeControl />
+            <LanguageSwitcher />
             <span className="user-greeting">
-              Admin: <strong>{currentUser?.displayName}</strong>
+              {t('adminName', { name: currentUser?.displayName ?? '' })}
             </span>
             <button
               type="button"
               className="logout-button"
               onClick={async () => {
                 try {
-                  await fetch('/api/v1/auth/logout', {
+                  const response = await fetch('/api/v1/auth/logout', {
                     method: 'POST',
                     credentials: 'include',
                   });
+                  if (response.ok) clearUser();
                 } finally {
                   router.push('/login');
                 }
               }}
             >
-              Sign out
+              {t('signOut')}
             </button>
           </div>
         </div>
       </header>
-      <main id="admin-main-content" className="admin-main-content">
+      <WorkspaceNavigation items={destinations} label={t('adminWorkspace')} variant="admin" />
+      <main id="admin-main-content" tabIndex={-1} className="admin-main-content">
         {children}
       </main>
     </div>

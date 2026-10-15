@@ -1,0 +1,636 @@
+{
+  "observed": "2026-10-14",
+  "scope": "Global, repository, native and local plugin cache; inventory is a snapshot, not future availability",
+  "skills": [
+    {
+      "name": "code-review-and-quality",
+      "path": "C:/Users/ASUS/.agents/skills/code-review-and-quality/SKILL.md",
+      "description": "Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch. Use when asked to review a diff or a pull request, even when the diff is pasted inline.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "debugging-and-error-recovery",
+      "path": "C:/Users/ASUS/.agents/skills/debugging-and-error-recovery/SKILL.md",
+      "description": "Guides systematic root-cause debugging. Use when tests fail, builds break, something that worked yesterday broke, behavior doesn't match expectations, or you encounter any unexpected error. Use when you need to figure out what broke and why — a systematic approach to finding and fixing the root cause rather than guessing.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "design-taste-frontend",
+      "path": "C:/Users/ASUS/.agents/skills/design-taste-frontend/SKILL.md",
+      "description": "Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships interfaces that do not look templated. Real design systems when applicable, audit-first on redesigns, strict pre-flight check.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "find-skills",
+      "path": "C:/Users/ASUS/.agents/skills/find-skills/SKILL.md",
+      "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "git-workflow-and-versioning",
+      "path": "C:/Users/ASUS/.agents/skills/git-workflow-and-versioning/SKILL.md",
+      "description": "Structures git workflow practices. Use when making any code change. Use when committing, branching, resolving conflicts, splitting uncommitted work in a messy working tree into clean atomic commits, opening or reviewing a pull request (PR), pushing to a remote, or when you need to organize work across multiple parallel streams. Use when cutting a release, choosing a semantic version bump, tagging, or writing a changelog.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "implement",
+      "path": "C:/Users/ASUS/.agents/skills/implement/SKILL.md",
+      "description": "Implement a piece of work based on a spec or set of tickets.",
+      "invocationRestriction": "explicit-only",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "path": "C:/Users/ASUS/.agents/skills/improve-codebase-architecture/SKILL.md",
+      "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.",
+      "invocationRestriction": "explicit-only",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "nestjs-expert",
+      "path": "C:/Users/ASUS/.agents/skills/nestjs-expert/SKILL.md",
+      "description": "Creates and configures NestJS modules, controllers, services, DTOs, guards, and interceptors for enterprise-grade TypeScript backend applications. Use when building NestJS REST APIs or GraphQL services, implementing dependency injection, scaffolding modular architecture, adding JWT/Passport authentication, integrating TypeORM or Prisma, or working with .module.ts, .controller.ts, and .service.ts files. Invoke for guards, interceptors, pipes, validation, Swagger documentation, and unit/E2E testing in NestJS projects.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "nodejs-backend-patterns",
+      "path": "C:/Users/ASUS/.agents/skills/nodejs-backend-patterns/SKILL.md",
+      "description": "Build production-ready Node.js backend services with Express/Fastify, implementing middleware patterns, error handling, authentication, database integration, and API design best practices. Use when creating Node.js servers, REST APIs, GraphQL backends, or microservices architectures.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "supabase-postgres-best-practices",
+      "path": "C:/Users/ASUS/.agents/skills/supabase-postgres-best-practices/SKILL.md",
+      "description": "Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "tdd",
+      "path": "C:/Users/ASUS/.agents/skills/tdd/SKILL.md",
+      "description": "Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions \"red-green-refactor\", or wants integration tests.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "vercel-react-best-practices",
+      "path": "C:/Users/ASUS/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "description": "React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "web-design-guidelines",
+      "path": "C:/Users/ASUS/.agents/skills/web-design-guidelines/SKILL.md",
+      "description": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "global",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "codex-quota-optimizer",
+      "path": "D:/Projects/WorkLingo/.agents/skills/codex-quota-optimizer/SKILL.md",
+      "description": "Optimize Codex Plus/Pro usage before and during coding tasks. Use when the user wants to save Codex quota/credits, reduce token or context waste, choose a cheaper model/reasoning level, avoid unnecessary repo scans/tests/subagents, or plan an implementation with the smallest reliable execution footprint. Do not use when the user explicitly prioritizes maximum quality regardless of usage.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "frontend-design",
+      "path": "D:/Projects/WorkLingo/.agents/skills/frontend-design/SKILL.md",
+      "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "brainstorming",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/brainstorming/SKILL.md",
+      "description": "You MUST use this before any creative work - creating features, building components, adding functionality, modifying behavior, or planning anything new, in software or out of it (a talk, a business, a renovation).",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "diagnosing-superpowers",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/diagnosing-superpowers/SKILL.md",
+      "description": "Use when a superpowers session went wrong and your human partner wants to know why — repeated work, ignored plans, stumbles, poor results, a skill that didn't fire, \"it took too long\", \"why is it so expensive\", \"what is it doing\" — or wants to build a bug report for the superpowers maintainers, for the current session or a past one identified by id or path, on any harness.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/dispatching-parallel-agents/SKILL.md",
+      "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "executing-plans",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/executing-plans/SKILL.md",
+      "description": "Use when executing an implementation plan in the current session as the implementer yourself — your human partner chose inline execution, or no subagent tool is available",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/finishing-a-development-branch/SKILL.md",
+      "description": "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "receiving-code-review",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/receiving-code-review/SKILL.md",
+      "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "requesting-code-review",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/requesting-code-review/SKILL.md",
+      "description": "Use when completing tasks, implementing major features, or before merging to verify work meets requirements",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "subagent-driven-development",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/subagent-driven-development/SKILL.md",
+      "description": "Use when executing implementation plans with independent tasks in the current session",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "systematic-debugging",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/systematic-debugging/SKILL.md",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "test-driven-development",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/test-driven-development/SKILL.md",
+      "description": "Use when implementing any feature or bugfix, before writing implementation code",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "using-git-worktrees",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/using-git-worktrees/SKILL.md",
+      "description": "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists via native tools or git worktree fallback",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "using-superpowers",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/using-superpowers/SKILL.md",
+      "description": "Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "verification-before-completion",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/verification-before-completion/SKILL.md",
+      "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "writing-plans",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/writing-plans/SKILL.md",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "writing-skills",
+      "path": "D:/Projects/WorkLingo/.agents/skills/superpowers/writing-skills/SKILL.md",
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "path": "D:/Projects/WorkLingo/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "repository",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "imagegen",
+      "path": "C:/Users/ASUS/.codex/skills/.system/imagegen/SKILL.md",
+      "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "native",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "openai-docs",
+      "path": "C:/Users/ASUS/.codex/skills/.system/openai-docs/SKILL.md",
+      "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "native",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "review-agent",
+      "path": "C:/Users/ASUS/.codex/skills/.system/review-agent/SKILL.md",
+      "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "native",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "skill-creator",
+      "path": "C:/Users/ASUS/.codex/skills/.system/skill-creator/SKILL.md",
+      "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "native",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "skill-installer",
+      "path": "C:/Users/ASUS/.codex/skills/.system/skill-installer/SKILL.md",
+      "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+      "invocationRestriction": "normal",
+      "availability": "filesystem-installed-readable",
+      "source": "native",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "computer-use",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-bundled/computer-use/26.1007.71326/skills/computer-use/SKILL.md",
+      "description": "Control Windows apps from ChatGPT",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "visualize",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-bundled/visualize/1.0.49/skills/visualize/SKILL.md",
+      "description": "Create visualizations and interactive tools directly in conversation. Proactively use to show how something works; explore 'what happens when', 'what changes', or 'help me understand'; compare or inspect; create simulations, maps, charts, graphs, and mockups. Use standard tools for static scientific figures.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-analytics-dashboard",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-analytics-dashboard/SKILL.md",
+      "description": "Create a spreadsheet using the Analytics Dashboard template and its retained reference file. Use when the user selects or names Analytics Dashboard. Monitor acquisition, engagement, retention, revenue, and conversion funnel KPIs with charts.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-business-review",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-business-review/SKILL.md",
+      "description": "Create a presentation using the Business Review template and its retained reference file. Use when the user selects or names Business Review. Review business performance, KPIs, segment results, strategic priorities, decisions, and outlook.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-design-report",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-design-report/SKILL.md",
+      "description": "Create a document using the Design Report template and its retained reference file. Use when the user selects or names Design Report. Produce design reports with an executive summary, key findings, implications, recommendations, and appendix.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-experiment-analysis",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-experiment-analysis/SKILL.md",
+      "description": "Create a document using the Experiment Analysis template and its retained reference file. Use when the user selects or names Experiment Analysis. Analyze experiments with hypotheses, methodology, results, interpretation, limitations, and next steps.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-financial-budget",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-financial-budget/SKILL.md",
+      "description": "Create a spreadsheet using the Financial Budget template and its retained reference file. Use when the user selects or names Financial Budget. Model actuals, budget and scenario forecasts, variances, cash runway, and departmental plans.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-investment-committee-memo",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-investment-committee-memo/SKILL.md",
+      "description": "Create a document using the Investment Committee Memo template and its retained reference file. Use when the user selects or names Investment Committee Memo. Prepare investment committee memos with the thesis, transaction details, financial analysis, risks, and recommendation.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-legal-memorandum",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-legal-memorandum/SKILL.md",
+      "description": "Create a document using the Legal Memorandum template and its retained reference file. Use when the user selects or names Legal Memorandum. Draft legal memoranda with the issue, brief answer, relevant facts, analysis, and conclusion.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-market-trends-report",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-market-trends-report/SKILL.md",
+      "description": "Create a presentation using the Market Trends Report template and its retained reference file. Use when the user selects or names Market Trends Report. Communicate market or industry trends, supporting evidence, implications, and recommended responses.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-minimal-letterhead",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-minimal-letterhead/SKILL.md",
+      "description": "Create a document using the Minimal Letterhead template and its retained reference file. Use when the user selects or names Minimal Letterhead. Write professional business letters with sender, recipient, message, and signature fields in a minimal letterhead layout.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-operating-calendar",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-operating-calendar/SKILL.md",
+      "description": "Create a spreadsheet using the Operating Calendar template and its retained reference file. Use when the user selects or names Operating Calendar. Plan annual and monthly operating milestones, campaigns, launches, deadlines, and recurring events.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-operating-review",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-operating-review/SKILL.md",
+      "description": "Create a presentation using the Operating Review template and its retained reference file. Use when the user selects or names Operating Review. Run weekly operating reviews with scorecards, functional updates, risks, decisions, and action items.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-project-kickoff",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-project-kickoff/SKILL.md",
+      "description": "Create a presentation using the Project Kickoff template and its retained reference file. Use when the user selects or names Project Kickoff. Align teams on project goals, scope, roles, milestones, risks, and the working model.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-project-tracker",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-project-tracker/SKILL.md",
+      "description": "Create a spreadsheet using the Project Tracker template and its retained reference file. Use when the user selects or names Project Tracker. Manage workstreams, tasks, owners, status, priority, dates, launch pulse, and a Gantt schedule.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-sales-pipeline",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-sales-pipeline/SKILL.md",
+      "description": "Create a spreadsheet using the Sales Pipeline template and its retained reference file. Use when the user selects or names Sales Pipeline. Track opportunities, stages, owners, deal sizes, probabilities, forecasts, next steps, and risks.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-simple-dark-mode",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-simple-dark-mode/SKILL.md",
+      "description": "Create a presentation using the Simple Dark Mode template and its retained reference file. Use when the user selects or names Simple Dark Mode. Create clean dark-mode presentations with bold typography, simple sections, charts, and imagery.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-simple-light-mode",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-simple-light-mode/SKILL.md",
+      "description": "Create a presentation using the Simple Light Mode template and its retained reference file. Use when the user selects or names Simple Light Mode. Create clean light-mode presentations with spacious typography, simple sections, charts, and imagery.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-strategy-memorandum",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-strategy-memorandum/SKILL.md",
+      "description": "Create a document using the Strategy Memorandum template and its retained reference file. Use when the user selects or names Strategy Memorandum. Present strategic context, choices, rationale, risks, milestones, and a clear recommendation.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-system-design",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-system-design/SKILL.md",
+      "description": "Create a document using the System Design template and its retained reference file. Use when the user selects or names System Design. Document system architecture, requirements, components, data flows, APIs, tradeoffs, and operational considerations.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-team-alignment",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-team-alignment/SKILL.md",
+      "description": "Create a presentation using the Team Alignment template and its retained reference file. Use when the user selects or names Team Alignment. Facilitate team offsites and planning with context, goals, priorities, decisions, and action items.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "artifact-template-three-statement-forecast",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.1/skills/artifact-template-three-statement-forecast/SKILL.md",
+      "description": "Create a spreadsheet using the Three-Statement Forecast template and its retained reference file. Use when the user selects or names Three-Statement Forecast. Build an integrated income statement, balance sheet, and cash flow forecast with assumptions, checks, and an executive summary.",
+      "invocationRestriction": "normal",
+      "availability": "cached-readable-not-runtime-exposed",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "plugin-management",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/plugin-management/0.1.0/skills/plugin-management/SKILL.md",
+      "description": "Discover and suggest relevant plugins, inspect app permissions and dependencies, and manage plugin connections or removal. Use when the user asks about plugins or when a task would materially benefit from an external app, account, service, or data source that available tools cannot access.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "sites",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/sites/1.0.1/skills/sites/SKILL.md",
+      "description": "Use Sites when the user wants a website built for them (including a landing page, portfolio, dashboard, portal, tracker, hub, game, event registration, or tool), requests changes to a website already built with Sites, wants to publish a website with Sites, or wants to manage Sites hosting.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "create-pet",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/work-pets/0.1.6/skills/create-pet/SKILL.md",
+      "description": "Create, repair, validate, preview, upload, or activate an animated v2 pet in ChatGPT Work mode from a character idea, brand cue, or reference image. Use for new ChatGPT Pets, custom mascots, non-pixel styles, and unattached sprite sheets requiring nine animation states plus sixteen look directions. Preserve Library artifacts and Pets MCP lifecycle behavior. Exclude real pets, standalone images, and other-app pets; clarify before invoking.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "pets",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/work-pets/0.1.6/skills/pets/SKILL.md",
+      "description": "List, inspect, select, download, or delete animated pets in ChatGPT Work mode. Use for an explicit pet in ChatGPT or established ChatGPT Pets context. Exclude real-world and other-app pets; clarify before invoking.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "update-pet",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-curated-remote/work-pets/0.1.6/skills/update-pet/SKILL.md",
+      "description": "Inspect, validate, preview, repair, or update a custom pet in ChatGPT Work mode, including its name, description, or sprite sheet. Use for a pet in ChatGPT or established ChatGPT Pets context. Exclude real-world and other-app pets; clarify before invoking.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "documents",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-primary-runtime/documents/26.1013.11914/skills/documents/SKILL.md",
+      "description": "Create, edit, redline, and comment on `.docx`, Word, and Google Docs-targeted document artifacts inside the container, with a strict render-and-verify workflow. Use `render_docx.py` to generate page PNGs (and optional PDF) for visual QA, then iterate until layout is flawless before delivering the final document.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "pdf",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-primary-runtime/pdf/26.1013.11914/skills/pdf/SKILL.md",
+      "description": "Read, create, inspect, render, and verify PDF files where visual layout matters, including fillable AcroForms. Use Poppler rendering plus Python tools such as reportlab, pdfplumber, and pypdf for generation and extraction.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "Presentations",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-primary-runtime/presentations/26.1013.11914/skills/presentations/SKILL.md",
+      "description": "Read, create or edit PowerPoint or Google Slides decks. Use for presentation, slide deck, PowerPoint, PPT, PPTX, or Google Slides requests.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "excel-live-control",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.1013.11914/skills/excel-live-control/SKILL.md",
+      "description": "Control an open or active Microsoft Excel workbook through the ChatGPT add-in or connected session. Use when the user tags the Microsoft Excel app in Codex or follows up on an established live Excel task. Do not use for standalone spreadsheet files or Google Sheets.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "Spreadsheets",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.1013.11914/skills/spreadsheets/SKILL.md",
+      "description": "Use skill when user requests to create, modify, analyze, visualize, or work with spreadsheet files (`.xlsx`, `.xls`, `.csv`, `.tsv`) or Google Sheets with formulas, formatting, charts, tables, and recalculation. Do not use for live controlling Microsoft Excel app or a live Excel session.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "template-creator",
+      "path": "C:/Users/ASUS/.codex/plugins/cache/openai-primary-runtime/template-creator/26.1013.11914/skills/template-creator/SKILL.md",
+      "description": "Create or update a reusable personal Codex artifact-template skill. Use when the user invokes $template-creator or asks in natural language to create a reusable template from a reference document, presentation, spreadsheet, Google Docs, Slides, or Sheets link, ImageGen or Product Design image, email, Slack message, or Site project, or explicitly asks to edit or update a passed artifact-template skill. Do not use for one-off creation from an existing template.",
+      "invocationRestriction": "normal",
+      "availability": "runtime-catalog-exposed-and-readable",
+      "source": "plugin-cache",
+      "routing": "Use declared trigger; respect invocation restriction. Re-read on use; do not infer linked skills exist."
+    },
+    {
+      "name": "mandate-steward",
+      "path": "D:/Projects/WorkLingo/.agents/skills/mandate-steward/SKILL.md",
+      "description": "WorkLingo mandate governance; improvement audits and proposal lifecycle",
+      "availability": "created-this-session-readable",
+      "source": "repository",
+      "invocationRestriction": "normal",
+      "routing": "Governance coordinator; domain/workflow skills used only for distinct needs."
+    }
+  ]
+}

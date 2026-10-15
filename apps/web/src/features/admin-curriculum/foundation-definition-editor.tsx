@@ -1,5 +1,7 @@
 'use client';
 
+import { useAdminCurriculum, type SystemMessage } from './i18n';
+
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   foundationCategorySchema,
@@ -14,6 +16,8 @@ import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-
 export interface PrerequisiteOption {
   readonly id: string;
   readonly label: string;
+  readonly title?: string;
+  readonly revision?: number;
 }
 
 interface Props {
@@ -33,11 +37,12 @@ const skills = ['reading', 'listening', 'speaking', 'writing'] as const;
 type Objective = CurriculumDefinitionInput['objectives'][number];
 
 export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisiteOptions, onClose }: Props) {
+  const { t, number, label, message: displayMessage } = useAdminCurriculum();
   const [serverDraft, setServerDraft] = useState<CurriculumDraftDto | null>(null);
   const [definition, setDefinition] = useState<CurriculumDefinitionInput>(emptyDefinition);
   const [state, setState] = useState<'loading' | 'idle' | 'saving' | 'validating' | 'publishing'>('loading');
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<unknown>(null);
+  const [error, setError] = useState<unknown>(null);
   const [hasConflict, setHasConflict] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
@@ -51,7 +56,7 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
       setIsDirty(false);
     } catch (cause) {
       setLoadFailed(true);
-      setError(cause instanceof Error ? cause.message : 'Could not load Foundation draft.');
+      setError(cause);
     } finally { setState('idle'); }
   }, [missionId]);
 
@@ -72,13 +77,13 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
     evidence: [{ lessonVersionId: '', activitySlug: '', languageBlockSlugs: [] }],
   }] }));
 
-  function localError(): string | null {
+  function localError(): SystemMessage | null {
     for (const [index, objective] of definition.objectives.entries()) {
-      if (!objective.slug.trim()) return `Objective ${index + 1} slug is required.`;
-      if (!objective.statement.trim()) return `Objective ${index + 1} statement is required.`;
+      if (!objective.slug.trim()) return { key: 'objectiveSlugRequired', values: { number: index + 1 } };
+      if (!objective.statement.trim()) return { key: 'objectiveStatementRequired', values: { number: index + 1 } };
       for (const evidence of objective.evidence) {
-        if (!evidence.lessonVersionId.trim()) return `Lesson version ID is required for objective ${index + 1} evidence mapping.`;
-        if (!evidence.activitySlug.trim()) return `Activity slug is required for objective ${index + 1} evidence mapping.`;
+        if (!evidence.lessonVersionId.trim()) return { key: 'evidenceLessonRequired', values: { number: index + 1 } };
+        if (!evidence.activitySlug.trim()) return { key: 'evidenceActivityRequired', values: { number: index + 1 } };
       }
     }
     return null;
@@ -111,64 +116,64 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
     } catch (cause) {
       if (cause instanceof ApiError && cause.status === 409) {
         setHasConflict(true); setError('The server has a newer revision. Your unsaved fields are preserved; refresh when ready.');
-      } else setError(cause instanceof Error ? cause.message : 'Foundation command failed.');
+      } else setError(cause);
     } finally { setState('idle'); }
   }
 
-  if (state === 'loading') return <div className="foundation-editor" aria-live="polite">Loading Foundation definition…</div>;
+  if (state === 'loading') return <div className="foundation-editor" aria-live="polite">{t('loadingFoundation')}</div>;
 
   return (
-    <section className="foundation-editor" aria-label={`Foundation definition for ${missionTitle}`}>
+    <section className="foundation-editor" aria-label={t('foundationRegion', { name: missionTitle })}>
       <div className="foundation-editor-header">
-        <div><h4>Foundation Definition</h4><p>{missionTitle} · {serverDraft?.status ?? 'NEW'} · revision {serverDraft?.revision ?? 'new'}</p></div>
-        <button type="button" className="action-button action-button-secondary" aria-label="Close Foundation editor" onClick={onClose}>Close</button>
+        <div><h4>{t('foundationTitle')}</h4><p>{t('foundationSummary', { name: missionTitle, status: label(serverDraft?.status ?? 'NEW'), revision: serverDraft?.revision != null ? number(serverDraft.revision) : t('newRevision') })}</p></div>
+        <button type="button" className="action-button action-button-secondary" aria-label={t('closeEditor')} onClick={onClose}>{t('close')}</button>
       </div>
-      {error ? <div role="alert" className="status-card error-card">{error}</div> : null}
-      {loadFailed ? <button type="button" className="action-button action-button-secondary" onClick={() => void loadDraft()}>Retry loading</button> : null}
-      {message ? <div role="status" className="status-card success-card">{message}</div> : null}
-      {hasConflict ? <button type="button" className="action-button action-button-secondary" onClick={() => void loadDraft()}>Refresh server draft</button> : null}
+      {error ? <div role="alert" className="status-card error-card">{displayMessage(error)}</div> : null}
+      {loadFailed ? <button type="button" className="action-button action-button-secondary" onClick={() => void loadDraft()}>{t('retryLoading')}</button> : null}
+      {message ? <div role="status" className="status-card success-card">{displayMessage(message)}</div> : null}
+      {hasConflict ? <button type="button" className="action-button action-button-secondary" onClick={() => void loadDraft()}>{t('refreshDraft')}</button> : null}
 
       <div className="foundation-form-grid">
-        <label>Foundation category<select aria-label="Foundation category" value={definition.category} onChange={(event) => editDefinition((current) => ({ ...current, category: foundationCategorySchema.parse(event.target.value) }))}>{foundationCategorySchema.options.map((category) => <option key={category}>{category}</option>)}</select></label>
+        <label>{t('category')}<select aria-label={t('category')} value={definition.category} onChange={(event) => editDefinition((current) => ({ ...current, category: foundationCategorySchema.parse(event.target.value) }))}>{foundationCategorySchema.options.map((category) => <option key={category} value={category}>{label(category)}</option>)}</select></label>
       </div>
       {definition.objectives.map((objective, index) => {
         const number = index + 1;
-        return <fieldset key={index} className="foundation-objective" aria-label={`Objective ${number}`}>
-          <legend>Objective {number}</legend>
+        return <fieldset key={index} className="foundation-objective" aria-label={t('objectiveNumber', { number })}>
+          <legend>{t('objectiveNumber', { number })}</legend>
           <div className="foundation-form-grid">
-            <label>Objective slug<input aria-label={index === 0 ? 'Objective slug' : `Objective ${number} slug`} value={objective.slug} onChange={(event) => updateObjective(index, { slug: event.target.value })} /></label>
-            <label>Required<input type="checkbox" aria-label={`Objective ${number} required`} checked={objective.required} onChange={(event) => updateObjective(index, { required: event.target.checked })} /></label>
-            <label className="foundation-wide">Objective statement<textarea aria-label={index === 0 ? 'Objective statement' : `Objective ${number} statement`} value={objective.statement} onChange={(event) => updateObjective(index, { statement: event.target.value })} /></label>
-            <fieldset className="foundation-wide foundation-skills"><legend>Skills</legend>{skills.map((skill) => <label key={skill}><input type="checkbox" aria-label={`Objective ${number} ${skill}`} checked={objective.skills.includes(skill)} onChange={(event) => updateObjective(index, { skills: event.target.checked ? [...objective.skills, skill] : objective.skills.filter((value) => value !== skill) })} /> {skill}</label>)}</fieldset>
+            <label>{t('objectiveSlug')}<input aria-label={index === 0 ? t('objectiveSlug') : t('objectiveSlugNumber', { number })} value={objective.slug} onChange={(event) => updateObjective(index, { slug: event.target.value })} /></label>
+            <label>{t('required')}<input type="checkbox" aria-label={t('objectiveRequired', { number })} checked={objective.required} onChange={(event) => updateObjective(index, { required: event.target.checked })} /></label>
+            <label className="foundation-wide">{t('objectiveStatement')}<textarea aria-label={index === 0 ? t('objectiveStatement') : t('objectiveStatementNumber', { number })} value={objective.statement} onChange={(event) => updateObjective(index, { statement: event.target.value })} /></label>
+            <fieldset className="foundation-wide foundation-skills"><legend>{t('skills')}</legend>{skills.map((skill) => <label key={skill}><input type="checkbox" aria-label={t('objectiveSkill', { number, skill: label(skill).toLocaleLowerCase() })} checked={objective.skills.includes(skill)} onChange={(event) => updateObjective(index, { skills: event.target.checked ? [...objective.skills, skill] : objective.skills.filter((value) => value !== skill) })} /> {label(skill)}</label>)}</fieldset>
             {objective.evidence.map((evidence, evidenceIndex) => {
               const evidenceNumber = evidenceIndex + 1;
-              const prefix = index === 0 && evidenceIndex === 0 ? 'Objective evidence' : `Objective ${number} evidence ${evidenceNumber}`;
-              return <fieldset key={evidenceIndex} className="foundation-wide foundation-evidence"><legend>Evidence {evidenceNumber}</legend>
+              const prefix = index === 0 && evidenceIndex === 0 ? t('evidencePrefix') : t('evidencePrefixNumber', { number, evidence: evidenceNumber });
+              return <fieldset key={evidenceIndex} className="foundation-wide foundation-evidence"><legend>{t('evidenceNumber', { number: evidenceNumber })}</legend>
                 <div className="foundation-form-grid">
-                  <label>Lesson version ID<input aria-label={`${prefix} lesson version`} value={evidence.lessonVersionId} onChange={(event) => updateEvidence(index, evidenceIndex, { lessonVersionId: event.target.value })} /></label>
-                  <label>Activity slug<input aria-label={`${prefix} activity`} value={evidence.activitySlug} onChange={(event) => updateEvidence(index, evidenceIndex, { activitySlug: event.target.value })} /></label>
-                  <label className="foundation-wide">Language Block slugs<input aria-label={`${prefix} language blocks`} value={evidence.languageBlockSlugs.join(', ')} onChange={(event) => updateEvidence(index, evidenceIndex, { languageBlockSlugs: event.target.value.split(',').map((value) => value.trim()).filter(Boolean) })} /></label>
+                  <label>{t('lessonVersionId')}<input aria-label={t('evidenceLesson', { prefix })} value={evidence.lessonVersionId} onChange={(event) => updateEvidence(index, evidenceIndex, { lessonVersionId: event.target.value })} /></label>
+                  <label>{t('activitySlug')}<input aria-label={t('evidenceActivity', { prefix })} value={evidence.activitySlug} onChange={(event) => updateEvidence(index, evidenceIndex, { activitySlug: event.target.value })} /></label>
+                  <label className="foundation-wide">{t('languageBlockSlugs')}<input aria-label={t('evidenceLanguageBlocks', { prefix })} value={evidence.languageBlockSlugs.join(', ')} onChange={(event) => updateEvidence(index, evidenceIndex, { languageBlockSlugs: event.target.value.split(',').map((value) => value.trim()).filter(Boolean) })} /></label>
                 </div>
-                {objective.evidence.length > 1 ? <button type="button" className="action-button action-button-danger" onClick={() => updateObjective(index, { evidence: objective.evidence.filter((_, itemIndex) => itemIndex !== evidenceIndex) })}>Remove evidence {evidenceNumber}</button> : null}
+                {objective.evidence.length > 1 ? <button type="button" className="action-button action-button-danger" onClick={() => updateObjective(index, { evidence: objective.evidence.filter((_, itemIndex) => itemIndex !== evidenceIndex) })}>{t('removeEvidence', { number: evidenceNumber })}</button> : null}
               </fieldset>;
             })}
           </div>
-          <button type="button" className="action-button action-button-secondary" disabled={objective.evidence.length >= 50} aria-label={`Add evidence mapping to objective ${number}`} onClick={() => updateObjective(index, { evidence: [...objective.evidence, { lessonVersionId: '', activitySlug: '', languageBlockSlugs: [] }] })}>Add evidence mapping</button>
-          {definition.objectives.length > 1 ? <button type="button" className="action-button action-button-danger" onClick={() => editDefinition((current) => ({ ...current, objectives: current.objectives.filter((_, objectiveIndex) => objectiveIndex !== index) }))}>Remove objective {number}</button> : null}
+          <button type="button" className="action-button action-button-secondary" disabled={objective.evidence.length >= 50} aria-label={t('addEvidenceAria', { number })} onClick={() => updateObjective(index, { evidence: [...objective.evidence, { lessonVersionId: '', activitySlug: '', languageBlockSlugs: [] }] })}>{t('addEvidence')}</button>
+          {definition.objectives.length > 1 ? <button type="button" className="action-button action-button-danger" onClick={() => editDefinition((current) => ({ ...current, objectives: current.objectives.filter((_, objectiveIndex) => objectiveIndex !== index) }))}>{t('removeObjective', { number })}</button> : null}
         </fieldset>;
       })}
-      <button type="button" className="action-button action-button-secondary" disabled={definition.objectives.length >= 50} onClick={addObjective}>Add objective</button>
+      <button type="button" className="action-button action-button-secondary" disabled={definition.objectives.length >= 50} onClick={addObjective}>{t('addObjective')}</button>
 
-      <fieldset className="foundation-prerequisites"><legend>Prerequisite published revisions</legend>
-        {prerequisiteOptions.length === 0 ? <p>No eligible prerequisite revisions are available.</p> : prerequisiteOptions.map((option) => <label key={option.id}><input type="checkbox" checked={definition.prerequisiteRevisionIds.includes(option.id)} onChange={(event) => editDefinition((current) => ({ ...current, prerequisiteRevisionIds: event.target.checked ? [...current.prerequisiteRevisionIds, option.id] : current.prerequisiteRevisionIds.filter((id) => id !== option.id) }))} /> {option.label}</label>)}
+      <fieldset className="foundation-prerequisites"><legend>{t('prerequisites')}</legend>
+        {prerequisiteOptions.length === 0 ? <p>{t('noPrerequisites')}</p> : prerequisiteOptions.map((option) => <label key={option.id}><input type="checkbox" checked={definition.prerequisiteRevisionIds.includes(option.id)} onChange={(event) => editDefinition((current) => ({ ...current, prerequisiteRevisionIds: event.target.checked ? [...current.prerequisiteRevisionIds, option.id] : current.prerequisiteRevisionIds.filter((id) => id !== option.id) }))} /> {option.title !== undefined && option.revision !== undefined ? t('prerequisiteLabel', { name: option.title, revision: option.revision }) : option.label}</label>)}
       </fieldset>
 
       <div className="curriculum-actions">
-        <button type="button" className="action-button action-button-primary" disabled={state !== 'idle'} onClick={() => void run('save')}>{state === 'saving' ? 'Saving…' : 'Save Foundation draft'}</button>
-        <button type="button" className="action-button action-button-secondary" disabled={state !== 'idle' || isDirty || !serverDraft?.revision} onClick={() => void run('validate')}>{state === 'validating' ? 'Validating…' : 'Validate Foundation draft'}</button>
-        <button type="button" className="action-button action-button-primary" disabled={state !== 'idle' || isDirty || serverDraft?.status !== 'VALIDATED'} onClick={() => void run('publish')}>{state === 'publishing' ? 'Publishing…' : 'Publish Foundation revision'}</button>
+        <button type="button" className="action-button action-button-primary" disabled={state !== 'idle'} onClick={() => void run('save')}>{state === 'saving' ? t('saving') : t('saveFoundation')}</button>
+        <button type="button" className="action-button action-button-secondary" disabled={state !== 'idle' || isDirty || !serverDraft?.revision} onClick={() => void run('validate')}>{state === 'validating' ? t('validating') : t('validateFoundation')}</button>
+        <button type="button" className="action-button action-button-primary" disabled={state !== 'idle' || isDirty || serverDraft?.status !== 'VALIDATED'} onClick={() => void run('publish')}>{state === 'publishing' ? t('publishing') : t('publishFoundation')}</button>
       </div>
-      {serverDraft?.publishedRevisions.length ? <div><h5>Published revisions</h5><ul>{serverDraft.publishedRevisions.map((revision: CurriculumRevisionDto) => <li key={revision.id}>Revision {revision.revision} · {revision.status}</li>)}</ul></div> : null}
+      {serverDraft?.publishedRevisions.length ? <div><h5>{t('publishedRevisions')}</h5><ul>{serverDraft.publishedRevisions.map((revision: CurriculumRevisionDto) => <li key={revision.id}>{t('revision', { count: revision.revision })} · {label(revision.status)}</li>)}</ul></div> : null}
     </section>
   );
 }

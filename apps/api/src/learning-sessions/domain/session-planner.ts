@@ -183,6 +183,13 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
       return left.order - right.order;
     });
 
+    // A shorter session selects only the activities needed for its canonical blocks.
+    // Respond keeps two activities when available so speaking and writing remain covered.
+    const selectedActivityCount = type === 'respond'
+      ? Math.max(2, occurrences)
+      : occurrences;
+    matchingActivities.splice(selectedActivityCount);
+
     const buckets = distributeActivities(matchingActivities, occurrences);
     distributedByType.set(type, buckets);
 

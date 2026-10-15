@@ -122,7 +122,7 @@ describe('SpeakingActivity', () => {
     );
     fireEvent.click(screen.getByRole('checkbox', { name: /consent/i }));
     fireEvent.click(screen.getByRole('button', { name: /send for evaluation/i }));
-    await screen.findByText('Network interrupted');
+    await screen.findByText('Something went wrong. Please try again.');
     fireEvent.click(screen.getByRole('button', { name: /send for evaluation/i }));
 
     await waitFor(() => expect(onSubmitRecording).toHaveBeenCalledTimes(2));

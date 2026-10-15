@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -9,6 +9,12 @@ import type { ContentImportDto } from '@worklingo/contracts';
 import type * as ApiClientModule from '../../lib/api/api-client';
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { ContentAuthoringWorkspace } from './content-authoring-workspace';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+
+function SwitchLocale() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => void setLocale('en')}>Switch English</button>;
+}
 
 vi.mock('../../lib/api/api-client', async (importOriginal) => {
   const actual = await importOriginal<typeof ApiClientModule>();
@@ -52,6 +58,19 @@ describe('ContentAuthoringWorkspace', () => {
     vi.clearAllTimers();
     vi.useRealTimers();
     vi.resetAllMocks();
+  });
+
+  it('shows localized validation API errors while preserving the mounted source across a locale switch', async () => {
+    vi.useRealTimers();
+    vi.mocked(apiClient.validateContentImport).mockRejectedValueOnce(new ApiError({ code: 'NETWORK_ERROR', status: 0, message: 'Server connection failed' }));
+    render(<LocaleProvider initialLocale="vi"><SwitchLocale /><ContentAuthoringWorkspace initialImport={initialImport} /></LocaleProvider>);
+    const editor = screen.getByRole('textbox', { name: 'Trình soạn thảo nguồn bài học' });
+    fireEvent.click(screen.getByRole('button', { name: 'Kiểm tra bản nháp' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Mất kết nối. Kiểm tra kết nối rồi thử lại.');
+    fireEvent.click(screen.getByRole('button', { name: 'Switch English' }));
+    expect(await screen.findByRole('textbox', { name: 'Lesson source editor' })).toBe(editor);
+    expect(editor).toHaveValue(initialImport.rawSource);
+    expect(screen.getByRole('alert')).toHaveTextContent('Connection failed. Check your connection and try again.');
   });
 
   it('debounces autosave after user typing and updates status to Saved', async () => {
@@ -240,13 +259,14 @@ describe('ContentAuthoringWorkspace', () => {
 
     // First validate
     fireEvent.click(screen.getByRole('button', { name: /validate/i }));
-    await screen.findByText('VALIDATED');
+    await screen.findByText('Validated');
 
     // Switch to publish tab
     const publishTab = screen.getByRole('tab', { name: /^publish/i });
     fireEvent.click(publishTab);
 
     const publishBtn = await screen.findByRole('button', { name: /publish lesson/i });
+    await waitFor(() => expect(publishBtn).toBeEnabled());
     fireEvent.click(publishBtn);
 
     expect(

@@ -1,9 +1,12 @@
+import { getServerT } from '../../../../i18n/server';
+import { metadataMessages } from '../../../../i18n/messages/metadata';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Learning Session',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerT('metadata', metadataMessages);
+  return { title: t('session') };
+}
 
 export default function LearningSessionLayout({ children }: { readonly children: ReactNode }) {
   return children;

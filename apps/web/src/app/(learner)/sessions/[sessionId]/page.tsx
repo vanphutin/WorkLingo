@@ -1,6 +1,9 @@
 'use client';
 
 import React, { use, useCallback, useEffect, useState } from 'react';
+import { useLocalePreference, useT } from '../../../../i18n/provider';
+import { routeMessages } from '../../../../i18n/messages/routes';
+import { localizedError } from '../../../../i18n/errors';
 
 import { SessionShell } from '../../../../features/learning-session/session-shell';
 import {
@@ -16,11 +19,13 @@ export default function SessionPage({
   readonly params: Promise<{ sessionId: string }>;
 }) {
   const { sessionId } = use(params);
+  const t = useT('routes', routeMessages);
+  const { locale } = useLocalePreference();
 
   const [session, setSession] = useState<LearningSessionDto | null>(null);
   const [currentActivity, setCurrentActivity] = useState<LearnerActivityDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
 
   const loadActivityForSession = useCallback(
     async (sessionData: LearningSessionDto) => {
@@ -54,7 +59,7 @@ export default function SessionPage({
       setSession(sessionData);
       await loadActivityForSession(sessionData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load session');
+      setError(err);
     } finally {
       setIsLoading(false);
     }
@@ -111,7 +116,7 @@ export default function SessionPage({
     return (
       <main className="session-loading-container" aria-busy="true">
         <div className="status-card" role="status">
-          <p>Preparing your 60-minute session…</p>
+          <p>{t('preparingSession')}</p>
         </div>
       </main>
     );
@@ -121,10 +126,10 @@ export default function SessionPage({
     return (
       <main className="session-error-container">
         <div className="status-card error-card" role="alert">
-          <h2>Unable to load session</h2>
-          <p>{error ?? 'Session not found'}</p>
+          <h2>{t('unableSession')}</h2>
+          <p>{error ? localizedError(error, locale) : t('sessionMissing')}</p>
           <button type="button" className="retry-button" onClick={() => void initSession()}>
-            Retry
+            {t('retry')}
           </button>
         </div>
       </main>

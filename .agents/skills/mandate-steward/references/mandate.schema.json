@@ -1,0 +1,565 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worklingo:mandate:1",
+  "title": "WorkLingo mandate frontmatter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "status",
+    "created",
+    "updated",
+    "approval",
+    "verification",
+    "history",
+    "title",
+    "type",
+    "owner",
+    "priority",
+    "confidence",
+    "effort",
+    "impact",
+    "problem",
+    "value",
+    "scope",
+    "dedupe_key",
+    "evidence",
+    "acceptance",
+    "risk",
+    "backlog_reference",
+    "plan_reference",
+    "sprint_reference"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^MND-[0-9]{8}-[0-9]{3}$"
+    },
+    "status": {
+      "enum": [
+        "captured",
+        "triaged",
+        "deferred",
+        "rejected",
+        "approved",
+        "implementing",
+        "verified",
+        "archived"
+      ]
+    },
+    "created": {
+      "type": "string",
+      "format": "date"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "type": {
+      "enum": [
+        "bug",
+        "feature",
+        "performance",
+        "security",
+        "architecture",
+        "refactor",
+        "upgrade",
+        "ux",
+        "learning-content",
+        "infrastructure"
+      ]
+    },
+    "owner": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "priority": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "effort": {
+      "enum": [
+        "s",
+        "m",
+        "l"
+      ]
+    },
+    "impact": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "problem": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "value": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "scope": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 160
+      }
+    },
+    "dedupe_key": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 240
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "reference",
+          "observation"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "code",
+              "document",
+              "test",
+              "observation",
+              "research"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "observation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4000
+      }
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "breaking",
+        "data_change",
+        "external_effect",
+        "rollback"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "breaking": {
+          "type": "boolean"
+        },
+        "data_change": {
+          "type": "boolean"
+        },
+        "external_effect": {
+          "type": "boolean"
+        },
+        "rollback": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      }
+    },
+    "backlog_reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "plan_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "sprint_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "approval": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "actor",
+        "reference",
+        "at",
+        "proposal_hash"
+      ],
+      "properties": {
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "proposal_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "verification": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "command",
+          "result",
+          "reference"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "result": {
+            "const": "passed"
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "actor",
+          "from",
+          "to",
+          "reason",
+          "event",
+          "reference"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "to": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "event": {
+            "enum": [
+              "capture",
+              "transition",
+              "update"
+            ]
+          },
+          "reference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "type",
+        "owner",
+        "priority",
+        "confidence",
+        "effort",
+        "impact",
+        "problem",
+        "value",
+        "scope",
+        "dedupe_key",
+        "evidence",
+        "acceptance",
+        "risk",
+        "backlog_reference",
+        "plan_reference",
+        "sprint_reference",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "type": {
+          "enum": [
+            "bug",
+            "feature",
+            "performance",
+            "security",
+            "architecture",
+            "refactor",
+            "upgrade",
+            "ux",
+            "learning-content",
+            "infrastructure"
+          ]
+        },
+        "owner": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "priority": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "effort": {
+          "enum": [
+            "s",
+            "m",
+            "l"
+          ]
+        },
+        "impact": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "problem": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "scope": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "dedupe_key": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 240
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "reference",
+              "observation"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "code",
+                  "document",
+                  "test",
+                  "observation",
+                  "research"
+                ]
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "observation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              }
+            }
+          }
+        },
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "risk": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "level",
+            "breaking",
+            "data_change",
+            "external_effect",
+            "rollback"
+          ],
+          "properties": {
+            "level": {
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "breaking": {
+              "type": "boolean"
+            },
+            "data_change": {
+              "type": "boolean"
+            },
+            "external_effect": {
+              "type": "boolean"
+            },
+            "rollback": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            }
+          }
+        },
+        "backlog_reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "plan_reference": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "sprint_reference": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      }
+    }
+  }
+}

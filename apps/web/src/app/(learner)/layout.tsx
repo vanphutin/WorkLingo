@@ -7,6 +7,19 @@ import React, { useEffect, useState } from 'react';
 import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
+import { ThemeControl } from '../../components/theme-control';
+import { WorkspaceNavigation } from '../../components/workspace-navigation';
+import { LanguageSwitcher } from '../../components/language-switcher';
+import { useLocalePreference, useT } from '../../i18n/provider';
+import { commonMessages } from '../../i18n/messages/common';
+
+const learnerDestinations = [
+  { href: '/dashboard', label: 'dashboard' },
+  { href: '/programs', label: 'programs' },
+  { href: '/mastery', label: 'mastery' },
+  { href: '/ielts/pathway', label: 'ieltsPathway' },
+  { href: '/settings', label: 'settings' },
+] as const;
 
 export default function LearnerLayout({
   children,
@@ -14,7 +27,11 @@ export default function LearnerLayout({
   readonly children: React.ReactNode;
 }) {
   const router = useRouter();
+  const t = useT('common', commonMessages);
+  const { synchronizeUser, clearUser } = useLocalePreference();
+  const destinations = learnerDestinations.map((item) => ({ href: item.href, label: t(item.label) }));
   const pathname = usePathname();
+  const isLearningSession = pathname.startsWith('/sessions/') || pathname.startsWith('/onboarding/placement/');
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -34,11 +51,13 @@ export default function LearnerLayout({
             return;
           }
           setCurrentUser(user);
+          synchronizeUser(user);
           setIsLoading(false);
         }
       } catch (error) {
         if (isMounted) {
           if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+            clearUser();
             router.replace('/login');
           } else {
             setAuthError(true);
@@ -53,12 +72,12 @@ export default function LearnerLayout({
     return () => {
       isMounted = false;
     };
-  }, [authRetryKey, pathname, router]);
+  }, [authRetryKey, pathname, router, synchronizeUser, clearUser]);
 
   if (isLoading) {
     return (
       <div className="learner-loading-screen" role="status">
-        <p>Loading your learning space…</p>
+        <p>{t('loadingLearner')}</p>
       </div>
     );
   }
@@ -67,10 +86,10 @@ export default function LearnerLayout({
     return (
       <main className="session-error-container">
         <div className="status-card error-card" role="alert">
-          <h1>Unable to open your learning space</h1>
-          <p>We could not verify your session. Check your connection and try again.</p>
+          <h1>{t('unableLearner')}</h1>
+          <p>{t('verifySession')}</p>
           <button type="button" className="retry-button" onClick={() => setAuthRetryKey((key) => key + 1)}>
-            Retry
+            {t('retry')}
           </button>
         </div>
       </main>
@@ -78,47 +97,57 @@ export default function LearnerLayout({
   }
 
   return (
-    <div className="learner-shell">
+    <div className={`learner-shell${isLearningSession ? ' learning-mode' : ''}`}>
       <a className="skip-link" href="#learner-main-content">
-        Skip to learning content
+        {t('skipLearning')}
       </a>
       <header className="learner-top-nav">
         <div className="nav-container">
-          <Link href="/dashboard" className="brand-logo">
+          <Link href="/dashboard" className="brand-logo" translate="no">
             WorkLingo
           </Link>
 
           <div className="nav-user-meta">
-            <Link href="/programs" className="nav-link">
-              Programs
-            </Link>
-            <Link href="/settings/audio" className="nav-link">
-              Audio settings
-            </Link>
-            <span className="user-greeting">
-              Learner: <strong>{currentUser?.displayName}</strong>
-            </span>
+            <ThemeControl />
+            <LanguageSwitcher />
+            {currentUser?.roles.some((role) => role === 'CONTENT_ADMIN' || role === 'SYSTEM_ADMIN') ?
+              <Link href="/admin/content" className="nav-link">{t('adminWorkspace')}</Link> : null}
+            <div className="user-greeting" aria-label={t('signedInAs', { name: currentUser?.displayName ?? t('learner') })}>
+              <span className="user-avatar" aria-hidden="true">
+                {currentUser?.displayName?.trim().charAt(0).toUpperCase() ?? 'L'}
+              </span>
+              <span className="user-identity">
+                <span className="user-identity-label">{t('learnerAccount')}</span>
+                <strong>{currentUser?.displayName}</strong>
+              </span>
+            </div>
             <button
               type="button"
               className="logout-button"
               onClick={async () => {
                 try {
-                  await fetch('/api/v1/auth/logout', {
+                  const response = await fetch('/api/v1/auth/logout', {
                     method: 'POST',
                     credentials: 'include',
                   });
+                  if (response.ok) clearUser();
                 } finally {
                   router.push('/login');
                 }
               }}
             >
-              Sign out
+              {t('signOut')}
             </button>
           </div>
         </div>
+        {isLearningSession ? (
+          <details className="session-navigation"><summary>{t('learningNavigation')}</summary>
+            <WorkspaceNavigation items={destinations} label={t('learningNavigation')} />
+          </details>
+        ) : <WorkspaceNavigation items={destinations} label={t('learningNavigation')} />}
       </header>
 
-      <div id="learner-main-content" className="learner-content">
+      <div id="learner-main-content" tabIndex={-1} className="learner-content">
         {children}
       </div>
     </div>

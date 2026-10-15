@@ -1,5 +1,9 @@
 # WorkLingo MVP Implementation Roadmap
 
+## UI internationalization — 2026-10-14
+
+Explicit user mandate: production Vietnamese / English UI across auth, learner, IELTS and Admin, preserving URLs and immutable educational data. Canonical [design](superpowers/specs/2026-10-14-i18n-design.md), [execution plan](superpowers/plans/2026-10-14-i18n.md), [developer guide](I18N.md), and original [feature verification report](I18N_IMPLEMENTATION_REPORT.md). Foundation, account/guest persistence and UI migration are implemented, with independent review fixes and feature QA. The subsequent [integration record](GIT_INTEGRATION_2026-10-15.md) records the audit fixes and combined verification; the original feature report preserves its earlier baseline. This entry does not mark release or public deployment approved.
+
 ## Mục tiêu
 
 Triển khai MVP theo các vertical increments nhỏ. Mỗi increment phải chạy được trên local, có test, có dữ liệu mẫu và tạo ra một luồng người dùng có thể kiểm chứng. Không xây toàn bộ backend trước rồi mới nối giao diện.
@@ -109,6 +113,8 @@ Speaking/writing chưa có điểm AI thật nên checkpoint có thể còn ch�
 **Trạng thái 2026-10-09:** Implementation Tasks 1–12 đã được hoàn thiện trên branch Increment 4: contracts/config, adapters, PostgreSQL jobs, recording/draft/evaluation persistence, consent/retention, learner recorder/audio/writing UI, golden harness và Teacher AI E2E desktop/mobile. Fake calibration pass 3/3 expected ranges. Sau khi khôi phục PostgreSQL local, full `pnpm verify` đã pass: lint/typecheck, 352 API tests, 136 web tests, 138 integration tests, production build và 8 Playwright journeys trên desktop/mobile. **Human calibration pending** và live-provider calibration chưa chạy; hai mục này chặn tuyên bố pilot-ready/live-provider, không chặn hoàn tất kỹ thuật Increment 4 trên local.
 
 Vận hành: `docs/INCREMENT_4_DEMO.md`. Calibration: `docs/AI_CALIBRATION.md`. Detailed plan: `docs/superpowers/plans/2026-10-07-increment-4-speech-teacher-ai.md`.
+
+**Bổ sung 2026-10-14:** Tích hợp Discovery Chat Completions cho Teacher AI; Qwen3.8-27B là mặc định local sau synthetic schema check. Có settings cho tài khoản/admin, dự phòng hai chiều có giới hạn và provenance theo provider thực tế. Chatbot hoãn theo xác nhận của người dùng; human calibration vẫn pending. Thiết kế và giá/giới hạn: `docs/AI_PROVIDER_STRATEGY.md`; kết quả kiểm tra: `docs/DISCOVERY_AI_IMPLEMENTATION_REPORT.md`.
 
 ## Increment 5 — Admin, quality và pilot readiness
 
@@ -244,6 +250,20 @@ Phase 5 adds four seeded skill modules, a 31-question-type taxonomy, immutable A
 Orientation-gated learner access, ten-stage guided practice, durable timed work, version-bound resume,
 and responsive Admin/learner interfaces. Desktop and mobile E2E preserve a learner's pinned version
 while Admin publishes a replacement. See `docs/IELTS_PHASE_5_BRIDGE_REVIEW.md`.
+
+## IELTS Phase 6 — Integrated Practice (completed 2026-10-13)
+
+Phase 6 adds configurable immutable 60/90/120/150-minute profiles, independent difficulty, a
+four-skill planner mixing review and new practice, idempotent/version-bound sessions, server-owned
+evaluation, durable block timers, Admin authoring, responsive learner journeys, and desktop/mobile
+qualification. See `docs/IELTS_PHASE_6_INTEGRATED_PRACTICE_REVIEW.md`.
+
+## IELTS Phase 7 — Band-Oriented Curriculum (completed 2026-10-14)
+
+Phase 7 adds a complete seven-stage competency map through Band 9.0, immutable Admin publishing,
+Bridge-gated version-bound learner journeys and an evidence progression engine across all four
+skills. Target band remains a learner goal and no mock-test or official band score is inferred. See
+`docs/IELTS_PHASE_7_BAND_CURRICULUM_REVIEW.md`.
 
 ## Definition of Done cho roadmap
 

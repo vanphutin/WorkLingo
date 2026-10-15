@@ -21,9 +21,30 @@ const mockProgress: LearnerProgressDto = {
 afterEach(cleanup);
 
 describe('DashboardView', () => {
+  it('makes the saved curriculum session the primary action instead of creating another session', () => {
+    render(<DashboardView progress={mockProgress} onStartSession={vi.fn()} roadmap={{
+      programId: '11111111-1111-4111-8111-111111111111',
+      enrollmentId: '22222222-2222-4222-8222-222222222222',
+      items: [{ missionId: '33333333-3333-4333-8333-333333333333',
+        revisionId: '44444444-4444-4444-8444-444444444444', title: 'Saved mission',
+        state: 'in_progress', activeSessionId: '55555555-5555-4555-8555-555555555555',
+        reviewDue: false, unmetPrerequisites: [], objectives: [] }],
+    }} />);
+    expect(screen.getByRole('link', { name: 'Continue saved session' })).toHaveAttribute(
+      'href', '/sessions/55555555-5555-4555-8555-555555555555');
+    expect(screen.queryByRole('button', { name: /start .*session/i })).not.toBeInTheDocument();
+  });
   it('shows the active program supplied by server context', () => {
     render(<DashboardView progress={mockProgress} onStartSession={vi.fn()} activeProgramName="Intermediate" />);
     expect(screen.getByText(/Active program:/)).toHaveTextContent('Intermediate');
+    expect(screen.getByText(/Active program:/)).toHaveClass('stat-label');
+    expect(screen.queryByRole('heading', { name: /learner dashboard/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /explore your ielts pathway/i })).not.toBeInTheDocument();
+  });
+
+  it('shows IELTS pathway cards only when IELTS is the active program', () => {
+    render(<DashboardView progress={mockProgress} onStartSession={vi.fn()} activeProgramName="IELTS" />);
+    expect(screen.getByRole('heading', { name: /explore your ielts pathway/i })).toBeInTheDocument();
   });
   it('links learners to the program catalog', () => {
     render(
@@ -220,7 +241,7 @@ describe('DashboardView', () => {
     fireEvent.click(screen.getByRole('button', { name: /start 60-minute session/i }));
 
     const alert = await screen.findByRole('alert');
-    expect(alert).toHaveTextContent(/not contain enough activities/i);
+    expect(alert).toHaveTextContent(/content is not ready/i);
   });
 
   it('keeps dashboard and start button usable when engagement loading fails', async () => {
@@ -242,7 +263,7 @@ describe('DashboardView', () => {
 
     // Engagement error is surfaced
     expect(screen.getByText('Unable to load engagement progress')).toBeInTheDocument();
-    expect(screen.getByText('Failed to load engagement data')).toBeInTheDocument();
+    expect(screen.getByText('Something went wrong. Please try again.')).toBeInTheDocument();
 
     // Session launcher and Start button remain enabled and usable
     const startButton = screen.getByRole('button', { name: 'Start 60-Minute Session' });

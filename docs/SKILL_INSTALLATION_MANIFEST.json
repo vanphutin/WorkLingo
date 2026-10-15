@@ -1,0 +1,262 @@
+{
+  "python_files_parsed": 18,
+  "imports": [
+    "argparse",
+    "collections",
+    "copy",
+    "core",
+    "csv",
+    "datetime",
+    "design_system",
+    "difflib",
+    "hashlib",
+    "importlib",
+    "io",
+    "json",
+    "math",
+    "os",
+    "pathlib",
+    "re",
+    "reasoning_contract",
+    "shutil",
+    "statistics",
+    "subprocess",
+    "sys",
+    "tempfile",
+    "unittest",
+    "urllib",
+    "validate_data"
+  ],
+  "sensitive_calls": [
+    {
+      "file": "scripts\\core.py",
+      "line": 372,
+      "call": "open"
+    },
+    {
+      "file": "scripts\\design_system.py",
+      "line": 297,
+      "call": "open"
+    },
+    {
+      "file": "scripts\\design_system.py",
+      "line": 304,
+      "call": "open"
+    },
+    {
+      "file": "scripts\\design_system.py",
+      "line": 311,
+      "call": "open"
+    },
+    {
+      "file": "scripts\\design_system.py",
+      "line": 1009,
+      "call": "os.replace"
+    },
+    {
+      "file": "scripts\\design_system.py",
+      "line": 1014,
+      "call": "os.link"
+    },
+    {
+      "file": "scripts\\design_system.py",
+      "line": 1017,
+      "call": "os.unlink"
+    },
+    {
+      "file": "scripts\\validate_data.py",
+      "line": 164,
+      "call": "open"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 26,
+      "call": "subprocess.run"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 108,
+      "call": "metadata_path.write_bytes"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 179,
+      "call": "(family_dir / 'METADATA.pb').write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 224,
+      "call": "rank_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 232,
+      "call": "axis_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 238,
+      "call": "existing.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 241,
+      "call": "bad_overrides.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 260,
+      "call": "metadata_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 323,
+      "call": "source.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 330,
+      "call": "curated_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 333,
+      "call": "package_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 338,
+      "call": "alias_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 343,
+      "call": "exports_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 138,
+      "call": "api_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 139,
+      "call": "metadata_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 152,
+      "call": "(directory / sentinel).write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 202,
+      "call": "(family_dir / 'METADATA.pb').write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_refresh.py",
+      "line": 294,
+      "call": "metadata_path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_summary_line_endings.py",
+      "line": 44,
+      "call": "lf.write_bytes"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_summary_line_endings.py",
+      "line": 45,
+      "call": "crlf.write_bytes"
+    },
+    {
+      "file": "scripts\\tests\\test_catalog_summary_line_endings.py",
+      "line": 70,
+      "call": "crlf_copy.write_bytes"
+    },
+    {
+      "file": "scripts\\tests\\test_core.py",
+      "line": 75,
+      "call": "path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_core.py",
+      "line": 79,
+      "call": "path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_core.py",
+      "line": 90,
+      "call": "path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_core.py",
+      "line": 256,
+      "call": "subprocess.Popen"
+    },
+    {
+      "file": "scripts\\tests\\test_core.py",
+      "line": 98,
+      "call": "path.write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_data_contracts.py",
+      "line": 320,
+      "call": "(root / 'data-provenance.json').write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_design_system_stack.py",
+      "line": 34,
+      "call": "subprocess.run"
+    },
+    {
+      "file": "scripts\\tests\\test_relevance_evaluator.py",
+      "line": 88,
+      "call": "(data / 'styles.csv').write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_relevance_evaluator.py",
+      "line": 101,
+      "call": "selected.write_bytes"
+    },
+    {
+      "file": "scripts\\tests\\test_relevance_evaluator.py",
+      "line": 104,
+      "call": "selected.write_bytes"
+    },
+    {
+      "file": "scripts\\tests\\test_relevance_evaluator.py",
+      "line": 87,
+      "call": "(runtime / name).write_text"
+    },
+    {
+      "file": "scripts\\tests\\test_relevance_evaluator.py",
+      "line": 92,
+      "call": "(runtime / 'reasoning_contract.py').write_text"
+    }
+  ],
+  "sources": {
+    "ui-ux-pro-max": "7246805992a42b7bba37d4cac83b01416f0c6c44",
+    "frontend-design": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+    "superpowers": "bb92a77741419a4ab5f06e711a283343f1ada0c3"
+  },
+  "skills": {
+    "codex-quota-optimizer\\SKILL.md": "a6c5930589922846669c8508f776436df2f833acfbb37dc94c31eab9914a270b",
+    "frontend-design\\SKILL.md": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+    "superpowers\\brainstorming\\SKILL.md": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43",
+    "superpowers\\diagnosing-superpowers\\SKILL.md": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19",
+    "superpowers\\dispatching-parallel-agents\\SKILL.md": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c",
+    "superpowers\\executing-plans\\SKILL.md": "f38e8f2ddcf079f65493adc713c1fed78421dfaf5f4dbf6b3a6b2b1d95466e71",
+    "superpowers\\finishing-a-development-branch\\SKILL.md": "8db5a922b242dd4e1bf824cb91c13b3e8d8e8a86d6ceaf7f0774eb9cce909d65",
+    "superpowers\\receiving-code-review\\SKILL.md": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438",
+    "superpowers\\requesting-code-review\\SKILL.md": "2180e14a448e9410bec88e6646a2d1f0ce7fdd58de27388c1e052e929679d2bc",
+    "superpowers\\subagent-driven-development\\SKILL.md": "8dde5589ee083fb4999106d116f01c8fdaf3116a8a9813fdedeb80329de49046",
+    "superpowers\\systematic-debugging\\SKILL.md": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202",
+    "superpowers\\test-driven-development\\SKILL.md": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+    "superpowers\\using-git-worktrees\\SKILL.md": "8cfb86f121269e8f7f12361e6795c4f6738828340e28964c9229d365666c9edd",
+    "superpowers\\using-superpowers\\SKILL.md": "82c5c8866ad7f5dd4440ce66bd7806ba48a2f13771beae5cf112e53f08fe36ba",
+    "superpowers\\verification-before-completion\\SKILL.md": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+    "superpowers\\writing-plans\\SKILL.md": "a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a",
+    "superpowers\\writing-skills\\SKILL.md": "bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9",
+    "ui-ux-pro-max\\SKILL.md": "b1ea07cc3ac0f597195219ef76a1c01552f090cb77f65fbc235fd1b87aa55bbb"
+  }
+}

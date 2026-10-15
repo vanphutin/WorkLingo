@@ -524,3 +524,22 @@ evidence snapshot that completed all required objectives.
   identity, and the migration rejects update/delete of published snapshots.
 - `IeltsBridgeProgress` is unique per learner/module and pins `moduleVersionId`. It stores stage index,
   optimistic revision, evaluated stage results, durable timer timestamps, and completion time.
+
+## 17. IELTS Integrated Practice (IELTS Phase 6)
+
+- `IeltsIntegratedProfile` owns an Admin draft for one unique duration; publish creates immutable
+  `IeltsIntegratedProfileVersion` rows protected by database trigger.
+- `IeltsIntegratedSession` is unique by learner/client-session ID and stores duration, independent
+  difficulty, profile version, immutable plan snapshot, current block, revision, and completion.
+- `IeltsIntegratedSessionBlock` pins the selected Bridge module version and stores skill, question
+  type, review/new mode, target minutes, start/completion timestamps, and server-evaluated result.
+
+## 18. IELTS Band-Oriented Curriculum (IELTS Phase 7)
+
+- `IeltsBandCurriculum` owns the editable seven-stage draft, optimistic `draftRevision`, status and
+  pointer to the current published version.
+- `IeltsBandCurriculumVersion` is an immutable content snapshot. Publishing archives the previous
+  current version without rewriting learner history.
+- `IeltsBandJourney` is unique per learner and stores `clientJourneyId`, pinned curriculum version,
+  current stage, target band, revision, completion and an evidence snapshot. Target band is a goal,
+  not an estimated or official result.

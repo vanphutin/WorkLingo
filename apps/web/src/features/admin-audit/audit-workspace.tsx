@@ -1,5 +1,7 @@
 'use client';
 
+import { useAdminAudit } from './i18n';
+
 import React, { useEffect, useState } from 'react';
 import type { AdminAuditEventDto } from '@worklingo/contracts';
 
@@ -7,10 +9,11 @@ import { adminAuditClient } from '../../lib/api/admin-audit-client';
 import './audit.css';
 
 export function AuditWorkspace() {
+  const { t, date, message: displayMessage } = useAdminAudit();
   const [events, setEvents] = useState<readonly AdminAuditEventDto[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<unknown>(null);
 
   // Filters
   const [filterAction, setFilterAction] = useState('');
@@ -33,9 +36,7 @@ export function AuditWorkspace() {
       setEvents(page.items);
       setNextCursor(page.nextCursor);
     } catch (err) {
-      setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to load audit events',
-      );
+      setErrorMessage(err);
     } finally {
       setIsLoading(false);
     }
@@ -61,9 +62,7 @@ export function AuditWorkspace() {
       setEvents(page.items);
       setNextCursor(page.nextCursor);
     } catch (err) {
-      setErrorMessage(
-        err instanceof Error ? err.message : 'Failed to load audit events',
-      );
+      setErrorMessage(err);
     } finally {
       setIsLoading(false);
     }
@@ -78,59 +77,55 @@ export function AuditWorkspace() {
     <div className="audit-container">
       <header className="audit-header">
         <div>
-          <h1>Audit Event Browser</h1>
-          <p className="node-meta">
-            Immutable, privacy-safe record of administrative curriculum changes and operations.
-          </p>
+          <h1>{t('title')}</h1>
+          <p className="node-meta">{t('help')}</p>
         </div>
       </header>
 
-      {errorMessage && (
+      {Boolean(errorMessage) && (
         <div className="curriculum-alert curriculum-alert-error" role="alert">
-          <span>{errorMessage}</span>
+          <span>{displayMessage(errorMessage)}</span>
           <button
             type="button"
             className="action-button action-button-secondary"
             onClick={() => loadEvents()}
-          >
-            Retry
-          </button>
+          >{t('retry')}</button>
         </div>
       )}
 
       <form onSubmit={handleApplyFilters} className="audit-filters-card">
         <div className="audit-filters-grid">
           <div className="audit-filter-item">
-            <label htmlFor="filter-action">Action</label>
+            <label htmlFor="filter-action">{t('action')}</label>
             <input
               id="filter-action"
               type="text"
               className="audit-filter-input"
               value={filterAction}
               onChange={(e) => setFilterAction(e.target.value)}
-              placeholder="e.g. PUBLISH_PATH, CREATE_MISSION"
+              placeholder={t('actionPlaceholder')}
             />
           </div>
           <div className="audit-filter-item">
-            <label htmlFor="filter-resource-type">Resource Type</label>
+            <label htmlFor="filter-resource-type">{t('resourceType')}</label>
             <input
               id="filter-resource-type"
               type="text"
               className="audit-filter-input"
               value={filterResourceType}
               onChange={(e) => setFilterResourceType(e.target.value)}
-              placeholder="e.g. LearningPath, Level, Mission"
+              placeholder={t('resourcePlaceholder')}
             />
           </div>
           <div className="audit-filter-item">
-            <label htmlFor="filter-resource-id">Resource ID</label>
+            <label htmlFor="filter-resource-id">{t('resourceId')}</label>
             <input
               id="filter-resource-id"
               type="text"
               className="audit-filter-input"
               value={filterResourceId}
               onChange={(e) => setFilterResourceId(e.target.value)}
-              placeholder="UUID or resource identifier"
+              placeholder={t('idPlaceholder')}
             />
           </div>
         </div>
@@ -139,27 +134,23 @@ export function AuditWorkspace() {
             type="submit"
             className="action-button action-button-primary"
             disabled={isLoading}
-          >
-            Apply Filters
-          </button>
+          >{t('applyFilters')}</button>
           <button
             type="button"
             className="action-button action-button-secondary"
             onClick={handleResetFilters}
             disabled={isLoading}
-          >
-            Reset
-          </button>
+          >{t('reset')}</button>
         </div>
       </form>
 
       {isLoading && events.length === 0 ? (
         <div role="status">
-          <p>Loading audit events…</p>
+          <p>{t('loading')}</p>
         </div>
       ) : events.length === 0 ? (
         <div className="audit-card">
-          <p>No audit events match the specified criteria.</p>
+          <p>{t('empty')}</p>
         </div>
       ) : (
         <div className="audit-events-list">
@@ -168,16 +159,16 @@ export function AuditWorkspace() {
               <div className="audit-card-top">
                 <span className="audit-action-badge">{event.action}</span>
                 <span className="audit-timestamp">
-                  {new Date(event.createdAt).toLocaleString()}
+                  {date(event.createdAt)}
                 </span>
               </div>
               <div className="audit-card-body">
                 <div className="audit-meta-item">
-                  <strong>Actor:</strong>
+                  <strong>{t('actor')}</strong>
                   <span>{event.actorDisplayName}</span>
                 </div>
                 <div className="audit-meta-item">
-                  <strong>Resource:</strong>
+                  <strong>{t('resource')}</strong>
                   <span>
                     {event.resourceType} ({event.resourceId})
                   </span>
@@ -186,7 +177,7 @@ export function AuditWorkspace() {
               {(event.oldState || event.newState || event.metadata) && (
                 <div className="audit-diff-section">
                   <details className="audit-diff-details">
-                    <summary>View Change Payload &amp; Metadata</summary>
+                    <summary>{t('payload')}</summary>
                     <pre style={{ margin: '0.5rem 0', whiteSpace: 'pre-wrap' }}>
                       {JSON.stringify(
                         {
@@ -208,7 +199,7 @@ export function AuditWorkspace() {
 
       <div className="audit-pagination">
         <span className="node-meta">
-          Showing {events.length} event{events.length === 1 ? '' : 's'}
+          {t('count', { count: events.length })}
         </span>
         <div className="curriculum-actions">
           <button
@@ -216,9 +207,7 @@ export function AuditWorkspace() {
             className="action-button action-button-secondary"
             onClick={handleNextPage}
             disabled={!nextCursor || isLoading}
-          >
-            Next Page
-          </button>
+          >{t('nextPage')}</button>
         </div>
       </div>
     </div>

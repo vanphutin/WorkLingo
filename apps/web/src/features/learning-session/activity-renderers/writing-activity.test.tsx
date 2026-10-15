@@ -57,7 +57,7 @@ describe('WritingActivity', () => {
       />,
     );
 
-    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Đã lưu bản nháp'));
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Draft saved'));
     expect(screen.queryByText('on track')).not.toBeInTheDocument();
     expect(screen.getByText(/recall 1 target phrase/i)).toBeVisible();
   });
@@ -82,7 +82,7 @@ describe('WritingActivity', () => {
     );
 
     await waitFor(() => expect(onChange).toHaveBeenCalledWith('The launch remains on track.'));
-    expect(screen.getByRole('status')).toHaveTextContent('Đã lưu bản nháp');
+    expect(screen.getByRole('status')).toHaveTextContent('Draft saved');
     expect(screen.getByText('on track')).toBeInTheDocument();
   });
 
@@ -109,7 +109,7 @@ describe('WritingActivity', () => {
       );
     }
     render(<ControlledWritingActivity />);
-    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Đã lưu bản nháp'));
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Draft saved'));
 
     fireEvent.change(screen.getByLabelText(/your written response/i), {
       target: { value: 'We are on track today.' },
@@ -151,7 +151,7 @@ describe('WritingActivity', () => {
       );
     }
     render(<ControlledWritingActivity />);
-    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Đã lưu bản nháp'));
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Draft saved'));
 
     const textarea = screen.getByLabelText(/your written response/i);
     fireEvent.change(textarea, { target: { value: 'We are on track.' } });

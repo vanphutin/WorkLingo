@@ -5,12 +5,17 @@ import React, { useEffect, useState } from 'react';
 import type { ContentImportDto } from '@worklingo/contracts';
 
 import { ContentList } from '../../../../features/admin-content/content-list';
-import { ApiError, apiClient } from '../../../../lib/api/api-client';
+import { apiClient } from '../../../../lib/api/api-client';
+import { useLocalePreference, useT } from '../../../../i18n/provider';
+import { routeMessages } from '../../../../i18n/messages/routes';
+import { localizedError } from '../../../../i18n/errors';
 
 export default function AdminContentPage() {
+  const t = useT('routes', routeMessages);
+  const { locale } = useLocalePreference();
   const [imports, setImports] = useState<ContentImportDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -27,11 +32,7 @@ export default function AdminContentPage() {
       } catch (err) {
         if (isMounted) {
           setIsLoading(false);
-          if (err instanceof ApiError) {
-            setError(err.message);
-          } else {
-            setError('Failed to load content imports.');
-          }
+          setError(err);
         }
       }
     }
@@ -46,7 +47,7 @@ export default function AdminContentPage() {
   if (isLoading) {
     return (
       <div className="admin-page-loading" role="status">
-        <p>Loading content drafts…</p>
+        <p>{t('loadingLesson')}</p>
       </div>
     );
   }
@@ -54,8 +55,8 @@ export default function AdminContentPage() {
   if (error) {
     return (
       <div className="status-card error-card" role="alert">
-        <h2>Unable to load imports</h2>
-        <p>{error}</p>
+        <h2>{t('lessonError')}</h2>
+        <p>{localizedError(error, locale)}</p>
       </div>
     );
   }

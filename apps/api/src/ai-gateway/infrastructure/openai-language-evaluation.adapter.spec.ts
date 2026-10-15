@@ -130,6 +130,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
   });
 
   it.each([
+    [{ status: 'completed', output: [{ type: 'message', content: [{ type: 'refusal' }] }] }, 'PROVIDER_REFUSED'],
     [{ status: 'completed', output: [{ type: 'message', content: [{ type: 'refusal', refusal: 'No.' }] }] }, 'PROVIDER_REFUSED'],
     [{ status: 'incomplete', incomplete_details: { reason: 'max_output_tokens' }, output: [] }, 'PROVIDER_RESPONSE_INVALID'],
     [{ status: 'completed', output: [{ type: 'message', content: [{ type: 'output_text', text: '{bad' }] }] }, 'PROVIDER_RESPONSE_INVALID'],
@@ -142,7 +143,7 @@ describe('OpenAiLanguageEvaluationAdapter', () => {
       apiKey: 'test-openai-secret', baseUrl, model: 'test-model', timeoutMs: LOCAL_PROVIDER_TIMEOUT_MS,
     });
 
-    await expect(adapter.evaluate(input)).rejects.toMatchObject({ code, retryable: true });
+    await expect(adapter.evaluate(input)).rejects.toMatchObject({ code, retryable: code !== 'PROVIDER_REFUSED' });
   });
 
   it.each([

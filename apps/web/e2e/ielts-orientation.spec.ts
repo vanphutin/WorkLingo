@@ -62,16 +62,18 @@ test.describe('IELTS Orientation browser journey', () => {
     await expect(page.getByText(/Published version \d+\./u)).toBeVisible();
 
     await page.request.post('/api/v1/auth/logout');
-    const registration = await page.request.post('/api/v1/auth/register', { data: { displayName: 'IELTS E2E Learner', email: `ielts-${randomUUID()}@test.local`, password: 'orientation-e2e-password' } });
+    const registration = await page.request.post('/api/v1/auth/register', { data: { locale: 'en', displayName: 'IELTS E2E Learner', email: `ielts-${randomUUID()}@test.local`, password: 'orientation-e2e-password' } });
     expect(registration.ok()).toBeTruthy();
     const learner = await registration.json() as { id: string };
     expect((await page.request.post('/api/v1/me/onboarding/self-placement', { data: { clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' } })).ok()).toBeTruthy();
 
-    await page.goto('/dashboard');
-    await expect(page.getByText('Complete your Foundation checkpoint to unlock IELTS Orientation.')).toBeVisible();
+    // The redesigned dashboard shows exam cards only in an active IELTS context.
+    // Verify this learner's eligibility directly on the existing orientation route.
+    await page.goto('/ielts/orientation');
+    await expect(page.getByRole('heading', { name: 'Orientation is locked' })).toBeVisible();
+    expect((await (await page.request.get('/api/v1/me/ielts-orientation')).json()).reasons).toContain('FOUNDATION_CHECKPOINT_REQUIRED');
     await grantFoundationEvidence(learner.id);
     await page.reload();
-    await page.getByRole('link', { name: 'Start IELTS Orientation' }).click();
     await page.getByRole('button', { name: 'Begin orientation' }).click();
     await expect(page.getByRole('heading', { level: 1, name: 'Welcome to IELTS' })).toBeVisible();
     const pinnedVersion = await page.getByText(/Version \d+/u).textContent();

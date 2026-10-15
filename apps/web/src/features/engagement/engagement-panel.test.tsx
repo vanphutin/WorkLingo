@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { EngagementSummaryDto } from '@worklingo/contracts';
 
 import { EngagementPanel } from './engagement-panel';
+import { LocaleProvider } from '../../i18n/provider';
 
 const mockEngagement: EngagementSummaryDto = {
   consistency: {
@@ -66,6 +67,14 @@ const mockEngagement: EngagementSummaryDto = {
 afterEach(cleanup);
 
 describe('EngagementPanel', () => {
+  it('renders Vietnamese progress states, counts and decimal formatting', () => {
+    render(<LocaleProvider initialLocale="vi"><EngagementPanel engagement={mockEngagement} onUpdateTarget={vi.fn()} /></LocaleProvider>);
+    expect(screen.getByText('2 trên 3 ngày học')).toBeInTheDocument();
+    expect(screen.getByLabelText('Mục tiêu học tập hằng tuần')).toHaveValue('3');
+    expect(screen.getByText('Đang tiến bộ')).toBeInTheDocument();
+    expect(screen.getByText('+10,0%')).toBeInTheDocument();
+    expect(screen.getByText('1 mẫu gần đây')).toBeInTheDocument();
+  });
   it('renders neutral consistency streak and distinct learning day progress', () => {
     render(<EngagementPanel engagement={mockEngagement} onUpdateTarget={vi.fn()} />);
 

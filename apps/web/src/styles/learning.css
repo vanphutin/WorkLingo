@@ -1,0 +1,70 @@
+/* Journey hierarchy. State handling remains in each existing feature. */
+.dashboard-container { gap: 2rem; }
+.dashboard-header { max-width: 55rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+.dashboard-title { font-size: var(--text-h1); margin: .5rem 0; }
+.eyebrow, .card-tag { text-transform: none; letter-spacing: 0; font-size: .875rem; font-weight: 600; }
+.dashboard-shortcuts { gap: .75rem 1.5rem; }
+.dashboard-shortcuts a { min-height: 44px; align-items: center; display: inline-flex; }
+.dashboard-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.dashboard-card { border-radius: var(--radius-panel); box-shadow: var(--shadow); padding: clamp(1.25rem, 3vw, 2rem); min-width: 0; }
+.next-mission-card { border-top: 4px solid var(--primary); border-radius: var(--radius-feature); }
+.mission-title { font-size: clamp(1.5rem, 3vw, 2.25rem); max-width: 24ch; }
+.mission-description { max-width: 60ch; line-height: 1.65; }
+.session-launcher { margin-top: 1.25rem; }
+.progress-card .progress-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.progress-card .stat-item { padding: .5rem 0; border: 0; border-bottom: 1px solid var(--border); background: transparent; min-width: 0; }
+.progress-card .stat-item:first-child { grid-column: 1 / -1; }
+.stat-value { font-size: 1.5rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.learning-pathways { display: grid; gap: 1rem; }
+.learning-pathways:has(.learning-pathways-grid:empty) { display: none; }
+.learning-pathways-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.learning-pathways-grid > section { min-width: 0; }
+.roadmap-grid { grid-template-columns: minmax(0, 1fr); }
+.roadmap-card { border-top: 0; border-left: 4px solid var(--control-border); border-radius: .25rem 1rem 1rem .25rem; box-shadow: none; }
+.roadmap-card-in_progress { border-left-color: var(--info); }
+.roadmap-card-completed { border-left-color: var(--success); }
+.roadmap-state { padding: .25rem .5rem; border-radius: .5rem; background: var(--surface-soft); }
+.engagement-card { box-shadow: none; }
+.engagement-card .evidence-header { display: block; }
+
+.session-layout { width: min(100%, var(--width-page)); padding: clamp(1rem, 3vw, 2rem); margin-inline: auto; }
+.session-header { background: transparent; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; padding: 0 0 1.5rem; }
+.session-header-content { gap: 1rem; flex-wrap: wrap; }
+.session-mission-title { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+.session-progress-note { margin-block: .75rem 0; color: var(--muted); font-size: .875rem; }
+.session-body-grid { grid-template-columns: minmax(0, 1fr) 17rem; gap: 1.5rem; }
+.session-main-content { width: 100%; margin: 0; padding: clamp(1rem, 3vw, 2rem); border-radius: var(--radius-panel); box-shadow: var(--shadow); }
+.session-support-panel { box-shadow: none; border-radius: var(--radius-panel); align-self: start; }
+.reading-content-item { background: var(--surface-soft); border: 0; border-radius: .5rem; padding: 1.25rem; }
+.reading-text, .transcript-text { max-width: var(--width-reader); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.8; white-space: pre-wrap; }
+.activity-prompt { font-size: 1.25rem; line-height: 1.5; }
+.question-block { padding: 1.25rem 0; border: 0; border-top: 1px solid var(--border); background: transparent; }
+.option-label { min-height: 48px; padding: .75rem 1rem; border-color: var(--control-border); }
+.option-label.selected { box-shadow: inset 3px 0 var(--primary); }
+.speaking-textarea, .writing-textarea { font-size: 1rem; line-height: 1.8; min-height: 12rem; }
+.speaking-recorder { background: var(--surface-soft); border-radius: var(--radius-panel); padding: 1.25rem; }
+.activity-footer { position: static; justify-content: flex-end; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+.activity-footer button { min-width: 10rem; }
+.blocks-progress-list { gap: .5rem; }
+.block-progress-step { min-width: 0; background: var(--surface); }
+
+.program-list { gap: 1.5rem; }
+.program-card { border-radius: var(--radius-feature); box-shadow: var(--shadow); }
+.program-card-active { border: 2px solid var(--primary); }
+.program-active-label { color: var(--primary); font-weight: 700; }
+.onboarding-choice-panel, .audio-settings-panel, .evidence-panel { box-shadow: var(--shadow); }
+.evidence-workspace .evidence-header { display: grid; }
+.evidence-skill-card { border-top: 3px solid var(--primary); }
+.audio-source-option { border-color: var(--control-border); }
+.audio-settings-footer { position: static; }
+
+@media (max-width: 1000px) {
+  .session-body-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 768px) {
+  .dashboard-grid, .learning-pathways-grid { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-card { box-shadow: none; }
+  .blocks-progress-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .session-main-content { box-shadow: none; }
+  .activity-footer button { width: 100%; }
+}

@@ -29,7 +29,7 @@
 }
 
 .onboarding-header > p:last-child {
-  color: #404c44;
+  color: var(--foreground);
   font-size: 1.05rem;
   line-height: 1.65;
   max-width: 65ch;
@@ -37,7 +37,7 @@
 
 .onboarding-kicker,
 .onboarding-section-label {
-  color: #17643a;
+  color: var(--primary);
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -66,8 +66,8 @@
 
 .onboarding-method,
 .onboarding-level {
-  background: #fffefb;
-  border: 1px solid #c9cec9;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   cursor: pointer;
   display: flex;
@@ -79,14 +79,14 @@
 
 .onboarding-method.selected,
 .onboarding-level:has(input:checked) {
-  background: #f2f7f3;
-  border-color: #17643a;
-  box-shadow: inset 0 0 0 1px #17643a;
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
 }
 
 .onboarding-method input,
 .onboarding-level input {
-  accent-color: #17643a;
+  accent-color: var(--primary);
   flex: 0 0 auto;
   height: 1.25rem;
   margin: 0.15rem 0 0;
@@ -95,7 +95,7 @@
 
 .onboarding-method input:focus-visible,
 .onboarding-level input:focus-visible {
-  outline: 3px solid #efb744;
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -113,7 +113,7 @@
 .onboarding-method small,
 .onboarding-level small,
 .onboarding-level-copy > span {
-  color: #4c5951;
+  color: var(--foreground);
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -121,8 +121,8 @@
 .onboarding-choice-panel,
 .onboarding-resume,
 .onboarding-status {
-  background: #fffefb;
-  border: 1px solid #d9ddd8;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.85rem;
   display: grid;
   gap: 1.5rem;
@@ -143,9 +143,9 @@
 
 .onboarding-primary-link {
   align-items: center;
-  background: #17643a;
+  background: var(--primary-fill);
   border-radius: 0.65rem;
-  color: white;
+  color: var(--on-primary);
   display: inline-flex;
   font-weight: 700;
   justify-content: center;
@@ -157,12 +157,12 @@
 .onboarding-primary-link:hover,
 .onboarding-choice-panel > button:hover:not(:disabled),
 .onboarding-status > button:hover:not(:disabled) {
-  background: #0f4f2d;
+  background: var(--primary-fill);
 }
 
 .onboarding-method:hover,
 .onboarding-level:hover:not(.unavailable) {
-  border-color: #17643a;
+  border-color: var(--primary);
 }
 
 .onboarding-level {
@@ -170,27 +170,27 @@
 }
 
 .onboarding-level.unavailable {
-  background: #f1f0ec;
+  background: var(--surface-soft);
   cursor: not-allowed;
 }
 
 .onboarding-privacy-note {
-  background: #f2f7f3;
-  border-left: 3px solid #17643a;
+  background: var(--primary-soft);
+  border-left: 3px solid var(--primary);
   padding: 1rem 1.25rem;
 }
 
 .onboarding-privacy-note p {
-  color: #404c44;
+  color: var(--foreground);
   margin-top: 0.35rem;
 }
 
 .onboarding-action-error,
 .onboarding-status-error {
-  background: #fdf2f2;
-  border: 1px solid #f2bcbc;
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
   border-radius: 0.75rem;
-  color: #7f2424;
+  color: var(--danger);
   padding: 1rem 1.25rem;
 }
 
@@ -256,8 +256,8 @@
 
 .placement-status > header,
 .placement-recommendation {
-  background: #fffefb;
-  border: 1px solid #d9ddd8;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.85rem;
   padding: clamp(1.25rem, 4vw, 2.25rem);
 }
@@ -283,8 +283,8 @@
 
 .placement-skill-list li {
   align-items: center;
-  background: #fffefb;
-  border: 1px solid #d9ddd8;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   display: flex;
   gap: 1rem;
@@ -299,7 +299,7 @@
 }
 
 .placement-skill-list small {
-  color: #556258;
+  color: var(--muted);
 }
 
 .placement-skill-status {
@@ -307,14 +307,14 @@
   text-align: right;
 }
 
-.placement-skill-status.evaluated { color: #17643a; }
-.placement-skill-status.pending { color: #6d5a2b; }
-.placement-skill-status.action_required { color: #a12a2a; }
+.placement-skill-status.evaluated { color: var(--primary); }
+.placement-skill-status.pending { color: var(--warning); }
+.placement-skill-status.action_required { color: var(--danger); }
 
 .placement-processing,
 .placement-refresh {
-  background: #fff8eb;
-  border-left: 3px solid #b57a05;
+  background: var(--warning-soft);
+  border-left: 3px solid var(--warning);
   display: grid;
   gap: 0.4rem;
   padding: 1rem 1.25rem;
@@ -332,7 +332,7 @@
 }
 
 .placement-recommendation dt {
-  color: #556258;
+  color: var(--muted);
   font-size: 0.85rem;
 }
 
@@ -345,10 +345,10 @@
 .placement-recommendation > button,
 .placement-refresh > button {
   align-items: center;
-  background: #17643a;
+  background: var(--primary-fill);
   border: 1px solid transparent;
   border-radius: 0.65rem;
-  color: white;
+  color: var(--on-primary);
   display: inline-flex;
   font-size: 1rem;
   font-weight: 700;
@@ -361,7 +361,7 @@
 
 .placement-recommendation > button:hover:not(:disabled),
 .placement-refresh > button:hover:not(:disabled) {
-  background: #0f4f2d;
+  background: var(--primary-fill);
 }
 
 .placement-recommendation > button:disabled {

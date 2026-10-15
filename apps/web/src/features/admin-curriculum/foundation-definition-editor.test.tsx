@@ -5,6 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../../lib/api/api-client';
 import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
 import { FoundationDefinitionEditor } from './foundation-definition-editor';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+
+function SwitchLocale() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => void setLocale('en')}>Switch English</button>;
+}
 
 const missionId = '11111111-1111-4111-8111-111111111111';
 const draft = {
@@ -18,6 +24,25 @@ const draft = {
 describe('FoundationDefinitionEditor', () => {
   beforeEach(() => { vi.restoreAllMocks(); vi.spyOn(curriculumFoundationClient, 'getDraft').mockResolvedValue(draft); });
   afterEach(cleanup);
+
+  it('localizes prerequisite revision metadata without translating its authored title', async () => {
+    render(<LocaleProvider initialLocale="vi"><FoundationDefinitionEditor missionId={missionId} missionTitle="Workplace requests" prerequisiteOptions={[{ id: 'prerequisite-id', label: 'English lesson · revision 2', title: 'English lesson', revision: 2 }]} /></LocaleProvider>);
+    expect(await screen.findByRole('checkbox', { name: 'English lesson · bản sửa đổi 2' })).toBeInTheDocument();
+  });
+
+  it('localizes mapping validation and preserves the unsaved objective when switching locale', async () => {
+    render(<LocaleProvider initialLocale="vi"><SwitchLocale /><FoundationDefinitionEditor missionId={missionId} missionTitle="Workplace requests" prerequisiteOptions={[]} /></LocaleProvider>);
+    const statement = await screen.findByLabelText('Nội dung mục tiêu');
+    fireEvent.change(statement, { target: { value: 'My English educational objective' } });
+    fireEvent.change(screen.getByLabelText('Minh chứng mục tiêu: hoạt động'), { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu bản nháp Foundation' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Cần mã hoạt động cho minh chứng của mục tiêu 1.');
+    fireEvent.click(screen.getByRole('button', { name: 'Switch English' }));
+    const englishStatement = await screen.findByLabelText('Objective statement');
+    expect(englishStatement).toBe(statement);
+    expect(englishStatement).toHaveValue('My English educational objective');
+    expect(screen.getByLabelText('Objective evidence activity')).toHaveValue('');
+  });
 
   it('shows actionable mapping errors and labelled mobile-friendly controls', async () => {
     render(<FoundationDefinitionEditor missionId={missionId} missionTitle="Workplace requests" prerequisiteOptions={[]} />);
@@ -60,7 +85,7 @@ describe('FoundationDefinitionEditor', () => {
   it('offers retry after initial load failure', async () => {
     vi.mocked(curriculumFoundationClient.getDraft).mockRejectedValueOnce(new Error('Offline')).mockResolvedValueOnce(draft);
     render(<FoundationDefinitionEditor missionId={missionId} missionTitle="Workplace requests" prerequisiteOptions={[]} />);
-    expect(await screen.findByRole('alert')).toHaveTextContent(/offline/i);
+    expect(await screen.findByRole('alert')).toHaveTextContent('Something went wrong. Please try again.');
     fireEvent.click(screen.getByRole('button', { name: /retry loading/i }));
     expect(await screen.findByText(/revision 2/i)).toBeInTheDocument();
   });

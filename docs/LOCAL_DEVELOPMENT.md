@@ -232,6 +232,7 @@ powershell -ExecutionPolicy Bypass -File ./scripts/backup-local.ps1 `
 
 **What it does:**
 - Dumps PostgreSQL tables into `database.sql` (using local `pg_dump` or containerized fallback).
+- The fallback runs a disposable `postgres:17-alpine` client against the host, port and database in the supplied URL. Loopback hosts use `host.docker.internal`; it does not select a Compose database implicitly. The image must already exist locally (`--pull=never`); normal Compose setup provides it. Credentials travel through `PGPASSWORD`, not Docker command arguments.
 - Copies all contents of `WORKLINGO_DATA_DIR` into a `data/` subdirectory.
 - Generates `manifest.json` containing SHA-256 hashes of every backed-up file.
 - Enforces path traversal safety (rejects paths outside `-AllowedRoot` if specified).
@@ -255,6 +256,14 @@ If database restore fails, discard the isolated target schema/directory and retr
 ---
 
 ## 9. Troubleshooting
+
+API tests load the root `.env` before collecting suites. An explicit `TEST_DATABASE_URL` takes precedence over `DATABASE_URL`; isolated test schemas are still used. For a local server on another port (for example 55432), configure its URL instead of changing test assertions. Automated AI/audio providers remain fake regardless of local credentials.
+
+Playwright sets `WORKLINGO_E2E_MODE=true` for its web server and uses `.next-e2e` instead of `.next`. This keeps its development-server lock and API rewrites separate from `pnpm dev` at port 3000. Next.js may update generated type references while either server runs.
+
+The root test command runs packages sequentially. API recovery integration starts disposable PostgreSQL clients; running it alongside web unit workers can exhaust local resources and exceed existing test timeouts. Individual assertions, timeouts and suite coverage remain unchanged.
+
+`pnpm verify` runs integration suites once through the API `test` command (which runs all Vitest files), followed by build and all browser journeys. `pnpm --filter @worklingo/api test:integration` remains available for focused diagnosis; the gate avoids rerunning that same directory a second time.
 
 ### 1. Port Conflicts (3000 or 4000 already in use)
 If port 4000 or 3000 is occupied by a previously running process:
