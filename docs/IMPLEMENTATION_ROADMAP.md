@@ -2,7 +2,7 @@
 
 ## UI internationalization — 2026-10-14
 
-Explicit user mandate: production Vietnamese / English UI across auth, learner, IELTS and Admin, preserving URLs and immutable educational data. Canonical [design](superpowers/specs/2026-10-14-i18n-design.md), [execution plan](superpowers/plans/2026-10-14-i18n.md), [developer guide](I18N.md), and [verification report](I18N_IMPLEMENTATION_REPORT.md). Foundation, account/guest persistence and UI migration are implemented in the current dirty feature checkout; independent review fixes and feature QA are verified; the repository release gate remains blocked by the preexisting API/curriculum regressions documented in the report. This entry does not mark release or public deployment approved.
+Explicit user mandate: production Vietnamese / English UI across auth, learner, IELTS and Admin, preserving URLs and immutable educational data. Canonical [design](superpowers/specs/2026-10-14-i18n-design.md), [execution plan](superpowers/plans/2026-10-14-i18n.md), [developer guide](I18N.md), and original [feature verification report](I18N_IMPLEMENTATION_REPORT.md). Foundation, account/guest persistence and UI migration are implemented, with independent review fixes and feature QA. The subsequent [integration record](GIT_INTEGRATION_2026-10-15.md) records the audit fixes and combined verification; the original feature report preserves its earlier baseline. This entry does not mark release or public deployment approved.
 
 ## Mục tiêu
 
