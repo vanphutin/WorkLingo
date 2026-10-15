@@ -18,6 +18,13 @@ const validEnvironment = {
 } satisfies NodeJS.ProcessEnv;
 
 describe('parseAppConfig', () => {
+  it('supports independent Discovery credentials and bounded evaluation output', () => {
+    const config = parseAppConfig({ ...validEnvironment, WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'discovery', DISCOVERY_API_KEY: 'synthetic-secret' });
+    expect(config.ai.languageEvaluation).toMatchObject({ provider: 'discovery', baseUrl: 'https://discovery-api.intern-ai.org.cn/v1', model: 'qwen3.8-27b' });
+    expect(config.ai.routing).toMatchObject({ defaultProvider: 'discovery', fallbackEnabled: true, maxOutputTokens: 2048 });
+    expect(() => parseAppConfig({ ...validEnvironment, WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'discovery' })).toThrow('DISCOVERY_API_KEY');
+    expect(() => parseAppConfig({ ...validEnvironment, AI_MAX_OUTPUT_TOKENS: '999999' })).toThrow('AI_MAX_OUTPUT_TOKENS');
+  });
   it.each(['DATABASE_URL', 'SESSION_SECRET', 'WORKLINGO_DATA_DIR'] as const)(
     'rejects a missing %s',
     (key) => {
@@ -50,6 +57,7 @@ describe('parseAppConfig', () => {
     const config = parseAppConfig(validEnvironment);
 
     expect(config.ai).toEqual({
+      routing: { enabled: true, defaultProvider: 'discovery', fallbackEnabled: true, maxOutputTokens: 2048, discovery: { baseUrl: 'https://discovery-api.intern-ai.org.cn/v1', model: 'qwen3.8-27b' }, openai: {} },
       draftRetentionDays: 30,
       fakeEvaluationRateLimitFailures: 0,
       languageEvaluation: { provider: 'fake' },

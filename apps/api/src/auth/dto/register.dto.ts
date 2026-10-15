@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsIn, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import type { UiLocale } from '@worklingo/contracts';
 
 export class RegisterDto {
   @ApiProperty({ example: 'An Nguyen', maxLength: 80, minLength: 2 })
@@ -18,6 +19,13 @@ export class RegisterDto {
     typeof value === 'string' ? value.trim().toLowerCase() : value,
   )
   email!: string;
+
+  @ApiPropertyOptional({ enum: ['vi', 'en'], default: 'vi' })
+  @IsOptional()
+  @IsIn(['vi', 'en'])
+  // IsOptional skips null; an explicit null is invalid rather than omitted.
+  @Transform(({ value }: { value: unknown }) => value === null ? '' : value)
+  locale?: UiLocale;
 
   @ApiProperty({ maxLength: 128, minLength: 12, writeOnly: true })
   @IsString()

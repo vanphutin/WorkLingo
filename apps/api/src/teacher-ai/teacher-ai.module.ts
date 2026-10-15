@@ -58,7 +58,7 @@ class TeacherAiHandlerRegistration implements OnModuleInit {
         const ai = config.get('ai', { infer: true });
         return {
           languageProviderConfigVersion: '1',
-          languageProviderModel: ai.languageEvaluation.provider === 'openai-compatible'
+          languageProviderModel: ai.languageEvaluation.provider !== 'fake'
             ? ai.languageEvaluation.model
             : null,
           languageProviderName: ai.languageEvaluation.provider,

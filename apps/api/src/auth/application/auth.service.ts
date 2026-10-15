@@ -49,6 +49,7 @@ export class AuthService {
       const user = await this.users.createLearner({
         displayName: input.displayName.trim(),
         email: input.email.trim().toLowerCase(),
+        locale: input.locale ?? 'vi',
         passwordHash,
       });
       const result = await this.createAuthenticatedSession(this.users.toAuthUser(user));

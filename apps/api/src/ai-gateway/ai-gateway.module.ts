@@ -16,12 +16,18 @@ import { FakeLanguageEvaluationAdapter } from './infrastructure/fake-language-ev
 import { FakeSpeechToTextAdapter } from './infrastructure/fake-speech-to-text.adapter.js';
 import { MicrosoftSpeechAdapter } from './infrastructure/microsoft-speech.adapter.js';
 import { OpenAiLanguageEvaluationAdapter } from './infrastructure/openai-language-evaluation.adapter.js';
+import { DiscoveryLanguageEvaluationAdapter } from './infrastructure/discovery-language-evaluation.adapter.js';
+import { RoutingLanguageEvaluationAdapter, type EvaluationRegistration } from './infrastructure/routing-language-evaluation.adapter.js';
+import { AiSettingsService } from './application/ai-settings.service.js';
+import { AdminAiSettingsController, AiSettingsController } from './ai-settings.controller.js';
 import { MicrosoftTextToSpeechAdapter } from './infrastructure/microsoft-tts.adapter.js';
 
 const AZURE_TEXT_TO_SPEECH_PORT = Symbol('AZURE_TEXT_TO_SPEECH_PORT');
 
 @Module({
+  controllers: [AiSettingsController, AdminAiSettingsController],
   providers: [
+    AiSettingsService,
     {
       provide: SpeechToTextPort,
       inject: [ConfigService],
@@ -38,19 +44,26 @@ const AZURE_TEXT_TO_SPEECH_PORT = Symbol('AZURE_TEXT_TO_SPEECH_PORT');
     },
     {
       provide: LanguageEvaluationPort,
-      inject: [ConfigService],
-      useFactory: (config: ConfigService<AppConfig, true>): LanguageEvaluationPort => {
+      inject: [ConfigService, AiSettingsService],
+      useFactory: (config: ConfigService<AppConfig, true>, settings: AiSettingsService): LanguageEvaluationPort => {
         const ai = config.get('ai', { infer: true });
-        return ai.languageEvaluation.provider === 'openai-compatible'
-          ? new OpenAiLanguageEvaluationAdapter({
-              apiKey: ai.languageEvaluation.apiKey,
-              baseUrl: ai.languageEvaluation.baseUrl,
-              model: ai.languageEvaluation.model,
-              timeoutMs: ai.providerTimeoutMs,
-            })
-          : new FakeLanguageEvaluationAdapter({
-              rateLimitFailures: ai.fakeEvaluationRateLimitFailures,
-            });
+        if (ai.languageEvaluation.provider === 'fake') return new FakeLanguageEvaluationAdapter({ rateLimitFailures: ai.fakeEvaluationRateLimitFailures });
+        if (!ai.routing.enabled) {
+          const selected = ai.languageEvaluation;
+          const directConfig = { apiKey: selected.apiKey, baseUrl: selected.baseUrl, model: selected.model, timeoutMs: ai.providerTimeoutMs, maxOutputTokens: ai.routing.maxOutputTokens };
+          return selected.provider === 'openai-compatible' ? new OpenAiLanguageEvaluationAdapter(directConfig) : new DiscoveryLanguageEvaluationAdapter(directConfig);
+        }
+        const providers: Partial<Record<'discovery' | 'openai', EvaluationRegistration>> = {};
+        const { discovery, openai, maxOutputTokens } = ai.routing;
+        if (discovery.apiKey) providers.discovery = {
+          model: discovery.model,
+          adapter: new DiscoveryLanguageEvaluationAdapter({ ...discovery, apiKey: discovery.apiKey, timeoutMs: ai.providerTimeoutMs, maxOutputTokens }),
+        };
+        if (openai.apiKey && openai.baseUrl && openai.model) providers.openai = {
+          model: openai.model,
+          adapter: new OpenAiLanguageEvaluationAdapter({ apiKey: openai.apiKey, baseUrl: openai.baseUrl, model: openai.model, timeoutMs: ai.providerTimeoutMs, maxOutputTokens }),
+        };
+        return new RoutingLanguageEvaluationAdapter(providers, settings);
       },
     },
     FakeTextToSpeechAdapter,

@@ -4,6 +4,14 @@ import { z } from 'zod';
 
 export interface AppConfig {
   readonly ai: {
+    readonly routing: {
+      readonly enabled: boolean;
+      readonly defaultProvider: 'discovery' | 'openai';
+      readonly fallbackEnabled: boolean;
+      readonly maxOutputTokens: number;
+      readonly discovery: { readonly apiKey?: string; readonly baseUrl: string; readonly model: string };
+      readonly openai: { readonly apiKey?: string; readonly baseUrl?: string; readonly model?: string };
+    };
     readonly draftRetentionDays: number;
     readonly fakeEvaluationRateLimitFailures: number;
     readonly languageEvaluation:
@@ -12,7 +20,7 @@ export interface AppConfig {
           readonly apiKey: string;
           readonly baseUrl: string;
           readonly model: string;
-          readonly provider: 'openai-compatible';
+          readonly provider: 'openai-compatible' | 'discovery';
         };
     readonly maxAttempts: number;
     readonly providerTimeoutMs: number;
@@ -63,6 +71,13 @@ const optionalNonBlankString = z.preprocess(
 const optionalUrl = z.preprocess(blankAsUndefined, z.url().optional());
 
 const environmentSchema = z.object({
+  AI_ROUTING_ENABLED: z.enum(['true', 'false']).default('true'),
+  AI_DEFAULT_PROVIDER: z.enum(['discovery', 'openai']).optional(),
+  AI_FALLBACK_ENABLED: z.enum(['true', 'false']).default('true'),
+  AI_MAX_OUTPUT_TOKENS: z.coerce.number().int().min(256).max(4096).default(2048),
+  DISCOVERY_API_KEY: optionalNonBlankString,
+  DISCOVERY_BASE_URL: z.preprocess(blankAsUndefined, z.url().default('https://discovery-api.intern-ai.org.cn/v1')),
+  DISCOVERY_MODEL: z.preprocess(blankAsUndefined, z.string().min(1).default('qwen3.8-27b')),
   API_PORT: z.coerce.number().int().min(1).max(65_535).default(4000),
   DATABASE_URL: z.string().min(1),
   JOB_WORKER_ENABLED: z.enum(['true', 'false']).default('false'),
@@ -95,7 +110,7 @@ const environmentSchema = z.object({
   WORKLINGO_ADMIN_PASSWORD: z.string().min(8).optional(),
   WORKLINGO_DATA_DIR: z.string().min(1),
   WORKLINGO_E2E_MODE: z.enum(['true', 'false']).default('false'),
-  WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: z.enum(['fake', 'openai-compatible']).default('fake'),
+  WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: z.enum(['fake', 'openai-compatible', 'discovery']).default('fake'),
   WORKLINGO_STT_PROVIDER: z.enum(['fake', 'microsoft']).default('fake'),
   WORKLINGO_TTS_PROVIDER: z
     .enum(['fake', 'fake-tts', 'microsoft', 'azure-speech'])
@@ -103,6 +118,13 @@ const environmentSchema = z.object({
   WORKLINGO_TEST_FAKE_EVALUATION_FAILURES: z.coerce.number().int().min(0).max(5).default(0),
   WRITING_DRAFT_RETENTION_DAYS: z.coerce.number().int().min(1).max(365).default(30),
 }).superRefine((environment, context) => {
+  if (environment.WORKLINGO_LANGUAGE_EVALUATION_PROVIDER === 'discovery' && !environment.DISCOVERY_API_KEY) {
+    context.addIssue({ code: 'custom', path: ['DISCOVERY_API_KEY'], message: 'is required for Discovery evaluation' });
+  }
+  const openaiFields = [environment.OPENAI_API_KEY, environment.OPENAI_BASE_URL, environment.OPENAI_MODEL];
+  if (openaiFields.some(Boolean) && !openaiFields.every(Boolean)) {
+    context.addIssue({ code: 'custom', path: ['OPENAI_API_KEY'], message: 'OpenAI credentials, base URL and model must be configured together' });
+  }
   if (environment.NODE_ENV === 'production') {
     if (!environment.RATE_LIMIT_HASH_KEY || environment.RATE_LIMIT_HASH_KEY.length < 16) {
       context.addIssue({
@@ -184,12 +206,30 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
         model: result.data.OPENAI_MODEL as string,
         provider: 'openai-compatible' as const,
       }
-    : { provider: 'fake' as const };
+    : result.data.WORKLINGO_LANGUAGE_EVALUATION_PROVIDER === 'discovery'
+      ? { apiKey: result.data.DISCOVERY_API_KEY as string, baseUrl: result.data.DISCOVERY_BASE_URL, model: result.data.DISCOVERY_MODEL, provider: 'discovery' as const }
+      : { provider: 'fake' as const };
 
   return {
     adminEmail: result.data.WORKLINGO_ADMIN_EMAIL,
     adminPassword: result.data.WORKLINGO_ADMIN_PASSWORD,
     ai: {
+      routing: {
+        enabled: result.data.AI_ROUTING_ENABLED === 'true',
+        defaultProvider: result.data.AI_DEFAULT_PROVIDER ?? (result.data.WORKLINGO_LANGUAGE_EVALUATION_PROVIDER === 'openai-compatible' ? 'openai' : 'discovery'),
+        fallbackEnabled: result.data.AI_FALLBACK_ENABLED === 'true',
+        maxOutputTokens: result.data.AI_MAX_OUTPUT_TOKENS,
+        discovery: {
+          ...(result.data.DISCOVERY_API_KEY ? { apiKey: result.data.DISCOVERY_API_KEY } : {}),
+          baseUrl: result.data.DISCOVERY_BASE_URL,
+          model: result.data.DISCOVERY_MODEL,
+        },
+        openai: {
+          ...(result.data.OPENAI_API_KEY ? { apiKey: result.data.OPENAI_API_KEY } : {}),
+          ...(result.data.OPENAI_BASE_URL ? { baseUrl: result.data.OPENAI_BASE_URL } : {}),
+          ...(result.data.OPENAI_MODEL ? { model: result.data.OPENAI_MODEL } : {}),
+        },
+      },
       draftRetentionDays: result.data.WRITING_DRAFT_RETENTION_DAYS,
       fakeEvaluationRateLimitFailures: result.data.WORKLINGO_TEST_FAKE_EVALUATION_FAILURES,
       languageEvaluation,

@@ -197,7 +197,8 @@ export class EvaluationService {
       return { id: existing.id, score: existing.score };
     }
 
-    const providerEvaluation = await this.language.evaluate({
+    const evaluationInput = {
+      routing: { userId: attempt.learnerId },
       activityType: activity.activityType,
       learnerResponse: learnerResponse.trim(),
       levelCode: attempt.session.mission.level.code,
@@ -206,7 +207,11 @@ export class EvaluationService {
       requiredPhrases: activity.payload.requiredPhrases,
       rubricId: rubric.id,
       rubricVersion: rubric.version,
-    });
+    };
+    const routed = this.language.evaluateWithProvenance
+      ? await this.language.evaluateWithProvenance(evaluationInput)
+      : { evaluation: await this.language.evaluate(evaluationInput), provenance: null };
+    const providerEvaluation = routed.evaluation;
     const aggregated = aggregateEvaluation(
       rubric,
       providerEvaluation,
@@ -229,9 +234,9 @@ export class EvaluationService {
             feedback: aggregated.feedback as Prisma.InputJsonValue,
             inputHash,
             lessonVersionId: attempt.session.lessonVersionId,
-            providerConfigVersion: this.options.languageProviderConfigVersion ?? '1',
-            providerModel: this.options.languageProviderModel ?? null,
-            providerName: this.options.languageProviderName ?? 'fake-language-evaluation',
+            providerConfigVersion: routed.provenance?.providerConfigVersion ?? this.options.languageProviderConfigVersion ?? '1',
+            providerModel: routed.provenance?.providerModel ?? this.options.languageProviderModel ?? null,
+            providerName: routed.provenance?.providerName ?? this.options.languageProviderName ?? 'fake-language-evaluation',
             rubricId: rubric.id,
             rubricVersion: rubric.version,
             score: aggregated.score,

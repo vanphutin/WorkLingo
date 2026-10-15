@@ -1,8 +1,11 @@
 import { z } from 'zod';
 
+import { uiLocaleSchema } from './locale-preference.contracts.ts';
+
 export const registerInputSchema = z.object({
   displayName: z.string().trim().min(2).max(80),
   email: z.string().trim().toLowerCase().email(),
+  locale: uiLocaleSchema.optional(),
   password: z.string().min(12).max(128),
 });
 
@@ -15,6 +18,7 @@ export const authUserSchema = z.object({
   displayName: z.string(),
   email: z.string().email(),
   id: z.string().uuid(),
+  locale: uiLocaleSchema.optional(),
   onboardingStatus: z.enum(['PENDING', 'COMPLETE']).nullable(),
   roles: z.array(z.enum(['LEARNER', 'CONTENT_ADMIN', 'SYSTEM_ADMIN'])),
 });

@@ -39,6 +39,7 @@ model User {
   createdAt                  DateTime                   @default(now())
   updatedAt                  DateTime                   @updatedAt
   profile                    LearnerProfile?
+  aiRoutingSetting           AiRoutingSetting?
   sessions                   UserSession[]
   learningSessions           LearningSession[]
   createdContentImports      ContentImport[]            @relation("ContentImportCreatedBy")
@@ -66,6 +67,15 @@ model User {
   ieltsBandJourneys          IeltsBandJourney[]
   ieltsMockAttempts          IeltsMockAttempt[]
   ieltsMockReviews           IeltsMockReview[]          @relation("IeltsMockReviewReviewer")
+}
+
+model AiRoutingSetting {
+  id                String   @id
+  userId            String?  @unique @db.Uuid
+  preferredProvider String   @default("system-default")
+  fallbackEnabled   Boolean  @default(true)
+  updatedAt         DateTime @updatedAt
+  user              User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model LearnerProfile {
