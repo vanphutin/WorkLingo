@@ -8,7 +8,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@nestjs/platform-express>multer": "2.3.0"
+      "@nestjs/platform-express>multer": "2.3.0",
+      "vitest>tinypool": "2.1.2"
     }
   },
   "scripts": {
