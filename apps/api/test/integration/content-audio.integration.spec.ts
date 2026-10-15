@@ -13,6 +13,7 @@ import { canonicalLessonSource } from '@worklingo/test-fixtures';
 
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
+import { JobRunnerService } from '../../src/jobs/application/job-runner.service.js';
 import { seedContentAdmin } from '../../src/users/infrastructure/seed-content-admin.js';
 
 describe('Content audio generation lifecycle and authorized streaming', () => {
@@ -148,6 +149,9 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
     // 4. Poll job status via GET /jobs/:id
     let jobCompleted = false;
     for (let i = 0; i < 20; i++) {
+      // The test configuration disables periodic workers; advance the real
+      // runner explicitly if the enqueue nudge ran before DB availableAt.
+      await app.get(JobRunnerService).runOnce();
       const jobRes = await request(app.getHttpServer())
         .get(`/api/v1/jobs/${jobId}`)
         .set('Cookie', adminCookie)
@@ -326,6 +330,7 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
         })
         .expect(202);
       for (let attempt = 0; attempt < 20; attempt += 1) {
+        await app.get(JobRunnerService).runOnce();
         const job = await request(app.getHttpServer())
           .get(`/api/v1/jobs/${response.body.jobId}`)
           .set('Cookie', adminCookie)
