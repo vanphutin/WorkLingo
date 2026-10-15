@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mandate Steward"
+  short_description: "Evidence-backed WorkLingo improvement governance"
+  default_prompt: "Use $mandate-steward to audit the requested WorkLingo scope and record evidence-backed proposals in mandate/ for human triage."
