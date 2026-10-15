@@ -1,5 +1,5 @@
 import { ConflictException, Inject, Injectable, NotFoundException, Optional } from '@nestjs/common';
-import { Prisma, type JobStatus as PrismaJobStatus } from '@prisma/client';
+import type { Prisma, JobStatus as PrismaJobStatus } from '@prisma/client';
 import type { JobDto, JobStatus } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
@@ -62,39 +62,35 @@ export class JobsService extends JobDispatcher {
     transaction?: Prisma.TransactionClient,
   ): Promise<JobReference> {
     const database = transaction ?? this.database;
-    try {
-      const job = await database.job.create({
-        data: {
-          type: input.type,
-          payload: input.payload as Prisma.InputJsonValue,
-          createdById: input.createdById,
-          idempotencyKey: input.idempotencyKey,
-          maxAttempts: input.maxAttempts ?? this.defaults?.maxAttempts ?? 3,
-          ...(input.contentImportId ? { contentImportId: input.contentImportId } : {}),
-          ...(input.resourceId ? { resourceId: input.resourceId } : {}),
-          ...(input.resourceType ? { resourceType: input.resourceType } : {}),
-        },
+    // ON CONFLICT must handle replays without poisoning a caller's transaction.
+    const [created] = await database.job.createManyAndReturn({
+      skipDuplicates: true,
+      data: {
+        type: input.type,
+        payload: input.payload as Prisma.InputJsonValue,
+        createdById: input.createdById,
+        idempotencyKey: input.idempotencyKey,
+        maxAttempts: input.maxAttempts ?? this.defaults?.maxAttempts ?? 3,
+        ...(input.contentImportId ? { contentImportId: input.contentImportId } : {}),
+        ...(input.resourceId ? { resourceId: input.resourceId } : {}),
+        ...(input.resourceType ? { resourceType: input.resourceType } : {}),
+      },
+    });
+    const job = created ?? await database.job.findUnique({
+      where: { idempotencyKey: input.idempotencyKey },
+    });
+    if (!job
+      || job.createdById !== input.createdById
+      || job.type !== input.type
+      || job.resourceType !== (input.resourceType ?? null)
+      || job.resourceId !== (input.resourceId ?? null)) {
+      throw new ConflictException({
+        code: 'IDEMPOTENCY_KEY_REUSED',
+        message: 'Idempotency key was already used for different work.',
+        statusCode: 409,
       });
-      return { id: job.id, status: job.status, type: job.type };
-    } catch (error) {
-      if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== 'P2002') {
-        throw error;
-      }
-      const existing = await database.job.findUnique({
-        where: { idempotencyKey: input.idempotencyKey },
-      });
-      if (!existing
-        || existing.type !== input.type
-        || existing.resourceType !== (input.resourceType ?? null)
-        || existing.resourceId !== (input.resourceId ?? null)) {
-        throw new ConflictException({
-          code: 'IDEMPOTENCY_KEY_REUSED',
-          message: 'Idempotency key was already used for different work.',
-          statusCode: 409,
-        });
-      }
-      return { id: existing.id, status: existing.status, type: existing.type };
     }
+    return { id: job.id, status: job.status, type: job.type };
   }
 
   async claimNext(workerId: string, now: Date, leaseMs: number): Promise<ClaimedJob | null> {
@@ -257,12 +253,15 @@ export class JobsService extends JobDispatcher {
           statusCode: 409,
         });
       }
-      const updated = await transaction.job.update({
-        where: { id: job.id },
+      const updated = await transaction.job.updateMany({
+        where: {
+          id: job.id, createdById: actorId, status: 'FAILED', retryable: true,
+          attemptCount: job.attemptCount, maxAttempts: job.maxAttempts,
+        },
         data: {
           status: 'PENDING',
           availableAt: new Date(),
-          maxAttempts: job.maxAttempts + 1,
+          maxAttempts: { increment: 1 },
           retryable: false,
           completedAt: null,
           error: null,
@@ -270,7 +269,14 @@ export class JobsService extends JobDispatcher {
           errorSummary: null,
         },
       });
-      return { id: updated.id, status: updated.status, type: updated.type };
+      if (updated.count === 0) {
+        throw new ConflictException({
+          code: 'JOB_NOT_RETRYABLE',
+          message: 'This job cannot be retried.',
+          statusCode: 409,
+        });
+      }
+      return { id: job.id, status: 'PENDING', type: job.type };
     });
   }
 
