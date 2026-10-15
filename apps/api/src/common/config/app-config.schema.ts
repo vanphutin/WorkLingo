@@ -210,6 +210,12 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
       ? { apiKey: result.data.DISCOVERY_API_KEY as string, baseUrl: result.data.DISCOVERY_BASE_URL, model: result.data.DISCOVERY_MODEL, provider: 'discovery' as const }
       : { provider: 'fake' as const };
 
+  // Speaking may transcribe once, then try each evaluation provider once.
+  // Leave time to persist the result before another worker can reclaim the job.
+  const evaluationLeaseMs = languageEvaluation.provider === 'fake' && speechToText.provider === 'fake'
+    ? 0
+    : result.data.PROVIDER_TIMEOUT_MS * 3 + 10_000;
+
   return {
     adminEmail: result.data.WORKLINGO_ADMIN_EMAIL,
     adminPassword: result.data.WORKLINGO_ADMIN_PASSWORD,
@@ -245,7 +251,7 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
     dataDir: path.resolve(result.data.WORKLINGO_DATA_DIR),
     databaseUrl: result.data.DATABASE_URL,
     jobs: {
-      leaseMs: result.data.JOB_WORKER_LEASE_MS,
+      leaseMs: Math.max(result.data.JOB_WORKER_LEASE_MS, evaluationLeaseMs),
       pollIntervalMs: result.data.JOB_WORKER_POLL_INTERVAL_MS,
       workerEnabled: result.data.JOB_WORKER_ENABLED === 'true',
     },

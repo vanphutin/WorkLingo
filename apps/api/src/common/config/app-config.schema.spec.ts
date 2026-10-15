@@ -18,6 +18,29 @@ const validEnvironment = {
 } satisfies NodeJS.ProcessEnv;
 
 describe('parseAppConfig', () => {
+  it.each(['30000', '120000'])('keeps the worker lease beyond transcription and both AI calls at timeout %s', (timeout) => {
+    const config = parseAppConfig({
+      ...validEnvironment,
+      WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'discovery',
+      DISCOVERY_API_KEY: 'synthetic-secret',
+      PROVIDER_TIMEOUT_MS: timeout,
+      JOB_WORKER_LEASE_MS: '5000',
+    });
+
+    expect(config.jobs.leaseMs).toBeGreaterThan(Number(timeout) * 3);
+  });
+
+  it('preserves a configured lease that already covers the provider chain', () => {
+    const config = parseAppConfig({
+      ...validEnvironment,
+      WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'discovery',
+      DISCOVERY_API_KEY: 'synthetic-secret',
+      JOB_WORKER_LEASE_MS: '200000',
+    });
+
+    expect(config.jobs.leaseMs).toBe(200_000);
+  });
+
   it('supports independent Discovery credentials and bounded evaluation output', () => {
     const config = parseAppConfig({ ...validEnvironment, WORKLINGO_LANGUAGE_EVALUATION_PROVIDER: 'discovery', DISCOVERY_API_KEY: 'synthetic-secret' });
     expect(config.ai.languageEvaluation).toMatchObject({ provider: 'discovery', baseUrl: 'https://discovery-api.intern-ai.org.cn/v1', model: 'qwen3.8-27b' });

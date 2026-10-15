@@ -86,6 +86,8 @@ AI_MAX_OUTPUT_TOKENS=2048
 
 Timeout mặc định giữ **30 giây mỗi provider**. Một lượt job có tối đa hai call khi fallback bật. `PROVIDER_MAX_ATTEMPTS` hiện có vẫn giới hạn retry job, mặc định 3, vì vậy trường hợp lỗi có thể lên đến **6 call cho một job**; retries không miễn phí. Không tự đổi retry STT/TTS để tối ưu LLM. Nếu cần chặn retry rộng hơn, cấu hình này tác động tất cả provider jobs.
 
+Với evaluation hoặc STT thật, lease hiệu lực là giá trị lớn hơn giữa `JOB_WORKER_LEASE_MS` và `3 × PROVIDER_TIMEOUT_MS + 10.000 ms`: một lần chuyển giọng nói thành văn bản, hai nhà cung cấp evaluation và thời gian lưu kết quả. Timeout mặc định cho lease tối thiểu 100 giây; cấu hình lease dài hơn vẫn được giữ. Đây là ngân sách có giới hạn, không phải heartbeat gia hạn khi database hoặc event loop bị treo. Các provider hoàn toàn giả lập giữ lease cấu hình cũ.
+
 Chưa có ngân sách tháng bằng số do người dùng chưa đưa mức tiền. Token cap là giới hạn request, **không phải monthly billing cap**. Khi có user thật cần theo dõi usage/billing phía Discovery và OpenAI, quyết định ngân sách rồi bổ sung ledger/budget guard bền vững; không coi phép tính ví dụ là hóa đơn đã đo.
 
 Input gửi ra ngoài chỉ gồm response/transcript và context rubric/lesson cần đánh giá; không gửi account ID, email, cookie hoặc raw recording trong payload LLM. Provider timeout/error được chuẩn hóa và không lưu raw response vào audit report. Microsoft vẫn có luồng audio/consent/retention riêng.
