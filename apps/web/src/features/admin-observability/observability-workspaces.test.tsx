@@ -6,6 +6,7 @@ import { adminAnalyticsClient } from '../../lib/api/admin-analytics-client';
 import { adminOperationsClient } from '../../lib/api/admin-operations-client';
 import { AnalyticsWorkspace } from './analytics-workspace';
 import { OperationsWorkspace } from './operations-workspace';
+import { LocaleProvider } from '../../i18n/provider';
 
 describe('admin observability workspaces', () => {
   beforeEach(() => {
@@ -32,6 +33,21 @@ describe('admin observability workspaces', () => {
   });
 
   afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+
+  it('localizes operations filters while retaining API status values', async () => {
+    render(<LocaleProvider initialLocale="vi"><OperationsWorkspace /></LocaleProvider>);
+    expect(await screen.findByText('Độ dài hàng đợi')).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Chờ thử lại' })).toHaveValue('RETRY_WAIT');
+    expect(screen.getByText('Không có tác vụ phù hợp với bộ lọc.')).toBeInTheDocument();
+  });
+
+  it('localizes aggregate metrics and definitions without translating machine event codes', async () => {
+    render(<LocaleProvider initialLocale="vi"><AnalyticsWorkspace /></LocaleProvider>);
+    expect(await screen.findByText('Tỷ lệ quay lại tuần 1')).toBeInTheDocument();
+    expect(screen.getByText('6/10 học viên đủ thời gian theo dõi')).toBeInTheDocument();
+    expect(screen.getByText('LEARNING_SESSION_COMPLETED')).toBeInTheDocument();
+    expect(screen.getByText('Một phiên học đã hoàn thành.')).toBeInTheDocument();
+  });
 
   it('renders queue health and an honest empty state', async () => {
     render(<OperationsWorkspace />);

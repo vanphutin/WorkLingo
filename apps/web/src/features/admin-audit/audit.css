@@ -14,19 +14,19 @@
   gap: 1rem;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #d9ddd8;
+  border-bottom: 1px solid var(--border);
 }
 
 .audit-header h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #1a241e;
+  color: var(--foreground);
   margin: 0;
 }
 
 .audit-filters-card {
-  background: #ffffff;
-  border: 1px solid #d9ddd8;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -46,7 +46,7 @@
 .audit-filter-item label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #2e3830;
+  color: var(--foreground);
   margin-bottom: 0.375rem;
 }
 
@@ -56,14 +56,14 @@
   min-height: 44px;
   padding: 0.5rem 0.75rem;
   font-size: 1rem; /* 16px minimum */
-  border: 1px solid #c2c8c1;
+  border: 1px solid var(--border);
   border-radius: 0.375rem;
-  background: #ffffff;
-  color: #1a241e;
+  background: var(--surface);
+  color: var(--foreground);
 }
 
 .audit-filter-input:focus {
-  outline: 2px solid #17643a;
+  outline: 2px solid var(--primary);
   outline-offset: 1px;
 }
 
@@ -82,15 +82,15 @@
 }
 
 .audit-card {
-  background: #ffffff;
-  border: 1px solid #d9ddd8;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1.25rem;
   transition: border-color 0.15s ease;
 }
 
 .audit-card:hover {
-  border-color: #aeb6ac;
+  border-color: var(--control-border);
 }
 
 .audit-card-top {
@@ -109,13 +109,13 @@
   font-size: 0.8rem;
   font-weight: 700;
   font-family: monospace;
-  background-color: #e8f4ec;
-  color: #17643a;
+  background-color: var(--primary-soft);
+  color: var(--primary);
 }
 
 .audit-timestamp {
   font-size: 0.875rem;
-  color: #556258;
+  color: var(--muted);
 }
 
 .audit-card-body {
@@ -123,18 +123,18 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.75rem;
   font-size: 0.9rem;
-  color: #2e3830;
+  color: var(--foreground);
   margin-bottom: 0.75rem;
 }
 
 .audit-meta-item strong {
   display: inline-block;
   margin-right: 0.25rem;
-  color: #1a241e;
+  color: var(--foreground);
 }
 
 .audit-diff-section {
-  background: #f7f6f2;
+  background: var(--background);
   border-radius: 0.375rem;
   padding: 0.75rem;
   font-size: 0.85rem;
@@ -146,7 +146,7 @@
 .audit-diff-details summary {
   cursor: pointer;
   font-weight: 600;
-  color: #17643a;
+  color: var(--primary);
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -159,5 +159,5 @@
   gap: 1rem;
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid #d9ddd8;
+  border-top: 1px solid var(--border);
 }

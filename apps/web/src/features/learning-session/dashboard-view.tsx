@@ -1,5 +1,11 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { localizedError } from '../../i18n/errors';
+import { formatNumber } from '../../i18n/translator';
+import type { Translator } from '../../i18n/translator';
+import { learningSessionMessages } from '../../i18n/messages/learningSession';
+
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
@@ -39,16 +45,16 @@ interface DashboardViewProps {
 const ALL_DURATIONS = [45, 60, 90, 120, 150] as const;
 const DEFAULT_DURATIONS = [45, 60] as const;
 
-function getDurationLabel(duration: number, isAvailable: boolean): string {
+function getDurationLabel(duration: number, isAvailable: boolean, t: Translator<typeof learningSessionMessages>): string {
   if (!isAvailable) {
-    return `${duration} minutes (Not enough practice available)`;
+    return t('durationUnavailable', { minutes: duration });
   }
-  if (duration === 60) return '60 minutes (Foundation default)';
-  if (duration === 45) return '45 minutes (Express)';
-  if (duration === 90) return '90 minutes (Deep Dive)';
-  if (duration === 120) return '120 minutes (Intensive)';
-  if (duration === 150) return '150 minutes (Mastery)';
-  return `${duration} minutes`;
+  if (duration === 60) return t('durationFoundation');
+  if (duration === 45) return t('durationExpress');
+  if (duration === 90) return t('durationDeep');
+  if (duration === 120) return t('durationIntensive');
+  if (duration === 150) return t('durationMastery');
+  return t('durationMinutes', { minutes: duration });
 }
 
 export function DashboardView({
@@ -70,6 +76,8 @@ export function DashboardView({
   roadmapError = null,
   onRetryRoadmap,
 }: DashboardViewProps) {
+  const t = useT('learningSession', learningSessionMessages);
+  const { locale } = useLocalePreference();
   const [availabilityOverride, setAvailabilityOverride] = useState<{
     source: readonly number[];
     durations: readonly number[];
@@ -81,8 +89,9 @@ export function DashboardView({
     ? preferredDuration
     : availableDurationsState.includes(60) ? 60 : availableDurationsState[0] ?? 60;
   const [isStarting, setIsStarting] = useState(false);
-  const [startError, setStartError] = useState<string | null>(null);
+  const [startError, setStartError] = useState<{ cause: unknown } | null>(null);
   const pendingSessionId = useRef<{ id: string; duration: number } | null>(null);
+  const resumableMission = roadmap?.items.find((item) => item.state === 'in_progress' && item.activeSessionId);
   useEffect(() => {
     if (pendingSessionId.current?.duration !== selectedDuration) pendingSessionId.current = null;
   }, [selectedDuration]);
@@ -111,7 +120,7 @@ export function DashboardView({
         const freshAvailable = (err as { availableDurations: number[] }).availableDurations;
         setAvailabilityOverride({ source: availableDurations, durations: freshAvailable });
       }
-      setStartError(err instanceof Error ? err.message : 'Failed to create session');
+      setStartError({ cause: err });
     } finally {
       setIsStarting(false);
     }
@@ -121,7 +130,7 @@ export function DashboardView({
     return (
       <main className="dashboard-container" aria-busy="true">
         <div className="status-card" role="status">
-          <p className="loading-indicator">Loading your dashboard and learning progress…</p>
+          <p className="loading-indicator">{t('dashboardLoading')}</p>
         </div>
       </main>
     );
@@ -131,11 +140,11 @@ export function DashboardView({
     return (
       <main className="dashboard-container">
         <div className="status-card error-card" role="alert">
-          <h2>Unable to load dashboard</h2>
-          <p className="error-message">{error}</p>
+          <h2>{t('dashboardError')}</h2>
+          <p className="error-message">{localizedError(error, locale)}</p>
           {onRetry && (
             <button type="button" className="retry-button" onClick={onRetry}>
-              Retry
+              {t('retry')}
             </button>
           )}
         </div>
@@ -146,44 +155,41 @@ export function DashboardView({
   return (
     <main className="dashboard-container">
       <header className="dashboard-header">
-        <span className="eyebrow">Workplace English - Foundation Slice</span>
-        <h1 className="dashboard-title">Learner Dashboard</h1>
-        {activeProgramName && <p>Active program: <strong>{activeProgramName}</strong></p>}
+        <span className="eyebrow">{t('learningSpace')}</span>
+        <h1 className="dashboard-title">{t('todayLearning')}</h1>
         <p className="dashboard-subtitle">
-          Structured workplace sessions covering listening, speaking, reading, and writing.
+          {t('dashboardDescription')}
         </p>
-        <nav className="dashboard-shortcuts" aria-label="Dashboard shortcuts">
-          <Link href="/programs">Explore learning programs</Link>
-          <Link href="/mastery">View Mastery Map, Memory Health and Error Bank</Link>
+        <nav className="dashboard-shortcuts" aria-label={t('dashboardShortcuts')}>
+          <Link href="/programs">{t('explorePrograms')}</Link>
+          <Link href="/mastery">{t('viewMastery')}</Link>
         </nav>
       </header>
 
       {startError && (
         <div className="form-error" role="alert">
-          {startError}
+          {localizedError(startError.cause, locale)}
         </div>
       )}
 
       <div className="dashboard-grid">
-        <OrientationDashboardCard />
-        <IeltsBridgeDashboardCard />
-        <IntegratedPracticeDashboardCard />
-        <IeltsMockDashboardCard />
-        <IeltsBandDashboardCard />
         <section className="dashboard-card next-mission-card" aria-labelledby="mission-heading">
-          <span className="card-tag">Current Mission</span>
-          <h2 id="mission-heading" className="mission-title">
-            {nextMissionTitle}
+          <span className="card-tag">{resumableMission ? t('continueWhereLeft') : t('currentMission')}</span>
+          <h2 id="mission-heading" className="mission-title" lang="en">
+            {resumableMission?.title ?? nextMissionTitle}
           </h2>
           <p className="mission-description">
-            Practice essential workplace introductions with simulated colleagues, decode email
-            messages, listen to team announcements, and write professional follow-ups.
+            {t('missionDescription')}
           </p>
 
-          <div className="session-launcher">
+          {resumableMission ? (
+            <Link className="primary-action-button inline-button" href={`/sessions/${resumableMission.activeSessionId}`}>
+              {t('continueSaved')}
+            </Link>
+          ) : <div className="session-launcher">
             <div className="field-group">
               <label htmlFor="session-duration-select" className="field-label">
-                Session duration:
+                {t('sessionDuration')}
               </label>
               <select
                 id="session-duration-select"
@@ -199,7 +205,7 @@ export function DashboardView({
                   const isAvailable = availableDurationsState.includes(duration);
                   return (
                     <option key={duration} value={duration} disabled={!isAvailable}>
-                      {getDurationLabel(duration, isAvailable)}
+                      {getDurationLabel(duration, isAvailable, t)}
                     </option>
                   );
                 })}
@@ -212,39 +218,42 @@ export function DashboardView({
               onClick={handleStart}
               disabled={isStarting || !availableDurationsState.includes(selectedDuration)}
             >
-              {isStarting ? 'Starting session…' : `Start ${selectedDuration}-Minute Session`}
+              {isStarting ? t('startingSession') : t('startSession', { minutes: selectedDuration })}
             </button>
-          </div>
-          {availableDurationsState.length === 0 && (
-            <p role="status">No sessions are available yet. Please check again later.</p>
+          </div>}
+          {!resumableMission && availableDurationsState.length === 0 && (
+            <p role="status">{t('noSessions')}</p>
           )}
         </section>
 
         <section className="dashboard-card progress-card" aria-labelledby="progress-heading">
-          <span className="card-tag">Progress Summary</span>
+          <span className="card-tag">{t('progressSummary')}</span>
           <h2 id="progress-heading" className="section-title">
-            Your Learning Journey
+            {t('learningJourney')}
           </h2>
 
           <div className="progress-stats">
+            {activeProgramName && <div className="stat-item stat-item-wide">
+              <span className="stat-label">{t('activeProgram')} <strong>{activeProgramName}</strong></span>
+            </div>}
             <div className="stat-item">
-              <span className="stat-label">Current Level</span>
+              <span className="stat-label">{t('currentLevel')}</span>
               <strong className="stat-value">{progress?.currentLevelCode ?? 'FOUNDATION_1'}</strong>
             </div>
 
             <div className="stat-item">
-              <span className="stat-label">Completed Activities</span>
-              <strong className="stat-value">{progress?.completedActivities ?? 0}</strong>
+              <span className="stat-label">{t('completedActivities')}</span>
+              <strong className="stat-value">{formatNumber(locale, progress?.completedActivities ?? 0)}</strong>
             </div>
 
             <div className="stat-item">
-              <span className="stat-label">Total Attempts</span>
-              <strong className="stat-value">{progress?.activityAttempts ?? 0}</strong>
+              <span className="stat-label">{t('totalAttempts')}</span>
+              <strong className="stat-value">{formatNumber(locale, progress?.activityAttempts ?? 0)}</strong>
             </div>
 
             <div className="stat-item">
-              <span className="stat-label">Completed Sessions</span>
-              <strong className="stat-value">{progress?.sessions.completed ?? 0}</strong>
+              <span className="stat-label">{t('completedSessions')}</span>
+              <strong className="stat-value">{formatNumber(locale, progress?.sessions.completed ?? 0)}</strong>
             </div>
           </div>
         </section>
@@ -268,6 +277,17 @@ export function DashboardView({
           onUpdateTarget={onUpdateTarget ?? (() => {})}
         />
       )}
+      {activeProgramName?.toLowerCase().includes('ielts') ? <section className="learning-pathways" aria-labelledby="learning-pathways-heading">
+        <h2 id="learning-pathways-heading">{t('ieltsPathway')}</h2>
+        <p className="neutral-subtext">{t('pathwayDescription')}</p>
+        <div className="learning-pathways-grid">
+          <OrientationDashboardCard />
+          <IeltsBridgeDashboardCard />
+          <IntegratedPracticeDashboardCard />
+          <IeltsBandDashboardCard />
+          <IeltsMockDashboardCard />
+        </div>
+      </section> : null}
     </main>
   );
 }

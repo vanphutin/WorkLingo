@@ -96,7 +96,7 @@ describe('AudioPreview', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText('audio-dialogue-1')).toBeInTheDocument();
-    expect(screen.getAllByText('READY')).toHaveLength(2);
+    expect(screen.getAllByText('Ready')).toHaveLength(2);
     expect(screen.getByRole('radio', { name: /fake-tts.*fake-neutral/i })).toBeInTheDocument();
 
     expect(screen.queryByTestId(
@@ -197,7 +197,7 @@ describe('AudioPreview', () => {
 
     await waitFor(() => {
       expect(apiClient.getJob).toHaveBeenCalledTimes(2);
-      expect(screen.getAllByText('READY')).toHaveLength(2);
+      expect(screen.getAllByText('Ready')).toHaveLength(2);
     });
   });
 

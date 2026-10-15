@@ -1,5 +1,7 @@
 'use client';
 
+import { useAdminContent } from './i18n';
+
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 export interface SourceEditorHandle {
@@ -16,6 +18,7 @@ export interface SourceEditorProps {
 
 export const SourceEditor = forwardRef<SourceEditorHandle, SourceEditorProps>(
   function SourceEditor({ source, onChange, readOnly = false, highlightedLines = [] }, ref) {
+    const { t, number } = useAdminContent();
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const gutterRef = useRef<HTMLDivElement>(null);
 
@@ -48,16 +51,16 @@ export const SourceEditor = forwardRef<SourceEditorHandle, SourceEditorProps>(
         <div ref={gutterRef} className="editor-gutter" aria-hidden="true">
           {lineNumbers.map((num) => (
             <div
-              key={num}
+              key={number(num)}
               className={`gutter-line-number ${highlightedSet.has(num) ? 'line-has-issue' : ''}`}
             >
-              {num}
+              {number(num)}
             </div>
           ))}
         </div>
         <textarea
           ref={textareaRef}
-          aria-label="Lesson source editor"
+          aria-label={t('sourceEditor')}
           className="editor-textarea"
           value={source}
           onChange={(e) => onChange(e.target.value)}

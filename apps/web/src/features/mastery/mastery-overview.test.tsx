@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { MasteryOverview } from './mastery-overview';
+import { LocaleProvider } from '../../i18n/provider';
 import { emptyMasteryMap, masteryMap, memoryHealth } from './test-fixtures';
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
@@ -13,6 +14,15 @@ function evidenceNetwork(map: unknown = masteryMap) {
 }
 
 describe('Mastery and Memory Health', () => {
+  it('localizes evidence states while preserving English phrases and Vietnamese meanings', async () => {
+    evidenceNetwork();
+    render(<LocaleProvider initialLocale="vi"><MasteryOverview /></LocaleProvider>);
+    expect(await screen.findByRole('article', { name: 'Mức ghi nhớ Đọc' })).toHaveTextContent('0%');
+    expect(screen.getByRole('article', { name: 'Mức ghi nhớ Nói' })).toHaveTextContent('Chưa đánh giá');
+    expect(await screen.findByRole('article', { name: 'Mức thành thạo Đọc: follow up' })).toHaveTextContent('Cần chú ý');
+    expect(screen.getByRole('heading', { name: 'follow up' })).toHaveAttribute('lang', 'en');
+    expect(screen.getByText('Check on progress')).toBeInTheDocument();
+  });
   it('shows four skills with scored zero distinct from unassessed evidence and displays the review queue', async () => {
     evidenceNetwork();
     render(<MasteryOverview />);

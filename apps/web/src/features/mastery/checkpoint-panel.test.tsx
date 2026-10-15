@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CheckpointPanel } from './checkpoint-panel';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
 import { assessmentId, blockId, passedSkill, pendingAssessment, progression, sessionId } from './test-fixtures';
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
@@ -16,6 +17,23 @@ function networkWithAssessment(assessment: unknown) {
 }
 
 describe('Checkpoint', () => {
+  it('keeps an uncertain assessment UUID while switching locale and localizes pending evidence', async () => {
+    const network = vi.fn().mockResolvedValueOnce(Response.json(progression))
+      .mockRejectedValueOnce(new TypeError('Connection lost'))
+      .mockResolvedValueOnce(Response.json(pendingAssessment));
+    vi.stubGlobal('fetch', network);
+    function Switch() {
+      const { setLocale } = useLocalePreference();
+      return <button onClick={() => setLocale('en')}>English</button>;
+    }
+    render(<LocaleProvider initialLocale="vi"><Switch /><CheckpointPanel /></LocaleProvider>);
+    fireEvent.click(await screen.findByRole('button', { name: 'Đánh giá phiên đã hoàn thành' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Không thể đánh giá phiên học');
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Retry assessment' }));
+    expect(await screen.findByText('Evaluation pending')).toBeInTheDocument();
+    expect(JSON.parse(String(network.mock.calls[2]?.[1].body))).toEqual(JSON.parse(String(network.mock.calls[1]?.[1].body)));
+  });
   it('shows pending scores honestly, offers reassessment and never offers confirmation', async () => {
     const network = networkWithAssessment(pendingAssessment);
     render(<CheckpointPanel />);

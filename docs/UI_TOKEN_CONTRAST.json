@@ -1,0 +1,30 @@
+{
+  "light": {
+    "foreground/background": 12.93,
+    "foreground/surface": 14.23,
+    "muted/surface": 6.22,
+    "primary/surface": 6.71,
+    "on-primary/primary-fill": 6.71,
+    "on-primary/danger-fill": 6.9,
+    "on-primary/info-fill": 6.68,
+    "danger/danger-soft": 6.04,
+    "warning/warning-soft": 6.19,
+    "info/info-soft": 5.82,
+    "control-border/surface": 3.59,
+    "focus/surface": 4.95
+  },
+  "dark": {
+    "foreground/background": 15.33,
+    "foreground/surface": 12.91,
+    "muted/surface": 7.97,
+    "primary/surface": 8.6,
+    "on-primary/primary-fill": 6.81,
+    "on-primary/danger-fill": 7.55,
+    "on-primary/info-fill": 6.87,
+    "danger/danger-soft": 6.78,
+    "warning/warning-soft": 8.21,
+    "info/info-soft": 6.69,
+    "control-border/surface": 4.94,
+    "focus/surface": 9.82
+  }
+}

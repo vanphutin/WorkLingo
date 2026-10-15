@@ -1,5 +1,8 @@
 'use client';
 
+import { useT } from '../../../i18n/provider';
+import { learningSessionMessages } from '../../../i18n/messages/learningSession';
+
 import React from 'react';
 
 import { apiClient, type LearnerActivityDto } from '../../../lib/api/api-client';
@@ -24,6 +27,7 @@ export function ListeningActivity({
   disabled = false,
   sessionId,
 }: ListeningActivityProps) {
+  const t = useT('learningSession', learningSessionMessages);
   const contentItems = activity.content as ReadonlyArray<{
     slug?: string;
     type?: string;
@@ -58,12 +62,12 @@ export function ListeningActivity({
   return (
     <article className="activity-container listening-activity" aria-labelledby="listening-prompt">
       <div className="activity-header">
-        <h2 id="listening-prompt" className="activity-prompt">
-          {(activity.payload.prompt as string) || 'Listen to the audio and answer the questions.'}
+        <h2 id="listening-prompt" className="activity-prompt" lang={activity.payload.prompt ? "en" : undefined}>
+          {(activity.payload.prompt as string) || t('listeningFallback')}
         </h2>
       </div>
 
-      <section className="audio-player-panel" aria-label="Audio player">
+      <section className="audio-player-panel" aria-label={t('audioPlayer')}>
         <LessonAudioPlayer
           audioUrl={audioUrl}
           preferBrowserSpeech={usesSimulationPlaceholder}
@@ -72,9 +76,9 @@ export function ListeningActivity({
 
         {contentItems.length > 0 && (
           <div className="audio-transcript-box">
-            <h3 className="section-subtitle">Audio Content / Transcript</h3>
+            <h3 className="section-subtitle">{t('transcript')}</h3>
             {contentItems.map((item, index) => (
-              <p key={item.slug ?? index} className="transcript-text">
+              <p key={item.slug ?? index} className="transcript-text" lang="en">
                 {item.text}
               </p>
             ))}
@@ -91,7 +95,7 @@ export function ListeningActivity({
               className="question-block"
               disabled={disabled}
             >
-              <legend className="question-prompt">
+              <legend className="question-prompt" lang="en">
                 <span className="question-number">{qIdx + 1}.</span> {question.prompt}
               </legend>
               <div className="options-group" role="radiogroup">
@@ -113,7 +117,7 @@ export function ListeningActivity({
                         onChange={() => handleSelectOption(qIdx, optIdx)}
                         disabled={disabled}
                       />
-                      <span className="option-text">{option}</span>
+                      <span className="option-text" lang="en">{option}</span>
                     </label>
                   );
                 })}

@@ -1,36 +1,36 @@
-.orientation-admin { color: #1a241e; max-width: 1480px; margin: 0 auto; }
+.orientation-admin { color: var(--foreground); max-width: 1480px; margin: 0 auto; }
 .orientation-admin__header, .orientation-admin__toolbar, .orientation-slide-list__heading, .orientation-slide-list__actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.orientation-admin__header { padding-bottom: 1.25rem; border-bottom: 1px solid #d9ddd8; }
+.orientation-admin__header { padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
 .orientation-admin__header h1 { margin: .1rem 0 .4rem; font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .orientation-admin__header p { margin: 0; max-width: 65ch; }
-.orientation-admin__kicker { color: #17643a; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
-.orientation-admin__status { min-width: 150px; padding: .8rem 1rem; background: #eef5ef; border-left: 4px solid #17643a; }
-.orientation-admin__status span { display: block; margin-top: .25rem; color: #56615a; }
+.orientation-admin__kicker { color: var(--primary); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
+.orientation-admin__status { min-width: 150px; padding: .8rem 1rem; background: var(--primary-soft); border-left: 4px solid var(--primary); }
+.orientation-admin__status span { display: block; margin-top: .25rem; color: var(--muted); }
 .orientation-admin__toolbar { justify-content: flex-start; margin: 1.25rem 0; }
-.orientation-admin button { min-height: 44px; padding: .55rem .9rem; border: 1px solid #aeb8b0; border-radius: 6px; background: #fff; color: #1a241e; font-weight: 650; cursor: pointer; }
-.orientation-admin button.primary, .orientation-slide-list__heading button { background: #17643a; color: #fff; border-color: #17643a; }
+.orientation-admin button { min-height: 44px; padding: .55rem .9rem; border: 1px solid var(--control-border); border-radius: 6px; background: var(--surface); color: var(--foreground); font-weight: 650; cursor: pointer; }
+.orientation-admin button.primary, .orientation-slide-list__heading button { background: var(--primary-fill); color: var(--on-primary); border-color: var(--primary); }
 .orientation-admin button:disabled { opacity: .48; cursor: not-allowed; }
-.orientation-admin button:focus-visible, .orientation-admin input:focus-visible, .orientation-admin textarea:focus-visible, .orientation-admin select:focus-visible { outline: 3px solid #2f7d50; outline-offset: 2px; }
-.orientation-notice, .orientation-issues { padding: .85rem 1rem; border-left: 4px solid #17643a; background: #eef5ef; }
-.orientation-notice--error, .orientation-issues { border-color: #a12a2a; background: #fff2f2; }
+.orientation-admin button:focus-visible, .orientation-admin input:focus-visible, .orientation-admin textarea:focus-visible, .orientation-admin select:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.orientation-notice, .orientation-issues { padding: .85rem 1rem; border-left: 4px solid var(--primary); background: var(--primary-soft); }
+.orientation-notice--error, .orientation-issues { border-color: var(--danger); background: var(--danger-soft); }
 .orientation-admin__grid { display: grid; grid-template-columns: minmax(210px, .7fr) minmax(340px, 1.35fr) minmax(280px, 1fr); gap: 1rem; align-items: start; }
-.orientation-slide-list, .orientation-editor, .orientation-preview, .orientation-versions { border: 1px solid #d9ddd8; border-radius: 8px; padding: 1rem; background: #fff; }
+.orientation-slide-list, .orientation-editor, .orientation-preview, .orientation-versions { border: 1px solid var(--border); border-radius: 8px; padding: 1rem; background: var(--surface); }
 .orientation-slide-list ol { list-style: none; margin: 1rem 0; padding: 0; display: grid; gap: .35rem; }
 .orientation-slide-list li button { width: 100%; text-align: left; display: flex; gap: .65rem; align-items: center; }
-.orientation-slide-list li button span { color: #647068; min-width: 1.5rem; }
-.orientation-slide-list li button.active { border-color: #17643a; background: #eef5ef; }
+.orientation-slide-list li button span { color: var(--muted); min-width: 1.5rem; }
+.orientation-slide-list li button.active { border-color: var(--primary); background: var(--primary-soft); }
 .orientation-editor { display: grid; gap: .9rem; }
 .orientation-editor label { display: grid; gap: .35rem; font-weight: 650; }
-.orientation-editor input, .orientation-editor textarea, .orientation-editor select { width: 100%; box-sizing: border-box; border: 1px solid #aeb8b0; border-radius: 5px; padding: .65rem; font: inherit; color: inherit; background: #fff; }
-.orientation-editor input:focus, .orientation-editor textarea:focus, .orientation-editor select:focus { outline: 3px solid rgba(23,100,58,.2); border-color: #17643a; }
+.orientation-editor input, .orientation-editor textarea, .orientation-editor select { width: 100%; box-sizing: border-box; border: 1px solid var(--control-border); border-radius: 5px; padding: .65rem; font: inherit; color: inherit; background: var(--surface); }
+.orientation-editor input:focus-visible, .orientation-editor textarea:focus-visible, .orientation-editor select:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-color: var(--primary); }
 .orientation-editor .orientation-checkbox { display: flex; align-items: center; }
 .orientation-editor .orientation-checkbox input { width: auto; }
 .orientation-media-fields { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.orientation-editor fieldset { border: 1px solid #cbd3cc; display: grid; gap: .75rem; }
-.orientation-preview { position: sticky; top: 1rem; background: #f7f6f2; }
+.orientation-editor fieldset { border: 1px solid var(--border); display: grid; gap: .75rem; }
+.orientation-preview { position: sticky; top: 1rem; background: var(--background); }
 .orientation-preview img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .orientation-preview audio { width: 100%; }
-.orientation-preview__fallback { font-size: .9rem; color: #56615a; border-top: 1px solid #d9ddd8; padding-top: .75rem; }
+.orientation-preview__fallback { font-size: .9rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: .75rem; }
 .orientation-versions { margin-top: 1rem; }
 .orientation-loading { padding: 2rem; }
 @media (max-width: 1050px) { .orientation-admin__grid { grid-template-columns: 230px 1fr; } .orientation-preview { grid-column: 1 / -1; position: static; } }

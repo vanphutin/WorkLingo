@@ -1,5 +1,9 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { onboardingMessages } from '../../i18n/messages/onboarding';
+import { localizedError } from '../../i18n/errors';
+
 import type { PlacementAttemptDto, PlacementSkill } from '@worklingo/contracts';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -8,14 +12,10 @@ import { ApiError } from '../../lib/api/api-client';
 import { onboardingClient } from '../../lib/api/onboarding-client';
 import { EvaluationFeedback } from '../learning-session/evaluation-feedback';
 import { useEvaluation } from '../learning-session/use-evaluation';
+import { onboardingSystemText } from './system-text';
+import { formatNumber } from '../../i18n/translator';
 
 const skillOrder: readonly PlacementSkill[] = ['listening', 'reading', 'speaking', 'writing'];
-const skillLabels: Record<PlacementSkill, string> = {
-  listening: 'Listening',
-  reading: 'Reading',
-  speaking: 'Speaking',
-  writing: 'Writing',
-};
 
 interface PlacementStatusProps {
   readonly initialAttempt: PlacementAttemptDto;
@@ -52,10 +52,14 @@ export function PlacementStatus({
   maxPolls = 30,
   pollIntervalMs = 1_000,
 }: PlacementStatusProps) {
+  const t = useT('onboarding', onboardingMessages);
+  const { locale } = useLocalePreference();
   const router = useRouter();
   const [attempt, setAttempt] = useState(initialAttempt);
   const [refreshError, setRefreshError] = useState(false);
   const [confirmationError, setConfirmationError] = useState(false);
+  const [refreshFailure, setRefreshFailure] = useState<unknown>(null);
+  const [confirmationFailure, setConfirmationFailure] = useState<unknown>(null);
   const [isConfirming, setIsConfirming] = useState(false);
   const [pollLimitReached, setPollLimitReached] = useState(false);
   const confirmationId = useRef<string | null>(null);
@@ -70,8 +74,9 @@ export function PlacementStatus({
       const next = await onboardingClient.getPlacementAttempt(attempt.id);
       setAttempt(next);
       setPollLimitReached(false);
-    } catch {
+    } catch (error) {
       setRefreshError(true);
+      setRefreshFailure(error);
     }
   }, [attempt.id]);
 
@@ -93,8 +98,8 @@ export function PlacementStatus({
         } else if (next.status === 'PROCESSING') {
           setPollLimitReached(true);
         }
-      } catch {
-        if (active) setRefreshError(true);
+      } catch (error) {
+        if (active) { setRefreshError(true); setRefreshFailure(error); }
       }
     };
 
@@ -110,6 +115,7 @@ export function PlacementStatus({
     confirmationId.current ??= crypto.randomUUID();
     setIsConfirming(true);
     setConfirmationError(false);
+    setConfirmationFailure(null);
     try {
       const state = await onboardingClient.confirmPlacement(attempt.id, {
         clientConfirmationId: confirmationId.current,
@@ -123,6 +129,7 @@ export function PlacementStatus({
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) confirmationId.current = null;
       setConfirmationError(true);
+      setConfirmationFailure(error);
     } finally {
       setIsConfirming(false);
     }
@@ -131,20 +138,20 @@ export function PlacementStatus({
   return (
     <section className="placement-status" aria-labelledby="placement-evidence-heading">
       <header>
-        <p className="onboarding-section-label">Placement assessment</p>
-        <h2 id="placement-evidence-heading">Assessment evidence</h2>
-        <p>Your result uses separate evidence from listening, reading, speaking, and writing.</p>
+        <p className="onboarding-section-label">{t('placement')}</p>
+        <h2 id="placement-evidence-heading">{t('evidence')}</h2>
+        <p>{t('evidenceNote')}</p>
       </header>
 
       <ul className="placement-skill-list">
         {skillOrder.map((skill) => {
           const result = attempt.skillResults[skill];
           const statusText = result.status === 'evaluated' && result.score !== null
-            ? `Evaluated: ${Math.round(result.score * 100)}%`
-            : result.status === 'action_required' ? 'Action required' : 'Waiting for evidence';
+            ? t('evaluated', { score: `${formatNumber(locale, Math.round(result.score * 100))}%` })
+            : result.status === 'action_required' ? t('actionRequired') : t('waiting');
           return (
             <li key={skill}>
-              <span><strong>{skillLabels[skill]}</strong><small>{result.evidenceCount} {result.evidenceCount === 1 ? 'sample' : 'samples'}</small></span>
+              <span><strong>{t(skill)}</strong><small>{t('samples', { count: result.evidenceCount })}</small></span>
               <span className={`placement-skill-status ${result.status}`}>{statusText}</span>
             </li>
           );
@@ -153,8 +160,8 @@ export function PlacementStatus({
 
       {attempt.status === 'PROCESSING' ? (
         <div className="placement-processing" role="status">
-          <strong>Teacher AI is finishing your evaluation</strong>
-          <p>Your session is saved. You can leave this page and return later.</p>
+          <strong>{t('teacherProcessing')}</strong>
+          <p>{t('sessionSaved')}</p>
         </div>
       ) : null}
 
@@ -164,21 +171,19 @@ export function PlacementStatus({
 
       {attempt.status === 'RECOMMENDED' && attempt.explanation ? (
         <section className="placement-recommendation" aria-labelledby="recommendation-heading">
-          <h2 id="recommendation-heading">{attempt.explanation.summary}</h2>
-          <p>{attempt.explanation.reasons[0]}</p>
+          <h2 id="recommendation-heading">{onboardingSystemText(attempt.explanation.summary, locale)}</h2>
+          <p>{attempt.explanation.reasons[0] ? onboardingSystemText(attempt.explanation.reasons[0], locale) : null}</p>
           <dl>
-            <div><dt>Recommended level</dt><dd>{attempt.recommendedLevelCode}</dd></div>
-            <div><dt>Policy</dt><dd>{attempt.policyVersion}</dd></div>
+            <div><dt>{t('recommendedLevel')}</dt><dd>{attempt.recommendedLevelCode ? onboardingSystemText(attempt.recommendedLevelCode, locale) : null}</dd></div>
+            <div><dt>{t('policy')}</dt><dd>{attempt.policyVersion}</dd></div>
           </dl>
           {confirmationError ? (
-            <p className="onboarding-action-error" role="alert">
-              We could not confirm your recommendation. Review the current state and try again.
-            </p>
+            <div className="onboarding-action-error" role="alert"><p>{t('recommendationError')}</p>{confirmationFailure !== null && <p>{localizedError(confirmationFailure, locale)}</p>}</div>
           ) : null}
           <button type="button" disabled={isConfirming} onClick={() => void confirm()}>
             {confirmationError
-              ? 'Try confirmation again'
-              : isConfirming ? 'Confirming…' : 'Confirm recommended level'}
+              ? t('retryConfirmation')
+              : isConfirming ? t('confirming') : t('confirmRecommended')}
           </button>
         </section>
       ) : null}
@@ -186,9 +191,10 @@ export function PlacementStatus({
       {refreshError || pollLimitReached ? (
         <div className="placement-refresh" role="alert">
           <p>{refreshError
-            ? 'We could not refresh the latest evaluation state.'
-            : 'Evaluation is taking longer than expected. Your session remains saved.'}</p>
-          <button type="button" onClick={() => void refresh()}>Check again</button>
+            ? t('refreshError')
+            : t('slowEvaluation')}</p>
+          {refreshError && <p>{localizedError(refreshFailure, locale)}</p>}
+          <button type="button" onClick={() => void refresh()}>{t('checkAgain')}</button>
         </div>
       ) : null}
     </section>

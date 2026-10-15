@@ -6,6 +6,7 @@ import type { AdminAuditPageDto } from '@worklingo/contracts';
 import { ApiError } from '../../lib/api/api-client';
 import { adminAuditClient } from '../../lib/api/admin-audit-client';
 import { AuditWorkspace } from './audit-workspace';
+import { LocaleProvider } from '../../i18n/provider';
 
 const mockFirstPage: AdminAuditPageDto = {
   items: [
@@ -63,6 +64,16 @@ describe('AuditWorkspace', () => {
 
   afterEach(() => {
     cleanup();
+  });
+
+  it('localizes audit labels and counts while retaining diagnostic codes and payloads', async () => {
+    render(<LocaleProvider initialLocale="vi"><AuditWorkspace /></LocaleProvider>);
+    expect(await screen.findByText('Super Admin')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Nhật ký kiểm toán' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Loại tài nguyên')).toBeInTheDocument();
+    expect(screen.getByText('Đang hiển thị 2 sự kiện')).toBeInTheDocument();
+    expect(screen.getByText('PUBLISH_PATH')).toBeInTheDocument();
+    expect(screen.getAllByText(/"status": "PUBLISHED"/)[0]).toBeInTheDocument();
   });
 
   it('renders audit events with action, actor display name, and privacy safety', async () => {
@@ -143,7 +154,7 @@ describe('AuditWorkspace', () => {
     render(<AuditWorkspace />);
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Could not connect to audit server',
+      'Connection failed. Check your connection and try again.',
     );
     expect(screen.getByRole('button', { name: /Retry/i })).toBeInTheDocument();
   });

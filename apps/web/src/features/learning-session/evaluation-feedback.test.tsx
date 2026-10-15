@@ -60,7 +60,7 @@ describe('EvaluationFeedback', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Thử đánh giá lại' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Retry evaluation' }));
     expect(onRetry).toHaveBeenCalledOnce();
   });
 

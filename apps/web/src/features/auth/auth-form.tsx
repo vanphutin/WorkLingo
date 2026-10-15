@@ -10,17 +10,26 @@ import {
   type RegisterInput,
 } from '@worklingo/contracts';
 
+import styles from './auth.module.css';
+import { useLocalePreference, useT } from '../../i18n/provider';
+import { authMessages } from '../../i18n/messages/auth';
+import { localizedError } from '../../i18n/errors';
+import { ApiError } from '../../lib/api/api-client';
+
 interface AuthFormProps {
   readonly mode: 'login' | 'register';
   readonly onAuthenticated: (user: AuthUser) => void;
   readonly submit: (input: LoginInput | RegisterInput) => Promise<AuthUser>;
 }
 
-type FieldErrors = Partial<Record<'displayName' | 'email' | 'password', string>>;
+type AuthKey = keyof typeof authMessages.en;
+type FieldErrors = Partial<Record<'displayName' | 'email' | 'password', AuthKey>>;
 
 export function AuthForm({ mode, onAuthenticated, submit }: AuthFormProps) {
+  const t = useT('auth', authMessages);
+  const { locale } = useLocalePreference();
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [formError, setFormError] = useState<string>();
+  const [formError, setFormError] = useState<{ key?: AuthKey; cause?: unknown }>();
   const [isPending, setIsPending] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
 
@@ -34,7 +43,7 @@ export function AuthForm({ mode, onAuthenticated, submit }: AuthFormProps) {
     const formData = new FormData(event.currentTarget);
     const rawInput = {
       ...(isRegistration
-        ? { displayName: String(formData.get('displayName') ?? '') }
+        ? { displayName: String(formData.get('displayName') ?? ''), locale }
         : {}),
       email: String(formData.get('email') ?? ''),
       password: String(formData.get('password') ?? ''),
@@ -52,10 +61,15 @@ export function AuthForm({ mode, onAuthenticated, submit }: AuthFormProps) {
           (field === 'displayName' || field === 'email' || field === 'password') &&
           !errors[field]
         ) {
-          errors[field] = issue.message;
+          errors[field] = field === 'displayName' ? (issue.code === 'too_big' ? 'nameMax' : 'nameMin')
+            : field === 'email' ? 'invalidEmail'
+            : issue.code === 'too_big' ? 'passwordMax' : isRegistration ? 'passwordMin' : 'passwordRequired';
         }
       }
       setFieldErrors(errors);
+      const firstInvalidField = Object.keys(errors)[0];
+      const control = firstInvalidField ? event.currentTarget.elements.namedItem(firstInvalidField) : null;
+      if (control instanceof HTMLElement) control.focus();
       return;
     }
 
@@ -64,62 +78,61 @@ export function AuthForm({ mode, onAuthenticated, submit }: AuthFormProps) {
       const user = await submit(result.data);
       setIsSuccessful(true);
       onAuthenticated(user);
-    } catch {
-      setFormError(
-        isRegistration
-          ? 'Unable to create your account.'
-          : 'Email or password is invalid.',
-      );
+    } catch (error) {
+      setFormError(error instanceof ApiError && error.status !== 401 && error.status !== 409
+        ? { cause: error }
+        : { key: error instanceof ApiError && error.status === 409 ? 'duplicateEmail' : isRegistration ? 'registerFailed' : 'invalidLogin' });
     } finally {
       setIsPending(false);
     }
   }
 
   return (
-    <form className="auth-form" noValidate onSubmit={handleSubmit}>
+    <form id="account-form" tabIndex={-1} aria-busy={isPending} className={`auth-form ${styles.form}`} noValidate onSubmit={handleSubmit}>
       {isRegistration ? (
         <AuthField
           autoComplete="name"
-          error={fieldErrors.displayName}
-          label="Display name"
+          error={fieldErrors.displayName ? t(fieldErrors.displayName) : undefined}
+          label={t('displayName')}
           name="displayName"
           type="text"
         />
       ) : null}
       <AuthField
         autoComplete="email"
-        error={fieldErrors.email}
-        label="Email"
+        error={fieldErrors.email ? t(fieldErrors.email) : undefined}
+        label={t('email')}
         name="email"
         type="email"
       />
       <AuthField
         autoComplete={isRegistration ? 'new-password' : 'current-password'}
-        error={fieldErrors.password}
-        label="Password"
+        error={fieldErrors.password ? t(fieldErrors.password) : undefined}
+        hint={isRegistration ? t('passwordHint') : undefined}
+        label={t('password')}
         name="password"
         type="password"
       />
 
       {formError ? (
-        <p className="form-error" role="alert">
-          {formError}
+        <p className={`form-error ${styles.formError}`} role="alert">
+          {formError.key ? t(formError.key) : localizedError(formError.cause, locale)}
         </p>
       ) : null}
       {isSuccessful ? (
-        <p aria-live="polite" className="form-status">
-          Opening your dashboard…
+        <p aria-live="polite" className={`form-status ${styles.status}`}>
+          {t('opening')}
         </p>
       ) : null}
 
-      <button disabled={isPending || isSuccessful} type="submit">
+      <button className={`primary-button ${styles.submit}`} disabled={isPending || isSuccessful} type="submit">
         {isPending
           ? isRegistration
-            ? 'Creating account…'
-            : 'Logging in…'
+            ? t('creating')
+            : t('loggingIn')
           : isRegistration
-            ? 'Create account'
-            : 'Log in'}
+            ? t('createAccount')
+            : t('logIn')}
       </button>
     </form>
   );
@@ -128,6 +141,7 @@ export function AuthForm({ mode, onAuthenticated, submit }: AuthFormProps) {
 interface AuthFieldProps {
   readonly autoComplete: string;
   readonly error: string | undefined;
+  readonly hint?: string | undefined;
   readonly label: string;
   readonly name: 'displayName' | 'email' | 'password';
   readonly type: 'email' | 'password' | 'text';
@@ -136,25 +150,29 @@ interface AuthFieldProps {
 function AuthField({
   autoComplete,
   error,
+  hint,
   label,
   name,
   type,
 }: AuthFieldProps) {
   const errorId = `${name}-error`;
+  const hintId = `${name}-hint`;
 
   return (
-    <div className="auth-field">
+    <div className={`auth-field ${styles.field}`}>
       <label htmlFor={name}>{label}</label>
       <input
-        aria-describedby={error ? errorId : undefined}
+        aria-describedby={error ? errorId : hint ? hintId : undefined}
         aria-invalid={Boolean(error)}
         autoComplete={autoComplete}
         id={name}
         name={name}
+        spellCheck={false}
         type={type}
       />
+      {hint ? <p className={styles.hint} id={hintId}>{hint}</p> : null}
       {error ? (
-        <p className="field-error" id={errorId} role="alert">
+        <p className={`field-error ${styles.fieldError}`} id={errorId} role="alert">
           {error}
         </p>
       ) : null}

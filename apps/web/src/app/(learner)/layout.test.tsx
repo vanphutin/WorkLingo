@@ -6,6 +6,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type * as ApiClientModule from '../../lib/api/api-client';
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import LearnerLayout from './layout';
+import { LanguageSwitcher } from '../../components/language-switcher';
+import { LocaleProvider } from '../../i18n/provider';
 
 const replace = vi.fn();
 const router = { push: vi.fn(), replace };
@@ -34,6 +36,14 @@ afterEach(() => {
 });
 
 describe('LearnerLayout', () => {
+  it('clears the expired account so guest language switching remains usable after redirect', async () => {
+    vi.mocked(apiClient.getCurrentUser).mockRejectedValue(new ApiError({ code: 'UNAUTHORIZED', status: 401, message: 'expired' }));
+    render(<LocaleProvider initialLocale="vi" initialUserId="expired-account"><LanguageSwitcher /><LearnerLayout>Protected content</LearnerLayout></LocaleProvider>);
+    await waitFor(() => expect(replace).toHaveBeenCalledWith('/login'));
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'en' } });
+    await waitFor(() => expect(document.documentElement.lang).toBe('en'));
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
   it('redirects unauthenticated learners without exposing server details', async () => {
     vi.mocked(apiClient.getCurrentUser).mockRejectedValue(
       new ApiError({ code: 'UNAUTHORIZED', message: 'internal auth details', status: 401 }),
@@ -99,16 +109,19 @@ describe('LearnerLayout', () => {
     expect(replace).not.toHaveBeenCalled();
   });
 
-  it('links authenticated learners to audio settings', async () => {
+  it('groups learner preferences under one expandable settings destination', async () => {
     vi.mocked(apiClient.getCurrentUser).mockResolvedValue({
       displayName: 'An Nguyen', email: 'an@example.test',
       id: '828a1927-c4fa-487f-93d5-96c556667869',
       onboardingStatus: 'COMPLETE', roles: ['LEARNER'],
     });
     render(<LearnerLayout>Dashboard content</LearnerLayout>);
-    expect(await screen.findByRole('link', { name: 'Audio settings' }))
-      .toHaveAttribute('href', '/settings/audio');
+    expect(await screen.findByRole('link', { name: 'Settings' }))
+      .toHaveAttribute('href', '/settings');
+    expect(screen.queryByRole('link', { name: 'Audio settings' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Programs' }))
       .toHaveAttribute('href', '/programs');
+    expect(screen.getByLabelText('Signed in as An Nguyen')).toBeInTheDocument();
+    expect(screen.queryByText('Learner:')).not.toBeInTheDocument();
   });
 });

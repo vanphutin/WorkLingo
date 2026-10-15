@@ -7,6 +7,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../../lib/api/api-client';
 import { onboardingClient } from '../../lib/api/onboarding-client';
 import { OnboardingWorkspace } from './onboarding-workspace';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
 
 const push = vi.fn();
 const replace = vi.fn();
@@ -54,6 +55,24 @@ afterEach(() => {
 });
 
 describe('OnboardingWorkspace', () => {
+  it('switches Vietnamese system controls without losing the selected starting level', async () => {
+    vi.mocked(onboardingClient.getState).mockResolvedValue(pendingState);
+    function Switch() {
+      const { setLocale } = useLocalePreference();
+      return <button onClick={() => setLocale('en')}>English</button>;
+    }
+    render(<LocaleProvider initialLocale="vi"><Switch /><OnboardingWorkspace /></LocaleProvider>);
+    expect(await screen.findByRole('heading', { name: 'Chọn cách bắt đầu' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('radio', { name: /Tự chọn trình độ bắt đầu/ }));
+    const level = screen.getByRole('radio', { name: /Nền tảng 1/ });
+    fireEvent.click(level);
+    expect(level).toBeChecked();
+    expect(screen.getByText('Nội dung công sở đủ bốn kỹ năng đã được duyệt chưa được xuất bản.')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+    expect(screen.getByRole('radio', { name: /Foundation 1/ })).toBe(level);
+    expect(level).toBeChecked();
+    expect(onboardingClient.getState).toHaveBeenCalledTimes(1);
+  });
   it('loads server state and explains unavailable levels without enabling them', async () => {
     vi.mocked(onboardingClient.getState).mockResolvedValue(pendingState);
 

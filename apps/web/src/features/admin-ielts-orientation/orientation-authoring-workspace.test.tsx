@@ -4,6 +4,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { adminIeltsOrientationClient } from '../../lib/api/admin-ielts-orientation-client';
 import { ApiError } from '../../lib/api/api-client';
 import { OrientationAuthoringWorkspace } from './orientation-authoring-workspace';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+
+function LocaleToggle() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => void setLocale('en')}>Switch to English</button>;
+}
 
 vi.mock('../../lib/api/admin-ielts-orientation-client', () => ({
   adminIeltsOrientationClient: { get: vi.fn(), updateDraft: vi.fn(), validate: vi.fn(), publish: vi.fn(), archive: vi.fn(), uploadMedia: vi.fn() },
@@ -19,6 +25,51 @@ describe('OrientationAuthoringWorkspace', () => {
     vi.mocked(adminIeltsOrientationClient.get).mockResolvedValue(orientation);
     vi.mocked(adminIeltsOrientationClient.updateDraft).mockResolvedValue({ ...orientation, draftRevision: 2 });
     vi.mocked(adminIeltsOrientationClient.validate).mockResolvedValue({ draftRevision: 2, status: 'VALIDATED', canPublish: true, issues: [] });
+  });
+
+  it('localizes authoring controls while preserving the mounted English slide draft', async () => {
+    render(<LocaleProvider initialLocale="vi"><LocaleToggle /><OrientationAuthoringWorkspace /></LocaleProvider>);
+    const title = await screen.findByLabelText('Tiêu đề trang chiếu');
+    expect((title as HTMLInputElement).value).toBe('Welcome');
+    fireEvent.change(title, { target: { value: 'My unsaved English slide' } });
+    expect(screen.getByRole('button', { name: 'Lưu bản nháp' })).not.toBeNull();
+    expect(screen.getByText('Bản nháp')).not.toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to English' }));
+    expect(await screen.findByLabelText('Slide title')).toBe(title);
+    expect((title as HTMLInputElement).value).toBe('My unsaved English slide');
+    expect(adminIeltsOrientationClient.get).toHaveBeenCalledTimes(1);
+    expect(title.getAttribute('lang')).toBe('en');
+  });
+
+  it('localizes validation feedback and re-renders it when the locale changes', async () => {
+    vi.mocked(adminIeltsOrientationClient.validate).mockResolvedValue({ draftRevision: 1, status: 'DRAFT', canPublish: false, issues: [{ code: 'TRANSCRIPT_REQUIRED', path: 'slides.0.transcript', message: 'Transcript is required.' }] });
+    render(<LocaleProvider initialLocale="vi"><LocaleToggle /><OrientationAuthoringWorkspace /></LocaleProvider>);
+    fireEvent.click(await screen.findByRole('button', { name: 'Kiểm tra bản nháp' }));
+    expect(await screen.findByText('Cần có bản chép lời.')).not.toBeNull();
+    expect(screen.getByText('slides.0.transcript')).not.toBeNull();
+    expect(screen.getByRole('button', { name: 'Xuất bản phiên bản' }).hasAttribute('disabled')).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to English' }));
+    expect(await screen.findByText('Transcript is required.')).not.toBeNull();
+    expect(screen.getByRole('status').textContent).toBe('Resolve validation issues before publishing.');
+  });
+
+  it('formats published versions in Vietnamese and localizes confirmation without changing the authored title', async () => {
+    vi.mocked(adminIeltsOrientationClient.get).mockResolvedValue({ ...orientation, draft: { ...orientation.draft, slides: [...orientation.draft.slides, { ...slide, id: crypto.randomUUID(), slug: 'extra' }] }, versions: [{ id: crypto.randomUUID(), version: 1000, status: 'PUBLISHED', publishedAt: '2026-10-14T12:00:00.000Z' }] });
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<LocaleProvider initialLocale="vi"><OrientationAuthoringWorkspace /></LocaleProvider>);
+    expect(await screen.findByText(/Phiên bản 1\.000 · Đã xuất bản ·/)).not.toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa trang chiếu' }));
+    expect(confirm).toHaveBeenCalledWith('Xóa trang chiếu "Welcome"? Thay đổi này chưa được lưu.');
+    expect(screen.getAllByRole('button', { name: /Welcome$/ })).toHaveLength(4);
+    confirm.mockRestore();
+  });
+
+  it('shows a localized initial API failure instead of hiding it behind loading', async () => {
+    vi.mocked(adminIeltsOrientationClient.get).mockRejectedValue(new ApiError({ code: 'NETWORK_ERROR', status: 0, message: 'Technical transport failure' }));
+    render(<LocaleProvider initialLocale="vi"><LocaleToggle /><OrientationAuthoringWorkspace /></LocaleProvider>);
+    expect((await screen.findByRole('alert')).textContent).toBe('Mất kết nối. Kiểm tra kết nối rồi thử lại.');
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to English' }));
+    expect(screen.getByRole('alert').textContent).toBe('Connection failed. Check your connection and try again.');
   });
 
   it('edits and saves a selected slide with the current optimistic revision', async () => {

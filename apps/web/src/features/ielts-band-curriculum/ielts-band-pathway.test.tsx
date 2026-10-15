@@ -1,7 +1,14 @@
+import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ieltsBandClient } from '../../lib/api/ielts-band-client';
 import { IeltsBandDashboardCard, IeltsBandPathway } from './ielts-band-pathway';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+
+function SwitchLocale() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => setLocale('en')}>Switch language</button>;
+}
 
 vi.mock('../../lib/api/ielts-band-client', () => ({ ieltsBandClient: { availability: vi.fn(), start: vi.fn(), updateTarget: vi.fn(), evaluate: vi.fn() } }));
 afterEach(cleanup);
@@ -16,6 +23,19 @@ const pathway = {
 };
 
 describe('IELTS band pathway', () => {
+  it('localizes evidence and generated criteria while keeping curriculum content and the target selection', async () => {
+    vi.mocked(ieltsBandClient.availability).mockResolvedValue({ eligible: true, lockedReason: null, targetBands: [3, 4, 5, 6, 7, 8, 9], journey: pathway });
+    render(<LocaleProvider initialLocale="vi"><SwitchLocale /><IeltsBandPathway /><IeltsBandDashboardCard /></LocaleProvider>);
+    expect(await screen.findByText('Band mục tiêu 6')).toBeVisible();
+    expect(screen.getAllByText('Chưa đủ bằng chứng')).toHaveLength(4);
+    expect(screen.getByText('Hoàn thành ít nhất 2 buổi luyện tập tích hợp.')).toBeVisible();
+    expect(screen.getAllByText('Foundation to 3.0')[0]).toHaveAttribute('lang', 'en');
+    const target = screen.getByLabelText('Cập nhật band mục tiêu');
+    fireEvent.change(target, { target: { value: '7' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Switch language' }));
+    expect(screen.getByLabelText('Update target band')).toBe(target);
+    expect(target).toHaveValue('7');
+  });
   it('keeps a target band separate from evidence-backed proficiency', async () => {
     vi.mocked(ieltsBandClient.availability).mockResolvedValue({ eligible: true, lockedReason: null, targetBands: [3, 4, 5, 6, 7, 8, 9], journey: pathway });
     render(<IeltsBandPathway />);

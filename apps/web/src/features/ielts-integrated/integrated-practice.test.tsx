@@ -1,12 +1,23 @@
+import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ieltsIntegratedClient } from '../../lib/api/ielts-integrated-client';
-import { IntegratedPracticeDashboardCard, IntegratedPracticePlayer } from './integrated-practice';
+import { IntegratedPracticeDashboardCard, IntegratedPracticePlayer, IntegratedPracticeLauncher } from './integrated-practice';
+import { LocaleProvider } from '../../i18n/provider';
 
 vi.mock('../../lib/api/ielts-integrated-client', () => ({ ieltsIntegratedClient: { availability: vi.fn(), get: vi.fn(), update: vi.fn() } }));
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
 afterEach(cleanup);
 
 describe('IntegratedPracticeDashboardCard', () => {
+  it('localizes the duration and difficulty choices and dashboard access', async () => {
+    vi.mocked(ieltsIntegratedClient.availability).mockResolvedValue({ eligible: true, lockedReason: null, durations: [60, 90, 120, 150], difficulties: ['foundation', 'developing', 'competent', 'advanced'], activeSessionId: null });
+    render(<LocaleProvider initialLocale="vi"><IntegratedPracticeLauncher /><IntegratedPracticeDashboardCard /></LocaleProvider>);
+    expect(await screen.findByLabelText('Thời lượng')).toHaveValue('60');
+    expect(screen.getByRole('option', { name: '60 phút' })).toBeVisible();
+    expect(screen.getByRole('option', { name: 'Nâng cao' })).toBeVisible();
+    expect(screen.getByRole('link', { name: 'Tạo buổi luyện tập tích hợp' })).toHaveAttribute('href', '/ielts/practice');
+  });
   it('explains the Bridge gate without exposing a start action', async () => {
     vi.mocked(ieltsIntegratedClient.availability).mockResolvedValue({ eligible: false, lockedReason: 'BRIDGE_REQUIRED', durations: [], difficulties: [], activeSessionId: null });
     render(<IntegratedPracticeDashboardCard />);
@@ -33,8 +44,11 @@ describe('IntegratedPracticePlayer', () => {
       { order: 4, skill: 'speaking', targetMinutes: 10, moduleVersionId: crypto.randomUUID(), questionType: 'speaking_part_2_cue_card', mode: 'new_practice' },
     ] }, currentBlockIndex: 0, revision: 1, startedAt, completedAt: null, blocks: [block, { ...block, order: 2, skill: 'reading' as const, startedAt: null }, { ...block, order: 3, skill: 'writing' as const, startedAt: null }, { ...block, order: 4, skill: 'speaking' as const, startedAt: null }] };
     vi.mocked(ieltsIntegratedClient.get).mockResolvedValue(session);
-    render(<IntegratedPracticePlayer sessionId={crypto.randomUUID()} />);
+    render(<LocaleProvider initialLocale="vi"><IntegratedPracticePlayer sessionId={crypto.randomUUID()} /></LocaleProvider>);
     expect(await screen.findByRole('timer')).not.toBeNull();
+    expect(screen.getByRole('timer')).toHaveTextContent('Thời gian còn lại của phần');
+    expect(screen.getByRole('heading', { name: 'Listen for detail' })).toHaveAttribute('lang', 'en');
+    expect(screen.getByText('Listen and identify the evidence.')).toHaveAttribute('lang', 'en');
   });
 
   it('clears feedback from the completed block when moving to the next skill', async () => {

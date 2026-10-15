@@ -1,5 +1,8 @@
 'use client';
 
+import { useT } from '../../../i18n/provider';
+import { learningSessionMessages } from '../../../i18n/messages/learningSession';
+
 import React from 'react';
 
 import type { LearnerActivityDto } from '../../../lib/api/api-client';
@@ -23,6 +26,7 @@ export function ReadingActivity({
   onChange,
   disabled = false,
 }: ReadingActivityProps) {
+  const t = useT('learningSession', learningSessionMessages);
   const contentItems = activity.content as ReadonlyArray<{
     slug?: string;
     type?: string;
@@ -46,30 +50,30 @@ export function ReadingActivity({
   return (
     <article className="activity-container reading-activity" aria-labelledby="activity-prompt">
       <div className="activity-header">
-        <h2 id="activity-prompt" className="activity-prompt">
-          {(activity.payload.prompt as string) || 'Read the following text and answer all questions.'}
+        <h2 id="activity-prompt" className="activity-prompt" lang={activity.payload.prompt ? "en" : undefined}>
+          {(activity.payload.prompt as string) || t('readingFallback')}
         </h2>
       </div>
 
       {contentItems.length > 0 && (
-        <section className="activity-reading-passage" aria-label="Reading passage">
+        <section className="activity-reading-passage" aria-label={t('readingPassage')}>
           {contentItems.map((item, index) => (
             <div key={item.slug ?? index} className="reading-content-item">
-              <pre className="reading-text">{item.text}</pre>
+              <pre className="reading-text" lang="en">{item.text}</pre>
             </div>
           ))}
         </section>
       )}
 
       {activity.languageBlocks.length > 0 && (
-        <section className="activity-language-blocks" aria-label="Key language blocks">
-          <h3 className="section-subtitle">Key language to notice:</h3>
+        <section className="activity-language-blocks" aria-label={t('keyLanguageBlocks')}>
+          <h3 className="section-subtitle">{t('keyLanguage')}</h3>
           <ul className="language-block-chips">
             {activity.languageBlocks.map((lb, index) => {
               const label =
-                (lb.canonicalForm as string) || (lb.slug as string) || `Block ${index + 1}`;
+                (lb.canonicalForm as string) || (lb.slug as string) || t('blockFallback', { count: index + 1 });
               return (
-                <li key={(lb.slug as string) ?? index} className="language-block-chip">
+                <li key={(lb.slug as string) ?? index} className="language-block-chip" lang="en">
                   {label}
                 </li>
               );
@@ -90,7 +94,7 @@ export function ReadingActivity({
               className="question-block"
               disabled={disabled}
             >
-              <legend className="question-prompt">
+              <legend className="question-prompt" lang="en">
                 <span className="question-number">{qIdx + 1}.</span> {question.prompt}
               </legend>
               <div className="options-group" role="radiogroup">
@@ -112,7 +116,7 @@ export function ReadingActivity({
                         onChange={() => handleSelectOption(qIdx, optIdx)}
                         disabled={disabled}
                       />
-                      <span className="option-text">{option}</span>
+                      <span className="option-text" lang="en">{option}</span>
                     </label>
                   );
                 })}

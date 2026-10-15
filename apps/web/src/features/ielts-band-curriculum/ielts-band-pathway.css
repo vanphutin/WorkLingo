@@ -1,11 +1,11 @@
 .band-pathway-card { display: grid; gap: 1.25rem; }
 .band-target { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; }
 .band-target strong { font-size: 1.35rem; }
-.band-target span { color: var(--color-text-muted, #52606d); }
+.band-target span { color: var(--color-text-muted, var(--muted)); }
 .band-skill-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
-.band-skill-grid article { display: grid; gap: .35rem; padding: 1rem; border: 1px solid #d8dee8; border-radius: .75rem; background: #fff; }
+.band-skill-grid article { display: grid; gap: .35rem; padding: 1rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--surface); }
 .band-skill-grid span { text-transform: capitalize; }
-.band-skill-grid small { color: #52606d; }
+.band-skill-grid small { color: var(--muted); }
 .band-actions { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
 .band-actions label, .band-select { display: grid; gap: .35rem; min-width: 12rem; }
 .band-actions select, .band-select select { min-height: 2.75rem; padding: .5rem; }

@@ -10,6 +10,8 @@ import type {
 } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
 import { findRestorableEvaluationAttemptId, SessionShell } from './session-shell';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+import { apiClient } from '../../lib/api/api-client';
 
 const mockReadingActivity: LearnerActivityDto = {
   id: 'd4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90',
@@ -193,6 +195,29 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('preserves a writing session and its response when switching from English to Vietnamese', async () => {
+    const loadDraft = vi.spyOn(apiClient, 'getActivityDraft').mockResolvedValue(null);
+    function SwitchLocale() {
+      const { setLocale } = useLocalePreference();
+      return <button onClick={() => void setLocale('vi')}>Switch to Vietnamese</button>;
+    }
+    render(<LocaleProvider initialLocale="en"><SwitchLocale /><SessionShell
+      session={createMockSession(3)} currentActivity={mockWritingActivity}
+      onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()}
+    /></LocaleProvider>);
+    await screen.findByText('Draft saved');
+    const editor = screen.getByRole('textbox', { name: 'Your written response:' });
+    fireEvent.change(editor, { target: { value: 'Hello teammate, glad to meet you!' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to Vietnamese' }));
+    expect(screen.getByRole('textbox', { name: 'Bài viết của bạn:' })).toBe(editor);
+    expect(editor).toHaveValue('Hello teammate, glad to meet you!');
+    expect(screen.getByRole('button', { name: 'Tiếp tục' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Tạm dừng buổi học' })).toBeInTheDocument();
+    expect(screen.getByText('Write a short greeting to your new teammate.')).toHaveAttribute('lang', 'en');
+    expect(screen.getByRole('heading', { name: 'Introduce yourself to a new colleague' })).toBeInTheDocument();
+    expect(loadDraft).toHaveBeenCalledTimes(1);
+    loadDraft.mockRestore();
+  });
   it('teaches the grammar pattern in context before the learner submits practice', () => {
     render(
       <ActivityRenderer

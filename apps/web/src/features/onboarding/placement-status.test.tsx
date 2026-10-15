@@ -8,6 +8,7 @@ import type * as ApiClientModule from '../../lib/api/api-client';
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { onboardingClient } from '../../lib/api/onboarding-client';
 import { PlacementStatus } from './placement-status';
+import { LocaleProvider } from '../../i18n/provider';
 
 const push = vi.fn();
 const router = { push, replace: vi.fn() };
@@ -104,6 +105,14 @@ afterEach(() => {
 });
 
 describe('PlacementStatus', () => {
+  it('localizes recommendation and skill evidence while preserving policy identifiers', () => {
+    render(<LocaleProvider initialLocale="vi"><PlacementStatus initialAttempt={recommended} /></LocaleProvider>);
+    expect(screen.getByRole('heading', { name: 'Nền tảng 1 là trình độ được đề xuất hiện tại.' })).toBeInTheDocument();
+    expect(screen.getByText('Đã đánh giá: 75%')).toBeInTheDocument();
+    expect(screen.getByText('2 mẫu')).toBeInTheDocument();
+    expect(screen.getByText('workplace-placement-v1')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Xác nhận trình độ được đề xuất' })).toBeEnabled();
+  });
   it('shows all four evidence states and reuses EvaluationFeedback for retry', async () => {
     vi.mocked(apiClient.getEvaluation).mockResolvedValue(failedEvaluation);
     vi.mocked(apiClient.retryEvaluation).mockResolvedValue({
@@ -120,7 +129,7 @@ describe('PlacementStatus', () => {
     expect(screen.getByText('Evaluated: 75%')).toBeInTheDocument();
     expect(screen.getByText('Waiting for evidence')).toBeInTheDocument();
     expect(screen.getByText('Action required')).toBeInTheDocument();
-    fireEvent.click(await screen.findByRole('button', { name: 'Thử đánh giá lại' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Retry evaluation' }));
     await waitFor(() => expect(apiClient.retryEvaluation).toHaveBeenCalledWith(retryAttemptId));
   });
 

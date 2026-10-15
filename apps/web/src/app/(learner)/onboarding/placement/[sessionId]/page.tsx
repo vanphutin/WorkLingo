@@ -2,6 +2,8 @@
 
 import { useParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useT } from '../../../../../i18n/provider';
+import { routeMessages } from '../../../../../i18n/messages/routes';
 
 import { SessionShell } from '../../../../../features/learning-session/session-shell';
 import {
@@ -17,6 +19,7 @@ export default function PlacementSessionPage({
   readonly params?: Promise<{ sessionId: string }>;
 }) {
   const routeParams = useParams();
+  const t = useT('routes', routeMessages);
   const [sessionId, setSessionId] = useState<string>(
     () => (routeParams?.['sessionId'] as string | undefined) ?? '',
   );
@@ -63,7 +66,7 @@ export default function PlacementSessionPage({
       let sessionData = await apiClient.getSession(sessionId);
 
       if (sessionData.purpose !== 'placement') {
-        setError('Only placement assessment sessions can be opened here');
+        setError('placementOnly');
         return;
       }
 
@@ -74,7 +77,7 @@ export default function PlacementSessionPage({
       setSession(sessionData);
       await loadActivityForSession(sessionData);
     } catch {
-      setError('Unable to load assessment session');
+      setError('unablePlacement');
     } finally {
       setIsLoading(false);
     }
@@ -132,7 +135,7 @@ export default function PlacementSessionPage({
     return (
       <main className="session-loading-container" aria-busy="true">
         <div className="status-card" role="status">
-          <p>Preparing your placement assessment…</p>
+          <p>{t('preparingPlacement')}</p>
         </div>
       </main>
     );
@@ -142,10 +145,10 @@ export default function PlacementSessionPage({
     return (
       <main className="session-error-container">
         <div className="status-card error-card" role="alert">
-          <h2>Unable to load assessment</h2>
-          <p>{error ?? 'Assessment session not found'}</p>
+          <h2>{t('unablePlacement')}</h2>
+          <p>{error ? t(error as 'placementOnly' | 'unablePlacement') : t('placementMissing')}</p>
           <button type="button" className="retry-button" onClick={() => void initSession()}>
-            Retry
+            {t('retry')}
           </button>
         </div>
       </main>
@@ -165,7 +168,7 @@ export default function PlacementSessionPage({
       onPauseSession={handlePauseSession}
       onResumeSession={handleResumeSession}
       isCompleted={isCompleted}
-      contextLabel="Placement assessment"
+      contextLabel={t('placement')}
       completionHref="/onboarding"
     />
   );

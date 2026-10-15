@@ -2,19 +2,24 @@
 
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { useLocalePreference, useT } from '../../../../../i18n/provider';
+import { routeMessages } from '../../../../../i18n/messages/routes';
+import { localizedError } from '../../../../../i18n/errors';
 
 import type { ContentImportDto } from '@worklingo/contracts';
 
 import { ContentAuthoringWorkspace } from '../../../../../features/admin-content/content-authoring-workspace';
-import { ApiError, apiClient } from '../../../../../lib/api/api-client';
+import { apiClient } from '../../../../../lib/api/api-client';
 
 export default function ContentImportDetailPage() {
   const params = useParams();
+  const t = useT('routes', routeMessages);
+  const { locale } = useLocalePreference();
   const importId = params['importId'] as string;
 
   const [contentImport, setContentImport] = useState<ContentImportDto | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     let isCancelled = false;
@@ -29,11 +34,7 @@ export default function ContentImportDetailPage() {
         }
       } catch (err) {
         if (!isCancelled) {
-          if (err instanceof ApiError) {
-            setError(err.message);
-          } else {
-            setError('Không thể tải bài học');
-          }
+          setError(err);
         }
       } finally {
         if (!isCancelled) {
@@ -54,7 +55,7 @@ export default function ContentImportDetailPage() {
   if (loading) {
     return (
       <div className="workspace-loading-state" role="status">
-        <p>Đang tải nội dung bài học...</p>
+        <p>{t('loadingLesson')}</p>
       </div>
     );
   }
@@ -62,8 +63,8 @@ export default function ContentImportDetailPage() {
   if (error) {
     return (
       <div className="workspace-error-state" role="alert">
-        <h2>Lỗi khi tải bài học</h2>
-        <p>{error}</p>
+        <h2>{t('lessonError')}</h2>
+        <p>{localizedError(error, locale)}</p>
       </div>
     );
   }
@@ -71,7 +72,7 @@ export default function ContentImportDetailPage() {
   if (!contentImport) {
     return (
       <div className="workspace-error-state" role="alert">
-        <p>Không tìm thấy bài học</p>
+        <p>{t('lessonMissing')}</p>
       </div>
     );
   }

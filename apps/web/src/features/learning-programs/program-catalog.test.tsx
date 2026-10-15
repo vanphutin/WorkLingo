@@ -7,6 +7,7 @@ import type { LearningProgramCatalogDto, ProgramContextDto } from '@worklingo/co
 import { ApiError } from '../../lib/api/api-client';
 import { learningProgramClient } from '../../lib/api/learning-program-client';
 import { ProgramCatalog } from './program-catalog';
+import { LocaleProvider } from '../../i18n/provider';
 
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
@@ -73,6 +74,18 @@ const catalog: LearningProgramCatalogDto = {
 };
 
 describe('ProgramCatalog', () => {
+  it('localizes program discovery and TOEIC availability with safe disabled actions', async () => {
+    vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue(catalog);
+    render(<LocaleProvider initialLocale="vi"><ProgramCatalog /></LocaleProvider>);
+    expect(screen.getByRole('heading', { name: 'Chọn chương trình học' })).toBeInTheDocument();
+    const cards = await screen.findAllByRole('listitem');
+    const toeic = cards[2]!;
+    expect(within(toeic).getByRole('heading', { name: 'TOEIC' })).toBeInTheDocument();
+    expect(toeic).toHaveTextContent('Định hướng TOEIC');
+    expect(toeic).toHaveTextContent('Luyện thi TOEIC qua ngôn ngữ công sở thực tế.');
+    expect(within(toeic).getByRole('button', { name: 'Chương trình TOEIC chưa khả dụng' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Mở chương trình Trung cấp' })).toBeEnabled();
+  });
   beforeEach(() => {
     vi.restoreAllMocks();
     push.mockReset();
@@ -172,7 +185,8 @@ describe('ProgramCatalog', () => {
     render(<ProgramCatalog />);
     const button = await screen.findByRole('button', { name: 'Open Intermediate program' });
     fireEvent.click(button);
-    expect(await screen.findByRole('alert')).toHaveTextContent('Connection lost');
+    expect(await screen.findByRole('alert')).toHaveTextContent('Connection failed. Check your connection and try again.');
+    expect(screen.queryByText('Connection lost')).not.toBeInTheDocument();
     expect(push).not.toHaveBeenCalled();
     await waitFor(() => expect(button).toBeEnabled());
     fireEvent.click(button);

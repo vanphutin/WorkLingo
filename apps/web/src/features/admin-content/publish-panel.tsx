@@ -1,3 +1,5 @@
+import { useAdminContent } from './i18n';
+
 import React, { useState } from 'react';
 
 import type { ContentStatus, PublishContentImportResult } from '@worklingo/contracts';
@@ -33,11 +35,12 @@ export function PublishPanel({
   onPublished,
   onArchive,
 }: PublishPanelProps) {
+  const { t, number, label, message } = useAdminContent();
   const [isPublishing, setIsPublishing] = useState(false);
-  const [publishError, setPublishError] = useState<string | null>(null);
+  const [publishError, setPublishError] = useState<unknown>(null);
 
   const [isArchiving, setIsArchiving] = useState(false);
-  const [archiveError, setArchiveError] = useState<string | null>(null);
+  const [archiveError, setArchiveError] = useState<unknown>(null);
 
   const handlePublish = async () => {
     if (isPublishing || !canPublish || !isAudioReady) return;
@@ -56,7 +59,7 @@ export function PublishPanel({
       onPublished?.(result);
     } catch (err: unknown) {
       if (err instanceof ApiError) {
-        setPublishError(err.message);
+        setPublishError(err);
       } else {
         setPublishError('Unable to publish the lesson.');
       }
@@ -76,7 +79,7 @@ export function PublishPanel({
       onArchive?.();
     } catch (err: unknown) {
       if (err instanceof ApiError) {
-        setArchiveError(err.message);
+        setArchiveError(err);
       } else {
         setArchiveError('Unable to archive the lesson version.');
       }
@@ -87,25 +90,22 @@ export function PublishPanel({
 
   if (status === 'PUBLISHED' || status === 'ARCHIVED') {
     return (
-      <div className="publish-panel-container" role="region" aria-label="Publish details">
+      <div className="publish-panel-container" role="region" aria-label={t('publishDetails')}>
         <div className="published-card">
           <div className="published-header">
-            <h3>Published lesson version</h3>
-            <span className={`status-pill pill-${status.toLowerCase()}`}>{status}</span>
+            <h3>{t('publishedTitle')}</h3>
+            <span className={`status-pill pill-${status.toLowerCase()}`}>{label(status)}</span>
           </div>
 
           <div className="published-details">
-            <p>Published Version: {publishedVersion ?? 'N/A'}</p>
-            {publishedLessonId && <p>Lesson ID: {publishedLessonId}</p>}
-            <p className="immutable-notice">
-              This version is immutable. Existing learner sessions remain bound to the version
-              they started with.
-            </p>
+            <p>{t('publishedVersion', { version: publishedVersion !== null && publishedVersion !== undefined ? number(publishedVersion) : t('notAvailable') })}</p>
+            {publishedLessonId && <p>{t('lessonId', { id: publishedLessonId })}</p>}
+            <p className="immutable-notice">{t('immutableNotice')}</p>
           </div>
 
-          {archiveError && (
+          {Boolean(archiveError) && (
             <div className="alert alert-error" role="alert">
-              {archiveError}
+              {message(archiveError)}
             </div>
           )}
 
@@ -117,7 +117,7 @@ export function PublishPanel({
                 disabled={isArchiving}
                 onClick={handleArchive}
               >
-                {isArchiving ? 'Archiving…' : 'Archive Version'}
+                {isArchiving ? t('archiving') : t('archiveVersion')}
               </button>
             </div>
           )}
@@ -129,40 +129,37 @@ export function PublishPanel({
   const isReadyToPublish = canPublish && isAudioReady;
 
   return (
-    <div className="publish-panel-container" role="region" aria-label="Publish panel">
+    <div className="publish-panel-container" role="region" aria-label={t('publishRegion')}>
       <div className="publish-card">
-        <h3>Lesson publishing requirements</h3>
-        <p className="publish-desc">
-          Validate the lesson format and generate every required audio artifact before publishing
-          it to learners.
-        </p>
+        <h3>{t('publishingRequirements')}</h3>
+        <p className="publish-desc">{t('publishingHelp')}</p>
 
         <div className="readiness-checklist">
           <div className={`readiness-item ${canPublish ? 'is-ready' : 'not-ready'}`}>
             <span className="readiness-icon">{canPublish ? '✓' : '✗'}</span>
             <div className="readiness-info">
-              <strong>Format validation</strong>
-              <p>{canPublish ? 'Valid and ready to publish' : 'Draft has errors or has not been validated'}</p>
+              <strong>{t('formatValidation')}</strong>
+              <p>{canPublish ? t('formatReady') : t('formatNotReady')}</p>
             </div>
           </div>
 
           <div className={`readiness-item ${isAudioReady ? 'is-ready' : 'not-ready'}`}>
             <span className="readiness-icon">{isAudioReady ? '✓' : '✗'}</span>
             <div className="readiness-info">
-              <strong>Simulation audio</strong>
-              <p>{isAudioReady ? 'All required audio is ready' : 'One or more audio scripts still need generation'}</p>
+              <strong>{t('simulationAudio')}</strong>
+              <p>{isAudioReady ? t('audioReady') : t('audioNotReady')}</p>
             </div>
           </div>
         </div>
 
         <div className="publish-revision-info">
-          <span>Draft Revision: <strong>{draftRevision}</strong></span>
-          <span className="hash-label">Source Hash: <code>{sourceHash.slice(0, 8)}</code></span>
+          <span>{t('draftRevision')} <strong>{number(draftRevision)}</strong></span>
+          <span className="hash-label">{t('sourceHash')}<code>{sourceHash.slice(0, 8)}</code></span>
         </div>
 
-        {publishError && (
+        {Boolean(publishError) && (
           <div className="alert alert-error" role="alert">
-            {publishError}
+            {message(publishError)}
           </div>
         )}
 
@@ -173,7 +170,7 @@ export function PublishPanel({
             disabled={!isReadyToPublish || isPublishing}
             onClick={handlePublish}
           >
-            {isPublishing ? 'Publishing…' : 'Publish Lesson'}
+            {isPublishing ? t('publishing') : t('publishLesson')}
           </button>
         </div>
       </div>

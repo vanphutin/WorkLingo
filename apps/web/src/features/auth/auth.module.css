@@ -1,0 +1,120 @@
+/* Auth-only parent selectors retain the existing route headings and switch links. */
+:global(.auth-page):has(.content) {
+  min-height: 100dvh;
+  padding-block: clamp(1.5rem, 5vw, 3rem);
+}
+
+:global(.auth-panel):has(.content) {
+  width: min(100%, 32rem);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+  border-radius: 1rem;
+  background: var(--surface);
+  color: var(--foreground);
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+:global(.auth-panel):has(.content) > h1 {
+  margin: .75rem 0 1rem;
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  line-height: 1.15;
+  letter-spacing: -.04em;
+  text-wrap: balance;
+}
+
+:global(.auth-panel):has(.content) > p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+:global(.auth-panel):has(.content) > :global(.eyebrow) {
+  color: var(--primary);
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:global(.auth-panel):has(.content) > p:last-child {
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0 0;
+  padding-top: 1.25rem;
+  font-size: .9rem;
+}
+
+:global(.auth-panel):has(.content) a {
+  color: var(--primary);
+  text-underline-offset: .2em;
+}
+
+:global(.auth-panel):has(.content) a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.content { min-width: 0; }
+
+.form {
+  gap: 1.25rem;
+  margin: 1.75rem 0 1rem;
+}
+
+.field { gap: .5rem; }
+
+.field label {
+  color: var(--foreground);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  border: 1px solid var(--control-border);
+  border-radius: .65rem;
+  background: var(--background);
+  color: var(--foreground);
+  padding: .75rem;
+  font-size: 1rem;
+}
+
+.field input[aria-invalid='true'] { border-color: var(--danger); }
+
+.field input:focus-visible,
+.submit:focus-visible,
+:global(.auth-panel):has(.content) a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.hint, .note {
+  margin: 0;
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.6;
+}
+
+.fieldError, .formError { color: var(--danger); }
+
+.formError {
+  border-left: 3px solid var(--danger);
+  padding: .5rem .75rem;
+  line-height: 1.5;
+}
+
+.status { color: var(--success); }
+
+.submit {
+  width: 100%;
+  min-height: 3rem;
+  margin-top: .25rem;
+  white-space: nowrap;
+}
+
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: .5rem;
+  font-size: .85rem;
+}

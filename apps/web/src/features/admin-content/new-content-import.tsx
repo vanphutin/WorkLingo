@@ -1,6 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useAdminContent } from './i18n';
+
 import React, { useState } from 'react';
 import { foundationCategories, getFoundationTemplate, type FoundationCategory } from '@worklingo/content-format';
 
@@ -50,10 +52,11 @@ Sample practice question.
 `;
 
 export function NewContentImport() {
+  const { t, label, message } = useAdminContent();
   const router = useRouter();
   const [rawSource, setRawSource] = useState(DEFAULT_TEMPLATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<unknown>(null);
   const [selectedTemplate, setSelectedTemplate] = useState('legacy');
 
   function handleTemplateChange(value: string) {
@@ -73,7 +76,7 @@ export function NewContentImport() {
     } catch (error) {
       setIsSubmitting(false);
       if (error instanceof ApiError) {
-        setErrorMessage(error.message);
+        setErrorMessage(error);
       } else {
         setErrorMessage('Failed to create content import draft. Please try again.');
       }
@@ -83,35 +86,30 @@ export function NewContentImport() {
   return (
     <div className="new-import-container">
       <div className="new-import-header">
-        <h1>New Content Import</h1>
-        <p>
-          Start from Format 1.0 or a Foundation 1.1 scaffold. Exact source will be
-          preserved for editing and validation.
-        </p>
+        <h1>{t('newImportTitle')}</h1>
+        <p>{t('newImportHelp')}</p>
       </div>
 
-      {errorMessage && (
+      {Boolean(errorMessage) && (
         <div className="status-card error-card" role="alert">
-          <p>{errorMessage}</p>
+          <p>{message(errorMessage)}</p>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="new-import-form">
         <div className="form-group">
-          <label htmlFor="lesson-template" className="form-label">Lesson template</label>
-          <select id="lesson-template" aria-label="Lesson template" value={selectedTemplate} onChange={(event) => handleTemplateChange(event.target.value)} disabled={isSubmitting}>
-            <option value="legacy">Format 1.0 blank lesson</option>
-            {foundationCategories.map((category) => <option key={category} value={category}>Foundation: {category}</option>)}
+          <label htmlFor="lesson-template" className="form-label">{t('lessonTemplate')}</label>
+          <select id="lesson-template" aria-label={t('lessonTemplate')} value={selectedTemplate} onChange={(event) => handleTemplateChange(event.target.value)} disabled={isSubmitting}>
+            <option value="legacy">{t('blankTemplate')}</option>
+            {foundationCategories.map((category) => <option key={category} value={category}>{t('foundationTemplate', { category: label(category) })}</option>)}
           </select>
-          {selectedTemplate !== 'legacy' ? <p className="form-help">Draft scaffold selected. Replace every TODO and validate before publishing.</p> : null}
+          {selectedTemplate !== 'legacy' ? <p className="form-help">{t('scaffoldHelp')}</p> : null}
         </div>
         <div className="form-group">
-          <label htmlFor="raw-source-input" className="form-label">
-            Lesson Source (WorkLingoLesson/1.0 or 1.1)
-          </label>
+          <label htmlFor="raw-source-input" className="form-label">{t('sourceLabel')}</label>
           <textarea
             id="raw-source-input"
-            aria-label="Lesson source"
+            aria-label={t('lessonSource')}
             className="raw-source-textarea"
             rows={20}
             value={rawSource}
@@ -127,7 +125,7 @@ export function NewContentImport() {
             className="btn btn-primary"
             disabled={isSubmitting || !rawSource.trim()}
           >
-            {isSubmitting ? 'Importing…' : 'Import Draft'}
+            {isSubmitting ? t('importing') : t('importDraft')}
           </button>
         </div>
       </form>

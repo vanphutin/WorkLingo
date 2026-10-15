@@ -4,6 +4,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { useAudioRecorder } from './use-audio-recorder';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
 
 class FakeMediaRecorder {
   static isTypeSupported = vi.fn(() => true);
@@ -40,6 +41,11 @@ function RecorderHarness() {
   );
 }
 
+function SwitchLocale() {
+  const { locale, setLocale } = useLocalePreference();
+  return <button onClick={() => void setLocale(locale === 'en' ? 'vi' : 'en')}>switch language</button>;
+}
+
 describe('useAudioRecorder', () => {
   const stopTrack = vi.fn();
   const stream = { getTracks: () => [{ stop: stopTrack }] } as unknown as MediaStream;
@@ -47,10 +53,10 @@ describe('useAudioRecorder', () => {
   beforeEach(() => {
     stopTrack.mockReset();
     vi.stubGlobal('MediaRecorder', FakeMediaRecorder);
-    vi.stubGlobal('URL', {
-      ...URL,
-      createObjectURL: vi.fn(() => 'blob:preview-1'),
-      revokeObjectURL: vi.fn(),
+    // Preserve the URL constructor used by browser cookies; mock only media object URLs.
+    vi.stubGlobal('URL', class extends URL {
+      static createObjectURL = vi.fn(() => 'blob:preview-1');
+      static revokeObjectURL = vi.fn();
     });
     Object.defineProperty(globalThis.navigator, 'mediaDevices', {
       configurable: true,
@@ -106,5 +112,34 @@ describe('useAudioRecorder', () => {
 
     await act(async () => fireEvent.click(screen.getByRole('button', { name: 'start' })));
     expect(await screen.findByRole('alert')).toHaveTextContent(/microphone|permission/i);
+  });
+
+  it('keeps the microphone recording and preview alive across locale changes', async () => {
+    render(<LocaleProvider initialLocale="en"><SwitchLocale /><RecorderHarness /></LocaleProvider>);
+    fireEvent.click(screen.getByRole('button', { name: 'start' }));
+    await screen.findByText('recording');
+    const recorder = FakeMediaRecorder.latest;
+    fireEvent.click(screen.getByRole('button', { name: 'switch language' }));
+    expect(screen.getByText('recording')).toBeInTheDocument();
+    expect(FakeMediaRecorder.latest).toBe(recorder);
+    expect(stopTrack).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'stop' }));
+    await screen.findByText('preview');
+    const preview = screen.getByLabelText('preview');
+    fireEvent.click(screen.getByRole('button', { name: 'switch language' }));
+    expect(screen.getByLabelText('preview')).toBe(preview);
+    expect(preview).toHaveAttribute('src', 'blob:preview-1');
+    expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+    expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalledTimes(1);
+  });
+
+  it('retranslates an existing microphone error without requesting permission again', async () => {
+    vi.mocked(navigator.mediaDevices.getUserMedia).mockRejectedValueOnce(new DOMException('Denied', 'NotAllowedError'));
+    render(<LocaleProvider initialLocale="en"><SwitchLocale /><RecorderHarness /></LocaleProvider>);
+    fireEvent.click(screen.getByRole('button', { name: 'start' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Microphone permission was denied.');
+    fireEvent.click(screen.getByRole('button', { name: 'switch language' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Quyền truy cập micro đã bị từ chối.');
+    expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalledTimes(1);
   });
 });

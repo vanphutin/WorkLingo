@@ -1,5 +1,9 @@
 'use client';
 
+import { useT, useLocalePreference } from '../../i18n/provider';
+import { onboardingMessages } from '../../i18n/messages/onboarding';
+import { localizedError } from '../../i18n/errors';
+
 import type { OnboardingStateDto } from '@worklingo/contracts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -8,10 +12,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ApiError } from '../../lib/api/api-client';
 import { onboardingClient } from '../../lib/api/onboarding-client';
 import { PlacementStatus } from './placement-status';
+import { onboardingSystemText } from './system-text';
 
 type OnboardingMethodChoice = 'self-placement' | 'assessment';
 
 export function OnboardingWorkspace() {
+  const t = useT('onboarding', onboardingMessages);
+  const { locale } = useLocalePreference();
   const router = useRouter();
   const [state, setState] = useState<OnboardingStateDto | null>(null);
   const [method, setMethod] = useState<OnboardingMethodChoice | null>(null);
@@ -19,7 +26,8 @@ export function OnboardingWorkspace() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadError, setLoadError] = useState(false);
-  const [actionError, setActionError] = useState<string | null>(null);
+  const [loadFailure, setLoadFailure] = useState<unknown>(null);
+  const [actionError, setActionError] = useState<{ key: 'selfError' | 'startError'; error: unknown } | null>(null);
   const confirmationId = useRef<string | null>(null);
   const placementAttemptId = useRef<string | null>(null);
 
@@ -34,8 +42,9 @@ export function OnboardingWorkspace() {
       } else if (nextState.activePlacementAttempt) {
         setMethod('assessment');
       }
-    } catch {
+    } catch (error) {
       setLoadError(true);
+      setLoadFailure(error);
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +71,7 @@ export function OnboardingWorkspace() {
       if (error instanceof ApiError && error.status === 409) {
         confirmationId.current = null;
       }
-      setActionError('We could not confirm your starting level. Your choice is safe; try again.');
+      setActionError({ key: 'selfError', error });
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +94,7 @@ export function OnboardingWorkspace() {
         await loadState();
         return;
       }
-      setActionError('We could not open the assessment. Your progress is safe; try again.');
+      setActionError({ key: 'startError', error });
     } finally {
       setIsSubmitting(false);
     }
@@ -95,7 +104,7 @@ export function OnboardingWorkspace() {
     return (
       <main className="onboarding-page" aria-busy="true">
         <div className="onboarding-status" role="status">
-          <p>Loading your starting options…</p>
+          <p>{t('loading')}</p>
         </div>
       </main>
     );
@@ -105,9 +114,10 @@ export function OnboardingWorkspace() {
     return (
       <main className="onboarding-page">
         <div className="onboarding-status onboarding-status-error" role="alert">
-          <h1>We could not load your options</h1>
-          <p>Check your connection and try again. Your account has not changed.</p>
-          <button type="button" onClick={() => void loadState()}>Try again</button>
+          <h1>{t('loadError')}</h1>
+          <p>{t('loadErrorNote')}</p>
+          <p>{localizedError(loadFailure, locale)}</p>
+          <button type="button" onClick={() => void loadState()}>{t('retry')}</button>
         </div>
       </main>
     );
@@ -118,35 +128,30 @@ export function OnboardingWorkspace() {
   return (
     <main className="onboarding-page">
       <header className="onboarding-header">
-        <p className="onboarding-kicker">Your starting point</p>
-        <h1>Choose how to begin</h1>
-        <p>
-          Start from a level you know, or complete a four-skill workplace assessment.
-          You can review the result before it changes your level.
-        </p>
+        <p className="onboarding-kicker">{t('kicker')}</p>
+        <h1>{t('title')}</h1>
+        <p>{t('introduction')}</p>
       </header>
 
-      {actionError ? <div className="onboarding-action-error" role="alert">{actionError}</div> : null}
+      {actionError ? <div className="onboarding-action-error" role="alert"><p>{t(actionError.key)}</p><p>{localizedError(actionError.error, locale)}</p></div> : null}
 
       {activeAttempt?.nextAction === 'continue_assessment' ? (
         <section className="onboarding-resume" aria-labelledby="resume-heading">
           <div>
-            <p className="onboarding-section-label">Assessment in progress</p>
-            <h2 id="resume-heading">Continue where you stopped</h2>
-            <p>Your answers and checkpoint are saved on this device's local WorkLingo server.</p>
+            <p className="onboarding-section-label">{t('inProgress')}</p>
+            <h2 id="resume-heading">{t('continue')}</h2>
+            <p>{t('saved')}</p>
           </div>
           <Link
             className="onboarding-primary-link"
             href={`/onboarding/placement/${activeAttempt.learningSessionId}`}
-          >
-            Resume assessment
-          </Link>
+          >{t('resume')}</Link>
         </section>
       ) : activeAttempt ? (
         <PlacementStatus initialAttempt={activeAttempt} />
       ) : (
         <fieldset className="onboarding-methods">
-          <legend>Choose one option</legend>
+          <legend>{t('chooseOption')}</legend>
           <label className={method === 'self-placement' ? 'onboarding-method selected' : 'onboarding-method'}>
             <input
               type="radio"
@@ -158,8 +163,8 @@ export function OnboardingWorkspace() {
               }}
             />
             <span>
-              <strong>Choose my starting level</strong>
-              <small>Best if you already understand your current workplace English foundation.</small>
+              <strong>{t('selfPlacement')}</strong>
+              <small>{t('selfNote')}</small>
             </span>
           </label>
           <label className={method === 'assessment' ? 'onboarding-method selected' : 'onboarding-method'}>
@@ -173,8 +178,8 @@ export function OnboardingWorkspace() {
               }}
             />
             <span>
-              <strong>Take a placement assessment</strong>
-              <small>Use reading, listening, speaking, and writing evidence to recommend a level.</small>
+              <strong>{t('assessment')}</strong>
+              <small>{t('assessmentNote')}</small>
             </span>
           </label>
         </fieldset>
@@ -183,12 +188,12 @@ export function OnboardingWorkspace() {
       {!activeAttempt && method === 'self-placement' ? (
         <section className="onboarding-choice-panel" aria-labelledby="level-heading">
           <div>
-            <p className="onboarding-section-label">Self-placement</p>
-            <h2 id="level-heading">Select an available level</h2>
-            <p>Only levels with a complete workplace mission can be selected.</p>
+            <p className="onboarding-section-label">{t('selfLabel')}</p>
+            <h2 id="level-heading">{t('selectLevel')}</h2>
+            <p>{t('levelNote')}</p>
           </div>
           <fieldset className="onboarding-levels">
-            <legend className="visually-hidden">Available starting levels</legend>
+            <legend className="visually-hidden">{t('availableLevels')}</legend>
             {state.eligibleLevels.map((level) => (
               <label
                 className={level.available ? 'onboarding-level' : 'onboarding-level unavailable'}
@@ -206,9 +211,9 @@ export function OnboardingWorkspace() {
                   }}
                 />
                 <span className="onboarding-level-copy">
-                  <strong>{level.name}</strong>
-                  <small>{level.cefrReference}</small>
-                  <span>{level.reason}</span>
+                  <strong>{onboardingSystemText(level.name, locale)}</strong>
+                  <small>{onboardingSystemText(level.cefrReference, locale)}</small>
+                  <span>{onboardingSystemText(level.reason, locale)}</span>
                 </span>
               </label>
             ))}
@@ -219,8 +224,8 @@ export function OnboardingWorkspace() {
             onClick={() => void confirmSelfPlacement()}
           >
             {actionError
-              ? 'Try confirmation again'
-              : isSubmitting ? 'Confirming…' : 'Confirm starting level'}
+              ? t('retryConfirmation')
+              : isSubmitting ? t('confirming') : t('confirmStart')}
           </button>
         </section>
       ) : null}
@@ -228,19 +233,16 @@ export function OnboardingWorkspace() {
       {!activeAttempt && method === 'assessment' ? (
         <section className="onboarding-choice-panel" aria-labelledby="assessment-heading">
           <div>
-            <p className="onboarding-section-label">Four-skill assessment</p>
-            <h2 id="assessment-heading">Show what you can understand and communicate</h2>
-            <p>
-              This 45-minute workplace assessment uses local lesson content. Speaking and writing
-              may need Teacher AI processing before your recommendation is ready.
-            </p>
+            <p className="onboarding-section-label">{t('fourSkills')}</p>
+            <h2 id="assessment-heading">{t('showSkills')}</h2>
+            <p>{t('assessmentDescription')}</p>
           </div>
           <aside className="onboarding-privacy-note">
-            <strong>Before you start</strong>
-            <p>Recording consent and retention choices appear in the speaking activity.</p>
+            <strong>{t('beforeStart')}</strong>
+            <p>{t('privacy')}</p>
           </aside>
           <button type="button" disabled={isSubmitting} onClick={() => void startPlacement()}>
-            {isSubmitting ? 'Opening assessment…' : 'Start assessment'}
+            {isSubmitting ? t('opening') : t('start')}
           </button>
         </section>
       ) : null}

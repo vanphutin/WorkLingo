@@ -1,16 +1,20 @@
 'use client';
 
+import { useLocalePreference } from '../../i18n/provider';
+import { localizedError } from '../../i18n/errors';
+
 import { useCallback, useEffect, useState } from 'react';
 import type { EvaluationDto } from '@worklingo/contracts';
 
-import { ApiError, apiClient } from '../../lib/api/api-client';
+import { apiClient } from '../../lib/api/api-client';
 
 const isPending = (evaluation: EvaluationDto): boolean =>
   evaluation.status === 'queued' || evaluation.status === 'processing';
 
 export function useEvaluation(attemptId: string | null, pollIntervalMs = 1_000) {
+  const { locale } = useLocalePreference();
   const [evaluation, setEvaluation] = useState<EvaluationDto | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [failure, setError] = useState<{ cause: unknown } | null>(null);
   const [isRetrying, setIsRetrying] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -28,7 +32,7 @@ export function useEvaluation(attemptId: string | null, pollIntervalMs = 1_000) 
         setEvaluation(next);
         if (isPending(next)) timer = setTimeout(() => void load(), pollIntervalMs);
       } catch (caught) {
-        if (active) setError(caught instanceof ApiError ? caught.message : 'Không thể tải đánh giá.');
+        if (active) setError({ cause: caught });
       }
     };
     void load();
@@ -47,11 +51,11 @@ export function useEvaluation(attemptId: string | null, pollIntervalMs = 1_000) 
       setEvaluation(retried);
       if (isPending(retried)) setRefreshKey((current) => current + 1);
     } catch (caught) {
-      setError(caught instanceof ApiError ? caught.message : 'Không thể thử lại đánh giá.');
+      setError({ cause: caught });
     } finally {
       setIsRetrying(false);
     }
   }, [attemptId, isRetrying]);
 
-  return { error, evaluation, isRetrying, retry };
+  return { error: failure ? localizedError(failure.cause, locale) : null, evaluation, isRetrying, retry };
 }

@@ -145,7 +145,7 @@ describe('PublishPanel', () => {
     fireEvent.click(screen.getByRole('button', { name: /publish lesson/i }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
-      /draft revision has changed on server/i,
+      /information has changed.*reload and try again/i,
     );
   });
 

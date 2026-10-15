@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useAdminContent } from './i18n';
+
 import React from 'react';
 
 import type { ContentImportDto } from '@worklingo/contracts';
@@ -18,54 +20,51 @@ function extractLessonInfo(rawSource: string): { title: string; slug: string } {
 }
 
 export function ContentList({ imports }: ContentListProps) {
+  const { t, date, label } = useAdminContent();
   if (imports.length === 0) {
     return (
-      <div className="content-list-empty" role="region" aria-label="Content imports">
+      <div className="content-list-empty" role="region" aria-label={t('importsRegion')}>
         <div className="empty-card">
-          <h2>No content imports yet</h2>
-          <p>Create your first import draft to begin authoring WorkLingo lessons.</p>
-          <Link href="/admin/content/new" className="btn btn-primary">
-            New Import
-          </Link>
+          <h2>{t('importsEmpty')}</h2>
+          <p>{t('importsEmptyHelp')}</p>
+          <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="content-list-container" role="region" aria-label="Content imports">
+    <div className="content-list-container" role="region" aria-label={t('importsRegion')}>
       <div className="content-list-header">
         <div>
-          <h2>All Imports ({imports.length})</h2>
-          <p className="subtitle">Draft, validate, test audio, and publish lesson versions.</p>
+          <h2>{t('allImports', { count: imports.length })}</h2>
+          <p className="subtitle">{t('importsHelp')}</p>
         </div>
-        <Link href="/admin/content/new" className="btn btn-primary">
-          New Import
-        </Link>
+        <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
       </div>
 
       <div className="content-table-wrapper">
         <table className="content-table">
           <thead>
             <tr>
-              <th scope="col">Status</th>
-              <th scope="col">Lesson</th>
-              <th scope="col">Revision</th>
-              <th scope="col">Updated</th>
-              <th scope="col">Actions</th>
+              <th scope="col">{t('status')}</th>
+              <th scope="col">{t('lesson')}</th>
+              <th scope="col">{t('revisionColumn')}</th>
+              <th scope="col">{t('updated')}</th>
+              <th scope="col">{t('actions')}</th>
             </tr>
           </thead>
           <tbody>
             {imports.map((item) => {
               const { title, slug } = extractLessonInfo(item.rawSource);
-              const formattedDate = new Date(item.updatedAt).toLocaleString();
-              const actionLabel = item.status === 'PUBLISHED' ? 'View' : 'Open Draft';
+              const formattedDate = date(item.updatedAt);
+              const actionLabel = item.status === 'PUBLISHED' ? t('view') : t('openDraft');
 
               return (
                 <tr key={item.id} className={`status-row status-${item.status.toLowerCase()}`}>
                   <td>
                     <span className={`status-pill pill-${item.status.toLowerCase()}`}>
-                      {item.status}
+                      {label(item.status)}
                     </span>
                   </td>
                   <td>
@@ -75,7 +74,7 @@ export function ContentList({ imports }: ContentListProps) {
                     </div>
                   </td>
                   <td>
-                    <span className="revision-badge">Rev {item.draftRevision}</span>
+                    <span className="revision-badge">{t('revisionShort', { count: item.draftRevision })}</span>
                   </td>
                   <td>
                     <time dateTime={item.updatedAt} className="updated-time">

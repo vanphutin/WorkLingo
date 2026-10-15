@@ -1,0 +1,96 @@
+body { font-family: var(--font-body); line-height: 1.6; }
+h1, h2, h3 { line-height: 1.2; text-wrap: balance; letter-spacing: -.025em; }
+p, li { overflow-wrap: anywhere; }
+button, input, select, textarea { font: inherit; }
+input, select, textarea { color: var(--foreground); background: var(--surface); }
+button, summary, select { touch-action: manipulation; }
+button { transition: background-color var(--motion-fast) var(--motion-ease); }
+button:not(:disabled):hover { filter: brightness(.93); }
+.primary-button, .secondary-button, .btn { display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; border: 1px solid var(--primary); border-radius: var(--radius-control);
+  padding: .75rem 1.25rem; font-weight: 700; text-decoration: none; }
+.primary-button { background: var(--primary-fill); color: var(--on-primary); }
+.secondary-button { background: var(--surface); color: var(--primary); }
+.primary-button:hover { background: var(--primary-hover); }
+.secondary-button:hover { background: var(--primary-soft); }
+.admin-shell .empty-card { max-width: 44rem; border: 1px solid var(--border); border-radius: var(--radius-panel);
+  background: var(--surface); padding: clamp(1.25rem, 4vw, 2.5rem); }
+a { text-underline-offset: .2em; }
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 3px;
+}
+fieldset { min-width: 0; }
+pre { max-width: 100%; overflow-x: auto; }
+audio { max-width: 100%; }
+[id] { scroll-margin-top: 1.5rem; }
+
+.learner-shell .learner-top-nav, .admin-shell .admin-top-nav {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 1rem max(1rem, calc((100vw - var(--width-page)) / 2));
+}
+.learner-shell .nav-container, .admin-shell .nav-container { max-width: var(--width-page); gap: 1rem; }
+.learner-shell .nav-user-meta, .admin-shell .nav-user-meta { flex-wrap: wrap; gap: .75rem; min-width: 0; }
+.brand-logo { color: var(--foreground); letter-spacing: -.05em; font-size: 1.5rem; }
+.brand-logo::before { content: 'w'; display: inline-grid; place-items: center; width: 2rem; height: 2rem;
+  border-radius: .625rem; background: var(--primary-fill); color: var(--on-primary); margin-right: .5rem; letter-spacing: -.06em; }
+.user-greeting { display: inline-flex; align-items: center; gap: .625rem; max-width: 22rem;
+  min-height: 44px; overflow-wrap: anywhere; color: var(--muted); }
+.user-avatar { display: inline-grid; flex: 0 0 auto; width: 2rem; height: 2rem; place-items: center;
+  border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 800; }
+.user-identity { display: grid; line-height: 1.2; }
+.user-identity-label { font-size: .7rem; color: var(--muted); }
+.user-identity strong { color: var(--foreground); font-size: .9rem; }
+.logout-button { border-color: var(--border); color: var(--foreground); }
+.theme-control { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 44px;
+  gap: .5rem; font-size: .875rem; color: var(--muted); }
+.theme-control select { min-height: 44px; max-width: 8rem; padding: .35rem .5rem;
+  border: 1px solid var(--control-border); border-radius: var(--radius-control); }
+.landing-topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.workspace-nav { display: flex; flex-wrap: wrap; gap: .25rem; min-width: 0; }
+.workspace-nav-learner { margin-top: .75rem; }
+.session-navigation summary { min-height: 44px; cursor: pointer; padding-block: .5rem; color: var(--primary); }
+.learning-mode .user-greeting { display: none; }
+.workspace-nav-link { display: flex; align-items: center; min-height: 44px; padding: .5rem .875rem;
+  color: var(--muted); text-decoration: none; border-radius: var(--radius-control); font-weight: 600; }
+.workspace-nav-link:hover { background: var(--surface-soft); color: var(--foreground); }
+.workspace-nav-link[aria-current='page'] { color: var(--primary); background: var(--primary-soft);
+  box-shadow: inset 0 -2px var(--primary); }
+.learner-content { width: 100%; min-width: 0; }
+.learner-content > main, .learner-content > .evidence-workspace {
+  width: 100%; max-width: var(--width-page); margin-inline: auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+}
+
+.admin-shell.admin-shell { display: grid; grid-template-columns: 14rem minmax(0, 1fr); min-height: 100dvh; align-content: start; }
+.admin-shell .admin-top-nav { grid-column: 1 / -1; }
+.admin-navigation { border-right: 1px solid var(--border); background: var(--surface);
+  padding: 1.25rem .75rem; min-width: 0; }
+.admin-navigation summary { min-height: 44px; cursor: pointer; padding: .5rem .75rem;
+  color: var(--muted); font-weight: 600; font-size: .875rem; }
+.workspace-nav-admin { flex-direction: column; }
+.admin-shell .admin-main-content { width: 100%; min-width: 0; max-width: 96rem;
+  padding: clamp(1rem, 3vw, 2rem); }
+.admin-shell .admin-nav-links { display: none; }
+.admin-badge { background: var(--surface-soft); color: var(--muted); }
+.admin-shell :where(.workspace-header, .workspace-view, .workspace-pane, .form-card, .observability-card) { box-shadow: none; }
+.admin-shell :where(table) { font-variant-numeric: tabular-nums; }
+.admin-shell :where(th) { white-space: normal; }
+.admin-shell :where(td, th) { overflow-wrap: anywhere; }
+
+@media (max-width: 900px) {
+  .admin-shell.admin-shell { grid-template-columns: minmax(0, 1fr); }
+  .admin-navigation { border-right: 0; border-bottom: 1px solid var(--border); padding: .5rem 1rem; }
+  .workspace-nav-admin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .learner-shell .nav-container, .admin-shell .nav-container { align-items: flex-start; }
+  .learner-shell .nav-user-meta, .admin-shell .nav-user-meta { width: 100%; gap: .5rem; }
+  .user-greeting { margin-right: auto; }
+  .user-identity-label { display: none; }
+  .workspace-nav-learner { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .workspace-nav-link { justify-content: center; padding-inline: .4rem; font-size: .875rem; text-align: center; }
+  .workspace-nav-admin .workspace-nav-link { justify-content: flex-start; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

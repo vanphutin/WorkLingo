@@ -48,11 +48,11 @@ describe('ContentImportDetailPage', () => {
 
     render(<ContentImportDetailPage />);
 
-    expect(screen.getByRole('status')).toHaveTextContent(/đang tải/i);
+    expect(screen.getByRole('status')).toHaveTextContent(/loading lesson content/i);
 
     await waitFor(() => {
       expect(screen.getByRole('textbox', { name: /lesson source/i })).toBeInTheDocument();
-      expect(screen.getByText('DRAFT')).toBeInTheDocument();
+      expect(screen.getByText('Draft')).toBeInTheDocument();
       expect(screen.getByText(/revision 1/i)).toBeInTheDocument();
     });
   });
@@ -68,6 +68,7 @@ describe('ContentImportDetailPage', () => {
 
     render(<ContentImportDetailPage />);
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(/content import not found/i);
+    expect(await screen.findByRole('alert')).toHaveTextContent(/this content is not available/i);
+    expect(screen.queryByText('Content import not found')).not.toBeInTheDocument();
   });
 });

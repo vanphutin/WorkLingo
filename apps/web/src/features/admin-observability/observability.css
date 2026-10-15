@@ -1,25 +1,25 @@
 .observability-shell { display: grid; gap: 1.5rem; }
-.observability-header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #d9ddd8; padding-bottom: 1rem; }
-.observability-header h1 { margin: 0; color: #1a241e; font-size: clamp(1.5rem, 3vw, 2rem); }
-.observability-header p { margin: .35rem 0 0; color: #556258; }
+.observability-header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+.observability-header h1 { margin: 0; color: var(--foreground); font-size: clamp(1.5rem, 3vw, 2rem); }
+.observability-header p { margin: .35rem 0 0; color: var(--muted); }
 .observability-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.observability-card { border: 1px solid #d9ddd8; border-radius: .6rem; background: #fff; padding: 1rem; min-width: 0; }
+.observability-card { border: 1px solid var(--border); border-radius: .6rem; background: var(--surface); padding: 1rem; min-width: 0; }
 .observability-card h2, .observability-card h3 { margin-top: 0; }
-.metric-value { display: block; margin-top: .35rem; color: #17643a; font-size: 1.65rem; font-weight: 750; }
+.metric-value { display: block; margin-top: .35rem; color: var(--primary); font-size: 1.65rem; font-weight: 750; }
 .observability-filters { display: flex; flex-wrap: wrap; gap: .75rem; align-items: end; }
 .observability-field { display: grid; gap: .3rem; min-width: 150px; }
 .observability-field label { font-size: .85rem; font-weight: 650; }
-.observability-field input, .observability-field select { min-height: 44px; border: 1px solid #aeb6ac; border-radius: .4rem; padding: .5rem .65rem; font: inherit; background: #fff; }
-.observability-table-wrap { overflow-x: auto; border: 1px solid #d9ddd8; border-radius: .6rem; }
-.observability-table { width: 100%; border-collapse: collapse; background: #fff; }
-.observability-table th, .observability-table td { padding: .75rem; text-align: left; border-bottom: 1px solid #e7e9e6; vertical-align: top; }
-.observability-table th { color: #37433a; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
-.observability-status { display: inline-block; border-radius: 999px; padding: .2rem .55rem; background: #eef2ed; font-size: .78rem; font-weight: 700; }
-.observability-alert { border: 1px solid #b5473d; border-radius: .5rem; background: #fff4f2; color: #7b241c; padding: .8rem 1rem; }
+.observability-field input, .observability-field select { min-height: 44px; border: 1px solid var(--control-border); border-radius: .4rem; padding: .5rem .65rem; font: inherit; background: var(--surface); }
+.observability-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: .6rem; }
+.observability-table { width: 100%; border-collapse: collapse; background: var(--surface); }
+.observability-table th, .observability-table td { padding: .75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+.observability-table th { color: var(--foreground); font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
+.observability-status { display: inline-block; border-radius: 999px; padding: .2rem .55rem; background: var(--surface-soft); font-size: .78rem; font-weight: 700; }
+.observability-alert { border: 1px solid var(--danger); border-radius: .5rem; background: var(--danger-soft); color: var(--danger); padding: .8rem 1rem; }
 .observability-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
-.observability-button { min-height: 44px; border: 1px solid #17643a; border-radius: .45rem; padding: .55rem .9rem; font: inherit; font-weight: 650; cursor: pointer; background: #17643a; color: #fff; }
-.observability-button.secondary { background: #fff; color: #17643a; }
-.observability-button:focus-visible, .observability-field :focus-visible { outline: 3px solid #e7a325; outline-offset: 2px; }
+.observability-button { min-height: 44px; border: 1px solid var(--primary); border-radius: .45rem; padding: .55rem .9rem; font: inherit; font-weight: 650; cursor: pointer; background: var(--primary-fill); color: var(--on-primary); }
+.observability-button.secondary { background: var(--surface); color: var(--primary); }
+.observability-button:focus-visible, .observability-field :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .observability-button:disabled { opacity: .55; cursor: not-allowed; }
 .job-detail { margin-top: .75rem; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .82rem; }
 @media (max-width: 640px) { .observability-table th:nth-child(3), .observability-table td:nth-child(3) { display: none; } }

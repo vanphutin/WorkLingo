@@ -1,7 +1,14 @@
+import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ieltsOrientationClient } from '../../lib/api/ielts-orientation-client';
 import { OrientationPlayer } from './orientation-player';
+import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
+
+function SwitchLocale() {
+  const { setLocale } = useLocalePreference();
+  return <button onClick={() => setLocale('en')}>Switch language</button>;
+}
 
 vi.mock('../../lib/api/ielts-orientation-client', () => ({ ieltsOrientationClient: { getStatus: vi.fn(), start: vi.fn(), updateProgress: vi.fn() } }));
 vi.mock('../audio/browser-speech-controls', () => ({ BrowserSpeechControls: ({ text }: { text: string }) => <button type="button">Read transcript: {text}</button> }));
@@ -17,6 +24,20 @@ const progress = { orientationVersionId: versionId, currentSlideIndex: 1, revisi
 describe('OrientationPlayer', () => {
   beforeEach(() => { vi.clearAllMocks(); vi.mocked(ieltsOrientationClient.getStatus).mockResolvedValue({ state: 'in_progress', reasons: [], presentation, progress }); });
   afterEach(cleanup);
+
+  it('localizes navigation and captions while preserving English content and the selected answer on switching', async () => {
+    render(<LocaleProvider initialLocale="vi"><SwitchLocale /><OrientationPlayer /></LocaleProvider>);
+    expect(await screen.findByRole('button', { name: 'Tiếp tục' })).toBeDisabled();
+    expect(screen.getByText('Bản chép lời và phụ đề')).toBeVisible();
+    expect(screen.getByText('Check transcript')).toHaveAttribute('lang', 'en');
+    expect(screen.getByRole('heading', { name: 'Knowledge check' })).toBeVisible();
+    const answer = screen.getByLabelText('Four');
+    fireEvent.click(answer);
+    fireEvent.click(screen.getByRole('button', { name: 'Switch language' }));
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
+    expect(screen.getByLabelText('Four')).toBe(answer);
+    expect(answer).toBeChecked();
+  });
 
   it('resumes the pinned slide, exposes captions and gates advancement on an answer', async () => {
     vi.mocked(ieltsOrientationClient.updateProgress).mockResolvedValue({ progress: { ...progress, currentSlideIndex: 2, revision: 3, answers: [{ questionSlug: 'skills-check', selectedIndex: 1, correct: true, answeredAt: new Date().toISOString() }] }, answerFeedback: { questionSlug: 'skills-check', correct: true, explanation: 'Four skills.' } });

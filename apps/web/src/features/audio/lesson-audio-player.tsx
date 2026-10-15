@@ -1,5 +1,8 @@
 'use client';
 
+import { useT } from '../../i18n/provider';
+import { audioMessages } from '../../i18n/messages/audio';
+
 import { useEffect, useState } from 'react';
 import type { AudioSettings } from '@worklingo/contracts';
 
@@ -16,6 +19,7 @@ export function LessonAudioPlayer(props: {
   readonly preferBrowserSpeech?: boolean;
   readonly text: string;
 }) {
+  const t = useT('audio', audioMessages);
   const [settings, setSettings] = useState<AudioSettings | null>(null);
   const [mediaFailed, setMediaFailed] = useState(false);
 
@@ -30,7 +34,7 @@ export function LessonAudioPlayer(props: {
   useEffect(() => setMediaFailed(false), [props.audioUrl]);
 
   if (!settings) {
-    return <p className="audio-fallback-notice" role="status">Loading audio preferences…</p>;
+    return <p className="audio-fallback-notice" role="status">{t('loadingPreferences')}</p>;
   }
 
   if (
@@ -50,14 +54,14 @@ export function LessonAudioPlayer(props: {
     if (settings.sourceId === 'published-audio') {
       return (
         <p className="audio-fallback-notice" role="alert">
-          Published audio is unavailable. Use the transcript below or change your audio settings.
+          {t('publishedUnavailable')}
         </p>
       );
     }
     return (
       <div className="audio-browser-fallback">
         <p className="audio-fallback-notice" role="status">
-          Lesson audio is unavailable. Browser speech is ready as a fallback.
+          {t('lessonUnavailable')}
         </p>
         <BrowserSpeechControls
           lang="en-US"
@@ -70,13 +74,13 @@ export function LessonAudioPlayer(props: {
 
   return (
     <audio
-      aria-label="Lesson audio"
+      aria-label={t('lessonAudio')}
       controls
       onError={() => setMediaFailed(true)}
       preload="metadata"
       src={props.audioUrl}
     >
-      Your browser does not support lesson audio playback.
+      {t('playbackUnsupported')}
     </audio>
   );
 }
