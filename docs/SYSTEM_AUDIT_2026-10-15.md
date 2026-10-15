@@ -108,4 +108,4 @@ failure behavior are unchanged. These limits require separate evidence before ex
 
 Git handoff: all repairs are isolated on `codex/audit-job-safety`; original feature changes remain
 in their checkout. The feature branch's 35 unrelated commits were neither published nor merged.
-Human pilot approvals remain required. The fix branch is pushed for PR review, without auto-merge.
+Human pilot approvals remain required. The fix branch is pushed for [PR #10](https://github.com/vanphutin/WorkLingo/pull/10), without auto-merge.

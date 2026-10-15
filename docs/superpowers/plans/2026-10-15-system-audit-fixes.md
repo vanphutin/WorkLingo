@@ -80,7 +80,7 @@
 ### Final gate
 
 - [x] Fresh independent five-axis review, targeted mutation check, final diff/secret check.
-- [ ] Commit, push the fix branch and open a PR against the remote default branch.
+- [x] Commit, push the fix branch and open [PR #10](https://github.com/vanphutin/WorkLingo/pull/10) against `main`.
 - [x] Preserve all original checkout changes and report verification limits; no pilot/release approval inferred.
 
 ## Execution rulings
