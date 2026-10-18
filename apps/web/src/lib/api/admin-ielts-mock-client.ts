@@ -10,6 +10,7 @@ export class AdminIeltsMockClient {
   private readonly baseUrl: string;
   constructor(baseUrl?: string) { this.baseUrl = (baseUrl ?? process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api/v1').replace(/\/+$/u, ''); }
   list(cursor?: string) { return this.request(`/admin/ielts-mocks${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ''}`, { method: 'GET' }, mockPageSchema); }
+  create(input: { idempotencyKey: string; content: unknown }) { return this.request('/admin/ielts-mocks', { method: 'POST', body: JSON.stringify(input) }, adminIeltsMockSchema); }
   save(id: string, input: { expectedRevision: number; idempotencyKey: string; content: unknown }) { return this.request(`/admin/ielts-mocks/${id}/draft`, { method: 'PUT', body: JSON.stringify(input) }, adminIeltsMockSchema); }
   validate(id: string, expectedRevision: number) { return this.request(`/admin/ielts-mocks/${id}/validate`, { method: 'POST', body: JSON.stringify({ expectedRevision, idempotencyKey: crypto.randomUUID() }) }, ieltsMockValidationSchema); }
   publish(id: string, expectedRevision: number) { return this.request(`/admin/ielts-mocks/${id}/publish`, { method: 'POST', body: JSON.stringify({ expectedRevision, idempotencyKey: crypto.randomUUID() }) }, publishIeltsMockResultSchema); }
