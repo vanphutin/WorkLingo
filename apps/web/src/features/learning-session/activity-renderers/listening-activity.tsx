@@ -3,7 +3,7 @@
 import { useT } from '../../../i18n/provider';
 import { learningSessionMessages } from '../../../i18n/messages/learningSession';
 
-import React from 'react';
+import React, { useId, useState } from 'react';
 
 import { apiClient, type LearnerActivityDto } from '../../../lib/api/api-client';
 import { LessonAudioPlayer } from '../../audio/lesson-audio-player';
@@ -20,7 +20,11 @@ interface ListeningActivityProps {
   readonly sessionId: string;
 }
 
-export function ListeningActivity({
+export function ListeningActivity(props: ListeningActivityProps) {
+  return <ListeningPractice key={`${props.sessionId}:${props.activity.id}`} {...props} />;
+}
+
+function ListeningPractice({
   activity,
   value,
   onChange,
@@ -28,6 +32,10 @@ export function ListeningActivity({
   sessionId,
 }: ListeningActivityProps) {
   const t = useT('learningSession', learningSessionMessages);
+  const [completedListens, setCompletedListens] = useState(0);
+  const [scriptState, setScriptState] = useState<'unopened' | 'shown' | 'hidden'>('unopened');
+  const scriptShown = scriptState === 'shown';
+  const scriptId = useId();
   const contentItems = activity.content as ReadonlyArray<{
     slug?: string;
     type?: string;
@@ -58,6 +66,11 @@ export function ListeningActivity({
   const usesSimulationPlaceholder = contentItems.some(
     (item) => item.audio?.kind === 'textPlaceholder',
   );
+  const hasUnansweredQuestion = questions.some((question, index) => {
+    const answer = value.answerIndexes[index];
+    return !Number.isInteger(answer) || answer === undefined || answer < 0 || answer >= question.options.length;
+  });
+  const canRevealScript = completedListens >= 6 && hasUnansweredQuestion && transcript.length > 0;
 
   return (
     <article className="activity-container listening-activity" aria-labelledby="listening-prompt">
@@ -72,11 +85,25 @@ export function ListeningActivity({
           audioUrl={audioUrl}
           dialogue={contentItems.some(item => item.type === 'dialogue')}
           preferBrowserSpeech={usesSimulationPlaceholder}
+          onPlaybackComplete={() => setCompletedListens((count) => count + 1)}
           text={transcript}
         />
 
-        {contentItems.length > 0 && (
-          <div className="audio-transcript-box">
+        {transcript.length > 0 && (
+          <div className="listening-script-help">
+            {!scriptShown && <p className="audio-settings-note" role="status">
+              {t('listeningScriptHelp', { count: completedListens })}
+            </p>}
+            {(canRevealScript || scriptState !== 'unopened') && (
+              <button type="button" className="secondary-action-button" aria-expanded={scriptShown} aria-controls={scriptId} onClick={() => setScriptState(scriptShown ? 'hidden' : 'shown')}>
+                {t(scriptShown ? 'hideScript' : 'showScript')}
+              </button>
+            )}
+          </div>
+        )}
+
+        {scriptShown && (
+          <div id={scriptId} className="audio-transcript-box">
             <h3 className="section-subtitle">{t('transcript')}</h3>
             {contentItems.map((item, index) => (
               <p key={item.slug ?? index} className="transcript-text" lang="en">

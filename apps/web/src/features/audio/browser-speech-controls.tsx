@@ -13,6 +13,7 @@ export function BrowserSpeechControls(props: {
   readonly itemId?: string;
   readonly sessionId?: string;
   readonly preferredVoiceId?: string | null;
+  readonly onPlaybackComplete?: (() => void) | undefined;
   readonly text: string;
 }) {
   const t = useT('audio', audioMessages);

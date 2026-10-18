@@ -15,9 +15,10 @@ const DEFAULT_SETTINGS: AudioSettings = {
   sourceId: 'system-default',
 };
 
-function LessonMedia(props: { readonly src: string; readonly onError: () => void }) {
+function LessonMedia(props: { readonly src: string; readonly onError: () => void; readonly onPlaybackComplete?: (() => void) | undefined }) {
   const t = useT('audio', audioMessages);
   const audio = useRef<HTMLAudioElement>(null);
+  const fullPlayback = useRef(false);
   useEffect(() => {
     const media = audio.current;
     const unsubscribe = subscribeNativeMedia();
@@ -33,9 +34,17 @@ function LessonMedia(props: { readonly src: string; readonly onError: () => void
       ref={audio}
       controls
       onPlay={(event) => {
+        if (event.currentTarget.currentTime <= 0.5) fullPlayback.current = true;
         claimMediaPlayback(event.currentTarget);
       }}
+      onSeeking={() => { fullPlayback.current = false; }}
+      onEnded={() => {
+        if (!fullPlayback.current) return;
+        fullPlayback.current = false;
+        props.onPlaybackComplete?.();
+      }}
       onError={(event) => {
+        fullPlayback.current = false;
         stopMediaPlayback(event.currentTarget);
         props.onError();
       }}
@@ -51,6 +60,7 @@ export function LessonAudioPlayer(props: {
   readonly audioUrl: string;
   readonly dialogue?: boolean;
   readonly preferBrowserSpeech?: boolean;
+  readonly onPlaybackComplete?: () => void;
   readonly text: string;
 }) {
   const t = useT('audio', audioMessages);
@@ -81,6 +91,7 @@ export function LessonAudioPlayer(props: {
         dialogue={props.dialogue === true}
         lang="en-US"
         preferredVoiceId={settings.browserVoiceId}
+        onPlaybackComplete={props.onPlaybackComplete}
         text={props.text}
       />
     );
@@ -104,6 +115,7 @@ export function LessonAudioPlayer(props: {
           dialogue={props.dialogue === true}
           lang="en-US"
           preferredVoiceId={settings.browserVoiceId}
+          onPlaybackComplete={props.onPlaybackComplete}
           text={props.text}
         />
       </div>
@@ -114,6 +126,7 @@ export function LessonAudioPlayer(props: {
     <LessonMedia
       key={props.audioUrl}
       onError={() => setMediaFailed(true)}
+      onPlaybackComplete={props.onPlaybackComplete}
       src={props.audioUrl}
     />
   );

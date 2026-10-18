@@ -30,6 +30,7 @@ export function useBrowserSpeech(input: {
   readonly rate?: number;
   readonly text: string;
   readonly volume?: number;
+  readonly onPlaybackComplete?: (() => void) | undefined;
 }): BrowserSpeechController {
   const t = useT('audio', audioMessages);
   const { voices, disabledIds, rotationEnabled, store, supported } = useVoiceRegistry();
@@ -41,6 +42,8 @@ export function useBrowserSpeech(input: {
   const paused = useRef(false);
   const pendingTurn = useRef<(() => void) | null>(null);
   const owner = useRef(Symbol('browser-speech'));
+  const onPlaybackComplete = useRef(input.onPlaybackComplete);
+  useEffect(() => { onPlaybackComplete.current = input.onPlaybackComplete; }, [input.onPlaybackComplete]);
   const instance = useId();
   const item = JSON.stringify([
     input.sessionId ?? null, input.itemId ?? instance,
@@ -100,7 +103,7 @@ export function useBrowserSpeech(input: {
       setError(null);
     });
     paused.current = false;
-    const finish = (code: string | null) => {
+    const finish = (code: string | null, completed = false) => {
       if (!live || !playbackOwnership.owns(token)) return;
       live = false;
       activeUtterance.current = null;
@@ -109,13 +112,14 @@ export function useBrowserSpeech(input: {
       setErrorCode(code ?? 'unknown');
       setError(code === 'not-allowed' ? 'speechBlocked' : code ? 'speechError' : null);
       setStatus(code ? 'error' : 'idle');
+      if (completed) onPlaybackComplete.current?.();
     };
     const assignments = new Map(plan.turns.map(turn => [turn.key, turn.voice]));
     const next = (index: number, attempted = new Set<string>()) => {
       if (!live || !playbackOwnership.owns(token)) return;
       if (paused.current) { pendingTurn.current = () => next(index, attempted); return; }
       const turn = plan.turns[index];
-      if (!turn) { finish(null); return; }
+      if (!turn) { finish(null, plan.turns.length > 0); return; }
       const voice = assignments.get(turn.key)!;
       attempted.add(voice.id);
       const utterance = new SpeechSynthesisUtterance(turn.text);
