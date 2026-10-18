@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 import { completeSelfPlacementViaApi } from './helpers/learner-onboarding';
 
-async function expectNoHorizontalOverflow(page: import('@playwright/test').Page): Promise<void> {
+async function expectNoHorizontalOverflow(page: Page): Promise<void> {
   const dimensions = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
     scrollWidth: document.documentElement.scrollWidth,

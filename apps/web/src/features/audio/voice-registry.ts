@@ -138,4 +138,3 @@ export class VoiceRotationManager {
   }
 }
 import type { DialogueScript, DialogueSpeaker, SpeakerGender } from '@worklingo/content-format';
-

@@ -16,4 +16,3 @@ export function topicFixture() {
   const pack = { slug: 'ielts-education-foundation', difficulty: 'foundation' as const, curriculumRevisionId: randomUUID(), focusChunkSlugs: phrases.map((_, i) => `ielts-chunk-${i}`), contexts: [{ slug: lesson.contentBlocks[0]!.slug, title: 'Advice' }, { slug: lesson.contentBlocks[1]!.slug, title: 'Planning' }] };
   return { pack, lesson: { mission, programSlug: 'ielts' } };
 }
-
