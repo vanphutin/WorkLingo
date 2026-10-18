@@ -35,3 +35,4 @@
 .orientation-loading { padding: 2rem; }
 @media (max-width: 1050px) { .orientation-admin__grid { grid-template-columns: 230px 1fr; } .orientation-preview { grid-column: 1 / -1; position: static; } }
 @media (max-width: 700px) { .orientation-admin__grid { grid-template-columns: 1fr; } .orientation-preview { grid-column: auto; } .orientation-media-fields { grid-template-columns: 1fr; } }
+.orientation-editor .orientation-editor__fields { display: grid; gap: .75rem; min-width: 0; border: 0; padding: 0; }

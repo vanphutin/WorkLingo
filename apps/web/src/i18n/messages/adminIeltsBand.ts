@@ -1,6 +1,12 @@
 export const adminIeltsBandMessages = {
   en: {
-    admin: 'IELTS curriculum administration', title: 'Band Curriculum', description: 'Author seven contiguous stages and publish immutable versions for learner journeys.',
+    transfer: 'Advanced JSON import / export', curriculumJson: 'Curriculum JSON', applyJson: 'Apply JSON', exportJson: 'Export draft / discard JSON', templateJson: 'Load curriculum template',
+    unappliedJson: 'JSON input has not been applied. Apply valid JSON or export the draft to discard the input before saving, validating or publishing. Loading a template replaces the JSON input.',
+    fixedTopologyImport: 'Keep the seven fixed stage codes, order, band ranges and prerequisites unchanged.', importApplied: 'JSON applied to the draft. Save and validate before publishing.',
+    authorLessons: 'Author lesson content', stageSettings: 'Stage configuration', stageTitle: 'Stage title', stageCode: 'Stage code', stageOrderLabel: 'Stage order', targetFrom: 'Target band from', targetTo: 'Target band to', prerequisites: 'Prerequisite stage codes', fixedTopology: 'Fixed progression structure',
+    learningOutcomes: 'Learning outcomes', lessonCategories: 'Lesson categories', competencies: 'Competencies', competencyNumber: 'Competency {index, number}', competencyCode: 'Competency code', skill: 'Skill', competencyTitle: 'Competency title', competencyDescription: 'Competency description', addCompetency: 'Add competency', removeCompetency: 'Remove competency {index, number}',
+    recommendedActivities: 'Recommended activities', assessmentCriteria: 'Assessment criteria', remediationPaths: 'Remediation paths', remediationTitle: 'Remediation title', remediationAction: 'Remediation action', practiceFormats: 'Suggested practice formats', exitCriteria: 'Exit criteria', minimumSessions: 'Minimum completed sessions', minimumSamples: 'Minimum samples per skill', minimumRate: 'Minimum correct rate (0.5–1)', item: 'Item {index, number}', addItem: 'Add item', removeItem: 'Remove item {index, number}',
+    admin: 'IELTS curriculum administration', title: 'Band Curriculum', description: 'Configure seven fixed progression stages. Stage order, band ranges and prerequisites stay fixed; author lessons in the content workspace.',
     loading: 'Loading Band Curriculum...', stages: 'Band curriculum stages', source: 'Stage definition JSON', revision: '{status} · draft revision {revision, number}',
     DRAFT: 'Draft', VALIDATED: 'Validated', PUBLISHED: 'Published', ARCHIVED: 'Archived',
     saveDraft: 'Save draft', saveValidate: 'Save & validate', publishVersion: 'Publish version', draftSaved: 'Draft saved.', ready: 'Draft saved and ready to publish.', published: 'Published immutable version {version, number}.',
@@ -9,7 +15,13 @@ export const adminIeltsBandMessages = {
     listening: 'listening', reading: 'reading', writing: 'writing', speaking: 'speaking',
   },
   vi: {
-    admin: 'Quản trị chương trình IELTS', title: 'Chương trình theo band', description: 'Biên soạn bảy giai đoạn liên tiếp và xuất bản các phiên bản cố định cho lộ trình học viên.',
+    transfer: 'Nhập / xuất JSON nâng cao', curriculumJson: 'JSON chương trình', applyJson: 'Áp dụng JSON', exportJson: 'Xuất JSON bản nháp / bỏ dữ liệu nhập', templateJson: 'Tải mẫu chương trình',
+    unappliedJson: 'Dữ liệu JSON chưa được áp dụng. Hãy áp dụng JSON hợp lệ hoặc xuất JSON của bản nháp để bỏ dữ liệu nhập trước khi lưu, kiểm tra hoặc xuất bản. Tải mẫu sẽ thay thế dữ liệu JSON đang nhập.',
+    fixedTopologyImport: 'Giữ nguyên mã, thứ tự, khoảng band và điều kiện tiên quyết của bảy giai đoạn cố định.', importApplied: 'Đã áp dụng JSON vào bản nháp. Hãy lưu và kiểm tra trước khi xuất bản.',
+    authorLessons: 'Biên soạn nội dung bài học', stageSettings: 'Cấu hình giai đoạn', stageTitle: 'Tiêu đề giai đoạn', stageCode: 'Mã giai đoạn', stageOrderLabel: 'Thứ tự giai đoạn', targetFrom: 'Band mục tiêu từ', targetTo: 'Band mục tiêu đến', prerequisites: 'Mã giai đoạn tiên quyết', fixedTopology: 'Cấu trúc tiến bộ cố định',
+    learningOutcomes: 'Kết quả học tập', lessonCategories: 'Nhóm bài học', competencies: 'Năng lực', competencyNumber: 'Năng lực {index, number}', competencyCode: 'Mã năng lực', skill: 'Kỹ năng', competencyTitle: 'Tiêu đề năng lực', competencyDescription: 'Mô tả năng lực', addCompetency: 'Thêm năng lực', removeCompetency: 'Xóa năng lực {index, number}',
+    recommendedActivities: 'Hoạt động đề xuất', assessmentCriteria: 'Tiêu chí đánh giá', remediationPaths: 'Lộ trình khắc phục', remediationTitle: 'Tiêu đề khắc phục', remediationAction: 'Hành động khắc phục', practiceFormats: 'Hình thức luyện tập đề xuất', exitCriteria: 'Điều kiện hoàn thành', minimumSessions: 'Số buổi hoàn thành tối thiểu', minimumSamples: 'Số mẫu tối thiểu mỗi kỹ năng', minimumRate: 'Tỷ lệ đúng tối thiểu (0,5–1)', item: 'Mục {index, number}', addItem: 'Thêm mục', removeItem: 'Xóa mục {index, number}',
+    admin: 'Quản trị chương trình IELTS', title: 'Chương trình theo band', description: 'Cấu hình bảy giai đoạn tiến bộ cố định. Thứ tự, khoảng band và điều kiện tiên quyết được giữ nguyên; biên soạn bài học tại khu vực nội dung.',
     loading: 'Đang tải chương trình theo band...', stages: 'Các giai đoạn chương trình theo band', source: 'JSON định nghĩa giai đoạn', revision: '{status} · bản sửa đổi {revision, number}',
     DRAFT: 'Bản nháp', VALIDATED: 'Đã kiểm tra', PUBLISHED: 'Đã xuất bản', ARCHIVED: 'Đã lưu trữ',
     saveDraft: 'Lưu bản nháp', saveValidate: 'Lưu và kiểm tra', publishVersion: 'Xuất bản phiên bản', draftSaved: 'Đã lưu bản nháp.', ready: 'Đã lưu bản nháp và sẵn sàng xuất bản.', published: 'Đã xuất bản phiên bản cố định {version, number}.',

@@ -1,5 +1,6 @@
 export const adminIeltsIntegratedMessages = {
   en: {
+    configuration: 'Configuration: four fixed duration profiles (60, 90, 120 and 150 minutes). Author actual lessons in the content workspace.', authorLessons: 'Author lesson content',
     curriculum: 'IELTS curriculum', title: 'Integrated Practice profiles', description: 'Configure immutable time allocation profiles. Duration and difficulty remain independent learner choices.',
     profiles: 'Duration profiles', minutes: '{count, number} min', allocation: '{count, number}-minute allocation', total: 'Total:', totalMinutes: '{total, number} / {duration, number} minutes',
     DRAFT: 'Draft', VALIDATED: 'Validated', PUBLISHED: 'Published', ARCHIVED: 'Archived', revision: '{status} · draft revision {revision, number}',
@@ -8,6 +9,7 @@ export const adminIeltsIntegratedMessages = {
     validationIssues: 'Validation issues', invalidField: 'Invalid profile. Review this field.', allocationSkills: 'Allocations must contain each skill exactly once', allocationTotal: 'Allocation minutes must equal session duration',
   },
   vi: {
+    configuration: 'Cấu hình: bốn thời lượng cố định (60, 90, 120 và 150 phút). Biên soạn bài học thực tế tại khu vực nội dung.', authorLessons: 'Biên soạn nội dung bài học',
     curriculum: 'Chương trình IELTS', title: 'Cấu hình luyện tập tổng hợp', description: 'Cấu hình phân bổ thời gian với phiên bản cố định. Thời lượng và độ khó vẫn là lựa chọn độc lập của học viên.',
     profiles: 'Cấu hình thời lượng', minutes: '{count, number} phút', allocation: 'Phân bổ {count, number} phút', total: 'Tổng:', totalMinutes: '{total, number} / {duration, number} phút',
     DRAFT: 'Bản nháp', VALIDATED: 'Đã kiểm tra', PUBLISHED: 'Đã xuất bản', ARCHIVED: 'Đã lưu trữ', revision: '{status} · bản sửa đổi {revision, number}',

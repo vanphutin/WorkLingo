@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { adminIeltsOrientationClient } from '../../lib/api/admin-ielts-orientation-client';
@@ -19,7 +19,7 @@ const slide = { id: '11111111-1111-4111-8111-111111111111', slug: 'welcome', tit
 const orientation = { id: '22222222-2222-4222-8222-222222222222', slug: 'ielts-orientation', status: 'DRAFT' as const, draftRevision: 1, draft: { title: 'IELTS Orientation', description: 'Introduction', slides: [slide, { ...slide, id: '33333333-3333-4333-8333-333333333333', slug: 'format' }, { ...slide, id: '44444444-4444-4444-8444-444444444444', slug: 'ready' }] }, currentPublishedVersion: null, versions: [], updatedAt: new Date().toISOString() };
 
 describe('OrientationAuthoringWorkspace', () => {
-  afterEach(cleanup);
+  afterEach(() => { cleanup(); vi.restoreAllMocks(); });
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(adminIeltsOrientationClient.get).mockResolvedValue(orientation);
@@ -118,5 +118,37 @@ describe('OrientationAuthoringWorkspace', () => {
     expect(confirm).toHaveBeenCalledTimes(2);
     expect(adminIeltsOrientationClient.archive).not.toHaveBeenCalled();
     expect(screen.getAllByRole('button', { name: /Welcome$/ })).toHaveLength(4);
+  });
+
+  it('retains slide edits across selection and removes only from the current draft', async () => {
+    const historical = { id: crypto.randomUUID(), version: 1, status: 'PUBLISHED' as const, publishedAt: '2026-10-14T12:00:00.000Z' };
+    vi.mocked(adminIeltsOrientationClient.get).mockResolvedValue({ ...orientation, versions: [historical] });
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    render(<OrientationAuthoringWorkspace />);
+    fireEvent.change(await screen.findByLabelText('Slide title'), { target: { value: 'Edited draft slide' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add slide' }));
+    fireEvent.change(screen.getByLabelText('Slide title'), { target: { value: 'Temporary slide' } });
+    fireEvent.click(screen.getByRole('button', { name: /Edited draft slide$/ }));
+    expect((screen.getByLabelText('Slide title') as HTMLInputElement).value).toBe('Edited draft slide');
+    fireEvent.click(screen.getByRole('button', { name: /Temporary slide$/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete slide' }));
+    expect(screen.getByText(/Slide changes affect only this draft/)).not.toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Save draft' }));
+    await waitFor(() => expect(adminIeltsOrientationClient.updateDraft).toHaveBeenCalledWith(expect.objectContaining({ expectedRevision: 1, content: expect.objectContaining({ slides: expect.arrayContaining([expect.objectContaining({ title: 'Edited draft slide' })]) }) })));
+    expect(vi.mocked(adminIeltsOrientationClient.updateDraft).mock.calls[0]![0].content.slides).toHaveLength(3);
+    expect(screen.getByText(/Version 1 · Published/)).not.toBeNull();
+    expect(adminIeltsOrientationClient.archive).not.toHaveBeenCalled();
+  });
+
+  it('prevents slide navigation and edits while a draft save is pending', async () => {
+    let finish!: (value: typeof orientation) => void;
+    vi.mocked(adminIeltsOrientationClient.updateDraft).mockImplementation(() => new Promise((resolve) => { finish = resolve; }));
+    render(<OrientationAuthoringWorkspace />);
+    const title = await screen.findByLabelText('Slide title');
+    fireEvent.click(screen.getByRole('button', { name: 'Save draft' }));
+    expect(title.closest('fieldset')?.disabled).toBe(true);
+    expect(screen.getByRole('button', { name: 'Add slide' }).hasAttribute('disabled')).toBe(true);
+    expect(screen.getAllByRole('button', { name: /Welcome$/ })[1]!.hasAttribute('disabled')).toBe(true);
+    await act(async () => finish(orientation));
   });
 });
