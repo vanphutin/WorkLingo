@@ -217,7 +217,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
           objectives.push({ range, slug: sectionSlug ?? '', statement: fields['statement']?.value ?? '', skills: (fields['skills']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean), required: fields['required']?.value ?? '' });
         }
       } else if (sectionType === 'LESSON') {
-        const fields = parseScalarSection(['slug', 'title', 'level', 'duration_minutes', 'objective']);
+        const fields = parseScalarSection(['slug', 'title', 'level', 'duration_minutes', 'objective', 'program', 'category', 'authoring_template']);
         const endOffset = lineIdx > 0 ? lines[lineIdx - 1]!.fullEndOffset : sectionStartOffset;
         const slugVal = fields['slug']?.value || sectionSlug || '';
         if (slugVal && !IDENTIFIER_REGEX.test(slugVal)) {
@@ -237,6 +237,9 @@ export function parseLessonSource(source: string): ParseLessonResult {
           level: fields['level']?.value || '',
           durationMinutes: parseInt(fields['duration_minutes']?.value || '0', 10),
           objective: fields['objective']?.value || '',
+          ...(fields['program'] ? { program: fields['program'].value } : {}),
+          ...(fields['category'] ? { category: fields['category'].value } : {}),
+          ...(fields['authoring_template'] ? { authoringTemplate: fields['authoring_template'].value } : {}),
         };
       } else if (sectionType === 'WORD_BANK') {
         const bankSlug = sectionSlug || '';
@@ -631,7 +634,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
                 break;
               }
               // Option format: A. Text
-              const optMatch = ot.match(/^([A-Z])\.\s*(.+)$/);
+              const optMatch = ot.match(/^([A-Z])\.\s*(.*)$/);
               if (optMatch) {
                 options.push({
                   label: optMatch[1]!,

@@ -9,6 +9,7 @@ import type { NormalizedLessonDraft } from './normalizer.ts';
 import { normalizeLessonDocument } from './normalizer.ts';
 import { validateFoundation } from './foundation-metadata.ts';
 import { parseDialogue } from './dialogue.ts';
+import { validateIntermediateAuthoring } from './intermediate-authoring.ts';
 
 export const PARSER_VERSION = '1.1.0';
 
@@ -39,7 +40,7 @@ export function validateLessonDocument(
   document: LessonDocumentNode,
   options?: { maxIssues?: number },
 ): ValidationResult {
-  const issues: ContentIssue[] = validateFoundation(document);
+  const issues: ContentIssue[] = [...validateFoundation(document), ...validateIntermediateAuthoring(document)];
   const maxIssues = options?.maxIssues ?? 100;
 
   function addIssue(
@@ -348,6 +349,9 @@ export function validateLessonDocument(
 
     // Response type specific validation
     if (act.responseType === 'multiple_choice') {
+      if (act.options.some(option => !option.text.trim())) {
+        addIssue('VAL_EMPTY_OPTION', `Activity '${act.slug}' has an empty answer option`, 'error', act.range, `activities.${act.slug}.options`);
+      }
       if (act.options.length < 2) {
         addIssue(
           'VAL_INSUFFICIENT_OPTIONS',
