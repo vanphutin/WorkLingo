@@ -27,13 +27,23 @@ describe('Admin workspace navigation', () => {
   });
 
   it('marks the current program and shows a clear program breadcrumb', () => {
-    location.pathname = '/admin/programs/beginner';
+    location.pathname = '/admin/programs/intermediate';
     render(<><AdminNavigation /><AdminBreadcrumbs /></>);
-    expect(screen.getByRole('link', { name: 'Foundation' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'Intermediate' })).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', { name: 'Overview' })).not.toHaveAttribute('aria-current');
     const breadcrumbs = screen.getByRole('navigation', { name: 'Breadcrumbs' });
-    expect(breadcrumbs).toHaveTextContent('AdminLearning ProgramsFoundation');
+    expect(breadcrumbs).toHaveTextContent('AdminLearning ProgramsIntermediate');
     expect(within(breadcrumbs).getByRole('link', { name: 'Admin' })).toHaveAttribute('href', '/admin');
+  });
+
+  it('defers Foundation and TOEIC while retaining Intermediate and IELTS authoring', () => {
+    render(<AdminNavigation />);
+    expect(screen.queryByRole('link', { name: 'Foundation' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'TOEIC' })).not.toBeInTheDocument();
+    expect(screen.getByText('Foundation').closest('.ad-nav-unavailable')).toHaveTextContent('Planned for later');
+    expect(screen.getByText('TOEIC').closest('.ad-nav-unavailable')).toHaveTextContent('Planned for later');
+    expect(screen.getByRole('link', { name: 'Intermediate' })).toHaveAttribute('href', '/admin/programs/intermediate');
+    expect(screen.getByRole('link', { name: 'IELTS' })).toHaveAttribute('href', '/admin/programs/ielts');
   });
 
   it('keeps content authoring hierarchy without exposing an opaque record id', () => {

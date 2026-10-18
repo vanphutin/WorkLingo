@@ -61,5 +61,7 @@ export default function AdminContentPage() {
     );
   }
 
-  return <ContentList imports={imports} />;
+  return <ContentList imports={imports} onReload={async () => { setImports(await apiClient.listContentImports()); }} onRemoved={({ id, action }) => setImports((items) => action === 'deleted'
+    ? items.filter((item) => item.id !== id)
+    : items.map((item) => item.id === id ? { ...item, status: 'ARCHIVED', draftRevision: item.draftRevision + 1 } : item))} />;
 }

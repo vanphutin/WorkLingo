@@ -8,7 +8,7 @@ import { formatDate, formatNumber } from '../../i18n/translator';
 import { adminDashboardMessages } from '../../i18n/messages/adminDashboard';
 import { commonMessages } from '../../i18n/messages/common';
 import { adminDashboardClient } from '../../lib/api/admin-dashboard-client';
-import { adminIeltsDestinations, adminProgramDestinations } from './admin-navigation';
+import { adminIeltsDestinations, adminProgramDestinations, isAdminProgramDeferred } from './admin-navigation';
 
 type Program = AdminDashboardOverview['programs'][number];
 type DashboardState = { status: 'loading' } | { status: 'error' } | { status: 'ready'; data: AdminDashboardOverview };
@@ -94,7 +94,9 @@ function ProgramTable({ programs }: { readonly programs: AdminDashboardOverview[
       <table className="content-table ad-table" aria-label={t('programPerformance')}><thead><tr>
         <th scope="col">{t('program')}</th><th scope="col">{t('availability')}</th><th scope="col">{t('enrollments')}</th><th scope="col">{t('publishedMissions')}</th><th scope="col">{t('completion')}</th>
       </tr></thead><tbody>{filtered.map((program) => <tr key={program.id}>
-        <th scope="row"><Link href={`/admin/programs/${encodeURIComponent(program.slug)}`}>{programLabel(program.slug) || program.name}</Link></th>
+        <th scope="row">{isAdminProgramDeferred(program.slug)
+          ? <><span>{programLabel(program.slug) || program.name}</span><small className="ad-cell-note">{t('deferred')}</small></>
+          : <Link href={`/admin/programs/${encodeURIComponent(program.slug)}`}>{programLabel(program.slug) || program.name}</Link>}</th>
         <td><span className="ad-availability">{t(availabilityKeys[program.availabilityStatus])}</span></td>
         <td>{formatNumber(locale, program.enrollments)}</td><td>{formatNumber(locale, program.publishedMissions)}</td>
         <td>{percentage(locale, program.totalSessions > 0 ? program.completedSessions / program.totalSessions : null)}
@@ -163,6 +165,10 @@ function ProgramWorkspace({ program }: { readonly program: Program }) {
     { href: '/admin/content', label: t('content'), description: t('contentDescription') },
     { href: '/admin/settings/audio', label: t('audio'), description: t('audioDescription') },
   ];
+  if (isAdminProgramDeferred(program.slug)) return <section className="ad-panel">
+    <h1>{name ? t(name.label) : program.name}</h1><p className="ad-availability">{t('deferred')}</p>
+    <p>{t('deferredDescription')}</p><Link href="/admin">{t('overview')}</Link>
+  </section>;
   return <div className="ad-dashboard">
     <header className="ad-page-header"><p className="ad-eyebrow">{t('learningPrograms')}</p><h1>{name ? t(name.label) : program.name}</h1>
       <span className="ad-availability">{t(availabilityKeys[program.availabilityStatus])}</span><p>{t('workspaceDescription')}</p></header>

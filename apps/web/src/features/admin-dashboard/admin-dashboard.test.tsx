@@ -45,7 +45,9 @@ describe('Admin dashboard', () => {
     fireEvent.change(screen.getByLabelText('Sort programs'), { target: { value: 'enrollments' } });
     expect(within(table).getAllByRole('row')[1]).toHaveTextContent('Intermediate');
     fireEvent.change(screen.getByLabelText('Search programs'), { target: { value: 'foundation' } });
-    expect(within(table).getByRole('link', { name: 'Foundation' })).toHaveAttribute('href', '/admin/programs/beginner');
+    expect(within(table).getByText('Foundation')).toBeInTheDocument();
+    expect(within(table).queryByRole('link', { name: 'Foundation' })).not.toBeInTheDocument();
+    expect(within(table).getByText('Planned for later')).toBeInTheDocument();
     expect(within(table).queryByRole('link', { name: 'Intermediate' })).not.toBeInTheDocument();
     expect(screen.getByRole('list', { name: 'Overview metrics' })).toHaveTextContent('81');
     fireEvent.change(screen.getByLabelText('Search programs'), { target: { value: 'missing' } });
@@ -71,17 +73,25 @@ describe('Admin dashboard', () => {
   });
 
   it('scopes program metrics and explains unsupported management features', async () => {
-    render(<AdminDashboard programSlug="beginner" />);
-    expect(await screen.findByRole('heading', { name: 'Foundation' })).toBeInTheDocument();
+    render(<AdminDashboard programSlug="intermediate" />);
+    expect(await screen.findByRole('heading', { name: 'Intermediate' })).toBeInTheDocument();
     const metrics = screen.getByRole('list', { name: 'Program metrics' });
-    expect(metrics).toHaveTextContent('18');
-    expect(metrics).toHaveTextContent('9');
-    expect(metrics).toHaveTextContent('62.5%');
-    expect(metrics).not.toHaveTextContent('63');
+    expect(metrics).toHaveTextContent('63');
+    expect(metrics).toHaveTextContent('12');
+    expect(metrics).toHaveTextContent('50%');
+    expect(metrics).not.toHaveTextContent('18');
     expect(screen.getByRole('link', { name: 'Levels and learning paths' })).toHaveAttribute('href', '/admin/curriculum');
     expect(screen.getByText(/shared tools.*program selector/i)).toBeInTheDocument();
     expect(screen.getByText(/individual learner progress.*not available/i)).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'IELTS orientation' })).not.toBeInTheDocument();
+  });
+
+  it.each(['beginner', 'toeic'])('shows the deferred %s workspace without authoring links', async (programSlug) => {
+    render(<AdminDashboard programSlug={programSlug} />);
+    expect(await screen.findByText('Planned for later')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '/admin');
+    expect(screen.queryByRole('link', { name: 'Lessons and activities' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('list', { name: 'Program metrics' })).not.toBeInTheDocument();
   });
 
   it('keeps exam tools reachable even while the learning program is unavailable', async () => {

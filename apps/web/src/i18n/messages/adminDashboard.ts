@@ -26,6 +26,8 @@ export const adminDashboardMessages = {
     unavailableProgram: 'This program is not in the current catalog', unavailableDescription: 'No metrics or availability can be inferred for a missing program.',
     notReady: 'Learner access follows the catalog availability above. Existing authoring tools remain available to administrators.',
     ieltsTools: 'IELTS tools',
+    deferred: 'Planned for later',
+    deferredDescription: 'Authoring for this program is planned for a later phase. Continue with Intermediate or IELTS.',
   },
   vi: {
     overview: 'Tổng quan', learningPrograms: 'Chương trình học', sharedManagement: 'Quản lý chung',
@@ -54,5 +56,7 @@ export const adminDashboardMessages = {
     unavailableProgram: 'Chương trình này không có trong danh mục hiện tại', unavailableDescription: 'Không thể suy ra chỉ số hay trạng thái cung cấp của chương trình chưa có trong danh mục.',
     notReady: 'Quyền truy cập của học viên tuân theo trạng thái danh mục ở trên. Quản trị viên vẫn có thể dùng các công cụ soạn nội dung hiện có.',
     ieltsTools: 'Công cụ IELTS',
+    deferred: 'Phát triển sau',
+    deferredDescription: 'Công cụ soạn bài cho chương trình này sẽ phát triển ở giai đoạn sau. Hiện tập trung vào Trung cấp và IELTS.',
   },
 } as const;

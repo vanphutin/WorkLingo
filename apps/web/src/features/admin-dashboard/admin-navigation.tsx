@@ -11,6 +11,10 @@ export const adminProgramDestinations = [
   { slug: 'toeic', label: 'toeic' }, { slug: 'ielts', label: 'ielts' },
 ] as const;
 
+export function isAdminProgramDeferred(slug: string) {
+  return slug === 'beginner' || slug === 'toeic';
+}
+
 export const adminIeltsDestinations = [
   { href: '/admin/ielts-topics', label: 'ieltsTopics' },
   { href: '/admin/ielts-orientation', label: 'ieltsOrientation' },
@@ -43,8 +47,10 @@ export function AdminNavigation() {
           <Link className="ad-nav-link" href="/admin" aria-current={pathname === '/admin' ? 'page' : undefined}>{t('overview')}</Link>
           <section aria-labelledby="admin-program-navigation">
             <h2 id="admin-program-navigation">{t('learningPrograms')}</h2>
-            {adminProgramDestinations.map(({ slug, label }) => <Link className="ad-nav-link" key={slug} href={`/admin/programs/${slug}`}
-              aria-current={isCurrent(pathname, `/admin/programs/${slug}`) ? 'page' : undefined}>{t(label)}</Link>)}
+            {adminProgramDestinations.map(({ slug, label }) => isAdminProgramDeferred(slug)
+              ? <div className="ad-nav-unavailable" key={slug}><span>{t(label)}</span><small>{t('deferred')}</small></div>
+              : <Link className="ad-nav-link" key={slug} href={`/admin/programs/${slug}`}
+                aria-current={isCurrent(pathname, `/admin/programs/${slug}`) ? 'page' : undefined}>{t(label)}</Link>)}
             <details className="ad-ielts-navigation" open={pathname.includes('/ielts-') || pathname === '/admin/programs/ielts'}>
               <summary>{t('ieltsTools')}</summary>
               {adminIeltsDestinations.map(({ href, label }) => <Link className="ad-nav-link" key={href} href={href}

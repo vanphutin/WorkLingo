@@ -75,7 +75,8 @@ describe('AdminLayout', () => {
     expect(screen.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '/admin');
     expect(screen.getByRole('heading', { name: 'Learning Programs' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Shared Management' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Foundation' })).toHaveAttribute('href', '/admin/programs/beginner');
+    expect(screen.queryByRole('link', { name: 'Foundation' })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Intermediate' })).toHaveAttribute('href', '/admin/programs/intermediate');
     expect(screen.getByRole('navigation', { name: 'Breadcrumbs' })).toHaveTextContent('Content');
     expect(screen.getByRole('link', { name: 'Content' })).toHaveAttribute(
       'href',
