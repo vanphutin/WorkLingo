@@ -4,6 +4,10 @@
 
 Explicit user mandate: production Vietnamese / English UI across auth, learner, IELTS and Admin, preserving URLs and immutable educational data. Canonical [design](superpowers/specs/2026-10-14-i18n-design.md), [execution plan](superpowers/plans/2026-10-14-i18n.md), [developer guide](I18N.md), and original [feature verification report](I18N_IMPLEMENTATION_REPORT.md). Foundation, account/guest persistence and UI migration are implemented, with independent review fixes and feature QA. The subsequent [integration record](GIT_INTEGRATION_2026-10-15.md) records the audit fixes and combined verification; the original feature report preserves its earlier baseline. This entry does not mark release or public deployment approved.
 
+## IELTS Flow V3 — 2026-10-15
+
+User approved the [three-section design](superpowers/specs/2026-10-15-ielts-flow-v3-design.md) and [11-task execution plan](superpowers/plans/2026-10-15-ielts-flow-v3.md). Implementation and isolated qualification cover replayable introduction, contextual 90/120/150-minute topic study, two mock policies, real Speaking recordings, owner-scoped history and rollback-safe pins. The [content record](IELTS_FLOW_V3_CONTENT.md) describes twelve original topics and the new Academic paper. The [implementation review](IELTS_FLOW_V3_REVIEW.md) records exact verification and rollout status. Local publication and V3 activation completed after qualification, backup and corrective verification. Final gates passed 986 API tests, 490 web tests and 69 legacy + 8 V3 browser journeys. The selected account can enter all three sections; old evidence and grants were preserved. Earlier verified Beta and account-grant records remain historical evidence.
+
 ## Mục tiêu
 
 Triển khai MVP theo các vertical increments nhỏ. Mỗi increment phải chạy được trên local, có test, có dữ liệu mẫu và tạo ra một luồng người dùng có thể kiểm chứng. Không xây toàn bộ backend trước rồi mới nối giao diện.
@@ -264,6 +268,17 @@ Phase 7 adds a complete seven-stage competency map through Band 9.0, immutable A
 Bridge-gated version-bound learner journeys and an evidence progression engine across all four
 skills. Target band remains a learner goal and no mock-test or official band score is inferred. See
 `docs/IELTS_PHASE_7_BAND_CURRICULUM_REVIEW.md`.
+
+## Local IELTS Beta entry and curated publications (2026-10-15)
+
+The user-authorized local Beta is published: Orientation, four curated Bridge modules, four existing
+Practice profiles, seven-stage Band Pathway and an original Academic practice paper with four real
+offline speech recordings. The catalog opens `/ielts` without replacing Intermediate context; existing
+Foundation and teacher-review gates remain enforced. This practice release discloses shorter audio,
+limited objective task variety and uncalibrated estimated bands. It is not a public/calibrated release.
+See `docs/IELTS_LOCAL_BETA_CONTENT.md`,
+`mandate/reports/2026-10-15-ielts-local-beta-release.md` and MND-20261015-001 for selection,
+tests, private rollback snapshot and verified local publication evidence.
 
 ## Definition of Done cho roadmap
 

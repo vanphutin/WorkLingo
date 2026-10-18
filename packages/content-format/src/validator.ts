@@ -8,6 +8,7 @@ import { parseLessonSource } from './parser.ts';
 import type { NormalizedLessonDraft } from './normalizer.ts';
 import { normalizeLessonDocument } from './normalizer.ts';
 import { validateFoundation } from './foundation-metadata.ts';
+import { parseDialogue } from './dialogue.ts';
 
 export const PARSER_VERSION = '1.1.0';
 
@@ -183,6 +184,11 @@ export function validateLessonDocument(
     if (!c.text) {
       addIssue('VAL_REQUIRED_FIELD', "Content 'text' is required", 'error', c.range, `content.${c.slug}.text`);
     }
+    if (c.type === 'dialogue') {
+      for (const issue of parseDialogue(c.text, { forceDialogue: true }).issues) {
+        addIssue(issue.code, issue.message, 'error', c.range, `content.${c.slug}.text`);
+      }
+    }
   }
 
   // Audio scripts
@@ -191,6 +197,9 @@ export function validateLessonDocument(
     audioScriptMap.set(as.slug, as);
     if (!as.script) {
       addIssue('VAL_REQUIRED_FIELD', "Audio script 'script' is required", 'error', as.range, `audio_script.${as.slug}.script`);
+    }
+    for (const issue of parseDialogue(as.script).issues) {
+      addIssue(issue.code, issue.message, 'error', as.range, `audio_script.${as.slug}.script`);
     }
   }
 

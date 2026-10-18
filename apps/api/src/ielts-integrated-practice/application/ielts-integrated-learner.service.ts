@@ -7,6 +7,7 @@ import {
   type IeltsIntegratedSessionDto, type LearnerIeltsBridgeTask, type LearningSkill, learningSkillSchema,
 } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { hasIeltsEarlyAccess } from '../../ielts-access/ielts-early-access.js';
 import { planIntegratedSession } from '../domain/integrated-session-planner.js';
 
 const includeSession = { profileVersion: true, blocks: { include: { moduleVersion: true }, orderBy: { order: 'asc' as const } } };
@@ -22,7 +23,8 @@ export class IeltsIntegratedLearnerService {
       this.database.ieltsIntegratedProfile.findMany({ where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } }, orderBy: { durationMinutes: 'asc' } }),
       this.database.ieltsIntegratedSession.findFirst({ where: { learnerId, completedAt: null }, orderBy: { startedAt: 'desc' } }),
     ]);
-    return ieltsIntegratedAvailabilitySchema.parse({ eligible: bridge && profiles.length === 4, lockedReason: !bridge ? 'BRIDGE_REQUIRED' : profiles.length !== 4 ? 'PROFILES_NOT_PUBLISHED' : null, durations: profiles.map((profile) => profile.durationMinutes), difficulties: ['foundation', 'developing', 'competent', 'advanced'], activeSessionId: active?.id ?? null });
+    const canEnter = bridge || await hasIeltsEarlyAccess(this.database, learnerId);
+    return ieltsIntegratedAvailabilitySchema.parse({ eligible: canEnter && profiles.length === 4, lockedReason: !canEnter ? 'BRIDGE_REQUIRED' : profiles.length !== 4 ? 'PROFILES_NOT_PUBLISHED' : null, durations: profiles.map((profile) => profile.durationMinutes), difficulties: ['foundation', 'developing', 'competent', 'advanced'], activeSessionId: active?.id ?? null });
   }
 
   async start(learnerId: string, input: unknown): Promise<IeltsIntegratedSessionDto> {
@@ -31,7 +33,7 @@ export class IeltsIntegratedLearnerService {
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-integrated-start:' + learnerId + ':' + parsed.clientSessionId}))`;
       const existing = await tx.ieltsIntegratedSession.findUnique({ where: { learnerId_clientSessionId: { learnerId, clientSessionId: parsed.clientSessionId } }, include: includeSession });
       if (existing) return this.toDto(existing);
-      if (!await this.bridgeComplete(learnerId, tx)) throw new ConflictException({ code: 'IELTS_INTEGRATED_LOCKED', reason: 'BRIDGE_REQUIRED' });
+      if (!await this.bridgeComplete(learnerId, tx) && !await hasIeltsEarlyAccess(tx, learnerId)) throw new ConflictException({ code: 'IELTS_INTEGRATED_LOCKED', reason: 'BRIDGE_REQUIRED' });
       const profile = await tx.ieltsIntegratedProfile.findUnique({ where: { durationMinutes: parsed.durationMinutes }, include: { currentPublishedVersion: true } });
       if (!profile?.currentPublishedVersion || profile.status !== 'PUBLISHED') throw new ConflictException({ code: 'IELTS_INTEGRATED_PROFILE_UNAVAILABLE' });
       const modules = await tx.ieltsBridgeModule.findMany({ where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } }, include: { currentPublishedVersion: true } });

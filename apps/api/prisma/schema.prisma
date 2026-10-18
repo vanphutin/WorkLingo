@@ -65,6 +65,7 @@ model User {
   ieltsBridgeProgress        IeltsBridgeProgress[]
   ieltsIntegratedSessions    IeltsIntegratedSession[]
   ieltsBandJourneys          IeltsBandJourney[]
+  ieltsIntroductionVisits    IeltsIntroductionVisit[]
   ieltsMockAttempts          IeltsMockAttempt[]
   ieltsMockReviews           IeltsMockReview[]          @relation("IeltsMockReviewReviewer")
 }
@@ -89,6 +90,7 @@ model LearnerProfile {
   locale           String            @default("vi")
   timezone         String            @default("Asia/Ho_Chi_Minh")
   recordingConsent Boolean           @default(false)
+  ieltsEarlyAccess Boolean           @default(false)
   audioSourceId    String            @default("system-default")
   browserVoiceId   String?
   createdAt        DateTime          @default(now())
@@ -474,6 +476,7 @@ model LearningSession {
   recordings            Recording[]
   activityDrafts        ActivityDraft[]
   checkpointAssessments CheckpointAssessment[]
+  ieltsTopicSession     IeltsTopicSession?
   placementAttempt      PlacementAttempt?
   studySession          LearnerStudySession?
 
@@ -839,18 +842,19 @@ model IeltsOrientation {
 }
 
 model IeltsOrientationVersion {
-  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  orientationId   String                @db.Uuid
-  version         Int
-  title           String
-  sourceHash      String
-  content         Json
-  status          ContentStatus         @default(PUBLISHED)
-  publishedAt     DateTime              @default(now())
-  archivedAt      DateTime?
-  orientation     IeltsOrientation      @relation("OrientationVersions", fields: [orientationId], references: [id], onDelete: Restrict)
-  currentFor      IeltsOrientation[]    @relation("OrientationCurrentPublishedVersion")
-  learnerProgress OrientationProgress[]
+  id                 String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orientationId      String                   @db.Uuid
+  version            Int
+  title              String
+  sourceHash         String
+  content            Json
+  status             ContentStatus            @default(PUBLISHED)
+  publishedAt        DateTime                 @default(now())
+  archivedAt         DateTime?
+  orientation        IeltsOrientation         @relation("OrientationVersions", fields: [orientationId], references: [id], onDelete: Restrict)
+  currentFor         IeltsOrientation[]       @relation("OrientationCurrentPublishedVersion")
+  introductionVisits IeltsIntroductionVisit[]
+  learnerProgress    OrientationProgress[]
 
   @@unique([orientationId, version])
   @@index([orientationId, status])
@@ -1090,6 +1094,10 @@ model IeltsMockAttempt {
   clientAttemptId      String               @db.Uuid
   mockTestVersionId    String               @db.Uuid
   mode                 String
+  policyVersion        String               @default("legacy-v1")
+  elapsedMs            Int                  @default(0)
+  pausedAt             DateTime?
+  clockUpdatedAt       DateTime             @default(now())
   status               String               @default("IN_PROGRESS")
   currentSection       String               @default("LISTENING")
   revision             Int                  @default(1)
@@ -1107,11 +1115,113 @@ model IeltsMockAttempt {
   updatedAt            DateTime             @updatedAt
   learner              User                 @relation(fields: [learnerId], references: [id], onDelete: Cascade)
   mockTestVersion      IeltsMockTestVersion @relation(fields: [mockTestVersionId], references: [id], onDelete: Restrict)
+  playbacks            IeltsMockPlayback[]
+  mockRecordings       IeltsMockRecording[]
   reviews              IeltsMockReview[]
 
   @@unique([learnerId, clientAttemptId])
   @@index([learnerId, status, updatedAt])
   @@index([mockTestVersionId])
+}
+
+model IeltsIntroductionVisit {
+  id                   String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  learnerId            String                  @db.Uuid
+  orientationVersionId String                  @db.Uuid
+  lastSlideIndex       Int                     @default(0)
+  visitedSlideIds      Json                    @default("[]")
+  viewedAllAt          DateTime?
+  revision             Int                     @default(1)
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @default(now()) @updatedAt
+  learner              User                    @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  orientationVersion   IeltsOrientationVersion @relation(fields: [orientationVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([learnerId, orientationVersionId])
+  @@index([learnerId, updatedAt])
+  @@index([orientationVersionId])
+}
+
+model IeltsTopic {
+  id                        String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                      String              @unique
+  status                    ContentStatus       @default(DRAFT)
+  draftRevision             Int                 @default(1)
+  draftContent              Json
+  currentPublishedVersionId String?             @unique @db.Uuid
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @default(now()) @updatedAt
+  currentPublishedVersion   IeltsTopicVersion?  @relation("IeltsTopicCurrentVersion", fields: [currentPublishedVersionId, id], references: [id, topicId], onDelete: Restrict)
+  versions                  IeltsTopicVersion[] @relation("IeltsTopicVersions")
+}
+
+model IeltsTopicVersion {
+  id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topicId     String              @db.Uuid
+  version     Int
+  status      ContentStatus       @default(PUBLISHED)
+  content     Json
+  sourceHash  String
+  publishedAt DateTime            @default(now())
+  archivedAt  DateTime?
+  topic       IeltsTopic          @relation("IeltsTopicVersions", fields: [topicId], references: [id], onDelete: Restrict)
+  currentFor  IeltsTopic[]        @relation("IeltsTopicCurrentVersion")
+  sessions    IeltsTopicSession[]
+
+  @@unique([topicId, version])
+  @@unique([id, topicId])
+  @@index([status, publishedAt])
+}
+
+model IeltsTopicSession {
+  sessionId      String            @id @db.Uuid
+  topicVersionId String            @db.Uuid
+  packSlug       String
+  createdAt      DateTime          @default(now())
+  session        LearningSession   @relation(fields: [sessionId], references: [id], onDelete: Restrict)
+  topicVersion   IeltsTopicVersion @relation(fields: [topicVersionId], references: [id], onDelete: Restrict)
+
+  @@index([topicVersionId])
+}
+
+model IeltsMockPlayback {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  attemptId       String           @db.Uuid
+  assetId         String           @db.Uuid
+  clientPlayId    String           @db.Uuid
+  durationSeconds Float            @default(0)
+  activatedAt     DateTime?
+  createdAt       DateTime         @default(now())
+  expiresAt       DateTime
+  attempt         IeltsMockAttempt @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, assetId])
+  @@unique([attemptId, clientPlayId])
+  @@index([assetId])
+  @@index([expiresAt])
+}
+
+model IeltsMockRecording {
+  id                   String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  attemptId            String           @db.Uuid
+  clientRecordingId    String           @db.Uuid
+  part                 Int
+  storageKey           String           @unique
+  mimeType             String
+  byteSize             Int
+  checksum             String
+  durationSeconds      Float
+  consentedAt          DateTime
+  consentPolicyVersion String           @default("ielts-mock-speaking-v1")
+  consentScope         String           @default("ielts-mock-speaking-review")
+  retainUntil          DateTime
+  deletedAt            DateTime?
+  createdAt            DateTime         @default(now())
+  attempt              IeltsMockAttempt @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, clientRecordingId])
+  @@index([attemptId, part])
+  @@index([retainUntil, deletedAt])
 }
 
 model IeltsMockReview {

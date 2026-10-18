@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-media-advertising-objective]
+statement: Infer and accurately use contextual Media & Advertising vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-media-advertising-lesson
+title: Media & Advertising: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Choose a funding model while protecting readers from misleading material.
+[/LESSON]
+
+[WORD_BANK ielts-media-advertising-bank]
+title: Media & Advertising in context
+
+[[LANGUAGE_BLOCK ielts-media-advertising-target-audience]]
+expression: target audience
+meaning_vi: đối tượng công chúng mục tiêu
+pronunciation: /ˈtɑːɡɪt ˈɔːdiəns/
+collocations: identify a target audience
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our target audience is residents seeking practical local information, including people who do not use social media.
+common_error: Audience refers to a group; avoid audiences when describing one group here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-advertising-revenue]]
+expression: advertising revenue
+meaning_vi: doanh thu quảng cáo
+pronunciation: /ˈædvətaɪzɪŋ ˈrevənjuː/
+collocations: generate advertising revenue
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Limited advertising revenue could fund reporting, but sponsors will not choose which stories are investigated.
+common_error: Revenue is income, not profit after costs.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-media-coverage]]
+expression: media coverage
+meaning_vi: sự đưa tin của truyền thông
+pronunciation: /ˈmiːdiə ˈkʌvərɪdʒ/
+collocations: balanced media coverage
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The editor wants media coverage to include routine council decisions as well as dramatic events.
+common_error: Coverage is normally uncountable in this meaning.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-brand-awareness]]
+expression: brand awareness
+meaning_vi: mức độ nhận biết thương hiệu
+pronunciation: /brænd əˈweənəs/
+collocations: raise brand awareness
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A sponsor may gain brand awareness through a clearly marked advertisement beside an article.
+common_error: Use raise, not rise, with a direct object.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-misleading-claims]]
+expression: misleading claims
+meaning_vi: những tuyên bố gây hiểu lầm
+pronunciation: /mɪsˈliːdɪŋ kleɪmz/
+collocations: challenge misleading claims
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Editors will reject misleading claims when advertisers cannot provide the evidence supporting their promises.
+common_error: Misleading describes the claim; misled describes a person affected.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-editorial-independence]]
+expression: editorial independence
+meaning_vi: tính độc lập biên tập
+pronunciation: /ˌedɪˈtɔːriəl ˌɪndɪˈpendəns/
+collocations: protect editorial independence
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The funding agreement will protect editorial independence by separating sponsorship decisions from story selection.
+common_error: Independence is a noun; independent is an adjective.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-consumer-behaviour]]
+expression: consumer behaviour
+meaning_vi: hành vi người tiêu dùng
+pronunciation: /kənˈsjuːmə bɪˈheɪvjə/
+collocations: influence consumer behaviour
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A class survey on consumer behaviour will ask what influenced a purchase without collecting participants' full shopping histories.
+common_error: Behaviour is normally uncountable in British English.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-sponsored-content]]
+expression: sponsored content
+meaning_vi: nội dung được tài trợ
+pronunciation: /ˈspɒnsəd ˈkɒntent/
+collocations: clearly labelled sponsored content
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: All sponsored content will carry a label at the top rather than hide the relationship in a separate policy page.
+common_error: Content is uncountable when referring to media material.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-source-credibility]]
+expression: source credibility
+meaning_vi: độ tin cậy của nguồn tin
+pronunciation: /sɔːs ˌkredəˈbɪləti/
+collocations: assess source credibility
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Reporters will assess source credibility by checking expertise, evidence and relevant conflicts of interest.
+common_error: Credibility is not the same as popularity.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-public-opinion]]
+expression: public opinion
+meaning_vi: dư luận công chúng
+pronunciation: /ˌpʌblɪk əˈpɪnjən/
+collocations: shape public opinion
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A voluntary comment poll will not be presented as representative public opinion because participation is self-selected.
+common_error: Opinion can be uncountable when describing a broad social view.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-digital-footprint]]
+expression: digital footprint
+meaning_vi: dấu vết số
+pronunciation: /ˈdɪdʒɪtəl ˈfʊtprɪnt/
+collocations: manage a digital footprint
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The project will explain its digital footprint policy and avoid unnecessary tracking of individual reading habits.
+common_error: Use a before one person’s footprint.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-media-advertising-fact-checking]]
+expression: fact checking
+meaning_vi: kiểm chứng thông tin
+pronunciation: /ˈfækt ˌtʃekɪŋ/
+collocations: independent fact checking
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A second editor will complete fact checking before publication and keep a visible record of later corrections.
+common_error: Checking is a noun here; check facts is the verb phrase.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-media-advertising-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a student newsroom deciding how to fund a local information project. Please compare the priorities below before our next meeting.
+Our target audience is residents seeking practical local information, including people who do not use social media.
+Limited advertising revenue could fund reporting, but sponsors will not choose which stories are investigated.
+The editor wants media coverage to include routine council decisions as well as dramatic events.
+A sponsor may gain brand awareness through a clearly marked advertisement beside an article.
+Editors will reject misleading claims when advertisers cannot provide the evidence supporting their promises.
+The funding agreement will protect editorial independence by separating sponsorship decisions from story selection.
+A class survey on consumer behaviour will ask what influenced a purchase without collecting participants' full shopping histories.
+All sponsored content will carry a label at the top rather than hide the relationship in a separate policy page.
+Reporters will assess source credibility by checking expertise, evidence and relevant conflicts of interest.
+A voluntary comment poll will not be presented as representative public opinion because participation is self-selected.
+The project will explain its digital footprint policy and avoid unnecessary tracking of individual reading habits.
+A second editor will complete fact checking before publication and keep a visible record of later corrections.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-media-advertising-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: The target audience should include new residents who may not recognize local place names in our headlines.
+Lan: Advertising revenue may keep the newsletter free, yet I would not let a sponsor approve our criticism.
+An: Media coverage of our estate usually focuses on problems, so a story about residents solving one would add context.
+Lan: Brand awareness is a reasonable commercial aim, but an advertisement must not look like an independent recommendation.
+An: Misleading claims can remain harmful even when a small disclaimer appears at the bottom of the page.
+Lan: Editorial independence needs a written rule, because friendly requests from an important sponsor can still create pressure.
+An: Consumer behaviour is influenced by convenience as well as price, so our survey should allow more than one reason.
+Lan: Sponsored content should remain clearly labelled when readers share only a screenshot of the opening paragraph.
+An: Source credibility matters more than a large follower count when a post makes a claim about public spending.
+Lan: Public opinion cannot be inferred from the loudest ten comments if many readers choose not to post.
+An: My digital footprint should not grow just because I read a local article without creating an account.
+Lan: Fact checking should continue after publication when a reader supplies evidence that changes our understanding.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-media-advertising-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: The target audience should include new residents who may not recognize local place names in our headlines.
+Lan: Advertising revenue may keep the newsletter free, yet I would not let a sponsor approve our criticism.
+An: Media coverage of our estate usually focuses on problems, so a story about residents solving one would add context.
+Lan: Brand awareness is a reasonable commercial aim, but an advertisement must not look like an independent recommendation.
+An: Misleading claims can remain harmful even when a small disclaimer appears at the bottom of the page.
+Lan: Editorial independence needs a written rule, because friendly requests from an important sponsor can still create pressure.
+An: Consumer behaviour is influenced by convenience as well as price, so our survey should allow more than one reason.
+Lan: Sponsored content should remain clearly labelled when readers share only a screenshot of the opening paragraph.
+An: Source credibility matters more than a large follower count when a post makes a claim about public spending.
+Lan: Public opinion cannot be inferred from the loudest ten comments if many readers choose not to post.
+An: My digital footprint should not grow just because I read a local article without creating an account.
+Lan: Fact checking should continue after publication when a reader supplies evidence that changes our understanding.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-media-advertising-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-target-audience | ielts-media-advertising-advertising-revenue | ielts-media-advertising-media-coverage
+prompt: Our target audience is residents seeking practical local information, including people who do not use social media. Limited advertising revenue could fund reporting, but sponsors will not choose which stories are investigated. The editor wants media coverage to include routine council decisions as well as dramatic events.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-public-opinion | ielts-media-advertising-digital-footprint | ielts-media-advertising-fact-checking
+prompt: A voluntary comment poll will not be presented as representative public opinion because participation is self-selected. The project will explain its digital footprint policy and avoid unnecessary tracking of individual reading habits. A second editor will complete fact checking before publication and keep a visible record of later corrections.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-target-audience | ielts-media-advertising-advertising-revenue | ielts-media-advertising-media-coverage | ielts-media-advertising-brand-awareness
+
+QUESTION:
+Whom is the project primarily intended to serve?
+
+OPTIONS:
+A. Only social-media influencers
+B. Residents needing practical local information
+C. Only advertising agencies
+
+ANSWER:
+B
+
+EXPLANATION:
+Residents needing practical local information. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-media-advertising-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-discussion
+language_block_refs: ielts-media-advertising-target-audience | ielts-media-advertising-advertising-revenue | ielts-media-advertising-media-coverage | ielts-media-advertising-brand-awareness
+audio_ref: ielts-media-advertising-discussion-audio
+
+QUESTION:
+Who should also be considered when writing headlines?
+
+OPTIONS:
+A. Only people already in the newsroom
+B. New residents unfamiliar with local names
+C. Only long-established advertisers
+
+ANSWER:
+B
+
+EXPLANATION:
+New residents unfamiliar with local names. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-media-advertising-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-misleading-claims | ielts-media-advertising-editorial-independence | ielts-media-advertising-consumer-behaviour | ielts-media-advertising-sponsored-content
+
+QUESTION:
+When will an advertisement’s promise be rejected?
+
+OPTIONS:
+A. When supporting evidence is unavailable
+B. Whenever a sponsor is local
+C. Only when there is no logo
+
+ANSWER:
+A
+
+EXPLANATION:
+When supporting evidence is unavailable. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-media-advertising-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-discussion
+language_block_refs: ielts-media-advertising-misleading-claims | ielts-media-advertising-editorial-independence | ielts-media-advertising-consumer-behaviour | ielts-media-advertising-sponsored-content
+audio_ref: ielts-media-advertising-discussion-audio
+
+QUESTION:
+Why might a small disclaimer be insufficient?
+
+OPTIONS:
+A. The main claim can still mislead
+B. It automatically proves the claim
+C. Readers never notice the main claim
+
+ANSWER:
+A
+
+EXPLANATION:
+The main claim can still mislead. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-media-advertising-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-source-credibility | ielts-media-advertising-public-opinion | ielts-media-advertising-digital-footprint | ielts-media-advertising-fact-checking
+
+QUESTION:
+How will reporters assess sources?
+
+OPTIONS:
+A. Through follower numbers alone
+B. Through the size of an advertisement
+C. Through evidence, expertise and conflicts
+
+ANSWER:
+C
+
+EXPLANATION:
+Through evidence, expertise and conflicts. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-media-advertising-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-discussion
+language_block_refs: ielts-media-advertising-source-credibility | ielts-media-advertising-public-opinion | ielts-media-advertising-digital-footprint | ielts-media-advertising-fact-checking
+audio_ref: ielts-media-advertising-discussion-audio
+
+QUESTION:
+What is more relevant than popularity for a spending claim?
+
+OPTIONS:
+A. The number of animated images
+B. The colour of the headline
+C. The source’s credibility
+
+ANSWER:
+C
+
+EXPLANATION:
+The source’s credibility. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-media-advertising-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-discussion
+language_block_refs: ielts-media-advertising-target-audience | ielts-media-advertising-misleading-claims | ielts-media-advertising-source-credibility
+prompt: The target audience should include new residents who may not recognize local place names in our headlines. Misleading claims can remain harmful even when a small disclaimer appears at the bottom of the page. Source credibility matters more than a large follower count when a post makes a claim about public spending.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Choose a funding model while protecting readers from misleading material. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-discussion
+language_block_refs: ielts-media-advertising-media-coverage | ielts-media-advertising-consumer-behaviour | ielts-media-advertising-digital-footprint
+prompt: Media coverage of our estate usually focuses on problems, so a story about residents solving one would add context. Consumer behaviour is influenced by convenience as well as price, so our survey should allow more than one reason. My digital footprint should not grow just because I read a local article without creating an account.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Choose a funding model while protecting readers from misleading material. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-advertising-revenue | ielts-media-advertising-editorial-independence | ielts-media-advertising-public-opinion
+prompt: Limited advertising revenue could fund reporting, but sponsors will not choose which stories are investigated. The funding agreement will protect editorial independence by separating sponsorship decisions from story selection. A voluntary comment poll will not be presented as representative public opinion because participation is self-selected.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Choose a funding model while protecting readers from misleading material. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-media-advertising-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-media-advertising-objective
+content_refs: ielts-media-advertising-proposal
+language_block_refs: ielts-media-advertising-brand-awareness | ielts-media-advertising-sponsored-content | ielts-media-advertising-fact-checking
+prompt: A sponsor may gain brand awareness through a clearly marked advertisement beside an article. All sponsored content will carry a label at the top rather than hide the relationship in a separate policy page. A second editor will complete fact checking before publication and keep a visible record of later corrections.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Choose a funding model while protecting readers from misleading material. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

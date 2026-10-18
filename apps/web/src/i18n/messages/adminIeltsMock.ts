@@ -1,5 +1,6 @@
 export const adminIeltsMockMessages = {
   en: {
+    recordedPart: 'Recorded Speaking part {part}', missingRecordings: 'Review requires retained recordings for all three Speaking parts.',
     admin: 'Content Admin', title: 'IELTS Full Mock Workspace', description: 'Author immutable Academic mock versions and complete teacher review for Writing and Speaking.',
     attempt: 'Attempt {id} · version {version, number}', responses: 'Submitted responses', criterion: 'Criterion {index, number}', writingTask1: 'Writing Task 1', writingTask2: 'Writing Task 2', speaking: 'Speaking', strengths: 'Strengths', gaps: 'Gaps', nextAction: 'Required next action', completeReview: 'Complete teacher review',
     selectMock: 'Select mock', moreMocks: 'Load more mocks', status: 'Status {status} · draft revision {revision, number} · published version {version}', none: 'none', source: 'Format 1 JSON content',
@@ -9,6 +10,7 @@ export const adminIeltsMockMessages = {
     invalidJson: 'Mock content must be valid JSON.', validationIssues: 'Validation issues', invalidField: 'Invalid mock content. Review this field.',
   },
   vi: {
+    recordedPart: 'Bản ghi Speaking phần {part}', missingRecordings: 'Cần đủ bản ghi còn hạn của cả ba phần Speaking để chấm bài.',
     admin: 'Quản trị nội dung', title: 'Không gian bài thi thử IELTS toàn phần', description: 'Biên soạn các phiên bản cố định của bài thi thử Academic và hoàn tất chấm phần Viết và Nói.',
     attempt: 'Bài làm {id} · phiên bản {version, number}', responses: 'Câu trả lời đã nộp', criterion: 'Tiêu chí {index, number}', writingTask1: 'Viết: bài 1', writingTask2: 'Viết: bài 2', speaking: 'Nói', strengths: 'Điểm mạnh', gaps: 'Điểm cần cải thiện', nextAction: 'Hành động tiếp theo bắt buộc', completeReview: 'Hoàn tất chấm bài',
     selectMock: 'Chọn bài thi thử', moreMocks: 'Tải thêm bài thi thử', status: 'Trạng thái {status} · bản sửa đổi {revision, number} · phiên bản xuất bản {version}', none: 'chưa có', source: 'Nội dung JSON định dạng 1',

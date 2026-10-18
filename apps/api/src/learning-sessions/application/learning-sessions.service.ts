@@ -86,7 +86,7 @@ export class LearningSessionsService {
     const context = await this.programContext.resolve(learnerId, transaction);
     const [missions, reviewQueue, completed] = await Promise.all([
       this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', transaction, context.programId),
-      this.mastery.getReviewQueue(learnerId),
+      this.mastery.getReviewQueue(learnerId, { programId: context.programId }),
       transaction.learningSession.findMany({
         where: { learnerId, status: 'COMPLETED', mission: { purpose: 'LEARNING', level: { path: { programId: context.programId } } } },
         select: { missionId: true },
@@ -202,6 +202,7 @@ export class LearningSessionsService {
     const languageBlocks = snapshot.wordBanks
       .flatMap((bank) => bank.languageBlocks)
       .filter((block) => activity.languageBlockReferences.includes(block.slug));
+    const recall = snapshot.foundation?.category === 'vocabulary' && activity.activityType === 'writing' && activity.learningBlock === 'respond';
     const payload = activity.activityType === 'reading' || activity.activityType === 'listening'
       ? {
           prompt: activity.payload.prompt,
@@ -209,7 +210,7 @@ export class LearningSessionsService {
         }
       : {
           prompt: activity.payload.prompt,
-          requiredPhrases: activity.payload.requiredPhrases,
+          ...(recall ? {requiredPhraseCount:activity.payload.requiredPhrases.length} : {requiredPhrases: activity.payload.requiredPhrases}),
           minWords: activity.payload.minWords,
           ...(activity.activityType === 'speaking'
             ? {
@@ -225,7 +226,7 @@ export class LearningSessionsService {
       content,
       foundationCategory: snapshot.foundation?.category ?? null,
       id: activity.id,
-      languageBlocks,
+      languageBlocks: recall ? [] : languageBlocks,
       learningBlock: activity.learningBlock,
       payload,
       skills: activity.skills,

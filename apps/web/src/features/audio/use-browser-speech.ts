@@ -1,9 +1,12 @@
 'use client';
 
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { parseDialogue } from '@worklingo/content-format';
 import { useT } from '../../i18n/provider';
 import { audioMessages } from '../../i18n/messages/audio';
-
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { playbackOwnership, subscribeNativeMedia } from './playback-owner';
+import { useVoiceRegistry } from './use-voice-registry';
+import { browserVoiceGender, planBrowserSpeech, type SpeechPlanError } from './voice-registry';
 
 export type BrowserSpeechStatus = 'idle' | 'speaking' | 'paused' | 'error';
 
@@ -20,106 +23,168 @@ export interface BrowserSpeechController {
 
 export function useBrowserSpeech(input: {
   readonly lang: string;
+  readonly dialogue?: boolean;
+  readonly itemId?: string;
+  readonly sessionId?: string;
   readonly preferredVoiceId?: string | null;
   readonly rate?: number;
   readonly text: string;
   readonly volume?: number;
 }): BrowserSpeechController {
   const t = useT('audio', audioMessages);
-  const supported = typeof window !== 'undefined'
-    && 'speechSynthesis' in window
-    && typeof SpeechSynthesisUtterance !== 'undefined';
-  const [voices, setVoices] = useState<readonly SpeechSynthesisVoice[]>(() =>
-    supported ? window.speechSynthesis.getVoices() : [],
-  );
+  const { voices, disabledIds, rotationEnabled, store, supported } = useVoiceRegistry();
   const [status, setStatus] = useState<BrowserSpeechStatus>('idle');
-  const [errorKey, setError] = useState<'speechUnsupported' | 'speechError' | null>(null);
+  const [errorKey, setError] = useState<SpeechPlanError | 'speechUnsupported' | 'speechError' | 'speechBlocked' | null>(null);
+  const [errorCode, setErrorCode] = useState('unknown');
+  const [playingVoice, setPlayingVoice] = useState<SpeechSynthesisVoice | null>(null);
   const activeUtterance = useRef<SpeechSynthesisUtterance | null>(null);
+  const paused = useRef(false);
+  const pendingTurn = useRef<(() => void) | null>(null);
+  const owner = useRef(Symbol('browser-speech'));
+  const instance = useId();
+  const item = JSON.stringify([
+    input.sessionId ?? null, input.itemId ?? instance,
+    input.itemId ? null : input.text, input.lang,
+  ]);
+  const eligible = voices.filter((entry) => !disabledIds.has(entry.id));
+  const resolvedVoice = playingVoice
+    ?? store?.rotation.resolve(item, eligible, input.preferredVoiceId, rotationEnabled)?.voice ?? null;
 
-  useEffect(() => {
-    if (!supported) return;
-    const synthesis = window.speechSynthesis;
-    const updateVoices = () => setVoices(synthesis.getVoices());
-    updateVoices();
-    synthesis.addEventListener('voiceschanged', updateVoices);
-    return () => synthesis.removeEventListener('voiceschanged', updateVoices);
-  }, [supported]);
-
-  const resolvedVoice = useMemo(() => {
-    const preferred = voices.find((voice) =>
-      voice.voiceURI === input.preferredVoiceId || voice.name === input.preferredVoiceId,
-    );
-    return preferred
-      ?? voices.find((voice) => voice.lang.toLowerCase().startsWith('en'))
-      ?? null;
-  }, [input.preferredVoiceId, voices]);
+  useEffect(subscribeNativeMedia, []);
 
   const stop = useCallback(() => {
-    if (!supported) return;
-    activeUtterance.current = null;
-    window.speechSynthesis.cancel();
+    playbackOwnership.stop(owner.current);
+    setPlayingVoice(null);
     setStatus('idle');
     setError(null);
-  }, [supported]);
+  }, []);
 
   useEffect(() => {
-    return () => {
-      if (supported) {
-        activeUtterance.current = null;
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, [input.lang, input.preferredVoiceId, input.rate, input.text, input.volume, supported]);
+    const token = owner.current;
+    setPlayingVoice(null);
+    return () => { playbackOwnership.stop(token); };
+  }, [input.dialogue, input.lang, input.preferredVoiceId, input.rate, input.text, input.volume, item, supported]);
 
   const play = useCallback(() => {
-    if (!supported) {
+    if (!supported || !store) {
       setError('speechUnsupported');
       setStatus('error');
       return;
     }
-    const synthesis = window.speechSynthesis;
-    synthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(input.text);
-    utterance.lang = input.lang;
-    utterance.rate = input.rate ?? 1;
-    utterance.volume = input.volume ?? 1;
-    utterance.voice = resolvedVoice;
-    activeUtterance.current = utterance;
-    utterance.onend = () => {
-      if (activeUtterance.current !== utterance) return;
-      activeUtterance.current = null;
-      setStatus('idle');
-    };
-    utterance.onerror = () => {
-      if (activeUtterance.current !== utterance) return;
-      activeUtterance.current = null;
-      setError('speechError');
+    // Refresh at the user gesture too: not every browser emits voiceschanged.
+    store.refresh();
+    const current = store.getSnapshot();
+    const enabled = current.voices.filter((entry) => !current.disabledIds.has(entry.id));
+    const plan = planBrowserSpeech(
+      parseDialogue(input.text, { forceDialogue: input.dialogue === true }),
+      /^en(?:[-_]|$)/iu.test(input.lang) ? enabled : [],
+      store.rotation, item, input.preferredVoiceId, current.rotationEnabled,
+    );
+    if (plan.error) {
+      playbackOwnership.stop(owner.current);
+      setError(plan.error);
       setStatus('error');
+      return;
+    }
+    const synthesis = window.speechSynthesis;
+    const token = owner.current;
+    let live = true;
+    playbackOwnership.claim(token, () => {
+      live = false;
+      activeUtterance.current = null;
+      pendingTurn.current = null;
+      paused.current = false;
+      synthesis.cancel();
+      setPlayingVoice(null);
+      setStatus('idle');
+      setError(null);
+    });
+    paused.current = false;
+    const finish = (code: string | null) => {
+      if (!live || !playbackOwnership.owns(token)) return;
+      live = false;
+      activeUtterance.current = null;
+      pendingTurn.current = null;
+      playbackOwnership.finish(token);
+      setErrorCode(code ?? 'unknown');
+      setError(code === 'not-allowed' ? 'speechBlocked' : code ? 'speechError' : null);
+      setStatus(code ? 'error' : 'idle');
+    };
+    const assignments = new Map(plan.turns.map(turn => [turn.key, turn.voice]));
+    const next = (index: number, attempted = new Set<string>()) => {
+      if (!live || !playbackOwnership.owns(token)) return;
+      if (paused.current) { pendingTurn.current = () => next(index, attempted); return; }
+      const turn = plan.turns[index];
+      if (!turn) { finish(null); return; }
+      const voice = assignments.get(turn.key)!;
+      attempted.add(voice.id);
+      const utterance = new SpeechSynthesisUtterance(turn.text);
+      utterance.lang = voice.locale;
+      utterance.rate = input.rate ?? 1;
+      utterance.volume = input.volume ?? 1;
+      utterance.voice = voice.voice;
+      activeUtterance.current = utterance;
+      setPlayingVoice(voice.voice);
+      store.rotation.remember(turn.key, voice, turn.preference);
+      let started = false;
+      const isCurrent = () => live && activeUtterance.current === utterance && playbackOwnership.owns(token);
+      utterance.onstart = () => { if (isCurrent()) started = true; };
+      utterance.onend = () => {
+        if (!isCurrent()) return;
+        activeUtterance.current = null;
+        next(index + 1);
+      };
+      utterance.onerror = (event) => {
+        if (!isCurrent()) return;
+        const code = event?.error ?? 'unknown';
+        const recoverable = ['network', 'voice-unavailable', 'language-unavailable', 'synthesis-failed', 'synthesis-unavailable'].includes(code);
+        if (!started && recoverable && attempted.size < 3) {
+          const latest = store.getSnapshot();
+          const reserved = new Set([...assignments].filter(([key]) => key !== turn.key).map(([, selected]) => selected.id));
+          const fallback = latest.voices
+            .filter(v => !latest.disabledIds.has(v.id) && !attempted.has(v.id) && !reserved.has(v.id)
+              && (!turn.speaker?.gender || browserVoiceGender(v.voice) === turn.speaker.gender))
+            .sort((a, b) => Number(b.localService) - Number(a.localService))[0];
+          if (fallback) {
+            // Invalidate before cancel: some engines dispatch cancellation immediately.
+            activeUtterance.current = null;
+            synthesis.cancel();
+            assignments.set(turn.key, fallback);
+            store.rotation.remember(turn.key, fallback, turn.preference, true);
+            next(index, attempted);
+            return;
+          }
+        }
+        finish(code === 'canceled' || code === 'interrupted' ? null : code);
+      };
+      try {
+        if (synthesis.paused) synthesis.resume();
+        synthesis.speak(utterance);
+      } catch { finish('synthesis-failed'); }
     };
     setError(null);
     setStatus('speaking');
-    synthesis.speak(utterance);
-  }, [input.lang, input.rate, input.text, input.volume, resolvedVoice, supported]);
+    next(0);
+  }, [input.dialogue, input.lang, input.preferredVoiceId, input.rate, input.text, input.volume, item, store, supported]);
 
   const pauseOrResume = useCallback(() => {
-    if (!supported || status === 'idle' || status === 'error') return;
+    if (!supported || !playbackOwnership.owns(owner.current) || status === 'idle' || status === 'error') return;
     if (status === 'paused' || window.speechSynthesis.paused) {
+      paused.current = false;
       window.speechSynthesis.resume();
       setStatus('speaking');
-      return;
+      const next = pendingTurn.current;
+      pendingTurn.current = null;
+      next?.();
+    } else {
+      paused.current = true;
+      window.speechSynthesis.pause();
+      setStatus('paused');
     }
-    window.speechSynthesis.pause();
-    setStatus('paused');
   }, [status, supported]);
 
   return {
-    error: errorKey ? t(errorKey) : null,
-    pauseOrResume,
-    play,
-    resolvedVoice,
-    status,
-    stop,
-    supported,
-    voices,
+    error: errorKey ? t(errorKey, { code: errorCode }) : null, pauseOrResume, play, resolvedVoice,
+    status, stop, supported, voices: voices.map((entry) => entry.voice),
   };
 }

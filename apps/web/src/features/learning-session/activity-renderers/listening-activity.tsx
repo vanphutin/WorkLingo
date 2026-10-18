@@ -70,6 +70,7 @@ export function ListeningActivity({
       <section className="audio-player-panel" aria-label={t('audioPlayer')}>
         <LessonAudioPlayer
           audioUrl={audioUrl}
+          dialogue={contentItems.some(item => item.type === 'dialogue')}
           preferBrowserSpeech={usesSimulationPlaceholder}
           text={transcript}
         />

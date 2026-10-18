@@ -34,7 +34,7 @@ export async function seedWorkplaceTransferCurriculum(
         { slug: 'visitor-email', type: 'email' as const,
           text: 'Hello An. A customer, Linh, will visit our office at ten. She wants to meet the support team about a new order. Please welcome her at reception. Tell her your name and department, then take her to Mai. Linh does not know our building. If she needs help, please ask her what she needs. Thank you, Mai' },
         { slug: 'visitor-call', type: 'dialogue' as const,
-          text: 'An: Hello, my name is An. I work in sales. How can I help you?\nLinh: My name is Linh. I am here to meet Mai in support.\nAn: Nice to meet you, Linh. Do you need help finding her desk?\nLinh: Yes, please. This is my first visit.\nAn: Please come with me. Mai is waiting for you.',
+          text: 'An (nam): Hello, my name is An. I work in sales. How can I help you?\nLinh (nữ): My name is Linh. I am here to meet Mai in support.\nAn: Nice to meet you, Linh. Do you need help finding her desk?\nLinh: Yes, please. This is my first visit.\nAn: Please come with me. Mai is waiting for you.',
           audio: { kind: 'textPlaceholder' as const, notice: 'A local simulated voice is available. Use the transcript if playback fails.' } },
       ],
       activities: [

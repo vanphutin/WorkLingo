@@ -33,7 +33,7 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     // Verify redirected to dashboard after onboarding
     await expect(page).toHaveURL(/.*\/dashboard/);
     await expect(page).toHaveTitle('Learner Dashboard | WorkLingo');
-    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: `Welcome back, ${displayName}`, exact: true })).toBeVisible();
 
     if (testInfo.project.name === 'foundation-mobile') {
       await expectNoHorizontalOverflow(page);
@@ -116,12 +116,12 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
 
     await expect(page.getByRole('heading', { name: 'Session Completed!' })).toBeVisible();
     await page.getByRole('link', { name: 'Return to Dashboard' }).click();
-    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: `Welcome back, ${displayName}`, exact: true })).toBeVisible();
 
     // 10. Verify persisted progress summary. Reading and listening finish
     // synchronously; Teacher AI work remains queued and must not be counted yet.
     await expect(page.getByText('Current Level')).toBeVisible();
-    await expect(page.getByText('FOUNDATION_1')).toBeVisible();
+    await expect(page.locator('.progress-card').getByText('FOUNDATION_1')).toBeVisible();
     await expect(page.getByText('Completed Activities').locator('..')).toContainText('2');
     await expect(page.getByText('Completed Sessions').locator('..')).toContainText('1');
   });

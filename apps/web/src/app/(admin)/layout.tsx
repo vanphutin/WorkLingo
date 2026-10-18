@@ -1,6 +1,7 @@
 'use client';
 
 import '../../features/admin-content/admin.css';
+import '../../features/admin-dashboard/admin-dashboard.css';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,28 +11,12 @@ import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { ThemeControl } from '../../components/theme-control';
-import { WorkspaceNavigation } from '../../components/workspace-navigation';
+import { AdminBreadcrumbs, AdminNavigation } from '../../features/admin-dashboard/admin-navigation';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { useLocalePreference, useT } from '../../i18n/provider';
 import { commonMessages } from '../../i18n/messages/common';
 
 const ADMIN_ROLES = new Set(['CONTENT_ADMIN', 'SYSTEM_ADMIN']);
-
-const adminDestinations = [
-  { href: '/admin/content', label: 'content' },
-  { href: '/admin/curriculum', label: 'curriculum' },
-  { href: '/admin/ielts-orientation', label: 'ieltsOrientation' },
-  { href: '/admin/ielts-bridge', label: 'ieltsBridge' },
-  { href: '/admin/ielts-integrated', label: 'integrated' },
-  { href: '/admin/ielts-mocks', label: 'mocks' },
-  { href: '/admin/ielts-band-curriculum', label: 'bandCurriculum' },
-  { href: '/admin/audit', label: 'audit' },
-  { href: '/admin/operations', label: 'operations' },
-  { href: '/admin/analytics', label: 'analytics' },
-  { href: '/admin/settings/audio', label: 'audioSettings' },
-  { href: '/admin/settings/ai', label: 'aiSettings' },
-  { href: '/dashboard', label: 'learnerView' },
-] as const;
 
 export default function AdminLayout({
   children,
@@ -41,7 +26,6 @@ export default function AdminLayout({
   const router = useRouter();
   const t = useT('common', commonMessages);
   const { synchronizeUser, clearUser } = useLocalePreference();
-  const destinations = adminDestinations.map((item) => ({ href: item.href, label: t(item.label) }));
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -112,14 +96,14 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="admin-shell">
+    <div className="admin-shell ad-shell">
       <a className="skip-link" href="#admin-main-content">
         {t('skipAdmin')}
       </a>
       <header className="admin-top-nav">
         <div className="nav-container">
           <div className="nav-left">
-            <Link href="/admin/content" className="brand-logo">
+            <Link href="/admin" className="brand-logo">
               <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
             </Link>
           </div>
@@ -150,10 +134,13 @@ export default function AdminLayout({
           </div>
         </div>
       </header>
-      <WorkspaceNavigation items={destinations} label={t('adminWorkspace')} variant="admin" />
-      <main id="admin-main-content" tabIndex={-1} className="admin-main-content">
-        {children}
-      </main>
+      <div className="ad-workspace">
+        <AdminNavigation />
+        <main id="admin-main-content" tabIndex={-1} className="admin-main-content">
+          <AdminBreadcrumbs />
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

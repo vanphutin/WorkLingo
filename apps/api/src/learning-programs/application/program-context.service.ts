@@ -50,7 +50,8 @@ export class ProgramContextService {
       if (!target || target.availabilityStatus === 'DISABLED') {
         throw new NotFoundException({ code: 'PROGRAM_NOT_FOUND', message: 'Learning program not found.' });
       }
-      if (!deriveProgramAccess(target).isSelectable) {
+      // IELTS is guided navigation over Intermediate evidence, never a generic level context.
+      if (target.slug === 'ielts' || !deriveProgramAccess(target).isSelectable) {
         throw new UnprocessableEntityException({ code: 'PROGRAM_UNAVAILABLE', message: 'This learning program is not available yet.' });
       }
       const current = await this.resolve(learnerId, tx);

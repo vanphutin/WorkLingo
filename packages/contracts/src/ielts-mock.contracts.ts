@@ -1,6 +1,18 @@
 import { z } from 'zod';
 
 export const ieltsMockModeSchema = z.enum(['LEARNING', 'PRACTICE', 'EXAM_SIMULATION']);
+export const newIeltsMockModeSchema = z.enum(['PRACTICE', 'EXAM_SIMULATION']);
+export type NewIeltsMockMode = z.infer<typeof newIeltsMockModeSchema>;
+export const ieltsMockPolicyVersionSchema = z.enum(['legacy-v1', 'v2']);
+export type IeltsMockPolicyVersion = z.infer<typeof ieltsMockPolicyVersionSchema>;
+export const mockClockOperationSchema = z.object({ expectedRevision: z.number().int().positive(), clientOperationId: z.uuid() }).strict();
+export const mockSectionReviewSchema = z.object({ section: z.enum(['LISTENING', 'READING', 'WRITING', 'SPEAKING']), questions: z.array(z.object({ id: z.uuid(), prompt: z.string(), response: z.string(), acceptedAnswers: z.array(z.string()), explanation: z.string(), correct: z.boolean() }).strict()), transcripts: z.array(z.object({ part: z.number().int(), text: z.string() }).strict()) }).strict();
+export type MockSectionReviewDto = z.infer<typeof mockSectionReviewSchema>;
+export const playbackLeaseSchema = z.object({ id: z.uuid(), streamUrl: z.string().startsWith('/api/v1/'), expiresAt: z.iso.datetime(), remainingSeconds: z.number().nonnegative() }).strict();
+export type PlaybackLeaseDto = z.infer<typeof playbackLeaseSchema>;
+export const ieltsMockRecordingSchema = z.object({ id: z.uuid(), part: z.number().int().min(1).max(3), durationSeconds: z.number().positive(), createdAt: z.iso.datetime() }).strict();
+export type IeltsMockRecordingDto = z.infer<typeof ieltsMockRecordingSchema>;
+export const mockRecordingUploadSchema = z.object({ clientRecordingId: z.uuid(), part: z.number().int().min(1).max(3), consent: z.boolean() }).strict();
 export const ieltsMockVariantSchema = z.enum(['ACADEMIC', 'GENERAL_TRAINING']);
 const mockBandSchema = z.number().min(0).max(9).refine((value) => Number.isInteger(value * 2), 'Mock band must use whole or half bands');
 const answerPolicySchema = z.object({ acceptedAnswers: z.array(z.string().min(1).max(160)).min(1).max(12), caseSensitive: z.boolean(), maxWords: z.number().int().min(1).max(10).nullable() }).strict();
@@ -16,9 +28,9 @@ const conversionSchema = z.array(z.object({ rawScore: z.number().int().min(0).ma
 }));
 const criteriaSchema = z.enum(['task_achievement', 'task_response', 'coherence_cohesion', 'lexical_resource', 'grammatical_range_accuracy']);
 
-export const ieltsMockContentSchema = z.object({
-  schemaVersion: z.literal(1), variant: ieltsMockVariantSchema, title: z.string().min(3).max(160), disclosure: z.string().min(20).max(300), allowedModes: z.array(ieltsMockModeSchema).min(1).max(3),
-  listening: z.object({ durationMinutes: z.literal(30), conversion: conversionSchema, parts: z.array(z.object({ part: z.number().int().min(1).max(4), audioAssetId: z.uuid().nullable(), questions: z.array(questionSchema).length(10) }).strict()).length(4) }).strict().superRefine((section, context) => {
+const ieltsMockContentBaseSchema = z.object({
+  schemaVersion: z.union([z.literal(1), z.literal(2)]), variant: ieltsMockVariantSchema, title: z.string().min(3).max(160), disclosure: z.string().min(20).max(300), allowedModes: z.array(ieltsMockModeSchema).min(1).max(3),
+  listening: z.object({ durationMinutes: z.literal(30), conversion: conversionSchema, parts: z.array(z.object({ part: z.number().int().min(1).max(4), audioAssetId: z.uuid().nullable(), transcript: z.string().min(20).max(30000).optional(), questions: z.array(questionSchema).length(10) }).strict()).length(4) }).strict().superRefine((section, context) => {
     const questions = section.parts.flatMap((part) => part.questions); if (questions.length !== 40 || questions.some((item, index) => item.order !== index + 1)) context.addIssue({ code: 'custom', path: ['parts'], message: 'Listening requires 40 contiguous questions' });
   }),
   reading: z.object({ durationMinutes: z.literal(60), conversion: conversionSchema, passages: z.array(z.object({ section: z.number().int().min(1).max(3), title: z.string().min(3).max(160), passage: z.string().min(100).max(20_000), questions: z.array(questionSchema).min(13).max(14) }).strict()).length(3) }).strict().superRefine((section, context) => {
@@ -35,6 +47,15 @@ export const ieltsMockContentSchema = z.object({
   if (content.variant !== 'ACADEMIC') context.addIssue({ code: 'custom', path: ['variant'], message: 'Phase 8 publishes Academic mocks only' });
   if (new Set(content.allowedModes).size !== content.allowedModes.length) context.addIssue({ code: 'custom', path: ['allowedModes'], message: 'Mock modes must be unique' });
 }).readonly();
+const ieltsMockContentV1Schema = ieltsMockContentBaseSchema.unwrap().safeExtend({ schemaVersion: z.literal(1) });
+const ieltsMockContentV2Schema = ieltsMockContentBaseSchema.unwrap().safeExtend({
+  schemaVersion: z.literal(2),
+  allowedModes: z.array(newIeltsMockModeSchema).min(1).max(2),
+  qualification: z.object({ reviewedBy: z.string().min(3), reviewedAt: z.iso.datetime(), evidenceRevision: z.string().min(3), qualifiedModes: z.array(newIeltsMockModeSchema).min(1).max(2) }).strict(),
+}).superRefine((content, context) => {
+  if (content.allowedModes.some(mode => !content.qualification.qualifiedModes.includes(mode))) context.addIssue({ code: 'custom', path: ['qualification'], message: 'Every allowed mode needs reviewed qualification evidence' });
+});
+export const ieltsMockContentSchema = z.discriminatedUnion('schemaVersion', [ieltsMockContentV1Schema, ieltsMockContentV2Schema]).readonly();
 export type IeltsMockContent = z.infer<typeof ieltsMockContentSchema>;
 
 const conversion = Array.from({ length: 41 }, (_, rawScore) => ({ rawScore, mockBand: Math.round(rawScore / 40 * 18) / 2 }));
@@ -72,17 +93,18 @@ export const ieltsMockCommandSchema = z.object({ expectedRevision: z.number().in
 export const ieltsMockValidationSchema = z.object({ mockTestId: z.uuid(), draftRevision: z.number().int().positive(), status: z.enum(['DRAFT', 'VALIDATED']), canPublish: z.boolean(), issues: z.array(z.object({ path: z.string(), message: z.string() }).strict()) }).strict();
 export const publishIeltsMockResultSchema = z.object({ mockTestId: z.uuid(), mockTestVersionId: z.uuid(), version: z.number().int().positive(), publishedAt: z.iso.datetime() }).strict();
 
-export const ieltsMockCatalogSchema = z.object({ eligible: z.boolean(), lockedReason: z.enum(['BAND_PATHWAY_REQUIRED', 'MOCK_NOT_PUBLISHED']).nullable(), mocks: z.array(z.object({ id: z.uuid(), title: z.string(), variant: ieltsMockVariantSchema, version: z.number().int().positive(), allowedModes: z.array(ieltsMockModeSchema), activeAttemptId: z.uuid().nullable() }).strict()) }).strict();
+export const ieltsMockCatalogSchema = z.object({ flowVersion: z.enum(['legacy', 'v3']).optional(), eligible: z.boolean(), lockedReason: z.enum(['BAND_PATHWAY_REQUIRED', 'MOCK_NOT_PUBLISHED']).nullable(), mocks: z.array(z.object({ id: z.uuid(), title: z.string(), variant: ieltsMockVariantSchema, version: z.number().int().positive(), allowedModes: z.array(ieltsMockModeSchema), activeAttemptId: z.uuid().nullable() }).strict()) }).strict();
 export const startIeltsMockAttemptSchema = z.object({ clientAttemptId: z.uuid(), mockTestId: z.uuid(), mode: ieltsMockModeSchema }).strict();
 export const saveIeltsMockResponsesSchema = z.object({ expectedRevision: z.number().int().positive(), responses: z.record(z.string(), z.string().max(20_000)) }).strict();
 export const submitIeltsMockSectionSchema = z.object({ expectedRevision: z.number().int().positive(), section: z.enum(['LISTENING', 'READING', 'WRITING', 'SPEAKING']) }).strict();
 const learnerQuestionSchema = questionObjectSchema.omit({ answerPolicy: true, explanation: true });
 export const ieltsMockAttemptSchema = z.object({
+  policyVersion: ieltsMockPolicyVersionSchema.default('legacy-v1'), elapsedMs: z.number().int().nonnegative().default(0), pausedAt: z.iso.datetime().nullable().default(null),
   id: z.uuid(), mockTestVersionId: z.uuid(), mockTestVersion: z.number().int().positive(), title: z.string(), mode: ieltsMockModeSchema,
   status: z.enum(['IN_PROGRESS', 'SUBMITTED', 'EVALUATION_PENDING', 'COMPLETED']), currentSection: z.enum(['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPLETE']), revision: z.number().int().positive(),
   responses: z.record(z.string(), z.string()), submittedSections: z.array(z.string()), sectionStartedAt: z.iso.datetime(), sectionDeadlineAt: z.iso.datetime(), startedAt: z.iso.datetime(), submittedAt: z.iso.datetime().nullable(),
   sectionContent: z.object({
-    listening: z.array(z.object({ part: z.number(), audioUrl: z.string(), questions: z.array(learnerQuestionSchema) }).strict()),
+    listening: z.array(z.object({ part: z.number(), audioUrl: z.string(), audioAssetId: z.uuid().optional(), questions: z.array(learnerQuestionSchema) }).strict()),
     reading: z.array(z.object({ section: z.number(), title: z.string(), passage: z.string(), questions: z.array(learnerQuestionSchema) }).strict()),
     writing: z.array(z.object({ task: z.number(), title: z.string(), prompt: z.string(), minimumWords: z.number() }).strict()),
     speaking: z.array(z.object({ part: z.number(), title: z.string(), prompts: z.array(z.string()), preparationSeconds: z.number(), responseSeconds: z.number() }).strict()),

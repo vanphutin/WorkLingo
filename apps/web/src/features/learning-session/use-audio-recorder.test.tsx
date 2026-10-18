@@ -82,6 +82,15 @@ describe('useAudioRecorder', () => {
     expect(stopTrack).toHaveBeenCalledOnce();
     expect(screen.getByLabelText('preview')).toHaveAttribute('src', 'blob:preview-1');
   });
+  it('releases a permission stream that arrives after the recorder was unmounted', async () => {
+    let resolve!: (value: MediaStream) => void;
+    vi.mocked(navigator.mediaDevices.getUserMedia).mockReturnValue(new Promise(value => { resolve = value; }));
+    const view = render(<RecorderHarness />);
+    fireEvent.click(screen.getByRole('button', { name: 'start' }));
+    view.unmount();
+    await act(async () => resolve(stream));
+    expect(stopTrack).toHaveBeenCalledOnce();
+  });
 
   it('revokes preview URLs when discarding a recording', async () => {
     render(<RecorderHarness />);

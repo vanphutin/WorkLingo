@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-health-objective]
+statement: Infer and accurately use contextual Health vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-health-lesson
+title: Health: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Choose an accessible wellbeing activity and justify how its success should be assessed.
+[/LESSON]
+
+[WORD_BANK ielts-health-bank]
+title: Health in context
+
+[[LANGUAGE_BLOCK ielts-health-public-health]]
+expression: public health
+meaning_vi: sức khỏe cộng đồng
+pronunciation: /ˌpʌblɪk ˈhelθ/
+collocations: improve public health
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our public health programme will focus on access to information rather than offering personal medical treatment.
+common_error: Public health concerns populations, not just public hospitals.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-balanced-diet]]
+expression: balanced diet
+meaning_vi: chế độ ăn cân đối
+pronunciation: /ˌbælənst ˈdaɪət/
+collocations: maintain a balanced diet
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A cooking session will explore a balanced diet using affordable ingredients selected by participants.
+common_error: Use a with diet when describing one eating pattern.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-physical-activity]]
+expression: physical activity
+meaning_vi: hoạt động thể chất
+pronunciation: /ˈfɪzɪkəl ækˈtɪvəti/
+collocations: regular physical activity
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Residents can suggest physical activity sessions, including gentle walking and seated movement.
+common_error: Activity can be uncountable when referring to movement in general.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-mental-wellbeing]]
+expression: mental wellbeing
+meaning_vi: sức khỏe tinh thần
+pronunciation: /ˈmentəl ˌwelˈbiːɪŋ/
+collocations: support mental wellbeing
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The mental wellbeing discussion will explain where residents can find qualified support when they need it.
+common_error: Wellbeing is a noun; do not replace it with well when naming the concept.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-preventive-care]]
+expression: preventive care
+meaning_vi: chăm sóc dự phòng
+pronunciation: /prɪˈventɪv keə/
+collocations: access to preventive care
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A visiting service will explain preventive care appointments and how to ask the local clinic about eligibility.
+common_error: Care is normally uncountable in this meaning.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-healthcare-access]]
+expression: healthcare access
+meaning_vi: khả năng tiếp cận dịch vụ y tế
+pronunciation: /ˈhelθkeər ˈækses/
+collocations: improve healthcare access
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A resident survey identifies transport and unclear booking instructions as barriers to healthcare access.
+common_error: Access is a noun here; use access to a service.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-sedentary-lifestyle]]
+expression: sedentary lifestyle
+meaning_vi: lối sống ít vận động
+pronunciation: /ˈsedəntəri ˈlaɪfstaɪl/
+collocations: a sedentary lifestyle
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A workplace discussion will examine how long seated periods can contribute to a sedentary lifestyle.
+common_error: Use a before the singular countable noun lifestyle.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-sleep-quality]]
+expression: sleep quality
+meaning_vi: chất lượng giấc ngủ
+pronunciation: /sliːp ˈkwɒləti/
+collocations: better sleep quality
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The sleep quality workshop will discuss daily routines without diagnosing participants or recommending medication.
+common_error: Quality is a noun; avoid good-quality sleeping as the concept label.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-health-literacy]]
+expression: health literacy
+meaning_vi: khả năng hiểu và sử dụng thông tin sức khỏe
+pronunciation: /helθ ˈlɪtərəsi/
+collocations: develop health literacy
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The health literacy activity asks groups to distinguish a source's evidence from its advertising claims.
+common_error: Literacy is uncountable here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-social-support]]
+expression: social support
+meaning_vi: sự hỗ trợ xã hội
+pronunciation: /ˈsəʊʃəl səˈpɔːt/
+collocations: a network of social support
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A weekly tea group will provide social support without recording private details of members' conversations.
+common_error: Support is uncountable in this phrase.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-work-related-stress]]
+expression: work-related stress
+meaning_vi: căng thẳng liên quan đến công việc
+pronunciation: /ˌwɜːk rɪˌleɪtɪd ˈstres/
+collocations: manage work-related stress
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Employers invited to the work-related stress forum must discuss workloads as well as individual coping routines.
+common_error: Stress is usually uncountable when naming pressure.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-health-quality-of-life]]
+expression: quality of life
+meaning_vi: chất lượng cuộc sống
+pronunciation: /ˌkwɒləti əv ˈlaɪf/
+collocations: improve quality of life
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Programme feedback will ask about quality of life and accessibility, rather than counting attendance as the only success.
+common_error: Keep of between quality and life.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-health-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a community centre designing a fictional wellbeing programme. Please compare the priorities below before our next meeting.
+Our public health programme will focus on access to information rather than offering personal medical treatment.
+A cooking session will explore a balanced diet using affordable ingredients selected by participants.
+Residents can suggest physical activity sessions, including gentle walking and seated movement.
+The mental wellbeing discussion will explain where residents can find qualified support when they need it.
+A visiting service will explain preventive care appointments and how to ask the local clinic about eligibility.
+A resident survey identifies transport and unclear booking instructions as barriers to healthcare access.
+A workplace discussion will examine how long seated periods can contribute to a sedentary lifestyle.
+The sleep quality workshop will discuss daily routines without diagnosing participants or recommending medication.
+The health literacy activity asks groups to distinguish a source's evidence from its advertising claims.
+A weekly tea group will provide social support without recording private details of members' conversations.
+Employers invited to the work-related stress forum must discuss workloads as well as individual coping routines.
+Programme feedback will ask about quality of life and accessibility, rather than counting attendance as the only success.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-health-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Public health information should be easy to understand, especially for people who are new to the area.
+Lan: A balanced diet session would be useful if it respected different budgets and cultural food preferences.
+An: I would join physical activity in a small group, but a competitive event might discourage me.
+Lan: Mental wellbeing matters, but volunteers should know the limits of their role and refer specialist questions.
+An: Clear information about preventive care would help me understand which appointments require a booking.
+Lan: Healthcare access is difficult for my neighbour because the last bus home leaves before some appointments finish.
+An: My sedentary lifestyle is partly linked to commuting, so a lunchtime walk might be more realistic than a morning class.
+Lan: I would like a sleep quality discussion that acknowledges shift work instead of assuming everyone has the same timetable.
+An: Health literacy would help me ask better questions when an online post makes an impressive claim.
+Lan: Social support should feel welcoming, but people must be free to leave a discussion they find uncomfortable.
+An: Work-related stress cannot be addressed only by telling staff to relax while their deadlines keep increasing.
+Lan: Quality of life means being able to do things that matter to me, so I would welcome a choice of activities.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-health-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Public health information should be easy to understand, especially for people who are new to the area.
+Lan: A balanced diet session would be useful if it respected different budgets and cultural food preferences.
+An: I would join physical activity in a small group, but a competitive event might discourage me.
+Lan: Mental wellbeing matters, but volunteers should know the limits of their role and refer specialist questions.
+An: Clear information about preventive care would help me understand which appointments require a booking.
+Lan: Healthcare access is difficult for my neighbour because the last bus home leaves before some appointments finish.
+An: My sedentary lifestyle is partly linked to commuting, so a lunchtime walk might be more realistic than a morning class.
+Lan: I would like a sleep quality discussion that acknowledges shift work instead of assuming everyone has the same timetable.
+An: Health literacy would help me ask better questions when an online post makes an impressive claim.
+Lan: Social support should feel welcoming, but people must be free to leave a discussion they find uncomfortable.
+An: Work-related stress cannot be addressed only by telling staff to relax while their deadlines keep increasing.
+Lan: Quality of life means being able to do things that matter to me, so I would welcome a choice of activities.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-health-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-public-health | ielts-health-balanced-diet | ielts-health-physical-activity
+prompt: Our public health programme will focus on access to information rather than offering personal medical treatment. A cooking session will explore a balanced diet using affordable ingredients selected by participants. Residents can suggest physical activity sessions, including gentle walking and seated movement.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-social-support | ielts-health-work-related-stress | ielts-health-quality-of-life
+prompt: A weekly tea group will provide social support without recording private details of members' conversations. Employers invited to the work-related stress forum must discuss workloads as well as individual coping routines. Programme feedback will ask about quality of life and accessibility, rather than counting attendance as the only success.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-public-health | ielts-health-balanced-diet | ielts-health-physical-activity | ielts-health-mental-wellbeing
+
+QUESTION:
+What is the programme’s stated role?
+
+OPTIONS:
+A. Diagnosing personal conditions
+B. Prescribing medication
+C. Providing accessible information
+
+ANSWER:
+C
+
+EXPLANATION:
+Providing accessible information. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-health-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-health-objective
+content_refs: ielts-health-discussion
+language_block_refs: ielts-health-public-health | ielts-health-balanced-diet | ielts-health-physical-activity | ielts-health-mental-wellbeing
+audio_ref: ielts-health-discussion-audio
+
+QUESTION:
+Who particularly needs understandable information?
+
+OPTIONS:
+A. Only medical researchers
+B. Only programme staff
+C. People unfamiliar with the area
+
+ANSWER:
+C
+
+EXPLANATION:
+People unfamiliar with the area. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-health-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-preventive-care | ielts-health-healthcare-access | ielts-health-sedentary-lifestyle | ielts-health-sleep-quality
+
+QUESTION:
+What will the visiting service explain?
+
+OPTIONS:
+A. An exercise competition
+B. Appointments and eligibility
+C. Personal diagnoses
+
+ANSWER:
+B
+
+EXPLANATION:
+Appointments and eligibility. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-health-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-health-objective
+content_refs: ielts-health-discussion
+language_block_refs: ielts-health-preventive-care | ielts-health-healthcare-access | ielts-health-sedentary-lifestyle | ielts-health-sleep-quality
+audio_ref: ielts-health-discussion-audio
+
+QUESTION:
+What would clearer appointment information help the speaker understand?
+
+OPTIONS:
+A. Which neighbour is attending
+B. Which visits need booking
+C. Which medicine to prescribe
+
+ANSWER:
+B
+
+EXPLANATION:
+Which visits need booking. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-health-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-health-literacy | ielts-health-social-support | ielts-health-work-related-stress | ielts-health-quality-of-life
+
+QUESTION:
+What must groups distinguish in the information activity?
+
+OPTIONS:
+A. Evidence and advertising claims
+B. Tea and coffee preferences
+C. Different sports scores
+
+ANSWER:
+A
+
+EXPLANATION:
+Evidence and advertising claims. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-health-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-health-objective
+content_refs: ielts-health-discussion
+language_block_refs: ielts-health-health-literacy | ielts-health-social-support | ielts-health-work-related-stress | ielts-health-quality-of-life
+audio_ref: ielts-health-discussion-audio
+
+QUESTION:
+Why does the speaker value information skills?
+
+OPTIONS:
+A. They can ask better questions about online claims
+B. They can avoid all appointments
+C. They can diagnose every condition
+
+ANSWER:
+A
+
+EXPLANATION:
+They can ask better questions about online claims. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-health-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-health-objective
+content_refs: ielts-health-discussion
+language_block_refs: ielts-health-public-health | ielts-health-preventive-care | ielts-health-health-literacy
+prompt: Public health information should be easy to understand, especially for people who are new to the area. Clear information about preventive care would help me understand which appointments require a booking. Health literacy would help me ask better questions when an online post makes an impressive claim.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Choose an accessible wellbeing activity and justify how its success should be assessed. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-health-objective
+content_refs: ielts-health-discussion
+language_block_refs: ielts-health-physical-activity | ielts-health-sedentary-lifestyle | ielts-health-work-related-stress
+prompt: I would join physical activity in a small group, but a competitive event might discourage me. My sedentary lifestyle is partly linked to commuting, so a lunchtime walk might be more realistic than a morning class. Work-related stress cannot be addressed only by telling staff to relax while their deadlines keep increasing.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Choose an accessible wellbeing activity and justify how its success should be assessed. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-balanced-diet | ielts-health-healthcare-access | ielts-health-social-support
+prompt: A cooking session will explore a balanced diet using affordable ingredients selected by participants. A resident survey identifies transport and unclear booking instructions as barriers to healthcare access. A weekly tea group will provide social support without recording private details of members' conversations.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Choose an accessible wellbeing activity and justify how its success should be assessed. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-health-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-health-objective
+content_refs: ielts-health-proposal
+language_block_refs: ielts-health-mental-wellbeing | ielts-health-sleep-quality | ielts-health-quality-of-life
+prompt: The mental wellbeing discussion will explain where residents can find qualified support when they need it. The sleep quality workshop will discuss daily routines without diagnosing participants or recommending medication. Programme feedback will ask about quality of life and accessibility, rather than counting attendance as the only success.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Choose an accessible wellbeing activity and justify how its success should be assessed. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

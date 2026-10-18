@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { INITIAL_IELTS_ACADEMIC_MOCK } from '@worklingo/contracts';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -14,6 +15,15 @@ vi.mock('../../lib/api/admin-ielts-mock-client', () => ({ adminIeltsMockClient: 
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
 describe('IeltsMockWorkspace pagination', () => {
+  it('provides owned recording playback to the teacher and blocks a V2 review missing a part', async () => {
+    vi.mocked(adminIeltsMockClient.list).mockResolvedValue({ items: [], nextCursor: null });
+    vi.mocked(adminIeltsMockClient.pending).mockResolvedValue({ items: [{ id: 'attempt-2', learnerId: 'learner', revision: 1, responses: {}, submittedAt: null, mockTestVersion: { version: 2 }, policyVersion: 'v2', recordings: [{ id: 'audio-1', part: 1, durationSeconds: 20, createdAt: new Date().toISOString() }] }], nextCursor: null });
+    render(<IeltsMockWorkspace />);
+    const player = await screen.findByLabelText('Recorded Speaking part 1');
+    expect(player).toHaveAttribute('src', '/api/v1/admin/ielts-mock-attempts/attempt-2/recordings/audio-1/content');
+    fireEvent.change(screen.getByLabelText('Required next action'), { target: { value: 'Practice fluency' } });
+    expect(screen.getByRole('button', { name: 'Complete teacher review' })).toBeDisabled();
+  });
   it('shows Vietnamese loading before the pending workspace requests complete', async () => {
     vi.mocked(adminIeltsMockClient.list).mockReturnValue(new Promise(() => undefined));
     vi.mocked(adminIeltsMockClient.pending).mockReturnValue(new Promise(() => undefined));

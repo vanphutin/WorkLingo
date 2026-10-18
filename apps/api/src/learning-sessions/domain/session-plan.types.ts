@@ -13,6 +13,7 @@ export interface ScheduledReviewItemReference {
 }
 
 export interface PlanFoundationSessionInput {
+  readonly productivePairPerRespondBlock?: boolean;
   readonly mission: PublishedMission;
   readonly durationMinutes: number;
   /** Items are ordered by ReviewScheduler, with NEEDS_ATTENTION before OVERDUE. */

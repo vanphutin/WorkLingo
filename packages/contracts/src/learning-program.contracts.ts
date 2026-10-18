@@ -23,7 +23,7 @@ export const learningProgramCatalogItemSchema = z
   .object({
     availabilityStatus: learningProgramAvailabilityStatusSchema,
     description: z.string().min(1),
-    destination: z.literal('/dashboard').nullable(),
+    destination: z.enum(['/dashboard', '/ielts']).nullable(),
     iconKey: learningProgramIconKeySchema,
     isSelectable: z.boolean(),
     learningGoal: z.string().min(1),

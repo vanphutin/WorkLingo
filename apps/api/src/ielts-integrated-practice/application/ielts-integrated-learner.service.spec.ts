@@ -33,10 +33,12 @@ const session = {
   })),
 };
 
-async function setup(options: { bridgeCount?: number; existing?: typeof session | null } = {}) {
+async function setup(options: { bridgeCount?: number; existing?: typeof session | null; earlyAccess?: boolean } = {}) {
   const existing = options.existing ?? null;
+  const profile = { ieltsEarlyAccess: options.earlyAccess ?? false, user: { status: 'ACTIVE', role: 'LEARNER' } };
   const tx = {
     $executeRaw: vi.fn(),
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(profile) },
     ieltsBridgeProgress: { count: vi.fn().mockResolvedValue(options.bridgeCount ?? 4), findMany: vi.fn().mockResolvedValue([]) },
     ieltsIntegratedSession: {
       findUnique: vi.fn().mockResolvedValue(existing), findFirst: vi.fn().mockResolvedValue(existing),
@@ -48,6 +50,7 @@ async function setup(options: { bridgeCount?: number; existing?: typeof session 
     ieltsBridgeModule: { findMany: vi.fn().mockResolvedValue(moduleVersions.map((currentPublishedVersion) => ({ status: 'PUBLISHED', currentPublishedVersion }))) },
   };
   const database = {
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(profile) },
     ieltsBridgeProgress: { count: vi.fn().mockResolvedValue(options.bridgeCount ?? 4) },
     ieltsIntegratedProfile: { findMany: vi.fn().mockResolvedValue(profileContent ? [60, 90, 120, 150].map((durationMinutes) => ({ durationMinutes })) : []) },
     ieltsIntegratedSession: { findFirst: vi.fn().mockResolvedValue(existing) },
@@ -58,6 +61,33 @@ async function setup(options: { bridgeCount?: number; existing?: typeof session 
 }
 
 describe('IeltsIntegratedLearnerService', () => {
+  it('allows a granted learner to view availability and start with no Bridge evidence', async () => {
+    const { service } = await setup({ bridgeCount: 0, earlyAccess: true });
+    await expect(service.availability(learnerId)).resolves.toMatchObject({ eligible: true, lockedReason: null, durations: [60, 90, 120, 150] });
+    await expect(service.start(learnerId, { clientSessionId: session.clientSessionId, durationMinutes: 60, difficulty: 'foundation' }))
+      .resolves.toMatchObject({ currentBlockIndex: 0, completedAt: null, blocks: [expect.objectContaining({ correct: null }) , expect.anything(), expect.anything(), expect.anything()] });
+  });
+
+  it('relocks availability and direct start when early access is revoked', async () => {
+    const { service, database, tx } = await setup({ bridgeCount: 0, earlyAccess: true });
+    const revoked = { ieltsEarlyAccess: false, user: { status: 'ACTIVE', role: 'LEARNER' } };
+    database.learnerProfile.findUnique.mockResolvedValue(revoked);
+    tx.learnerProfile.findUnique.mockResolvedValue(revoked);
+    await expect(service.availability(learnerId)).resolves.toMatchObject({ eligible: false, lockedReason: 'BRIDGE_REQUIRED' });
+    await expect(service.start(learnerId, { clientSessionId: session.clientSessionId, durationMinutes: 60, difficulty: 'foundation' })).rejects.toBeInstanceOf(ConflictException);
+    expect(tx.ieltsIntegratedSession.create).not.toHaveBeenCalled();
+  });
+
+  it('requires published profiles even when a learner has early access', async () => {
+    const { service, database, tx } = await setup({ bridgeCount: 0, earlyAccess: true });
+    database.ieltsIntegratedProfile.findMany.mockResolvedValue([]);
+    tx.ieltsIntegratedProfile.findUnique.mockResolvedValue(null);
+    await expect(service.availability(learnerId)).resolves.toMatchObject({ eligible: false, lockedReason: 'PROFILES_NOT_PUBLISHED', durations: [] });
+    await expect(service.start(learnerId, { clientSessionId: session.clientSessionId, durationMinutes: 60, difficulty: 'foundation' }))
+      .rejects.toMatchObject({ response: { code: 'IELTS_INTEGRATED_PROFILE_UNAVAILABLE' } });
+    expect(tx.ieltsIntegratedSession.create).not.toHaveBeenCalled();
+  });
+
   it('keeps integrated practice locked until all required Bridge modules are complete', async () => {
     const { service } = await setup({ bridgeCount: 3 });
     await expect(service.availability(learnerId)).resolves.toMatchObject({ eligible: false, lockedReason: 'BRIDGE_REQUIRED' });
@@ -70,6 +100,7 @@ describe('IeltsIntegratedLearnerService', () => {
     expect(result.blocks).toHaveLength(4);
     expect(result.blocks[0]?.task).not.toHaveProperty('answerIndex');
     expect(tx.ieltsIntegratedSession.create).toHaveBeenCalledOnce();
+    expect(tx.learnerProfile.findUnique).not.toHaveBeenCalled();
     const createInput = tx.ieltsIntegratedSession.create.mock.calls[0]?.[0] as { data: { blocks: { create: Array<{ startedAt: Date | null }> } } };
     expect(createInput.data.blocks.create.map((block) => block.startedAt instanceof Date)).toEqual([true, false, false, false]);
   });

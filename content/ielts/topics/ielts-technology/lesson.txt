@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-technology-objective]
+statement: Infer and accurately use contextual Technology vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-technology-lesson
+title: Technology: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Recommend a digital service while addressing access, privacy and support.
+[/LESSON]
+
+[WORD_BANK ielts-technology-bank]
+title: Technology in context
+
+[[LANGUAGE_BLOCK ielts-technology-digital-literacy]]
+expression: digital literacy
+meaning_vi: năng lực sử dụng công nghệ số
+pronunciation: /ˈdɪdʒɪtəl ˈlɪtərəsi/
+collocations: improve digital literacy
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our library will offer digital literacy sessions before introducing online-only booking for any service.
+common_error: Literacy names an ability, not a particular device.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-data-privacy]]
+expression: data privacy
+meaning_vi: quyền riêng tư dữ liệu
+pronunciation: /ˈdeɪtə ˈprɪvəsi/
+collocations: protect data privacy
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The data privacy review recommends collecting only the details necessary to reserve a room.
+common_error: Privacy is uncountable; avoid a privacy in this sense.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-artificial-intelligence]]
+expression: artificial intelligence
+meaning_vi: trí tuệ nhân tạo
+pronunciation: /ˌɑːtɪˈfɪʃəl ɪnˈtelɪdʒəns/
+collocations: use artificial intelligence
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A trial of artificial intelligence may help sort enquiries, but a librarian will check suggested replies.
+common_error: Intelligence is uncountable when naming the technology.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-automation-tools]]
+expression: automation tools
+meaning_vi: công cụ tự động hóa
+pronunciation: /ˌɔːtəˈmeɪʃən tuːlz/
+collocations: adopt automation tools
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Simple automation tools will send reminders, while staff remain responsible for cancellations and exceptions.
+common_error: Automation names the process; automatic is an adjective.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-reliable-information]]
+expression: reliable information
+meaning_vi: thông tin đáng tin cậy
+pronunciation: /rɪˈlaɪəbəl ˌɪnfəˈmeɪʃən/
+collocations: find reliable information
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The website will link reliable information to named sources and display when each page was checked.
+common_error: Information is uncountable; avoid informations.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-online-security]]
+expression: online security
+meaning_vi: an toàn trên môi trường trực tuyến
+pronunciation: /ˌɒnlaɪn sɪˈkjʊərəti/
+collocations: improve online security
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Staff will explain online security without asking visitors to reveal their passwords during a workshop.
+common_error: Security is not a countable password or device.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-user-experience]]
+expression: user experience
+meaning_vi: trải nghiệm người dùng
+pronunciation: /ˈjuːzər ɪkˈspɪəriəns/
+collocations: improve the user experience
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The user experience test will include people using screen readers and people with slow connections.
+common_error: Use experience as a noun after user.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-technological-change]]
+expression: technological change
+meaning_vi: sự thay đổi công nghệ
+pronunciation: /ˌteknəˈlɒdʒɪkəl tʃeɪndʒ/
+collocations: adapt to technological change
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Training time is included in the budget because technological change affects daily routines as well as equipment.
+common_error: Technological modifies change; technology is the noun.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-remote-access]]
+expression: remote access
+meaning_vi: khả năng truy cập từ xa
+pronunciation: /rɪˈməʊt ˈækses/
+collocations: provide remote access
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The proposal provides remote access to selected resources, while print copies remain available in the building.
+common_error: Access usually takes to before the service being accessed.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-digital-divide]]
+expression: digital divide
+meaning_vi: khoảng cách trong tiếp cận công nghệ số
+pronunciation: /ˈdɪdʒɪtəl dɪˈvaɪd/
+collocations: bridge the digital divide
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Loan devices and telephone support are intended to reduce the digital divide rather than assume everyone is connected.
+common_error: Use the digital divide when naming the social gap.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-technical-support]]
+expression: technical support
+meaning_vi: hỗ trợ kỹ thuật
+pronunciation: /ˈteknɪkəl səˈpɔːt/
+collocations: provide technical support
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A named member of staff will provide technical support during the first month of the trial.
+common_error: Support is uncountable here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-technology-screen-time]]
+expression: screen time
+meaning_vi: thời gian sử dụng màn hình
+pronunciation: /skriːn taɪm/
+collocations: manage screen time
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Feedback will distinguish useful screen time from avoidable repeated logins and confusing navigation.
+common_error: Time is uncountable for a duration, not a number of occasions.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-technology-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a library choosing a digital service for residents. Please compare the priorities below before our next meeting.
+Our library will offer digital literacy sessions before introducing online-only booking for any service.
+The data privacy review recommends collecting only the details necessary to reserve a room.
+A trial of artificial intelligence may help sort enquiries, but a librarian will check suggested replies.
+Simple automation tools will send reminders, while staff remain responsible for cancellations and exceptions.
+The website will link reliable information to named sources and display when each page was checked.
+Staff will explain online security without asking visitors to reveal their passwords during a workshop.
+The user experience test will include people using screen readers and people with slow connections.
+Training time is included in the budget because technological change affects daily routines as well as equipment.
+The proposal provides remote access to selected resources, while print copies remain available in the building.
+Loan devices and telephone support are intended to reduce the digital divide rather than assume everyone is connected.
+A named member of staff will provide technical support during the first month of the trial.
+Feedback will distinguish useful screen time from avoidable repeated logins and confusing navigation.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-technology-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Digital literacy classes would help my father, but he needs practice on the device he actually owns.
+Lan: Data privacy matters to me because reserving a desk should not require my employment history.
+An: Artificial intelligence could save time, provided a person checks inaccurate or unsuitable suggestions.
+Lan: Automation tools should let a member stop reminders easily rather than send repeated messages they cannot control.
+An: I judge reliable information by its evidence and source, not by how professional the page looks.
+Lan: Online security advice should include checking a suspicious message before opening its attachment.
+An: A good user experience would let me find the cancellation button without asking a staff member.
+Lan: Technological change feels less disruptive when we can try a system before the old one disappears.
+An: Remote access would help me use the library after work, but I still want help when a page fails.
+Lan: The digital divide concerns confidence as well as equipment; owning a phone does not mean understanding every form.
+An: Technical support should be easy to contact, with a telephone alternative when the website itself is unavailable.
+Lan: I do not want extra screen time just to renew a book that used to take one short call.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-technology-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Digital literacy classes would help my father, but he needs practice on the device he actually owns.
+Lan: Data privacy matters to me because reserving a desk should not require my employment history.
+An: Artificial intelligence could save time, provided a person checks inaccurate or unsuitable suggestions.
+Lan: Automation tools should let a member stop reminders easily rather than send repeated messages they cannot control.
+An: I judge reliable information by its evidence and source, not by how professional the page looks.
+Lan: Online security advice should include checking a suspicious message before opening its attachment.
+An: A good user experience would let me find the cancellation button without asking a staff member.
+Lan: Technological change feels less disruptive when we can try a system before the old one disappears.
+An: Remote access would help me use the library after work, but I still want help when a page fails.
+Lan: The digital divide concerns confidence as well as equipment; owning a phone does not mean understanding every form.
+An: Technical support should be easy to contact, with a telephone alternative when the website itself is unavailable.
+Lan: I do not want extra screen time just to renew a book that used to take one short call.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-technology-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-digital-literacy | ielts-technology-data-privacy | ielts-technology-artificial-intelligence
+prompt: Our library will offer digital literacy sessions before introducing online-only booking for any service. The data privacy review recommends collecting only the details necessary to reserve a room. A trial of artificial intelligence may help sort enquiries, but a librarian will check suggested replies.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-digital-divide | ielts-technology-technical-support | ielts-technology-screen-time
+prompt: Loan devices and telephone support are intended to reduce the digital divide rather than assume everyone is connected. A named member of staff will provide technical support during the first month of the trial. Feedback will distinguish useful screen time from avoidable repeated logins and confusing navigation.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-digital-literacy | ielts-technology-data-privacy | ielts-technology-artificial-intelligence | ielts-technology-automation-tools
+
+QUESTION:
+What will happen before online-only booking is introduced?
+
+OPTIONS:
+A. Visitors will share passwords
+B. Skills sessions will be offered
+C. Printed resources will be destroyed
+
+ANSWER:
+B
+
+EXPLANATION:
+Skills sessions will be offered. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-technology-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-discussion
+language_block_refs: ielts-technology-digital-literacy | ielts-technology-data-privacy | ielts-technology-artificial-intelligence | ielts-technology-automation-tools
+audio_ref: ielts-technology-discussion-audio
+
+QUESTION:
+Which equipment would make classes useful for the speaker’s father?
+
+OPTIONS:
+A. Only the librarian’s computer
+B. His own device
+C. Only the newest model
+
+ANSWER:
+B
+
+EXPLANATION:
+His own device. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-technology-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-reliable-information | ielts-technology-online-security | ielts-technology-user-experience | ielts-technology-technological-change
+
+QUESTION:
+How will website information be supported?
+
+OPTIONS:
+A. By named sources and review dates
+B. Only by attractive page design
+C. By removing all publication dates
+
+ANSWER:
+A
+
+EXPLANATION:
+By named sources and review dates. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-technology-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-discussion
+language_block_refs: ielts-technology-reliable-information | ielts-technology-online-security | ielts-technology-user-experience | ielts-technology-technological-change
+audio_ref: ielts-technology-discussion-audio
+
+QUESTION:
+How does the speaker assess trustworthy material?
+
+OPTIONS:
+A. By source and evidence
+B. By page appearance alone
+C. By the number of animations
+
+ANSWER:
+A
+
+EXPLANATION:
+By source and evidence. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-technology-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-remote-access | ielts-technology-digital-divide | ielts-technology-technical-support | ielts-technology-screen-time
+
+QUESTION:
+What will remain available alongside off-site resources?
+
+OPTIONS:
+A. Only an automated reply
+B. Only loan phones
+C. Printed copies in the library
+
+ANSWER:
+C
+
+EXPLANATION:
+Printed copies in the library. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-technology-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-discussion
+language_block_refs: ielts-technology-remote-access | ielts-technology-digital-divide | ielts-technology-technical-support | ielts-technology-screen-time
+audio_ref: ielts-technology-discussion-audio
+
+QUESTION:
+Why would off-site resources help the speaker?
+
+OPTIONS:
+A. They would never need assistance
+B. They could avoid every booking rule
+C. They could use them after work
+
+ANSWER:
+C
+
+EXPLANATION:
+They could use them after work. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-technology-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-discussion
+language_block_refs: ielts-technology-digital-literacy | ielts-technology-reliable-information | ielts-technology-remote-access
+prompt: Digital literacy classes would help my father, but he needs practice on the device he actually owns. I judge reliable information by its evidence and source, not by how professional the page looks. Remote access would help me use the library after work, but I still want help when a page fails.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Recommend a digital service while addressing access, privacy and support. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-discussion
+language_block_refs: ielts-technology-artificial-intelligence | ielts-technology-user-experience | ielts-technology-technical-support
+prompt: Artificial intelligence could save time, provided a person checks inaccurate or unsuitable suggestions. A good user experience would let me find the cancellation button without asking a staff member. Technical support should be easy to contact, with a telephone alternative when the website itself is unavailable.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Recommend a digital service while addressing access, privacy and support. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-data-privacy | ielts-technology-online-security | ielts-technology-digital-divide
+prompt: The data privacy review recommends collecting only the details necessary to reserve a room. Staff will explain online security without asking visitors to reveal their passwords during a workshop. Loan devices and telephone support are intended to reduce the digital divide rather than assume everyone is connected.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Recommend a digital service while addressing access, privacy and support. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-technology-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-technology-objective
+content_refs: ielts-technology-proposal
+language_block_refs: ielts-technology-automation-tools | ielts-technology-technological-change | ielts-technology-screen-time
+prompt: Simple automation tools will send reminders, while staff remain responsible for cancellations and exceptions. Training time is included in the budget because technological change affects daily routines as well as equipment. Feedback will distinguish useful screen time from avoidable repeated logins and confusing navigation.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Recommend a digital service while addressing access, privacy and support. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

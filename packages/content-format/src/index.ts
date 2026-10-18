@@ -6,3 +6,5 @@ export * from './validator.ts';
 export * from './normalizer.ts';
 export * from './foundation-metadata.ts';
 export * from './foundation-templates.ts';
+export * from './dialogue.ts';
+export * from './ielts-topic-manifest.ts';

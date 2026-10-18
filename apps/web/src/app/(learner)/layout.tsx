@@ -17,7 +17,7 @@ const learnerDestinations = [
   { href: '/dashboard', label: 'dashboard' },
   { href: '/programs', label: 'programs' },
   { href: '/mastery', label: 'mastery' },
-  { href: '/ielts/pathway', label: 'ieltsPathway' },
+  { href: '/ielts', label: 'ieltsPathway' },
   { href: '/settings', label: 'settings' },
 ] as const;
 

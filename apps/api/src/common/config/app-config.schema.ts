@@ -3,6 +3,7 @@ import path from 'node:path';
 import { z } from 'zod';
 
 export interface AppConfig {
+  readonly ieltsFlow: 'legacy' | 'v3';
   readonly ai: {
     readonly routing: {
       readonly enabled: boolean;
@@ -71,6 +72,7 @@ const optionalNonBlankString = z.preprocess(
 const optionalUrl = z.preprocess(blankAsUndefined, z.url().optional());
 
 const environmentSchema = z.object({
+  WORKLINGO_IELTS_FLOW: z.enum(['legacy', 'v3']).default('legacy'),
   AI_ROUTING_ENABLED: z.enum(['true', 'false']).default('true'),
   AI_DEFAULT_PROVIDER: z.enum(['discovery', 'openai']).optional(),
   AI_FALLBACK_ENABLED: z.enum(['true', 'false']).default('true'),
@@ -217,6 +219,7 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
     : result.data.PROVIDER_TIMEOUT_MS * 3 + 10_000;
 
   return {
+    ieltsFlow: result.data.WORKLINGO_IELTS_FLOW,
     adminEmail: result.data.WORKLINGO_ADMIN_EMAIL,
     adminPassword: result.data.WORKLINGO_ADMIN_PASSWORD,
     ai: {

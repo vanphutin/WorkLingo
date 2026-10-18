@@ -7,6 +7,7 @@ import {
   type SynthesizedAudio,
 } from '../domain/text-to-speech.port.js';
 import { requestProviderBytes } from './provider-http-client.js';
+import { buildAzureDialogueSsml } from './azure-dialogue-ssml.js';
 
 export interface MicrosoftTextToSpeechConfig {
   readonly endpoint?: string;
@@ -15,13 +16,6 @@ export interface MicrosoftTextToSpeechConfig {
   readonly timeoutMs: number;
   readonly voice: string;
 }
-
-const escapeXml = (value: string): string => value
-  .replaceAll('&', '&amp;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
-  .replaceAll('"', '&quot;')
-  .replaceAll("'", '&apos;');
 
 const inspectPcmWav = (audio: Buffer): { durationSeconds: number; sampleRate: number } => {
   if (audio.length < 44
@@ -59,7 +53,7 @@ export class MicrosoftTextToSpeechAdapter extends TextToSpeechPort {
       : this.config.voice;
     const endpoint = this.config.endpoint
       ?? `https://${this.config.region}.tts.speech.microsoft.com/cognitiveservices/v1`;
-    const ssml = `<speak version="1.0" xml:lang="en-US"><voice name="${escapeXml(voice)}">${escapeXml(script)}</voice></speak>`;
+    const { ssml, speakerVoices } = buildAzureDialogueSsml(script, voice);
     const response = await requestProviderBytes({
       body: ssml,
       headers: {
@@ -82,6 +76,7 @@ export class MicrosoftTextToSpeechAdapter extends TextToSpeechPort {
         name: 'azure-speech',
         requestId: response.headers.get('x-requestid'),
         voice,
+        speakerVoices,
       },
       sampleRate: inspected.sampleRate,
     };

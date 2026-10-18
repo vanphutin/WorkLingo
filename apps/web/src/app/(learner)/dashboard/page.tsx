@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import type { CurriculumRoadmapDto, EngagementSummaryDto, ProgramContextDto } from '@worklingo/contracts';
+import type { CurriculumRoadmapDto, EngagementSummaryDto, LearnerDashboardAnalytics, ProgramContextDto } from '@worklingo/contracts';
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
 import {
   apiClient,
@@ -12,6 +12,7 @@ import {
 } from '../../../lib/api/api-client';
 import { engagementClient } from '../../../lib/api/engagement-client';
 import { learningProgramClient } from '../../../lib/api/learning-program-client';
+import { learnerDashboardClient } from '../../../lib/api/learner-dashboard-client';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -23,6 +24,9 @@ export default function DashboardPage() {
   const [roadmap, setRoadmap] = useState<CurriculumRoadmapDto | null>(null);
   const [roadmapLoading, setRoadmapLoading] = useState(true);
   const [roadmapError, setRoadmapError] = useState<string | null>(null);
+  const [analytics, setAnalytics] = useState<LearnerDashboardAnalytics | null>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
+  const [analyticsError, setAnalyticsError] = useState<string | null>(null);
 
   const [engagement, setEngagement] = useState<EngagementSummaryDto | null>(null);
   const [engagementLoading, setEngagementLoading] = useState(true);
@@ -32,18 +36,39 @@ export default function DashboardPage() {
     try {
       setIsLoading(true);
       setError(null);
-      const [progressData, availabilityData, contextData] = await Promise.all([
+      const [progressResult, availabilityResult, contextResult] = await Promise.allSettled([
         apiClient.getProgress(),
         apiClient.getSessionAvailability(),
         learningProgramClient.getContext(),
       ]);
-      setProgress(progressData);
-      setAvailability(availabilityData);
+      if (contextResult.status === 'rejected') throw contextResult.reason;
+      const contextData = contextResult.value;
       setProgramContext(contextData);
+      if (!contextData.activeProgram) {
+        setProgress(null);
+        setAvailability(null);
+        return;
+      }
+      if (progressResult.status === 'rejected') throw progressResult.reason;
+      if (availabilityResult.status === 'rejected') throw availabilityResult.reason;
+      setProgress(progressResult.value);
+      setAvailability(availabilityResult.value);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load progress data');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const loadAnalytics = async () => {
+    try {
+      setAnalyticsLoading(true);
+      setAnalyticsError(null);
+      setAnalytics(await learnerDashboardClient.getAnalytics());
+    } catch (err) {
+      setAnalyticsError(err instanceof Error ? err.message : 'Failed to load dashboard insights');
+    } finally {
+      setAnalyticsLoading(false);
     }
   };
 
@@ -77,6 +102,7 @@ export default function DashboardPage() {
       loadProgressAndAvailability(),
       loadEngagement(),
       loadRoadmap(),
+      loadAnalytics(),
     ]);
   };
 
@@ -98,8 +124,10 @@ export default function DashboardPage() {
     <DashboardView
       progress={progress}
       activeProgramName={programContext?.activeProgram?.name}
+      activeProgramSlug={programContext ? programContext.activeProgram?.slug ?? null : undefined}
+      currentLevelCode={programContext ? programContext.enrollment?.currentLevel?.code ?? null : undefined}
       availableDurations={availability?.availableDurations ?? []}
-      nextMissionTitle={availability?.mission.title ?? 'Introduce yourself to a new colleague'}
+      nextMissionTitle={availability?.mission.title}
       onStartSession={handleStartSession}
       isLoading={isLoading}
       error={error}
@@ -113,6 +141,10 @@ export default function DashboardPage() {
       roadmapLoading={roadmapLoading}
       roadmapError={roadmapError}
       onRetryRoadmap={loadRoadmap}
+      analytics={analytics}
+      analyticsLoading={analyticsLoading}
+      analyticsError={analyticsError}
+      onRetryAnalytics={loadAnalytics}
     />
   );
 }

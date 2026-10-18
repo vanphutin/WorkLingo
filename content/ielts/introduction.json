@@ -1,0 +1,96 @@
+{
+  "title": "IELTS: explore, learn and practise",
+  "description": "A replayable introduction to the test and the three independent WorkLingo IELTS sections.",
+  "slides": [
+    {
+      "id": "cc95c0ea-80b7-4ff9-aee4-cec1bd66691c",
+      "slug": "welcome-to-ielts",
+      "title": "Welcome to your IELTS workspace",
+      "body": "Use three independent sections: Introduction, Learn through topics, and Mock tests. Viewing these slides is recommended for newcomers but never required to unlock learning or a mock. You can revisit any slide later.",
+      "transcript": "Use three independent sections: Introduction, Learn through topics, and Mock tests. Viewing these slides is recommended for newcomers but never required to unlock learning or a mock. You can revisit any slide later.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "bf0d42a8-086b-4f94-aa3d-e60b8ee152c4",
+      "slug": "what-is-ielts",
+      "title": "What is IELTS?",
+      "body": "IELTS assesses English through Listening, Reading, Writing and Speaking. Academic is commonly used for higher education and professional registration. This workspace provides learning and original mock practice; it does not award an official result.",
+      "transcript": "IELTS assesses English through Listening, Reading, Writing and Speaking. Academic is commonly used for higher education and professional registration. This workspace provides learning and original mock practice; it does not award an official result.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "6f36a92c-0f24-4ec2-a748-750c768096e7",
+      "slug": "academic-and-general",
+      "title": "Academic and General Training",
+      "body": "Listening and Speaking are shared across Academic and General Training, while Reading and Writing differ. The full mock papers in this workspace use the Academic format. Always check which test your institution or organisation requires.",
+      "transcript": "Listening and Speaking are shared across Academic and General Training, while Reading and Writing differ. The full mock papers in this workspace use the Academic format. Always check which test your institution or organisation requires.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "8c2ff34a-660d-4ae4-aeed-68dc97396fc5",
+      "slug": "listening-and-reading",
+      "title": "Listening and Reading",
+      "body": "Listening has four parts and forty questions, with approximately thirty minutes in the official format. Academic Reading has three sections and forty questions in sixty minutes. Read the exact instructions: a word limit, a matching task and a multiple-choice question require different responses.",
+      "transcript": "Listening has four parts and forty questions, with approximately thirty minutes in the official format. Academic Reading has three sections and forty questions in sixty minutes. Read the exact instructions: a word limit, a matching task and a multiple-choice question require different responses.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "c71b9858-5280-46b4-aa46-c5560ea9e014",
+      "slug": "writing-tasks",
+      "title": "Academic Writing",
+      "body": "Writing lasts sixty minutes. Task 1 asks you to summarise supplied visual information in at least 150 words. Task 2 requires at least 250 words and carries twice the weight. Use the given data accurately and develop relevant reasons rather than memorize an unrelated answer.",
+      "transcript": "Writing lasts sixty minutes. Task 1 asks you to summarise supplied visual information in at least 150 words. Task 2 requires at least 250 words and carries twice the weight. Use the given data accurately and develop relevant reasons rather than memorize an unrelated answer.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "f0336b1e-9263-45c9-a4e5-55faf9f4615f",
+      "slug": "speaking-parts",
+      "title": "Speaking Parts 1, 2 and 3",
+      "body": "Speaking is normally an eleven-to-fourteen-minute interview: familiar questions, a prepared long turn, then discussion of connected ideas. This local mock captures three real recordings. Check your microphone, review the consent notice and speak in your own words; text is not a substitute for spoken evidence.",
+      "transcript": "Speaking is normally an eleven-to-fourteen-minute interview: familiar questions, a prepared long turn, then discussion of connected ideas. This local mock captures three real recordings. Check your microphone, review the consent notice and speak in your own words; text is not a substitute for spoken evidence.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "89ebbe61-88cc-492b-a3f2-5754f495d15e",
+      "slug": "learn-in-context",
+      "title": "Learn through topics",
+      "body": "Choose one of twelve topics and an available 90, 120 or 150-minute session. Meet useful phrases in a proposal and a discussion, interpret evidence, then use the language in speaking and writing. Practised vocabulary and stable four-skill mastery are shown separately; pending evaluation is not counted as mastered.",
+      "transcript": "Choose one of twelve topics and an available 90, 120 or 150-minute session. Meet useful phrases in a proposal and a discussion, interpret evidence, then use the language in speaking and writing. Practised vocabulary and stable four-skill mastery are shown separately; pending evaluation is not counted as mastered.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "3dd5dcda-562f-4f0d-a923-561730337f42",
+      "slug": "mock-modes",
+      "title": "Practice or exam simulation",
+      "body": "Practice uses elapsed time, pause and resume, audio replay and feedback after a section is submitted. Simulation uses server-kept section deadlines, one listening play per part, no pause and no answers during the attempt. Reloading does not reset time. This local simulation does not reproduce every official administration condition.",
+      "transcript": "Practice uses elapsed time, pause and resume, audio replay and feedback after a section is submitted. Simulation uses server-kept section deadlines, one listening play per part, no pause and no answers during the attempt. Reloading does not reset time. This local simulation does not reproduce every official administration condition.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    },
+    {
+      "id": "971a1688-004c-4444-a5a3-f0823e42a707",
+      "slug": "scores-next-steps",
+      "title": "Choose your next step",
+      "body": "You may learn through topics or open a mock directly. Writing and Speaking remain pending until a teacher reviews them; no overall estimate is created from incomplete evidence. Local band estimates are uncalibrated and are not official IELTS results. Earlier Bridge, Integrated and Band activity remains accessible in your history.",
+      "transcript": "You may learn through topics or open a mock directly. Writing and Speaking remain pending until a teacher reviews them; no overall estimate is created from incomplete evidence. Local band estimates are uncalibrated and are not official IELTS results. Earlier Bridge, Integrated and Band activity remains accessible in your history.",
+      "audioAssetId": null,
+      "imageAssetId": null,
+      "question": null
+    }
+  ]
+}

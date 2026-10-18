@@ -125,6 +125,7 @@ export const sessionBlockDtoSchema = z.object({
 });
 
 export const learningSessionDtoSchema = z.object({
+  ieltsTopic: z.object({ topicVersionId: z.uuid(), title: z.string(), packSlug: z.string() }).optional(),
   id: z.string(),
   clientSessionId: z.string(),
   lessonVersionId: z.string(),

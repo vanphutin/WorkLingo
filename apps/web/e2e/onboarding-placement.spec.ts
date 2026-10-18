@@ -37,7 +37,7 @@ test.describe('Onboarding and placement assessment journey', () => {
     await expect(confirmButton).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(/\/dashboard$/u);
-    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Welcome back, Self Placement Learner', exact: true })).toBeVisible();
 
     await expectNoHorizontalOverflow(page);
   });
@@ -169,7 +169,7 @@ test.describe('Onboarding and placement assessment journey', () => {
 
     await confirmRecommendedButton.click();
     await expect(page).toHaveURL(/\/dashboard$/u);
-    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Welcome back, Placement Learner', exact: true })).toBeVisible();
 
     // Verify placement evidence is isolated from ordinary learning mastery
     await page.goto('/mastery');

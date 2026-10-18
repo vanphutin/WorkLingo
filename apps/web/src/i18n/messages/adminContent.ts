@@ -28,7 +28,7 @@ export const adminContentMessages = {
     "noPreview": "No preview available. Validate your lesson draft without errors to generate a structured preview.",
     "sourceEditor": "Lesson source editor",
     "newImportTitle": "New Content Import",
-    "newImportHelp": "Start from Format 1.0 or a Foundation 1.1 scaffold. Exact source will be preserved for editing and validation.",
+    "newImportHelp": "Start from Format 1.0 or a Foundation 1.1 scaffold. For dialogue, write An (nam): Hello. and Lan (nữ): Hi. Each character keeps a different voice; labels are not spoken. More than two characters requires a male/female label for every character. Exact source is preserved for editing and validation.",
     "lessonTemplate": "Lesson template",
     "blankTemplate": "Format 1.0 blank lesson",
     "foundationTemplate": "Foundation: {category}",
@@ -189,6 +189,8 @@ export const adminContentMessages = {
     "issueObjectiveRequired": "Complete the objective and its skill mapping.",
     "issueObjectiveRef": "Reference an existing objective.",
     "issueAssessment": "Complete assessment questions, references, explanation and rubric.",
+    "issueDialogueGender": "Use a consistent (nam)/(nữ) or (male)/(female) label for each character. More than two characters requires a label for every character.",
+    "issueDialogueTurn": "Check the character label and add the dialogue text after the colon, for example An (nam): Hello.",
     "statusStale": "Stale",
     "blockListenReason": "Listen and reason"
   },
@@ -221,7 +223,7 @@ export const adminContentMessages = {
     "noPreview": "Chưa có bản xem trước. Kiểm tra và sửa hết lỗi trong bản nháp để tạo bản xem trước có cấu trúc.",
     "sourceEditor": "Trình soạn thảo nguồn bài học",
     "newImportTitle": "Nhập nội dung mới",
-    "newImportHelp": "Bắt đầu từ Format 1.0 hoặc khung Foundation 1.1. Nguồn được giữ nguyên để chỉnh sửa và kiểm tra.",
+    "newImportHelp": "Bắt đầu từ Format 1.0 hoặc khung Foundation 1.1. Hội thoại ghi theo mẫu An (nam): Hello. và Lan (nữ): Hi. Mỗi nhân vật giữ một giọng khác nhau; nhãn tên không được đọc. Với hơn hai nhân vật, bắt buộc khai báo nam/nữ cho từng người. Nguồn được giữ nguyên để chỉnh sửa và kiểm tra.",
     "lessonTemplate": "Mẫu bài học",
     "blankTemplate": "Bài học trống Format 1.0",
     "foundationTemplate": "Foundation: {category}",
@@ -382,6 +384,8 @@ export const adminContentMessages = {
     "issueObjectiveRequired": "Điền mục tiêu và ánh xạ kỹ năng.",
     "issueObjectiveRef": "Tham chiếu mục tiêu hiện có.",
     "issueAssessment": "Điền câu hỏi đánh giá, tham chiếu, giải thích và tiêu chí chấm.",
+    "issueDialogueGender": "Dùng nhãn (nam)/(nữ) hoặc (male)/(female) nhất quán cho từng nhân vật. Với hơn hai nhân vật, bắt buộc khai báo nhãn cho từng người.",
+    "issueDialogueTurn": "Kiểm tra nhãn nhân vật và thêm lời thoại sau dấu hai chấm, ví dụ An (nam): Hello.",
     "statusStale": "Đã lỗi thời",
     "blockListenReason": "Nghe và suy luận"
   }

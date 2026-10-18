@@ -45,7 +45,12 @@ describe('AudioGenerationHandler', () => {
       synthesize: vi.fn().mockResolvedValue({
         audioBytes: Buffer.alloc(48), checksum: 'checksum', durationSeconds: 1,
         mimeType: 'audio/wav', sampleRate: 24_000,
-        provider: { name: 'azure-speech', requestId: 'request-id', voice: 'en-US-JennyNeural' },
+        provider: {
+          name: 'azure-speech', requestId: 'request-id', voice: 'en-US-JennyNeural',
+          speakerVoices: [
+            { speaker: 'an', name: 'An', gender: null, voice: 'en-US-GuyNeural', voiceGender: 'male' },
+          ],
+        },
       }),
     } as unknown as TextToSpeechPort;
     const handler = new AudioGenerationHandler(
@@ -69,7 +74,12 @@ describe('AudioGenerationHandler', () => {
     })).resolves.toEqual({ artifactId: 'artifact-id', status: 'READY' });
     expect(update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({
       adapterName: 'azure-speech', status: 'READY',
-      voiceConfig: { voice: 'en-US-JennyNeural' },
+      voiceConfig: {
+        voice: 'en-US-JennyNeural',
+        speakerVoices: [
+          { speaker: 'an', name: 'An', gender: null, voice: 'en-US-GuyNeural', voiceGender: 'male' },
+        ],
+      },
     }), where: {
       id: 'artifact-id',
       status: 'GENERATING',

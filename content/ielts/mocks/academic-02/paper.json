@@ -1,0 +1,2178 @@
+{
+  "schemaVersion": 2,
+  "variant": "ACADEMIC",
+  "title": "Places, evidence and participation — original Academic mock 02",
+  "disclosure": "Original fictional Academic practice and timed simulation. Offline US speech voices; bands are uncalibrated local estimates, not official IELTS results. Writing and Speaking require teacher review.",
+  "allowedModes": [
+    "PRACTICE",
+    "EXAM_SIMULATION"
+  ],
+  "qualification": {
+    "reviewedBy": "Mendel independent text review; Codex source and media checks",
+    "reviewedAt": "2026-10-15T12:40:00.000Z",
+    "evidenceRevision": "academic-02-original-v1",
+    "qualifiedModes": [
+      "PRACTICE",
+      "EXAM_SIMULATION"
+    ]
+  },
+  "listening": {
+    "durationMinutes": 30,
+    "conversion": [
+      {
+        "rawScore": 0,
+        "mockBand": 0
+      },
+      {
+        "rawScore": 1,
+        "mockBand": 0.0
+      },
+      {
+        "rawScore": 2,
+        "mockBand": 0.5
+      },
+      {
+        "rawScore": 3,
+        "mockBand": 1.0
+      },
+      {
+        "rawScore": 4,
+        "mockBand": 1.5
+      },
+      {
+        "rawScore": 5,
+        "mockBand": 2.0
+      },
+      {
+        "rawScore": 6,
+        "mockBand": 2.0
+      },
+      {
+        "rawScore": 7,
+        "mockBand": 2.5
+      },
+      {
+        "rawScore": 8,
+        "mockBand": 3.0
+      },
+      {
+        "rawScore": 9,
+        "mockBand": 3.5
+      },
+      {
+        "rawScore": 10,
+        "mockBand": 4.0
+      },
+      {
+        "rawScore": 11,
+        "mockBand": 4.0
+      },
+      {
+        "rawScore": 12,
+        "mockBand": 4.0
+      },
+      {
+        "rawScore": 13,
+        "mockBand": 4.5
+      },
+      {
+        "rawScore": 14,
+        "mockBand": 4.5
+      },
+      {
+        "rawScore": 15,
+        "mockBand": 4.5
+      },
+      {
+        "rawScore": 16,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 17,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 18,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 19,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 20,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 21,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 22,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 23,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 24,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 25,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 26,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 27,
+        "mockBand": 6.5
+      },
+      {
+        "rawScore": 28,
+        "mockBand": 6.5
+      },
+      {
+        "rawScore": 29,
+        "mockBand": 6.5
+      },
+      {
+        "rawScore": 30,
+        "mockBand": 7.0
+      },
+      {
+        "rawScore": 31,
+        "mockBand": 7.0
+      },
+      {
+        "rawScore": 32,
+        "mockBand": 7.0
+      },
+      {
+        "rawScore": 33,
+        "mockBand": 7.5
+      },
+      {
+        "rawScore": 34,
+        "mockBand": 7.5
+      },
+      {
+        "rawScore": 35,
+        "mockBand": 8.0
+      },
+      {
+        "rawScore": 36,
+        "mockBand": 8.0
+      },
+      {
+        "rawScore": 37,
+        "mockBand": 8.5
+      },
+      {
+        "rawScore": 38,
+        "mockBand": 8.5
+      },
+      {
+        "rawScore": 39,
+        "mockBand": 9.0
+      },
+      {
+        "rawScore": 40,
+        "mockBand": 9.0
+      }
+    ],
+    "parts": [
+      {
+        "part": 1,
+        "audioAssetId": "7b4c65f7-5b74-4af9-aeac-ac85b50d76e5",
+        "transcript": "Maya: Good afternoon, Eastbank Learning Centre. This is Maya speaking. Are you calling about an existing booking or would you like information about one of our new courses? We have several activities beginning next month, and some of the printed notices show the dates of introductory talks rather than the first teaching session. If you tell me which course interests you, I can check the current information and explain what you need before you decide whether to book.\nDaniel: Hello, I am interested in the photography course. I take pictures on walks, but I tend to leave my camera on its automatic setting. I would like to understand what I am changing when I press the other buttons. My neighbour recommended your centre, although she attended a drawing class rather than photography. I work during the week, so I need to make sure the meetings are at a time I can actually attend, not just a time that looks convenient on a leaflet.\nMaya: The next photography course starts on Saturday. There is an open evening on Thursday, but that is only an opportunity to meet the tutors. The course itself has six weekly meetings. Each meeting starts at half past nine and finishes at midday, with a short break. We use the river room, which is downstairs near the courtyard. The upstairs studio is used by the drawing group, so please do not follow the old sign towards that room. The river room also has level access from the side entrance.\nDaniel: Saturday is possible, and downstairs access would make it easier to carry my equipment. I saw a notice mentioning a charge for materials, and I was not sure whether that was included in the course price. I already have a camera, though it is not a very recent model. I do not want to buy another one before I know whether photography is something I will continue with. Could you explain the fee and whether I need to bring anything besides the camera itself?\nMaya: The total course fee is sixty pounds. The price includes the six meetings and a small set of printed notes. You do not need to pay for photographic paper because this course concentrates on digital images. You should bring a notebook so you can record the settings you try; we supply pencils if someone forgets one. The tutor also asks everyone to bring the instruction manual for their own camera, either printed or stored on a phone. Cameras differ, and the class should not spend all morning guessing where a particular manufacturer has put a control.\nDaniel: That makes sense. I can find the manual online. Is there any special equipment for the outdoor part? The notice showed a person using a tripod, but I do not own one. I am also interested in the kinds of subjects we would photograph. I would prefer to learn through ordinary places rather than need to travel somewhere spectacular every week. If the weather is poor, I would want to know that the session still had a clear purpose instead of being cancelled at the last minute.\nMaya: You can borrow a tripod from the centre during class; buying one is not required. The tutor begins with nearby buildings because they let the group discuss framing without waiting for a moving subject. Later you will work on reflections and movement. For the first outdoor meeting, the group will meet at the market entrance, not at the bus station. If it rains, the tutor will use the covered arcade beside the market. Please wear comfortable shoes. A heavy bag of extra equipment would be less useful than being able to move safely and notice what is around you.\nDaniel: I like the sound of using familiar places differently. I sometimes assume a photograph is disappointing because the place was ordinary, when perhaps I have not paid attention to how it is framed. One final question about joining: my neighbour mentioned a discount because she is retired. I am not retired and I do not live within the town boundary, although I work nearby. Is the course restricted to residents, or can I still register at the standard fee you have described?\nMaya: The course is open to everyone. A limited bursary is available to applicants receiving income support, but there is no automatic discount based only on retirement or residence. On the registration form, choose adult learner as your registration category. That category tells our office which attendance record to use; it is not an assessment of your photography level. To hold a place, return the form by Monday. Payment is due only after we confirm the place by email, so please do not send bank details with the initial form.\nDaniel: I will use the adult learner category and return the form before the deadline. Please send it to the email address I give you after this call, and I will check the information before making a payment. I appreciate the explanation about the bursary because the shorter notice could have been misunderstood. I am looking forward to learning how to make choices with the camera rather than simply hoping that its automatic setting chooses well for every situation.",
+        "questions": [
+          {
+            "id": "0ca561e3-934a-4d42-a60c-453c441b8356",
+            "order": 1,
+            "type": "gap_fill",
+            "prompt": "The teaching course begins on ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Saturday"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “course starts on Saturday”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "b5519292-715a-4552-a67e-716cf3171e66",
+            "order": 2,
+            "type": "gap_fill",
+            "prompt": "There are ____ weekly meetings. Use ONE WORD OR ONE NUMBER.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "six",
+                "6"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “six weekly meetings”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "51483a03-a43f-4817-ab2f-14c9f28681ac",
+            "order": 3,
+            "type": "gap_fill",
+            "prompt": "The class uses the ____ room. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "river"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “use the river room”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "88b6ea34-f77f-4198-a7fb-de9bb721a83c",
+            "order": 4,
+            "type": "gap_fill",
+            "prompt": "The total fee is ____ pounds. Use ONE NUMBER.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "60",
+                "sixty"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “fee is sixty pounds”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "50ae6e01-4968-4902-a679-768b7f2968cf",
+            "order": 5,
+            "type": "gap_fill",
+            "prompt": "Bring a ____ for recording settings. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "notebook"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “bring a notebook”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "bcaba6bd-ea0b-497d-aa56-f8d5c56c03fd",
+            "order": 6,
+            "type": "multiple_choice",
+            "prompt": "Why should learners bring their camera manual?",
+            "options": [
+              "To prove they bought a new camera",
+              "Different cameras place controls in different locations",
+              "To learn how to print photographs"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Different cameras place controls in different locations"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “where a particular manufacturer has put a control”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "7ab5b3d5-8c82-4233-ad83-60d5222e3b29",
+            "order": 7,
+            "type": "multiple_choice",
+            "prompt": "What does the tutor use as the first subjects?",
+            "options": [
+              "Moving sports players",
+              "Distant landscapes",
+              "Nearby buildings"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Nearby buildings"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “begins with nearby buildings”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "accef228-43a6-4785-a82f-e455b8436c3b",
+            "order": 8,
+            "type": "gap_fill",
+            "prompt": "The first outdoor meeting is at the market ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "entrance"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “meet at the market entrance”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "4cc2f965-ba37-4fed-aaec-02835e59ec9d",
+            "order": 9,
+            "type": "multiple_choice",
+            "prompt": "Who may apply for the limited bursary?",
+            "options": [
+              "All retired people automatically",
+              "Only residents of the town",
+              "Applicants receiving income support"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Applicants receiving income support"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “available to applicants receiving income support”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "60603003-e676-4f46-a2be-d154f5dff580",
+            "order": 10,
+            "type": "gap_fill",
+            "prompt": "Return the registration form by ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Monday"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “return the form by Monday”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      },
+      {
+        "part": 2,
+        "audioAssetId": "b0151691-ed35-4420-af65-033280993711",
+        "transcript": "Leah: Welcome to the River House Museum, and thank you for offering your time. I am Leah, the volunteer coordinator. Before we walk through the building, I want to explain how visitors use the museum and where you can find support. Our aim is not for every volunteer to memorize every date on every label. We want visitors to feel comfortable asking questions, and we want you to know when to consult a colleague rather than guess. The most useful introduction is therefore a clear account of your role and its limits.\nLeah: The museum tells the story of journeys along the river through objects, maps and recorded memories. Most visitors enter from the square, but school groups now arrive through the garden gate. This change gives teachers a safer place to count their pupils without blocking the main pavement. If you are greeting a school group, wait at the garden gate and check the teacher name on your list. Do not take a group inside until its teacher is ready, even if another class is waiting behind it. A calm arrival is more important than saving a minute.\nLeah: Visitors frequently ask about the audio guide. It is available from reception, and no deposit is required. The guide has a simple volume control and a headphone socket. Please demonstrate those controls before handing it over. We provide a printed transcript for anyone who prefers to read. If a guide fails, replace it and put the faulty unit in the labelled tray; do not repeatedly restart it in front of a frustrated visitor. At the end of the day, reception staff check the tray and record the faults for maintenance.\nLeah: Now for the main exhibition. The boat gallery contains original models, while the workshop gallery explains the tools used to maintain the vessels. The recording gallery presents interviews with former river workers. You may hear people describe the same event differently. Please do not select one account as the official version simply because it sounds more confident. The labels explain when and how each interview was collected. If a visitor asks why an account differs from something they read elsewhere, invite them to compare the sources or ask the curator, who is responsible for historical interpretation.\nLeah: There is one handling table where visitors can touch replica objects. Original objects in glass cases must remain untouched. Families sometimes ask whether an attractive rope or tool outside a case can be handled; if it is not on the handling table, please check rather than assume. The replicas are checked each morning for rough edges and loose parts. Should you notice damage during a session, remove the item from the table and tell the duty manager. You are not expected to repair equipment while supervising visitors, and improvised repairs can create a new problem.\nLeah: Let me describe several different duties, because you will rotate through them during training. Reception welcomes people and explains tickets. Gallery support answers practical questions inside the exhibition. Workshop support prepares the handling table and checks materials afterwards. Route support helps groups move through the building when more than one visit overlaps. A volunteer shadowing reception needs to practise clear explanations; someone at the workshop table must be comfortable checking objects carefully. We will discuss your preferences, but we also want everyone to understand how the different duties depend on one another.\nLeah: You will take breaks in the learning room when no class is using it. The cafe is open to the public and can become crowded, so it is not a reliable place to leave belongings. Lockers are in the staff corridor. Please keep the route to the emergency exit clear, including during a busy workshop. If you hear the alarm, follow the duty manager instructions and direct visitors to the assembly point beside the fountain. Do not send them to the car park, where arriving vehicles could create a hazard. You will practise the route during your induction.\nLeah: We encourage volunteers to write a short note after each shift. This is not a scorecard showing who answered the most questions. We want to know which instructions were confusing, where visitors waited and what information you could not find. A recurring question may indicate that a sign needs changing rather than that several volunteers need to work harder. Please record the issue without copying a visitor private contact details into your note. The coordinator can follow up a concern through the appropriate channel if a visitor specifically asks for a reply.\nLeah: Finally, our next training morning includes a practice visit before the museum opens. You will work in pairs: one person will ask ordinary visitor questions while the other tries to locate the information. We will begin in the learning room and finish with a walk through the galleries. Please bring the handbook you receive today, but you do not need to learn it all in advance. The purpose of the morning is to find information together, notice gaps and build confidence without feeling obliged to pretend that you already know every answer.",
+        "questions": [
+          {
+            "id": "72876abd-c2aa-41be-a42d-42da50427d1f",
+            "order": 11,
+            "type": "gap_fill",
+            "prompt": "School groups arrive through the ____ gate. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "garden"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “arrive through the garden gate”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "c964ea1d-71bc-42ff-a7e0-a0a9aaab21b5",
+            "order": 12,
+            "type": "gap_fill",
+            "prompt": "The audio guide can be collected from ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "reception"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “available from reception”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "ebbd7b46-0b88-49c7-a2ce-3f2f1cc0b340",
+            "order": 13,
+            "type": "multiple_choice",
+            "prompt": "What is offered to visitors who prefer reading?",
+            "options": [
+              "Only a map of the car park",
+              "A printed transcript",
+              "A written examination"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "A printed transcript"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “provide a printed transcript”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "3ee60a36-7c37-406b-a8f2-6c87aa317673",
+            "order": 14,
+            "type": "multiple_choice",
+            "prompt": "Who is responsible for historical interpretation?",
+            "options": [
+              "Every visitor independently",
+              "The cafe cashier",
+              "The curator"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "The curator"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “curator, who is responsible for historical interpretation”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "1ddc5f22-2e6c-4445-ac97-865325326937",
+            "order": 15,
+            "type": "matching",
+            "prompt": "Match this duty to its description: Reception. Select ONE description.",
+            "options": [
+              "Welcoming visitors and explaining tickets",
+              "Checking handling materials",
+              "Managing overlapping group routes"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Welcoming visitors and explaining tickets"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “Reception welcomes people and explains tickets”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "e052bf58-804e-43ac-a50a-ed78cb055a64",
+            "order": 16,
+            "type": "matching",
+            "prompt": "Match this duty to its description: Workshop support. Select ONE description.",
+            "options": [
+              "Welcoming visitors and explaining tickets",
+              "Checking handling materials",
+              "Managing overlapping group routes"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Checking handling materials"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “Workshop support prepares the handling table and checks materials afterwards”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "867ae4ef-6900-43f5-a426-50946b68ecc0",
+            "order": 17,
+            "type": "matching",
+            "prompt": "Match this duty to its description: Route support. Select ONE description.",
+            "options": [
+              "Welcoming visitors and explaining tickets",
+              "Checking handling materials",
+              "Managing overlapping group routes"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Managing overlapping group routes"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “Route support helps groups move through the building”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "2e418235-b638-4d6a-ab25-86da909c6486",
+            "order": 18,
+            "type": "gap_fill",
+            "prompt": "When it is not in use by a class, volunteers take breaks in the ____ room. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "learning"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “take breaks in the learning room”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "c0360512-f540-4d89-adfd-95cb6a77ac98",
+            "order": 19,
+            "type": "gap_fill",
+            "prompt": "The assembly point is beside the ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "fountain"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “assembly point beside the fountain”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "d113adf1-819d-4b1e-a5b2-66eb93c9f6a9",
+            "order": 20,
+            "type": "multiple_choice",
+            "prompt": "What is a main purpose of the shift note?",
+            "options": [
+              "Ranking volunteers by question totals",
+              "Identifying confusing information and recurring issues",
+              "Collecting private contact details"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Identifying confusing information and recurring issues"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “which instructions were confusing, where visitors waited and what information you could not find”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      },
+      {
+        "part": 3,
+        "audioAssetId": "c810eb5d-b4e8-4ba7-af42-7b625a0b43f5",
+        "transcript": "Nora: Our tutor wants the next proposal to be more precise. We said we would investigate food waste across the university, but that covers too many different processes. Waste in a kitchen store is not the same as food left on a plate, and the people who could change those things are different. I think we should choose one location and one type of discarded food, explain why we chose it, and show how our measurements could answer a manageable question rather than promise a complete account of the whole campus.\nSam: I agree. I spoke to the catering manager, and she can give us access to the east cafeteria. The other cafeteria is being renovated, so its temporary arrangements would make comparisons difficult. At the east site we can separate preparation waste from plate waste, but the manager recommends concentrating on plate waste first. Staff already keep reasonably consistent purchasing records. What they do not understand is why similar meals sometimes come back almost untouched. Measuring the leftovers could help us ask that question, although it would not answer it on its own.\nNora: Then our main measure should be the weight of plate waste divided by the number of meals served, not just the total weight collected each day. Otherwise a busy day would look worse even if each person left less. We should record the menu and the number of meals too. I initially thought photographs might be enough, but a picture can make a shallow pile look much larger than it is. A scale gives us a more consistent quantity, provided we check its reading and subtract the weight of the container before recording the food.\nSam: The manager can lend us a scale, and she has suggested using the same collection containers each day. We also need a clear boundary on what counts. Drinks left in cups should not be mixed into our plate-waste measurement, because we have chosen uneaten solid food as the focus. We can record a note about drinks separately if it helps us plan a later project. Let us not quietly change the definition halfway through simply because something interesting appears. A stable definition makes the results less exciting perhaps, but more interpretable.\nTutor: That is a more workable design. Remember that the collection process itself can change behaviour if diners notice the study. Explain how you will describe it without suggesting that people are being judged. Also think about the observation period. One or two days could be dominated by a particular menu or an event on campus. I suggest two teaching weeks, with comparable weekdays, and a short pilot before that. The pilot is for checking the process, so do not combine its numbers with the main results after changing your procedure.\nNora: For explanations, we could ask diners a short optional question after they return their trays. My first draft asked why they wasted food, but that sounds accusatory and assumes they see the situation in the same way we do. I will ask whether anything affected how much they ate. We can offer common categories and space for another reason. We should not ask for names or student numbers. A diner can decline without explaining, and the staff serving the next meal should not be able to identify individual answers.\nSam: We should include portion size and taste as possible reasons, but also lack of time. I sometimes choose a normal meal and then realise I have only ten minutes before a class on the other side of campus. That is different from disliking the food. If we keep only two categories, the results will make it seem that those are the only explanations. We can test the wording with a few volunteers in the pilot and ask whether a category is missing or confusing. Their comments would help us improve the form before the main collection.\nTutor: Good. Be careful with the relationship between the survey and the weighing. You cannot identify exactly which returned plate belongs to each anonymous answer, so do not claim that a particular respondent left a measured amount. You will have two related sets of information at an aggregate level. And if fewer people answer on a busy day, the survey may underrepresent those who were rushing. Record response numbers as well as meal numbers. In the final discussion, explain both what the measures reveal and which links you cannot establish.\nNora: For the analysis, I will make a spreadsheet with one row for each observation day. It will contain meals served, the container-adjusted weight, the waste per meal, the menu and the number of survey responses. We can summarize the optional reasons separately. I will not rank individual kitchen staff because that is not our research question and we do not have evidence about their separate contributions. The manager asked for practical suggestions, so the discussion should distinguish suggestions supported by our observations from ideas that would need a further trial.\nSam: My main worry is that we might recommend smaller servings too quickly. If the problem is a timetable that leaves little time to eat, changing the portion could fail to address it. We could propose a choice of sizes and test it later, but our present study is observational. It cannot establish that changing a serving causes a reduction in waste. Let us finish the proposal with that limitation, plus a plan to share a short summary with the catering team. That would give them something useful without overstating what two weeks of student research can prove.",
+        "questions": [
+          {
+            "id": "4554cbe2-2a46-499a-a300-6cf168ea87a8",
+            "order": 21,
+            "type": "gap_fill",
+            "prompt": "The study will use the ____ cafeteria. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "east"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “access to the east cafeteria”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "bb951f34-4441-4cf9-acd9-450321a8c3ef",
+            "order": 22,
+            "type": "multiple_choice",
+            "prompt": "Which waste stream will the students focus on first?",
+            "options": [
+              "Unused food in storage",
+              "Food left on plates",
+              "Only drinks in cups"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Food left on plates"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “concentrating on plate waste first”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "94c908d4-fff0-49a4-aade-f2283d662e4b",
+            "order": 23,
+            "type": "gap_fill",
+            "prompt": "Total waste will be divided by the number of ____ served. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "meals"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “divided by the number of meals served”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "06bb89ac-4ef3-4912-a91f-5f0e7156f088",
+            "order": 24,
+            "type": "gap_fill",
+            "prompt": "The students must subtract the weight of the ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "container"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “subtract the weight of the container”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "2672e88f-c534-4067-a6b4-81f5166b8cfe",
+            "order": 25,
+            "type": "gap_fill",
+            "prompt": "The main observation lasts two teaching ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "weeks"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “two teaching weeks”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "0e97eb4e-398a-49c2-a618-b15de34a487b",
+            "order": 26,
+            "type": "multiple_choice",
+            "prompt": "Why is the original survey wording changed?",
+            "options": [
+              "It reveals the exact weight of each plate",
+              "It assumes blame and a shared interpretation",
+              "It includes too many student numbers"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "It assumes blame and a shared interpretation"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “sounds accusatory and assumes they see the situation in the same way”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "54a0eeb4-c93f-4a0d-ae8d-46de92ce44d7",
+            "order": 27,
+            "type": "multiple_choice",
+            "prompt": "What additional reason does Sam want to include?",
+            "options": [
+              "A preference for different plates",
+              "Lack of time to eat",
+              "The colour of the collection container"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Lack of time to eat"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “also lack of time”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "dfd54789-0b89-426c-accf-bdb83f727842",
+            "order": 28,
+            "type": "multiple_choice",
+            "prompt": "Why can responses not be linked to an exact measured plate?",
+            "options": [
+              "All diners eat identical meals",
+              "The answers are anonymous and not individually connected",
+              "The scale measures only drinks"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "The answers are anonymous and not individually connected"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “cannot identify exactly which returned plate belongs to each anonymous answer”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "8e561100-15d2-4597-a360-1898c2698655",
+            "order": 29,
+            "type": "gap_fill",
+            "prompt": "Daily information will be organized in a ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "spreadsheet"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “make a spreadsheet with one row for each observation day”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "6c6b2fea-0284-49db-a298-cb533707d8cf",
+            "order": 30,
+            "type": "multiple_choice",
+            "prompt": "What limitation will the proposal emphasize?",
+            "options": [
+              "Smaller servings are already proven to be the only solution",
+              "An observational study cannot prove that a serving change causes less waste",
+              "The study can identify every staff member’s contribution"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "An observational study cannot prove that a serving change causes less waste"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “It cannot establish that changing a serving causes a reduction in waste”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "audioAssetId": "c15d19b3-0e06-468c-a46d-540a31150c61",
+        "transcript": "Lecturer: Today I want to examine what changes when environmental observations are collected by community volunteers rather than only by professional field teams. Our case is a fictional project monitoring a small urban stream. I will not argue that one group of observers is automatically more trustworthy than another. Instead, we will consider the process that turns an observation into a claim. That process includes choosing where to look, agreeing what to record, checking uncertain entries and deciding which conclusions are justified. More observations can be valuable, but their meaning depends on these decisions.\nLecturer: The project began with a question about changes along the stream after rain. Volunteers selected six fixed locations, marked on a shared map, rather than choosing a convenient spot on each visit. This mattered because a small move upstream could change what was visible around a drain or a planted bank. Each location had a site code so records could be connected without requiring observers to write a long description every time. The map also showed safe public access. Volunteers were told not to enter the water or cross a barrier in order to complete a record.\nLecturer: At the training session, observers compared photographs and practised using a common recording sheet. They were not asked to conceal uncertainty. If they could not confidently identify a feature, they marked it uncertain and attached a photograph where appropriate. A coordinator later reviewed those entries. This was preferable to forcing every observation into a confident category, because apparent precision can hide disagreement. The team retained both the original entry and any later classification, so it remained possible to see how an interpretation had changed rather than assume the final label had existed from the beginning.\nLecturer: Timing was another difficulty. Volunteers naturally preferred daylight and convenient weather, yet the research question concerned conditions after rain. The project used an agreed observation window following a rainfall event, while keeping safety as the priority. A missed visit was recorded as missing; it was not entered as an observation of no change. This distinction is easily overlooked. If a blank record is converted into a zero, the analysis may make an unvisited location appear stable. Missing information tells us about the limits of our observation process, not necessarily about the stream itself.\nLecturer: The team used a simple cloudiness comparison rather than a laboratory analysis of every sample. A marked tube helped observers compare water transparency under a consistent procedure. Before public summaries were prepared, a regional laboratory checked a small set of paired samples. The comparison was intended to identify gross disagreements, not transform every volunteer estimate into a laboratory result. A simple field measure can support a useful pattern while remaining different from a precise chemical analysis. The final report therefore named the measure used and did not replace it with a more impressive technical term.\nLecturer: To investigate consistency, selected visits involved two observers independently describing the same location. These duplicate observations were not counted as additional independent sites. They helped the coordinator see whether observers applied categories similarly. Where disagreement was common, the response was to improve the guidance or preserve an uncertain classification, rather than simply remove the less convenient entry. The project also avoided judging volunteer quality by whether an observer agreed with the majority every time. A minority observation could reveal an overlooked feature, but it needed evidence that other people could examine.\nLecturer: Participants sometimes wanted to explain a cloudy reading immediately. A construction site, a garden or a road drain might seem an obvious source. However, the monitoring records did not establish which source caused a particular change. Rainfall could move material through several routes, and the observations were not designed to isolate those contributions. Public summaries described an association between recorded conditions and recent rain, while separating that pattern from untested explanations. This distinction protected the usefulness of the project: a cautious finding was more credible than a dramatic accusation the data could not sustain.\nLecturer: Data management was not simply an administrative task added after fieldwork. Records entered a central repository with their site code, observation time, method version and review status. When the recording guidance changed, the new version was documented. Otherwise a difference between early and late results might reflect a different definition rather than a change in the environment. The repository preserved an audit trail of corrections. It also limited public access to volunteer contact details, because transparency about methods did not require publishing information that could identify someone who reported a concern.\nLecturer: What, then, counted as success? The project did not promise to identify every pollution source or provide continuous coverage. It produced a bounded account of conditions at selected locations and helped residents understand how to ask more precise questions. A follow-up study could test a suspected source with a different design. The monitoring itself also revealed where access and training needed improvement. Its limitations were not a reason to dismiss the observations, but they had to travel with the findings when the results were presented to councillors, journalists or other researchers.\nLecturer: The wider lesson is that trust comes from traceable decisions rather than from the sheer size of a spreadsheet. Professional equipment can be used carelessly, and modest tools can be used transparently. We should ask whether sites were chosen consistently, whether missing visits remained visible, whether uncertain labels could be reviewed and whether explanations were kept separate from observations. A community project becomes stronger when participants can question these choices and understand the answers. That is a demanding form of participation, but it offers more than asking people to supply numbers whose meaning is decided somewhere else.",
+        "questions": [
+          {
+            "id": "cfcf112c-daea-4bf1-a2b0-c12e9360e53a",
+            "order": 31,
+            "type": "gap_fill",
+            "prompt": "The project selected six fixed ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "locations"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “selected six fixed locations”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "752bb293-d303-488a-a250-aaa994798adf",
+            "order": 32,
+            "type": "gap_fill",
+            "prompt": "Each place was identified with a site ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "code"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “Each location had a site code”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "6075aa72-32ac-401f-aa00-78b05a800ff1",
+            "order": 33,
+            "type": "gap_fill",
+            "prompt": "Observers marked unclear classifications as ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "uncertain"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “marked it uncertain”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "bb34ddab-f5d5-456b-af31-e300d42a4c5d",
+            "order": 34,
+            "type": "multiple_choice",
+            "prompt": "How was a missed visit recorded?",
+            "options": [
+              "As a zero showing stable conditions",
+              "As missing rather than as no change",
+              "As a completed duplicate"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "As missing rather than as no change"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “A missed visit was recorded as missing”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "dc5bf863-7764-4f0d-ae4b-4fee35a275bf",
+            "order": 35,
+            "type": "gap_fill",
+            "prompt": "Paired samples were checked by a regional ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "laboratory"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “a regional laboratory checked a small set of paired samples”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "7f9b62ec-9882-42aa-a579-f4e010de1889",
+            "order": 36,
+            "type": "multiple_choice",
+            "prompt": "Why were two observers sometimes sent together?",
+            "options": [
+              "To double the number of independent sites",
+              "To examine consistency in applying categories",
+              "To remove every minority observation"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "To examine consistency in applying categories"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “see whether observers applied categories similarly”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "3017e479-efd0-43c3-afeb-5d66368f3050",
+            "order": 37,
+            "type": "multiple_choice",
+            "prompt": "What causal conclusion did the records not establish?",
+            "options": [
+              "That observations were made at marked locations",
+              "Which source caused a particular change",
+              "That recent rain was recorded"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Which source caused a particular change"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “did not establish which source caused a particular change”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "c1787eab-456a-4fc7-a5fa-979a11e6bb0c",
+            "order": 38,
+            "type": "gap_fill",
+            "prompt": "Records entered a central ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "repository"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “Records entered a central repository”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "38ba1ed4-9d92-46b9-a514-31135eae4598",
+            "order": 39,
+            "type": "gap_fill",
+            "prompt": "The repository preserved an audit ____ of corrections. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "trail"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “preserved an audit trail of corrections”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "dfd6aabb-02c6-406e-a2a4-563ee8abde05",
+            "order": 40,
+            "type": "multiple_choice",
+            "prompt": "What does the lecturer present as the basis for trust?",
+            "options": [
+              "The largest possible spreadsheet",
+              "Professional equipment alone",
+              "Decisions that can be traced and questioned"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Decisions that can be traced and questioned"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "listening_evidence",
+              "listening_detail"
+            ],
+            "explanation": "Evidence: “trust comes from traceable decisions”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      }
+    ]
+  },
+  "reading": {
+    "durationMinutes": 60,
+    "conversion": [
+      {
+        "rawScore": 0,
+        "mockBand": 0
+      },
+      {
+        "rawScore": 1,
+        "mockBand": 0.0
+      },
+      {
+        "rawScore": 2,
+        "mockBand": 0.5
+      },
+      {
+        "rawScore": 3,
+        "mockBand": 1.0
+      },
+      {
+        "rawScore": 4,
+        "mockBand": 1.5
+      },
+      {
+        "rawScore": 5,
+        "mockBand": 2.0
+      },
+      {
+        "rawScore": 6,
+        "mockBand": 2.0
+      },
+      {
+        "rawScore": 7,
+        "mockBand": 2.5
+      },
+      {
+        "rawScore": 8,
+        "mockBand": 3.0
+      },
+      {
+        "rawScore": 9,
+        "mockBand": 3.5
+      },
+      {
+        "rawScore": 10,
+        "mockBand": 4.0
+      },
+      {
+        "rawScore": 11,
+        "mockBand": 4.0
+      },
+      {
+        "rawScore": 12,
+        "mockBand": 4.0
+      },
+      {
+        "rawScore": 13,
+        "mockBand": 4.5
+      },
+      {
+        "rawScore": 14,
+        "mockBand": 4.5
+      },
+      {
+        "rawScore": 15,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 16,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 17,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 18,
+        "mockBand": 5.0
+      },
+      {
+        "rawScore": 19,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 20,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 21,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 22,
+        "mockBand": 5.5
+      },
+      {
+        "rawScore": 23,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 24,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 25,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 26,
+        "mockBand": 6.0
+      },
+      {
+        "rawScore": 27,
+        "mockBand": 6.5
+      },
+      {
+        "rawScore": 28,
+        "mockBand": 6.5
+      },
+      {
+        "rawScore": 29,
+        "mockBand": 6.5
+      },
+      {
+        "rawScore": 30,
+        "mockBand": 7.0
+      },
+      {
+        "rawScore": 31,
+        "mockBand": 7.0
+      },
+      {
+        "rawScore": 32,
+        "mockBand": 7.0
+      },
+      {
+        "rawScore": 33,
+        "mockBand": 7.5
+      },
+      {
+        "rawScore": 34,
+        "mockBand": 7.5
+      },
+      {
+        "rawScore": 35,
+        "mockBand": 8.0
+      },
+      {
+        "rawScore": 36,
+        "mockBand": 8.0
+      },
+      {
+        "rawScore": 37,
+        "mockBand": 8.5
+      },
+      {
+        "rawScore": 38,
+        "mockBand": 8.5
+      },
+      {
+        "rawScore": 39,
+        "mockBand": 9.0
+      },
+      {
+        "rawScore": 40,
+        "mockBand": 9.0
+      }
+    ],
+    "passages": [
+      {
+        "section": 1,
+        "title": "A library of things: what a borrowing record can reveal",
+        "passage": "In the fictional town of Alderwick, a library began lending household tools in 2019. The idea was not to replace commercial hire shops. Librarians wanted residents to try an unfamiliar activity before deciding whether to buy equipment, and to avoid storing objects they used only occasionally. A survey had suggested strong enthusiasm. Yet the team understood that agreeing with an attractive idea on a questionnaire was different from making a journey, paying a deposit and returning an object on time. They therefore opened a small pilot rather than immediately purchasing every item residents had requested.\n\nThe first collection contained drills, sewing machines and garden tools. Each borrower attended a short induction, and volunteers checked equipment after every return. Items needing specialist repair were removed from circulation. To keep the borrowing record meaningful, the team distinguished a reservation from a completed loan. A resident could reserve a tool, cancel after reading its instructions and still appear interested in a simple count of bookings. The completed-loan measure avoided that particular problem, although it did not reveal whether the borrower had successfully finished the intended task at home.\n\nOne early surprise concerned the collection's most frequently borrowed object: a carpet cleaner. Staff had expected drills to dominate because they appeared so often in the initial survey. Interviews suggested an explanation. People could often borrow a drill informally from a neighbour, whereas few households owned a carpet cleaner. Moreover, the cleaner was needed for a specific job, and the price of buying one was difficult to justify for occasional use. This did not mean that survey respondents had been dishonest. Rather, the decision to borrow depended on alternatives and circumstances that a general expression of interest had not captured.\n\nThe library initially required a refundable deposit. Although the money was returned when an item came back in good condition, some residents could not comfortably spare it for a week. In the second year, a local fund offered a deposit waiver to eligible borrowers. The staff did not assume that every person with a low income wanted the same equipment. Instead, the waiver changed the financial condition of borrowing while allowing people to choose for themselves. Its effect was assessed using completed loans and follow-up conversations, not simply the number of waiver applications received.\n\nSpace created a different constraint. The library had a secure storeroom, but it could not safely accommodate every requested item. A large tile cutter might be useful to a few residents while occupying the same shelf area as several smaller objects. Staff recorded storage space alongside purchase price and maintenance time when considering additions. They also retained a small number of less frequently borrowed tools because removing every low-use item could gradually narrow the service to people with the most common needs. Efficiency therefore required a stated purpose rather than a rule that the highest borrowing count must always win.\n\nDuring the third year, the team compared two ways of helping new users. One group received printed instructions; another could book a demonstration with a trained volunteer. Participation was voluntary, so the comparison could not establish that demonstrations alone caused any difference in successful use. People willing to book help might already be more cautious or more motivated. Nevertheless, reports of confusion helped staff rewrite unclear instructions for everyone. A modest observational comparison could thus produce a practical improvement without being presented as a definitive experiment.\n\nEnvironmental claims required similar care. A completed loan did not automatically represent an avoided purchase: a borrower might otherwise have borrowed from a friend, postponed the task or rented commercially. Manufacturing and transporting replacement equipment also used resources. The library therefore described its environmental benefits as potential rather than measured savings. A later study would ask what borrowers would probably have done without the service, while acknowledging that such answers remained estimates. Counting transactions was easier than calculating a credible environmental impact.\n\nAfter four years, the library kept the collection deliberately limited. A public report included repair costs, overdue returns, user feedback and the reasons for retaining less popular items. It also described people the service had failed to reach, including residents who could not collect equipment during opening hours. The project had produced useful evidence, but its strongest lesson was about interpretation: a record tells an organisation what happened within a service, not everything that would have happened without it. Responsible expansion depended on asking that second question as well as celebrating the first.",
+        "questions": [
+          {
+            "id": "e7b7fdd2-3186-41ff-ac69-0c69c1f72d6f",
+            "order": 1,
+            "type": "gap_fill",
+            "prompt": "The town library began lending tools in ____. Use ONE NUMBER.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "2019"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “began lending household tools in 2019”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "e2df2118-3139-4ded-a0b2-a2587d654225",
+            "order": 2,
+            "type": "multiple_choice",
+            "prompt": "What was a central purpose of the original pilot?",
+            "options": [
+              "Replace every commercial hire shop",
+              "Let residents try an activity before buying equipment",
+              "Guarantee that every requested tool would be stocked"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Let residents try an activity before buying equipment"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “try an unfamiliar activity before deciding whether to buy equipment”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "2cbad8a3-1491-4e7b-a7e5-813f332db679",
+            "order": 3,
+            "type": "gap_fill",
+            "prompt": "A reservation was distinguished from a completed ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "loan"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “distinguished a reservation from a completed loan”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "a8c1eefd-bd5f-447a-ab19-2139cb54e667",
+            "order": 4,
+            "type": "gap_fill",
+            "prompt": "Which cleaning machine was borrowed most often? Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "carpet cleaner"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “most frequently borrowed object: a carpet cleaner”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "7f02af32-e193-4e3c-a7aa-b2dfc04db048",
+            "order": 5,
+            "type": "multiple_choice",
+            "prompt": "Why did the result differ from the survey?",
+            "options": [
+              "Survey participants all deliberately lied",
+              "Actual borrowing reflected alternatives and circumstances",
+              "Every household already owned a carpet cleaner"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Actual borrowing reflected alternatives and circumstances"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “decision to borrow depended on alternatives and circumstances”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "b4607281-66fb-4c62-a702-ba091836fdfd",
+            "order": 6,
+            "type": "gap_fill",
+            "prompt": "What upfront financial condition could the local fund remove? Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "refundable deposit",
+                "deposit"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “library initially required a refundable deposit”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "7a7ba68a-5385-4599-a424-ba3510b2a00b",
+            "order": 7,
+            "type": "gap_fill",
+            "prompt": "What physical constraint was recorded alongside price and upkeep? Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "storage space",
+                "space"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “recorded storage space alongside purchase price and maintenance time”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "d255ddad-b448-49b7-a801-c00e752f80e5",
+            "order": 8,
+            "type": "multiple_choice",
+            "prompt": "Why retain some less popular tools?",
+            "options": [
+              "To eliminate all repair work",
+              "To avoid serving only the most common needs",
+              "To guarantee every object was borrowed daily"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "To avoid serving only the most common needs"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “removing every low-use item could gradually narrow the service to people with the most common needs”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "7d022b97-83af-4650-a7a7-ec7ec348a939",
+            "order": 9,
+            "type": "gap_fill",
+            "prompt": "What extra assistance could some new users book? Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "demonstration"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “book a demonstration with a trained volunteer”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "a4b4a9f7-edf6-468f-a234-75866f629477",
+            "order": 10,
+            "type": "multiple_choice",
+            "prompt": "Why was the assistance comparison not a definitive causal experiment?",
+            "options": [
+              "All participants received identical support",
+              "People chose whether to take part",
+              "No instructions existed"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "People chose whether to take part"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “Participation was voluntary”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "a0762b36-5504-48c1-a249-d73126e43a13",
+            "order": 11,
+            "type": "gap_fill",
+            "prompt": "The report described environmental benefits as ____ rather than measured savings. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "potential"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “described its environmental benefits as potential rather than measured savings”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "a265ba4c-90b9-4f51-a619-5cfe59c8ff12",
+            "order": 12,
+            "type": "multiple_choice",
+            "prompt": "What additional question matters for environmental impact?",
+            "options": [
+              "Which tool had the brightest packaging",
+              "What borrowers might have done without the service",
+              "How many pages were in the storeroom register"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "What borrowers might have done without the service"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “ask what borrowers would probably have done without the service”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "28746f9f-2261-4e77-a7c5-0e258c8c1438",
+            "order": 13,
+            "type": "gap_fill",
+            "prompt": "Some residents could not collect tools during ____. Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "opening hours"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “could not collect equipment during opening hours”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "8dbf450b-9a25-425a-a7c4-1ef35b0e0bbe",
+            "order": 14,
+            "type": "multiple_choice",
+            "prompt": "What is the passage’s main caution?",
+            "options": [
+              "High loan counts prove environmental savings",
+              "Service records need careful interpretation before claims are made",
+              "Small services cannot produce any useful evidence"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Service records need careful interpretation before claims are made"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “a record tells an organisation what happened within a service, not everything that would have happened without it”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      },
+      {
+        "section": 2,
+        "title": "Shade, movement and the changing meaning of a cool street",
+        "passage": "The fictional city of Bellhaven commissioned a study of shade along routes used by pedestrians. Officials already had maps of tree cover, but those maps did not show whether a person walking to the market would be shaded at the time they usually travelled. A tree could cast its shadow onto a roof or an empty parking space while leaving the adjacent pavement exposed. The research team therefore treated shade as a relationship between a place, a time and an activity, rather than as a permanent property that could be read from a single aerial image.\n\nObservers walked six routes at three times of day during a period of settled summer weather. They carried temperature sensors in identical ventilated cases and recorded whether each marked location was shaded. To reduce one source of measurement error, the sensors were compared side by side before and after fieldwork. A device that consistently read slightly higher could otherwise make one route appear warmer simply because of the instrument assigned to it. These checks did not remove every uncertainty, but they made the comparison more transparent and helped identify a faulty sensor before its readings entered the final dataset.\n\nThe researchers also asked volunteers to describe their journeys. A shaded route was not always the route they chose. One resident preferred an exposed main road because its crossings had audible signals. Another avoided a leafy shortcut whose uneven surface made it uncomfortable with a walking aid. Parents sometimes selected the route passing a school rather than the coolest available path. Such accounts challenged the assumption that temperature alone explained movement. A route had to connect useful destinations and be manageable for the person using it.\n\nThe team separated continuous shade from scattered patches. A route with several small shadows could look impressive when its total shaded area was added together, yet still require a person to cross long exposed stretches. Continuous shade was particularly valued near a clinic, where some pedestrians walked slowly and could not easily hurry between protected points. The study did not conclude that scattered shade was worthless. It showed that the arrangement of shade affected its usefulness, and that a total-area measure could conceal this difference.\n\nTemporary fabric canopies offered a faster intervention than planting mature trees. However, they needed inspection, suitable fixings and a plan for strong winds. Trees could provide wider benefits, but their survival depended on soil volume, water and long-term maintenance. The report therefore rejected a simple contest in which one solution had to be declared universally superior. At a bus stop needed immediately, a canopy might be appropriate; elsewhere, improving conditions for young trees could produce a more durable result. Choosing an intervention required identifying the local constraint first.\n\nA second phase tested how information influenced travel decisions. Volunteers received either a conventional street map or a map showing shade at different times. Those using the new map reported noticing alternatives they had previously overlooked. Yet the team avoided claiming that the map had reduced heat-related illness. The study had not measured that outcome, and the volunteers were not a representative sample of all residents. A useful navigation tool could be demonstrated without extending the conclusion to a medical effect the research had not investigated.\n\nMaintenance records introduced an unexpected lesson. A street listed as having healthy trees had lost several branches after storm damage, but the city's digital layer had not been updated. Conversely, a newly installed canopy appeared in field notes before it reached the official map. The researchers described the map as a dated account, not a live description of the city. They recommended displaying the date of the last inspection and providing a simple way to report changes. A more detailed map would be misleading if users assumed that detail guaranteed current accuracy.\n\nBellhaven eventually prioritized a short route between the bus station, clinic and market. It was not the route with the largest possible increase in total shade. It was chosen because many residents used it for essential journeys and because improvements could be connected into a continuous corridor. The pilot included accessible crossings, surface repairs and maintenance funding as well as planting. Its evaluation would consider who could use the route comfortably, not only how many square metres of shadow appeared in a summer photograph. The project reframed urban cooling as a question about useful access, with temperature remaining a necessary but insufficient part of the answer.",
+        "questions": [
+          {
+            "id": "95887eaa-6eda-4bc0-a05c-500efb3eebaa",
+            "order": 15,
+            "type": "multiple_choice",
+            "prompt": "What did the existing tree maps fail to show?",
+            "options": [
+              "Every tree species in the city",
+              "Shade experienced during an actual journey",
+              "The number of shop employees"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Shade experienced during an actual journey"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “maps did not show whether a person walking to the market would be shaded at the time they usually travelled”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "ac5d362b-d32f-4883-a2f8-1d59429f4506",
+            "order": 16,
+            "type": "gap_fill",
+            "prompt": "The instruments were checked together before and after ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "fieldwork"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “compared side by side before and after fieldwork”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "86fc07ea-0adb-475a-af0d-c72175d8221a",
+            "order": 17,
+            "type": "gap_fill",
+            "prompt": "What crossing feature influenced one resident’s choice? Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "audible signals"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “crossings had audible signals”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "33183d3a-53c1-4ed3-adbb-03392ef238c8",
+            "order": 18,
+            "type": "multiple_choice",
+            "prompt": "What did residents’ accounts challenge?",
+            "options": [
+              "The existence of any shaded streets",
+              "The idea that temperature alone explained route choice",
+              "The need for useful destinations"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "The idea that temperature alone explained route choice"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “assumption that temperature alone explained movement”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "3ebc2607-69c3-43a6-ae07-6307b182cac7",
+            "order": 19,
+            "type": "gap_fill",
+            "prompt": "Near the clinic, people particularly valued ____ shade. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "continuous"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “Continuous shade was particularly valued near a clinic”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "07843a76-592f-4935-a41e-4b53067cd182",
+            "order": 20,
+            "type": "multiple_choice",
+            "prompt": "What can a total shaded-area measure conceal?",
+            "options": [
+              "The arrangement of protection never matters",
+              "How protection is distributed along a journey",
+              "Every resident’s home address"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "How protection is distributed along a journey"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “arrangement of shade affected its usefulness”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "623f2ed9-1f1b-4dd0-a576-5c81e1f1f626",
+            "order": 21,
+            "type": "gap_fill",
+            "prompt": "What weather condition required a plan for fabric canopies? Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "strong winds"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “a plan for strong winds”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "367a7596-7e93-472f-a18c-17b14bcdcb59",
+            "order": 22,
+            "type": "multiple_choice",
+            "prompt": "How should the choice between trees and canopies be made?",
+            "options": [
+              "By always choosing trees",
+              "By always choosing fabric",
+              "By first identifying the local constraint"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "By first identifying the local constraint"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “Choosing an intervention required identifying the local constraint first”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "3d34148d-a4fe-4bd3-a04b-0ad44e8b562f",
+            "order": 23,
+            "type": "multiple_choice",
+            "prompt": "Which benefit did the map trial actually support?",
+            "options": [
+              "Proving a fall in illness",
+              "Helping volunteers notice alternative routes",
+              "Establishing all volunteers represented the city"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Helping volunteers notice alternative routes"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “reported noticing alternatives they had previously overlooked”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "e964dcfc-3cf5-4322-aa0e-d2fd3b47670f",
+            "order": 24,
+            "type": "gap_fill",
+            "prompt": "After storm damage, some lost ____ had not been reflected in the digital layer. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "branches"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “lost several branches after storm damage”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "7e5e875d-0e46-4f12-a701-1c69500f7002",
+            "order": 25,
+            "type": "gap_fill",
+            "prompt": "The report recommended showing the last ____ date. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "inspection"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “displaying the date of the last inspection”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "548f3c54-6e12-48dc-a5e2-1f386ccdf8eb",
+            "order": 26,
+            "type": "multiple_choice",
+            "prompt": "Why was the final corridor selected?",
+            "options": [
+              "It maximized every square metre of shadow",
+              "It connected essential destinations for many users",
+              "It needed no maintenance"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "It connected essential destinations for many users"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “many residents used it for essential journeys”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "8ce45a3a-8065-456a-aec4-a98c70a2f03a",
+            "order": 27,
+            "type": "multiple_choice",
+            "prompt": "Which statement best captures the final argument?",
+            "options": [
+              "Temperature measurements are useless",
+              "Cooling projects should consider usable access as well as temperature",
+              "A detailed map is always current"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Cooling projects should consider usable access as well as temperature"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “temperature remaining a necessary but insufficient part of the answer”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      },
+      {
+        "section": 3,
+        "title": "When a useful archive is allowed to remain incomplete",
+        "passage": "The fictional Northfield Sound Archive began as a collection of interviews recorded by local volunteers. Its earliest catalogue contained broad labels such as work, childhood and the river. These labels helped the original team remember conversations they had personally conducted, but they were less useful to later researchers. A visitor interested in changes to ferry services could not know that a recording filed under childhood contained a detailed account of the crossing. The archive's first digital project therefore focused on description rather than simply converting every recording into a new file format.\n\nAt first, staff imagined that a searchable transcript would solve most access problems. Transcription made spoken words easier to find, yet it introduced its own choices. Speakers used local expressions, interrupted one another and referred to places by names absent from current maps. A perfectly fluent transcript could make uncertain speech appear more definite than the recording justified. The team decided to retain uncertainty markers and connect each transcript to the corresponding audio. Searchability mattered, but it could not justify concealing how the text had been produced.\n\nNaming people raised a separate concern. Some interviewees had consented to local listening in a small reading room years before an internet catalogue was proposed. That agreement could not automatically be treated as permission for unrestricted online access. Staff contacted contributors where possible and created different access levels. A public summary might describe a recording while the full audio remained available only under agreed conditions. The archive did not regard every restriction as a technical defect to be eliminated; sometimes a limit was necessary to honour the relationship through which the material had been collected.\n\nVolunteers then began adding descriptive tags. Rather than assign every term centrally, the archive allowed contributors and researchers to suggest vocabulary. This revealed differences that a tidy catalogue could have hidden. A place described as a wasteland in a planning document was remembered as a playground by residents who had used it as children. Both descriptions could be retained with their sources. Combining them into a single neutral label would have removed information about the perspectives behind the terms. Disagreement was part of the collection's meaning, not merely noise in its metadata.\n\nHowever, openness created practical demands. A suggested tag could misidentify a person or expose information that had deliberately been withheld. Every public contribution therefore entered a review queue before appearing in the catalogue. Reviewers checked the proposed label against the recording, relevant permissions and the contributor's explanation. They did not require every suggestion to match an existing institutional vocabulary. Their task was to make the basis of a description visible and to prevent avoidable harm, while accepting that responsible interpretation could still remain contestable.\n\nThe archive also distinguished a correction from a reinterpretation. If a transcript gave the wrong year because a volunteer had mistyped a clearly audible date, the error could be corrected. If two listeners disagreed about what a speaker implied, replacing one interpretation with the other would not settle the matter in the same way. The system kept version history so researchers could see changes and the reasons for them. This history was not an excuse to leave known errors in place; it was a way of acknowledging that descriptions were maintained rather than delivered once in a permanently finished form.\n\nFunding reports initially asked how many interviews had been made fully searchable. Staff supplied that count but argued that it was an incomplete measure of progress. Revisiting consent, checking a disputed name or improving a description could require substantial work without adding another searchable recording. A target focused only on volume might reward hurried publication and make careful maintenance look unproductive. The archive proposed a wider account including access requests resolved, corrections documented and contributors successfully contacted. These measures were imperfect too, but they made previously invisible responsibilities easier to discuss.\n\nThe final project did not promise a complete and frictionless history of Northfield. Some recordings remained restricted; others had gaps, contested tags or missing contextual information. The catalogue made these limits visible and invited well-supported additions. For researchers, the value lay partly in understanding how a record had arrived in its present form. An archive could become more useful without pretending that every uncertainty had been removed. Indeed, preserving the reasons for uncertainty sometimes offered a richer account of the past than a clean interface that hid the decisions supporting it.",
+        "questions": [
+          {
+            "id": "9148952f-87a1-45f3-aa5a-e35f933405f7",
+            "order": 28,
+            "type": "multiple_choice",
+            "prompt": "Why were early broad labels insufficient for later users?",
+            "options": [
+              "They included too many modern file formats",
+              "They relied on knowledge the original interviewers already had",
+              "They prohibited all searches"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "They relied on knowledge the original interviewers already had"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “helped the original team remember conversations they had personally conducted”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "a631dd2d-84f1-441f-a38c-2743e8e8f9e3",
+            "order": 29,
+            "type": "gap_fill",
+            "prompt": "The first digital effort emphasized ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "description"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “focused on description rather than simply converting every recording”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "086bb94f-22e1-4819-adda-aa66f7f7ffac",
+            "order": 30,
+            "type": "gap_fill",
+            "prompt": "The team retained uncertainty ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "markers"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “decided to retain uncertainty markers”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "ecbba955-882b-4fb6-aac1-3cffd17590cd",
+            "order": 31,
+            "type": "multiple_choice",
+            "prompt": "Why could old consent not simply authorize internet publication?",
+            "options": [
+              "All contributors had requested unrestricted publication",
+              "The original agreement concerned a different form of access",
+              "The recordings contained no identifiable people"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "The original agreement concerned a different form of access"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “consented to local listening in a small reading room”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "471bc032-ad86-4e05-af4e-0d888b4f5951",
+            "order": 32,
+            "type": "gap_fill",
+            "prompt": "A public ____ could describe material whose full audio was restricted. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "summary"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “A public summary might describe a recording”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "70319042-5495-4433-a23c-859f4f745748",
+            "order": 33,
+            "type": "gap_fill",
+            "prompt": "Residents remembered the place described as wasteland in the planning document as a ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "playground"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “remembered as a playground by residents”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "1cd8771f-da81-4331-a2a3-b011e034c680",
+            "order": 34,
+            "type": "multiple_choice",
+            "prompt": "Why keep both descriptions with their sources?",
+            "options": [
+              "They prove that every term means the same thing",
+              "They reveal different perspectives on the same place",
+              "They eliminate the need to identify sources"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "They reveal different perspectives on the same place"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “information about the perspectives behind the terms”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "c11a340c-ded7-4ed8-a803-855658abe7f6",
+            "order": 35,
+            "type": "gap_fill",
+            "prompt": "Public contributions entered a review ____. Use ONE WORD.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "queue"
+              ],
+              "caseSensitive": false,
+              "maxWords": 1
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “entered a review queue before appearing”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "ac9eb9fd-1244-42a1-a609-c8acdb221330",
+            "order": 36,
+            "type": "multiple_choice",
+            "prompt": "What was a reviewer’s responsibility?",
+            "options": [
+              "Force every term into one institutional vocabulary",
+              "Make the basis of a description visible while checking permissions",
+              "Publish every suggestion immediately"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Make the basis of a description visible while checking permissions"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “make the basis of a description visible and to prevent avoidable harm”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "af1c4941-0cae-43ce-a02e-ccaa67b11c38",
+            "order": 37,
+            "type": "gap_fill",
+            "prompt": "What system record made changes and their reasons visible? Use NO MORE THAN TWO WORDS.",
+            "options": [],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "version history"
+              ],
+              "caseSensitive": false,
+              "maxWords": 2
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “kept version history so researchers could see changes”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "1d1c96ea-ed75-4a71-afb1-a6f4b83b67e5",
+            "order": 38,
+            "type": "multiple_choice",
+            "prompt": "How does an interpretation dispute differ from a typing error?",
+            "options": [
+              "Every interpretation can be corrected mechanically",
+              "Changing an interpretation does not settle it in the same way",
+              "Typing errors must never be corrected"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Changing an interpretation does not settle it in the same way"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “replacing one interpretation with the other would not settle the matter in the same way”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "f9422187-dd4b-4bc3-adc2-32f7ab4694c6",
+            "order": 39,
+            "type": "multiple_choice",
+            "prompt": "What risk did a volume-only publication target create?",
+            "options": [
+              "It would guarantee better consent procedures",
+              "It could encourage haste and undervalue maintenance",
+              "It would remove all work on the catalogue"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "It could encourage haste and undervalue maintenance"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “reward hurried publication and make careful maintenance look unproductive”. The accepted response follows the stated question and word limit."
+          },
+          {
+            "id": "92809aca-79c4-4087-adaf-bc6e7afc2775",
+            "order": 40,
+            "type": "multiple_choice",
+            "prompt": "What is the author’s central conclusion?",
+            "options": [
+              "Usefulness requires hiding every uncertainty",
+              "Visible limits and documented decisions can increase an archive’s usefulness",
+              "Every restricted recording is a technical failure"
+            ],
+            "answerPolicy": {
+              "acceptedAnswers": [
+                "Visible limits and documented decisions can increase an archive’s usefulness"
+              ],
+              "caseSensitive": false,
+              "maxWords": null
+            },
+            "competencyTags": [
+              "reading_evidence",
+              "reading_detail"
+            ],
+            "explanation": "Evidence: “preserving the reasons for uncertainty sometimes offered a richer account of the past”. The accepted response follows the stated question and word limit."
+          }
+        ]
+      }
+    ]
+  },
+  "writing": {
+    "durationMinutes": 60,
+    "tasks": [
+      {
+        "task": 1,
+        "title": "Travel to a fictional city learning centre",
+        "prompt": "The table gives the percentage of visits to the fictional Bellhaven Learning Centre made by four main travel modes in 2016, 2020 and 2024. Each visitor selected one main mode, and the same survey method was used in all three years. Summarise the main features and make relevant comparisons. Write at least 150 words. Suggested time: 20 minutes.\n\nMain mode | 2016 | 2020 | 2024\nPrivate car | 52% | 44% | 31%\nBus or rail | 26% | 29% | 35%\nWalking | 16% | 18% | 22%\nCycling | 6% | 9% | 12%\n\nEach column totals 100%. Describe the data; do not invent causes or present this fictional table as a real survey.",
+        "minimumWords": 150,
+        "weight": 1,
+        "criteria": [
+          "task_achievement",
+          "coherence_cohesion",
+          "lexical_resource",
+          "grammatical_range_accuracy"
+        ],
+        "competencyTags": [
+          "writing_task_1",
+          "data_comparison"
+        ]
+      },
+      {
+        "task": 2,
+        "title": "Public decisions and local participation",
+        "prompt": "Some people believe that local residents should have the main say in decisions about public spaces, such as parks, libraries and streets. Others think these decisions should be made mainly by trained professionals. Discuss both views and give your own opinion. Support your ideas with reasons and relevant examples. Write at least 250 words. Suggested time: 40 minutes.",
+        "minimumWords": 250,
+        "weight": 2,
+        "criteria": [
+          "task_response",
+          "coherence_cohesion",
+          "lexical_resource",
+          "grammatical_range_accuracy"
+        ],
+        "competencyTags": [
+          "writing_task_2",
+          "balanced_argument"
+        ]
+      }
+    ]
+  },
+  "speaking": {
+    "durationMinutes": {
+      "minimum": 11,
+      "maximum": 14
+    },
+    "parts": [
+      {
+        "part": 1,
+        "title": "Places and everyday choices",
+        "prompts": [
+          "What do you like about the area where you live?",
+          "How do you usually travel to work or study?",
+          "Do you prefer a quiet place or a busy place for learning? Why?",
+          "What local place would you like to visit more often?"
+        ],
+        "preparationSeconds": 0,
+        "responseSeconds": 240,
+        "competencyTags": [
+          "speaking_part_1",
+          "developed_response"
+        ]
+      },
+      {
+        "part": 2,
+        "title": "A useful shared place",
+        "prompts": [
+          "Describe a place that is useful to people in your community. Say where it is, who uses it, what people can do there, and explain why it matters. You have one minute to prepare and up to two minutes to speak."
+        ],
+        "preparationSeconds": 60,
+        "responseSeconds": 120,
+        "competencyTags": [
+          "speaking_part_2",
+          "narrative"
+        ]
+      },
+      {
+        "part": 3,
+        "title": "Planning for different needs",
+        "prompts": [
+          "Why might different groups disagree about the best use of a public space?",
+          "How can planners find out what residents need?",
+          "Should a rarely used service always be closed? Why or why not?",
+          "How could a community judge whether a change has been successful?"
+        ],
+        "preparationSeconds": 0,
+        "responseSeconds": 300,
+        "competencyTags": [
+          "speaking_part_3",
+          "reasoned_opinion"
+        ]
+      }
+    ]
+  }
+}

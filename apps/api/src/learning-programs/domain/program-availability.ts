@@ -3,15 +3,17 @@ import type { LearningProgramAvailabilityStatusDto } from '@worklingo/contracts'
 interface ProgramAccessInput {
   availabilityStatus: LearningProgramAvailabilityStatusDto;
   slug: string;
+  ieltsReady?: boolean;
 }
 
 export interface ProgramAccess {
-  destination: '/dashboard' | null;
+  destination: '/dashboard' | '/ielts' | null;
   isSelectable: boolean;
 }
 
-const APPROVED_DESTINATIONS: Readonly<Record<string, '/dashboard'>> = {
+const APPROVED_DESTINATIONS: Readonly<Record<string, '/dashboard' | '/ielts'>> = {
   intermediate: '/dashboard',
+  ielts: '/ielts',
 };
 
 export function deriveProgramAccess(input: ProgramAccessInput): ProgramAccess {
@@ -19,7 +21,7 @@ export function deriveProgramAccess(input: ProgramAccessInput): ProgramAccess {
   const isReleased =
     input.availabilityStatus === 'AVAILABLE' || input.availabilityStatus === 'BETA';
 
-  if (!destination || !isReleased) {
+  if (!destination || !isReleased || (input.slug === 'ielts' && !input.ieltsReady)) {
     return { destination: null, isSelectable: false };
   }
 

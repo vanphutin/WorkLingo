@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
 import { DashboardView } from './dashboard-view';
+import { dashboardFixture } from '../learner-dashboard/dashboard.test-fixtures';
+import { LocaleProvider } from '../../i18n/provider';
 
 const mockProgress: LearnerProgressDto = {
   activityAttempts: 4,
@@ -21,6 +23,81 @@ const mockProgress: LearnerProgressDto = {
 afterEach(cleanup);
 
 describe('DashboardView', () => {
+  it('personalizes the greeting and shows independent stored program completion', () => {
+    render(<DashboardView progress={mockProgress} analytics={dashboardFixture} onStartSession={vi.fn()} />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Minh');
+    const intermediate = within(screen.getByRole('article', { name: 'Intermediate' }));
+    expect(intermediate.getByText('3 of 12 lessons completed')).toBeInTheDocument();
+    expect(intermediate.getByRole('progressbar', { name: 'Lesson completion' })).toHaveAttribute('value', '3');
+    expect(intermediate.getByRole('progressbar', { name: 'Lesson completion' })).toHaveAttribute('max', '12');
+    expect(within(screen.getByRole('article', { name: 'Foundation' })).getByText('10 of 10 lessons completed')).toBeInTheDocument();
+    const ielts = within(screen.getByRole('article', { name: 'IELTS' }));
+    expect(ielts.getByText('Coming soon')).toBeInTheDocument();
+    expect(ielts.queryByRole('progressbar')).not.toBeInTheDocument();
+    expect(intermediate.getByRole('link')).toHaveAttribute('href', '/programs');
+  });
+
+  it('shows real UTC activity, accuracy ratios and only assessed skills with text equivalents', () => {
+    render(<DashboardView progress={mockProgress} analytics={dashboardFixture} onStartSession={vi.fn()} />);
+    expect(screen.getByText(/past 14 UTC days/i)).toBeInTheDocument();
+    screen.getAllByText('View data table').forEach((summary) => fireEvent.click(summary));
+    expect(within(screen.getByRole('table', { name: 'Learning activity' })).getByRole('row', { name: /2026-10-14 3 2/ })).toBeInTheDocument();
+    expect(within(screen.getByRole('table', { name: 'Practice accuracy' })).getByRole('row', { name: /2026-10-14 75% 4/ })).toBeInTheDocument();
+    const skills = within(screen.getByRole('table', { name: 'Assessed skills' }));
+    expect(skills.getByRole('row', { name: /Reading 80% 5/ })).toBeInTheDocument();
+    expect(skills.getByRole('row', { name: /Speaking Not assessed/ })).toBeInTheDocument();
+    expect(screen.getByText('Strongest assessed skill: Reading')).toBeInTheDocument();
+    expect(screen.getByText('Practice focus: Listening')).toBeInTheDocument();
+    expect(screen.queryByText(/ielts band|toeic score/i)).not.toBeInTheDocument();
+  });
+
+  it('does not invent a program, level, mission or score for a learner without an active program', () => {
+    render(<DashboardView progress={null} analytics={{ ...dashboardFixture, activeProgramSlug: null, activity: [], accuracyTrend: [], skills: [], programs: [] }} onStartSession={vi.fn()} />);
+    expect(screen.queryByText('FOUNDATION_1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Introduce yourself to a new colleague')).not.toBeInTheDocument();
+    expect(screen.getByText('Choose a program to start learning.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /start.*session/i })).not.toBeInTheDocument();
+    expect(screen.getByText('No active level yet')).toBeInTheDocument();
+  });
+
+  it('keeps a null active level and empty assessment data honest', () => {
+    render(<DashboardView progress={mockProgress} analytics={{ ...dashboardFixture, accuracyTrend: [], skills: [], programs: [{ ...dashboardFixture.programs[0]!, currentLevelCode: null }] }} onStartSession={vi.fn()} />);
+    expect(screen.queryByText('FOUNDATION_1')).not.toBeInTheDocument();
+    expect(screen.getAllByText('No active level yet').length).toBeGreaterThan(0);
+    expect(screen.getByText('Complete an evaluated activity to see accuracy.')).toBeInTheDocument();
+    expect(screen.getByText('No skill assessments in this period.')).toBeInTheDocument();
+  });
+
+  it('does not show stale level or zero progress as facts when no progress is available', () => {
+    render(<DashboardView progress={null} activeProgramSlug={null} onStartSession={vi.fn()} />);
+    expect(screen.getByText('Choose a program to start learning.')).toBeInTheDocument();
+    expect(screen.queryAllByText('0')).toHaveLength(0);
+    expect(screen.queryByText('Curriculum roadmap')).not.toBeInTheDocument();
+  });
+
+  it('shows a published-mission milestone progress bar with the real denominator', () => {
+    render(<DashboardView progress={mockProgress} analytics={dashboardFixture} onStartSession={vi.fn()} roadmap={{ programId: dashboardFixture.programs[0]!.id, enrollmentId: 'enrollment', items: [] }} />);
+    expect(screen.getByRole('progressbar', { name: 'Next milestone' })).toHaveAttribute('value', '2');
+    expect(screen.getByRole('progressbar', { name: 'Next milestone' })).toHaveAttribute('max', '8');
+  });
+
+  it('keeps session creation usable when analytics fails and offers an independent retry', async () => {
+    const retry = vi.fn();
+    render(<DashboardView progress={mockProgress} analytics={null} analyticsError="Network failure" onRetryAnalytics={retry} onStartSession={vi.fn()} />);
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to load dashboard insights');
+    fireEvent.click(screen.getByRole('button', { name: 'Retry insights' }));
+    expect(retry).toHaveBeenCalledOnce();
+    expect(screen.getByRole('button', { name: /start 60-minute session/i })).toBeEnabled();
+  });
+
+  it('localizes the new dashboard insights in Vietnamese', () => {
+    render(<LocaleProvider initialLocale="vi"><DashboardView progress={mockProgress} analytics={dashboardFixture} onStartSession={vi.fn()} /></LocaleProvider>);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Chào Minh');
+    screen.getAllByText('Xem bảng dữ liệu').forEach((summary) => fireEvent.click(summary));
+    expect(screen.getByRole('table', { name: 'Hoạt động học tập' })).toBeInTheDocument();
+    expect(screen.getByText('Đã hoàn thành 3 trên 12 bài học')).toBeInTheDocument();
+  });
+
   it('makes the saved curriculum session the primary action instead of creating another session', () => {
     render(<DashboardView progress={mockProgress} onStartSession={vi.fn()} roadmap={{
       programId: '11111111-1111-4111-8111-111111111111',

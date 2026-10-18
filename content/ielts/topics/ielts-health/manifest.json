@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Health",
+  "description": "Build contextual IELTS vocabulary through a community centre designing a fictional wellbeing programme. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-health-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "e0801504-bffc-481b-ae42-45d44f3e4445",
+      "focusChunkSlugs": [
+        "ielts-health-public-health",
+        "ielts-health-balanced-diet",
+        "ielts-health-physical-activity",
+        "ielts-health-mental-wellbeing",
+        "ielts-health-preventive-care",
+        "ielts-health-healthcare-access",
+        "ielts-health-sedentary-lifestyle",
+        "ielts-health-sleep-quality",
+        "ielts-health-health-literacy",
+        "ielts-health-social-support",
+        "ielts-health-work-related-stress",
+        "ielts-health-quality-of-life"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-health-proposal",
+          "title": "Planning proposal: Health"
+        },
+        {
+          "slug": "ielts-health-discussion",
+          "title": "Residents discuss alternatives: Health"
+        }
+      ]
+    }
+  ]
+}

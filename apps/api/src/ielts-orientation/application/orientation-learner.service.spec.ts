@@ -24,11 +24,12 @@ const version = { id: versionId, orientationId, version: 1, title: content.title
 const progress = { id: '66666666-6666-4666-8666-666666666666', learnerId, orientationVersionId: versionId, currentSlideIndex: 0, revision: 1, answers: [], completedAt: null, createdAt: now, updatedAt: now, orientationVersion: version };
 const passedSkills = Object.fromEntries(['reading', 'listening', 'speaking', 'writing'].map((skill) => [skill, { score: 1, threshold: 0.8, passed: true, evaluatedCount: 1, pendingCount: 0 }]));
 
-async function setup(overrides: { profile?: unknown; enrollment?: unknown; checkpoint?: unknown; existingProgress?: unknown } = {}) {
+async function setup(overrides: { profile?: unknown; enrollment?: unknown; checkpoint?: unknown; existingProgress?: unknown; earlyAccess?: boolean } = {}) {
+  const profile = overrides.profile === undefined ? { onboardingStatus: 'COMPLETE', ieltsEarlyAccess: overrides.earlyAccess ?? false, user: { status: 'ACTIVE', role: 'LEARNER' } } : overrides.profile;
   const tx = {
     $executeRaw: vi.fn(),
     $queryRaw: vi.fn(),
-    learnerProfile: { findUnique: vi.fn().mockResolvedValue(overrides.profile === undefined ? { onboardingStatus: 'COMPLETE' } : overrides.profile) },
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(profile) },
     learnerProgramEnrollment: { findUnique: vi.fn().mockResolvedValue(overrides.enrollment === undefined ? { id: 'enrollment' } : overrides.enrollment) },
     checkpointAssessment: { findFirst: vi.fn().mockResolvedValue(overrides.checkpoint === undefined ? { status: 'passed', canAdvance: true, skills: passedSkills } : overrides.checkpoint) },
     ieltsOrientation: { findUnique: vi.fn().mockResolvedValue({ id: orientationId, currentPublishedVersion: version }) },
@@ -40,7 +41,7 @@ async function setup(overrides: { profile?: unknown; enrollment?: unknown; check
     },
   };
   const database = {
-    learnerProfile: { findUnique: vi.fn().mockResolvedValue(overrides.profile === undefined ? { onboardingStatus: 'COMPLETE' } : overrides.profile) },
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(profile) },
     learnerProgramEnrollment: { findUnique: vi.fn().mockResolvedValue(overrides.enrollment === undefined ? { id: 'enrollment' } : overrides.enrollment) },
     checkpointAssessment: { findFirst: vi.fn().mockResolvedValue(overrides.checkpoint === undefined ? { status: 'passed', canAdvance: true, skills: passedSkills } : overrides.checkpoint) },
     ieltsOrientation: { findUnique: vi.fn().mockResolvedValue({ id: orientationId, currentPublishedVersion: version }) },
@@ -62,6 +63,39 @@ async function setup(overrides: { profile?: unknown; enrollment?: unknown; check
 }
 
 describe('OrientationLearnerService', () => {
+  it('allows a granted learner without Foundation evidence to view availability and start without completing it', async () => {
+    const { service, database, tx } = await setup({ checkpoint: null, earlyAccess: true });
+    await expect(service.getStatus(learnerId)).resolves.toMatchObject({ state: 'available', reasons: [] });
+    await expect(service.start(learnerId)).resolves.toMatchObject({ state: 'in_progress', progress: { currentSlideIndex: 0, completedAt: null, answers: [] } });
+    expect(database.checkpointAssessment.findFirst).toHaveBeenCalled();
+    expect(tx.orientationProgress.create).toHaveBeenCalledWith(expect.objectContaining({ data: { learnerId, orientationVersionId: versionId, answers: [] } }));
+  });
+
+  it('relocks availability and new starts after revocation without inventing Foundation evidence', async () => {
+    const { service, database, tx } = await setup({ checkpoint: null, earlyAccess: true });
+    const revoked = { onboardingStatus: 'COMPLETE', ieltsEarlyAccess: false, user: { status: 'ACTIVE', role: 'LEARNER' } };
+    database.learnerProfile.findUnique.mockResolvedValue(revoked);
+    tx.learnerProfile.findUnique.mockResolvedValue(revoked);
+    await expect(service.getStatus(learnerId)).resolves.toMatchObject({ state: 'locked', reasons: ['FOUNDATION_CHECKPOINT_REQUIRED'] });
+    await expect(service.start(learnerId)).rejects.toBeInstanceOf(ConflictException);
+    expect(tx.orientationProgress.create).not.toHaveBeenCalled();
+  });
+
+  it.each(['onboarding', 'enrollment', 'publication'] as const)('keeps the %s requirement for granted learners', async (missing) => {
+    const { service, database, tx } = await setup({ checkpoint: null, earlyAccess: true,
+      ...(missing === 'onboarding' ? { profile: { onboardingStatus: 'PENDING', ieltsEarlyAccess: true, user: { status: 'ACTIVE', role: 'LEARNER' } } } : {}),
+      ...(missing === 'enrollment' ? { enrollment: null } : {}),
+    });
+    if (missing === 'publication') {
+      database.ieltsOrientation.findUnique.mockResolvedValue(null);
+      tx.ieltsOrientation.findUnique.mockResolvedValue(null);
+    }
+    const reason = { onboarding: 'ONBOARDING_REQUIRED', enrollment: 'INTERMEDIATE_ENROLLMENT_REQUIRED', publication: 'ORIENTATION_NOT_PUBLISHED' }[missing];
+    await expect(service.getStatus(learnerId)).resolves.toMatchObject({ state: 'locked', reasons: [reason] });
+    await expect(service.start(learnerId)).rejects.toBeInstanceOf(ConflictException);
+    expect(tx.orientationProgress.create).not.toHaveBeenCalled();
+  });
+
   it('reports explicit lock reasons before Foundation evidence is complete', async () => {
     const { service } = await setup({ checkpoint: null });
     await expect(service.getStatus(learnerId)).resolves.toMatchObject({ state: 'locked', reasons: ['FOUNDATION_CHECKPOINT_REQUIRED'], presentation: null });

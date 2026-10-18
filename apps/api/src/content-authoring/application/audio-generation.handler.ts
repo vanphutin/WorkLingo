@@ -95,6 +95,9 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
           voiceConfig: {
             ...payload.voiceConfig,
             ...(synthesized.provider ? { voice: synthesized.provider.voice } : {}),
+            ...(synthesized.provider?.speakerVoices ? {
+              speakerVoices: synthesized.provider.speakerVoices.map((assignment) => ({ ...assignment })),
+            } : {}),
           } as Prisma.InputJsonValue,
         },
       });

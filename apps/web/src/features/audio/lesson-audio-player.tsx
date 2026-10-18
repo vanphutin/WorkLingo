@@ -3,19 +3,53 @@
 import { useT } from '../../i18n/provider';
 import { audioMessages } from '../../i18n/messages/audio';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AudioSettings } from '@worklingo/contracts';
 
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import { BrowserSpeechControls } from './browser-speech-controls';
+import { claimMediaPlayback, stopMediaPlayback, subscribeNativeMedia } from './playback-owner';
 
 const DEFAULT_SETTINGS: AudioSettings = {
   browserVoiceId: null,
   sourceId: 'system-default',
 };
 
+function LessonMedia(props: { readonly src: string; readonly onError: () => void }) {
+  const t = useT('audio', audioMessages);
+  const audio = useRef<HTMLAudioElement>(null);
+  useEffect(() => {
+    const media = audio.current;
+    const unsubscribe = subscribeNativeMedia();
+    return () => {
+      if (media) stopMediaPlayback(media);
+      unsubscribe();
+    };
+  }, []);
+
+  return (
+    <audio
+      aria-label={t('lessonAudio')}
+      ref={audio}
+      controls
+      onPlay={(event) => {
+        claimMediaPlayback(event.currentTarget);
+      }}
+      onError={(event) => {
+        stopMediaPlayback(event.currentTarget);
+        props.onError();
+      }}
+      preload="metadata"
+      src={props.src}
+    >
+      {t('playbackUnsupported')}
+    </audio>
+  );
+}
+
 export function LessonAudioPlayer(props: {
   readonly audioUrl: string;
+  readonly dialogue?: boolean;
   readonly preferBrowserSpeech?: boolean;
   readonly text: string;
 }) {
@@ -43,6 +77,8 @@ export function LessonAudioPlayer(props: {
   ) {
     return (
       <BrowserSpeechControls
+        itemId={props.audioUrl}
+        dialogue={props.dialogue === true}
         lang="en-US"
         preferredVoiceId={settings.browserVoiceId}
         text={props.text}
@@ -64,6 +100,8 @@ export function LessonAudioPlayer(props: {
           {t('lessonUnavailable')}
         </p>
         <BrowserSpeechControls
+          itemId={props.audioUrl}
+          dialogue={props.dialogue === true}
           lang="en-US"
           preferredVoiceId={settings.browserVoiceId}
           text={props.text}
@@ -73,14 +111,10 @@ export function LessonAudioPlayer(props: {
   }
 
   return (
-    <audio
-      aria-label={t('lessonAudio')}
-      controls
+    <LessonMedia
+      key={props.audioUrl}
       onError={() => setMediaFailed(true)}
-      preload="metadata"
       src={props.audioUrl}
-    >
-      {t('playbackUnsupported')}
-    </audio>
+    />
   );
 }

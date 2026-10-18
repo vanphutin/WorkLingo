@@ -1,0 +1,478 @@
+[
+  {
+    "assetId": "7b4c65f7-5b74-4af9-aeac-ac85b50d76e5",
+    "file": "mock-part-1.wav",
+    "checksum": "09384337c08f6c80e4264383791116e023bcb6b6762f1ebab6ff22d6f32e8d9a",
+    "byteSize": 20313698,
+    "durationSeconds": 423.201125,
+    "speechSeconds": 352.1935,
+    "provenance": {
+      "adapterName": "local-windows-speech",
+      "scriptHash": "4c8a7f5e95e386ccfbcc8d8f58f58e37a979f9d3606f46d677de54def909041d",
+      "voices": [
+        "Microsoft David",
+        "Microsoft Zira"
+      ],
+      "rate": 0,
+      "original": true,
+      "transcriptHash": "5a24fa2bc826dc1a4c8cb17a8245c2d7ff934700a9152ef0946e5cb65e480b0d"
+    },
+    "timeline": [
+      {
+        "kind": "speech",
+        "seconds": 27.2195
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Read ten questions and their response instructions",
+        "questionOrders": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 26.8695
+      },
+      {
+        "kind": "speech",
+        "seconds": 29.5545
+      },
+      {
+        "kind": "speech",
+        "seconds": 31.4145
+      },
+      {
+        "kind": "speech",
+        "seconds": 28.8745
+      },
+      {
+        "kind": "speech",
+        "seconds": 7.4645
+      },
+      {
+        "kind": "pause",
+        "seconds": 14.201541666666667,
+        "purpose": "Review the remaining questions before the second half",
+        "questionOrders": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.5445
+      },
+      {
+        "kind": "speech",
+        "seconds": 31.0145
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.8945
+      },
+      {
+        "kind": "speech",
+        "seconds": 30.2995
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.7395
+      },
+      {
+        "kind": "speech",
+        "seconds": 26.8845
+      },
+      {
+        "kind": "speech",
+        "seconds": 11.4195
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Check the ten completed answers and word limits",
+        "questionOrders": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    ]
+  },
+  {
+    "assetId": "b0151691-ed35-4420-af65-033280993711",
+    "file": "mock-part-2.wav",
+    "checksum": "b9366c13f0e5b0414211c6fd05868e2119b1e69d6f1ed75f2574634d95c11a67",
+    "byteSize": 20258042,
+    "durationSeconds": 422.041625,
+    "speechSeconds": 351.03399999999993,
+    "provenance": {
+      "adapterName": "local-windows-speech",
+      "scriptHash": "d2c513e5e857102865770cc51a982f7565f41433ba3125fbb71ae36c724353dc",
+      "voices": [
+        "Microsoft David",
+        "Microsoft Zira"
+      ],
+      "rate": 0,
+      "original": true,
+      "transcriptHash": "2aa1e8ace8a4a37580c49e23d6aff65eb0eb4cf266fc4f7df7e8bf29a6ee4d4f"
+    },
+    "timeline": [
+      {
+        "kind": "speech",
+        "seconds": 27.7095
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Read ten questions and their response instructions",
+        "questionOrders": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 30.8595
+      },
+      {
+        "kind": "speech",
+        "seconds": 32.3845
+      },
+      {
+        "kind": "speech",
+        "seconds": 32.6195
+      },
+      {
+        "kind": "speech",
+        "seconds": 36.9295
+      },
+      {
+        "kind": "speech",
+        "seconds": 7.4645
+      },
+      {
+        "kind": "pause",
+        "seconds": 14.201541666666667,
+        "purpose": "Review the remaining questions before the second half",
+        "questionOrders": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 34.6645
+      },
+      {
+        "kind": "speech",
+        "seconds": 39.0845
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.1145
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.3695
+      },
+      {
+        "kind": "speech",
+        "seconds": 31.2295
+      },
+      {
+        "kind": "speech",
+        "seconds": 11.6045
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Check the ten completed answers and word limits",
+        "questionOrders": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]
+      }
+    ]
+  },
+  {
+    "assetId": "c810eb5d-b4e8-4ba7-af42-7b625a0b43f5",
+    "file": "mock-part-3.wav",
+    "checksum": "eda3d11f38323a249f8c7cedff4c386e40209983be1457d52f766ed7b404a677",
+    "byteSize": 21559058,
+    "durationSeconds": 449.146125,
+    "speechSeconds": 378.13849999999996,
+    "provenance": {
+      "adapterName": "local-windows-speech",
+      "scriptHash": "2c61fda3759e2c5c53ebc6398ef601de1157bd53bb57ecf5b72b5cbf13dcccf2",
+      "voices": [
+        "Microsoft David",
+        "Microsoft Zira",
+        "Microsoft Mark"
+      ],
+      "rate": 0,
+      "original": true,
+      "transcriptHash": "15ddd440dd026984d80649274cdc4f8760223aa84b2f21a2ad87cc2272b411e5"
+    },
+    "timeline": [
+      {
+        "kind": "speech",
+        "seconds": 28.3095
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Read ten questions and their response instructions",
+        "questionOrders": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 29.6795
+      },
+      {
+        "kind": "speech",
+        "seconds": 38.3395
+      },
+      {
+        "kind": "speech",
+        "seconds": 30.0945
+      },
+      {
+        "kind": "speech",
+        "seconds": 35.0395
+      },
+      {
+        "kind": "speech",
+        "seconds": 31.5745
+      },
+      {
+        "kind": "speech",
+        "seconds": 7.4645
+      },
+      {
+        "kind": "pause",
+        "seconds": 14.201541666666667,
+        "purpose": "Review the remaining questions before the second half",
+        "questionOrders": [
+          26,
+          27,
+          28,
+          29,
+          30
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 32.1195
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.6545
+      },
+      {
+        "kind": "speech",
+        "seconds": 31.0495
+      },
+      {
+        "kind": "speech",
+        "seconds": 33.7245
+      },
+      {
+        "kind": "speech",
+        "seconds": 35.1895
+      },
+      {
+        "kind": "speech",
+        "seconds": 11.8995
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Check the ten completed answers and word limits",
+        "questionOrders": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ]
+      }
+    ]
+  },
+  {
+    "assetId": "c15d19b3-0e06-468c-a46d-540a31150c61",
+    "file": "mock-part-4.wav",
+    "checksum": "8c04695524930ec94f1f4ecd3992fbba4d4dfaf0695f5c994f0ae84d268fcc09",
+    "byteSize": 23789378,
+    "durationSeconds": 495.611125,
+    "speechSeconds": 424.60349999999994,
+    "provenance": {
+      "adapterName": "local-windows-speech",
+      "scriptHash": "0ae7029746971295924a827cbf53c1af69e6c7ee148c185582fab08614b5a7cc",
+      "voices": [
+        "Microsoft David",
+        "Microsoft Zira"
+      ],
+      "rate": 0,
+      "original": true,
+      "transcriptHash": "56943f97407dff412dad6a5c5d937b25875ed54fa5463d7f5e64b88d84255bf7"
+    },
+    "timeline": [
+      {
+        "kind": "speech",
+        "seconds": 28.4495
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Read ten questions and their response instructions",
+        "questionOrders": [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 36.8245
+      },
+      {
+        "kind": "speech",
+        "seconds": 34.2845
+      },
+      {
+        "kind": "speech",
+        "seconds": 37.8745
+      },
+      {
+        "kind": "speech",
+        "seconds": 38.2695
+      },
+      {
+        "kind": "speech",
+        "seconds": 37.9495
+      },
+      {
+        "kind": "speech",
+        "seconds": 7.4645
+      },
+      {
+        "kind": "pause",
+        "seconds": 14.201541666666667,
+        "purpose": "Review the remaining questions before the second half",
+        "questionOrders": [
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      {
+        "kind": "speech",
+        "seconds": 39.0245
+      },
+      {
+        "kind": "speech",
+        "seconds": 39.7195
+      },
+      {
+        "kind": "speech",
+        "seconds": 38.4345
+      },
+      {
+        "kind": "speech",
+        "seconds": 36.5895
+      },
+      {
+        "kind": "speech",
+        "seconds": 37.8745
+      },
+      {
+        "kind": "speech",
+        "seconds": 11.8445
+      },
+      {
+        "kind": "pause",
+        "seconds": 28.403041666666667,
+        "purpose": "Check the ten completed answers and word limits",
+        "questionOrders": [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      }
+    ]
+  }
+]

@@ -8,10 +8,12 @@ import { useCallback, useEffect, useState } from 'react';
 import type { AdminAudioSettings } from '@worklingo/contracts';
 
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
+import { useVoiceRegistry } from './use-voice-registry';
 
 export function AdminAudioSettingsPanel() {
   const t = useT('audio', audioMessages);
   const { locale } = useLocalePreference();
+  const registry = useVoiceRegistry();
   const [settings, setSettings] = useState<AdminAudioSettings | null>(null);
   const [loadError, setLoadError] = useState<{ cause: unknown } | null>(null);
   const [saving, setSaving] = useState(false);
@@ -108,6 +110,8 @@ export function AdminAudioSettingsPanel() {
               {selected.defaultVoiceId ?? t('providerDefault')}
             </option>
           </select>
+          <p className="audio-settings-note">{t('serverRotationUnavailable')}</p>
+          <p className="audio-settings-note">{t('providerLocales', { locales: selected.supportedLocales.join(', ') })}</p>
           {selected.simulation ? (
             <p className="audio-settings-warning">{t('simulationWarning')}</p>
           ) : null}
@@ -120,6 +124,34 @@ export function AdminAudioSettingsPanel() {
         {saved ? <p role="status">{t('providerSaved')}</p> : null}
         {saveError ? <p className="field-error" role="alert">{localizedError(saveError.cause, locale)}</p> : null}
       </div>
+      <fieldset className="audio-source-list">
+        <legend>{t('deviceVoiceRegistry')}</legend>
+        <p className="audio-settings-note">{t('deviceRegistryScope')}</p>
+        <label className="audio-source-option">
+          <input
+            type="checkbox"
+            checked={registry.rotationEnabled}
+            disabled={!registry.supported}
+            onChange={(event) => registry.store?.setRotation(event.target.checked)}
+          />
+          <span><strong>{t('rotateVoices')}</strong><small>{t('rotationDescription')}</small></span>
+        </label>
+        {!registry.supported ? <p>{t('speechUnsupported')}</p> : registry.voices.length === 0 ? (
+          <p role="status">{t('voicesUnavailable')}</p>
+        ) : registry.voices.map((voice) => (
+          <label className="audio-source-option" key={voice.id}>
+            <input
+              type="checkbox"
+              checked={!registry.disabledIds.has(voice.id)}
+              onChange={(event) => registry.store?.setEnabled(voice.id, event.target.checked)}
+            />
+            <span>
+              <strong>{voice.displayName} ({voice.locale})</strong>
+              <small>{voice.id} · {voice.localService ? t('deviceVoiceService') : t('remoteVoiceService')}</small>
+            </span>
+          </label>
+        ))}
+      </fieldset>
     </section>
   );
 }

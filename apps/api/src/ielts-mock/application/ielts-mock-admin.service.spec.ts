@@ -10,6 +10,12 @@ const command = { expectedRevision: 1, idempotencyKey: '33333333-3333-4333-8333-
 async function setup(status = 'DRAFT') { const tx = { $executeRaw: vi.fn(), mutationReceipt: { findUnique: vi.fn() }, ieltsMockTest: { findUnique: vi.fn().mockResolvedValue({ id: mockId, status, draftRevision: 1, draftContent: INITIAL_IELTS_ACADEMIC_MOCK, versions: [] }), updateMany: vi.fn().mockResolvedValue({ count: 1 }) }, audioArtifact: { count: vi.fn().mockResolvedValue(0) } }; const database = { $transaction: vi.fn((work: (value: typeof tx) => unknown) => work(tx)) }; const module = await Test.createTestingModule({ providers: [IeltsMockAdminService, { provide: PrismaService, useValue: database }] }).compile(); return { service: module.get(IeltsMockAdminService), tx }; }
 
 describe('IeltsMockAdminService publish gate', () => {
+  it('rejects a schema-valid V2 draft whose audio/content qualification was only declared', async () => {
+    const { service, tx } = await setup();
+    const base = await tx.ieltsMockTest.findUnique();
+    tx.ieltsMockTest.findUnique.mockResolvedValue({ ...base, draftContent: { ...INITIAL_IELTS_ACADEMIC_MOCK, schemaVersion: 2, allowedModes: ['PRACTICE', 'EXAM_SIMULATION'], qualification: { reviewedBy: 'Declared only', reviewedAt: new Date().toISOString(), evidenceRevision: 'unverified', qualifiedModes: ['PRACTICE','EXAM_SIMULATION'] } } } as typeof base);
+    expect((await service.validate(mockId, command)).canPublish).toBe(false);
+  });
   it('rejects publication unless the exact draft was validated', async () => { const { service } = await setup(); await expect(service.publish(actorId, mockId, command)).rejects.toBeInstanceOf(ConflictException); });
   it('rejects publication when listening audio is absent or not release-ready', async () => { const { service } = await setup('VALIDATED'); await expect(service.publish(actorId, mockId, command)).rejects.toBeInstanceOf(UnprocessableEntityException); });
   it('locks and conditionally validates the same draft revision', async () => { const { service, tx } = await setup(); await service.validate(mockId, command); expect(tx.$executeRaw).toHaveBeenCalledOnce(); expect(tx.ieltsMockTest.updateMany).toHaveBeenCalledWith(expect.objectContaining({ where: { id: mockId, draftRevision: 1 } })); });

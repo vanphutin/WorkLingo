@@ -1,8 +1,8 @@
-import { adminIeltsMockSchema, ieltsMockReportSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
+import { ieltsMockRecordingSchema, adminIeltsMockSchema, ieltsMockReportSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
 import { z } from 'zod';
 import { ApiError } from './api-client';
 
-const pendingAttemptSchema = z.object({ id: z.string(), learnerId: z.string(), revision: z.number(), responses: z.record(z.string(), z.string()), submittedAt: z.union([z.string(), z.date(), z.null()]), mockTestVersion: z.object({ version: z.number() }) });
+const pendingAttemptSchema = z.object({ policyVersion: z.enum(['legacy-v1', 'v2']).optional(), recordings: z.array(ieltsMockRecordingSchema).optional(), id: z.string(), learnerId: z.string(), revision: z.number(), responses: z.record(z.string(), z.string()), submittedAt: z.union([z.string(), z.date(), z.null()]), mockTestVersion: z.object({ version: z.number() }) });
 const mockPageSchema = z.object({ items: z.array(adminIeltsMockSchema), nextCursor: z.string().nullable() });
 const pendingPageSchema = z.object({ items: z.array(pendingAttemptSchema), nextCursor: z.string().nullable() });
 const errorSchema = z.object({ code: z.string().optional(), message: z.union([z.string(), z.array(z.string())]).optional() });

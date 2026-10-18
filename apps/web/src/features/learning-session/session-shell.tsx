@@ -33,6 +33,7 @@ interface SessionShellProps {
   readonly isCompleted?: boolean;
   readonly contextLabel?: string;
   readonly completionHref?: string;
+  readonly completionLabel?: string;
 }
 
 
@@ -74,6 +75,7 @@ export function SessionShell({
   isCompleted = false,
   contextLabel = 'Workplace Learning Session',
   completionHref = '/dashboard',
+  completionLabel,
 }: SessionShellProps) {
   const t = useT('learningSession', learningSessionMessages);
   const { locale } = useLocalePreference();
@@ -355,7 +357,7 @@ export function SessionShell({
                 : t('sessionCompleteDescription', { count: session.plan.blocks.length, minutes: session.durationMinutes })}
               </p>
               <Link href={completionHref} className="primary-action-button inline-button">
-                {isPlacement ? t('reviewAssessment') : t('returnDashboard')}
+                {completionLabel ?? (isPlacement ? t('reviewAssessment') : t('returnDashboard'))}
               </Link>
             </section>
           ) : (

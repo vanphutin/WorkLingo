@@ -15,6 +15,7 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { hasIeltsEarlyAccess } from '../../ielts-access/ielts-early-access.js';
 
 type VersionRecord = {
   id: string; moduleId: string; version: number; title: string; content: Prisma.JsonValue; status: string;
@@ -36,14 +37,14 @@ export class IeltsBridgeLearnerService {
     const progress = await this.database.ieltsBridgeProgress.findMany({
       where: { learnerId }, include: { moduleVersion: true }, orderBy: { createdAt: 'asc' },
     });
-    const orientationComplete = await this.hasCompletedOrientation(learnerId);
-    if (!orientationComplete && progress.length === 0) {
+    const canEnter = await this.hasCompletedOrientation(learnerId) || await hasIeltsEarlyAccess(this.database, learnerId);
+    if (!canEnter && progress.length === 0) {
       return ieltsBridgeCatalogSchema.parse({
         eligible: false, lockedReason: 'ORIENTATION_REQUIRED', bridgeCompleted: false, modules: [],
       });
     }
 
-    const currentModules = orientationComplete ? await this.database.ieltsBridgeModule.findMany({
+    const currentModules = canEnter ? await this.database.ieltsBridgeModule.findMany({
       where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } },
       include: { currentPublishedVersion: true }, orderBy: { slug: 'asc' },
     }) : [];
@@ -65,7 +66,7 @@ export class IeltsBridgeLearnerService {
     });
     const required = modules.filter((module) => module.required);
     return ieltsBridgeCatalogSchema.parse({
-      eligible: orientationComplete, lockedReason: orientationComplete ? null : 'ORIENTATION_REQUIRED',
+      eligible: canEnter, lockedReason: canEnter ? null : 'ORIENTATION_REQUIRED',
       bridgeCompleted: required.length >= 4 && required.every((module) => module.progress?.completedAt != null), modules,
     });
   }
@@ -77,7 +78,7 @@ export class IeltsBridgeLearnerService {
         where: { learnerId_moduleId: { learnerId, moduleId } }, include: { moduleVersion: true },
       });
       if (existing) return this.toSession(existing);
-      if (!await this.hasCompletedOrientation(learnerId, transaction)) {
+      if (!await this.hasCompletedOrientation(learnerId, transaction) && !await hasIeltsEarlyAccess(transaction, learnerId)) {
         throw new ConflictException({ code: 'IELTS_BRIDGE_LOCKED', reason: 'ORIENTATION_REQUIRED' });
       }
       const module = await transaction.ieltsBridgeModule.findUnique({

@@ -183,10 +183,19 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
       return left.order - right.order;
     });
 
+    if (type === 'respond' && input.productivePairPerRespondBlock) {
+      const speaking = matchingActivities.filter(activity => activity.activityType === 'speaking').slice(0, occurrences);
+      const writing = matchingActivities.filter(activity => activity.activityType === 'writing').slice(0, occurrences);
+      if (speaking.length !== occurrences || writing.length !== occurrences) throw new InvalidLessonPlanError('IELTS respond blocks require distinct speaking and writing tasks');
+      // Preserve scheduler priority within each skill, then pair the two skills.
+      // Source order or a due-review priority must not put two speaking tasks in one block.
+      matchingActivities.splice(0, matchingActivities.length, ...speaking.flatMap((activity, index) => [activity, writing[index]!]));
+    }
+
     // A shorter session selects only the activities needed for its canonical blocks.
     // Respond keeps two activities when available so speaking and writing remain covered.
     const selectedActivityCount = type === 'respond'
-      ? Math.max(2, occurrences)
+      ? (input.productivePairPerRespondBlock ? occurrences * 2 : Math.max(2, occurrences))
       : occurrences;
     matchingActivities.splice(selectedActivityCount);
 
@@ -208,6 +217,10 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
     const activities = distributedByType.get(type)?.[bucketIndex] ?? [];
     if (activities.length === 0) {
       throw new InvalidLessonPlanError(`Lesson has an empty ${type} block`);
+    }
+    if (input.productivePairPerRespondBlock && type === 'respond' &&
+        (!activities.some(activity => activity.activityType === 'speaking') || !activities.some(activity => activity.activityType === 'writing'))) {
+      throw new InvalidLessonPlanError('IELTS respond blocks require distinct speaking and writing tasks');
     }
 
     return {

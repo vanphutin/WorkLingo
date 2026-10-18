@@ -21,6 +21,7 @@ import { PrismaService } from '../../common/database/prisma.service.js';
 import { TextToSpeechProviderRegistry } from '../../ai-gateway/application/text-to-speech-provider.registry.js';
 import { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
 import { SIMULATION_AUDIO_LABEL } from '../../ai-gateway/infrastructure/fake-tts.adapter.js';
+import { AZURE_AUDIO_GENERATION_VERSION } from '../../ai-gateway/infrastructure/azure-dialogue-ssml.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { JobRunnerService } from '../../jobs/application/job-runner.service.js';
@@ -67,7 +68,11 @@ export class AudioGenerationService implements OnApplicationShutdown {
     const providerId = input.providerId ?? this.tts.providerName;
     const descriptor = this.ttsProviders.list().find((candidate) => candidate.id === providerId);
     const voiceId = input.voiceId ?? descriptor?.defaultVoiceId ?? '';
-    const voiceConfig = { ...(input.voiceConfig ?? {}), voice: voiceId };
+    const voiceConfig: Record<string, unknown> = { ...(input.voiceConfig ?? {}), voice: voiceId };
+    // Audit fields come from synthesis, never from the caller. Version participates
+    // in both variant and request hashes so pre-dialogue artifacts cannot be reused.
+    delete voiceConfig.speakerVoices;
+    if (providerId === 'azure-speech') voiceConfig.generationVersion = AZURE_AUDIO_GENERATION_VERSION;
     const normalizedVoiceConfig = canonicalizeJson(voiceConfig) as Record<string, unknown>;
     const variantKey = `${providerId}:${voiceId}:${createHash('sha256')
       .update(JSON.stringify(normalizedVoiceConfig)).digest('hex')}`;
@@ -370,6 +375,9 @@ export class AudioGenerationService implements OnApplicationShutdown {
           voiceConfig: {
             ...voiceConfig,
             ...(synthesized.provider ? { voice: synthesized.provider.voice } : {}),
+            ...(synthesized.provider?.speakerVoices ? {
+              speakerVoices: synthesized.provider.speakerVoices.map((assignment) => ({ ...assignment })),
+            } : {}),
           },
           failureSummary: isStale ? 'Script changed during generation' : null,
         },

@@ -29,6 +29,7 @@ export interface LearnerActivityDto {
 }
 
 export interface LearningSessionDto {
+  readonly ieltsTopic?: { readonly topicVersionId: string; readonly title: string; readonly packSlug: string };
   readonly id: string;
   readonly clientSessionId: string;
   readonly curriculumRevisionId: string | null;

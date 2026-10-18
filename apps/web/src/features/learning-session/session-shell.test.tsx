@@ -195,6 +195,11 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('returns an IELTS topic session to its study catalogue using the supplied context label', () => {
+    render(<SessionShell session={createMockSession()} currentActivity={null} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()} isCompleted contextLabel="IELTS · Education" completionHref="/ielts/learn" completionLabel="Back to IELTS study" />);
+    expect(screen.getByRole('link', { name: 'Back to IELTS study' })).toHaveAttribute('href', '/ielts/learn');
+    expect(screen.getByText('IELTS · Education')).toBeVisible();
+  });
   it('preserves a writing session and its response when switching from English to Vietnamese', async () => {
     const loadDraft = vi.spyOn(apiClient, 'getActivityDraft').mockResolvedValue(null);
     function SwitchLocale() {

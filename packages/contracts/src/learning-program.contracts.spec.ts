@@ -26,11 +26,18 @@ describe('learning program contracts', () => {
     expect(learningProgramCatalogSchema.parse(input)).toEqual(input);
   });
 
+  it('accepts IELTS guided entry and a locked destination without adding DTO fields', () => {
+    for (const destination of ['/ielts', null]) {
+      const input = { programs: [{ ...intermediateProgram, slug: 'ielts', destination }] };
+      expect(learningProgramCatalogSchema.parse(input)).toEqual(input);
+    }
+  });
+
   it('rejects unknown icon keys, destinations and extra properties', () => {
     expect(() => learningProgramIconKeySchema.parse('rocket')).toThrow();
     expect(() =>
       learningProgramCatalogSchema.parse({
-        programs: [{ ...intermediateProgram, destination: '/ielts' }],
+        programs: [{ ...intermediateProgram, destination: '/ielts/mock' }],
       }),
     ).toThrow();
     expect(() =>

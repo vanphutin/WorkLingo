@@ -34,6 +34,8 @@ import { IeltsBridgeModule } from './ielts-bridge/ielts-bridge.module.js';
 import { IeltsIntegratedPracticeModule } from './ielts-integrated-practice/ielts-integrated-practice.module.js';
 import { IeltsBandCurriculumModule } from './ielts-band-curriculum/ielts-band-curriculum.module.js';
 import { IeltsMockModule } from './ielts-mock/ielts-mock.module.js';
+import { IeltsFlowModule } from './ielts-flow/ielts-flow.module.js';
+import { IeltsStudyModule } from './ielts-study/ielts-study.module.js';
 
 @Module({
   imports: [
@@ -67,6 +69,8 @@ import { IeltsMockModule } from './ielts-mock/ielts-mock.module.js';
     IeltsIntegratedPracticeModule,
     IeltsBandCurriculumModule,
     IeltsMockModule,
+    IeltsStudyModule,
+    IeltsFlowModule,
   ],
   providers: [
     SafeLoggerService,

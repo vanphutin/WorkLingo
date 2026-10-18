@@ -32,6 +32,7 @@ export function WritingActivity({
   const requiredPhrases = Array.isArray(activity.payload.requiredPhrases)
     ? activity.payload.requiredPhrases.filter((phrase): phrase is string => typeof phrase === 'string')
     : [];
+  const requiredPhraseCount = typeof activity.payload.requiredPhraseCount === 'number' ? activity.payload.requiredPhraseCount : requiredPhrases.length;
   const requiresVocabularyRecall = activity.foundationCategory === 'vocabulary';
   const wordCount = value.trim() ? value.trim().split(/\s+/u).length : 0;
   const revisionRef = useRef(0);
@@ -125,9 +126,9 @@ export function WritingActivity({
       <section className="writing-rubric-box" aria-label={t('writingGuidelines')}>
           <h3 className="section-subtitle">{t('writingGoals')}</h3>
           <p className="rubric-text">{t('writingMinimum', { count: minWords })}</p>
-          {requiredPhrases.length > 0 && requiresVocabularyRecall ? (
+          {requiredPhraseCount > 0 && requiresVocabularyRecall ? (
             <p className="rubric-text">
-              {t('writingRecall', { count: requiredPhrases.length })}
+              {t('writingRecall', { count: requiredPhraseCount })}
             </p>
           ) : null}
           {requiredPhrases.length > 0 && !requiresVocabularyRecall ? (

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Society & Community",
+  "description": "Build contextual IELTS vocabulary through residents reviewing a plan for a shared community centre. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-society-community-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "16400065-9eb8-4535-a6fd-c6c8d57ab5f2",
+      "focusChunkSlugs": [
+        "ielts-society-community-social-cohesion",
+        "ielts-society-community-voluntary-work",
+        "ielts-society-community-social-inclusion",
+        "ielts-society-community-income-inequality",
+        "ielts-society-community-community-engagement",
+        "ielts-society-community-public-services",
+        "ielts-society-community-ageing-population",
+        "ielts-society-community-civic-responsibility",
+        "ielts-society-community-support-networks",
+        "ielts-society-community-social-mobility",
+        "ielts-society-community-interpersonal-trust",
+        "ielts-society-community-shared-resources"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-society-community-proposal",
+          "title": "Planning proposal: Society & Community"
+        },
+        {
+          "slug": "ielts-society-community-discussion",
+          "title": "Residents discuss alternatives: Society & Community"
+        }
+      ]
+    }
+  ]
+}

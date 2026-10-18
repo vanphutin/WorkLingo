@@ -1,3 +1,7 @@
+import { MockRecordingRetentionHandler } from '../../ielts-mock/application/mock-recording-retention.handler.js';
+import type { PrismaService } from '../../common/database/prisma.service.js';
+import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
+import type { MockAttemptClock } from '../../ielts-mock/application/mock-attempt-clock.js';
 import { describe, expect, it, vi } from 'vitest';
 
 import { ProviderError } from '../../ai-gateway/domain/provider-errors.js';
@@ -167,4 +171,16 @@ describe('JobRunnerService', () => {
 
     await expect(runner.runOnce()).resolves.toBe(false);
   });
+});
+
+it('retries transient mock recording deletion and tombstones only after storage succeeds',async()=>{
+ const recording={id:crypto.randomUUID(),storageKey:'retained'};
+ const db={ieltsMockRecording:{findFirst:vi.fn().mockResolvedValue(recording),updateMany:vi.fn()}};
+ const storage={delete:vi.fn().mockRejectedValueOnce(Object.assign(new Error('busy storage path'),{code:'EBUSY'})).mockResolvedValue(undefined)};
+ const registry=new JobHandlerRegistry();
+ registry.register(new MockRecordingRetentionHandler(db as unknown as PrismaService,storage as unknown as ObjectStorage,registry,{now:()=>new Date()} as MockAttemptClock));
+ const jobs={claimNext:vi.fn().mockResolvedValue({...claimedJob,type:'IELTS_MOCK_RECORDING_RETENTION',payload:{recordingId:recording.id}}),failClaim:vi.fn(),completeClaim:vi.fn()};
+ const runner=new JobRunnerService(jobs as unknown as JobsService,registry,{enabled:false,leaseMs:30000,pollIntervalMs:1000,workerId:'retention-test'});
+ await runner.runOnce();expect(jobs.failClaim).toHaveBeenCalledWith(expect.objectContaining({retry:true,manuallyRetryable:true,code:'STORAGE_CLEANUP_FAILED'}));expect(db.ieltsMockRecording.updateMany).not.toHaveBeenCalled();
+ await runner.runOnce();expect(db.ieltsMockRecording.updateMany).toHaveBeenCalledOnce();expect(jobs.completeClaim).toHaveBeenCalledOnce();
 });

@@ -29,3 +29,5 @@ button.bridge-primary:disabled { opacity: .5; cursor: not-allowed; }
 .bridge-actions { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
 .bridge-shell :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
 @media (max-width: 620px) { .bridge-shell { padding: .75rem; } .bridge-heading { display: grid; } .bridge-stage-nav { grid-template-columns: repeat(5, 1fr); } .bridge-actions .bridge-primary { width: 100%; } }
+
+.mock-data-table{overflow-x:auto;max-width:100%;margin:1rem 0}.mock-data-table table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}.mock-data-table th,.mock-data-table td{text-align:left;padding:.7rem;border:1px solid var(--border)}.bridge-stage-card audio{max-width:100%}

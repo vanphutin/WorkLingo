@@ -1,6 +1,7 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../common/database/prisma.service';
+import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
 import { documentContextSignature } from '../../curriculum/domain/context-signature.js';
 import type { Clock } from '../domain/clock.port';
 import { SystemClock } from '../domain/clock.port';
@@ -31,6 +32,7 @@ export interface RecordAttemptEvaluationInput {
 }
 
 export interface ErrorBankQueryOptions {
+  programId?: string;
   skill?: ActivityType;
   page?: number;
   limit?: number;
@@ -282,10 +284,13 @@ export class MasteryService {
     learnerId: string,
     options: ReviewSelectionOptions = {},
   ): Promise<ScheduledReviewItem[]> {
+    const programId = await this.programId(learnerId, options.programId);
     const records = await this.database.masteryRecord.findMany({
       where: {
         learnerId,
         ...(options.skill ? { skill: options.skill } : {}),
+        languageBlock: this.programBlocks(programId),
+        ...(options.languageBlockIds ? { languageBlockId: { in: [...options.languageBlockIds] } } : {}),
       },
       include: {
         events: {
@@ -318,11 +323,13 @@ export class MasteryService {
     });
   }
 
-  async getMasteryRecords(learnerId: string, skill?: ActivityType) {
+  async getMasteryRecords(learnerId: string, skill?: ActivityType, scope?: { programId: string }) {
+    const programId = await this.programId(learnerId, scope?.programId);
     return this.database.masteryRecord.findMany({
       where: {
         learnerId,
         ...(skill ? { skill } : {}),
+        languageBlock: this.programBlocks(programId),
       },
       include: {
         languageBlock: true,
@@ -338,6 +345,15 @@ export class MasteryService {
     const page = Math.max(1, options.page ?? 1);
     const limit = Math.max(1, Math.min(100, options.limit ?? 20));
     const offset = (page - 1) * limit;
+    const programId = await this.programId(learnerId, options.programId);
+    const programScope = Prisma.sql`AND EXISTS (
+      SELECT 1 FROM "LessonVersion" lv
+      JOIN "MissionLesson" ml ON ml."lessonId" = lv."lessonId"
+      JOIN "Mission" m ON m.id = ml."missionId" AND m.purpose = 'LEARNING'
+      JOIN "Level" l ON l.id = m."levelId"
+      JOIN "LearningPath" p ON p.id = l."pathId"
+      WHERE lv.id = "ErrorBankEntry"."lessonVersionId" AND p."programId" = ${programId}::uuid
+    )`;
 
     const totalCountResult = await this.database.$queryRaw<Array<{ count: bigint | number }>>`
       SELECT COUNT(*)::int AS count
@@ -345,6 +361,7 @@ export class MasteryService {
         SELECT 1
         FROM "ErrorBankEntry"
         WHERE "learnerId" = ${learnerId}::uuid
+          ${programScope}
           ${options.skill ? Prisma.sql`AND "skill" = ${options.skill}::"ActivityType"` : Prisma.empty}
         GROUP BY "learnerId", "languageBlockId", "skill", "errorType", "evidenceGranularity", "contextKey"
       ) t;
@@ -408,6 +425,7 @@ export class MasteryService {
           MAX("occurredAt") AS "lastOccurredAt"
         FROM "ErrorBankEntry"
         WHERE "learnerId" = ${learnerId}::uuid
+          ${programScope}
           ${options.skill ? Prisma.sql`AND "skill" = ${options.skill}::"ActivityType"` : Prisma.empty}
         GROUP BY "learnerId", "languageBlockId", "skill", "errorType", "evidenceGranularity", "contextKey"
       ) agg
@@ -451,11 +469,22 @@ export class MasteryService {
     };
   }
 
-  async getMemoryHealth(learnerId: string): Promise<MemoryHealthSummary> {
+  async getMemoryHealth(learnerId: string, scope?: { programId: string }): Promise<MemoryHealthSummary> {
+    const programId = await this.programId(learnerId, scope?.programId);
     const records = await this.database.masteryRecord.findMany({
-      where: { learnerId },
+      where: { learnerId, languageBlock: this.programBlocks(programId) },
     });
     return summarizeMemoryHealth(records, this.clock.now());
+  }
+
+  private programBlocks(programId: string): Prisma.LanguageBlockWhereInput {
+    return { wordBank: { lessonVersions: { some: { lessonVersion: { lesson: { missions: { some: { mission: { purpose: 'LEARNING', level: { path: { programId } } } } } } } } } } };
+  }
+
+  private async programId(learnerId: string, requested?: string): Promise<string> {
+    if (requested) return requested;
+    const profile = await this.database.learnerProfile.findUnique({ where: { userId: learnerId }, select: { activeProgramId: true } });
+    return profile?.activeProgramId ?? INTERMEDIATE_PROGRAM_ID;
   }
 
   async backfillErrorBank(learnerId?: string): Promise<{ backfilledCount: number }> {

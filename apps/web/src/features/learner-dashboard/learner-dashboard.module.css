@@ -1,0 +1,44 @@
+.insights { display: grid; gap: var(--space-8); margin-block: var(--space-8); }
+.welcome { min-width: 0; overflow-wrap: anywhere; }
+.sectionHeading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.sectionHeading h2, .sectionHeading h3 { margin: 0; }
+.sectionHeading a, .catalogLink { display: inline-flex; align-items: center; min-height: 2.75rem; }
+.note { color: var(--muted); line-height: 1.6; }
+.programGrid, .chartGrid { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr); }
+.programCard, .chartCard, .skillCard { min-width: 0; }
+.programCard { display: flex; flex-direction: column; align-items: flex-start; }
+.programCard .sectionHeading { width: 100%; }
+.badge { padding: var(--space-1) var(--space-2); background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-control); font-size: var(--text-caption); }
+.progress { width: 100%; height: .75rem; accent-color: var(--primary); }
+.progress::-webkit-progress-bar { background: var(--surface-soft); border-radius: var(--radius-control); }
+.progress::-webkit-progress-value { background: var(--primary); border-radius: var(--radius-control); }
+.progress::-moz-progress-bar { background: var(--primary); }
+.catalogLink { margin-top: auto; padding-top: var(--space-3); }
+.chart { display: block; width: 100%; height: auto; margin-block: var(--space-3); }
+.axis { stroke: var(--border); stroke-width: 1; }
+.bar { fill: var(--primary); }
+.completedBar { fill: var(--foreground); }
+.trend { stroke: var(--primary); stroke-width: 3; }
+.axisLabel { fill: var(--muted); font-size: 12px; }
+.dateRange { color: var(--muted); font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--space-4); font-size: var(--text-caption); color: var(--muted); }
+.legend span::before { content: ''; display: inline-block; width: .75rem; height: .75rem; margin-right: var(--space-2); background: var(--primary); }
+.legend span:last-child::before { background: var(--foreground); }
+.table { border-collapse: collapse; width: 100%; margin-block: var(--space-3); font-size: var(--text-caption); }
+.table caption { text-align: left; font-weight: 600; padding-block: var(--space-2); }
+.table th, .table td { padding: var(--space-3) var(--space-2); text-align: left; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+.table th { font-weight: 600; }
+.chartCard summary { cursor: pointer; min-height: 2.75rem; padding-block: var(--space-3); color: var(--primary); }
+.chartCard summary:focus-visible, .catalogLink:focus-visible, .sectionHeading a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.skillSummary { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
+.skillSummary p { margin-top: 0; width: 100%; }
+.skillTrack { display: block; height: .5rem; border-radius: var(--radius-control); background: var(--surface-soft); margin-top: var(--space-2); }
+.skillTrack > span { display: block; height: 100%; background: var(--primary); border-radius: inherit; }
+.milestone { margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-4); }
+.milestone p { margin-bottom: var(--space-2); }
+@media (min-width: 48rem) {
+  .programGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chartGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skillCard { grid-column: 1 / -1; }
+}
+@media (min-width: 70rem) { .programGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

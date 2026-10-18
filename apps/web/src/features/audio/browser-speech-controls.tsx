@@ -9,6 +9,9 @@ import { useBrowserSpeech } from './use-browser-speech';
 
 export function BrowserSpeechControls(props: {
   readonly lang: string;
+  readonly dialogue?: boolean;
+  readonly itemId?: string;
+  readonly sessionId?: string;
   readonly preferredVoiceId?: string | null;
   readonly text: string;
 }) {
@@ -60,7 +63,7 @@ export function BrowserSpeechControls(props: {
         {speech.error ?? (
           speech.resolvedVoice
             ? t('usingVoice', { name: speech.resolvedVoice.name })
-            : t('browserChooseVoice')
+            : t('voicesUnavailable')
         )}
       </p>
     </div>

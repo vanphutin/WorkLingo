@@ -1,0 +1,122 @@
+import { createHash, randomUUID } from 'node:crypto';
+import { ConfigService } from '@nestjs/config';
+import type { Prisma } from '@prisma/client';
+import { INITIAL_IELTS_ACADEMIC_MOCK } from '@worklingo/contracts';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
+import { MockAttemptClock } from '../../src/ielts-mock/application/mock-attempt-clock.js';
+import { MockRecordingRetentionHandler } from '../../src/ielts-mock/application/mock-recording-retention.handler.js';
+import { TestClock } from '../../src/mastery/domain/clock.port.js';
+import { createLearningSessionTestContext, registerPendingLearner, type LearningSessionTestContext } from './learning-session-test-harness.js';
+
+export function mediaFixtureWav(seconds = 2): Buffer {
+  const rate = 16_000, size = rate * seconds * 2;
+  const body = Buffer.alloc(44 + size);
+  body.write('RIFF', 0); body.writeUInt32LE(36 + size, 4); body.write('WAVE', 8); body.write('fmt ', 12); body.writeUInt32LE(16, 16); body.writeUInt16LE(1, 20); body.writeUInt16LE(1, 22); body.writeUInt32LE(rate, 24); body.writeUInt32LE(rate * 2, 28); body.writeUInt16LE(2, 32); body.writeUInt16LE(16, 34); body.write('data', 36); body.writeUInt32LE(size, 40);
+  for (let index = 0; index < rate * seconds; index++) body.writeInt16LE(Math.round(1000 * Math.sin(index * Math.PI / 24)), 44 + index * 2);
+  return body;
+}
+
+describe('IELTS mock owned media', () => {
+  let context: LearningSessionTestContext;
+  const clock = new TestClock(new Date('2026-10-15T12:00:00Z'));
+  beforeAll(async () => { context = await createLearningSessionTestContext('ielts_mock_media'); context.app.get(ConfigService).set('ieltsFlow', 'v3'); await context.database.learningProgram.update({ where: { slug: 'ielts' }, data: { availabilityStatus: 'BETA' } }); vi.spyOn(context.app.get(MockAttemptClock), 'now').mockImplementation(() => clock.now()); }, 60_000);
+  afterAll(async () => { vi.restoreAllMocks(); await context?.close(); });
+
+  it('keeps one ordered strict lease across concurrent starts, HEAD, range and reload retries', async () => {
+    const db = context.database;
+    const learner = await registerPendingLearner(context.app, { displayName: 'Audio learner', email: `${randomUUID()}@test.local` });
+    await learner.agent.post('/api/v1/me/onboarding/self-placement').send({ clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' }).expect(200);
+    const foreign = await registerPendingLearner(context.app, { displayName: 'Other listener', email: `${randomUUID()}@test.local` });
+    const body = mediaFixtureWav();
+    const parts = [];
+    for (const part of INITIAL_IELTS_ACADEMIC_MOCK.listening.parts) {
+      const object = await context.app.get(ObjectStorage).put({ body, contentType: 'audio/wav', prefix: 'test-mock-audio' });
+      const artifact = await db.audioArtifact.create({ data: { audioScriptSlug: `fixture-part-${part.part}`, scriptHash: randomUUID(), adapterName: 'isolated-fixture', voiceConfig: { provenance: 'Synthetic transport fixture only' }, mimeType: 'audio/wav', byteSize: body.length, checksum: createHash('sha256').update(body).digest('hex'), storageKey: object.key, status: 'READY' } });
+      parts.push({ ...part, audioAssetId: artifact.id });
+    }
+    const content = { ...INITIAL_IELTS_ACADEMIC_MOCK, schemaVersion: 2, allowedModes: ['PRACTICE', 'EXAM_SIMULATION'], listening: { ...INITIAL_IELTS_ACADEMIC_MOCK.listening, parts }, qualification: { reviewedBy: 'Isolated transport fixture', reviewedAt: clock.now().toISOString(), evidenceRevision: 'transport-test-only', qualifiedModes: ['PRACTICE', 'EXAM_SIMULATION'] } };
+    const mock = await db.ieltsMockTest.create({ data: { slug: 'media-fixture', status: 'PUBLISHED', draftContent: content as unknown as Prisma.InputJsonValue } });
+    const version = await db.ieltsMockTestVersion.create({ data: { mockTestId: mock.id, version: 1, sourceHash: randomUUID(), content: content as unknown as Prisma.InputJsonValue } });
+    await db.ieltsMockTest.update({ where: { id: mock.id }, data: { currentPublishedVersionId: version.id } });
+    const attempt = await learner.agent.post('/api/v1/me/ielts-mocks/attempts').send({ clientAttemptId: randomUUID(), mockTestId: mock.id, mode: 'EXAM_SIMULATION' }).expect(200);
+    const root = `/api/v1/me/ielts-mocks/attempts/${attempt.body.id}`;
+    const playback = `${root}/audio/${parts[0]!.audioAssetId}/playback`;
+    await learner.agent.post(`${root}/audio/${parts[3]!.audioAssetId}/playback`).send({ clientPlayId: randomUUID() }).expect(409);
+    await learner.agent.get(`${root}/audio/${parts[0]!.audioAssetId}`).expect(409);
+    const clientPlayId = randomUUID();
+    const [one, retry] = await Promise.all([learner.agent.post(playback).send({ clientPlayId }), learner.agent.post(playback).send({ clientPlayId })]);
+    expect(one.status).toBe(200); expect(retry.body.id).toBe(one.body.id);
+    expect(await db.ieltsMockPlayback.count({ where: { attemptId: attempt.body.id } })).toBe(1);
+    const streamUrl = one.body.streamUrl as string;
+    const objectStorage=context.app.get(ObjectStorage);
+    const originalRead=objectStorage.read.bind(objectStorage);
+    const failed=vi.spyOn(objectStorage,'read').mockRejectedValueOnce(new Error('isolated delivery outage'));
+    await learner.agent.get(streamUrl).expect(500);
+    clock.advance(40_000);
+    expect((await learner.agent.post(playback).send({clientPlayId}).expect(200)).body.id).toBe(one.body.id);
+    failed.mockImplementation(originalRead);
+    await learner.agent.head(streamUrl).expect(200).expect('Content-Length', String(body.length));
+    const range = await learner.agent.get(streamUrl).set('Range', 'bytes=0-19').expect(206);
+    expect(range.body).toEqual(body.subarray(0, 20));
+    await learner.agent.get(streamUrl).set('Range', 'bytes=20-39').expect(206);
+    await foreign.agent.get(streamUrl).expect(404);
+    await learner.agent.post(`${playback}/${one.body.id}/activate`).expect(200);
+    await learner.agent.post(`${playback}/${one.body.id}/activate`).expect(200);
+    await learner.agent.post(playback).send({ clientPlayId: randomUUID() }).expect(409);
+    const restored = await learner.agent.get(playback).expect(200);
+    expect(restored.body.id).toBe(one.body.id);
+    clock.advance(3000);
+    await learner.agent.post(`${root}/audio/${parts[1]!.audioAssetId}/playback`).send({ clientPlayId: randomUUID() }).expect(200);
+    clock.advance(40_000);
+    await learner.agent.get(streamUrl).expect(409);
+    expect((await db.ieltsMockAttempt.findUniqueOrThrow({ where: { id: attempt.body.id } })).sectionDeadlineAt.toISOString()).toBe(attempt.body.sectionDeadlineAt);
+    const practice = await learner.agent.post('/api/v1/me/ielts-mocks/attempts').send({ clientAttemptId: randomUUID(), mockTestId: mock.id, mode: 'PRACTICE' }).expect(200);
+    const practiceRoot = `/api/v1/me/ielts-mocks/attempts/${practice.body.id}`;
+    await learner.agent.get(`${practiceRoot}/audio/${parts[0]!.audioAssetId}`).expect(200);
+    await learner.agent.get(`${practiceRoot}/audio/${parts[0]!.audioAssetId}`).expect(200);
+  });
+
+  it('requires consented audio, persists retries once, and exposes retained audio only to owner/reviewer', async () => {
+    const db = context.database;
+    const mock = await db.ieltsMockTest.findUniqueOrThrow({ where: { slug: 'media-fixture' } });
+    const learner = await registerPendingLearner(context.app, { displayName: 'Speaker', email: `${randomUUID()}@test.local` });
+    await learner.agent.post('/api/v1/me/onboarding/self-placement').send({ clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' }).expect(200);
+    let attempt = (await learner.agent.post('/api/v1/me/ielts-mocks/attempts').send({ clientAttemptId: randomUUID(), mockTestId: mock.id, mode: 'EXAM_SIMULATION' }).expect(200)).body;
+    const root = `/api/v1/me/ielts-mocks/attempts/${attempt.id}`;
+    for (const section of ['LISTENING', 'READING', 'WRITING']) attempt = (await learner.agent.post(`${root}/sections/${section}/submit`).send({ expectedRevision: attempt.revision }).expect(200)).body;
+    await learner.agent.post(`${root}/sections/SPEAKING/submit`).send({ expectedRevision: attempt.revision }).expect(422);
+    const file = mediaFixtureWav(1);
+    const clientRecordingId = randomUUID();
+    const send = (consent = 'true', part = '1', id = clientRecordingId) => learner.agent.post(`${root}/recordings`).field('clientRecordingId', id).field('part', part).field('consent', consent).attach('audio', file, { filename: 'spoken.wav', contentType: 'audio/wav' });
+    await send('false').expect(422);
+    await learner.agent.post(`${root}/recordings`).field('clientRecordingId', randomUUID()).field('part', '1').field('consent', 'true').expect(422);
+    const first = await send().expect(201);
+    expect((await send().expect(201)).body.id).toBe(first.body.id);
+    await send('true', '2').expect(409);
+    for (const part of ['2', '3']) await send('true', part, randomUUID()).expect(201);
+    expect(await db.ieltsMockRecording.count({ where: { attemptId: attempt.id } })).toBe(3);
+    expect(await db.job.count({ where: { resourceType: 'IeltsMockRecording', type: 'TRANSCRIBE_SPEECH' } })).toBe(0);
+    const rows = await db.ieltsMockRecording.findMany({ where: { attemptId: attempt.id } });
+    const jobs = await db.job.findMany({ where: { resourceType: 'IeltsMockRecording' } });
+    expect(jobs).toHaveLength(3);
+    expect(jobs[0]!.availableAt.getTime()).toBe(rows.find(row => row.id === jobs[0]!.resourceId)!.retainUntil.getTime());
+    await learner.agent.get(`${root}/recordings/${first.body.id}/content`).expect(200);
+    const foreign = await registerPendingLearner(context.app, { displayName: 'Foreign', email: `${randomUUID()}@test.local` });
+    await foreign.agent.get(`${root}/recordings/${first.body.id}/content`).expect(404);
+    await learner.agent.get(`/api/v1/admin/ielts-mock-attempts/${attempt.id}/recordings/${first.body.id}/content`).expect(403);
+    await db.user.update({ where: { id: foreign.user.id }, data: { role: 'CONTENT_ADMIN' } });
+    await foreign.agent.get(`/api/v1/admin/ielts-mock-attempts/${attempt.id}/recordings/${first.body.id}/content`).expect(200);
+    const updated = (await learner.agent.get(root).expect(200)).body;
+    const submitted = await learner.agent.post(`${root}/sections/SPEAKING/submit`).send({ expectedRevision: updated.revision }).expect(200);
+    expect((await learner.agent.get(`${root}/report`).expect(200)).body.overallMockBand).toBeNull();
+    const reviewed = await foreign.agent.post(`/api/v1/admin/ielts-mock-attempts/${attempt.id}/reviews`).send({ expectedRevision: submitted.body.revision, idempotencyKey: randomUUID(), writingTask1: [6, 6, 6, 6], writingTask2: [6, 6, 6, 6], speaking: [6, 6, 6, 6], strengths: [], gaps: [], nextActions: ['Review your recording and develop specific examples.'] }).expect(201);
+    expect(reviewed.body.status).toBe('COMPLETED');
+    clock.advanceDays(8);
+    await learner.agent.get(`${root}/recordings/${first.body.id}/content`).expect(410);
+    const recording = rows.find(row => row.id === first.body.id)!;
+    expect(await context.app.get(MockRecordingRetentionHandler).handle({ id: jobs[0]!.id, type: 'IELTS_MOCK_RECORDING_RETENTION', attemptNumber: 1, maxAttempts: 3, payload: { recordingId: recording.id } })).toEqual({ deletedRecordings: 1 });
+    await expect(context.app.get(ObjectStorage).read(recording.storageKey)).rejects.toThrow();
+    expect((await learner.agent.get(`${root}/report`).expect(200)).body).toEqual(reviewed.body);
+  });
+});

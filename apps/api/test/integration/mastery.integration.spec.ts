@@ -94,7 +94,7 @@ describe('Mastery & Review Scheduler Integration', () => {
         order: 1,
       },
     });
-    await database.mission.create({
+    const missionObj = await database.mission.create({
       data: {
         slug: `mission_${randomUUID()}`,
         title: 'Mission 1',
@@ -121,6 +121,9 @@ describe('Mastery & Review Scheduler Integration', () => {
       },
     });
     lessonVersion1Id = lv1.id;
+    // Review reads now require real program ownership, matching published content.
+    await database.missionLesson.create({ data: { missionId: missionObj.id, lessonId: lessonObj.id, order: 1 } });
+    await database.lessonVersionWordBank.create({ data: { lessonVersionId: lv1.id, wordBankId: wb.id } });
 
     for (const skill of ['reading', 'listening', 'speaking', 'writing'] as const) {
       await database.activity.create({
