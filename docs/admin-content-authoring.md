@@ -8,6 +8,7 @@ Các công cụ có cấu trúc khác nhau. Mỗi công cụ giữ định dạn
 
 | Công cụ | Đơn vị quản lý | Cách nhập và thao tác |
 | --- | --- | --- |
+| Chuyên mục Trung cấp | Một bài trong Ngữ pháp, Phát âm, Từ vựng, Đọc, Nghe, Nói hoặc Viết | Mỗi chuyên mục có nút thêm, danh sách và biểu mẫu tạo/sửa riêng; quản lý xóa/lưu trữ từng bài; mở công cụ nâng cao của chính bài đó để kiểm tra, làm âm thanh và xuất bản |
 | Nội dung bài học | Một bản nhập bài | Văn bản WorkLingoLesson/1.0 hoặc /1.1; tạo từ mẫu, mở/sửa nháp, kiểm tra, âm thanh, xuất bản; xóa/lưu trữ riêng từng hàng |
 | Chủ đề IELTS | Chủ đề, các gói học liệu và ngữ cảnh | Trường nhập tên, mô tả, mã gói, độ khó, phiên bản giáo trình đã xuất bản, mã cụm từ và ngữ cảnh; thêm/sửa/xóa nháp hoặc lưu trữ chủ đề |
 | Định hướng IELTS | Slide trong một bản giới thiệu | Thêm/sửa/bỏ từng slide trong bản nháp; lưu, kiểm tra và xuất bản chung một phiên bản |
@@ -21,6 +22,14 @@ Chủ đề, đề thi thử và giáo trình theo band có mục nhập/xuất 
 Nền tảng/Mất gốc và TOEIC được đánh dấu **Phát triển sau** trong khu vực quản trị. Danh mục học viên và đăng ký học không bị thay đổi bởi việc điều chỉnh điều hướng này.
 
 ## Quy trình soạn bài
+
+Với Trung cấp, mở `/admin/programs/intermediate`, chọn **Thêm bài** ở chuyên mục cần soạn. Ngữ pháp ưu tiên cấu trúc và ví dụ; Phát âm ưu tiên phiên âm; Từ vựng ưu tiên từ/cụm từ và nghĩa. Đọc có văn bản cùng câu hỏi, lựa chọn, đáp án và dòng dẫn chứng. Nghe có hội thoại riêng, tên nhân vật theo mẫu `An (nam): ...`, `Nhi (nữ): ...`, cùng câu hỏi nghe. Nói và Viết có yêu cầu và câu trả lời mẫu riêng. Mục mở rộng cho phép sửa các hoạt động hỗ trợ của bài bốn kỹ năng.
+
+Lưu tạo bản nháp trong đúng chuyên mục. Công cụ nâng cao của cùng ID tiếp tục phụ trách kiểm tra, âm thanh và xuất bản. Bài đã xuất bản hoặc lưu trữ chỉ xem trong biểu mẫu; cần quản lý phiên bản bằng công cụ hiện có. Nếu lưu bị xung đột revision, nội dung đang nhập được giữ lại và cần đối chiếu trong công cụ nâng cao trước khi tiếp tục.
+
+Phân loại soạn bài được lưu rõ trong `[LESSON]` với `program: intermediate`, `category` và `authoring_template: intermediate-form-v1`. Đây là phân loại cho quản trị; việc thêm bài vào lộ trình học viên vẫn theo cơ chế giáo trình hiện có. Bài cũ không có phân loại và nội dung tùy biến tiếp tục mở trong thư viện/công cụ nâng cao; hệ thống không tự đoán chuyên mục hoặc chuyển đổi làm mất dữ liệu.
+
+Các chuyên mục phát triển tiếp theo cần cung cấp đường dẫn thêm bài, danh sách riêng và biểu mẫu phù hợp với cấu trúc nội dung của mình theo cùng cách này.
 
 1. Chọn đúng công cụ và tạo hoặc mở một bài cụ thể.
 2. Sửa nội dung, lưu bản nháp, kiểm tra rồi xuất bản khi đủ điều kiện.
@@ -39,4 +48,4 @@ Endpoint bổ sung: `POST /api/v1/admin/content-lifecycle/:kind/:id/remove`, v�
 
 ## Phạm vi kiểm chứng
 
-Xem báo cáo `superpowers/reports/2026-10-18-admin-content-crud-verification.md` để biết các lệnh kiểm tra, kết quả và giới hạn. Không có migration mới hoặc thay đổi dependency trong tính năng này.
+Xem báo cáo `superpowers/reports/2026-10-18-admin-content-crud-verification.md` và phần bổ sung `superpowers/reports/2026-10-18-intermediate-category-authoring-verification.md` để biết các lệnh kiểm tra, kết quả và giới hạn. Không có migration mới hoặc thay đổi dependency trong tính năng này.
