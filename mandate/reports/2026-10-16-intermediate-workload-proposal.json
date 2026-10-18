@@ -1,0 +1,82 @@
+{
+  "title": "Redesign Intermediate learning session workload and cross-skill separation",
+  "type": "architecture",
+  "owner": null,
+  "priority": "P1",
+  "confidence": "medium",
+  "effort": "l",
+  "impact": 4,
+  "problem": "Static code selects activity counts by canonical block occurrence rather than estimated workload, while the block contract labels every block 15 minutes. Listening projects referenced text to the learner and renders transcript before submission; incorrect comprehension feedback includes explanations before retry. The supplied consolidation also raises program/CEFR, authoring, mastery and quality gaps, whose live applicability and severity require baseline evidence rather than seed-wide assumptions.",
+  "value": "Give learners honest independent versus assisted evidence and give authors actionable workload/content readiness. Evaluate benefit through comprehension, transfer, delayed retention and abandonment rather than question count or longer time alone.",
+  "scope": [
+    "Intermediate program/level/CEFR mapping discovery and reviewed content",
+    "Learning-session workload profiling, duration readiness and versioned planner proposal",
+    "Listening API/UI/media, practice/accessibility and feedback/attempt evidence policy",
+    "Content authoring/metadata, quality linting and existing Admin workspaces",
+    "Mastery/checkpoint, privacy-safe telemetry and controlled pilot decisions",
+    "docs/IMPLEMENTATION_ROADMAP.md Increment 5 refinement"
+  ],
+  "dedupe_key": "learning-session:intermediate-workload-and-listening-leak",
+  "evidence": [
+    {
+      "kind": "code",
+      "reference": "apps/api/src/learning-sessions/domain/session-planner.ts:188",
+      "observation": "Selection count is based on block occurrences, with Respond retaining at least two, then splice(selectedActivityCount); no workload-duration estimation at this selection point. Inspected statically on 2026-10-16 at efa2fd99b5373a644a011af3787bf81f737a51a7."
+    },
+    {
+      "kind": "code",
+      "reference": "packages/contracts/src/learning-session.contracts.ts:30",
+      "observation": "Every canonical block has targetMinutes literal 15; this does not measure active learning time."
+    },
+    {
+      "kind": "code",
+      "reference": "apps/api/src/learning-sessions/application/learning-sessions.service.ts:187",
+      "observation": "getActivity projects referenced content; comprehension questions omit answerIndex/explanation, while referenced text remains in content. Full alternate-channel tests remain proposed work."
+    },
+    {
+      "kind": "code",
+      "reference": "apps/web/src/features/learning-session/activity-renderers/listening-activity.tsx:57",
+      "observation": "Transcript text feeds LessonAudioPlayer and renders before submission; independent assessment protection must account for browser speech and supported modes."
+    },
+    {
+      "kind": "code",
+      "reference": "packages/content-format/src/normalizer.ts:180",
+      "observation": "Authoring normalizer emits one question per comprehension activity, distinct from the runtime snapshot schema's multi-question array support."
+    },
+    {
+      "kind": "code",
+      "reference": "apps/api/src/learning-sessions/application/learning-sessions.service.ts:544",
+      "observation": "Incorrect comprehension feedback includes missed explanations; advance requires score === 1. This does not establish all mastery/checkpoint records are passing."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-16-intermediate-consolidated-source.txt:1",
+      "observation": "User-supplied four-report consolidation, dated 2026-10-15, explicitly distinguishes findings, hypotheses, contradictions and unapproved proposals. Original S1-S4 were not independently provided."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-16-intermediate-normalization.md:1",
+      "observation": "Records exact checkout, original dirty state, preservation hashes, static evidence, source corrections, dedupe and scope/verification limitations."
+    }
+  ],
+  "acceptance": [
+    "Establish a revision/environment-specific, redacted inventory of published content, separate activities/questions/open tasks and verify plan behavior for all five durations before making live-content claims.",
+    "Obtain named program/CEFR, assessment/accessibility, audio, evidence-storage and rollout decisions for each implementation slice; preserve enrollment and historical version bindings.",
+    "For approved new independent listening sessions, protect transcript/answer-bearing text across API/UI/media/error/replay channels until the approved finalization boundary; retain usable practice/accessibility support and honest evidence labels.",
+    "Record first-attempt/support evidence server-side with idempotency/concurrency guarantees; do not rewrite historical mastery or change weights/checkpoints without policy approval.",
+    "Show explainable uncalibrated workload/unknowns and per-duration warnings in existing Admin; calibrate before new hard gates. Distinguish structural playability from estimated sufficiency.",
+    "After reviewed content exists, validate a deterministic additive planner in shadow mode with four-skill/order/uniqueness/review/version invariants and no filler; keep legacy parsers and sessions working.",
+    "Use qualified content/audio review and a controlled comparison with retention/transfer/abandonment evidence before pilot promotion or adaptive/item analytics expansion."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": true,
+    "data_change": true,
+    "external_effect": true,
+    "rollback": "Risk flags describe potential future program/policy/schema/provider/pilot changes, not actions performed by this document update. Approve slices separately. Preserve immutable versions and histories; switch selection flags only for new sessions, retain policy bindings for existing sessions, and require scoped schema/provider/content rollback before those optional changes."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-16-intermediate-learning-quality.md",
+  "sprint_reference": null,
+  "body": "## Analysis\n\nNormalize the supplied report; this is not a fresh live-data audit. Direct static observations and exact revision are in mandate/reports/2026-10-16-intermediate-normalization.md. Preserve the full source and prior capture alongside that report. The old universal 5-question/3-7-minute claims are superseded: source fixture counts and all time/overlap estimates require revision-specific verification.\n\n## Value and alternatives\n\nImprove independent comprehension, transfer and retention without filler. Start with baseline and read-only warnings; adding more questions alone is insufficient. Intermediate mapping alternatives remain open. Existing review/transfer/prerequisites are reused.\n\n## Unknowns and dependencies\n\nLive published Admin inventory, CEFR quality, media provenance, actual active time, flags and calibrated thresholds are unknown. D1-D10 in docs/superpowers/specs/2026-10-16-intermediate-learning-quality-design.md require human decisions. Accepted transcript fallback/browser speech decisions D-023/D-024 cannot silently become independent assessment policy. No named implementation owner is known.\n\n## Implementation and verification proposal\n\nThe linked master plan refines canonical roadmap Increment 5 and maps every source P0/P1/P2 row plus all proposal groups. Separate W0/W3 and W2 plans carry proposed interfaces and red/green checks; W4-W8 remain gated phase briefs until their subsystem designs/decisions are accepted. Preserve 45/60/90/120/150, four skills, immutable snapshots, Format 1.0/1.1, enrollment and historical scores. API/UI disclosure, concurrency, version and a11y tests precede rollout. No new hard workload gate, paid provider, migration or pilot is assumed approved.\n\n## Authorization\n\nOn 2026-10-16 the human selected option 2: normalize this report into mandate and implementation planning. That authorizes only documents/register. Keep captured, owner null, approval null, verification empty and no sprint commitment. Product implementation/data/publication/release still requires exact named authorization and proposal-hash-bound approval."
+}

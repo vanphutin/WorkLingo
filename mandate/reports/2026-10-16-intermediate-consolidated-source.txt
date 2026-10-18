@@ -1,0 +1,259 @@
+WORKLINGO — BÁO CÁO HỢP NHẤT TOÀN BỘ Ý KIẾN KIỂM TOÁN INTERMEDIATE
+Ngày: 15/10/2026
+Nguồn: Bốn báo cáo người dùng cung cấp, không phải một cuộc kiểm toán lại repository hoặc cơ sở dữ liệu tại thời điểm hợp nhất.
+Trạng thái: Tổng hợp/phân tích đề xuất; chưa phê duyệt triển khai.
+Mục tiêu: Giữ lại tất cả ý kiến riêng biệt, hợp nhất những ý trùng, phân định bằng chứng và giả thuyết, giải quyết mâu thuẫn, tạo backlog có thể giao Codex.
+0. Quy ước nguồn và phương pháp hợp nhất
+- S1: Pasted text(7).txt — báo cáo dài 579 dòng; có nội dung audit, thiết kế 15 phút, ví dụ giao hàng chậm, kiến trúc, backlog và ghi nhận mandate MND-20261015-001.
+- S2: Pasted text (2).txt — báo cáo 339 dòng; nhấn mạnh sai lệch Program/CEFR, ràng buộc fixture, phân biệt đã xác minh/giả thuyết, linter chi tiết, chi phí, tương thích và các quyết định cần người duyệt.
+- S3: Pasted text (3).txt — báo cáo 157 dòng; mô tả thận trọng đường đi service, readiness, workload calibration, kiểm thử và rollout.
+- S4: Pasted text (4).txt — báo cáo 227 dòng; nhấn mạnh nguyên tắc giáo dục, tỷ lệ nhận thức, adaptive, kiến trúc và mandate governance.
+Phương pháp: Mỗi ý tưởng độc lập xuất hiện một lần trong danh mục hợp nhất bên dưới. Các gạch đầu dòng trong mỗi ý có thể chứa nhiều chi tiết bổ trợ, vì những chi tiết đó phục vụ cùng một thay đổi. Các phương án cạnh tranh và số liệu mâu thuẫn được giữ trong mục 4, thay vì âm thầm chọn một số. Mỗi mục ghi rõ nguồn tương ứng. Số ID C/P/F/L/M/A/O/G là ID của báo cáo này, không phải issue hay mandate đã tạo trong repository.
+1. TÓM TẮT ĐIỀU HÀNH
+Bốn báo cáo đồng thuận rằng hiện trạng không phải đơn thuần thiếu câu hỏi; hệ thống đang thiếu sự ăn khớp giữa chương trình ↔ trình độ ↔ nội dung ↔ lịch phân phối ↔ phương pháp đánh giá ↔ cơ chế quản trị chất lượng. Một block gắn nhãn 15 phút không được chứng minh là có 15 phút học thực chất. Reading và Listening có nguy cơ đo trí nhớ đã đọc thay vì kỹ năng nghe; hiển thị transcript trước khi nộp ở UI là một vấn đề đánh giá nổi bật. Việc ghi nhận đúng sau khi được trợ giúp cũng cần được phân biệt với làm đúng độc lập. Admin chưa thấy tình trạng thiếu content/thiếu workload một cách đầy đủ.
+Định hướng chung: Chuẩn hóa chương trình B1 thực sự, triển khai Workload-aware Session Planner theo năng lực và nội dung, tách Reading/Listening thành nguồn bằng chứng độc lập, có chính sách feedback/mastery đúng nghĩa, linter/Admin Quality Dashboard, đo pilot và triển khai bằng version/feature flag.
+Chú ý: Thời gian học dài hơn không phải thành công mặc định. KPI chính là khả năng trả lời độc lập, chuyển giao sang tình huống khác, lưu giữ sau nhiều ngày và mức bỏ dở chấp nhận được.
+2. HIỆN TRẠNG: NHỮNG PHÁT HIỆN CẦN GIỮ LẠI
+ID	Kết luận từ các bản audit	Phạm vi khẳng định	Nguồn
+H01	Luồng session dùng planFoundationSession chung; không thấy planner riêng cho Intermediate.	Đã đối chiếu trong code được audit, không chứng minh mọi runtime giống nhau.	S1/S2/S3/S4
+H02	Các thời lượng được định nghĩa: 45/60/90/120/150 phút; mỗi block canonical có nhãn targetMinutes=15; session 60 phút đi qua activate → readDecode → listenReason → respond.	Hành vi contracts/planner được báo cáo.	S1/S2/S4
+H03	Với 60 phút, planner chọn 1 Activate + 1 Reading + 1 Listening + 2 Respond; cơ chế selectedActivityCount và matchingActivities.splice(...) loại ứng viên còn lại.	Logic của bản code được audit.	S1/S2/S3/S4
+H04	Fixture được phân tích có 10 activities, nhưng phiên 60 phút chỉ chọn 5; 5 chưa chọn không được sử dụng trong phiên này.	Không đồng nghĩa activity bị xóa khỏi lesson hay không bao giờ xuất hiện ở phiên khác.	S1/S2/S3/S4
+H05	Trong fixture đó, 5 activity chứa 5 câu MCQ + 3 nhiệm vụ mở, tổng 8 lượt yêu cầu trả lời; song đường Content Admin Format 1.0/1.1 có dấu hiệu mỗi activity do normalizer tạo ra chỉ có một câu/prompt.	Phải tách activity, question, item, open task; kết quả không áp dụng mặc định cho mọi bài DB.	S1/S2/S3
+H06	Không thấy cơ chế tính thời lượng thực, số từ, số câu, độ khó/nhận thức để quyết định block có đủ “15 phút”.	15 phút là nhãn kế hoạch, không phải hẹn giờ bắt học viên ngồi đủ.	S1/S2/S3/S4
+H07	Intermediate được hiển thị với nhãn B1–B2, nhưng ít nhất path mẫu english-for-work được seed vào INTERMEDIATE_PROGRAM_ID và level fixture FOUNDATION_1/Pre-A1; thiếu curriculum Intermediate B1 riêng trong mã nguồn được xem.	Cần truy vấn DB thật để biết có bài B1 do Admin tạo hay không.	S2/S3/S4
+H08	Dữ liệu mẫu có rất ít context, dùng lại email/hội thoại và Language Blocks; distractor đôi lúc quá dễ đoán.	Mức độ trùng chính xác chưa đo bằng phương pháp thống nhất.	S1/S2/S4
+H09	UI Listening hiển thị transcript trong .audio-transcript-box trước khi người học nộp; payload hiện tại có thể chuyển plaintext script tới learner.	Cần test API/DTO để chốt rò rỉ ở tất cả chế độ; vấn đề UI trong bản code audit được ghi nhận rõ.	S1/S2/S3/S4
+H10	Seed audio dùng Fake TTS/tone mô phỏng hoặc đường text-placeholder/browser speech; chưa chứng minh có audio hội thoại đa giọng chất lượng production.	Không được suy ra toàn bộ audio Authoring trên DB cũng là giả.	S1/S2/S4
+H11	Reading/Listening chỉ advance khi score===1; feedback sai có thể trả explanation, mở đường retry phụ thuộc đáp án. Speaking/Writing có thể advance trước điểm Teacher AI bất đồng bộ.	Không được suy luận rằng mọi mastery record/checkpoint cuối cùng luôn đạt tuyệt đối.	S1/S2/S3/S4
+H12	Mastery/review có ghi các attempts, nhưng chưa có nhãn rõ firstAttempt, hintUsed, independent/assisted.	Muốn kết luận chính xác trọng số/STABLE, cần audit riêng mastery-calculator cùng test.	S1/S2/S3/S4
+H13	Admin publish/readiness thiên về cấu trúc, đủ hoạt động/độ phủ kỹ năng, chưa có chất lượng sư phạm ở cấp item/block.	Cần phân biệt validation hiện hữu và quality linter đề xuất.	S1/S2/S3/S4
+H14	Không có telemetry đủ tốt về actual active time, pause/background, time per item, transcript/hint dependency.	Mọi “session 60 phút thực học X phút” chỉ là ước tính, chưa phải chỉ số sản phẩm.	S1/S2/S3/S4
+H15	Có dấu hiệu docs mô tả 90/120/150 không khả dụng với seed, còn mô phỏng computeAvailableDurations/spec trong S2 cho thấy có thể khả dụng.	Phải chạy tests và endpoint trước khi kết luận.	S2, đối chiếu S4
+H16	Một số Activate trong fixture chỉ là viết câu quen thuộc, chưa chắc là retrieval có khoảng cách; Speaking/Respond workload chưa cân bằng giữa các duration.	Đã ghi nhận từ fixture, cần đối chiếu DB.	S2
+H17	Có nợ kỹ thuật if (duration===60) và kiểm tra block rỗng về sau có thể trùng tác dụng; tên planner Foundation không phản ánh phạm vi thực.	Nợ kỹ thuật nhỏ, không phải ưu tiên trước integrity.	S2/S3
+
+
+2.1 Trả lời 10 câu hỏi nghiệp vụ ban đầu
+1. Có bao nhiêu activity/câu? 60 phút thường là 5 activity ở fixture phân tích, bên trong có 5 MCQ + 3 nhiệm vụ mở. Không được đồng nhất hai chỉ số.
+2. Vì sao phân chia ít? Vì planner cắt theo số lần xuất hiện của block type; chưa lượng hóa workload.
+3. Tại sao không dùng hết lesson? Vì giới hạn lựa chọn ở mức activity; các activity còn lại không vào session đó.
+4. Nội dung mới/trùng? Có nhiều context được tham chiếu lại và thông tin nghe/đọc có giao nhau. Không có tỷ lệ trùng được đo đáng tin cậy cho mọi bài.
+5. Thời gian thật? Chưa đo; các bản đưa ra giả thuyết khoảng 4–14 phút cho session 60 phút tùy cách tính. Không chọn một con số làm baseline.
+6. Listening lộ từ Reading/transcript? Transcript hiển thị sớm là phát hiện mạnh nhất; trùng đáp án với Reading phụ thuộc từng câu.
+7. Bắt buộc phải nghe? UI hiện tại không bảo đảm độc lập nghe; sự kiện play/ended nếu có chỉ là tín hiệu tương tác, không phải bằng chứng hiểu.
+8. Độ khó adaptive? Chủ yếu order/review/transfer, thiếu item-level difficulty/cognitive fit; review scheduler hiện tại vẫn có giá trị.
+9. Complete có đồng nghĩa mastered? Không. Cần tách hoàn thành, đúng lần đầu, đúng có trợ giúp, retention, transfer.
+10. Admin đủ kiểm soát? Chưa. Thiếu preview workload, cấp độ nhận thức, context/audio QA, readiness theo duration.
+3. DANH MỤC HỢP NHẤT TOÀN BỘ ĐỀ XUẤT KHÔNG TRÙNG
+3A. CURRICULUM, PROGRAM VÀ THIẾT KẾ SƯ PHẠM
+C01 — Xác minh inventory dữ liệu thực trước khi sửa. Kiểm tra read-only các LearningProgram/LearningPath/Level/LessonVersion đã publish trong DB, content do Admin nhập, số activity, question, CEFR, audio, độ dài, trạng thái học. Không áp dụng nhận định dựa trên seed cho mọi learner. (S2/S3/S4)
+C02 — Chốt kiến trúc nhãn Intermediate–B1/B2. Quyết định một trong ba hướng được S2 nêu: xây path B1/B2 thật; đổi nhãn hiện tại để phản ánh Pre-A1; hoặc tách Foundation sang Beginner. Khi ra quyết định, bảo vệ enrollment/currentLevel của người học. (S2/S3/S4)
+C03 — Chuẩn hóa ánh xạ program ↔ level ↔ CEFR ↔ language block. Có validator phát hiện mismatch giữa FOUNDATION_1, Pre-A1 và nhãn Intermediate; dùng taxonomy cấp độ thay vì chỉ trường CEFR string tự do. Không mặc định mọi lesson Intermediate đạt B1. (S2/S4)
+C04 — Xây curriculum B1 thật, không “làm khó” Foundation bằng cách tăng câu. Biên soạn objective, prerequisite, ngữ liệu môi trường công việc B1, ngân hàng item/chủ đề, độ khó và chứng cứ chuyển giao. Khởi đầu bằng 1–2 lesson pilot có thể kiểm chứng trước khi nhân rộng. (S2/S3/S4)
+C05 — Dự phòng chi phí tác quyền. Một lesson 60 phút B1 có thể cần nhiều văn bản đọc, nhiều audio độc lập và nhiệm vụ mở; seed 2 context không đủ. Phải dự trù viết nội dung, review CEFR, thu âm/TTS và QA, không chỉ code planner. (S1/S2/S3/S4)
+C06 — Nguyên lý Same Objective – Different Context – Higher Cognitive Demand. Kiến thức đích có thể lặp lại có chủ đích qua kỹ năng, nhưng phải tăng độ sâu và đổi bằng chứng/đáp án. Dùng Reading để xử lý email, Listening để xử lý cuộc gọi chứa thông tin mới, Respond để chuyển sang tình huống thứ ba. (S1/S2/S3/S4)
+C07 — Phân loại nhận thức ở mức item. Có Recall, Comprehension, Application, Inference/Analysis, Transfer (tham chiếu Bloom, tùy nghiệp vụ có thể gộp/tách); tránh đề chỉ toàn literal recall. Độ khó được cấu hình theo CEFR, kỹ năng và mục tiêu, không hard-code một tỷ lệ cho toàn hệ thống. (S1/S2/S3/S4)
+C08 — Cấu trúc một block Activate đúng nghĩa active retrieval. Lấy nội dung từ phiên trước, review-due và error bank; gồm cloze, sắp xếp cụm, collocation, phát hiện lỗi, tạo câu ngắn, retrieval không mở tài liệu. Không dùng câu tự giới thiệu không có gì để “nhớ lại” làm ví dụ mặc định cho B1. (S1/S2/S3/S4)
+C09 — Reading đo mục đích/chi tiết/lập luận/hành động. Dùng 2–3 ngữ cảnh khác thể loại khi phù hợp (email, notice, chat, báo cáo), câu về gist, fact, inference, tone, so sánh phương án, next action; tăng distractor có giá trị. (S1/S2/S3/S4)
+C10 — Listening đo âm thanh độc lập. Thiết kế tiến trình gist → detail → inference → intent/tone → action; có monologue/voicemail/dialogue, thông tin mới, speaker rõ; tránh người học đoán bằng kiến thức Reading hoặc suy luận “lịch sự nhất”. (S1/S2/S3/S4)
+C11 — Respond là Productive Transfer, không chỉ shadowing. Bổ sung spoken response/role-play, written message/email mới, short reflection/self-assessment; rubric quan sát được gồm appropriateness, language accuracy, clarity/fluency, xử lý ràng buộc. Shadowing là hoạt động hỗ trợ phát âm, không thay toàn bộ khả năng nói. (S1/S2/S3/S4)
+C12 — Tạo bối cảnh thực hành chuyên nghiệp phong phú. Các ví dụ nguồn: đổi lịch họp/giờ họp, xác nhận hành động, khách trễ giao hàng, khiếu nại hợp đồng, ràng buộc kho vận và ngân sách, đối tác ở múi giờ khác. Đây là ví dụ chương trình, không phải các khóa bắt buộc phải triển khai cùng lúc. (S1/S2/S3/S4)
+C13 — Giữ các kỹ năng hỗ trợ nối tiếp. Language Blocks, transfer preference, ReviewScheduler, prerequisites, mastery context vẫn là hạ tầng hữu ích; thiết kế mới nâng cấp cách dùng, không vứt các cơ chế đang tồn tại. (S2/S3/S4)
+3B. WORKLOAD, SESSION PLANNER VÀ CONTRACTS
+P01 — Không coi một Activity bằng 15 phút. Planner tính mức khó và thực tế mỗi activity/item, thay vì chỉ cắt 1 activity/block. (S1/S2/S3/S4)
+P02 — Thiết kế ngân sách học có thể cấu hình. Phân biệt targetMinutes=15 theo UI/plan với netLearningBudget sau khi trừ hướng dẫn/chuyển bài/feedback; S2 gợi ý 12/15 phút, S1 gợi ý 13–15, S4 85–115% budget. Các trị số này dùng pilot calibrate, không đóng đinh. (S1/S2/S3/S4)
+P03 — Ước tính workload theo thành phần. W = thời gian tiếp nhận context + xử lý nhận thức câu hỏi + input/speaking/writing + feedback + reflection + chuyển UI. Không tính lại toàn bộ thời gian đọc cùng văn bản cho mỗi câu; Listening có độ dài audio và kỳ vọng replay; tốc độ đọc/nghe theo CEFR. (S1/S2/S3/S4)
+P04 — Lưu cấu hình thời gian theo level/task. Ví dụ S2: Recall 8s; comprehension 15s; application 25s; inference 35s; transfer 60s, cùng chi phí nhập/ghi âm. Ví dụ S1 dùng mốc cao hơn và đọc 130–160 WPM; chỉ xem là initial priors. Gắn calibrated=false khi chưa có dữ liệu. (S1/S2)
+P05 — Hỗ trợ nhiều activity trong block; có thể chọn đến item. Planner v2 bỏ giới hạn splice(1), không nhất thiết dùng hết toàn bộ lesson; chọn câu/nhóm hợp lý để đủ mục tiêu workload. Nếu thêm item-level itemRefs, giữ activityIds làm khoá tương thích. (S1/S2/S3/S4)
+P06 — Thuật toán selection deterministic trước AI runtime. Dùng greedy/knapsack dựa trên scoring minh bạch thay vì sinh câu tự động lúc learner đang học. Score kết hợp review priority, mastery gap, objective, novelty, cognitive fit, context diversity, redundant penalty và guessability penalty. (S1/S2/S3/S4)
+P07 — Ràng buộc pedagogy trong planner. Tôn trọng prerequisites, 4-skill coverage, canonical order, uniqueness của activity/item, mục tiêu của mission, phân bố cognitive level, context đa dạng, không lặp exposure không cần thiết. (S1/S2/S3/S4)
+P08 — Giữ ưu tiên review và transfer hiện tại. ReviewScheduler/learning gaps không bị xoá; thứ tự review/transfer/order có thể dùng làm scoring/tie-break, kết hợp learner mastery mà không phá nghĩa của lesson cũ. (S2/S4)
+P09 — Phát hiện cross-skill context/answer leakage. contextSignature có thể là hash văn bản chuẩn hoá để bắt trường hợp trùng nguyên dạng, nhưng kiểm tra thực thể/đáp án (Jaccard, semantic overlap) mới bắt được trùng nội dung diễn đạt khác. Ngưỡng như 0.2 của S2 chỉ là thử nghiệm; không coi hash khác nghĩa là độc lập tuyệt đối. (S1/S2/S4)
+P10 — Không kéo dài bài bằng filler/repetition. Khi thiếu workload, trả trạng thái có cấu trúc INSUFFICIENT_CONTENT/InsufficientWorkloadForDurationError: block, missingSeconds, thiếu objective/context/item type; không dựng activity giả hoặc lặp câu để lấp giờ. (S1/S2/S3/S4)
+P11 — Phát hiện block quá tải. Khi workload vượt budget, chọn bớt item thừa/trùng trước; tuyệt đối không cắt arbitrary làm mất prerequisite/mục tiêu trọng yếu. Hiển thị nguy cơ overtime. (S2)
+P12 — Readiness riêng cho 45/60/90/120/150 phút. Giữ durations trong contract hiện có; mỗi mức phải qua kiểm tra chất lượng nội dung và workload thay vì chỉ đủ số activity. Chạy regression vì có dấu hiệu code/docs mâu thuẫn về 90–150. (S1/S2/S3/S4)
+P13 — Version hóa plan additive. Tạo planWorkloadAwareSession pure function song song planFoundationSession, chọn theo feature flag; thêm optional planVersion, estimatedSeconds, budgetSeconds, selectionRationale, calibrated, itemRefs, giữ targetMinutes=15 và activityIds để parse session cũ. (S1/S2/S3/S4)
+P14 — Session Snapshot bất biến. Plan mới chỉ cho session tạo mới, không tái phân phối phiên IN_PROGRESS/PAUSED dựa trên config mới; published LessonVersion hiện có không sửa, metadata chỉ ở version tiếp theo. (S1/S2/S3/S4)
+P15 — Kiểm thử pure planner và contract xuyên duration. Unit/property test bảo đảm không trùng ID, tổng block hợp lệ, last block/respond khi contract quy định, phủ bốn kỹ năng, xử lý thiếu content, threshold, context separation và regression plan v1. (S1/S2/S3/S4)
+P16 — Dọn nợ kỹ thuật sau khi ổn định. Rà soát shim if(duration === 60) và đường lỗi trùng; quyết định có rename planFoundationSession trong nội bộ hay chỉ alias để tránh breaking change; đồng bộ docs. (S2/S3)
+3C. CONTENT FORMAT, AUTHORING VÀ ITEM QUALITY
+F01 — Nâng Content Format lên phiên bản có nhiều câu/item mỗi activity. Đề xuất Format 1.2: [ACTIVITY] có nhiều [QUESTION]/options/answer, cập nhật parser/AST/normalizer/validator và fixture; Format 1.0/1.1 vẫn parse như trước. (S1, bổ sung từ S2/S4)
+F02 — Khai báo metadata sư phạm có cấu trúc. Theo question/activity lưu (optional ở giai đoạn đầu): objectiveSlug/objectiveRefs, cognitiveLevel, difficulty, estSeconds/estimatedDurationSeconds, contextSignature, answerEntities, distractorRationale, isTransferEligible, assessmentMode. Phân biệt metadata tác giả nhập và profile suy ra (derived). (S1/S2/S3/S4)
+F03 — Version content nghiêm ngặt. Nội dung và metadata mới đặt ở LessonVersion mới; có thể dựng profile read-only từ snapshot cũ để phân tích; không sửa parsedContent của bản published/archive. (S1/S2/S3/S4)
+F04 — Lint trùng context/item. DUP_CONTEXT khi dùng cùng scenario, cùng đáp án nhưng đảo câu chữ; kiểm tra semantic overlap, không nhầm tái sử dụng Language Block có mục tiêu là lỗi. (S1/S2/S4)
+F05 — Lint distractor quá dễ. DISTRACTOR_TRIVIAL: lựa chọn vô lý hoặc không đồng đều như “Go home”, “Ignore”, “Say nothing”; kiểm tra độ dài/ngữ pháp, độ khả tín và có cần thực sự đọc/nghe để trả lời không. (S2)
+F06 — Lint đoán đáp án khi không có stimulus. GUESSABLE_WITHOUT_STIMULUS: đáp án đúng là phương án lịch sự/hợp lý duy nhất; dùng heuristic hoặc AI để gợi ý, nhưng Admin/chuyên gia duyệt. (S2)
+F07 — Lint mục tiêu học/độ khó. OBJECTIVE_MISMATCH khi item không map objective; LEVEL_DIFFICULTY_MISMATCH khi CEFR/language block/lesson/program lệch nhau. (S2/S4)
+F08 — Lint mức độ nhận thức. Cảnh báo WARN_BLOOM_TAXONOMY_IMBALANCE (ví dụ >70% recall), kiểm tỷ lệ inference/application/transfer tương xứng skill/CEFR; không ràng buộc cứng 15/30/25/20/10 cho mọi block. (S1/S2/S4)
+F09 — Lint audio/content mismatch. AUDIO_TOO_SHORT_FOR_WORKLOAD khi audio quá ngắn so với các câu mục tiêu; có thể dùng tỷ lệ giây/câu làm cảnh báo khởi đầu, không hard-code chuẩn do thiếu dữ liệu. (S1/S2)
+F10 — Lint Reading–Listening overlap. READ_LISTEN_ENTITY_OVERLAP/WARN_CROSS_SKILL_CONTEXT_LEAK khi cùng facts/answer entities có thể suy đoán, không chỉ so text hash. (S1/S2/S4)
+F11 — Đánh giá chênh lệch content/assessment. Đếm question thật, task mở, lượng ngữ liệu mới/ôn, các câu factual vs inference, mức overlap, tỷ lệ câu nghe buộc nghe, coverage objective. (S1/S2/S3/S4)
+F12 — Phân loại error|warn và giai đoạn siết gate. Bắt đầu linter read-only/warn; blocker rõ ràng (schema sai, thiếu kỹ năng/audio assessment làm lộ đáp án, unsafe content) có thể chuyển error ngay sau kiểm chứng; rubric định lượng thiếu workload/chất lượng nên hiệu chỉnh trước khi khóa publish hàng loạt. (S1/S2/S3/S4)
+3D. READING–LISTENING, AUDIO VÀ ACCESSIBILITY
+L01 — Audio-first assessment thực sự. Trước khi nộp bài nghe đánh giá độc lập, UI không hiển thị transcript; nội dung chữ không được gửi sẵn trong assessment DTO rồi chỉ giấu bằng CSS. Sau submit mới trả transcript/evidence highlight phù hợp. Phụ thuộc cần giải quyết: nếu mode hiện dùng browser speech từ textPlaceholder thì trình duyệt cần kịch bản chữ để phát TTS; assessment an toàn phải chuyển sang media audio được tổng hợp phía server hoặc kiến trúc khác không tiết lộ transcript cho client. Chỉ ẩn React component mà vẫn đưa text trong JSON không đạt yêu cầu. (S1/S2/S3/S4)
+L02 — Tách assessment, practice, accessibility. Assessment không hiện transcript trước submit; Practice cho phép chủ động xem như hint; Accessibility cho phép transcript/subtitles và replay theo nhu cầu với cách đo riêng, không phạt người học vì cần hỗ trợ. (S1/S2/S3/S4)
+L03 — Ghi nguồn trợ giúp. Lưu supportLevel=none/transcriptOnDemand/accessible, transcriptOpened/hintUsed, tính điểm độc lập và có hỗ trợ thành hai loại bằng chứng. Tránh kết luận học viên có trợ năng không đủ năng lực; chỉ đánh dấu bài đó không đo “listening without text”. (S1/S2/S3/S4)
+L04 — Replay policy theo mục tiêu. Thử nghiệm nghe 1 lượt để nắm ý chính, 2 lượt để nghe chi tiết; Practice có thể nghe lại thoải mái. Số lần là cấu hình theo level/task, không khóa vô lý trên mọi tình huống. (S1/S2/S4)
+L05 — Instrument audio interaction. Theo dõi play count, pause, end, seek, replay, transcript toggle; có thể kiểm tra học viên từng phát audio nhưng không dùng playback event làm bằng chứng đủ để hiểu; xử lý lỗi trình duyệt/mạng/trợ năng. (S1/S2)
+L06 — Tách âm thanh thử nghiệm khỏi audio production. Xác minh FakeTextToSpeechAdapter, browser speech fallback, textPlaceholder và đường tác quyền thật; readiness hiển thị fake/real và có kiểm tra file media. (S1/S2/S4)
+L07 — TTS nhiều speaker/giọng đọc đúng vai. Audio dialogue cần speakerId/speakers[]/segments, accent, tốc độ, voiceConfig; luân phiên giọng khác nhau theo vai khi mục tiêu là đối thoại, không sinh giọng random vô nghĩa. (S1/S2/S4)
+L08 — Đo WPM, duration và audio quality. Các đề xuất trong nguồn nêu khoảng 120–150/130–150 WPM và đoạn 45–90 giây làm mẫu B1; đo từ/phút và chất lượng nghe thật thay vì mặc định. Tiếng ồn nhẹ là lựa chọn thiết kế có điều kiện, phải bảo đảm rõ lời. (S1/S2/S4)
+L09 — Adapter/provider audio có phê duyệt chi phí. Tận dụng TextToSpeechPort hiện có nếu phù hợp, bổ sung provider thật, cache/artifact, speaker profiles và dự toán TTS/AI; không mua dịch vụ hay thay pipeline trước khi Product Owner duyệt. (S2/S4)
+L10 — Audio vs Reading khác thông tin được hỏi. Học cùng learning objective nhưng speaker, fact, deadline, ràng buộc và câu trả lời khác; tăng kỹ năng inference/intent/action thay vì nhắc lại “Mai works in support” đã đọc. (S1/S2/S3/S4)
+3E. ASSESSMENT, MASTERY, REVIEW VÀ ADAPTIVE
+M01 — Tách bốn khái niệm đánh giá. completed, correct attempt, independent evidence, stable mastery là các trạng thái khác nhau; learner có thể hoàn thành nhiệm vụ nhưng chưa thành thạo. (S1/S2/S3/S4)
+M02 — Ghi first attempt và hỗ trợ. Thêm firstAttempt, attemptIndex, hintUsed, supportLevel, assessmentMode, answerChangedAfterFeedback, và score gốc vào attempt metadata/JSON hiện có nếu schema cho phép. Giữ điểm/histories cũ. (S1/S2/S3/S4)
+M03 — Sửa feedback trước retry trong assessment. Khi sai, không trả ngay đáp án/explanation đầy đủ rồi cho chọn lại mà tính như độc lập. Có thể chỉ báo sai/hint dẫn dắt hoặc chuyển item biến thể. Sau khi assessment kết thúc mới cho rationale/evidence chi tiết. Practice vẫn được feedback học tập rõ ràng và đánh dấu có trợ giúp. (S1/S2/S4)
+M04 — Retry cùng objective khác context. Sau sai nhiều lần, đưa câu mẫu/chunk scaffold rồi nhiệm vụ biến thể mới, thay vì lặp đúng câu đã lộ đáp án. Không coi lần chọn đúng sau lộ đáp án ngang first attempt. (S1/S2/S4)
+M05 — Cân trọng số mastery. First-attempt không hint có tín hiệu mạnh hơn retry có gợi ý; assisted attempt vẫn có giá trị học tập. Con số “retry hint tối đa 0.5” trong S1 là đề xuất phải kiểm định, không được hard-code khi chưa duyệt assessment policy. (S1/S2/S3/S4)
+M06 — Siết STABLE bằng bằng chứng đa lần/đa context/có spacing. S1 đề xuất ≥3 ngữ cảnh Reading/Listening/production và first-attempt ≥80%; S2 đề xuất ≥3 lần, ≥2 context + spacing. Phương án hợp nhất: policy configurable dựa trên độ lặp độc lập, độ phủ bối cảnh/kỹ năng phù hợp, retention sau thời gian, không dựa vào một lần retry 100%. (S1/S2/S4)
+M07 — Nâng checkpoint sau khi đủ bằng chứng. Kiểm tra checkpoint-policy thật; đề xuất workplace-checkpoint-v2 xét inference/transfer/productive ability, không chỉ score≥0.7 của một attempt có hint. Thay đổi có flag và migration semantics hợp lý. (S1/S2/S4)
+M08 — Giữ UX Speaking/Writing bất đồng bộ nhưng đo đúng. Cho phép learner tiến tiếp khi Teacher AI chưa chấm có thể cần giữ, song achievement/checkpoint phải phân biệt pending/evaluated, rubrics thực chất và xác suất làm đúng, không coi submit nonempty = mastered. (S1/S2/S3/S4)
+M09 — Adaptive scaffold khi học yếu. Sai liên tiếp cùng Language Block/objective → micro-explanation/chunk bank/new context; thiếu bằng chứng → lịch ôn, không tự nâng level. (S1/S2/S4)
+M10 — Adaptive stretch khi học tốt. Đúng độc lập lần đầu nhiều context hoặc block Reading 100% → giảm lặp máy móc, đưa inference/tone/transfer sâu hơn thay vì giữ mức dễ; tránh adaptive chỉ dùng để tăng số lượng câu. (S1/S2/S4)
+M11 — Spaced retrieval thực từ session trước. Đưa item/objective yếu và due vào Activate theo khoảng cách; mastery đã bền vững thì giảm bài lặp; triển khai item-level exposure/remediation về P2 nếu dữ liệu chưa đủ. (S1/S2/S4)
+M12 — Item analytics và IRT như hướng nâng cao. Sau pilot đủ dữ liệu, phân tích item difficulty, p-value, discrimination, guessability, khả năng phân biệt trình độ; Adaptive/Item Response Theory không phải điều kiện P0. (S1/S2)
+3F. ADMIN CURRICULUM QUALITY DASHBOARD & PUBLISH FLOW
+A01 — Tạo Curriculum Quality Dashboard ngay trong Admin hiện hữu. Tái dùng admin-curriculum, admin-content, ValidationPanel, admin-curriculum-query.service và contracts thay vì mở một công cụ rời, giữ UI dễ thao tác. (S1/S2/S3/S4)
+A02 — Hiển thị workload trên mỗi block và duration. Activity count, question count, open tasks, words, audio duration, estimatedSeconds, net target, sai lệch, calibrated vs derived, chưa đo vs đã đo. (S1/S2/S3/S4)
+A03 — Hiển thị phân bổ kỹ năng/năng lực. Biểu đồ 4 kỹ năng, cognitive taxonomy/Bloom, difficulty CEFR, tỷ lệ mới/ôn, objective coverage, hỏi-suy luận-transfer. (S1/S2/S3/S4)
+A04 — Hiển thị context/audio integrity. Danh sách Reading/Listening trùng context, answer entity leakage, score overlap, audio kind fake/real, audio duration/WPM, speaker/accent, transcript status/mode. (S1/S2/S3/S4)
+A05 — Preview Session Readiness từng thời lượng. Với 45/60/90/120/150 trả đủ/thiếu loại nào, thiếu bao nhiêu giây, skill/objective và warning code; không chỉ trả danh sách duration về mặt cấu trúc. (S1/S2/S3/S4)
+A06 — Quality gate có lý do và nơi khắc phục. error/warn kèm link activity/question/context, mô tả cách sửa; quality warning phát hiện câu quá ít hoặc quá dễ; Admin review và phê duyệt thủ công trường hợp ngoại lệ. (S1/S2/S3/S4)
+A07 — Bật warning trước, nâng hard gate có kiểm soát. Không chặn 100% lesson cũ chỉ vì giả định <15 questions/60m; chỉ hard-block khi có cơ sở rõ ràng. Kiểm thử rule và quan sát false positives trước khi chặn publish. (S1/S2/S3/S4)
+A08 — Pre-publish QA chuyên gia sư phạm. Kết hợp automatic lint, review CEFR/ngôn ngữ, thử nghiệm learner và phê duyệt Product Owner. AI heuristic phát hiện lỗi nhưng không là người ra quyết định cuối. (S2/S3/S4)
+3G. TELEMETRY, VALIDATION, PILOT & KPI
+O01 — Đo active learning time đúng nghĩa. Instrument bắt đầu/kết thúc block/activity, pause, inactive/background, scroll/playing, response time, hints, transcript, speaker playback; không chỉ trừ timestamp session_started→completed. (S1/S2/S3/S4)
+O02 — Có kế hoạch migration hoặc non-migration. Phương án chuẩn: blockStartedAt/CompletedAt hay event store riêng sau khi duyệt schema. Phương án trước mắt: suy gần đúng từ ActivityAttempt.createdAt, client heartbeat/metric hiện có; minh bạch giới hạn dữ liệu. Không lưu raw learner content không cần thiết. (S2/S3/S4)
+O03 — Baseline trước rollout. Kiểm kê DB/lượng item, predicted vs observed workload, median/P90 duration, first attempt, replay, hint, dropoff; kiểm thử trên content có thực, không chỉ fixture seed. (S1/S2/S3/S4)
+O04 — Các KPI kỹ năng chính. Independent listening accuracy, Reading inference, Respond rubric/transfer, number of distinct contexts, retention 1/7/14 ngày, mastered vs assisted, hint dependency. (S1/S2/S3/S4)
+O05 — KPI trải nghiệm và sản phẩm. Completion/abandonment, session dropoff, satisfaction, cognitive overload, duration error median/P90; tránh kéo dài để tăng engagement ảo. (S1/S2/S3/S4)
+O06 — Calibrate workload trên learner thật. Dùng median theo CEFR/skill/task, so estimated vs actual, điều chỉnh replay/time weights theo tuần có người duyệt; đánh dấu dự đoán calibrated=false trước pilot. (S1/S2/S3/S4)
+O07 — Shadow mode planner v2 trước khi phục vụ người học. Với input tương tự tính plan v1/v2 song song, so workload/coverage/invariants, không tạo session v2 thật cho đến khi pass validation. (S2)
+O08 — A/B pilot có nhóm đối chứng. So nhóm planner cũ vs planner v2+audio-first trên mẫu content B1 đã chuẩn hóa; tách ảnh hưởng thay đổi nội dung khỏi thay đổi thuật toán khi đánh giá. S2 gợi ý ≥30 learner/nhánh nếu có thể, nhưng cần thiết kế thống kê chứ không khẳng định đây là cỡ mẫu đủ. (S1/S2/S3/S4)
+O09 — Test nhiều tầng và khả năng truy cập. Unit (formula/linter/planner/mastery), integration (contracts/DTO/publish/review), E2E Playwright desktop/mobile, RTL listening UI, axe a11y, regression session v1/v2, durations 45/60/90/120/150. (S1/S2/S3/S4)
+O10 — Tiêu chuẩn nghiệm thu không lấy “lâu hơn” làm chính. Mọi mốc như 45–55 phút, 35–45 phút, ±15%, P90 ±25%, accuracy 65–80%, retention 75%, hint <20% từ nguồn là giả thuyết pilot, chưa phải baseline/target có cơ sở thực chứng. Chốt qua chuyên gia curriculum, thống kê và số liệu live. (S1/S2/S3/S4)
+3H. ARCHITECTURE, COMPATIBILITY, GOVERNANCE & DELIVERY
+G01 — Giữ modular monolith và nâng cấp additive. Reuse services hiện có, ưu tiên read-only profiler/linter, không tạo bảng/microservice mới sớm; metadata content trong JSON snapshot nếu phù hợp, ItemExposure table chỉ khi cần P2. (S1/S2/S3/S4)
+G02 — Không sửa history. Published/Archived LessonVersion, historical MasteryRecord, attempt đã có và SessionPlanSnapshot của IN_PROGRESS/PAUSED bất biến; schema/contract tùy chọn giữ parser v1/1.1 và session cũ. (S1/S2/S3/S4)
+G03 — Feature flags/level gates. Chỉ bật B1 Intermediate pilot, không đổi Foundation/TOEIC/IELTS ngoài ý muốn; có rollback cho planner, assessment, transcript mode và publish policy. (S1/S2/S3/S4)
+G04 — Kiểm thử và rollback từng slice. Tách parser, linter, DTO/audio, telemetry, planner, mastery; unit/integration/E2E sau mỗi slice; trước rollout có suite đầy đủ; revert flag/commit phù hợp, migration có phương án xuống an toàn. (S1/S2/S3/S4)
+G05 — Đồng bộ code–docs–seed. Làm rõ khác biệt CURRICULUM.md, IMPLEMENTATION_ROADMAP.md, runtime planner đối với 90/120/150; cập nhật quyết định architectural docs/DECISIONS.md, canonical roadmap và item-specific docs sau khi test. (S1/S2/S4)
+G06 — Theo workflow mandate-steward. Đọc AGENTS.md, skill/governance và dùng mandate.mjs find/create/validate, dedupe trước khi thêm mandate; phân loại record-and-propose, cần Product Owner/human approval trước khi implement. (S1/S2/S4)
+G07 — Kiểm chứng trạng thái mandate không đồng nhất giữa các nguồn. S1 tuyên bố đã tạo MND-20261015-001 và validate register ở checkout của mình; S2/S3/S4 mô tả sandbox/read-only hoặc chưa ghi register. Phải kiểm tra repo/branch hiện tại để xác nhận mandate có thật trong nhánh được bàn giao, tránh tạo trùng. (S1/S2/S3/S4)
+G08 — Gắn backlog vào roadmap có chủ đích. Roadmap có Increment 5 Admin/quality/pilot (theo S2); liên kết mandate mới vào đó nếu Product Owner phê duyệt, không tự sửa nhãn “approved” hay production code. (S2)
+G09 — Phân vai và quyết định kinh phí. Product Owner duyệt mapping Intermediate, scope migration, provider TTS và chi phí AI; chuyên gia giáo dục chuẩn hóa B1/B2, người phụ trách assessment phê rubric/threshold, kỹ sư chịu trách nhiệm kiểm thử/rollout. (S1/S2/S3/S4)
+G10 — Bảo vệ người dùng đang học. Enrollment, activeProgramId, currentLevelCode, mastery history và các khóa progression không được thay đổi ngầm khi tách Foundation/Intermediate; có regression đa chương trình. (S2/S3/S4)
+4. CÁC ĐIỂM KHÁC NHAU / MÂU THUẪN — KHÔNG ĐƯỢC BỎ QUA
+#	Những quan điểm khác nhau từ nguồn	Nhận định hợp nhất có điều kiện
+X01 — Số câu	S1 nói 5 nhiệm vụ do Admin vs 7 nhiệm vụ fixture; S2/S3 nói 5 MCQ + 3 tác vụ mở = 8 lượt.	Bắt buộc báo 5 activities, 5 MCQ, 3 open tasks, 8 response prompts cho fixture tương ứng. Cần định nghĩa cách đếm shadowing/response trong analytics.
+X02 — Thời gian AS-IS	S1 khoảng 4–7 phút; S2 8–14 hoặc ~9–11; S4 <20–25 phút.	Không có telemetry; tất cả chỉ là ước tính dựa trên giả định khác nhau. Tuyệt đối không lấy làm baseline đo thật.
+X03 — Word count/overlap	S1 nói email 52 từ/hội thoại 43 từ, overlap ~80%; S2 nói email 47/hội thoại 52 và mức leakage qua Reading thấp-trung bình.	Kiểm lại đúng revision của fixture bằng script đếm từ và answer entity; chưa có phép đo overlap 80% được chứng minh. Transcript leakage là kết luận chắc hơn.
+X04 — Cấp B1	S2 khẳng định seed Intermediate gắn Foundation_1 Pre-A1; S3/S4 nói chưa có planner riêng; các bản vẫn thiết kế To-Be B1/B2.	Không coi label = nội dung B1. Xác minh DB, chọn product-level mapping trước khi tăng câu.
+X05 — Số lượng mỗi block	Activate 5–7/5–8; Reading 8–10/8–12; Listening 6–8/6–10; Respond 2–4, S1 muốn 3–4.	Cấu hình B1 pilot: Activate 5–8 micro, Reading 8–12 items/2–3 context, Listening 6–10 items/2–3 audio, Respond 2–4 task. Không là quota cứng và workload phải quyết định.
+X06 — 15 phút	S1 pack 13–15 phút/block, benchmark thực tổng 45–55/58; S2 net 12 phút trong block 15, toàn session To-Be ~35–45 phút; S3 thí điểm 23–26 lượt.	Phân biệt wall-clock, active time, net budget, feedback/buffer. Pilot quyết định SLA thực tế; không bắt learner đợi cho đủ 15 phút.
+X07 — CEFR Cognitive mix	S1 đưa 15/30/25/20/10; S2 cung cấp mix riêng Reading/Listening/Respond; S4 đề ≥25% inference/transfer.	Giữ taxonomy, đặt mix theo kỹ năng/mức độ B1/B2 và objective; tỷ lệ tổng là cấu hình gợi ý, không luật cứng toàn app.
+X08 — Reading↔Listening	S1 muốn phân tách nghiêm ngặt; S2 giải thích có overlap thực thể nhưng rò rỉ qua Reading mức thấp-trung bình; S4 đề unique contextSignature.	Mục tiêu là không thể trả lời câu Listening dựa chỉ trên Reading, chứ không nhất thiết cấm dùng chung chủ đề/ngôn ngữ.
+X09 — Hiển thị transcript	Có bản chỉ đề ẩn UI, bản khác nhấn mạnh API gửi script ngay; browser-speech/textPlaceholder còn phụ thuộc client text.	Áp dụng nguyên tắc backend DTO không tiết lộ trước assessment; chuyển sang audio asset phía server khi cần, UI ẩn là lớp bổ sung, Practice/A11y có cơ chế riêng.
+X10 — Accessibility	Một bản nói mark assisted=true, S2 nói không phạt.	Không hạ điểm hoặc tước trải nghiệm; chỉ phân biệt bằng chứng nghe không có chữ với bằng chứng học/đánh giá có hỗ trợ.
+X11 — Playback	S1 đề yêu cầu play/ended để chứng minh có nghe; S2 chỉ kiểm replay.	Event dùng làm telemetry/UX, không đủ làm bằng chứng comprehension hoặc rào cản loại trừ a11y.
+X12 — Feedback sai	S1 muốn bỏ explanation ngay tức thì; S2/S3 nhấn mạnh các attempts sai vẫn được ghi mastery.	Phân biệt assessment vs practice, thay đổi timing của feedback nhưng không làm mất quá trình học; first attempt và assisted score là 2 tín hiệu riêng.
+X13 — STABLE	S1 ≥3 context 3 skill & ≥80%; S2 ≥3 lần ≥2 context với spacing.	Đưa vào assessment policy/config sau pilot; yêu cầu đa lần + đa context + delayed retention thay vì tự động áp threshold cực cứng.
+X14 — Publish gate	S1 chặn publish lesson quá mỏng; S2/S4 ủng hộ warn-first/read-only; S3 ưu tiên warning P0.	Bật quality report trước; hard-block chỉ lỗi rõ, nâng chất lượng threshold sau khi hiệu chuẩn và kiểm tra false positives.
+X15 — Schema	S1 thêm estimatedDurationSeconds dạng required trong contract; S2/S3/S4 ưu tiên optional/additive.	Chọn optional estimatedSeconds/planVersion để session legacy vẫn parse; không áp min(600) bắt buộc cho mọi block cũ.
+X16 — P0/P1/P2	S1 đặt Format 1.2 ở P1, Audio ở P2, mastery ở P2; S2 đặt quyết định CEFR ở P0, Retry/mastery ở P1, audio ở P1; S4 đặt Intermediate curriculum ở P2.	Ưu tiên theo phụ thuộc và rủi ro: CEFR/assessment integrity/readiness P0, content bank+parser+planner+mastery P1, adaptive/item statistics P2; audio production lên P1 khi bị chặn pilot, không dựa thứ tự tài liệu.
+X17 — Migration	Có đề xuất timestamp columns; cũng có hướng JSON/metrics không migration.	Khởi động read-only; telemetry phức tạp và itemExposure cần design review trước migration. Tránh thay schema vì convenience.
+X18 — Docs 90–150	Một số tài liệu nói disabled, mô phỏng khác nói playable.	Test computeAvailableDurations, session-planner.spec và endpoint với seed version hiện hành; cập nhật docs theo kết quả.
+X19 — Audio quality	Các bản ghi audio fake seed, nhưng pipeline authoring có service chưa audit.	Tách seed audio và production generated audio; không tuyên bố 100% audio của app là sóng sin.
+X20 — Mandate	S1 báo đã tạo/validate mandate; S2/S3/S4 báo chưa tạo trong clone/branch audit.	Kiểm tra trạng thái repo đích, branch/commit và register; nếu có cùng ý thì dedupe/extend, không mở mandate trùng.
+X21 — Benchmark pilot	Các bản nêu 65–80% accuracy nghe, hint<20%, retention>75%, ±15/±25% accuracy time, ≥30/cohort, median 45–55 phút.	Không đủ dữ liệu để coi là KPI sản phẩm. Chỉ dùng làm dải giả thuyết/thử nghiệm; cần thiết kế thống kê, curriculum board và learner data.
+X22 — “Không có bug”	S2 nói planner chạy đúng spec, S1 xem là lỗi thiết kế nghiêm trọng.	Đây là design defect / educational quality gap dù code có thể đúng contract; tránh fix vụn gây regression.
+
+
+5. THIẾT KẾ TRẢI NGHIỆM ĐƯỢC HỢP NHẤT — PHIÊN 60 PHÚT B1 MẪU
+Chủ đề minh họa: Xử lý thay đổi lịch họp và phản hồi khách hàng (tương đương có thể thay bằng sự cố giao hàng chậm như S1). Tất cả con số là cấu hình thử nghiệm, không phải chuẩn đạt.
+Block	Nội dung	Khối lượng sơ bộ	Bằng chứng yêu cầu
+Activate	Ôn reschedule, postpone, confirm qua retrieval, cloze, collocation, error spotting và một câu tự tạo	5–8 micro items; lấy từ bài trước/error bank	First attempt, review due, không nhìn tài liệu
+Read & Decode	Email đổi lịch + chat/notice có ràng buộc mới, phân tích người/timing/deadline/next action	8–12 items, 2–3 văn bản; nhiều inference/application	Người học hiểu nội dung, lựa chọn có lý do
+Listen & Reason	Cuộc gọi/voicemail với speaker/thông tin không nằm trong bài đọc	6–10 items, 2–3 audio; gist→detail→intent→action	Audio-first, no transcript trước đánh giá, độc lập với Reading
+Respond	Role-play xác nhận với manager/khách, email phản hồi ở context thứ ba, reflection; shadowing nếu cần về phát âm	2–4 nhiệm vụ có ý nghĩa	Speaking/writing rubric về ứng xử, độ chính xác và transfer
+
+
+Nhìn từ ví dụ của S1: Activate collocation về giao hàng; Reading email khách 160 từ + báo cáo kho 110 từ; Listening cuộc gọi kho 55s + voicemail ngân sách 45s; Respond shadowing, giải thích nói 45–60s và email 50–70 từ. Đây là một biến thể nội dung khác của cùng kiến trúc, không phải nội dung bổ sung bắt buộc cho mỗi lesson.
+Không công bố sẵn câu hỏi cứng: Kiểu B1 với 8–12 MCQ Reading + 6–10 Listening là xuất phát điểm; việc kết hợp context/cognitive tasks dài có thể cần ít câu hơn. Không tạo timer ép người học ngồi đủ 15 phút.
+6. BACKLOG ƯU TIÊN HỢP NHẤT VÀ PHỤ THUỘC
+P0 — Chặn sai lệch nền tảng, tăng khả năng quan sát, bảo vệ assessment
+ID	Việc cần làm	Đầu ra và acceptance criteria
+P0-01	Read-only DB/content inventory + test 45/60/90/120/150	Có báo cáo phiên/lesson version; xác nhận hoặc bác bỏ H07/H15, phân biệt seed và live.
+P0-02	Product decision Intermediate–Foundation–CEFR	Chốt nhãn/path/mapping; validator; không phá enrollment, currentLevel, mastery.
+P0-03	Listening assessment integrity	API assessment không gửi transcript/script trước khi nộp; UI không render; nếu đang dùng browser TTS từ textPlaceholder thì thay bằng audio media phù hợp cho assessment; Practice/A11y có nhãn hỗ trợ, a11y pass.
+P0-04	Feedback/retry integrity	Với assessment sai, API không lộ đáp án trước retry tính độc lập; ghi first attempt và hint dependency; giữ lịch sử attempt.
+P0-05	Read-only workload profiler và Admin warnings	Admin thấy số câu/task/context/estimated time/readiness theo duration; missing workload được mô tả.
+P0-06	Planner nói rõ thiếu content	Trả structured INSUFFICIENT_CONTENT/readiness, không silent thin session/filler; regression duration.
+P0-07	Governance/mandate/status baseline	Kiểm tra MND-20261015-001 trên repo đích; dedupe; record approved scope; sửa docs availability sau test.
+
+
+P1 — Xây nền tảng nội dung, planner mới, đánh giá và thí điểm
+ID	Việc cần làm	Đầu ra và acceptance criteria
+P1-01	B1 pilot curriculum/content bank	≥1–2 lesson được reviewer CEFR duyệt, 2–3 context đọc/nghe độc lập và Respond transfer thực.
+P1-02	Format 1.2 đa-question + metadata	Parser/AST/normalizer giữ v1/1.1; hỗ trợ nhiều item/activity; metadata optional/versioned.
+P1-03	Quality linter và publish workflow	Rules F04–F10 có tests; Admin thấy actionable warnings; escalation warn→error được phê duyệt.
+P1-04	Planner v2 workload/item-aware	Có score/constraints/selectionRationale, feature flag và shadow mode; 45–150 regression, v1 vẫn hoạt động.
+P1-05	Reading–Listening semantic separation	Test answer entity/context leakage; mục tiêu nghe không đoán chỉ bằng đọc.
+P1-06	Attempt evidence + mastery/checkpoint v2	Independent/assisted rõ, first attempt, retry variants, deferred grading; không backfill mastery cũ.
+P1-07	Telemetry active time + calibration	Block/activity timing, replay/hint/absence metrics; privacy-safe; chuẩn bị A/B pilot.
+P1-08	TTS thật/multi speaker khi pilot yêu cầu	Provider được duyệt, audio artifact có speaker/accent/wpm/duration, fake giữ cho tests.
+P1-09	Controlled pilot A/B	So kỹ năng/retention/abandonment với control; không lấy time dài hơn là success.
+
+
+P2 — Tối ưu theo bằng chứng pilot
+ID	Việc cần làm	Đầu ra và acceptance criteria
+P2-01	Adaptive scaffold/branching nâng cao	Weak→support, strong→deeper inference/transfer theo policy có thể giải thích.
+P2-02	ItemExposure, item statistics/IRT	Có p-value/discrimination, exposure/guessability, đủ dữ liệu trước khi tối ưu.
+P2-03	Auto-calibrate workload và review scheduling	Hằng số theo CEFR/task dựa telemetry thực, có kiểm soát drift.
+P2-04	Hoàn thiện ngân hàng B1/B2 toàn chương trình	CEFR curriculum map đủ sâu theo missions, không chỉ pilot.
+P2-05	Debt cleanup và UX polishing	Dọn legacy shim, alias planner, docs; giảm friction trong Admin/Learner.
+
+
+7. LỘ TRÌNH THỰC HIỆN AN TOÀN
+1. Trước mọi thay đổi: đọc AGENTS.md, xem mandate + governance, xác nhận commit/branch, DB snapshot và recheck tests. Product Owner chốt mapping CEFR/Intermediate và quyền triển khai.
+2. Chặn sai lệch integrity: sửa assessment transcript cả API và UI, a11y mode; sửa timing feedback; bổ sung first attempt và attempt mode. Test không lộ đáp án, đồng thời xác nhận accessibility.
+3. Hiển thị vấn đề trước khi thay thuật toán: workload profiler read-only, Admin Quality Dashboard warnings, INSUFFICIENT_CONTENT, xác minh 90–150 và sửa docs. Đo baseline sơ bộ.
+4. Thiết kế content & parser: Format 1.2 (nếu cần), optional metadata, 1–2 B1 lessons thật, QA CEFR, independent reading/listening; publish version mới.
+5. Planner v2: pure function theo CEFR/config, item selection + hard invariants; shadow mode; feature flag riêng Intermediate pilot.
+6. Assessment/mastery, audio và telemetry: thử với content/pilot, chỉ nâng chính sách khi đã có tests/metrics; duyệt provider/migration riêng.
+7. Controlled A/B rollout: theo dõi median/P90, first-attempt, retention 1/7/14, transfer, assisted, satisfaction, abandonment. Calibrate threshold; tắt flag khi regressions.
+8. Sau pilot: promote warning→error có căn cứ, mở rộng curriculum B1/B2, triển khai adaptive, item exposure nếu dữ liệu đủ.
+8. CÁC CÂU HỎI CẦN QUYẾT ĐỊNH (KHÔNG TỰ PHÊ DUYỆT)
+1. Intermediate label/path: Tạo B1/B2 path; đổi nhãn Pre-A1; hay tách Foundation sang Beginner?
+2. Dữ liệu live: Có bao nhiêu lesson Intermediate thật do Admin publish, khác fixture ở đâu?
+3. Kế hoạch B1: Ai là curriculum/IELTS/CEFR reviewer, tiêu chí nghiệm thu bài B1 như thế nào?
+4. Các phiên timebox: Giữ nhãn 15/60 phút như cấu trúc hay thay UX theo thời gian học đã đo; khi session thiếu nội dung thì disable duration hay đề xuất duration ngắn hơn?
+5. Accessibility: Định nghĩa chứng cứ điểm cho bài dùng phụ đề/trợ năng sao cho công bằng và rõ mục tiêu đánh giá?
+6. Feedback/mastery: Chính sách first-attempt, retry, hint, STABLE, checkpoint mới do ai duyệt?
+7. Audio: Có bật provider thật, speaker voice library, chi phí API, caching và QA chưa?
+8. Telemetry: Dùng JSON/metric hiện có hay duyệt migration cho timestamp/event store?
+9. Publish gate: Ngưỡng nào chặn ngay, ngưỡng nào cảnh báo? Bao lâu pilot trước khi chuyển warn→error?
+10. Rollout & governance: Repo đích đã có MND-20261015-001 chưa, có gắn Increment 5/roadmap và ai duyệt implementation?
+9. KIỂM TRA PHẠM VI BAO PHỦ (TRACEABILITY)
+Trục kiểm toán / đề xuất	S1	S2	S3	S4	Nơi được hợp nhất
+10 câu hỏi audit	✓	✓	✓	✓	H01–H17, §2.1
+Program label, CEFR, Intermediate/Foundation	—	✓	✓	✓	C01–C05, X04, P0-02
+Planner, workload formula, duration, selection	✓	✓	✓	✓	P01–P16, X05–X06, X18
+Reading/Listening transfer/context	✓	✓	✓	✓	C06/C09/C10, P09, L10
+Audio-first transcript/API/a11y/replay	✓	✓	✓	✓	L01–L05, X09–X11
+Fake TTS, multi-speaker, WPM/provider	✓	✓	✓	✓	L06–L09, X19
+Assessment/retry/hints/mastery/checkpoint	✓	✓	✓	✓	M01–M12, X12–X13
+Format 1.2/multi question	✓	—	—	—	F01, P1-02
+Item metadata/cognitive taxonomy/quality lint	✓	✓	✓	✓	F02–F12, C07, X07
+Admin quality/readiness/publish policy	✓	✓	✓	✓	A01–A08, X14
+Telemetry, metrics, A/B, calibrate	✓	✓	✓	✓	O01–O10, X21
+Multi-duration docs inconsistency/legacy shim	—	✓	—	✓	H15/H17, P16, G05, X18
+Mandate create-vs-readonly state	✓	✓	✓	✓	G06–G08, X20
+Existing version/session/progression safety	✓	✓	✓	✓	G01–G04/G10, P14
+
+
+10. KẾT LUẬN CUỐI CÙNG
+Mục tiêu đúng của kế hoạch này không phải biến bài 5 câu thành bài 25 câu. WorkLingo cần một chuỗi trách nhiệm khép kín: (1) đúng chương trình và trình độ, (2) đúng mục tiêu mỗi item, (3) thời lượng và tải nhận thức hợp lý, (4) Reading–Listening độc lập, (5) feedback/assisted/first-attempt chính xác, (6) admin kiểm định trước publish, (7) đo năng lực thật sau học và sau nhiều ngày, (8) triển khai không phá dữ liệu cũ. Không một biện pháp đơn lẻ nào giải quyết toàn bộ vấn đề.
+Giới hạn bản báo cáo: Đây là việc hợp nhất có phê bình từ bốn báo cáo đã được gửi; chưa truy cập repository hiện hành, DB production, feature flags thực tế hay event logs tại thời điểm tổng hợp. Những mâu thuẫn nguồn quan trọng đã được phơi bày và cần kiểm chứng trước khi Codex chỉnh sửa production.

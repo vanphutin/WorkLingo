@@ -1,0 +1,83 @@
+{
+  "environment": "fixture-only; not a database inventory",
+  "source": "packages/test-fixtures/src/foundation-mission.fixture.ts",
+  "contextWords": [
+    {
+      "slug": "welcome-email",
+      "words": 47
+    },
+    {
+      "slug": "desk-conversation",
+      "words": 52
+    }
+  ],
+  "lessonVersionCount": 1,
+  "lessons": [
+    {
+      "lessonVersionId": "00000000-0000-4000-8000-000000000300",
+      "version": 2,
+      "missionId": "00000000-0000-4000-8000-000000000400",
+      "levelCode": "FOUNDATION_1",
+      "cefrReference": "Pre-A1",
+      "programLabel": "Intermediate / B1–B2",
+      "purpose": "learning",
+      "publication": {
+        "path": "synthetic",
+        "level": "synthetic",
+        "mission": "synthetic"
+      },
+      "provenance": "unknown",
+      "labelMismatch": true,
+      "audio": [],
+      "snapshotValid": true,
+      "activityCount": 10,
+      "questionCount": 10,
+      "openTaskCount": 4,
+      "contextCount": 2,
+      "availableDurations": [
+        45,
+        60,
+        90,
+        120,
+        150
+      ],
+      "durations": [
+        {
+          "minutes": 45,
+          "planValid": true,
+          "selectedActivityCount": 4,
+          "questionCount": 5,
+          "openTaskCount": 2
+        },
+        {
+          "minutes": 60,
+          "planValid": true,
+          "selectedActivityCount": 5,
+          "questionCount": 5,
+          "openTaskCount": 3
+        },
+        {
+          "minutes": 90,
+          "planValid": true,
+          "selectedActivityCount": 7,
+          "questionCount": 8,
+          "openTaskCount": 3
+        },
+        {
+          "minutes": 120,
+          "planValid": true,
+          "selectedActivityCount": 8,
+          "questionCount": 8,
+          "openTaskCount": 4
+        },
+        {
+          "minutes": 150,
+          "planValid": true,
+          "selectedActivityCount": 10,
+          "questionCount": 10,
+          "openTaskCount": 4
+        }
+      ]
+    }
+  ]
+}

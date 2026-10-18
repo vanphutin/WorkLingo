@@ -1,0 +1,106 @@
+{
+  "environment": "configured-local-public; read-only schema metadata",
+  "tableCount": 37,
+  "missingLearningProgram": true,
+  "applied": [
+    {
+      "migration_name": "20261004000100_foundation",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261004000200_auth",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261004000300_curriculum",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261004000400_preserve_auth_uuid_defaults",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261004000500_learning_sessions",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261004000600_content_authoring",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261006000100_mastery_events_and_records",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261006000200_mastery_event_integrity",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261006000300_mastery_canonical_backfill",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261006000400_error_bank",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261006000500_multi_duration_sessions",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261007000100_checkpoint_progression",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261007120000_add_teacher_ai_pipeline",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261009000100_system_seeded_audio",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261009000200_increment_5a1_onboarding_placement",
+      "finished": true,
+      "rolled_back": false
+    },
+    {
+      "migration_name": "20261010000100_audio_tts_settings",
+      "finished": true,
+      "rolled_back": false
+    }
+  ],
+  "catalogSchemas": [],
+  "localMigrationCount": 31,
+  "pending": [
+    "20261010000200_increment_5a2_engagement",
+    "20261011000100_increment_5b_curriculum_admin",
+    "20261011000200_increment_5c_rate_limits",
+    "20261011000300_increment_5c_pilot_analytics",
+    "20261012000100_learning_programs",
+    "20261012000200_learner_program_enrollment",
+    "20261013000100_curriculum_foundation",
+    "20261013000200_ielts_orientation",
+    "20261013000300_ielts_bridge",
+    "20261013000400_ielts_integrated_practice",
+    "20261013000500_ielts_integrated_block_timer",
+    "20261014000100_ielts_band_curriculum",
+    "20261014000200_ielts_full_mock",
+    "20261014000300_ielts_mock_audio_events",
+    "20261014163000_ai_routing_settings"
+  ]
+}

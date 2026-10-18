@@ -1,0 +1,1136 @@
+{
+  "artifactType": "worklingo-content-review-draft",
+  "artifactVersion": 1,
+  "date": "2026-10-16",
+  "status": "draft-not-importable-not-publish-approved",
+  "author": "Codex (AI-assisted draft)",
+  "qualifiedCefrReviewer": null,
+  "reviewRubricVersion": "worklingo-b1-pilot-review-v1-draft",
+  "reviewedSourceHash": null,
+  "sourceRights": "New fictional texts drafted for this proposal; not copied from an examination or publisher. Human rights review pending.",
+  "scope": {
+    "lessonCount": 2,
+    "targetCefr": "B1 candidate, not a proficiency certification",
+    "timingCalibration": "unknown",
+    "publication": false,
+    "providerCalls": false,
+    "assessmentMode": "No independent-assessment eligibility asserted; W2 unresolved."
+  },
+  "lessons": [
+    {
+      "slug": "b1-handle-delivery-change",
+      "title": "Handle a delayed delivery",
+      "targetCefr": "B1",
+      "cefrReviewStatus": "ai-reviewed-provisional",
+      "prerequisiteRefs": [
+        "a2-state-dates-and-quantities",
+        "a2-explain-simple-reason",
+        "a2-request-confirmation"
+      ],
+      "objectives": [
+        {
+          "slug": "identify-constraints",
+          "skills": [
+            "reading",
+            "listening"
+          ],
+          "statement": "Identify the changed arrangement, its reason and a condition on the available options."
+        },
+        {
+          "slug": "explain-change",
+          "skills": [
+            "speaking",
+            "writing"
+          ],
+          "statement": "Explain a problem and its practical effect to a colleague or customer."
+        },
+        {
+          "slug": "choose-next-action",
+          "skills": [
+            "reading",
+            "listening",
+            "speaking",
+            "writing"
+          ],
+          "statement": "Select a feasible next action, give a brief reason and ask for confirmation without promising an unsupported outcome."
+        }
+      ],
+      "languageBlocks": [
+        {
+          "slug": "due-to",
+          "expression": "due to",
+          "meaningVi": "do, vì",
+          "example": "The workshop is closed due to repairs."
+        },
+        {
+          "slug": "could-you-confirm",
+          "expression": "Could you confirm ...?",
+          "meaningVi": "Bạn có thể xác nhận ... không?",
+          "example": "Could you confirm the number of visitors?"
+        },
+        {
+          "slug": "provided-that",
+          "expression": "provided that",
+          "meaningVi": "với điều kiện là",
+          "example": "We can use the room provided that we leave it tidy."
+        },
+        {
+          "slug": "instead-of",
+          "expression": "instead of",
+          "meaningVi": "thay vì",
+          "example": "Please send a message instead of calling during the presentation."
+        },
+        {
+          "slug": "keep-informed",
+          "expression": "keep you informed",
+          "meaningVi": "cập nhật thông tin cho bạn",
+          "example": "I will keep you informed about the new opening hours."
+        }
+      ],
+      "contexts": [
+        {
+          "slug": "harbor-email",
+          "channel": "reading",
+          "type": "email",
+          "lines": [
+            "From: Mina, Harbor Office Supplies | To: Lee, Greenway Studio | Subject: Chair delivery",
+            "Thank you for ordering twelve chairs for your new office. We planned to deliver all of them on Monday, but a damaged part has delayed the final checks. The complete order can now arrive on Wednesday afternoon.",
+            "If you need some chairs sooner, we can send eight on Monday and the remaining four on Thursday. There is no extra delivery charge for this option. However, we need your reply by 3 p.m. today so that we can reserve space on the first truck.",
+            "The smaller delivery would let part of your team start work, but it would not provide enough seats for everyone. Please do not arrange your full team meeting until all twelve chairs have arrived.",
+            "Your old chairs are due to be collected on Tuesday morning. If you choose the Wednesday delivery, we can ask the collection company to come later, but that company must confirm the change. We cannot promise a new collection time yet.",
+            "Please tell us which delivery option you prefer and whether you would like us to contact the collection company."
+          ]
+        },
+        {
+          "slug": "cedar-call",
+          "channel": "listening",
+          "type": "dialogue",
+          "audioStatus": "script-only",
+          "durationSeconds": null,
+          "speakers": [
+            "Sam, supplier",
+            "Nora, café manager"
+          ],
+          "lines": [
+            "Sam: Hi Nora, it is Sam from Cedar Packaging. I am calling about the paper cups for your café. Our delivery van has broken down, so the boxes will not arrive this evening as planned.",
+            "Nora: We have enough cups for tomorrow morning, but there is a school event at two in the afternoon. We will need more before that starts.",
+            "Sam: A courier can bring six boxes by eleven tomorrow. The other four boxes would come on our regular van the following day. The courier costs twenty pounds.",
+            "Nora: That is more than we planned to spend. Could I collect the six boxes myself instead?",
+            "Sam: Yes. They will be ready at our depot from eight thirty. Collection is free, but please bring the order number. The depot closes for staff training at ten.",
+            "Nora: I have a colleague who can go there at nine. Please hold the boxes while I check with him. Do not book the courier yet.",
+            "Sam: Of course. Please call me back before four today. If I do not hear from you, I will leave the whole order for the regular van; I will not book the courier automatically.",
+            "Nora: Thanks. I will confirm this afternoon. The remaining four boxes can wait until the following day."
+          ]
+        },
+        {
+          "slug": "printer-task",
+          "channel": "speaking-task",
+          "type": "task-card",
+          "lines": [
+            "You coordinate an office move. The hired printer will arrive on Friday instead of Thursday. Staff need to print visitor badges on Thursday morning. A nearby branch can lend a printer, but it cannot deliver it. A colleague may be able to collect it; this is not confirmed.",
+            "Leave that colleague a voice message. Explain the problem and its effect, suggest a workable option and ask whether they can collect the printer. Do not claim collection is already arranged."
+          ]
+        },
+        {
+          "slug": "uniform-task",
+          "channel": "writing-task",
+          "type": "task-card",
+          "lines": [
+            "You ordered uniforms for a community event on Saturday. Twenty shirts are ready, but five smaller shirts will not arrive until Monday. The supplier can replace those five with a different colour on Friday at no extra cost. The event organiser must approve that colour before you accept.",
+            "Write the organiser an email explaining the change, recommending a next step with a reason and asking for a decision by tomorrow noon. Do not promise a refund or a delivery that the supplier has not offered."
+          ]
+        }
+      ],
+      "comprehension": [
+        {
+          "slug": "harbor-reading",
+          "skill": "reading",
+          "learningBlock": "readDecode",
+          "contextSlug": "harbor-email",
+          "objectiveRefs": [
+            "identify-constraints",
+            "choose-next-action"
+          ],
+          "questions": [
+            {
+              "slug": "delivery-purpose",
+              "cognitiveLevel": "comprehension",
+              "prompt": "Why has Mina written this email?",
+              "options": [
+                "To confirm that the complete order is already on the truck.",
+                "To ask Lee to choose how to handle a changed delivery.",
+                "To ask Lee to pay for repairing damaged chairs.",
+                "To cancel the order and arrange a collection."
+              ],
+              "answerIndex": 1,
+              "evidenceLines": [
+                2,
+                3,
+                6
+              ],
+              "explanation": "The original arrangement has changed and Mina asks Lee to choose an option.",
+              "distractorRationales": [
+                "The email offers future deliveries; it does not say loading is complete.",
+                null,
+                "The part caused a delay, but no repair payment is requested.",
+                "The order remains available; collection concerns old chairs."
+              ],
+              "answerEntities": [
+                "choose delivery option"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "delivery-split",
+              "cognitiveLevel": "comprehension",
+              "prompt": "If Lee chooses the split delivery, when will the final four chairs arrive?",
+              "options": [
+                "Monday.",
+                "Tuesday morning.",
+                "Wednesday afternoon.",
+                "Thursday."
+              ],
+              "answerIndex": 3,
+              "evidenceLines": [
+                3
+              ],
+              "explanation": "The split option sends eight on Monday and four on Thursday.",
+              "distractorRationales": [
+                "Monday is for the first eight chairs.",
+                "Tuesday is the planned old-chair collection.",
+                "Wednesday applies to the complete-order option.",
+                null
+              ],
+              "answerEntities": [
+                "four chairs Thursday"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "delivery-condition",
+              "cognitiveLevel": "application",
+              "prompt": "What must Lee do to get eight chairs on Monday?",
+              "options": [
+                "Reply by 3 p.m. today to reserve truck space.",
+                "Reply today and pay the charge for the second delivery.",
+                "Confirm that the old chairs will be collected on Tuesday.",
+                "Wait for the collection company to approve a later visit."
+              ],
+              "answerIndex": 0,
+              "evidenceLines": [
+                3
+              ],
+              "explanation": "A reply before the stated deadline is the condition for reserving space.",
+              "distractorRationales": [
+                null,
+                "A timely reply is required, but no extra delivery charge is due.",
+                "Tuesday collection is not the condition for booking the split delivery.",
+                "The collection company cannot reserve Harbor's first truck."
+              ],
+              "answerEntities": [
+                "reply 3 p.m. today"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "delivery-comparison",
+              "cognitiveLevel": "application",
+              "prompt": "What is one disadvantage of the split delivery compared with the complete Wednesday delivery?",
+              "options": [
+                "The final four chairs require an extra delivery charge.",
+                "The first eight arrive after the old-chair collection.",
+                "The full set arrives one day after Wednesday.",
+                "The collection company must delay its visit until Thursday."
+              ],
+              "answerIndex": 2,
+              "evidenceLines": [
+                2,
+                3,
+                4
+              ],
+              "explanation": "The final four arrive Thursday in the split option, one day after the complete Wednesday delivery.",
+              "distractorRationales": [
+                "The split option explicitly has no extra delivery charge.",
+                "The first eight arrive Monday, before Tuesday's collection.",
+                null,
+                "No Thursday collection condition is stated."
+              ],
+              "answerEntities": [
+                "Thursday later than Wednesday"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "delivery-uncertainty",
+              "cognitiveLevel": "comprehension",
+              "prompt": "What remains uncertain if Lee chooses the Wednesday delivery?",
+              "options": [
+                "Whether the old chairs are scheduled for Tuesday collection.",
+                "Whether the collection company can change its visit.",
+                "Whether the split delivery sends four chairs on Thursday.",
+                "Whether the full order is offered for Wednesday afternoon."
+              ],
+              "answerIndex": 1,
+              "evidenceLines": [
+                5
+              ],
+              "explanation": "Harbor can ask for a later collection, but the collection company has not agreed.",
+              "distractorRationales": [
+                "Tuesday is already the scheduled collection day.",
+                null,
+                "Thursday is stated in the split option.",
+                "Wednesday afternoon is the stated complete-order offer."
+              ],
+              "answerEntities": [
+                "collection company approval pending"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "delivery-next-action",
+              "cognitiveLevel": "application",
+              "prompt": "Lee needs all twelve chairs for a Wednesday evening meeting and wants to keep the old chairs until the new ones arrive. Which reply best fits the email?",
+              "options": [
+                "Choose the split delivery and confirm all chairs will be there on Monday.",
+                "Ask Harbor to cancel the old-chair collection without checking with anyone.",
+                "Choose Wednesday and tell staff that the collection change is guaranteed.",
+                "Choose Wednesday and ask Harbor to request a later collection, awaiting confirmation."
+              ],
+              "answerIndex": 3,
+              "evidenceLines": [
+                2,
+                3,
+                5
+              ],
+              "explanation": "Wednesday supplies all twelve; a changed collection must still be confirmed.",
+              "distractorRationales": [
+                "The split option is incomplete until Thursday.",
+                "Harbor can request a change but cannot confirm it alone.",
+                "The email explicitly withholds that guarantee.",
+                null
+              ],
+              "answerEntities": [
+                "Wednesday complete order",
+                "collection confirmation needed"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            }
+          ]
+        },
+        {
+          "slug": "cedar-listening",
+          "skill": "listening",
+          "learningBlock": "listenReason",
+          "contextSlug": "cedar-call",
+          "objectiveRefs": [
+            "identify-constraints",
+            "choose-next-action"
+          ],
+          "questions": [
+            {
+              "slug": "cups-purpose",
+              "cognitiveLevel": "comprehension",
+              "prompt": "Why does Sam call Nora?",
+              "options": [
+                "A broken van has changed the cup delivery.",
+                "The café has ordered the wrong cup size.",
+                "The courier has delivered too many boxes.",
+                "The school event has been cancelled."
+              ],
+              "answerIndex": 0,
+              "evidenceLines": [
+                1
+              ],
+              "explanation": "Sam explains that the van failure prevents the planned arrival.",
+              "distractorRationales": [
+                null,
+                "No cup-size error is discussed.",
+                "The courier is only an option.",
+                "The event is still planned."
+              ],
+              "answerEntities": [
+                "van broken",
+                "delivery delayed"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "cups-needed",
+              "cognitiveLevel": "comprehension",
+              "prompt": "When does Nora need the extra cups?",
+              "options": [
+                "Before the café opens tomorrow morning.",
+                "Before the depot training starts today.",
+                "Before the school event tomorrow afternoon.",
+                "Before the regular van arrives this evening."
+              ],
+              "answerIndex": 2,
+              "evidenceLines": [
+                2
+              ],
+              "explanation": "Existing stock covers the morning; the event at two requires more.",
+              "distractorRationales": [
+                "She already has enough for the morning.",
+                "Depot training is tomorrow and is not the café's demand.",
+                null,
+                "The regular delivery this evening is no longer possible."
+              ],
+              "answerEntities": [
+                "school event two tomorrow"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "cups-courier",
+              "cognitiveLevel": "comprehension",
+              "prompt": "What would the courier option provide?",
+              "options": [
+                "All ten boxes this evening for twenty pounds.",
+                "Six boxes by eleven tomorrow for twenty pounds.",
+                "Four boxes tomorrow morning at no extra charge.",
+                "Six boxes the following day with the regular van."
+              ],
+              "answerIndex": 1,
+              "evidenceLines": [
+                3
+              ],
+              "explanation": "Sam offers six boxes by eleven with a twenty-pound courier charge.",
+              "distractorRationales": [
+                "Neither the quantity nor time matches.",
+                null,
+                "The remaining four are on the regular van, not this courier.",
+                "The first six could come tomorrow, not the following day."
+              ],
+              "answerEntities": [
+                "six boxes eleven tomorrow",
+                "twenty pounds"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "cups-collection",
+              "cognitiveLevel": "application",
+              "prompt": "Which collection plan meets the depot's conditions?",
+              "options": [
+                "Arrive at ten thirty with the order number.",
+                "Arrive at nine and pay the courier charge.",
+                "Arrive at eight before the boxes are ready.",
+                "Arrive at nine with the order number."
+              ],
+              "answerIndex": 3,
+              "evidenceLines": [
+                5,
+                6
+              ],
+              "explanation": "Nine is inside the stated collection window and the order number is required.",
+              "distractorRationales": [
+                "The depot closes at ten.",
+                "Collection is free; a courier payment is unnecessary.",
+                "The boxes are not ready until eight thirty.",
+                null
+              ],
+              "answerEntities": [
+                "nine collection",
+                "order number"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "cups-decision",
+              "cognitiveLevel": "comprehension",
+              "prompt": "Why does Nora ask Sam not to book the courier yet?",
+              "options": [
+                "She may arrange free collection, but she must check with her colleague.",
+                "She is checking whether tomorrow's school event can use fewer than six boxes.",
+                "She wants to wait until the regular van can deliver all ten boxes.",
+                "She needs Sam to decide which colleague will collect the boxes for her."
+              ],
+              "answerIndex": 0,
+              "evidenceLines": [
+                4,
+                6
+              ],
+              "explanation": "She is checking the cheaper collection option before committing.",
+              "distractorRationales": [
+                null,
+                "She does not propose reducing the number of boxes needed for the event.",
+                "The regular van is too late for the event, and she is considering collection.",
+                "Nora is responsible for checking with her colleague; Sam is holding the boxes."
+              ],
+              "answerEntities": [
+                "colleague confirmation pending",
+                "free collection"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "cups-no-reply",
+              "cognitiveLevel": "application",
+              "prompt": "What will Sam do if Nora does not call back before four?",
+              "options": [
+                "Book the courier and charge Nora twenty pounds.",
+                "Send only four boxes with the courier tomorrow.",
+                "Keep the full order for the regular van.",
+                "Hold six boxes indefinitely at the depot."
+              ],
+              "answerIndex": 2,
+              "evidenceLines": [
+                7
+              ],
+              "explanation": "Sam states the fallback and says a courier will not be booked automatically.",
+              "distractorRationales": [
+                "He explicitly rules out automatic booking.",
+                "The four-box courier option was never offered.",
+                null,
+                "The fallback is the regular van, not indefinite collection."
+              ],
+              "answerEntities": [
+                "whole order regular van if no reply"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            }
+          ]
+        }
+      ],
+      "activation": {
+        "slug": "delivery-retrieval",
+        "skill": "writing",
+        "learningBlock": "activate",
+        "prompt": "Before opening the new contexts, recall a phrase from prior practice for explaining a change and one for requesting confirmation. Use each in a new sentence. If you have not studied these before, mark first exposure; this task then introduces language and is not evidence of spaced retrieval.",
+        "priorEvidenceRequired": true,
+        "estimatedSeconds": null
+      },
+      "responses": [
+        {
+          "slug": "printer-voice-message",
+          "skill": "speaking",
+          "learningBlock": "respond",
+          "contextSlug": "printer-task",
+          "objectiveRefs": [
+            "explain-change",
+            "choose-next-action"
+          ],
+          "cognitiveLevel": "transfer",
+          "prompt": "Leave a brief voice message for the colleague using the task card. Explain the effect on Thursday's badges, propose collection from the branch and ask whether the colleague can do it.",
+          "modelResponse": "Hi Alex. The hired printer will not arrive until Friday, but we need badges on Thursday morning. The nearby branch can lend us one, although they cannot deliver it. Could you collect it and let me know whether that is possible? I will wait for your confirmation before arranging it.",
+          "requiredMeaning": [
+            "Friday arrival conflicts with Thursday badges",
+            "branch loan needs collection",
+            "colleague availability unknown",
+            "explicit confirmation request"
+          ],
+          "rubricRefs": [
+            "task-achievement",
+            "reason-and-action",
+            "coherence",
+            "language-control",
+            "intelligibility"
+          ],
+          "estimatedSeconds": null,
+          "runtimeSupport": "manual-review-only; current snapshot supports shadowing"
+        },
+        {
+          "slug": "uniform-email",
+          "skill": "writing",
+          "learningBlock": "respond",
+          "contextSlug": "uniform-task",
+          "objectiveRefs": [
+            "explain-change",
+            "choose-next-action"
+          ],
+          "cognitiveLevel": "transfer",
+          "prompt": "Write an email to the organiser using the task card. Suggested length: 80–110 words; this is an authoring target, not a CEFR definition or automatic pass rule.",
+          "modelResponse": "Hello Priya, I have an update about the uniforms for Saturday's event. Twenty shirts are ready, but the five smaller shirts will arrive on Monday, after the event. The supplier can send five shirts in a different colour on Friday without an extra charge. I suggest accepting the different colour so that everyone has a shirt, provided that you are happy with it. Could you confirm your decision by tomorrow noon? I will wait for your approval before telling the supplier. Best wishes, Kim",
+          "requiredMeaning": [
+            "20 ready and five small delayed beyond Saturday",
+            "alternative colour Friday at no extra cost",
+            "recommendation with reason",
+            "organiser approval by tomorrow noon",
+            "no unsupported promise"
+          ],
+          "rubricRefs": [
+            "task-achievement",
+            "reason-and-action",
+            "coherence",
+            "language-control"
+          ],
+          "estimatedSeconds": null,
+          "runtimeSupport": "existing short_text can separate learner task and private model; suggested length remains editorial and current scoring is unchanged"
+        }
+      ]
+    },
+    {
+      "slug": "b1-reschedule-team-arrangement",
+      "title": "Reschedule a team arrangement",
+      "targetCefr": "B1",
+      "cefrReviewStatus": "ai-reviewed-provisional",
+      "prerequisiteRefs": [
+        "a2-state-dates-and-quantities",
+        "a2-explain-simple-reason",
+        "a2-request-confirmation"
+      ],
+      "objectives": [
+        {
+          "slug": "identify-constraints",
+          "skills": [
+            "reading",
+            "listening"
+          ],
+          "statement": "Identify the revised time or location and distinguish a confirmed arrangement from a proposal."
+        },
+        {
+          "slug": "explain-change",
+          "skills": [
+            "speaking",
+            "writing"
+          ],
+          "statement": "Explain a scheduling problem and its consequence using connected, factual language."
+        },
+        {
+          "slug": "choose-next-action",
+          "skills": [
+            "reading",
+            "listening",
+            "speaking",
+            "writing"
+          ],
+          "statement": "Choose an option that meets stated constraints and ask the relevant person to confirm it."
+        }
+      ],
+      "languageBlocks": [
+        {
+          "slug": "bring-forward",
+          "expression": "bring forward",
+          "meaningVi": "chuyển lên sớm hơn",
+          "example": "Could we bring the equipment check forward?"
+        },
+        {
+          "slug": "be-available",
+          "expression": "be available",
+          "meaningVi": "rảnh, có thể tham gia",
+          "example": "I am available after lunch."
+        },
+        {
+          "slug": "as-long-as",
+          "expression": "as long as",
+          "meaningVi": "miễn là",
+          "example": "We can share the desk as long as both screens work."
+        },
+        {
+          "slug": "let-me-know",
+          "expression": "let me know",
+          "meaningVi": "cho tôi biết",
+          "example": "Please let me know whether you received the file."
+        },
+        {
+          "slug": "otherwise",
+          "expression": "otherwise",
+          "meaningVi": "nếu không thì",
+          "example": "Save a copy now; otherwise, you may lose your notes."
+        }
+      ],
+      "contexts": [
+        {
+          "slug": "training-email",
+          "channel": "reading",
+          "type": "email",
+          "lines": [
+            "From: Rosa, team coordinator | Subject: Thursday's safety workshop",
+            "The trainer's return journey has changed, so Thursday's safety workshop cannot start at 2 p.m. as planned. She can lead it at 10 a.m. on Thursday or at 2 p.m. on Friday. Both sessions would last one hour.",
+            "The workshop must take place in person because everyone needs to practise with the equipment. Joining by video is therefore not an option. The room on the second floor is available at either proposed time.",
+            "Three members of the sales team have customer visits throughout Thursday morning. They could attend on Friday, but their manager needs to approve a change to their normal duties first.",
+            "Please reply by noon on Tuesday with your availability. I will then ask the manager about Friday and confirm one session for the whole group. Do not change your calendars until you receive that confirmation.",
+            "If neither time works for you, tell me which duty you cannot move. Please do not arrange a separate session with the trainer; I need to keep the whole group's requirements together."
+          ]
+        },
+        {
+          "slug": "handover-call",
+          "channel": "listening",
+          "type": "dialogue",
+          "audioStatus": "script-only",
+          "durationSeconds": null,
+          "speakers": [
+            "Evan, project coordinator",
+            "Lina, client contact"
+          ],
+          "lines": [
+            "Evan: Hi Lina. I am checking our project handover for Monday. We booked the South meeting room at eleven, but maintenance has closed it until the end of the day.",
+            "Lina: Thanks for telling me. Our designer can join only after one, and our finance colleague has to leave at three. Could we use a different room at two?",
+            "Evan: The North room is free at two. It has space for six people, but there is no video equipment. How many people are coming from your office?",
+            "Lina: Four of us will attend in person, and you said there would be two people from your team. Nobody needs to join online.",
+            "Evan: Good. I can hold the North room until five today. Could you confirm with your designer before then? I will send the new invitation only when you agree.",
+            "Lina: Yes. Please include the equipment checklist with the invitation. The designer wants to review it before the meeting.",
+            "Evan: I will. If the designer cannot attend at two, we will keep Monday for a short phone update and arrange the in-person handover later. We should not call the phone update a completed handover.",
+            "Lina: Agreed. I will message you by four thirty, so you have time to release the room if necessary."
+          ]
+        },
+        {
+          "slug": "interview-task",
+          "channel": "speaking-task",
+          "type": "task-card",
+          "lines": [
+            "You help organise a volunteer interview on Wednesday. The interviewer is unavailable at noon but can meet at 9 a.m. or 4 p.m. The applicant works until 3 p.m. and can travel to the office in thirty minutes. The office closes at 5 p.m.; the interview lasts thirty minutes.",
+            "Leave the applicant a voice message recommending one feasible slot, explain why it fits and ask them to confirm. The interviewer has offered times but no appointment has been confirmed."
+          ]
+        },
+        {
+          "slug": "site-visit-task",
+          "channel": "writing-task",
+          "type": "task-card",
+          "lines": [
+            "You coordinate a Friday site visit for a small team. The guide can now meet only at 9 a.m. or 3 p.m. The team's shared bus cannot arrive before 10 a.m. and must leave the site at 4 p.m. The visit lasts forty-five minutes.",
+            "Write a factual email proposing a feasible time, explaining why the other option does not work, asking the guide to confirm and requesting the meeting point. Reply requested by Wednesday at 5 p.m. Do not say the new booking is already confirmed."
+          ]
+        }
+      ],
+      "comprehension": [
+        {
+          "slug": "training-reading",
+          "skill": "reading",
+          "learningBlock": "readDecode",
+          "contextSlug": "training-email",
+          "objectiveRefs": [
+            "identify-constraints",
+            "choose-next-action"
+          ],
+          "questions": [
+            {
+              "slug": "workshop-purpose",
+              "cognitiveLevel": "comprehension",
+              "prompt": "What does Rosa need from the team first?",
+              "options": [
+                "An individual booking made directly with the trainer.",
+                "Confirmation that everyone can attend a video workshop.",
+                "Approval of a session time already chosen by Rosa.",
+                "A reply saying when they are available."
+              ],
+              "answerIndex": 3,
+              "evidenceLines": [
+                5
+              ],
+              "explanation": "Rosa needs availability before choosing and confirming one session.",
+              "distractorRationales": [
+                "Rosa asks the team not to arrange separate sessions.",
+                "Video attendance is not possible.",
+                "Rosa has not selected a final time.",
+                null
+              ],
+              "answerEntities": [
+                "availability reply"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "workshop-online",
+              "cognitiveLevel": "comprehension",
+              "prompt": "Why can the team not attend by video?",
+              "options": [
+                "The trainer is travelling and cannot join by video.",
+                "They need to practise with equipment in person.",
+                "The manager wants to discuss Friday's changed duties first.",
+                "The second-floor room is booked for an online meeting."
+              ],
+              "answerIndex": 1,
+              "evidenceLines": [
+                3
+              ],
+              "explanation": "Physical equipment practice is the stated reason.",
+              "distractorRationales": [
+                "Travel changed the time, but physical practice explains the video restriction.",
+                null,
+                "Manager approval concerns the sales team's availability on Friday.",
+                "The room is available; the activity itself requires in-person practice."
+              ],
+              "answerEntities": [
+                "in-person equipment practice"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "workshop-constraint",
+              "cognitiveLevel": "comprehension",
+              "prompt": "What prevents three sales colleagues from attending on Thursday morning?",
+              "options": [
+                "They have customer visits.",
+                "The workshop room is unavailable.",
+                "Their manager has refused permission.",
+                "They are travelling with the trainer."
+              ],
+              "answerIndex": 0,
+              "evidenceLines": [
+                4
+              ],
+              "explanation": "Their customer visits occupy Thursday morning.",
+              "distractorRationales": [
+                null,
+                "The room is available at both times.",
+                "Approval for Friday is pending, not refused.",
+                "The trainer's travel is a different issue."
+              ],
+              "answerEntities": [
+                "Thursday customer visits"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "workshop-pending",
+              "cognitiveLevel": "comprehension",
+              "prompt": "Why is Friday at 2 p.m. still a proposal?",
+              "options": [
+                "The trainer still needs to offer a time on Friday.",
+                "The room is available Thursday but has not been checked Friday.",
+                "The sales manager still needs to approve changed duties.",
+                "Rosa still needs to decide whether practice can happen by video."
+              ],
+              "answerIndex": 2,
+              "evidenceLines": [
+                2,
+                3,
+                4,
+                5
+              ],
+              "explanation": "The time and room are possible, but the sales colleagues' duties need approval.",
+              "distractorRationales": [
+                "Friday at two has already been offered.",
+                "The room is available at either proposed time.",
+                null,
+                "In-person practice has already ruled out video."
+              ],
+              "answerEntities": [
+                "sales manager approval pending"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "workshop-next-action",
+              "cognitiveLevel": "application",
+              "prompt": "You cannot move a duty at either proposed time. What should you do?",
+              "options": [
+                "Book a private session with the trainer.",
+                "Change your calendar to Friday anyway.",
+                "Ask a colleague to mark you present.",
+                "Tell Rosa which duty cannot be moved."
+              ],
+              "answerIndex": 3,
+              "evidenceLines": [
+                6
+              ],
+              "explanation": "Rosa asks for the unmovable duty so she can coordinate the group.",
+              "distractorRationales": [
+                "She explicitly rules out separate sessions.",
+                "Friday is not yet confirmed.",
+                "The email does not suggest attendance by proxy.",
+                null
+              ],
+              "answerEntities": [
+                "report unmovable duty"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "workshop-calendar",
+              "cognitiveLevel": "application",
+              "prompt": "Which message accurately describes the workshop's current status?",
+              "options": [
+                "The Thursday ten o'clock session is confirmed; everyone should update their calendar now.",
+                "Two times are being considered; Rosa will confirm after checking replies and approval.",
+                "The Friday two o'clock session is confirmed; only the room booking is still uncertain.",
+                "Each employee should choose a session and confirm a private booking with the trainer."
+              ],
+              "answerIndex": 1,
+              "evidenceLines": [
+                2,
+                4,
+                5,
+                6
+              ],
+              "explanation": "There are two proposals and a clear confirmation step.",
+              "distractorRationales": [
+                "Thursday is a proposal and Rosa says to wait before updating calendars.",
+                null,
+                "Friday is not confirmed; the room is available and duty approval is pending.",
+                "Rosa asks for availability to coordinate one session, not private bookings."
+              ],
+              "answerEntities": [
+                "two proposed slots",
+                "confirmation pending"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            }
+          ]
+        },
+        {
+          "slug": "handover-listening",
+          "skill": "listening",
+          "learningBlock": "listenReason",
+          "contextSlug": "handover-call",
+          "objectiveRefs": [
+            "identify-constraints",
+            "choose-next-action"
+          ],
+          "questions": [
+            {
+              "slug": "handover-problem",
+              "cognitiveLevel": "comprehension",
+              "prompt": "What has made the original room unavailable?",
+              "options": [
+                "It is being used for another client's interview.",
+                "It is too small for four people.",
+                "Maintenance has closed it for the day.",
+                "Its video link has already been booked."
+              ],
+              "answerIndex": 2,
+              "evidenceLines": [
+                1
+              ],
+              "explanation": "Evan says maintenance has closed the South room.",
+              "distractorRationales": [
+                "No other interview is mentioned.",
+                "The group size is discussed for the alternative room.",
+                null,
+                "No video booking causes the closure."
+              ],
+              "answerEntities": [
+                "South room maintenance"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "handover-window",
+              "cognitiveLevel": "application",
+              "prompt": "Why is two o'clock a possible meeting time?",
+              "options": [
+                "It is after the designer can join and before the finance colleague leaves.",
+                "It gives the designer time to leave before the finance colleague arrives at three.",
+                "It keeps the original booking and avoids asking Lina to confirm a changed time.",
+                "It allows the designer to attend before one and the finance colleague after three."
+              ],
+              "answerIndex": 0,
+              "evidenceLines": [
+                2
+              ],
+              "explanation": "Two falls between the designer's availability after one and the finance colleague's departure at three.",
+              "distractorRationales": [
+                null,
+                "Three is the finance colleague's departure, not arrival time.",
+                "The original booking was eleven and a new confirmation is still required.",
+                "The availability limits are reversed."
+              ],
+              "answerEntities": [
+                "after one before three"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "handover-room",
+              "cognitiveLevel": "application",
+              "prompt": "Why could the North room work for the group?",
+              "options": [
+                "It seats the four client visitors, with Evan's team joining by video.",
+                "It can hold everyone, with the finance colleague attending online from another room.",
+                "Only four people will attend, because Evan's team will join by phone.",
+                "It fits all six attendees and nobody needs a video link."
+              ],
+              "answerIndex": 3,
+              "evidenceLines": [
+                3,
+                4
+              ],
+              "explanation": "Four client staff plus two from Evan's team fit the room; online access is unnecessary.",
+              "distractorRationales": [
+                "Evan's two team members are attending in person, and video equipment is unavailable.",
+                "Nobody needs to join online; all six plan to attend in person.",
+                "Lina counts four client staff plus two from Evan's team.",
+                null
+              ],
+              "answerEntities": [
+                "six in person",
+                "no video needed"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "handover-invite",
+              "cognitiveLevel": "comprehension",
+              "prompt": "When will Evan send the revised invitation?",
+              "options": [
+                "As soon as the maintenance work begins.",
+                "After Lina confirms the designer can attend.",
+                "Only after the room hold expires at five.",
+                "After the finance colleague leaves the meeting."
+              ],
+              "answerIndex": 1,
+              "evidenceLines": [
+                5
+              ],
+              "explanation": "Evan waits for Lina's agreement before sending it.",
+              "distractorRationales": [
+                "Maintenance has already changed the arrangement.",
+                null,
+                "The hold deadline is the limit for confirming, not a reason to wait.",
+                "The invitation precedes the meeting."
+              ],
+              "answerEntities": [
+                "Lina confirmation before invitation"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "handover-attachment",
+              "cognitiveLevel": "comprehension",
+              "prompt": "What does Lina ask Evan to include with the invitation?",
+              "options": [
+                "A list of all six attendees.",
+                "An updated room booking form.",
+                "An equipment checklist.",
+                "Notes from Monday's phone update."
+              ],
+              "answerIndex": 2,
+              "evidenceLines": [
+                6
+              ],
+              "explanation": "The designer wants to review the equipment checklist.",
+              "distractorRationales": [
+                "Lina mentions attendance, but does not request an attendee list.",
+                "The room hold is discussed, but no form is requested.",
+                null,
+                "The fallback phone update has not happened and is not the requested attachment."
+              ],
+              "answerEntities": [
+                "equipment checklist"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            },
+            {
+              "slug": "handover-fallback",
+              "cognitiveLevel": "application",
+              "prompt": "If the designer cannot attend at two, what have they agreed?",
+              "options": [
+                "Have a short phone update on Monday and arrange the in-person handover later.",
+                "Hold a phone update on Monday and record the in-person handover as already completed.",
+                "Keep Monday at eleven in the South room and ask the designer to join online.",
+                "Use the North room at two without the designer and cancel any later handover."
+              ],
+              "answerIndex": 0,
+              "evidenceLines": [
+                7,
+                8
+              ],
+              "explanation": "The fallback is a limited phone update with the real handover still to be arranged.",
+              "distractorRationales": [
+                null,
+                "Evan explicitly says the phone update is not a completed handover.",
+                "The South room is closed and the designer cannot join until after one.",
+                "They agreed to a limited phone update and later handover, not this alternative."
+              ],
+              "answerEntities": [
+                "Monday phone update",
+                "handover later"
+              ],
+              "estimatedSeconds": null,
+              "difficulty": null
+            }
+          ]
+        }
+      ],
+      "activation": {
+        "slug": "arrangement-retrieval",
+        "skill": "writing",
+        "learningBlock": "activate",
+        "prompt": "Before opening the contexts, recall how you asked for confirmation in prior practice. Write a new request about a time and a sentence explaining a reason. If no relevant prior practice exists, mark first exposure; do not call this spaced retrieval.",
+        "priorEvidenceRequired": true,
+        "estimatedSeconds": null
+      },
+      "responses": [
+        {
+          "slug": "interview-voice-message",
+          "skill": "speaking",
+          "learningBlock": "respond",
+          "contextSlug": "interview-task",
+          "objectiveRefs": [
+            "explain-change",
+            "choose-next-action"
+          ],
+          "cognitiveLevel": "transfer",
+          "prompt": "Leave a voice message to the applicant. Recommend a feasible slot with a reason and request confirmation.",
+          "modelResponse": "Hello Jamie. The interviewer cannot meet at noon on Wednesday. She has offered nine in the morning or four in the afternoon. Since you work until three and need thirty minutes to travel, I suggest four. The interview would finish before the office closes. Could you confirm whether that works for you? I will book it after you reply.",
+          "requiredMeaning": [
+            "Wednesday four proposed",
+            "work until three plus travel",
+            "finish before five",
+            "confirmation request",
+            "proposal not guaranteed booking"
+          ],
+          "rubricRefs": [
+            "task-achievement",
+            "reason-and-action",
+            "coherence",
+            "language-control",
+            "intelligibility"
+          ],
+          "estimatedSeconds": null,
+          "runtimeSupport": "manual-review-only; current snapshot supports shadowing"
+        },
+        {
+          "slug": "site-visit-email",
+          "skill": "writing",
+          "learningBlock": "respond",
+          "contextSlug": "site-visit-task",
+          "objectiveRefs": [
+            "explain-change",
+            "choose-next-action"
+          ],
+          "cognitiveLevel": "transfer",
+          "prompt": "Write the guide an email using the task card. Suggested length: 80–110 words; length alone does not establish proficiency.",
+          "modelResponse": "Hello Morgan, Thank you for letting us know about the change to Friday's site visit. I suggest starting at three in the afternoon. Our bus cannot reach the site before ten, so the nine o'clock option is not possible. A forty-five-minute visit at three would finish before our bus leaves at four. Could you confirm whether three is still available and tell us where the group should meet you? Please reply by five on Wednesday so that I can update the team. I will wait for your confirmation before changing our booking. Best wishes, Dani",
+          "requiredMeaning": [
+            "Friday three proposed",
+            "nine impossible because bus arrival",
+            "45-minute visit finishes before four",
+            "confirmation and meeting point",
+            "reply Wednesday five"
+          ],
+          "rubricRefs": [
+            "task-achievement",
+            "reason-and-action",
+            "coherence",
+            "language-control"
+          ],
+          "estimatedSeconds": null,
+          "runtimeSupport": "existing short_text can separate learner task and private model; suggested length remains editorial and current scoring is unchanged"
+        }
+      ]
+    }
+  ],
+  "aiReview": {
+    "reviewer": "Codex (AI)",
+    "date": "2026-10-16",
+    "rubricVersion": "worklingo-b1-pilot-review-v1-draft",
+    "status": "completed-with-revisions; CEFR target provisional",
+    "qualifiedHumanSignoff": false,
+    "publicationApproval": false
+  }
+}

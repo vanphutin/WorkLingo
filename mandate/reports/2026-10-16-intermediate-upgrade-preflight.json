@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-10-16T05:04:04.089Z",
+  "environment": "disposable-schema restored from configured local public backup",
+  "publicSchemaMigrated": false,
+  "seedsRun": false,
+  "backupManifestVerified": true,
+  "restored": true,
+  "migrated": true,
+  "legacyTableCount": 36,
+  "legacyRowCount": 96,
+  "changedLegacyTables": [],
+  "appliedMigrationCount": 31,
+  "backupDatabaseSha256": "d9120880d1c0881489114aa28389e6d343a89c18eebe439692fe6586f0d7de5b",
+  "inventoryExported": true,
+  "disposableSchemaRemoved": true
+}

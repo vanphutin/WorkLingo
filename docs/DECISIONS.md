@@ -330,6 +330,17 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Giới hạn:** Mock test, band estimate đã calibration và official result thuộc Phase 8 hoặc nguồn
   dữ liệu riêng; Phase 7 không ghi hay hiển thị các giá trị đó.
 
+## D-036 — Intermediate B1 additive path with Foundation continuity
+
+- **Trạng thái:** Accepted product direction (2026-10-16); implementation remains staged.
+- **Nguồn phê duyệt:** [Direct human review record](../mandate/reports/2026-10-16-intermediate-approval.md#second-approval--d1-direction-accepted), second “duyệt” following the D1 recommendation.
+- **Quyết định:** Add a genuine B1 path under Intermediate, beginning with 1–2 workplace pilot lessons subject to qualified CEFR/content review. Keep current Foundation content and enrolled learners' progress intact. Do not move existing Foundation levels/enrollments to Beginner or rewrite historical session/mastery snapshots.
+- **Chuyển tiếp:** Label existing Foundation content transparently as bridge/legacy content. New B1 admission/default selection must be designed and reviewed before activation; a catalog label alone is not evidence of B1 proficiency. B2 expansion follows pilot evidence.
+- **Lý do:** The current catalog claims B1–B2 while the inspected Foundation fixture is Pre-A1. Additive paths fit LearningPath/program membership without an implicit enrollment migration. Renaming or increasing question counts cannot supply a B1 curriculum.
+- **Giới hạn:** D2–D10 remain open. This decision does not approve publishing unreviewed B1 lessons, local learner-schema migration/backfill, provider costs, assessment/mastery changes or a pilot. Existing accepted D-016/D-021/D-029/D-030 safeguards remain in force.
+- **Rollback:** Do not activate/publish the new path until its gates pass. Once versioned content exists, disable new selection without rewriting existing version-bound sessions or Foundation progress.
+- **Liên kết:** [MND-20261015-001](../mandate/items/MND-20261015-001-architecture-redesign-intermediate-learning-session-workload-and-cross-skill-separa.md), [master plan](superpowers/plans/2026-10-16-intermediate-learning-quality.md).
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

@@ -1,0 +1,63 @@
+{
+  "title": "Redesign Intermediate learning session workload and cross-skill separation",
+  "type": "architecture",
+  "owner": null,
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "m",
+  "impact": 4,
+  "problem": "Intermediate 15-minute blocks allocate only 1 activity and 1-3 micro-questions because session-planner drops extra activities via splice(1), while Content Authoring limits activities to single questions. In addition, Listening renders full transcripts on screen, nullifying oral comprehension.",
+  "value": "Provides pedagogically calibrated 15-minute workloads matching CEFR B1-B2 cognitive requirements, audio-first listening without visual leaks, and valid assessment of learner mastery.",
+  "scope": [
+    "apps/api/src/learning-sessions/domain/session-planner.ts",
+    "packages/contracts/src/learning-session.contracts.ts",
+    "apps/web/src/features/learning-session/activity-renderers/listening-activity.tsx",
+    "packages/content-format/src/normalizer.ts",
+    "apps/web/src/features/admin-content/validation-panel.tsx"
+  ],
+  "dedupe_key": "learning-session:intermediate-workload-and-listening-leak",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "apps/api/src/learning-sessions/domain/session-planner.ts:188",
+      "observation": "Session planner splices matching activities down to 1 for non-respond blocks regardless of authored activities."
+    },
+    {
+      "kind": "document",
+      "reference": "packages/contracts/src/learning-session.contracts.ts:30",
+      "observation": "Contract fixes targetMinutes to literal 15 while blocks contain single activities."
+    },
+    {
+      "kind": "document",
+      "reference": "apps/web/src/features/learning-session/activity-renderers/listening-activity.tsx:77",
+      "observation": "ListeningActivity renders audio transcript unhidden directly above questions before playback."
+    },
+    {
+      "kind": "document",
+      "reference": "packages/content-format/src/normalizer.ts:180",
+      "observation": "Normalizer maps authored comprehension activities to a single question array."
+    },
+    {
+      "kind": "document",
+      "reference": "apps/api/src/learning-sessions/application/learning-sessions.service.ts:557",
+      "observation": "Evaluation feedback on incorrect answers discloses missed explanations before retries."
+    }
+  ],
+  "acceptance": [
+    "Session planner calculates activity allocation using learning objectives and estimated workload instead of rigid 1-activity buckets.",
+    "Listening activities default to audio-first with hidden transcripts prior to evaluated submission.",
+    "Reading and listening contexts within the same session maintain distinct scenario signatures preventing factual leakage.",
+    "Admin Content tools include workload estimation and quality validation warnings prior to publishing."
+  ],
+  "risk": {
+    "level": "medium",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "Retain published LessonVersion immutability; legacy session snapshots continue using existing schema definitions without mutation."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": null,
+  "sprint_reference": null,
+  "body": "## Analysis\n\nAudit confirms that Intermediate learning sessions suffer from an acute workload deficit. In a 60-minute session, the planner assigns exactly one activity to Activate, ReadDecode, and ListenReason, and two to Respond. In Format 1.0/1.1 authoring, each activity contains exactly one question, resulting in a 5-question session that learners finish in 3 to 7 minutes. Additionally, ListeningActivity prints the full transcript on screen, turning listening into reading, while reading and listening materials reuse identical characters, departments, and facts.\n\n## Unknowns\n\nPrecise reading and listening speeds across target workplace learner cohorts require empirical pilot baseline data. Pilot calibration must test 15-minute block workload formulas against real completion times."
+}

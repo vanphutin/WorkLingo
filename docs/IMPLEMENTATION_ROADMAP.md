@@ -118,6 +118,20 @@ Vận hành: `docs/INCREMENT_4_DEMO.md`. Calibration: `docs/AI_CALIBRATION.md`. 
 
 ## Increment 5 — Admin, quality và pilot readiness
 
+**Refinement Intermediate (2026-10-16): W0 được duyệt; hướng D1 được duyệt theo D-036; các phần còn lại theo cổng quyết định.**
+[MND-20261015-001](../mandate/items/MND-20261015-001-architecture-redesign-intermediate-learning-session-workload-and-cross-skill-separa.md)
+được hợp nhất vào [thiết kế đã review](superpowers/specs/2026-10-16-intermediate-learning-quality-design.md)
+và [kế hoạch theo phụ thuộc](superpowers/plans/2026-10-16-intermediate-learning-quality.md).
+Phạm vi đề xuất: baseline/CEFR, assessment integrity, workload/Admin warnings, nội dung B1,
+planner có version, evidence/telemetry và pilot có kiểm soát. Các phần có thể duyệt riêng;
+không thay trạng thái hoàn tất hiện hữu, không cam kết sprint và không suy ra quyền migration dữ liệu hoặc công bố nội dung. [D-036](DECISIONS.md#d-036--intermediate-b1-additive-path-with-foundation-continuity) giữ nguyên Foundation và enrollment hiện có khi bổ sung path B1.
+
+W0 đã khảo sát môi trường local legacy/fixture; W3 advisory đã được triển khai và kiểm chứng trong worktree (1.324 test, 4 E2E, typecheck/lint/build đạt). [Báo cáo W3](../mandate/reports/2026-10-16-intermediate-workload-visibility.md) ghi rõ timing chưa được hiệu chuẩn, dữ liệu public chưa migration, mã chưa tích hợp vào checkout gốc và các cổng B1/assessment/pilot vẫn còn mở.
+
+W1/W4 đã chuẩn bị [thiết kế authoring](superpowers/specs/2026-10-16-intermediate-b1-content-authoring-design.md) và [hai bài B1 cùng review AI](../mandate/reports/2026-10-16-intermediate-b1-content-review.md). Slice authoring Format 1.2 đã kiểm chứng trong worktree:1.378 test/271 file, typecheck/lint/build/i18n đạt;3 lỗi Important từ review đã sửa,1 Minor về fixture test để sau. [Báo cáo W4](../mandate/reports/2026-10-16-intermediate-grouped-authoring.md) ghi scope, review, preview local và giới hạn. CEFR tạm thời, bài chưa publish, code chưa tích hợp; các cổng admission/assessment/audio/pilot giữ nguyên.
+
+W2 đã được duyệt và triển khai trong worktree theo [chính sách cụ thể](superpowers/specs/2026-10-16-intermediate-assessment-policy-design.md) và [kế hoạch hiện có](superpowers/plans/2026-10-16-intermediate-assessment-integrity.md): tách tự làm/hỗ trợ, giữ kết quả đầu, lưu tiếp xúc trước khi trả nội dung và kiểm tra audio/lịch sử. [Báo cáo thực thi](../mandate/reports/2026-10-16-intermediate-assessment-integrity.md) ghi kết quả kiểm tra và review. Migration chỉ chạy trong schema test dùng một lần; cohort thực tế vẫn tắt, public/preview chưa nâng cấp. Toàn mandate và các cổng nội dung/audio/pilot chưa hoàn tất.
+
 **Kết quả:** local MVP đủ ổn định để chạy pilot có kiểm soát với bộ Foundation content đầu tiên.
 
 **Bao gồm:**

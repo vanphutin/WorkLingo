@@ -1,0 +1,237 @@
+{
+  "observedAt": "2026-10-16T05:08:30.218Z",
+  "environment": "configured local public; unchanged legacy schema; read-only SQL compatibility inspection",
+  "transaction": {
+    "read_only": "on",
+    "isolation": "repeatable read"
+  },
+  "catalogPresent": false,
+  "scope": "all legacy published versions; Intermediate membership cannot be established before catalog migration",
+  "pathIds": [
+    "09df03ce-b9f3-478e-a1e6-7c661fe577b0"
+  ],
+  "publishedVersionCountIncludingUnbound": 3,
+  "unboundPublishedVersionCount": 0,
+  "lessonVersionCount": 3,
+  "lessons": [
+    {
+      "lessonVersionId": "056cf563-ba6e-43af-a6dc-b789bd583cb5",
+      "version": 1,
+      "missionId": "727e21a0-3290-4dc1-9ce2-ec5f60a56299",
+      "levelCode": "FOUNDATION_1",
+      "cefrReference": "Pre-A1",
+      "programLabel": "unknown (pre-catalog schema)",
+      "purpose": "learning",
+      "publication": {
+        "path": "PUBLISHED",
+        "level": "unknown (column absent)",
+        "mission": "PUBLISHED"
+      },
+      "provenance": "unknown",
+      "labelMismatch": null,
+      "audio": [
+        {
+          "adapterName": "fake-tts",
+          "status": "READY",
+          "byteSize": 320044,
+          "durationSeconds": null
+        }
+      ],
+      "snapshotValid": true,
+      "activityCount": 5,
+      "questionCount": 5,
+      "openTaskCount": 3,
+      "contextCount": 2,
+      "availableDurations": [
+        45,
+        60
+      ],
+      "durations": [
+        {
+          "minutes": 45,
+          "planValid": true,
+          "selectedActivityCount": 4,
+          "questionCount": 5,
+          "openTaskCount": 2
+        },
+        {
+          "minutes": 60,
+          "planValid": true,
+          "selectedActivityCount": 5,
+          "questionCount": 5,
+          "openTaskCount": 3
+        },
+        {
+          "minutes": 90,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        },
+        {
+          "minutes": 120,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        },
+        {
+          "minutes": 150,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        }
+      ]
+    },
+    {
+      "lessonVersionId": "2985feb2-5d56-4481-adb5-e71562842f79",
+      "version": 1,
+      "missionId": "b7013012-095a-4117-b31b-3be8f3676030",
+      "levelCode": "FOUNDATION_1",
+      "cefrReference": "Pre-A1",
+      "programLabel": "unknown (pre-catalog schema)",
+      "purpose": "placement",
+      "publication": {
+        "path": "PUBLISHED",
+        "level": "unknown (column absent)",
+        "mission": "PUBLISHED"
+      },
+      "provenance": "fixture-hash-match",
+      "labelMismatch": null,
+      "audio": [
+        {
+          "adapterName": "fake-tts",
+          "status": "READY",
+          "byteSize": 320044,
+          "durationSeconds": null
+        }
+      ],
+      "snapshotValid": true,
+      "activityCount": 4,
+      "questionCount": 5,
+      "openTaskCount": 2,
+      "contextCount": 2,
+      "availableDurations": [
+        45
+      ],
+      "durations": [
+        {
+          "minutes": 45,
+          "planValid": true,
+          "selectedActivityCount": 4,
+          "questionCount": 5,
+          "openTaskCount": 2
+        },
+        {
+          "minutes": 60,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INVALID_LESSON_PLAN"
+        },
+        {
+          "minutes": 90,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        },
+        {
+          "minutes": 120,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        },
+        {
+          "minutes": 150,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        }
+      ]
+    },
+    {
+      "lessonVersionId": "67a41241-9e1f-4710-8868-1b37d119d428",
+      "version": 1,
+      "missionId": "6afd34e7-735a-4093-bb7f-c699bea60a30",
+      "levelCode": "FOUNDATION_1",
+      "cefrReference": "Pre-A1",
+      "programLabel": "unknown (pre-catalog schema)",
+      "purpose": "learning",
+      "publication": {
+        "path": "PUBLISHED",
+        "level": "unknown (column absent)",
+        "mission": "PUBLISHED"
+      },
+      "provenance": "unknown",
+      "labelMismatch": null,
+      "audio": [
+        {
+          "adapterName": "fake-tts",
+          "status": "READY",
+          "byteSize": 320044,
+          "durationSeconds": null
+        }
+      ],
+      "snapshotValid": true,
+      "activityCount": 5,
+      "questionCount": 5,
+      "openTaskCount": 3,
+      "contextCount": 2,
+      "availableDurations": [
+        45,
+        60
+      ],
+      "durations": [
+        {
+          "minutes": 45,
+          "planValid": true,
+          "selectedActivityCount": 4,
+          "questionCount": 5,
+          "openTaskCount": 2
+        },
+        {
+          "minutes": 60,
+          "planValid": true,
+          "selectedActivityCount": 5,
+          "questionCount": 5,
+          "openTaskCount": 3
+        },
+        {
+          "minutes": 90,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        },
+        {
+          "minutes": 120,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        },
+        {
+          "minutes": 150,
+          "planValid": false,
+          "selectedActivityCount": null,
+          "questionCount": null,
+          "openTaskCount": null,
+          "code": "INSUFFICIENT_CONTENT_FOR_DURATION"
+        }
+      ]
+    }
+  ]
+}
