@@ -1,5 +1,5 @@
-import { createHash } from 'node:crypto';
-import { BadRequestException, ConflictException, Inject, Injectable, Optional, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { createHash, randomUUID } from 'node:crypto';
+import { BadRequestException, ConflictException, ForbiddenException, Inject, Injectable, Optional, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { adminIeltsMockSchema, ieltsMockContentSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
@@ -12,6 +12,29 @@ type VersionRecord = Prisma.IeltsMockTestVersionGetPayload<Record<string, never>
 @Injectable()
 export class IeltsMockAdminService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService, @Optional() @Inject(ObjectStorage) private readonly storage?: ObjectStorage) {}
+  async create(actorId: string, input: { idempotencyKey: string; content: unknown }) {
+    const parsed = ieltsMockContentSchema.safeParse(input.content);
+    if (!parsed.success) throw new BadRequestException({ code: 'INVALID_IELTS_MOCK_CONTENT', message: 'IELTS mock content is invalid.', details: parsed.error.issues });
+    const content = parsed.data;
+    const operation = 'create-ielts-mock';
+    const requestHash = this.hash({ content });
+    return this.database.$transaction(async tx => {
+      const actor = await tx.user.findUnique({ where: { id: actorId }, select: { role: true, status: true } });
+      if (!actor || actor.status !== 'ACTIVE' || !['CONTENT_ADMIN', 'SYSTEM_ADMIN'].includes(actor.role)) throw new ForbiddenException('Active content administrator required.');
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${operation + ':' + actorId + ':' + input.idempotencyKey}))`;
+      const receipt = await tx.mutationReceipt.findUnique({ where: { actorId_operation_idempotencyKey: { actorId, operation, idempotencyKey: input.idempotencyKey } } });
+      if (receipt) {
+        if (receipt.requestHash !== requestHash) throw new ConflictException('Idempotency key reused.');
+        return adminIeltsMockSchema.parse(receipt.responseBody);
+      }
+      const id = randomUUID();
+      const row = await tx.ieltsMockTest.create({ data: { id, slug: `${content.variant.toLowerCase()}-mock-${id}`, draftContent: content as Prisma.InputJsonValue }, include: includeMock });
+      const response = this.dto(row);
+      await tx.auditLog.create({ data: { actorId, action: 'CREATE_IELTS_MOCK', resourceType: 'IeltsMockTest', resourceId: id, newState: { draftRevision: row.draftRevision }, metadata: { variant: content.variant } } });
+      await tx.mutationReceipt.create({ data: { actorId, operation, idempotencyKey: input.idempotencyKey, requestHash, responseStatus: 201, responseBody: response as Prisma.InputJsonValue } });
+      return response;
+    });
+  }
   async list(cursor?: string) {
     const after = cursor ? this.decodeCursor(cursor) : null;
     const rows = await this.database.ieltsMockTest.findMany({ ...(after ? { where: { OR: [{ createdAt: { lt: after.at } }, { createdAt: after.at, id: { gt: after.id } }] } } : {}), include: includeMock, orderBy: [{ createdAt: 'desc' }, { id: 'asc' }], take: 51 });

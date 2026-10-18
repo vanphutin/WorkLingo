@@ -1,4 +1,4 @@
-import { ConflictException, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, UnprocessableEntityException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { INITIAL_IELTS_ACADEMIC_MOCK } from '@worklingo/contracts';
 import { describe, expect, it, vi } from 'vitest';
@@ -35,5 +35,61 @@ describe('IeltsMockAdminService list', () => {
     expect(page.items).toHaveLength(50);
     expect(page.nextCursor).toEqual(expect.any(String));
     expect(database.ieltsMockTest.findMany).toHaveBeenCalledWith(expect.objectContaining({ orderBy: [{ createdAt: 'desc' }, { id: 'asc' }], take: 51 }));
+  });
+});
+
+describe('IeltsMockAdminService create', () => {
+  async function createSetup() {
+    const rows: Array<Record<string, unknown>> = [];
+    const tx = {
+      $executeRaw: vi.fn(), user: { findUnique: vi.fn().mockResolvedValue({ status: 'ACTIVE', role: 'CONTENT_ADMIN' }) },
+      mutationReceipt: { findUnique: vi.fn(), create: vi.fn() }, auditLog: { create: vi.fn() },
+      ieltsMockTest: { create: vi.fn(async ({ data }: { data: Record<string, unknown> }) => {
+        const row = { status: 'DRAFT', draftRevision: 1, currentPublishedVersion: null, versions: [], createdAt: new Date(0), updatedAt: new Date(0), ...data };
+        rows.push(row); return row;
+      }) },
+    };
+    const database = { $transaction: vi.fn((work: (value: typeof tx) => unknown) => work(tx)) };
+    const module = await Test.createTestingModule({ providers: [IeltsMockAdminService, { provide: PrismaService, useValue: database }] }).compile();
+    return { service: module.get(IeltsMockAdminService), tx, rows, database };
+  }
+  const input = { idempotencyKey: command.idempotencyKey, content: INITIAL_IELTS_ACADEMIC_MOCK };
+  it('creates independent schema-valid draft papers with unique slugs and atomic audit receipts', async () => {
+    const { service, tx } = await createSetup();
+    const first = await service.create(actorId, input);
+    const second = await service.create(actorId, { ...input, idempotencyKey: crypto.randomUUID() });
+    expect(first).toMatchObject({ status: 'DRAFT', draftRevision: 1, draft: input.content, versions: [], currentPublishedVersion: null });
+    expect(first.id).not.toBe(second.id);
+    expect(first.slug).not.toBe(second.slug);
+    expect(tx.auditLog.create).toHaveBeenCalledTimes(2);
+    expect(tx.mutationReceipt.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ responseBody: first, responseStatus: 201 }) }));
+  });
+  it('rejects invalid paper content before opening a transaction', async () => {
+    const { service, database } = await createSetup();
+    await expect(service.create(actorId, { ...input, content: {} })).rejects.toBeInstanceOf(BadRequestException);
+    expect(database.$transaction).not.toHaveBeenCalled();
+  });
+  it('rejects non-admin and inactive creators', async () => {
+    const { service, tx } = await createSetup();
+    for (const user of [{ role: 'LEARNER', status: 'ACTIVE' }, { role: 'CONTENT_ADMIN', status: 'SUSPENDED' }]) {
+      tx.user.findUnique.mockResolvedValue(user);
+      await expect(service.create(actorId, input)).rejects.toBeInstanceOf(ForbiddenException);
+    }
+    expect(tx.ieltsMockTest.create).not.toHaveBeenCalled();
+  });
+  it('replays the original DTO after acquiring the idempotency lock', async () => {
+    const { service, tx } = await createSetup();
+    const first = await service.create(actorId, input);
+    const data = tx.mutationReceipt.create.mock.calls[0]![0].data;
+    tx.mutationReceipt.findUnique.mockResolvedValue(data);
+    await expect(service.create(actorId, input)).resolves.toEqual(first);
+    expect(tx.ieltsMockTest.create).toHaveBeenCalledOnce();
+    expect(tx.$executeRaw).toHaveBeenCalledTimes(2);
+  });
+  it('rejects idempotency key reuse with different content', async () => {
+    const { service, tx } = await createSetup();
+    tx.mutationReceipt.findUnique.mockResolvedValue({ requestHash: 'different', responseBody: {} });
+    await expect(service.create(actorId, input)).rejects.toBeInstanceOf(ConflictException);
+    expect(tx.ieltsMockTest.create).not.toHaveBeenCalled();
   });
 });
