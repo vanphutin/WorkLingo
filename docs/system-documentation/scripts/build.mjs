@@ -1,0 +1,18 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import { bundleMermaid } from './vendor.mjs';
+const home=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+execFileSync(process.execPath,[path.join(home,'scripts/validate/validate.mjs')],{cwd:home,stdio:'inherit'});
+await bundleMermaid(home);
+const dist=path.resolve(home,'dist');
+if (path.dirname(dist)!==home || path.basename(dist)!=='dist') throw new Error('Unsafe build target');
+await fs.rm(dist,{recursive:true,force:true});
+await fs.mkdir(dist,{recursive:true});
+for (const file of ['index.html','src','vendor']) await fs.cp(path.join(home,file),path.join(dist,file),{recursive:true});
+await fs.mkdir(path.join(dist,'data'),{recursive:true});
+await fs.copyFile(path.join(home,'data/system.json'),path.join(dist,'data/system.json'));
+await fs.mkdir(path.join(dist,'reports'),{recursive:true});
+for (const file of ['coverage.md','gaps.md','quality.md','analysis-summary.md']) await fs.copyFile(path.join(home,'reports',file),path.join(dist,'reports',file));
+console.log('Production static site built at '+dist+' (relative assets, hash navigation, offline Mermaid).');

@@ -1,0 +1,36 @@
+{
+  "executedAt": "2026-10-17T11:13:26.560Z",
+  "checks": [
+    {
+      "name": "test",
+      "result": "PASS",
+      "durationMs": 1293,
+      "output": "TAP version 13\n# Subtest: compose controller and method routes, preserve method roles override and body type\nok 1 - compose controller and method routes, preserve method roles override and body type\n  ---\n  duration_ms: 15.5116\n  ...\n# Subtest: dynamic controller paths remain unknown instead of fabricated endpoints\nok 2 - dynamic controller paths remain unknown instead of fabricated endpoints\n  ---\n  duration_ms: 6.9133\n  ...\n# Subtest: class and method guards combine while an empty method role list overrides class roles\nok 3 - class and method guards combine while an empty method role list overrides class roles\n  ---\n  duration_ms: 1.092\n  ...\n# Subtest: validator rejects dangling links, duplicate IDs and VERIFIED claims without evidence\nok 4 - validator rejects dangling links, duplicate IDs and VERIFIED claims without evidence\n  ---\n  duration_ms: 0.6923\n  ...\n# Subtest: validator accepts a closed graph with a bounded source reference\nok 5 - validator accepts a closed graph with a bounded source reference\n  ---\n  duration_ms: 0.3369\n  ...\n# Subtest: source validation rejects stale hashes, nonexistent files and out-of-range lines\nok 6 - source validation rejects stale hashes, nonexistent files and out-of-range lines\n  ---\n  duration_ms: 0.7128\n  ...\n# Subtest: source validation accepts an exact snapshot and rejects sensitive paths\nok 7 - source validation accepts an exact snapshot and rejects sensitive paths\n  ---\n  duration_ms: 0.3325\n  ...\n# Subtest: traceability connects reviewed use cases to requirements and rules without claiming runtime test coverage\nok 8 - traceability connects reviewed use cases to requirements and rules without claiming runtime test coverage\n  ---\n  duration_ms: 8.3581\n  ...\n# Subtest: unknown item kinds cannot silently disappear from navigation\nok 9 - unknown item kinds cannot silently disappear from navigation\n  ---\n  duration_ms: 0.2629\n  ...\n# Subtest: supplemental and nested test citations reject missing files, stale hashes and invalid bounds\nok 10 - supplemental and nested test citations reject missing files, stale hashes and invalid bounds\n  ---\n  duration_ms: 0.3503\n  ...\n# Subtest: ERD markers preserve compound primary key columns and ordinary unique fields\nok 11 - ERD markers preserve compound primary key columns and ordinary unique fields\n  ---\n  duration_ms: 0.2845\n  ...\n# Subtest: global search reaches non-navigation kinds, nested attributes, evidence and Vietnamese names\nok 12 - global search reaches non-navigation kinds, nested attributes, evidence and Vietnamese names\n  ---\n  duration_ms: 3.9182\n  ...\n# Subtest: composes kind/module/status/API filters and never treats missing guards as public access\nok 13 - composes kind/module/status/API filters and never treats missing guards as public access\n  ---\n  duration_ms: 0.6806\n  ...\n# Subtest: hash navigation round-trips IDs and filters on nested static hosting and handles malformed input\nok 14 - hash navigation round-trips IDs and filters on nested static hosting and handles malformed input\n  ---\n  duration_ms: 2.4931\n  ...\n# Subtest: pagination clamps out-of-range pages and preserves an actually empty list\nok 15 - pagination clamps out-of-range pages and preserves an actually empty list\n  ---\n  duration_ms: 0.5226\n  ...\n# Subtest: relationships expose both directions and preserve unresolved IDs without inventing records\nok 16 - relationships expose both directions and preserve unresolved IDs without inventing records\n  ---\n  duration_ms: 0.8756\n  ...\n# Subtest: section selection places only matching diagram types and reports structural coverage honestly\nok 17 - section selection places only matching diagram types and reports structural coverage honestly\n  ---\n  duration_ms: 1.4296\n  ...\n# Subtest: changing kind on a browse route changes the fixed route instead of ignoring the selection\nok 18 - changing kind on a browse route changes the fixed route instead of ignoring the selection\n  ---\n  duration_ms: 0.5454\n  ...\n# Subtest: incomplete or inconsistent structural coverage stays unknown instead of reporting false percentages\nok 19 - incomplete or inconsistent structural coverage stays unknown instead of reporting false percentages\n  ---\n  duration_ms: 0.4253\n  ...\n# Subtest: evidence selection counts only evidence-bearing records, with separate inventory and source-file scope\nok 20 - evidence selection counts only evidence-bearing records, with separate inventory and source-file scope\n  ---\n  duration_ms: 0.8499\n  ...\n# Subtest: diagram node mapping resolves exact generated node IDs without ambiguous prefixes or dangling targets\nok 21 - diagram node mapping resolves exact generated node IDs without ambiguous prefixes or dangling targets\n  ---\n  duration_ms: 0.7085\n  ...\n1..21\n# tests 21\n# suites 0\n# pass 21\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 1222.8382\n"
+    },
+    {
+      "name": "lint",
+      "result": "PASS",
+      "durationMs": 7214,
+      "output": ""
+    },
+    {
+      "name": "typecheck",
+      "result": "PASS",
+      "durationMs": 3209,
+      "output": ""
+    },
+    {
+      "name": "validate",
+      "result": "PASS",
+      "durationMs": 12554,
+      "output": "Validated 2576 records, 951 source hashes, 4036 evidence references and 9179 relationships. No broken references or scanned secret patterns.\n"
+    },
+    {
+      "name": "build",
+      "result": "PASS",
+      "durationMs": 2047,
+      "output": "Validated 2576 records, 951 source hashes, 4036 evidence references and 9179 relationships. No broken references or scanned secret patterns.\nProduction static site built at D:\\Projects\\WorkLingo\\docs\\system-documentation\\dist (relative assets, hash navigation, offline Mermaid).\n"
+    }
+  ],
+  "productionTests": "NOT_RUN"
+}

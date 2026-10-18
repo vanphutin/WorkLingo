@@ -1,0 +1,1707 @@
+[
+  {
+    "id": "GAP-CORE-ReadmeAI",
+    "kind": "finding",
+    "name": "README no-cloud description versus live AI routing",
+    "module": "MOD-ai-gateway",
+    "status": "CONFLICT",
+    "description": "README describes a self-contained slice without cloud/third-party AI dependencies. Architecture depicts outbound providers but names OpenAI-compatible/Microsoft STT/configurable TTS without Discovery/account routing. Current factories support fake, direct OpenAI/Discovery and a two-provider router. The README statement fits fake mode rather than all supported configurations.",
+    "evidence": [
+      {
+        "file": "README.md",
+        "symbol": "WorkLingo",
+        "lineStart": 1,
+        "lineEnd": 3,
+        "sha256": "725964feb5da9e35b6e6d5a334aa32a7dcf0fe28ccbfc1da90b52fddcb9e4da9"
+      },
+      {
+        "file": "docs/ARCHITECTURE.md",
+        "symbol": "2. Kiến trúc tổng thể",
+        "lineStart": 32,
+        "lineEnd": 38,
+        "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+      },
+      {
+        "file": "docs/ARCHITECTURE.md",
+        "symbol": "Provider adapters",
+        "lineStart": 55,
+        "lineEnd": 68,
+        "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "symbol": "AiGatewayModule",
+        "lineStart": 45,
+        "lineEnd": 67,
+        "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "symbol": "RoutingLanguageEvaluationAdapter",
+        "lineStart": 15,
+        "lineEnd": 29,
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "symbol": "AiSettingsService",
+        "lineStart": 11,
+        "lineEnd": 22,
+        "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "symbol": "AiSettingsService",
+        "lineStart": 65,
+        "lineEnd": 82,
+        "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+      },
+      {
+        "file": "apps/api/src/common/config/app-config.schema.ts",
+        "symbol": "environmentSchema",
+        "lineStart": 113,
+        "lineEnd": 117,
+        "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ai-gateway",
+      "SYM-1d29eaa66637c9e7",
+      "SYM-80e6b7d3dc2f0283",
+      "SYM-a55a740dc51d727a",
+      "SYM-28ffd8f141492887",
+      "SYM-dc07ac42cac361b2",
+      "SYM-7b571dea867b4494",
+      "SYM-30047f2922c3fc81",
+      "SYM-3ef74094ebc4f41f",
+      "SYM-2a0908106ad00139",
+      "SYM-a6b3af2fc1be46fc",
+      "SYM-3d75ca819359b7f7",
+      "SYM-565963de1f938ae7",
+      "SYM-c9d3f4081ad9c944",
+      "SYM-1657253637b4d55c"
+    ],
+    "documentedClaim": "Self-contained operation without cloud or third-party AI dependencies.",
+    "observedBehavior": "Live providers and system/account fallback are implemented alongside default fake mode.",
+    "unknowns": [
+      "Active environment and deployed provider selection intentionally not examined."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "README.md",
+      "docs/ARCHITECTURE.md",
+      "apps/api/src/ai-gateway/ai-gateway.module.ts",
+      "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+      "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+      "apps/api/src/common/config/app-config.schema.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-LeaseBoundary",
+    "kind": "finding",
+    "name": "Claim fencing does not prove side-effect exclusivity",
+    "module": "MOD-jobs",
+    "status": "INFERRED",
+    "description": "Completion/failure predicates match status/owner/attempt rather than leaseExpiresAt. Reviewed runner has no lease renewal or cancellation path; an expired handler could continue after another claim. External/domain writes therefore cannot be assumed exactly once. Configuration lengthens lease to at least three provider timeouts plus 10 seconds when evaluation/STT is live.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 96,
+        "lineEnd": 193,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      },
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "JobHandlerRegistry",
+        "lineStart": 116,
+        "lineEnd": 181,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/src/common/config/app-config.schema.ts",
+        "symbol": "parseAppConfig",
+        "lineStart": 213,
+        "lineEnd": 217,
+        "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+      },
+      {
+        "file": "apps/api/src/common/config/app-config.schema.ts",
+        "symbol": "parseAppConfig",
+        "lineStart": 253,
+        "lineEnd": 256,
+        "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "symbol": "AudioGenerationHandler",
+        "lineStart": 70,
+        "lineEnd": 101,
+        "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "MOD-content-authoring",
+      "ENT-Job",
+      "ENT-JobAttempt",
+      "ENT-AudioArtifact",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7",
+      "SYM-c9d3f4081ad9c944",
+      "SYM-1657253637b4d55c",
+      "SYM-1bcead783bd33781",
+      "SYM-cf3d01cb6b1a5416",
+      "SYM-9382b5567e7cfadc",
+      "SYM-dc0821e1378e480c"
+    ],
+    "unknowns": [
+      "Overlapping side effects after expiry were not reproduced.",
+      "Expired but not reclaimed job can still complete because expiry is absent from update predicate."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/application/jobs.service.ts",
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/src/common/config/app-config.schema.ts",
+      "apps/api/src/content-authoring/application/audio-generation.handler.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-WorkerConcurrency",
+    "kind": "finding",
+    "name": "Timer serialization is not global concurrency configuration",
+    "module": "MOD-jobs",
+    "status": "VERIFIED",
+    "description": "pollActive serializes only private timer poll. AudioGenerationService calls public runOnce in a bounded loop outside that flag; runOnce has no enabled check or concurrency gate. Database locks protect claims, but a fixed global concurrency of one cannot be inferred.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "JobHandlerRegistry",
+        "lineStart": 105,
+        "lineEnd": 181,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "symbol": "AudioGenerationService",
+        "lineStart": 270,
+        "lineEnd": 277,
+        "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "symbol": "AudioGenerationService",
+        "lineStart": 299,
+        "lineEnd": 305,
+        "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+      },
+      {
+        "file": "apps/api/src/common/config/app-config.schema.ts",
+        "symbol": "environmentSchema",
+        "lineStart": 81,
+        "lineEnd": 85,
+        "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "MOD-content-authoring",
+      "ENT-Job",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7",
+      "SYM-3799485ce2e01519",
+      "SYM-1186c65cad1154c9",
+      "SYM-9ab0c15ba8cfed50",
+      "SYM-6fd73e60ea46a9b1",
+      "SYM-0528e09d6777d7ee",
+      "SYM-d121ea1770206826",
+      "SYM-81c0210180666465",
+      "SYM-18cdcc7b6deb0c3f",
+      "SYM-c9d3f4081ad9c944",
+      "SYM-1657253637b4d55c"
+    ],
+    "unknowns": [
+      "Actual concurrency depends on request/process overlap and was not measured.",
+      "workerEnabled controls timer startup rather than direct runOnce calls."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/src/content-authoring/application/audio-generation.service.ts",
+      "apps/api/src/common/config/app-config.schema.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-AudioManualRetry",
+    "kind": "finding",
+    "name": "Manual job retry does not reset FAILED audio candidate",
+    "module": "MOD-content-authoring",
+    "status": "INFERRED",
+    "description": "Terminal/exhausted audio failure marks artifact FAILED. retryJob resets Job fields only, while the handler requires its existing candidate to be GENERATING. A retryable job may therefore be scheduled without its failed artifact becoming eligible again. This consequence is inferred across code paths and not reproduced.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "symbol": "AudioGenerationHandler",
+        "lineStart": 59,
+        "lineEnd": 69,
+        "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "symbol": "AudioGenerationHandler",
+        "lineStart": 103,
+        "lineEnd": 124,
+        "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+      },
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 239,
+        "lineEnd": 279,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "MOD-jobs",
+      "ENT-AudioArtifact",
+      "ENT-Job",
+      "SYM-1bcead783bd33781",
+      "SYM-cf3d01cb6b1a5416",
+      "SYM-9382b5567e7cfadc",
+      "SYM-dc0821e1378e480c",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20"
+    ],
+    "unknowns": [
+      "Exhausted-audio manual retry was not executed; a fresh generation request can create a new candidate."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+      "apps/api/src/jobs/application/jobs.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-PublishReceiptScope",
+    "kind": "finding",
+    "name": "Publication request hash omits import identity",
+    "module": "MOD-content-authoring",
+    "status": "INFERRED",
+    "description": "Publication receipt lookup uses actor/operation/key; request hash includes revision/hash/key/audio selection but omits importId. Receipt replay precedes import lookup. Cross-import requests with otherwise identical hashed fields could replay another import response. Audio generation includes contentImportId in its hash.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 33,
+        "lineEnd": 75,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "symbol": "AudioGenerationService",
+        "lineStart": 74,
+        "lineEnd": 85,
+        "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "MutationReceipt",
+        "lineStart": 1220,
+        "lineEnd": 1231,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-ContentImport",
+      "ENT-MutationReceipt",
+      "SYM-6784d170eee326c7",
+      "SYM-6f90718a00bc5fea",
+      "SYM-2043c822d22e5e53",
+      "SYM-3799485ce2e01519",
+      "SYM-1186c65cad1154c9",
+      "SYM-9ab0c15ba8cfed50",
+      "SYM-6fd73e60ea46a9b1",
+      "SYM-0528e09d6777d7ee",
+      "SYM-d121ea1770206826",
+      "SYM-81c0210180666465",
+      "SYM-18cdcc7b6deb0c3f"
+    ],
+    "unknowns": [
+      "Cross-import replay scenario not exercised; no incident claimed."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/content-publisher.service.ts",
+      "apps/api/src/content-authoring/application/audio-generation.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-DeploymentCookie",
+    "kind": "finding",
+    "name": "Transport and deployment guarantees remain unknown",
+    "module": "MOD-auth",
+    "status": "UNKNOWN",
+    "description": "Source cookie secure=false is unconditional. API and development Compose database bind loopback; Next forwards to configured API origin. These sources do not establish deployed TLS, proxy trust, hostname, process count or filesystem permissions.",
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/auth.controller.ts",
+        "symbol": "AuthController",
+        "lineStart": 93,
+        "lineEnd": 100,
+        "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+      },
+      {
+        "file": "apps/api/src/main.ts",
+        "symbol": "bootstrap",
+        "lineStart": 21,
+        "lineEnd": 33,
+        "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+      },
+      {
+        "file": "infra/docker-compose.yml",
+        "symbol": "services.postgres",
+        "lineStart": 8,
+        "lineEnd": 11,
+        "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+      },
+      {
+        "file": "apps/web/next.config.ts",
+        "symbol": "nextConfig.rewrites",
+        "lineStart": 6,
+        "lineEnd": 15,
+        "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+      }
+    ],
+    "relatedIds": [
+      "MOD-auth",
+      "MOD-infra",
+      "MOD-web",
+      "SYM-63899ccb34e77e53",
+      "SYM-7c79ff95eb0f7936",
+      "SYM-784e8cfeb515d895",
+      "SYM-1de762416949c88f",
+      "SYM-8c33e318a36cc9d3",
+      "API-72d35ffed94a1e5e",
+      "API-d98afd350a878235",
+      "API-75fe132ab22de760",
+      "SYM-0d1463abae29de7c"
+    ],
+    "verifiedFacts": [
+      "Cookie secure flag is false in source.",
+      "API and development database bind loopback."
+    ],
+    "unknowns": [
+      "Active deployment and environment configuration intentionally excluded."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/auth/auth.controller.ts",
+      "apps/api/src/main.ts",
+      "infra/docker-compose.yml",
+      "apps/web/next.config.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-Observability",
+    "kind": "finding",
+    "name": "Job correlation and rate-limit cleanup scheduling are unverified",
+    "module": "MOD-common",
+    "status": "DOCUMENTED_ONLY",
+    "description": "Architecture describes request/job correlation IDs. Middleware and HTTP errors carry request IDs; runner warnings include job ID and safe code but no request correlation propagation in the reviewed path. Rate-limit cleanup is an injectable one-day-default method; reviewed source search found no production caller or scheduler.",
+    "evidence": [
+      {
+        "file": "docs/ARCHITECTURE.md",
+        "symbol": "11. Observability local",
+        "lineStart": 229,
+        "lineEnd": 234,
+        "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+      },
+      {
+        "file": "apps/api/src/common/request-context/correlation-id.middleware.ts",
+        "symbol": "CorrelationIdMiddleware",
+        "lineStart": 23,
+        "lineEnd": 40,
+        "sha256": "7acffaf63c10b89866ae998d1d4e3896440d655cbaafae89de163968cbc5afd5"
+      },
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "JobHandlerRegistry",
+        "lineStart": 154,
+        "lineEnd": 166,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/src/common/rate-limit/rate-limit-cleanup.service.ts",
+        "symbol": "RateLimitCleanupService",
+        "lineStart": 5,
+        "lineEnd": 21,
+        "sha256": "f0fc93c8fc50032ea5aafca2864c99793fd08abbdbef4f2e42f6046ca9ecf448"
+      },
+      {
+        "file": "apps/api/src/common/rate-limit/rate-limit.module.ts",
+        "symbol": "RateLimitModule",
+        "lineStart": 8,
+        "lineEnd": 20,
+        "sha256": "8df8153bcea9059b0eb66e66bdc44ebd54082ef8706a41a9e032c8adf3c2dd49"
+      }
+    ],
+    "relatedIds": [
+      "MOD-common",
+      "MOD-jobs",
+      "ENT-RateLimitBucket",
+      "SYM-f18996442e2a6b2e",
+      "SYM-788491c880558b53",
+      "SYM-d9bc5f475c82b31e",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7",
+      "SYM-8ff2a97f1169155c",
+      "SYM-d3694b6a9af9c827",
+      "SYM-f7b19e2323d13f07"
+    ],
+    "verifiedFacts": [
+      "Request correlation and safe structured logger implementations exist.",
+      "Cleanup method exists, but not a scheduler in its class."
+    ],
+    "unknowns": [
+      "External scheduling, operational retention and complete request-to-job correlation unverified."
+    ],
+    "searchScope": "rg over apps/api/src production TypeScript for cleanupExpiredBuckets, heartbeat and renewLease; only cleanup method declaration matched.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "docs/ARCHITECTURE.md",
+      "apps/api/src/common/request-context/correlation-id.middleware.ts",
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/src/common/rate-limit/rate-limit-cleanup.service.ts",
+      "apps/api/src/common/rate-limit/rate-limit.module.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-CORE-BackupConsistency",
+    "kind": "finding",
+    "name": "Cross-resource backup snapshot consistency not established",
+    "module": "MOD-operations-scripts",
+    "status": "INFERRED",
+    "description": "Architecture describes database/directory backup as one logical snapshot. Script creates dump before copying files and hashing bundle. Reviewed sequence does not demonstrate application-write freezing or coordinated database/file snapshot. Integrity/empty-target checks exist; concurrent consistency remains unknown.",
+    "evidence": [
+      {
+        "file": "docs/ARCHITECTURE.md",
+        "symbol": "Local-first infrastructure",
+        "lineStart": 49,
+        "lineEnd": 53,
+        "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+      },
+      {
+        "file": "scripts/backup-local.ps1",
+        "symbol": "backup-local.ps1::<script>",
+        "lineStart": 94,
+        "lineEnd": 99,
+        "sha256": "078833e7656795fbb5db3b7984d322f0fd1457839f27e79118b5a6d504479c19"
+      },
+      {
+        "file": "scripts/backup-local.ps1",
+        "symbol": "backup-local.ps1::<script>",
+        "lineStart": 147,
+        "lineEnd": 187,
+        "sha256": "078833e7656795fbb5db3b7984d322f0fd1457839f27e79118b5a6d504479c19"
+      },
+      {
+        "file": "scripts/restore-local.ps1",
+        "symbol": "restore-local.ps1::<script>",
+        "lineStart": 109,
+        "lineEnd": 144,
+        "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+      },
+      {
+        "file": "scripts/restore-local.ps1",
+        "symbol": "restore-local.ps1::<script>",
+        "lineStart": 213,
+        "lineEnd": 239,
+        "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+      }
+    ],
+    "relatedIds": [
+      "MOD-operations-scripts",
+      "MOD-storage",
+      "MOD-infra"
+    ],
+    "unknowns": [
+      "No backup/restore executed and no backup/runtime data read.",
+      "Operational quiescing procedures outside these excerpts not verified."
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "docs/ARCHITECTURE.md",
+      "scripts/backup-local.ps1",
+      "scripts/restore-local.ps1"
+    ],
+    "curated": true
+  },
+  {
+    "id": "SCOPE-CORE-Analysis",
+    "kind": "finding",
+    "name": "Core behavioral analysis scope and limits",
+    "module": "MOD-common",
+    "status": "INFERRED",
+    "description": "Reviewed auth/users session and locale paths; job enqueue/claims/attempts/retries; import validation, transaction publication and registered audio generation; AI routing/HTTP boundaries; local storage; request limits, safe errors/logs and correlation; bootstrap/web rewrite and backup/restore excerpts. This is not a whole-system runtime certification.",
+    "evidence": [
+      {
+        "file": "apps/api/src/app.module.ts",
+        "symbol": "AppModule",
+        "lineStart": 38,
+        "lineEnd": 82,
+        "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+      },
+      {
+        "file": "apps/api/src/jobs/jobs.module.ts",
+        "symbol": "JobsModule",
+        "lineStart": 16,
+        "lineEnd": 46,
+        "sha256": "1448df08e4680bf4f64b9731c9bda51a64fb0fea6d50d593a4ca538f4d4df2a6"
+      }
+    ],
+    "relatedIds": [
+      "MOD-auth",
+      "MOD-users",
+      "MOD-jobs",
+      "MOD-content-authoring",
+      "MOD-ai-gateway",
+      "MOD-storage",
+      "MOD-common",
+      "MOD-web",
+      "MOD-infra",
+      "MOD-operations-scripts",
+      "SYM-1b70fc8045ff9d16",
+      "SYM-9f0a3df65b0fb9ae",
+      "SYM-16ea9517a43f69b8"
+    ],
+    "analyzedScope": [
+      "8 detailed use cases",
+      "15 business rules",
+      "10 AS-IS requirements",
+      "5 Mermaid diagrams",
+      "5 actor roles and 5 integration boundaries"
+    ],
+    "gaps": [
+      "No runtime/deployed verification, database tests or performance measurements.",
+      "No environment files, dependencies, database rows, recordings or runtime storage were read.",
+      "Learning/onboarding/mastery/IELTS behavior is outside this assigned core record.",
+      "Mermaid rendering not executed in authoring pass."
+    ],
+    "method": "Bounded rg and numbered source/test reads, byte-hashed citations; only curated-core.json is written.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/app.module.ts",
+      "apps/api/src/jobs/jobs.module.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-scope",
+    "kind": "finding",
+    "name": "Phạm vi học tập chỉ được phân tích từng phần",
+    "module": "MOD-learning-sessions",
+    "status": "UNKNOWN",
+    "description": "Đã đọc các nhánh chính của session/draft/AI, onboarding/placement, mastery/progression, eligibility/completion/program context và IELTS learner services. Đây không phải xác minh toàn bộ ứng dụng hay deployed behavior.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService",
+        "lineStart": 85,
+        "lineEnd": 180,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+        "symbol": "PlacementRecommendationService",
+        "lineStart": 33,
+        "lineEnd": 118,
+        "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+      },
+      {
+        "file": "apps/api/src/curriculum-foundation/application/curriculum-progress.service.ts",
+        "symbol": "CurriculumProgressService",
+        "lineStart": 25,
+        "lineEnd": 56,
+        "sha256": "aa45c7dc98e1cdd385fa62212f247e01f548f960246e83127ad706cc9471aae6"
+      },
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+        "symbol": "IeltsIntegratedLearnerService",
+        "lineStart": 28,
+        "lineEnd": 92,
+        "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService",
+        "lineStart": 38,
+        "lineEnd": 113,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "MOD-onboarding",
+      "MOD-mastery",
+      "MOD-progression",
+      "MOD-curriculum-foundation",
+      "MOD-learning-programs",
+      "MOD-teacher-ai",
+      "MOD-ielts-bridge",
+      "MOD-ielts-integrated-practice",
+      "MOD-ielts-band-curriculum",
+      "MOD-ielts-mock",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43",
+      "SYM-c89930e3c8e0b1f1",
+      "SYM-efcd5d20c701a6af",
+      "SYM-5cdeb45823c69eac",
+      "SYM-4a054b7e2e2517bb",
+      "SYM-e245bce75179f68f",
+      "SYM-dbaa0518b0968991",
+      "SYM-f72e13efcc81cf01",
+      "SYM-2cc9ceb64c653e4e",
+      "SYM-6fe4c0efcc75f876",
+      "SYM-c242916366bba9a4",
+      "SYM-7eea2f24b414c37b",
+      "SYM-6d7d73dcb69824f9",
+      "SYM-fe14d8e8d5e56aa7",
+      "SYM-287fe4d8cc1a51e7",
+      "SYM-39f4489d1e32bfda",
+      "SYM-62aa68652f4cbe00",
+      "SYM-8b84879e86b5e5e4",
+      "SYM-570603e7a2bf4301",
+      "SYM-0d2ae3df732163e2",
+      "SYM-4a02a225edf89c04",
+      "SYM-b0fea7c8694aff0f",
+      "SYM-5e0ea8ee0b26ee3a",
+      "SYM-55d5cf27613ed7dd",
+      "SYM-422fe4868720aa17",
+      "SYM-93dd269e53cfe677",
+      "SYM-dbf882dfc27a20ea",
+      "SYM-b05b9d2d350f2f0e",
+      "SYM-dfa3e3cffe3c09f0",
+      "SYM-9eaf0f8e596e336b",
+      "SYM-d1ec700ce5c829a8",
+      "SYM-3f90882b4740b6af",
+      "SYM-e4a91a54663addca",
+      "SYM-2cf0002b6dd7705b",
+      "SYM-fbb5348d80539be2",
+      "SYM-d5ee1e09b7b4ff91",
+      "SYM-36122a4666b8ab83",
+      "SYM-6c66b797a7d435d2",
+      "SYM-286e25a346fda534",
+      "TEST-dfca00d525a5c829",
+      "TEST-d8a8783e571007f1",
+      "TEST-f7a6dc8f0ccf077b",
+      "TEST-a35143a7402e9106",
+      "TEST-19addedad20864a7",
+      "TEST-4dc8639fa0a799ba",
+      "TEST-f1c6615738bbddcd",
+      "TEST-d20bac4641cb1610",
+      "TEST-33f8d0d85965281b",
+      "TEST-614d09a82a4330cb",
+      "TEST-97854903d4db949b",
+      "TEST-576de256d547b91e",
+      "TEST-cc88238751f7e285",
+      "TEST-9e87f70103cadd38",
+      "TEST-8ef93ec3a312f7b1",
+      "TEST-35e89baaf4ce79b2",
+      "TEST-3238431ec6323493",
+      "TEST-03359b17916d57a1"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+      "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+      "apps/api/src/curriculum-foundation/application/curriculum-progress.service.ts",
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Service branches được trích dẫn kèm assertion chọn lọc từ unit/integration tests.",
+      "Prisma model names/unique keys liên quan được kiểm tra; requirements và acceptance criteria là diễn đạt suy ra."
+    ],
+    "unreviewedBehavior": [
+      "Chưa review toàn bộ frontend/e2e, admin publishing, migrations/triggers, DTO/global guards, worker lease lifecycle hoặc nguồn provider adapters.",
+      "Không đọc .env, local runtime data hoặc dependency; không gọi API/DB; test source đã đọc không có nghĩa test đã chạy.",
+      "Không claim complete module analysis; các entity/module IDs cần pipeline registry hợp nhất xác nhận tồn tại."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "reviewedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+      "apps/api/src/learning-sessions/application/session-creation.service.ts",
+      "apps/api/prisma/schema.prisma",
+      "apps/api/src/learning-sessions/application/activity-drafts.service.ts",
+      "apps/api/test/integration/teacher-ai-api.integration.spec.ts",
+      "apps/api/src/teacher-ai/application/evaluation.service.ts",
+      "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+      "apps/api/src/onboarding/application/onboarding.service.ts",
+      "apps/api/src/curriculum/domain/playable-level-policy.ts",
+      "apps/api/src/learning-programs/application/program-context.service.ts",
+      "apps/api/src/onboarding/application/placement-attempts.service.ts",
+      "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+      "apps/api/src/onboarding/domain/placement-policy.ts",
+      "apps/api/src/mastery/application/mastery.service.ts",
+      "apps/api/src/mastery/domain/mastery-calculator.ts",
+      "apps/api/src/mastery/domain/review-scheduler.ts",
+      "apps/api/src/progression/application/progression.service.ts",
+      "apps/api/src/progression/domain/checkpoint-policy.ts",
+      "apps/api/src/progression/application/checkpoint-evidence.ts",
+      "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+      "apps/api/src/curriculum-foundation/application/curriculum-progress.service.ts",
+      "apps/api/src/curriculum-foundation/domain/objective-evidence-policy.ts",
+      "apps/api/test/integration/program-learning-boundaries.integration.spec.ts",
+      "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+      "apps/api/test/integration/ielts-bridge-learner.integration.spec.ts",
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+      "apps/api/src/ielts-integrated-practice/domain/integrated-session-planner.ts",
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.spec.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+      "apps/api/src/ielts-mock/domain/ielts-mock-scoring.ts",
+      "apps/api/src/ielts-mock/ielts-mock-review.controller.ts",
+      "apps/api/test/integration/ielts-mock-workflow.integration.spec.ts",
+      "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/src/jobs/application/jobs.service.ts",
+      "apps/api/test/integration/placement-attempt.integration.spec.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts"
+    ],
+    "reviewedTestEvidence": [
+      {
+        "file": "apps/api/test/integration/teacher-ai-api.integration.spec.ts",
+        "symbol": "enforces ownership, optimistic draft revisions, and learner-safe retry state",
+        "lineStart": 20,
+        "lineEnd": 103,
+        "sha256": "78427f3c346e6834436213a3c4d9b87d2f30df9e88b09ab968ffaa9682f1dc5b"
+      },
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "symbol": "persists result, replays and isolates placement mastery",
+        "lineStart": 107,
+        "lineEnd": 210,
+        "sha256": "48a67b04eb19aaea0773ae51c4fbfee082fe31d664968980e482761c6ffcfb6f"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "symbol": "queues writing evaluation; stale pause protection",
+        "lineStart": 17,
+        "lineEnd": 114,
+        "sha256": "4e1793d4ef42d1b4c37defad73072ab7b38484865df75a6dd93b5e14f1f3666a"
+      },
+      {
+        "file": "apps/api/test/integration/learning-sessions.integration.spec.ts",
+        "symbol": "deterministic evaluation, checkpoint and pause/resume assertions",
+        "lineStart": 241,
+        "lineEnd": 337,
+        "sha256": "98a8805a43d56d725ee39678eaa9df2b146a7cd9327ca78d623ed77812421cb3"
+      },
+      {
+        "file": "apps/api/test/integration/placement-attempt.integration.spec.ts",
+        "symbol": "UUID replay and concurrent creation",
+        "lineStart": 66,
+        "lineEnd": 99,
+        "sha256": "fc0365802f618e2f44467dc5746384fd21a94f5fdba1f4aeeb2ac91085e9b4b4"
+      },
+      {
+        "file": "apps/api/test/integration/placement-confirmation.integration.spec.ts",
+        "symbol": "confirmation replay, concurrency and withdrawn curriculum",
+        "lineStart": 210,
+        "lineEnd": 290,
+        "sha256": "dac24f7e2c11570ac6fd0c535e472313a1945cad1f421074f4ac0bd25e4b8098"
+      },
+      {
+        "file": "apps/api/test/integration/mastery.integration.spec.ts",
+        "symbol": "unscored and concurrent attempts assertions",
+        "lineStart": 248,
+        "lineEnd": 354,
+        "sha256": "7f7e71fd28a6b94ebadd96b8d08a4b36509fc28e47d22fe61c67afbeace5bc60"
+      },
+      {
+        "file": "apps/api/test/integration/curriculum-foundation-progress.integration.spec.ts",
+        "symbol": "pending/foreign evidence; duplicate projection",
+        "lineStart": 75,
+        "lineEnd": 106,
+        "sha256": "023fe75b5a085f48b582f3fa32a6b1006fd7a7797797f1def69f11b1128185e0"
+      },
+      {
+        "file": "apps/api/test/integration/program-learning-boundaries.integration.spec.ts",
+        "symbol": "stale level mirror, archived content and onboarding boundary",
+        "lineStart": 14,
+        "lineEnd": 48,
+        "sha256": "d87f62ae87f04685d4961f20874466970c1f08a40455f1471f7a6dd33bb088dd"
+      },
+      {
+        "file": "apps/api/test/integration/progression.integration.spec.ts",
+        "symbol": "immutable assessment and concurrent confirmation",
+        "lineStart": 197,
+        "lineEnd": 255,
+        "sha256": "2b09ba9e6cb344c0600c46aab3e0eb8f2ab9c9b9ea83df7d6bd572b063c111f1"
+      },
+      {
+        "file": "apps/api/test/integration/progression.integration.spec.ts",
+        "symbol": "live prerequisites block stale pass",
+        "lineStart": 443,
+        "lineEnd": 490,
+        "sha256": "2b09ba9e6cb344c0600c46aab3e0eb8f2ab9c9b9ea83df7d6bd572b063c111f1"
+      },
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.spec.ts",
+        "symbol": "orientation gate, safe payload and pinned version",
+        "lineStart": 46,
+        "lineEnd": 70,
+        "sha256": "57db174b08bdd025b0ec6244a5687e67ecf66a9f1e9623fd7054e800007782a3"
+      },
+      {
+        "file": "apps/api/test/integration/ielts-bridge-learner.integration.spec.ts",
+        "symbol": "pinned version, ownership and ten stages",
+        "lineStart": 49,
+        "lineEnd": 95,
+        "sha256": "9ee648a23828838c1dcfb49a63c67537e1628287711000cbc62ec7de61164517"
+      },
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.spec.ts",
+        "symbol": "availability, plan pinning and stale revision",
+        "lineStart": 61,
+        "lineEnd": 101,
+        "sha256": "e5c97f68701d2f0c84f4b94032e58f1de70923651875564a11df377d24a46859"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts",
+        "symbol": "version-bound pathway, owner and single-stage advancement",
+        "lineStart": 35,
+        "lineEnd": 57,
+        "sha256": "f5fddf77057af7050a176fb4d9ab7c7dd9490f17bac408b7f4f51f4daddd4015"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.spec.ts",
+        "symbol": "insufficient and sufficient four-skill evidence",
+        "lineStart": 9,
+        "lineEnd": 27,
+        "sha256": "af2da03c02b84f6ee3263ee0bbc61221ed58776b79dc917410b34ae08c9be4c0"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.spec.ts",
+        "symbol": "pinning, deadlines, ordering, ownership and audio",
+        "lineStart": 50,
+        "lineEnd": 131,
+        "sha256": "dcbe6780893e418799ce4925ef1fbd3fc2756e4841decd0d256dffc2c1c72b3e"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.spec.ts",
+        "symbol": "review completion, pending gate and bounded pagination",
+        "lineStart": 22,
+        "lineEnd": 44,
+        "sha256": "c31e8e599cac1b6c9be933e6e770775016ab97d79cb68765a06d1296baf84234"
+      },
+      {
+        "file": "apps/api/test/integration/ielts-mock-workflow.integration.spec.ts",
+        "symbol": "four sections and completed reviewed report",
+        "lineStart": 25,
+        "lineEnd": 39,
+        "sha256": "3b7dd4b1d2d26470fe4888dd88c24309e9f003ff25532ed221634764d09070bb"
+      }
+    ],
+    "excludedInputs": [
+      ".env và tệp môi trường",
+      "runtime/local learner data",
+      "node_modules và dependencies",
+      "API/database execution",
+      "Production test execution"
+    ],
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-draft-retention",
+    "kind": "finding",
+    "name": "Chưa xác minh cleanup nháp và đua tạo lần đầu",
+    "module": "MOD-learning-sessions",
+    "status": "UNKNOWN",
+    "description": "save tính expiresAt; get không lọc expiresAt. Hai save đầu cùng expectedRevision0 có unique constraint nhưng service không bắt riêng lỗi create race; chưa xác minh mapping lỗi HTTP/cleanup thực tế.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/activity-drafts.service.ts",
+        "symbol": "ActivityDraftsService.save/get",
+        "lineStart": 27,
+        "lineEnd": 70,
+        "sha256": "1861148ef95284f1220c2c95e6d7aebf808b2420768a3cd35c2b908bcc5bc72f"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "ActivityDraft uniqueness and expiry index",
+        "lineStart": 719,
+        "lineEnd": 736,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-ActivityDraft",
+      "TEST-dfca00d525a5c829",
+      "SYM-68016bb03a3e3033",
+      "SYM-dff19e6d88ec3946",
+      "SYM-ae13f04c6b9b33a4",
+      "SYM-aa7147fdce2e065a",
+      "SYM-d5f9623a004c1d4c",
+      "SYM-b2063b92480fa93f",
+      "SYM-66ce9e690bc0202b",
+      "SYM-5d063fea6d595be9",
+      "SYM-000683e2059bc293"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/activity-drafts.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/teacher-ai-api.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Đọc ownership, revision update, creation và get."
+    ],
+    "unreviewedBehavior": [
+      "Chưa tìm/đọc lịch cleanup expiry hoặc test đua first insert.",
+      "Không khẳng định draft tự biến mất đúng expiresAt hay mọi race luôn trả DRAFT_REVISION_CONFLICT."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/teacher-ai-api.integration.spec.ts",
+        "symbol": "enforces ownership, optimistic draft revisions, and learner-safe retry state",
+        "lineStart": 20,
+        "lineEnd": 103,
+        "sha256": "78427f3c346e6834436213a3c4d9b87d2f30df9e88b09ab968ffaa9682f1dc5b"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-ai-worker-recording",
+    "kind": "finding",
+    "name": "Chưa review toàn bộ recording, lease và provider retries",
+    "module": "MOD-teacher-ai",
+    "status": "UNKNOWN",
+    "description": "Đã đọc evaluator/handler/manual retry và policy delay. Chưa xác minh end-to-end speech upload, consent, transcription, lease reclaim hoặc callback sau xóa recording.",
+    "evidence": [
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "symbol": "EvaluationService.retryForLearner/evaluateAttempt",
+        "lineStart": 107,
+        "lineEnd": 299,
+        "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+      },
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+        "symbol": "EvaluateAttemptHandler.handle",
+        "lineStart": 28,
+        "lineEnd": 69,
+        "sha256": "66b87872c1eb7c0ac560672b53b199d594237569af8b3539d01688e2203b5168"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "Recording",
+        "lineStart": 660,
+        "lineEnd": 691,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      },
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "decideJobRetry",
+        "lineStart": 15,
+        "lineEnd": 51,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      }
+    ],
+    "relatedIds": [
+      "MOD-teacher-ai",
+      "ENT-Recording",
+      "ENT-Job",
+      "ENT-EvaluationResult",
+      "SYM-113c181e56b0d993",
+      "SYM-e6043d7a5f37569e",
+      "SYM-66f2452cd7488a41",
+      "SYM-44f27c9274598d5f",
+      "SYM-e7be3833d19e357b",
+      "SYM-62219a9fff63a216",
+      "SYM-0fd4e9a33686fd6b",
+      "SYM-61721c5582ceaec7",
+      "SYM-fa5e683d0c28dd37",
+      "SYM-68572b79e24a5d29",
+      "SYM-1000680c320593a2",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/teacher-ai/application/evaluation.service.ts",
+      "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+      "apps/api/prisma/schema.prisma",
+      "apps/api/src/jobs/application/job-runner.service.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Handler tránh hạ EVALUATED khi ghi processing/failure; result unique attempt/rubricVersion.",
+      "Provider call xảy ra trước transaction create result; duplicate trong transaction trả result trực tiếp không so hash lại."
+    ],
+    "unreviewedBehavior": [
+      "Chưa review Jobs runner lease/claim hoàn chỉnh, transcribe handler, storage deletion, network retry adapters hoặc mọi race manual retry/worker.",
+      "Không chứng minh exactly-once provider call hay không có tác dụng muộn sau delete/timeout."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-mastery-projections",
+    "kind": "finding",
+    "name": "Chưa review đầy đủ mastery map, Error Bank và memory health",
+    "module": "MOD-mastery",
+    "status": "UNKNOWN",
+    "description": "recordInTransaction tạo ErrorBankEntry cho score<0.7 ở mức activity; các projection đọc/backfill tiếp theo chưa được phân tích đầy đủ.",
+    "evidence": [
+      {
+        "file": "apps/api/src/mastery/application/mastery.service.ts",
+        "symbol": "MasteryService.recordInTransaction error entry",
+        "lineStart": 250,
+        "lineEnd": 265,
+        "sha256": "107f1aab2c5ee640dc7268ad71ca98548d27df12c2d560bf109d69fe9bf1c4ec"
+      },
+      {
+        "file": "apps/api/src/mastery/application/mastery.service.ts",
+        "symbol": "MasteryService.getReviewQueue/getMasteryRecords",
+        "lineStart": 281,
+        "lineEnd": 330,
+        "sha256": "107f1aab2c5ee640dc7268ad71ca98548d27df12c2d560bf109d69fe9bf1c4ec"
+      }
+    ],
+    "relatedIds": [
+      "MOD-mastery",
+      "ENT-MasteryRecord",
+      "ENT-MasteryEvent",
+      "ENT-ErrorBankEntry",
+      "TEST-f1c6615738bbddcd",
+      "SYM-e5a5d5f369d09fd3",
+      "SYM-436b9cfca38da21c",
+      "SYM-6099e19833ccbfef",
+      "SYM-a163692a5878b676",
+      "SYM-9764557d873ab3f9",
+      "SYM-0901b4f14d9fc159",
+      "SYM-9be0822242d2b014",
+      "SYM-7c61542ea249c7c0",
+      "SYM-a54cee1e1e97d406",
+      "SYM-1cc11610ecd1d9ac",
+      "SYM-53d00d817baed680",
+      "SYM-56df087ee4635a9a",
+      "SYM-69865c6e04166591"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/mastery/application/mastery.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/mastery.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Đọc calculator, scheduler, scored-event writes, queue selection và integration assertions về concurrent retries."
+    ],
+    "unreviewedBehavior": [
+      "Chưa đối chiếu toàn bộ getErrorBank/getMemoryHealth/backfillErrorBank hoặc mastery-map response mapping; không suy ra UI completeness.",
+      "Không khẳng định append-only trigger toàn diện vì chưa đọc migrations."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/mastery.integration.spec.ts",
+        "symbol": "unscored and concurrent attempts assertions",
+        "lineStart": 248,
+        "lineEnd": 354,
+        "sha256": "7f7e71fd28a6b94ebadd96b8d08a4b36509fc28e47d22fe61c67afbeace5bc60"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-foundation-authoring",
+    "kind": "finding",
+    "name": "Chưa review sâu validator và admin publication Foundation",
+    "module": "MOD-curriculum-foundation",
+    "status": "UNKNOWN",
+    "description": "FoundationCurriculumService có validate/publish/archive và receipt locking; chỉ đọc service, chưa phân tích validator phụ trợ/cycle và đủ test admin.",
+    "evidence": [
+      {
+        "file": "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts",
+        "symbol": "FoundationCurriculumService.validateDraft/publishDraft/archiveRevision",
+        "lineStart": 42,
+        "lineEnd": 81,
+        "sha256": "c70ab1119c2232590c59af44e3af4dfe6c86b2fe9c26a7c0e960cab98a6a8bec"
+      },
+      {
+        "file": "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts",
+        "symbol": "FoundationCurriculumService.mutate",
+        "lineStart": 96,
+        "lineEnd": 125,
+        "sha256": "c70ab1119c2232590c59af44e3af4dfe6c86b2fe9c26a7c0e960cab98a6a8bec"
+      }
+    ],
+    "relatedIds": [
+      "MOD-curriculum-foundation",
+      "ENT-CurriculumDefinition",
+      "ENT-CurriculumRevision",
+      "ENT-CurriculumPrerequisite",
+      "SYM-7be5e2d44e708990",
+      "SYM-c1c89166c9a445d0",
+      "SYM-530655c859f57ada",
+      "SYM-0487164b509474bb",
+      "SYM-5eabcb967192eb6d",
+      "SYM-b605fa05e99b4ea8",
+      "SYM-38113e9df136760e",
+      "SYM-d4c7832f01bb26e5",
+      "SYM-4fdbd9f4bbd4ecd0",
+      "SYM-cb851e70a8a8fb08",
+      "SYM-2749dfaf58df5f4a"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Ưu tiên learner eligibility, objective evidence và completion.",
+      "Đã thấy validate bắt buộc trước publish và kiểm tra published dependents trước archive."
+    ],
+    "unreviewedBehavior": [
+      "Chưa kết luận toàn bộ cross-program prerequisite cycle validation, content authoring correctness hoặc mutation concurrency khi publication đổi giữa eligibility và session create."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-orientation-gates",
+    "kind": "finding",
+    "name": "Chưa xác minh toàn bộ Orientation và khác biệt gate Bridge",
+    "module": "MOD-ielts-bridge",
+    "status": "UNKNOWN",
+    "description": "Bridge catalog yêu cầu ít nhất4 required modules và mọi module required trong catalog hoàn tất; Integrated/Band chỉ đếm completed required progress>=4. Hai predicate khác nhau khi tập required mở rộng.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.catalog",
+        "lineStart": 35,
+        "lineEnd": 69,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      },
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.hasCompletedOrientation",
+        "lineStart": 176,
+        "lineEnd": 180,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      },
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+        "symbol": "IeltsIntegratedLearnerService.bridgeComplete",
+        "lineStart": 88,
+        "lineEnd": 88,
+        "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+        "symbol": "IeltsBandLearnerService.bridgeComplete",
+        "lineStart": 94,
+        "lineEnd": 95,
+        "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-bridge",
+      "ENT-OrientationProgress",
+      "ENT-IeltsBridgeProgress",
+      "MOD-ielts-integrated-practice",
+      "MOD-ielts-band-curriculum",
+      "SYM-d44a6f09c3d03278",
+      "SYM-1ea9533730505a58",
+      "SYM-a7243de3795afa2c",
+      "SYM-1a1bfeffc4b42779",
+      "SYM-c79f02ff1f713c3a",
+      "SYM-0abc2f384244e2d8",
+      "SYM-d5cfcc666ceeb456",
+      "SYM-97410e72eb72d307",
+      "SYM-380b8b9afd36bdc6",
+      "SYM-eada1b856b36a2b9",
+      "SYM-47418fa12e87c279",
+      "SYM-b5eccd556208feab",
+      "SYM-2ea2fe42d1317575",
+      "SYM-3a0b32ddf033b2e4",
+      "SYM-008e912364ce9984",
+      "SYM-6fe4c0efcc75f876",
+      "SYM-c242916366bba9a4",
+      "SYM-7eea2f24b414c37b",
+      "SYM-6d7d73dcb69824f9",
+      "SYM-fe14d8e8d5e56aa7",
+      "SYM-287fe4d8cc1a51e7",
+      "SYM-39f4489d1e32bfda",
+      "SYM-62aa68652f4cbe00",
+      "SYM-8b84879e86b5e5e4",
+      "SYM-570603e7a2bf4301",
+      "SYM-0d2ae3df732163e2",
+      "SYM-1381bb46ac8b2125",
+      "SYM-7c37328ae9fdd106",
+      "SYM-2fe4f4f61ddb0d1c",
+      "SYM-bae68cf38d852216",
+      "SYM-ce0ed410e9e1e55c",
+      "SYM-3d3955f1de1e6a20",
+      "SYM-29b948a79a1a67f9",
+      "SYM-308531b3744e702e",
+      "SYM-42d795d4f32daacd",
+      "SYM-5fb64518f1fa8795",
+      "SYM-05934641ae1a6f90"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Đã đọc gate từ downstream services và Bridge catalog."
+    ],
+    "unreviewedBehavior": [
+      "Chưa review implementation Orientation để xác định criteria completed, version pinning, media và resume.",
+      "Chưa review hành vi khi hơn4 required modules, nhiều module cùng skill hoặc withdrawal khiến catalog và gate downstream khác nhau; không thay count>=4 thành all required."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-productive-band",
+    "kind": "finding",
+    "name": "Chưa chứng minh đường tiến band cho task text và spoken",
+    "module": "MOD-ielts-band-curriculum",
+    "status": "UNKNOWN",
+    "description": "Integrated evaluate trả correct=null cho text/spoken không rỗng. Band policy chỉ đếm boolean; unit test advancement dùng synthetic correct=true cho cả bốn skill. Đường production tạo productive boolean chưa được chứng minh.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+        "symbol": "IeltsIntegratedLearnerService.evaluate",
+        "lineStart": 91,
+        "lineEnd": 91,
+        "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+        "symbol": "IeltsBandLearnerService.evaluate",
+        "lineStart": 81,
+        "lineEnd": 88,
+        "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+        "symbol": "evaluateBandProgression",
+        "lineStart": 14,
+        "lineEnd": 46,
+        "sha256": "cd633ab67bf757502b51d5330526bcb59e8ef5c6eb08749782fc5a145e0e1cef"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts",
+        "symbol": "synthetic four-skill advancement fixture",
+        "lineStart": 47,
+        "lineEnd": 52,
+        "sha256": "f5fddf77057af7050a176fb4d9ab7c7dd9490f17bac408b7f4f51f4daddd4015"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-band-curriculum",
+      "ENT-IeltsIntegratedSessionBlock",
+      "ENT-IeltsBandJourney",
+      "TEST-9e87f70103cadd38",
+      "SYM-6fe4c0efcc75f876",
+      "SYM-c242916366bba9a4",
+      "SYM-7eea2f24b414c37b",
+      "SYM-6d7d73dcb69824f9",
+      "SYM-fe14d8e8d5e56aa7",
+      "SYM-287fe4d8cc1a51e7",
+      "SYM-39f4489d1e32bfda",
+      "SYM-62aa68652f4cbe00",
+      "SYM-8b84879e86b5e5e4",
+      "SYM-570603e7a2bf4301",
+      "SYM-0d2ae3df732163e2",
+      "SYM-1381bb46ac8b2125",
+      "SYM-7c37328ae9fdd106",
+      "SYM-2fe4f4f61ddb0d1c",
+      "SYM-bae68cf38d852216",
+      "SYM-ce0ed410e9e1e55c",
+      "SYM-3d3955f1de1e6a20",
+      "SYM-29b948a79a1a67f9",
+      "SYM-308531b3744e702e",
+      "SYM-42d795d4f32daacd",
+      "SYM-5fb64518f1fa8795",
+      "SYM-05934641ae1a6f90",
+      "SYM-cd6347805a282ccf",
+      "SYM-b78e69e352039098",
+      "SYM-969e84f0a4d0aefb",
+      "SYM-b13a8314e91d785d"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts"
+    ],
+    "testFiles": [
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Đã đọc source evaluate/filter và test assertions."
+    ],
+    "unreviewedBehavior": [
+      "Chưa tìm hiểu liệu có luồng khác cập nhật productive block.result để đủ minimumSamplesPerSkill hay không; không claim journey luôn có thể đạt target.",
+      "Chưa kiểm thử ảnh hưởng đổi target sau completedAt, hoặc snapshot giữ decision stage trước khi currentStageCode đã chuyển stage mới."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts",
+        "symbol": "version-bound pathway, owner and single-stage advancement",
+        "lineStart": 35,
+        "lineEnd": 57,
+        "sha256": "f5fddf77057af7050a176fb4d9ab7c7dd9490f17bac408b7f4f51f4daddd4015"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "GAP-LRN-mock-races",
+    "kind": "finding",
+    "name": "Chưa xác minh mọi race giữa timer, save, audio và review",
+    "module": "MOD-ielts-mock",
+    "status": "UNKNOWN",
+    "description": "Mock dùng CAS revision cho save/submit; audio dùng hai transaction khóa asset tách bởi storage.read. Transaction sau đọc lại lượt nhưng không kiểm tra lại currentSection; hiệu ứng đua thời gian/section chưa được kiểm chứng.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService.get/saveResponses/submitSection",
+        "lineStart": 58,
+        "lineEnd": 102,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService.getAudio",
+        "lineStart": 116,
+        "lineEnd": 138,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+        "symbol": "IeltsMockReviewService.review",
+        "lineStart": 20,
+        "lineEnd": 40,
+        "sha256": "4190a0ba08f5e7f2ff3634e0e3ea33cad97dba4db5698b1ccbfc81ad754c3b46"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-mock",
+      "ENT-IeltsMockAttempt",
+      "ENT-IeltsMockReview",
+      "ENT-AudioArtifact",
+      "TEST-35e89baaf4ce79b2",
+      "TEST-03359b17916d57a1",
+      "SYM-4a02a225edf89c04",
+      "SYM-b0fea7c8694aff0f",
+      "SYM-5e0ea8ee0b26ee3a",
+      "SYM-55d5cf27613ed7dd",
+      "SYM-422fe4868720aa17",
+      "SYM-93dd269e53cfe677",
+      "SYM-dbf882dfc27a20ea",
+      "SYM-b05b9d2d350f2f0e",
+      "SYM-dfa3e3cffe3c09f0",
+      "SYM-9eaf0f8e596e336b",
+      "SYM-d1ec700ce5c829a8",
+      "SYM-3f90882b4740b6af",
+      "SYM-e4a91a54663addca",
+      "SYM-2cf0002b6dd7705b",
+      "SYM-fbb5348d80539be2",
+      "SYM-d5ee1e09b7b4ff91",
+      "SYM-36122a4666b8ab83",
+      "SYM-6c66b797a7d435d2",
+      "SYM-286e25a346fda534",
+      "SYM-94e6ef7210e3d79a",
+      "SYM-dd7f70d0a05c1ad7",
+      "SYM-1cbd306878a01769",
+      "SYM-3321c146baab35f1",
+      "SYM-fd5adbc2b555cb4b",
+      "SYM-49bc7f3376ee8ca8"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.spec.ts",
+      "apps/api/test/integration/ielts-mock-workflow.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "analyzedScope": [
+      "Đã đọc deadline/order, audio single-play/storage-failure unit assertions và full-mock integration assertions."
+    ],
+    "unreviewedBehavior": [
+      "Chưa review mọi race GET auto-submit với save/submit, đọc audio cùng lúc đổi section, hay nhiều asset cập nhật audioPlayEvents trên cùng attempt.",
+      "Không chứng minh timer background tự chạy khi không có GET; get chỉ auto-submits một phần hiện tại.",
+      "Không chạy storage, browser media/range hoặc DB concurrent tests."
+    ],
+    "reason": "Không đủ bằng chứng trong phạm vi đọc tĩnh của assignment để kết luận toàn bộ hành vi; không chạy runtime hoặc DB.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.spec.ts",
+        "symbol": "pinning, deadlines, ordering, ownership and audio",
+        "lineStart": 50,
+        "lineEnd": 131,
+        "sha256": "dcbe6780893e418799ce4925ef1fbd3fc2756e4841decd0d256dffc2c1c72b3e"
+      },
+      {
+        "file": "apps/api/test/integration/ielts-mock-workflow.integration.spec.ts",
+        "symbol": "four sections and completed reviewed report",
+        "lineStart": 25,
+        "lineEnd": 39,
+        "sha256": "3b7dd4b1d2d26470fe4888dd88c24309e9f003ff25532ed221634764d09070bb"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "FIND-OBS-error-id",
+    "kind": "finding",
+    "name": "Error envelope: correlationId server khác requestId client",
+    "module": "MOD-web",
+    "status": "CONFLICT",
+    "description": "SafeExceptionFilter trả correlationId và X-Correlation-ID. errorEnvelopeSchema của ApiClient khai báo requestId trong error lồng; ApiClient.request chỉ đọc data.error.requestId, còn nhánh lỗi phẳng không gán requestId. Có khác biệt contract/source giữa hai phía; tác động UI và hành vi runtime chưa chạy xác minh. Không tự coi đây là lỗ hổng bảo mật.",
+    "evidence": [
+      {
+        "file": "apps/api/src/common/http/safe-exception.filter.ts",
+        "symbol": "SafeExceptionFilter.catch",
+        "lineStart": 106,
+        "lineEnd": 113,
+        "sha256": "82bacc9b12e767f8df2379412ebdb4c5326f141baca6dfc0a3b306d40ef314ec"
+      },
+      {
+        "file": "apps/web/src/lib/api/api-client.ts",
+        "symbol": "errorEnvelopeSchema",
+        "lineStart": 77,
+        "lineEnd": 92,
+        "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+      },
+      {
+        "file": "apps/web/src/lib/api/api-client.ts",
+        "symbol": "ApiClient.request error branch",
+        "lineStart": 236,
+        "lineEnd": 268,
+        "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+      }
+    ],
+    "relatedIds": [
+      "MOD-web",
+      "MOD-common",
+      "REQ-OPS-error-envelope"
+    ],
+    "curated": true
+  },
+  {
+    "id": "FIND-ARCH-deployment",
+    "kind": "finding",
+    "name": "CI/CD và production topology chưa được chứng minh",
+    "module": "MOD-infra",
+    "status": "UNKNOWN",
+    "description": "Trong phạm vi khảo sát có Docker Compose cho PostgreSQL và scripts setup/backup/restore/qualification. Không phát hiện thư mục .github trong snapshot hiện tại. Không suy ra rằng hệ thống không có CI/CD bên ngoài; production deployment, caching và recovery thực tế chưa được quan sát.",
+    "evidence": [
+      {
+        "file": "infra/docker-compose.yml",
+        "symbol": "services.postgres",
+        "lineStart": 1,
+        "lineEnd": 14,
+        "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+      },
+      {
+        "file": "package.json",
+        "symbol": "scripts",
+        "lineStart": 15,
+        "lineEnd": 38,
+        "sha256": "0b0593b7d714161d2e3d0c3bf177b08503ed8438f2bd5a90e26a9b53a3412313"
+      }
+    ],
+    "relatedIds": [
+      "MOD-infra",
+      "MOD-operations-scripts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "FIND-runtime",
+    "kind": "finding",
+    "name": "Runtime and deployment remain unverified",
+    "module": "MOD-api",
+    "status": "UNKNOWN",
+    "description": "This analysis reads source, schema and migration files. It does not connect to PostgreSQL, inspect migration application state, execute application tests, or verify external provider availability. The documentation package is tested separately.",
+    "evidence": [
+      {
+        "file": "README.md",
+        "symbol": "local startup instructions",
+        "lineStart": 1,
+        "lineEnd": 27,
+        "sha256": "725964feb5da9e35b6e6d5a334aa32a7dcf0fe28ccbfc1da90b52fddcb9e4da9"
+      }
+    ],
+    "relatedIds": [
+      "MOD-api",
+      "MOD-database"
+    ]
+  },
+  {
+    "id": "FIND-extraction-limits",
+    "kind": "finding",
+    "name": "Static extraction boundaries",
+    "module": "MOD-workspace",
+    "status": "UNKNOWN",
+    "description": "TypeScript AST extracts declarations and direct static calls. Dynamic dispatch, runtime DTO serialization, all service-level error branches, conditional registration, test parameter expansion and SQL semantics are not fully resolved. SQL migration facts use a bounded extractor; Prisma DMMF is authoritative for schema declarations. Files outside the explicit scope are not analyzed.",
+    "evidence": [],
+    "relatedIds": [
+      "MOD-workspace"
+    ]
+  }
+]

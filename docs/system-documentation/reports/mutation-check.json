@@ -1,0 +1,7 @@
+{
+  "executedAt": "2026-10-18T11:01:42.225Z",
+  "mutation": "Inverted duplicate-ID validation condition",
+  "result": "KILLED",
+  "testExitCode": 1,
+  "restored": true
+}

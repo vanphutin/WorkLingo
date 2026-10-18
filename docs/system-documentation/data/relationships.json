@@ -1,0 +1,23 @@
+[
+  {"useCase":"UC-CORE-Register","requirements":["REQ-CORE-01"],"rules":["BR-CORE-01","BR-CORE-14"]},
+  {"useCase":"UC-CORE-Session","requirements":["REQ-CORE-01","REQ-CORE-02"],"rules":["BR-CORE-02","BR-CORE-03"]},
+  {"useCase":"UC-CORE-Preferences","requirements":["REQ-CORE-03"],"rules":["BR-CORE-04"]},
+  {"useCase":"UC-CORE-Import","requirements":["REQ-CORE-04"],"rules":["BR-CORE-05","BR-CORE-06"]},
+  {"useCase":"UC-CORE-Audio","requirements":["REQ-CORE-05","REQ-CORE-08"],"rules":["BR-CORE-08","BR-CORE-09"]},
+  {"useCase":"UC-CORE-Publish","requirements":["REQ-CORE-04","REQ-CORE-05"],"rules":["BR-CORE-06","BR-CORE-07","BR-CORE-08"]},
+  {"useCase":"UC-CORE-Job","requirements":["REQ-CORE-06"],"rules":["BR-CORE-10","BR-CORE-11","BR-CORE-12","BR-CORE-13"]},
+  {"useCase":"UC-CORE-AIRoute","requirements":["REQ-CORE-08"],"rules":["BR-CORE-15"]},
+  {"useCase":"UC-LRN-session","requirements":["REQ-LRN-ownership","REQ-LRN-session-continuity","REQ-LRN-concurrent-commands"],"rules":["BR-LRN-session-create","BR-LRN-session-transitions"]},
+  {"useCase":"UC-LRN-draft","requirements":["REQ-LRN-ownership","REQ-LRN-session-continuity","REQ-LRN-concurrent-commands"],"rules":["BR-LRN-draft-cas"]},
+  {"useCase":"UC-LRN-submit-ai","requirements":["REQ-LRN-ai-feedback","REQ-LRN-retry-disclosure","REQ-LRN-concurrent-commands"],"rules":["BR-LRN-attempt-identity","BR-LRN-submission-evidence","BR-LRN-ai-retry","BR-LRN-ai-result"]},
+  {"useCase":"UC-LRN-self-placement","requirements":["REQ-LRN-onboarding-evidence"],"rules":["BR-LRN-self-confirm"]},
+  {"useCase":"UC-LRN-placement","requirements":["REQ-LRN-onboarding-evidence","REQ-LRN-program-isolation"],"rules":["BR-LRN-placement-create","BR-LRN-placement-decision"]},
+  {"useCase":"UC-LRN-mastery","requirements":["REQ-LRN-ai-feedback","REQ-LRN-progression-evidence"],"rules":["BR-LRN-mastery-idempotency","BR-LRN-review-policy"]},
+  {"useCase":"UC-LRN-progression","requirements":["REQ-LRN-progression-evidence","REQ-LRN-program-isolation"],"rules":["BR-LRN-progression-confirm"]},
+  {"useCase":"UC-LRN-foundation","requirements":["REQ-LRN-objective-completion"],"rules":["BR-LRN-curriculum-evidence"]},
+  {"useCase":"UC-LRN-program-context","requirements":["REQ-LRN-program-isolation"],"rules":["BR-LRN-program-boundary"]},
+  {"useCase":"UC-LRN-bridge","requirements":["REQ-LRN-bridge-practice"],"rules":["BR-LRN-bridge-stages"]},
+  {"useCase":"UC-LRN-integrated","requirements":["REQ-LRN-integrated-band-evidence"],"rules":["BR-LRN-integrated-band"]},
+  {"useCase":"UC-LRN-band","requirements":["REQ-LRN-integrated-band-evidence"],"rules":["BR-LRN-integrated-band"]},
+  {"useCase":"UC-LRN-mock","requirements":["REQ-LRN-mock-report"],"rules":["BR-LRN-mock-lifecycle"]}
+]

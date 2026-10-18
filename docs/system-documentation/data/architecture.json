@@ -1,0 +1,3373 @@
+[
+  {
+    "id": "DIA-CORE-Auth",
+    "kind": "diagram",
+    "name": "Login and protected request sequence",
+    "module": "MOD-auth",
+    "status": "VERIFIED",
+    "description": "Successful login and protected identity request with explicit error alternatives. Global guard wiring is source evidence, not a deployed execution trace.",
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/application/auth.service.ts",
+        "symbol": "AuthService",
+        "lineStart": 45,
+        "lineEnd": 138,
+        "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+      },
+      {
+        "file": "apps/api/src/auth/auth.controller.ts",
+        "symbol": "AuthController",
+        "lineStart": 41,
+        "lineEnd": 100,
+        "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+      },
+      {
+        "file": "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+        "symbol": "SessionAuthGuard",
+        "lineStart": 22,
+        "lineEnd": 40,
+        "sha256": "a755ed50668d4c14dd5248b2347fd626c30952c60b218aa5cd64dab645bb363c"
+      },
+      {
+        "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "symbol": "RolesGuard",
+        "lineStart": 18,
+        "lineEnd": 42,
+        "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+      },
+      {
+        "file": "apps/api/src/users/users.controller.ts",
+        "symbol": "UsersController",
+        "lineStart": 15,
+        "lineEnd": 19,
+        "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+      }
+    ],
+    "relatedIds": [
+      "MOD-auth",
+      "MOD-users",
+      "ENT-User",
+      "ENT-UserSession",
+      "SYM-0bb02533acae9904",
+      "SYM-2d4824564a872f7f",
+      "SYM-3c966a8b308e14f7",
+      "SYM-5d694cd2bda94297",
+      "SYM-1413046fc7603cdf",
+      "SYM-b93314708f68bf06",
+      "SYM-28398c901bb98cb5",
+      "SYM-e1bc71c41f4b8ae4",
+      "SYM-63899ccb34e77e53",
+      "SYM-7c79ff95eb0f7936",
+      "SYM-784e8cfeb515d895",
+      "SYM-1de762416949c88f",
+      "SYM-8c33e318a36cc9d3",
+      "API-72d35ffed94a1e5e",
+      "API-d98afd350a878235",
+      "API-75fe132ab22de760",
+      "SYM-0be0c5d1246432a7",
+      "SYM-efccf5a8fcf57af6",
+      "SYM-2c35f6b2965d2564",
+      "SYM-60115893924c6461",
+      "SYM-312e8287b73c8803",
+      "SYM-2f7f4d0da1bd9b22",
+      "SYM-1086bdc74dd926bd",
+      "SYM-5192c76b7e6a71e7",
+      "SYM-8b4c1f8b4e2f961d",
+      "API-0650d0a82d12eb77",
+      "API-af3bb6830f396b1c",
+      "API-4d57caa35f33c47a"
+    ],
+    "diagramType": "sequence",
+    "code": "sequenceDiagram\n    actor Account\n    participant Auth as AuthController and AuthService\n    participant DB as Prisma User and UserSession\n    participant Guard as SessionAuthGuard and RolesGuard\n    participant Users as UsersController\n    Account->>Auth: POST /api/v1/auth/login\n    Auth->>DB: Find normalized email and profile\n    alt Missing user, bad password or inactive account\n        Auth-->>Account: 401 credential error\n    else Valid credentials\n        Auth->>DB: Store token hash and expiry\n        Auth-->>Account: Public user and session cookie\n        Account->>Guard: GET /api/v1/me with cookie\n        Guard->>DB: Find token hash and current user\n        alt Session absent, revoked, expired or account inactive\n            Guard-->>Account: 401\n        else Valid session\n            Guard->>Guard: Check required roles when declared\n            Guard->>Users: Attach authenticated user\n            Users-->>Account: Current user\n        end\n    end",
+    "nodeEvidence": {
+      "Account": "AuthController.login public boundary",
+      "Auth": "AuthService.login/createAuthenticatedSession",
+      "DB": "AuthService Prisma calls",
+      "Guard": "SessionAuthGuard.canActivate; RolesGuard.canActivate",
+      "Users": "UsersController.getCurrentUser"
+    },
+    "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/auth/application/auth.service.ts",
+      "apps/api/src/auth/auth.controller.ts",
+      "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+      "apps/api/src/auth/infrastructure/roles.guard.ts",
+      "apps/api/src/users/users.controller.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-CORE-JobState",
+    "kind": "diagram",
+    "name": "Durable job transitions",
+    "module": "MOD-jobs",
+    "status": "VERIFIED",
+    "description": "Only JobsService/registered runner transitions shown. RUNNING self-transition is lease reclamation with new attempt; COMPLETED does not guarantee an audio artifact is READY.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 60,
+        "lineEnd": 305,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      },
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "decideJobRetry; JobRunnerService",
+        "lineStart": 15,
+        "lineEnd": 181,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "Job",
+        "lineStart": 1167,
+        "lineEnd": 1184,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "ENT-Job",
+      "ENT-JobAttempt",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7"
+    ],
+    "diagramType": "state",
+    "code": "stateDiagram-v2\n    [*] --> PENDING: enqueue with schema default\n    PENDING --> RUNNING: due and attempts below max\n    RETRY_WAIT --> RUNNING: due and attempts below max\n    RUNNING --> RUNNING: lease expired and attempts below max\n    RUNNING --> FAILED: lease expired at max attempts\n    RUNNING --> COMPLETED: matching owner and attempt succeeds\n    RUNNING --> RETRY_WAIT: matching claim and eligible provider retry\n    RUNNING --> FAILED: matching claim and no automatic retry\n    FAILED --> PENDING: owner retry when retryable adds one attempt",
+    "nodeEvidence": {
+      "PENDING": "Job default and JobsService.retryJob",
+      "RUNNING": "JobsService.claimNext",
+      "RETRY_WAIT": "JobsService.failClaim",
+      "FAILED": "JobsService.claimNext/failClaim",
+      "COMPLETED": "JobsService.completeClaim"
+    },
+    "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/application/jobs.service.ts",
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-CORE-Publication",
+    "kind": "diagram",
+    "name": "Publication and explicit archive sequence",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Preflight checks precede transaction locks, rereads and atomic materialization/pointer/audit/receipt updates.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 33,
+        "lineEnd": 306,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 473,
+        "lineEnd": 628,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 631,
+        "lineEnd": 691,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "symbol": "ContentAuthoringController",
+        "lineStart": 152,
+        "lineEnd": 162,
+        "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+      },
+      {
+        "file": "apps/api/src/content-authoring/lesson-versions.controller.ts",
+        "symbol": "LessonVersionsController",
+        "lineStart": 29,
+        "lineEnd": 38,
+        "sha256": "e19aed92c752f0fa0bde7104074a7e46401912b97968ba5c2ff67fc0ecdd7fd5"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 308,
+        "lineEnd": 407,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 409,
+        "lineEnd": 473,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-LessonVersion",
+      "ENT-ContentImport",
+      "ENT-AudioArtifact",
+      "ENT-MutationReceipt",
+      "ENT-AuditLog",
+      "SYM-6784d170eee326c7",
+      "SYM-6f90718a00bc5fea",
+      "SYM-2043c822d22e5e53",
+      "SYM-81d340a59a18c99c",
+      "SYM-d092855a62609f7c",
+      "SYM-0ed5740f4361dd1f",
+      "SYM-9b7e1a102c8f4919",
+      "SYM-6d6fbed09c7c150d",
+      "SYM-cc12763a91be9bb6",
+      "SYM-1a98966b6b250044",
+      "SYM-522889346d8c6b3f",
+      "API-84d059829fd88a5e",
+      "API-6d0da70ec52b3e32",
+      "API-740d1a3ca6cf53db",
+      "API-4aba6690814aa03c",
+      "API-3cb4bdf43a975c54",
+      "API-5a3705b5dd4aa51e",
+      "API-fb81a353e5880ca3",
+      "SYM-34b6128617172c97",
+      "SYM-db363675f8120256",
+      "API-8fe5c4907dc8fe1e"
+    ],
+    "diagramType": "sequence",
+    "code": "sequenceDiagram\n    actor Admin\n    participant Publisher as ContentPublisherService\n    participant DB as PostgreSQL transaction\n    Admin->>Publisher: Publish import, revision, hash, key and audio choices\n    Publisher->>DB: Read mutation receipt\n    alt Matching replay receipt\n        DB-->>Publisher: Saved response\n        Publisher-->>Admin: Original response\n    else New request\n        Publisher->>Publisher: Check validated source and selected READY audio\n        Publisher->>DB: Begin transaction and acquire lesson slug lock\n        Publisher->>DB: Recheck receipt and row-lock import\n        Publisher->>DB: Recheck revision, hash, validation and audio\n        Publisher->>DB: Allocate version and materialize children\n        Publisher->>DB: Bind selected audio\n        Publisher->>DB: Archive prior current and publish new version\n        Publisher->>DB: Change lesson pointer and import status\n        Publisher->>DB: Write audit and receipt, commit\n        Publisher-->>Admin: Published version identity\n    end\n    opt Explicit archive of published version\n        Admin->>Publisher: Archive version\n        Publisher->>DB: Slug lock and reread version\n        Publisher->>DB: Archive, clear pointer if current, audit and commit\n        Publisher-->>Admin: ARCHIVED\n    end",
+    "nodeEvidence": {
+      "Admin": "ContentAuthoringController.publish; LessonVersionsController.archive",
+      "Publisher": "ContentPublisherService.publish/archiveLessonVersion",
+      "DB": "Prisma transaction and PostgreSQL lock calls"
+    },
+    "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/content-publisher.service.ts",
+      "apps/api/src/content-authoring/content-authoring.controller.ts",
+      "apps/api/src/content-authoring/lesson-versions.controller.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-CORE-Audio",
+    "kind": "diagram",
+    "name": "Durable audio generation activity",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Handler returns STALE normally for script changes. Terminal/exhausted errors attempt artifact FAILED and rethrow for runner policy.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "symbol": "AudioGenerationHandler",
+        "lineStart": 15,
+        "lineEnd": 124,
+        "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "MOD-jobs",
+      "MOD-ai-gateway",
+      "MOD-storage",
+      "ENT-AudioArtifact",
+      "ENT-Job",
+      "SYM-1bcead783bd33781",
+      "SYM-cf3d01cb6b1a5416",
+      "SYM-9382b5567e7cfadc",
+      "SYM-dc0821e1378e480c"
+    ],
+    "diagramType": "activity",
+    "code": "flowchart TD\n    Claim[GENERATE_AUDIO claim] --> Parse[Parse payload and fetch script]\n    Parse --> Fresh{Script hash matches?}\n    Fresh -->|No| Stale[Mark GENERATING artifact STALE]\n    Fresh -->|Yes| Candidate[Resolve provider and GENERATING candidate]\n    Candidate --> Synth[Synthesize and store audio]\n    Synth --> Recheck{Latest script hash matches?}\n    Recheck -->|Yes| Ready[Update artifact to READY]\n    Recheck -->|No| Changed[Update artifact to STALE]\n    Ready --> Result[Return status to runner]\n    Changed --> Result\n    Stale --> Result\n    Candidate -.-> Err[Error caught in handler]\n    Synth -.-> Err\n    Err --> Terminal{Non-retryable or attempt budget exhausted?}\n    Terminal -->|Yes| Failed[Attempt artifact FAILED]\n    Terminal -->|No| Retain[Retain artifact state]\n    Failed --> Throw[Rethrow to runner]\n    Retain --> Throw",
+    "nodeEvidence": {
+      "Claim": "AudioGenerationHandler.handle",
+      "Parse": "payloadSchema and script lookup",
+      "Fresh": "currentHash comparison",
+      "Stale": "markArtifact STALE",
+      "Candidate": "registry resolve and candidate lookup",
+      "Synth": "synthesize/storage.put",
+      "Recheck": "latestScript hash",
+      "Ready": "updateMany READY",
+      "Changed": "updateMany STALE",
+      "Result": "handler return",
+      "Err": "handler catch",
+      "Terminal": "retryable/budget predicate",
+      "Failed": "markArtifact FAILED",
+      "Retain": "catch without artifact mutation",
+      "Throw": "throw error"
+    },
+    "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/audio-generation.handler.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-CORE-AIRouting",
+    "kind": "diagram",
+    "name": "Routed evaluation fallback decision",
+    "module": "MOD-ai-gateway",
+    "status": "VERIFIED",
+    "description": "Only routed adapter path is shown; fake/direct construction bypasses it. No retryable-flag gate is invented.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "symbol": "AiGatewayModule",
+        "lineStart": 45,
+        "lineEnd": 67,
+        "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "symbol": "RoutingLanguageEvaluationAdapter",
+        "lineStart": 15,
+        "lineEnd": 29,
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "symbol": "AiSettingsService",
+        "lineStart": 11,
+        "lineEnd": 22,
+        "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "symbol": "AiSettingsService",
+        "lineStart": 65,
+        "lineEnd": 82,
+        "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ai-gateway",
+      "ENT-AiRoutingSetting",
+      "SYM-1d29eaa66637c9e7",
+      "SYM-80e6b7d3dc2f0283",
+      "SYM-a55a740dc51d727a",
+      "SYM-28ffd8f141492887",
+      "SYM-dc07ac42cac361b2",
+      "SYM-7b571dea867b4494",
+      "SYM-30047f2922c3fc81",
+      "SYM-3ef74094ebc4f41f",
+      "SYM-2a0908106ad00139",
+      "SYM-a6b3af2fc1be46fc",
+      "SYM-3d75ca819359b7f7",
+      "SYM-565963de1f938ae7"
+    ],
+    "diagramType": "activity",
+    "code": "flowchart TD\n    Input[Input and routing context] --> Pref[Resolve system and account preference]\n    Pref --> Primary[Required provider or preferred provider]\n    Primary --> Call[Call registered primary adapter]\n    Call -->|Success| Output[Evaluation and actual provider provenance]\n    Call -->|Error| Required{Required provider specified?}\n    Required -->|Yes| Fail[Propagate error]\n    Required -->|No| Enabled{Fallback enabled and secondary registered?}\n    Enabled -->|No| Fail\n    Enabled -->|Yes| ErrorKind{ProviderError with allowed code?}\n    ErrorKind -->|No| Fail\n    ErrorKind -->|Yes| Other[Call secondary once]\n    Other -->|Success| Output\n    Other -->|Error| Fail",
+    "nodeEvidence": {
+      "Input": "evaluateWithProvenance input",
+      "Pref": "AiSettingsService.resolve",
+      "Primary": "requiredProvider or preference",
+      "Call": "RoutingLanguageEvaluationAdapter.call",
+      "Output": "evaluation/provenance return",
+      "Required": "requiredProvider guard",
+      "Enabled": "fallbackEnabled/secondary guard",
+      "ErrorKind": "ProviderError excluding refused/invalid-audio/expired-recording",
+      "Other": "single alternate call",
+      "Fail": "original or secondary throw"
+    },
+    "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/ai-gateway/ai-gateway.module.ts",
+      "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+      "apps/api/src/ai-gateway/application/ai-settings.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-session-state",
+    "kind": "diagram",
+    "name": "State session: các transition đã thấy trong code",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Chỉ biểu diễn transition được thực thi; không có edge ABANDONED. Loop IN_PROGRESS của start/resume là replay, loop submit là tăng checkpoint chưa cuối.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/session-creation.service.ts",
+        "symbol": "SessionCreationService.create",
+        "lineStart": 60,
+        "lineEnd": 85,
+        "sha256": "e3d7485aef3d83d86211e96119976b0130c376d44791071fc46db2afd0a25177"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "LearningSession default status",
+        "lineStart": 453,
+        "lineEnd": 465,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.startSession/pauseSession/resumeSession",
+        "lineStart": 236,
+        "lineEnd": 289,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.advanceSubmittedActivity",
+        "lineStart": 338,
+        "lineEnd": 364,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.submitAttempt replay",
+        "lineStart": 376,
+        "lineEnd": 386,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-LearningSession",
+      "SYM-c0a433632e978dc0",
+      "SYM-77fabb544ed36753",
+      "SYM-291882e795687eff",
+      "SYM-e784d10e0dd5c018",
+      "SYM-fce6f97c6aae5a84",
+      "SYM-3a4403c620512c07",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/session-creation.service.ts",
+      "apps/api/prisma/schema.prisma",
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "state",
+    "code": "stateDiagram-v2\n    [*] --> PLANNED : create\n    PLANNED --> IN_PROGRESS : start\n    PAUSED --> IN_PROGRESS : start or resume\n    IN_PROGRESS --> IN_PROGRESS : start or resume replay\n    IN_PROGRESS --> PAUSED : pause\n    IN_PROGRESS --> IN_PROGRESS : accepted nonfinal submission\n    IN_PROGRESS --> COMPLETED : accepted final submission\n    note right of COMPLETED\n        start pause resume rejected\n        matching attempt UUID may replay\n        AI evaluation may remain pending\n    end note",
+    "nodeEvidence": [
+      {
+        "node": "PLANNED",
+        "relatedIds": [
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/prisma/schema.prisma",
+            "symbol": "LearningSession.status",
+            "lineStart": 453,
+            "lineEnd": 465,
+            "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+          }
+        ]
+      },
+      {
+        "node": "IN_PROGRESS",
+        "relatedIds": [
+          "MOD-learning-sessions",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+            "symbol": "LearningSessionsService.startSession/resumeSession",
+            "lineStart": 236,
+            "lineEnd": 289,
+            "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+          }
+        ]
+      },
+      {
+        "node": "PAUSED",
+        "relatedIds": [
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+            "symbol": "LearningSessionsService.pauseSession",
+            "lineStart": 266,
+            "lineEnd": 275,
+            "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+          }
+        ]
+      },
+      {
+        "node": "COMPLETED",
+        "relatedIds": [
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+            "symbol": "LearningSessionsService.advanceSubmittedActivity",
+            "lineStart": 338,
+            "lineEnd": 364,
+            "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-submit-ai",
+    "kind": "diagram",
+    "name": "Sequence: writing submit, AI và retry",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Sequence cho writing khi JobsService có sẵn. Session checkpoint tăng lúc enqueue; worker evaluation đến sau. Failed retry và terminal result không đồng nhất với session status.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.submitAttempt",
+        "lineStart": 376,
+        "lineEnd": 462,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "symbol": "EvaluationService.retryForLearner/evaluateAttempt",
+        "lineStart": 107,
+        "lineEnd": 299,
+        "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+      },
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+        "symbol": "EvaluateAttemptHandler.handle",
+        "lineStart": 28,
+        "lineEnd": 69,
+        "sha256": "66b87872c1eb7c0ac560672b53b199d594237569af8b3539d01688e2203b5168"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-ActivityAttempt",
+      "ENT-LearningSession",
+      "ENT-Job",
+      "ENT-EvaluationResult",
+      "MOD-teacher-ai",
+      "MOD-jobs",
+      "MOD-mastery",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43",
+      "SYM-113c181e56b0d993",
+      "SYM-e6043d7a5f37569e",
+      "SYM-66f2452cd7488a41",
+      "SYM-44f27c9274598d5f",
+      "SYM-e7be3833d19e357b",
+      "SYM-62219a9fff63a216",
+      "SYM-0fd4e9a33686fd6b",
+      "SYM-61721c5582ceaec7",
+      "SYM-fa5e683d0c28dd37",
+      "SYM-68572b79e24a5d29",
+      "SYM-1000680c320593a2"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+      "apps/api/src/teacher-ai/application/evaluation.service.ts",
+      "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "sequence",
+    "code": "sequenceDiagram\n    actor Learner\n    participant Sessions\n    participant DB\n    participant Jobs\n    participant Handler\n    participant Evaluation\n    participant Provider\n    participant Mastery\n    Learner->>Sessions: submit writing with clientAttemptId\n    Sessions->>DB: find owned session and attempt UUID\n    alt same target UUID exists\n        DB-->>Sessions: stored attempt\n        Sessions-->>Learner: replay\n    else new attempt at current checkpoint\n        Sessions->>DB: transaction create raw response and QUEUED\n        Sessions->>Jobs: enqueue EVALUATE_ATTEMPT in transaction\n        Sessions->>DB: delete draft and CAS checkpoint\n        Sessions-->>Learner: queued attempt\n        Note over DB,Handler: Session may already be COMPLETED\n        Handler->>DB: PROCESSING unless EVALUATED\n        Handler->>Evaluation: evaluateAttempt\n        Evaluation->>DB: lookup rubric result and input hash\n        alt existing matching result\n            DB-->>Evaluation: replay result\n        else no result\n            Evaluation->>Provider: evaluate with provenance\n            alt success\n                Evaluation->>DB: transaction result and EVALUATED\n                opt mission purpose LEARNING\n                    Evaluation->>Mastery: record scored evidence in transaction\n                    Evaluation->>DB: project curriculum completion\n                end\n            else provider failure\n                Handler->>DB: QUEUED if retry policy permits\n                Note over Handler,DB: Otherwise EVALUATION_FAILED unless already EVALUATED\n            end\n        end\n    end\n    opt learner retries failed evaluation\n        Learner->>Evaluation: retryForLearner\n        Evaluation->>DB: check failed job and source availability\n        Evaluation->>Jobs: retry owned retryable job\n        Evaluation->>DB: failed attempt to QUEUED conditionally\n    end",
+    "nodeEvidence": [
+      {
+        "node": "Learner",
+        "relatedIds": [
+          "MOD-learning-sessions"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+            "symbol": "LearningSessionsService.submitAttempt",
+            "lineStart": 376,
+            "lineEnd": 400,
+            "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+          }
+        ]
+      },
+      {
+        "node": "Sessions",
+        "relatedIds": [
+          "MOD-learning-sessions"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+            "symbol": "LearningSessionsService.submitAttempt",
+            "lineStart": 403,
+            "lineEnd": 462,
+            "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+          }
+        ]
+      },
+      {
+        "node": "DB",
+        "relatedIds": [
+          "ENT-ActivityAttempt",
+          "ENT-EvaluationResult"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+            "symbol": "EvaluationService.evaluateAttempt transaction",
+            "lineStart": 223,
+            "lineEnd": 283,
+            "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+          }
+        ]
+      },
+      {
+        "node": "Jobs",
+        "relatedIds": [
+          "MOD-jobs",
+          "ENT-Job"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+            "symbol": "LearningSessionsService.submitAttempt enqueue",
+            "lineStart": 436,
+            "lineEnd": 448,
+            "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+          }
+        ]
+      },
+      {
+        "node": "Handler",
+        "relatedIds": [
+          "MOD-teacher-ai"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+            "symbol": "EvaluateAttemptHandler.handle",
+            "lineStart": 28,
+            "lineEnd": 69,
+            "sha256": "66b87872c1eb7c0ac560672b53b199d594237569af8b3539d01688e2203b5168"
+          }
+        ]
+      },
+      {
+        "node": "Evaluation",
+        "relatedIds": [
+          "MOD-teacher-ai"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+            "symbol": "EvaluationService.evaluateAttempt",
+            "lineStart": 143,
+            "lineEnd": 299,
+            "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+          }
+        ]
+      },
+      {
+        "node": "Provider",
+        "relatedIds": [
+          "MOD-teacher-ai"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+            "symbol": "LanguageEvaluationPort invocation",
+            "lineStart": 200,
+            "lineEnd": 221,
+            "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+          }
+        ]
+      },
+      {
+        "node": "Mastery",
+        "relatedIds": [
+          "MOD-mastery"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+            "symbol": "EvaluationService mastery caller",
+            "lineStart": 271,
+            "lineEnd": 282,
+            "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-placement",
+    "kind": "diagram",
+    "name": "Placement: refresh evidence và confirm recommendation",
+    "module": "MOD-onboarding",
+    "status": "VERIFIED",
+    "description": "Refresh không ghi lại RECOMMENDED/CONFIRMED. Flowchart là các nhánh thực thi, không giả định tất cả enum chuyển tự do.",
+    "evidence": [
+      {
+        "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+        "symbol": "PlacementAttemptsService.create/confirm",
+        "lineStart": 49,
+        "lineEnd": 266,
+        "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+        "symbol": "PlacementRecommendationService.refresh/persistInterim",
+        "lineStart": 33,
+        "lineEnd": 118,
+        "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+      },
+      {
+        "file": "apps/api/src/onboarding/domain/placement-policy.ts",
+        "symbol": "recommendPlacement",
+        "lineStart": 36,
+        "lineEnd": 78,
+        "sha256": "b55ce1d172adb2d372d933c224eff57917e01c44c23e1dcc246049b5f57dbdda"
+      }
+    ],
+    "relatedIds": [
+      "MOD-onboarding",
+      "ENT-PlacementAttempt",
+      "ENT-LearningSession",
+      "ENT-LearnerProfile",
+      "ENT-MutationReceipt",
+      "SYM-d72e49a50e01bfa7",
+      "SYM-d0582917a0fffe5f",
+      "SYM-f38c9047d805c9d9",
+      "SYM-3efbdb45a61bda42",
+      "SYM-0d409e28b3211c55",
+      "SYM-3c7b7365468e9516",
+      "SYM-c89930e3c8e0b1f1",
+      "SYM-efcd5d20c701a6af",
+      "SYM-5cdeb45823c69eac",
+      "SYM-4a054b7e2e2517bb",
+      "SYM-b101f885a8892408",
+      "SYM-a0cf6d38548742bc",
+      "SYM-30bd7754d420929b",
+      "SYM-f657f16f80d9f2e5"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/onboarding/application/placement-attempts.service.ts",
+      "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+      "apps/api/src/onboarding/domain/placement-policy.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "activity",
+    "code": "flowchart TD\n    A[\"Create placement with new UUID\"] --> B{\"Existing UUID?\"}\n    B -->|yes| C[\"Replay stored attempt\"]\n    B -->|no| D[\"Lock profile; role and onboarding checks\"]\n    D --> E{\"Other non-CONFIRMED attempt?\"}\n    E -->|yes| X[\"409 active attempt\"]\n    E -->|no| F[\"Transaction: 45-minute session and PlacementAttempt\"]\n    F --> G[\"Refresh owned placement\"]\n    G --> H{\"RECOMMENDED or CONFIRMED?\"}\n    H -->|yes| I[\"Read frozen recommendation\"]\n    H -->|no| J{\"Session COMPLETED?\"}\n    J -->|no| K[\"Persist IN_PROGRESS\"]\n    J -->|yes| L{\"Any skill action_required?\"}\n    L -->|yes| M[\"Persist ACTION_REQUIRED\"]\n    L -->|no| N{\"All four skills evaluated?\"}\n    N -->|no| O[\"Persist PROCESSING\"]\n    N -->|yes| P{\"Available policy candidate?\"}\n    P -->|no| M\n    P -->|yes| Q[\"Persist RECOMMENDED snapshot\"]\n    Q --> R[\"Confirm: lock profile and attempt\"]\n    R --> S{\"Receipt same target?\"}\n    S -->|yes| T[\"Replay response\"]\n    S -->|no| U{\"Pending onboarding, recommended, level still playable?\"}\n    U -->|no| V[\"Reject confirmation\"]\n    U -->|yes| W[\"Initialize enrollment; COMPLETE profile; CONFIRMED; audit and receipt\"]\n",
+    "nodeEvidence": [
+      {
+        "node": "A",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "B",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "C",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "D",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "E",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "F",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "X",
+        "relatedIds": [
+          "ENT-PlacementAttempt",
+          "ENT-LearningSession"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.create",
+            "lineStart": 49,
+            "lineEnd": 126,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "G",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "H",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "I",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "J",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "K",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "L",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "M",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "N",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "O",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "P",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "Q",
+        "relatedIds": [
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+            "symbol": "PlacementRecommendationService.refresh",
+            "lineStart": 33,
+            "lineEnd": 106,
+            "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+          }
+        ]
+      },
+      {
+        "node": "R",
+        "relatedIds": [
+          "ENT-LearnerProfile",
+          "ENT-MutationReceipt",
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.confirm",
+            "lineStart": 139,
+            "lineEnd": 266,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "S",
+        "relatedIds": [
+          "ENT-LearnerProfile",
+          "ENT-MutationReceipt",
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.confirm",
+            "lineStart": 139,
+            "lineEnd": 266,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "T",
+        "relatedIds": [
+          "ENT-LearnerProfile",
+          "ENT-MutationReceipt",
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.confirm",
+            "lineStart": 139,
+            "lineEnd": 266,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "U",
+        "relatedIds": [
+          "ENT-LearnerProfile",
+          "ENT-MutationReceipt",
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.confirm",
+            "lineStart": 139,
+            "lineEnd": 266,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "V",
+        "relatedIds": [
+          "ENT-LearnerProfile",
+          "ENT-MutationReceipt",
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.confirm",
+            "lineStart": 139,
+            "lineEnd": 266,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      },
+      {
+        "node": "W",
+        "relatedIds": [
+          "ENT-LearnerProfile",
+          "ENT-MutationReceipt",
+          "ENT-PlacementAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+            "symbol": "PlacementAttemptsService.confirm",
+            "lineStart": 139,
+            "lineEnd": 266,
+            "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-progression",
+    "kind": "diagram",
+    "name": "Progression: snapshot pass và live blockers",
+    "module": "MOD-progression",
+    "status": "VERIFIED",
+    "description": "Confirm không dùng bằng chứng mới để nâng snapshot failed/pending. Level tiếp theo phải là immediate successor đủ nội dung.",
+    "evidence": [
+      {
+        "file": "apps/api/src/progression/application/progression.service.ts",
+        "symbol": "ProgressionService.assess/confirm",
+        "lineStart": 69,
+        "lineEnd": 157,
+        "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+      },
+      {
+        "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+        "symbol": "evaluateCheckpoint",
+        "lineStart": 19,
+        "lineEnd": 60,
+        "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+      },
+      {
+        "file": "apps/api/src/progression/application/checkpoint-evidence.ts",
+        "symbol": "frozenActivities/availableNextLevel",
+        "lineStart": 16,
+        "lineEnd": 96,
+        "sha256": "8f32dde18650ef18da4b10582df65cec3e23007433e7a69db98b3a9b634325f6"
+      }
+    ],
+    "relatedIds": [
+      "MOD-progression",
+      "ENT-CheckpointAssessment",
+      "ENT-ProgressionConfirmation",
+      "ENT-LearnerProgramEnrollment",
+      "SYM-118d06b00abd2f67",
+      "SYM-93c04061a895a24e",
+      "SYM-aaa25701015688b1",
+      "SYM-b8c493601f21c46d",
+      "SYM-0b9a8ea357bf9069",
+      "SYM-54ac30da24ca048f",
+      "SYM-8569937bafa0bba7",
+      "SYM-89c43e03b81a41a0",
+      "SYM-8ded926f66006ff7",
+      "SYM-439a117443e7b205",
+      "SYM-ecff58e647e43d64",
+      "SYM-1a09fa2429fdd3f9",
+      "SYM-ba6d1661aa0d3bd1",
+      "SYM-b2b91881224e317f",
+      "SYM-a6ad922060188e98",
+      "SYM-7aabc0a89b0d28f6"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/progression/application/progression.service.ts",
+      "apps/api/src/progression/domain/checkpoint-policy.ts",
+      "apps/api/src/progression/application/checkpoint-evidence.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "activity",
+    "code": "flowchart TD\n    A[\"Assess: lock profile and resolve enrollment\"] --> B{\"Replay UUID and same session?\"}\n    B -->|yes| C[\"Return immutable assessment\"]\n    B -->|no new UUID| D[\"Validate owned completed session and frozen plan\"]\n    D --> E[\"Gather four-skill attempts and required mastery\"]\n    E --> F[\"Evaluate prerequisites and threshold 0.7\"]\n    F --> G[\"Store decision, next level and enrollment revision\"]\n    G --> H[\"Confirm: lock profile\"]\n    H --> I{\"Owner and active program match?\"}\n    I -->|no| X[\"409 conflict\"]\n    I -->|yes| J{\"Confirmation already exists?\"}\n    J -->|yes| K[\"Return current summary\"]\n    J -->|no| L{\"Stored pass and snapshot prerequisites valid?\"}\n    L -->|no| X\n    L -->|yes| M{\"Enrollment and live prerequisites unchanged?\"}\n    M -->|no| X\n    M -->|yes| N{\"Immediate next matches snapshot?\"}\n    N -->|no| X\n    N -->|yes non-null| O[\"CAS enrollment level and revision\"]\n    N -->|yes null| P[\"Confirm completion without advancement\"]\n    O --> Q[\"Create ProgressionConfirmation\"]\n    P --> Q\n",
+    "nodeEvidence": [
+      {
+        "node": "A",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "B",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "C",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "D",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "E",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "F",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "G",
+        "relatedIds": [
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.assess",
+            "lineStart": 69,
+            "lineEnd": 101,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          },
+          {
+            "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+            "symbol": "evaluateCheckpoint",
+            "lineStart": 19,
+            "lineEnd": 60,
+            "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+          }
+        ]
+      },
+      {
+        "node": "H",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "I",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "J",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "K",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "L",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "M",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "N",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "X",
+        "relatedIds": [
+          "MOD-progression",
+          "ENT-CheckpointAssessment"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 104,
+            "lineEnd": 139,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "O",
+        "relatedIds": [
+          "ENT-LearnerProgramEnrollment",
+          "ENT-ProgressionConfirmation"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 140,
+            "lineEnd": 155,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "P",
+        "relatedIds": [
+          "ENT-LearnerProgramEnrollment",
+          "ENT-ProgressionConfirmation"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 140,
+            "lineEnd": 155,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      },
+      {
+        "node": "Q",
+        "relatedIds": [
+          "ENT-LearnerProgramEnrollment",
+          "ENT-ProgressionConfirmation"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/progression/application/progression.service.ts",
+            "symbol": "ProgressionService.confirm",
+            "lineStart": 140,
+            "lineEnd": 155,
+            "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-bridge",
+    "kind": "diagram",
+    "name": "Bridge: stage, timer và chống replay mutation",
+    "module": "MOD-ielts-bridge",
+    "status": "VERIFIED",
+    "description": "Timer không từ chối bài trễ; completion stage không yêu cầu trả lời đúng.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.updateProgress",
+        "lineStart": 104,
+        "lineEnd": 173,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      },
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.evaluate",
+        "lineStart": 234,
+        "lineEnd": 255,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-bridge",
+      "ENT-IeltsBridgeProgress",
+      "SYM-d44a6f09c3d03278",
+      "SYM-1ea9533730505a58",
+      "SYM-a7243de3795afa2c",
+      "SYM-1a1bfeffc4b42779",
+      "SYM-c79f02ff1f713c3a",
+      "SYM-0abc2f384244e2d8",
+      "SYM-d5cfcc666ceeb456",
+      "SYM-97410e72eb72d307",
+      "SYM-380b8b9afd36bdc6",
+      "SYM-eada1b856b36a2b9",
+      "SYM-47418fa12e87c279",
+      "SYM-b5eccd556208feab",
+      "SYM-2ea2fe42d1317575",
+      "SYM-3a0b32ddf033b2e4",
+      "SYM-008e912364ce9984"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "activity",
+    "code": "flowchart TD\n    A[\"Update progress\"] --> B[\"Lock row and reread owner progress\"]\n    B --> C{\"Completed or stale revision?\"}\n    C -->|yes| X[\"409 conflict\"]\n    C -->|no| D{\"Current stage index?\"}\n    D -->|no| Y[\"422 stage locked\"]\n    D -->|yes| E{\"startTimer?\"}\n    E -->|yes| F{\"Timed stage, valid limit, not completeStage?\"}\n    F -->|no| Z[\"422 timer invalid\"]\n    F -->|yes| G{\"Timer already started?\"}\n    G -->|yes| X\n    G -->|no| H[\"CAS start and deadline; revision plus one\"]\n    E -->|no| I{\"completeStage and timer ready when required?\"}\n    I -->|no| J[\"422 action or timer required\"]\n    I -->|yes| K[\"Validate answer; evaluate correct or null\"]\n    K --> L[\"Record timedOut when now exceeds deadline\"]\n    L --> M{\"Last stage?\"}\n    M -->|no| N[\"CAS next index, results and revision\"]\n    M -->|yes| O[\"CAS completedAt, results and revision\"]\n    O --> P[\"Further update rejected\"]\n",
+    "nodeEvidence": [
+      {
+        "node": "A",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "B",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "C",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "D",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "E",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "F",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "G",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "H",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "I",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "J",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "L",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "M",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "N",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "O",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "P",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "X",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "Y",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "Z",
+        "relatedIds": [
+          "ENT-IeltsBridgeProgress"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.updateProgress",
+            "lineStart": 104,
+            "lineEnd": 173,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      },
+      {
+        "node": "K",
+        "relatedIds": [
+          "MOD-ielts-bridge"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+            "symbol": "IeltsBridgeLearnerService.evaluate",
+            "lineStart": 234,
+            "lineEnd": 255,
+            "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-integrated",
+    "kind": "diagram",
+    "name": "Integrated và band: từ kế hoạch đến evidence đủ mẫu",
+    "module": "MOD-ielts-integrated-practice",
+    "status": "VERIFIED",
+    "description": "Integrated và band dùng revision riêng. Không có cạnh tự biến text/spoken correct=null thành scored boolean.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+        "symbol": "IeltsIntegratedLearnerService.start/update",
+        "lineStart": 28,
+        "lineEnd": 92,
+        "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+      },
+      {
+        "file": "apps/api/src/ielts-integrated-practice/domain/integrated-session-planner.ts",
+        "symbol": "planIntegratedSession",
+        "lineStart": 9,
+        "lineEnd": 17,
+        "sha256": "04994d3ddb9df5f42ca228ceec747f98b549e40a8cf6f25d603aed8e87496bd3"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+        "symbol": "IeltsBandLearnerService.evaluate",
+        "lineStart": 73,
+        "lineEnd": 95,
+        "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+        "symbol": "evaluateBandProgression",
+        "lineStart": 14,
+        "lineEnd": 46,
+        "sha256": "cd633ab67bf757502b51d5330526bcb59e8ef5c6eb08749782fc5a145e0e1cef"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-integrated-practice",
+      "ENT-IeltsIntegratedSession",
+      "ENT-IeltsIntegratedSessionBlock",
+      "ENT-IeltsBandJourney",
+      "MOD-ielts-band-curriculum",
+      "SYM-6fe4c0efcc75f876",
+      "SYM-c242916366bba9a4",
+      "SYM-7eea2f24b414c37b",
+      "SYM-6d7d73dcb69824f9",
+      "SYM-fe14d8e8d5e56aa7",
+      "SYM-287fe4d8cc1a51e7",
+      "SYM-39f4489d1e32bfda",
+      "SYM-62aa68652f4cbe00",
+      "SYM-8b84879e86b5e5e4",
+      "SYM-570603e7a2bf4301",
+      "SYM-0d2ae3df732163e2",
+      "SYM-6c3d283056b4e498",
+      "SYM-853cc73e3e7734f7",
+      "SYM-2ce83ec49b840627",
+      "SYM-1381bb46ac8b2125",
+      "SYM-7c37328ae9fdd106",
+      "SYM-2fe4f4f61ddb0d1c",
+      "SYM-bae68cf38d852216",
+      "SYM-ce0ed410e9e1e55c",
+      "SYM-3d3955f1de1e6a20",
+      "SYM-29b948a79a1a67f9",
+      "SYM-308531b3744e702e",
+      "SYM-42d795d4f32daacd",
+      "SYM-5fb64518f1fa8795",
+      "SYM-05934641ae1a6f90",
+      "SYM-cd6347805a282ccf",
+      "SYM-b78e69e352039098",
+      "SYM-969e84f0a4d0aefb",
+      "SYM-b13a8314e91d785d"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+      "apps/api/src/ielts-integrated-practice/domain/integrated-session-planner.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "activity",
+    "code": "flowchart TD\n    A[\"Start Integrated\"] --> B{\"Existing learner and clientSessionId?\"}\n    B -->|yes| C[\"Replay pinned session\"]\n    B -->|no| D[\"Require Bridge count at least four and published profile\"]\n    D --> E[\"Select published module per skill, review mode and question variety\"]\n    E --> F[\"Persist four-block plan; start first block\"]\n    F --> G[\"Update current block with expected revision\"]\n    G --> H{\"Owned, not completed, revision and index match?\"}\n    H -->|no| X[\"Reject stale or locked block\"]\n    H -->|yes| I[\"Evaluate answer and record timedOut\"]\n    I --> J{\"Block index equals three?\"}\n    J -->|no| K[\"CAS next block index; start next block\"]\n    K --> G\n    J -->|yes| L[\"CAS session completedAt\"]\n    L --> M[\"Band evaluate with its own expected revision\"]\n    M --> N[\"Select completed sessions started since journey began\"]\n    N --> O[\"Count only boolean correctness per skill\"]\n    O --> P{\"Minimum sessions, samples and correct rates met?\"}\n    P -->|no| Q[\"Keep stage and return gaps\"]\n    P -->|yes| R{\"Target reached or final stage?\"}\n    R -->|no| S[\"Advance one stage\"]\n    R -->|yes| T[\"Complete journey\"]\n",
+    "nodeEvidence": [
+      {
+        "node": "A",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "B",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "C",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "D",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "F",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "G",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "H",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "I",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "J",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "K",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "L",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "X",
+        "relatedIds": [
+          "ENT-IeltsIntegratedSession",
+          "ENT-IeltsIntegratedSessionBlock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+            "symbol": "IeltsIntegratedLearnerService.start/update",
+            "lineStart": 28,
+            "lineEnd": 92,
+            "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+          }
+        ]
+      },
+      {
+        "node": "E",
+        "relatedIds": [
+          "MOD-ielts-integrated-practice"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-integrated-practice/domain/integrated-session-planner.ts",
+            "symbol": "planIntegratedSession",
+            "lineStart": 9,
+            "lineEnd": 17,
+            "sha256": "04994d3ddb9df5f42ca228ceec747f98b549e40a8cf6f25d603aed8e87496bd3"
+          }
+        ]
+      },
+      {
+        "node": "M",
+        "relatedIds": [
+          "ENT-IeltsBandJourney",
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+            "symbol": "IeltsBandLearnerService.evaluate",
+            "lineStart": 73,
+            "lineEnd": 95,
+            "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+          }
+        ]
+      },
+      {
+        "node": "N",
+        "relatedIds": [
+          "ENT-IeltsBandJourney",
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+            "symbol": "IeltsBandLearnerService.evaluate",
+            "lineStart": 73,
+            "lineEnd": 95,
+            "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+          }
+        ]
+      },
+      {
+        "node": "R",
+        "relatedIds": [
+          "ENT-IeltsBandJourney",
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+            "symbol": "IeltsBandLearnerService.evaluate",
+            "lineStart": 73,
+            "lineEnd": 95,
+            "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+          }
+        ]
+      },
+      {
+        "node": "S",
+        "relatedIds": [
+          "ENT-IeltsBandJourney",
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+            "symbol": "IeltsBandLearnerService.evaluate",
+            "lineStart": 73,
+            "lineEnd": 95,
+            "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+          }
+        ]
+      },
+      {
+        "node": "T",
+        "relatedIds": [
+          "ENT-IeltsBandJourney",
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+            "symbol": "IeltsBandLearnerService.evaluate",
+            "lineStart": 73,
+            "lineEnd": 95,
+            "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+          }
+        ]
+      },
+      {
+        "node": "O",
+        "relatedIds": [
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+            "symbol": "evaluateBandProgression",
+            "lineStart": 14,
+            "lineEnd": 46,
+            "sha256": "cd633ab67bf757502b51d5330526bcb59e8ef5c6eb08749782fc5a145e0e1cef"
+          }
+        ]
+      },
+      {
+        "node": "P",
+        "relatedIds": [
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+            "symbol": "evaluateBandProgression",
+            "lineStart": 14,
+            "lineEnd": 46,
+            "sha256": "cd633ab67bf757502b51d5330526bcb59e8ef5c6eb08749782fc5a145e0e1cef"
+          }
+        ]
+      },
+      {
+        "node": "Q",
+        "relatedIds": [
+          "MOD-ielts-band-curriculum"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+            "symbol": "evaluateBandProgression",
+            "lineStart": 14,
+            "lineEnd": 46,
+            "sha256": "cd633ab67bf757502b51d5330526bcb59e8ef5c6eb08749782fc5a145e0e1cef"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-LRN-mock-timer",
+    "kind": "diagram",
+    "name": "Mock: deadline, submit phần thi và terminal review",
+    "module": "MOD-ielts-mock",
+    "status": "VERIFIED",
+    "description": "GET quá hạn tự submit một current section. Save trễ bị từ chối; submit section có thể sớm/trống. Report chỉ completed sau review.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService.start/get/saveResponses/submitSection/report",
+        "lineStart": 38,
+        "lineEnd": 113,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "section durations",
+        "lineStart": 15,
+        "lineEnd": 17,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+        "symbol": "IeltsMockReviewService.review",
+        "lineStart": 20,
+        "lineEnd": 40,
+        "sha256": "4190a0ba08f5e7f2ff3634e0e3ea33cad97dba4db5698b1ccbfc81ad754c3b46"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/ielts-mock-review.controller.ts",
+        "symbol": "review role metadata",
+        "lineStart": 10,
+        "lineEnd": 14,
+        "sha256": "32ed356e334d3247d642d39dd326a9549f3389c48fad1c220c24eabbee3bedd1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-mock",
+      "ENT-IeltsMockAttempt",
+      "ENT-IeltsMockReview",
+      "ENT-MutationReceipt",
+      "SYM-4a02a225edf89c04",
+      "SYM-b0fea7c8694aff0f",
+      "SYM-5e0ea8ee0b26ee3a",
+      "SYM-55d5cf27613ed7dd",
+      "SYM-422fe4868720aa17",
+      "SYM-93dd269e53cfe677",
+      "SYM-dbf882dfc27a20ea",
+      "SYM-b05b9d2d350f2f0e",
+      "SYM-dfa3e3cffe3c09f0",
+      "SYM-9eaf0f8e596e336b",
+      "SYM-d1ec700ce5c829a8",
+      "SYM-3f90882b4740b6af",
+      "SYM-e4a91a54663addca",
+      "SYM-2cf0002b6dd7705b",
+      "SYM-fbb5348d80539be2",
+      "SYM-d5ee1e09b7b4ff91",
+      "SYM-36122a4666b8ab83",
+      "SYM-6c66b797a7d435d2",
+      "SYM-286e25a346fda534",
+      "SYM-94e6ef7210e3d79a",
+      "SYM-dd7f70d0a05c1ad7",
+      "SYM-1cbd306878a01769",
+      "SYM-3321c146baab35f1",
+      "SYM-fd5adbc2b555cb4b",
+      "SYM-49bc7f3376ee8ca8",
+      "SYM-2f01e3afcb42d33d",
+      "SYM-81e5e53bdb1986ec",
+      "SYM-b1d9ef16fd49a6cc",
+      "API-90124c1e81c6d575",
+      "API-2f55757aacb420db"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+      "apps/api/src/ielts-mock/ielts-mock-review.controller.ts"
+    ],
+    "testFiles": [],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "diagramType": "sequence",
+    "code": "sequenceDiagram\n    actor Learner\n    participant MockService\n    participant DB\n    actor Reviewer\n    participant ReviewService\n    Learner->>MockService: start mock with UUID and mode\n    MockService->>DB: pin version, LISTENING, deadline plus 30 min\n    Learner->>MockService: save responses with expectedRevision\n    alt server now exceeds deadline\n        MockService-->>Learner: 409 SECTION_EXPIRED\n    else status and revision valid\n        MockService->>DB: CAS merge current section responses\n    end\n    Learner->>MockService: get attempt\n    opt IN_PROGRESS and now exceeds deadline\n        MockService->>MockService: submit current section\n        MockService->>DB: objective score if L or R, CAS next section and deadline\n    end\n    Note over MockService,DB: Order L 30, R 60, W 60, S 14 minutes\n    loop remaining current sections\n        Learner->>MockService: submit current section and revision\n        MockService->>DB: CAS next section\n    end\n    MockService->>DB: final section to EVALUATION_PENDING\n    Learner->>MockService: get report\n    MockService-->>Learner: overall null, Writing and Speaking pending\n    Reviewer->>ReviewService: rubric bands, expectedRevision and idempotencyKey\n    Note over Reviewer,ReviewService: Controller roles CONTENT_ADMIN or SYSTEM_ADMIN\n    ReviewService->>DB: advisory lock and receipt lookup\n    alt matching receipt exists\n        DB-->>ReviewService: replay completed report\n    else new review\n        ReviewService->>DB: require pending revision and objective scores\n        ReviewService->>DB: transaction CAS COMPLETED, report, review, audit, receipt\n    end\n    Learner->>MockService: get report\n    MockService->>DB: read reportSnapshot\n    MockService-->>Learner: completed four-skill report\n",
+    "nodeEvidence": [
+      {
+        "node": "Learner",
+        "relatedIds": [
+          "MOD-ielts-mock",
+          "ENT-IeltsMockAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+            "symbol": "IeltsMockLearnerService.start/get/saveResponses/submitSection/report",
+            "lineStart": 38,
+            "lineEnd": 113,
+            "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+          }
+        ]
+      },
+      {
+        "node": "MockService",
+        "relatedIds": [
+          "MOD-ielts-mock",
+          "ENT-IeltsMockAttempt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+            "symbol": "IeltsMockLearnerService.start/get/saveResponses/submitSection/report",
+            "lineStart": 38,
+            "lineEnd": 113,
+            "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+          }
+        ]
+      },
+      {
+        "node": "DB",
+        "relatedIds": [
+          "ENT-IeltsMockAttempt",
+          "ENT-IeltsMockReview",
+          "ENT-MutationReceipt"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+            "symbol": "IeltsMockReviewService.review transaction",
+            "lineStart": 22,
+            "lineEnd": 40,
+            "sha256": "4190a0ba08f5e7f2ff3634e0e3ea33cad97dba4db5698b1ccbfc81ad754c3b46"
+          }
+        ]
+      },
+      {
+        "node": "Reviewer",
+        "relatedIds": [
+          "MOD-ielts-mock"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-mock/ielts-mock-review.controller.ts",
+            "symbol": "IeltsMockReviewController roles",
+            "lineStart": 10,
+            "lineEnd": 14,
+            "sha256": "32ed356e334d3247d642d39dd326a9549f3389c48fad1c220c24eabbee3bedd1"
+          }
+        ]
+      },
+      {
+        "node": "ReviewService",
+        "relatedIds": [
+          "MOD-ielts-mock",
+          "ENT-IeltsMockReview"
+        ],
+        "evidence": [
+          {
+            "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+            "symbol": "IeltsMockReviewService.review",
+            "lineStart": 20,
+            "lineEnd": 40,
+            "sha256": "4190a0ba08f5e7f2ff3634e0e3ea33cad97dba4db5698b1ccbfc81ad754c3b46"
+          }
+        ]
+      }
+    ],
+    "renderVerification": "NOT_RENDERED; cú pháp được giữ theo Mermaid chuẩn, không tải dependency để parse/render.",
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "DIA-system-context",
+    "kind": "diagram",
+    "name": "System context và trust boundaries",
+    "module": "MOD-api",
+    "status": "INFERRED",
+    "diagramType": "context",
+    "description": "C4-style context được tổng hợp từ page routes, role guard, module wiring và adapter registrations. Các kết nối biểu diễn thiết kế triển khai trong source; không khẳng định dịch vụ đang chạy hoặc provider đang bật. Outbound AI là lựa chọn theo cấu hình, fake adapters cũng tồn tại.",
+    "code": "flowchart LR\n Learner[\"Người học\"] --> Web[\"Next.js learner UI\"]\n Admin[\"Content / System admin\"] --> Web\n subgraph Local[\"Local application boundary\"]\n Web -->|\"HTTP /api/v1\"| API[\"NestJS modular monolith\"]\n API -->|Prisma| PG[(PostgreSQL)]\n API -->|ObjectStorage| Files[\"Local object files\"]\n end\n API -. \"Configured STT / TTS / evaluation\" .-> External[\"External AI providers\"]",
+    "evidence": [
+      {
+        "file": "apps/web/next.config.ts",
+        "symbol": "nextConfig.rewrites",
+        "lineStart": 5,
+        "lineEnd": 16,
+        "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+      },
+      {
+        "file": "apps/api/src/app.module.ts",
+        "symbol": "AppModule",
+        "lineStart": 38,
+        "lineEnd": 83,
+        "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+      },
+      {
+        "file": "apps/api/src/storage/storage.module.ts",
+        "symbol": "StorageModule",
+        "lineStart": 8,
+        "lineEnd": 20,
+        "sha256": "6513ec25c75cce7f2c0eafa8f5c9860cee94426ba127c3d983d2bafd70a80b3c"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "symbol": "AiGatewayModule providers",
+        "lineStart": 28,
+        "lineEnd": 99,
+        "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+      }
+    ],
+    "relatedIds": [
+      "MOD-api",
+      "MOD-web",
+      "MOD-database",
+      "MOD-ai-gateway",
+      "MOD-storage"
+    ],
+    "nodeMap": {
+      "Web": "MOD-web",
+      "API": "MOD-api",
+      "PG": "MOD-database",
+      "Files": "MOD-storage",
+      "External": "MOD-ai-gateway"
+    },
+    "curated": true
+  },
+  {
+    "id": "DIA-container-architecture",
+    "kind": "diagram",
+    "name": "Container architecture và runtime boundaries",
+    "module": "MOD-api",
+    "status": "INFERRED",
+    "diagramType": "container",
+    "description": "Next.js và NestJS là hai process cấu hình riêng; Prisma client truy cập PostgreSQL. Job runner nằm trong backend và được bật/tắt qua cấu hình, không có bằng chứng về worker process độc lập. Compose chỉ khai báo PostgreSQL local; production orchestration ngoài repository chưa xác định.",
+    "code": "flowchart TB\n Browser[\"Browser\"] --> Next[\"Next.js server - /api rewrite\"]\n Next --> Nest[\"NestJS API - loopback listener\"]\n subgraph Backend[\"Backend process\"]\n Nest --> Modules[\"Controllers / Application services\"]\n Modules --> Prisma[\"PrismaService\"]\n Modules --> Storage[\"LocalObjectStorageAdapter\"]\n Worker[\"JobRunnerService - conditional\"] --> Prisma\n Worker --> Handlers[\"Job handlers\"]\n end\n Prisma --> DB[(\"PostgreSQL - Compose development service\")]\n Storage --> Disk[\"Configured data directory\"]",
+    "evidence": [
+      {
+        "file": "apps/web/next.config.ts",
+        "symbol": "rewrites",
+        "lineStart": 5,
+        "lineEnd": 16,
+        "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+      },
+      {
+        "file": "apps/api/src/main.ts",
+        "symbol": "bootstrap.listen",
+        "lineStart": 31,
+        "lineEnd": 34,
+        "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+      },
+      {
+        "file": "apps/api/src/common/database/prisma.service.ts",
+        "symbol": "PrismaService",
+        "lineStart": 5,
+        "lineEnd": 17,
+        "sha256": "da3c154a7ec92785d3af78349dee3ed67b9734d2405c66d922e85446bb669b93"
+      },
+      {
+        "file": "apps/api/src/jobs/jobs.module.ts",
+        "symbol": "JobsModule",
+        "lineStart": 15,
+        "lineEnd": 46,
+        "sha256": "1448df08e4680bf4f64b9731c9bda51a64fb0fea6d50d593a4ca538f4d4df2a6"
+      },
+      {
+        "file": "infra/docker-compose.yml",
+        "symbol": "postgres service (credential values omitted)",
+        "lineStart": 1,
+        "lineEnd": 14,
+        "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+      }
+    ],
+    "relatedIds": [
+      "MOD-web",
+      "MOD-api",
+      "MOD-common",
+      "MOD-jobs",
+      "MOD-database",
+      "MOD-storage",
+      "MOD-infra"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-http-lifecycle",
+    "kind": "diagram",
+    "name": "Request lifecycle và response validation",
+    "module": "MOD-common",
+    "status": "INFERRED",
+    "diagramType": "request",
+    "description": "Sequence tổng hợp plumbing đã đăng ký trong source. Guards chỉ áp dụng điều kiện riêng: Public bỏ qua session authentication; RolesGuard chỉ từ chối khi role metadata yêu cầu; RateLimitGuard cho qua nếu không có policy. Không khẳng định thứ tự tương đối giữa các global guards được đo runtime. Service/Prisma branch khác nhau theo endpoint.",
+    "code": "sequenceDiagram\n participant UI as Browser ApiClient\n participant API as Nest HTTP pipeline\n participant MW as CorrelationIdMiddleware\n participant G as Registered global guards\n participant VP as ValidationPipe\n participant C as Controller / service\n UI->>API: fetch with credentials\n API->>MW: HTTP request\n MW-->>API: correlationId and header\n API->>G: Session / role / rate policies\n G-->>API: allow or exception\n API->>VP: Runtime DTO transform and validation\n VP-->>API: validated input or exception\n API->>C: Route handler\n C-->>API: declared endpoint result\n API-->>UI: serialized response or SafeExceptionFilter JSON\n UI->>UI: Zod schema.parse on success",
+    "evidence": [
+      {
+        "file": "apps/web/src/lib/api/api-client.ts",
+        "symbol": "ApiClient.request",
+        "lineStart": 200,
+        "lineEnd": 275,
+        "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+      },
+      {
+        "file": "apps/api/src/app.module.ts",
+        "symbol": "AppModule.configure",
+        "lineStart": 79,
+        "lineEnd": 83,
+        "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+      },
+      {
+        "file": "apps/api/src/auth/auth.module.ts",
+        "symbol": "APP_GUARD providers",
+        "lineStart": 11,
+        "lineEnd": 21,
+        "sha256": "be2625e306999bc3b6a136139124ef9b7087900bbf0386886eaaa32552499dcb"
+      },
+      {
+        "file": "apps/api/src/common/rate-limit/rate-limit.module.ts",
+        "symbol": "APP_GUARD registration",
+        "lineStart": 8,
+        "lineEnd": 22,
+        "sha256": "8df8153bcea9059b0eb66e66bdc44ebd54082ef8706a41a9e032c8adf3c2dd49"
+      },
+      {
+        "file": "apps/api/src/main.ts",
+        "symbol": "ValidationPipe",
+        "lineStart": 23,
+        "lineEnd": 29,
+        "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+      }
+    ],
+    "relatedIds": [
+      "MOD-web",
+      "MOD-api",
+      "MOD-common",
+      "MOD-auth",
+      "REQ-SEC-validation",
+      "REQ-OPS-error-envelope"
+    ],
+    "curated": true
+  },
+  {
+    "id": "DIA-speech-data-flow",
+    "kind": "diagram",
+    "name": "Speaking audio, transcript and evaluation data flow",
+    "module": "MOD-teacher-ai",
+    "status": "INFERRED",
+    "diagramType": "data-flow",
+    "description": "Data-flow synthesis of the speaking transcription path. Binary audio is read through ObjectStorage, sent to the configured SpeechToTextPort, transcript and provider metrics are persisted on Recording, then an EVALUATE_ATTEMPT job is enqueued transactionally. EvaluationService reads the transcript as learnerResponse. This diagram omits upload and result persistence details; fake and external speech adapters are selected by configuration, not assumed live.",
+    "code": "flowchart LR\n Disk[\"ObjectStorage audio bytes\"] -->|read storageKey| Handler[\"TranscribeSpeechHandler\"]\n Handler -->|audio / mimeType / locale / referenceText| STT[\"Configured SpeechToTextPort\"]\n STT -->|transcript / pronunciation / provider| Handler\n Handler -->|persist transcription| Recording[(\"Recording in PostgreSQL\")]\n Handler -->|transactional enqueue| Job[(\"Job: EVALUATE_ATTEMPT\")]\n Recording -->|transcript| Eval[\"EvaluationService: learnerResponse\"]\n Job -. attemptId .-> Eval",
+    "evidence": [
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "symbol": "EvaluationService.evaluateAttempt",
+        "lineStart": 143,
+        "lineEnd": 300,
+        "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+      },
+      {
+        "file": "apps/api/src/teacher-ai/application/transcribe-speech.handler.ts",
+        "symbol": "TranscribeSpeechHandler.handle",
+        "lineStart": 35,
+        "lineEnd": 59,
+        "sha256": "0be0bb76f9afc630dceb237a5167fe8dcc62d125880a3c3d5391c1d10a5543ef"
+      }
+    ],
+    "relatedIds": [
+      "MOD-teacher-ai",
+      "MOD-storage",
+      "MOD-ai-gateway",
+      "MOD-jobs",
+      "ENT-Recording",
+      "ENT-Job",
+      "UC-LRN-submit-ai"
+    ],
+    "nodeMap": {
+      "Disk": "MOD-storage",
+      "Handler": "MOD-teacher-ai",
+      "STT": "MOD-ai-gateway",
+      "Recording": "ENT-Recording",
+      "Job": "ENT-Job",
+      "Eval": "MOD-teacher-ai"
+    },
+    "curated": true
+  },
+  {
+    "id": "DIA-use-case-actors",
+    "kind": "diagram",
+    "name": "Actor / use-case map",
+    "module": "MOD-api",
+    "status": "INFERRED",
+    "diagramType": "use-case",
+    "description": "Narrative actor-to-use-case grouping from reviewed use-case specifications. This is an analyst map, not an authorization matrix. Exact role enforcement is shown separately in the API role metadata matrix. Filter use-case lists by module or search actor descriptions for a narrower view.",
+    "code": "flowchart LR\n ad1dcd2d125[\"Unauthenticated account applicant\"]\n a53477ca834[\"Account holder\"]\n a66db7bac8f[\"Authenticated account holder, including administrators\"]\n aaa2503a1e0[\"CONTENT_ADMIN or SYSTEM_ADMIN\"]\n a1dc4da0cf1[\"CONTENT_ADMIN or SYSTEM_ADMIN; runner and configured TTS adapter\"]\n aee21c33456[\"In-process runner; creating administrator for status/manual retry\"]\n ab8090a32ed[\"Application evaluation caller; account holder or administrator maintaining preference\"]\n a1d3fc10862[\"Người học sở hữu phiên\"]\n a8869287f32[\"Người học\"]\n a3793fe4a7c[\"Người học; worker đánh giá qua LanguageEvaluationPort\"]\n a0d50a0e6d6[\"Người học chưa onboarding\"]\n abfb3787319[\"Dịch vụ chấm điểm; người học xem review queue\"]\n a57c2183415[\"Người học; projector curriculum\"]\n a5425ca5bd8[\"Người học đã onboarding\"]\n a735f1beb21[\"Người học IELTS\"]\n a60ee036534[\"Người học; CONTENT_ADMIN hoặc SYSTEM_ADMIN review\"]\n nbd18bd9b7b([\"Register a learner and issue a session\"])\n nc1af4c25e1([\"Log in, authorize requests and log out\"])\n nbede6d0066([\"Read and update current-account locale\"])\n ne9f9283cd0([\"Create, edit, validate and preview lesson source\"])\n n77001b1be9([\"Generate and review a provider-specific audio candidate\"])\n na7b288cda3([\"Publish a validated version and archive a version\"])\n n2400082cbb([\"Claim, execute, recover and retry a persistent job\"])\n n963439482c([\"Resolve evaluation preference and call configured adapter\"])\n n841674625d([\"Tạo và tiếp tục phiên học theo enrollment\"])\n nf92397f6bb([\"Lưu, đọc và xóa nháp viết có revision\"])\n n48d00e6407([\"Nộp đáp án, nhận đánh giá AI và thử lại\"])\n n3535094af8([\"Tự chọn level onboarding đang chơi được\"])\n n1cbb4c7fcc([\"Làm placement, chờ bốn kỹ năng và xác nhận\"])\n nb569ab5647([\"Tích lũy mastery theo Language Block và kỹ năng\"])\n n5d1e30b837([\"Đánh giá checkpoint và xác nhận chuyển level\"])\n n9008aecd69([\"Mở curriculum có prerequisite và ghi objective completion\"])\n n8070ec7b0c([\"Chọn chương trình theo enrollment revision\"])\n n64f6e47f69([\"Hoàn thành IELTS Bridge theo stage và timer server\"])\n ne91d515048([\"Luyện IELTS Integrated bốn block theo plan đã ghim\"])\n n3a2848f0b9([\"Theo dõi IELTS band pathway bằng evidence Integrated\"])\n n4a505081be([\"Làm IELTS Mock có deadline và report sau review\"])\n ad1dcd2d125 --> nbd18bd9b7b\n a53477ca834 --> nc1af4c25e1\n a66db7bac8f --> nbede6d0066\n aaa2503a1e0 --> ne9f9283cd0\n a1dc4da0cf1 --> n77001b1be9\n aaa2503a1e0 --> na7b288cda3\n aee21c33456 --> n2400082cbb\n ab8090a32ed --> n963439482c\n a1d3fc10862 --> n841674625d\n a8869287f32 --> nf92397f6bb\n a3793fe4a7c --> n48d00e6407\n a0d50a0e6d6 --> n3535094af8\n a0d50a0e6d6 --> n1cbb4c7fcc\n abfb3787319 --> nb569ab5647\n a8869287f32 --> n5d1e30b837\n a57c2183415 --> n9008aecd69\n a5425ca5bd8 --> n8070ec7b0c\n a735f1beb21 --> n64f6e47f69\n a735f1beb21 --> ne91d515048\n a735f1beb21 --> n3a2848f0b9\n a60ee036534 --> n4a505081be",
+    "nodeMap": {
+      "nbd18bd9b7b": "UC-CORE-Register",
+      "nc1af4c25e1": "UC-CORE-Session",
+      "nbede6d0066": "UC-CORE-Preferences",
+      "ne9f9283cd0": "UC-CORE-Import",
+      "n77001b1be9": "UC-CORE-Audio",
+      "na7b288cda3": "UC-CORE-Publish",
+      "n2400082cbb": "UC-CORE-Job",
+      "n963439482c": "UC-CORE-AIRoute",
+      "n841674625d": "UC-LRN-session",
+      "nf92397f6bb": "UC-LRN-draft",
+      "n48d00e6407": "UC-LRN-submit-ai",
+      "n3535094af8": "UC-LRN-self-placement",
+      "n1cbb4c7fcc": "UC-LRN-placement",
+      "nb569ab5647": "UC-LRN-mastery",
+      "n5d1e30b837": "UC-LRN-progression",
+      "n9008aecd69": "UC-LRN-foundation",
+      "n8070ec7b0c": "UC-LRN-program-context",
+      "n64f6e47f69": "UC-LRN-bridge",
+      "ne91d515048": "UC-LRN-integrated",
+      "n3a2848f0b9": "UC-LRN-band",
+      "n4a505081be": "UC-LRN-mock"
+    },
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/application/auth.service.ts",
+        "symbol": "AuthService",
+        "lineStart": 45,
+        "lineEnd": 138,
+        "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+      },
+      {
+        "file": "apps/api/src/auth/application/auth.service.ts",
+        "symbol": "AuthService",
+        "lineStart": 45,
+        "lineEnd": 138,
+        "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+      },
+      {
+        "file": "apps/api/src/users/application/users.service.ts",
+        "symbol": "UsersService",
+        "lineStart": 23,
+        "lineEnd": 76,
+        "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "symbol": "ContentImportsService",
+        "lineStart": 36,
+        "lineEnd": 232,
+        "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "symbol": "AudioGenerationService",
+        "lineStart": 62,
+        "lineEnd": 277,
+        "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 33,
+        "lineEnd": 306,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 60,
+        "lineEnd": 305,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "symbol": "AiGatewayModule",
+        "lineStart": 45,
+        "lineEnd": 67,
+        "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.selectCurriculum",
+        "lineStart": 85,
+        "lineEnd": 111,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/activity-drafts.service.ts",
+        "symbol": "ActivityDraftsService.save",
+        "lineStart": 27,
+        "lineEnd": 63,
+        "sha256": "1861148ef95284f1220c2c95e6d7aebf808b2420768a3cd35c2b908bcc5bc72f"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.submitAttempt",
+        "lineStart": 376,
+        "lineEnd": 462,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/onboarding.service.ts",
+        "symbol": "OnboardingService.confirmSelfPlacement",
+        "lineStart": 66,
+        "lineEnd": 165,
+        "sha256": "00c78a50e8f53d8054b7b3d461c5b0f8c4b09315a6842e37cc5dd6fe6578bed4"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+        "symbol": "PlacementAttemptsService.create",
+        "lineStart": 49,
+        "lineEnd": 126,
+        "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+      },
+      {
+        "file": "apps/api/src/mastery/application/mastery.service.ts",
+        "symbol": "MasteryService.recordAttemptEvaluation/recordInTransaction",
+        "lineStart": 87,
+        "lineEnd": 278,
+        "sha256": "107f1aab2c5ee640dc7268ad71ca98548d27df12c2d560bf109d69fe9bf1c4ec"
+      },
+      {
+        "file": "apps/api/src/progression/application/progression.service.ts",
+        "symbol": "ProgressionService.assess",
+        "lineStart": 69,
+        "lineEnd": 101,
+        "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+      },
+      {
+        "file": "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+        "symbol": "CurriculumEligibilityService.resolve",
+        "lineStart": 20,
+        "lineEnd": 76,
+        "sha256": "8d52310a2f6837a7c3f6c507e83404af94e1b6f5f2aa4091996ac8f89c8dc12c"
+      },
+      {
+        "file": "apps/api/src/learning-programs/application/program-context.service.ts",
+        "symbol": "ProgramContextService.resolve/activate",
+        "lineStart": 26,
+        "lineEnd": 76,
+        "sha256": "705d9edccc5de55cc4c6aa17be22616dbf769eb00d1e36f6577a7e63c370b3c3"
+      },
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.start",
+        "lineStart": 73,
+        "lineEnd": 93,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      },
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+        "symbol": "IeltsIntegratedLearnerService.availability/start",
+        "lineStart": 19,
+        "lineEnd": 63,
+        "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+        "symbol": "IeltsBandLearnerService.start/updateTarget/evaluate",
+        "lineStart": 38,
+        "lineEnd": 95,
+        "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService.start/get/saveResponses/submitSection",
+        "lineStart": 38,
+        "lineEnd": 102,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      }
+    ],
+    "relatedIds": [
+      "UC-CORE-Register",
+      "UC-CORE-Session",
+      "UC-CORE-Preferences",
+      "UC-CORE-Import",
+      "UC-CORE-Audio",
+      "UC-CORE-Publish",
+      "UC-CORE-Job",
+      "UC-CORE-AIRoute",
+      "UC-LRN-session",
+      "UC-LRN-draft",
+      "UC-LRN-submit-ai",
+      "UC-LRN-self-placement",
+      "UC-LRN-placement",
+      "UC-LRN-mastery",
+      "UC-LRN-progression",
+      "UC-LRN-foundation",
+      "UC-LRN-program-context",
+      "UC-LRN-bridge",
+      "UC-LRN-integrated",
+      "UC-LRN-band",
+      "UC-LRN-mock"
+    ]
+  },
+  {
+    "id": "DIA-module-dependencies",
+    "kind": "diagram",
+    "name": "Module dependencies from static imports",
+    "module": "MOD-api",
+    "status": "VERIFIED",
+    "diagramType": "dependency",
+    "description": "An arrow means a source import crosses module boundaries, including type imports. It does not assert runtime invocation or deployment topology.",
+    "code": "flowchart LR\n nb7fc711c98[\"workspace\"]\n n4c311acd56[\"api\"]\n nc0043cc5b7[\"database\"]\n n4ce65447fe[\"admin-curriculum\"]\n n4a28374f0f[\"ai-gateway\"]\n nebd7ed81c6[\"analytics\"]\n na73e6542ed[\"audio-settings\"]\n ncb8064452e[\"audit\"]\n n4204e85502[\"auth\"]\n ne610e1b5a3[\"common\"]\n n12a056f9e8[\"content-authoring\"]\n n4b22342223[\"curriculum-foundation\"]\n nbc9c412081[\"curriculum\"]\n nfd28ee3461[\"engagement\"]\n n102b5ec210[\"health\"]\n n5f542beab2[\"ielts-band-curriculum\"]\n ne093e3ab01[\"ielts-bridge\"]\n n1d00bc62fd[\"ielts-integrated-practice\"]\n nca2a8fdc6b[\"ielts-mock\"]\n n5e0767fe29[\"ielts-orientation\"]\n nb477f1b960[\"jobs\"]\n n15b4d321d2[\"learning-programs\"]\n nbf13faa7ff[\"learning-sessions\"]\n nc67dd4f4a5[\"mastery\"]\n na2b1b6d362[\"media\"]\n n7b6b5a20c7[\"onboarding\"]\n nbc1e99f126[\"operations\"]\n na5742057bf[\"progress\"]\n ncc0d9d3dc1[\"progression\"]\n n6e05219659[\"storage\"]\n ncc9b9dc6ad[\"teacher-ai\"]\n n73bb195989[\"users\"]\n nadec6286eb[\"web\"]\n n1932be424c[\"infra\"]\n n577209a79e[\"package-content-format\"]\n n39d45ff9d6[\"package-contracts\"]\n n11ae3a3aa7[\"package-test-fixtures\"]\n n2c8febd3b1[\"operations-scripts\"]\n nc0043cc5b7 --> nbc9c412081\n nc0043cc5b7 --> n73bb195989\n nc0043cc5b7 --> n15b4d321d2\n nc0043cc5b7 --> n5e0767fe29\n nc0043cc5b7 --> ne093e3ab01\n nc0043cc5b7 --> n1d00bc62fd\n nc0043cc5b7 --> n5f542beab2\n nc0043cc5b7 --> nca2a8fdc6b\n n4ce65447fe --> n39d45ff9d6\n n4ce65447fe --> n4204e85502\n n4ce65447fe --> ne610e1b5a3\n n4ce65447fe --> n15b4d321d2\n n4ce65447fe --> ncb8064452e\n n4ce65447fe --> nbc9c412081\n n4ce65447fe --> nbf13faa7ff\n n4a28374f0f --> ne610e1b5a3\n n4a28374f0f --> n39d45ff9d6\n n4a28374f0f --> n4204e85502\n nebd7ed81c6 --> n39d45ff9d6\n nebd7ed81c6 --> n4204e85502\n nebd7ed81c6 --> ne610e1b5a3\n n4c311acd56 --> n4a28374f0f\n n4c311acd56 --> n4204e85502\n n4c311acd56 --> ne610e1b5a3\n n4c311acd56 --> n102b5ec210\n n4c311acd56 --> nbc9c412081\n n4c311acd56 --> n12a056f9e8\n n4c311acd56 --> nb477f1b960\n n4c311acd56 --> nbf13faa7ff\n n4c311acd56 --> nc67dd4f4a5\n n4c311acd56 --> na2b1b6d362\n n4c311acd56 --> na5742057bf\n n4c311acd56 --> ncc0d9d3dc1\n n4c311acd56 --> ncc9b9dc6ad\n n4c311acd56 --> n7b6b5a20c7\n n4c311acd56 --> na73e6542ed\n n4c311acd56 --> nfd28ee3461\n n4c311acd56 --> n4ce65447fe\n n4c311acd56 --> ncb8064452e\n n4c311acd56 --> nbc1e99f126\n n4c311acd56 --> nebd7ed81c6\n n4c311acd56 --> n15b4d321d2\n n4c311acd56 --> n4b22342223\n n4c311acd56 --> n5e0767fe29\n n4c311acd56 --> ne093e3ab01\n n4c311acd56 --> n1d00bc62fd\n n4c311acd56 --> n5f542beab2\n n4c311acd56 --> nca2a8fdc6b\n na73e6542ed --> n39d45ff9d6\n na73e6542ed --> n4204e85502\n na73e6542ed --> n4a28374f0f\n na73e6542ed --> ne610e1b5a3\n ncb8064452e --> n39d45ff9d6\n ncb8064452e --> n4204e85502\n ncb8064452e --> ne610e1b5a3\n n4204e85502 --> n39d45ff9d6\n n4204e85502 --> ne610e1b5a3\n n4204e85502 --> n73bb195989\n n4204e85502 --> nebd7ed81c6\n ne610e1b5a3 --> n39d45ff9d6\n n12a056f9e8 --> ne610e1b5a3\n n12a056f9e8 --> n4a28374f0f\n n12a056f9e8 --> n6e05219659\n n12a056f9e8 --> nb477f1b960\n n12a056f9e8 --> n577209a79e\n n12a056f9e8 --> n39d45ff9d6\n n12a056f9e8 --> n11ae3a3aa7\n n12a056f9e8 --> nebd7ed81c6\n n12a056f9e8 --> nbc9c412081\n n12a056f9e8 --> n4204e85502\n n12a056f9e8 --> na2b1b6d362\n n4b22342223 --> ne610e1b5a3\n n4b22342223 --> n15b4d321d2\n n4b22342223 --> n39d45ff9d6\n n4b22342223 --> n4204e85502\n n4b22342223 --> ncc0d9d3dc1\n nbc9c412081 --> n39d45ff9d6\n nbc9c412081 --> ne610e1b5a3\n nbc9c412081 --> n577209a79e\n nbc9c412081 --> nbf13faa7ff\n nbc9c412081 --> n6e05219659\n nbc9c412081 --> n4a28374f0f\n nbc9c412081 --> n11ae3a3aa7\n nbc9c412081 --> n15b4d321d2\n nfd28ee3461 --> ne610e1b5a3\n nfd28ee3461 --> n39d45ff9d6\n nfd28ee3461 --> n4204e85502\n n102b5ec210 --> n4204e85502\n n102b5ec210 --> n6e05219659\n n102b5ec210 --> ne610e1b5a3\n n5f542beab2 --> n39d45ff9d6\n n5f542beab2 --> ne610e1b5a3\n n5f542beab2 --> n4204e85502\n ne093e3ab01 --> n39d45ff9d6\n ne093e3ab01 --> ne610e1b5a3\n ne093e3ab01 --> n4204e85502\n n1d00bc62fd --> ne610e1b5a3\n n1d00bc62fd --> n39d45ff9d6\n n1d00bc62fd --> ne093e3ab01\n n1d00bc62fd --> n4204e85502\n nca2a8fdc6b --> n39d45ff9d6\n nca2a8fdc6b --> ne610e1b5a3\n nca2a8fdc6b --> n6e05219659\n nca2a8fdc6b --> n4204e85502\n nca2a8fdc6b --> na2b1b6d362\n n5e0767fe29 --> ne610e1b5a3\n n5e0767fe29 --> n39d45ff9d6\n n5e0767fe29 --> n15b4d321d2\n n5e0767fe29 --> n6e05219659\n n5e0767fe29 --> n4204e85502\n n5e0767fe29 --> na2b1b6d362\n nb477f1b960 --> n4a28374f0f\n nb477f1b960 --> ne610e1b5a3\n nb477f1b960 --> n39d45ff9d6\n nb477f1b960 --> n4204e85502\n n15b4d321d2 --> ne610e1b5a3\n n15b4d321d2 --> n39d45ff9d6\n n15b4d321d2 --> n4204e85502\n nbf13faa7ff --> ne610e1b5a3\n nbf13faa7ff --> n39d45ff9d6\n nbf13faa7ff --> n6e05219659\n nbf13faa7ff --> nbc9c412081\n nbf13faa7ff --> n11ae3a3aa7\n nbf13faa7ff --> nc67dd4f4a5\n nbf13faa7ff --> nb477f1b960\n nbf13faa7ff --> n15b4d321d2\n nbf13faa7ff --> n4b22342223\n nbf13faa7ff --> nfd28ee3461\n nbf13faa7ff --> nebd7ed81c6\n nbf13faa7ff --> n4204e85502\n nbf13faa7ff --> na2b1b6d362\n nc67dd4f4a5 --> ne610e1b5a3\n nc67dd4f4a5 --> n15b4d321d2\n nc67dd4f4a5 --> nbc9c412081\n nc67dd4f4a5 --> n4204e85502\n na2b1b6d362 --> ne610e1b5a3\n na2b1b6d362 --> nb477f1b960\n na2b1b6d362 --> nbf13faa7ff\n na2b1b6d362 --> n6e05219659\n na2b1b6d362 --> n39d45ff9d6\n na2b1b6d362 --> n4204e85502\n n7b6b5a20c7 --> n39d45ff9d6\n n7b6b5a20c7 --> ne610e1b5a3\n n7b6b5a20c7 --> n15b4d321d2\n n7b6b5a20c7 --> nebd7ed81c6\n n7b6b5a20c7 --> nbc9c412081\n n7b6b5a20c7 --> nbf13faa7ff\n n7b6b5a20c7 --> n4204e85502\n nbc1e99f126 --> n39d45ff9d6\n nbc1e99f126 --> n4204e85502\n nbc1e99f126 --> ne610e1b5a3\n na5742057bf --> ne610e1b5a3\n na5742057bf --> n15b4d321d2\n na5742057bf --> n4204e85502\n ncc0d9d3dc1 --> n39d45ff9d6\n ncc0d9d3dc1 --> nbc9c412081\n ncc0d9d3dc1 --> nbf13faa7ff\n ncc0d9d3dc1 --> ne610e1b5a3\n ncc0d9d3dc1 --> n15b4d321d2\n ncc0d9d3dc1 --> n4204e85502\n n6e05219659 --> ne610e1b5a3\n ncc9b9dc6ad --> ne610e1b5a3\n ncc9b9dc6ad --> n4a28374f0f\n ncc9b9dc6ad --> nb477f1b960\n ncc9b9dc6ad --> nc67dd4f4a5\n ncc9b9dc6ad --> n4b22342223\n ncc9b9dc6ad --> n39d45ff9d6\n ncc9b9dc6ad --> nebd7ed81c6\n ncc9b9dc6ad --> nbc9c412081\n ncc9b9dc6ad --> n6e05219659\n ncc9b9dc6ad --> n4204e85502\n n73bb195989 --> ne610e1b5a3\n n73bb195989 --> n39d45ff9d6\n n73bb195989 --> n4204e85502\n nadec6286eb --> n39d45ff9d6\n nadec6286eb --> n577209a79e\n n577209a79e --> n11ae3a3aa7\n n39d45ff9d6 --> n577209a79e",
+    "nodeMap": {
+      "nb7fc711c98": "MOD-workspace",
+      "n4c311acd56": "MOD-api",
+      "nc0043cc5b7": "MOD-database",
+      "n4ce65447fe": "MOD-admin-curriculum",
+      "n4a28374f0f": "MOD-ai-gateway",
+      "nebd7ed81c6": "MOD-analytics",
+      "na73e6542ed": "MOD-audio-settings",
+      "ncb8064452e": "MOD-audit",
+      "n4204e85502": "MOD-auth",
+      "ne610e1b5a3": "MOD-common",
+      "n12a056f9e8": "MOD-content-authoring",
+      "n4b22342223": "MOD-curriculum-foundation",
+      "nbc9c412081": "MOD-curriculum",
+      "nfd28ee3461": "MOD-engagement",
+      "n102b5ec210": "MOD-health",
+      "n5f542beab2": "MOD-ielts-band-curriculum",
+      "ne093e3ab01": "MOD-ielts-bridge",
+      "n1d00bc62fd": "MOD-ielts-integrated-practice",
+      "nca2a8fdc6b": "MOD-ielts-mock",
+      "n5e0767fe29": "MOD-ielts-orientation",
+      "nb477f1b960": "MOD-jobs",
+      "n15b4d321d2": "MOD-learning-programs",
+      "nbf13faa7ff": "MOD-learning-sessions",
+      "nc67dd4f4a5": "MOD-mastery",
+      "na2b1b6d362": "MOD-media",
+      "n7b6b5a20c7": "MOD-onboarding",
+      "nbc1e99f126": "MOD-operations",
+      "na5742057bf": "MOD-progress",
+      "ncc0d9d3dc1": "MOD-progression",
+      "n6e05219659": "MOD-storage",
+      "ncc9b9dc6ad": "MOD-teacher-ai",
+      "n73bb195989": "MOD-users",
+      "nadec6286eb": "MOD-web",
+      "n1932be424c": "MOD-infra",
+      "n577209a79e": "MOD-package-content-format",
+      "n39d45ff9d6": "MOD-package-contracts",
+      "n11ae3a3aa7": "MOD-package-test-fixtures",
+      "n2c8febd3b1": "MOD-operations-scripts"
+    },
+    "evidence": [
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/prisma/seed.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "bec247206bbec5ba59e190c1a618112305dcdd660eb5d6f135ad8a4b9d039d9f"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/admin-curriculum.controller.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "d52a8a0788ac609e989b1ddf5345f0310790b2ce4fc4e398d30a23c1c016b075"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/admin-curriculum.controller.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "d52a8a0788ac609e989b1ddf5345f0310790b2ce4fc4e398d30a23c1c016b075"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/admin-curriculum.controller.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "d52a8a0788ac609e989b1ddf5345f0310790b2ce4fc4e398d30a23c1c016b075"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/admin-curriculum.module.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "120f306bf9ca04ad83a48482fee2f9efb5871a54298f8e14d1a85fcfaa427375"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.spec.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "306581779747062b78264f027d287aad58dc3b85540f058cef2788e14de8a79a"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.spec.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "306581779747062b78264f027d287aad58dc3b85540f058cef2788e14de8a79a"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "a305bb234af70518817a5162d89d8c5c594f1020ff2e0b82fad2de5ad13901fe"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "a305bb234af70518817a5162d89d8c5c594f1020ff2e0b82fad2de5ad13901fe"
+      },
+      {
+        "file": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+        "symbol": "cross-module import",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "sha256": "a305bb234af70518817a5162d89d8c5c594f1020ff2e0b82fad2de5ad13901fe"
+      }
+    ],
+    "relatedIds": [
+      "MOD-workspace",
+      "MOD-api",
+      "MOD-database",
+      "MOD-admin-curriculum",
+      "MOD-ai-gateway",
+      "MOD-analytics",
+      "MOD-audio-settings",
+      "MOD-audit",
+      "MOD-auth",
+      "MOD-common",
+      "MOD-content-authoring",
+      "MOD-curriculum-foundation",
+      "MOD-curriculum",
+      "MOD-engagement",
+      "MOD-health",
+      "MOD-ielts-band-curriculum",
+      "MOD-ielts-bridge",
+      "MOD-ielts-integrated-practice",
+      "MOD-ielts-mock",
+      "MOD-ielts-orientation",
+      "MOD-jobs",
+      "MOD-learning-programs",
+      "MOD-learning-sessions",
+      "MOD-mastery",
+      "MOD-media",
+      "MOD-onboarding",
+      "MOD-operations",
+      "MOD-progress",
+      "MOD-progression",
+      "MOD-storage",
+      "MOD-teacher-ai",
+      "MOD-users",
+      "MOD-web",
+      "MOD-infra",
+      "MOD-package-content-format",
+      "MOD-package-contracts",
+      "MOD-package-test-fixtures",
+      "MOD-operations-scripts"
+    ]
+  },
+  {
+    "id": "DIA-erd-all",
+    "kind": "diagram",
+    "name": "Schema relationships: all",
+    "module": "MOD-database",
+    "status": "VERIFIED",
+    "diagramType": "erd",
+    "description": "Only owning-side Prisma @relation(fields,references) links are drawn. Glyphs use relation optionality and scalar/composite uniqueness. Scalar display is capped at 12 fields; entity detail contains every field. Schema is declared, live database state UNKNOWN.",
+    "code": "erDiagram\n User {\n  String id PK\n  String email UK\n  String displayName\n  String passwordHash\n  UserRole role\n  UserStatus status\n  DateTime createdAt\n  DateTime updatedAt\n }\n AiRoutingSetting {\n  String id PK\n  String userId UK\n  String preferredProvider\n  Boolean fallbackEnabled\n  DateTime updatedAt\n }\n LearnerProfile {\n  String userId PK\n  String currentLevelCode\n  String activeProgramId\n  OnboardingStatus onboardingStatus\n  OnboardingMethod onboardingMethod\n  DateTime onboardedAt\n  Int weeklyTargetDays\n  String locale\n  String timezone\n  Boolean recordingConsent\n  String audioSourceId\n  String browserVoiceId\n }\n UserSession {\n  String id PK\n  String userId\n  String tokenHash UK\n  DateTime expiresAt\n  DateTime revokedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearningProgram {\n  String id PK\n  String slug UK\n  String name\n  String description\n  String learningGoal\n  String proficiencyLabel\n  String iconKey\n  ProgramAvailabilityStatus availabilityStatus\n  Int displayOrder UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearnerProgramEnrollment {\n  String id PK\n  String learnerId\n  String programId\n  String currentLevelId\n  Int revision\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearningPath {\n  String id PK\n  String programId\n  String slug UK\n  String name\n  ContentStatus status\n  Int revision\n  DateTime createdAt\n  DateTime updatedAt\n }\n Level {\n  String id PK\n  String pathId\n  String code UK\n  String name\n  String cefrReference\n  Int order\n  ContentStatus status\n  Int revision\n  DateTime createdAt\n  DateTime updatedAt\n }\n Mission {\n  String id PK\n  String levelId\n  String slug UK\n  String title\n  String objective\n  Int order\n  MissionPurpose purpose\n  ContentStatus status\n  Int revision\n  DateTime createdAt\n  DateTime updatedAt\n }\n Lesson {\n  String id PK\n  String slug UK\n  String currentPublishedVersionId\n  DateTime createdAt\n  DateTime updatedAt\n }\n MissionLesson {\n  String missionId PK\n  String lessonId PK\n  Int order\n  Int revision\n }\n LessonVersion {\n  String id PK\n  String lessonId\n  Int version\n  String title\n  ContentStatus status\n  String sourceHash\n  Json parsedContent\n  DateTime publishedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n ContentBlock {\n  String id PK\n  String lessonVersionId\n  String slug\n  String type\n  Int order\n  String text\n  Json metadata\n  DateTime createdAt\n  DateTime updatedAt\n }\n Activity {\n  String id PK\n  String lessonVersionId\n  String slug\n  ActivityType activityType\n  LearningBlockType learningBlock\n  Int order\n  ActivityType skills\n  String contentReferences\n  String languageBlockReferences\n  Json payload\n  DateTime createdAt\n  DateTime updatedAt\n }\n WordBank {\n  String id PK\n  String slug UK\n  String name\n  DateTime createdAt\n  DateTime updatedAt\n }\n WordBankVersion {\n  String id PK\n  String wordBankId\n  String name\n  String sourceHash\n  Int version\n  DateTime createdAt\n }\n LanguageBlockVersion {\n  String id PK\n  String wordBankVersionId\n  String slug\n  String canonicalForm\n  String meaning\n  String pronunciation\n  String collocations\n  String grammarPattern\n  String examples\n  String commonErrors\n  String cefrLevel\n  String transferContexts\n }\n LessonVersionWordBank {\n  String lessonVersionId PK\n  String wordBankId PK\n  String wordBankVersionId\n }\n LanguageBlock {\n  String id PK\n  String wordBankId\n  String slug UK\n  String canonicalForm\n  String meaning\n  String pronunciation\n  String collocations\n  String grammarPattern\n  String examples\n  String commonErrors\n  String cefrLevel\n  String transferContexts\n }\n LearningSession {\n  String id PK\n  String learnerId\n  String clientSessionId\n  String missionId\n  String lessonVersionId\n  String curriculumRevisionId\n  Int durationMinutes\n  Json planSnapshot\n  LearningSessionStatus status\n  Int currentCheckpoint\n  DateTime startedAt\n  DateTime completedAt\n }\n CurriculumDefinition {\n  String id PK\n  String missionId UK\n  Int revision\n  ContentStatus status\n  Json content\n  DateTime createdAt\n  DateTime updatedAt\n }\n CurriculumRevision {\n  String id PK\n  String missionId\n  Int revision\n  Json snapshot\n  ContentStatus status\n  DateTime publishedAt\n  DateTime archivedAt\n }\n CurriculumRevisionLesson {\n  String curriculumRevisionId PK\n  String lessonVersionId PK\n  Int order\n }\n CurriculumPrerequisite {\n  String curriculumRevisionId PK\n  String prerequisiteRevisionId PK\n }\n CurriculumCompletion {\n  String id PK\n  String enrollmentId\n  String curriculumRevisionId\n  String policyVersion\n  Json evidenceSnapshot\n  DateTime completedAt\n }\n PlacementAttempt {\n  String id PK\n  String learnerId\n  String clientAttemptId\n  String learningSessionId UK\n  String lessonVersionId\n  String policyVersion\n  PlacementAttemptStatus status\n  Json skillResults\n  String recommendedLevelCode\n  Json explanation\n  DateTime confirmedAt\n  DateTime createdAt\n }\n CheckpointAssessment {\n  String id PK\n  String learnerId\n  String clientAssessmentId\n  String sessionId\n  String lessonVersionId\n  String levelCode\n  String policyVersion\n  String status\n  Json skills\n  Json reinforcement\n  Json evidenceSnapshot\n  Boolean canAdvance\n }\n ProgressionConfirmation {\n  String id PK\n  String learnerId\n  String assessmentId UK\n  String fromLevelCode\n  String toLevelCode\n  DateTime createdAt\n }\n SessionBlock {\n  String id PK\n  String sessionId\n  LearningBlockType type\n  Int order\n  Int targetMinutes\n  String activityIds\n  SessionBlockStatus status\n  DateTime createdAt\n  DateTime updatedAt\n }\n ActivityAttempt {\n  String id PK\n  String learnerId\n  String sessionId\n  String activityId\n  String clientAttemptId\n  Json rawResponse\n  Json normalizedResponse\n  AttemptEvaluationStatus evaluationStatus\n  Float score\n  String feedback\n  DateTime createdAt\n  DateTime updatedAt\n }\n Recording {\n  String id PK\n  String learnerId\n  String sessionId\n  String activityId\n  String attemptId UK\n  String storageKey UK\n  String mimeType\n  Int byteSize\n  String checksum\n  Float durationSeconds\n  String consentPolicyVersion\n  String consentScope\n }\n EvaluationResult {\n  String id PK\n  String attemptId\n  String lessonVersionId\n  String rubricId\n  String rubricVersion\n  String inputHash\n  String providerName\n  String providerModel\n  String providerConfigVersion\n  Json scores\n  Float score\n  Json feedback\n }\n ActivityDraft {\n  String id PK\n  String learnerId\n  String sessionId\n  String activityId\n  String text\n  Int revision\n  DateTime expiresAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n ContentImport {\n  String id PK\n  String lessonId\n  String lessonVersionId\n  String rawSource\n  String sourceHash\n  ContentStatus status\n  Int draftRevision\n  String parserVersion\n  Json parsedAst\n  Json normalizedPreview\n  Json validationReport\n  String validationHash\n }\n AudioArtifact {\n  String id PK\n  String contentImportId\n  String audioScriptSlug\n  String scriptHash\n  String variantKey\n  String generationKey UK\n  String adapterName\n  Json voiceConfig\n  String mimeType\n  Int byteSize\n  String checksum\n  String storageKey\n }\n AudioSystemSetting {\n  String id PK\n  String providerId\n  String defaultVoiceId\n  String updatedById\n  DateTime createdAt\n  DateTime updatedAt\n }\n LessonVersionAudioArtifact {\n  String id PK\n  String lessonVersionId\n  String audioArtifactId\n  String audioScriptSlug\n  DateTime createdAt\n }\n IeltsOrientation {\n  String id PK\n  String slug UK\n  ContentStatus status\n  Int draftRevision\n  Json draftContent\n  String currentPublishedVersionId UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n IeltsOrientationVersion {\n  String id PK\n  String orientationId\n  Int version\n  String title\n  String sourceHash\n  Json content\n  ContentStatus status\n  DateTime publishedAt\n  DateTime archivedAt\n }\n OrientationMediaAsset {\n  String id PK\n  String orientationId\n  OrientationMediaKind kind\n  String fileName\n  String mimeType\n  Int byteSize\n  String checksum\n  String storageKey UK\n  String createdById\n  DateTime createdAt\n }\n OrientationProgress {\n  String id PK\n  String learnerId\n  String orientationVersionId\n  Int currentSlideIndex\n  Int revision\n  Json answers\n  DateTime completedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n IeltsBridgeModule {\n  String id PK\n  String slug UK\n  ContentStatus status\n  Int draftRevision\n  Json draftContent\n  String currentPublishedVersionId UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n IeltsBridgeModuleVersion {\n  String id PK\n  String moduleId\n  Int version\n  String title\n  String skill\n  String questionType\n  Boolean required\n  String sourceHash\n  Json content\n  ContentStatus status\n  DateTime publishedAt\n  DateTime archivedAt\n }\n IeltsIntegratedProfile {\n  String id PK\n  Int durationMinutes UK\n  ContentStatus status\n  Int draftRevision\n  Json draftContent\n  String currentPublishedVersionId UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n IeltsIntegratedProfileVersion {\n  String id PK\n  String profileId\n  Int version\n  Int durationMinutes\n  String sourceHash\n  Json content\n  ContentStatus status\n  DateTime publishedAt\n  DateTime archivedAt\n }\n IeltsIntegratedSession {\n  String id PK\n  String learnerId\n  String clientSessionId\n  String profileVersionId\n  Int durationMinutes\n  String difficulty\n  Json planSnapshot\n  Int currentBlockIndex\n  Int revision\n  DateTime startedAt\n  DateTime completedAt\n  DateTime updatedAt\n }\n IeltsIntegratedSessionBlock {\n  String id PK\n  String sessionId\n  String moduleVersionId\n  Int order\n  String skill\n  Int targetMinutes\n  String questionType\n  String mode\n  Json result\n  DateTime startedAt\n  DateTime completedAt\n }\n IeltsBandCurriculum {\n  String id PK\n  String slug UK\n  ContentStatus status\n  Int draftRevision\n  Json draftContent\n  String currentPublishedVersionId UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n IeltsBandCurriculumVersion {\n  String id PK\n  String curriculumId\n  Int version\n  String sourceHash\n  Json content\n  ContentStatus status\n  DateTime publishedAt\n  DateTime archivedAt\n }\n IeltsBandJourney {\n  String id PK\n  String learnerId UK\n  String clientJourneyId\n  String curriculumVersionId\n  String currentStageCode\n  Int targetBand\n  Int revision\n  Json evidenceSnapshot\n  DateTime startedAt\n  DateTime completedAt\n  DateTime updatedAt\n }\n IeltsMockTest {\n  String id PK\n  String slug UK\n  ContentStatus status\n  Int draftRevision\n  Json draftContent\n  String currentPublishedVersionId UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n IeltsMockTestVersion {\n  String id PK\n  String mockTestId\n  Int version\n  String sourceHash\n  Json content\n  ContentStatus status\n  DateTime publishedAt\n  DateTime archivedAt\n }\n IeltsMockAttempt {\n  String id PK\n  String learnerId\n  String clientAttemptId\n  String mockTestVersionId\n  String mode\n  String status\n  String currentSection\n  Int revision\n  Json responses\n  Json submittedSections\n  Json objectiveScore\n  Json audioPlayEvents\n }\n IeltsMockReview {\n  String id PK\n  String attemptId\n  String reviewerId\n  Int attemptRevision\n  Json evaluation\n  DateTime createdAt\n }\n IeltsBridgeProgress {\n  String id PK\n  String learnerId\n  String moduleId\n  String moduleVersionId\n  Int currentStageIndex\n  Int revision\n  Json stageResults\n  DateTime timedStageStartedAt\n  DateTime timedStageDeadlineAt\n  DateTime completedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n Job {\n  String id PK\n  String type\n  JobStatus status\n  Json payload\n  Json result\n  String error\n  String idempotencyKey UK\n  String resourceType\n  String resourceId\n  Int attemptCount\n  Int maxAttempts\n  DateTime availableAt\n }\n JobAttempt {\n  String id PK\n  String jobId\n  Int attemptNumber\n  JobAttemptOutcome outcome\n  String providerName\n  String providerModel\n  String configVersion\n  Int httpStatus\n  String errorCode\n  String errorSummary\n  DateTime startedAt\n  DateTime completedAt\n }\n MutationReceipt {\n  String id PK\n  String actorId\n  String operation\n  String idempotencyKey\n  String requestHash\n  Int responseStatus\n  Json responseBody\n  DateTime createdAt\n }\n AuditLog {\n  String id PK\n  String actorId\n  String action\n  String resourceType\n  String resourceId\n  Json oldState\n  Json newState\n  Json metadata\n  String contentImportId\n  DateTime createdAt\n }\n MasteryRecord {\n  String id PK\n  String learnerId\n  String languageBlockId\n  ActivityType skill\n  MasteryState state\n  Float score\n  Float confidence\n  Float intervalDays\n  DateTime lastEvidenceAt\n  DateTime nextReviewAt\n  String lastLessonVersionId\n  DateTime createdAt\n }\n MasteryEvent {\n  String id PK\n  String learnerId\n  String attemptId\n  String languageBlockId\n  ActivityType skill\n  String lessonVersionId\n  String masteryRecordId\n  MasteryEventType eventType\n  Float score\n  Json metadata\n  DateTime createdAt\n }\n ErrorBankEntry {\n  String id PK\n  String learnerId\n  String masteryEventId UK\n  String languageBlockId\n  ActivityType skill\n  ErrorType errorType\n  EvidenceGranularity evidenceGranularity\n  String lessonVersionId\n  String activityId\n  String activitySlug\n  String contextKey\n  DateTime occurredAt\n }\n LearnerStudyDay {\n  String id PK\n  String learnerId\n  String dateKey\n  String timezone\n  Int completedSessionCount\n  DateTime firstCompletedAt\n  DateTime lastCompletedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearnerStudySession {\n  String id PK\n  String learnerId\n  String studyDayId\n  String sessionId UK\n  DateTime completedAt\n  DateTime createdAt\n }\n LearnerEngagementWeek {\n  String id PK\n  String learnerId\n  String weekStartKey\n  String timezone\n  Int targetDays\n  EngagementWeekStatus status\n  DateTime metAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n RateLimitBucket {\n  String id PK\n  String scope\n  String subjectHash\n  DateTime windowStart\n  Int consumed\n  DateTime createdAt\n  DateTime updatedAt\n }\n PilotMetricDaily {\n  String id PK\n  String dateKey\n  PilotMetricEventType eventType\n  String dimensionKey\n  Json dimensions\n  Int count\n  DateTime createdAt\n  DateTime updatedAt\n }\n PilotMetricReceipt {\n  String id PK\n  String sourceHash UK\n  PilotMetricEventType eventType\n  DateTime createdAt\n }\n AiRoutingSetting |o--o| User : \"userId FK\"\n LearnerProfile |o--|| User : \"userId FK\"\n LearnerProfile }o--o| LearningProgram : \"activeProgramId FK\"\n UserSession }o--|| User : \"userId FK\"\n LearnerProgramEnrollment }o--|| User : \"learnerId FK\"\n LearnerProgramEnrollment }o--|| LearningProgram : \"programId FK\"\n LearnerProgramEnrollment }o--o| Level : \"currentLevelId FK\"\n LearningPath }o--|| LearningProgram : \"programId FK\"\n Level }o--|| LearningPath : \"pathId FK\"\n Mission }o--|| Level : \"levelId FK\"\n Lesson }o--o| LessonVersion : \"currentPublishedVersionId FK\"\n MissionLesson }o--|| Mission : \"missionId FK\"\n MissionLesson }o--|| Lesson : \"lessonId FK\"\n LessonVersion }o--|| Lesson : \"lessonId FK\"\n ContentBlock }o--|| LessonVersion : \"lessonVersionId FK\"\n Activity }o--|| LessonVersion : \"lessonVersionId FK\"\n WordBankVersion }o--|| WordBank : \"wordBankId FK\"\n LanguageBlockVersion }o--|| WordBankVersion : \"wordBankVersionId FK\"\n LessonVersionWordBank }o--|| LessonVersion : \"lessonVersionId FK\"\n LessonVersionWordBank }o--|| WordBank : \"wordBankId FK\"\n LessonVersionWordBank }o--o| WordBankVersion : \"wordBankVersionId FK\"\n LanguageBlock }o--|| WordBank : \"wordBankId FK\"\n LearningSession }o--|| User : \"learnerId FK\"\n LearningSession }o--|| Mission : \"missionId FK\"\n LearningSession }o--|| LessonVersion : \"lessonVersionId FK\"\n LearningSession }o--o| CurriculumRevision : \"curriculumRevisionId FK\"\n CurriculumDefinition |o--|| Mission : \"missionId FK\"\n CurriculumRevision }o--|| Mission : \"missionId FK\"\n CurriculumRevisionLesson }o--|| CurriculumRevision : \"curriculumRevisionId FK\"\n CurriculumRevisionLesson }o--|| LessonVersion : \"lessonVersionId FK\"\n CurriculumPrerequisite }o--|| CurriculumRevision : \"curriculumRevisionId FK\"\n CurriculumPrerequisite }o--|| CurriculumRevision : \"prerequisiteRevisionId FK\"\n CurriculumCompletion }o--|| LearnerProgramEnrollment : \"enrollmentId FK\"\n CurriculumCompletion }o--|| CurriculumRevision : \"curriculumRevisionId FK\"\n PlacementAttempt }o--|| User : \"learnerId FK\"\n PlacementAttempt |o--|| LearningSession : \"learningSessionId,learnerId,lessonVersionId FK\"\n PlacementAttempt }o--|| LessonVersion : \"lessonVersionId FK\"\n CheckpointAssessment }o--|| User : \"learnerId FK\"\n CheckpointAssessment }o--|| LearningSession : \"sessionId,learnerId FK\"\n CheckpointAssessment }o--|| LessonVersion : \"lessonVersionId FK\"\n ProgressionConfirmation }o--|| User : \"learnerId FK\"\n ProgressionConfirmation |o--|| CheckpointAssessment : \"assessmentId,learnerId FK\"\n SessionBlock }o--|| LearningSession : \"sessionId FK\"\n ActivityAttempt }o--|| LearningSession : \"sessionId,learnerId FK\"\n ActivityAttempt }o--|| Activity : \"activityId FK\"\n Recording }o--|| User : \"learnerId FK\"\n Recording }o--|| LearningSession : \"sessionId,learnerId FK\"\n Recording }o--|| Activity : \"activityId FK\"\n Recording |o--|| ActivityAttempt : \"attemptId FK\"\n EvaluationResult }o--|| ActivityAttempt : \"attemptId FK\"\n EvaluationResult }o--|| LessonVersion : \"lessonVersionId FK\"\n ActivityDraft }o--|| User : \"learnerId FK\"\n ActivityDraft }o--|| LearningSession : \"sessionId,learnerId FK\"\n ActivityDraft }o--|| Activity : \"activityId FK\"\n ContentImport }o--|| User : \"createdById FK\"\n ContentImport }o--|| User : \"updatedById FK\"\n ContentImport }o--o| Lesson : \"lessonId FK\"\n ContentImport }o--o| LessonVersion : \"lessonVersionId FK\"\n AudioArtifact }o--o| ContentImport : \"contentImportId FK\"\n AudioSystemSetting }o--o| User : \"updatedById FK\"\n LessonVersionAudioArtifact }o--|| LessonVersion : \"lessonVersionId FK\"\n LessonVersionAudioArtifact }o--|| AudioArtifact : \"audioArtifactId FK\"\n IeltsOrientation |o--o| IeltsOrientationVersion : \"currentPublishedVersionId FK\"\n IeltsOrientationVersion }o--|| IeltsOrientation : \"orientationId FK\"\n OrientationMediaAsset }o--|| IeltsOrientation : \"orientationId FK\"\n OrientationMediaAsset }o--|| User : \"createdById FK\"\n OrientationProgress }o--|| User : \"learnerId FK\"\n OrientationProgress }o--|| IeltsOrientationVersion : \"orientationVersionId FK\"\n IeltsBridgeModule }o--o| IeltsBridgeModuleVersion : \"currentPublishedVersionId,id FK\"\n IeltsBridgeModuleVersion }o--|| IeltsBridgeModule : \"moduleId FK\"\n IeltsIntegratedProfile }o--o| IeltsIntegratedProfileVersion : \"currentPublishedVersionId,id FK\"\n IeltsIntegratedProfileVersion }o--|| IeltsIntegratedProfile : \"profileId FK\"\n IeltsIntegratedSession }o--|| User : \"learnerId FK\"\n IeltsIntegratedSession }o--|| IeltsIntegratedProfileVersion : \"profileVersionId FK\"\n IeltsIntegratedSessionBlock }o--|| IeltsIntegratedSession : \"sessionId FK\"\n IeltsIntegratedSessionBlock }o--|| IeltsBridgeModuleVersion : \"moduleVersionId FK\"\n IeltsBandCurriculum }o--o| IeltsBandCurriculumVersion : \"currentPublishedVersionId,id FK\"\n IeltsBandCurriculumVersion }o--|| IeltsBandCurriculum : \"curriculumId FK\"\n IeltsBandJourney |o--|| User : \"learnerId FK\"\n IeltsBandJourney }o--|| IeltsBandCurriculumVersion : \"curriculumVersionId FK\"\n IeltsMockTest }o--o| IeltsMockTestVersion : \"currentPublishedVersionId,id FK\"\n IeltsMockTestVersion }o--|| IeltsMockTest : \"mockTestId FK\"\n IeltsMockAttempt }o--|| User : \"learnerId FK\"\n IeltsMockAttempt }o--|| IeltsMockTestVersion : \"mockTestVersionId FK\"\n IeltsMockReview }o--|| IeltsMockAttempt : \"attemptId FK\"\n IeltsMockReview }o--|| User : \"reviewerId FK\"\n IeltsBridgeProgress }o--|| User : \"learnerId FK\"\n IeltsBridgeProgress }o--|| IeltsBridgeModuleVersion : \"moduleVersionId,moduleId FK\"\n Job }o--o| ContentImport : \"contentImportId FK\"\n Job }o--|| User : \"createdById FK\"\n JobAttempt }o--|| Job : \"jobId FK\"\n MutationReceipt }o--|| User : \"actorId FK\"\n AuditLog }o--|| User : \"actorId FK\"\n AuditLog }o--o| ContentImport : \"contentImportId FK\"\n MasteryRecord }o--|| User : \"learnerId FK\"\n MasteryRecord }o--|| LanguageBlock : \"languageBlockId FK\"\n MasteryRecord }o--o| LessonVersion : \"lastLessonVersionId FK\"\n MasteryEvent }o--|| User : \"learnerId FK\"\n MasteryEvent }o--|| ActivityAttempt : \"attemptId FK\"\n MasteryEvent }o--|| LanguageBlock : \"languageBlockId FK\"\n MasteryEvent }o--|| LessonVersion : \"lessonVersionId FK\"\n MasteryEvent }o--o| MasteryRecord : \"masteryRecordId FK\"\n ErrorBankEntry }o--|| User : \"learnerId FK\"\n ErrorBankEntry |o--|| MasteryEvent : \"masteryEventId FK\"\n ErrorBankEntry }o--|| LanguageBlock : \"languageBlockId FK\"\n ErrorBankEntry }o--|| LessonVersion : \"lessonVersionId FK\"\n ErrorBankEntry }o--|| Activity : \"activityId FK\"\n LearnerStudyDay }o--|| User : \"learnerId FK\"\n LearnerStudySession }o--|| User : \"learnerId FK\"\n LearnerStudySession }o--|| LearnerStudyDay : \"studyDayId FK\"\n LearnerStudySession |o--|| LearningSession : \"sessionId FK\"\n LearnerEngagementWeek }o--|| User : \"learnerId FK\"",
+    "evidence": [
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "Prisma declared foreign keys",
+        "lineStart": 1,
+        "lineEnd": 1464,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "ENT-User",
+      "ENT-AiRoutingSetting",
+      "ENT-LearnerProfile",
+      "ENT-UserSession",
+      "ENT-LearningProgram",
+      "ENT-LearnerProgramEnrollment",
+      "ENT-LearningPath",
+      "ENT-Level",
+      "ENT-Mission",
+      "ENT-Lesson",
+      "ENT-MissionLesson",
+      "ENT-LessonVersion",
+      "ENT-ContentBlock",
+      "ENT-Activity",
+      "ENT-WordBank",
+      "ENT-WordBankVersion",
+      "ENT-LanguageBlockVersion",
+      "ENT-LessonVersionWordBank",
+      "ENT-LanguageBlock",
+      "ENT-LearningSession",
+      "ENT-CurriculumDefinition",
+      "ENT-CurriculumRevision",
+      "ENT-CurriculumRevisionLesson",
+      "ENT-CurriculumPrerequisite",
+      "ENT-CurriculumCompletion",
+      "ENT-PlacementAttempt",
+      "ENT-CheckpointAssessment",
+      "ENT-ProgressionConfirmation",
+      "ENT-SessionBlock",
+      "ENT-ActivityAttempt",
+      "ENT-Recording",
+      "ENT-EvaluationResult",
+      "ENT-ActivityDraft",
+      "ENT-ContentImport",
+      "ENT-AudioArtifact",
+      "ENT-AudioSystemSetting",
+      "ENT-LessonVersionAudioArtifact",
+      "ENT-IeltsOrientation",
+      "ENT-IeltsOrientationVersion",
+      "ENT-OrientationMediaAsset",
+      "ENT-OrientationProgress",
+      "ENT-IeltsBridgeModule",
+      "ENT-IeltsBridgeModuleVersion",
+      "ENT-IeltsIntegratedProfile",
+      "ENT-IeltsIntegratedProfileVersion",
+      "ENT-IeltsIntegratedSession",
+      "ENT-IeltsIntegratedSessionBlock",
+      "ENT-IeltsBandCurriculum",
+      "ENT-IeltsBandCurriculumVersion",
+      "ENT-IeltsBandJourney",
+      "ENT-IeltsMockTest",
+      "ENT-IeltsMockTestVersion",
+      "ENT-IeltsMockAttempt",
+      "ENT-IeltsMockReview",
+      "ENT-IeltsBridgeProgress",
+      "ENT-Job",
+      "ENT-JobAttempt",
+      "ENT-MutationReceipt",
+      "ENT-AuditLog",
+      "ENT-MasteryRecord",
+      "ENT-MasteryEvent",
+      "ENT-ErrorBankEntry",
+      "ENT-LearnerStudyDay",
+      "ENT-LearnerStudySession",
+      "ENT-LearnerEngagementWeek",
+      "ENT-RateLimitBucket",
+      "ENT-PilotMetricDaily",
+      "ENT-PilotMetricReceipt"
+    ]
+  },
+  {
+    "id": "DIA-erd-identity",
+    "kind": "diagram",
+    "name": "Schema relationships: identity",
+    "module": "MOD-database",
+    "status": "VERIFIED",
+    "diagramType": "erd",
+    "description": "Only owning-side Prisma @relation(fields,references) links are drawn. Glyphs use relation optionality and scalar/composite uniqueness. Scalar display is capped at 12 fields; entity detail contains every field. Schema is declared, live database state UNKNOWN.",
+    "code": "erDiagram\n User {\n  String id PK\n  String email UK\n  String displayName\n  String passwordHash\n  UserRole role\n  UserStatus status\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearnerProfile {\n  String userId PK\n  String currentLevelCode\n  String activeProgramId\n  OnboardingStatus onboardingStatus\n  OnboardingMethod onboardingMethod\n  DateTime onboardedAt\n  Int weeklyTargetDays\n  String locale\n  String timezone\n  Boolean recordingConsent\n  String audioSourceId\n  String browserVoiceId\n }\n UserSession {\n  String id PK\n  String userId\n  String tokenHash UK\n  DateTime expiresAt\n  DateTime revokedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearningProgram {\n  String id PK\n  String slug UK\n  String name\n  String description\n  String learningGoal\n  String proficiencyLabel\n  String iconKey\n  ProgramAvailabilityStatus availabilityStatus\n  Int displayOrder UK\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearnerProgramEnrollment {\n  String id PK\n  String learnerId\n  String programId\n  String currentLevelId\n  Int revision\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearnerProfile |o--|| User : \"userId FK\"\n LearnerProfile }o--o| LearningProgram : \"activeProgramId FK\"\n UserSession }o--|| User : \"userId FK\"\n LearnerProgramEnrollment }o--|| User : \"learnerId FK\"\n LearnerProgramEnrollment }o--|| LearningProgram : \"programId FK\"",
+    "evidence": [
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "Prisma declared foreign keys",
+        "lineStart": 1,
+        "lineEnd": 1464,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "ENT-User",
+      "ENT-LearnerProfile",
+      "ENT-UserSession",
+      "ENT-LearningProgram",
+      "ENT-LearnerProgramEnrollment"
+    ]
+  },
+  {
+    "id": "DIA-erd-learning",
+    "kind": "diagram",
+    "name": "Schema relationships: learning",
+    "module": "MOD-database",
+    "status": "VERIFIED",
+    "diagramType": "erd",
+    "description": "Only owning-side Prisma @relation(fields,references) links are drawn. Glyphs use relation optionality and scalar/composite uniqueness. Scalar display is capped at 12 fields; entity detail contains every field. Schema is declared, live database state UNKNOWN.",
+    "code": "erDiagram\n Mission {\n  String id PK\n  String levelId\n  String slug UK\n  String title\n  String objective\n  Int order\n  MissionPurpose purpose\n  ContentStatus status\n  Int revision\n  DateTime createdAt\n  DateTime updatedAt\n }\n LessonVersion {\n  String id PK\n  String lessonId\n  Int version\n  String title\n  ContentStatus status\n  String sourceHash\n  Json parsedContent\n  DateTime publishedAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n LearningSession {\n  String id PK\n  String learnerId\n  String clientSessionId\n  String missionId\n  String lessonVersionId\n  String curriculumRevisionId\n  Int durationMinutes\n  Json planSnapshot\n  LearningSessionStatus status\n  Int currentCheckpoint\n  DateTime startedAt\n  DateTime completedAt\n }\n ActivityAttempt {\n  String id PK\n  String learnerId\n  String sessionId\n  String activityId\n  String clientAttemptId\n  Json rawResponse\n  Json normalizedResponse\n  AttemptEvaluationStatus evaluationStatus\n  Float score\n  String feedback\n  DateTime createdAt\n  DateTime updatedAt\n }\n Recording {\n  String id PK\n  String learnerId\n  String sessionId\n  String activityId\n  String attemptId UK\n  String storageKey UK\n  String mimeType\n  Int byteSize\n  String checksum\n  Float durationSeconds\n  String consentPolicyVersion\n  String consentScope\n }\n ActivityDraft {\n  String id PK\n  String learnerId\n  String sessionId\n  String activityId\n  String text\n  Int revision\n  DateTime expiresAt\n  DateTime createdAt\n  DateTime updatedAt\n }\n Job {\n  String id PK\n  String type\n  JobStatus status\n  Json payload\n  Json result\n  String error\n  String idempotencyKey UK\n  String resourceType\n  String resourceId\n  Int attemptCount\n  Int maxAttempts\n  DateTime availableAt\n }\n MutationReceipt {\n  String id PK\n  String actorId\n  String operation\n  String idempotencyKey\n  String requestHash\n  Int responseStatus\n  Json responseBody\n  DateTime createdAt\n }\n MasteryRecord {\n  String id PK\n  String learnerId\n  String languageBlockId\n  ActivityType skill\n  MasteryState state\n  Float score\n  Float confidence\n  Float intervalDays\n  DateTime lastEvidenceAt\n  DateTime nextReviewAt\n  String lastLessonVersionId\n  DateTime createdAt\n }\n MasteryEvent {\n  String id PK\n  String learnerId\n  String attemptId\n  String languageBlockId\n  ActivityType skill\n  String lessonVersionId\n  String masteryRecordId\n  MasteryEventType eventType\n  Float score\n  Json metadata\n  DateTime createdAt\n }\n LearningSession }o--|| Mission : \"missionId FK\"\n LearningSession }o--|| LessonVersion : \"lessonVersionId FK\"\n ActivityAttempt }o--|| LearningSession : \"sessionId,learnerId FK\"\n Recording }o--|| LearningSession : \"sessionId,learnerId FK\"\n Recording |o--|| ActivityAttempt : \"attemptId FK\"\n ActivityDraft }o--|| LearningSession : \"sessionId,learnerId FK\"\n MasteryRecord }o--o| LessonVersion : \"lastLessonVersionId FK\"\n MasteryEvent }o--|| ActivityAttempt : \"attemptId FK\"\n MasteryEvent }o--|| LessonVersion : \"lessonVersionId FK\"\n MasteryEvent }o--o| MasteryRecord : \"masteryRecordId FK\"",
+    "evidence": [
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "Prisma declared foreign keys",
+        "lineStart": 1,
+        "lineEnd": 1464,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "ENT-Mission",
+      "ENT-LessonVersion",
+      "ENT-LearningSession",
+      "ENT-ActivityAttempt",
+      "ENT-Recording",
+      "ENT-ActivityDraft",
+      "ENT-Job",
+      "ENT-MutationReceipt",
+      "ENT-MasteryRecord",
+      "ENT-MasteryEvent"
+    ]
+  }
+]

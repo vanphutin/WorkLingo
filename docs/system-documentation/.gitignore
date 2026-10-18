@@ -1,0 +1,6 @@
+node_modules/
+dist/
+vendor/
+reports/screenshots/
+!data/
+!data/**

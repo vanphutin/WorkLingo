@@ -1,0 +1,41 @@
+{
+  "executedAt": "2026-10-18T11:04:20.440Z",
+  "results": [
+    {
+      "theme": "light",
+      "nodes": [
+        {
+          "text": "Readable label",
+          "nativeText": 4
+        },
+        {
+          "text": "Second label",
+          "nativeText": 4
+        }
+      ],
+      "edgeText": [
+        "Edge label"
+      ],
+      "foreignObjects": 0
+    },
+    {
+      "theme": "dark",
+      "nodes": [
+        {
+          "text": "Readable label",
+          "nativeText": 4
+        },
+        {
+          "text": "Second label",
+          "nativeText": 4
+        }
+      ],
+      "edgeText": [
+        "Edge label"
+      ],
+      "foreignObjects": 0
+    }
+  ],
+  "dependencyNodeCount": 38,
+  "result": "PASS"
+}

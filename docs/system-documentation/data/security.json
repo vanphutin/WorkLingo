@@ -1,0 +1,2429 @@
+[
+  {
+    "id": "SEC-api-role-matrix",
+    "kind": "security",
+    "name": "API role metadata matrix",
+    "module": "MOD-auth",
+    "status": "VERIFIED",
+    "description": "Declared global SessionAuthGuard and RolesGuard policy for each route. pass-role-check means only that the role metadata check permits this role; ownership, account/session validity, validation, rate limits and service checks may still deny. There is no implicit administrative role hierarchy. Public means the authentication guard is bypassed, not unconditional authorization.",
+    "permissions": [
+      {
+        "apiId": "API-1f5413d93e2ca234",
+        "method": "GET",
+        "path": "/api/v1/admin/curriculum",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-68ab46f21302a239",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/paths",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-848c7754bbf3308a",
+        "method": "PATCH",
+        "path": "/api/v1/admin/curriculum/paths/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d800f3f521b90ea7",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/paths/:id/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-862a19c747abed6b",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/paths/:id/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-bacfa23b5e0385c5",
+        "method": "PUT",
+        "path": "/api/v1/admin/curriculum/paths/:id/level-order",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-e39b4299ca6b1ad5",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/levels",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-7d9730750918b469",
+        "method": "PATCH",
+        "path": "/api/v1/admin/curriculum/levels/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-af8229b01c7cb5c4",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/levels/:id/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-19ee42f1577f60b1",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/levels/:id/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-78728227af17a453",
+        "method": "PUT",
+        "path": "/api/v1/admin/curriculum/levels/:id/mission-order",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-417695a07ad9636a",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/missions",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-4a3320d0a6c48d95",
+        "method": "PATCH",
+        "path": "/api/v1/admin/curriculum/missions/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-ff26af35ebc94f42",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/missions/:id/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d52e2d6552900db6",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/missions/:id/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-232aedf7a0f4e2ea",
+        "method": "PUT",
+        "path": "/api/v1/admin/curriculum/missions/:id/lessons",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-bed892fe334defcf",
+        "method": "GET",
+        "path": "/api/v1/me/ai-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-899a68aa48a49337",
+        "method": "PATCH",
+        "path": "/api/v1/me/ai-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-0143a0a218a99176",
+        "method": "GET",
+        "path": "/api/v1/admin/ai-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d6d7c9ab50950af7",
+        "method": "PATCH",
+        "path": "/api/v1/admin/ai-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-be394afa1aba4e51",
+        "method": "GET",
+        "path": "/api/v1/admin/analytics/pilot",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-ba6473639504a262",
+        "method": "GET",
+        "path": "/api/v1/admin/audio-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-2807536800074b18",
+        "method": "PATCH",
+        "path": "/api/v1/admin/audio-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-338de2a1c1e48732",
+        "method": "GET",
+        "path": "/api/v1/me/audio-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a8e9c27af4dde32f",
+        "method": "PATCH",
+        "path": "/api/v1/me/audio-settings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a2be842b58bfeb7f",
+        "method": "GET",
+        "path": "/api/v1/admin/audit-events",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-72d35ffed94a1e5e",
+        "method": "POST",
+        "path": "/api/v1/auth/register",
+        "authentication": "PUBLIC",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d98afd350a878235",
+        "method": "POST",
+        "path": "/api/v1/auth/login",
+        "authentication": "PUBLIC",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-75fe132ab22de760",
+        "method": "POST",
+        "path": "/api/v1/auth/logout",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-2e1d6a4bebb90889",
+        "method": "POST",
+        "path": "/api/v1/admin/content-imports/:id/generate-audio",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a32116e28b162204",
+        "method": "GET",
+        "path": "/api/v1/admin/content-imports/:id/audio",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d69d8ad3aad8cc8e",
+        "method": "GET",
+        "path": "/api/v1/admin/audio-artifacts/:id/content",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-84d059829fd88a5e",
+        "method": "POST",
+        "path": "/api/v1/admin/content-imports",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6d0da70ec52b3e32",
+        "method": "GET",
+        "path": "/api/v1/admin/content-imports",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-740d1a3ca6cf53db",
+        "method": "GET",
+        "path": "/api/v1/admin/content-imports/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-4aba6690814aa03c",
+        "method": "PATCH",
+        "path": "/api/v1/admin/content-imports/:id/source",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-3cb4bdf43a975c54",
+        "method": "POST",
+        "path": "/api/v1/admin/content-imports/:id/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-5a3705b5dd4aa51e",
+        "method": "GET",
+        "path": "/api/v1/admin/content-imports/:id/preview",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-fb81a353e5880ca3",
+        "method": "POST",
+        "path": "/api/v1/admin/content-imports/:id/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-8fe5c4907dc8fe1e",
+        "method": "POST",
+        "path": "/api/v1/admin/lesson-versions/:id/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-08a0158ab99ca072",
+        "method": "GET",
+        "path": "/api/v1/me/curriculum-roadmap",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-be3da9475e2972f8",
+        "method": "GET",
+        "path": "/api/v1/admin/curriculum/missions/:missionId/foundation",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-34e3d48c5f5fef90",
+        "method": "PUT",
+        "path": "/api/v1/admin/curriculum/missions/:missionId/foundation",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-dbc081077c505653",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/missions/:missionId/foundation/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-0053e564c9af942c",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/missions/:missionId/foundation/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-1ea7024a0603c840",
+        "method": "POST",
+        "path": "/api/v1/admin/curriculum/foundation-revisions/:id/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a592b276b686d3e8",
+        "method": "GET",
+        "path": "/api/v1/me/engagement",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-2c86c94db4760aa6",
+        "method": "PATCH",
+        "path": "/api/v1/me/engagement/weekly-target",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-1a3ee1db567f0da9",
+        "method": "GET",
+        "path": "/api/v1/health",
+        "authentication": "PUBLIC",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-85243aa7acac9bbd",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-band-curriculum",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-0ec20402a1bc7c09",
+        "method": "PUT",
+        "path": "/api/v1/admin/ielts-band-curriculum/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-9d9c7fe1904b9e17",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-band-curriculum/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-471152c995dbf6bf",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-band-curriculum/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-875e83a71ec178a3",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-band-pathway",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b4b1e63218b837fd",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-band-pathway/start",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6574a99baa7428f1",
+        "method": "PUT",
+        "path": "/api/v1/me/ielts-band-pathway/target",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-aad1288ef44f1816",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-band-pathway/evaluate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-21477fcff65e5c58",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-bridge/modules",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-88c1e73201b5cb37",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-bridge/modules/:moduleId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-c247cb69a1b45170",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-bridge/modules",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-626c3e0e73ad8129",
+        "method": "PUT",
+        "path": "/api/v1/admin/ielts-bridge/modules/:moduleId/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-117d81d3ec80d58c",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-bridge/modules/:moduleId/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-dc28927c62e0d366",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-bridge/modules/:moduleId/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-3afea87a3bdf3e80",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-bridge/modules/:moduleId/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-338c69e695d21839",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-bridge/catalog",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-835ce7537e598b09",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-bridge/modules/:moduleId/start",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-331b6c72039da3d3",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-bridge/modules/:moduleId/session",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-2a846ccbbe011b3a",
+        "method": "PUT",
+        "path": "/api/v1/me/ielts-bridge/modules/:moduleId/progress",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-06c4285b44c2062b",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-integrated/profiles",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6ee6709f66b13752",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-integrated/profiles/:profileId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-5f845f71a5b531e5",
+        "method": "PUT",
+        "path": "/api/v1/admin/ielts-integrated/profiles/:profileId/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b37a5fc9923effe1",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-integrated/profiles/:profileId/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-7292f0ff8f2a6185",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-integrated/profiles/:profileId/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-5e95948cd19ee788",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-integrated/availability",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a76ba8f44d5e98d9",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-integrated/sessions",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-0cf72b88daee04d8",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-integrated/sessions/:sessionId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-c9146e46ad9efe11",
+        "method": "PUT",
+        "path": "/api/v1/me/ielts-integrated/sessions/:sessionId/progress",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a2df6a7abf81041c",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-mocks",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-9ef7ce4e0c9b4269",
+        "method": "PUT",
+        "path": "/api/v1/admin/ielts-mocks/:id/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-cd3fa03fc6c0289e",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-mocks/:id/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-c2d8495ac130606e",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-mocks/:id/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a89f7107500eda12",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-mock-attempts",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-f5acec53224f1bd2",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mock-attempts/:attemptId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-85bb3ceebb1b06a0",
+        "method": "PUT",
+        "path": "/api/v1/me/ielts-mock-attempts/:attemptId/responses",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b6eea58bbff26256",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-mock-attempts/:attemptId/sections/:section/submit",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-05d14083739e1394",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-mock-attempts/:attemptId/submit",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-734d7b841cf9d88b",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mock-attempts/:attemptId/report",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-7204ba4bb446b77b",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mock-attempts/:attemptId/audio/:assetId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-7c0d0262297c1c25",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mocks",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-20871e15b83f2620",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-mocks/attempts",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-9309dd41337b98e1",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mocks/attempts/:attemptId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a2a8c65c47f73392",
+        "method": "PUT",
+        "path": "/api/v1/me/ielts-mocks/attempts/:attemptId/responses",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-19a1823aa6118f7f",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-mocks/attempts/:attemptId/sections/:section/submit",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-92678a5691bb5c77",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mocks/attempts/:attemptId/report",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-566420f1da888e82",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-mocks/attempts/:attemptId/audio/:assetId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-90124c1e81c6d575",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-mock-attempts",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-2f55757aacb420db",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-mock-attempts/:attemptId/reviews",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-738d1f5e9a32552e",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-orientation",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d98e514d6fe311ca",
+        "method": "PUT",
+        "path": "/api/v1/admin/ielts-orientation/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6a3e50d22c7fc143",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-orientation/validate",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d1e56c1f8a075278",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-orientation/publish",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-13442c108e1f4bd5",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-orientation/archive",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-9bc2ae606c187488",
+        "method": "POST",
+        "path": "/api/v1/admin/ielts-orientation/media",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6cab09178913d47e",
+        "method": "GET",
+        "path": "/api/v1/admin/ielts-orientation/media/:assetId/content",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b6b2b08db6958faa",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-orientation",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-02abd1258dcaf460",
+        "method": "POST",
+        "path": "/api/v1/me/ielts-orientation/start",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-82e77311985d1f79",
+        "method": "PUT",
+        "path": "/api/v1/me/ielts-orientation/progress",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-2afad74a24580429",
+        "method": "GET",
+        "path": "/api/v1/me/ielts-orientation/media/:assetId/content",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-64c940cd380b0e0d",
+        "method": "GET",
+        "path": "/api/v1/jobs/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-550de84691b6db35",
+        "method": "POST",
+        "path": "/api/v1/jobs/:id/retry",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-1c800267d1fe622b",
+        "method": "GET",
+        "path": "/api/v1/learning-programs",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-32e9b04d51f00065",
+        "method": "GET",
+        "path": "/api/v1/me/program-context",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-f87b099b97ec225b",
+        "method": "PUT",
+        "path": "/api/v1/me/program-context",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-66055ed2bdff461c",
+        "method": "GET",
+        "path": "/api/v1/learning-sessions/:id/activities/:activityId/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6c1d1acf0b9c252a",
+        "method": "PUT",
+        "path": "/api/v1/learning-sessions/:id/activities/:activityId/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-eb9a58179b92fc90",
+        "method": "DELETE",
+        "path": "/api/v1/learning-sessions/:id/activities/:activityId/draft",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-bc8e451a5649a82f",
+        "method": "GET",
+        "path": "/api/v1/learning-sessions/:id/activities/:activityId/audio",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-84b7e6c3d22ad513",
+        "method": "POST",
+        "path": "/api/v1/learning-sessions",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-0a2f701469ebf0c1",
+        "method": "GET",
+        "path": "/api/v1/learning-sessions/availability",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-3a4e83a672ad3bab",
+        "method": "GET",
+        "path": "/api/v1/learning-sessions/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-a93b4843fd51a831",
+        "method": "GET",
+        "path": "/api/v1/learning-sessions/:id/activities/:activityId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b523a4636705d0b0",
+        "method": "POST",
+        "path": "/api/v1/learning-sessions/:id/start",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-58bf8f5b2511adef",
+        "method": "POST",
+        "path": "/api/v1/learning-sessions/:id/pause",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-e6c0c112ce8120f8",
+        "method": "POST",
+        "path": "/api/v1/learning-sessions/:id/resume",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-32f2ff8ba1a390ea",
+        "method": "POST",
+        "path": "/api/v1/activities/:activityId/attempts",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-ec49bc1ea30b08c8",
+        "method": "GET",
+        "path": "/api/v1/me/mastery-map",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-9e5f22deb736bedf",
+        "method": "GET",
+        "path": "/api/v1/me/error-bank",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-96a3cb6d3bcbcaf6",
+        "method": "GET",
+        "path": "/api/v1/me/memory-health",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-d2b67d972ded281a",
+        "method": "POST",
+        "path": "/api/v1/activities/:activityId/recordings",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-6bc4efb84691df51",
+        "method": "DELETE",
+        "path": "/api/v1/recordings/:recordingId",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-07989d1135b4e72a",
+        "method": "GET",
+        "path": "/api/v1/me/onboarding",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-7124cba19e5e23e1",
+        "method": "POST",
+        "path": "/api/v1/me/onboarding/self-placement",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-cd99893c51c2e1e8",
+        "method": "POST",
+        "path": "/api/v1/me/onboarding/placement-attempts",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-9ed9df03816be609",
+        "method": "GET",
+        "path": "/api/v1/me/onboarding/placement-attempts/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-fc1f73ed5b1f0231",
+        "method": "POST",
+        "path": "/api/v1/me/onboarding/placement-attempts/:id/confirm",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "LEARNER"
+        ],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "deny-role-check",
+          "SYSTEM_ADMIN": "deny-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-fac2665b925b2bdd",
+        "method": "GET",
+        "path": "/api/v1/admin/operations/summary",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-ccd44030a515d590",
+        "method": "GET",
+        "path": "/api/v1/admin/operations/jobs",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-1fedf6f016b5aba1",
+        "method": "GET",
+        "path": "/api/v1/admin/operations/jobs/:id",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [
+          "CONTENT_ADMIN",
+          "SYSTEM_ADMIN"
+        ],
+        "roleMetadata": {
+          "LEARNER": "deny-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-5b2ed692bec304d1",
+        "method": "GET",
+        "path": "/api/v1/me/progress",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b7d73f88267baf27",
+        "method": "GET",
+        "path": "/api/v1/me/progression",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-745193696f5eb7d2",
+        "method": "POST",
+        "path": "/api/v1/me/checkpoint-assessments",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-c6a2c1913821fd5e",
+        "method": "POST",
+        "path": "/api/v1/me/checkpoint-assessments/:id/confirm",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-b3bcf52652276311",
+        "method": "GET",
+        "path": "/api/v1/attempts/:attemptId/evaluation",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-da83817627ba00aa",
+        "method": "POST",
+        "path": "/api/v1/attempts/:attemptId/evaluation/retry",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-0650d0a82d12eb77",
+        "method": "GET",
+        "path": "/api/v1/me",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-af3bb6830f396b1c",
+        "method": "GET",
+        "path": "/api/v1/me/preferences",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      },
+      {
+        "apiId": "API-4d57caa35f33c47a",
+        "method": "PATCH",
+        "path": "/api/v1/me/preferences",
+        "authentication": "SESSION_COOKIE",
+        "requiredAnyRoles": [],
+        "roleMetadata": {
+          "LEARNER": "pass-role-check",
+          "CONTENT_ADMIN": "pass-role-check",
+          "SYSTEM_ADMIN": "pass-role-check"
+        },
+        "ownership": "See linked reviewed use cases / service methods; not inferred from role metadata."
+      }
+    ],
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/auth.module.ts",
+        "symbol": "auth.module.ts",
+        "lineStart": 1,
+        "lineEnd": 23,
+        "sha256": "be2625e306999bc3b6a136139124ef9b7087900bbf0386886eaaa32552499dcb"
+      },
+      {
+        "file": "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+        "symbol": "session-auth.guard.ts",
+        "lineStart": 1,
+        "lineEnd": 61,
+        "sha256": "a755ed50668d4c14dd5248b2347fd626c30952c60b218aa5cd64dab645bb363c"
+      },
+      {
+        "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "symbol": "roles.guard.ts",
+        "lineStart": 1,
+        "lineEnd": 45,
+        "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+      },
+      {
+        "file": "apps/api/src/common/rate-limit/rate-limit.module.ts",
+        "symbol": "rate-limit.module.ts",
+        "lineStart": 1,
+        "lineEnd": 23,
+        "sha256": "8df8153bcea9059b0eb66e66bdc44ebd54082ef8706a41a9e032c8adf3c2dd49"
+      }
+    ],
+    "relatedIds": [
+      "API-1f5413d93e2ca234",
+      "API-68ab46f21302a239",
+      "API-848c7754bbf3308a",
+      "API-d800f3f521b90ea7",
+      "API-862a19c747abed6b",
+      "API-bacfa23b5e0385c5",
+      "API-e39b4299ca6b1ad5",
+      "API-7d9730750918b469",
+      "API-af8229b01c7cb5c4",
+      "API-19ee42f1577f60b1",
+      "API-78728227af17a453",
+      "API-417695a07ad9636a",
+      "API-4a3320d0a6c48d95",
+      "API-ff26af35ebc94f42",
+      "API-d52e2d6552900db6",
+      "API-232aedf7a0f4e2ea",
+      "API-bed892fe334defcf",
+      "API-899a68aa48a49337",
+      "API-0143a0a218a99176",
+      "API-d6d7c9ab50950af7",
+      "API-be394afa1aba4e51",
+      "API-ba6473639504a262",
+      "API-2807536800074b18",
+      "API-338de2a1c1e48732",
+      "API-a8e9c27af4dde32f",
+      "API-a2be842b58bfeb7f",
+      "API-72d35ffed94a1e5e",
+      "API-d98afd350a878235",
+      "API-75fe132ab22de760",
+      "API-2e1d6a4bebb90889",
+      "API-a32116e28b162204",
+      "API-d69d8ad3aad8cc8e",
+      "API-84d059829fd88a5e",
+      "API-6d0da70ec52b3e32",
+      "API-740d1a3ca6cf53db",
+      "API-4aba6690814aa03c",
+      "API-3cb4bdf43a975c54",
+      "API-5a3705b5dd4aa51e",
+      "API-fb81a353e5880ca3",
+      "API-8fe5c4907dc8fe1e",
+      "API-08a0158ab99ca072",
+      "API-be3da9475e2972f8",
+      "API-34e3d48c5f5fef90",
+      "API-dbc081077c505653",
+      "API-0053e564c9af942c",
+      "API-1ea7024a0603c840",
+      "API-a592b276b686d3e8",
+      "API-2c86c94db4760aa6",
+      "API-1a3ee1db567f0da9",
+      "API-85243aa7acac9bbd",
+      "API-0ec20402a1bc7c09",
+      "API-9d9c7fe1904b9e17",
+      "API-471152c995dbf6bf",
+      "API-875e83a71ec178a3",
+      "API-b4b1e63218b837fd",
+      "API-6574a99baa7428f1",
+      "API-aad1288ef44f1816",
+      "API-21477fcff65e5c58",
+      "API-88c1e73201b5cb37",
+      "API-c247cb69a1b45170",
+      "API-626c3e0e73ad8129",
+      "API-117d81d3ec80d58c",
+      "API-dc28927c62e0d366",
+      "API-3afea87a3bdf3e80",
+      "API-338c69e695d21839",
+      "API-835ce7537e598b09",
+      "API-331b6c72039da3d3",
+      "API-2a846ccbbe011b3a",
+      "API-06c4285b44c2062b",
+      "API-6ee6709f66b13752",
+      "API-5f845f71a5b531e5",
+      "API-b37a5fc9923effe1",
+      "API-7292f0ff8f2a6185",
+      "API-5e95948cd19ee788",
+      "API-a76ba8f44d5e98d9",
+      "API-0cf72b88daee04d8",
+      "API-c9146e46ad9efe11",
+      "API-a2df6a7abf81041c",
+      "API-9ef7ce4e0c9b4269",
+      "API-cd3fa03fc6c0289e",
+      "API-c2d8495ac130606e",
+      "API-a89f7107500eda12",
+      "API-f5acec53224f1bd2",
+      "API-85bb3ceebb1b06a0",
+      "API-b6eea58bbff26256",
+      "API-05d14083739e1394",
+      "API-734d7b841cf9d88b",
+      "API-7204ba4bb446b77b",
+      "API-7c0d0262297c1c25",
+      "API-20871e15b83f2620",
+      "API-9309dd41337b98e1",
+      "API-a2a8c65c47f73392",
+      "API-19a1823aa6118f7f",
+      "API-92678a5691bb5c77",
+      "API-566420f1da888e82",
+      "API-90124c1e81c6d575",
+      "API-2f55757aacb420db",
+      "API-738d1f5e9a32552e",
+      "API-d98e514d6fe311ca",
+      "API-6a3e50d22c7fc143",
+      "API-d1e56c1f8a075278",
+      "API-13442c108e1f4bd5",
+      "API-9bc2ae606c187488",
+      "API-6cab09178913d47e",
+      "API-b6b2b08db6958faa",
+      "API-02abd1258dcaf460",
+      "API-82e77311985d1f79",
+      "API-2afad74a24580429",
+      "API-64c940cd380b0e0d",
+      "API-550de84691b6db35",
+      "API-1c800267d1fe622b",
+      "API-32e9b04d51f00065",
+      "API-f87b099b97ec225b",
+      "API-66055ed2bdff461c",
+      "API-6c1d1acf0b9c252a",
+      "API-eb9a58179b92fc90",
+      "API-bc8e451a5649a82f",
+      "API-84b7e6c3d22ad513",
+      "API-0a2f701469ebf0c1",
+      "API-3a4e83a672ad3bab",
+      "API-a93b4843fd51a831",
+      "API-b523a4636705d0b0",
+      "API-58bf8f5b2511adef",
+      "API-e6c0c112ce8120f8",
+      "API-32f2ff8ba1a390ea",
+      "API-ec49bc1ea30b08c8",
+      "API-9e5f22deb736bedf",
+      "API-96a3cb6d3bcbcaf6",
+      "API-d2b67d972ded281a",
+      "API-6bc4efb84691df51",
+      "API-07989d1135b4e72a",
+      "API-7124cba19e5e23e1",
+      "API-cd99893c51c2e1e8",
+      "API-9ed9df03816be609",
+      "API-fc1f73ed5b1f0231",
+      "API-fac2665b925b2bdd",
+      "API-ccd44030a515d590",
+      "API-1fedf6f016b5aba1",
+      "API-5b2ed692bec304d1",
+      "API-b7d73f88267baf27",
+      "API-745193696f5eb7d2",
+      "API-c6a2c1913821fd5e",
+      "API-b3bcf52652276311",
+      "API-da83817627ba00aa",
+      "API-0650d0a82d12eb77",
+      "API-af3bb6830f396b1c",
+      "API-4d57caa35f33c47a"
+    ]
+  },
+  {
+    "id": "SEC-OBS-redaction",
+    "kind": "security",
+    "name": "Logger có redaction và giới hạn dữ liệu",
+    "module": "MOD-common",
+    "status": "VERIFIED",
+    "description": "redactValue thay bearer token, connection string, email và IP trong chuỗi; che các sensitive keys trong object; giới hạn độ sâu, chiều dài và số phần tử, phát hiện cycle. Đây là policy cụ thể trong logger, không phải bằng chứng toàn hệ thống không bao giờ lộ dữ liệu.",
+    "evidence": [
+      {
+        "file": "apps/api/src/common/logging/safe-logger.service.ts",
+        "symbol": "redactValue",
+        "lineStart": 4,
+        "lineEnd": 92,
+        "sha256": "1e380fe9e67238774990facd121cc3284dfaa91c822cc7503024efe30a43d05c"
+      }
+    ],
+    "relatedIds": [
+      "MOD-common",
+      "REQ-OPS-error-envelope",
+      "TEST-7284ecc75f97a944"
+    ],
+    "testFiles": [
+      "apps/api/src/common/logging/safe-logger.service.spec.ts"
+    ],
+    "curated": true
+  }
+]

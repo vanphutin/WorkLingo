@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="WorkLingo System Atlas — tài liệu AS-IS có bằng chứng từ repository.">
+  <title>WorkLingo System Atlas</title>
+  <link rel="stylesheet" href="./src/styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Đến nội dung chính</a>
+  <aside id="sidebar" class="sidebar" aria-label="Điều hướng tài liệu">
+    <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true">W</span><span>WorkLingo<strong>System Atlas</strong></span></a>
+    <div class="sidebar-caption">Tài liệu hệ thống AS-IS</div>
+    <nav id="primary-nav" aria-label="16 phần tài liệu"></nav>
+    <div class="sidebar-footer"><span class="snapshot-dot" aria-hidden="true"></span><span id="snapshot-label">Đang đọc snapshot…</span></div>
+  </aside>
+  <button id="sidebar-scrim" class="sidebar-scrim" aria-label="Đóng điều hướng" hidden></button>
+  <div class="workspace">
+    <header class="topbar">
+      <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="sidebar">Mục lục</button>
+      <form id="search-form" role="search" class="global-search">
+        <label class="sr-only" for="global-search">Tìm kiếm toàn bộ registry</label>
+        <input id="global-search" name="q" type="search" placeholder="Tìm ID, nghiệp vụ, API, symbol, đường dẫn…" autocomplete="off">
+        <button type="submit">Tìm kiếm</button>
+      </form>
+      <button id="theme-toggle" aria-label="Chuyển sang giao diện tối" aria-pressed="false">Giao diện tối</button>
+    </header>
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <nav id="breadcrumbs" class="breadcrumbs" aria-label="Đường dẫn"></nav>
+        <div id="page-heading"></div>
+        <form id="filters" class="filters" aria-label="Bộ lọc danh mục" hidden>
+          <label>Module<select id="module-filter" name="module"><option value="">Tất cả module</option></select></label>
+          <label>Bằng chứng<select id="status-filter" name="status"><option value="">Mọi trạng thái</option></select></label>
+          <label>Loại bản ghi<select id="kind-filter" name="kind"><option value="">Tất cả loại</option></select></label>
+          <label class="api-filter">Method<select id="method-filter" name="method"><option value="">Mọi method</option></select></label>
+          <label class="api-filter">Authentication<select id="auth-filter" name="authentication"><option value="">Mọi cơ chế</option></select></label>
+          <button id="reset-filters" type="button">Xóa bộ lọc</button>
+        </form>
+        <div id="results-status" class="results-status" role="status" aria-live="polite" aria-atomic="true"></div>
+        <div id="content" aria-busy="true"><p class="loading">Đang tải dữ liệu hệ thống…</p></div>
+      </main>
+      <aside class="toc" aria-label="Trong trang này"><strong>Trong trang này</strong><nav id="toc"></nav><p>VERIFIED xác nhận nhận định được dẫn chứng; không xác nhận hành vi triển khai thực tế.</p></aside>
+    </div>
+  </div>
+  <dialog id="evidence-dialog" aria-labelledby="evidence-title">
+    <header class="dialog-header"><h2 id="evidence-title">Bằng chứng nguồn</h2><button id="close-evidence" autofocus>Đóng</button></header>
+    <div id="evidence-content"></div>
+  </dialog>
+  <noscript>System Atlas cần JavaScript để tải registry và điều hướng. Hãy bật JavaScript rồi tải lại trang.</noscript>
+</body>
+</html>

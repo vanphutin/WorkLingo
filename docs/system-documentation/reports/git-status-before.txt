@@ -1,0 +1,47 @@
+ M docs/DECISIONS.md
+ M docs/IMPLEMENTATION_ROADMAP.md
+ M mandate/INDEX.md
+?? docs/content-drafts/2026-10-16-intermediate-b1-pilot.json
+?? docs/content-drafts/2026-10-16-intermediate-b1-pilot.md
+?? docs/superpowers/plans/2026-10-16-intermediate-assessment-integrity.md
+?? docs/superpowers/plans/2026-10-16-intermediate-baseline-workload.md
+?? docs/superpowers/plans/2026-10-16-intermediate-grouped-authoring.md
+?? docs/superpowers/plans/2026-10-16-intermediate-learning-quality.md
+?? docs/superpowers/specs/2026-10-16-intermediate-assessment-policy-design.md
+?? docs/superpowers/specs/2026-10-16-intermediate-b1-content-authoring-design.md
+?? docs/superpowers/specs/2026-10-16-intermediate-learning-quality-design.md
+?? docs/system-documentation/reports/implementation-plan.md
+?? docs/system-documentation/reports/progress.md
+?? docs/system-documentation/reports/user-specification.md
+?? mandate/items/MND-20261015-001-architecture-redesign-intermediate-learning-session-workload-and-cross-skill-separa.md
+?? mandate/reports/2026-10-15-intermediate-workload-proposal.json
+?? mandate/reports/2026-10-16-intermediate-approval.md
+?? mandate/reports/2026-10-16-intermediate-approve.json
+?? mandate/reports/2026-10-16-intermediate-approved-proposal.json
+?? mandate/reports/2026-10-16-intermediate-assessment-integrity.md
+?? mandate/reports/2026-10-16-intermediate-b1-content-review.md
+?? mandate/reports/2026-10-16-intermediate-baseline.md
+?? mandate/reports/2026-10-16-intermediate-consolidated-source.txt
+?? mandate/reports/2026-10-16-intermediate-d1-approved-proposal.json
+?? mandate/reports/2026-10-16-intermediate-fixture-baseline.json
+?? mandate/reports/2026-10-16-intermediate-grouped-authoring.md
+?? mandate/reports/2026-10-16-intermediate-local-legacy-inventory.json
+?? mandate/reports/2026-10-16-intermediate-local-upgrade-review.md
+?? mandate/reports/2026-10-16-intermediate-normalization.md
+?? mandate/reports/2026-10-16-intermediate-prior-capture.md
+?? mandate/reports/2026-10-16-intermediate-rehearsal-inventory.json
+?? mandate/reports/2026-10-16-intermediate-schema-status.json
+?? mandate/reports/2026-10-16-intermediate-triage.json
+?? mandate/reports/2026-10-16-intermediate-upgrade-preflight.json
+?? mandate/reports/2026-10-16-intermediate-w2-approve.json
+?? mandate/reports/2026-10-16-intermediate-w2-approved-proposal.json
+?? mandate/reports/2026-10-16-intermediate-w2-policy-review.md
+?? mandate/reports/2026-10-16-intermediate-w2-triage.json
+?? mandate/reports/2026-10-16-intermediate-w3-approve.json
+?? mandate/reports/2026-10-16-intermediate-w3-approved-proposal.json
+?? mandate/reports/2026-10-16-intermediate-w3-triage.json
+?? mandate/reports/2026-10-16-intermediate-w4-approve.json
+?? mandate/reports/2026-10-16-intermediate-w4-approved-proposal.json
+?? mandate/reports/2026-10-16-intermediate-w4-triage.json
+?? mandate/reports/2026-10-16-intermediate-workload-proposal.json
+?? mandate/reports/2026-10-16-intermediate-workload-visibility.md

@@ -1,0 +1,34 @@
+{
+  "name": "worklingo-system-documentation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "overrides": {
+    "deepmerge-ts": "8.0.2",
+    "effect": "3.20.0",
+    "katex": "0.18.2"
+  },
+  "scripts": {
+    "analyze": "node scripts/analyze/extract.mjs",
+    "validate": "node scripts/validate/validate.mjs",
+    "test": "node --test",
+    "lint": "eslint src scripts tests --config eslint.config.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs dist",
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:diagram-text": "node scripts/diagram-text-smoke.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.63.0",
+    "@prisma/internals": "6.19.1",
+    "esbuild": "0.25.12",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "mermaid": "11.17.2",
+    "typescript": "5.9.3"
+  }
+}

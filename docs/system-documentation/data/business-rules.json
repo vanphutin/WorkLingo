@@ -1,0 +1,2537 @@
+[
+  {
+    "id": "BR-CORE-01",
+    "kind": "rule",
+    "name": "Normalized registration and learner defaults",
+    "module": "MOD-auth",
+    "status": "VERIFIED",
+    "description": "Registration trims identity, lowercases email and requires a 12–128 character password at DTO boundary; Prisma defaults create LEARNER/ACTIVE.",
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/application/auth.service.ts",
+        "symbol": "AuthService",
+        "lineStart": 45,
+        "lineEnd": 68,
+        "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+      },
+      {
+        "file": "apps/api/src/auth/dto/register.dto.ts",
+        "symbol": "RegisterDto",
+        "lineStart": 6,
+        "lineEnd": 34,
+        "sha256": "2f0dc47bde4750e9335de6fa425df6c99a33212a4352a25bbd6de4f42ade826c"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "User",
+        "lineStart": 32,
+        "lineEnd": 40,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-auth",
+      "MOD-users",
+      "ENT-User",
+      "SYM-0bb02533acae9904",
+      "SYM-2d4824564a872f7f",
+      "SYM-3c966a8b308e14f7",
+      "SYM-5d694cd2bda94297",
+      "SYM-1413046fc7603cdf",
+      "SYM-b93314708f68bf06",
+      "SYM-28398c901bb98cb5",
+      "SYM-e1bc71c41f4b8ae4",
+      "SYM-c497d7a990a9e664"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/auth/application/auth.service.ts",
+      "apps/api/src/auth/dto/register.dto.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-02",
+    "kind": "rule",
+    "name": "Session token and account validity",
+    "module": "MOD-auth",
+    "status": "VERIFIED",
+    "description": "Persist HMAC-SHA256 token hash, reject revoked/expired sessions and non-ACTIVE users. Session lifetime is seven days; logout revokes matching unrevoked token hashes.",
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/application/auth.service.ts",
+        "symbol": "AuthService",
+        "lineStart": 93,
+        "lineEnd": 137,
+        "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+      },
+      {
+        "file": "apps/api/src/auth/auth.constants.ts",
+        "symbol": "SESSION_COOKIE_NAME; SESSION_DURATION_MS",
+        "lineStart": 1,
+        "lineEnd": 2,
+        "sha256": "383f6754466ec9cc5baefb7df9fdfb55f19e6fd310d58f5cf60785891c05b772"
+      }
+    ],
+    "relatedIds": [
+      "MOD-auth",
+      "ENT-UserSession",
+      "ENT-User",
+      "SYM-0bb02533acae9904",
+      "SYM-2d4824564a872f7f",
+      "SYM-3c966a8b308e14f7",
+      "SYM-5d694cd2bda94297",
+      "SYM-1413046fc7603cdf",
+      "SYM-b93314708f68bf06",
+      "SYM-28398c901bb98cb5",
+      "SYM-e1bc71c41f4b8ae4"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/auth/application/auth.service.ts",
+      "apps/api/src/auth/auth.constants.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-03",
+    "kind": "rule",
+    "name": "Method role override and any-role matching",
+    "module": "MOD-auth",
+    "status": "VERIFIED",
+    "description": "Handler role metadata overrides class metadata. Missing/empty role list passes; otherwise any matching role is enough. Insufficient administrative permission throws ForbiddenException.",
+    "evidence": [
+      {
+        "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "symbol": "RolesGuard",
+        "lineStart": 18,
+        "lineEnd": 42,
+        "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+      }
+    ],
+    "relatedIds": [
+      "MOD-auth",
+      "ENT-User",
+      "SYM-60115893924c6461",
+      "SYM-312e8287b73c8803"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/auth/infrastructure/roles.guard.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-04",
+    "kind": "rule",
+    "name": "Preferences use authenticated identity",
+    "module": "MOD-users",
+    "status": "VERIFIED",
+    "description": "Optional mismatched x-worklingo-account-id fails ACCOUNT_CHANGED. Preference lookup/upsert uses authUser.id; missing/unsupported stored locale projects as vi.",
+    "evidence": [
+      {
+        "file": "apps/api/src/users/application/users.service.ts",
+        "symbol": "UsersService",
+        "lineStart": 23,
+        "lineEnd": 76,
+        "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+      },
+      {
+        "file": "apps/api/src/users/users.controller.ts",
+        "symbol": "UsersController",
+        "lineStart": 15,
+        "lineEnd": 41,
+        "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+      }
+    ],
+    "relatedIds": [
+      "MOD-users",
+      "ENT-LearnerProfile",
+      "SYM-6aa2cc952f58d6cc",
+      "SYM-09823005e8e03b2f",
+      "SYM-b14a3fa8c82d8682",
+      "SYM-c58a71023cecf778",
+      "SYM-d680738e947ff8a2",
+      "SYM-4cae3123686a953b",
+      "SYM-cbf83567c6c1e38c",
+      "SYM-a732334c7b84611c",
+      "SYM-cb8789a151d6139b",
+      "SYM-2f7f4d0da1bd9b22",
+      "SYM-1086bdc74dd926bd",
+      "SYM-5192c76b7e6a71e7",
+      "SYM-8b4c1f8b4e2f961d",
+      "API-0650d0a82d12eb77",
+      "API-af3bb6830f396b1c",
+      "API-4d57caa35f33c47a"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/users/application/users.service.ts",
+      "apps/api/src/users/users.controller.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-05",
+    "kind": "rule",
+    "name": "Draft edits use revision compare-and-set",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Published/archived imports are immutable through edit/validate. Edit requires expected revision and DRAFT/VALIDATED status, increments once, sets DRAFT and clears validationHash.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "symbol": "ContentImportsService",
+        "lineStart": 78,
+        "lineEnd": 143,
+        "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "symbol": "ContentImportsService",
+        "lineStart": 163,
+        "lineEnd": 205,
+        "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-ContentImport",
+      "SYM-fe05829c4b269c30",
+      "SYM-05e492ae233578f1",
+      "SYM-50f3ff9b7ffa6f06",
+      "SYM-3a70ac587851a973",
+      "SYM-9d8689cae39a3e88",
+      "SYM-68ec905cbc3261a6",
+      "SYM-da192bde128ceb1a"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/content-imports.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-06",
+    "kind": "rule",
+    "name": "Validation binds hash and blocking issues",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Conditional validation matches ID/revision/hash/editable status. Only canPublish sets VALIDATED and validationHash=sourceHash. Analyzer checks source length above 500000 characters, section/activity limits 200/50 and listening audio references; controller distinguishes parse/validation errors.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "symbol": "ContentImportsService",
+        "lineStart": 180,
+        "lineEnd": 223,
+        "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+      },
+      {
+        "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "symbol": "ContentAuthoringController",
+        "lineStart": 120,
+        "lineEnd": 137,
+        "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+      },
+      {
+        "file": "packages/content-format/src/validator.ts",
+        "symbol": "MAX_SOURCE_LENGTH; MAX_SECTIONS; MAX_ACTIVITIES; MAX_OPTIONS",
+        "lineStart": 27,
+        "lineEnd": 87,
+        "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+      },
+      {
+        "file": "packages/content-format/src/validator.ts",
+        "symbol": "validateLessonDocument",
+        "lineStart": 317,
+        "lineEnd": 337,
+        "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+      },
+      {
+        "file": "packages/content-format/src/validator.ts",
+        "symbol": "analyzeLessonSource",
+        "lineStart": 483,
+        "lineEnd": 522,
+        "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-ContentImport",
+      "SYM-fe05829c4b269c30",
+      "SYM-05e492ae233578f1",
+      "SYM-50f3ff9b7ffa6f06",
+      "SYM-3a70ac587851a973",
+      "SYM-9d8689cae39a3e88",
+      "SYM-68ec905cbc3261a6",
+      "SYM-da192bde128ceb1a",
+      "SYM-81d340a59a18c99c",
+      "SYM-d092855a62609f7c",
+      "SYM-0ed5740f4361dd1f",
+      "SYM-9b7e1a102c8f4919",
+      "SYM-6d6fbed09c7c150d",
+      "SYM-cc12763a91be9bb6",
+      "SYM-1a98966b6b250044",
+      "SYM-522889346d8c6b3f",
+      "API-84d059829fd88a5e",
+      "API-6d0da70ec52b3e32",
+      "API-740d1a3ca6cf53db",
+      "API-4aba6690814aa03c",
+      "API-3cb4bdf43a975c54",
+      "API-5a3705b5dd4aa51e",
+      "API-fb81a353e5880ca3",
+      "SYM-2cbec70abc0a86d4",
+      "SYM-84134157144ba486",
+      "SYM-0260115201df7aa1",
+      "SYM-96a0c547e121a81d"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/content-imports.service.ts",
+      "apps/api/src/content-authoring/content-authoring.controller.ts",
+      "packages/content-format/src/validator.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-07",
+    "kind": "rule",
+    "name": "Publication serializes allocation and replay",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Actor/operation/key receipt, slug advisory transaction lock and import row lock protect publication. It rechecks revision/hash/state, materializes children, archives prior current, changes pointer and commits audit/receipt together.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 33,
+        "lineEnd": 306,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 473,
+        "lineEnd": 628,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 308,
+        "lineEnd": 407,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 409,
+        "lineEnd": 473,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-LessonVersion",
+      "ENT-ContentImport",
+      "ENT-MutationReceipt",
+      "ENT-AuditLog",
+      "SYM-6784d170eee326c7",
+      "SYM-6f90718a00bc5fea",
+      "SYM-2043c822d22e5e53"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/content-publisher.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-08",
+    "kind": "rule",
+    "name": "Listening binds explicit current READY candidates",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Selected IDs are distinct; each required script selects artifact from this import with matching slug, READY and exact script hash. Extraneous selected slugs fail. Transaction rechecks candidates before version binding.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 144,
+        "lineEnd": 210,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 284,
+        "lineEnd": 305,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "symbol": "ContentPublisherService",
+        "lineStart": 532,
+        "lineEnd": 540,
+        "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-AudioArtifact",
+      "ENT-LessonVersionAudioArtifact",
+      "SYM-6784d170eee326c7",
+      "SYM-6f90718a00bc5fea",
+      "SYM-2043c822d22e5e53"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/content-publisher.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-09",
+    "kind": "rule",
+    "name": "Audio replay and freshness are separate",
+    "module": "MOD-content-authoring",
+    "status": "VERIFIED",
+    "description": "Generation request hash includes import/script selector/provider/voice/canonical config. Matching receipt replays acceptance. Pre/post synthesis script mismatch yields STALE; READY update requires GENERATING artifact.",
+    "evidence": [
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "symbol": "AudioGenerationService",
+        "lineStart": 62,
+        "lineEnd": 277,
+        "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+      },
+      {
+        "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "symbol": "AudioGenerationHandler",
+        "lineStart": 42,
+        "lineEnd": 111,
+        "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+      }
+    ],
+    "relatedIds": [
+      "MOD-content-authoring",
+      "ENT-AudioArtifact",
+      "ENT-MutationReceipt",
+      "SYM-3799485ce2e01519",
+      "SYM-1186c65cad1154c9",
+      "SYM-9ab0c15ba8cfed50",
+      "SYM-6fd73e60ea46a9b1",
+      "SYM-0528e09d6777d7ee",
+      "SYM-d121ea1770206826",
+      "SYM-81c0210180666465",
+      "SYM-18cdcc7b6deb0c3f",
+      "SYM-1bcead783bd33781",
+      "SYM-cf3d01cb6b1a5416",
+      "SYM-9382b5567e7cfadc",
+      "SYM-dc0821e1378e480c"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/content-authoring/application/audio-generation.service.ts",
+      "apps/api/src/content-authoring/application/audio-generation.handler.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-10",
+    "kind": "rule",
+    "name": "Job replay checks identity rather than payload equality",
+    "module": "MOD-jobs",
+    "status": "VERIFIED",
+    "description": "Enqueue skips duplicate key and confirms creator/type/resourceType/resourceId. It does not compare payload, contentImportId or maxAttempts against existing row.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 60,
+        "lineEnd": 93,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "ENT-Job",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/application/jobs.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-11",
+    "kind": "rule",
+    "name": "Claim locks and owner-attempt fences",
+    "module": "MOD-jobs",
+    "status": "VERIFIED",
+    "description": "Due PENDING/RETRY_WAIT needs remaining attempts; expired RUNNING is reclaimable. Claims use FOR UPDATE SKIP LOCKED. Completion/failure matches RUNNING/owner/attempt but not wall-clock lease expiry.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 96,
+        "lineEnd": 168,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      },
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 171,
+        "lineEnd": 235,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "ENT-Job",
+      "ENT-JobAttempt",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/application/jobs.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-12",
+    "kind": "rule",
+    "name": "Bounded code-specific retry",
+    "module": "MOD-jobs",
+    "status": "VERIFIED",
+    "description": "Runner requires retryable ProviderError and helper approval. Timeout/rate-limit/upstream retry below max; invalid/refused helper codes are eligible only at attempt 1. Delay starts at exponential 1s with 0.8–1.2 jitter, honors retryAfterMs within 60s cap. Live adapters mark refusals non-retryable, so their refusals never enter helper retry.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "decideJobRetry; JobRunnerService",
+        "lineStart": 15,
+        "lineEnd": 51,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "JobHandlerRegistry",
+        "lineStart": 142,
+        "lineEnd": 165,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "symbol": "DiscoveryLanguageEvaluationAdapter",
+        "lineStart": 47,
+        "lineEnd": 55,
+        "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "symbol": "OpenAiLanguageEvaluationAdapter",
+        "lineStart": 120,
+        "lineEnd": 124,
+        "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "MOD-ai-gateway",
+      "ENT-Job",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7",
+      "SYM-62e23d8fcd723087",
+      "SYM-d1f6ac5fb101bfa7",
+      "SYM-9971af444c8f8193",
+      "SYM-28249e6008f3e3aa",
+      "SYM-a807bdb04c56077c",
+      "SYM-d334a3bc20f8b01c",
+      "SYM-eea2498ba960905a"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+      "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-13",
+    "kind": "rule",
+    "name": "Owner manual retry grants one attempt",
+    "module": "MOD-jobs",
+    "status": "VERIFIED",
+    "description": "Status/retry API requires CONTENT_ADMIN or SYSTEM_ADMIN; service filters creator. Manual retry conditionally accepts FAILED/retryable, preserves identity, adds one maxAttempts unit and clears completion/errors.",
+    "evidence": [
+      {
+        "file": "apps/api/src/jobs/jobs.controller.ts",
+        "symbol": "JobsController",
+        "lineStart": 26,
+        "lineEnd": 51,
+        "sha256": "c3227c7f8eeecba37cb0c71f8d36c9007f14d51ccdd0d2e411260b7d89fb9271"
+      },
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService",
+        "lineStart": 239,
+        "lineEnd": 290,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      }
+    ],
+    "relatedIds": [
+      "MOD-jobs",
+      "ENT-Job",
+      "SYM-48cc1dd51c8019db",
+      "SYM-6289245794091ed1",
+      "SYM-8112bc4ef250250a",
+      "API-64c940cd380b0e0d",
+      "API-550de84691b6db35",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/jobs/jobs.controller.ts",
+      "apps/api/src/jobs/application/jobs.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-14",
+    "kind": "rule",
+    "name": "Fixed-window limiting applies only to decorated operations",
+    "module": "MOD-common",
+    "status": "VERIFIED",
+    "description": "No RateLimit metadata bypasses guard. Decorated calls use HMAC subject hashes and PostgreSQL upsert by scope/hash/window; excess is 429 with rate-limit/retry headers. Login/register each declare 30 per 60 seconds.",
+    "evidence": [
+      {
+        "file": "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+        "symbol": "RateLimitGuard",
+        "lineStart": 33,
+        "lineEnd": 98,
+        "sha256": "eac434b47242b8e229d9a8bb0cd3348cf95b686516fc9b69c3f842aa8ea60cdb"
+      },
+      {
+        "file": "apps/api/src/common/rate-limit/rate-limit.service.ts",
+        "symbol": "RateLimitService",
+        "lineStart": 40,
+        "lineEnd": 101,
+        "sha256": "853969b2b9399e633ed3ebe163ee49f6b5564eb7b0ce6aeb24b5bf137a0ad5dd"
+      },
+      {
+        "file": "apps/api/src/auth/auth.controller.ts",
+        "symbol": "AuthController",
+        "lineStart": 41,
+        "lineEnd": 68,
+        "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+      }
+    ],
+    "relatedIds": [
+      "MOD-common",
+      "MOD-auth",
+      "ENT-RateLimitBucket",
+      "SYM-cf935cacee9f1258",
+      "SYM-82dd6890164bc4d1",
+      "SYM-f11fb1c167cc90c0",
+      "SYM-52cbd94a28fb3922",
+      "SYM-9fe35f9014f55500",
+      "SYM-467cd8688ecbc6bb",
+      "SYM-2fea48451c9c9f5f",
+      "SYM-160317a178f17828",
+      "SYM-4051672ce5ee70d2",
+      "SYM-63899ccb34e77e53",
+      "SYM-7c79ff95eb0f7936",
+      "SYM-784e8cfeb515d895",
+      "SYM-1de762416949c88f",
+      "SYM-8c33e318a36cc9d3",
+      "API-72d35ffed94a1e5e",
+      "API-d98afd350a878235",
+      "API-75fe132ab22de760"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+      "apps/api/src/common/rate-limit/rate-limit.service.ts",
+      "apps/api/src/auth/auth.controller.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-CORE-15",
+    "kind": "rule",
+    "name": "Fallback is constrained independently of retryable flag",
+    "module": "MOD-ai-gateway",
+    "status": "VERIFIED",
+    "description": "Required provider overrides preference. Account fallback cannot override system prohibition. One alternate requires enabled fallback, registered secondary and ProviderError other than refusal/invalid-audio/expired-recording; retryable flag is not tested.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "symbol": "AiGatewayModule",
+        "lineStart": 45,
+        "lineEnd": 67,
+        "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "symbol": "RoutingLanguageEvaluationAdapter",
+        "lineStart": 15,
+        "lineEnd": 29,
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "symbol": "AiSettingsService",
+        "lineStart": 11,
+        "lineEnd": 22,
+        "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+      },
+      {
+        "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "symbol": "AiSettingsService",
+        "lineStart": 65,
+        "lineEnd": 82,
+        "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ai-gateway",
+      "ENT-AiRoutingSetting",
+      "SYM-1d29eaa66637c9e7",
+      "SYM-80e6b7d3dc2f0283",
+      "SYM-a55a740dc51d727a",
+      "SYM-28ffd8f141492887",
+      "SYM-dc07ac42cac361b2",
+      "SYM-7b571dea867b4494",
+      "SYM-30047f2922c3fc81",
+      "SYM-3ef74094ebc4f41f",
+      "SYM-2a0908106ad00139",
+      "SYM-a6b3af2fc1be46fc",
+      "SYM-3d75ca819359b7f7",
+      "SYM-565963de1f938ae7"
+    ],
+    "testFiles": [],
+    "relatedSourceFiles": [
+      "apps/api/src/ai-gateway/ai-gateway.module.ts",
+      "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+      "apps/api/src/ai-gateway/application/ai-settings.service.ts"
+    ],
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-session-create",
+    "kind": "rule",
+    "name": "Tạo phiên giới hạn thời lượng và context",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Chỉ tạo phiên học thường sau onboarding, trong active program/level, mission eligible; 45/60/90/120/150 là tập thời lượng hợp lệ.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.createSession/selectCurriculum",
+        "lineStart": 85,
+        "lineEnd": 180,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.requireCompletedOnboarding",
+        "lineStart": 518,
+        "lineEnd": 526,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-LearningSession",
+      "ENT-LearnerProgramEnrollment",
+      "TEST-a35143a7402e9106",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/learning-sessions.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "createSession trước replay: sessionDurationSchema phải hợp lệ và profile onboardingStatus=COMPLETE.",
+      "selectCurriculum lấy missions published của context.levelCode/context.programId; eligibility.available=true."
+    ],
+    "enforcement": [
+      "Khóa profile khi tạo; lưu session/blocks nguyên tử qua SessionCreationService.",
+      "Review queue được lọc theo LanguageBlock IDs xuất hiện trong missions hiện tại."
+    ],
+    "rejectedConditions": [
+      "Thời lượng ngoài tập: INVALID_SESSION_DURATION422.",
+      "Không onboarding:ONBOARDING_REQUIRED409; không mission404; eligibility false:CURRICULUM_UNAVAILABLE422."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/learning-sessions.integration.spec.ts",
+        "symbol": "deterministic evaluation, checkpoint and pause/resume assertions",
+        "lineStart": 241,
+        "lineEnd": 337,
+        "sha256": "98a8805a43d56d725ee39678eaa9df2b146a7cd9327ca78d623ed77812421cb3"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-session-transitions",
+    "kind": "rule",
+    "name": "Transition session và CAS ngăn ghi đè terminal",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Start chỉ PLANNED/PAUSED; pause chỉ IN_PROGRESS; resume chỉ PAUSED. IN_PROGRESS start/resume replay; COMPLETED không mở lại qua các lệnh này.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.startSession/pauseSession/resumeSession",
+        "lineStart": 236,
+        "lineEnd": 303,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.advanceSubmittedActivity",
+        "lineStart": 338,
+        "lineEnd": 364,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "symbol": "stale pause assertions",
+        "lineStart": 95,
+        "lineEnd": 114,
+        "sha256": "4e1793d4ef42d1b4c37defad73072ab7b38484865df75a6dd93b5e14f1f3666a"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-LearningSession",
+      "TEST-f7a6dc8f0ccf077b",
+      "TEST-a35143a7402e9106",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+      "apps/api/test/integration/learning-sessions.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Trước mutation đọc owner session.",
+      "updateMany khớp id/learnerId/status; advance khớp cả currentCheckpoint."
+    ],
+    "enforcement": [
+      "CAS count khác1 thì đọc latest và xử lý idempotent start/resume hoặc conflict.",
+      "Chỉ advance checkpoint cuối đặt COMPLETED."
+    ],
+    "rejectedConditions": [
+      "Pause không IN_PROGRESS; resume không PAUSED/IN_PROGRESS; start không PLANNED/PAUSED/IN_PROGRESS:INVALID_STATE_TRANSITION409.",
+      "Checkpoint đã đổi:409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "symbol": "queues writing evaluation; stale pause protection",
+        "lineStart": 17,
+        "lineEnd": 114,
+        "sha256": "4e1793d4ef42d1b4c37defad73072ab7b38484865df75a6dd93b5e14f1f3666a"
+      },
+      {
+        "file": "apps/api/test/integration/learning-sessions.integration.spec.ts",
+        "symbol": "deterministic evaluation, checkpoint and pause/resume assertions",
+        "lineStart": 241,
+        "lineEnd": 337,
+        "sha256": "98a8805a43d56d725ee39678eaa9df2b146a7cd9327ca78d623ed77812421cb3"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-attempt-identity",
+    "kind": "rule",
+    "name": "Attempt UUID nhận diện target, không hash nội dung mới",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Unique learner/clientAttemptId; replay cùng session/activity trả attempt cũ, khác target bị từ chối trước tạo attempt mới.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.submitAttempt duplicate and P2002 branches",
+        "lineStart": 376,
+        "lineEnd": 400,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.submitAttempt P2002 fallback",
+        "lineStart": 499,
+        "lineEnd": 506,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.resolveDuplicateAttempt",
+        "lineStart": 613,
+        "lineEnd": 625,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "ActivityAttempt uniqueness",
+        "lineStart": 635,
+        "lineEnd": 657,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-ActivityAttempt",
+      "TEST-a35143a7402e9106",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/learning-sessions.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Tra UUID trong phạm vi learner.",
+      "findOwnedSession diễn ra trước tra duplicate."
+    ],
+    "enforcement": [
+      "resolveDuplicateAttempt chỉ so sessionId/activityId.",
+      "Replay trước kiểm tra IN_PROGRESS/currentCheckpoint, không re-evaluate hoặc so response."
+    ],
+    "rejectedConditions": [
+      "UUID cùng learner nhưng target khác:IDEMPOTENCY_KEY_REUSED409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/learning-sessions.integration.spec.ts",
+        "symbol": "deterministic evaluation, checkpoint and pause/resume assertions",
+        "lineStart": 241,
+        "lineEnd": 337,
+        "sha256": "98a8805a43d56d725ee39678eaa9df2b146a7cd9327ca78d623ed77812421cb3"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-submission-evidence",
+    "kind": "rule",
+    "name": "Điểm objective và checkpoint có ngưỡng khác nhau",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Reading/listening chấm score đúng/số câu; chỉ score===1 mới advance, trong khi mastery/checkpoint pass evidence dùng >=0.7.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.evaluate",
+        "lineStart": 544,
+        "lineEnd": 583,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.submitAttempt",
+        "lineStart": 424,
+        "lineEnd": 460,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      },
+      {
+        "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+        "symbol": "passesEvaluatedEvidence",
+        "lineStart": 16,
+        "lineEnd": 17,
+        "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-ActivityAttempt",
+      "ENT-MasteryEvent",
+      "TEST-a35143a7402e9106",
+      "TEST-f7a6dc8f0ccf077b",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43",
+      "SYM-8ded926f66006ff7",
+      "SYM-439a117443e7b205"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+      "apps/api/src/progression/domain/checkpoint-policy.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/learning-sessions.integration.spec.ts",
+      "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Objective response có answerIndexes array, đúng số câu, tất cả integer.",
+      "Submission mới cần current activity và IN_PROGRESS."
+    ],
+    "enforcement": [
+      "score<1 vẫn lưu EVALUATED/feedback và có thể ghi mastery LEARNING.",
+      "Writing text hợp lệ advance=true dù score=null; có JobsService mới QUEUED."
+    ],
+    "rejectedConditions": [
+      "Thiếu/sai answerIndexes hoặc text rỗng:400.",
+      "Sai checkpoint:INVALID_CHECKPOINT409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "symbol": "queues writing evaluation; stale pause protection",
+        "lineStart": 17,
+        "lineEnd": 114,
+        "sha256": "4e1793d4ef42d1b4c37defad73072ab7b38484865df75a6dd93b5e14f1f3666a"
+      },
+      {
+        "file": "apps/api/test/integration/learning-sessions.integration.spec.ts",
+        "symbol": "deterministic evaluation, checkpoint and pause/resume assertions",
+        "lineStart": 241,
+        "lineEnd": 337,
+        "sha256": "98a8805a43d56d725ee39678eaa9df2b146a7cd9327ca78d623ed77812421cb3"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-draft-cas",
+    "kind": "rule",
+    "name": "Nháp writing dùng optimistic revision",
+    "module": "MOD-learning-sessions",
+    "status": "VERIFIED",
+    "description": "Ownership + plan membership + type/version quyết định quyền nháp. Revision0 chỉ tạo mới; nháp cũ phải khớp revision.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-sessions/application/activity-drafts.service.ts",
+        "symbol": "ActivityDraftsService.save",
+        "lineStart": 27,
+        "lineEnd": 63,
+        "sha256": "1861148ef95284f1220c2c95e6d7aebf808b2420768a3cd35c2b908bcc5bc72f"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/activity-drafts.service.ts",
+        "symbol": "ActivityDraftsService.requireOwnedWritingActivity/revisionConflict",
+        "lineStart": 78,
+        "lineEnd": 105,
+        "sha256": "1861148ef95284f1220c2c95e6d7aebf808b2420768a3cd35c2b908bcc5bc72f"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-sessions",
+      "ENT-ActivityDraft",
+      "ENT-LearningSession",
+      "TEST-dfca00d525a5c829",
+      "SYM-68016bb03a3e3033",
+      "SYM-dff19e6d88ec3946",
+      "SYM-ae13f04c6b9b33a4",
+      "SYM-aa7147fdce2e065a",
+      "SYM-d5f9623a004c1d4c",
+      "SYM-b2063b92480fa93f",
+      "SYM-66ce9e690bc0202b",
+      "SYM-5d063fea6d595be9",
+      "SYM-000683e2059bc293"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-sessions/application/activity-drafts.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/teacher-ai-api.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Writing activity nằm trong plan của owned session và khớp lessonVersion.",
+      "Không có draft:expectedRevision=0; có draft:expectedRevision=existing.revision."
+    ],
+    "enforcement": [
+      "Update theo id/revision, revision+1, text.trim và expiresAt mới.",
+      "Helper không gate session status/checkpoint và GET không gate expiresAt."
+    ],
+    "rejectedConditions": [
+      "Không match ownership/type/version/plan:404; revision không khớp/CAS fail:DRAFT_REVISION_CONFLICT409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/teacher-ai-api.integration.spec.ts",
+        "symbol": "enforces ownership, optimistic draft revisions, and learner-safe retry state",
+        "lineStart": 20,
+        "lineEnd": 103,
+        "sha256": "78427f3c346e6834436213a3c4d9b87d2f30df9e88b09ab968ffaa9682f1dc5b"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-ai-retry",
+    "kind": "rule",
+    "name": "AI retry phân biệt tự động, thủ công và nguồn còn lại",
+    "module": "MOD-teacher-ai",
+    "status": "VERIFIED",
+    "description": "Chỉ ProviderError retryable đi qua policy tự động; retry thủ công yêu cầu attempt lỗi và failed job retryable, đúng chủ sở hữu.",
+    "evidence": [
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+        "symbol": "EvaluateAttemptHandler.handle",
+        "lineStart": 28,
+        "lineEnd": 69,
+        "sha256": "66b87872c1eb7c0ac560672b53b199d594237569af8b3539d01688e2203b5168"
+      },
+      {
+        "file": "apps/api/src/jobs/application/job-runner.service.ts",
+        "symbol": "retry constants/decideJobRetry",
+        "lineStart": 15,
+        "lineEnd": 51,
+        "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+      },
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "symbol": "EvaluationService.retryForLearner",
+        "lineStart": 107,
+        "lineEnd": 140,
+        "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+      },
+      {
+        "file": "apps/api/src/jobs/application/jobs.service.ts",
+        "symbol": "JobsService.retryJob",
+        "lineStart": 239,
+        "lineEnd": 279,
+        "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+      }
+    ],
+    "relatedIds": [
+      "MOD-teacher-ai",
+      "ENT-ActivityAttempt",
+      "ENT-Job",
+      "ENT-Recording",
+      "TEST-dfca00d525a5c829",
+      "SYM-68572b79e24a5d29",
+      "SYM-1000680c320593a2",
+      "SYM-672875e0f9b3da3c",
+      "SYM-2f6afc2efe689290",
+      "SYM-d79e34dc28bc3629",
+      "SYM-a77af63dfde731c5",
+      "SYM-a84ad0326b5b1d50",
+      "SYM-e7a01fd801aefd6e",
+      "SYM-f4ccbab71e0513e5",
+      "SYM-ec31867463c11e4d",
+      "SYM-d37393a8e9deb074",
+      "SYM-7f70447be5c44e01",
+      "SYM-e8ff35ac857844e7",
+      "SYM-113c181e56b0d993",
+      "SYM-e6043d7a5f37569e",
+      "SYM-66f2452cd7488a41",
+      "SYM-44f27c9274598d5f",
+      "SYM-e7be3833d19e357b",
+      "SYM-62219a9fff63a216",
+      "SYM-0fd4e9a33686fd6b",
+      "SYM-61721c5582ceaec7",
+      "SYM-fa5e683d0c28dd37",
+      "SYM-1614cd58760abbe5",
+      "SYM-36fbe2c9a6c4fa5a",
+      "SYM-79baf9c1ad1ef1da",
+      "SYM-281c78d6910c07dd",
+      "SYM-24acddf1bda33bf6",
+      "SYM-0f69f0278710cd5c",
+      "SYM-f00b7afcc23386ab",
+      "SYM-e776436463aa228f",
+      "SYM-6bed139184a0ded1",
+      "SYM-c2e3ddb3ebc29556",
+      "SYM-1d9be984188d0d20"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/teacher-ai/application/evaluate-attempt.handler.ts",
+      "apps/api/src/jobs/application/job-runner.service.ts",
+      "apps/api/src/teacher-ai/application/evaluation.service.ts",
+      "apps/api/src/jobs/application/jobs.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/teacher-ai-api.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Tự động:attemptNumber<maxAttempts; transient code TIMEOUT/RATE_LIMITED/UPSTREAM hoặc RESPONSE_INVALID/REFUSED chỉ khi attemptNumber=1.",
+      "Thủ công:attempt EVALUATION_FAILED, JobsService tồn tại, tìm được FAILED/retryable job; retryJob yêu cầu createdById=actor.",
+      "TRANSCRIBE_SPEECH cần recording tồn tại, deletedAt và deletionRequestedAt null."
+    ],
+    "enforcement": [
+      "Backoff exponential 1000*2^(n-1), jitter0.8..1.2, xét retryAfterMs, cap60000ms.",
+      "Handler chỉ ghi QUEUED/FAILED khi status chưa EVALUATED.",
+      "Manual retry CAS job FAILED/retryable/counters; PENDING, maxAttempts+1, retryable=false."
+    ],
+    "rejectedConditions": [
+      "Không đủ điều kiện:EVALUATION_NOT_RETRYABLE409 hoặc JOB_NOT_RETRYABLE409.",
+      "Mất recording transcription:RECORDING_EXPIRED410."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/teacher-ai-api.integration.spec.ts",
+        "symbol": "enforces ownership, optimistic draft revisions, and learner-safe retry state",
+        "lineStart": 20,
+        "lineEnd": 103,
+        "sha256": "78427f3c346e6834436213a3c4d9b87d2f30df9e88b09ab968ffaa9682f1dc5b"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-ai-result",
+    "kind": "rule",
+    "name": "EvaluationResult unique theo attempt và rubric version",
+    "module": "MOD-teacher-ai",
+    "status": "VERIFIED",
+    "description": "Result tái dùng theo rubricVersion/inputHash; persist result/attempt/mastery cho LEARNING cùng transaction. Không đồng nghĩa exactly-once provider call.",
+    "evidence": [
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "symbol": "EvaluationService.evaluateAttempt",
+        "lineStart": 181,
+        "lineEnd": 299,
+        "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "EvaluationResult",
+        "lineStart": 694,
+        "lineEnd": 716,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-teacher-ai",
+      "ENT-EvaluationResult",
+      "ENT-ActivityAttempt",
+      "ENT-MasteryEvent",
+      "TEST-d8a8783e571007f1",
+      "SYM-113c181e56b0d993",
+      "SYM-e6043d7a5f37569e",
+      "SYM-66f2452cd7488a41",
+      "SYM-44f27c9274598d5f",
+      "SYM-e7be3833d19e357b",
+      "SYM-62219a9fff63a216",
+      "SYM-0fd4e9a33686fd6b",
+      "SYM-61721c5582ceaec7",
+      "SYM-fa5e683d0c28dd37"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/teacher-ai/application/evaluation.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "testFiles": [
+      "apps/api/src/teacher-ai/application/evaluation.service.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Precheck result cùng rubricVersion; hash input gồm activity/response/lessonVersion/rubric/speechMetrics.",
+      "Transaction kiểm tra unique result trước create."
+    ],
+    "enforcement": [
+      "Precheck cùng hash trả result, không gọi provider; khác hash conflict.",
+      "P2002 fallback chỉ replay winner cùng hash.",
+      "Trong transaction thấy duplicate thì trả id/score trực tiếp; nhánh này không so inputHash lại.",
+      "Chỉ LEARNING ghi mastery/project curriculum."
+    ],
+    "rejectedConditions": [
+      "Input đổi so pre-existing rubric result:409; unique race không có winner trùng hash:rethrow."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "symbol": "persists result, replays and isolates placement mastery",
+        "lineStart": 107,
+        "lineEnd": 210,
+        "sha256": "48a67b04eb19aaea0773ae51c4fbfee082fe31d664968980e482761c6ffcfb6f"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-self-confirm",
+    "kind": "rule",
+    "name": "Self-placement khóa profile và receipt hash",
+    "module": "MOD-onboarding",
+    "status": "VERIFIED",
+    "description": "Level tự chọn chỉ Intermediate playable canonical60; xác nhận và receipt/audit nguyên tử. Replay key/hash xử lý trước trạng thái COMPLETE.",
+    "evidence": [
+      {
+        "file": "apps/api/src/onboarding/application/onboarding.service.ts",
+        "symbol": "OnboardingService.confirmSelfPlacement",
+        "lineStart": 66,
+        "lineEnd": 165,
+        "sha256": "00c78a50e8f53d8054b7b3d461c5b0f8c4b09315a6842e37cc5dd6fe6578bed4"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/onboarding.service.ts",
+        "symbol": "OnboardingService.findPlayableLevels/replayOrThrow",
+        "lineStart": 212,
+        "lineEnd": 280,
+        "sha256": "00c78a50e8f53d8054b7b3d461c5b0f8c4b09315a6842e37cc5dd6fe6578bed4"
+      },
+      {
+        "file": "apps/api/src/curriculum/domain/playable-level-policy.ts",
+        "symbol": "findPlayableLevels",
+        "lineStart": 27,
+        "lineEnd": 45,
+        "sha256": "cd320047a15870890dcc19fcadc56b885bdd3518105e8dce03fedaa72a479bfd"
+      }
+    ],
+    "relatedIds": [
+      "MOD-onboarding",
+      "ENT-LearnerProfile",
+      "ENT-MutationReceipt",
+      "TEST-88fa9f9e0448021e",
+      "TEST-33f8d0d85965281b",
+      "SYM-7f5af0a3f61cfec3",
+      "SYM-4ae60a5a8619083e",
+      "SYM-9d9b77c3704cd87a",
+      "SYM-093d3f374bd7d0c5",
+      "SYM-1fde1e94e066cf0b",
+      "SYM-5ea5124bbd30e457",
+      "SYM-923d07984c4107a4",
+      "SYM-03036a181d06bd84",
+      "SYM-fe84cfa5e00ee323",
+      "SYM-12eb97190c0add7e",
+      "SYM-cba28afab14d9430",
+      "SYM-29a1d39d30c76a2c",
+      "SYM-18f74cb0d0bde3f1"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/onboarding/application/onboarding.service.ts",
+      "apps/api/src/curriculum/domain/playable-level-policy.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/onboarding-self-placement.integration.spec.ts",
+      "apps/api/test/integration/program-learning-boundaries.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Role LEARNER; UUID mới cần onboarding chưa COMPLETE.",
+      "selectedLevelCode trim phải có available=true trong eligible levels Intermediate."
+    ],
+    "enforcement": [
+      "Profile FOR UPDATE và receipt recheck serialize distinct confirmation.",
+      "Receipt scope actorId/operation=onboarding:self-placement/key, requestHash từ selectedLevelCode."
+    ],
+    "rejectedConditions": [
+      "Level không playable422; COMPLETE với UUID mới409; receipt hash khác409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/program-learning-boundaries.integration.spec.ts",
+        "symbol": "stale level mirror, archived content and onboarding boundary",
+        "lineStart": 14,
+        "lineEnd": 48,
+        "sha256": "d87f62ae87f04685d4961f20874466970c1f08a40455f1471f7a6dd33bb088dd"
+      }
+    ],
+    "unreviewedTestFiles": [
+      "apps/api/test/integration/onboarding-self-placement.integration.spec.ts"
+    ],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-placement-create",
+    "kind": "rule",
+    "name": "Một active placement theo learner khi tạo UUID mới",
+    "module": "MOD-onboarding",
+    "status": "VERIFIED",
+    "description": "Khóa profile rồi kiểm tra active status khác CONFIRMED; placement/session 45 phút được tạo cùng transaction và ghim lesson version.",
+    "evidence": [
+      {
+        "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+        "symbol": "PlacementAttemptsService.create",
+        "lineStart": 49,
+        "lineEnd": 126,
+        "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "PlacementAttempt",
+        "lineStart": 555,
+        "lineEnd": 576,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      },
+      {
+        "file": "apps/api/test/integration/placement-attempt.integration.spec.ts",
+        "symbol": "concurrent create assertions",
+        "lineStart": 87,
+        "lineEnd": 99,
+        "sha256": "fc0365802f618e2f44467dc5746384fd21a94f5fdba1f4aeeb2ac91085e9b4b4"
+      }
+    ],
+    "relatedIds": [
+      "MOD-onboarding",
+      "ENT-PlacementAttempt",
+      "ENT-LearningSession",
+      "TEST-19addedad20864a7",
+      "SYM-d72e49a50e01bfa7",
+      "SYM-d0582917a0fffe5f",
+      "SYM-f38c9047d805c9d9",
+      "SYM-3efbdb45a61bda42",
+      "SYM-0d409e28b3211c55",
+      "SYM-3c7b7365468e9516"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/onboarding/application/placement-attempts.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/placement-attempt.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Replay UUID cũ được tra trước và trong profile lock.",
+      "UUID mới:role LEARNER, chưa COMPLETE, không attempt status!=CONFIRMED."
+    ],
+    "enforcement": [
+      "Session duration45, clientSessionId=clientAttemptId, reviewItems=[]; attempt bind owner/session/lessonVersion."
+    ],
+    "rejectedConditions": [
+      "Active attempt khác:PLACEMENT_ATTEMPT_ACTIVE409.",
+      "Đã COMPLETE:ONBOARDING_ALREADY_COMPLETE409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/placement-attempt.integration.spec.ts",
+        "symbol": "UUID replay and concurrent creation",
+        "lineStart": 66,
+        "lineEnd": 99,
+        "sha256": "fc0365802f618e2f44467dc5746384fd21a94f5fdba1f4aeeb2ac91085e9b4b4"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-placement-decision",
+    "kind": "rule",
+    "name": "Recommendation đủ bốn skill và confirm kiểm tra live content",
+    "module": "MOD-onboarding",
+    "status": "VERIFIED",
+    "description": "Mỗi skill cần evaluated score/evidence; candidate hiện chỉ FOUNDATION_1 minima0. RECOMMENDED/CONFIRMED không refresh lại; confirm có live availability.",
+    "evidence": [
+      {
+        "file": "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+        "symbol": "PlacementRecommendationService.refresh",
+        "lineStart": 33,
+        "lineEnd": 106,
+        "sha256": "37affe103548ab5cfc3306cdc5d993b0ec4d5aa72de5e964a5ff37d65aecdc75"
+      },
+      {
+        "file": "apps/api/src/onboarding/domain/placement-policy.ts",
+        "symbol": "WORKPLACE_PLACEMENT_V1_CANDIDATES/recommendPlacement",
+        "lineStart": 27,
+        "lineEnd": 78,
+        "sha256": "b55ce1d172adb2d372d933c224eff57917e01c44c23e1dcc246049b5f57dbdda"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/placement-attempts.service.ts",
+        "symbol": "PlacementAttemptsService.confirm",
+        "lineStart": 139,
+        "lineEnd": 266,
+        "sha256": "53f57d2eba4224bbd7bb073e3628ad1342b28647b09f190f20d5f2cec5976536"
+      }
+    ],
+    "relatedIds": [
+      "MOD-onboarding",
+      "ENT-PlacementAttempt",
+      "ENT-MutationReceipt",
+      "TEST-4dc8639fa0a799ba",
+      "SYM-c89930e3c8e0b1f1",
+      "SYM-efcd5d20c701a6af",
+      "SYM-5cdeb45823c69eac",
+      "SYM-4a054b7e2e2517bb",
+      "SYM-b101f885a8892408",
+      "SYM-a0cf6d38548742bc",
+      "SYM-30bd7754d420929b",
+      "SYM-f657f16f80d9f2e5",
+      "SYM-d72e49a50e01bfa7",
+      "SYM-d0582917a0fffe5f",
+      "SYM-f38c9047d805c9d9",
+      "SYM-3efbdb45a61bda42",
+      "SYM-0d409e28b3211c55",
+      "SYM-3c7b7365468e9516"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/onboarding/application/placement-recommendation.service.ts",
+      "apps/api/src/onboarding/domain/placement-policy.ts",
+      "apps/api/src/onboarding/application/placement-attempts.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/placement-confirmation.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Session COMPLETED trước khi recommendation; skill status evaluated, score!=null,evidenceCount>=1.",
+      "Skill có evaluated evidence lấy trung bình evaluated; chỉ khi không có evaluated mới xét failure.",
+      "Confirm UUID mới:profile chưa COMPLETE, attempt RECOMMENDED/recommendedLevelCode và level còn available."
+    ],
+    "enforcement": [
+      "Update recommendation chỉ từ IN_PROGRESS/PROCESSING/ACTION_REQUIRED.",
+      "Khóa profile/attempt; receipt hash attemptId; enrollment/profile/CONFIRMED/audit/receipt cùng transaction."
+    ],
+    "rejectedConditions": [
+      "Chưa ready:PLACEMENT_NOT_READY409; withdrawn:LEVEL_NO_LONGER_AVAILABLE409.",
+      "Không candidate eligible:ACTION_REQUIRED, không tự chọn level khác."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/placement-confirmation.integration.spec.ts",
+        "symbol": "confirmation replay, concurrency and withdrawn curriculum",
+        "lineStart": 210,
+        "lineEnd": 290,
+        "sha256": "dac24f7e2c11570ac6fd0c535e472313a1945cad1f421074f4ac0bd25e4b8098"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-mastery-idempotency",
+    "kind": "rule",
+    "name": "Mastery chỉ nhận scored evidence và khóa theo skill/block",
+    "module": "MOD-mastery",
+    "status": "VERIFIED",
+    "description": "EVALUATED score!=null cùng refs/skills mới ghi. Event unique attempt/block/skill; lock learner/block/skill serialize cả attempts khác nhau.",
+    "evidence": [
+      {
+        "file": "apps/api/src/mastery/application/mastery.service.ts",
+        "symbol": "MasteryService.recordAttemptEvaluation/recordInTransaction",
+        "lineStart": 87,
+        "lineEnd": 199,
+        "sha256": "107f1aab2c5ee640dc7268ad71ca98548d27df12c2d560bf109d69fe9bf1c4ec"
+      },
+      {
+        "file": "apps/api/src/mastery/application/mastery.service.ts",
+        "symbol": "MasteryService.recordInTransaction persistence",
+        "lineStart": 203,
+        "lineEnd": 265,
+        "sha256": "107f1aab2c5ee640dc7268ad71ca98548d27df12c2d560bf109d69fe9bf1c4ec"
+      },
+      {
+        "file": "apps/api/prisma/schema.prisma",
+        "symbol": "MasteryEvent uniqueness",
+        "lineStart": 1298,
+        "lineEnd": 1321,
+        "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+      }
+    ],
+    "relatedIds": [
+      "MOD-mastery",
+      "ENT-MasteryRecord",
+      "ENT-MasteryEvent",
+      "ENT-ErrorBankEntry",
+      "TEST-f1c6615738bbddcd",
+      "SYM-e5a5d5f369d09fd3",
+      "SYM-436b9cfca38da21c",
+      "SYM-6099e19833ccbfef",
+      "SYM-a163692a5878b676",
+      "SYM-9764557d873ab3f9",
+      "SYM-0901b4f14d9fc159",
+      "SYM-9be0822242d2b014",
+      "SYM-7c61542ea249c7c0",
+      "SYM-a54cee1e1e97d406",
+      "SYM-1cc11610ecd1d9ac",
+      "SYM-53d00d817baed680",
+      "SYM-56df087ee4635a9a",
+      "SYM-69865c6e04166591"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/mastery/application/mastery.service.ts",
+      "apps/api/prisma/schema.prisma"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/mastery.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Không EVALUATED, null score, thiếu refs/skills: return[] ngay.",
+      "Dedupe skill, sort block/skill, advisory transaction lock trước event lookup."
+    ],
+    "enforcement": [
+      "Existing event bỏ qua.",
+      "Lỗi score<0.7 cần attempt owner/status/score/lessonVersion chính xác trước tạo ACTIVITY-level error entry.",
+      "Không gọi service cho placement trong submitAttempt/evaluateAttempt paths đã đọc."
+    ],
+    "rejectedConditions": [
+      "Mismatched incorrect evidence context:throw Error, rollback."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/mastery.integration.spec.ts",
+        "symbol": "unscored and concurrent attempts assertions",
+        "lineStart": 248,
+        "lineEnd": 354,
+        "sha256": "7f7e71fd28a6b94ebadd96b8d08a4b36509fc28e47d22fe61c67afbeace5bc60"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-review-policy",
+    "kind": "rule",
+    "name": "Ôn tập ưu tiên điểm yếu, state không tự đổi theo enum",
+    "module": "MOD-mastery",
+    "status": "VERIFIED",
+    "description": "Thành công>=0.7 và không INCORRECT_ATTEMPT. Stable cần interval>=7/score>=0.85; queue chọn do thời gian và NEEDS_ATTENTION.",
+    "evidence": [
+      {
+        "file": "apps/api/src/mastery/domain/mastery-calculator.ts",
+        "symbol": "MasteryCalculator.calculateNextState",
+        "lineStart": 11,
+        "lineEnd": 71,
+        "sha256": "e5b9736949f65c593785d773965ef18c8ee0500aca9510d83279c75149a07d84"
+      },
+      {
+        "file": "apps/api/src/mastery/domain/review-scheduler.ts",
+        "symbol": "ReviewScheduler.selectReviewItems",
+        "lineStart": 11,
+        "lineEnd": 72,
+        "sha256": "4296a490a834a99ee2c0b5bb077d88beef2a5e9fe58008a21ebadc59d581f94b"
+      }
+    ],
+    "relatedIds": [
+      "MOD-mastery",
+      "ENT-MasteryRecord",
+      "TEST-c0402228ea99161b",
+      "TEST-f1c6615738bbddcd",
+      "SYM-e955c9e5bda41eb6",
+      "SYM-52e695bd339d9fa7",
+      "SYM-04a884730c9e557e",
+      "SYM-e8f6930c2e6aad0d"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/mastery/domain/mastery-calculator.ts",
+      "apps/api/src/mastery/domain/review-scheduler.ts"
+    ],
+    "testFiles": [
+      "apps/api/src/mastery/domain/mastery-calculator.spec.ts",
+      "apps/api/test/integration/mastery.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Lần đầu success→LEARNING, fail→NEEDS_ATTENTION.",
+      "Record cũ fail→NEEDS_ATTENTION, interval1; success tăng interval theo <2→3,<5→7,<10→14,còn lại min60,old*2."
+    ],
+    "enforcement": [
+      "NextReviewAt=clock.now+intervalDays.",
+      "Queue NEEDS_ATTENTION nếu due hoặc includeWeakUnscheduled(default true); otherwise chọn due.",
+      "Sắp NEEDS_ATTENTION trước OVERDUE trước DUE, sau đó priorityScore giảm và ID tăng."
+    ],
+    "rejectedConditions": [
+      "Skill filter loại skills khác; upcoming non-weak bị loại.",
+      "Không có writer REVIEW_DUE được chứng minh bằng calculator này."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/mastery.integration.spec.ts",
+        "symbol": "unscored and concurrent attempts assertions",
+        "lineStart": 248,
+        "lineEnd": 354,
+        "sha256": "7f7e71fd28a6b94ebadd96b8d08a4b36509fc28e47d22fe61c67afbeace5bc60"
+      }
+    ],
+    "unreviewedTestFiles": [
+      "apps/api/src/mastery/domain/mastery-calculator.spec.ts"
+    ],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-program-boundary",
+    "kind": "rule",
+    "name": "Active enrollment là nguồn level và revision switch",
+    "module": "MOD-learning-programs",
+    "status": "VERIFIED",
+    "description": "Session selection theo active program/enrollment; ordinary onboarding chỉ Intermediate. Switch không tự tạo enrollment target.",
+    "evidence": [
+      {
+        "file": "apps/api/src/learning-programs/application/program-context.service.ts",
+        "symbol": "ProgramContextService.resolve/activate",
+        "lineStart": 26,
+        "lineEnd": 88,
+        "sha256": "705d9edccc5de55cc4c6aa17be22616dbf769eb00d1e36f6577a7e63c370b3c3"
+      },
+      {
+        "file": "apps/api/src/learning-programs/application/program-context.service.ts",
+        "symbol": "ProgramContextService.readContext",
+        "lineStart": 91,
+        "lineEnd": 110,
+        "sha256": "705d9edccc5de55cc4c6aa17be22616dbf769eb00d1e36f6577a7e63c370b3c3"
+      },
+      {
+        "file": "apps/api/src/onboarding/application/onboarding.service.ts",
+        "symbol": "OnboardingService.findPlayableLevels",
+        "lineStart": 212,
+        "lineEnd": 261,
+        "sha256": "00c78a50e8f53d8054b7b3d461c5b0f8c4b09315a6842e37cc5dd6fe6578bed4"
+      },
+      {
+        "file": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "symbol": "LearningSessionsService.selectCurriculum",
+        "lineStart": 85,
+        "lineEnd": 111,
+        "sha256": "f0bb6d938f065242ce273c46525dfc114976a35b54d3380861ab9d688c34f720"
+      }
+    ],
+    "relatedIds": [
+      "MOD-learning-programs",
+      "ENT-LearnerProgramEnrollment",
+      "ENT-LearnerProfile",
+      "ENT-LearningProgram",
+      "TEST-33f8d0d85965281b",
+      "TEST-614d09a82a4330cb",
+      "SYM-f7215b13263d14aa",
+      "SYM-aaefdddbf0f41029",
+      "SYM-8a142edbf7f2c4c8",
+      "SYM-5b7ff259003de197",
+      "SYM-33a013f3d0934dfe",
+      "SYM-cb2de938794a7e28",
+      "SYM-7c3e2bb2ed7f978e",
+      "SYM-1c4a7fb79dc45a84",
+      "SYM-7f5af0a3f61cfec3",
+      "SYM-4ae60a5a8619083e",
+      "SYM-9d9b77c3704cd87a",
+      "SYM-093d3f374bd7d0c5",
+      "SYM-1fde1e94e066cf0b",
+      "SYM-5ea5124bbd30e457",
+      "SYM-923d07984c4107a4",
+      "SYM-03036a181d06bd84",
+      "SYM-4dfcc4eacf196059",
+      "SYM-e2e1251bca0fca48",
+      "SYM-a2fd92fc612a5978",
+      "SYM-b06241543bd73201",
+      "SYM-ca3d1adb11756f00",
+      "SYM-c979828be9961733",
+      "SYM-53d4a7b24af96725",
+      "SYM-8bb30994c925e262",
+      "SYM-fc812cc6bde64979",
+      "SYM-271dd066d2b49e58",
+      "SYM-7554f206bac01e4c",
+      "SYM-5c1ab5ef923b6046",
+      "SYM-cfc7edbc52cba5a4",
+      "SYM-7fc693980b744552",
+      "SYM-acc7013b7dff9281",
+      "SYM-b84d8c3d40a2fa3a",
+      "SYM-b1505acc781cb8c0",
+      "SYM-ee1bacbebff68f69",
+      "SYM-968e9af1cb2ba1eb",
+      "SYM-497f24bea13e475b",
+      "SYM-9bbc682818980ffa",
+      "SYM-f6519e2bd55e047f",
+      "SYM-f63949596664bc43"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/learning-programs/application/program-context.service.ts",
+      "apps/api/src/onboarding/application/onboarding.service.ts",
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/program-learning-boundaries.integration.spec.ts",
+      "apps/api/test/integration/progression.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Activate profile COMPLETE, target tồn tại/not DISABLED và deriveProgramAccess.isSelectable.",
+      "expectedRevision=current enrollment revision; target enrollment level thuộc target."
+    ],
+    "enforcement": [
+      "Khóa profile serialize switch với các thao tác dùng cùng lock.",
+      "Khác target tăng revision lên max(current,target)+1; cùng target trả hiện trạng sau kiểm tra revision."
+    ],
+    "rejectedConditions": [
+      "Stale:PROGRAM_CONTEXT_STALE409; inconsistent:PROGRAM_CONTEXT_INVALID409; unavailable422; disabled404."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/program-learning-boundaries.integration.spec.ts",
+        "symbol": "stale level mirror, archived content and onboarding boundary",
+        "lineStart": 14,
+        "lineEnd": 48,
+        "sha256": "d87f62ae87f04685d4961f20874466970c1f08a40455f1471f7a6dd33bb088dd"
+      },
+      {
+        "file": "apps/api/test/integration/progression.integration.spec.ts",
+        "symbol": "immutable assessment and concurrent confirmation",
+        "lineStart": 197,
+        "lineEnd": 255,
+        "sha256": "2b09ba9e6cb344c0600c46aab3e0eb8f2ab9c9b9ea83df7d6bd572b063c111f1"
+      },
+      {
+        "file": "apps/api/test/integration/progression.integration.spec.ts",
+        "symbol": "live prerequisites block stale pass",
+        "lineStart": 443,
+        "lineEnd": 490,
+        "sha256": "2b09ba9e6cb344c0600c46aab3e0eb8f2ab9c9b9ea83df7d6bd572b063c111f1"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-curriculum-evidence",
+    "kind": "rule",
+    "name": "Prerequisite và completion cùng enrollment/revision",
+    "module": "MOD-curriculum-foundation",
+    "status": "VERIFIED",
+    "description": "Eligibility kiểm tra hierarchy/bound lessons/prerequisites. Completion chỉ sau required objective mappings có attempt/mastery>=0.7.",
+    "evidence": [
+      {
+        "file": "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+        "symbol": "CurriculumEligibilityService.resolve",
+        "lineStart": 30,
+        "lineEnd": 76,
+        "sha256": "8d52310a2f6837a7c3f6c507e83404af94e1b6f5f2aa4091996ac8f89c8dc12c"
+      },
+      {
+        "file": "apps/api/src/curriculum-foundation/application/curriculum-progress.service.ts",
+        "symbol": "CurriculumProgressService.projectSession/readRevisionProgress",
+        "lineStart": 25,
+        "lineEnd": 56,
+        "sha256": "aa45c7dc98e1cdd385fa62212f247e01f548f960246e83127ad706cc9471aae6"
+      },
+      {
+        "file": "apps/api/src/curriculum-foundation/application/curriculum-progress.service.ts",
+        "symbol": "CurriculumProgressService.readRevisionProgress",
+        "lineStart": 98,
+        "lineEnd": 133,
+        "sha256": "aa45c7dc98e1cdd385fa62212f247e01f548f960246e83127ad706cc9471aae6"
+      },
+      {
+        "file": "apps/api/src/curriculum-foundation/domain/objective-evidence-policy.ts",
+        "symbol": "evaluateObjectiveEvidence",
+        "lineStart": 19,
+        "lineEnd": 42,
+        "sha256": "2b2b11f102d6815e2daf75fc274f4869fb8aa3a04707d3a29cde21946ae1b3ff"
+      },
+      {
+        "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+        "symbol": "passesEvaluatedEvidence",
+        "lineStart": 16,
+        "lineEnd": 17,
+        "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+      }
+    ],
+    "relatedIds": [
+      "MOD-curriculum-foundation",
+      "ENT-CurriculumRevision",
+      "ENT-CurriculumCompletion",
+      "ENT-CurriculumPrerequisite",
+      "TEST-d20bac4641cb1610",
+      "TEST-2ad6c43d7b261563",
+      "SYM-997048e40fa1ee26",
+      "SYM-b8a6a9acddb4d7ff",
+      "SYM-b384c9f3a491c5dc",
+      "SYM-e245bce75179f68f",
+      "SYM-dbaa0518b0968991",
+      "SYM-f72e13efcc81cf01",
+      "SYM-2cc9ceb64c653e4e",
+      "SYM-95c5f044122e5248",
+      "SYM-25a31808a3b5cefc",
+      "SYM-cbec6a65447eed18",
+      "SYM-8ded926f66006ff7",
+      "SYM-439a117443e7b205"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+      "apps/api/src/curriculum-foundation/application/curriculum-progress.service.ts",
+      "apps/api/src/curriculum-foundation/domain/objective-evidence-policy.ts",
+      "apps/api/src/progression/domain/checkpoint-policy.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/curriculum-foundation-progress.integration.spec.ts",
+      "apps/api/test/integration/curriculum-foundation-eligibility.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Mission thuộc active program; mission/level/path PUBLISHED.",
+      "Revision mới nhất published phải có lessons, lessons/prerequisites PUBLISHED, prerequisite completion đúng context.enrollmentId.",
+      "Project session COMPLETED/revision mission khớp và có enrollment program revision."
+    ],
+    "enforcement": [
+      "Mỗi mapping cần đúng lessonVersion/activitySlug EVALUATED score>=0.7, và mastery skill/block>=0.7.",
+      "Upsert completion unique enrollment/revision, update{}; không tự chuyển level.",
+      "Mission không definition/revision có legacy hierarchy-only path; definition chưa published thì unavailable."
+    ],
+    "rejectedConditions": [
+      "Thiếu prerequisite/lesson publication:availability=false/reasons.",
+      "Thiếu objective evidence:không ghi completion."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/curriculum-foundation-progress.integration.spec.ts",
+        "symbol": "pending/foreign evidence; duplicate projection",
+        "lineStart": 75,
+        "lineEnd": 106,
+        "sha256": "023fe75b5a085f48b582f3fa32a6b1006fd7a7797797f1def69f11b1128185e0"
+      }
+    ],
+    "unreviewedTestFiles": [
+      "apps/api/test/integration/curriculum-foundation-eligibility.integration.spec.ts"
+    ],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-progression-confirm",
+    "kind": "rule",
+    "name": "Pass bất biến chưa đủ nếu prerequisites live thay đổi",
+    "module": "MOD-progression",
+    "status": "VERIFIED",
+    "description": "Confirm dùng immutable pass rồi live blockers, không dùng evidence mới để nâng assessment cũ. Không skip immediate next level.",
+    "evidence": [
+      {
+        "file": "apps/api/src/progression/application/progression.service.ts",
+        "symbol": "ProgressionService.assess/confirm",
+        "lineStart": 69,
+        "lineEnd": 157,
+        "sha256": "9e267b0fbf237ab6011a8d9f18796fed776a1c643a448f426f548311805f4451"
+      },
+      {
+        "file": "apps/api/src/progression/domain/checkpoint-policy.ts",
+        "symbol": "evaluateCheckpoint",
+        "lineStart": 19,
+        "lineEnd": 60,
+        "sha256": "fdb892a0c9beb63d06c97493a5bfcbd7fa8c17f902cca5a95979d452867f2b6c"
+      },
+      {
+        "file": "apps/api/src/progression/application/checkpoint-evidence.ts",
+        "symbol": "availableNextLevel",
+        "lineStart": 80,
+        "lineEnd": 96,
+        "sha256": "8f32dde18650ef18da4b10582df65cec3e23007433e7a69db98b3a9b634325f6"
+      }
+    ],
+    "relatedIds": [
+      "MOD-progression",
+      "ENT-CheckpointAssessment",
+      "ENT-ProgressionConfirmation",
+      "ENT-LearnerProgramEnrollment",
+      "TEST-614d09a82a4330cb",
+      "SYM-118d06b00abd2f67",
+      "SYM-93c04061a895a24e",
+      "SYM-aaa25701015688b1",
+      "SYM-b8c493601f21c46d",
+      "SYM-0b9a8ea357bf9069",
+      "SYM-54ac30da24ca048f",
+      "SYM-8569937bafa0bba7",
+      "SYM-89c43e03b81a41a0",
+      "SYM-8ded926f66006ff7",
+      "SYM-439a117443e7b205",
+      "SYM-ecff58e647e43d64",
+      "SYM-1a09fa2429fdd3f9",
+      "SYM-ba6d1661aa0d3bd1",
+      "SYM-b2b91881224e317f",
+      "SYM-a6ad922060188e98",
+      "SYM-7aabc0a89b0d28f6"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/progression/application/progression.service.ts",
+      "apps/api/src/progression/domain/checkpoint-policy.ts",
+      "apps/api/src/progression/application/checkpoint-evidence.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/progression.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Pass workplace-checkpoint-v1, mọi skill passed/pendingCount0/evaluatedCount>0/score>=threshold0.7; snapshot allMissionsCompleted/curriculumReady.",
+      "Context level/enrollmentRevision khớp; live curriculum ready/all missions completed/required block scores>=0.7.",
+      "Next availability bằng snapshot.nextLevelCode; nếu next!=null cần canAdvance."
+    ],
+    "enforcement": [
+      "Profile lock + enrollment CAS level/revision; ProgressionConfirmation duy nhất assessment.",
+      "next=null vẫn confirm completion không advance.",
+      "Checkpoint decision dùng first EVALUATED attempt theo ordered list, skill average riêng biệt."
+    ],
+    "rejectedConditions": [
+      "Failed/pending snapshot không confirm; đổi program/context/curriculum/next hoặc CAS fail409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/progression.integration.spec.ts",
+        "symbol": "immutable assessment and concurrent confirmation",
+        "lineStart": 197,
+        "lineEnd": 255,
+        "sha256": "2b09ba9e6cb344c0600c46aab3e0eb8f2ab9c9b9ea83df7d6bd572b063c111f1"
+      },
+      {
+        "file": "apps/api/test/integration/progression.integration.spec.ts",
+        "symbol": "live prerequisites block stale pass",
+        "lineStart": 443,
+        "lineEnd": 490,
+        "sha256": "2b09ba9e6cb344c0600c46aab3e0eb8f2ab9c9b9ea83df7d6bd572b063c111f1"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-bridge-stages",
+    "kind": "rule",
+    "name": "Bridge stage tuần tự, timer bắt buộc nhưng không cấm nộp trễ",
+    "module": "MOD-ielts-bridge",
+    "status": "VERIFIED",
+    "description": "Start mới cần orientation completed. Update lock/revision/index; timed stage phải startTimer, hoàn thành vẫn được khi trễ hoặc sai đáp án.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.start/updateProgress",
+        "lineStart": 73,
+        "lineEnd": 173,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      },
+      {
+        "file": "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts",
+        "symbol": "IeltsBridgeLearnerService.hasCompletedOrientation",
+        "lineStart": 176,
+        "lineEnd": 180,
+        "sha256": "7212b7fc669d2ddcf2a511663700f8539abbbca30ab8f301edf9044b68c948b2"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-bridge",
+      "ENT-IeltsBridgeProgress",
+      "ENT-OrientationProgress",
+      "TEST-576de256d547b91e",
+      "SYM-d44a6f09c3d03278",
+      "SYM-1ea9533730505a58",
+      "SYM-a7243de3795afa2c",
+      "SYM-1a1bfeffc4b42779",
+      "SYM-c79f02ff1f713c3a",
+      "SYM-0abc2f384244e2d8",
+      "SYM-d5cfcc666ceeb456",
+      "SYM-97410e72eb72d307",
+      "SYM-380b8b9afd36bdc6",
+      "SYM-eada1b856b36a2b9",
+      "SYM-47418fa12e87c279",
+      "SYM-b5eccd556208feab",
+      "SYM-2ea2fe42d1317575",
+      "SYM-3a0b32ddf033b2e4",
+      "SYM-008e912364ce9984"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-bridge/application/ielts-bridge-learner.service.ts"
+    ],
+    "testFiles": [
+      "apps/api/test/integration/ielts-bridge-learner.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Start replay trước gate; mới cần OrientationProgress.completedAt!=null và published module/current version.",
+      "Update chưa completed, revision/index khớp sau row lock.",
+      "startTimer chỉ timed_practice/timeLimitSeconds!=null và không completeStage cùng request; không được bật lần2."
+    ],
+    "enforcement": [
+      "Deadline=server now+timeLimitSeconds.",
+      "Complete cần completeStage, timed stage đã start; lưu timedOut=(now>deadline), advance kể cả correct=false/null.",
+      "Stage cuối giữ index cuối và completedAt; không mở lại qua update."
+    ],
+    "rejectedConditions": [
+      "ALREADY_COMPLETED/REVISION_STALE409; STAGE_LOCKED/TIMER_REQUIRED/TIMER_INVALID422; TIMER_ALREADY_STARTED409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/test/integration/ielts-bridge-learner.integration.spec.ts",
+        "symbol": "pinned version, ownership and ten stages",
+        "lineStart": 49,
+        "lineEnd": 95,
+        "sha256": "9ee648a23828838c1dcfb49a63c67537e1628287711000cbc62ec7de61164517"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-integrated-band",
+    "kind": "rule",
+    "name": "Integrated completion và band scored sample là hai điều kiện khác nhau",
+    "module": "MOD-ielts-integrated-practice",
+    "status": "VERIFIED",
+    "description": "Integrated advances dù correct=false/null; band chỉ đếm boolean evidence. Revision bảo vệ progress; gate Bridge là count>=4.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+        "symbol": "IeltsIntegratedLearnerService.start/update/bridgeComplete",
+        "lineStart": 28,
+        "lineEnd": 92,
+        "sha256": "b32e005f719e31f8af1519e47ed586732a253efe6c66aaf8a71f37af4e0ff002"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+        "symbol": "IeltsBandLearnerService.evaluate/updateTarget",
+        "lineStart": 58,
+        "lineEnd": 95,
+        "sha256": "c47de3e273983b9a33455572b43a6352edb0c87f82d73a70963d56c59daabd3f"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts",
+        "symbol": "evaluateBandProgression",
+        "lineStart": 14,
+        "lineEnd": 46,
+        "sha256": "cd633ab67bf757502b51d5330526bcb59e8ef5c6eb08749782fc5a145e0e1cef"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-integrated-practice",
+      "ENT-IeltsIntegratedSession",
+      "ENT-IeltsIntegratedSessionBlock",
+      "ENT-IeltsBandJourney",
+      "TEST-cc88238751f7e285",
+      "TEST-9e87f70103cadd38",
+      "TEST-8ef93ec3a312f7b1",
+      "SYM-6fe4c0efcc75f876",
+      "SYM-c242916366bba9a4",
+      "SYM-7eea2f24b414c37b",
+      "SYM-6d7d73dcb69824f9",
+      "SYM-fe14d8e8d5e56aa7",
+      "SYM-287fe4d8cc1a51e7",
+      "SYM-39f4489d1e32bfda",
+      "SYM-62aa68652f4cbe00",
+      "SYM-8b84879e86b5e5e4",
+      "SYM-570603e7a2bf4301",
+      "SYM-0d2ae3df732163e2",
+      "SYM-1381bb46ac8b2125",
+      "SYM-7c37328ae9fdd106",
+      "SYM-2fe4f4f61ddb0d1c",
+      "SYM-bae68cf38d852216",
+      "SYM-ce0ed410e9e1e55c",
+      "SYM-3d3955f1de1e6a20",
+      "SYM-29b948a79a1a67f9",
+      "SYM-308531b3744e702e",
+      "SYM-42d795d4f32daacd",
+      "SYM-5fb64518f1fa8795",
+      "SYM-05934641ae1a6f90",
+      "SYM-cd6347805a282ccf",
+      "SYM-b78e69e352039098",
+      "SYM-969e84f0a4d0aefb",
+      "SYM-b13a8314e91d785d"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.ts",
+      "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.ts"
+    ],
+    "testFiles": [
+      "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.spec.ts",
+      "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts",
+      "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Start integrated/band mới yêu cầu completed required Bridge progress count>=4, không kiểm tra bốn skill distinct.",
+      "Integrated update owner/chưa completed/revision/current index.",
+      "Band evaluate chưa completed/revision, sessions completed/startedAt>=journey.startedAt; boolean correct thuộc bốn skills."
+    ],
+    "enforcement": [
+      "Integrated computes timedOut nhưng không gate score/time; CAS tăng index/revision, last index3 completed.",
+      "Band yêu cầu minimumSessions và minSamples/correctRate từng skill; evaluate tối đa một stage, hoàn tất khi targetReached hoặc finalStage.",
+      "updateTarget chỉ revision và target>=stage upper band, không gate completedAt."
+    ],
+    "rejectedConditions": [
+      "Integrated completed/stale:409; wrong index422.",
+      "Band evaluate completed/stale409; target thấp422."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/ielts-integrated-practice/application/ielts-integrated-learner.service.spec.ts",
+        "symbol": "availability, plan pinning and stale revision",
+        "lineStart": 61,
+        "lineEnd": 101,
+        "sha256": "e5c97f68701d2f0c84f4b94032e58f1de70923651875564a11df377d24a46859"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts",
+        "symbol": "version-bound pathway, owner and single-stage advancement",
+        "lineStart": 35,
+        "lineEnd": 57,
+        "sha256": "f5fddf77057af7050a176fb4d9ab7c7dd9490f17bac408b7f4f51f4daddd4015"
+      },
+      {
+        "file": "apps/api/src/ielts-band-curriculum/domain/evaluate-band-progression.spec.ts",
+        "symbol": "insufficient and sufficient four-skill evidence",
+        "lineStart": 9,
+        "lineEnd": 27,
+        "sha256": "af2da03c02b84f6ee3263ee0bbc61221ed58776b79dc917410b34ae08c9be4c0"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-LRN-mock-lifecycle",
+    "kind": "rule",
+    "name": "Mock deadline, section order và terminal report",
+    "module": "MOD-ielts-mock",
+    "status": "VERIFIED",
+    "description": "Save trước/đúng deadline, submit chỉ currentSection; GET quá hạn nộp một section. Review mới chỉ EVALUATION_PENDING, CAS completed và receipt replay.",
+    "evidence": [
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService.get/saveResponses/submitSection/report",
+        "lineStart": 58,
+        "lineEnd": 113,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+        "symbol": "IeltsMockLearnerService.requireWritable/deadline",
+        "lineStart": 141,
+        "lineEnd": 143,
+        "sha256": "0c8b0e07ad1849e5bb2b06401fcb9dd495efda2aefe68c0fdd7707b6707c5c27"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+        "symbol": "IeltsMockReviewService.review",
+        "lineStart": 20,
+        "lineEnd": 40,
+        "sha256": "4190a0ba08f5e7f2ff3634e0e3ea33cad97dba4db5698b1ccbfc81ad754c3b46"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/domain/ielts-mock-scoring.ts",
+        "symbol": "scoreProductiveSkills/toOverallMockBand",
+        "lineStart": 17,
+        "lineEnd": 27,
+        "sha256": "22ef808abea5ae2d64d56a7f7deb3057aab418e61c879c36c4da345a82fee5c5"
+      }
+    ],
+    "relatedIds": [
+      "MOD-ielts-mock",
+      "ENT-IeltsMockAttempt",
+      "ENT-IeltsMockReview",
+      "ENT-MutationReceipt",
+      "TEST-35e89baaf4ce79b2",
+      "TEST-3238431ec6323493",
+      "TEST-03359b17916d57a1",
+      "SYM-4a02a225edf89c04",
+      "SYM-b0fea7c8694aff0f",
+      "SYM-5e0ea8ee0b26ee3a",
+      "SYM-55d5cf27613ed7dd",
+      "SYM-422fe4868720aa17",
+      "SYM-93dd269e53cfe677",
+      "SYM-dbf882dfc27a20ea",
+      "SYM-b05b9d2d350f2f0e",
+      "SYM-dfa3e3cffe3c09f0",
+      "SYM-9eaf0f8e596e336b",
+      "SYM-d1ec700ce5c829a8",
+      "SYM-3f90882b4740b6af",
+      "SYM-e4a91a54663addca",
+      "SYM-2cf0002b6dd7705b",
+      "SYM-fbb5348d80539be2",
+      "SYM-d5ee1e09b7b4ff91",
+      "SYM-36122a4666b8ab83",
+      "SYM-6c66b797a7d435d2",
+      "SYM-286e25a346fda534",
+      "SYM-94e6ef7210e3d79a",
+      "SYM-dd7f70d0a05c1ad7",
+      "SYM-1cbd306878a01769",
+      "SYM-3321c146baab35f1",
+      "SYM-fd5adbc2b555cb4b",
+      "SYM-49bc7f3376ee8ca8",
+      "SYM-266c6fec60119d10",
+      "SYM-cc19278f146b9b42",
+      "SYM-0260443a2363de66",
+      "SYM-de6cfda89bbcf0a8"
+    ],
+    "relatedSourceFiles": [
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-review.service.ts",
+      "apps/api/src/ielts-mock/domain/ielts-mock-scoring.ts"
+    ],
+    "testFiles": [
+      "apps/api/src/ielts-mock/application/ielts-mock-learner.service.spec.ts",
+      "apps/api/src/ielts-mock/application/ielts-mock-review.service.spec.ts",
+      "apps/api/test/integration/ielts-mock-workflow.integration.spec.ts"
+    ],
+    "verificationLevel": "STATIC_SOURCE_REVIEW",
+    "testExecution": "NOT_RUN",
+    "enforcementConditions": [
+      "Save/submit owner, status IN_PROGRESS, revision đúng; save Date.now()<=deadline và IDs thuộc currentSection.",
+      "Submit section phải khớp current; không bắt đủ answers hay đợi deadline.",
+      "Review role ở controller CONTENT_ADMIN/SYSTEM_ADMIN; status pending/revision đúng, objective nghe/đọc tồn tại."
+    ],
+    "enforcement": [
+      "Order L/R/W/S, durations30/60/60/14; final pending, overall null trước review.",
+      "Review lock theo attempt; CAS terminal COMPLETED/report/review/audit/receipt trong transaction.",
+      "Writing Task2 gấp đôi Task1, speaking trung bình4 tiêu chí, overall trung bình4 skill; làm tròn nửa band."
+    ],
+    "rejectedConditions": [
+      "Save trễ:SECTION_EXPIRED409; out-of-section IDs422; wrong submit section422.",
+      "Mutation sau pending/completed:REVISION_STALE409; review mới sau completed:REVIEW_REVISION_STALE409."
+    ],
+    "analysisStatus": "PARTIAL_MODULE_REVIEW",
+    "staticVerificationNotice": "VERIFIED chỉ mô tả nguồn tĩnh được trích dẫn, không xác minh runtime, triển khai hay toàn bộ module.",
+    "testEvidence": [
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-learner.service.spec.ts",
+        "symbol": "pinning, deadlines, ordering, ownership and audio",
+        "lineStart": 50,
+        "lineEnd": 131,
+        "sha256": "dcbe6780893e418799ce4925ef1fbd3fc2756e4841decd0d256dffc2c1c72b3e"
+      },
+      {
+        "file": "apps/api/src/ielts-mock/application/ielts-mock-review.service.spec.ts",
+        "symbol": "review completion, pending gate and bounded pagination",
+        "lineStart": 22,
+        "lineEnd": 44,
+        "sha256": "c31e8e599cac1b6c9be933e6e770775016ab97d79cb68765a06d1296baf84234"
+      },
+      {
+        "file": "apps/api/test/integration/ielts-mock-workflow.integration.spec.ts",
+        "symbol": "four sections and completed reviewed report",
+        "lineStart": 25,
+        "lineEnd": 39,
+        "sha256": "3b7dd4b1d2d26470fe4888dd88c24309e9f003ff25532ed221634764d09070bb"
+      }
+    ],
+    "unreviewedTestFiles": [],
+    "testReviewScope": "Chỉ đọc assertion ở testEvidence; testFiles còn lại là liên kết định vị, không khẳng định đã đọc hết hay đã chạy.",
+    "curated": true
+  },
+  {
+    "id": "BR-OBS-correlation",
+    "kind": "rule",
+    "name": "Chuẩn hóa correlation ID trước xử lý HTTP",
+    "module": "MOD-common",
+    "status": "VERIFIED",
+    "description": "Middleware nhận x-correlation-id hoặc x-request-id, chỉ giữ chuỗi trim khớp [a-zA-Z0-9_-]{1,64}; nếu không hợp lệ tạo UUID. Gắn request.correlationId và X-Correlation-ID response header rồi gọi next.",
+    "evidence": [
+      {
+        "file": "apps/api/src/common/request-context/correlation-id.middleware.ts",
+        "symbol": "CorrelationIdMiddleware.use",
+        "lineStart": 15,
+        "lineEnd": 42,
+        "sha256": "7acffaf63c10b89866ae998d1d4e3896440d655cbaafae89de163968cbc5afd5"
+      },
+      {
+        "file": "apps/api/src/app.module.ts",
+        "symbol": "AppModule.configure",
+        "lineStart": 79,
+        "lineEnd": 83,
+        "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+      }
+    ],
+    "relatedIds": [
+      "MOD-common",
+      "REQ-OPS-error-envelope",
+      "TEST-9fd27cbdc8216ab0"
+    ],
+    "testFiles": [
+      "apps/api/src/common/request-context/correlation-id.middleware.spec.ts"
+    ],
+    "curated": true
+  }
+]

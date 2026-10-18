@@ -1,0 +1,440 @@
+{
+  "items": [
+    {
+      "id": "REQ-ARCH-boundaries",
+      "kind": "requirement",
+      "name": "Web và API là hai ứng dụng, dùng chung contracts",
+      "module": "MOD-api",
+      "status": "VERIFIED",
+      "category": "Integration",
+      "description": "Next.js rewrite chuyển /api/:path* tới API origin cấu hình. ApiClient mặc định dùng /api/v1, gửi credentials và parse response bằng schema. Nest đặt prefix api/v1. Đây là cấu hình trong source; không xác nhận deployment đang chạy.",
+      "evidence": [
+        {
+          "file": "apps/web/next.config.ts",
+          "symbol": "nextConfig.rewrites",
+          "lineStart": 3,
+          "lineEnd": 17,
+          "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+        },
+        {
+          "file": "apps/web/src/lib/api/api-client.ts",
+          "symbol": "ApiClient.request",
+          "lineStart": 193,
+          "lineEnd": 275,
+          "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "bootstrap",
+          "lineStart": 14,
+          "lineEnd": 29,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        }
+      ],
+      "relatedIds": [
+        "MOD-api",
+        "MOD-web",
+        "MOD-package-contracts",
+        "TEST-08d2dd6fa6178398"
+      ],
+      "testFiles": [
+        "apps/web/src/lib/api/api-client.test.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-SEC-validation",
+      "kind": "requirement",
+      "name": "HTTP request DTO đi qua ValidationPipe toàn cục",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "category": "Security",
+      "description": "bootstrap bật transform, whitelist và forbidNonWhitelisted trong ValidationPipe. Phạm vi validate phụ thuộc metadata runtime và decorator của từng DTO; interface/type TypeScript đơn thuần không chứng minh validation runtime.",
+      "evidence": [
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "bootstrap.ValidationPipe",
+          "lineStart": 23,
+          "lineEnd": 29,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "MOD-api"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-OBS-correlation",
+      "kind": "rule",
+      "name": "Chuẩn hóa correlation ID trước xử lý HTTP",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "description": "Middleware nhận x-correlation-id hoặc x-request-id, chỉ giữ chuỗi trim khớp [a-zA-Z0-9_-]{1,64}; nếu không hợp lệ tạo UUID. Gắn request.correlationId và X-Correlation-ID response header rồi gọi next.",
+      "evidence": [
+        {
+          "file": "apps/api/src/common/request-context/correlation-id.middleware.ts",
+          "symbol": "CorrelationIdMiddleware.use",
+          "lineStart": 15,
+          "lineEnd": 42,
+          "sha256": "7acffaf63c10b89866ae998d1d4e3896440d655cbaafae89de163968cbc5afd5"
+        },
+        {
+          "file": "apps/api/src/app.module.ts",
+          "symbol": "AppModule.configure",
+          "lineStart": 79,
+          "lineEnd": 83,
+          "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "REQ-OPS-error-envelope",
+        "TEST-9fd27cbdc8216ab0"
+      ],
+      "testFiles": [
+        "apps/api/src/common/request-context/correlation-id.middleware.spec.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-OPS-error-envelope",
+      "kind": "requirement",
+      "name": "HTTP lỗi được chuẩn hóa bởi exception filter",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "category": "Operational",
+      "description": "SafeExceptionFilter xử lý HttpException thành JSON gồm code, correlationId, details, message, statusCode và các extra fields. Lỗi không nhận diện trả INTERNAL_SERVER_ERROR với thông báo chung và ghi log. Không khẳng định mọi HttpException đều ẩn message nhạy cảm: nhánh HttpException giữ message của exception.",
+      "evidence": [
+        {
+          "file": "apps/api/src/common/http/safe-exception.filter.ts",
+          "symbol": "SafeExceptionFilter.catch",
+          "lineStart": 43,
+          "lineEnd": 133,
+          "sha256": "82bacc9b12e767f8df2379412ebdb4c5326f141baca6dfc0a3b306d40ef314ec"
+        },
+        {
+          "file": "apps/api/src/app.module.ts",
+          "symbol": "APP_FILTER registration",
+          "lineStart": 71,
+          "lineEnd": 77,
+          "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "BR-OBS-correlation",
+        "TEST-c6ffee4e39dc319a"
+      ],
+      "testFiles": [
+        "apps/api/src/common/http/safe-exception.filter.spec.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "SEC-OBS-redaction",
+      "kind": "security",
+      "name": "Logger có redaction và giới hạn dữ liệu",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "description": "redactValue thay bearer token, connection string, email và IP trong chuỗi; che các sensitive keys trong object; giới hạn độ sâu, chiều dài và số phần tử, phát hiện cycle. Đây là policy cụ thể trong logger, không phải bằng chứng toàn hệ thống không bao giờ lộ dữ liệu.",
+      "evidence": [
+        {
+          "file": "apps/api/src/common/logging/safe-logger.service.ts",
+          "symbol": "redactValue",
+          "lineStart": 4,
+          "lineEnd": 92,
+          "sha256": "1e380fe9e67238774990facd121cc3284dfaa91c822cc7503024efe30a43d05c"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "REQ-OPS-error-envelope",
+        "TEST-7284ecc75f97a944"
+      ],
+      "testFiles": [
+        "apps/api/src/common/logging/safe-logger.service.spec.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "FIND-OBS-error-id",
+      "kind": "finding",
+      "name": "Error envelope: correlationId server khác requestId client",
+      "module": "MOD-web",
+      "status": "CONFLICT",
+      "description": "SafeExceptionFilter trả correlationId và X-Correlation-ID. errorEnvelopeSchema của ApiClient khai báo requestId trong error lồng; ApiClient.request chỉ đọc data.error.requestId, còn nhánh lỗi phẳng không gán requestId. Có khác biệt contract/source giữa hai phía; tác động UI và hành vi runtime chưa chạy xác minh. Không tự coi đây là lỗ hổng bảo mật.",
+      "evidence": [
+        {
+          "file": "apps/api/src/common/http/safe-exception.filter.ts",
+          "symbol": "SafeExceptionFilter.catch",
+          "lineStart": 106,
+          "lineEnd": 113,
+          "sha256": "82bacc9b12e767f8df2379412ebdb4c5326f141baca6dfc0a3b306d40ef314ec"
+        },
+        {
+          "file": "apps/web/src/lib/api/api-client.ts",
+          "symbol": "errorEnvelopeSchema",
+          "lineStart": 77,
+          "lineEnd": 92,
+          "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+        },
+        {
+          "file": "apps/web/src/lib/api/api-client.ts",
+          "symbol": "ApiClient.request error branch",
+          "lineStart": 236,
+          "lineEnd": 268,
+          "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+        }
+      ],
+      "relatedIds": [
+        "MOD-web",
+        "MOD-common",
+        "REQ-OPS-error-envelope"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-system-context",
+      "kind": "diagram",
+      "name": "System context và trust boundaries",
+      "module": "MOD-api",
+      "status": "INFERRED",
+      "diagramType": "context",
+      "description": "C4-style context được tổng hợp từ page routes, role guard, module wiring và adapter registrations. Các kết nối biểu diễn thiết kế triển khai trong source; không khẳng định dịch vụ đang chạy hoặc provider đang bật. Outbound AI là lựa chọn theo cấu hình, fake adapters cũng tồn tại.",
+      "code": "flowchart LR\n Learner[\"Người học\"] --> Web[\"Next.js learner UI\"]\n Admin[\"Content / System admin\"] --> Web\n subgraph Local[\"Local application boundary\"]\n Web -->|\"HTTP /api/v1\"| API[\"NestJS modular monolith\"]\n API -->|Prisma| PG[(PostgreSQL)]\n API -->|ObjectStorage| Files[\"Local object files\"]\n end\n API -. \"Configured STT / TTS / evaluation\" .-> External[\"External AI providers\"]",
+      "evidence": [
+        {
+          "file": "apps/web/next.config.ts",
+          "symbol": "nextConfig.rewrites",
+          "lineStart": 5,
+          "lineEnd": 16,
+          "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+        },
+        {
+          "file": "apps/api/src/app.module.ts",
+          "symbol": "AppModule",
+          "lineStart": 38,
+          "lineEnd": 83,
+          "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+        },
+        {
+          "file": "apps/api/src/storage/storage.module.ts",
+          "symbol": "StorageModule",
+          "lineStart": 8,
+          "lineEnd": 20,
+          "sha256": "6513ec25c75cce7f2c0eafa8f5c9860cee94426ba127c3d983d2bafd70a80b3c"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule providers",
+          "lineStart": 28,
+          "lineEnd": 99,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        }
+      ],
+      "relatedIds": [
+        "MOD-api",
+        "MOD-web",
+        "MOD-database",
+        "MOD-ai-gateway",
+        "MOD-storage"
+      ],
+      "nodeMap": {
+        "Web": "MOD-web",
+        "API": "MOD-api",
+        "PG": "MOD-database",
+        "Files": "MOD-storage",
+        "External": "MOD-ai-gateway"
+      },
+      "curated": true
+    },
+    {
+      "id": "DIA-container-architecture",
+      "kind": "diagram",
+      "name": "Container architecture và runtime boundaries",
+      "module": "MOD-api",
+      "status": "INFERRED",
+      "diagramType": "container",
+      "description": "Next.js và NestJS là hai process cấu hình riêng; Prisma client truy cập PostgreSQL. Job runner nằm trong backend và được bật/tắt qua cấu hình, không có bằng chứng về worker process độc lập. Compose chỉ khai báo PostgreSQL local; production orchestration ngoài repository chưa xác định.",
+      "code": "flowchart TB\n Browser[\"Browser\"] --> Next[\"Next.js server - /api rewrite\"]\n Next --> Nest[\"NestJS API - loopback listener\"]\n subgraph Backend[\"Backend process\"]\n Nest --> Modules[\"Controllers / Application services\"]\n Modules --> Prisma[\"PrismaService\"]\n Modules --> Storage[\"LocalObjectStorageAdapter\"]\n Worker[\"JobRunnerService - conditional\"] --> Prisma\n Worker --> Handlers[\"Job handlers\"]\n end\n Prisma --> DB[(\"PostgreSQL - Compose development service\")]\n Storage --> Disk[\"Configured data directory\"]",
+      "evidence": [
+        {
+          "file": "apps/web/next.config.ts",
+          "symbol": "rewrites",
+          "lineStart": 5,
+          "lineEnd": 16,
+          "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "bootstrap.listen",
+          "lineStart": 31,
+          "lineEnd": 34,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        },
+        {
+          "file": "apps/api/src/common/database/prisma.service.ts",
+          "symbol": "PrismaService",
+          "lineStart": 5,
+          "lineEnd": 17,
+          "sha256": "da3c154a7ec92785d3af78349dee3ed67b9734d2405c66d922e85446bb669b93"
+        },
+        {
+          "file": "apps/api/src/jobs/jobs.module.ts",
+          "symbol": "JobsModule",
+          "lineStart": 15,
+          "lineEnd": 46,
+          "sha256": "1448df08e4680bf4f64b9731c9bda51a64fb0fea6d50d593a4ca538f4d4df2a6"
+        },
+        {
+          "file": "infra/docker-compose.yml",
+          "symbol": "postgres service (credential values omitted)",
+          "lineStart": 1,
+          "lineEnd": 14,
+          "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+        }
+      ],
+      "relatedIds": [
+        "MOD-web",
+        "MOD-api",
+        "MOD-common",
+        "MOD-jobs",
+        "MOD-database",
+        "MOD-storage",
+        "MOD-infra"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-http-lifecycle",
+      "kind": "diagram",
+      "name": "Request lifecycle và response validation",
+      "module": "MOD-common",
+      "status": "INFERRED",
+      "diagramType": "request",
+      "description": "Sequence tổng hợp plumbing đã đăng ký trong source. Guards chỉ áp dụng điều kiện riêng: Public bỏ qua session authentication; RolesGuard chỉ từ chối khi role metadata yêu cầu; RateLimitGuard cho qua nếu không có policy. Không khẳng định thứ tự tương đối giữa các global guards được đo runtime. Service/Prisma branch khác nhau theo endpoint.",
+      "code": "sequenceDiagram\n participant UI as Browser ApiClient\n participant API as Nest HTTP pipeline\n participant MW as CorrelationIdMiddleware\n participant G as Registered global guards\n participant VP as ValidationPipe\n participant C as Controller / service\n UI->>API: fetch with credentials\n API->>MW: HTTP request\n MW-->>API: correlationId and header\n API->>G: Session / role / rate policies\n G-->>API: allow or exception\n API->>VP: Runtime DTO transform and validation\n VP-->>API: validated input or exception\n API->>C: Route handler\n C-->>API: declared endpoint result\n API-->>UI: serialized response or SafeExceptionFilter JSON\n UI->>UI: Zod schema.parse on success",
+      "evidence": [
+        {
+          "file": "apps/web/src/lib/api/api-client.ts",
+          "symbol": "ApiClient.request",
+          "lineStart": 200,
+          "lineEnd": 275,
+          "sha256": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba"
+        },
+        {
+          "file": "apps/api/src/app.module.ts",
+          "symbol": "AppModule.configure",
+          "lineStart": 79,
+          "lineEnd": 83,
+          "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+        },
+        {
+          "file": "apps/api/src/auth/auth.module.ts",
+          "symbol": "APP_GUARD providers",
+          "lineStart": 11,
+          "lineEnd": 21,
+          "sha256": "be2625e306999bc3b6a136139124ef9b7087900bbf0386886eaaa32552499dcb"
+        },
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.module.ts",
+          "symbol": "APP_GUARD registration",
+          "lineStart": 8,
+          "lineEnd": 22,
+          "sha256": "8df8153bcea9059b0eb66e66bdc44ebd54082ef8706a41a9e032c8adf3c2dd49"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "ValidationPipe",
+          "lineStart": 23,
+          "lineEnd": 29,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        }
+      ],
+      "relatedIds": [
+        "MOD-web",
+        "MOD-api",
+        "MOD-common",
+        "MOD-auth",
+        "REQ-SEC-validation",
+        "REQ-OPS-error-envelope"
+      ],
+      "curated": true
+    },
+    {
+      "id": "FIND-ARCH-deployment",
+      "kind": "finding",
+      "name": "CI/CD và production topology chưa được chứng minh",
+      "module": "MOD-infra",
+      "status": "UNKNOWN",
+      "description": "Trong phạm vi khảo sát có Docker Compose cho PostgreSQL và scripts setup/backup/restore/qualification. Không phát hiện thư mục .github trong snapshot hiện tại. Không suy ra rằng hệ thống không có CI/CD bên ngoài; production deployment, caching và recovery thực tế chưa được quan sát.",
+      "evidence": [
+        {
+          "file": "infra/docker-compose.yml",
+          "symbol": "services.postgres",
+          "lineStart": 1,
+          "lineEnd": 14,
+          "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+        },
+        {
+          "file": "package.json",
+          "symbol": "scripts",
+          "lineStart": 15,
+          "lineEnd": 38,
+          "sha256": "0b0593b7d714161d2e3d0c3bf177b08503ed8438f2bd5a90e26a9b53a3412313"
+        }
+      ],
+      "relatedIds": [
+        "MOD-infra",
+        "MOD-operations-scripts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-speech-data-flow",
+      "kind": "diagram",
+      "name": "Speaking audio, transcript and evaluation data flow",
+      "module": "MOD-teacher-ai",
+      "status": "INFERRED",
+      "diagramType": "data-flow",
+      "description": "Data-flow synthesis of the speaking transcription path. Binary audio is read through ObjectStorage, sent to the configured SpeechToTextPort, transcript and provider metrics are persisted on Recording, then an EVALUATE_ATTEMPT job is enqueued transactionally. EvaluationService reads the transcript as learnerResponse. This diagram omits upload and result persistence details; fake and external speech adapters are selected by configuration, not assumed live.",
+      "code": "flowchart LR\n Disk[\"ObjectStorage audio bytes\"] -->|read storageKey| Handler[\"TranscribeSpeechHandler\"]\n Handler -->|audio / mimeType / locale / referenceText| STT[\"Configured SpeechToTextPort\"]\n STT -->|transcript / pronunciation / provider| Handler\n Handler -->|persist transcription| Recording[(\"Recording in PostgreSQL\")]\n Handler -->|transactional enqueue| Job[(\"Job: EVALUATE_ATTEMPT\")]\n Recording -->|transcript| Eval[\"EvaluationService: learnerResponse\"]\n Job -. attemptId .-> Eval",
+      "evidence": [
+        {
+          "file": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+          "symbol": "EvaluationService.evaluateAttempt",
+          "lineStart": 143,
+          "lineEnd": 300,
+          "sha256": "48c02b5149b4343fe906a5dc5ed5af491db399df2631e932a9c73248dc7c9d0e"
+        },
+        {
+          "file": "apps/api/src/teacher-ai/application/transcribe-speech.handler.ts",
+          "symbol": "TranscribeSpeechHandler.handle",
+          "lineStart": 35,
+          "lineEnd": 59,
+          "sha256": "0be0bb76f9afc630dceb237a5167fe8dcc62d125880a3c3d5391c1d10a5543ef"
+        }
+      ],
+      "relatedIds": [
+        "MOD-teacher-ai",
+        "MOD-storage",
+        "MOD-ai-gateway",
+        "MOD-jobs",
+        "ENT-Recording",
+        "ENT-Job",
+        "UC-LRN-submit-ai"
+      ],
+      "nodeMap": {
+        "Disk": "MOD-storage",
+        "Handler": "MOD-teacher-ai",
+        "STT": "MOD-ai-gateway",
+        "Recording": "ENT-Recording",
+        "Job": "ENT-Job",
+        "Eval": "MOD-teacher-ai"
+      },
+      "curated": true
+    }
+  ]
+}

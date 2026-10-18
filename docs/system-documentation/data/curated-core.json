@@ -1,0 +1,4402 @@
+{
+  "items": [
+    {
+      "id": "UC-CORE-Register",
+      "kind": "use-case",
+      "name": "Register a learner and issue a session",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Public registration stores normalized identity and a password hash, creates a learner profile and issues a session cookie. Account and session creation are separate writes.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 45,
+          "lineEnd": 138,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 41,
+          "lineEnd": 100,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        },
+        {
+          "file": "apps/api/src/users/application/users.service.ts",
+          "symbol": "UsersService",
+          "lineStart": 23,
+          "lineEnd": 76,
+          "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+        },
+        {
+          "file": "apps/api/src/auth/dto/register.dto.ts",
+          "symbol": "RegisterDto",
+          "lineStart": 6,
+          "lineEnd": 34,
+          "sha256": "2f0dc47bde4750e9335de6fa425df6c99a33212a4352a25bbd6de4f42ade826c"
+        },
+        {
+          "file": "apps/api/prisma/schema.prisma",
+          "symbol": "User",
+          "lineStart": 32,
+          "lineEnd": 40,
+          "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+        },
+        {
+          "file": "apps/api/test/integration/auth.integration.spec.ts",
+          "symbol": "describe(\"authentication\")",
+          "lineStart": 33,
+          "lineEnd": 90,
+          "sha256": "c8e880916001ce5eef531cf6ade6c64658d0b6c454de7050f0e8727e8865c40e"
+        },
+        {
+          "file": "apps/api/src/auth/auth.constants.ts",
+          "symbol": "SESSION_COOKIE_NAME; SESSION_DURATION_MS",
+          "lineStart": 1,
+          "lineEnd": 2,
+          "sha256": "383f6754466ec9cc5baefb7df9fdfb55f19e6fd310d58f5cf60785891c05b772"
+        },
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+          "symbol": "RateLimitGuard",
+          "lineStart": 68,
+          "lineEnd": 95,
+          "sha256": "eac434b47242b8e229d9a8bb0cd3348cf95b686516fc9b69c3f842aa8ea60cdb"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-users",
+        "ENT-User",
+        "ENT-LearnerProfile",
+        "ENT-UserSession",
+        "TEST-f7ac848a01af40c9",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760",
+        "SYM-6aa2cc952f58d6cc",
+        "SYM-09823005e8e03b2f",
+        "SYM-b14a3fa8c82d8682",
+        "SYM-c58a71023cecf778",
+        "SYM-d680738e947ff8a2",
+        "SYM-4cae3123686a953b",
+        "SYM-cbf83567c6c1e38c",
+        "SYM-a732334c7b84611c",
+        "SYM-cb8789a151d6139b",
+        "SYM-c497d7a990a9e664",
+        "SYM-cf935cacee9f1258",
+        "SYM-82dd6890164bc4d1",
+        "SYM-f11fb1c167cc90c0",
+        "REQ-CORE-01",
+        "BR-CORE-01",
+        "BR-CORE-14"
+      ],
+      "actor": "Unauthenticated account applicant",
+      "goal": "Obtain a learner account and authenticated session.",
+      "trigger": "POST /api/v1/auth/register with displayName, email, password and optional locale.",
+      "preconditions": [
+        "DTO validation and the register rate limit pass.",
+        "Email is not already registered after normalization."
+      ],
+      "mainFlow": [
+        "DTO trims name/email, lowercases email, checks name length 2–80 and password length 12–128; optional locale must be vi or en.",
+        "Hash password, then create User and nested LearnerProfile. Prisma supplies LEARNER and ACTIVE defaults.",
+        "Create random 32-byte base64url token; store its HMAC-SHA256 hash with user ID and seven-day expiry.",
+        "Set HttpOnly, SameSite=lax cookie on path / and return projected user; registration metric is best effort."
+      ],
+      "alternativeFlows": [
+        "Omitted locale becomes vi."
+      ],
+      "exceptionFlows": [
+        "P2002 unique constraint failure becomes email conflict 409.",
+        "Invalid DTO is 400; exceeded register bucket is 429.",
+        "Session-write failure propagates after account creation; there is no encompassing registration transaction."
+      ],
+      "postconditions": [
+        "Success creates User, LearnerProfile and UserSession and exposes no passwordHash."
+      ],
+      "businessRules": [
+        "Email is normalized before lookup/storage.",
+        "Registration rate limit is 30 per 60 seconds per IP/route.",
+        "Session cookie secure is hardcoded false."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Registration returns normalized public identity and session cookie.",
+        "INFERRED acceptance criterion from source: Duplicate normalized email cannot create a second account.",
+        "INFERRED acceptance criterion from source: A password shorter than 12 characters is rejected."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/test/integration/auth.integration.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/auth.controller.ts",
+        "apps/api/src/users/application/users.service.ts",
+        "apps/api/src/auth/dto/register.dto.ts",
+        "apps/api/prisma/schema.prisma",
+        "apps/api/src/auth/auth.constants.ts",
+        "apps/api/src/common/rate-limit/rate-limit.guard.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-01",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-01",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-14",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-Session",
+      "kind": "use-case",
+      "name": "Log in, authorize requests and log out",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Protected requests reload session and account state; effective role metadata is resolved from handler before class.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 45,
+          "lineEnd": 138,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 41,
+          "lineEnd": 100,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        },
+        {
+          "file": "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+          "symbol": "SessionAuthGuard",
+          "lineStart": 22,
+          "lineEnd": 58,
+          "sha256": "a755ed50668d4c14dd5248b2347fd626c30952c60b218aa5cd64dab645bb363c"
+        },
+        {
+          "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+          "symbol": "RolesGuard",
+          "lineStart": 18,
+          "lineEnd": 42,
+          "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+        },
+        {
+          "file": "apps/api/src/auth/auth.module.ts",
+          "symbol": "AuthModule",
+          "lineStart": 11,
+          "lineEnd": 20,
+          "sha256": "be2625e306999bc3b6a136139124ef9b7087900bbf0386886eaaa32552499dcb"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 19,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        },
+        {
+          "file": "apps/api/test/integration/auth.integration.spec.ts",
+          "symbol": "describe(\"authentication\")",
+          "lineStart": 93,
+          "lineEnd": 130,
+          "sha256": "c8e880916001ce5eef531cf6ade6c64658d0b6c454de7050f0e8727e8865c40e"
+        },
+        {
+          "file": "apps/api/src/auth/auth.constants.ts",
+          "symbol": "SESSION_COOKIE_NAME; SESSION_DURATION_MS",
+          "lineStart": 1,
+          "lineEnd": 2,
+          "sha256": "383f6754466ec9cc5baefb7df9fdfb55f19e6fd310d58f5cf60785891c05b772"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-users",
+        "ENT-User",
+        "ENT-UserSession",
+        "TEST-f7ac848a01af40c9",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760",
+        "SYM-0be0c5d1246432a7",
+        "SYM-efccf5a8fcf57af6",
+        "SYM-2c35f6b2965d2564",
+        "SYM-60115893924c6461",
+        "SYM-312e8287b73c8803",
+        "SYM-f4e1cfd4741e562d",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a",
+        "REQ-CORE-01",
+        "REQ-CORE-02",
+        "BR-CORE-02",
+        "BR-CORE-03"
+      ],
+      "actor": "Account holder",
+      "goal": "Use an active account for protected requests and revoke the current session.",
+      "trigger": "POST /api/v1/auth/login, protected request, then POST /api/v1/auth/logout.",
+      "preconditions": [
+        "Successful login requires an existing ACTIVE account and matching password.",
+        "Protected requests carry a decodable worklingo_session cookie."
+      ],
+      "mainFlow": [
+        "Normalize email and load account/profile. Verify password hash.",
+        "Persist new hashed session and set cookie; return projected user.",
+        "SessionAuthGuard bypasses Public handlers, otherwise reads cookie and rejects absent/revoked/expired sessions or non-ACTIVE accounts.",
+        "Attach authUser/authSessionToken. RolesGuard checks any matching role against effective handler/class metadata.",
+        "GET /api/v1/me returns authUser. Logout revokes unrevoked sessions matching the current token hash, clears cookie and returns 204."
+      ],
+      "alternativeFlows": [
+        "No required-role metadata passes the role guard.",
+        "Unknown email still performs a hash operation before the public credential error."
+      ],
+      "exceptionFlows": [
+        "Unknown email, wrong password, inactive account or invalid session yields 401.",
+        "Insufficient role yields 403.",
+        "Malformed cookie encoding is treated as a missing token."
+      ],
+      "postconditions": [
+        "A logged-out token no longer authenticates."
+      ],
+      "businessRules": [
+        "Method roles override class roles; listed roles are alternatives.",
+        "Logout revokes the current token rather than all account sessions."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Unknown email and wrong password use the same public error.",
+        "INFERRED acceptance criterion from source: Logout prevents subsequent /me access with that session.",
+        "INFERRED acceptance criterion from source: A newly inactive user fails subsequent session authentication."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/test/integration/auth.integration.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/auth.controller.ts",
+        "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+        "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "apps/api/src/auth/auth.module.ts",
+        "apps/api/src/users/users.controller.ts",
+        "apps/api/src/auth/auth.constants.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-01",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "REQ-CORE-02",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-02",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-03",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-Preferences",
+      "kind": "use-case",
+      "name": "Read and update current-account locale",
+      "module": "MOD-users",
+      "status": "VERIFIED",
+      "description": "Preference writes use session identity and can reject a stale browser account header.",
+      "evidence": [
+        {
+          "file": "apps/api/src/users/application/users.service.ts",
+          "symbol": "UsersService",
+          "lineStart": 23,
+          "lineEnd": 76,
+          "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 41,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        },
+        {
+          "file": "apps/api/src/users/application/users.service.spec.ts",
+          "symbol": "describe(\"UsersService locale preferences\")",
+          "lineStart": 21,
+          "lineEnd": 51,
+          "sha256": "b8adb4c938cb2a357281261e5e87ba563de026025c6c14931fba924e7b3d6673"
+        },
+        {
+          "file": "apps/api/test/integration/locale-preferences.integration.spec.ts",
+          "symbol": "describe(\"locale preferences API\")",
+          "lineStart": 23,
+          "lineEnd": 48,
+          "sha256": "4e9a533c436c1f6a9b2d57ec1cbe9bb38692b030e522b78c2a3caf0ce8cf810c"
+        }
+      ],
+      "relatedIds": [
+        "MOD-users",
+        "MOD-auth",
+        "ENT-User",
+        "ENT-LearnerProfile",
+        "TEST-bf610d5019eab8d0",
+        "TEST-2c207c7c3bd62efc",
+        "SYM-6aa2cc952f58d6cc",
+        "SYM-09823005e8e03b2f",
+        "SYM-b14a3fa8c82d8682",
+        "SYM-c58a71023cecf778",
+        "SYM-d680738e947ff8a2",
+        "SYM-4cae3123686a953b",
+        "SYM-cbf83567c6c1e38c",
+        "SYM-a732334c7b84611c",
+        "SYM-cb8789a151d6139b",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a",
+        "REQ-CORE-03",
+        "BR-CORE-04"
+      ],
+      "actor": "Authenticated account holder, including administrators",
+      "goal": "Persist a supported interface locale for the current account.",
+      "trigger": "GET or PATCH /api/v1/me/preferences.",
+      "preconditions": [
+        "Request authenticates successfully.",
+        "PATCH passes UserPreferencesDto validation."
+      ],
+      "mainFlow": [
+        "Read locale by request.authUser.id.",
+        "On PATCH compare optional x-worklingo-account-id with authenticated ID.",
+        "Upsert profile for authenticated ID; create missing profile or change only locale.",
+        "Project supported stored locale, falling back to vi for absent/unsupported values."
+      ],
+      "alternativeFlows": [
+        "Omitted account header permits the authenticated-account write.",
+        "Administrator without a profile receives fallback vi."
+      ],
+      "exceptionFlows": [
+        "Mismatched account header throws 409 ACCOUNT_CHANGED before mutation.",
+        "Invalid DTO fails request validation."
+      ],
+      "postconditions": [
+        "Successful PATCH updates the signed-in account profile."
+      ],
+      "businessRules": [
+        "Server session identity selects the profile.",
+        "Stored unsupported locale is projected as vi."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Changing one account to en leaves another account unchanged.",
+        "INFERRED acceptance criterion from source: Stale account header produces 409 without profile changes."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/src/users/application/users.service.spec.ts",
+        "apps/api/test/integration/locale-preferences.integration.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/users/application/users.service.ts",
+        "apps/api/src/users/users.controller.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-03",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-04",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-Import",
+      "kind": "use-case",
+      "name": "Create, edit, validate and preview lesson source",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Drafts preserve raw source even when invalid. Compare-and-set updates bind validation to a revision and hash.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+          "symbol": "ContentImportsService",
+          "lineStart": 36,
+          "lineEnd": 232,
+          "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+          "symbol": "ContentImportsService",
+          "lineStart": 235,
+          "lineEnd": 277,
+          "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+        },
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 45,
+          "lineEnd": 48,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 103,
+          "lineEnd": 139,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "packages/content-format/src/validator.ts",
+          "symbol": "analyzeLessonSource",
+          "lineStart": 483,
+          "lineEnd": 522,
+          "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.spec.ts",
+          "symbol": "describe(\"ContentImportsService\")",
+          "lineStart": 182,
+          "lineEnd": 239,
+          "sha256": "716f69df03222a12a69d45ecb78954c41920ebd173a85d75751a6270559ddb31"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-ContentImport",
+        "TEST-3fb057ed0fd6c222",
+        "SYM-fe05829c4b269c30",
+        "SYM-05e492ae233578f1",
+        "SYM-50f3ff9b7ffa6f06",
+        "SYM-3a70ac587851a973",
+        "SYM-9d8689cae39a3e88",
+        "SYM-68ec905cbc3261a6",
+        "SYM-da192bde128ceb1a",
+        "SYM-81d340a59a18c99c",
+        "SYM-d092855a62609f7c",
+        "SYM-0ed5740f4361dd1f",
+        "SYM-9b7e1a102c8f4919",
+        "SYM-6d6fbed09c7c150d",
+        "SYM-cc12763a91be9bb6",
+        "SYM-1a98966b6b250044",
+        "SYM-522889346d8c6b3f",
+        "API-84d059829fd88a5e",
+        "API-6d0da70ec52b3e32",
+        "API-740d1a3ca6cf53db",
+        "API-4aba6690814aa03c",
+        "API-3cb4bdf43a975c54",
+        "API-5a3705b5dd4aa51e",
+        "API-fb81a353e5880ca3",
+        "SYM-2cbec70abc0a86d4",
+        "SYM-84134157144ba486",
+        "SYM-0260115201df7aa1",
+        "SYM-96a0c547e121a81d",
+        "REQ-CORE-04",
+        "BR-CORE-05",
+        "BR-CORE-06"
+      ],
+      "actor": "CONTENT_ADMIN or SYSTEM_ADMIN",
+      "goal": "Produce a current validated draft and inspect normalized content and issues.",
+      "trigger": "Create import, PATCH source with expectedDraftRevision, POST validate, or GET preview.",
+      "preconditions": [
+        "Authenticated administrative authoring role.",
+        "Existing import for edit/validate/preview."
+      ],
+      "mainFlow": [
+        "Create DRAFT with exact rawSource, SHA256 sourceHash, revision 1, parser version and actor attribution.",
+        "For edit reject immutable status/stale revision; conditional update increments revision, sets DRAFT and clears validationHash.",
+        "Analyze and parse source; conditional validation matches ID, revision, sourceHash and editable status.",
+        "Persist AST, normalized preview and issue report; set VALIDATED and validationHash=sourceHash only for canPublish.",
+        "Preview uses stored normalized content when validationHash matches sourceHash; otherwise reanalyzes without persisting validation."
+      ],
+      "alternativeFlows": [
+        "Invalid content remains stored as DRAFT with issue report.",
+        "Preview can show analyzable source without authorizing publication.",
+        "List/get methods ignore actor filtering; controller role gate permits shared administrative access."
+      ],
+      "exceptionFlows": [
+        "Missing import is 404; immutable status or concurrent edit is 409.",
+        "Controller returns 422 CONTENT_PARSE_FAILED for PARSE_ issues or CONTENT_VALIDATION_FAILED otherwise after saving report."
+      ],
+      "postconditions": [
+        "Validated state refers to the unchanged source/revision checked by conditional update."
+      ],
+      "businessRules": [
+        "Validation cannot silently approve a newer concurrent revision.",
+        "Preview alone is not publication authorization."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Stale validation cannot mark a newer revision VALIDATED.",
+        "INFERRED acceptance criterion from source: Editing validated source clears its validation hash.",
+        "INFERRED acceptance criterion from source: Invalid source remains available with issue details."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/src/content-authoring/application/content-imports.service.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "packages/content-format/src/validator.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-04",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-05",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-06",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-Audio",
+      "kind": "use-case",
+      "name": "Generate and review a provider-specific audio candidate",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Generation stores provider/voice/configuration variant and durable job, checking script hash before and after synthesis. An optional-dependency legacy path also exists.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 62,
+          "lineEnd": 277,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+          "symbol": "AudioGenerationHandler",
+          "lineStart": 42,
+          "lineEnd": 111,
+          "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+        },
+        {
+          "file": "apps/api/src/content-authoring/audio.controller.ts",
+          "symbol": "AudioController",
+          "lineStart": 35,
+          "lineEnd": 85,
+          "sha256": "fdc658239f1fe3c8f0b15de9eef7a660c0c3d047a8b33b6e6fa36cc7f7849d2e"
+        },
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.module.ts",
+          "symbol": "ContentAuthoringModule",
+          "lineStart": 15,
+          "lineEnd": 24,
+          "sha256": "88eec03c3e4cbd1b1754ec30875bae866d50815e78719b649e3d5afd92766be2"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 299,
+          "lineEnd": 306,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.spec.ts",
+          "symbol": "describe(\"AudioGenerationService\")",
+          "lineStart": 208,
+          "lineEnd": 314,
+          "sha256": "849347f8a58181f5639dc1a7966645636705c2ac5eed3339fbd586e01c90257e"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "MOD-jobs",
+        "MOD-ai-gateway",
+        "MOD-storage",
+        "ENT-ContentImport",
+        "ENT-AudioArtifact",
+        "ENT-Job",
+        "ENT-MutationReceipt",
+        "TEST-0bc7c9daa9aba8b7",
+        "SYM-3799485ce2e01519",
+        "SYM-1186c65cad1154c9",
+        "SYM-9ab0c15ba8cfed50",
+        "SYM-6fd73e60ea46a9b1",
+        "SYM-0528e09d6777d7ee",
+        "SYM-d121ea1770206826",
+        "SYM-81c0210180666465",
+        "SYM-18cdcc7b6deb0c3f",
+        "SYM-1bcead783bd33781",
+        "SYM-cf3d01cb6b1a5416",
+        "SYM-9382b5567e7cfadc",
+        "SYM-dc0821e1378e480c",
+        "SYM-f64b78e16b943336",
+        "SYM-8631e06ca3692425",
+        "SYM-13ae4b0e43606cb5",
+        "SYM-9c3e544fbf9bd0d3",
+        "API-2e1d6a4bebb90889",
+        "API-a32116e28b162204",
+        "API-d69d8ad3aad8cc8e",
+        "SYM-78763b7ee2b25ba5",
+        "REQ-CORE-05",
+        "REQ-CORE-08",
+        "BR-CORE-08",
+        "BR-CORE-09"
+      ],
+      "actor": "CONTENT_ADMIN or SYSTEM_ADMIN; runner and configured TTS adapter",
+      "goal": "Create an explicit audio candidate for an authored script.",
+      "trigger": "POST /api/v1/admin/content-imports/:id/generate-audio with idempotency key and optional script/provider/voice/config.",
+      "preconditions": [
+        "Import contains requested script, or at least one script if omitted.",
+        "Selected provider is available and voice is supported."
+      ],
+      "mainFlow": [
+        "Resolve provider/voice and canonicalize voice configuration into variantKey; request hash includes import ID.",
+        "Replay identical actor/operation/key receipt or reject conflicting reuse.",
+        "Select requested or first script and hash exact text; transactionally create GENERATING artifact, GENERATE_AUDIO job and acceptance receipt.",
+        "Return accepted job reference. With dispatcher/runner injected, start bounded runQueuedJob in addition to any timer polling.",
+        "Handler fetches current script and returns STALE on pre-synthesis hash mismatch; otherwise synthesize and store under generated-audio.",
+        "Recheck script after synthesis; conditionally update GENERATING artifact to READY or STALE with provider/storage/checksum metadata.",
+        "Administrative listing and authenticated streaming allow candidate review."
+      ],
+      "alternativeFlows": [
+        "Identical receipt returns original acceptance response.",
+        "Without optional dispatcher the service creates lowercase generate-audio job and uses legacy in-process generation; normal module wiring imports JobsModule.",
+        "A STALE artifact is a normal handler return and can accompany a COMPLETED job."
+      ],
+      "exceptionFlows": [
+        "Registry rejects unavailable provider or unsupported voice; missing script/import is 404.",
+        "Retryable provider error keeps artifact GENERATING until budget exhaustion; terminal/exhausted errors attempt FAILED and rethrow.",
+        "Unexpected synthesis/storage errors propagate to runner policy."
+      ],
+      "postconditions": [
+        "Generated candidate is not automatically published.",
+        "Job COMPLETED is distinct from artifact READY."
+      ],
+      "businessRules": [
+        "Script hash and provider/voice variant identify the generation.",
+        "Publication later selects an explicit READY candidate."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Old text cannot become a fresh READY candidate after script change.",
+        "INFERRED acceptance criterion from source: Identical generation request replays its original response.",
+        "INFERRED acceptance criterion from source: Fresh candidate records actual provider, checksum and storage metadata."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/src/content-authoring/application/audio-generation.service.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "apps/api/src/content-authoring/audio.controller.ts",
+        "apps/api/src/content-authoring/content-authoring.module.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-05",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "REQ-CORE-08",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-08",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-09",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-Publish",
+      "kind": "use-case",
+      "name": "Publish a validated version and archive a version",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Publication locks by lesson slug and rechecks the draft within its transaction before materializing versions, audio bindings, audit and replay receipt.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 33,
+          "lineEnd": 306,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 473,
+          "lineEnd": 628,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 631,
+          "lineEnd": 691,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 45,
+          "lineEnd": 48,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "apps/api/test/integration/content-publish.integration.spec.ts",
+          "symbol": "describe(\"Transactional publish, archive, and session version isolation\")",
+          "lineStart": 262,
+          "lineEnd": 295,
+          "sha256": "3bcf7e8f522ed925909ba618da3c00723d69e46efcdfcbcb6185857e33eb2a44"
+        },
+        {
+          "file": "apps/api/test/integration/content-publish.integration.spec.ts",
+          "symbol": "describe(\"Transactional publish, archive, and session version isolation\")",
+          "lineStart": 349,
+          "lineEnd": 381,
+          "sha256": "3bcf7e8f522ed925909ba618da3c00723d69e46efcdfcbcb6185857e33eb2a44"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 308,
+          "lineEnd": 407,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 409,
+          "lineEnd": 473,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-ContentImport",
+        "ENT-Lesson",
+        "ENT-LessonVersion",
+        "ENT-AudioArtifact",
+        "ENT-MutationReceipt",
+        "ENT-AuditLog",
+        "TEST-61a69597556fd54f",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53",
+        "SYM-81d340a59a18c99c",
+        "SYM-d092855a62609f7c",
+        "SYM-0ed5740f4361dd1f",
+        "SYM-9b7e1a102c8f4919",
+        "SYM-6d6fbed09c7c150d",
+        "SYM-cc12763a91be9bb6",
+        "SYM-1a98966b6b250044",
+        "SYM-522889346d8c6b3f",
+        "API-84d059829fd88a5e",
+        "API-6d0da70ec52b3e32",
+        "API-740d1a3ca6cf53db",
+        "API-4aba6690814aa03c",
+        "API-3cb4bdf43a975c54",
+        "API-5a3705b5dd4aa51e",
+        "API-fb81a353e5880ca3",
+        "REQ-CORE-04",
+        "REQ-CORE-05",
+        "BR-CORE-06",
+        "BR-CORE-07",
+        "BR-CORE-08"
+      ],
+      "actor": "CONTENT_ADMIN or SYSTEM_ADMIN",
+      "goal": "Expose a complete lesson version with selected audio or retire a published version.",
+      "trigger": "POST /api/v1/admin/content-imports/:id/publish; optional POST /api/v1/admin/lesson-versions/:id/archive.",
+      "preconditions": [
+        "Authenticated administrative authoring role.",
+        "Current expected revision/hash, idempotency key and selected audio map supplied.",
+        "Import VALIDATED for its current source; listening scripts have matching READY candidates."
+      ],
+      "mainFlow": [
+        "Check actor/operation/key receipt; replay matching hash or reject conflicting reuse.",
+        "Check revision/hash/validation/report, fresh normalization and audio readiness/hash/ownership.",
+        "Transaction takes advisory lock on normalized lesson slug, rechecks receipt, row-locks/rereads import, and rechecks selected artifacts.",
+        "Upsert lesson, allocate version and word-bank versions, schema-validate snapshot and materialize version, blocks, activities, word-bank links and audio bindings.",
+        "Archive former current version, publish new version, move current pointer and mark import PUBLISHED.",
+        "Commit PUBLISH_LESSON audit and receipt with publication; emit best-effort metric afterwards.",
+        "Explicit archive uses slug lock, accepts PUBLISHED or existing ARCHIVED, clears pointer only if still current and records ARCHIVE_LESSON audit."
+      ],
+      "alternativeFlows": [
+        "Identical waiter replays receipt after lock.",
+        "Already archived version returns ARCHIVED without a duplicate archive audit.",
+        "No listening activities requires no listening audio selection."
+      ],
+      "exceptionFlows": [
+        "Missing resource is 404; stale revision/hash, published state or conflicting key is 409.",
+        "Invalid validation or missing/foreign/non-READY/stale/extra audio selection is 422.",
+        "Snapshot schema/database exceptions roll back transaction."
+      ],
+      "postconditions": [
+        "Publication atomically points lesson at complete PUBLISHED version and archives prior current version.",
+        "Explicit archive may leave current pointer null; it does not choose an older version."
+      ],
+      "businessRules": [
+        "Only code-enforced transitions are described.",
+        "Publish request hash omits importId; cross-import replay is a separate inferred gap."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Concurrent identical publication creates one version and receipt.",
+        "INFERRED acceptance criterion from source: Different keys cannot publish the same draft twice after its state changes.",
+        "INFERRED acceptance criterion from source: Archiving current version clears pointer and records one audit."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/test/integration/content-publish.integration.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "apps/api/src/content-authoring/content-authoring.controller.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-04",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "REQ-CORE-05",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-06",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-07",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-08",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-Job",
+      "kind": "use-case",
+      "name": "Claim, execute, recover and retry a persistent job",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "PostgreSQL locking coordinates claims; owner/attempt identity fences job updates. Automatic retry preserves identity and manual owner retry grants one additional attempt.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 60,
+          "lineEnd": 305,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "decideJobRetry; JobRunnerService",
+          "lineStart": 15,
+          "lineEnd": 181,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/jobs/jobs.controller.ts",
+          "symbol": "JobsController",
+          "lineStart": 26,
+          "lineEnd": 51,
+          "sha256": "c3227c7f8eeecba37cb0c71f8d36c9007f14d51ccdd0d2e411260b7d89fb9271"
+        },
+        {
+          "file": "apps/api/test/integration/jobs-worker.integration.spec.ts",
+          "symbol": "describe(\"leased PostgreSQL job worker\")",
+          "lineStart": 72,
+          "lineEnd": 84,
+          "sha256": "b2c275dd717ac77584135e3b044a80467f2e11f18ca9f5b492641e7e245bfc47"
+        },
+        {
+          "file": "apps/api/test/integration/jobs-worker.integration.spec.ts",
+          "symbol": "describe(\"leased PostgreSQL job worker\")",
+          "lineStart": 134,
+          "lineEnd": 155,
+          "sha256": "b2c275dd717ac77584135e3b044a80467f2e11f18ca9f5b492641e7e245bfc47"
+        },
+        {
+          "file": "apps/api/test/integration/jobs-worker.integration.spec.ts",
+          "symbol": "describe(\"leased PostgreSQL job worker\")",
+          "lineStart": 158,
+          "lineEnd": 198,
+          "sha256": "b2c275dd717ac77584135e3b044a80467f2e11f18ca9f5b492641e7e245bfc47"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.spec.ts",
+          "symbol": "describe(\"decideJobRetry\")",
+          "lineStart": 19,
+          "lineEnd": 85,
+          "sha256": "3e2af8ab1199167db33b2ee873e8b347359eb75528e66d6f5f0ddba248efd33c"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "ENT-JobAttempt",
+        "TEST-5ff5b4367b66c720",
+        "TEST-294538d4c13dbe7e",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7",
+        "SYM-48cc1dd51c8019db",
+        "SYM-6289245794091ed1",
+        "SYM-8112bc4ef250250a",
+        "API-64c940cd380b0e0d",
+        "API-550de84691b6db35",
+        "REQ-CORE-06",
+        "BR-CORE-10",
+        "BR-CORE-11",
+        "BR-CORE-12",
+        "BR-CORE-13"
+      ],
+      "actor": "In-process runner; creating administrator for status/manual retry",
+      "goal": "Process durable work with bounded retry and recover abandoned claims.",
+      "trigger": "Timer poll, direct runOnce invocation, or owner POST /api/v1/jobs/:id/retry.",
+      "preconditions": [
+        "Due PENDING/RETRY_WAIT below attempt budget, or RUNNING with expired lease.",
+        "Registered handler needed for successful dispatch.",
+        "Status/retry API requires administrative role and matching createdById."
+      ],
+      "mainFlow": [
+        "Enqueue skips duplicate keys and confirms creator/type/resource identity against existing row.",
+        "Transaction selects one eligible row FOR UPDATE SKIP LOCKED, prioritizing expired RUNNING work then availableAt/createdAt.",
+        "Expired claim marks running attempts FAILED with LEASE_EXPIRED; exhausted budget marks job FAILED, otherwise new RUNNING claim increments attempt and sets owner/expiry.",
+        "Dispatch handler; success updates only RUNNING job with same owner/attempt and marks attempt SUCCEEDED.",
+        "On error store safe code/summary; eligible retryable ProviderError receives bounded jittered backoff or job becomes FAILED.",
+        "Owner manual retry conditionally accepts FAILED/retryable, sets PENDING, increments maxAttempts by one and clears completion/error state."
+      ],
+      "alternativeFlows": [
+        "No eligible claim returns false. Expired final attempt can be failed while claimNext returns null.",
+        "pollActive prevents overlapping timer polls only, not direct runOnce calls.",
+        "Automatic retries retain job ID and increment attempt on next claim."
+      ],
+      "exceptionFlows": [
+        "Unknown type fails without retry.",
+        "Stale completion/failure returns false after owner/attempt changes.",
+        "Non-owner job appears not found; non-retryable state or lost retry race is 409."
+      ],
+      "postconditions": [
+        "Accepted claim creates numbered attempt; accepted completion/failure sets its outcome.",
+        "Job update fencing does not establish exactly-once external side effects."
+      ],
+      "businessRules": [
+        "Live leases excluded from claims; completion predicate does not test leaseExpiresAt.",
+        "Manual retry budget is separate from automatic retry."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Concurrent claimers obtain at most one claim per row.",
+        "INFERRED acceptance criterion from source: Reclamation rejects previous attempt completion.",
+        "INFERRED acceptance criterion from source: Retry cannot claim before availableAt.",
+        "INFERRED acceptance criterion from source: Manual retry keeps job identity and adds one maxAttempts unit."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/test/integration/jobs-worker.integration.spec.ts",
+        "apps/api/src/jobs/application/job-runner.service.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts",
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/src/jobs/jobs.controller.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-06",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-10",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-11",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-12",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-13",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "UC-CORE-AIRoute",
+      "kind": "use-case",
+      "name": "Resolve evaluation preference and call configured adapter",
+      "module": "MOD-ai-gateway",
+      "status": "VERIFIED",
+      "description": "Factory selects fake/direct/routed evaluation. Routed calls combine system/account preferences and may call the secondary configured provider once.",
+      "evidence": [
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 45,
+          "lineEnd": 67,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+          "symbol": "RoutingLanguageEvaluationAdapter",
+          "lineStart": 15,
+          "lineEnd": 29,
+          "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 11,
+          "lineEnd": 22,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 65,
+          "lineEnd": 82,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 43,
+          "lineEnd": 62,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+          "symbol": "OpenAiLanguageEvaluationAdapter",
+          "lineStart": 91,
+          "lineEnd": 165,
+          "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+          "symbol": "DiscoveryLanguageEvaluationAdapter",
+          "lineStart": 28,
+          "lineEnd": 66,
+          "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.spec.ts",
+          "symbol": "describe(\"evaluation routing\")",
+          "lineStart": 19,
+          "lineEnd": 58,
+          "sha256": "c6dd42aca7626c3c7b28b3d960bc41c60b4e5ce01f457e4d77585974f82ffb15"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "ENT-AiRoutingSetting",
+        "ENT-AuditLog",
+        "TEST-99973d68d8f46a75",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-80e6b7d3dc2f0283",
+        "SYM-a55a740dc51d727a",
+        "SYM-28ffd8f141492887",
+        "SYM-dc07ac42cac361b2",
+        "SYM-7b571dea867b4494",
+        "SYM-30047f2922c3fc81",
+        "SYM-3ef74094ebc4f41f",
+        "SYM-2a0908106ad00139",
+        "SYM-a6b3af2fc1be46fc",
+        "SYM-3d75ca819359b7f7",
+        "SYM-565963de1f938ae7",
+        "SYM-a807bdb04c56077c",
+        "SYM-d334a3bc20f8b01c",
+        "SYM-eea2498ba960905a",
+        "SYM-62e23d8fcd723087",
+        "SYM-d1f6ac5fb101bfa7",
+        "SYM-9971af444c8f8193",
+        "SYM-28249e6008f3e3aa",
+        "REQ-CORE-08",
+        "BR-CORE-15"
+      ],
+      "actor": "Application evaluation caller; account holder or administrator maintaining preference",
+      "goal": "Evaluate input using configured capability and return actual provider/model provenance.",
+      "trigger": "LanguageEvaluationPort.evaluate or evaluateWithProvenance with optional routing userId/requiredProvider.",
+      "preconditions": [
+        "Startup configuration parsed successfully.",
+        "Live credentials configured; presence does not establish remote availability."
+      ],
+      "mainFlow": [
+        "Fake languageEvaluation.provider returns fake adapter before routing logic.",
+        "Routing disabled selects configured direct OpenAI-compatible or Discovery adapter.",
+        "Routing enabled registers configured live providers and resolves system/account preference.",
+        "Combine environment/system/account fallback permissions; requiredProvider overrides preference.",
+        "Call primary; OpenAI-compatible uses /responses structured output, Discovery /chat/completions with parsed/schema-validated JSON.",
+        "For allowed ProviderError and enabled fallback, call other registered provider once and return actual provider/model/config provenance."
+      ],
+      "alternativeFlows": [
+        "Invalid/missing account preference uses system preference.",
+        "Settings updates reject routing disabled/unavailable selection; system changes can audit transactionally."
+      ],
+      "exceptionFlows": [
+        "No alternate for requiredProvider, disabled fallback, missing secondary, non-ProviderError, refusal, invalid audio or expired recording.",
+        "Missing primary registration throws non-retryable PROVIDER_UPSTREAM but can still fall back when not required, because router does not test retryable.",
+        "Adapters reject refusal and malformed/incomplete output; HTTP helper maps timeout/status/response bounds."
+      ],
+      "postconditions": [
+        "Routed success identifies actual provider/model.",
+        "Source/settings shape does not prove running provider selection."
+      ],
+      "businessRules": [
+        "Fallback predicate uses class/code/settings rather than retryable flag.",
+        "Fake mode bypasses live routing."
+      ],
+      "acceptanceCriteria": [
+        "INFERRED acceptance criterion from source: Fallback does not loop if both providers fail.",
+        "INFERRED acceptance criterion from source: Required-provider work never downgrades.",
+        "INFERRED acceptance criterion from source: Concurrent accounts retain separate actual provider provenance."
+      ],
+      "verificationScope": "Static source and cited test assertions reviewed; production and database tests not executed.",
+      "testFiles": [
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts"
+      ],
+      "curated": true,
+      "relationships": [
+        {
+          "target": "REQ-CORE-08",
+          "type": "satisfies",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        },
+        {
+          "target": "BR-CORE-15",
+          "type": "governed-by",
+          "status": "INFERRED",
+          "basis": "Analyst mapping between reviewed source-backed descriptions; not runtime or test coverage."
+        }
+      ]
+    },
+    {
+      "id": "BR-CORE-01",
+      "kind": "rule",
+      "name": "Normalized registration and learner defaults",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Registration trims identity, lowercases email and requires a 12–128 character password at DTO boundary; Prisma defaults create LEARNER/ACTIVE.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 45,
+          "lineEnd": 68,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/dto/register.dto.ts",
+          "symbol": "RegisterDto",
+          "lineStart": 6,
+          "lineEnd": 34,
+          "sha256": "2f0dc47bde4750e9335de6fa425df6c99a33212a4352a25bbd6de4f42ade826c"
+        },
+        {
+          "file": "apps/api/prisma/schema.prisma",
+          "symbol": "User",
+          "lineStart": 32,
+          "lineEnd": 40,
+          "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-users",
+        "ENT-User",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4",
+        "SYM-c497d7a990a9e664"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/dto/register.dto.ts",
+        "apps/api/prisma/schema.prisma"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-02",
+      "kind": "rule",
+      "name": "Session token and account validity",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Persist HMAC-SHA256 token hash, reject revoked/expired sessions and non-ACTIVE users. Session lifetime is seven days; logout revokes matching unrevoked token hashes.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 93,
+          "lineEnd": 137,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/auth.constants.ts",
+          "symbol": "SESSION_COOKIE_NAME; SESSION_DURATION_MS",
+          "lineStart": 1,
+          "lineEnd": 2,
+          "sha256": "383f6754466ec9cc5baefb7df9fdfb55f19e6fd310d58f5cf60785891c05b772"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "ENT-UserSession",
+        "ENT-User",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/auth.constants.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-03",
+      "kind": "rule",
+      "name": "Method role override and any-role matching",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Handler role metadata overrides class metadata. Missing/empty role list passes; otherwise any matching role is enough. Insufficient administrative permission throws ForbiddenException.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+          "symbol": "RolesGuard",
+          "lineStart": 18,
+          "lineEnd": 42,
+          "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "ENT-User",
+        "SYM-60115893924c6461",
+        "SYM-312e8287b73c8803"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/infrastructure/roles.guard.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-04",
+      "kind": "rule",
+      "name": "Preferences use authenticated identity",
+      "module": "MOD-users",
+      "status": "VERIFIED",
+      "description": "Optional mismatched x-worklingo-account-id fails ACCOUNT_CHANGED. Preference lookup/upsert uses authUser.id; missing/unsupported stored locale projects as vi.",
+      "evidence": [
+        {
+          "file": "apps/api/src/users/application/users.service.ts",
+          "symbol": "UsersService",
+          "lineStart": 23,
+          "lineEnd": 76,
+          "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 41,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        }
+      ],
+      "relatedIds": [
+        "MOD-users",
+        "ENT-LearnerProfile",
+        "SYM-6aa2cc952f58d6cc",
+        "SYM-09823005e8e03b2f",
+        "SYM-b14a3fa8c82d8682",
+        "SYM-c58a71023cecf778",
+        "SYM-d680738e947ff8a2",
+        "SYM-4cae3123686a953b",
+        "SYM-cbf83567c6c1e38c",
+        "SYM-a732334c7b84611c",
+        "SYM-cb8789a151d6139b",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/users/application/users.service.ts",
+        "apps/api/src/users/users.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-05",
+      "kind": "rule",
+      "name": "Draft edits use revision compare-and-set",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Published/archived imports are immutable through edit/validate. Edit requires expected revision and DRAFT/VALIDATED status, increments once, sets DRAFT and clears validationHash.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+          "symbol": "ContentImportsService",
+          "lineStart": 78,
+          "lineEnd": 143,
+          "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+          "symbol": "ContentImportsService",
+          "lineStart": 163,
+          "lineEnd": 205,
+          "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-ContentImport",
+        "SYM-fe05829c4b269c30",
+        "SYM-05e492ae233578f1",
+        "SYM-50f3ff9b7ffa6f06",
+        "SYM-3a70ac587851a973",
+        "SYM-9d8689cae39a3e88",
+        "SYM-68ec905cbc3261a6",
+        "SYM-da192bde128ceb1a"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-imports.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-06",
+      "kind": "rule",
+      "name": "Validation binds hash and blocking issues",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Conditional validation matches ID/revision/hash/editable status. Only canPublish sets VALIDATED and validationHash=sourceHash. Analyzer checks source length above 500000 characters, section/activity limits 200/50 and listening audio references; controller distinguishes parse/validation errors.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+          "symbol": "ContentImportsService",
+          "lineStart": 180,
+          "lineEnd": 223,
+          "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+        },
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 120,
+          "lineEnd": 137,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "packages/content-format/src/validator.ts",
+          "symbol": "MAX_SOURCE_LENGTH; MAX_SECTIONS; MAX_ACTIVITIES; MAX_OPTIONS",
+          "lineStart": 27,
+          "lineEnd": 87,
+          "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+        },
+        {
+          "file": "packages/content-format/src/validator.ts",
+          "symbol": "validateLessonDocument",
+          "lineStart": 317,
+          "lineEnd": 337,
+          "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+        },
+        {
+          "file": "packages/content-format/src/validator.ts",
+          "symbol": "analyzeLessonSource",
+          "lineStart": 483,
+          "lineEnd": 522,
+          "sha256": "2be983a7fec5b5b1d95e762e0ea1e1171853b9590f5a5ba864dc56bf2e72e716"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-ContentImport",
+        "SYM-fe05829c4b269c30",
+        "SYM-05e492ae233578f1",
+        "SYM-50f3ff9b7ffa6f06",
+        "SYM-3a70ac587851a973",
+        "SYM-9d8689cae39a3e88",
+        "SYM-68ec905cbc3261a6",
+        "SYM-da192bde128ceb1a",
+        "SYM-81d340a59a18c99c",
+        "SYM-d092855a62609f7c",
+        "SYM-0ed5740f4361dd1f",
+        "SYM-9b7e1a102c8f4919",
+        "SYM-6d6fbed09c7c150d",
+        "SYM-cc12763a91be9bb6",
+        "SYM-1a98966b6b250044",
+        "SYM-522889346d8c6b3f",
+        "API-84d059829fd88a5e",
+        "API-6d0da70ec52b3e32",
+        "API-740d1a3ca6cf53db",
+        "API-4aba6690814aa03c",
+        "API-3cb4bdf43a975c54",
+        "API-5a3705b5dd4aa51e",
+        "API-fb81a353e5880ca3",
+        "SYM-2cbec70abc0a86d4",
+        "SYM-84134157144ba486",
+        "SYM-0260115201df7aa1",
+        "SYM-96a0c547e121a81d"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "packages/content-format/src/validator.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-07",
+      "kind": "rule",
+      "name": "Publication serializes allocation and replay",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Actor/operation/key receipt, slug advisory transaction lock and import row lock protect publication. It rechecks revision/hash/state, materializes children, archives prior current, changes pointer and commits audit/receipt together.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 33,
+          "lineEnd": 306,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 473,
+          "lineEnd": 628,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 308,
+          "lineEnd": 407,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 409,
+          "lineEnd": 473,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-LessonVersion",
+        "ENT-ContentImport",
+        "ENT-MutationReceipt",
+        "ENT-AuditLog",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-publisher.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-08",
+      "kind": "rule",
+      "name": "Listening binds explicit current READY candidates",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Selected IDs are distinct; each required script selects artifact from this import with matching slug, READY and exact script hash. Extraneous selected slugs fail. Transaction rechecks candidates before version binding.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 144,
+          "lineEnd": 210,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 284,
+          "lineEnd": 305,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 532,
+          "lineEnd": 540,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-AudioArtifact",
+        "ENT-LessonVersionAudioArtifact",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-publisher.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-09",
+      "kind": "rule",
+      "name": "Audio replay and freshness are separate",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Generation request hash includes import/script selector/provider/voice/canonical config. Matching receipt replays acceptance. Pre/post synthesis script mismatch yields STALE; READY update requires GENERATING artifact.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 62,
+          "lineEnd": 277,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+          "symbol": "AudioGenerationHandler",
+          "lineStart": 42,
+          "lineEnd": 111,
+          "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-AudioArtifact",
+        "ENT-MutationReceipt",
+        "SYM-3799485ce2e01519",
+        "SYM-1186c65cad1154c9",
+        "SYM-9ab0c15ba8cfed50",
+        "SYM-6fd73e60ea46a9b1",
+        "SYM-0528e09d6777d7ee",
+        "SYM-d121ea1770206826",
+        "SYM-81c0210180666465",
+        "SYM-18cdcc7b6deb0c3f",
+        "SYM-1bcead783bd33781",
+        "SYM-cf3d01cb6b1a5416",
+        "SYM-9382b5567e7cfadc",
+        "SYM-dc0821e1378e480c"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "apps/api/src/content-authoring/application/audio-generation.handler.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-10",
+      "kind": "rule",
+      "name": "Job replay checks identity rather than payload equality",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Enqueue skips duplicate key and confirms creator/type/resourceType/resourceId. It does not compare payload, contentImportId or maxAttempts against existing row.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 60,
+          "lineEnd": 93,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-11",
+      "kind": "rule",
+      "name": "Claim locks and owner-attempt fences",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Due PENDING/RETRY_WAIT needs remaining attempts; expired RUNNING is reclaimable. Claims use FOR UPDATE SKIP LOCKED. Completion/failure matches RUNNING/owner/attempt but not wall-clock lease expiry.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 96,
+          "lineEnd": 168,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        },
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 171,
+          "lineEnd": 235,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "ENT-JobAttempt",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-12",
+      "kind": "rule",
+      "name": "Bounded code-specific retry",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Runner requires retryable ProviderError and helper approval. Timeout/rate-limit/upstream retry below max; invalid/refused helper codes are eligible only at attempt 1. Delay starts at exponential 1s with 0.8–1.2 jitter, honors retryAfterMs within 60s cap. Live adapters mark refusals non-retryable, so their refusals never enter helper retry.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "decideJobRetry; JobRunnerService",
+          "lineStart": 15,
+          "lineEnd": 51,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "JobHandlerRegistry",
+          "lineStart": 142,
+          "lineEnd": 165,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+          "symbol": "DiscoveryLanguageEvaluationAdapter",
+          "lineStart": 47,
+          "lineEnd": 55,
+          "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+          "symbol": "OpenAiLanguageEvaluationAdapter",
+          "lineStart": 120,
+          "lineEnd": 124,
+          "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "MOD-ai-gateway",
+        "ENT-Job",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7",
+        "SYM-62e23d8fcd723087",
+        "SYM-d1f6ac5fb101bfa7",
+        "SYM-9971af444c8f8193",
+        "SYM-28249e6008f3e3aa",
+        "SYM-a807bdb04c56077c",
+        "SYM-d334a3bc20f8b01c",
+        "SYM-eea2498ba960905a"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-13",
+      "kind": "rule",
+      "name": "Owner manual retry grants one attempt",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Status/retry API requires CONTENT_ADMIN or SYSTEM_ADMIN; service filters creator. Manual retry conditionally accepts FAILED/retryable, preserves identity, adds one maxAttempts unit and clears completion/errors.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/jobs.controller.ts",
+          "symbol": "JobsController",
+          "lineStart": 26,
+          "lineEnd": 51,
+          "sha256": "c3227c7f8eeecba37cb0c71f8d36c9007f14d51ccdd0d2e411260b7d89fb9271"
+        },
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 239,
+          "lineEnd": 290,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "SYM-48cc1dd51c8019db",
+        "SYM-6289245794091ed1",
+        "SYM-8112bc4ef250250a",
+        "API-64c940cd380b0e0d",
+        "API-550de84691b6db35",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/jobs.controller.ts",
+        "apps/api/src/jobs/application/jobs.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-14",
+      "kind": "rule",
+      "name": "Fixed-window limiting applies only to decorated operations",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "description": "No RateLimit metadata bypasses guard. Decorated calls use HMAC subject hashes and PostgreSQL upsert by scope/hash/window; excess is 429 with rate-limit/retry headers. Login/register each declare 30 per 60 seconds.",
+      "evidence": [
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+          "symbol": "RateLimitGuard",
+          "lineStart": 33,
+          "lineEnd": 98,
+          "sha256": "eac434b47242b8e229d9a8bb0cd3348cf95b686516fc9b69c3f842aa8ea60cdb"
+        },
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.service.ts",
+          "symbol": "RateLimitService",
+          "lineStart": 40,
+          "lineEnd": 101,
+          "sha256": "853969b2b9399e633ed3ebe163ee49f6b5564eb7b0ce6aeb24b5bf137a0ad5dd"
+        },
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 41,
+          "lineEnd": 68,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "MOD-auth",
+        "ENT-RateLimitBucket",
+        "SYM-cf935cacee9f1258",
+        "SYM-82dd6890164bc4d1",
+        "SYM-f11fb1c167cc90c0",
+        "SYM-52cbd94a28fb3922",
+        "SYM-9fe35f9014f55500",
+        "SYM-467cd8688ecbc6bb",
+        "SYM-2fea48451c9c9f5f",
+        "SYM-160317a178f17828",
+        "SYM-4051672ce5ee70d2",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+        "apps/api/src/common/rate-limit/rate-limit.service.ts",
+        "apps/api/src/auth/auth.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "BR-CORE-15",
+      "kind": "rule",
+      "name": "Fallback is constrained independently of retryable flag",
+      "module": "MOD-ai-gateway",
+      "status": "VERIFIED",
+      "description": "Required provider overrides preference. Account fallback cannot override system prohibition. One alternate requires enabled fallback, registered secondary and ProviderError other than refusal/invalid-audio/expired-recording; retryable flag is not tested.",
+      "evidence": [
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 45,
+          "lineEnd": 67,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+          "symbol": "RoutingLanguageEvaluationAdapter",
+          "lineStart": 15,
+          "lineEnd": 29,
+          "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 11,
+          "lineEnd": 22,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 65,
+          "lineEnd": 82,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "ENT-AiRoutingSetting",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-80e6b7d3dc2f0283",
+        "SYM-a55a740dc51d727a",
+        "SYM-28ffd8f141492887",
+        "SYM-dc07ac42cac361b2",
+        "SYM-7b571dea867b4494",
+        "SYM-30047f2922c3fc81",
+        "SYM-3ef74094ebc4f41f",
+        "SYM-2a0908106ad00139",
+        "SYM-a6b3af2fc1be46fc",
+        "SYM-3d75ca819359b7f7",
+        "SYM-565963de1f938ae7"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/application/ai-settings.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-01",
+      "kind": "requirement",
+      "name": "Account registration and session identity",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Expose public learner registration/login, projected current-user identity and current-session logout with DTO password/locale validation.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 45,
+          "lineEnd": 138,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 41,
+          "lineEnd": 100,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        },
+        {
+          "file": "apps/api/src/auth/dto/register.dto.ts",
+          "symbol": "RegisterDto",
+          "lineStart": 6,
+          "lineEnd": 34,
+          "sha256": "2f0dc47bde4750e9335de6fa425df6c99a33212a4352a25bbd6de4f42ade826c"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 19,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-users",
+        "ENT-User",
+        "ENT-UserSession",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760",
+        "SYM-c497d7a990a9e664",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a"
+      ],
+      "category": "Functional",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/auth.controller.ts",
+        "apps/api/src/auth/dto/register.dto.ts",
+        "apps/api/src/users/users.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-02",
+      "kind": "requirement",
+      "name": "Active session and administrative authorization",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Protected requests require unrevoked unexpired session and ACTIVE user; role-specific handlers require an effective matching role. Cookie is HttpOnly/SameSite=lax, secure=false.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+          "symbol": "SessionAuthGuard",
+          "lineStart": 22,
+          "lineEnd": 40,
+          "sha256": "a755ed50668d4c14dd5248b2347fd626c30952c60b218aa5cd64dab645bb363c"
+        },
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 93,
+          "lineEnd": 108,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+          "symbol": "RolesGuard",
+          "lineStart": 18,
+          "lineEnd": 42,
+          "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+        },
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 93,
+          "lineEnd": 100,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "ENT-UserSession",
+        "SYM-0be0c5d1246432a7",
+        "SYM-efccf5a8fcf57af6",
+        "SYM-2c35f6b2965d2564",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4",
+        "SYM-60115893924c6461",
+        "SYM-312e8287b73c8803",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760"
+      ],
+      "category": "Security",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "apps/api/src/auth/auth.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-03",
+      "kind": "requirement",
+      "name": "Account-scoped interface locale",
+      "module": "MOD-users",
+      "status": "VERIFIED",
+      "description": "Read/upsert current-account locale, reject optional stale account header and project fallback vi for missing/unsupported stored locale.",
+      "evidence": [
+        {
+          "file": "apps/api/src/users/application/users.service.ts",
+          "symbol": "UsersService",
+          "lineStart": 23,
+          "lineEnd": 76,
+          "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 41,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        }
+      ],
+      "relatedIds": [
+        "MOD-users",
+        "ENT-LearnerProfile",
+        "SYM-6aa2cc952f58d6cc",
+        "SYM-09823005e8e03b2f",
+        "SYM-b14a3fa8c82d8682",
+        "SYM-c58a71023cecf778",
+        "SYM-d680738e947ff8a2",
+        "SYM-4cae3123686a953b",
+        "SYM-cbf83567c6c1e38c",
+        "SYM-a732334c7b84611c",
+        "SYM-cb8789a151d6139b",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a"
+      ],
+      "category": "Functional",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/users/application/users.service.ts",
+        "apps/api/src/users/users.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-04",
+      "kind": "requirement",
+      "name": "Exact source and revision-specific validation",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Store exact draft source/hash and persist revision-specific analysis separately from publication. Published/archived source is immutable through import service.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-imports.service.ts",
+          "symbol": "ContentImportsService",
+          "lineStart": 36,
+          "lineEnd": 232,
+          "sha256": "7cb0884b50011d49f5500ef70ec7d780fdda9353eb1e83c231c756d12eefb68b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-ContentImport",
+        "SYM-fe05829c4b269c30",
+        "SYM-05e492ae233578f1",
+        "SYM-50f3ff9b7ffa6f06",
+        "SYM-3a70ac587851a973",
+        "SYM-9d8689cae39a3e88",
+        "SYM-68ec905cbc3261a6",
+        "SYM-da192bde128ceb1a"
+      ],
+      "category": "Data",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-imports.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-05",
+      "kind": "requirement",
+      "name": "Atomic version publication and audio binding",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Require current VALIDATED source and selected matching audio; serialize version allocation, retain audit/replay receipt and support explicit version archival.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 33,
+          "lineEnd": 306,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 473,
+          "lineEnd": 628,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 631,
+          "lineEnd": 691,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 308,
+          "lineEnd": 407,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 409,
+          "lineEnd": 473,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-LessonVersion",
+        "ENT-MutationReceipt",
+        "ENT-AuditLog",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53"
+      ],
+      "category": "Functional",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-publisher.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-06",
+      "kind": "requirement",
+      "name": "Durable jobs and bounded recovery",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "PostgreSQL claims/leases/attempt history, owner-attempt completion predicates and bounded retry support recovery. No throughput or exactly-once service-level guarantee was verified.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 60,
+          "lineEnd": 305,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "decideJobRetry; JobRunnerService",
+          "lineStart": 15,
+          "lineEnd": 181,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "ENT-JobAttempt",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7"
+      ],
+      "category": "Non-functional",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts",
+        "apps/api/src/jobs/application/job-runner.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-07",
+      "kind": "requirement",
+      "name": "Local root-bounded object bytes",
+      "module": "MOD-storage",
+      "status": "VERIFIED",
+      "description": "StorageModule binds local adapter. Put writes exclusive temporary file then renames; read/delete resolve lexical paths beneath configured root and reject absolute/traversal keys.",
+      "evidence": [
+        {
+          "file": "apps/api/src/storage/storage.module.ts",
+          "symbol": "StorageModule",
+          "lineStart": 8,
+          "lineEnd": 19,
+          "sha256": "6513ec25c75cce7f2c0eafa8f5c9860cee94426ba127c3d983d2bafd70a80b3c"
+        },
+        {
+          "file": "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts",
+          "symbol": "LocalObjectStorageAdapter",
+          "lineStart": 19,
+          "lineEnd": 64,
+          "sha256": "4aa47178a69aa0f61ab8c6ccb94812c411fa4caf90a413d2a0abf085c933c9c3"
+        }
+      ],
+      "relatedIds": [
+        "MOD-storage",
+        "SYM-111dab236c3f27fa",
+        "SYM-330a96350ca270f9",
+        "SYM-0960be1094d48153",
+        "SYM-b070160f6b864308",
+        "SYM-337a65d59bd52924",
+        "SYM-de620a1e01bfd1db"
+      ],
+      "category": "Data",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/storage/storage.module.ts",
+        "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-08",
+      "kind": "requirement",
+      "name": "Bound and validate live provider exchange",
+      "module": "MOD-ai-gateway",
+      "status": "VERIFIED",
+      "description": "Support fake/direct/routed evaluation, OpenAI Responses, Discovery chat-completions, Microsoft speech and Azure TTS. Helpers bound response bytes/time and adapters validate structured responses.",
+      "evidence": [
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 45,
+          "lineEnd": 67,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+          "symbol": "RoutingLanguageEvaluationAdapter",
+          "lineStart": 15,
+          "lineEnd": 29,
+          "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 11,
+          "lineEnd": 22,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 65,
+          "lineEnd": 82,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/provider-http-client.ts",
+          "symbol": "requestProviderJson; requestProviderBytes; readBoundedBody",
+          "lineStart": 46,
+          "lineEnd": 146,
+          "sha256": "0bd588a9fdccf64bc7fc9bc16c0cf3da87d748bc6b68d9db84d2d38fb87f66a0"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+          "symbol": "OpenAiLanguageEvaluationAdapter",
+          "lineStart": 91,
+          "lineEnd": 165,
+          "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+          "symbol": "DiscoveryLanguageEvaluationAdapter",
+          "lineStart": 28,
+          "lineEnd": 66,
+          "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/microsoft-speech.adapter.ts",
+          "symbol": "MicrosoftSpeechAdapter",
+          "lineStart": 47,
+          "lineEnd": 86,
+          "sha256": "8d4682ff45552cd570fd31f7203250477765effc49ac5b812af9efe7b0013e52"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts",
+          "symbol": "MicrosoftTextToSpeechAdapter",
+          "lineStart": 52,
+          "lineEnd": 87,
+          "sha256": "7a893efdf75164c22bcd9e1a7b96a3f36368dd3e05e23458f228414cdd395a05"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-80e6b7d3dc2f0283",
+        "SYM-a55a740dc51d727a",
+        "SYM-28ffd8f141492887",
+        "SYM-dc07ac42cac361b2",
+        "SYM-7b571dea867b4494",
+        "SYM-30047f2922c3fc81",
+        "SYM-3ef74094ebc4f41f",
+        "SYM-2a0908106ad00139",
+        "SYM-a6b3af2fc1be46fc",
+        "SYM-3d75ca819359b7f7",
+        "SYM-565963de1f938ae7",
+        "SYM-924d602823ecd043",
+        "SYM-8d0631026e1b83c8",
+        "SYM-8caff1402a728830",
+        "SYM-58fdb7826c18b9a3",
+        "SYM-a807bdb04c56077c",
+        "SYM-d334a3bc20f8b01c",
+        "SYM-eea2498ba960905a",
+        "SYM-62e23d8fcd723087",
+        "SYM-d1f6ac5fb101bfa7",
+        "SYM-9971af444c8f8193",
+        "SYM-28249e6008f3e3aa",
+        "SYM-e87699d3f6e64102",
+        "SYM-7abb15f12145f796",
+        "SYM-03df96100109f6f8",
+        "SYM-76e560250a1aef7f",
+        "SYM-c608657d490942af",
+        "SYM-c22169e5e7529b2f"
+      ],
+      "category": "Integration",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "apps/api/src/ai-gateway/infrastructure/provider-http-client.ts",
+        "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/microsoft-speech.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-09",
+      "kind": "requirement",
+      "name": "Persistent privacy-preserving route limits",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "description": "Decorated routes consume fixed-window database buckets keyed by HMAC subject hashes; trusted forwarding requires positive configured hop count. Excess exposes 429 and retry/reset headers.",
+      "evidence": [
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+          "symbol": "RateLimitGuard",
+          "lineStart": 33,
+          "lineEnd": 98,
+          "sha256": "eac434b47242b8e229d9a8bb0cd3348cf95b686516fc9b69c3f842aa8ea60cdb"
+        },
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.service.ts",
+          "symbol": "RateLimitService",
+          "lineStart": 40,
+          "lineEnd": 101,
+          "sha256": "853969b2b9399e633ed3ebe163ee49f6b5564eb7b0ce6aeb24b5bf137a0ad5dd"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "ENT-RateLimitBucket",
+        "SYM-cf935cacee9f1258",
+        "SYM-82dd6890164bc4d1",
+        "SYM-f11fb1c167cc90c0",
+        "SYM-52cbd94a28fb3922",
+        "SYM-9fe35f9014f55500",
+        "SYM-467cd8688ecbc6bb",
+        "SYM-2fea48451c9c9f5f",
+        "SYM-160317a178f17828",
+        "SYM-4051672ce5ee70d2"
+      ],
+      "category": "Security",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/common/rate-limit/rate-limit.guard.ts",
+        "apps/api/src/common/rate-limit/rate-limit.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "REQ-CORE-10",
+      "kind": "requirement",
+      "name": "Local bootstrap, safe errors/logging and guarded recovery",
+      "module": "MOD-common",
+      "status": "VERIFIED",
+      "description": "API binds loopback with /api/v1 and validation/SafeLogger. Middleware propagates bounded correlation IDs and unexpected exceptions yield generic 500. Backup creates dump/files/hash manifest; restore verifies hashes and empty destinations. No deployment or script execution was performed.",
+      "evidence": [
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "bootstrap",
+          "lineStart": 13,
+          "lineEnd": 33,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        },
+        {
+          "file": "apps/api/src/common/logging/safe-logger.service.ts",
+          "symbol": "SafeLoggerService",
+          "lineStart": 3,
+          "lineEnd": 126,
+          "sha256": "1e380fe9e67238774990facd121cc3284dfaa91c822cc7503024efe30a43d05c"
+        },
+        {
+          "file": "apps/api/src/common/http/safe-exception.filter.ts",
+          "symbol": "SafeExceptionFilter",
+          "lineStart": 117,
+          "lineEnd": 130,
+          "sha256": "82bacc9b12e767f8df2379412ebdb4c5326f141baca6dfc0a3b306d40ef314ec"
+        },
+        {
+          "file": "apps/api/src/common/request-context/correlation-id.middleware.ts",
+          "symbol": "CorrelationIdMiddleware",
+          "lineStart": 23,
+          "lineEnd": 40,
+          "sha256": "7acffaf63c10b89866ae998d1d4e3896440d655cbaafae89de163968cbc5afd5"
+        },
+        {
+          "file": "scripts/backup-local.ps1",
+          "symbol": "backup-local.ps1::<script>",
+          "lineStart": 147,
+          "lineEnd": 187,
+          "sha256": "078833e7656795fbb5db3b7984d322f0fd1457839f27e79118b5a6d504479c19"
+        },
+        {
+          "file": "scripts/restore-local.ps1",
+          "symbol": "restore-local.ps1::<script>",
+          "lineStart": 109,
+          "lineEnd": 144,
+          "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+        },
+        {
+          "file": "scripts/restore-local.ps1",
+          "symbol": "restore-local.ps1::<script>",
+          "lineStart": 166,
+          "lineEnd": 174,
+          "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+        },
+        {
+          "file": "scripts/restore-local.ps1",
+          "symbol": "restore-local.ps1::<script>",
+          "lineStart": 213,
+          "lineEnd": 239,
+          "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "MOD-infra",
+        "MOD-operations-scripts",
+        "SYM-0d1463abae29de7c",
+        "SYM-ab937ca78c1d7e92",
+        "SYM-5fd30f6ce2a18c69",
+        "SYM-a31b1e2b061b1874",
+        "SYM-e2f38d012c03137d",
+        "SYM-de936fadbe9202d1",
+        "SYM-616152edca7a6e6f",
+        "SYM-7524c86f34ab2d86",
+        "SYM-bda8e0ab7adfe64b",
+        "SYM-2dea16dea334c49a",
+        "SYM-2353bc070a62c6c5",
+        "SYM-f18996442e2a6b2e",
+        "SYM-788491c880558b53",
+        "SYM-d9bc5f475c82b31e"
+      ],
+      "category": "Operational",
+      "requirementBasis": "AS-IS reconstructed behavior; not a newly approved specification.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/main.ts",
+        "apps/api/src/common/logging/safe-logger.service.ts",
+        "apps/api/src/common/http/safe-exception.filter.ts",
+        "apps/api/src/common/request-context/correlation-id.middleware.ts",
+        "scripts/backup-local.ps1",
+        "scripts/restore-local.ps1"
+      ],
+      "curated": true
+    },
+    {
+      "id": "ACT-CORE-Visitor",
+      "kind": "actor",
+      "name": "Unauthenticated account applicant",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Public registration/login are available; unmarked protected handlers require a valid session.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 41,
+          "lineEnd": 78,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        },
+        {
+          "file": "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+          "symbol": "SessionAuthGuard",
+          "lineStart": 22,
+          "lineEnd": 40,
+          "sha256": "a755ed50668d4c14dd5248b2347fd626c30952c60b218aa5cd64dab645bb363c"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "ENT-User",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760",
+        "SYM-0be0c5d1246432a7",
+        "SYM-efccf5a8fcf57af6",
+        "SYM-2c35f6b2965d2564"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/auth.controller.ts",
+        "apps/api/src/auth/infrastructure/session-auth.guard.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "ACT-CORE-Learner",
+      "kind": "actor",
+      "name": "Authenticated learner",
+      "module": "MOD-users",
+      "status": "VERIFIED",
+      "description": "Prisma defaults new users to LEARNER/ACTIVE; session identity supplies account for current-user/preferences operations.",
+      "evidence": [
+        {
+          "file": "apps/api/prisma/schema.prisma",
+          "symbol": "User",
+          "lineStart": 32,
+          "lineEnd": 40,
+          "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+        },
+        {
+          "file": "apps/api/src/users/application/users.service.ts",
+          "symbol": "UsersService",
+          "lineStart": 23,
+          "lineEnd": 76,
+          "sha256": "21578d08128110321dd45e33809603f01a4e8dedb61270c2bb2adac4751073f5"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 41,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        }
+      ],
+      "relatedIds": [
+        "MOD-users",
+        "MOD-auth",
+        "ENT-User",
+        "ENT-LearnerProfile",
+        "SYM-6aa2cc952f58d6cc",
+        "SYM-09823005e8e03b2f",
+        "SYM-b14a3fa8c82d8682",
+        "SYM-c58a71023cecf778",
+        "SYM-d680738e947ff8a2",
+        "SYM-4cae3123686a953b",
+        "SYM-cbf83567c6c1e38c",
+        "SYM-a732334c7b84611c",
+        "SYM-cb8789a151d6139b",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/prisma/schema.prisma",
+        "apps/api/src/users/application/users.service.ts",
+        "apps/api/src/users/users.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "ACT-CORE-ContentAdmin",
+      "kind": "actor",
+      "name": "Content administrator",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "CONTENT_ADMIN is admitted with SYSTEM_ADMIN for authoring/audio and owner-filtered jobs API.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 45,
+          "lineEnd": 48,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "apps/api/src/content-authoring/audio.controller.ts",
+          "symbol": "AudioController",
+          "lineStart": 35,
+          "lineEnd": 38,
+          "sha256": "fdc658239f1fe3c8f0b15de9eef7a660c0c3d047a8b33b6e6fa36cc7f7849d2e"
+        },
+        {
+          "file": "apps/api/src/jobs/jobs.controller.ts",
+          "symbol": "JobsController",
+          "lineStart": 26,
+          "lineEnd": 51,
+          "sha256": "c3227c7f8eeecba37cb0c71f8d36c9007f14d51ccdd0d2e411260b7d89fb9271"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "MOD-jobs",
+        "ENT-User",
+        "SYM-81d340a59a18c99c",
+        "SYM-d092855a62609f7c",
+        "SYM-0ed5740f4361dd1f",
+        "SYM-9b7e1a102c8f4919",
+        "SYM-6d6fbed09c7c150d",
+        "SYM-cc12763a91be9bb6",
+        "SYM-1a98966b6b250044",
+        "SYM-522889346d8c6b3f",
+        "API-84d059829fd88a5e",
+        "API-6d0da70ec52b3e32",
+        "API-740d1a3ca6cf53db",
+        "API-4aba6690814aa03c",
+        "API-3cb4bdf43a975c54",
+        "API-5a3705b5dd4aa51e",
+        "API-fb81a353e5880ca3",
+        "SYM-f64b78e16b943336",
+        "SYM-8631e06ca3692425",
+        "SYM-13ae4b0e43606cb5",
+        "SYM-9c3e544fbf9bd0d3",
+        "API-2e1d6a4bebb90889",
+        "API-a32116e28b162204",
+        "API-d69d8ad3aad8cc8e",
+        "SYM-48cc1dd51c8019db",
+        "SYM-6289245794091ed1",
+        "SYM-8112bc4ef250250a",
+        "API-64c940cd380b0e0d",
+        "API-550de84691b6db35"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "apps/api/src/content-authoring/audio.controller.ts",
+        "apps/api/src/jobs/jobs.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "ACT-CORE-SystemAdmin",
+      "kind": "actor",
+      "name": "System administrator",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "SYSTEM_ADMIN shares these authoring/audio/jobs permissions with CONTENT_ADMIN; no wider permission is inferred from the role name.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 45,
+          "lineEnd": 48,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "apps/api/src/content-authoring/audio.controller.ts",
+          "symbol": "AudioController",
+          "lineStart": 35,
+          "lineEnd": 38,
+          "sha256": "fdc658239f1fe3c8f0b15de9eef7a660c0c3d047a8b33b6e6fa36cc7f7849d2e"
+        },
+        {
+          "file": "apps/api/src/jobs/jobs.controller.ts",
+          "symbol": "JobsController",
+          "lineStart": 26,
+          "lineEnd": 51,
+          "sha256": "c3227c7f8eeecba37cb0c71f8d36c9007f14d51ccdd0d2e411260b7d89fb9271"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "MOD-jobs",
+        "ENT-User",
+        "SYM-81d340a59a18c99c",
+        "SYM-d092855a62609f7c",
+        "SYM-0ed5740f4361dd1f",
+        "SYM-9b7e1a102c8f4919",
+        "SYM-6d6fbed09c7c150d",
+        "SYM-cc12763a91be9bb6",
+        "SYM-1a98966b6b250044",
+        "SYM-522889346d8c6b3f",
+        "API-84d059829fd88a5e",
+        "API-6d0da70ec52b3e32",
+        "API-740d1a3ca6cf53db",
+        "API-4aba6690814aa03c",
+        "API-3cb4bdf43a975c54",
+        "API-5a3705b5dd4aa51e",
+        "API-fb81a353e5880ca3",
+        "SYM-f64b78e16b943336",
+        "SYM-8631e06ca3692425",
+        "SYM-13ae4b0e43606cb5",
+        "SYM-9c3e544fbf9bd0d3",
+        "API-2e1d6a4bebb90889",
+        "API-a32116e28b162204",
+        "API-d69d8ad3aad8cc8e",
+        "SYM-48cc1dd51c8019db",
+        "SYM-6289245794091ed1",
+        "SYM-8112bc4ef250250a",
+        "API-64c940cd380b0e0d",
+        "API-550de84691b6db35"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "apps/api/src/content-authoring/audio.controller.ts",
+        "apps/api/src/jobs/jobs.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "ACT-CORE-Worker",
+      "kind": "actor",
+      "name": "In-process job runner",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Timer can poll PostgreSQL jobs and dispatch registered handlers, persisting success or safe failure. Audio service also calls runOnce directly.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "JobHandlerRegistry",
+          "lineStart": 94,
+          "lineEnd": 181,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 299,
+          "lineEnd": 306,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "ENT-JobAttempt",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7",
+        "SYM-3799485ce2e01519",
+        "SYM-1186c65cad1154c9",
+        "SYM-9ab0c15ba8cfed50",
+        "SYM-6fd73e60ea46a9b1",
+        "SYM-0528e09d6777d7ee",
+        "SYM-d121ea1770206826",
+        "SYM-81c0210180666465",
+        "SYM-18cdcc7b6deb0c3f"
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/src/content-authoring/application/audio-generation.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "INT-CORE-PostgreSQL",
+      "kind": "integration",
+      "name": "PostgreSQL persistence and coordination",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Prisma persistence supplies row/advisory locks for claims/publication. Development Compose declares PostgreSQL 17 Alpine, loopback port and named data volume.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 96,
+          "lineEnd": 112,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 213,
+          "lineEnd": 244,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "infra/docker-compose.yml",
+          "symbol": "services.postgres",
+          "lineStart": 1,
+          "lineEnd": 3,
+          "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+        },
+        {
+          "file": "infra/docker-compose.yml",
+          "symbol": "services.postgres",
+          "lineStart": 8,
+          "lineEnd": 14,
+          "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "MOD-content-authoring",
+        "MOD-infra",
+        "ENT-Job",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53"
+      ],
+      "direction": "API to PostgreSQL",
+      "deploymentStatus": "UNKNOWN: no container, connection, migrations or database rows inspected.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts",
+        "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "infra/docker-compose.yml"
+      ],
+      "curated": true
+    },
+    {
+      "id": "INT-CORE-ObjectStorage",
+      "kind": "integration",
+      "name": "Configured local object storage",
+      "module": "MOD-storage",
+      "status": "VERIFIED",
+      "description": "StorageModule always binds local filesystem adapter to configured directory. Random keys use caller prefix; exclusive temporary write plus rename publishes bytes. This is a local infrastructure boundary, not a cloud service.",
+      "evidence": [
+        {
+          "file": "apps/api/src/storage/storage.module.ts",
+          "symbol": "StorageModule",
+          "lineStart": 8,
+          "lineEnd": 19,
+          "sha256": "6513ec25c75cce7f2c0eafa8f5c9860cee94426ba127c3d983d2bafd70a80b3c"
+        },
+        {
+          "file": "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts",
+          "symbol": "LocalObjectStorageAdapter",
+          "lineStart": 19,
+          "lineEnd": 64,
+          "sha256": "4aa47178a69aa0f61ab8c6ccb94812c411fa4caf90a413d2a0abf085c933c9c3"
+        },
+        {
+          "file": "apps/api/src/storage/infrastructure/local-object-storage.adapter.spec.ts",
+          "symbol": "describe(\"LocalObjectStorageAdapter\")",
+          "lineStart": 30,
+          "lineEnd": 60,
+          "sha256": "acc21caa2a6413f90be20e48b2e025279de228d648c92f32f4032b7841d1d9a6"
+        }
+      ],
+      "relatedIds": [
+        "MOD-storage",
+        "MOD-content-authoring",
+        "TEST-6ea63e56a1f0707e",
+        "SYM-111dab236c3f27fa",
+        "SYM-330a96350ca270f9",
+        "SYM-0960be1094d48153",
+        "SYM-b070160f6b864308",
+        "SYM-337a65d59bd52924",
+        "SYM-de620a1e01bfd1db"
+      ],
+      "direction": "API to local filesystem",
+      "limitations": [
+        "Lexical root checks verified; actual files, permissions, mounts and symlink behavior were not examined."
+      ],
+      "testFiles": [
+        "apps/api/src/storage/infrastructure/local-object-storage.adapter.spec.ts"
+      ],
+      "relatedSourceFiles": [
+        "apps/api/src/storage/storage.module.ts",
+        "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "INT-CORE-Evaluation",
+      "kind": "integration",
+      "name": "Discovery and OpenAI-compatible evaluation",
+      "module": "MOD-ai-gateway",
+      "status": "VERIFIED",
+      "description": "Configurable Discovery chat-completions and OpenAI Responses send learner/rubric context in an untrusted-data envelope and validate returned structure. Routed success includes actual provider/model provenance; fake mode bypasses live adapters.",
+      "evidence": [
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 45,
+          "lineEnd": 67,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+          "symbol": "RoutingLanguageEvaluationAdapter",
+          "lineStart": 15,
+          "lineEnd": 29,
+          "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 11,
+          "lineEnd": 22,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 65,
+          "lineEnd": 82,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+          "symbol": "OpenAiLanguageEvaluationAdapter",
+          "lineStart": 69,
+          "lineEnd": 165,
+          "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+          "symbol": "DiscoveryLanguageEvaluationAdapter",
+          "lineStart": 28,
+          "lineEnd": 66,
+          "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "ENT-AiRoutingSetting",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-80e6b7d3dc2f0283",
+        "SYM-a55a740dc51d727a",
+        "SYM-28ffd8f141492887",
+        "SYM-dc07ac42cac361b2",
+        "SYM-7b571dea867b4494",
+        "SYM-30047f2922c3fc81",
+        "SYM-3ef74094ebc4f41f",
+        "SYM-2a0908106ad00139",
+        "SYM-a6b3af2fc1be46fc",
+        "SYM-3d75ca819359b7f7",
+        "SYM-565963de1f938ae7",
+        "SYM-a807bdb04c56077c",
+        "SYM-d334a3bc20f8b01c",
+        "SYM-eea2498ba960905a",
+        "SYM-62e23d8fcd723087",
+        "SYM-d1f6ac5fb101bfa7",
+        "SYM-9971af444c8f8193",
+        "SYM-28249e6008f3e3aa"
+      ],
+      "direction": "Outbound HTTP POST",
+      "dataSent": [
+        "Learner response",
+        "Prompt/reference text",
+        "Required phrases and rubric context"
+      ],
+      "verificationScope": "Static adapters only; no network or active account configuration inspected.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "INT-CORE-Speech",
+      "kind": "integration",
+      "name": "Microsoft Speech and Azure TTS",
+      "module": "MOD-ai-gateway",
+      "status": "VERIFIED",
+      "description": "Microsoft STT sends audio and reference context to a regional endpoint. Azure TTS sends escaped SSML, requests mono 24kHz PCM WAV, checks WAV metadata and computes checksum. Independently selectable fake alternatives exist.",
+      "evidence": [
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 30,
+          "lineEnd": 42,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 69,
+          "lineEnd": 101,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/microsoft-speech.adapter.ts",
+          "symbol": "MicrosoftSpeechAdapter",
+          "lineStart": 47,
+          "lineEnd": 86,
+          "sha256": "8d4682ff45552cd570fd31f7203250477765effc49ac5b812af9efe7b0013e52"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts",
+          "symbol": "MicrosoftTextToSpeechAdapter",
+          "lineStart": 52,
+          "lineEnd": 87,
+          "sha256": "7a893efdf75164c22bcd9e1a7b96a3f36368dd3e05e23458f228414cdd395a05"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "MOD-content-authoring",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-e87699d3f6e64102",
+        "SYM-7abb15f12145f796",
+        "SYM-03df96100109f6f8",
+        "SYM-76e560250a1aef7f",
+        "SYM-c608657d490942af",
+        "SYM-c22169e5e7529b2f"
+      ],
+      "direction": "Outbound HTTP POST",
+      "dataSent": [
+        "Recording bytes and reference context",
+        "Authored script and selected voice"
+      ],
+      "verificationScope": "Provider availability and runtime behavior unverified.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/microsoft-speech.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "INT-CORE-WebProxy",
+      "kind": "integration",
+      "name": "Next.js API rewrite",
+      "module": "MOD-web",
+      "status": "VERIFIED",
+      "description": "Next rewrites /api/:path* to configured WORKLINGO_API_URL with same API path, defaulting to loopback port 4000. API source binds loopback and defines api/v1 prefix.",
+      "evidence": [
+        {
+          "file": "apps/web/next.config.ts",
+          "symbol": "nextConfig.rewrites",
+          "lineStart": 3,
+          "lineEnd": 15,
+          "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "bootstrap",
+          "lineStart": 21,
+          "lineEnd": 33,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        }
+      ],
+      "relatedIds": [
+        "MOD-web",
+        "MOD-common",
+        "SYM-0d1463abae29de7c"
+      ],
+      "direction": "Web server to API",
+      "limitations": [
+        "TLS termination, public hostname and active deployment are UNKNOWN."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/web/next.config.ts",
+        "apps/api/src/main.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-CORE-Auth",
+      "kind": "diagram",
+      "name": "Login and protected request sequence",
+      "module": "MOD-auth",
+      "status": "VERIFIED",
+      "description": "Successful login and protected identity request with explicit error alternatives. Global guard wiring is source evidence, not a deployed execution trace.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/application/auth.service.ts",
+          "symbol": "AuthService",
+          "lineStart": 45,
+          "lineEnd": 138,
+          "sha256": "68b9cca41509765dc7809f93a1558b0fdae7d544ea1125b1dcfbfce3ad595a72"
+        },
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 41,
+          "lineEnd": 100,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        },
+        {
+          "file": "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+          "symbol": "SessionAuthGuard",
+          "lineStart": 22,
+          "lineEnd": 40,
+          "sha256": "a755ed50668d4c14dd5248b2347fd626c30952c60b218aa5cd64dab645bb363c"
+        },
+        {
+          "file": "apps/api/src/auth/infrastructure/roles.guard.ts",
+          "symbol": "RolesGuard",
+          "lineStart": 18,
+          "lineEnd": 42,
+          "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+        },
+        {
+          "file": "apps/api/src/users/users.controller.ts",
+          "symbol": "UsersController",
+          "lineStart": 15,
+          "lineEnd": 19,
+          "sha256": "19c5ae717fa716517c9bcc60d0c8ff12e6715a3470116d831a0f51dd9dbf3952"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-users",
+        "ENT-User",
+        "ENT-UserSession",
+        "SYM-0bb02533acae9904",
+        "SYM-2d4824564a872f7f",
+        "SYM-3c966a8b308e14f7",
+        "SYM-5d694cd2bda94297",
+        "SYM-1413046fc7603cdf",
+        "SYM-b93314708f68bf06",
+        "SYM-28398c901bb98cb5",
+        "SYM-e1bc71c41f4b8ae4",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760",
+        "SYM-0be0c5d1246432a7",
+        "SYM-efccf5a8fcf57af6",
+        "SYM-2c35f6b2965d2564",
+        "SYM-60115893924c6461",
+        "SYM-312e8287b73c8803",
+        "SYM-2f7f4d0da1bd9b22",
+        "SYM-1086bdc74dd926bd",
+        "SYM-5192c76b7e6a71e7",
+        "SYM-8b4c1f8b4e2f961d",
+        "API-0650d0a82d12eb77",
+        "API-af3bb6830f396b1c",
+        "API-4d57caa35f33c47a"
+      ],
+      "diagramType": "sequence",
+      "code": "sequenceDiagram\n    actor Account\n    participant Auth as AuthController and AuthService\n    participant DB as Prisma User and UserSession\n    participant Guard as SessionAuthGuard and RolesGuard\n    participant Users as UsersController\n    Account->>Auth: POST /api/v1/auth/login\n    Auth->>DB: Find normalized email and profile\n    alt Missing user, bad password or inactive account\n        Auth-->>Account: 401 credential error\n    else Valid credentials\n        Auth->>DB: Store token hash and expiry\n        Auth-->>Account: Public user and session cookie\n        Account->>Guard: GET /api/v1/me with cookie\n        Guard->>DB: Find token hash and current user\n        alt Session absent, revoked, expired or account inactive\n            Guard-->>Account: 401\n        else Valid session\n            Guard->>Guard: Check required roles when declared\n            Guard->>Users: Attach authenticated user\n            Users-->>Account: Current user\n        end\n    end",
+      "nodeEvidence": {
+        "Account": "AuthController.login public boundary",
+        "Auth": "AuthService.login/createAuthenticatedSession",
+        "DB": "AuthService Prisma calls",
+        "Guard": "SessionAuthGuard.canActivate; RolesGuard.canActivate",
+        "Users": "UsersController.getCurrentUser"
+      },
+      "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/application/auth.service.ts",
+        "apps/api/src/auth/auth.controller.ts",
+        "apps/api/src/auth/infrastructure/session-auth.guard.ts",
+        "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "apps/api/src/users/users.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-CORE-JobState",
+      "kind": "diagram",
+      "name": "Durable job transitions",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "Only JobsService/registered runner transitions shown. RUNNING self-transition is lease reclamation with new attempt; COMPLETED does not guarantee an audio artifact is READY.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 60,
+          "lineEnd": 305,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "decideJobRetry; JobRunnerService",
+          "lineStart": 15,
+          "lineEnd": 181,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/prisma/schema.prisma",
+          "symbol": "Job",
+          "lineStart": 1167,
+          "lineEnd": 1184,
+          "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "ENT-Job",
+        "ENT-JobAttempt",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7"
+      ],
+      "diagramType": "state",
+      "code": "stateDiagram-v2\n    [*] --> PENDING: enqueue with schema default\n    PENDING --> RUNNING: due and attempts below max\n    RETRY_WAIT --> RUNNING: due and attempts below max\n    RUNNING --> RUNNING: lease expired and attempts below max\n    RUNNING --> FAILED: lease expired at max attempts\n    RUNNING --> COMPLETED: matching owner and attempt succeeds\n    RUNNING --> RETRY_WAIT: matching claim and eligible provider retry\n    RUNNING --> FAILED: matching claim and no automatic retry\n    FAILED --> PENDING: owner retry when retryable adds one attempt",
+      "nodeEvidence": {
+        "PENDING": "Job default and JobsService.retryJob",
+        "RUNNING": "JobsService.claimNext",
+        "RETRY_WAIT": "JobsService.failClaim",
+        "FAILED": "JobsService.claimNext/failClaim",
+        "COMPLETED": "JobsService.completeClaim"
+      },
+      "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts",
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/prisma/schema.prisma"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-CORE-Publication",
+      "kind": "diagram",
+      "name": "Publication and explicit archive sequence",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Preflight checks precede transaction locks, rereads and atomic materialization/pointer/audit/receipt updates.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 33,
+          "lineEnd": 306,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 473,
+          "lineEnd": 628,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 631,
+          "lineEnd": 691,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/content-authoring.controller.ts",
+          "symbol": "ContentAuthoringController",
+          "lineStart": 152,
+          "lineEnd": 162,
+          "sha256": "ed214f3d2d81aa0ddf0660bf861d5560e09d1c18a66a4d4fea699f09d9cb794f"
+        },
+        {
+          "file": "apps/api/src/content-authoring/lesson-versions.controller.ts",
+          "symbol": "LessonVersionsController",
+          "lineStart": 29,
+          "lineEnd": 38,
+          "sha256": "e19aed92c752f0fa0bde7104074a7e46401912b97968ba5c2ff67fc0ecdd7fd5"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 308,
+          "lineEnd": 407,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 409,
+          "lineEnd": 473,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-LessonVersion",
+        "ENT-ContentImport",
+        "ENT-AudioArtifact",
+        "ENT-MutationReceipt",
+        "ENT-AuditLog",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53",
+        "SYM-81d340a59a18c99c",
+        "SYM-d092855a62609f7c",
+        "SYM-0ed5740f4361dd1f",
+        "SYM-9b7e1a102c8f4919",
+        "SYM-6d6fbed09c7c150d",
+        "SYM-cc12763a91be9bb6",
+        "SYM-1a98966b6b250044",
+        "SYM-522889346d8c6b3f",
+        "API-84d059829fd88a5e",
+        "API-6d0da70ec52b3e32",
+        "API-740d1a3ca6cf53db",
+        "API-4aba6690814aa03c",
+        "API-3cb4bdf43a975c54",
+        "API-5a3705b5dd4aa51e",
+        "API-fb81a353e5880ca3",
+        "SYM-34b6128617172c97",
+        "SYM-db363675f8120256",
+        "API-8fe5c4907dc8fe1e"
+      ],
+      "diagramType": "sequence",
+      "code": "sequenceDiagram\n    actor Admin\n    participant Publisher as ContentPublisherService\n    participant DB as PostgreSQL transaction\n    Admin->>Publisher: Publish import, revision, hash, key and audio choices\n    Publisher->>DB: Read mutation receipt\n    alt Matching replay receipt\n        DB-->>Publisher: Saved response\n        Publisher-->>Admin: Original response\n    else New request\n        Publisher->>Publisher: Check validated source and selected READY audio\n        Publisher->>DB: Begin transaction and acquire lesson slug lock\n        Publisher->>DB: Recheck receipt and row-lock import\n        Publisher->>DB: Recheck revision, hash, validation and audio\n        Publisher->>DB: Allocate version and materialize children\n        Publisher->>DB: Bind selected audio\n        Publisher->>DB: Archive prior current and publish new version\n        Publisher->>DB: Change lesson pointer and import status\n        Publisher->>DB: Write audit and receipt, commit\n        Publisher-->>Admin: Published version identity\n    end\n    opt Explicit archive of published version\n        Admin->>Publisher: Archive version\n        Publisher->>DB: Slug lock and reread version\n        Publisher->>DB: Archive, clear pointer if current, audit and commit\n        Publisher-->>Admin: ARCHIVED\n    end",
+      "nodeEvidence": {
+        "Admin": "ContentAuthoringController.publish; LessonVersionsController.archive",
+        "Publisher": "ContentPublisherService.publish/archiveLessonVersion",
+        "DB": "Prisma transaction and PostgreSQL lock calls"
+      },
+      "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "apps/api/src/content-authoring/lesson-versions.controller.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-CORE-Audio",
+      "kind": "diagram",
+      "name": "Durable audio generation activity",
+      "module": "MOD-content-authoring",
+      "status": "VERIFIED",
+      "description": "Handler returns STALE normally for script changes. Terminal/exhausted errors attempt artifact FAILED and rethrow for runner policy.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+          "symbol": "AudioGenerationHandler",
+          "lineStart": 15,
+          "lineEnd": 124,
+          "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "MOD-jobs",
+        "MOD-ai-gateway",
+        "MOD-storage",
+        "ENT-AudioArtifact",
+        "ENT-Job",
+        "SYM-1bcead783bd33781",
+        "SYM-cf3d01cb6b1a5416",
+        "SYM-9382b5567e7cfadc",
+        "SYM-dc0821e1378e480c"
+      ],
+      "diagramType": "activity",
+      "code": "flowchart TD\n    Claim[GENERATE_AUDIO claim] --> Parse[Parse payload and fetch script]\n    Parse --> Fresh{Script hash matches?}\n    Fresh -->|No| Stale[Mark GENERATING artifact STALE]\n    Fresh -->|Yes| Candidate[Resolve provider and GENERATING candidate]\n    Candidate --> Synth[Synthesize and store audio]\n    Synth --> Recheck{Latest script hash matches?}\n    Recheck -->|Yes| Ready[Update artifact to READY]\n    Recheck -->|No| Changed[Update artifact to STALE]\n    Ready --> Result[Return status to runner]\n    Changed --> Result\n    Stale --> Result\n    Candidate -.-> Err[Error caught in handler]\n    Synth -.-> Err\n    Err --> Terminal{Non-retryable or attempt budget exhausted?}\n    Terminal -->|Yes| Failed[Attempt artifact FAILED]\n    Terminal -->|No| Retain[Retain artifact state]\n    Failed --> Throw[Rethrow to runner]\n    Retain --> Throw",
+      "nodeEvidence": {
+        "Claim": "AudioGenerationHandler.handle",
+        "Parse": "payloadSchema and script lookup",
+        "Fresh": "currentHash comparison",
+        "Stale": "markArtifact STALE",
+        "Candidate": "registry resolve and candidate lookup",
+        "Synth": "synthesize/storage.put",
+        "Recheck": "latestScript hash",
+        "Ready": "updateMany READY",
+        "Changed": "updateMany STALE",
+        "Result": "handler return",
+        "Err": "handler catch",
+        "Terminal": "retryable/budget predicate",
+        "Failed": "markArtifact FAILED",
+        "Retain": "catch without artifact mutation",
+        "Throw": "throw error"
+      },
+      "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/audio-generation.handler.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "DIA-CORE-AIRouting",
+      "kind": "diagram",
+      "name": "Routed evaluation fallback decision",
+      "module": "MOD-ai-gateway",
+      "status": "VERIFIED",
+      "description": "Only routed adapter path is shown; fake/direct construction bypasses it. No retryable-flag gate is invented.",
+      "evidence": [
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 45,
+          "lineEnd": 67,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+          "symbol": "RoutingLanguageEvaluationAdapter",
+          "lineStart": 15,
+          "lineEnd": 29,
+          "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 11,
+          "lineEnd": 22,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 65,
+          "lineEnd": 82,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "ENT-AiRoutingSetting",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-80e6b7d3dc2f0283",
+        "SYM-a55a740dc51d727a",
+        "SYM-28ffd8f141492887",
+        "SYM-dc07ac42cac361b2",
+        "SYM-7b571dea867b4494",
+        "SYM-30047f2922c3fc81",
+        "SYM-3ef74094ebc4f41f",
+        "SYM-2a0908106ad00139",
+        "SYM-a6b3af2fc1be46fc",
+        "SYM-3d75ca819359b7f7",
+        "SYM-565963de1f938ae7"
+      ],
+      "diagramType": "activity",
+      "code": "flowchart TD\n    Input[Input and routing context] --> Pref[Resolve system and account preference]\n    Pref --> Primary[Required provider or preferred provider]\n    Primary --> Call[Call registered primary adapter]\n    Call -->|Success| Output[Evaluation and actual provider provenance]\n    Call -->|Error| Required{Required provider specified?}\n    Required -->|Yes| Fail[Propagate error]\n    Required -->|No| Enabled{Fallback enabled and secondary registered?}\n    Enabled -->|No| Fail\n    Enabled -->|Yes| ErrorKind{ProviderError with allowed code?}\n    ErrorKind -->|No| Fail\n    ErrorKind -->|Yes| Other[Call secondary once]\n    Other -->|Success| Output\n    Other -->|Error| Fail",
+      "nodeEvidence": {
+        "Input": "evaluateWithProvenance input",
+        "Pref": "AiSettingsService.resolve",
+        "Primary": "requiredProvider or preference",
+        "Call": "RoutingLanguageEvaluationAdapter.call",
+        "Output": "evaluation/provenance return",
+        "Required": "requiredProvider guard",
+        "Enabled": "fallbackEnabled/secondary guard",
+        "ErrorKind": "ProviderError excluding refused/invalid-audio/expired-recording",
+        "Other": "single alternate call",
+        "Fail": "original or secondary throw"
+      },
+      "verificationScope": "Static behavior illustration, not an observed runtime trace.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/application/ai-settings.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-ReadmeAI",
+      "kind": "finding",
+      "name": "README no-cloud description versus live AI routing",
+      "module": "MOD-ai-gateway",
+      "status": "CONFLICT",
+      "description": "README describes a self-contained slice without cloud/third-party AI dependencies. Architecture depicts outbound providers but names OpenAI-compatible/Microsoft STT/configurable TTS without Discovery/account routing. Current factories support fake, direct OpenAI/Discovery and a two-provider router. The README statement fits fake mode rather than all supported configurations.",
+      "evidence": [
+        {
+          "file": "README.md",
+          "symbol": "WorkLingo",
+          "lineStart": 1,
+          "lineEnd": 3,
+          "sha256": "725964feb5da9e35b6e6d5a334aa32a7dcf0fe28ccbfc1da90b52fddcb9e4da9"
+        },
+        {
+          "file": "docs/ARCHITECTURE.md",
+          "symbol": "2. Kiến trúc tổng thể",
+          "lineStart": 32,
+          "lineEnd": 38,
+          "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+        },
+        {
+          "file": "docs/ARCHITECTURE.md",
+          "symbol": "Provider adapters",
+          "lineStart": 55,
+          "lineEnd": 68,
+          "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/ai-gateway.module.ts",
+          "symbol": "AiGatewayModule",
+          "lineStart": 45,
+          "lineEnd": 67,
+          "sha256": "68f783da22b5ced9c7a2c26e9696a88ba71ba67d853aa613f8ae23541af71773"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+          "symbol": "RoutingLanguageEvaluationAdapter",
+          "lineStart": 15,
+          "lineEnd": 29,
+          "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 11,
+          "lineEnd": 22,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+          "symbol": "AiSettingsService",
+          "lineStart": 65,
+          "lineEnd": 82,
+          "sha256": "966d1bf07bcfc40b8303e5c8fd32a553f30e8d1d8a49d17aeb3894c41d6621ff"
+        },
+        {
+          "file": "apps/api/src/common/config/app-config.schema.ts",
+          "symbol": "environmentSchema",
+          "lineStart": 113,
+          "lineEnd": 117,
+          "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-ai-gateway",
+        "SYM-1d29eaa66637c9e7",
+        "SYM-80e6b7d3dc2f0283",
+        "SYM-a55a740dc51d727a",
+        "SYM-28ffd8f141492887",
+        "SYM-dc07ac42cac361b2",
+        "SYM-7b571dea867b4494",
+        "SYM-30047f2922c3fc81",
+        "SYM-3ef74094ebc4f41f",
+        "SYM-2a0908106ad00139",
+        "SYM-a6b3af2fc1be46fc",
+        "SYM-3d75ca819359b7f7",
+        "SYM-565963de1f938ae7",
+        "SYM-c9d3f4081ad9c944",
+        "SYM-1657253637b4d55c"
+      ],
+      "documentedClaim": "Self-contained operation without cloud or third-party AI dependencies.",
+      "observedBehavior": "Live providers and system/account fallback are implemented alongside default fake mode.",
+      "unknowns": [
+        "Active environment and deployed provider selection intentionally not examined."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "README.md",
+        "docs/ARCHITECTURE.md",
+        "apps/api/src/ai-gateway/ai-gateway.module.ts",
+        "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/application/ai-settings.service.ts",
+        "apps/api/src/common/config/app-config.schema.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-LeaseBoundary",
+      "kind": "finding",
+      "name": "Claim fencing does not prove side-effect exclusivity",
+      "module": "MOD-jobs",
+      "status": "INFERRED",
+      "description": "Completion/failure predicates match status/owner/attempt rather than leaseExpiresAt. Reviewed runner has no lease renewal or cancellation path; an expired handler could continue after another claim. External/domain writes therefore cannot be assumed exactly once. Configuration lengthens lease to at least three provider timeouts plus 10 seconds when evaluation/STT is live.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 96,
+          "lineEnd": 193,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "JobHandlerRegistry",
+          "lineStart": 116,
+          "lineEnd": 181,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/common/config/app-config.schema.ts",
+          "symbol": "parseAppConfig",
+          "lineStart": 213,
+          "lineEnd": 217,
+          "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+        },
+        {
+          "file": "apps/api/src/common/config/app-config.schema.ts",
+          "symbol": "parseAppConfig",
+          "lineStart": 253,
+          "lineEnd": 256,
+          "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+          "symbol": "AudioGenerationHandler",
+          "lineStart": 70,
+          "lineEnd": 101,
+          "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "MOD-content-authoring",
+        "ENT-Job",
+        "ENT-JobAttempt",
+        "ENT-AudioArtifact",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7",
+        "SYM-c9d3f4081ad9c944",
+        "SYM-1657253637b4d55c",
+        "SYM-1bcead783bd33781",
+        "SYM-cf3d01cb6b1a5416",
+        "SYM-9382b5567e7cfadc",
+        "SYM-dc0821e1378e480c"
+      ],
+      "unknowns": [
+        "Overlapping side effects after expiry were not reproduced.",
+        "Expired but not reclaimed job can still complete because expiry is absent from update predicate."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/jobs.service.ts",
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/src/common/config/app-config.schema.ts",
+        "apps/api/src/content-authoring/application/audio-generation.handler.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-WorkerConcurrency",
+      "kind": "finding",
+      "name": "Timer serialization is not global concurrency configuration",
+      "module": "MOD-jobs",
+      "status": "VERIFIED",
+      "description": "pollActive serializes only private timer poll. AudioGenerationService calls public runOnce in a bounded loop outside that flag; runOnce has no enabled check or concurrency gate. Database locks protect claims, but a fixed global concurrency of one cannot be inferred.",
+      "evidence": [
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "JobHandlerRegistry",
+          "lineStart": 105,
+          "lineEnd": 181,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 270,
+          "lineEnd": 277,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 299,
+          "lineEnd": 305,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        },
+        {
+          "file": "apps/api/src/common/config/app-config.schema.ts",
+          "symbol": "environmentSchema",
+          "lineStart": 81,
+          "lineEnd": 85,
+          "sha256": "b1cfc5242c1a4b2d17ee52b9bbed268ed92684dd0991709fc881a8362e4fd22b"
+        }
+      ],
+      "relatedIds": [
+        "MOD-jobs",
+        "MOD-content-authoring",
+        "ENT-Job",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7",
+        "SYM-3799485ce2e01519",
+        "SYM-1186c65cad1154c9",
+        "SYM-9ab0c15ba8cfed50",
+        "SYM-6fd73e60ea46a9b1",
+        "SYM-0528e09d6777d7ee",
+        "SYM-d121ea1770206826",
+        "SYM-81c0210180666465",
+        "SYM-18cdcc7b6deb0c3f",
+        "SYM-c9d3f4081ad9c944",
+        "SYM-1657253637b4d55c"
+      ],
+      "unknowns": [
+        "Actual concurrency depends on request/process overlap and was not measured.",
+        "workerEnabled controls timer startup rather than direct runOnce calls."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "apps/api/src/common/config/app-config.schema.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-AudioManualRetry",
+      "kind": "finding",
+      "name": "Manual job retry does not reset FAILED audio candidate",
+      "module": "MOD-content-authoring",
+      "status": "INFERRED",
+      "description": "Terminal/exhausted audio failure marks artifact FAILED. retryJob resets Job fields only, while the handler requires its existing candidate to be GENERATING. A retryable job may therefore be scheduled without its failed artifact becoming eligible again. This consequence is inferred across code paths and not reproduced.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+          "symbol": "AudioGenerationHandler",
+          "lineStart": 59,
+          "lineEnd": 69,
+          "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+          "symbol": "AudioGenerationHandler",
+          "lineStart": 103,
+          "lineEnd": 124,
+          "sha256": "d4cb9d0fc342a46c4d673adbc3ae983c5321089a173b0def1dbba4589d876ba4"
+        },
+        {
+          "file": "apps/api/src/jobs/application/jobs.service.ts",
+          "symbol": "JobsService",
+          "lineStart": 239,
+          "lineEnd": 279,
+          "sha256": "a6205b07f176ecdc126944ac4412c6dfb6cc024068dfb65f33ce92125a90dffb"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "MOD-jobs",
+        "ENT-AudioArtifact",
+        "ENT-Job",
+        "SYM-1bcead783bd33781",
+        "SYM-cf3d01cb6b1a5416",
+        "SYM-9382b5567e7cfadc",
+        "SYM-dc0821e1378e480c",
+        "SYM-1614cd58760abbe5",
+        "SYM-36fbe2c9a6c4fa5a",
+        "SYM-79baf9c1ad1ef1da",
+        "SYM-281c78d6910c07dd",
+        "SYM-24acddf1bda33bf6",
+        "SYM-0f69f0278710cd5c",
+        "SYM-f00b7afcc23386ab",
+        "SYM-e776436463aa228f",
+        "SYM-6bed139184a0ded1",
+        "SYM-c2e3ddb3ebc29556",
+        "SYM-1d9be984188d0d20"
+      ],
+      "unknowns": [
+        "Exhausted-audio manual retry was not executed; a fresh generation request can create a new candidate."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "apps/api/src/jobs/application/jobs.service.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-PublishReceiptScope",
+      "kind": "finding",
+      "name": "Publication request hash omits import identity",
+      "module": "MOD-content-authoring",
+      "status": "INFERRED",
+      "description": "Publication receipt lookup uses actor/operation/key; request hash includes revision/hash/key/audio selection but omits importId. Receipt replay precedes import lookup. Cross-import requests with otherwise identical hashed fields could replay another import response. Audio generation includes contentImportId in its hash.",
+      "evidence": [
+        {
+          "file": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+          "symbol": "ContentPublisherService",
+          "lineStart": 33,
+          "lineEnd": 75,
+          "sha256": "e21879a7fc2de056eb0a99219602dd5613346646a3869b32ca95c721566ef315"
+        },
+        {
+          "file": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+          "symbol": "AudioGenerationService",
+          "lineStart": 74,
+          "lineEnd": 85,
+          "sha256": "ea6c938fde6177f4773b32c9bfe9ef51768ecb310e0d62c89b623aa959f36322"
+        },
+        {
+          "file": "apps/api/prisma/schema.prisma",
+          "symbol": "MutationReceipt",
+          "lineStart": 1220,
+          "lineEnd": 1231,
+          "sha256": "6091e641afad7673c0118ab8bf420cc3db899a84ab060a701cfd97312219acc1"
+        }
+      ],
+      "relatedIds": [
+        "MOD-content-authoring",
+        "ENT-ContentImport",
+        "ENT-MutationReceipt",
+        "SYM-6784d170eee326c7",
+        "SYM-6f90718a00bc5fea",
+        "SYM-2043c822d22e5e53",
+        "SYM-3799485ce2e01519",
+        "SYM-1186c65cad1154c9",
+        "SYM-9ab0c15ba8cfed50",
+        "SYM-6fd73e60ea46a9b1",
+        "SYM-0528e09d6777d7ee",
+        "SYM-d121ea1770206826",
+        "SYM-81c0210180666465",
+        "SYM-18cdcc7b6deb0c3f"
+      ],
+      "unknowns": [
+        "Cross-import replay scenario not exercised; no incident claimed."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "apps/api/prisma/schema.prisma"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-DeploymentCookie",
+      "kind": "finding",
+      "name": "Transport and deployment guarantees remain unknown",
+      "module": "MOD-auth",
+      "status": "UNKNOWN",
+      "description": "Source cookie secure=false is unconditional. API and development Compose database bind loopback; Next forwards to configured API origin. These sources do not establish deployed TLS, proxy trust, hostname, process count or filesystem permissions.",
+      "evidence": [
+        {
+          "file": "apps/api/src/auth/auth.controller.ts",
+          "symbol": "AuthController",
+          "lineStart": 93,
+          "lineEnd": 100,
+          "sha256": "fa7e044b9b9ce57d9e15642a4f81e84f9822375a817cad41cfd9410dcc76b966"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "symbol": "bootstrap",
+          "lineStart": 21,
+          "lineEnd": 33,
+          "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+        },
+        {
+          "file": "infra/docker-compose.yml",
+          "symbol": "services.postgres",
+          "lineStart": 8,
+          "lineEnd": 11,
+          "sha256": "017ae415a3d2fb6ecfa27f35bc3e61d715b4669489590afc4466c55dd7571730"
+        },
+        {
+          "file": "apps/web/next.config.ts",
+          "symbol": "nextConfig.rewrites",
+          "lineStart": 6,
+          "lineEnd": 15,
+          "sha256": "2c6928ffd50a678df25f45c29713c5cede57bce494fa3df65ca3bd542e050fdb"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-infra",
+        "MOD-web",
+        "SYM-63899ccb34e77e53",
+        "SYM-7c79ff95eb0f7936",
+        "SYM-784e8cfeb515d895",
+        "SYM-1de762416949c88f",
+        "SYM-8c33e318a36cc9d3",
+        "API-72d35ffed94a1e5e",
+        "API-d98afd350a878235",
+        "API-75fe132ab22de760",
+        "SYM-0d1463abae29de7c"
+      ],
+      "verifiedFacts": [
+        "Cookie secure flag is false in source.",
+        "API and development database bind loopback."
+      ],
+      "unknowns": [
+        "Active deployment and environment configuration intentionally excluded."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/auth/auth.controller.ts",
+        "apps/api/src/main.ts",
+        "infra/docker-compose.yml",
+        "apps/web/next.config.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-Observability",
+      "kind": "finding",
+      "name": "Job correlation and rate-limit cleanup scheduling are unverified",
+      "module": "MOD-common",
+      "status": "DOCUMENTED_ONLY",
+      "description": "Architecture describes request/job correlation IDs. Middleware and HTTP errors carry request IDs; runner warnings include job ID and safe code but no request correlation propagation in the reviewed path. Rate-limit cleanup is an injectable one-day-default method; reviewed source search found no production caller or scheduler.",
+      "evidence": [
+        {
+          "file": "docs/ARCHITECTURE.md",
+          "symbol": "11. Observability local",
+          "lineStart": 229,
+          "lineEnd": 234,
+          "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+        },
+        {
+          "file": "apps/api/src/common/request-context/correlation-id.middleware.ts",
+          "symbol": "CorrelationIdMiddleware",
+          "lineStart": 23,
+          "lineEnd": 40,
+          "sha256": "7acffaf63c10b89866ae998d1d4e3896440d655cbaafae89de163968cbc5afd5"
+        },
+        {
+          "file": "apps/api/src/jobs/application/job-runner.service.ts",
+          "symbol": "JobHandlerRegistry",
+          "lineStart": 154,
+          "lineEnd": 166,
+          "sha256": "46dd4b7fe541eb0149ffad13b5b75736291b067437d98a89abd030ae34d95b8f"
+        },
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit-cleanup.service.ts",
+          "symbol": "RateLimitCleanupService",
+          "lineStart": 5,
+          "lineEnd": 21,
+          "sha256": "f0fc93c8fc50032ea5aafca2864c99793fd08abbdbef4f2e42f6046ca9ecf448"
+        },
+        {
+          "file": "apps/api/src/common/rate-limit/rate-limit.module.ts",
+          "symbol": "RateLimitModule",
+          "lineStart": 8,
+          "lineEnd": 20,
+          "sha256": "8df8153bcea9059b0eb66e66bdc44ebd54082ef8706a41a9e032c8adf3c2dd49"
+        }
+      ],
+      "relatedIds": [
+        "MOD-common",
+        "MOD-jobs",
+        "ENT-RateLimitBucket",
+        "SYM-f18996442e2a6b2e",
+        "SYM-788491c880558b53",
+        "SYM-d9bc5f475c82b31e",
+        "SYM-672875e0f9b3da3c",
+        "SYM-2f6afc2efe689290",
+        "SYM-d79e34dc28bc3629",
+        "SYM-a77af63dfde731c5",
+        "SYM-a84ad0326b5b1d50",
+        "SYM-e7a01fd801aefd6e",
+        "SYM-f4ccbab71e0513e5",
+        "SYM-ec31867463c11e4d",
+        "SYM-d37393a8e9deb074",
+        "SYM-7f70447be5c44e01",
+        "SYM-e8ff35ac857844e7",
+        "SYM-8ff2a97f1169155c",
+        "SYM-d3694b6a9af9c827",
+        "SYM-f7b19e2323d13f07"
+      ],
+      "verifiedFacts": [
+        "Request correlation and safe structured logger implementations exist.",
+        "Cleanup method exists, but not a scheduler in its class."
+      ],
+      "unknowns": [
+        "External scheduling, operational retention and complete request-to-job correlation unverified."
+      ],
+      "searchScope": "rg over apps/api/src production TypeScript for cleanupExpiredBuckets, heartbeat and renewLease; only cleanup method declaration matched.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "docs/ARCHITECTURE.md",
+        "apps/api/src/common/request-context/correlation-id.middleware.ts",
+        "apps/api/src/jobs/application/job-runner.service.ts",
+        "apps/api/src/common/rate-limit/rate-limit-cleanup.service.ts",
+        "apps/api/src/common/rate-limit/rate-limit.module.ts"
+      ],
+      "curated": true
+    },
+    {
+      "id": "GAP-CORE-BackupConsistency",
+      "kind": "finding",
+      "name": "Cross-resource backup snapshot consistency not established",
+      "module": "MOD-operations-scripts",
+      "status": "INFERRED",
+      "description": "Architecture describes database/directory backup as one logical snapshot. Script creates dump before copying files and hashing bundle. Reviewed sequence does not demonstrate application-write freezing or coordinated database/file snapshot. Integrity/empty-target checks exist; concurrent consistency remains unknown.",
+      "evidence": [
+        {
+          "file": "docs/ARCHITECTURE.md",
+          "symbol": "Local-first infrastructure",
+          "lineStart": 49,
+          "lineEnd": 53,
+          "sha256": "e2b1c605dd991e0cbd4c2dcb719755a1f9cdab7edc3137cae46206187884774d"
+        },
+        {
+          "file": "scripts/backup-local.ps1",
+          "symbol": "backup-local.ps1::<script>",
+          "lineStart": 94,
+          "lineEnd": 99,
+          "sha256": "078833e7656795fbb5db3b7984d322f0fd1457839f27e79118b5a6d504479c19"
+        },
+        {
+          "file": "scripts/backup-local.ps1",
+          "symbol": "backup-local.ps1::<script>",
+          "lineStart": 147,
+          "lineEnd": 187,
+          "sha256": "078833e7656795fbb5db3b7984d322f0fd1457839f27e79118b5a6d504479c19"
+        },
+        {
+          "file": "scripts/restore-local.ps1",
+          "symbol": "restore-local.ps1::<script>",
+          "lineStart": 109,
+          "lineEnd": 144,
+          "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+        },
+        {
+          "file": "scripts/restore-local.ps1",
+          "symbol": "restore-local.ps1::<script>",
+          "lineStart": 213,
+          "lineEnd": 239,
+          "sha256": "57d088dd8296f0335bcebefddb3ea292da187847fe4e8233dd2f4f4cc7b8e744"
+        }
+      ],
+      "relatedIds": [
+        "MOD-operations-scripts",
+        "MOD-storage",
+        "MOD-infra"
+      ],
+      "unknowns": [
+        "No backup/restore executed and no backup/runtime data read.",
+        "Operational quiescing procedures outside these excerpts not verified."
+      ],
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "docs/ARCHITECTURE.md",
+        "scripts/backup-local.ps1",
+        "scripts/restore-local.ps1"
+      ],
+      "curated": true
+    },
+    {
+      "id": "SCOPE-CORE-Analysis",
+      "kind": "finding",
+      "name": "Core behavioral analysis scope and limits",
+      "module": "MOD-common",
+      "status": "INFERRED",
+      "description": "Reviewed auth/users session and locale paths; job enqueue/claims/attempts/retries; import validation, transaction publication and registered audio generation; AI routing/HTTP boundaries; local storage; request limits, safe errors/logs and correlation; bootstrap/web rewrite and backup/restore excerpts. This is not a whole-system runtime certification.",
+      "evidence": [
+        {
+          "file": "apps/api/src/app.module.ts",
+          "symbol": "AppModule",
+          "lineStart": 38,
+          "lineEnd": 82,
+          "sha256": "cecbb3d266c47791267a8193c55a436c57da01d6a2c30943dace8335601b279b"
+        },
+        {
+          "file": "apps/api/src/jobs/jobs.module.ts",
+          "symbol": "JobsModule",
+          "lineStart": 16,
+          "lineEnd": 46,
+          "sha256": "1448df08e4680bf4f64b9731c9bda51a64fb0fea6d50d593a4ca538f4d4df2a6"
+        }
+      ],
+      "relatedIds": [
+        "MOD-auth",
+        "MOD-users",
+        "MOD-jobs",
+        "MOD-content-authoring",
+        "MOD-ai-gateway",
+        "MOD-storage",
+        "MOD-common",
+        "MOD-web",
+        "MOD-infra",
+        "MOD-operations-scripts",
+        "SYM-1b70fc8045ff9d16",
+        "SYM-9f0a3df65b0fb9ae",
+        "SYM-16ea9517a43f69b8"
+      ],
+      "analyzedScope": [
+        "8 detailed use cases",
+        "15 business rules",
+        "10 AS-IS requirements",
+        "5 Mermaid diagrams",
+        "5 actor roles and 5 integration boundaries"
+      ],
+      "gaps": [
+        "No runtime/deployed verification, database tests or performance measurements.",
+        "No environment files, dependencies, database rows, recordings or runtime storage were read.",
+        "Learning/onboarding/mastery/IELTS behavior is outside this assigned core record.",
+        "Mermaid rendering not executed in authoring pass."
+      ],
+      "method": "Bounded rg and numbered source/test reads, byte-hashed citations; only curated-core.json is written.",
+      "testFiles": [],
+      "relatedSourceFiles": [
+        "apps/api/src/app.module.ts",
+        "apps/api/src/jobs/jobs.module.ts"
+      ],
+      "curated": true
+    }
+  ]
+}

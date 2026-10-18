@@ -1,0 +1,54 @@
+{
+  "executedAt": "2026-10-18T11:04:38.362Z",
+  "base": "http://127.0.0.1:4173/",
+  "checks": [
+    {
+      "name": "Overview loads the real snapshot",
+      "result": "PASS"
+    },
+    {
+      "name": "All 16 navigation sections load",
+      "result": "PASS"
+    },
+    {
+      "name": "Global search, zero results and combined API filters",
+      "result": "PASS"
+    },
+    {
+      "name": "Deep links, inbound/outbound traceability and source panel",
+      "result": "PASS"
+    },
+    {
+      "name": "Every generated Mermaid diagram parses and renders",
+      "result": "PASS"
+    },
+    {
+      "name": "Diagram zoom, fit, accessible navigation and node interaction",
+      "result": "PASS"
+    },
+    {
+      "name": "Light/dark theme persists across reload",
+      "result": "PASS"
+    },
+    {
+      "name": "Nested static-host paths preserve assets and deep links",
+      "result": "PASS"
+    },
+    {
+      "name": "375px mobile layout, menu and keyboard escape",
+      "result": "PASS"
+    },
+    {
+      "name": "Unknown record route remains actionable",
+      "result": "PASS"
+    },
+    {
+      "name": "Missing snapshot reports an error and retry loads the real data",
+      "result": "PASS"
+    }
+  ],
+  "diagrams": 21,
+  "consoleErrors": [],
+  "productionTests": "NOT_RUN",
+  "browser": "Chromium headless"
+}
