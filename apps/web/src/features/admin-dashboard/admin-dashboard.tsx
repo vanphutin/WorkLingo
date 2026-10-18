@@ -9,6 +9,7 @@ import { adminDashboardMessages } from '../../i18n/messages/adminDashboard';
 import { commonMessages } from '../../i18n/messages/common';
 import { adminDashboardClient } from '../../lib/api/admin-dashboard-client';
 import { adminIeltsDestinations, adminProgramDestinations, isAdminProgramDeferred } from './admin-navigation';
+import { IntermediateAuthoringHub } from '../admin-intermediate/intermediate-authoring-hub';
 
 type Program = AdminDashboardOverview['programs'][number];
 type DashboardState = { status: 'loading' } | { status: 'error' } | { status: 'ready'; data: AdminDashboardOverview };
@@ -172,6 +173,7 @@ function ProgramWorkspace({ program }: { readonly program: Program }) {
   return <div className="ad-dashboard">
     <header className="ad-page-header"><p className="ad-eyebrow">{t('learningPrograms')}</p><h1>{name ? t(name.label) : program.name}</h1>
       <span className="ad-availability">{t(availabilityKeys[program.availabilityStatus])}</span><p>{t('workspaceDescription')}</p></header>
+    {program.slug === 'intermediate' ? <IntermediateAuthoringHub /> : null}
     {program.availabilityStatus !== 'AVAILABLE' ? <p className="ad-notice">{t('notReady')}</p> : null}
     <ul className="ad-metrics" aria-label={t('programMetrics')}>{metrics.map((metric) => <li className="ad-metric" key={metric.label}><span>{metric.label}</span><strong>{metric.value}</strong></li>)}</ul>
     <p className="ad-muted ad-footnote">{program.totalSessions === 0 ? t('noSessions') : t('completionDefinition')}</p>

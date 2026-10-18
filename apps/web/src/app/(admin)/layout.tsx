@@ -3,7 +3,7 @@
 import '../../features/admin-content/admin.css';
 import '../../features/admin-dashboard/admin-dashboard.css';
 
-import Link from 'next/link';
+import { AdminLink as Link, AdminNavigationGuardProvider } from '../../features/admin-dashboard/admin-navigation-guard';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -96,6 +96,7 @@ export default function AdminLayout({
   }
 
   return (
+    <AdminNavigationGuardProvider>
     <div className="admin-shell ad-shell">
       <a className="skip-link" href="#admin-main-content">
         {t('skipAdmin')}
@@ -142,5 +143,6 @@ export default function AdminLayout({
         </main>
       </div>
     </div>
+    </AdminNavigationGuardProvider>
   );
 }

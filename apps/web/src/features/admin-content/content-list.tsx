@@ -12,6 +12,9 @@ interface ContentListProps {
   readonly imports: readonly ContentImportDto[];
   readonly onRemoved?: (result: { id: string; action: 'deleted' | 'archived' }) => void;
   readonly onReload?: () => Promise<void>;
+  readonly newImportHref?: string;
+  readonly newImportLabel?: string;
+  readonly getItemHref?: (item: ContentImportDto) => string;
 }
 
 function extractLessonInfo(rawSource: string): { title: string; slug: string } {
@@ -22,7 +25,7 @@ function extractLessonInfo(rawSource: string): { title: string; slug: string } {
   return { title, slug };
 }
 
-export function ContentList({ imports, onRemoved, onReload }: ContentListProps) {
+export function ContentList({ imports, onRemoved, onReload, newImportHref = '/admin/content/new', newImportLabel, getItemHref }: ContentListProps) {
   const { t, date, label, message } = useAdminContent();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -71,7 +74,7 @@ export function ContentList({ imports, onRemoved, onReload }: ContentListProps) 
         <div className="empty-card">
           <h2>{t('importsEmpty')}</h2>
           <p>{t('importsEmptyHelp')}</p>
-          <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
+          <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
         </div>
       </div>
 
@@ -85,7 +88,7 @@ export function ContentList({ imports, onRemoved, onReload }: ContentListProps) 
           <h2>{t('allImports', { count: imports.length })}</h2>
           <p className="subtitle">{t('importsHelp')}</p>
         </div>
-        <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
+        <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
       </div>
 
       <div className="content-table-wrapper">
@@ -132,7 +135,7 @@ export function ContentList({ imports, onRemoved, onReload }: ContentListProps) 
                   </td>
                   <td>
                     <Link
-                      href={`/admin/content/${item.id}`}
+                      href={getItemHref ? getItemHref(item) : `/admin/content/${item.id}`}
                       className="btn btn-sm btn-secondary"
                     >
                       {actionLabel}

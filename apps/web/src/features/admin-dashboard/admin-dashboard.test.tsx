@@ -4,8 +4,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocaleProvider } from '../../i18n/provider';
 import { adminDashboardClient } from '../../lib/api/admin-dashboard-client';
 import { AdminDashboard } from './admin-dashboard';
+import { apiClient } from '../../lib/api/api-client';
 
 vi.mock('../../lib/api/admin-dashboard-client', () => ({ adminDashboardClient: { getOverview: vi.fn() } }));
+vi.mock('../../lib/api/api-client', () => ({ apiClient: { listContentImports: vi.fn() } }));
 
 const overview = {
   totalLearners: 120, activeLearners7d: 23, programEnrollments: 81, sessionCompletionRate: 0.625,
@@ -20,9 +22,19 @@ const overview = {
 };
 
 afterEach(() => { cleanup(); vi.resetAllMocks(); });
-beforeEach(() => { vi.mocked(adminDashboardClient.getOverview).mockResolvedValue(overview); });
+beforeEach(() => { vi.mocked(adminDashboardClient.getOverview).mockResolvedValue(overview); vi.mocked(apiClient.listContentImports).mockResolvedValue([]); });
 
 describe('Admin dashboard', () => {
+  it('places all seven category Add lesson links ahead of program metrics and shared tools', async () => {
+    render(<AdminDashboard programSlug="intermediate" />);
+    await screen.findByRole('heading', { name: 'Intermediate' });
+    const metrics = screen.getByRole('list', { name: 'Program metrics' });
+    for (const [category, label] of [['grammar', 'Grammar'], ['pronunciation', 'Pronunciation'], ['vocabulary', 'Vocabulary'], ['reading', 'Reading'], ['listening', 'Listening'], ['speaking', 'Speaking'], ['writing', 'Writing']]) {
+      const link = screen.getByRole('link', { name: `Add lesson: ${label}` });
+      expect(link).toHaveAttribute('href', `/admin/programs/intermediate/${category}/new`);
+      expect(link.compareDocumentPosition(metrics) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    }
+  });
   it('renders stored metrics, a labeled activity chart and recent sessions', async () => {
     render(<AdminDashboard />);
     expect(screen.getByRole('status')).toHaveTextContent(/loading/i);

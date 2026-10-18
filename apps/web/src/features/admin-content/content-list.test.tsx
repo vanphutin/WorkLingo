@@ -59,6 +59,15 @@ describe('ContentList', () => {
       : items.map((item) => item.id === id ? { ...item, status: 'ARCHIVED' } : item))} />;
   }
 
+  it.each([false, true])('uses category add and edit destinations for empty=%s', (empty) => {
+    render(<ContentList imports={empty ? [] : sampleImports}
+      newImportHref="/admin/programs/intermediate/grammar/new" newImportLabel="Add grammar lesson"
+      getItemHref={(item) => `/admin/programs/intermediate/grammar/${item.id}`} />);
+    expect(screen.getByRole('link', { name: 'Add grammar lesson' })).toHaveAttribute('href', '/admin/programs/intermediate/grammar/new');
+    if (!empty) expect(screen.getByRole('link', { name: /open draft/i })).toHaveAttribute('href', `/admin/programs/intermediate/grammar/${sampleImports[0]!.id}`);
+    expect(screen.queryByRole('link', { name: 'New import' })).not.toBeInTheDocument();
+  });
+
   it('deletes only the confirmed draft and keeps the other lesson editable', async () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
     vi.mocked(adminContentLifecycleClient.remove).mockResolvedValue({ id: sampleImports[0]!.id, action: 'deleted' });

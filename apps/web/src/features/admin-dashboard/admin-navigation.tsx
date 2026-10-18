@@ -1,10 +1,14 @@
 'use client';
 
-import Link from 'next/link';
+import { AdminLink as Link } from './admin-navigation-guard';
+import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
 import { useT } from '../../i18n/provider';
 import { commonMessages } from '../../i18n/messages/common';
 import { adminDashboardMessages } from '../../i18n/messages/adminDashboard';
+import { intermediateCategories, isIntermediateCategory } from '@worklingo/content-format';
+import { adminProgramAuthoringMessages } from '../../i18n/messages/adminProgramAuthoring';
+import '../admin-intermediate/intermediate-navigation.css';
 
 export const adminProgramDestinations = [
   { slug: 'beginner', label: 'foundation' }, { slug: 'intermediate', label: 'intermediate' },
@@ -39,6 +43,7 @@ export function AdminNavigation() {
   const pathname = usePathname();
   const t = useT('adminDashboard', adminDashboardMessages);
   const tc = useT('common', commonMessages);
+  const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
   return (
     <aside className="ad-sidebar">
       <details className="ad-navigation" open>
@@ -49,8 +54,16 @@ export function AdminNavigation() {
             <h2 id="admin-program-navigation">{t('learningPrograms')}</h2>
             {adminProgramDestinations.map(({ slug, label }) => isAdminProgramDeferred(slug)
               ? <div className="ad-nav-unavailable" key={slug}><span>{t(label)}</span><small>{t('deferred')}</small></div>
-              : <Link className="ad-nav-link" key={slug} href={`/admin/programs/${slug}`}
-                aria-current={isCurrent(pathname, `/admin/programs/${slug}`) ? 'page' : undefined}>{t(label)}</Link>)}
+              : <Fragment key={slug}>
+                <Link className="ad-nav-link" href={`/admin/programs/${slug}`}
+                  aria-current={(slug === 'intermediate' ? pathname === '/admin/programs/intermediate' : isCurrent(pathname, `/admin/programs/${slug}`)) ? 'page' : undefined}>{t(label)}</Link>
+                {slug === 'intermediate' ? <details className="intermediate-category-navigation" open={pathname.startsWith('/admin/programs/intermediate/')}>
+                  <summary>{ta('categories')}</summary>
+                  {intermediateCategories.map((category) => <Link className="ad-nav-link" key={category}
+                    href={`/admin/programs/intermediate/${category}`}
+                    aria-current={isCurrent(pathname, `/admin/programs/intermediate/${category}`) ? 'page' : undefined}>{ta(category)}</Link>)}
+                </details> : null}
+              </Fragment>)}
             <details className="ad-ielts-navigation" open={pathname.includes('/ielts-') || pathname === '/admin/programs/ielts'}>
               <summary>{t('ieltsTools')}</summary>
               {adminIeltsDestinations.map(({ href, label }) => <Link className="ad-nav-link" key={href} href={href}
@@ -73,6 +86,20 @@ export function AdminBreadcrumbs() {
   const pathname = usePathname();
   const t = useT('adminDashboard', adminDashboardMessages);
   const tc = useT('common', commonMessages);
+  const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
+  const segments = pathname.split('/');
+  const category = segments[1] === 'admin' && segments[2] === 'programs' && segments[3] === 'intermediate'
+    && isIntermediateCategory(segments[4] ?? '') ? segments[4] : null;
+  if (category && isIntermediateCategory(category)) {
+    const nested = Boolean(segments[5]);
+    return <nav className="ad-breadcrumbs" aria-label={t('breadcrumbs')}><ol>
+      <li><Link href="/admin">{tc('admin')}</Link></li>
+      <li><span>{t('learningPrograms')}</span></li>
+      <li><Link href="/admin/programs/intermediate">{t('intermediate')}</Link></li>
+      <li>{nested ? <Link href={`/admin/programs/intermediate/${category}`}>{ta(category)}</Link> : <span aria-current="page">{ta(category)}</span>}</li>
+      {nested ? <li><span aria-current="page">{segments[5] === 'new' ? ta('newLesson') : t('details')}</span></li> : null}
+    </ol></nav>;
+  }
   const program = adminProgramDestinations.find(({ slug }) => pathname === `/admin/programs/${slug}`);
   const destination = [...sharedDestinations, ...adminIeltsDestinations].find(({ href }) => isCurrent(pathname, href));
   const nested = destination && pathname !== destination.href;

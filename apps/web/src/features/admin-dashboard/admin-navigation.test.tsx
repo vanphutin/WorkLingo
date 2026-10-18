@@ -8,6 +8,42 @@ vi.mock('next/navigation', () => ({ usePathname: () => location.pathname }));
 afterEach(() => { cleanup(); location.pathname = '/admin'; });
 
 describe('Admin workspace navigation', () => {
+  it('places category navigation immediately after Intermediate and before TOEIC and IELTS', () => {
+    render(<AdminNavigation />);
+    const intermediate = screen.getByRole('link', { name: 'Intermediate' });
+    const categories = screen.getByText('Intermediate categories').closest('details')!;
+    const toeic = screen.getByText('TOEIC');
+    const ielts = screen.getByRole('link', { name: 'IELTS' });
+    expect(intermediate.nextElementSibling).toBe(categories);
+    expect(categories.compareDocumentPosition(toeic) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(categories.compareDocumentPosition(ielts) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it.each(['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'])('selects only the %s category on its editor route', (category) => {
+    location.pathname = `/admin/programs/intermediate/${category}/record-id`;
+    render(<AdminNavigation />);
+    const nav = screen.getByRole('navigation', { name: 'Admin workspace' });
+    const selected = within(nav).getAllByRole('link').filter((link) => link.getAttribute('aria-current') === 'page');
+    expect(selected).toHaveLength(1);
+    expect(selected[0]).toHaveAttribute('href', `/admin/programs/intermediate/${category}`);
+  });
+
+  it.each([['', 'Grammar'], ['/new', 'New lesson'], ['/opaque-id', 'Details']])('shows valid category hierarchy for %s', (suffix, current) => {
+    location.pathname = `/admin/programs/intermediate/grammar${suffix}`;
+    render(<AdminBreadcrumbs />);
+    const crumbs = screen.getByRole('navigation', { name: 'Breadcrumbs' });
+    expect(crumbs).toHaveTextContent('AdminLearning ProgramsIntermediateGrammar');
+    expect(within(crumbs).getByRole('link', { name: 'Intermediate' })).toHaveAttribute('href', '/admin/programs/intermediate');
+    expect(crumbs.querySelector('[aria-current="page"]')).toHaveTextContent(current);
+    if (suffix) expect(within(crumbs).getByRole('link', { name: 'Grammar' })).toHaveAttribute('href', '/admin/programs/intermediate/grammar');
+    expect(crumbs).not.toHaveTextContent('opaque-id');
+  });
+
+  it('does not invent a category breadcrumb for invalid slugs', () => {
+    location.pathname = '/admin/programs/intermediate/not-a-category/new';
+    render(<AdminBreadcrumbs />);
+    expect(screen.queryByRole('link', { name: 'Grammar' })).not.toBeInTheDocument();
+  });
   it('exposes contextual IELTS topic authoring with a matching breadcrumb', () => {
     location.pathname = '/admin/ielts-topics';
     render(<><AdminNavigation /><AdminBreadcrumbs /></>);
