@@ -44,6 +44,9 @@ export function useAdminContent() {
   const date = (value: string) => new Date(value).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US');
   const label = (value: string) => labels[value] ? t(labels[value]) : value;
   const message = (value: unknown): string => {
+    if (typeof value === 'object' && value !== null && 'code' in value && value.code === 'LANGUAGE_BLOCK_IDENTITY_CONFLICT') {
+      return t('vocabularyIdentityConflict');
+    }
     if (typeof value === 'object' && value !== null && 'key' in value) {
       const descriptor = value as ContentMessage;
       return t(descriptor.key, descriptor.values);

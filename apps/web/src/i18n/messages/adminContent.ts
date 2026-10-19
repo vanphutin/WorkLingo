@@ -1,5 +1,6 @@
 export const adminContentMessages = {
   "en": {
+    "vocabularyIdentityConflict": "A vocabulary identifier belongs to another word bank. Change the identifier, validate the lesson, then publish again.",
     "importsRegion": "Content imports",
     "importsEmpty": "No content imports yet",
     "importsEmptyHelp": "Create your first import draft to begin authoring WorkLingo lessons.",
@@ -201,6 +202,7 @@ export const adminContentMessages = {
     "blockListenReason": "Listen and reason"
   },
   "vi": {
+    "vocabularyIdentityConflict": "Mã từ vựng đang thuộc một bộ từ khác. Đổi mã bị trùng, kiểm tra bài học rồi xuất bản lại.",
     "importsRegion": "Các bản nhập nội dung",
     "importsEmpty": "Chưa có bản nhập nội dung",
     "importsEmptyHelp": "Tạo bản nhập nháp đầu tiên để bắt đầu biên soạn bài học WorkLingo.",

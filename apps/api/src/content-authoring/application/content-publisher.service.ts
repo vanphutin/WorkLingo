@@ -334,6 +334,7 @@ export class ContentPublisherService {
         wb: (typeof normalizedDraft.wordBanks)[number];
         blocks: Array<(typeof normalizedDraft.wordBanks)[number]['languageBlocks'][number] & { id: string }>;
       }> = [];
+      const resolvedLanguageSlugs = new Map<string, string>();
 
       for (const wb of normalizedDraft.wordBanks) {
         const wordBank = await tx.wordBank.upsert({
@@ -344,11 +345,14 @@ export class ContentPublisherService {
 
         const blocks = [];
         for (const lb of wb.languageBlocks) {
-          const canonical = await tx.languageBlock.upsert({
-            where: { slug: lb.slug },
+          // A source-local slug can legitimately occur in different word banks.
+          // Prefer an already allocated scoped identity so later versions keep mastery IDs stable.
+          const scopedSlug = `lb-${wordBank.id}-${lb.slug}`;
+          const upsertBlock = (slug: string) => tx.languageBlock.upsert({
+            where: { slug },
             update: {},
             create: {
-              slug: lb.slug,
+              slug,
               wordBankId: wordBank.id,
               canonicalForm: lb.canonicalForm,
               meaning: lb.meaning,
@@ -361,10 +365,17 @@ export class ContentPublisherService {
               transferContexts: [...lb.transferContexts],
             },
           });
-          if (canonical.wordBankId !== wordBank.id) {
-            throw new ConflictException('Language Block belongs to another Word Bank');
+          let canonical = await tx.languageBlock.findUnique({ where: { slug: scopedSlug } });
+          if (!canonical) {
+            canonical = await upsertBlock(lb.slug);
+            if (canonical.wordBankId !== wordBank.id) canonical = await upsertBlock(scopedSlug);
           }
-          blocks.push({ ...lb, id: canonical.id });
+          if (canonical.wordBankId !== wordBank.id) {
+            throw new ConflictException({ code: 'LANGUAGE_BLOCK_IDENTITY_CONFLICT',
+              message: 'Vocabulary identity is already owned by another word bank.', statusCode: 409 });
+          }
+          resolvedLanguageSlugs.set(lb.slug, canonical.slug);
+          blocks.push({ ...lb, id: canonical.id, slug: canonical.slug });
         }
 
         const wbHash = createHash('sha256')
@@ -396,7 +407,7 @@ export class ContentPublisherService {
               data: {
                 id: lb.id ?? randomUUID(),
                 wordBankVersionId: wbVersion.id,
-                slug: lb.slug,
+                slug: resolvedLanguageSlugs.get(lb.slug)!,
                 canonicalForm: lb.canonicalForm,
                 meaning: lb.meaning,
                 pronunciation: lb.pronunciation,
@@ -473,7 +484,7 @@ export class ContentPublisherService {
             learningBlock: a.learningBlock,
             skills: [...a.skills],
             contentReferences: [...a.contentReferences],
-            languageBlockReferences: [...a.languageBlockReferences],
+            languageBlockReferences: a.languageBlockReferences.map(slug => resolvedLanguageSlugs.get(slug) ?? slug),
             payload,
           };
         }),

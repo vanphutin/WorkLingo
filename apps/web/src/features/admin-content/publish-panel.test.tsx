@@ -7,6 +7,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type * as ApiClientModule from '../../lib/api/api-client';
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { PublishPanel } from './publish-panel';
+import { LocaleProvider } from '../../i18n/provider';
 
 vi.mock('../../lib/api/api-client', async (importOriginal) => {
   const actual = await importOriginal<typeof ApiClientModule>();
@@ -26,6 +27,14 @@ afterEach(() => {
 });
 
 describe('PublishPanel', () => {
+  it.each(['en', 'vi'] as const)('explains a vocabulary identity conflict in %s instead of claiming a stale draft', async locale => {
+    vi.mocked(apiClient.publishContentImport).mockRejectedValueOnce(new ApiError({ code: 'LANGUAGE_BLOCK_IDENTITY_CONFLICT', message: 'private details', status: 409 }));
+    render(<LocaleProvider initialLocale={locale}><PublishPanel importId="11111111-1111-4111-8111-111111111111" draftRevision={1}
+      sourceHash="hash-1" canPublish isAudioReady status="VALIDATED" /></LocaleProvider>);
+    fireEvent.click(screen.getByRole('button', { name: locale === 'vi' ? 'Xuất bản bài học' : 'Publish Lesson' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent(locale === 'vi' ? /mã từ vựng.*bộ từ khác/i : /vocabulary identifier.*another word bank/i);
+    expect(screen.getByRole('alert')).not.toHaveTextContent(/private details|reload and try again|tải lại rồi thử lại/i);
+  });
   it('disables publish button if validation or audio is not ready', () => {
     const { rerender } = render(
       <PublishPanel
