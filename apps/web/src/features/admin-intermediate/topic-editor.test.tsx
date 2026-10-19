@@ -7,6 +7,7 @@ import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client
 import { IntermediateLessonEditor } from './intermediate-lesson-editor';
 import { createIntermediateLessonDraft } from './lesson-model';
 import { serializeIntermediateTopicLesson } from './topic-lesson-model';
+import { createTopicJsonTemplate } from './topic-json';
 
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
@@ -19,6 +20,79 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); push.mockReset(); });
 describe('A topic contains the source passage and its connected practice', () => {
+  it('imports JSON into editable fields without saving or approving it', () => {
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    const json = { ...createTopicJsonTemplate(), title: 'Restaurant JSON lesson' };
+    fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: JSON.stringify(json) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    expect(screen.getByLabelText('Lesson title')).toHaveValue(json.title);
+    expect(screen.getByRole('textbox', { name: 'Source passage' })).toHaveValue(json.readingText);
+    expect(apiClient.createContentImport).not.toHaveBeenCalled();
+  });
+  it('preserves edited fields when JSON is invalid or replacement is cancelled', () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.change(screen.getByLabelText('Lesson title'), { target: { value: 'Keep my edits' } });
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: '{broken' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Invalid JSON');
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('Keep my edits');
+    fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: JSON.stringify(createTopicJsonTemplate()) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    expect(window.confirm).toHaveBeenCalledTimes(1);
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('Keep my edits');
+  });
+  it('reads a local JSON file, requires explicit application and saves through the topic source format', async () => {
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    const file = new File(['{}'], 'lesson.json', { type: 'application/json' });
+    const json = JSON.stringify({ ...createTopicJsonTemplate(), title: 'Local file lesson' });
+    Object.defineProperty(file, 'text', { value: async () => json });
+    fireEvent.change(screen.getByLabelText('Choose a JSON file'), { target: { files: [file] } });
+    await waitFor(() => expect(screen.getByLabelText('Topic JSON')).toHaveValue(json));
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('');
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Create draft' }));
+    await waitFor(() => expect(push).toHaveBeenCalledWith(`/admin/programs/intermediate/topics/${id}`));
+    const source = vi.mocked(apiClient.createContentImport).mock.calls[0]![0];
+    expect(source).toContain('title: Local file lesson');
+    expect(source).toContain('authoring_template: intermediate-topic-v1');
+    expect(source).not.toContain('approvedById');
+  });
+  it('blocks saving during a file read and restores it when reading fails', async () => {
+    let rejectRead!: (error: Error) => void;
+    const file = new File(['{}'], 'lesson.json');
+    Object.defineProperty(file, 'text', { value: () => new Promise<string>((_, reject) => { rejectRead = reject; }) });
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    fireEvent.change(screen.getByLabelText('Choose a JSON file'), { target: { files: [file] } });
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeDisabled();
+    rejectRead(new Error('Read failed'));
+    await screen.findByRole('alert');
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeEnabled();
+  });
+  it('guards unapplied JSON on browser unload and releases the guard after clearing it', () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: '{unfinished' } });
+    expect(fireEvent(window, new Event('beforeunload', { cancelable: true }))).toBe(false);
+    fireEvent.click(screen.getByRole('button', { name: 'Clear JSON buffer' }));
+    expect(fireEvent(window, new Event('beforeunload', { cancelable: true }))).toBe(true);
+  });
+  it('releases saving and browser navigation when the JSON buffer is erased manually', () => {
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    const input = screen.getByLabelText('Topic JSON');
+    fireEvent.change(input, { target: { value: '{unfinished' } });
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeDisabled();
+    fireEvent.change(input, { target: { value: '  ' } });
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeEnabled();
+    expect(fireEvent(window, new Event('beforeunload', { cancelable: true }))).toBe(true);
+  });
   it('creates one topic with its own route and the same passage for audio', async () => {
     render(<IntermediateLessonEditor category="reading" topic />);
     expect(screen.getByRole('heading', { name: 'New topic lesson' })).toBeVisible();

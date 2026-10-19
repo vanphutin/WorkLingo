@@ -17,6 +17,7 @@ import {
 import './intermediate-authoring.css';
 import { isIntermediateTopicSource, readIntermediateTopicLesson, serializeIntermediateTopicLesson } from './topic-lesson-model';
 import { TopicReviewPanel } from './topic-review-panel';
+import { TopicJsonTransfer } from './topic-json-transfer';
 
 type T = Translator<typeof adminIntermediateMessages>;
 type Props = { category: IntermediateCategory; importId?: string; topic?: boolean };
@@ -158,13 +159,14 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [planDirty, setPlanDirty] = useState(false);
+  const [jsonDirty, setJsonDirty] = useState(false);
   const [error, setError] = useState<'conflict' | 'saveFailed' | 'invalidDraft' | null>(null);
   const mounted = useRef(false);
   const inFlight = useRef(false);
   const headingId = useId();
   const readOnly = record?.status === 'PUBLISHED' || record?.status === 'ARCHIVED';
   const dirty = draft !== savedDraft;
-  const anyDirty = dirty || planDirty;
+  const anyDirty = dirty || planDirty || jsonDirty;
   useAdminNavigationGuard(anyDirty, t('leaveDirty'));
   const [focusKey, helpKey] = focusKeys[category];
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
@@ -181,7 +183,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   }
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (readOnly || inFlight.current || error === 'conflict') return;
+    if (readOnly || inFlight.current || error === 'conflict' || jsonDirty) return;
     if (topic && planDirty && !window.confirm(tt('replacePlan'))) return;
     let source: string;
     try { source = topic ? serializeIntermediateTopicLesson(draft) : serializeIntermediateLesson(category, draft); }
@@ -234,6 +236,9 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
     </header>
     {readOnly ? <p className="intermediate-notice">{t('readOnly')}</p> : null}
     {error ? <p role="alert" className="intermediate-notice intermediate-error">{t(error)}</p> : null}
+    {topic ? <TopicJsonTransfer draft={draft} dirty={dirty} disabled={saving || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
+      onApply={next => { setDraft(next); setSaved(false); }} /> : null}
+    {jsonDirty ? <p role="status" className="intermediate-help">{tt('jsonPending')}</p> : null}
     <form onSubmit={(event) => void save(event)}>
       <fieldset className="intermediate-form-fields" disabled={saving || readOnly}>
         <legend className="intermediate-sr-only">{t('editTitle', { category: t(category) })}</legend>
@@ -269,11 +274,11 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
         </details>}
       </fieldset>
       {!readOnly ? <div className="intermediate-actions">
-        <button className="intermediate-save" type="submit" disabled={saving || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
+        <button className="intermediate-save" type="submit" disabled={saving || jsonDirty || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
         <span role="status" aria-live="polite">{saved ? t('saved') : dirty ? t('dirty') : ''}</span>
       </div> : null}
     </form>
-    {topic && record ? <TopicReviewPanel record={record} dirty={dirty} onDirtyChange={setPlanDirty} /> : null}
+    {topic && record ? <TopicReviewPanel record={record} dirty={dirty || jsonDirty} onDirtyChange={setPlanDirty} /> : null}
     {record ? <aside className="intermediate-card intermediate-lifecycle">
       <Link href={`/admin/content/${record.id}`}>{t('lifecycle')}</Link>
       <p className="intermediate-help">{t('lifecycleHelp')}</p>

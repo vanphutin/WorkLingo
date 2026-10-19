@@ -1,6 +1,6 @@
 export const intermediateTopicsMessages = {
   en: {
-    title: 'Topic lessons', description: 'One source passage, connected language practice and a human-approved session plan.',
+    title: 'Topic lessons', tools: 'Intermediate tools', description: 'One source passage, connected language practice and a human-approved session plan.',
     add: 'Add a topic lesson', list: 'View topic lessons', newTitle: 'New topic lesson', editTitle: 'Edit topic lesson', back: 'Back to topic lessons',
     passage: 'Source passage', passageHelp: 'All reading, listening and response activities develop understanding of this passage.',
     language: 'Vocabulary, grammar and pronunciation', parts: 'Connected practice', listening: 'Listening to the passage', listeningHelp: 'Audio uses the source passage above. Edit the questions here.',
@@ -17,9 +17,15 @@ export const intermediateTopicsMessages = {
     learnerHelp: 'Each session follows one passage. The displayed time has been approved by an administrator.', time: '{minutes} minutes', opening: 'Opening topic…',
     legacyNotice: 'Earlier lessons remain available below while topic lessons are being prepared.',
     replacePlan: 'Saving the lesson reloads its review. Discard the unsaved allocation changes?',
+    jsonTitle: 'Import a topic from JSON', jsonLabel: 'Topic JSON', jsonFile: 'Choose a JSON file',
+    jsonHelp: 'Paste JSON or choose a file (up to 1 MB). Use the example for the required format. Applying fills the form; save and review the lesson separately. Time and approvals are not imported.',
+    jsonApply: 'Apply JSON to form', jsonTemplate: 'Load example JSON', jsonExport: 'Download form as JSON', jsonClear: 'Clear JSON buffer',
+    jsonReplace: 'Replace the unsaved lesson fields with this JSON?', jsonDiscard: 'Discard the pending JSON buffer?',
+    jsonInvalid: 'Invalid JSON. The lesson fields were preserved.', jsonFileError: 'Could not read this file. Choose a JSON file up to 1 MB.',
+    jsonApplied: 'JSON applied to the form. Review the fields and save the draft.', jsonPending: 'Apply or clear the pending JSON before saving or reviewing this lesson.',
   },
   vi: {
-    title: 'Bài học theo chủ đề', description: 'Một bài đọc gốc, các phần luyện tập liên kết và khung thời lượng do admin duyệt.',
+    title: 'Bài học theo chủ đề', tools: 'Công cụ Trung cấp', description: 'Một bài đọc gốc, các phần luyện tập liên kết và khung thời lượng do admin duyệt.',
     add: 'Thêm bài học theo chủ đề', list: 'Xem bài học theo chủ đề', newTitle: 'Thêm bài học theo chủ đề', editTitle: 'Sửa bài học theo chủ đề', back: 'Về danh sách bài theo chủ đề',
     passage: 'Bài đọc gốc', passageHelp: 'Các phần đọc, nghe và phản hồi đều giúp người học hiểu trọn bài đọc này.',
     language: 'Từ vựng, ngữ pháp và phát âm', parts: 'Các phần học liên kết', listening: 'Nghe bài đọc', listeningHelp: 'Âm thanh dùng chính bài đọc gốc phía trên. Soạn câu hỏi nghe tại đây.',
@@ -36,5 +42,11 @@ export const intermediateTopicsMessages = {
     learnerHelp: 'Mỗi phiên học xoay quanh một bài đọc. Thời lượng hiển thị đã được admin duyệt.', time: '{minutes} phút', opening: 'Đang mở chủ đề…',
     legacyNotice: 'Các bài trước đây vẫn có thể học bên dưới trong lúc chuẩn bị chủ đề mới.',
     replacePlan: 'Lưu bài sẽ tải lại bản duyệt. Bỏ các thay đổi phân bổ thời lượng chưa lưu?',
+    jsonTitle: 'Nhập bài theo chủ đề bằng JSON', jsonLabel: 'Nội dung JSON', jsonFile: 'Chọn file JSON',
+    jsonHelp: 'Dán JSON hoặc chọn file (tối đa 1 MB). Dùng mẫu để xem cấu trúc. Áp dụng chỉ điền vào biểu mẫu; lưu và duyệt bài là các bước riêng. Không nhập thời lượng hay phê duyệt từ JSON.',
+    jsonApply: 'Áp dụng JSON vào biểu mẫu', jsonTemplate: 'Nạp JSON mẫu', jsonExport: 'Tải biểu mẫu dạng JSON', jsonClear: 'Xóa nội dung JSON đang nhập',
+    jsonReplace: 'Thay các trường bài học chưa lưu bằng nội dung JSON này?', jsonDiscard: 'Bỏ nội dung JSON đang nhập?',
+    jsonInvalid: 'JSON không hợp lệ. Các trường bài học vẫn được giữ nguyên.', jsonFileError: 'Không đọc được file. Hãy chọn file JSON tối đa 1 MB.',
+    jsonApplied: 'Đã điền JSON vào biểu mẫu. Kiểm tra các trường rồi lưu bản nháp.', jsonPending: 'Áp dụng hoặc xóa nội dung JSON đang nhập trước khi lưu hay duyệt bài.',
   },
 } as const;

@@ -8,7 +8,8 @@ vi.mock('next/navigation', () => ({ usePathname: () => location.pathname }));
 afterEach(() => { cleanup(); location.pathname = '/admin'; });
 
 describe('Admin workspace navigation', () => {
-  it('places category navigation immediately after Intermediate and before TOEIC and IELTS', () => {
+  it('groups topic authoring and legacy tools beneath Intermediate before TOEIC and IELTS', () => {
+    location.pathname = '/admin/programs/intermediate/topics';
     render(<AdminNavigation />);
     const intermediate = screen.getByRole('link', { name: 'Intermediate' });
     const categories = screen.getByText('Earlier category tools').closest('details')!;
@@ -16,10 +17,23 @@ describe('Admin workspace navigation', () => {
     const ielts = screen.getByRole('link', { name: 'IELTS' });
     const topics = screen.getByRole('link', { name: 'Topic lessons' });
     expect(topics).toHaveAttribute('href', '/admin/programs/intermediate/topics');
-    expect(intermediate.nextElementSibling).toBe(topics);
-    expect(topics.nextElementSibling).toBe(categories);
+    const tools = screen.getByText('Intermediate tools').closest('details')!;
+    expect(intermediate.nextElementSibling).toBe(tools);
+    expect(tools).toHaveAttribute('open');
+    expect(within(tools).getByRole('link', { name: 'Add a topic lesson' })).toHaveAttribute('href', '/admin/programs/intermediate/topics/new');
+    expect(tools).toContainElement(topics);
+    expect(tools).toContainElement(categories);
+    expect(categories).not.toHaveAttribute('open');
     expect(categories.compareDocumentPosition(toeic) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(categories.compareDocumentPosition(ielts) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it.each([['/topics', '/topics'], ['/topics/new', '/topics/new'], ['/topics/record-id', '/topics']])('selects exactly one topic destination for %s', (route, selectedRoute) => {
+    location.pathname = `/admin/programs/intermediate${route}`;
+    render(<AdminNavigation />);
+    const selected = screen.getByRole('navigation', { name: 'Admin workspace' }).querySelectorAll('[aria-current="page"]');
+    expect(selected).toHaveLength(1);
+    expect(selected[0]).toHaveAttribute('href', `/admin/programs/intermediate${selectedRoute}`);
   });
 
   it.each(['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'])('selects only the %s category on its editor route', (category) => {

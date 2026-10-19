@@ -59,12 +59,19 @@ export function AdminNavigation() {
               : <Fragment key={slug}>
                 <Link className="ad-nav-link" href={`/admin/programs/${slug}`}
                   aria-current={(slug === 'intermediate' ? pathname === '/admin/programs/intermediate' : isCurrent(pathname, `/admin/programs/${slug}`)) ? 'page' : undefined}>{t(label)}</Link>
-                {slug === 'intermediate' ? <><Link className="ad-nav-link" href="/admin/programs/intermediate/topics" aria-current={isCurrent(pathname, '/admin/programs/intermediate/topics') ? 'page' : undefined}>{tt('title')}</Link><details className="intermediate-category-navigation" open={isIntermediateCategory(pathname.split('/')[4] ?? '')}>
-                  <summary>{tt('legacy')}</summary>
-                  {intermediateCategories.map((category) => <Link className="ad-nav-link" key={category}
-                    href={`/admin/programs/intermediate/${category}`}
-                    aria-current={isCurrent(pathname, `/admin/programs/intermediate/${category}`) ? 'page' : undefined}>{ta(category)}</Link>)}
-                </details></> : null}
+                {slug === 'intermediate' ? <details className="intermediate-program-navigation" open={isCurrent(pathname, '/admin/programs/intermediate')}>
+                  <summary>{tt('tools')}</summary>
+                  <Link className="ad-nav-link" href="/admin/programs/intermediate/topics"
+                    aria-current={isCurrent(pathname, '/admin/programs/intermediate/topics') && pathname !== '/admin/programs/intermediate/topics/new' ? 'page' : undefined}>{tt('title')}</Link>
+                  <Link className="ad-nav-link" href="/admin/programs/intermediate/topics/new"
+                    aria-current={pathname === '/admin/programs/intermediate/topics/new' ? 'page' : undefined}>{tt('add')}</Link>
+                  <details className="intermediate-category-navigation" open={isIntermediateCategory(pathname.split('/')[4] ?? '')}>
+                    <summary>{tt('legacy')}</summary>
+                    {intermediateCategories.map((category) => <Link className="ad-nav-link" key={category}
+                      href={`/admin/programs/intermediate/${category}`}
+                      aria-current={isCurrent(pathname, `/admin/programs/intermediate/${category}`) ? 'page' : undefined}>{ta(category)}</Link>)}
+                  </details>
+                </details> : null}
               </Fragment>)}
             <details className="ad-ielts-navigation" open={pathname.includes('/ielts-') || pathname === '/admin/programs/ielts'}>
               <summary>{t('ieltsTools')}</summary>

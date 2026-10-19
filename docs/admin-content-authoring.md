@@ -28,6 +28,28 @@ Với Trung cấp, mở `/admin/programs/intermediate/topics`, chọn **Thêm b�
 
 Lưu bản nháp rồi chọn **Nhờ AI đề xuất**, hoặc tự chọn khung học khi không dùng AI. AI chỉ đưa ra đề xuất có lý do; chế độ mô phỏng được ghi rõ. Admin được sửa thời lượng 45/60/90/120/150 phút và số phút của bốn chặng trước khi bấm **Phê duyệt khung học này**. Tổng phân bổ phải đúng thời lượng. Đổi nguồn sau khi duyệt làm phê duyệt cũ hết hiệu lực; yêu cầu AI trả về muộn hoặc revision cũ không được ghi đè bản mới.
 
+### Nhập topic Trung cấp bằng JSON
+
+Sidebar **Trung cấp → Công cụ Trung cấp** có **Bài học theo chủ đề** và **Thêm bài học theo chủ đề**. Các chuyên mục cũ nằm trong nhóm thu gọn riêng, tự mở khi truy cập đường dẫn cũ.
+
+Trong biểu mẫu thêm/sửa topic, mở **Nhập bài theo chủ đề bằng JSON**. Dán nội dung hoặc chọn file JSON tối đa 1 MB; **Nạp JSON mẫu** cung cấp ví dụ đầy đủ. Có thể dùng [file mẫu nhà hàng](examples/intermediate-topic.json). Bấm **Áp dụng JSON vào biểu mẫu**, kiểm tra các trường rồi **Tạo/Lưu bản nháp**. JSON chưa áp dụng được cảnh báo khi rời trang và phải áp dụng hoặc xóa trước khi lưu/duyệt. Thay các trường đã chỉnh sửa cần xác nhận. File đọc lỗi hoặc JSON sai không thay nội dung biểu mẫu.
+
+Định dạng cho **một topic**, không phải mảng nhiều bài:
+
+| Trường | Nội dung |
+| --- | --- |
+| `format` | Chính xác `WorkLingoIntermediateTopic/1.0` |
+| `slug`, `title`, `level`, `objective` | Mã, tên, trình độ và mục tiêu bài; tên không được rỗng |
+| `readingText` | Bài đọc gốc không rỗng; xuống dòng dùng `\n` trong chuỗi JSON; âm thanh tự dùng cùng nội dung |
+| `speaker`, `activatePrompt` | Nhân vật/người đọc và nhiệm vụ khởi động |
+| `languageBlocks` | Ít nhất một mục gồm `slug`, `expression`, `meaningVi`, `pronunciation`, `grammarPattern`, `example`, `commonError`, `collocations` (mảng chuỗi) |
+| `readingQuestions`, `listeningQuestions` | Mỗi mảng ít nhất một câu gồm `slug`, `prompt`, `options` (2–10 chuỗi), `answerIndex` (bắt đầu từ **0**), `explanation`, `evidenceLine` (dòng của bài đọc, bắt đầu từ **1**) |
+| `speakingPrompt`, `speakingModel`, `writingPrompt`, `writingModel` | Yêu cầu và câu trả lời mẫu cho nói/viết |
+
+Tất cả trường trên đều bắt buộc; các trường văn bản ngoài tên/bài đọc có thể để chuỗi rỗng để hoàn thiện sau. Mã bài/mục dùng chữ thường, số, dấu gạch nối; mã các mục phải khác nhau. Không thêm trường ngoài định dạng, kể cả trong câu hỏi hoặc mục ngôn ngữ. Các ký hiệu điều khiển của nguồn bài được kiểm tra trước khi áp dụng.
+
+**Tải biểu mẫu dạng JSON** xuất các trường hiện tại, kể cả phần đang soạn dở; cần điền tên và bài đọc trước khi nhập lại. JSON không chứa `dialogue`, `durationMinutes`, ID hệ thống, trạng thái xuất bản hay phê duyệt. Nhập JSON không tự lưu, đề xuất AI, duyệt hoặc xuất bản. Thời lượng vẫn theo quy trình duyệt riêng; thay nguồn đã lưu làm phê duyệt cũ hết hiệu lực.
+
 Công cụ nâng cao của cùng ID tiếp tục phụ trách kiểm tra, âm thanh và xuất bản. Backend chặn xuất bản topic chưa có phê duyệt phù hợp nguồn hiện tại. Sau đó gắn bài đã xuất bản vào nhiệm vụ của đúng lộ trình/trình độ và xuất bản giáo trình theo công cụ hiện có. Việc lưu hoặc duyệt thời lượng không tự xuất bản, không tự thêm bài vào lộ trình.
 
 Học viên chọn topic hoặc để hệ thống chọn ngẫu nhiên trong các topic đã xuất bản và đủ điều kiện của chương trình/trình độ hiện tại. Mỗi phiên giữ đúng một topic, toàn bộ hoạt động và khung thời lượng admin đã duyệt. Nói/viết cùng thuộc chặng phản hồi; bốn chặng có thời lượng linh hoạt và không bỏ bớt hoạt động để vừa khung 15 phút của bài cũ. Phiên đang học giữ snapshot đã đóng băng. Các bài cũ vẫn có thể bắt đầu khi chưa có topic mới hợp lệ.
