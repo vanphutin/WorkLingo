@@ -55,7 +55,7 @@ function PickerSession({ children, initialTopics, initialError }: PickerProps) {
   }
   return <>
     <section className="session-launcher" aria-label={t('learnerTitle')}>
-      <h3>{t('learnerTitle')}</h3><p>{t('learnerHelp')}</p>
+      <h3>{t('learnerTitle')}</h3>{topics.length > 0 ? <p>{t('learnerHelp')}</p> : null}
       {status === 'loading' ? <p role="status">{t('busy')}</p> : null}
       {status === 'error' ? <div role="alert"><p>{t('loadError')}</p><button type="button" onClick={() => { setStatus('loading'); setAttempt(n => n + 1); }}>{t('retry')}</button></div> : null}
       {failed ? <p role="alert">{t('requestError')}</p> : null}

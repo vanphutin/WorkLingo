@@ -1,5 +1,6 @@
 export const learnerDashboardMessages = {
   en: {
+    sectionNavigation: 'Dashboard sections', tabToday: 'Today', tabProgress: 'Progress', tabPrograms: 'Programs', tabWeekly: 'Study rhythm',
     welcome: 'Welcome back, {name}', noLevel: 'No active level yet',
     chooseProgram: 'Choose a program to start learning.', chooseMission: 'Choose your next learning activity',
     nextMilestone: 'Next milestone', noMilestone: 'Your next milestone will appear when a published mission is available.',
@@ -26,6 +27,7 @@ export const learnerDashboardMessages = {
     details: 'View data table', examHistory: 'Exam score history is not available on this dashboard. Practice accuracy is not a TOEIC score or IELTS band.',
   },
   vi: {
+    sectionNavigation: 'Nội dung trang học tập', tabToday: 'Học hôm nay', tabProgress: 'Tiến độ', tabPrograms: 'Chương trình', tabWeekly: 'Nhịp học',
     welcome: 'Chào {name}', noLevel: 'Chưa có cấp độ đang học',
     chooseProgram: 'Chọn chương trình để bắt đầu học.', chooseMission: 'Chọn hoạt động học tập tiếp theo',
     nextMilestone: 'Cột mốc tiếp theo', noMilestone: 'Cột mốc tiếp theo sẽ xuất hiện khi có nhiệm vụ đã xuất bản.',

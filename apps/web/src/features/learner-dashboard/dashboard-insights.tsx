@@ -9,13 +9,14 @@ import { formatNumber } from '../../i18n/translator';
 import styles from './learner-dashboard.module.css';
 
 export interface DashboardInsightsProps {
+  readonly section?: 'all' | 'programs' | 'activity';
   readonly analytics?: LearnerDashboardAnalytics | null | undefined;
   readonly analyticsLoading?: boolean | undefined;
   readonly analyticsError?: string | null | undefined;
   readonly onRetryAnalytics?: (() => void) | undefined;
 }
 
-export function DashboardInsights({ analytics, analyticsLoading, analyticsError, onRetryAnalytics }: DashboardInsightsProps) {
+export function DashboardInsights({ analytics, analyticsLoading, analyticsError, onRetryAnalytics, section = 'all' }: DashboardInsightsProps) {
   const t = useT('learnerDashboard', learnerDashboardMessages);
   const { locale } = useLocalePreference();
   const percent = (value: number) => formatNumber(locale, value, { style: 'percent', maximumFractionDigits: 0 });
@@ -40,7 +41,7 @@ export function DashboardInsights({ analytics, analyticsLoading, analyticsError,
   const x = (dateKey: string) => 16 + Math.max(0, dates.indexOf(dateKey)) * (568 / Math.max(1, dates.length - 1));
 
   return <div className={styles.insights}>
-    <section aria-labelledby="learner-programs-heading">
+    {section !== 'activity' && <section aria-labelledby="learner-programs-heading">
       <div className={styles.sectionHeading}><h2 id="learner-programs-heading">{t('programs')}</h2><Link href="/programs">{t('viewCatalog')}</Link></div>
       <p className={styles.note}>{t('programsNote')}</p>
       <div className={styles.programGrid}>
@@ -62,9 +63,9 @@ export function DashboardInsights({ analytics, analyticsLoading, analyticsError,
         })}
       </div>
       {analytics.programs.length === 0 ? <p>{t('noPrograms')}</p> : null}
-    </section>
+    </section>}
 
-    <section aria-labelledby="learner-insights-heading">
+    {section !== 'programs' && <section aria-labelledby="learner-insights-heading">
       <h2 id="learner-insights-heading">{t('insights')}</h2>
       <p className={styles.note}>{hasActiveProgram ? t('period') : t('noActive')}</p>
       <div className={styles.chartGrid}>
@@ -131,6 +132,6 @@ export function DashboardInsights({ analytics, analyticsLoading, analyticsError,
         </section>
       </div>
       {/ielts|toeic/iu.test(analytics.activeProgramSlug ?? '') ? <p className={styles.note}>{t('examHistory')}</p> : null}
-    </section>
+    </section>}
   </div>;
 }

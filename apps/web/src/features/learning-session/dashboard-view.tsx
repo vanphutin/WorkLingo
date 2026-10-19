@@ -12,6 +12,7 @@ import Link from 'next/link';
 import type { LearnerProgressDto } from '../../lib/api/api-client';
 import type { CurriculumRoadmapDto, EngagementSummaryDto, LearnerTopic } from '@worklingo/contracts';
 import { EngagementPanel } from '../engagement/engagement-panel';
+import { DashboardSections } from '../learner-dashboard/dashboard-sections';
 import { CurriculumRoadmap } from '../curriculum-roadmap/curriculum-roadmap';
 import { OrientationDashboardCard } from '../ielts-orientation/orientation-dashboard-card';
 import { IeltsBridgeDashboardCard } from '../ielts-bridge/ielts-bridge-dashboard-card';
@@ -175,7 +176,7 @@ export function DashboardView({
   }
 
   return (
-    <main className="dashboard-container">
+    <main className={`dashboard-container ${styles.compact}`}>
       <header className="dashboard-header">
         <span className="eyebrow">{t('learningSpace')}</span>
         <h1 className={`dashboard-title ${styles.welcome}`}>{analytics?.displayName.trim() ? dashboardT('welcome', { name: analytics.displayName.trim() }) : t('todayLearning')}</h1>
@@ -188,6 +189,7 @@ export function DashboardView({
         </nav>
       </header>
 
+      <DashboardSections home={<>
       {startError && (
         <div className="form-error" role="alert">
           {localizedError(startError.cause, locale)}
@@ -289,8 +291,8 @@ export function DashboardView({
         </section>
       </div>
 
-      <DashboardInsights analytics={analytics} analyticsLoading={analyticsLoading} analyticsError={analyticsError} onRetryAnalytics={onRetryAnalytics} />
-
+      </>} progress={<>
+      <DashboardInsights section="activity" analytics={analytics} analyticsLoading={analyticsLoading} analyticsError={analyticsError} onRetryAnalytics={onRetryAnalytics} />
       {!noActiveProgram && (roadmap !== undefined || roadmapLoading || roadmapError !== null) ? (
         <CurriculumRoadmap
           roadmap={roadmap ?? null}
@@ -299,7 +301,20 @@ export function DashboardView({
           onRetry={onRetryRoadmap}
         />
       ) : null}
-
+      </>} programs={<>
+      <DashboardInsights section="programs" analytics={analytics} analyticsLoading={analyticsLoading} analyticsError={analyticsError} onRetryAnalytics={onRetryAnalytics} />
+      {!noActiveProgram && programName?.toLowerCase().includes('ielts') ? <section className="learning-pathways" aria-labelledby="learning-pathways-heading">
+        <h2 id="learning-pathways-heading">{t('ieltsPathway')}</h2>
+        <p className="neutral-subtext">{t('pathwayDescription')}</p>
+        <div className="learning-pathways-grid">
+          <OrientationDashboardCard />
+          <IeltsBridgeDashboardCard />
+          <IntegratedPracticeDashboardCard />
+          <IeltsBandDashboardCard />
+          <IeltsMockDashboardCard />
+        </div>
+      </section> : null}
+      </>} weekly={<>
       {(engagement !== undefined || engagementLoading || engagementError !== null) && (
         <div>
           <p className="neutral-subtext">{dashboardT('engagementScope')}</p>
@@ -312,17 +327,7 @@ export function DashboardView({
           />
         </div>
       )}
-      {!noActiveProgram && programName?.toLowerCase().includes('ielts') ? <section className="learning-pathways" aria-labelledby="learning-pathways-heading">
-        <h2 id="learning-pathways-heading">{t('ieltsPathway')}</h2>
-        <p className="neutral-subtext">{t('pathwayDescription')}</p>
-        <div className="learning-pathways-grid">
-          <OrientationDashboardCard />
-          <IeltsBridgeDashboardCard />
-          <IntegratedPracticeDashboardCard />
-          <IeltsBandDashboardCard />
-          <IeltsMockDashboardCard />
-        </div>
-      </section> : null}
+      </>} />
     </main>
   );
 }

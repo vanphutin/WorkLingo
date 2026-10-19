@@ -10,7 +10,7 @@ import { overviewFixture } from '../../../features/learner-dashboard/overview.te
 import DashboardPage from './page';
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
 beforeEach(() => { vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json(overviewFixture))); });
-afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); window.history.replaceState(null, '', '/'); });
 describe('Learner dashboard overview', () => {
   it('retries failed progress without refetching healthy sections', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(Response.json({ ...overviewFixture, progress: { status: 'error', error: { code: 'DASHBOARD_SECTION_UNAVAILABLE', status: 503 } } }));
@@ -65,8 +65,10 @@ describe('Learner dashboard overview', () => {
     vi.mocked(fetch).mockResolvedValueOnce(Response.json({ ...overviewFixture, analytics: { status: 'error', error: { code: 'DASHBOARD_SECTION_UNAVAILABLE', status: 503 } } }))
       .mockResolvedValueOnce(Response.json(dashboardFixture));
     render(<DashboardPage />);
+    fireEvent.click(await screen.findByRole('tab', { name: 'Progress' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Retry insights' }));
     expect(await screen.findByRole('heading', { name: 'Welcome back, Minh' })).toBeVisible();
+    fireEvent.click(screen.getByRole('tab', { name: 'Today' }));
     expect(screen.getByRole('link', { name: 'Continue saved session' })).toBeVisible();
     expect(vi.mocked(fetch).mock.calls[1]?.[0]).toBe('/api/v1/me/dashboard');
   });
