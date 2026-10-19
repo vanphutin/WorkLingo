@@ -20,6 +20,7 @@ export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{
 }>;
 
 export interface CreateMissionSessionInput {
+  readonly topicSelection?: 'chosen' | 'random';
   readonly productivePairPerRespondBlock?: boolean;
   readonly clientSessionId: string;
   readonly curriculumRevisionId?: string | null;
@@ -50,6 +51,7 @@ export class SessionCreationService {
         (existing.curriculumRevisionId ?? null) !== (input.curriculumRevisionId ?? null) ||
         existing.lessonVersionId !== input.mission.lessonVersion.id ||
         existing.missionId !== input.mission.id
+        || sessionPlanSchema.parse(existing.planSnapshot).topicSelection !== input.topicSelection
       ) {
         throw new ConflictException({
           code: 'IDEMPOTENCY_CONFLICT',
@@ -60,12 +62,13 @@ export class SessionCreationService {
       return toLearningSessionDto(existing);
     }
 
-    const plan = planFoundationSession({
+    const basePlan = planFoundationSession({
       durationMinutes: input.durationMinutes,
       mission: input.mission,
       reviewItems: input.reviewItems,
       productivePairPerRespondBlock: input.productivePairPerRespondBlock ?? false,
     });
+    const plan = input.topicSelection ? sessionPlanSchema.parse({ ...basePlan, topicSelection: input.topicSelection }) : basePlan;
     const created = await transaction.learningSession.create({
       data: {
         blocks: {
@@ -100,7 +103,7 @@ export function toLearningSessionDto(session: LearningSessionRecord): LearningSe
       id: block.id,
       order: block.order,
       status: block.status.toLowerCase() as 'available' | 'completed',
-      targetMinutes: 15,
+      targetMinutes: block.targetMinutes,
       type: block.type,
     })),
     clientSessionId: session.clientSessionId,

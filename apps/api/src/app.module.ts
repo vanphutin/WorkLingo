@@ -37,6 +37,7 @@ import { IeltsMockModule } from './ielts-mock/ielts-mock.module.js';
 import { IeltsFlowModule } from './ielts-flow/ielts-flow.module.js';
 import { IeltsStudyModule } from './ielts-study/ielts-study.module.js';
 import { AdminContentLifecycleModule } from './admin-content-lifecycle/admin-content-lifecycle.module.js';
+import { IntermediateTopicsModule } from './intermediate-topics/intermediate-topics.module.js';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { AdminContentLifecycleModule } from './admin-content-lifecycle/admin-con
     CurriculumModule,
     ContentAuthoringModule,
     AdminContentLifecycleModule,
+    IntermediateTopicsModule,
     JobsModule,
     LearningSessionsModule,
     MasteryModule,

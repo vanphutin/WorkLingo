@@ -22,6 +22,7 @@ import {
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
+import { approvedTopicForPublication } from '../../intermediate-topics/topic-source.js';
 
 @Injectable()
 export class ContentPublisherService {
@@ -281,6 +282,7 @@ export class ContentPublisherService {
         });
       }
 
+      const intermediateTopic = await approvedTopicForPublication(tx, lockedImport);
       const lockedSelectedArtifacts = await tx.audioArtifact.findMany({
         where: { id: { in: selectedIds } },
       });
@@ -408,6 +410,7 @@ export class ContentPublisherService {
 
       // Build UUID-backed snapshot conforming to lessonSnapshotSchema
       const snapshot = {
+        ...(intermediateTopic ? { intermediateTopic } : {}),
         ...(normalizedDraft.foundation ? { foundation: normalizedDraft.foundation } : {}),
         title: normalizedDraft.title,
         contentBlocks: normalizedDraft.contentBlocks.map((b) => ({

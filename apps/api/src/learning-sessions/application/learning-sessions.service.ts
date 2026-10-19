@@ -122,7 +122,7 @@ export class LearningSessionsService {
       lessonVersionId: mission.lessonVersion.id,
       supportedDurations: [...supportedSessionDurations],
       availableDurations: [...availableDurations],
-      defaultDurationMinutes: 60,
+      defaultDurationMinutes: mission.lessonVersion.intermediateTopic?.durationMinutes ?? 60,
     };
   }
 

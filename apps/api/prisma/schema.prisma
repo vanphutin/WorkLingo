@@ -761,11 +761,25 @@ model ContentImport {
   lesson            Lesson?         @relation(fields: [lessonId], references: [id], onDelete: SetNull)
   publishedVersion  LessonVersion?  @relation(fields: [lessonVersionId], references: [id], onDelete: SetNull)
   audioArtifacts    AudioArtifact[]
+  intermediateTopicReview IntermediateTopicReview?
   jobs              Job[]
   auditLogs         AuditLog[]
 
   @@index([lessonId])
   @@index([status])
+}
+
+model IntermediateTopicReview {
+  contentImportId String @id @db.Uuid
+  revision Int @default(1)
+  sourceHash String
+  draftRevision Int
+  proposal Json?
+  approvedPlan Json?
+  approvedById String? @db.Uuid
+  approvedAt DateTime?
+  updatedAt DateTime @updatedAt
+  contentImport ContentImport @relation(fields: [contentImportId], references: [id], onDelete: Cascade)
 }
 
 enum AudioArtifactStatus {

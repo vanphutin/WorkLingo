@@ -44,7 +44,7 @@ export interface LearningSessionDto {
     readonly id: string;
     readonly type: 'activate' | 'readDecode' | 'listenReason' | 'respond';
     readonly order: number;
-    readonly targetMinutes: 15;
+    readonly targetMinutes: number;
     readonly activityIds: readonly string[];
     readonly status: 'available' | 'completed';
   }>;
