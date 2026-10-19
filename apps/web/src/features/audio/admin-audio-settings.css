@@ -4,9 +4,10 @@
 
 .admin-audio-page {
   width: 100%;
-  max-width: 68rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding-block: 1rem 3rem;
+  box-sizing: border-box;
 }
 
 /* Breadcrumbs */
@@ -68,8 +69,10 @@
 }
 
 .admin-settings-tab svg {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  max-width: 1.15rem !important;
+  max-height: 1.15rem !important;
   stroke-width: 2;
   fill: none;
   stroke: currentColor;
@@ -101,14 +104,16 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-panel, 1rem);
   box-shadow: var(--shadow);
-  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Header */
 .admin-audio-header {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.65rem;
   border-bottom: 1px solid var(--border);
   padding-bottom: 1.5rem;
 }
@@ -126,12 +131,22 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  width: fit-content;
+  max-width: fit-content;
+}
+
+.admin-audio-header .eyebrow-badge svg {
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+  max-width: 0.875rem !important;
+  max-height: 0.875rem !important;
+  flex-shrink: 0;
 }
 
 .admin-audio-header h1 {
   margin: 0;
   color: var(--foreground);
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: clamp(1.5rem, 2.5vw, 1.95rem);
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.015em;
@@ -140,9 +155,9 @@
 .admin-audio-header p {
   margin: 0;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.55;
-  max-width: 54ch;
+  max-width: 58ch;
 }
 
 /* Section Containers */
@@ -177,11 +192,14 @@
 }
 
 .admin-section-title svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  max-width: 1.25rem !important;
+  max-height: 1.25rem !important;
   stroke: var(--primary);
   stroke-width: 2;
   fill: none;
+  flex-shrink: 0;
 }
 
 .admin-section-desc {
@@ -194,7 +212,7 @@
 /* Provider Cards Grid */
 .admin-provider-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.25rem;
   border: 0;
   padding: 0;
@@ -207,13 +225,14 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1.35rem;
+  padding: 1.25rem;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-control, 0.75rem);
   cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease, background-color 0.2s ease;
-  min-height: 10rem;
+  min-height: 9.5rem;
+  box-sizing: border-box;
 }
 
 .admin-provider-card:hover:not(.disabled) {
@@ -252,15 +271,16 @@
   display: flex;
   align-items: center;
   gap: 0.85rem;
+  min-width: 0;
 }
 
 .admin-provider-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.6rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
   background: var(--surface-soft);
   border: 1px solid var(--border);
   color: var(--primary);
@@ -273,21 +293,25 @@
 }
 
 .admin-provider-icon svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.35rem !important;
+  height: 1.35rem !important;
+  max-width: 1.35rem !important;
+  max-height: 1.35rem !important;
   stroke: currentColor;
   stroke-width: 2;
   fill: none;
+  flex-shrink: 0;
 }
 
 .admin-provider-name-box {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.25rem;
+  min-width: 0;
 }
 
 .admin-provider-name {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--foreground);
   line-height: 1.3;
@@ -311,13 +335,22 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
+  padding: 0.2rem 0.55rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  width: fit-content;
+}
+
+.admin-status-badge svg {
+  width: 0.8rem !important;
+  height: 0.8rem !important;
+  max-width: 0.8rem !important;
+  max-height: 0.8rem !important;
+  flex-shrink: 0;
 }
 
 .admin-status-badge.badge-active {
@@ -346,7 +379,7 @@
 /* Provider Card Description */
 .admin-provider-desc {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--muted);
   line-height: 1.5;
   flex-grow: 1;
@@ -366,7 +399,7 @@
   align-items: center;
   padding: 0.15rem 0.5rem;
   border-radius: 0.35rem;
-  font-size: 0.75rem;
+  font-size: 0.725rem;
   font-weight: 600;
   background: var(--surface-soft);
   color: var(--foreground);
@@ -393,8 +426,8 @@
 }
 
 .admin-unconfigured-note svg {
-  width: 1rem;
-  height: 1rem;
+  width: 1rem !important;
+  height: 1rem !important;
   stroke: var(--muted);
   stroke-width: 2;
   fill: none;
@@ -407,7 +440,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding: 1.5rem;
+  padding: 1.35rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-control, 0.75rem);
   background: var(--surface-soft);
@@ -456,8 +489,8 @@
   position: absolute;
   right: 1rem;
   pointer-events: none;
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.15rem !important;
+  height: 1.15rem !important;
   stroke: var(--muted);
   stroke-width: 2;
   fill: none;
@@ -469,6 +502,7 @@
   gap: 0.5rem;
   font-size: 0.8rem;
   color: var(--muted);
+  flex-wrap: wrap;
 }
 
 .admin-voice-meta-badge code {
@@ -487,9 +521,9 @@
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.15rem;
   border-radius: 0.6rem;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
@@ -501,8 +535,10 @@
 }
 
 .admin-callout-warning svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  max-width: 1.25rem !important;
+  max-height: 1.25rem !important;
   stroke: var(--warning);
   stroke-width: 2;
   fill: none;
@@ -518,8 +554,10 @@
 }
 
 .admin-callout-success svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  max-width: 1.25rem !important;
+  max-height: 1.25rem !important;
   stroke: var(--success);
   stroke-width: 2;
   fill: none;
@@ -540,16 +578,169 @@
 
 .admin-callout-desc {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--foreground);
+}
+
+/* Device Voice Registry Card */
+.admin-device-registry-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.35rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control, 0.75rem);
+}
+
+.admin-rotation-toggle-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.admin-rotation-toggle-card:hover {
+  border-color: var(--control-border);
+}
+
+.admin-rotation-toggle-card input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-rotation-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.admin-rotation-toggle-text strong {
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+.admin-rotation-toggle-text small {
+  font-size: 0.825rem;
+  color: var(--muted);
+}
+
+/* Scrollable Voice Grid */
+.admin-voice-registry-scroll {
+  max-height: 20rem;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  padding: 0.5rem;
+}
+
+.admin-voice-registry-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-voice-registry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 0.45rem;
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.admin-voice-registry-item:hover {
+  border-color: var(--control-border);
+  background: var(--surface-soft);
+}
+
+.admin-voice-registry-item.active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.admin-voice-registry-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-voice-registry-item input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-voice-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.admin-voice-item-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-voice-item-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.admin-voice-registry-item.active .admin-voice-item-badge {
+  background: var(--surface);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.admin-voice-item-desc {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Security Notice */
 .admin-security-card {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  padding: 1.15rem 1.35rem;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
   background: var(--surface-soft);
   border: 1px solid var(--border);
   border-radius: var(--radius-control, 0.75rem);
@@ -559,9 +750,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.45rem;
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--primary);
@@ -569,17 +760,20 @@
 }
 
 .admin-security-icon svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  max-width: 1.15rem !important;
+  max-height: 1.15rem !important;
   stroke: currentColor;
   stroke-width: 2;
   fill: none;
+  flex-shrink: 0;
 }
 
 .admin-security-body {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
 .admin-security-title {
@@ -642,6 +836,14 @@
   font-size: 0.875rem;
   font-weight: 700;
   border: 1px solid var(--success);
+}
+
+.admin-save-success svg {
+  width: 0.85rem !important;
+  height: 0.85rem !important;
+  max-width: 0.85rem !important;
+  max-height: 0.85rem !important;
+  flex-shrink: 0;
 }
 
 .admin-save-error {
@@ -751,160 +953,6 @@
   cursor: pointer;
 }
 
-/* Device Voice Registry Card */
-.admin-device-registry-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  background: var(--surface-soft);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-control, 0.75rem);
-}
-
-.admin-device-registry-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.admin-device-registry-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--foreground);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.admin-device-registry-scope {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.admin-rotation-toggle-card {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.9rem 1.15rem;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
-}
-
-.admin-rotation-toggle-card:hover {
-  border-color: var(--control-border);
-}
-
-.admin-rotation-toggle-card input[type="checkbox"] {
-  width: 1.25rem;
-  height: 1.25rem;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-.admin-rotation-toggle-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.admin-rotation-toggle-text strong {
-  font-size: 0.95rem;
-  color: var(--foreground);
-}
-
-.admin-rotation-toggle-text small {
-  font-size: 0.825rem;
-  color: var(--muted);
-}
-
-/* Scrollable Voice Grid */
-.admin-voice-registry-scroll {
-  max-height: 22rem;
-  overflow-y: auto;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--surface);
-  padding: 0.75rem;
-}
-
-.admin-voice-registry-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 0.65rem;
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
-.admin-voice-registry-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem 0.85rem;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--surface-soft);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.admin-voice-registry-item:hover {
-  border-color: var(--control-border);
-  background: var(--surface);
-}
-
-.admin-voice-registry-item.active {
-  border-color: var(--primary);
-  background: var(--primary-soft);
-}
-
-.admin-voice-registry-item input[type="checkbox"] {
-  width: 1.15rem;
-  height: 1.15rem;
-  margin-top: 0.15rem;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-.admin-voice-item-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.admin-voice-item-title {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--foreground);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.admin-voice-item-badge {
-  font-size: 0.7rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.25rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  font-family: ui-monospace, monospace;
-}
-
-.admin-voice-item-desc {
-  font-size: 0.775rem;
-  color: var(--muted);
-  word-break: break-all;
-}
-
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .admin-audio-page {
@@ -912,7 +960,7 @@
   }
   
   .admin-audio-settings-card {
-    padding: 1.25rem;
+    padding: 1.15rem;
     gap: 1.5rem;
   }
 

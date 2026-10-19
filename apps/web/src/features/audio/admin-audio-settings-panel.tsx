@@ -10,44 +10,99 @@ import { audioMessages } from '../../i18n/messages/audio';
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import './admin-audio-settings.css';
 
-/* Icons */
-function AudioWaveIcon() {
+/* Icons with strict sizing */
+function AudioWaveIcon({ size = 16 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M12 2v20M17 5v14M22 9v6M7 5v14M2 9v6" />
     </svg>
   );
 }
 
-function SparklesIcon() {
+function SparklesIcon({ size = 16 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
     </svg>
   );
 }
 
-function CloudSpeechIcon() {
+function CloudSpeechIcon({ size = 20 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
       <path d="M9 13v3M12 11v7M15 13v3" />
     </svg>
   );
 }
 
-function FlaskIcon() {
+function FlaskIcon({ size = 20 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M10 2v7.31L4.65 17.5A2 2 0 0 0 6.38 20.5h11.24a2 2 0 0 0 1.73-3L14 9.31V2" />
       <path d="M8.5 2h7M7 16h10" />
     </svg>
   );
 }
 
-function SlidersIcon() {
+function SlidersIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <line x1="4" x2="4" y1="21" y2="14" />
       <line x1="4" x2="4" y1="10" y2="3" />
       <line x1="12" x2="12" y1="21" y2="12" />
@@ -61,26 +116,60 @@ function SlidersIcon() {
   );
 }
 
-function ShieldCheckIcon() {
+function ShieldCheckIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <path d="m9 12 2 2 4-4" />
     </svg>
   );
 }
 
-function ChevronDownIcon() {
+function ChevronDownIcon({ size = 16 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" className="admin-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      className="admin-select-chevron"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
 
-function AlertTriangleIcon() {
+function AlertTriangleIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
       <line x1="12" y1="9" x2="12" y2="13" />
       <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -88,9 +177,20 @@ function AlertTriangleIcon() {
   );
 }
 
-function CheckCircleIcon() {
+function CheckCircleIcon({ size = 13 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
       <polyline points="22 4 12 14.01 9 11.01" />
     </svg>
