@@ -1,0 +1,23 @@
+.panel { min-width: 0; overflow-wrap: anywhere; }
+.heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem .5rem; }
+.heading h2 { margin: 0; font-size: 1.05rem; line-height: 1.45; }
+.heading :global(.feedback-score) { flex-shrink: 0; white-space: nowrap; font-size: 1.6rem; line-height: 1.35; }
+.status { display: flex; align-items: center; gap: .6rem; padding: .25rem 1.25rem 1rem; font-size: .9rem; }
+.empty { padding: .25rem 1.25rem 1.25rem; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+.steps { list-style: none; margin: 0 1.25rem; padding: 0; border-top: 1px solid var(--border); }
+.step { padding: .7rem 0; border-bottom: 1px solid var(--border); }
+.stepLine { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .2rem .5rem; font-size: max(.85rem, 12px); line-height: 1.5; }
+.stepLine span { color: var(--muted); font-size: max(.8rem, 12px); }
+.step[data-status="processing"] strong, .step[data-status="completed"] strong { color: var(--primary); }
+.step[data-status="failed"] strong, .step[data-status="failed"] span { color: var(--danger); }
+.model { display: block; margin-top: .15rem; color: var(--muted); font-size: max(.75rem, 12px); line-height: 1.5; }
+.summary { margin: 0; font-size: 1rem; font-weight: 500; line-height: 1.65; }
+.details { margin-top: 1rem; }
+.details > summary { display: flex; align-items: center; min-height: 44px; cursor: pointer; color: var(--primary); font-weight: 600; font-size: .9rem; }
+.details > summary::after { content: '+'; margin-left: auto; }
+.details[open] > summary::after { content: '−'; }
+.details > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: .25rem; }
+.details :global(.feedback-columns) { grid-template-columns: minmax(0, 1fr); font-size: .9rem; line-height: 1.65; }
+.details :global(.feedback-dimensions) { font-size: .85rem; }
+.details blockquote { font-size: .9rem; line-height: 1.65; }
+@media (prefers-reduced-motion: reduce) { .panel :global(.feedback-pulse) { animation: none; } }

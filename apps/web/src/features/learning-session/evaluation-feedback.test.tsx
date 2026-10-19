@@ -6,12 +6,30 @@ import { describe, expect, it, vi } from 'vitest';
 import { EvaluationFeedback } from './evaluation-feedback';
 
 describe('EvaluationFeedback', () => {
+  it('shows the current processing step and only the model recorded for that step', () => {
+    render(<EvaluationFeedback evaluation={{ attemptId: '00000000-0000-4000-8000-000000000001', status: 'processing', transcript: 'Hello', scores: null, score: null,
+      feedback: null, retryable: false, recording: null, completedAt: null,
+      processingSteps: [
+        { key: 'submission', status: 'completed', providerName: null, model: null },
+        { key: 'transcription', status: 'completed', providerName: 'Microsoft Speech', model: null },
+        { key: 'evaluation', status: 'processing', providerName: null, model: null },
+      ],
+    }} />);
+    const current = screen.getByText('Scoring and feedback').closest('li');
+    expect(current).toHaveAttribute('aria-current', 'step');
+    expect(screen.getByText('Microsoft Speech')).toBeInTheDocument();
+    expect(screen.getByText('Model confirmed after processing')).toBeInTheDocument();
+  });
   it('renders structured Teacher AI feedback instead of a single opaque message', () => {
     render(
       <EvaluationFeedback
         evaluation={{
           attemptId: '00000000-0000-4000-8000-000000000001',
           status: 'evaluated',
+          processingSteps: [
+            { key: 'submission', status: 'completed', providerName: null, model: null },
+            { key: 'evaluation', status: 'completed', providerName: 'discovery', model: 'qwen3.8-27b' },
+          ],
           transcript: null,
           score: 0.82,
           scores: {
@@ -39,6 +57,10 @@ describe('EvaluationFeedback', () => {
     expect(screen.getByText('Nêu đúng hành động cần làm')).toBeInTheDocument();
     expect(screen.getByText('Thêm thời hạn cụ thể')).toBeInTheDocument();
     expect(screen.getByText('Could you send the report by 3 p.m.?')).toBeInTheDocument();
+    expect(screen.getByText('qwen3.8-27b')).toBeVisible();
+    expect(screen.getByText('Thêm thời hạn cụ thể')).not.toBeVisible();
+    fireEvent.click(screen.getByText('View detailed feedback'));
+    expect(screen.getByText('Thêm thời hạn cụ thể')).toBeVisible();
   });
 
   it('offers an explicit retry only for retryable failures', () => {

@@ -441,6 +441,21 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.getByText('Saved')).toBeInTheDocument();
   });
 
+  it('shows approved topic stage minutes instead of assuming every block lasts fifteen minutes', () => {
+    const original = createMockSession(1);
+    const session: LearningSessionDto = { ...original, plan: { ...original.plan, kind: 'topic', blocks: original.plan.blocks.map((block, index) => ({ ...block, targetMinutes: [5, 20, 15, 20][index]! })) } };
+    render(<SessionShell session={session} currentActivity={mockReadingActivity} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()} />);
+    expect(screen.getByText('60 minutes total · Current stage: 20 minutes')).toBeInTheDocument();
+    expect(screen.queryByText(/15 minutes per block/)).not.toBeInTheDocument();
+  });
+
+  it('keeps the AI feedback panel in the right sidebar rather than inside the activity area', () => {
+    render(<SessionShell session={createMockSession(1)} currentActivity={mockReadingActivity} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()} />);
+    const sidebar = screen.getByRole('complementary', { name: 'Session information and AI feedback' });
+    expect(within(sidebar).getByRole('region', { name: 'Teacher AI feedback' })).toBeInTheDocument();
+    expect(within(screen.getByRole('main')).queryByRole('region', { name: 'Teacher AI feedback' })).not.toBeInTheDocument();
+  });
+
   it('shows evaluation feedback when a comprehension answer needs another attempt', async () => {
     const session = createMockSession(1);
     const onSubmitAttempt = vi.fn().mockResolvedValue({

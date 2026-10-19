@@ -338,17 +338,6 @@ export function SessionShell({
             </div>
           )}
 
-          <EvaluationFeedback
-            evaluation={asyncEvaluation.evaluation}
-            error={asyncEvaluation.error}
-            isRetrying={asyncEvaluation.isRetrying}
-            onRetry={() => void asyncEvaluation.retry()}
-            onDeleteRecording={(recordingId) => void handleDeleteRecording(recordingId)}
-            isDeletingRecording={deletingRecordingId !== null}
-            recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
-            deletionError={recordingDeleteError ? localizedError(recordingDeleteError.cause, locale) : null}
-          />
-
           {isCompleted ? (
             <section className="session-completed-card" aria-label={t('sessionCompletedLabel')}>
               <h2>{isPlacement ? t('placementComplete') : t('sessionComplete')}</h2>
@@ -401,8 +390,9 @@ export function SessionShell({
           )}
         </main>
 
-        {/* Collapsible Support Panel */}
-        {!isCompleted && currentActivity && <aside
+        {((!isCompleted && currentActivity) || evaluationAttemptId) ? <aside className="session-side-column" aria-label={t('supportAndFeedback')}>
+        {/* Information and feedback collapse independently. */}
+        {!isCompleted && currentActivity && <section
           className={`session-support-panel ${isPanelCollapsed ? 'collapsed' : ''}`}
           aria-label={t('supportInfo')}
         >
@@ -424,7 +414,9 @@ export function SessionShell({
             <div className="panel-content" id="session-support-content">
               <div className="info-block">
                 <h3>{t('duration')}</h3>
-                <p>{t('totalDuration', { minutes: session.durationMinutes })}</p>
+                <p>{session.plan.kind === 'topic'
+                  ? t('topicDuration', { minutes: session.durationMinutes, stageMinutes: session.plan.blocks[resolvedActiveBlockIndex]?.targetMinutes ?? 0 })
+                  : t('totalDuration', { minutes: session.durationMinutes })}</p>
               </div>
 
               <div className="info-block">
@@ -451,7 +443,20 @@ export function SessionShell({
               )}
             </div>
           )}
-        </aside>}
+        </section>}
+        <EvaluationFeedback
+          showEmpty={!isCompleted}
+          loading={evaluationAttemptId !== null && !asyncEvaluation.evaluation && !asyncEvaluation.error}
+          evaluation={asyncEvaluation.evaluation}
+          error={asyncEvaluation.error}
+          isRetrying={asyncEvaluation.isRetrying}
+          onRetry={() => void asyncEvaluation.retry()}
+          onDeleteRecording={(recordingId) => void handleDeleteRecording(recordingId)}
+          isDeletingRecording={deletingRecordingId !== null}
+          recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
+          deletionError={recordingDeleteError ? localizedError(recordingDeleteError.cause, locale) : null}
+        />
+        </aside> : null}
       </div>
     </div>
   );
