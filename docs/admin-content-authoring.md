@@ -1,6 +1,6 @@
 # Quản lý nội dung Trung cấp và IELTS
 
-Ngày cập nhật: 18/10/2026. Bản triển khai nằm trên nhánh `codex/audio-dashboard-v2`.
+Ngày cập nhật: 19/10/2026. Bản triển khai nằm trên nhánh `codex/audio-dashboard-v2`.
 
 ## Đơn vị quản lý và định dạng
 
@@ -8,7 +8,8 @@ Các công cụ có cấu trúc khác nhau. Mỗi công cụ giữ định dạn
 
 | Công cụ | Đơn vị quản lý | Cách nhập và thao tác |
 | --- | --- | --- |
-| Chuyên mục Trung cấp | Một bài trong Ngữ pháp, Phát âm, Từ vựng, Đọc, Nghe, Nói hoặc Viết | Mỗi chuyên mục có nút thêm, danh sách và biểu mẫu tạo/sửa riêng; quản lý xóa/lưu trữ từng bài; mở công cụ nâng cao của chính bài đó để kiểm tra, làm âm thanh và xuất bản |
+| Topic Trung cấp | Một bài đọc gốc và các phần học liên kết | Soạn từ vựng/ngữ pháp/phát âm, đọc/nghe hiểu, nói/viết trong cùng bài; AI đề xuất thời lượng, admin sửa/duyệt; kiểm tra, làm âm thanh và xuất bản riêng |
+| Chuyên mục Trung cấp trước đây | Bài đã soạn theo từng chuyên mục | Giữ trong nhóm công cụ cũ để xem/sửa/xóa/lưu trữ; không tự chuyển đổi hoặc đoán topic |
 | Nội dung bài học | Một bản nhập bài | Văn bản WorkLingoLesson/1.0 hoặc /1.1; tạo từ mẫu, mở/sửa nháp, kiểm tra, âm thanh, xuất bản; xóa/lưu trữ riêng từng hàng |
 | Chủ đề IELTS | Chủ đề, các gói học liệu và ngữ cảnh | Trường nhập tên, mô tả, mã gói, độ khó, phiên bản giáo trình đã xuất bản, mã cụm từ và ngữ cảnh; thêm/sửa/xóa nháp hoặc lưu trữ chủ đề |
 | Định hướng IELTS | Slide trong một bản giới thiệu | Thêm/sửa/bỏ từng slide trong bản nháp; lưu, kiểm tra và xuất bản chung một phiên bản |
@@ -23,13 +24,15 @@ Nền tảng/Mất gốc và TOEIC được đánh dấu **Phát triển sau** t
 
 ## Quy trình soạn bài
 
-Với Trung cấp, mở `/admin/programs/intermediate`, chọn **Thêm bài** ở chuyên mục cần soạn. Ngữ pháp ưu tiên cấu trúc và ví dụ; Phát âm ưu tiên phiên âm; Từ vựng ưu tiên từ/cụm từ và nghĩa. Đọc có văn bản cùng câu hỏi, lựa chọn, đáp án và dòng dẫn chứng. Nghe có hội thoại riêng, tên nhân vật theo mẫu `An (nam): ...`, `Nhi (nữ): ...`, cùng câu hỏi nghe. Nói và Viết có yêu cầu và câu trả lời mẫu riêng. Mục mở rộng cho phép sửa các hoạt động hỗ trợ của bài bốn kỹ năng.
+Với Trung cấp, mở `/admin/programs/intermediate/topics`, chọn **Thêm bài học theo chủ đề**. Mỗi topic có một bài đọc gốc. Từ vựng, ngữ pháp, phát âm, câu hỏi đọc/nghe và nhiệm vụ nói/viết đều phục vụ cùng nội dung. Âm thanh dùng chính bài đọc đó; nhãn nhân vật `An (nam): ...`, `Nhi (nữ): ...` được hỗ trợ khi bài là hội thoại. Admin soạn các phần học; AI trong phiên bản này phân tích bố cục để đề xuất thời lượng/phân bổ, không tự tạo và duyệt toàn bộ bài.
 
-Lưu tạo bản nháp trong đúng chuyên mục. Công cụ nâng cao của cùng ID tiếp tục phụ trách kiểm tra, âm thanh và xuất bản. Bài đã xuất bản hoặc lưu trữ chỉ xem trong biểu mẫu; cần quản lý phiên bản bằng công cụ hiện có. Nếu lưu bị xung đột revision, nội dung đang nhập được giữ lại và cần đối chiếu trong công cụ nâng cao trước khi tiếp tục.
+Lưu bản nháp rồi chọn **Nhờ AI đề xuất**, hoặc tự chọn khung học khi không dùng AI. AI chỉ đưa ra đề xuất có lý do; chế độ mô phỏng được ghi rõ. Admin được sửa thời lượng 45/60/90/120/150 phút và số phút của bốn chặng trước khi bấm **Phê duyệt khung học này**. Tổng phân bổ phải đúng thời lượng. Đổi nguồn sau khi duyệt làm phê duyệt cũ hết hiệu lực; yêu cầu AI trả về muộn hoặc revision cũ không được ghi đè bản mới.
 
-Phân loại soạn bài được lưu rõ trong `[LESSON]` với `program: intermediate`, `category` và `authoring_template: intermediate-form-v1`. Đây là phân loại cho quản trị; việc thêm bài vào lộ trình học viên vẫn theo cơ chế giáo trình hiện có. Bài cũ không có phân loại và nội dung tùy biến tiếp tục mở trong thư viện/công cụ nâng cao; hệ thống không tự đoán chuyên mục hoặc chuyển đổi làm mất dữ liệu.
+Công cụ nâng cao của cùng ID tiếp tục phụ trách kiểm tra, âm thanh và xuất bản. Backend chặn xuất bản topic chưa có phê duyệt phù hợp nguồn hiện tại. Sau đó gắn bài đã xuất bản vào nhiệm vụ của đúng lộ trình/trình độ và xuất bản giáo trình theo công cụ hiện có. Việc lưu hoặc duyệt thời lượng không tự xuất bản, không tự thêm bài vào lộ trình.
 
-Các chuyên mục phát triển tiếp theo cần cung cấp đường dẫn thêm bài, danh sách riêng và biểu mẫu phù hợp với cấu trúc nội dung của mình theo cùng cách này.
+Học viên chọn topic hoặc để hệ thống chọn ngẫu nhiên trong các topic đã xuất bản và đủ điều kiện của chương trình/trình độ hiện tại. Mỗi phiên giữ đúng một topic, toàn bộ hoạt động và khung thời lượng admin đã duyệt. Nói/viết cùng thuộc chặng phản hồi; bốn chặng có thời lượng linh hoạt và không bỏ bớt hoạt động để vừa khung 15 phút của bài cũ. Phiên đang học giữ snapshot đã đóng băng. Các bài cũ vẫn có thể bắt đầu khi chưa có topic mới hợp lệ.
+
+Topic dùng `[LESSON] program: intermediate`, `category: reading`, `authoring_template: intermediate-topic-v1`. Bài theo chuyên mục cũ dùng `intermediate-form-v1`; các đường dẫn cũ vẫn hoạt động. Những phần phát triển tiếp theo cần giữ quan hệ từ các phần học về bài gốc của topic.
 
 1. Chọn đúng công cụ và tạo hoặc mở một bài cụ thể.
 2. Sửa nội dung, lưu bản nháp, kiểm tra rồi xuất bản khi đủ điều kiện.
@@ -48,4 +51,4 @@ Endpoint bổ sung: `POST /api/v1/admin/content-lifecycle/:kind/:id/remove`, v�
 
 ## Phạm vi kiểm chứng
 
-Xem báo cáo `superpowers/reports/2026-10-18-admin-content-crud-verification.md` và phần bổ sung `superpowers/reports/2026-10-18-intermediate-category-authoring-verification.md` để biết các lệnh kiểm tra, kết quả và giới hạn. Không có migration mới hoặc thay đổi dependency trong tính năng này.
+Xem báo cáo `superpowers/reports/2026-10-18-admin-content-crud-verification.md`, `superpowers/reports/2026-10-18-intermediate-category-authoring-verification.md` và `superpowers/reports/2026-10-19-intermediate-topic-verification.md`. Increment topic thêm bảng review bằng migration bổ sung; không đổi dependency. Các increment cũ không có migration mới.
