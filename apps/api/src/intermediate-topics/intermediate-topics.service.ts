@@ -19,9 +19,19 @@ export class IntermediateTopicsService {
     @Inject(SessionCreationService) private readonly sessions: SessionCreationService) {}
 
   async list(learnerId: string) {
-    return this.database.$transaction(async tx => (await this.available(learnerId, tx)).map(({ mission }) =>
-      learnerTopicSchema.parse({ id: mission.id, title: mission.title, lessonVersionId: mission.lessonVersion.id,
-        durationMinutes: mission.lessonVersion.intermediateTopic!.durationMinutes })), { isolationLevel: 'RepeatableRead' });
+    return this.database.$transaction(async tx => {
+      const available = await this.available(learnerId, tx);
+      if (!available.length) return [];
+      const versions = await tx.lessonVersion.findMany({ where: { id: { in: available.map(({ mission }) => mission.lessonVersion.id) } },
+        select: { id: true, lesson: { select: { topicGroup: { select: { id: true, name: true, description: true } } } } } });
+      const groups = new Map(versions.map(version => [version.id, version.lesson.topicGroup]));
+      return available.map(({ mission }) => {
+        const group = groups.get(mission.lessonVersion.id);
+        return learnerTopicSchema.parse({ id: mission.id, title: mission.title, lessonVersionId: mission.lessonVersion.id,
+          durationMinutes: mission.lessonVersion.intermediateTopic!.durationMinutes,
+          ...(group ? { group: { id: group.id, name: group.name, description: group.description } } : {}) });
+      });
+    }, { isolationLevel: 'RepeatableRead' });
   }
 
   async create(learnerId: string, input: CreateTopicSession) {

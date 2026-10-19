@@ -255,6 +255,10 @@ model Lesson {
   missions                  MissionLesson[]
   versions                  LessonVersion[]
   contentImports            ContentImport[]
+  topicGroupId              String?         @db.Uuid
+  topicGroup                IntermediateTopicGroup? @relation(fields: [topicGroupId], references: [id], onDelete: SetNull)
+
+  @@index([topicGroupId])
 }
 
 model MissionLesson {
@@ -747,6 +751,9 @@ model ContentImport {
   sourceHash        String
   status            ContentStatus   @default(DRAFT)
   draftRevision     Int             @default(1)
+  topicGroupId      String?         @db.Uuid
+  topicGroupRevision Int           @default(0)
+  topicGroup        IntermediateTopicGroup? @relation(fields: [topicGroupId], references: [id], onDelete: SetNull)
   parserVersion     String          @default("1.0.0")
   parsedAst         Json?
   normalizedPreview Json?
@@ -766,7 +773,20 @@ model ContentImport {
   auditLogs         AuditLog[]
 
   @@index([lessonId])
+  @@index([topicGroupId])
   @@index([status])
+}
+
+model IntermediateTopicGroup {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  normalizedName String          @unique
+  description    String          @default("")
+  revision       Int             @default(1)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  lessons        Lesson[]
+  contentImports ContentImport[]
 }
 
 model IntermediateTopicReview {

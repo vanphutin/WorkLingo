@@ -20,9 +20,10 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
-import { approvedTopicForPublication } from '../../intermediate-topics/topic-source.js';
+import { approvedTopicForPublication, isTopicSource } from '../../intermediate-topics/topic-source.js';
 
 @Injectable()
 export class ContentPublisherService {
@@ -213,6 +214,7 @@ export class ContentPublisherService {
 
     // 4. Execute publication transaction with PostgreSQL advisory lock
     const published = await this.database.$transaction(async (tx) => {
+      if (isTopicSource(contentImport.rawSource)) await lockTopicGroups(tx);
       // Advisory transaction lock scoped to lesson slug
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${normalizedDraft.slug}))`;
 
@@ -313,6 +315,10 @@ export class ContentPublisherService {
         update: {},
         create: { slug: normalizedDraft.slug },
       });
+      // Revision zero means this new import has never been assigned or cleared.
+      // Preserve the logical lesson's group until an administrator makes an
+      // explicit draft assignment; null with a positive revision means clear.
+      const topicGroupId = lockedImport.topicGroupRevision > 0 ? lockedImport.topicGroupId : lesson.topicGroupId;
 
       // Allocate next version number
       const maxVer = await tx.lessonVersion.aggregate({
@@ -563,7 +569,8 @@ export class ContentPublisherService {
       // Update Lesson currentPublishedVersionId
       await tx.lesson.update({
         where: { id: lesson.id },
-        data: { currentPublishedVersionId: newVersion.id },
+        data: { currentPublishedVersionId: newVersion.id,
+          ...(intermediateTopic ? { topicGroupId } : {}) },
       });
 
       // Update ContentImport status to PUBLISHED
@@ -576,6 +583,11 @@ export class ContentPublisherService {
           updatedById: actorId,
         },
       });
+
+      if (intermediateTopic) {
+        await tx.contentImport.updateMany({ where: { lessonId: lesson.id },
+          data: { topicGroupId, topicGroupRevision: { increment: 1 } } });
+      }
 
       // Record AuditLog
       await tx.auditLog.create({
@@ -621,6 +633,13 @@ export class ContentPublisherService {
       });
 
       return responseBody;
+    }).catch((error: unknown) => {
+      const code = error && typeof error === 'object' && 'code' in error ? error.code : undefined;
+      if (code === 'P2003' || code === 'P2025' || code === 'P2034') {
+        throw new ConflictException({ code: 'CONTENT_PUBLICATION_CONFLICT',
+          message: 'Content or topic group changed concurrently. Refresh before publishing again.', statusCode: 409 });
+      }
+      throw error;
     });
     await this.pilotMetrics?.recordBestEffort({
       dimensions: { outcome: 'completed' },

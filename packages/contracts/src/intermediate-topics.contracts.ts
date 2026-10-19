@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { sessionDurationSchema, type SessionDuration } from './learning-session.contracts.ts';
+import { learnerTopicGroupSchema } from './intermediate-topic-groups.contracts.ts';
 
 export const topicBlockTypes = ['activate', 'readDecode', 'listenReason', 'respond'] as const;
 export const topicAllocationSchema = z.object({ type: z.enum(topicBlockTypes), targetMinutes: z.number().int().positive().max(150) }).strict();
@@ -25,7 +26,7 @@ export const topicReviewSchema = z.object({ importId: z.uuid(), revision: z.numb
 export type TopicReview = z.infer<typeof topicReviewSchema>;
 export const approvedTopicSnapshotSchema = topicPlanSchema.extend({ sourceContentRef: z.literal('workplace-reading'), approvedById: z.uuid(), approvedAt: z.iso.datetime() });
 export type ApprovedTopicSnapshot = z.infer<typeof approvedTopicSnapshotSchema>;
-export const learnerTopicSchema = z.object({ id: z.uuid(), title: z.string().min(1), lessonVersionId: z.uuid(), durationMinutes: sessionDurationSchema }).strict();
+export const learnerTopicSchema = z.object({ id: z.uuid(), title: z.string().min(1), lessonVersionId: z.uuid(), durationMinutes: sessionDurationSchema, group: learnerTopicGroupSchema.optional() }).strict();
 export type LearnerTopic = z.infer<typeof learnerTopicSchema>;
 export const createTopicSessionSchema = z.object({ clientSessionId: z.uuid(), topicId: z.uuid().optional() }).strict();
 export type CreateTopicSession = z.infer<typeof createTopicSessionSchema>;

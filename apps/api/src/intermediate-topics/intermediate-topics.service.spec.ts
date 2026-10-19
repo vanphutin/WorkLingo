@@ -12,7 +12,7 @@ function setup() {
   const chosen = topicMission(), unavailable = topicMission(), legacy = topicMission();
   delete legacy.lessonVersion.intermediateTopic;
   let existing: unknown = null;
-  const tx = { $queryRaw: vi.fn(async () => []), learningSession: {
+  const tx = { $queryRaw: vi.fn(async () => []), lessonVersion: { findMany: vi.fn(async () => [] as Array<{ id: string; lesson: { topicGroup: object | null } }>) }, learningSession: {
     findUnique: vi.fn(async () => existing),
     create: vi.fn(async ({ data }) => {
       existing = { ...data, id: randomUUID(), attempts: [], status: 'PLANNED', currentCheckpoint: 0,
@@ -38,6 +38,13 @@ describe('Intermediate topic sessions', () => {
   it('returns no topics outside Intermediate', async () => {
     const s = setup(); s.context.resolve.mockResolvedValue({ programSlug: 'ielts', programId: randomUUID(), levelCode: s.chosen.levelCode });
     expect(await s.service.list(randomUUID())).toEqual([]);
+  });
+  it('appends public group metadata from the stable lesson only after eligibility filtering', async () => {
+    const s = setup(); const group = { id: randomUUID(), name: 'Work', description: 'Work life' };
+    s.tx.lessonVersion.findMany.mockResolvedValue([{ id: s.chosen.lessonVersion.id, lesson: { topicGroup: { ...group, revision: 5, approvedById: randomUUID() } } }]);
+    const result = await s.service.list(randomUUID());
+    expect(result).toEqual([{ id: s.chosen.id, title: 'Topic', lessonVersionId: s.chosen.lessonVersion.id, durationMinutes: 90, group }]);
+    expect(s.tx.lessonVersion.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { id: { in: [s.chosen.lessonVersion.id] } } }));
   });
   it('rejects explicit unavailable mission IDs', async () => {
     const s = setup(); await expect(s.service.create(randomUUID(), { clientSessionId: randomUUID(), topicId: s.unavailable.id })).rejects.toMatchObject({ status: 404 });

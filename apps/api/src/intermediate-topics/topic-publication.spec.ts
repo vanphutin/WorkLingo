@@ -11,17 +11,17 @@ function setup() {
   const sourceHash = createHash('sha256').update(topicSource).digest('hex');
   const script = parseLessonSource(topicSource).document.audioScripts[0]!;
   const artifact = { id: audioId, contentImportId: importId, audioScriptSlug: script.slug, status: 'READY', scriptHash: createHash('sha256').update(script.script).digest('hex') };
-  const source = { id: importId, sourceHash, rawSource: topicSource, draftRevision: 1, status: 'VALIDATED', validationHash: sourceHash, audioArtifacts: [artifact] };
+  const source = { id: importId, sourceHash, rawSource: topicSource, draftRevision: 1, status: 'VALIDATED', validationHash: sourceHash, audioArtifacts: [artifact], topicGroupId: null as string | null, topicGroupRevision: 0 };
   let review: Record<string, unknown> | null = { sourceHash, draftRevision: 1, revision: 1, approvedPlan: defaultTopicPlan(90), approvedById: approver, approvedAt: new Date('2026-10-19T00:00:00Z') };
   let snapshot: Record<string, unknown> = {};
   const bankId = randomUUID();
   const tx = {
-    $executeRaw: vi.fn(async () => 1), $queryRaw: vi.fn(async () => []),
+    $executeRaw: vi.fn(async (..._args: unknown[]) => 1), $queryRaw: vi.fn(async () => []),
     mutationReceipt: { findUnique: vi.fn(async () => null), create: vi.fn() },
-    contentImport: { findUnique: vi.fn(async () => source), update: vi.fn() },
+    contentImport: { findUnique: vi.fn(async () => source), update: vi.fn(), updateMany: vi.fn() },
     intermediateTopicReview: { findUnique: vi.fn(async () => review) },
     audioArtifact: { findMany: vi.fn(async () => [artifact]) },
-    lesson: { upsert: vi.fn(async () => ({ id: randomUUID(), currentPublishedVersionId: null })), update: vi.fn() },
+    lesson: { upsert: vi.fn(async () => ({ id: randomUUID(), currentPublishedVersionId: null, topicGroupId: null as string | null })), update: vi.fn() },
     lessonVersion: { aggregate: vi.fn(async () => ({ _max: { version: 0 } })),
       create: vi.fn(async ({ data }) => { snapshot = structuredClone(data.parsedContent); return { id: versionId }; }), update: vi.fn() },
     wordBank: { upsert: vi.fn(async ({ create }) => ({ ...create, id: bankId })) },
@@ -54,6 +54,40 @@ describe('Topic publication approval gate', () => {
   it('reads approval after acquiring the import lock', async () => {
     const s = setup(); s.tx.$queryRaw.mockImplementation(async () => { s.setReview(null); return []; });
     await expect(s.publish()).rejects.toMatchObject({ status: 422 });
+    expect(s.tx.lessonVersion.create).not.toHaveBeenCalled();
+  });
+  it('copies the locked draft group to the stable lesson and all related imports without changing approval', async () => {
+    const s = setup(); const groupId = randomUUID();
+    // Simulate a reassignment that committed after the publisher preflight read.
+    s.tx.$queryRaw.mockImplementation(async () => { s.source.topicGroupId = groupId; s.source.topicGroupRevision = 1; return []; });
+    await s.publish();
+    expect(s.tx.lesson.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ topicGroupId: groupId }) }));
+    expect(s.tx.contentImport.updateMany).toHaveBeenCalledWith({ where: { lessonId: expect.any(String) }, data: { topicGroupId: groupId, topicGroupRevision: { increment: 1 } } });
+    expect(s.snapshot().intermediateTopic).toMatchObject({ durationMinutes: 90, approvedById: s.approver });
+    const taxonomyLock = s.tx.$executeRaw.mock.calls.findIndex(call => String(call[0]).includes('74291'));
+    expect(taxonomyLock).toBe(0);
+  });
+  it('a fresh unassigned import inherits the existing stable lesson group and synchronizes all imports', async () => {
+    const s = setup(); const lessonId = randomUUID(), groupId = randomUUID();
+    s.tx.lesson.upsert.mockResolvedValue({ id: lessonId, currentPublishedVersionId: null, topicGroupId: groupId });
+    await s.publish();
+    expect(s.tx.lesson.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ topicGroupId: groupId }) }));
+    expect(s.tx.contentImport.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ lessonId }) }));
+    expect(s.tx.contentImport.updateMany).toHaveBeenCalledWith({ where: { lessonId }, data: { topicGroupId: groupId, topicGroupRevision: { increment: 1 } } });
+  });
+  it('publishing an explicitly cleared draft removes the stable lesson group across versions', async () => {
+    const s = setup();
+    s.source.topicGroupRevision = 1;
+    s.tx.lesson.upsert.mockResolvedValue({ id: randomUUID(), currentPublishedVersionId: null, topicGroupId: randomUUID() });
+    await s.publish();
+    expect(s.tx.lesson.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ topicGroupId: null }) }));
+    expect(s.tx.contentImport.updateMany).toHaveBeenCalledWith({ where: { lessonId: expect.any(String) }, data: { topicGroupId: null, topicGroupRevision: { increment: 1 } } });
+    expect(s.snapshot().intermediateTopic).toMatchObject({ durationMinutes: 90, approvedById: s.approver });
+    expect(s.snapshot()).not.toHaveProperty('group');
+  });
+  it.each(['P2003', 'P2025', 'P2034'])('reports concurrent publication database error %s as a refreshable conflict', async code => {
+    const s = setup(); s.tx.$executeRaw.mockRejectedValueOnce({ code });
+    await expect(s.publish()).rejects.toMatchObject({ status: 409, response: { code: 'CONTENT_PUBLICATION_CONFLICT' } });
     expect(s.tx.lessonVersion.create).not.toHaveBeenCalled();
   });
 });
