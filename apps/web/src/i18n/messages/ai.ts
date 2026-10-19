@@ -8,6 +8,7 @@ export const aiMessages = {
     openaiOnly: 'Tasks requiring OpenAI capabilities always use OpenAI. Speech recognition, pronunciation and generated audio keep their separate speech provider.',
     simulation: 'Simulation mode is active. No live AI provider is called.', calibration: 'Provider configuration does not confirm grading quality. Human calibration is required before relying on scores.',
     save: 'Save AI settings', saving: 'Saving…', saved: 'AI settings saved.', readOnly: 'Only system administrators can change global AI settings.', aiDescription: 'Choose evaluation provider and fallback preferences.',
+    systemBadge: 'System Gateway', accountBadge: 'Account Preference', effectiveLabel: 'Active Routing Default', tokenCapLabel: 'Output Token Limit',
   },
   vi: {
     routingDisabled: 'Trong chế độ rollback, nhà cung cấp AI do cấu hình server quản lý.',
@@ -18,5 +19,6 @@ export const aiMessages = {
     openaiOnly: 'Tác vụ cần khả năng riêng của OpenAI luôn dùng OpenAI. Nhận diện giọng nói, điểm phát âm và tạo âm thanh vẫn dùng nhà cung cấp giọng nói riêng.',
     simulation: 'Đang dùng chế độ mô phỏng. Không gọi nhà cung cấp AI thật.', calibration: 'Cấu hình nhà cung cấp chưa xác nhận chất lượng chấm bài. Cần hiệu chuẩn bởi người trước khi tin cậy điểm số.',
     save: 'Lưu cài đặt AI', saving: 'Đang lưu…', saved: 'Đã lưu cài đặt AI.', readOnly: 'Chỉ quản trị viên hệ thống có thể thay đổi cài đặt AI chung.', aiDescription: 'Chọn nhà cung cấp đánh giá và cách dùng dự phòng.',
+    systemBadge: 'Cổng AI Hệ thống', accountBadge: 'Tùy chọn Tài khoản', effectiveLabel: 'Mặc định điều phối', tokenCapLabel: 'Giới hạn Token đầu ra',
   },
 } as const;
