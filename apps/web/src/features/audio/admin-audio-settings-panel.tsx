@@ -8,6 +8,7 @@ import { useT, useLocalePreference } from '../../i18n/provider';
 import { localizedError } from '../../i18n/errors';
 import { audioMessages } from '../../i18n/messages/audio';
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
+import { useVoiceRegistry } from './use-voice-registry';
 import './admin-audio-settings.css';
 
 /* Icons */
@@ -61,6 +62,16 @@ function SlidersIcon() {
   );
 }
 
+function DevicesIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+      <line x1="8" y1="21" x2="16" y2="21" />
+      <line x1="12" y1="17" x2="12" y2="21" />
+    </svg>
+  );
+}
+
 function ShieldCheckIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -100,6 +111,7 @@ function CheckCircleIcon() {
 export function AdminAudioSettingsPanel() {
   const t = useT('audio', audioMessages);
   const { locale } = useLocalePreference();
+  const registry = useVoiceRegistry();
   const [settings, setSettings] = useState<AdminAudioSettings | null>(null);
   const [initialSettings, setInitialSettings] = useState<AdminAudioSettings | null>(null);
   const [loadError, setLoadError] = useState<{ cause: unknown } | null>(null);
@@ -353,6 +365,10 @@ export function AdminAudioSettingsPanel() {
                 </div>
               </div>
 
+              {/* Server rotation note & locales for tests & clarity */}
+              <p className="audio-settings-note">{t('serverRotationUnavailable')}</p>
+              <p className="audio-settings-note">{t('providerLocales', { locales: selected.supportedLocales.join(', ') })}</p>
+
               {/* Dynamic Callout based on provider */}
               {selected.simulation ? (
                 <div className="audio-settings-warning admin-callout-warning">
@@ -375,7 +391,77 @@ export function AdminAudioSettingsPanel() {
           </section>
         ) : null}
 
-        {/* Section 3: Security & Isolation Notice */}
+        {/* Section 3: Device Voice Registry & Rotation (Compact, elegant scrollable card) */}
+        <section className="admin-audio-section">
+          <div className="admin-section-header">
+            <div className="admin-section-title-group">
+              <h2 className="admin-section-title">
+                <DevicesIcon />
+                <span>{t('deviceVoiceRegistry')}</span>
+              </h2>
+              <p className="admin-section-desc audio-settings-note">
+                {t('deviceRegistryScope')}
+              </p>
+            </div>
+          </div>
+
+          <div className="admin-device-registry-card">
+            {/* Master Rotation Toggle */}
+            <label className="audio-source-option admin-rotation-toggle-card">
+              <input
+                type="checkbox"
+                checked={registry.rotationEnabled}
+                disabled={!registry.supported}
+                onChange={(event) => registry.store?.setRotation(event.target.checked)}
+              />
+              <div className="admin-rotation-toggle-text">
+                <strong>{t('rotateVoices')}</strong>
+                <small>{t('rotationDescription')}</small>
+              </div>
+            </label>
+
+            {/* Voices List */}
+            {!registry.supported ? (
+              <p className="audio-settings-note">{t('speechUnsupported')}</p>
+            ) : registry.voices.length === 0 ? (
+              <p role="status">{t('voicesUnavailable')}</p>
+            ) : (
+              <div className="admin-voice-registry-scroll">
+                <fieldset className="audio-source-list admin-voice-registry-grid">
+                  <legend className="sr-only" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0 }}>
+                    {t('deviceVoiceRegistry')}
+                  </legend>
+                  {registry.voices.map((voice) => {
+                    const isEnabled = !registry.disabledIds.has(voice.id);
+                    return (
+                      <label
+                        className={`audio-source-option admin-voice-registry-item ${isEnabled ? 'active' : ''}`}
+                        key={voice.id}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isEnabled}
+                          onChange={(event) => registry.store?.setEnabled(voice.id, event.target.checked)}
+                        />
+                        <div className="admin-voice-item-info">
+                          <span className="admin-voice-item-title">
+                            <strong>{voice.displayName}</strong>
+                            <span className="admin-voice-item-badge">{voice.locale}</span>
+                          </span>
+                          <small className="admin-voice-item-desc">
+                            {voice.id} · {voice.localService ? t('deviceVoiceService') : t('remoteVoiceService')}
+                          </small>
+                        </div>
+                      </label>
+                    );
+                  })}
+                </fieldset>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Section 4: Security & Isolation Notice */}
         <div className="admin-security-card">
           <div className="admin-security-icon">
             <ShieldCheckIcon />
@@ -386,7 +472,7 @@ export function AdminAudioSettingsPanel() {
           </div>
         </div>
 
-        {/* Section 4: Action Footer */}
+        {/* Section 5: Action Footer */}
         <div className="audio-settings-footer admin-settings-footer-bar">
           <div className="admin-footer-status">
             {hasChanges && !saved && !saving ? (

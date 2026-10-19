@@ -751,6 +751,160 @@
   cursor: pointer;
 }
 
+/* Device Voice Registry Card */
+.admin-device-registry-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control, 0.75rem);
+}
+
+.admin-device-registry-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.admin-device-registry-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-device-registry-scope {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.admin-rotation-toggle-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1.15rem;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.admin-rotation-toggle-card:hover {
+  border-color: var(--control-border);
+}
+
+.admin-rotation-toggle-card input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.admin-rotation-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.admin-rotation-toggle-text strong {
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+.admin-rotation-toggle-text small {
+  font-size: 0.825rem;
+  color: var(--muted);
+}
+
+/* Scrollable Voice Grid */
+.admin-voice-registry-scroll {
+  max-height: 22rem;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  padding: 0.75rem;
+}
+
+.admin-voice-registry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.65rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-voice-registry-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-voice-registry-item:hover {
+  border-color: var(--control-border);
+  background: var(--surface);
+}
+
+.admin-voice-registry-item.active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.admin-voice-registry-item input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.admin-voice-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.admin-voice-item-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.admin-voice-item-badge {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: ui-monospace, monospace;
+}
+
+.admin-voice-item-desc {
+  font-size: 0.775rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .admin-audio-page {
