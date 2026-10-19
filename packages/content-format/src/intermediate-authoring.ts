@@ -12,6 +12,7 @@ export function validateIntermediateAuthoring(document: LessonDocumentNode): Con
   const lesson = document.lesson;
   if (!lesson || (lesson.program === undefined && lesson.category === undefined && lesson.authoringTemplate === undefined)) return [];
   if (lesson.program === 'intermediate' && isIntermediateCategory(lesson.category ?? '') && !document.foundation
-    && (lesson.authoringTemplate === undefined || lesson.authoringTemplate === 'intermediate-form-v1')) return [];
+    && (lesson.authoringTemplate === undefined || lesson.authoringTemplate === 'intermediate-form-v1'
+      || (lesson.authoringTemplate === 'intermediate-topic-v1' && lesson.category === 'reading'))) return [];
   return [{ code: 'VAL_AUTHORING_CLASSIFICATION', severity: 'error', message: 'Authoring metadata requires program intermediate and a supported category, without Foundation metadata.', path: 'lesson.category', range: lesson.range }];
 }
