@@ -10,6 +10,7 @@ import { intermediateCategories, isIntermediateCategory } from '@worklingo/conte
 import { adminProgramAuthoringMessages } from '../../i18n/messages/adminProgramAuthoring';
 import '../admin-intermediate/intermediate-navigation.css';
 import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
+import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 
 export const adminProgramDestinations = [
   { slug: 'beginner', label: 'foundation' }, { slug: 'intermediate', label: 'intermediate' },
@@ -46,6 +47,7 @@ export function AdminNavigation() {
   const tc = useT('common', commonMessages);
   const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
   const tt = useT('intermediateTopics', intermediateTopicsMessages);
+  const tg = useT('intermediateGroups', intermediateGroupsMessages);
   return (
     <aside className="ad-sidebar">
       <details className="ad-navigation" open>
@@ -61,6 +63,8 @@ export function AdminNavigation() {
                   aria-current={(slug === 'intermediate' ? pathname === '/admin/programs/intermediate' : isCurrent(pathname, `/admin/programs/${slug}`)) ? 'page' : undefined}>{t(label)}</Link>
                 {slug === 'intermediate' ? <details className="intermediate-program-navigation" open={isCurrent(pathname, '/admin/programs/intermediate')}>
                   <summary>{tt('tools')}</summary>
+                  <Link className="ad-nav-link" href="/admin/programs/intermediate/topic-groups"
+                    aria-current={pathname === '/admin/programs/intermediate/topic-groups' ? 'page' : undefined}>{tg('title')}</Link>
                   <Link className="ad-nav-link" href="/admin/programs/intermediate/topics"
                     aria-current={isCurrent(pathname, '/admin/programs/intermediate/topics') && pathname !== '/admin/programs/intermediate/topics/new' ? 'page' : undefined}>{tt('title')}</Link>
                   <Link className="ad-nav-link" href="/admin/programs/intermediate/topics/new"
@@ -97,7 +101,15 @@ export function AdminBreadcrumbs() {
   const tc = useT('common', commonMessages);
   const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
   const tt = useT('intermediateTopics', intermediateTopicsMessages);
+  const tg = useT('intermediateGroups', intermediateGroupsMessages);
   const segments = pathname.split('/');
+  if (pathname === '/admin/programs/intermediate/topic-groups') {
+    return <nav className="ad-breadcrumbs" aria-label={t('breadcrumbs')}><ol>
+      <li><Link href="/admin">{tc('admin')}</Link></li><li>{t('learningPrograms')}</li>
+      <li><Link href="/admin/programs/intermediate">{t('intermediate')}</Link></li>
+      <li><span aria-current="page">{tg('title')}</span></li>
+    </ol></nav>;
+  }
   if (pathname === '/admin/programs/intermediate/topics' || pathname.startsWith('/admin/programs/intermediate/topics/')) {
     return <nav className="ad-breadcrumbs" aria-label={t('breadcrumbs')}><ol>
       <li><Link href="/admin">{tc('admin')}</Link></li><li>{t('learningPrograms')}</li>

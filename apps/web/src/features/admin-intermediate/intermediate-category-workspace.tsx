@@ -12,6 +12,7 @@ import { getIntermediateCategory } from './lesson-model';
 import './intermediate-navigation.css';
 import { isIntermediateTopicSource } from './topic-lesson-model';
 import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
+import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 
 export function IntermediateCategoryWorkspace({ category, topic = false }: { readonly category: IntermediateCategory; readonly topic?: boolean }) {
   return <CategoryLessons key={`${topic}:${category}`} category={category} topic={topic} />;
@@ -20,6 +21,7 @@ export function IntermediateCategoryWorkspace({ category, topic = false }: { rea
 function CategoryLessons({ category, topic }: { readonly category: IntermediateCategory; readonly topic: boolean }) {
   const t = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
   const tt = useT('intermediateTopics', intermediateTopicsMessages);
+  const tg = useT('intermediateGroups', intermediateGroupsMessages);
   const [imports, setImports] = useState<ContentImportDto[]>([]);
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading');
   const [attempt, setAttempt] = useState(0);
@@ -39,7 +41,8 @@ function CategoryLessons({ category, topic }: { readonly category: IntermediateC
     : !isIntermediateTopicSource(item.rawSource) && getIntermediateCategory(item.rawSource) === category);
   return <div className="ad-dashboard intermediate-category-workspace">
     <header className="ad-page-header"><h1>{topic ? tt('title') : t('categoryLessons', { category: t(category) })}</h1><p>{topic ? tt('description') : t('categoryHelp')}</p>
-      <Link href="/admin/programs/intermediate">{t('back')}</Link></header>
+      <Link href="/admin/programs/intermediate">{t('back')}</Link>
+      {topic ? <p><Link href="/admin/programs/intermediate/topic-groups">{tg('title')}</Link></p> : null}</header>
     {status === 'loading' ? <p role="status">{t('loading')}</p> : null}
     {status === 'error' ? <div className="ad-panel ad-error" role="alert"><p>{t('loadError')}</p>
       <button className="secondary-button" type="button" onClick={() => { setStatus('loading'); setAttempt((value) => value + 1); }}>{t('retry')}</button>

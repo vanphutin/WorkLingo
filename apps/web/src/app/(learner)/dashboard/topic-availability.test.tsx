@@ -22,7 +22,7 @@ describe('Topic selection independent from generic mission availability', () => 
     vi.spyOn(engagementClient, 'getSummary').mockRejectedValue(new Error('unrelated panel offline'));
     const topics = vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([{ id, title: 'Eligible restaurant topic', durationMinutes: 90, lessonVersionId: id }]);
     render(<DashboardPage />);
-    expect(await screen.findByRole('button', { name: 'Start this topic' })).toBeEnabled();
+    expect(await screen.findByRole('button', { name: 'Start this lesson' })).toBeEnabled();
     expect(screen.getByRole('option', { name: 'Eligible restaurant topic · 90 minutes' })).toBeVisible();
     expect(topics).toHaveBeenCalled();
     expect(screen.queryByText('Selected mission has an unmet prerequisite.')).not.toBeInTheDocument();

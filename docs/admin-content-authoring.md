@@ -83,7 +83,21 @@ Topic dùng `[LESSON] program: intermediate`, `category: reading`, `authoring_te
 3. Khi đổi chủ đề/đề thi đang có thay đổi, chọn tiếp tục chỉnh sửa hoặc bỏ thay đổi. Module Bridge, cấu hình thời lượng và giai đoạn band giữ các chỉnh sửa riêng khi chuyển lựa chọn trong không gian hiện tại.
 4. Nếu có xung đột, tải lại. Bản mới của cùng bài được nạp sau khi xác nhận bỏ chỉnh sửa cục bộ; giữ chỉnh sửa không tự nâng revision để ghi đè nội dung của người khác.
 
-## Xóa và lưu trữ
+## Danh mục chủ đề Trung cấp
+
+Trong **Trung cấp → Danh mục chủ đề** (`/admin/programs/intermediate/topic-groups`), admin tạo/sửa tên và mô tả chủ đề. Một chủ đề chứa nhiều bài, ví dụ Nhà hàng có Đặt bàn, Gọi món, Thanh toán.
+
+- Thêm và lưu bài bằng biểu mẫu hoặc JSON hiện có, sau đó chọn chủ đề cạnh bài trong danh mục. Có thể phân nhóm cả bản nháp; trạng thái từng bài được hiển thị riêng. Dùng ô tìm kiếm và bộ lọc chủ đề để quản lý bài.
+- Một bài có một chủ đề chung cho các phiên bản. Phân nhóm có revision riêng, không sửa bài đọc/câu hỏi hay làm mất phê duyệt thời lượng. Khi xuất bản, lựa chọn phân nhóm của admin được gắn cho bài và đồng bộ những bản nhập đã liên kết với bài đó. Bản nhập mới chưa từng chọn/bỏ chủ đề sẽ giữ chủ đề hiện có của bài.
+- Xóa chủ đề cần xác nhận; các bài vẫn được giữ trong **Bài chưa phân chủ đề**. Xung đột với thao tác ở cửa sổ khác yêu cầu tải lại dữ liệu.
+- Học viên chọn chủ đề, sau đó chọn một bài trong chủ đề. Các bài chưa phân nhóm vẫn truy cập được qua **Các bài khác**. Nút ngẫu nhiên chọn trên tất cả bài đủ điều kiện; không giới hạn theo bộ lọc đang chọn.
+- Nhóm không thay thế xuất bản hay thiết lập giáo trình. Chỉ những bài có thời lượng được admin duyệt, đã xuất bản và đã được gắn/xuất bản trong đúng lộ trình, trình độ mới hiện với học viên. Chủ đề rỗng hoặc chỉ có bản nháp chưa hiện.
+
+AI chỉ đề xuất thời lượng từng bài. Số câu hỏi do admin hoặc JSON quyết định. Một phiên học vẫn dùng đúng một bài đọc gốc và nội dung của bài được chọn; đổi tên, chuyển hoặc xóa chủ đề không sửa snapshot phiên đã mở.
+
+API quản trị: `GET/POST /api/v1/admin/intermediate-topic-groups`, `PATCH/DELETE /:id`, `PUT /lessons/:importId`. Chỉ content/system admin có quyền; metadata nhóm và phân nhóm dùng optimistic revision độc lập.
+
+## Xóa và lưu trữ bài
 
 - Bản nháp chưa từng xuất bản có thể xóa sau khi xác nhận tên bài.
 - Nội dung có lịch sử xuất bản được lưu trữ: ngừng mở phiên mới, giữ các phiên bản và tham chiếu của phiên học đã có.

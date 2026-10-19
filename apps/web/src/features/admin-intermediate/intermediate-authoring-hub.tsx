@@ -9,6 +9,7 @@ import { apiClient } from '../../lib/api/api-client';
 import { getIntermediateCategory } from './lesson-model';
 import './intermediate-navigation.css';
 import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
+import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 import { isIntermediateTopicSource } from './topic-lesson-model';
 
 type CountState = { status: 'loading' } | { status: 'error' } | { status: 'ready'; counts: Partial<Record<IntermediateCategory, number>> };
@@ -16,6 +17,7 @@ type CountState = { status: 'loading' } | { status: 'error' } | { status: 'ready
 export function IntermediateAuthoringHub() {
   const t = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
   const tt = useT('intermediateTopics', intermediateTopicsMessages);
+  const tg = useT('intermediateGroups', intermediateGroupsMessages);
   const id = useId();
   const [state, setState] = useState<CountState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
@@ -36,6 +38,7 @@ export function IntermediateAuthoringHub() {
   return <section className="intermediate-authoring-hub" aria-labelledby={`${id}-title`}>
     <header><h2 id={`${id}-title`}>{tt('title')}</h2><p className="ad-muted">{tt('description')}</p></header>
     <div className="intermediate-category-actions">
+      <Link href="/admin/programs/intermediate/topic-groups">{tg('title')}</Link>
       <Link className="intermediate-add-link" href="/admin/programs/intermediate/topics/new">{tt('add')}</Link>
       <Link href="/admin/programs/intermediate/topics">{tt('list')}</Link>
     </div>
