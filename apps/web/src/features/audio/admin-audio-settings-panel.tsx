@@ -295,15 +295,6 @@ export function AdminAudioSettingsPanel() {
 
   return (
     <div className="admin-audio-page">
-      {/* Settings Breadcrumbs */}
-      <nav aria-label="Breadcrumb" className="admin-settings-breadcrumbs">
-        <span>Admin</span>
-        <span className="breadcrumb-separator" aria-hidden="true">/</span>
-        <span>{t('adminSettingsBreadcrumb')}</span>
-        <span className="breadcrumb-separator" aria-hidden="true">/</span>
-        <span className="breadcrumb-current" aria-current="page">{t('generationSettings')}</span>
-      </nav>
-
       {/* Settings Hub Tabs */}
       <nav className="admin-settings-tabs-nav" aria-label="Settings categories">
         <Link href="/admin/settings/audio" className="admin-settings-tab active" aria-current="page">
@@ -320,7 +311,7 @@ export function AdminAudioSettingsPanel() {
       <section className="audio-settings-panel admin-audio-settings-card" aria-labelledby="admin-audio-settings-title">
         {/* Header */}
         <header className="admin-audio-header">
-          <div className="eyebrow-badge">
+          <div className="eyebrow-badge" style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', gap: '0.4rem', width: 'fit-content' }}>
             <AudioWaveIcon size={14} />
             <span>{t('generation')}</span>
           </div>
@@ -337,7 +328,7 @@ export function AdminAudioSettingsPanel() {
                 <span>{t('ttsProvider')}</span>
               </h2>
               <p className="admin-section-desc">
-                {t('generationDescription')}
+                {t('providerSectionDesc')}
               </p>
             </div>
           </div>
@@ -354,9 +345,10 @@ export function AdminAudioSettingsPanel() {
                 <label
                   className={`audio-source-option admin-provider-card ${isSelected ? 'selected' : ''} ${!isAvailable ? 'disabled' : ''}`}
                   key={provider.id}
+                  style={{ display: 'flex', flexDirection: 'column', minHeight: '9.5rem' }}
                 >
-                  <div className="admin-provider-card-top">
-                    <div className="admin-provider-visual">
+                  <div className="admin-provider-card-top" style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div className="admin-provider-visual" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                       <div className="admin-provider-icon">
                         {provider.simulation ? <FlaskIcon size={20} /> : <CloudSpeechIcon size={20} />}
                       </div>
@@ -366,16 +358,17 @@ export function AdminAudioSettingsPanel() {
                         </span>
                         <div className="admin-provider-status-badge-container">
                           {isSelected ? (
-                            <span className="admin-status-badge badge-active">
-                              <CheckCircleIcon size={12} /> {t('activeBadge')}
+                            <span className="admin-status-badge badge-active" style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', gap: '0.35rem' }}>
+                              <CheckCircleIcon size={12} />
+                              <span>{t('activeBadge')}</span>
                             </span>
                           ) : isAvailable ? (
-                            <span className={`admin-status-badge ${provider.simulation ? 'badge-simulation' : 'badge-available'}`}>
-                              {provider.simulation ? t('simulationAvailable') : t('providerAvailable')}
+                            <span className={`admin-status-badge ${provider.simulation ? 'badge-simulation' : 'badge-available'}`} style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', gap: '0.35rem' }}>
+                              <span>{provider.simulation ? t('simulationAvailable') : t('providerAvailable')}</span>
                             </span>
                           ) : (
-                            <span className="admin-status-badge badge-unavailable">
-                              {t('providerUnavailable')}
+                            <span className="admin-status-badge badge-unavailable" style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', gap: '0.35rem' }}>
+                              <span>{t('providerUnavailable')}</span>
                             </span>
                           )}
                         </div>
@@ -389,6 +382,7 @@ export function AdminAudioSettingsPanel() {
                       type="radio"
                       value={provider.id}
                       className="admin-provider-radio-input"
+                      style={{ marginLeft: 'auto', flexShrink: 0 }}
                       onChange={() => {
                         setSaved(false);
                         setSettings((current) => current && ({
@@ -518,7 +512,7 @@ export function AdminAudioSettingsPanel() {
 
           <div className="admin-device-registry-card">
             {/* Master Rotation Toggle */}
-            <label className="audio-source-option admin-rotation-toggle-card">
+            <label className="audio-source-option admin-rotation-toggle-card" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <input
                 type="checkbox"
                 checked={registry.rotationEnabled}
@@ -548,8 +542,9 @@ export function AdminAudioSettingsPanel() {
                       <label
                         className={`audio-source-option admin-voice-registry-item ${isEnabled ? 'active' : ''}`}
                         key={voice.id}
+                        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
                       >
-                        <div className="admin-voice-registry-item-left">
+                        <div className="admin-voice-registry-item-left" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
                           <input
                             type="checkbox"
                             checked={isEnabled}
