@@ -1,5 +1,7 @@
 export const intermediateTopicsMessages = {
   en: {
+    filterTime: 'Session time', allTimes: 'All durations', matchingCount: 'Lessons matching time: {count, number}',
+    noTimeMatches: 'No published lessons match this duration. Choose another time.', randomFiltered: 'Random lesson matching this time',
     title: 'Topic lessons', tools: 'Intermediate tools', description: 'One source passage, connected language practice and a human-approved session plan.',
     add: 'Add a topic lesson', list: 'View topic lessons', newTitle: 'New topic lesson', editTitle: 'Edit topic lesson', back: 'Back to topic lessons',
     passage: 'Source passage', passageHelp: 'All reading, listening and response activities develop understanding of this passage.',
@@ -35,6 +37,8 @@ export const intermediateTopicsMessages = {
     outlineSave: 'Save draft', outlineAdminOnly: 'Questions come from the admin form or JSON. AI suggests duration only.',
   },
   vi: {
+    filterTime: 'Thời gian học', allTimes: 'Tất cả thời lượng', matchingCount: 'Số bài phù hợp thời gian: {count, number}',
+    noTimeMatches: 'Chưa có bài đã xuất bản phù hợp thời lượng này. Hãy chọn thời gian khác.', randomFiltered: 'Bài ngẫu nhiên đúng thời lượng',
     title: 'Bài học theo chủ đề', tools: 'Công cụ Trung cấp', description: 'Một bài đọc gốc, các phần luyện tập liên kết và khung thời lượng do admin duyệt.',
     add: 'Thêm bài học theo chủ đề', list: 'Xem bài học theo chủ đề', newTitle: 'Thêm bài học theo chủ đề', editTitle: 'Sửa bài học theo chủ đề', back: 'Về danh sách bài theo chủ đề',
     passage: 'Bài đọc gốc', passageHelp: 'Các phần đọc, nghe và phản hồi đều giúp người học hiểu trọn bài đọc này.',

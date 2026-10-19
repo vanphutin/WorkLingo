@@ -30,6 +30,18 @@ function setup() {
   return { service, tx, chosen, unavailable, curriculum, context };
 }
 describe('Intermediate topic sessions', () => {
+  it('keeps a random duration filter in the frozen plan and rejects changing it on retry', async () => {
+    const s = setup(); const learner = randomUUID(); const clientSessionId = randomUUID();
+    const session = await s.service.create(learner, { clientSessionId, durationMinutes: 90 });
+    expect(session.durationMinutes).toBe(90);
+    expect(session.plan).toHaveProperty('topicDurationFilter', 90);
+    expect(await s.service.create(learner, { clientSessionId, durationMinutes: 90 })).toEqual(session);
+    await expect(s.service.create(learner, { clientSessionId })).rejects.toMatchObject({ status: 409 });
+  });
+  it.each([false, true])('does not start a different-duration lesson when the filter has no result (chosen=%s)', async chosen => {
+    const s = setup();
+    await expect(s.service.create(randomUUID(), { clientSessionId: randomUUID(), durationMinutes: 45, ...(chosen ? { topicId: s.chosen.id } : {}) })).rejects.toMatchObject({ status: 404 });
+  });
   it('lists eligible topics across all levels in the active Intermediate program', async () => {
     const s = setup(); const result = await s.service.list(randomUUID());
     expect(result).toEqual([{ id: s.chosen.id, title: 'Topic', lessonVersionId: s.chosen.lessonVersion.id, durationMinutes: 90 }]);

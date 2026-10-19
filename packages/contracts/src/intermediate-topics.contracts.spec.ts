@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { approveTopicSchema, defaultTopicPlan, topicPlanSchema, topicReviewSchema } from './intermediate-topics.contracts.ts';
+import { approveTopicSchema, createTopicSessionSchema, defaultTopicPlan, topicPlanSchema, topicReviewSchema } from './intermediate-topics.contracts.ts';
 import { sessionPlanSchema } from './learning-session.contracts.ts';
 
 const id = '11111111-1111-4111-8111-111111111111';
 describe('Intermediate topic contracts', () => {
+  it('accepts only the supported duration filters for topic selection', () => {
+    for (const durationMinutes of [45, 60, 90, 120, 150]) expect(createTopicSessionSchema.safeParse({ clientSessionId: id, durationMinutes }).success).toBe(true);
+    expect(createTopicSessionSchema.safeParse({ clientSessionId: id, durationMinutes: 75 }).success).toBe(false);
+  });
   it.each([45, 60, 90, 120, 150] as const)('accepts a complete %i-minute topic allocation', duration => {
     expect(topicPlanSchema.parse(defaultTopicPlan(duration)).durationMinutes).toBe(duration);
   });
@@ -25,6 +29,8 @@ describe('Intermediate topic contracts', () => {
     const blocks = allocation.allocations.map((item, index) => ({ ...item, order: index + 1, activityIds: [`11111111-1111-4111-8111-${String(index + 1).padStart(12, '0')}`], skills: [(['writing', 'reading', 'listening', 'speaking'] as const)[index]!] }));
     const topic = { kind: 'topic', topicSelection: 'chosen', durationMinutes: 45, missionId: id, lessonVersionId: id, blocks };
     expect(sessionPlanSchema.safeParse(topic).success).toBe(true);
+    expect(sessionPlanSchema.safeParse({ ...topic, topicDurationFilter: 45 }).success).toBe(true);
+    expect(sessionPlanSchema.safeParse({ ...topic, topicDurationFilter: 90 }).success).toBe(false);
     expect(sessionPlanSchema.safeParse({ ...topic, kind: undefined }).success).toBe(false);
   });
 });

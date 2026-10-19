@@ -37,6 +37,7 @@ export const sessionBlockSchema = z.object({
 export const sessionPlanSchema = z.object({
   kind: z.literal('topic').optional(),
   topicSelection: z.enum(['chosen', 'random']).optional(),
+  topicDurationFilter: sessionDurationSchema.optional(),
   durationMinutes: sessionDurationSchema,
   missionId: z.uuid(),
   lessonVersionId: z.uuid(),
@@ -46,6 +47,9 @@ export const sessionPlanSchema = z.object({
     reviewItemId: z.uuid(), activityId: z.uuid(), transferred: z.boolean(),
   }).readonly()).readonly().optional(),
 }).superRefine((plan, context) => {
+  if (plan.topicDurationFilter !== undefined && (plan.kind !== 'topic' || plan.topicDurationFilter !== plan.durationMinutes)) {
+    context.addIssue({ code: 'custom', path: ['topicDurationFilter'], message: 'Topic duration filter must match the approved session duration.' });
+  }
   const expectedBlockTypes = plan.kind === 'topic'
     ? ['activate', 'readDecode', 'listenReason', 'respond']
     : canonicalBlockTypesByDuration[plan.durationMinutes];

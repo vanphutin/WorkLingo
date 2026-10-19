@@ -51,18 +51,18 @@ export class IntermediateTopicsService {
       const mode = request.topicId ? 'chosen' : 'random';
       if (existing) {
         const plan = sessionPlanSchema.parse(existing.planSnapshot);
-        if (plan.kind !== 'topic' || plan.topicSelection !== mode || (request.topicId && existing.missionId !== request.topicId)) {
-          throw new ConflictException({ code: 'IDEMPOTENCY_CONFLICT', message: 'Session UUID is already associated with another topic or selection mode.' });
+        if (plan.kind !== 'topic' || plan.topicSelection !== mode || plan.topicDurationFilter !== request.durationMinutes || (request.topicId && existing.missionId !== request.topicId)) {
+          throw new ConflictException({ code: 'IDEMPOTENCY_CONFLICT', message: 'Session UUID is already associated with another topic, selection mode or duration filter.' });
         }
         return toLearningSessionDto(existing);
       }
-      const available = await this.available(learnerId, tx);
+      const available = (await this.available(learnerId, tx)).filter(item => request.durationMinutes === undefined || item.mission.lessonVersion.intermediateTopic!.durationMinutes === request.durationMinutes);
       const selected = request.topicId ? available.find(t => t.mission.id === request.topicId)
         : available.length ? available[randomInt(available.length)] : undefined;
       if (!selected) throw new NotFoundException('No eligible Intermediate topic found');
       return this.sessions.create(tx, { learnerId, clientSessionId: request.clientSessionId, mission: selected.mission,
         curriculumRevisionId: selected.curriculumRevisionId, durationMinutes: selected.mission.lessonVersion.intermediateTopic!.durationMinutes,
-        reviewItems: [], topicSelection: mode });
+        reviewItems: [], topicSelection: mode, ...(request.durationMinutes !== undefined ? { topicDurationFilter: request.durationMinutes } : {}) });
     }, { timeout: 15_000 });
   }
 

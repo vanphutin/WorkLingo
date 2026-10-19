@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import type { ActivityAttempt, Prisma } from '@prisma/client';
-import { sessionPlanSchema } from '@worklingo/contracts';
+import { sessionPlanSchema, type SessionDuration } from '@worklingo/contracts';
 import { parseIeltsTopicManifest } from '@worklingo/content-format';
 
 import type { PublishedMission } from '../../curriculum/domain/curriculum.types.js';
@@ -21,6 +21,7 @@ export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{
 
 export interface CreateMissionSessionInput {
   readonly topicSelection?: 'chosen' | 'random';
+  readonly topicDurationFilter?: SessionDuration;
   readonly productivePairPerRespondBlock?: boolean;
   readonly clientSessionId: string;
   readonly curriculumRevisionId?: string | null;
@@ -46,12 +47,14 @@ export class SessionCreationService {
       include: learningSessionInclude,
     });
     if (existing) {
+      const existingPlan = sessionPlanSchema.parse(existing.planSnapshot);
       if (
         existing.durationMinutes !== input.durationMinutes ||
         (existing.curriculumRevisionId ?? null) !== (input.curriculumRevisionId ?? null) ||
         existing.lessonVersionId !== input.mission.lessonVersion.id ||
         existing.missionId !== input.mission.id
-        || sessionPlanSchema.parse(existing.planSnapshot).topicSelection !== input.topicSelection
+        || existingPlan.topicSelection !== input.topicSelection
+        || existingPlan.topicDurationFilter !== input.topicDurationFilter
       ) {
         throw new ConflictException({
           code: 'IDEMPOTENCY_CONFLICT',
@@ -68,7 +71,8 @@ export class SessionCreationService {
       reviewItems: input.reviewItems,
       productivePairPerRespondBlock: input.productivePairPerRespondBlock ?? false,
     });
-    const plan = input.topicSelection ? sessionPlanSchema.parse({ ...basePlan, topicSelection: input.topicSelection }) : basePlan;
+    const plan = input.topicSelection ? sessionPlanSchema.parse({ ...basePlan, topicSelection: input.topicSelection,
+      ...(input.topicDurationFilter !== undefined ? { topicDurationFilter: input.topicDurationFilter } : {}) }) : basePlan;
     const created = await transaction.learningSession.create({
       data: {
         blocks: {

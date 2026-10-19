@@ -28,5 +28,5 @@ export const approvedTopicSnapshotSchema = topicPlanSchema.extend({ sourceConten
 export type ApprovedTopicSnapshot = z.infer<typeof approvedTopicSnapshotSchema>;
 export const learnerTopicSchema = z.object({ id: z.uuid(), title: z.string().min(1), lessonVersionId: z.uuid(), durationMinutes: sessionDurationSchema, level: z.string().min(1).optional(), group: learnerTopicGroupSchema.optional() }).strict();
 export type LearnerTopic = z.infer<typeof learnerTopicSchema>;
-export const createTopicSessionSchema = z.object({ clientSessionId: z.uuid(), topicId: z.uuid().optional() }).strict();
+export const createTopicSessionSchema = z.object({ clientSessionId: z.uuid(), topicId: z.uuid().optional(), durationMinutes: sessionDurationSchema.optional() }).strict();
 export type CreateTopicSession = z.infer<typeof createTopicSessionSchema>;

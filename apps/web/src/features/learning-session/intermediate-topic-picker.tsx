@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import type { LearnerTopic } from '@worklingo/contracts';
+import { supportedSessionDurations, type LearnerTopic, type SessionDuration } from '@worklingo/contracts';
 import { useLocalePreference, useT } from '../../i18n/provider';
 import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
 import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
@@ -19,6 +19,7 @@ function PickerSession({ children, initialTopics, initialError }: PickerProps) {
   const [topics, setTopics] = useState<LearnerTopic[]>(initialTopics ?? []);
   const [selected, setSelected] = useState(initialTopics?.[0]?.id ?? '');
   const [selectedGroup, setSelectedGroup] = useState(initialTopics?.[0]?.group?.id ?? 'ungrouped');
+  const [durationFilter, setDurationFilter] = useState<SessionDuration | 'all'>('all');
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(initialError ? 'error' : initialTopics ? 'ready' : 'loading');
   const [attempt, setAttempt] = useState(0);
   const [busy, setBusy] = useState(false);
@@ -36,16 +37,23 @@ function PickerSession({ children, initialTopics, initialError }: PickerProps) {
     }).catch(() => { if (!cancelled) setStatus('error'); });
     return () => { cancelled = true; live.current = false; };
   }, [attempt, initialTopics, initialError]);
-  const groups = Array.from(new Map(topics.flatMap(topic => topic.group ? [[topic.group.id, topic.group] as const] : [])).values());
+  const filteredTopics = topics.filter(topic => durationFilter === 'all' || topic.durationMinutes === durationFilter);
+  const groups = Array.from(new Map(filteredTopics.flatMap(topic => topic.group ? [[topic.group.id, topic.group] as const] : [])).values());
   const grouped = groups.length > 0;
-  const visibleTopics = grouped ? topics.filter(topic => (topic.group?.id ?? 'ungrouped') === selectedGroup) : topics;
+  const visibleTopics = grouped ? filteredTopics.filter(topic => (topic.group?.id ?? 'ungrouped') === selectedGroup) : filteredTopics;
+  function filterByDuration(value: string) {
+    const duration = value === 'all' ? 'all' : Number(value) as SessionDuration;
+    const first = topics.find(topic => duration === 'all' || topic.durationMinutes === duration);
+    setDurationFilter(duration); setSelected(first?.id ?? ''); setSelectedGroup(first?.group?.id ?? 'ungrouped');
+    pending.current = null; setFailed(false);
+  }
   async function start(random: boolean) {
-    if (inFlight.current || !topics.length || (!random && !topics.some(topic => topic.id === selected))) return;
+    if (inFlight.current || !filteredTopics.length || (!random && !visibleTopics.some(topic => topic.id === selected))) return;
     inFlight.current = true; setBusy(true); setFailed(false);
-    const mode = random ? 'random' : selected;
+    const mode = `${random ? 'random' : selected}:${durationFilter}`;
     if (pending.current?.mode !== mode) pending.current = { mode, id: crypto.randomUUID() };
     try {
-      const session = await intermediateTopicClient.create({ clientSessionId: pending.current.id, ...(!random ? { topicId: selected } : {}) });
+      const session = await intermediateTopicClient.create({ clientSessionId: pending.current.id, ...(!random ? { topicId: selected } : {}), ...(durationFilter !== 'all' ? { durationMinutes: durationFilter } : {}) });
       if (!live.current) return;
       router.push(`/sessions/${session.id}`);
       // Keep locked during navigation to prevent a second start.
@@ -61,13 +69,18 @@ function PickerSession({ children, initialTopics, initialError }: PickerProps) {
       {failed ? <p role="alert">{t('requestError')}</p> : null}
       {status === 'ready' && !topics.length ? <p>{t('noTopics')}</p> : null}
       {topics.length ? <>
+        <label className="field-label">{t('filterTime')}<select className="field-select" value={durationFilter} disabled={busy} onChange={event => filterByDuration(event.target.value)}>
+          <option value="all">{t('allTimes')}</option>{supportedSessionDurations.map(minutes => <option key={minutes} value={minutes}>{t('time', { minutes })}</option>)}
+        </select></label>
+        <p role="status">{t('matchingCount', { count: filteredTopics.length })}</p>
+        {filteredTopics.length ? <>
         {grouped ? <>
           <label className="field-label">{tg('chooseGroup')}<select className="field-select" value={selectedGroup} disabled={busy} onChange={event => {
             const groupId = event.target.value;
-            setSelectedGroup(groupId); setSelected(topics.find(topic => (topic.group?.id ?? 'ungrouped') === groupId)?.id ?? '');
+            setSelectedGroup(groupId); setSelected(filteredTopics.find(topic => (topic.group?.id ?? 'ungrouped') === groupId)?.id ?? '');
             pending.current = null; setFailed(false);
           }}>{groups.map(group => <option key={group.id} value={group.id}>{locale === 'en' && group.nameEn ? group.nameEn : group.name}</option>)}
-            {topics.some(topic => !topic.group) ? <option value="ungrouped">{tg('learnerUngrouped')}</option> : null}
+            {filteredTopics.some(topic => !topic.group) ? <option value="ungrouped">{tg('learnerUngrouped')}</option> : null}
           </select></label>
           {groups.find(group => group.id === selectedGroup)?.description ? <p>{groups.find(group => group.id === selectedGroup)!.description}</p> : null}
           <p>{tg('lessonCount', { count: visibleTopics.length })}</p>
@@ -76,7 +89,8 @@ function PickerSession({ children, initialTopics, initialError }: PickerProps) {
           {visibleTopics.map(topic => <option key={topic.id} value={topic.id}>{topic.title}{topic.level ? ` · ${topic.level}` : ''} · {t('time', { minutes: topic.durationMinutes })}</option>)}
         </select></label>
         <button type="button" className="primary-action-button" disabled={busy} onClick={() => void start(false)}>{busy ? t('opening') : tg('startLesson')}</button>
-        <button type="button" className="secondary-button" disabled={busy} onClick={() => void start(true)}>{tg('randomAll')}</button>
+        <button type="button" className="secondary-button" disabled={busy} onClick={() => void start(true)}>{durationFilter === 'all' ? tg('randomAll') : t('randomFiltered')}</button>
+        </> : <p>{t('noTimeMatches')}</p>}
       </> : <p>{t('legacyNotice')}</p>}
     </section>
     {!topics.length ? children : null}
