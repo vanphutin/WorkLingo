@@ -14,6 +14,7 @@ import { TopicGroupsController } from './topic-groups.controller.js';
 import { TopicGroupsService } from './topic-groups.service.js';
 
 @Module({ imports: [DatabaseModule, CurriculumModule, CurriculumFoundationModule, LearningProgramsModule, LearningSessionsModule],
+  exports: [IntermediateTopicsService],
   controllers: [IntermediateTopicsController, IntermediateTopicReviewController, TopicGroupsController],
   providers: [IntermediateTopicsService, TopicReviewService, TopicProposalService, TopicJsonRepairService, AiSettingsService, TopicGroupsService] })
 export class IntermediateTopicsModule {}

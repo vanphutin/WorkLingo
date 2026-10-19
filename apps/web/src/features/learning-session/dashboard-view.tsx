@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
-import type { CurriculumRoadmapDto, EngagementSummaryDto } from '@worklingo/contracts';
+import type { CurriculumRoadmapDto, EngagementSummaryDto, LearnerTopic } from '@worklingo/contracts';
 import { EngagementPanel } from '../engagement/engagement-panel';
 import { CurriculumRoadmap } from '../curriculum-roadmap/curriculum-roadmap';
 import { OrientationDashboardCard } from '../ielts-orientation/orientation-dashboard-card';
@@ -24,6 +24,8 @@ import styles from '../learner-dashboard/learner-dashboard.module.css';
 import { IntermediateTopicPicker } from './intermediate-topic-picker';
 
 interface DashboardViewProps extends DashboardInsightsProps {
+  readonly initialTopics?: LearnerTopic[] | undefined;
+  readonly topicsFailed?: boolean | undefined;
   readonly progress: LearnerProgressDto | null;
   readonly activeProgramName?: string | undefined;
   readonly activeProgramSlug?: string | null | undefined;
@@ -87,6 +89,8 @@ export function DashboardView({
   analyticsLoading,
   analyticsError,
   onRetryAnalytics,
+  initialTopics,
+  topicsFailed,
 }: DashboardViewProps) {
   const t = useT('learningSession', learningSessionMessages);
   const dashboardT = useT('learnerDashboard', learnerDashboardMessages);
@@ -204,7 +208,7 @@ export function DashboardView({
             <Link className="primary-action-button inline-button" href={`/sessions/${resumableMission.activeSessionId}`}>
               {t('continueSaved')}
             </Link>
-          ) : <IntermediateTopicPicker enabled={activeProgramSlug === 'intermediate'} contextKey={currentLevelCode ?? ''}><div className="session-launcher">
+          ) : <IntermediateTopicPicker enabled={activeProgramSlug === 'intermediate'} contextKey={currentLevelCode ?? ''} initialTopics={initialTopics} initialError={topicsFailed}><div className="session-launcher">
             <div className="field-group">
               <label htmlFor="session-duration-select" className="field-label">
                 {t('sessionDuration')}

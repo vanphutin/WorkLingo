@@ -11,7 +11,7 @@ import { LearningProgramsModule } from '../learning-programs/learning-programs.m
 @Global()
 @Module({
   controllers: [AdminAnalyticsController, DashboardController],
-  exports: [PilotMetricsService],
+  exports: [PilotMetricsService, DashboardAnalyticsService],
   imports: [DatabaseModule, LearningProgramsModule],
   providers: [PilotMetricsService, PilotRetentionService, DashboardAnalyticsService],
 })

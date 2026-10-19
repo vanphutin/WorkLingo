@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import type { CurriculumRoadmapDto, EngagementSummaryDto, LearnerDashboardAnalytics, ProgramContextDto } from '@worklingo/contracts';
+import type { CurriculumRoadmapDto, DashboardOverview, EngagementSummaryDto, LearnerDashboardAnalytics, ProgramContextDto } from '@worklingo/contracts';
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
 import {
   apiClient,
@@ -11,8 +11,8 @@ import {
   type SessionAvailabilityDto,
 } from '../../../lib/api/api-client';
 import { engagementClient } from '../../../lib/api/engagement-client';
-import { learningProgramClient } from '../../../lib/api/learning-program-client';
 import { learnerDashboardClient } from '../../../lib/api/learner-dashboard-client';
+import { learningProgramClient } from '../../../lib/api/learning-program-client';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -31,35 +31,12 @@ export default function DashboardPage() {
   const [engagement, setEngagement] = useState<EngagementSummaryDto | null>(null);
   const [engagementLoading, setEngagementLoading] = useState(true);
   const [engagementError, setEngagementError] = useState<string | null>(null);
-
-  const loadProgressAndAvailability = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const [progressResult, availabilityResult, contextResult] = await Promise.allSettled([
-        apiClient.getProgress(),
-        apiClient.getSessionAvailability(),
-        learningProgramClient.getContext(),
-      ]);
-      if (contextResult.status === 'rejected') throw contextResult.reason;
-      const contextData = contextResult.value;
-      setProgramContext(contextData);
-      if (!contextData.activeProgram) {
-        setProgress(null);
-        setAvailability(null);
-        return;
-      }
-      if (progressResult.status === 'rejected') throw progressResult.reason;
-      // Topic eligibility is loaded independently; a locked legacy mission must not hide it.
-      if (availabilityResult.status === 'rejected' && contextData.activeProgram.slug !== 'intermediate') throw availabilityResult.reason;
-      setProgress(progressResult.value);
-      setAvailability(availabilityResult.status === 'fulfilled' ? availabilityResult.value : null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load progress data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [topics, setTopics] = useState<DashboardOverview['topics']>();
+  const alive = useRef(false);
+  const generation = useRef(0);
+  const overviewRequest = useRef<Promise<DashboardOverview> | null>(null);
+  const overviewAbort = useRef<AbortController | null>(null);
+  const coreFailures = useRef({ progress: false, availability: false });
 
   const loadAnalytics = async () => {
     try {
@@ -99,16 +76,85 @@ export default function DashboardPage() {
   };
 
   const loadData = async () => {
-    await Promise.allSettled([
-      loadProgressAndAvailability(),
-      loadEngagement(),
-      loadRoadmap(),
-      loadAnalytics(),
-    ]);
+    const version = ++generation.current;
+    setIsLoading(true); setError(null); setAnalyticsLoading(true); setRoadmapLoading(true); setEngagementLoading(true);
+    coreFailures.current = { progress: false, availability: false };
+    // React can replay mount effects; reuse the same in-flight request without caching learner data.
+    if (!overviewRequest.current) {
+      overviewAbort.current = new AbortController();
+      overviewRequest.current = learnerDashboardClient.getOverview(overviewAbort.current.signal);
+    }
+    const pending = overviewRequest.current;
+    try {
+      const result = await pending;
+      if (!alive.current || version !== generation.current) return;
+      setProgramContext(result.programContext);
+      setProgress(result.progress.status === 'ready' ? result.progress.data : null);
+      setAvailability(result.availability.status === 'ready' ? result.availability.data : null);
+      if (result.programContext.activeProgram) {
+        coreFailures.current = { progress: result.progress.status === 'error', availability: result.availability.status === 'error' && result.programContext.activeProgram.slug !== 'intermediate' };
+        if (result.progress.status === 'error') setError(result.progress.error.code);
+        else if (result.availability.status === 'error' && result.programContext.activeProgram.slug !== 'intermediate') setError(result.availability.error.code);
+      }
+      setAnalytics(result.analytics.status === 'ready' ? result.analytics.data : null);
+      setAnalyticsError(result.analytics.status === 'error' ? result.analytics.error.code : null);
+      setRoadmap(result.roadmap.status === 'ready' ? result.roadmap.data : null);
+      setRoadmapError(result.roadmap.status === 'error' ? result.roadmap.error.code : null);
+      setEngagement(result.engagement.status === 'ready' ? result.engagement.data : null);
+      setEngagementError(result.engagement.status === 'error' ? result.engagement.error.code : null);
+      setTopics(result.topics);
+    } catch (failure) {
+      if (alive.current && version === generation.current) setError(failure instanceof Error ? failure.message : 'Failed to load dashboard');
+    } finally {
+      if (overviewRequest.current === pending) { overviewRequest.current = null; overviewAbort.current = null; }
+      if (alive.current && version === generation.current) {
+        setIsLoading(false); setAnalyticsLoading(false); setRoadmapLoading(false); setEngagementLoading(false);
+      }
+    }
+  };
+
+  const retryCore = async () => {
+    const failed = coreFailures.current;
+    if (!failed.progress && !failed.availability) return loadData();
+    const version = ++generation.current;
+    setIsLoading(true); setError(null);
+    const matches = (context: ProgramContextDto) => context.activeProgram?.id === programContext?.activeProgram?.id
+      && context.enrollment?.id === programContext?.enrollment?.id && context.enrollment?.revision === programContext?.enrollment?.revision;
+    try {
+      const before = await learningProgramClient.getContext();
+      if (!alive.current || version !== generation.current) return;
+      if (!matches(before)) return loadData();
+      const [nextProgress, nextAvailability] = await Promise.allSettled([
+        failed.progress ? apiClient.getProgress() : Promise.resolve(progress),
+        failed.availability ? apiClient.getSessionAvailability() : Promise.resolve(availability),
+      ]);
+      const after = await learningProgramClient.getContext();
+      if (!alive.current || version !== generation.current) return;
+      if (!matches(after)) return loadData();
+      if (nextProgress.status === 'fulfilled') setProgress(nextProgress.value);
+      if (nextAvailability.status === 'fulfilled') setAvailability(nextAvailability.value);
+      coreFailures.current = { progress: nextProgress.status === 'rejected', availability: nextAvailability.status === 'rejected' };
+      const failure = nextProgress.status === 'rejected' ? nextProgress : nextAvailability.status === 'rejected' ? nextAvailability : null;
+      if (failure) setError(failure.reason instanceof Error ? failure.reason.message : 'Failed to load dashboard');
+    } catch (failure) {
+      if (alive.current && version === generation.current) {
+        coreFailures.current = { progress: false, availability: false };
+        setError(failure instanceof Error ? failure.message : 'Failed to load dashboard');
+      }
+    } finally {
+      if (alive.current && version === generation.current) setIsLoading(false);
+    }
   };
 
   useEffect(() => {
+    alive.current = true;
     void loadData();
+    return () => {
+      alive.current = false; generation.current++;
+      const controller = overviewAbort.current;
+      // Allow the synchronous StrictMode setup to reuse the pending request; abort a real unmount.
+      queueMicrotask(() => { if (!alive.current) controller?.abort(); });
+    };
   }, []);
 
   const handleUpdateTarget = async (targetDays: number) => {
@@ -132,7 +178,9 @@ export default function DashboardPage() {
       onStartSession={handleStartSession}
       isLoading={isLoading}
       error={error}
-      onRetry={loadProgressAndAvailability}
+      onRetry={retryCore}
+      initialTopics={topics?.status === 'ready' ? topics.data : undefined}
+      topicsFailed={topics?.status === 'error'}
       engagement={engagement}
       engagementLoading={engagementLoading}
       engagementError={engagementError}

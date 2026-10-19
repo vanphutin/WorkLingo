@@ -38,6 +38,7 @@ import { IeltsFlowModule } from './ielts-flow/ielts-flow.module.js';
 import { IeltsStudyModule } from './ielts-study/ielts-study.module.js';
 import { AdminContentLifecycleModule } from './admin-content-lifecycle/admin-content-lifecycle.module.js';
 import { IntermediateTopicsModule } from './intermediate-topics/intermediate-topics.module.js';
+import { DashboardOverviewModule } from './dashboard-overview/dashboard-overview.module.js';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { IntermediateTopicsModule } from './intermediate-topics/intermediate-top
     ContentAuthoringModule,
     AdminContentLifecycleModule,
     IntermediateTopicsModule,
+    DashboardOverviewModule,
     JobsModule,
     LearningSessionsModule,
     MasteryModule,

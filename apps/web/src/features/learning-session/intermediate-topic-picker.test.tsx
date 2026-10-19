@@ -12,6 +12,15 @@ const id = '11111111-1111-4111-8111-111111111111';
 const session = learningSessionDtoSchema.parse({ id, clientSessionId: id, lessonVersionId: id, purpose: 'learning', durationMinutes: 60, status: 'planned', currentCheckpoint: 1, mission: { id, title: 'Restaurant' }, plan: { kind: 'topic', topicSelection: 'chosen', durationMinutes: 60, missionId: id, lessonVersionId: id, blocks: defaultTopicPlan(60).allocations.map((a, i) => ({ ...a, order: i + 1, activityIds: [`11111111-1111-4111-8111-${String(i + 1).padStart(12, '0')}`], skills: [(['writing', 'reading', 'listening', 'speaking'] as const)[i]!] })) }, blocks: [], attempts: [] });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); push.mockReset(); });
 describe('Learner topic choice', () => {
+  it('keeps an overview error visible and only fetches topics when retried', async () => {
+    const list = vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([{ id, title: 'Restaurant', lessonVersionId: id, durationMinutes: 60 }]);
+    render(<IntermediateTopicPicker enabled initialError><p>Legacy launcher</p></IntermediateTopicPicker>);
+    expect(screen.getByRole('alert')).toBeVisible();
+    expect(list).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: /retry/i }));
+    expect(await screen.findByRole('button', { name: 'Start this lesson' })).toBeEnabled();
+    expect(list).toHaveBeenCalledTimes(1);
+  });
   it('uses English group names for the English interface with Vietnamese fallback', async () => {
     vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([{ id, title: 'Booking', lessonVersionId: id, durationMinutes: 60,
       group: { id, name: 'Nhà hàng', nameEn: 'Restaurants', description: '' } }]);

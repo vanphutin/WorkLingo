@@ -7,18 +7,19 @@ import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopi
 import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client';
 
-export function IntermediateTopicPicker({ enabled, contextKey = '', children }: { enabled: boolean; contextKey?: string; children: ReactNode }) {
-  return enabled ? <PickerSession key={contextKey}>{children}</PickerSession> : children;
+type PickerProps = { children: ReactNode; initialTopics?: LearnerTopic[] | undefined; initialError?: boolean | undefined };
+export function IntermediateTopicPicker({ enabled, contextKey = '', children, initialTopics, initialError }: PickerProps & { enabled: boolean; contextKey?: string }) {
+  return enabled ? <PickerSession key={contextKey} initialTopics={initialTopics} initialError={initialError}>{children}</PickerSession> : children;
 }
-function PickerSession({ children }: { children: ReactNode }) {
+function PickerSession({ children, initialTopics, initialError }: PickerProps) {
   const t = useT('intermediateTopics', intermediateTopicsMessages);
   const tg = useT('intermediateGroups', intermediateGroupsMessages);
   const { locale } = useLocalePreference();
   const router = useRouter();
-  const [topics, setTopics] = useState<LearnerTopic[]>([]);
-  const [selected, setSelected] = useState('');
-  const [selectedGroup, setSelectedGroup] = useState('');
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [topics, setTopics] = useState<LearnerTopic[]>(initialTopics ?? []);
+  const [selected, setSelected] = useState(initialTopics?.[0]?.id ?? '');
+  const [selectedGroup, setSelectedGroup] = useState(initialTopics?.[0]?.group?.id ?? 'ungrouped');
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(initialError ? 'error' : initialTopics ? 'ready' : 'loading');
   const [attempt, setAttempt] = useState(0);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -27,13 +28,14 @@ function PickerSession({ children }: { children: ReactNode }) {
   const pending = useRef<{ mode: string; id: string } | null>(null);
   useEffect(() => {
     live.current = true;
+    if (attempt === 0 && (initialTopics !== undefined || initialError)) return () => { live.current = false; };
     let cancelled = false;
     void intermediateTopicClient.list().then(value => {
       if (cancelled) return;
       setTopics(value); setSelected(value[0]?.id ?? ''); setSelectedGroup(value[0]?.group?.id ?? 'ungrouped'); setStatus('ready');
     }).catch(() => { if (!cancelled) setStatus('error'); });
     return () => { cancelled = true; live.current = false; };
-  }, [attempt]);
+  }, [attempt, initialTopics, initialError]);
   const groups = Array.from(new Map(topics.flatMap(topic => topic.group ? [[topic.group.id, topic.group] as const] : [])).values());
   const grouped = groups.length > 0;
   const visibleTopics = grouped ? topics.filter(topic => (topic.group?.id ?? 'ungrouped') === selectedGroup) : topics;

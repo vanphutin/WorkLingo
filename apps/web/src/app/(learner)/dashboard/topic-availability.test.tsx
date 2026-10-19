@@ -1,31 +1,24 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import DashboardPage from './page';
-import { ApiError, apiClient } from '../../../lib/api/api-client';
 import { intermediateTopicClient } from '../../../lib/api/intermediate-topic-client';
-import { learningProgramClient } from '../../../lib/api/learning-program-client';
 import { learnerDashboardClient } from '../../../lib/api/learner-dashboard-client';
-import { engagementClient } from '../../../lib/api/engagement-client';
-import { dashboardFixture } from '../../../features/learner-dashboard/dashboard.test-fixtures';
+import { overviewFixture } from '../../../features/learner-dashboard/overview.test-fixture';
 const id = '11111111-1111-4111-8111-111111111111';
 const router = { push: vi.fn() };
 vi.mock('next/navigation', () => ({ useRouter: () => router }));
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 describe('Topic selection independent from generic mission availability', () => {
-  it('keeps an eligible topic reachable when a different generic mission has unmet prerequisites', async () => {
-    vi.spyOn(apiClient, 'getProgress').mockResolvedValue({ activityAttempts: 0, completedActivities: 0, currentLevelCode: 'B1', sessions: { completed: 0, inProgress: 0, paused: 0, planned: 0 } });
-    vi.spyOn(apiClient, 'getSessionAvailability').mockRejectedValue(new ApiError({ code: 'CURRICULUM_UNAVAILABLE', message: 'Selected mission has an unmet prerequisite.', status: 422 }));
-    vi.spyOn(learningProgramClient, 'getContext').mockResolvedValue({ activeProgram: { id, slug: 'intermediate', name: 'Intermediate' }, enrollment: { id, revision: 1, currentLevel: { id, code: 'B1', name: 'B1' } } });
-    vi.spyOn(apiClient, 'getCurriculumRoadmap').mockResolvedValue({ programId: id, enrollmentId: id, items: [] });
-    vi.spyOn(learnerDashboardClient, 'getAnalytics').mockResolvedValue(dashboardFixture);
-    vi.spyOn(engagementClient, 'getSummary').mockRejectedValue(new Error('unrelated panel offline'));
-    const topics = vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([{ id, title: 'Eligible restaurant topic', durationMinutes: 90, lessonVersionId: id }]);
+  it('uses prefetched topics even when generic mission availability fails with 422', async () => {
+    vi.spyOn(learnerDashboardClient, 'getOverview').mockResolvedValue({ ...overviewFixture,
+      roadmap: { status: 'ready', data: { programId: id, enrollmentId: id, items: [] } },
+      availability: { status: 'error', error: { code: 'CURRICULUM_UNAVAILABLE', status: 422 } },
+      topics: { status: 'ready', data: [{ id, title: 'Eligible restaurant topic', durationMinutes: 90, lessonVersionId: id }] } });
+    const topics = vi.spyOn(intermediateTopicClient, 'list');
     render(<DashboardPage />);
-    // Dashboard context loads before the picker mounts and requests its catalog.
-    await waitFor(() => expect(topics).toHaveBeenCalled());
     expect(await screen.findByRole('button', { name: 'Start this lesson' })).toBeEnabled();
     expect(screen.getByRole('option', { name: 'Eligible restaurant topic · 90 minutes' })).toBeVisible();
-    expect(screen.queryByText('Selected mission has an unmet prerequisite.')).not.toBeInTheDocument();
+    expect(topics).not.toHaveBeenCalled();
   });
 });

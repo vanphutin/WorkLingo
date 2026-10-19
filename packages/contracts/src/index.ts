@@ -26,3 +26,4 @@ export * from './ielts-study.contracts.ts';
 export * from './intermediate-topics.contracts.ts';
 export * from './intermediate-topic-groups.contracts.ts';
 export * from './intermediate-topic-json.contracts.ts';
+export * from './dashboard-overview.contracts.ts';

@@ -2,6 +2,7 @@ import {
   audioArtifactDtoSchema,
   authUserSchema,
   contentImportSchema,
+  learnerProgressDtoSchema,
   contentIssueSchema,
   contentStatusSchema,
   createCheckpointAssessmentSchema,
@@ -142,17 +143,7 @@ export const learningSessionDtoSchema = z.object({
   attempts: z.array(activityAttemptDtoSchema),
 });
 
-export const learnerProgressDtoSchema = z.object({
-  activityAttempts: z.number(),
-  completedActivities: z.number(),
-  currentLevelCode: z.string().nullable(),
-  sessions: z.object({
-    completed: z.number(),
-    inProgress: z.number(),
-    paused: z.number(),
-    planned: z.number(),
-  }),
-});
+export { learnerProgressDtoSchema } from '@worklingo/contracts';
 
 export type ActivityAttemptDto = z.infer<typeof activityAttemptDtoSchema>;
 export type LearnerActivityDto = z.infer<typeof learnerActivityDtoSchema>;
