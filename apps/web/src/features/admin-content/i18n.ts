@@ -45,6 +45,7 @@ export function useAdminContent() {
   const label = (value: string) => labels[value] ? t(labels[value]) : value;
   const message = (value: unknown): string => {
     if (typeof value === 'object' && value !== null && 'code' in value) {
+      if (value.code === 'NARRATION_REVIEW_REQUIRED') return t('narrationReviewRequired');
       if (value.code === 'VOCABULARY_REVIEW_REQUIRED') return t('vocabularyReviewRequired');
       if (value.code === 'VOCABULARY_REVIEW_STALE') return t('vocabularyReviewStale');
       if (value.code === 'VOCABULARY_SOURCE_STALE') return t('vocabularySourceStale');

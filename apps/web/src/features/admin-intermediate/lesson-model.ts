@@ -10,6 +10,7 @@ export interface IntermediateQuestion {
 export interface IntermediateLessonDraft {
   slug: string; title: string; level: string; objective: string; durationMinutes: number;
   readingText: string; speaker: string; dialogue: string; activatePrompt: string;
+  spokenText?: string | undefined; speechReview?: string | undefined;
   speakingPrompt: string; speakingModel: string; writingPrompt: string; writingModel: string;
   languageBlocks: IntermediateLanguageBlock[]; readingQuestions: IntermediateQuestion[]; listeningQuestions: IntermediateQuestion[];
 }
@@ -129,7 +130,7 @@ script:
 <<<
 ${block(draft.dialogue, 'Dialogue', true)}
 >>>
-[/AUDIO_SCRIPT]
+${draft.spokenText === undefined ? '' : `spoken_text:\n<<<\n${block(draft.spokenText, 'Spoken text', true)}\n>>>\nspeech_review: ${scalar(draft.speechReview ?? '', 'Speech review')}\n`}[/AUDIO_SCRIPT]
 
 [CONTENT workplace-dialogue]
 type: dialogue
@@ -182,6 +183,8 @@ export function readIntermediateLesson(source: string, category: IntermediateCat
     const draft: IntermediateLessonDraft = {
       slug: lesson.slug, title: lesson.title, level: lesson.level, objective: lesson.objective, durationMinutes: lesson.durationMinutes,
       readingText: contents.find(item => item.slug === 'workplace-reading')?.text ?? '', speaker: audioScripts[0]!.speaker ?? '', dialogue: audioScripts[0]!.script,
+      ...(audioScripts[0]!.spokenText !== undefined ? { spokenText: audioScripts[0]!.spokenText } : {}),
+      ...(audioScripts[0]!.speechReview !== undefined ? { speechReview: audioScripts[0]!.speechReview } : {}),
       activatePrompt: activities.find(item => item.slug === 'activate')?.question ?? '',
       speakingPrompt: activities.find(item => item.slug === 'speaking-response')?.question ?? '', speakingModel: activities.find(item => item.slug === 'speaking-response')?.prompt ?? '',
       writingPrompt: activities.find(item => item.slug === 'writing-response')?.question ?? '', writingModel: activities.find(item => item.slug === 'writing-response')?.prompt ?? '',

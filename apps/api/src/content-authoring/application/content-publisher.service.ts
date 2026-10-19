@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import type { ActivityType, LearningBlockType, Prisma } from '@prisma/client';
 import {
-  analyzeLessonSource,
+  audioScriptFingerprintText,
+  spokenScript,
   parseLessonSource,
 } from '@worklingo/content-format';
 import {
@@ -26,6 +27,7 @@ import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.j
 import { approvedTopicForPublication, isTopicSource } from '../../intermediate-topics/topic-source.js';
 import { ensureTopicMission } from '../../intermediate-topics/topic-mission.js';
 import { buildVocabularyPublicationReview, normalizeVocabularyExpression, validateVocabularyPublicationSelection } from './publication-vocabulary.js';
+import { analyzeReviewedSource as analyzeLessonSource, assertNarrationReviewed } from './audio-narration.js';
 
 @Injectable()
 export class ContentPublisherService {
@@ -148,11 +150,12 @@ export class ContentPublisherService {
 
     // 3. Audio readiness check
     const parseRes = parseLessonSource(contentImport.rawSource);
+    assertNarrationReviewed(parseRes.document);
     const audioScriptsMap = new Map<string, { script: string; hash: string }>();
     for (const script of parseRes.document.audioScripts) {
       audioScriptsMap.set(script.slug, {
-        script: script.script,
-        hash: createHash('sha256').update(script.script).digest('hex'),
+        script: spokenScript(script),
+        hash: createHash('sha256').update(audioScriptFingerprintText(script)).digest('hex'),
       });
     }
 
@@ -499,6 +502,8 @@ export class ContentPublisherService {
               })),
             };
           }
+          const audioRef = parseRes.document.activities.find(act => act.slug === a.slug)?.audioRef;
+          const audioText = audioRef ? audioScriptsMap.get(audioRef)?.script : undefined;
           return {
             id: a.id ?? randomUUID(),
             slug: a.slug,
@@ -508,7 +513,7 @@ export class ContentPublisherService {
             skills: [...a.skills],
             contentReferences: [...a.contentReferences],
             languageBlockReferences: a.languageBlockReferences.map(slug => resolvedLanguageSlugs.get(slug) ?? slug),
-            payload,
+            payload: audioText ? { ...(payload as Record<string, unknown>), audioText } : payload,
           };
         }),
       };

@@ -2,7 +2,8 @@ import { createHash } from 'node:crypto';
 
 import { Inject, Injectable, NotFoundException, type OnModuleInit } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
-import { parseLessonSource } from '@worklingo/content-format';
+import { audioScriptFingerprintText, parseLessonSource, spokenScript } from '@worklingo/content-format';
+import { assertNarrationReviewed, narrationReviewIssues } from './audio-narration.js';
 import { z } from 'zod';
 
 import { TextToSpeechProviderRegistry } from '../../ai-gateway/application/text-to-speech-provider.registry.js';
@@ -46,10 +47,12 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
         where: { id: payload.contentImportId },
       });
       if (!contentImport) throw new NotFoundException('Content import for audio was not found');
-      const script = parseLessonSource(contentImport.rawSource).document.audioScripts
+      const document = parseLessonSource(contentImport.rawSource).document;
+      assertNarrationReviewed(document);
+      const script = document.audioScripts
         .find((candidate) => candidate.slug === payload.audioScriptSlug);
       if (!script) throw new Error('Reviewed audio script is no longer available');
-      const currentHash = createHash('sha256').update(script.script).digest('hex');
+      const currentHash = createHash('sha256').update(audioScriptFingerprintText(script)).digest('hex');
       if (currentHash !== payload.scriptHash) {
         await this.markArtifact(payload, { status: 'STALE', failureSummary: 'Script changed before generation' });
         return { audioScriptSlug: payload.audioScriptSlug, status: 'STALE' };
@@ -68,7 +71,7 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
         },
       });
       const synthesized = await provider.synthesize({
-        script: script.script,
+        script: spokenScript(script),
         voiceConfig: payload.voiceConfig,
         ...(script.speaker ? { speaker: script.speaker } : {}),
       });
@@ -80,8 +83,8 @@ export class AudioGenerationHandler implements JobHandler, OnModuleInit {
         ? parseLessonSource(latest.rawSource).document.audioScripts
           .find((candidate) => candidate.slug === payload.audioScriptSlug)
         : undefined;
-      const stale = !latestScript
-        || createHash('sha256').update(latestScript.script).digest('hex') !== payload.scriptHash;
+      const stale = !latestScript || (latest && narrationReviewIssues(parseLessonSource(latest.rawSource).document).some(i => i.severity === 'error'))
+        || createHash('sha256').update(audioScriptFingerprintText(latestScript)).digest('hex') !== payload.scriptHash;
       const artifact = await this.database.audioArtifact.updateMany({
         where: { id: candidate.id, status: 'GENERATING' },
         data: {

@@ -484,6 +484,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
         const audioSlug = sectionSlug || '';
         let speaker: string | undefined;
         let scriptText = '';
+        let spokenText: string | undefined;
+        let speechReview: string | undefined;
         let closed = false;
         const audioStartOffset = sectionStartOffset;
 
@@ -512,17 +514,21 @@ export function parseLessonSource(source: string): ParseLessonResult {
             break;
           }
 
-          if (at.startsWith('script:')) {
+          if (at.startsWith('script:') || at.startsWith('spoken_text:')) {
+            const isSpoken = at.startsWith('spoken_text:');
             lineIdx++;
             if (lineIdx < lines.length && lines[lineIdx]!.text.trim() === '<<<') {
               const multi = readMultiline(lineIdx + 1);
               if (!multi.closed) {
                 addIssue('PARSE_UNCLOSED_MULTILINE', 'Unclosed multiline block in AUDIO_SCRIPT', aLine.startOffset, aLine.endOffset);
               }
-              scriptText = multi.text;
+              if (isSpoken) spokenText = multi.text;
+              else scriptText = multi.text;
               lineIdx = multi.nextLineIdx;
             } else {
-              scriptText = aLine.text.slice(7).trim();
+              const value = aLine.text.slice(aLine.text.indexOf(':') + 1).trim();
+              if (isSpoken) spokenText = value;
+              else scriptText = value;
             }
             continue;
           }
@@ -533,6 +539,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
             const v = aLine.text.slice(colonIdx + 1).trim();
             if (k === 'speaker') {
               speaker = v;
+            } else if (k === 'speech_review') {
+              speechReview = v;
             } else {
               addIssue('PARSE_UNKNOWN_FIELD', `Unknown field '${k}' in AUDIO_SCRIPT`, aLine.startOffset, aLine.endOffset);
             }
@@ -551,6 +559,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
           slug: audioSlug,
           speaker,
           script: scriptText,
+          ...(spokenText !== undefined ? { spokenText } : {}),
+          ...(speechReview !== undefined ? { speechReview } : {}),
         });
       } else if (sectionType === 'ACTIVITY') {
         const actSlug = sectionSlug || '';

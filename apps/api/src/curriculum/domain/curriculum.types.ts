@@ -10,8 +10,9 @@ const questionSchema = z.object({
   slug, prompt: text, options: z.array(text).min(2), answerIndex: z.number().int().nonnegative(),
   explanation: text, evidence: text,
 }).refine((q) => q.answerIndex < q.options.length, 'Answer must reference an option');
-const comprehensionPayload = z.object({ prompt: text, questions: z.array(questionSchema).min(1) });
+const comprehensionPayload = z.object({ prompt: text, questions: z.array(questionSchema).min(1), audioText: text.optional() });
 const responsePayload = z.object({
+  audioText: text.optional(),
   prompt: text, sampleAnswer: text, requiredPhrases: z.array(text).min(1), minWords: z.number().int().positive(),
 });
 const activityBase = {

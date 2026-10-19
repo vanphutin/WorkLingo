@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import {
-  analyzeLessonSource,
   parseLessonSource,
   type NormalizedLessonDraft,
 } from '@worklingo/content-format';
@@ -28,6 +27,7 @@ import { PrismaService } from '../../common/database/prisma.service.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { mapContentImportToDto } from '../infrastructure/content-analysis.mapper.js';
 import { isTopicSource } from '../../intermediate-topics/topic-source.js';
+import { analyzeReviewedSource as analyzeLessonSource } from './audio-narration.js';
 import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
 import { buildVocabularyPublicationReview } from './publication-vocabulary.js';
 

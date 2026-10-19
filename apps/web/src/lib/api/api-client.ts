@@ -104,6 +104,7 @@ export const activityAttemptDtoSchema = z.object({
 });
 
 export const learnerActivityDtoSchema = z.object({
+  audioText: z.string().min(1).optional(),
   id: z.string(),
   slug: z.string(),
   activityType: z.enum(['reading', 'listening', 'speaking', 'writing']),

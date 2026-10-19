@@ -62,7 +62,7 @@ function ListeningPractice({
 
   const audioUrl = apiClient.getActivityAudioUrl(sessionId, activity.id);
 
-  const transcript = contentItems.map((item) => item.text ?? '').filter(Boolean).join('\n');
+  const transcript = activity.audioText ?? contentItems.map((item) => item.text ?? '').filter(Boolean).join('\n');
   const usesSimulationPlaceholder = contentItems.some(
     (item) => item.audio?.kind === 'textPlaceholder',
   );

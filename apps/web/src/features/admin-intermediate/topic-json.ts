@@ -12,6 +12,8 @@ export function topicDraftToJson(draft: IntermediateLessonDraft): TopicJson {
   return {
     format: 'WorkLingoIntermediateTopic/1.0', slug: draft.slug, title: draft.title, level: draft.level,
     objective: draft.objective, readingText: draft.readingText, speaker: draft.speaker, activatePrompt: draft.activatePrompt,
+    ...(draft.spokenText !== undefined ? { spokenText: draft.spokenText } : {}),
+    ...(draft.speechReview !== undefined ? { speechReview: draft.speechReview } : {}),
     speakingPrompt: draft.speakingPrompt, speakingModel: draft.speakingModel,
     writingPrompt: draft.writingPrompt, writingModel: draft.writingModel,
     languageBlocks: draft.languageBlocks, readingQuestions: draft.readingQuestions, listeningQuestions: draft.listeningQuestions,

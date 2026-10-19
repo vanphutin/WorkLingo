@@ -13,6 +13,12 @@ function authored(category: IntermediateCategory) {
   };
 }
 describe('Intermediate structured lesson model', () => {
+  it('retains explicit spoken text and its review stamp when reopening the form', () => {
+    const draft = { ...authored('reading'), spokenText: 'Please confirm the new date tomorrow.', speechReview: 'a'.repeat(64) };
+    const source = serializeIntermediateLesson('reading', draft);
+    expect(parseLessonSource(source).document.audioScripts[0]!.spokenText).toBe('Please confirm the new date tomorrow.');
+    expect(readIntermediateLesson(source, 'reading')).toEqual(draft);
+  });
   it.each(intermediateCategories)('round trips and normalizes the %s form with all four skills', category => {
     const draft = authored(category);
     const source = serializeIntermediateLesson(category, draft);

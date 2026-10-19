@@ -223,6 +223,7 @@ export class LearningSessionsService {
         };
     return {
       activityType: activity.activityType,
+      ...(activity.payload.audioText ? { audioText: activity.payload.audioText } : {}),
       content,
       foundationCategory: snapshot.foundation?.category ?? null,
       id: activity.id,

@@ -2,6 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { readIntermediateTopicLesson, serializeIntermediateTopicLesson } from './topic-lesson-model';
 import { createTopicJsonTemplate, topicDraftToJson, topicJsonToDraft } from './topic-json';
 
+it('preserves an imported narration for review instead of silently dropping it', () => {
+  const input = { ...createTopicJsonTemplate(), spokenText: 'Hello team.', speechReview: 'a'.repeat(64) };
+  expect(topicDraftToJson(topicJsonToDraft(input))).toEqual(input);
+});
+
 describe('Intermediate topic JSON', () => {
   it('roundtrips a topic through JSON and the source format with one passage for audio', () => {
     const json = createTopicJsonTemplate();

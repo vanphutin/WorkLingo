@@ -1,3 +1,4 @@
+import { narrationEvidenceIssues } from './audio-narration.ts';
 import type {
   ContentNode,
   LanguageBlockNode,
@@ -195,6 +196,9 @@ export function validateLessonDocument(
   // Audio scripts
   for (const as of document.audioScripts) {
     trackSlug(as.slug, 'audio_script', as.range);
+    for (const issue of narrationEvidenceIssues(document, as)) {
+      addIssue(issue.code, issue.message, issue.severity, issue.range, issue.path);
+    }
     audioScriptMap.set(as.slug, as);
     if (!as.script) {
       addIssue('VAL_REQUIRED_FIELD', "Audio script 'script' is required", 'error', as.range, `audio_script.${as.slug}.script`);

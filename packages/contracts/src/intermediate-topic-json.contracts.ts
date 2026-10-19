@@ -13,6 +13,7 @@ const question = z.strictObject({ slug, prompt: block(false), options: z.array(s
 export const intermediateTopicJsonSchema = z.strictObject({
   format: z.literal('WorkLingoIntermediateTopic/1.0'), slug, title: scalar.trim().min(1), level: scalar, objective: scalar,
   readingText: block(true).trim().min(1), speaker: scalar, activatePrompt: block(false),
+  spokenText: block(true).trim().min(1).optional(), speechReview: z.string().regex(/^[a-f0-9]{64}$/u).optional(),
   speakingPrompt: block(false), speakingModel: scalar, writingPrompt: block(false), writingModel: scalar,
   languageBlocks: z.array(z.strictObject({ slug, expression: scalar, meaningVi: scalar, pronunciation: scalar,
     grammarPattern: scalar, example: scalar, commonError: scalar,

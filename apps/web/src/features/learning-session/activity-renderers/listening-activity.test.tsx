@@ -36,6 +36,17 @@ function completeListen(audio: HTMLElement) {
 }
 
 describe('ListeningActivity', () => {
+  it('speaks the reviewed rendition rather than the original email in browser mode', async () => {
+    vi.mocked(audioSettingsClient.getLearnerSettings).mockResolvedValue({ browserVoiceId: null, sourceId: 'browser-tts' });
+    const speak = vi.fn();
+    vi.stubGlobal('SpeechSynthesisUtterance', class { constructor(readonly text: string) {} });
+    vi.stubGlobal('speechSynthesis', { speak, cancel: vi.fn(), pause: vi.fn(), resume: vi.fn(), paused: false,
+      getVoices: () => [{ name: 'Microsoft Zira', voiceURI: 'zira', lang: 'en-US', localService: true, default: true }], addEventListener: vi.fn(), removeEventListener: vi.fn() });
+    render(<ListeningActivity activity={{ ...listeningActivity, audioText: 'Hello team.', content: [{ type: 'email', text: 'From: May\nTo: Team\n\nHello team.' }] }} sessionId="00000000-0000-4000-8000-000000000020" value={{ answerIndexes: [] }} onChange={vi.fn()} />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Play preview' }));
+    expect(speak.mock.calls[0]![0].text).toBe('Hello team.');
+    expect(screen.queryByText('From: May')).not.toBeInTheDocument();
+  });
   it('uses session-bound audio without autoplay', async () => {
     const activity = {
       id: '00000000-0000-4000-8000-000000000010', slug: 'listen', activityType: 'listening',

@@ -17,6 +17,7 @@ export interface ActivityAttemptDto {
 }
 
 export interface LearnerActivityDto {
+  readonly audioText?: string;
   readonly id: string;
   readonly slug: string;
   readonly activityType: 'reading' | 'listening' | 'speaking' | 'writing';
