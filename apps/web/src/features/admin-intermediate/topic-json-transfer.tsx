@@ -8,8 +8,9 @@ import type { IntermediateLessonDraft } from './lesson-model';
 import { createTopicJsonTemplate, topicDraftToJson, topicJsonToDraft } from './topic-json';
 
 const MAX_BYTES = 1_000_000;
-export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChange }: {
+export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChange, anchorId }: {
   draft: IntermediateLessonDraft; dirty: boolean; disabled: boolean;
+  anchorId?: string;
   onApply: (draft: IntermediateLessonDraft) => void; onDirtyChange: (dirty: boolean) => void;
 }) {
   const t = useT('intermediateTopics', intermediateTopicsMessages);
@@ -43,7 +44,7 @@ export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChan
     link.href = url; link.download = 'intermediate-topic.json'; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 0);
   };
-  return <details className="intermediate-card intermediate-json">
+  return <details id={anchorId} tabIndex={-1} className="intermediate-card intermediate-json">
     <summary>{t('jsonTitle')}</summary>
     <p className="intermediate-help" id={`${id}-help`}>{t('jsonHelp')}</p>
     <fieldset disabled={disabled || loading} className="intermediate-form-fields">

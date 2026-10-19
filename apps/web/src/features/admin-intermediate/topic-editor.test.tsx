@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ContentImportDto } from '@worklingo/contracts';
 import { apiClient } from '../../lib/api/api-client';
@@ -20,6 +20,54 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); push.mockReset(); });
 describe('A topic contains the source passage and its connected practice', () => {
+  it('keeps exactly 10 imported reading questions and links to each from the outline', () => {
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    const template = createTopicJsonTemplate();
+    const readingQuestions = Array.from({ length: 10 }, (_, i) => ({ ...template.readingQuestions[0]!, slug: `reading-${i + 1}`, prompt: `Admin question ${i + 1}` }));
+    fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: JSON.stringify({ ...template, readingQuestions }) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    fireEvent.click(screen.getByText('Lesson outline', { selector: 'summary' }));
+    const outline = screen.getByRole('navigation', { name: 'Lesson outline' });
+    expect(outline).toHaveTextContent('10 reading questions');
+    expect(screen.getAllByRole('group', { name: /^Reading question \d+$/ })).toHaveLength(10);
+    const last = within(outline).getByRole('link', { name: 'Reading question 10' });
+    const target = screen.getByRole('group', { name: 'Reading question 10' });
+    expect(last.getAttribute('href')).toBe(`#${target.id}`);
+    fireEvent.click(last);
+    expect(confirm).not.toHaveBeenCalled();
+    expect(target).toHaveFocus();
+    expect(within(target).getByLabelText('Question')).toHaveValue('Admin question 10');
+    fireEvent.change(screen.getByRole('textbox', { name: 'Source passage' }), { target: { value: 'A much longer passage. '.repeat(100) } });
+    expect(screen.getAllByRole('group', { name: /^Reading question \d+$/ })).toHaveLength(10);
+    expect(outline).toHaveTextContent('10 reading questions');
+    fireEvent.click(within(screen.getByRole('group', { name: 'Reading question 1' })).getByRole('button', { name: 'Remove question' }));
+    expect(outline).toHaveTextContent('9 reading questions');
+    const ninth = within(outline).getByRole('link', { name: 'Reading question 9' });
+    fireEvent.click(ninth);
+    expect(within(screen.getByRole('group', { name: 'Reading question 9' })).getByLabelText('Question')).toHaveValue('Admin question 10');
+    expect(within(outline).queryByRole('link', { name: 'Reading question 10' })).not.toBeInTheDocument();
+    fireEvent.click(within(screen.getByRole('region', { name: 'Source passage' })).getByRole('button', { name: 'Add question' }));
+    expect(outline).toHaveTextContent('10 reading questions');
+    expect(within(outline).getByRole('link', { name: 'Reading question 10' })).toHaveAttribute('href', `#${screen.getByRole('group', { name: 'Reading question 10' }).id}`);
+  }, 15_000);
+  it('opens JSON from the outline and keeps reading/listening anchor targets distinct', () => {
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Lesson outline', { selector: 'summary' }));
+    const outline = screen.getByRole('navigation', { name: 'Lesson outline' });
+    const jsonPanel = screen.getByText('Import a topic from JSON', { selector: 'summary' }).closest('details')!;
+    expect(jsonPanel).not.toHaveAttribute('open');
+    fireEvent.click(within(outline).getByRole('link', { name: 'Import a topic from JSON' }));
+    expect(jsonPanel).toHaveAttribute('open');
+    expect(jsonPanel).toHaveFocus();
+    const reading = within(outline).getByRole('link', { name: 'Reading question 1' });
+    const listening = within(outline).getByRole('link', { name: 'Listening question 1' });
+    expect(reading.getAttribute('href')).not.toBe(listening.getAttribute('href'));
+    fireEvent.click(listening);
+    expect(screen.getByRole('group', { name: 'Listening question 1' })).toHaveFocus();
+    expect(within(outline).queryByRole('link', { name: 'Session time and administrator approval' })).not.toBeInTheDocument();
+  });
   it('imports JSON into editable fields without saving or approving it', () => {
     render(<IntermediateLessonEditor category="reading" topic />);
     fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
@@ -99,7 +147,7 @@ describe('A topic contains the source passage and its connected practice', () =>
     fireEvent.change(screen.getByLabelText('Lesson title'), { target: { value: 'At the restaurant' } });
     fireEvent.change(screen.getByRole('textbox', { name: 'Source passage' }), { target: { value: 'Please confirm the order.' } });
     expect(screen.queryByLabelText('Dialogue')).not.toBeInTheDocument();
-    expect(screen.getByText('Vocabulary, grammar and pronunciation')).toBeVisible();
+    expect(screen.getByRole('heading', { name: 'Vocabulary, grammar and pronunciation' })).toBeVisible();
     fireEvent.click(screen.getByRole('button', { name: 'Create draft' }));
     await waitFor(() => expect(push).toHaveBeenCalledWith(`/admin/programs/intermediate/topics/${id}`));
     const source = vi.mocked(apiClient.createContentImport).mock.calls[0]![0];

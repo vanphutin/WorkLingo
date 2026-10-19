@@ -23,6 +23,8 @@ export const intermediateTopicsMessages = {
     jsonReplace: 'Replace the unsaved lesson fields with this JSON?', jsonDiscard: 'Discard the pending JSON buffer?',
     jsonInvalid: 'Invalid JSON. The lesson fields were preserved.', jsonFileError: 'Could not read this file. Choose a JSON file up to 1 MB.',
     jsonApplied: 'JSON applied to the form. Review the fields and save the draft.', jsonPending: 'Apply or clear the pending JSON before saving or reviewing this lesson.',
+    outlineTitle: 'Lesson outline', outlineWords: '{count} passage words', outlineReading: '{count} reading questions', outlineListening: '{count} listening questions',
+    outlineSave: 'Save draft', outlineAdminOnly: 'Questions come from the admin form or JSON. AI suggests duration only.',
   },
   vi: {
     title: 'Bài học theo chủ đề', tools: 'Công cụ Trung cấp', description: 'Một bài đọc gốc, các phần luyện tập liên kết và khung thời lượng do admin duyệt.',
@@ -48,5 +50,7 @@ export const intermediateTopicsMessages = {
     jsonReplace: 'Thay các trường bài học chưa lưu bằng nội dung JSON này?', jsonDiscard: 'Bỏ nội dung JSON đang nhập?',
     jsonInvalid: 'JSON không hợp lệ. Các trường bài học vẫn được giữ nguyên.', jsonFileError: 'Không đọc được file. Hãy chọn file JSON tối đa 1 MB.',
     jsonApplied: 'Đã điền JSON vào biểu mẫu. Kiểm tra các trường rồi lưu bản nháp.', jsonPending: 'Áp dụng hoặc xóa nội dung JSON đang nhập trước khi lưu hay duyệt bài.',
+    outlineTitle: 'Mục lục bài học', outlineWords: '{count} từ trong bài đọc', outlineReading: '{count} câu hỏi đọc', outlineListening: '{count} câu hỏi nghe',
+    outlineSave: 'Lưu bản nháp', outlineAdminOnly: 'Câu hỏi do admin nhập hoặc nạp từ JSON. AI chỉ đề xuất thời lượng.',
   },
 } as const;

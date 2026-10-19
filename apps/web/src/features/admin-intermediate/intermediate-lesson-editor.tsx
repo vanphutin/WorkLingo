@@ -18,6 +18,7 @@ import './intermediate-authoring.css';
 import { isIntermediateTopicSource, readIntermediateTopicLesson, serializeIntermediateTopicLesson } from './topic-lesson-model';
 import { TopicReviewPanel } from './topic-review-panel';
 import { TopicJsonTransfer } from './topic-json-transfer';
+import { TopicLessonOutline } from './topic-lesson-outline';
 
 type T = Translator<typeof adminIntermediateMessages>;
 type Props = { category: IntermediateCategory; importId?: string; topic?: boolean };
@@ -107,13 +108,15 @@ function LanguageFields({ category, blocks, onChange, t }: {
   </div>;
 }
 
-function Questions({ skill, questions, onChange, t }: {
+function Questions({ skill, questions, onChange, t, anchorPrefix }: {
   skill: 'reading' | 'listening'; questions: IntermediateQuestion[]; onChange: (questions: IntermediateQuestion[]) => void; t: T;
+  anchorPrefix?: string | undefined;
 }) {
   const update = (index: number, patch: Partial<IntermediateQuestion>) => onChange(questions.map((item, i) => i === index ? { ...item, ...patch } : item));
   return <div className="intermediate-section-body">
-    <h3>{t(skill === 'reading' ? 'readingQuestions' : 'listeningQuestions')}</h3>
-    {questions.map((question, index) => <fieldset className="intermediate-item" key={index}>
+    <h3 id={anchorPrefix ? `${anchorPrefix}-${skill}-questions` : undefined} tabIndex={anchorPrefix ? -1 : undefined}>{t(skill === 'reading' ? 'readingQuestions' : 'listeningQuestions')}</h3>
+    {questions.map((question, index) => <fieldset className="intermediate-item" key={index}
+      id={anchorPrefix ? `${anchorPrefix}-${skill}-question-${index + 1}` : undefined} tabIndex={anchorPrefix ? -1 : undefined}>
       <legend>{t(skill === 'reading' ? 'readingQuestion' : 'listeningQuestion', { count: index + 1 })}</legend>
       <Field label={t('question')} value={question.prompt} multiline onChange={(value) => update(index, { prompt: value })} />
       <div className="intermediate-options">
@@ -164,6 +167,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   const mounted = useRef(false);
   const inFlight = useRef(false);
   const headingId = useId();
+  const target = (key: string) => topic ? { id: `${headingId}-${key}`, tabIndex: -1 } : {};
   const readOnly = record?.status === 'PUBLISHED' || record?.status === 'ARCHIVED';
   const dirty = draft !== savedDraft;
   const anyDirty = dirty || planDirty || jsonDirty;
@@ -218,15 +222,17 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   );
   const language = <LanguageFields category={category} blocks={draft.languageBlocks} onChange={(languageBlocks) => update({ languageBlocks })} t={t} />;
   const reading = <div className="intermediate-section-body">{textField('readingText')}
-    <Questions skill="reading" questions={draft.readingQuestions} onChange={(readingQuestions) => update({ readingQuestions })} t={t} /></div>;
+    <Questions skill="reading" questions={draft.readingQuestions} onChange={(readingQuestions) => update({ readingQuestions })} t={t} anchorPrefix={topic ? headingId : undefined} /></div>;
   const listening = <div className="intermediate-section-body">{textField('speaker', false, t('speakerHelp'))}{topic ? <p>{tt('listeningHelp')}</p> : textField('dialogue', true, t('dialogueHelp'))}
-    <Questions skill="listening" questions={draft.listeningQuestions} onChange={(listeningQuestions) => update({ listeningQuestions })} t={t} /></div>;
+    <Questions skill="listening" questions={draft.listeningQuestions} onChange={(listeningQuestions) => update({ listeningQuestions })} t={t} anchorPrefix={topic ? headingId : undefined} /></div>;
   const speaking = <div className="intermediate-section-body">{textField('speakingPrompt')}{textField('speakingModel', false, t('modelHelp'))}</div>;
   const writing = <div className="intermediate-section-body">{textField('writingPrompt')}{textField('writingModel', false, t('modelHelp'))}</div>;
   const skills = { reading, listening, speaking, writing };
   const languagePrimary = category === 'grammar' || category === 'pronunciation' || category === 'vocabulary';
 
-  return <div className="intermediate-editor">
+  return <div className={topic ? 'intermediate-topic-layout' : undefined}>
+    {topic ? <TopicLessonOutline prefix={headingId} draft={draft} hasReview={Boolean(record)} canSave={!readOnly} /> : null}
+    <div className="intermediate-editor">
     <Link href={`/admin/programs/intermediate/${topic ? 'topics' : category}`}>{topic ? tt('back') : t('back', { category: t(category) })}</Link>
     <header className="intermediate-editor-header">
       <p className="intermediate-eyebrow">{t('program')} / {topic ? tt('title') : t(category)}</p>
@@ -236,13 +242,13 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
     </header>
     {readOnly ? <p className="intermediate-notice">{t('readOnly')}</p> : null}
     {error ? <p role="alert" className="intermediate-notice intermediate-error">{t(error)}</p> : null}
-    {topic ? <TopicJsonTransfer draft={draft} dirty={dirty} disabled={saving || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
+    {topic ? <TopicJsonTransfer anchorId={`${headingId}-json`} draft={draft} dirty={dirty} disabled={saving || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
       onApply={next => { setDraft(next); setSaved(false); }} /> : null}
     {jsonDirty ? <p role="status" className="intermediate-help">{tt('jsonPending')}</p> : null}
     <form onSubmit={(event) => void save(event)}>
       <fieldset className="intermediate-form-fields" disabled={saving || readOnly}>
         <legend className="intermediate-sr-only">{t('editTitle', { category: t(category) })}</legend>
-        <section className="intermediate-card">
+        <section className="intermediate-card" {...target('basics')}>
           <h2>{t('basics')}</h2>
           <div className="intermediate-grid">
             <Field label={t('title')} value={draft.title} onChange={(title) => update({ title })} />
@@ -252,17 +258,17 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
           </div>
           <Field label={t('objective')} value={draft.objective} onChange={(objective) => update({ objective })} />
         </section>
-        <section className="intermediate-card intermediate-primary" aria-labelledby={headingId}>
+        <section className="intermediate-card intermediate-primary" aria-labelledby={headingId} {...target('passage')}>
           <h2 id={headingId}>{topic ? tt('passage') : t(focusKey)}</h2>
           <p className="intermediate-help">{topic ? tt('passageHelp') : t(helpKey)}</p>
           {languagePrimary ? language : skills[category as keyof typeof skills]}
         </section>
         {topic ? <section className="intermediate-card intermediate-supporting">
-          <h2>{tt('parts')}</h2>{textField('activatePrompt')}
-          <section><h2>{tt('language')}</h2>{language}</section>
-          <section><h2>{tt('listening')}</h2>{listening}</section>
-          <section><h2>{t('speaking')}</h2>{speaking}</section>
-          <section><h2>{t('writing')}</h2>{writing}</section>
+          <h2>{tt('parts')}</h2><div {...target('warmup')}>{textField('activatePrompt')}</div>
+          <section {...target('language')}><h2>{tt('language')}</h2>{language}</section>
+          <section {...target('listening')}><h2>{tt('listening')}</h2>{listening}</section>
+          <section {...target('speaking')}><h2>{t('speaking')}</h2>{speaking}</section>
+          <section {...target('writing')}><h2>{t('writing')}</h2>{writing}</section>
         </section> : <details className="intermediate-card intermediate-supporting">
           <summary>{t('supporting')}</summary>
           <p className="intermediate-help">{t('supportingHelp')}</p>
@@ -273,15 +279,16 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
           ))}
         </details>}
       </fieldset>
-      {!readOnly ? <div className="intermediate-actions">
+      {!readOnly ? <div className="intermediate-actions" {...target('save')}>
         <button className="intermediate-save" type="submit" disabled={saving || jsonDirty || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
         <span role="status" aria-live="polite">{saved ? t('saved') : dirty ? t('dirty') : ''}</span>
       </div> : null}
     </form>
-    {topic && record ? <TopicReviewPanel record={record} dirty={dirty || jsonDirty} onDirtyChange={setPlanDirty} /> : null}
-    {record ? <aside className="intermediate-card intermediate-lifecycle">
+    {topic && record ? <div {...target('review')}><TopicReviewPanel record={record} dirty={dirty || jsonDirty} onDirtyChange={setPlanDirty} /></div> : null}
+    {record ? <aside className="intermediate-card intermediate-lifecycle" {...target('lifecycle')}>
       <Link href={`/admin/content/${record.id}`}>{t('lifecycle')}</Link>
       <p className="intermediate-help">{t('lifecycleHelp')}</p>
     </aside> : null}
+    </div>
   </div>;
 }

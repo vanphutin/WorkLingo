@@ -50,6 +50,14 @@ Tất cả trường trên đều bắt buộc; các trường văn bản ngoài
 
 **Tải biểu mẫu dạng JSON** xuất các trường hiện tại, kể cả phần đang soạn dở; cần điền tên và bài đọc trước khi nhập lại. JSON không chứa `dialogue`, `durationMinutes`, ID hệ thống, trạng thái xuất bản hay phê duyệt. Nhập JSON không tự lưu, đề xuất AI, duyệt hoặc xuất bản. Thời lượng vẫn theo quy trình duyệt riêng; thay nguồn đã lưu làm phê duyệt cũ hết hiệu lực.
 
+### Mục lục khi soạn bài dài
+
+**Mục lục bài học** nằm cố định bên phải trên desktop, hiển thị số từ của bài đọc, số câu đọc/nghe và liên kết tới từng câu. Bấm một mục để đến đúng phần và chuyển tiêu điểm bàn phím; mục JSON tự mở nếu đang thu gọn. Nhảy trong bài không yêu cầu bỏ nội dung chưa lưu. Khi thêm/xóa câu hoặc áp dụng JSON, mục lục cập nhật theo các trường hiện tại. Bài mới chưa lưu chưa có liên kết duyệt thời lượng; bài đã xuất bản không có liên kết lưu nháp.
+
+Trên màn hình nhỏ, mục lục nằm trước biểu mẫu, mặc định thu gọn và có vùng cuộn riêng khi mở. Danh sách dài không làm tràn chiều ngang.
+
+**Admin quyết định toàn bộ câu hỏi.** Ví dụ JSON có 6 câu đọc và 4 câu nghe thì hệ thống dùng đúng 10 câu đó. Tăng độ dài bài đọc không tự thêm câu hỏi. AI chỉ hỗ trợ đề xuất thời lượng; không sinh hoặc tự chèn câu hỏi vào biểu mẫu hay phiên học.
+
 Công cụ nâng cao của cùng ID tiếp tục phụ trách kiểm tra, âm thanh và xuất bản. Backend chặn xuất bản topic chưa có phê duyệt phù hợp nguồn hiện tại. Sau đó gắn bài đã xuất bản vào nhiệm vụ của đúng lộ trình/trình độ và xuất bản giáo trình theo công cụ hiện có. Việc lưu hoặc duyệt thời lượng không tự xuất bản, không tự thêm bài vào lộ trình.
 
 Học viên chọn topic hoặc để hệ thống chọn ngẫu nhiên trong các topic đã xuất bản và đủ điều kiện của chương trình/trình độ hiện tại. Mỗi phiên giữ đúng một topic, toàn bộ hoạt động và khung thời lượng admin đã duyệt. Nói/viết cùng thuộc chặng phản hồi; bốn chặng có thời lượng linh hoạt và không bỏ bớt hoạt động để vừa khung 15 phút của bài cũ. Phiên đang học giữ snapshot đã đóng băng. Các bài cũ vẫn có thể bắt đầu khi chưa có topic mới hợp lệ.
