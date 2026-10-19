@@ -35,7 +35,7 @@ export function TopicLessonOutline({ prefix, draft, hasReview, canSave }: {
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
       if (visible[0]) setActive(visible[0].target.id);
     }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
     targets.split('|').forEach(target => { const element = document.getElementById(target); if (element) observer.observe(element); });

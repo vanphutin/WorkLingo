@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import { approveTopicSchema, createTopicSessionSchema, learnerTopicSchema, topicReviewRequestSchema, topicReviewSchema, type ApproveTopic, type CreateTopicSession, type TopicReviewRequest } from '@worklingo/contracts';
 import { ApiError, learningSessionDtoSchema } from './api-client';
+import { repairTopicJsonRequestSchema, topicJsonRepairProposalSchema, type RepairTopicJsonRequest } from '@worklingo/contracts';
 
 class IntermediateTopicClient {
+  repairJson(input: RepairTopicJsonRequest) { return this.request('/admin/intermediate-topics/repair-json', 'POST', repairTopicJsonRequestSchema.parse(input), topicJsonRepairProposalSchema); }
   review(id: string) { return this.request(`/admin/intermediate-topics/${encodeURIComponent(id)}/review`, 'GET', undefined, topicReviewSchema); }
   propose(id: string, input: TopicReviewRequest) { return this.request(`/admin/intermediate-topics/${encodeURIComponent(id)}/propose`, 'POST', topicReviewRequestSchema.parse(input), topicReviewSchema); }
   approve(id: string, input: ApproveTopic) { return this.request(`/admin/intermediate-topics/${encodeURIComponent(id)}/approve`, 'POST', approveTopicSchema.parse(input), topicReviewSchema); }

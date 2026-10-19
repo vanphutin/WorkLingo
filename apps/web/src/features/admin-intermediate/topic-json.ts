@@ -1,38 +1,10 @@
-import { z } from 'zod';
+import { intermediateTopicJsonSchema, type IntermediateTopicJson } from '@worklingo/contracts';
 import type { IntermediateLessonDraft } from './lesson-model';
-import { serializeIntermediateTopicLesson } from './topic-lesson-model';
-
-const text = z.string().max(100_000);
-const question = z.strictObject({
-  slug: text, prompt: text, options: z.array(text).min(2).max(10),
-  answerIndex: z.number().int().nonnegative(), explanation: text, evidenceLine: z.number().int().positive(),
-});
-const jsonShape = z.strictObject({
-  format: z.literal('WorkLingoIntermediateTopic/1.0'),
-  slug: text, title: text.trim().min(1), level: text, objective: text,
-  readingText: text.trim().min(1), speaker: text, activatePrompt: text,
-  speakingPrompt: text, speakingModel: text, writingPrompt: text, writingModel: text,
-  languageBlocks: z.array(z.strictObject({
-    slug: text, expression: text, meaningVi: text, pronunciation: text, grammarPattern: text,
-    example: text, commonError: text, collocations: z.array(text).max(100),
-  })).min(1).max(100),
-  readingQuestions: z.array(question).min(1).max(100), listeningQuestions: z.array(question).min(1).max(100),
-});
-type TopicJson = z.infer<typeof jsonShape>;
+type TopicJson = IntermediateTopicJson;
 function toDraft(value: TopicJson): IntermediateLessonDraft {
   return { ...value, dialogue: value.readingText, durationMinutes: 60 };
 }
-export const topicJsonSchema = jsonShape.superRefine((value, context) => {
-  const lines = value.readingText.replace(/\r\n?/gu, '\n').split('\n').length;
-  for (const key of ['readingQuestions', 'listeningQuestions'] as const) {
-    value[key].forEach((item, index) => {
-      if (item.answerIndex >= item.options.length) context.addIssue({ code: 'custom', path: [key, index, 'answerIndex'], message: 'Answer index must refer to an option (starting at 0).' });
-      if (item.evidenceLine > lines) context.addIssue({ code: 'custom', path: [key, index, 'evidenceLine'], message: 'Evidence line must exist in the source passage (starting at 1).' });
-    });
-  }
-  try { serializeIntermediateTopicLesson(toDraft(value)); }
-  catch (cause) { context.addIssue({ code: 'custom', message: cause instanceof Error ? cause.message : 'Unsupported lesson content.' }); }
-});
+export const topicJsonSchema = intermediateTopicJsonSchema;
 export function topicJsonToDraft(value: unknown): IntermediateLessonDraft {
   return toDraft(topicJsonSchema.parse(value));
 }

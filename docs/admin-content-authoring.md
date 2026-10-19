@@ -32,7 +32,9 @@ Lưu bản nháp rồi chọn **Nhờ AI đề xuất**, hoặc tự chọn khun
 
 Sidebar **Trung cấp → Công cụ Trung cấp** có **Bài học theo chủ đề** và **Thêm bài học theo chủ đề**. Các chuyên mục cũ nằm trong nhóm thu gọn riêng, tự mở khi truy cập đường dẫn cũ.
 
-Trong biểu mẫu thêm/sửa topic, mở **Nhập bài theo chủ đề bằng JSON**. Dán nội dung hoặc chọn file JSON tối đa 1 MB; **Nạp JSON mẫu** cung cấp ví dụ đầy đủ. Có thể dùng [file mẫu nhà hàng](examples/intermediate-topic.json). Bấm **Áp dụng JSON vào biểu mẫu**, kiểm tra các trường rồi **Tạo/Lưu bản nháp**. JSON chưa áp dụng được cảnh báo khi rời trang và phải áp dụng hoặc xóa trước khi lưu/duyệt. Thay các trường đã chỉnh sửa cần xác nhận. File đọc lỗi hoặc JSON sai không thay nội dung biểu mẫu.
+Trong biểu mẫu thêm/sửa topic, mở **Nhập bài theo chủ đề bằng JSON**. Dán nội dung hoặc chọn file JSON tối đa 1 MB; **Nạp JSON mẫu** cung cấp ví dụ đầy đủ. Có thể dùng [file mẫu nhà hàng](examples/intermediate-topic.json). JSON hợp lệ tự điền thông tin bài học, bài đọc và các phần luyện tập để review. Bấm **Xem bài đã điền** để đến phần thông tin, kiểm tra rồi **Tạo/Lưu bản nháp**; nhập JSON không tự lưu.
+
+Nếu chưa sửa tay, các lần chỉnh JSON hợp lệ tiếp theo tiếp tục đồng bộ vào biểu mẫu. Khi admin đã sửa trường bằng tay, JSON mới không tự ghi đè: phải bấm **Áp dụng JSON vào biểu mẫu** và xác nhận thay thế. Quy tắc này cũng áp dụng nếu chỉnh tay trong khi file còn đang đọc. JSON chưa hợp lệ hoặc đang chờ áp dụng được cảnh báo khi rời trang và phải sửa, áp dụng hoặc xóa trước khi lưu/duyệt. File đọc lỗi hoặc JSON sai không thay nội dung biểu mẫu.
 
 Định dạng cho **một topic**, không phải mảng nhiều bài:
 
@@ -49,6 +51,18 @@ Trong biểu mẫu thêm/sửa topic, mở **Nhập bài theo chủ đề bằng
 Tất cả trường trên đều bắt buộc; các trường văn bản ngoài tên/bài đọc có thể để chuỗi rỗng để hoàn thiện sau. Mã bài/mục dùng chữ thường, số, dấu gạch nối; mã các mục phải khác nhau. Không thêm trường ngoài định dạng, kể cả trong câu hỏi hoặc mục ngôn ngữ. Các ký hiệu điều khiển của nguồn bài được kiểm tra trước khi áp dụng.
 
 **Tải biểu mẫu dạng JSON** xuất các trường hiện tại, kể cả phần đang soạn dở; cần điền tên và bài đọc trước khi nhập lại. JSON không chứa `dialogue`, `durationMinutes`, ID hệ thống, trạng thái xuất bản hay phê duyệt. Nhập JSON không tự lưu, đề xuất AI, duyệt hoặc xuất bản. Thời lượng vẫn theo quy trình duyệt riêng; thay nguồn đã lưu làm phê duyệt cũ hết hiệu lực.
+
+### Lỗi JSON và đề xuất sửa định dạng
+
+Thông báo lỗi chỉ rõ đường dẫn trường, ví dụ `writingModel` hoặc `readingQuestions[0].answerIndex`. Chỉ số câu hỏi trong đường dẫn bắt đầu từ 0. Nếu sai cú pháp JSON, giao diện hiển thị dòng/cột khi bộ phân tích xác định được và nút **Đến vị trí lỗi JSON** đưa con trỏ đến chỗ đó. Tối đa 10 lỗi được liệt kê mỗi lần; sửa rồi hệ thống kiểm tra lại.
+
+Ví dụ `writingModel` chứa email nhiều đoạn: định dạng bài hiện lưu câu trả lời mẫu trên một dòng, nên cần thay xuống dòng bằng dấu cách. Bài đọc gốc `readingText` vẫn được xuống dòng; số dòng của bài đọc gắn với dẫn chứng nên không tự đổi.
+
+Với lỗi định dạng có thể xác minh, bấm **Nhờ AI đề xuất sửa JSON**. Chức năng dùng nhà cung cấp/model đã cấu hình tại **Cài đặt AI**, chỉ gọi khi admin bấm, một lần mỗi yêu cầu, không tự thử lại. Chế độ fake không tạo bản sửa giả. Phạm vi sửa tối đa 200.000 ký tự, nhỏ hơn giới hạn file nhập 1 MB.
+
+AI chỉ đề xuất thay dấu phân cách hoặc khoảng trắng/xuống dòng của trường đơn dòng. Bộ kiểm tra so sánh các giá trị và cấu trúc, từ chối thêm/bớt câu hỏi, đổi đáp án, đổi bài đọc hay dòng dẫn chứng. Dữ liệu thiếu, chuỗi bị cắt, khóa trùng, cấu trúc ngoặc không rõ ràng, nhiều khả năng sửa hoặc bản sửa không hợp lệ đều phải sửa tay; hệ thống không cố đoán. Lỗi nhà cung cấp được báo riêng và giữ nguyên nội dung gốc.
+
+Bản đề xuất hiển thị riêng, chưa thay ô JSON hay biểu mẫu. Admin đọc rồi bấm **Áp dụng bản sửa đã xem** hoặc **Bỏ đề xuất**. Nếu đã chỉnh tay trong lúc AI xử lý, thay thế phải được xác nhận. Áp dụng không tự lưu, phê duyệt hay xuất bản. Endpoint `POST /api/v1/admin/intermediate-topics/repair-json` chỉ dành cho content/system admin, giới hạn 5 yêu cầu/phút/người dùng và không ghi bài học vào cơ sở dữ liệu.
 
 ### Mục lục khi soạn bài dài
 

@@ -21,4 +21,12 @@ describe('Intermediate topic JSON', () => {
       expect(() => topicJsonToDraft({ ...json, readingQuestions: [{ ...json.readingQuestions[0], ...patch }] })).toThrow();
     }
   });
+  it('identifies the exact model field when a multi-paragraph email cannot be serialized', () => {
+    try {
+      topicJsonToDraft({ ...createTopicJsonTemplate(), writingModel: 'Dear guest,\n\nYour booking is confirmed.\nBest regards.' });
+      expect.fail('Expected a field validation error');
+    } catch (error) {
+      expect(error).toMatchObject({ issues: expect.arrayContaining([expect.objectContaining({ path: ['writingModel'], message: expect.stringContaining('single line') })]) });
+    }
+  });
 });

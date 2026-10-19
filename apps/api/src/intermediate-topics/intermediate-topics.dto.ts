@@ -14,3 +14,6 @@ export class CreateTopicSessionDto {
   @ApiProperty({ format: 'uuid' }) @IsUUID() clientSessionId!: string;
   @ApiPropertyOptional({ format: 'uuid' }) @IsOptional() @IsUUID() topicId?: string;
 }
+export class RepairTopicJsonDto {
+  @ApiProperty({ maxLength: 200000 }) @IsString() @IsNotEmpty() @MaxLength(200000) source!: string;
+}

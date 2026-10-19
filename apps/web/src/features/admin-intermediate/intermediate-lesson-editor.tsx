@@ -242,7 +242,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
     </header>
     {readOnly ? <p className="intermediate-notice">{t('readOnly')}</p> : null}
     {error ? <p role="alert" className="intermediate-notice intermediate-error">{t(error)}</p> : null}
-    {topic ? <TopicJsonTransfer anchorId={`${headingId}-json`} draft={draft} dirty={dirty} disabled={saving || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
+    {topic ? <TopicJsonTransfer anchorId={`${headingId}-json`} reviewHref={`#${headingId}-basics`} draft={draft} dirty={dirty} disabled={saving || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
       onApply={next => { setDraft(next); setSaved(false); }} /> : null}
     {jsonDirty ? <p role="status" className="intermediate-help">{tt('jsonPending')}</p> : null}
     <form onSubmit={(event) => void save(event)}>

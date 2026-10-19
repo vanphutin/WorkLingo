@@ -68,15 +68,52 @@ describe('A topic contains the source passage and its connected practice', () =>
     expect(screen.getByRole('group', { name: 'Listening question 1' })).toHaveFocus();
     expect(within(outline).queryByRole('link', { name: 'Session time and administrator approval' })).not.toBeInTheDocument();
   });
-  it('imports JSON into editable fields without saving or approving it', () => {
+  it('automatically fills valid pasted JSON into review fields without saving or approving it', () => {
     render(<IntermediateLessonEditor category="reading" topic />);
     fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
     const json = { ...createTopicJsonTemplate(), title: 'Restaurant JSON lesson' };
     fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: JSON.stringify(json) } });
-    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
     expect(screen.getByLabelText('Lesson title')).toHaveValue(json.title);
     expect(screen.getByRole('textbox', { name: 'Source passage' })).toHaveValue(json.readingText);
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeEnabled();
     expect(apiClient.createContentImport).not.toHaveBeenCalled();
+    const reviewLink = screen.getByRole('link', { name: 'View filled lesson' });
+    fireEvent.click(reviewLink);
+    expect(screen.getByRole('heading', { name: 'Lesson details' }).closest('section')).toHaveFocus();
+  });
+  it('keeps JSON synchronized until the administrator edits the form manually', () => {
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    const input = screen.getByLabelText('Topic JSON');
+    const json = createTopicJsonTemplate();
+    fireEvent.change(input, { target: { value: JSON.stringify(json) } });
+    fireEvent.change(input, { target: { value: JSON.stringify({ ...json, title: 'Updated JSON title' }) } });
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('Updated JSON title');
+    fireEvent.change(screen.getByLabelText('Lesson title'), { target: { value: 'My manual title' } });
+    fireEvent.change(input, { target: { value: JSON.stringify({ ...json, title: 'Replacement JSON' }) } });
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('My manual title');
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    expect(confirm).toHaveBeenCalledTimes(1);
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('My manual title');
+    confirm.mockReturnValue(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('Replacement JSON');
+  });
+  it('does not overwrite manual edits made while a local JSON file is being read', async () => {
+    let finishRead!: (value: string) => void;
+    const file = new File(['{}'], 'lesson.json');
+    Object.defineProperty(file, 'text', { value: () => new Promise<string>(resolve => { finishRead = resolve; }) });
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    fireEvent.change(screen.getByLabelText('Choose a JSON file'), { target: { files: [file] } });
+    fireEvent.change(screen.getByLabelText('Lesson title'), { target: { value: 'Typed while loading' } });
+    const json = JSON.stringify(createTopicJsonTemplate());
+    finishRead(json);
+    await waitFor(() => expect(screen.getByLabelText('Topic JSON')).toHaveValue(json));
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('Typed while loading');
+    expect(screen.getByRole('button', { name: 'Apply JSON to form' })).toBeEnabled();
   });
   it('preserves edited fields when JSON is invalid or replacement is cancelled', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false);
@@ -92,7 +129,7 @@ describe('A topic contains the source passage and its connected practice', () =>
     expect(window.confirm).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText('Lesson title')).toHaveValue('Keep my edits');
   });
-  it('reads a local JSON file, requires explicit application and saves through the topic source format', async () => {
+  it('automatically fills a local JSON file for review and saves only on explicit submission', async () => {
     render(<IntermediateLessonEditor category="reading" topic />);
     fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
     const file = new File(['{}'], 'lesson.json', { type: 'application/json' });
@@ -100,9 +137,9 @@ describe('A topic contains the source passage and its connected practice', () =>
     Object.defineProperty(file, 'text', { value: async () => json });
     fireEvent.change(screen.getByLabelText('Choose a JSON file'), { target: { files: [file] } });
     await waitFor(() => expect(screen.getByLabelText('Topic JSON')).toHaveValue(json));
-    expect(screen.getByLabelText('Lesson title')).toHaveValue('');
-    expect(screen.getByRole('button', { name: 'Create draft' })).toBeDisabled();
-    fireEvent.click(screen.getByRole('button', { name: 'Apply JSON to form' }));
+    expect(screen.getByLabelText('Lesson title')).toHaveValue('Local file lesson');
+    expect(screen.getByRole('button', { name: 'Create draft' })).toBeEnabled();
+    expect(apiClient.createContentImport).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', { name: 'Create draft' }));
     await waitFor(() => expect(push).toHaveBeenCalledWith(`/admin/programs/intermediate/topics/${id}`));
     const source = vi.mocked(apiClient.createContentImport).mock.calls[0]![0];

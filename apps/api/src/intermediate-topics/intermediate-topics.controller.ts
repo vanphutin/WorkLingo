@@ -5,9 +5,10 @@ import { Roles } from '../auth/roles.decorator.js';
 import { RateLimit } from '../common/rate-limit/rate-limit.decorator.js';
 import { IntermediateTopicsService } from './intermediate-topics.service.js';
 import { TopicReviewService } from './topic-review.service.js';
+import { TopicJsonRepairService } from './topic-json-repair.service.js';
 // Runtime DTO imports provide metadata for the global ValidationPipe.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { ApproveTopicDto, CreateTopicSessionDto, TopicReviewRequestDto } from './intermediate-topics.dto.js';
+import { ApproveTopicDto, CreateTopicSessionDto, TopicReviewRequestDto, RepairTopicJsonDto } from './intermediate-topics.dto.js';
 
 @ApiTags('intermediate topics')
 @Roles('LEARNER')
@@ -30,7 +31,15 @@ export class IntermediateTopicsController {
 @ApiForbiddenResponse({ description: 'Content or system administrator required' })
 @Controller('admin/intermediate-topics')
 export class IntermediateTopicReviewController {
-  constructor(@Inject(TopicReviewService) private readonly reviews: TopicReviewService) {}
+  constructor(@Inject(TopicReviewService) private readonly reviews: TopicReviewService,
+    @Inject(TopicJsonRepairService) private readonly jsonRepair: TopicJsonRepairService) {}
+
+  @Post('repair-json') @HttpCode(200) @ApiOperation({ summary: 'Propose a verified JSON formatting repair; never adds questions or saves content' })
+  @ApiOkResponse({ description: 'Formatting-only candidate awaiting administrator acceptance' })
+  @RateLimit({ keyType: 'USER_AND_OPERATION', limit: 5, scope: 'intermediate-topics:repair-json', windowSeconds: 60 })
+  repairJson(@Req() request: AuthenticatedRequest, @Body() input: RepairTopicJsonDto) {
+    return this.jsonRepair.repair(input.source, request.authUser.id);
+  }
 
   @Get(':id/review') @ApiOperation({ summary: 'Read duration review for an Intermediate topic import' })
   @ApiOkResponse({ description: 'Current review; stale approvals are invalid' })

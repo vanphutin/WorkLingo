@@ -24,3 +24,4 @@ export * from './ielts-mock.contracts.ts';
 export * from './ielts-flow.contracts.ts';
 export * from './ielts-study.contracts.ts';
 export * from './intermediate-topics.contracts.ts';
+export * from './intermediate-topic-json.contracts.ts';
