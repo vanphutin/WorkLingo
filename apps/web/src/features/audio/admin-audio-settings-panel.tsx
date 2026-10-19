@@ -11,44 +11,99 @@ import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import { useVoiceRegistry } from './use-voice-registry';
 import './admin-audio-settings.css';
 
-/* Icons */
-function AudioWaveIcon() {
+/* Icons with strict sizing */
+function AudioWaveIcon({ size = 16 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M12 2v20M17 5v14M22 9v6M7 5v14M2 9v6" />
     </svg>
   );
 }
 
-function SparklesIcon() {
+function SparklesIcon({ size = 16 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
     </svg>
   );
 }
 
-function CloudSpeechIcon() {
+function CloudSpeechIcon({ size = 20 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
       <path d="M9 13v3M12 11v7M15 13v3" />
     </svg>
   );
 }
 
-function FlaskIcon() {
+function FlaskIcon({ size = 20 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M10 2v7.31L4.65 17.5A2 2 0 0 0 6.38 20.5h11.24a2 2 0 0 0 1.73-3L14 9.31V2" />
       <path d="M8.5 2h7M7 16h10" />
     </svg>
   );
 }
 
-function SlidersIcon() {
+function SlidersIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <line x1="4" x2="4" y1="21" y2="14" />
       <line x1="4" x2="4" y1="10" y2="3" />
       <line x1="12" x2="12" y1="21" y2="12" />
@@ -62,9 +117,20 @@ function SlidersIcon() {
   );
 }
 
-function DevicesIcon() {
+function DevicesIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
       <line x1="8" y1="21" x2="16" y2="21" />
       <line x1="12" y1="17" x2="12" y2="21" />
@@ -72,26 +138,60 @@ function DevicesIcon() {
   );
 }
 
-function ShieldCheckIcon() {
+function ShieldCheckIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <path d="m9 12 2 2 4-4" />
     </svg>
   );
 }
 
-function ChevronDownIcon() {
+function ChevronDownIcon({ size = 16 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" className="admin-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      className="admin-select-chevron"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
 
-function AlertTriangleIcon() {
+function AlertTriangleIcon({ size = 18 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
       <line x1="12" y1="9" x2="12" y2="13" />
       <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -99,9 +199,20 @@ function AlertTriangleIcon() {
   );
 }
 
-function CheckCircleIcon() {
+function CheckCircleIcon({ size = 13 }: { readonly size?: number }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
       <polyline points="22 4 12 14.01 9 11.01" />
     </svg>
@@ -196,11 +307,11 @@ export function AdminAudioSettingsPanel() {
       {/* Settings Hub Tabs */}
       <nav className="admin-settings-tabs-nav" aria-label="Settings categories">
         <Link href="/admin/settings/audio" className="admin-settings-tab active" aria-current="page">
-          <AudioWaveIcon />
+          <AudioWaveIcon size={16} />
           <span>{t('audioTab')}</span>
         </Link>
         <Link href="/admin/settings/ai" className="admin-settings-tab">
-          <SparklesIcon />
+          <SparklesIcon size={16} />
           <span>{t('aiTab')}</span>
         </Link>
       </nav>
@@ -210,7 +321,7 @@ export function AdminAudioSettingsPanel() {
         {/* Header */}
         <header className="admin-audio-header">
           <div className="eyebrow-badge">
-            <AudioWaveIcon />
+            <AudioWaveIcon size={14} />
             <span>{t('generation')}</span>
           </div>
           <h1 id="admin-audio-settings-title">{t('generationSettings')}</h1>
@@ -222,7 +333,7 @@ export function AdminAudioSettingsPanel() {
           <div className="admin-section-header">
             <div className="admin-section-title-group">
               <h2 className="admin-section-title">
-                <SlidersIcon />
+                <SlidersIcon size={18} />
                 <span>{t('ttsProvider')}</span>
               </h2>
               <p className="admin-section-desc">
@@ -247,7 +358,7 @@ export function AdminAudioSettingsPanel() {
                   <div className="admin-provider-card-top">
                     <div className="admin-provider-visual">
                       <div className="admin-provider-icon">
-                        {provider.simulation ? <FlaskIcon /> : <CloudSpeechIcon />}
+                        {provider.simulation ? <FlaskIcon size={20} /> : <CloudSpeechIcon size={20} />}
                       </div>
                       <div className="admin-provider-name-box">
                         <span className="admin-provider-name">
@@ -256,7 +367,7 @@ export function AdminAudioSettingsPanel() {
                         <div className="admin-provider-status-badge-container">
                           {isSelected ? (
                             <span className="admin-status-badge badge-active">
-                              <CheckCircleIcon /> {t('activeBadge')}
+                              <CheckCircleIcon size={12} /> {t('activeBadge')}
                             </span>
                           ) : isAvailable ? (
                             <span className={`admin-status-badge ${provider.simulation ? 'badge-simulation' : 'badge-available'}`}>
@@ -309,7 +420,7 @@ export function AdminAudioSettingsPanel() {
 
                   {!isAvailable && (
                     <div className="admin-unconfigured-note">
-                      <AlertTriangleIcon />
+                      <AlertTriangleIcon size={16} />
                       <span>{t('serverSetupNotice')}</span>
                     </div>
                   )}
@@ -325,7 +436,7 @@ export function AdminAudioSettingsPanel() {
             <div className="admin-section-header">
               <div className="admin-section-title-group">
                 <h2 className="admin-section-title">
-                  <AudioWaveIcon />
+                  <AudioWaveIcon size={18} />
                   <span>{t('voiceConfigTitle')}</span>
                 </h2>
                 <p className="admin-section-desc">
@@ -355,7 +466,7 @@ export function AdminAudioSettingsPanel() {
                       {selected.defaultVoiceId ?? t('providerDefault')}
                     </option>
                   </select>
-                  <ChevronDownIcon />
+                  <ChevronDownIcon size={16} />
                 </div>
                 <div className="admin-voice-meta-badge">
                   <span>{t('voiceFormat')}</span>
@@ -372,7 +483,7 @@ export function AdminAudioSettingsPanel() {
               {/* Dynamic Callout based on provider */}
               {selected.simulation ? (
                 <div className="audio-settings-warning admin-callout-warning">
-                  <AlertTriangleIcon />
+                  <AlertTriangleIcon size={18} />
                   <div className="admin-callout-content">
                     <span className="admin-callout-title">{t('simulationWarning')}</span>
                     <p className="admin-callout-desc">{t('simulationDesc')}</p>
@@ -380,7 +491,7 @@ export function AdminAudioSettingsPanel() {
                 </div>
               ) : (
                 <div className="admin-callout-success">
-                  <CheckCircleIcon />
+                  <CheckCircleIcon size={18} />
                   <div className="admin-callout-content">
                     <span className="admin-callout-title">{t('azureReadyTitle')}</span>
                     <p className="admin-callout-desc">{t('azureReadyDesc')}</p>
@@ -396,7 +507,7 @@ export function AdminAudioSettingsPanel() {
           <div className="admin-section-header">
             <div className="admin-section-title-group">
               <h2 className="admin-section-title">
-                <DevicesIcon />
+                <DevicesIcon size={18} />
                 <span>{t('deviceVoiceRegistry')}</span>
               </h2>
               <p className="admin-section-desc audio-settings-note">
@@ -438,20 +549,20 @@ export function AdminAudioSettingsPanel() {
                         className={`audio-source-option admin-voice-registry-item ${isEnabled ? 'active' : ''}`}
                         key={voice.id}
                       >
-                        <input
-                          type="checkbox"
-                          checked={isEnabled}
-                          onChange={(event) => registry.store?.setEnabled(voice.id, event.target.checked)}
-                        />
-                        <div className="admin-voice-item-info">
-                          <span className="admin-voice-item-title">
-                            <strong>{voice.displayName}</strong>
-                            <span className="admin-voice-item-badge">{voice.locale}</span>
-                          </span>
-                          <small className="admin-voice-item-desc">
-                            {voice.id} · {voice.localService ? t('deviceVoiceService') : t('remoteVoiceService')}
-                          </small>
+                        <div className="admin-voice-registry-item-left">
+                          <input
+                            type="checkbox"
+                            checked={isEnabled}
+                            onChange={(event) => registry.store?.setEnabled(voice.id, event.target.checked)}
+                          />
+                          <div className="admin-voice-item-info">
+                            <strong className="admin-voice-item-title">{voice.displayName}</strong>
+                            <small className="admin-voice-item-desc">
+                              {voice.id} · {voice.localService ? t('deviceVoiceService') : t('remoteVoiceService')}
+                            </small>
+                          </div>
                         </div>
+                        <span className="admin-voice-item-badge">{voice.locale}</span>
                       </label>
                     );
                   })}
@@ -464,7 +575,7 @@ export function AdminAudioSettingsPanel() {
         {/* Section 4: Security & Isolation Notice */}
         <div className="admin-security-card">
           <div className="admin-security-icon">
-            <ShieldCheckIcon />
+            <ShieldCheckIcon size={18} />
           </div>
           <div className="admin-security-body">
             <h3 className="admin-security-title">{t('securityTitle')}</h3>
@@ -483,13 +594,13 @@ export function AdminAudioSettingsPanel() {
             ) : null}
             {saved ? (
               <p className="admin-save-success" role="status">
-                <CheckCircleIcon />
+                <CheckCircleIcon size={14} />
                 <span>{t('providerSaved')}</span>
               </p>
             ) : null}
             {saveError ? (
               <p className="admin-save-error field-error" role="alert">
-                <AlertTriangleIcon />
+                <AlertTriangleIcon size={16} />
                 <span>{localizedError(saveError.cause, locale)}</span>
               </p>
             ) : null}
