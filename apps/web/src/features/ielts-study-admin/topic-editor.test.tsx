@@ -101,7 +101,9 @@ describe('TopicEditor', () => {
   });
   it('authors a new topic with pack, context and phrase fields without mandatory JSON', async () => {
     render(<TopicEditor />);
-    fireEvent.click(await screen.findByRole('button', { name: 'New topic' }));
+    const newTopicButton = await screen.findByRole('button', { name: 'New topic' });
+    await waitFor(() => expect(newTopicButton).toBeEnabled());
+    fireEvent.click(newTopicButton);
     fireEvent.change(screen.getByLabelText('Topic title'), { target: { value: 'Workplace learning' } });
     expect(screen.getByLabelText('Description')).toBeVisible();
     expect(screen.getByLabelText('Published curriculum revision ID')).toBeVisible();
