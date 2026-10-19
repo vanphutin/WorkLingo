@@ -27,6 +27,15 @@ beforeEach(() => { roles = ['CONTENT_ADMIN']; vi.clearAllMocks(); });
 afterAll(async () => { await app?.close(); });
 
 describe('Topic group HTTP boundary', () => {
+  it('accepts normalized bilingual metadata and rejects unbounded or null alias input', async () => {
+    await request(app.getHttpServer()).post(root).send({ name: 'Nhà hàng', nameEn: ' Ｒestaurant ', aliases: [' dining  out '], description: '' }).expect(201);
+    expect(service.create).toHaveBeenCalledWith(expect.objectContaining({ nameEn: 'Restaurant', aliases: ['dining out'] }));
+    for (const metadata of [{ nameEn: ' ' }, { nameEn: 'x'.repeat(121) }, { aliases: null }, { aliases: [''] }, { aliases: ['x'.repeat(121)] }, { aliases: Array(21).fill('Alias') }]) {
+      await request(app.getHttpServer()).post(root).send({ name: 'Work', description: '', ...metadata }).expect(400);
+    }
+    await request(app.getHttpServer()).patch(`${root}/${id}`).send({ name: 'Work', description: '', nameEn: null, aliases: [], expectedRevision: 1 }).expect(200);
+    expect(service.update).toHaveBeenCalledWith(id, expect.objectContaining({ nameEn: null, aliases: [] }));
+  });
   it.each(['CONTENT_ADMIN', 'SYSTEM_ADMIN'])('allows %s to use the exact catalog and mutation routes', async role => {
     roles = [role];
     expect((await request(app.getHttpServer()).get(root).expect(200)).body).toEqual(catalog);

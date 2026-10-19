@@ -68,7 +68,7 @@ export class ContentAuthoringController {
     @Req() request: AuthenticatedRequest,
     @Body() input: CreateContentImportDto,
   ): Promise<ContentImportDto> {
-    return this.contentImportsService.create(request.authUser.id, input.rawSource);
+    return this.contentImportsService.create(request.authUser.id, input.rawSource, input.topicGroupId);
   }
 
   @Get()

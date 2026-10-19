@@ -781,12 +781,24 @@ model IntermediateTopicGroup {
   id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name           String
   normalizedName String          @unique
+  nameEn         String?
+  aliases        String[]        @default([])
+  catalogKey     String?         @unique
+  registeredNames IntermediateTopicGroupName[]
   description    String          @default("")
   revision       Int             @default(1)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   lessons        Lesson[]
   contentImports ContentImport[]
+}
+
+model IntermediateTopicGroupName {
+  normalizedName String @id
+  groupId String @db.Uuid
+  group IntermediateTopicGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@index([groupId])
 }
 
 model IntermediateTopicReview {

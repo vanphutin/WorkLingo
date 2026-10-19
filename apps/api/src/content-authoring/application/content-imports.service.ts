@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import {
+  BadRequestException,
   ConflictException,
   Inject,
   Injectable,
@@ -14,6 +15,7 @@ import {
 } from '@worklingo/content-format';
 import {
   ContentAuthoringErrorCode,
+  createContentImportSchema,
   type ContentImportDto,
   type ContentIssueDto,
   type ContentPreviewDto,
@@ -25,6 +27,8 @@ import {
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { mapContentImportToDto } from '../infrastructure/content-analysis.mapper.js';
+import { isTopicSource } from '../../intermediate-topics/topic-source.js';
+import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
 
 @Injectable()
 export class ContentImportsService {
@@ -33,20 +37,29 @@ export class ContentImportsService {
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
-  async create(actorId: string, rawSource: string): Promise<ContentImportDto> {
+  async create(actorId: string, rawSource: string, topicGroupId?: string): Promise<ContentImportDto> {
+    if (!createContentImportSchema.safeParse({ rawSource, topicGroupId }).success) throw new BadRequestException('Invalid content import request');
+    if (topicGroupId !== undefined && !isTopicSource(rawSource)) throw new BadRequestException('Import is not an Intermediate topic');
     const sourceHash = createHash('sha256').update(rawSource).digest('hex');
 
-    const created = await this.database.contentImport.create({
-      data: {
-        rawSource,
-        sourceHash,
-        status: 'DRAFT',
-        draftRevision: 1,
-        parserVersion: '1.0.0',
-        createdById: actorId,
-        updatedById: actorId,
-      },
-    });
+    const data = {
+      rawSource,
+      sourceHash,
+      status: 'DRAFT' as const,
+      draftRevision: 1,
+      parserVersion: '1.0.0',
+      createdById: actorId,
+      updatedById: actorId,
+      topicGroupId: topicGroupId ?? null,
+      topicGroupRevision: topicGroupId ? 1 : 0,
+    };
+    const created = topicGroupId === undefined
+      ? await this.database.contentImport.create({ data })
+      : await this.database.$transaction(async tx => {
+        await lockTopicGroups(tx);
+        if (!await tx.intermediateTopicGroup.findUnique({ where: { id: topicGroupId } })) throw new NotFoundException('Topic group not found');
+        return tx.contentImport.create({ data });
+      });
 
     return mapContentImportToDto(created);
   }

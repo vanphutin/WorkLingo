@@ -8,12 +8,13 @@ import { TopicProposalService } from './topic-proposal.service.js';
 import { defaultTopicPlan } from '@worklingo/contracts';
 import { topicSource } from './topic-test.fixture.js';
 
-type Group = { id: string; name: string; normalizedName: string; description: string; revision: number };
+type Group = { id: string; name: string; normalizedName: string; nameEn?: string | null; aliases?: string[]; description: string; revision: number };
 type Import = { id: string; rawSource: string; sourceHash: string; lessonId: string | null; status: 'DRAFT' | 'VALIDATED' | 'PUBLISHED' | 'ARCHIVED'; topicGroupId: string | null; topicGroupRevision: number; draftRevision: number };
 async function setup() {
   const groups: Group[] = [];
   const imports: Import[] = [];
   const lessons: Array<{ id: string; topicGroupId: string | null }> = [];
+  const names: Array<{ normalizedName: string; groupId: string }> = [];
   const approval = { sourceHash: 'source-hash', draftRevision: 7, revision: 4, proposal: null,
     approvedPlan: defaultTopicPlan(90), approvedById: randomUUID(), approvedAt: new Date('2026-10-19T00:00:00Z') };
   // Only the external database boundary is replaced; mutations change state so
@@ -21,6 +22,14 @@ async function setup() {
   const tx = {
     $executeRaw: vi.fn(async () => 1), $queryRaw: vi.fn(async () => []),
     intermediateTopicReview: { findUnique: vi.fn(async () => approval) },
+    intermediateTopicGroupName: {
+      deleteMany: vi.fn(async ({ where }) => { for (let i = names.length - 1; i >= 0; i--) if (names[i]!.groupId === where.groupId) names.splice(i, 1); }),
+      createMany: vi.fn(async ({ data }: { data: typeof names }) => {
+        if (data.some(n => names.some(old => old.normalizedName === n.normalizedName))) throw { code: 'P2002' };
+        names.push(...data); return { count: data.length };
+      }),
+      findMany: vi.fn(async ({ where }) => names.filter(n => where.normalizedName.in.includes(n.normalizedName) && n.groupId !== where.groupId?.not)),
+    },
     intermediateTopicGroup: {
       findMany: vi.fn(async () => groups),
       findUnique: vi.fn(async ({ where }) => groups.find(g => g.id === where.id) ?? null),
@@ -58,6 +67,25 @@ async function setup() {
 }
 
 describe('Topic group admin operations', () => {
+  it('reserves names across languages and aliases, preserves omitted metadata and releases replaced aliases', async () => {
+    const s = await setup();
+    const group = await s.service.create({ name: 'Nhà hàng', description: '', nameEn: 'Restaurant', aliases: ['restaurent', ' Dining  out '] });
+    expect(group).toMatchObject({ nameEn: 'Restaurant', aliases: ['restaurent', 'Dining out'] });
+    for (const name of [' ＲＥＳＴＡＵＲＡＮＴ ', 'RESTAURENT', 'dining out']) {
+      await expect(s.service.create({ name, description: '' })).rejects.toMatchObject({ status: 409 });
+    }
+    const updated = await s.service.update(group.id, { name: 'Ăn uống', description: 'Edited', expectedRevision: 1 });
+    expect(updated).toMatchObject({ nameEn: 'Restaurant', aliases: ['restaurent', 'Dining out'] });
+    await s.service.update(group.id, { name: 'Ăn uống', description: '', nameEn: null, aliases: [], expectedRevision: 2 });
+    expect(await s.service.create({ name: 'Restaurant', description: '' })).toMatchObject({ name: 'Restaurant' });
+  });
+  it('retains name reservations when transformed legacy DTO fields are explicitly undefined', async () => {
+    const s = await setup();
+    const group = await s.service.create({ name: 'Nhà hàng', description: '', nameEn: 'Restaurant', aliases: ['restaurent'] });
+    await s.service.update(group.id, { name: 'Ăn uống', description: '', expectedRevision: 1, nameEn: undefined, aliases: undefined });
+    await expect(s.service.create({ name: 'restaurant', description: '' })).rejects.toMatchObject({ status: 409 });
+    await expect(s.service.create({ name: 'restaurent', description: '' })).rejects.toMatchObject({ status: 409 });
+  });
   it('creates normalized groups, rejects name collisions, updates with an independent revision', async () => {
     const s = await setup();
     const created = await s.service.create({ name: ' Work  life ', description: ' Intro ' });

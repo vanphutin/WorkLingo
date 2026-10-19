@@ -23,13 +23,13 @@ export class IntermediateTopicsService {
       const available = await this.available(learnerId, tx);
       if (!available.length) return [];
       const versions = await tx.lessonVersion.findMany({ where: { id: { in: available.map(({ mission }) => mission.lessonVersion.id) } },
-        select: { id: true, lesson: { select: { topicGroup: { select: { id: true, name: true, description: true } } } } } });
+        select: { id: true, lesson: { select: { topicGroup: { select: { id: true, name: true, nameEn: true, description: true } } } } } });
       const groups = new Map(versions.map(version => [version.id, version.lesson.topicGroup]));
       return available.map(({ mission }) => {
         const group = groups.get(mission.lessonVersion.id);
         return learnerTopicSchema.parse({ id: mission.id, title: mission.title, lessonVersionId: mission.lessonVersion.id,
           durationMinutes: mission.lessonVersion.intermediateTopic!.durationMinutes,
-          ...(group ? { group: { id: group.id, name: group.name, description: group.description } } : {}) });
+          ...(group ? { group: { id: group.id, name: group.name, ...(group.nameEn ? { nameEn: group.nameEn } : {}), description: group.description } } : {}) });
       });
     }, { isolationLevel: 'RepeatableRead' });
   }

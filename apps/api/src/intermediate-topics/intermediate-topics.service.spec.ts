@@ -40,8 +40,8 @@ describe('Intermediate topic sessions', () => {
     expect(await s.service.list(randomUUID())).toEqual([]);
   });
   it('appends public group metadata from the stable lesson only after eligibility filtering', async () => {
-    const s = setup(); const group = { id: randomUUID(), name: 'Work', description: 'Work life' };
-    s.tx.lessonVersion.findMany.mockResolvedValue([{ id: s.chosen.lessonVersion.id, lesson: { topicGroup: { ...group, revision: 5, approvedById: randomUUID() } } }]);
+    const s = setup(); const group = { id: randomUUID(), name: 'Work', nameEn: 'Work life', description: 'Work life' };
+    s.tx.lessonVersion.findMany.mockResolvedValue([{ id: s.chosen.lessonVersion.id, lesson: { topicGroup: { ...group, aliases: ['Office'], catalogKey: 'work', revision: 5, approvedById: randomUUID() } } }]);
     const result = await s.service.list(randomUUID());
     expect(result).toEqual([{ id: s.chosen.id, title: 'Topic', lessonVersionId: s.chosen.lessonVersion.id, durationMinutes: 90, group }]);
     expect(s.tx.lessonVersion.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { id: { in: [s.chosen.lessonVersion.id] } } }));

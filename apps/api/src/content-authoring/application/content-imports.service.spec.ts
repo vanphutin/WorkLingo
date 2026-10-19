@@ -6,9 +6,32 @@ import { canonicalLessonSource, invalidLessonSources } from '@worklingo/test-fix
 
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import { ContentImportsService } from './content-imports.service.js';
+import { topicSource } from '../../intermediate-topics/topic-test.fixture.js';
 
 describe('ContentImportsService', () => {
   const actorId = randomUUID();
+
+  it('creates a draft with its initial assignment in the taxonomy transaction', async () => {
+    const topicGroupId = randomUUID();
+    const records: object[] = [];
+    const create = vi.fn(async ({ data }) => {
+      const record = { id: randomUUID(), lessonId: null, lessonVersionId: null, validationHash: null, ...data, createdAt: new Date(), updatedAt: new Date() };
+      records.push(record); return record;
+    });
+    const tx = { $executeRaw: vi.fn(async () => 1), intermediateTopicGroup: { findUnique: vi.fn(async () => ({ id: topicGroupId })) }, contentImport: { create } };
+    const database = { contentImport: { create }, $transaction: vi.fn(async (fn: (client: typeof tx) => unknown) => fn(tx)) };
+    const service = new ContentImportsService(database as unknown as PrismaService);
+    const result = await service.create(actorId, topicSource, topicGroupId);
+    expect(result).toMatchObject({ topicGroupId, topicGroupRevision: 1, draftRevision: 1, rawSource: topicSource });
+    expect(records).toHaveLength(1);
+    expect(database.$transaction).toHaveBeenCalledTimes(1);
+    expect(tx.$executeRaw).toHaveBeenCalledTimes(1);
+    tx.intermediateTopicGroup.findUnique.mockResolvedValueOnce(null as never);
+    await expect(service.create(actorId, topicSource, randomUUID())).rejects.toMatchObject({ status: 404 });
+    await expect(service.create(actorId, canonicalLessonSource, topicGroupId)).rejects.toMatchObject({ status: 400 });
+    await expect(service.create(actorId, topicSource, 'bad')).rejects.toMatchObject({ status: 400 });
+    expect(records).toHaveLength(1);
+  });
 
   describe('exact-source persistence and revision checks', () => {
     it('creates an import and persists invalid raw source exactly', async () => {

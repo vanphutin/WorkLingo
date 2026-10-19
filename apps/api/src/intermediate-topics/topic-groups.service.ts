@@ -8,6 +8,7 @@ import { assignIntermediateTopicGroupSchema, createIntermediateTopicGroupSchema,
 import { PrismaService } from '../common/database/prisma.service.js';
 import { isTopicSource } from './topic-source.js';
 import { lockTopicGroups } from './topic-group-lock.js';
+import { checkTopicGroupNames, normalizedTopicGroupNames, registerTopicGroupNames } from './topic-group-names.js';
 
 function parse<T>(schema: z.ZodType<T>, input: unknown): T {
   const result = schema.safeParse(input);
@@ -24,19 +25,30 @@ export class TopicGroupsService {
   }
 
   async create(input: CreateIntermediateTopicGroup) {
-    const data = parse(createIntermediateTopicGroupSchema, input);
+    const { nameEn, aliases, ...base } = parse(createIntermediateTopicGroupSchema, input);
+    const data = { ...base, ...(nameEn === undefined ? {} : { nameEn }), ...(aliases === undefined ? {} : { aliases }) };
     return this.mutate(async tx => {
+      const names = normalizedTopicGroupNames(data);
+      await checkTopicGroupNames(tx, names);
       const group = await tx.intermediateTopicGroup.create({ data: { ...data, normalizedName: data.name.toLowerCase() } });
-      return intermediateTopicGroupSchema.parse({ id: group.id, name: group.name, description: group.description, revision: group.revision, lessonCount: 0 });
+      await registerTopicGroupNames(tx, group.id, names);
+      return intermediateTopicGroupSchema.parse({ id: group.id, name: group.name, nameEn: group.nameEn, aliases: group.aliases,
+        description: group.description, revision: group.revision, lessonCount: 0 });
     });
   }
 
   async update(id: string, input: UpdateIntermediateTopicGroup) {
-    const { expectedRevision, ...data } = parse(updateIntermediateTopicGroupSchema, input);
+    const { expectedRevision, nameEn, aliases, ...base } = parse(updateIntermediateTopicGroupSchema, input);
+    // Transformed DTO instances may have own properties with undefined values.
+    // Omitted fields must preserve both stored metadata and its reservations.
+    const data = { ...base, ...(nameEn === undefined ? {} : { nameEn }), ...(aliases === undefined ? {} : { aliases }) };
     return this.mutate(async tx => {
-      await this.group(tx, id, expectedRevision);
+      const existing = await this.group(tx, id, expectedRevision);
+      const names = normalizedTopicGroupNames({ ...existing, ...data });
+      await checkTopicGroupNames(tx, names, id);
       await tx.intermediateTopicGroup.update({ where: { id, revision: expectedRevision },
         data: { ...data, normalizedName: data.name.toLowerCase(), revision: { increment: 1 } } });
+      await registerTopicGroupNames(tx, id, names);
       const catalog = await this.readCatalog(tx);
       return intermediateTopicGroupSchema.parse(catalog.groups.find(group => group.id === id));
     });
@@ -106,7 +118,7 @@ export class TopicGroupsService {
     });
     const topics = sources.filter(source => isTopicSource(source.rawSource));
     return intermediateTopicGroupCatalogSchema.parse({
-      groups: groups.map(group => ({ id: group.id, name: group.name, description: group.description, revision: group.revision,
+      groups: groups.map(group => ({ id: group.id, name: group.name, nameEn: group.nameEn, aliases: group.aliases, description: group.description, revision: group.revision,
         lessonCount: new Set(topics.filter(source => source.topicGroupId === group.id).map(source => source.lessonId ?? source.id)).size })),
       lessons: topics.map(source => ({ importId: source.id, title: parseLessonSource(source.rawSource).document.lesson?.title?.trim() || 'Untitled topic',
         status: source.status, groupId: source.topicGroupId, revision: source.topicGroupRevision })),

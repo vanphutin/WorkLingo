@@ -3,6 +3,19 @@ import * as contracts from './index.ts';
 
 const id = '11111111-1111-4111-8111-111111111111';
 describe('Intermediate topic group contracts', () => {
+  it('accepts bounded bilingual metadata while keeping learner aliases private', () => {
+    const input = { name: 'Nhà hàng', description: '', nameEn: '  Ｒestaurant ', aliases: [' restaurent ', ' Dining  out '] };
+    expect(contracts.createIntermediateTopicGroupSchema.parse(input)).toEqual({ ...input, nameEn: 'Restaurant', aliases: ['restaurent', 'Dining out'] });
+    expect(contracts.learnerTopicGroupSchema.parse({ id, name: input.name, description: '', nameEn: 'Restaurant' })).toMatchObject({ nameEn: 'Restaurant' });
+    expect(contracts.learnerTopicGroupSchema.safeParse({ id, ...input }).success).toBe(false);
+    for (const metadata of [{ nameEn: '' }, { nameEn: 'x'.repeat(121) }, { aliases: [''] }, { aliases: Array(21).fill('alias') }]) {
+      expect(contracts.createIntermediateTopicGroupSchema.safeParse({ name: 'Work', description: '', ...metadata }).success).toBe(false);
+    }
+  });
+  it('preserves optional draft group assignment and rejects malformed create IDs', () => {
+    expect(contracts.createContentImportSchema.parse({ rawSource: 'source', topicGroupId: id })).toEqual({ rawSource: 'source', topicGroupId: id });
+    for (const topicGroupId of [null, '', 'bad']) expect(contracts.createContentImportSchema.safeParse({ rawSource: 'source', topicGroupId }).success).toBe(false);
+  });
   it('exports strict group and catalog schemas using actual import statuses', () => {
     expect(contracts.intermediateTopicGroupSchema).toBeDefined();
     const group = { id, name: 'Work', description: '', revision: 1, lessonCount: 2 };

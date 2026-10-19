@@ -1,7 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsObject, IsString, MaxLength, Min } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsInt, IsNotEmpty, IsObject, IsString, IsUUID, MaxLength, Min, ValidateIf } from 'class-validator';
 
 export class CreateContentImportDto {
+  @ApiPropertyOptional({ format: 'uuid' })
+  @ValidateIf((_object, value: unknown) => value !== undefined) @IsUUID() topicGroupId?: string;
+
   @ApiProperty({ description: 'Raw lesson format source text' })
   @IsString()
   @IsNotEmpty()
