@@ -1,0 +1,41 @@
+/* Session workspaces fill the viewport; reading width stays comfortable inside each pane. */
+.learning-mode .nav-container,
+.learning-mode .session-navigation { max-width: none; margin-inline: 0; }
+.learner-shell.learning-mode .learner-top-nav { padding-inline: clamp(1rem, 2.5vw, 3rem); }
+.learning-mode .nav-container { width: 100%; }
+.session-layout.session-layout { width: 100%; max-width: none; padding: 1.5rem clamp(1rem, 2.5vw, 3rem) 2.5rem; }
+.session-layout .session-body-grid { grid-template-columns: minmax(0, 1fr); }
+.session-layout .session-main-content { max-width: none; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.activity-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem); gap: 1.5rem; align-items: start; min-width: 0; }
+.activity-workspace-with-source { grid-template-columns: minmax(0, 1.2fr) minmax(22rem, .9fr); }
+.activity-source-pane,
+.activity-response-card { min-width: 0; padding: clamp(1.25rem, 2vw, 2rem); border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); }
+.activity-source-pane { display: grid; gap: 1.5rem; scroll-margin-top: 1rem; }
+.activity-pane-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.activity-pane-heading h2 { margin: 0; font-size: 1rem; color: var(--primary); }
+.activity-source-pane .reading-text { width: 100%; max-width: 75ch; margin: 0 auto; overflow-wrap: anywhere; font-size: 1.0625rem; line-height: 1.85; }
+.activity-response-pane { min-width: 0; display: grid; gap: 1.25rem; }
+.activity-response-card { display: grid; gap: 1.5rem; scroll-margin-top: 1rem; }
+.activity-response-card .activity-header { margin-bottom: 1.25rem; }
+.activity-response-card .activity-prompt { margin-top: 0; }
+.activity-response-card .question-block { min-inline-size: 0; }
+.activity-response-card .option-label { overflow-wrap: anywhere; }
+.activity-response-card .activity-footer { margin: 0; }
+.activity-workspace .session-side-column { position: static; }
+.activity-workspace-with-source .session-support-panel .panel-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.activity-workspace-with-source .info-block { min-width: 0; margin: 0; }
+.activity-workspace-with-source .info-block:last-child { grid-column: 1 / -1; }
+.activity-pane-jump { display: none; }
+@media (min-width: 1001px) {
+  .activity-source-pane { position: sticky; top: 1rem; max-height: calc(100dvh - 2rem); overflow-y: auto; scrollbar-gutter: stable; overscroll-behavior-y: contain; }
+}
+@media (max-width: 1000px) {
+  .activity-workspace,
+  .activity-workspace-with-source { grid-template-columns: minmax(0, 1fr); }
+  .activity-pane-jump { display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; }
+  .activity-source-pane { position: static; max-height: none; }
+}
+@media (max-width: 480px) {
+  .activity-workspace-with-source .session-support-panel .panel-content { grid-template-columns: minmax(0, 1fr); }
+  .activity-pane-heading { flex-wrap: wrap; }
+}

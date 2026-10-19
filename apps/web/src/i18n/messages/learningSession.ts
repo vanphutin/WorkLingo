@@ -1,5 +1,9 @@
 export const learningSessionMessages = {
   "en": {
+    "sourceText": "Source text",
+    "questionsAndResponse": "Questions and response",
+    "jumpToResponse": "Go to questions",
+    "backToSource": "Back to source text",
     "supportAndFeedback": "Session information and AI feedback",
     "topicDuration": "{minutes, number} minutes total · Current stage: {stageMinutes, number} minutes",
     "aiProgress": "AI processing progress",
@@ -174,6 +178,10 @@ export const learningSessionMessages = {
     "pathwayDescription": "Available steps follow your program and published learning content."
   },
   "vi": {
+    "sourceText": "Văn bản nguồn",
+    "questionsAndResponse": "Câu hỏi và trả lời",
+    "jumpToResponse": "Đến câu hỏi",
+    "backToSource": "Về văn bản nguồn",
     "supportAndFeedback": "Thông tin buổi học và phản hồi AI",
     "topicDuration": "Tổng {minutes, number} phút · Chặng hiện tại: {stageMinutes, number} phút",
     "aiProgress": "Tiến trình xử lý AI",

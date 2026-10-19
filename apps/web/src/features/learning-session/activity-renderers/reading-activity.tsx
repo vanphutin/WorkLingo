@@ -27,11 +27,6 @@ export function ReadingActivity({
   disabled = false,
 }: ReadingActivityProps) {
   const t = useT('learningSession', learningSessionMessages);
-  const contentItems = activity.content as ReadonlyArray<{
-    slug?: string;
-    type?: string;
-    text?: string;
-  }>;
   const questions = (
     (activity.payload.questions as ReadonlyArray<{
       slug: string;
@@ -54,16 +49,6 @@ export function ReadingActivity({
           {(activity.payload.prompt as string) || t('readingFallback')}
         </h2>
       </div>
-
-      {contentItems.length > 0 && (
-        <section className="activity-reading-passage" aria-label={t('readingPassage')}>
-          {contentItems.map((item, index) => (
-            <div key={item.slug ?? index} className="reading-content-item">
-              <pre className="reading-text" lang="en">{item.text}</pre>
-            </div>
-          ))}
-        </section>
-      )}
 
       {activity.languageBlocks.length > 0 && (
         <section className="activity-language-blocks" aria-label={t('keyLanguageBlocks')}>

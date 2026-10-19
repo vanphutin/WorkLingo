@@ -195,6 +195,36 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('does not invent a source panel for an activity without source text', () => {
+    render(<ActivityRenderer activity={{ ...mockReadingActivity, content: [{ slug: 'empty', text: '  ' }] }} value={{ answerIndexes: [] }} onChange={vi.fn()} sessionId="no-source" />);
+    expect(screen.queryByRole('region', { name: 'Source text' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Back to source text' })).not.toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Team introduction' })).toBeVisible();
+  });
+
+  it.each(['reading', 'writing', 'speaking'] as const)('keeps source text separate from the %s response', (activityType) => {
+    const activity = {
+      ...(activityType === 'reading' ? mockReadingActivity : activityType === 'writing' ? mockWritingActivity : mockSpeakingActivity),
+      content: mockReadingActivity.content,
+    };
+    render(<ActivityRenderer activity={activity} value={activityType === 'reading' ? { answerIndexes: [] } : ''} onChange={vi.fn()} sessionId="source-layout-test" />);
+    const source = screen.getByRole('region', { name: 'Source text' });
+    const response = screen.getByRole('region', { name: 'Questions and response' });
+    expect(source).toHaveTextContent('Subject: Team introduction');
+    expect(response).not.toHaveTextContent('Dear team, I am eager to start.');
+    expect(within(response).getByRole('heading', { level: 2 })).toBeVisible();
+  });
+
+  it('keeps the reading answer and Continue action together while preserving answer selection', () => {
+    render(<SessionShell session={createMockSession(1)} currentActivity={mockReadingActivity} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()} />);
+    const response = screen.getByRole('region', { name: 'Questions and response' });
+    const proceed = within(response).getByRole('button', { name: 'Continue' });
+    expect(proceed).toBeDisabled();
+    fireEvent.click(within(response).getByLabelText('Team introduction'));
+    expect(proceed).toBeEnabled();
+    expect(screen.getByRole('region', { name: 'Source text' })).toHaveTextContent('Dear team');
+  });
+
   it('returns an IELTS topic session to its study catalogue using the supplied context label', () => {
     render(<SessionShell session={createMockSession()} currentActivity={null} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()} isCompleted contextLabel="IELTS · Education" completionHref="/ielts/learn" completionLabel="Back to IELTS study" />);
     expect(screen.getByRole('link', { name: 'Back to IELTS study' })).toHaveAttribute('href', '/ielts/learn');
@@ -438,7 +468,7 @@ describe('SessionShell and Activity Renderers', () => {
     await waitFor(() => expect(onSubmitAttempt).toHaveBeenCalledTimes(2));
     expect(onSubmitAttempt.mock.calls[0]?.[2]).toBeTruthy();
     expect(onSubmitAttempt.mock.calls[1]?.[2]).toBe(onSubmitAttempt.mock.calls[0]?.[2]);
-    expect(screen.getByText('Saved')).toBeInTheDocument();
+    expect(await screen.findByText('Saved')).toBeInTheDocument();
   });
 
   it('shows approved topic stage minutes instead of assuming every block lasts fifteen minutes', () => {
@@ -449,11 +479,11 @@ describe('SessionShell and Activity Renderers', () => {
     expect(screen.queryByText(/15 minutes per block/)).not.toBeInTheDocument();
   });
 
-  it('keeps the AI feedback panel in the right sidebar rather than inside the activity area', () => {
+  it('keeps AI feedback in its support region outside the answer controls', () => {
     render(<SessionShell session={createMockSession(1)} currentActivity={mockReadingActivity} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()} />);
     const sidebar = screen.getByRole('complementary', { name: 'Session information and AI feedback' });
     expect(within(sidebar).getByRole('region', { name: 'Teacher AI feedback' })).toBeInTheDocument();
-    expect(within(screen.getByRole('main')).queryByRole('region', { name: 'Teacher AI feedback' })).not.toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Questions and response' })).queryByRole('region', { name: 'Teacher AI feedback' })).not.toBeInTheDocument();
   });
 
   it('shows evaluation feedback when a comprehension answer needs another attempt', async () => {
