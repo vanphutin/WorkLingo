@@ -44,12 +44,14 @@ export class LearningSessionsController {
   ) {}
 
   @Get('learning-sessions/:id/activities/:activityId/draft')
-  getDraft(
+  async getDraft(
     @Req() request: AuthenticatedRequest,
     @Param('id', ParseUUIDPipe) id: string,
     @Param('activityId', ParseUUIDPipe) activityId: string,
-  ): Promise<WritingDraft | null> {
-    return this.drafts.get(request.authUser.id, id, activityId);
+    @Res() response: Response,
+  ): Promise<void> {
+    // Nest otherwise sends an empty body for null, which is not valid JSON.
+    response.json(await this.drafts.get(request.authUser.id, id, activityId));
   }
 
   @Put('learning-sessions/:id/activities/:activityId/draft')

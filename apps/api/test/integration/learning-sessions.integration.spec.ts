@@ -238,6 +238,19 @@ describe('learning sessions', () => {
     expect(JSON.stringify(response.body)).not.toMatch(/answerIndex|explanation|evidence|sampleAnswer/u);
   });
 
+  it('returns JSON null for an empty writing draft and restores a subsequently saved draft', async () => {
+    const agent = await registerLearner(context.app, { displayName: 'Draft Learner', email: 'writing-draft@example.test' });
+    const session = await agent.post('/api/v1/learning-sessions').send({ clientSessionId: randomUUID(), durationMinutes: 60 }).expect(201);
+    const activity = await context.database.activity.findFirstOrThrow({ where: { lessonVersionId: session.body.lessonVersionId, activityType: 'writing' } });
+    const path = `/api/v1/learning-sessions/${session.body.id}/activities/${activity.id}/draft`;
+    const empty = await agent.get(path).expect(200).expect('Content-Type', /application\/json/);
+    expect(empty.text).toBe('null');
+    expect(empty.body).toBeNull();
+    await agent.put(path).send({ expectedRevision: 0, text: 'Please book a table for four.' }).expect(200);
+    const restored = await agent.get(path).expect(200);
+    expect(restored.body).toMatchObject({ activityId: activity.id, sessionId: session.body.id, revision: 1, text: 'Please book a table for four.' });
+  });
+
   it('stores raw answers before deterministic evaluation and advances a checkpoint once', async () => {
     const agent = await registerLearner(context.app, {
       displayName: 'Attempt Learner', email: 'attempt@example.test',
