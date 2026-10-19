@@ -5,12 +5,20 @@ import { defaultTopicPlan } from '@worklingo/contracts';
 import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client';
 import { learningSessionDtoSchema } from '../../lib/api/api-client';
 import { IntermediateTopicPicker } from './intermediate-topic-picker';
+import { LocaleProvider } from '../../i18n/provider';
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
 const id = '11111111-1111-4111-8111-111111111111';
 const session = learningSessionDtoSchema.parse({ id, clientSessionId: id, lessonVersionId: id, purpose: 'learning', durationMinutes: 60, status: 'planned', currentCheckpoint: 1, mission: { id, title: 'Restaurant' }, plan: { kind: 'topic', topicSelection: 'chosen', durationMinutes: 60, missionId: id, lessonVersionId: id, blocks: defaultTopicPlan(60).allocations.map((a, i) => ({ ...a, order: i + 1, activityIds: [`11111111-1111-4111-8111-${String(i + 1).padStart(12, '0')}`], skills: [(['writing', 'reading', 'listening', 'speaking'] as const)[i]!] })) }, blocks: [], attempts: [] });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); push.mockReset(); });
 describe('Learner topic choice', () => {
+  it('uses English group names for the English interface with Vietnamese fallback', async () => {
+    vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([{ id, title: 'Booking', lessonVersionId: id, durationMinutes: 60,
+      group: { id, name: 'Nhà hàng', nameEn: 'Restaurants', description: '' } }]);
+    render(<LocaleProvider initialLocale="en"><IntermediateTopicPicker enabled><p>Legacy launcher</p></IntermediateTopicPicker></LocaleProvider>);
+    expect(await screen.findByRole('option', { name: 'Restaurants' })).toBeInTheDocument();
+    expect(screen.queryByRole('option', { name: 'Nhà hàng' })).not.toBeInTheDocument();
+  });
   it('selects a group then one of its lessons and keeps ungrouped lessons accessible', async () => {
     const second = '22222222-2222-4222-8222-222222222222';
     const third = '33333333-3333-4333-8333-333333333333';

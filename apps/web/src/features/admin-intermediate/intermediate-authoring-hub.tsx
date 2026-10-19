@@ -36,11 +36,9 @@ export function IntermediateAuthoringHub() {
   }, [attempt]);
 
   return <section className="intermediate-authoring-hub" aria-labelledby={`${id}-title`}>
-    <header><h2 id={`${id}-title`}>{tt('title')}</h2><p className="ad-muted">{tt('description')}</p></header>
+    <header><h2 id={`${id}-title`}>{tg('title')}</h2><p className="ad-muted">{tg('flowHelp')}</p></header>
     <div className="intermediate-category-actions">
-      <Link href="/admin/programs/intermediate/topic-groups">{tg('title')}</Link>
-      <Link className="intermediate-add-link" href="/admin/programs/intermediate/topics/new">{tt('add')}</Link>
-      <Link href="/admin/programs/intermediate/topics">{tt('list')}</Link>
+      <Link className="intermediate-add-link" href="/admin/programs/intermediate/topic-groups">{tg('title')}</Link>
     </div>
     <details className="intermediate-legacy-tools"><summary>{tt('legacy')}</summary><p>{tt('legacyHelp')}</p>
     {state.status === 'loading' ? <p role="status">{t('loadingCounts')}</p> : null}

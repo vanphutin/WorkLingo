@@ -24,13 +24,13 @@ Nền tảng/Mất gốc và TOEIC được đánh dấu **Phát triển sau** t
 
 ## Quy trình soạn bài
 
-Với Trung cấp, mở `/admin/programs/intermediate/topics`, chọn **Thêm bài học theo chủ đề**. Mỗi topic có một bài đọc gốc. Từ vựng, ngữ pháp, phát âm, câu hỏi đọc/nghe và nhiệm vụ nói/viết đều phục vụ cùng nội dung. Âm thanh dùng chính bài đọc đó; nhãn nhân vật `An (nam): ...`, `Nhi (nữ): ...` được hỗ trợ khi bài là hội thoại. Admin soạn các phần học; AI trong phiên bản này phân tích bố cục để đề xuất thời lượng/phân bổ, không tự tạo và duyệt toàn bộ bài.
+Với Trung cấp, mở **Chủ đề & bài học** (`/admin/programs/intermediate/topic-groups`), chọn một chủ đề rồi bấm **Thêm bài học** trong chủ đề đó. Mỗi bài có một bài đọc gốc. Từ vựng, ngữ pháp, phát âm, câu hỏi đọc/nghe và nhiệm vụ nói/viết đều phục vụ cùng nội dung. Âm thanh dùng chính bài đọc đó; nhãn nhân vật `An (nam): ...`, `Nhi (nữ): ...` được hỗ trợ khi bài là hội thoại. Admin soạn các phần học; AI phân tích bố cục để đề xuất thời lượng/phân bổ, không tự tạo câu hỏi hoặc duyệt bài.
 
 Lưu bản nháp rồi chọn **Nhờ AI đề xuất**, hoặc tự chọn khung học khi không dùng AI. AI chỉ đưa ra đề xuất có lý do; chế độ mô phỏng được ghi rõ. Admin được sửa thời lượng 45/60/90/120/150 phút và số phút của bốn chặng trước khi bấm **Phê duyệt khung học này**. Tổng phân bổ phải đúng thời lượng. Đổi nguồn sau khi duyệt làm phê duyệt cũ hết hiệu lực; yêu cầu AI trả về muộn hoặc revision cũ không được ghi đè bản mới.
 
 ### Nhập topic Trung cấp bằng JSON
 
-Sidebar **Trung cấp → Công cụ Trung cấp** có **Bài học theo chủ đề** và **Thêm bài học theo chủ đề**. Các chuyên mục cũ nằm trong nhóm thu gọn riêng, tự mở khi truy cập đường dẫn cũ.
+Sidebar **Trung cấp → Công cụ Trung cấp** chỉ có một lối vào chính **Chủ đề & bài học**. Các chuyên mục cũ nằm trong nhóm thu gọn riêng, tự mở khi truy cập đường dẫn cũ. `/topics` chuyển về không gian chung; mở `/topics/new` thiếu mã chủ đề hợp lệ cũng quay về chọn chủ đề. Mã chủ đề đã xóa được kiểm tra trước khi mở biểu mẫu.
 
 Trong biểu mẫu thêm/sửa topic, mở **Nhập bài theo chủ đề bằng JSON**. Dán nội dung hoặc chọn file JSON tối đa 1 MB; **Nạp JSON mẫu** cung cấp ví dụ đầy đủ. Có thể dùng [file mẫu nhà hàng](examples/intermediate-topic.json). JSON hợp lệ tự điền thông tin bài học, bài đọc và các phần luyện tập để review. Bấm **Xem bài đã điền** để đến phần thông tin, kiểm tra rồi **Tạo/Lưu bản nháp**; nhập JSON không tự lưu.
 
@@ -83,11 +83,21 @@ Topic dùng `[LESSON] program: intermediate`, `category: reading`, `authoring_te
 3. Khi đổi chủ đề/đề thi đang có thay đổi, chọn tiếp tục chỉnh sửa hoặc bỏ thay đổi. Module Bridge, cấu hình thời lượng và giai đoạn band giữ các chỉnh sửa riêng khi chuyển lựa chọn trong không gian hiện tại.
 4. Nếu có xung đột, tải lại. Bản mới của cùng bài được nạp sau khi xác nhận bỏ chỉnh sửa cục bộ; giữ chỉnh sửa không tự nâng revision để ghi đè nội dung của người khác.
 
-## Danh mục chủ đề Trung cấp
+## Chủ đề & bài học Trung cấp
 
-Trong **Trung cấp → Danh mục chủ đề** (`/admin/programs/intermediate/topic-groups`), admin tạo/sửa tên và mô tả chủ đề. Một chủ đề chứa nhiều bài, ví dụ Nhà hàng có Đặt bàn, Gọi món, Thanh toán.
+Trong **Trung cấp → Chủ đề & bài học** (`/admin/programs/intermediate/topic-groups`), admin tạo/sửa tên và mô tả chủ đề. Một chủ đề chứa nhiều bài, ví dụ Nhà hàng có Đặt bàn, Gọi món, Thanh toán.
 
-- Thêm và lưu bài bằng biểu mẫu hoặc JSON hiện có, sau đó chọn chủ đề cạnh bài trong danh mục. Có thể phân nhóm cả bản nháp; trạng thái từng bài được hiển thị riêng. Dùng ô tìm kiếm và bộ lọc chủ đề để quản lý bài.
+Danh mục khởi tạo có **150 chủ đề**, mỗi chủ đề có tên Việt, tên Anh và tên gọi khác đăng ký chung một ID. Có thể tìm bằng cả hai ngôn ngữ hoặc tên không dấu. Danh sách, tiêu đề và bộ chọn hiển thị tên theo ngôn ngữ giao diện: Việt dùng tên Việt, Anh dùng tên Anh (nếu chủ đề tùy chỉnh chưa có tên Anh thì dùng tên hiện có). Biểu mẫu sửa chủ đề vẫn có các trường riêng để quản trị hai tên và tối đa 20 tên gọi khác.
+
+Ví dụ Nhà hàng / Restaurants có các tên Restaurant, restaurent và Nha hang cùng thuộc một ID. Nhập một tên/tên gọi đã thuộc chủ đề khác bị chặn; không tự gộp hai nhóm cũ. Nạp lại danh mục dùng mã ổn định, giữ ID, các bài đã liên kết và chỉnh sửa của admin; trường hợp nhiều nhóm cũ khớp cùng mục được báo xung đột để xử lý riêng.
+
+**Quy tắc nghiệp vụ:** **Chọn chủ đề → Xem các bài trong chủ đề → Thêm bài bằng biểu mẫu/JSON → Lưu nháp → Kiểm tra nội dung và chuẩn bị âm thanh → Admin duyệt thời lượng → Xuất bản**. Trang soạn hiển thị các bước để biết vị trí hiện tại.
+
+Chưa chọn chủ đề thì không có nút thêm bài. Chủ đề được cố định khi tạo bài mới; muốn chọn chủ đề khác, quay lại bước đầu (cảnh báo nếu có nội dung chưa lưu). Nhập JSON chỉ điền nội dung bài và giữ ID chủ đề đã chọn, không đọc tên nhóm từ JSON. API trả `400 TOPIC_GROUP_REQUIRED` khi tạo bài Trung cấp mới không có chủ đề, kể cả đổi bản nháp trống/định dạng khác sang bài Trung cấp; mã không tồn tại bị từ chối. Tạo bản nháp lưu bài và phân nhóm trong một transaction, nên lỗi chủ đề không để lại bản nháp tạo dở.
+
+Với bài đã lưu, đổi chủ đề được lưu ngay bằng revision phân nhóm riêng và giữ nội dung bài đang chỉnh sửa. Các bài cũ chưa phân nhóm nằm trong **Bài chưa phân chủ đề** để admin đưa vào nhóm; khu vực này không tạo bài Trung cấp mới chưa phân nhóm. Bài đã xuất bản và phiên đang học vẫn giữ quy tắc dữ liệu trước đây.
+
+- Chọn chủ đề rồi thêm và lưu bài bằng biểu mẫu hoặc JSON hiện có. Với bài đã lưu, có thể đổi chủ đề trong biểu mẫu hoặc cạnh bài trong không gian chung. Trạng thái từng bài được hiển thị riêng; dùng ô tìm kiếm và bộ lọc chủ đề để quản lý bài.
 - Một bài có một chủ đề chung cho các phiên bản. Phân nhóm có revision riêng, không sửa bài đọc/câu hỏi hay làm mất phê duyệt thời lượng. Khi xuất bản, lựa chọn phân nhóm của admin được gắn cho bài và đồng bộ những bản nhập đã liên kết với bài đó. Bản nhập mới chưa từng chọn/bỏ chủ đề sẽ giữ chủ đề hiện có của bài.
 - Xóa chủ đề cần xác nhận; các bài vẫn được giữ trong **Bài chưa phân chủ đề**. Xung đột với thao tác ở cửa sổ khác yêu cầu tải lại dữ liệu.
 - Học viên chọn chủ đề, sau đó chọn một bài trong chủ đề. Các bài chưa phân nhóm vẫn truy cập được qua **Các bài khác**. Nút ngẫu nhiên chọn trên tất cả bài đủ điều kiện; không giới hạn theo bộ lọc đang chọn.

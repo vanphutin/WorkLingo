@@ -8,6 +8,7 @@ import { IntermediateLessonEditor } from './intermediate-lesson-editor';
 import { createIntermediateLessonDraft } from './lesson-model';
 import { serializeIntermediateTopicLesson } from './topic-lesson-model';
 import { createTopicJsonTemplate } from './topic-json';
+import { topicGroupClient } from '../../lib/api/topic-group-client';
 
 const { push } = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
@@ -20,6 +21,16 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); push.mockReset(); });
 describe('A topic contains the source passage and its connected practice', () => {
+  it('keeps the selected topic while JSON fills the lesson and creates both in one request', async () => {
+    vi.spyOn(topicGroupClient, 'catalog').mockResolvedValue({ groups: [{ id, name: 'Nhà hàng', description: '', revision: 1, lessonCount: 0 }], lessons: [] });
+    render(<IntermediateLessonEditor category="reading" topic />);
+    fireEvent.change(await screen.findByRole('combobox', { name: 'Lesson topic' }), { target: { value: id } });
+    fireEvent.click(screen.getByText('Import a topic from JSON', { selector: 'summary' }));
+    fireEvent.change(screen.getByLabelText('Topic JSON'), { target: { value: JSON.stringify(createTopicJsonTemplate()) } });
+    expect(screen.getByRole('combobox', { name: 'Lesson topic' })).toHaveValue(id);
+    fireEvent.click(screen.getByRole('button', { name: 'Create draft' }));
+    await waitFor(() => expect(apiClient.createContentImport).toHaveBeenCalledWith(expect.stringContaining('authoring_template: intermediate-topic-v1'), id));
+  });
   it('keeps exactly 10 imported reading questions and links to each from the outline', () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
     render(<IntermediateLessonEditor category="reading" topic />);

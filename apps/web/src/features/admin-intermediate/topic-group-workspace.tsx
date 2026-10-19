@@ -3,34 +3,41 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { z } from 'zod';
 import type { intermediateTopicGroupCatalogSchema, intermediateTopicGroupSchema } from '@worklingo/contracts';
-import { useT } from '../../i18n/provider';
+import { useLocalePreference, useT } from '../../i18n/provider';
 import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 import { ApiError } from '../../lib/api/api-client';
 import { topicGroupClient } from '../../lib/api/topic-group-client';
 import { AdminLink, useAdminNavigationGuard } from '../admin-dashboard/admin-navigation-guard';
 import './intermediate-authoring.css';
 import './topic-group-workspace.css';
+import { matchesTopicGroup, topicGroupLabel } from './topic-group-search';
+import { TopicAuthoringSteps } from './topic-authoring-steps';
 
 type Catalog = z.infer<typeof intermediateTopicGroupCatalogSchema>;
 type Group = z.infer<typeof intermediateTopicGroupSchema>;
 const lessonBase = '/admin/programs/intermediate/topics';
 
-export function TopicGroupWorkspace() {
+export function TopicGroupWorkspace({ initialGroupId = '' }: { initialGroupId?: string }) {
   const t = useT('intermediateGroups', intermediateGroupsMessages);
+  const { locale } = useLocalePreference();
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  const [selection, setSelection] = useState('all');
+  const [selection, setSelection] = useState(initialGroupId);
   const [search, setSearch] = useState('');
+  const [topicSearch, setTopicSearch] = useState('');
   const [editor, setEditor] = useState<Group | 'new' | null>(null);
   const [name, setName] = useState('');
+  const [nameEn, setNameEn] = useState('');
+  const [aliases, setAliases] = useState('');
   const [description, setDescription] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<'error' | 'conflict' | 'duplicate' | null>(null);
   const [saved, setSaved] = useState(false);
   const live = useRef(false);
   const inFlight = useRef(false);
-  const dirty = editor !== null && (name !== (editor === 'new' ? '' : editor.name) || description !== (editor === 'new' ? '' : editor.description));
+  const dirty = editor !== null && (name !== (editor === 'new' ? '' : editor.name) || description !== (editor === 'new' ? '' : editor.description)
+    || nameEn !== (editor === 'new' ? '' : editor.nameEn ?? '') || aliases !== (editor === 'new' ? '' : (editor.aliases ?? []).join('\n')));
   useAdminNavigationGuard(dirty, t('leave'));
 
   useEffect(() => {
@@ -52,6 +59,8 @@ export function TopicGroupWorkspace() {
   function openEditor(group: Group | 'new' | null) {
     if (busy || !canLeave()) return;
     setEditor(group); setName(group && group !== 'new' ? group.name : '');
+    setNameEn(group && group !== 'new' ? group.nameEn ?? '' : '');
+    setAliases(group && group !== 'new' ? (group.aliases ?? []).join('\n') : '');
     setDescription(group && group !== 'new' ? group.description : ''); setError(null); setSaved(false);
   }
   async function mutate(action: () => Promise<void>) {
@@ -67,7 +76,7 @@ export function TopicGroupWorkspace() {
     event.preventDefault();
     if (!editor || !name.trim()) return;
     void mutate(async () => {
-      const input = { name: name.trim(), description: description.trim() };
+      const input = { name: name.trim(), nameEn: nameEn.trim() || null, aliases: aliases.split('\n').map(alias => alias.trim()).filter(Boolean), description: description.trim() };
       const group = editor === 'new' ? await topicGroupClient.create(input)
         : await topicGroupClient.update(editor.id, { ...input, expectedRevision: editor.revision });
       if (!live.current) return;
@@ -76,22 +85,23 @@ export function TopicGroupWorkspace() {
     });
   }
   function remove(group: Group) {
-    if (!canLeave() || !window.confirm(t('deleteConfirm', { name: group.name }))) return;
+    if (!canLeave() || !window.confirm(t('deleteConfirm', { name: topicGroupLabel(group, locale) }))) return;
     void mutate(async () => {
       await topicGroupClient.remove(group.id, { expectedRevision: group.revision });
       const value = await topicGroupClient.catalog();
-      if (live.current) { setCatalog(value); setSelection('all'); setEditor(null); }
+      if (live.current) { setCatalog(value); setSelection(''); setEditor(null); }
     });
   }
   const selectedGroup = catalog?.groups.find(group => group.id === selection);
+  const orderedGroups = [...(catalog?.groups ?? [])].sort((a, b) => topicGroupLabel(a, locale).localeCompare(topicGroupLabel(b, locale), locale));
   const lessons = catalog?.lessons.filter(lesson => (selection === 'all' || (selection === 'ungrouped' ? !lesson.groupId : lesson.groupId === selection))
     && lesson.title.toLocaleLowerCase().includes(search.toLocaleLowerCase().trim())) ?? [];
   const statusKey = { DRAFT: 'draft', VALIDATED: 'validated', PUBLISHED: 'published', ARCHIVED: 'archived' } as const;
 
   return <div className="intermediate-editor topic-groups">
     <header className="intermediate-editor-header"><h1>{t('title')}</h1><p>{t('help')}</p>
-      <div className="intermediate-actions"><button type="button" className="intermediate-save" disabled={busy || !catalog} onClick={() => openEditor('new')}>{t('add')}</button>
-        <AdminLink href={lessonBase}>{t('all')}</AdminLink></div>
+      <TopicAuthoringSteps step={1} /><p className="intermediate-help">{t('flowHelp')}</p>
+      <div className="intermediate-actions"><button type="button" className="intermediate-save" disabled={busy || !catalog} onClick={() => openEditor('new')}>{t('add')}</button></div>
     </header>
     {!catalog && !loadFailed ? <p role="status">{t('loading')}</p> : null}
     {loadFailed ? <div role="alert"><p>{t('loadError')}</p><button type="button" onClick={() => { setLoadFailed(false); setAttempt(n => n + 1); }}>{t('retry')}</button></div> : null}
@@ -104,22 +114,30 @@ export function TopicGroupWorkspace() {
     {editor ? <form className="intermediate-card" onSubmit={save} aria-label={t(editor === 'new' ? 'add' : 'edit')}>
       <h2>{t(editor === 'new' ? 'add' : 'edit')}</h2>
       <label className="intermediate-field">{t('name')}<input value={name} onChange={e => setName(e.target.value)} required maxLength={120} disabled={busy} autoFocus /></label>
+      <label className="intermediate-field">{t('nameEn')}<input value={nameEn} onChange={e => setNameEn(e.target.value)} maxLength={120} disabled={busy} /></label>
+      <label className="intermediate-field">{t('aliases')}<textarea value={aliases} onChange={e => setAliases(e.target.value)} rows={3} maxLength={3600} disabled={busy} /></label>
+      <p className="intermediate-help">{t('aliasesHelp')}</p>
       <label className="intermediate-field">{t('description')}<textarea value={description} onChange={e => setDescription(e.target.value)} maxLength={2000} rows={3} disabled={busy} /></label>
       <div className="intermediate-actions"><button type="submit" className="intermediate-save" disabled={busy || !name.trim()}>{t(busy ? 'busy' : 'save')}</button>
         <button type="button" disabled={busy} onClick={() => openEditor(null)}>{t('cancel')}</button></div>
     </form> : null}
     {catalog ? <div className="topic-groups-layout">
       <nav className="topic-groups-nav intermediate-card" aria-label={t('title')}>
-        {[{ id: 'all', label: t('all') }, ...catalog.groups.map(group => ({ id: group.id, label: t('groupCount', { name: group.name, count: group.lessonCount }) })),
+        <label className="intermediate-field">{t('findTopic')}<input type="search" value={topicSearch} onChange={e => setTopicSearch(e.target.value)} /></label>
+        <div className="topic-groups-options">
+        {[...orderedGroups.filter(group => matchesTopicGroup(group, topicSearch)).map(group => ({ id: group.id, label: t('groupCount', { name: topicGroupLabel(group, locale), count: group.lessonCount }) })),
           { id: 'ungrouped', label: t('ungrouped') }].map(item => <button key={item.id} type="button" disabled={busy} aria-pressed={selection === item.id}
             onClick={() => { if (canLeave()) { setSelection(item.id); setSearch(''); setEditor(null); } }}>{item.label}</button>)}
+        </div>
+        {topicSearch && !catalog.groups.some(group => matchesTopicGroup(group, topicSearch)) ? <p>{t('noTopicsFound')}</p> : null}
         {!catalog.groups.length ? <p className="intermediate-help">{t('emptyGroups')}</p> : null}
       </nav>
-      <section className="intermediate-card topic-group-lessons" aria-label={t('lessons')}>
-        <header><h2>{selectedGroup?.name ?? t(selection === 'ungrouped' ? 'ungrouped' : 'all')}</h2>
+      {selectedGroup || selection === 'ungrouped' ? <section className="intermediate-card topic-group-lessons" aria-label={t('lessons')}>
+        <header><h2>{selectedGroup ? topicGroupLabel(selectedGroup, locale) : t('ungrouped')}</h2>
           {selectedGroup?.description ? <p>{selectedGroup.description}</p> : null}
+          {selection === 'ungrouped' ? <p>{t('ungroupedHelp')}</p> : null}
           <div className="intermediate-actions">
-            <AdminLink href={`${lessonBase}/new`}>{t('addLesson')}</AdminLink>
+            {selectedGroup ? <AdminLink href={`${lessonBase}/new?topicGroupId=${encodeURIComponent(selectedGroup.id)}`}>{t('addLesson')}</AdminLink> : null}
             {selectedGroup ? <><button type="button" disabled={busy} onClick={() => openEditor(selectedGroup)}>{t('edit')}</button>
               <button type="button" disabled={busy} onClick={() => remove(selectedGroup)}>{t('remove')}</button></> : null}
           </div>
@@ -133,11 +151,11 @@ export function TopicGroupWorkspace() {
               const groupId = e.target.value || null;
               void mutate(async () => { const value = await topicGroupClient.assign(lesson.importId, { groupId, expectedRevision: lesson.revision });
                 if (live.current) setCatalog(value); });
-            }}><option value="">{t('ungrouped')}</option>{catalog.groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}</select>
+            }}><option value="">{t('ungrouped')}</option>{orderedGroups.map(group => <option key={group.id} value={group.id}>{topicGroupLabel(group, locale)}</option>)}</select>
           </label>
         </li>)}</ul>
         {!lessons.length ? <p>{t(search ? 'noMatches' : catalog.lessons.length ? 'emptyLessons' : 'noLessons')}</p> : null}
-      </section>
+      </section> : <section className="intermediate-card"><h2>{t('chooseTopicStep')}</h2><p>{t('chooseFirst')}</p></section>}
     </div> : null}
     <p className="intermediate-notice">{t('publication')}</p>
   </div>;

@@ -442,12 +442,12 @@ export class ApiClient {
     return this.request('/admin/content-imports', { method: 'GET' }, z.array(contentImportSchema));
   }
 
-  async createContentImport(rawSource: string): Promise<ContentImportDto> {
+  async createContentImport(rawSource: string, topicGroupId?: string): Promise<ContentImportDto> {
     return this.request(
       '/admin/content-imports',
       {
         method: 'POST',
-        body: JSON.stringify({ rawSource }),
+        body: JSON.stringify({ rawSource, ...(topicGroupId ? { topicGroupId } : {}) }),
       },
       contentImportSchema,
     );

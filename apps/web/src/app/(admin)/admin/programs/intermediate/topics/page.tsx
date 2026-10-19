@@ -1,2 +1,2 @@
-import { IntermediateCategoryWorkspace } from '../../../../../../features/admin-intermediate/intermediate-category-workspace';
-export default function IntermediateTopicsPage() { return <IntermediateCategoryWorkspace category="reading" topic />; }
+import { redirect } from 'next/navigation';
+export default function IntermediateTopicsPage() { redirect('/admin/programs/intermediate/topic-groups'); }

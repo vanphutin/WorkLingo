@@ -15,12 +15,13 @@ describe('Admin workspace navigation', () => {
     const categories = screen.getByText('Earlier category tools').closest('details')!;
     const toeic = screen.getByText('TOEIC');
     const ielts = screen.getByRole('link', { name: 'IELTS' });
-    const topics = screen.getByRole('link', { name: 'Topic lessons' });
-    expect(topics).toHaveAttribute('href', '/admin/programs/intermediate/topics');
+    const topics = screen.getByRole('link', { name: 'Topics and lessons' });
+    expect(topics).toHaveAttribute('href', '/admin/programs/intermediate/topic-groups');
     const tools = screen.getByText('Intermediate tools').closest('details')!;
     expect(intermediate.nextElementSibling).toBe(tools);
     expect(tools).toHaveAttribute('open');
-    expect(within(tools).getByRole('link', { name: 'Add a topic lesson' })).toHaveAttribute('href', '/admin/programs/intermediate/topics/new');
+    expect(within(tools).queryByRole('link', { name: 'Add a topic lesson' })).not.toBeInTheDocument();
+    expect(within(tools).queryByRole('link', { name: 'Topic lessons' })).not.toBeInTheDocument();
     expect(tools).toContainElement(topics);
     expect(tools).toContainElement(categories);
     expect(categories).not.toHaveAttribute('open');
@@ -28,12 +29,12 @@ describe('Admin workspace navigation', () => {
     expect(categories.compareDocumentPosition(ielts) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
-  it.each([['/topics', '/topics'], ['/topics/new', '/topics/new'], ['/topics/record-id', '/topics']])('selects exactly one topic destination for %s', (route, selectedRoute) => {
+  it.each(['/topic-groups', '/topics', '/topics/new', '/topics/record-id'])('selects exactly one topic destination for %s', route => {
     location.pathname = `/admin/programs/intermediate${route}`;
     render(<AdminNavigation />);
     const selected = screen.getByRole('navigation', { name: 'Admin workspace' }).querySelectorAll('[aria-current="page"]');
     expect(selected).toHaveLength(1);
-    expect(selected[0]).toHaveAttribute('href', `/admin/programs/intermediate${selectedRoute}`);
+    expect(selected[0]).toHaveAttribute('href', '/admin/programs/intermediate/topic-groups');
   });
 
   it.each(['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'])('selects only the %s category on its editor route', (category) => {

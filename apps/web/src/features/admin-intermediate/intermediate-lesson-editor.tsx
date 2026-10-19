@@ -19,9 +19,12 @@ import { isIntermediateTopicSource, readIntermediateTopicLesson, serializeInterm
 import { TopicReviewPanel } from './topic-review-panel';
 import { TopicJsonTransfer } from './topic-json-transfer';
 import { TopicLessonOutline } from './topic-lesson-outline';
+import { TopicGroupField } from './topic-group-field';
+import { TopicAuthoringSteps } from './topic-authoring-steps';
+import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 
 type T = Translator<typeof adminIntermediateMessages>;
-type Props = { category: IntermediateCategory; importId?: string; topic?: boolean };
+type Props = { category: IntermediateCategory; importId?: string; topic?: boolean; initialTopicGroupId?: string };
 type LoadState = { kind: 'loading' | 'error' } | { kind: 'unsupported' | 'wrong'; record: ContentImportDto }
   | { kind: 'ready'; record: ContentImportDto | null; draft: IntermediateLessonDraft };
 const focusKeys = {
@@ -31,11 +34,12 @@ const focusKeys = {
 } as const;
 
 /** A record/category switch unmounts all draft state and invalidates pending work immediately. */
-export function IntermediateLessonEditor({ category, importId, topic = false }: Props) {
-  return <EditorSession key={`${topic}:${category}:${importId ?? 'new'}`} category={category} topic={topic} {...(importId ? { importId } : {})} />;
+export function IntermediateLessonEditor({ category, importId, topic = false, initialTopicGroupId }: Props) {
+  return <EditorSession key={`${topic}:${category}:${importId ?? 'new'}:${initialTopicGroupId ?? ''}`} category={category} topic={topic}
+    {...(importId ? { importId } : {})} {...(initialTopicGroupId ? { initialTopicGroupId } : {})} />;
 }
 
-function EditorSession({ category, importId, topic = false }: Props) {
+function EditorSession({ category, importId, topic = false, initialTopicGroupId }: Props) {
   const t = useT('adminIntermediate', adminIntermediateMessages);
   const tt = useT('intermediateTopics', intermediateTopicsMessages);
   const [loaded, setLoaded] = useState<LoadState>(() => importId ? { kind: 'loading' }
@@ -55,9 +59,10 @@ function EditorSession({ category, importId, topic = false }: Props) {
     return () => { cancelled = true; };
   }, [category, importId, topic]);
 
-  if (loaded.kind === 'ready') return <DraftForm category={category} topic={topic} initialRecord={loaded.record} initialDraft={loaded.draft} />;
+  if (loaded.kind === 'ready') return <DraftForm category={category} topic={topic} initialRecord={loaded.record} initialDraft={loaded.draft}
+    {...(initialTopicGroupId ? { initialTopicGroupId } : {})} />;
   return <div className="intermediate-editor">
-    <Link href={`/admin/programs/intermediate/${topic ? 'topics' : category}`}>{topic ? tt('back') : t('back', { category: t(category) })}</Link>
+    <Link href={`/admin/programs/intermediate/${topic ? 'topic-groups' : category}`}>{topic ? tt('back') : t('back', { category: t(category) })}</Link>
     {loaded.kind === 'loading' ? <p role="status">{t('loading')}</p> : <>
       <p role="alert" className="intermediate-notice">{t(loaded.kind === 'wrong' ? 'wrongCategory' : loaded.kind === 'unsupported' ? 'unsupported' : 'loadFailed')}</p>
       {importId && loaded.kind !== 'error' ? <Link href={`/admin/content/${importId}`}>{t('advanced')}</Link> : null}
@@ -150,13 +155,16 @@ function Questions({ skill, questions, onChange, t, anchorPrefix }: {
   </div>;
 }
 
-function DraftForm({ category, topic, initialRecord, initialDraft }: {
-  category: IntermediateCategory; topic: boolean; initialRecord: ContentImportDto | null; initialDraft: IntermediateLessonDraft;
+function DraftForm({ category, topic, initialRecord, initialDraft, initialTopicGroupId }: {
+  category: IntermediateCategory; topic: boolean; initialRecord: ContentImportDto | null; initialDraft: IntermediateLessonDraft; initialTopicGroupId?: string;
 }) {
   const t = useT('adminIntermediate', adminIntermediateMessages);
   const tt = useT('intermediateTopics', intermediateTopicsMessages);
+  const tg = useT('intermediateGroups', intermediateGroupsMessages);
   const router = useRouter();
   const [record, setRecord] = useState(initialRecord);
+  const [topicGroupId, setTopicGroupId] = useState(initialRecord?.topicGroupId ?? initialTopicGroupId ?? '');
+  const [groupBusy, setGroupBusy] = useState(false);
   const [draft, setDraft] = useState(initialDraft);
   const [savedDraft, setSavedDraft] = useState(initialDraft);
   const [saving, setSaving] = useState(false);
@@ -170,7 +178,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   const target = (key: string) => topic ? { id: `${headingId}-${key}`, tabIndex: -1 } : {};
   const readOnly = record?.status === 'PUBLISHED' || record?.status === 'ARCHIVED';
   const dirty = draft !== savedDraft;
-  const anyDirty = dirty || planDirty || jsonDirty;
+  const anyDirty = dirty || planDirty || jsonDirty || (!record && Boolean(topicGroupId) && !initialTopicGroupId);
   useAdminNavigationGuard(anyDirty, t('leaveDirty'));
   const [focusKey, helpKey] = focusKeys[category];
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
@@ -187,7 +195,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   }
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (readOnly || inFlight.current || error === 'conflict' || jsonDirty) return;
+    if (readOnly || inFlight.current || groupBusy || error === 'conflict' || jsonDirty) return;
     if (topic && planDirty && !window.confirm(tt('replacePlan'))) return;
     let source: string;
     try { source = topic ? serializeIntermediateTopicLesson(draft) : serializeIntermediateLesson(category, draft); }
@@ -203,7 +211,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
         setSavedDraft(draft);
         setSaved(true);
       } else {
-        const created = await apiClient.createContentImport(source);
+        const created = topic && topicGroupId ? await apiClient.createContentImport(source, topicGroupId) : await apiClient.createContentImport(source);
         if (!mounted.current) return;
         setSavedDraft(draft);
         setSaved(true);
@@ -233,13 +241,17 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
   return <div className={topic ? 'intermediate-topic-layout' : undefined}>
     {topic ? <TopicLessonOutline prefix={headingId} draft={draft} hasReview={Boolean(record)} canSave={!readOnly} /> : null}
     <div className="intermediate-editor">
-    <Link href={`/admin/programs/intermediate/${topic ? 'topics' : category}`}>{topic ? tt('back') : t('back', { category: t(category) })}</Link>
+    <Link href={topic ? `/admin/programs/intermediate/topic-groups${topicGroupId ? `?topicGroupId=${encodeURIComponent(topicGroupId)}` : ''}`
+      : `/admin/programs/intermediate/${category}`}>{topic ? tg('changeTopic') : t('back', { category: t(category) })}</Link>
     <header className="intermediate-editor-header">
       <p className="intermediate-eyebrow">{t('program')} / {topic ? tt('title') : t(category)}</p>
       <h1>{topic ? tt(record ? 'editTitle' : 'newTitle') : t(record ? 'editTitle' : 'newTitle', { category: t(category) })}</h1>
       <p>{topic ? tt('description') : t('introduction')}</p>
       {record ? <span className="intermediate-revision">{t('revision', { count: record.draftRevision })}</span> : null}
     </header>
+    {topic ? <><TopicAuthoringSteps step={record ? (readOnly ? 4 : 3) : 2} /><p className="intermediate-help">{tg(record ? 'savedFlowHelp' : 'flowHelp')}</p></> : null}
+    {topic ? <TopicGroupField key={record?.id ?? 'new'} value={topicGroupId} onChange={setTopicGroupId} disabled={saving} onBusyChange={setGroupBusy} fixed={Boolean(initialTopicGroupId && !record)}
+      {...(record ? { importId: record.id } : {})} /> : null}
     {readOnly ? <p className="intermediate-notice">{t('readOnly')}</p> : null}
     {error ? <p role="alert" className="intermediate-notice intermediate-error">{t(error)}</p> : null}
     {topic ? <TopicJsonTransfer anchorId={`${headingId}-json`} reviewHref={`#${headingId}-basics`} draft={draft} dirty={dirty} disabled={saving || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
@@ -280,7 +292,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft }: {
         </details>}
       </fieldset>
       {!readOnly ? <div className="intermediate-actions" {...target('save')}>
-        <button className="intermediate-save" type="submit" disabled={saving || jsonDirty || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
+        <button className="intermediate-save" type="submit" disabled={saving || groupBusy || jsonDirty || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
         <span role="status" aria-live="polite">{saved ? t('saved') : dirty ? t('dirty') : ''}</span>
       </div> : null}
     </form>

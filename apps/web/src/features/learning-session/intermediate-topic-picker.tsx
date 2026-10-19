@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import type { LearnerTopic } from '@worklingo/contracts';
-import { useT } from '../../i18n/provider';
+import { useLocalePreference, useT } from '../../i18n/provider';
 import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
 import { intermediateGroupsMessages } from '../../i18n/messages/intermediateGroups';
 import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client';
@@ -13,6 +13,7 @@ export function IntermediateTopicPicker({ enabled, contextKey = '', children }: 
 function PickerSession({ children }: { children: ReactNode }) {
   const t = useT('intermediateTopics', intermediateTopicsMessages);
   const tg = useT('intermediateGroups', intermediateGroupsMessages);
+  const { locale } = useLocalePreference();
   const router = useRouter();
   const [topics, setTopics] = useState<LearnerTopic[]>([]);
   const [selected, setSelected] = useState('');
@@ -63,7 +64,7 @@ function PickerSession({ children }: { children: ReactNode }) {
             const groupId = event.target.value;
             setSelectedGroup(groupId); setSelected(topics.find(topic => (topic.group?.id ?? 'ungrouped') === groupId)?.id ?? '');
             pending.current = null; setFailed(false);
-          }}>{groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
+          }}>{groups.map(group => <option key={group.id} value={group.id}>{locale === 'en' && group.nameEn ? group.nameEn : group.name}</option>)}
             {topics.some(topic => !topic.group) ? <option value="ungrouped">{tg('learnerUngrouped')}</option> : null}
           </select></label>
           {groups.find(group => group.id === selectedGroup)?.description ? <p>{groups.find(group => group.id === selectedGroup)!.description}</p> : null}

@@ -64,11 +64,7 @@ export function AdminNavigation() {
                 {slug === 'intermediate' ? <details className="intermediate-program-navigation" open={isCurrent(pathname, '/admin/programs/intermediate')}>
                   <summary>{tt('tools')}</summary>
                   <Link className="ad-nav-link" href="/admin/programs/intermediate/topic-groups"
-                    aria-current={pathname === '/admin/programs/intermediate/topic-groups' ? 'page' : undefined}>{tg('title')}</Link>
-                  <Link className="ad-nav-link" href="/admin/programs/intermediate/topics"
-                    aria-current={isCurrent(pathname, '/admin/programs/intermediate/topics') && pathname !== '/admin/programs/intermediate/topics/new' ? 'page' : undefined}>{tt('title')}</Link>
-                  <Link className="ad-nav-link" href="/admin/programs/intermediate/topics/new"
-                    aria-current={pathname === '/admin/programs/intermediate/topics/new' ? 'page' : undefined}>{tt('add')}</Link>
+                    aria-current={pathname === '/admin/programs/intermediate/topic-groups' || isCurrent(pathname, '/admin/programs/intermediate/topics') ? 'page' : undefined}>{tg('title')}</Link>
                   <details className="intermediate-category-navigation" open={isIntermediateCategory(pathname.split('/')[4] ?? '')}>
                     <summary>{tt('legacy')}</summary>
                     {intermediateCategories.map((category) => <Link className="ad-nav-link" key={category}
@@ -114,7 +110,7 @@ export function AdminBreadcrumbs() {
     return <nav className="ad-breadcrumbs" aria-label={t('breadcrumbs')}><ol>
       <li><Link href="/admin">{tc('admin')}</Link></li><li>{t('learningPrograms')}</li>
       <li><Link href="/admin/programs/intermediate">{t('intermediate')}</Link></li>
-      <li>{segments[5] ? <Link href="/admin/programs/intermediate/topics">{tt('title')}</Link> : <span aria-current="page">{tt('title')}</span>}</li>
+      <li><Link href="/admin/programs/intermediate/topic-groups">{tg('title')}</Link></li>
       {segments[5] ? <li><span aria-current="page">{segments[5] === 'new' ? tt('newTitle') : t('details')}</span></li> : null}
     </ol></nav>;
   }

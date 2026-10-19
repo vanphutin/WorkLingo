@@ -29,8 +29,8 @@ describe('Admin dashboard', () => {
     render(<AdminDashboard programSlug="intermediate" />);
     await screen.findByRole('heading', { name: 'Intermediate' });
     const metrics = screen.getByRole('list', { name: 'Program metrics' });
-    const link = screen.getByRole('link', { name: 'Add a topic lesson' });
-    expect(link).toHaveAttribute('href', '/admin/programs/intermediate/topics/new');
+    const link = screen.getByRole('link', { name: 'Topics and lessons' });
+    expect(link).toHaveAttribute('href', '/admin/programs/intermediate/topic-groups');
     expect(link.compareDocumentPosition(metrics) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
   it('renders stored metrics, a labeled activity chart and recent sessions', async () => {
