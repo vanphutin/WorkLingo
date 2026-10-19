@@ -79,7 +79,31 @@ describe('Intermediate topic groups on PostgreSQL', () => {
     expect(await database.intermediateTopicGroupName.count({ where: { groupId: b.id } })).toBe(0);
   });
 
-  it('creates draft and assignment atomically and leaves no draft on missing or invalid groups', async () => {
+  it('rejects a new topic without a group and leaves the PostgreSQL draft count unchanged', async () => {
+    const imports = new ContentImportsService(database as PrismaService);
+    const before = await database.contentImport.count();
+
+    await expect(imports.create(actor, topicSource)).rejects.toMatchObject({
+      status: 400,
+      response: { code: 'TOPIC_GROUP_REQUIRED', statusCode: 400 },
+    });
+    expect(await database.contentImport.count()).toBe(before);
+  });
+
+  it('keeps existing ungrouped topic drafts editable', async () => {
+    const imports = new ContentImportsService(database as PrismaService);
+    // Historical records bypass create: the new rule applies only to new imports.
+    const existing = await draft();
+    const rawSource = `${topicSource}\n`;
+    const updated = await imports.updateSource(existing.id, actor, {
+      rawSource, expectedDraftRevision: 7,
+    });
+    expect(updated).toMatchObject({ id: existing.id, rawSource, draftRevision: 8, topicGroupId: null, topicGroupRevision: 0 });
+    expect(await database.contentImport.findUnique({ where: { id: existing.id } }))
+      .toMatchObject({ rawSource, draftRevision: 8, topicGroupId: null });
+  });
+
+  it('creates draft and assignment atomically and leaves no draft on nonexistent or invalid groups', async () => {
     const imports = new ContentImportsService(database as PrismaService);
     const group = await service.create({ name: 'New lesson mapping', description: '' });
     const before = await database.contentImport.count();
@@ -90,6 +114,17 @@ describe('Intermediate topic groups on PostgreSQL', () => {
     expect(assigned).toMatchObject({ topicGroupId: group.id, topicGroupRevision: 1, draftRevision: 1, rawSource: topicSource });
     expect(await imports.create(actor, 'INVALID SOURCE')).toMatchObject({ topicGroupId: null, topicGroupRevision: 0 });
     expect(await database.contentImport.count()).toBe(before + 2);
+  });
+
+  it('blocks advanced draft conversion without a topic, but preserves edits to existing ungrouped topics', async () => {
+    const imports = new ContentImportsService(database as PrismaService);
+    const legacy = await imports.create(actor, '');
+    await expect(imports.updateSource(legacy.id, actor, { rawSource: topicSource, expectedDraftRevision: 1 }))
+      .rejects.toMatchObject({ status: 400, response: { code: 'TOPIC_GROUP_REQUIRED' } });
+    expect(await database.contentImport.findUnique({ where: { id: legacy.id } })).toMatchObject({ rawSource: '', draftRevision: 1, topicGroupId: null });
+    const oldTopic = await draft();
+    expect(await imports.updateSource(oldTopic.id, actor, { rawSource: `${topicSource}\n`, expectedDraftRevision: oldTopic.draftRevision }))
+      .toMatchObject({ draftRevision: oldTopic.draftRevision + 1, topicGroupId: null });
   });
 
   it('groups multiple drafts and rejects normalized duplicate names without changing source revisions', async () => {

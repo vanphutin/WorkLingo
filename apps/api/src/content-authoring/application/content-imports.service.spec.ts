@@ -11,6 +11,34 @@ import { topicSource } from '../../intermediate-topics/topic-test.fixture.js';
 describe('ContentImportsService', () => {
   const actorId = randomUUID();
 
+  it('rejects converting an ungrouped non-topic draft into a topic without modifying it', async () => {
+    const id = randomUUID();
+    const updateMany = vi.fn(async () => ({ count: 1 }));
+    const database = { contentImport: { findUnique: vi.fn(async () => ({ id, status: 'DRAFT', draftRevision: 1, rawSource: '', topicGroupId: null, topicGroupRevision: 0 })),
+      updateMany, findUniqueOrThrow: vi.fn(async () => { throw new Error('Unexpected write'); }) } };
+    const service = new ContentImportsService(database as unknown as PrismaService);
+    await expect(service.updateSource(id, actorId, { rawSource: topicSource, expectedDraftRevision: 1 })).rejects.toMatchObject({
+      status: 400, response: { code: 'TOPIC_GROUP_REQUIRED' },
+    });
+    expect(updateMany).not.toHaveBeenCalled();
+  });
+
+  it('rejects a new Intermediate topic without a group before persisting a draft', async () => {
+    const records: object[] = [];
+    const database = { contentImport: { create: vi.fn(async ({ data }) => {
+      const record = { id: randomUUID(), lessonId: null, lessonVersionId: null, validationHash: null, ...data, createdAt: new Date(), updatedAt: new Date() };
+      records.push(record);
+      return record;
+    }) } };
+    const service = new ContentImportsService(database as unknown as PrismaService);
+
+    await expect(service.create(actorId, topicSource)).rejects.toMatchObject({
+      status: 400,
+      response: { code: 'TOPIC_GROUP_REQUIRED', statusCode: 400 },
+    });
+    expect(records).toHaveLength(0);
+  });
+
   it('creates a draft with its initial assignment in the taxonomy transaction', async () => {
     const topicGroupId = randomUUID();
     const records: object[] = [];
@@ -34,8 +62,7 @@ describe('ContentImportsService', () => {
   });
 
   describe('exact-source persistence and revision checks', () => {
-    it('creates an import and persists invalid raw source exactly', async () => {
-      const invalidSource = 'INVALID NOT REAL LESSON';
+    it.each([canonicalLessonSource, 'INVALID NOT REAL LESSON'])('creates an ungrouped legacy import and persists raw source exactly (%#)', async (invalidSource) => {
       const importId = randomUUID();
       const expectedHash = createHash('sha256').update(invalidSource).digest('hex');
 
@@ -70,6 +97,8 @@ describe('ContentImportsService', () => {
       expect(result.sourceHash).toBe(expectedHash);
       expect(result.draftRevision).toBe(1);
       expect(result.status).toBe('DRAFT');
+      expect(result.topicGroupId).toBeNull();
+      expect(result.topicGroupRevision).toBe(0);
     });
 
     it('requires expectedDraftRevision on update and increments revision once on success', async () => {

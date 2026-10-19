@@ -39,6 +39,13 @@ export class ContentImportsService {
 
   async create(actorId: string, rawSource: string, topicGroupId?: string): Promise<ContentImportDto> {
     if (!createContentImportSchema.safeParse({ rawSource, topicGroupId }).success) throw new BadRequestException('Invalid content import request');
+    if (topicGroupId === undefined && isTopicSource(rawSource)) {
+      throw new BadRequestException({
+        code: 'TOPIC_GROUP_REQUIRED',
+        message: 'Choose an existing topic group before creating an Intermediate lesson.',
+        statusCode: 400,
+      });
+    }
     if (topicGroupId !== undefined && !isTopicSource(rawSource)) throw new BadRequestException('Import is not an Intermediate topic');
     const sourceHash = createHash('sha256').update(rawSource).digest('hex');
 
@@ -122,6 +129,12 @@ export class ContentImportsService {
       });
     }
 
+    const enteringTopic = isTopicSource(input.rawSource) && !isTopicSource(existing.rawSource);
+    if (enteringTopic && !existing.topicGroupId) {
+      throw new BadRequestException({ code: 'TOPIC_GROUP_REQUIRED',
+        message: 'Choose an existing topic group before converting a draft to an Intermediate lesson.', statusCode: 400 });
+    }
+
     const nextRevision = existing.draftRevision + 1;
     const newHash = createHash('sha256').update(input.rawSource).digest('hex');
 
@@ -130,6 +143,7 @@ export class ContentImportsService {
         id,
         draftRevision: input.expectedDraftRevision,
         status: { in: ['DRAFT', 'VALIDATED'] },
+        ...(enteringTopic ? { topicGroupId: existing.topicGroupId, topicGroupRevision: existing.topicGroupRevision } : {}),
       },
       data: {
         rawSource: input.rawSource,
