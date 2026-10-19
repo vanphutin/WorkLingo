@@ -1,6 +1,7 @@
 import { randomInt } from 'node:crypto';
 import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
+import { parseLessonSource } from '@worklingo/content-format';
 import { createTopicSessionSchema, learnerTopicSchema, sessionPlanSchema, type CreateTopicSession } from '@worklingo/contracts';
 import { PrismaService } from '../common/database/prisma.service.js';
 import { CurriculumService } from '../curriculum/application/curriculum.service.js';
@@ -23,12 +24,15 @@ export class IntermediateTopicsService {
       const available = await this.available(learnerId, tx);
       if (!available.length) return [];
       const versions = await tx.lessonVersion.findMany({ where: { id: { in: available.map(({ mission }) => mission.lessonVersion.id) } },
-        select: { id: true, lesson: { select: { topicGroup: { select: { id: true, name: true, nameEn: true, description: true } } } } } });
-      const groups = new Map(versions.map(version => [version.id, version.lesson.topicGroup]));
+        select: { id: true, contentImports: { where: { status: 'PUBLISHED' }, take: 1, select: { rawSource: true } },
+          lesson: { select: { topicGroup: { select: { id: true, name: true, nameEn: true, description: true } } } } } });
+      const metadata = new Map(versions.map(version => [version.id, { group: version.lesson.topicGroup,
+        level: version.contentImports?.[0] ? parseLessonSource(version.contentImports[0].rawSource).document.lesson?.level : undefined }]));
       return available.map(({ mission }) => {
-        const group = groups.get(mission.lessonVersion.id);
+        const { group, level } = metadata.get(mission.lessonVersion.id) ?? {};
         return learnerTopicSchema.parse({ id: mission.id, title: mission.title, lessonVersionId: mission.lessonVersion.id,
           durationMinutes: mission.lessonVersion.intermediateTopic!.durationMinutes,
+          ...(level ? { level } : {}),
           ...(group ? { group: { id: group.id, name: group.name, ...(group.nameEn ? { nameEn: group.nameEn } : {}), description: group.description } } : {}) });
       });
     }, { isolationLevel: 'RepeatableRead' });
@@ -65,14 +69,16 @@ export class IntermediateTopicsService {
   private async available(learnerId: string, tx: Prisma.TransactionClient) {
     const context = await this.context.resolve(learnerId, tx);
     if (context.programSlug !== 'intermediate') return [];
-    const missions = await this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', tx, context.programId);
+    const missions = await this.curriculum.getPublishedMissionsForLevel(undefined, 'learning', tx, context.programId);
     const available: Array<{ mission: PublishedMission; curriculumRevisionId: string | null }> = [];
     for (const candidate of missions) {
+      if (!candidate.lessonVersion.intermediateTopic) continue;
       const eligible = await this.eligibility.resolve(learnerId, candidate.id, tx);
       if (!eligible.available) continue;
       const mission = eligible.revisionId ? await this.curriculum.getPublishedMissionForRevision(eligible.revisionId, tx) : candidate;
-      if (mission.id !== candidate.id || mission.levelCode !== context.levelCode || mission.purpose !== 'learning' ||
+      if (mission.id !== candidate.id || mission.purpose !== 'learning' ||
           !mission.lessonVersion.intermediateTopic || !computeAvailableDurations(mission).length) continue;
+      if (available.some(item => item.mission.lessonVersion.id === mission.lessonVersion.id)) continue;
       available.push({ mission, curriculumRevisionId: eligible.revisionId });
     }
     return available;

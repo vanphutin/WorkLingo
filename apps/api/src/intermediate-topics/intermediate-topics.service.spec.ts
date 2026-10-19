@@ -30,10 +30,10 @@ function setup() {
   return { service, tx, chosen, unavailable, curriculum, context };
 }
 describe('Intermediate topic sessions', () => {
-  it('lists only eligible topics in the active Intermediate program and current level', async () => {
+  it('lists eligible topics across all levels in the active Intermediate program', async () => {
     const s = setup(); const result = await s.service.list(randomUUID());
     expect(result).toEqual([{ id: s.chosen.id, title: 'Topic', lessonVersionId: s.chosen.lessonVersion.id, durationMinutes: 90 }]);
-    expect(s.curriculum.getPublishedMissionsForLevel).toHaveBeenCalledWith(s.chosen.levelCode, 'learning', expect.anything(), expect.any(String));
+    expect(s.curriculum.getPublishedMissionsForLevel).toHaveBeenCalledWith(undefined, 'learning', expect.anything(), expect.any(String));
   });
   it('returns no topics outside Intermediate', async () => {
     const s = setup(); s.context.resolve.mockResolvedValue({ programSlug: 'ielts', programId: randomUUID(), levelCode: s.chosen.levelCode });

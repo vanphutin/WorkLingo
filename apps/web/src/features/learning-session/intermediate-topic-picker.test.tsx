@@ -12,6 +12,10 @@ const id = '11111111-1111-4111-8111-111111111111';
 const session = learningSessionDtoSchema.parse({ id, clientSessionId: id, lessonVersionId: id, purpose: 'learning', durationMinutes: 60, status: 'planned', currentCheckpoint: 1, mission: { id, title: 'Restaurant' }, plan: { kind: 'topic', topicSelection: 'chosen', durationMinutes: 60, missionId: id, lessonVersionId: id, blocks: defaultTopicPlan(60).allocations.map((a, i) => ({ ...a, order: i + 1, activityIds: [`11111111-1111-4111-8111-${String(i + 1).padStart(12, '0')}`], skills: [(['writing', 'reading', 'listening', 'speaking'] as const)[i]!] })) }, blocks: [], attempts: [] });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); push.mockReset(); });
 describe('Learner topic choice', () => {
+  it('shows the authored lesson level next to its title and approved duration', async () => {
+    render(<IntermediateTopicPicker enabled initialTopics={[{ id, title: 'Restaurant', lessonVersionId: id, durationMinutes: 60, level: 'B1' }]}><p>Legacy launcher</p></IntermediateTopicPicker>);
+    expect(await screen.findByRole('option', { name: 'Restaurant · B1 · 60 minutes' })).toBeVisible();
+  });
   it('keeps an overview error visible and only fetches topics when retried', async () => {
     const list = vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([{ id, title: 'Restaurant', lessonVersionId: id, durationMinutes: 60 }]);
     render(<IntermediateTopicPicker enabled initialError><p>Legacy launcher</p></IntermediateTopicPicker>);
@@ -78,7 +82,7 @@ describe('Learner topic choice', () => {
   it('explains when no published topic is eligible and retains legacy launch', async () => {
     vi.spyOn(intermediateTopicClient, 'list').mockResolvedValue([]);
     render(<IntermediateTopicPicker enabled><p>Legacy launcher</p></IntermediateTopicPicker>);
-    expect(await screen.findByText('No approved, published topic is available for your current level yet.')).toBeVisible();
+    expect(await screen.findByText('No approved, published Intermediate topic is available yet.')).toBeVisible();
     expect(screen.getByText('Legacy launcher')).toBeVisible();
   });
 });

@@ -24,6 +24,7 @@ import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import { approvedTopicForPublication, isTopicSource } from '../../intermediate-topics/topic-source.js';
+import { ensureTopicMission } from '../../intermediate-topics/topic-mission.js';
 import { buildVocabularyPublicationReview, normalizeVocabularyExpression, validateVocabularyPublicationSelection } from './publication-vocabulary.js';
 
 @Injectable()
@@ -627,6 +628,7 @@ export class ContentPublisherService {
       });
 
       if (intermediateTopic) {
+        await ensureTopicMission(tx, { id: lesson.id, title: normalizedDraft.title, objective: normalizedDraft.objective });
         await tx.contentImport.updateMany({ where: { lessonId: lesson.id },
           data: { topicGroupId, topicGroupRevision: { increment: 1 } } });
       }

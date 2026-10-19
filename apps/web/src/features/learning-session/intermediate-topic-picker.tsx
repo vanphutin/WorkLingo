@@ -73,7 +73,7 @@ function PickerSession({ children, initialTopics, initialError }: PickerProps) {
           <p>{tg('lessonCount', { count: visibleTopics.length })}</p>
         </> : null}
         <label className="field-label">{tg('chooseLesson')}<select className="field-select" value={selected} disabled={busy} onChange={event => { setSelected(event.target.value); pending.current = null; setFailed(false); }}>
-          {visibleTopics.map(topic => <option key={topic.id} value={topic.id}>{topic.title} · {t('time', { minutes: topic.durationMinutes })}</option>)}
+          {visibleTopics.map(topic => <option key={topic.id} value={topic.id}>{topic.title}{topic.level ? ` · ${topic.level}` : ''} · {t('time', { minutes: topic.durationMinutes })}</option>)}
         </select></label>
         <button type="button" className="primary-action-button" disabled={busy} onClick={() => void start(false)}>{busy ? t('opening') : tg('startLesson')}</button>
         <button type="button" className="secondary-button" disabled={busy} onClick={() => void start(true)}>{tg('randomAll')}</button>

@@ -19,7 +19,7 @@ import {
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
-import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
+import { INTERMEDIATE_PROGRAM_ID, INTERMEDIATE_TOPIC_LIBRARY_LEVEL } from '../../learning-programs/domain/program-catalog.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import {
@@ -213,7 +213,7 @@ export class OnboardingService {
     database: Prisma.TransactionClient,
   ): Promise<PlayableLevel[]> {
     const levels = await database.level.findMany({
-      where: { path: { status: 'PUBLISHED', programId: INTERMEDIATE_PROGRAM_ID } },
+      where: { code: { not: INTERMEDIATE_TOPIC_LIBRARY_LEVEL }, path: { status: 'PUBLISHED', programId: INTERMEDIATE_PROGRAM_ID } },
       orderBy: [{ order: 'asc' }, { code: 'asc' }],
       include: {
         missions: {

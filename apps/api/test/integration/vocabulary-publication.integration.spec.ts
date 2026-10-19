@@ -12,6 +12,14 @@ import { ContentPublisherService } from '../../src/content-authoring/application
 import type { PrismaService } from '../../src/common/database/prisma.service.js';
 import { lessonSnapshotSchema } from '../../src/curriculum/domain/curriculum.types.js';
 import { MasteryService } from '../../src/mastery/application/mastery.service.js';
+import { IntermediateTopicsService } from '../../src/intermediate-topics/intermediate-topics.service.js';
+import { CurriculumService } from '../../src/curriculum/application/curriculum.service.js';
+import { CurriculumEligibilityService } from '../../src/curriculum-foundation/application/curriculum-eligibility.service.js';
+import type { ProgramContextService } from '../../src/learning-programs/application/program-context.service.js';
+import { SessionCreationService } from '../../src/learning-sessions/application/session-creation.service.js';
+import { INTERMEDIATE_PROGRAM_ID } from '../../src/learning-programs/domain/program-catalog.js';
+import { OnboardingService } from '../../src/onboarding/application/onboarding.service.js';
+import { ensureTopicMission } from '../../src/intermediate-topics/topic-mission.js';
 
 describe('Explicit vocabulary meanings and topic usage', () => {
   const schema = `vocabulary_publication_${randomUUID().replaceAll('-', '')}`;
@@ -48,6 +56,27 @@ describe('Explicit vocabulary meanings and topic usage', () => {
     const d = await draft('No automatic merging');
     await expect(d.publish()).rejects.toMatchObject({ status: 422, response: { code: 'VOCABULARY_REVIEW_REQUIRED' } });
     expect((await db.contentImport.findUniqueOrThrow({ where: { id: d.record.id } })).status).toBe('VALIDATED');
+  });
+  it('makes a published topic visible and startable across Intermediate levels without manual curriculum binding', async () => {
+    const d = await draft('Published topic catalog', source => source.replace('level: foundation', 'level: B1').replaceAll('expression: ', `expression: catalog-${randomUUID()} `));
+    const publication = await d.publish(fresh(await d.review()));
+    const context = { resolve: async () => ({ programId: INTERMEDIATE_PROGRAM_ID, programSlug: 'intermediate', levelCode: 'FOUNDATION_1', enrollmentId: randomUUID() }) } as unknown as ProgramContextService;
+    const service = new IntermediateTopicsService(db as PrismaService, new CurriculumService(db as PrismaService), context,
+      new CurriculumEligibilityService(db as PrismaService, context), new SessionCreationService());
+    const topics = await service.list(actorId);
+    expect(topics).toEqual(expect.arrayContaining([expect.objectContaining({ lessonVersionId: publication.lessonVersionId, level: 'B1' })]));
+    const topic = topics.find(item => item.lessonVersionId === publication.lessonVersionId)!;
+    const session = await service.create(actorId, { clientSessionId: randomUUID(), topicId: topic.id });
+    expect(session.lessonVersionId).toBe(publication.lessonVersionId);
+    expect(session.durationMinutes).toBe(90);
+    expect(session.blocks.map(block => block.targetMinutes)).toEqual([10, 30, 20, 30]);
+    const bound = await db.$transaction(tx => ensureTopicMission(tx, { id: publication.lessonId, title: topic.title, objective: 'Topic objective' }));
+    expect(bound).toBe(topic.id);
+    expect(await db.missionLesson.count({ where: { lessonId: publication.lessonId } })).toBe(1);
+    const levels = await new OnboardingService(db as PrismaService, context).findPlayableLevels(db);
+    expect(levels.map(level => level.code)).not.toContain('INTERMEDIATE_TOPIC_LIBRARY');
+    await db.lessonVersion.update({ where: { id: publication.lessonVersionId }, data: { status: 'ARCHIVED' } });
+    expect((await service.list(actorId)).map(item => item.id)).not.toContain(topic.id);
   });
   it('reuses one meaning across two topics while keeping both lesson contexts, or explicitly creates a new meaning', async () => {
     const first = await draft('Restaurant'); const firstReview = await first.review();

@@ -7,6 +7,8 @@ import { ContentPublisherService } from '../content-authoring/application/conten
 import { topicSource } from './topic-test.fixture.js';
 import { buildVocabularyPublicationReview } from '../content-authoring/application/publication-vocabulary.js';
 
+vi.mock('./topic-mission.js', () => ({ ensureTopicMission: vi.fn(async () => randomUUID()) }));
+
 function setup() {
   const importId = randomUUID(), actorId = randomUUID(), approver = randomUUID(), audioId = randomUUID(), versionId = randomUUID();
   const sourceHash = createHash('sha256').update(topicSource).digest('hex');
