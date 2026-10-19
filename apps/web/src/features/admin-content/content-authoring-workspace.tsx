@@ -1,4 +1,5 @@
 'use client';
+import { parseLessonSource } from '@worklingo/content-format';
 
 import { useAdminContent } from './i18n';
 
@@ -369,6 +370,7 @@ export function ContentAuthoringWorkspace({
       {activeTab === 'publish' && (
         <div className="workspace-view publish-view">
           <PublishPanel
+            vocabularyReviewRequired={parseLessonSource(localSource).document.lesson?.authoringTemplate === 'intermediate-topic-v1'}
             importId={initialImport.id}
             draftRevision={currentDraftRevision}
             sourceHash={sourceHash}

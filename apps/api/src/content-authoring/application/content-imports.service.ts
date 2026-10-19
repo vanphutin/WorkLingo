@@ -29,9 +29,15 @@ import { PilotMetricsService } from '../../analytics/application/pilot-metrics.s
 import { mapContentImportToDto } from '../infrastructure/content-analysis.mapper.js';
 import { isTopicSource } from '../../intermediate-topics/topic-source.js';
 import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
+import { buildVocabularyPublicationReview } from './publication-vocabulary.js';
 
 @Injectable()
 export class ContentImportsService {
+  async getVocabularyReview(id: string) {
+    const source = await this.database.contentImport.findUnique({ where: { id } });
+    if (!source) throw new NotFoundException('Content import not found');
+    return buildVocabularyPublicationReview(this.database, source);
+  }
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,

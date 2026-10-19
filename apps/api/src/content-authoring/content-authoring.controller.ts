@@ -149,6 +149,10 @@ export class ContentAuthoringController {
     return this.contentImportsService.getPreview(id, request.authUser.id);
   }
 
+  @Get(':id/vocabulary-review')
+  @ApiOperation({ summary: 'Review existing vocabulary meanings and their lesson/topic contexts' })
+  vocabularyReview(@Param('id', ParseUUIDPipe) id: string) { return this.contentImportsService.getVocabularyReview(id); }
+
   @Post(':id/publish')
   @HttpCode(200)
   @ApiOperation({ summary: 'Atomically publish a validated content import draft' })

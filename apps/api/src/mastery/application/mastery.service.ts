@@ -478,7 +478,12 @@ export class MasteryService {
   }
 
   private programBlocks(programId: string): Prisma.LanguageBlockWhereInput {
-    return { wordBank: { lessonVersions: { some: { lessonVersion: { lesson: { missions: { some: { mission: { purpose: 'LEARNING', level: { path: { programId } } } } } } } } } } };
+    const lessonVersion: Prisma.LessonVersionWhereInput = { lesson: { missions: { some: { mission: { purpose: 'LEARNING', level: { path: { programId } } } } } } };
+    return { OR: [
+      { vocabularyUsages: { some: { lessonVersion } } },
+      // Retain catalog membership for older lessons that have no explicit usage rows.
+      { wordBank: { lessonVersions: { some: { lessonVersion } } } },
+    ] };
   }
 
   private async programId(learnerId: string, requested?: string): Promise<string> {

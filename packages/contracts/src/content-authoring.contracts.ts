@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { vocabularyPublicationSelectionSchema } from './vocabulary-publication.contracts.ts';
 import type { NormalizedLessonDraft } from '@worklingo/content-format';
 
 export const ContentAuthoringErrorCode = {
@@ -106,6 +107,7 @@ export interface ContentPreviewDto {
 }
 
 export const publishContentImportSchema = z.object({
+  vocabularyReview: vocabularyPublicationSelectionSchema.optional(),
   expectedDraftRevision: z.number().int().positive(),
   expectedSourceHash: z.string().min(1),
   idempotencyKey: z.string().min(1),

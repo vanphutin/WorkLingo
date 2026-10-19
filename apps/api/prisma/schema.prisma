@@ -301,6 +301,7 @@ model LessonVersion {
   checkpointAssessments CheckpointAssessment[]
   evaluationResults     EvaluationResult[]
   curriculumBindings    CurriculumRevisionLesson[]
+  vocabularyUsages      LessonVocabularyUsage[]
 
   @@unique([lessonId, version])
 }
@@ -409,6 +410,7 @@ model LanguageBlock {
   wordBankId       String           @db.Uuid
   slug             String           @unique
   canonicalForm    String
+  normalizedExpression String @default("")
   meaning          String
   pronunciation    String
   collocations     String[]
@@ -420,11 +422,31 @@ model LanguageBlock {
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
   wordBank         WordBank         @relation(fields: [wordBankId], references: [id], onDelete: Restrict)
+  vocabularyUsages LessonVocabularyUsage[]
   masteryRecords   MasteryRecord[]
   masteryEvents    MasteryEvent[]
   errorBankEntries ErrorBankEntry[]
 
   @@index([wordBankId])
+  @@index([normalizedExpression])
+}
+
+model LessonVocabularyUsage {
+  lessonVersionId    String @db.Uuid
+  sourceWordBankSlug String
+  sourceSlug         String
+  languageBlockId    String @db.Uuid
+  decision           String
+  topicGroupId       String? @db.Uuid
+  topicName          String?
+  topicNameEn        String?
+  lessonVersion      LessonVersion @relation(fields: [lessonVersionId], references: [id], onDelete: Cascade)
+  languageBlock      LanguageBlock @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
+  topicGroup         IntermediateTopicGroup? @relation(fields: [topicGroupId], references: [id], onDelete: SetNull)
+
+  @@id([lessonVersionId, sourceWordBankSlug, sourceSlug])
+  @@index([languageBlockId])
+  @@index([topicGroupId])
 }
 
 enum LearningSessionStatus {
@@ -791,6 +813,7 @@ model IntermediateTopicGroup {
   updatedAt      DateTime        @updatedAt
   lessons        Lesson[]
   contentImports ContentImport[]
+  vocabularyUsages LessonVocabularyUsage[]
 }
 
 model IntermediateTopicGroupName {

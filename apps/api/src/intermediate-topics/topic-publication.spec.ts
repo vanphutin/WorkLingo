@@ -5,6 +5,7 @@ import { parseLessonSource } from '@worklingo/content-format';
 import type { PrismaService } from '../common/database/prisma.service.js';
 import { ContentPublisherService } from '../content-authoring/application/content-publisher.service.js';
 import { topicSource } from './topic-test.fixture.js';
+import { buildVocabularyPublicationReview } from '../content-authoring/application/publication-vocabulary.js';
 
 function setup() {
   const importId = randomUUID(), actorId = randomUUID(), approver = randomUUID(), audioId = randomUUID(), versionId = randomUUID();
@@ -21,11 +22,13 @@ function setup() {
     contentImport: { findUnique: vi.fn(async () => source), update: vi.fn(), updateMany: vi.fn() },
     intermediateTopicReview: { findUnique: vi.fn(async () => review) },
     audioArtifact: { findMany: vi.fn(async () => [artifact]) },
-    lesson: { upsert: vi.fn(async () => ({ id: randomUUID(), currentPublishedVersionId: null, topicGroupId: null as string | null })), update: vi.fn() },
+    lesson: { findUnique: vi.fn(async () => ({ topicGroupId: null as string | null })), upsert: vi.fn(async () => ({ id: randomUUID(), currentPublishedVersionId: null, topicGroupId: null as string | null })), update: vi.fn() },
     lessonVersion: { aggregate: vi.fn(async () => ({ _max: { version: 0 } })),
       create: vi.fn(async ({ data }) => { snapshot = structuredClone(data.parsedContent); return { id: versionId }; }), update: vi.fn() },
     wordBank: { upsert: vi.fn(async ({ create }) => ({ ...create, id: bankId })) },
-    languageBlock: { upsert: vi.fn(async ({ create }) => ({ ...create, id: randomUUID() })) },
+    languageBlock: { findMany: vi.fn(async () => []), findUnique: vi.fn(async () => null), upsert: vi.fn(async ({ create }) => ({ ...create, id: randomUUID() })) },
+    intermediateTopicGroup: { findUnique: vi.fn(async ({ where }) => ({ id: where.id, name: 'Topic', nameEn: null })) },
+    lessonVocabularyUsage: { createMany: vi.fn() },
     wordBankVersion: { findFirst: vi.fn(async () => null), aggregate: vi.fn(async () => ({ _max: { version: 0 } })), create: vi.fn(async () => ({ id: randomUUID() })) },
     languageBlockVersion: { create: vi.fn() }, contentBlock: { create: vi.fn() },
     lessonVersionWordBank: { create: vi.fn() }, activity: { create: vi.fn() },
@@ -33,7 +36,9 @@ function setup() {
   };
   const db = { ...tx, $transaction: async (fn: (t: typeof tx) => unknown) => fn(tx) };
   return { tx, source, approver, setReview: (r: typeof review) => { review = r; }, snapshot: () => snapshot,
-    publish: () => new ContentPublisherService(db as unknown as PrismaService).publish(importId, actorId, {
+    publish: async () => new ContentPublisherService(db as unknown as PrismaService).publish(importId, actorId, {
+      vocabularyReview: { reviewHash: (await buildVocabularyPublicationReview(db as never, source)).reviewHash,
+        choices: parseLessonSource(topicSource).document.wordBanks.flatMap(bank => bank.languageBlocks.map(block => ({ sourceSlug: block.slug, action: 'new' as const }))) },
       expectedDraftRevision: 1, expectedSourceHash: sourceHash, idempotencyKey: randomUUID(), selectedAudioArtifacts: { [script.slug]: audioId },
     }) };
 }
@@ -56,10 +61,9 @@ describe('Topic publication approval gate', () => {
     await expect(s.publish()).rejects.toMatchObject({ status: 422 });
     expect(s.tx.lessonVersion.create).not.toHaveBeenCalled();
   });
-  it('copies the locked draft group to the stable lesson and all related imports without changing approval', async () => {
+  it('copies the reviewed draft group to the stable lesson and all related imports without changing approval', async () => {
     const s = setup(); const groupId = randomUUID();
-    // Simulate a reassignment that committed after the publisher preflight read.
-    s.tx.$queryRaw.mockImplementation(async () => { s.source.topicGroupId = groupId; s.source.topicGroupRevision = 1; return []; });
+    s.source.topicGroupId = groupId; s.source.topicGroupRevision = 1;
     await s.publish();
     expect(s.tx.lesson.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ topicGroupId: groupId }) }));
     expect(s.tx.contentImport.updateMany).toHaveBeenCalledWith({ where: { lessonId: expect.any(String) }, data: { topicGroupId: groupId, topicGroupRevision: { increment: 1 } } });
@@ -67,9 +71,16 @@ describe('Topic publication approval gate', () => {
     const taxonomyLock = s.tx.$executeRaw.mock.calls.findIndex(call => String(call[0]).includes('74291'));
     expect(taxonomyLock).toBe(0);
   });
+  it('requires another vocabulary review if the group changes after preflight', async () => {
+    const s = setup();
+    s.tx.$queryRaw.mockImplementation(async () => { s.source.topicGroupId = randomUUID(); s.source.topicGroupRevision = 1; return []; });
+    await expect(s.publish()).rejects.toMatchObject({ status: 409, response: { code: 'VOCABULARY_REVIEW_STALE' } });
+    expect(s.tx.lessonVersion.create).not.toHaveBeenCalled();
+  });
   it('a fresh unassigned import inherits the existing stable lesson group and synchronizes all imports', async () => {
     const s = setup(); const lessonId = randomUUID(), groupId = randomUUID();
     s.tx.lesson.upsert.mockResolvedValue({ id: lessonId, currentPublishedVersionId: null, topicGroupId: groupId });
+    s.tx.lesson.findUnique.mockResolvedValue({ topicGroupId: groupId });
     await s.publish();
     expect(s.tx.lesson.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ topicGroupId: groupId }) }));
     expect(s.tx.contentImport.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ lessonId }) }));

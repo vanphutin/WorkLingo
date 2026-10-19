@@ -1,5 +1,9 @@
 export const adminContentMessages = {
   "en": {
+    "vocabularySourceStale": "This page has an older draft. Reload the lesson before reviewing vocabulary.",
+    "vocabularyReviewRequired": "Review vocabulary and choose existing or new meanings before publishing.",
+    "vocabularyReviewStale": "The draft, topic or vocabulary catalog changed. Check vocabulary again and confirm your choices.",
+    "vocabularySelectionInvalid": "Choose a valid meaning or create a new meaning for every vocabulary entry.",
     "vocabularyIdentityConflict": "A vocabulary identifier belongs to another word bank. Change the identifier, validate the lesson, then publish again.",
     "importsRegion": "Content imports",
     "importsEmpty": "No content imports yet",
@@ -202,6 +206,10 @@ export const adminContentMessages = {
     "blockListenReason": "Listen and reason"
   },
   "vi": {
+    "vocabularySourceStale": "Trang này đang mở bản nháp cũ. Tải lại bài học trước khi duyệt từ vựng.",
+    "vocabularyReviewRequired": "Cần duyệt từ vựng và chọn dùng lại hoặc tạo nghĩa mới trước khi xuất bản.",
+    "vocabularyReviewStale": "Bản nháp, topic hoặc danh mục từ vựng đã thay đổi. Kiểm tra lại từ vựng và xác nhận các lựa chọn.",
+    "vocabularySelectionInvalid": "Chọn nghĩa có sẵn hợp lệ hoặc tạo nghĩa mới cho từng mục từ vựng.",
     "vocabularyIdentityConflict": "Mã từ vựng đang thuộc một bộ từ khác. Đổi mã bị trùng, kiểm tra bài học rồi xuất bản lại.",
     "importsRegion": "Các bản nhập nội dung",
     "importsEmpty": "Chưa có bản nhập nội dung",

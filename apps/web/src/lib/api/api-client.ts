@@ -1,3 +1,4 @@
+import { vocabularyPublicationReviewSchema, type VocabularyPublicationReview } from '@worklingo/contracts';
 import {
   audioArtifactDtoSchema,
   authUserSchema,
@@ -506,6 +507,10 @@ export class ApiClient {
 
   async getJob(id: string): Promise<JobDto> {
     return this.request(`/jobs/${id}`, { method: 'GET' }, jobDtoSchema);
+  }
+
+  async getVocabularyPublicationReview(id: string): Promise<VocabularyPublicationReview> {
+    return this.request(`/admin/content-imports/${id}/vocabulary-review`, { method: 'GET', cache: 'no-store' }, vocabularyPublicationReviewSchema);
   }
 
   async publishContentImport(

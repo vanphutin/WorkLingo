@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import type { VocabularyPublicationSelection } from '@worklingo/contracts';
 import { IsInt, IsNotEmpty, IsObject, IsString, IsUUID, MaxLength, Min, ValidateIf } from 'class-validator';
 
 export class CreateContentImportDto {
@@ -33,6 +34,9 @@ export class ValidateContentImportDto {
 }
 
 export class PublishContentImportDto {
+  @ApiPropertyOptional({ description: 'Explicit vocabulary decisions from the current publication review' })
+  @ValidateIf((_object, value: unknown) => value !== undefined) @IsObject()
+  vocabularyReview?: VocabularyPublicationSelection;
   @ApiProperty({ description: 'Expected draft revision' })
   @IsInt()
   @Min(1)

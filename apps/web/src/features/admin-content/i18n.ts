@@ -44,6 +44,12 @@ export function useAdminContent() {
   const date = (value: string) => new Date(value).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US');
   const label = (value: string) => labels[value] ? t(labels[value]) : value;
   const message = (value: unknown): string => {
+    if (typeof value === 'object' && value !== null && 'code' in value) {
+      if (value.code === 'VOCABULARY_REVIEW_REQUIRED') return t('vocabularyReviewRequired');
+      if (value.code === 'VOCABULARY_REVIEW_STALE') return t('vocabularyReviewStale');
+      if (value.code === 'VOCABULARY_SOURCE_STALE') return t('vocabularySourceStale');
+      if (value.code === 'VOCABULARY_SELECTION_INVALID') return t('vocabularySelectionInvalid');
+    }
     if (typeof value === 'object' && value !== null && 'code' in value && value.code === 'LANGUAGE_BLOCK_IDENTITY_CONFLICT') {
       return t('vocabularyIdentityConflict');
     }
