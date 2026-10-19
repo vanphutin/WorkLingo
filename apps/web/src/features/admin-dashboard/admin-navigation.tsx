@@ -9,6 +9,7 @@ import { adminDashboardMessages } from '../../i18n/messages/adminDashboard';
 import { intermediateCategories, isIntermediateCategory } from '@worklingo/content-format';
 import { adminProgramAuthoringMessages } from '../../i18n/messages/adminProgramAuthoring';
 import '../admin-intermediate/intermediate-navigation.css';
+import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
 
 export const adminProgramDestinations = [
   { slug: 'beginner', label: 'foundation' }, { slug: 'intermediate', label: 'intermediate' },
@@ -44,6 +45,7 @@ export function AdminNavigation() {
   const t = useT('adminDashboard', adminDashboardMessages);
   const tc = useT('common', commonMessages);
   const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
+  const tt = useT('intermediateTopics', intermediateTopicsMessages);
   return (
     <aside className="ad-sidebar">
       <details className="ad-navigation" open>
@@ -57,12 +59,12 @@ export function AdminNavigation() {
               : <Fragment key={slug}>
                 <Link className="ad-nav-link" href={`/admin/programs/${slug}`}
                   aria-current={(slug === 'intermediate' ? pathname === '/admin/programs/intermediate' : isCurrent(pathname, `/admin/programs/${slug}`)) ? 'page' : undefined}>{t(label)}</Link>
-                {slug === 'intermediate' ? <details className="intermediate-category-navigation" open={pathname.startsWith('/admin/programs/intermediate/')}>
-                  <summary>{ta('categories')}</summary>
+                {slug === 'intermediate' ? <><Link className="ad-nav-link" href="/admin/programs/intermediate/topics" aria-current={isCurrent(pathname, '/admin/programs/intermediate/topics') ? 'page' : undefined}>{tt('title')}</Link><details className="intermediate-category-navigation" open={isIntermediateCategory(pathname.split('/')[4] ?? '')}>
+                  <summary>{tt('legacy')}</summary>
                   {intermediateCategories.map((category) => <Link className="ad-nav-link" key={category}
                     href={`/admin/programs/intermediate/${category}`}
                     aria-current={isCurrent(pathname, `/admin/programs/intermediate/${category}`) ? 'page' : undefined}>{ta(category)}</Link>)}
-                </details> : null}
+                </details></> : null}
               </Fragment>)}
             <details className="ad-ielts-navigation" open={pathname.includes('/ielts-') || pathname === '/admin/programs/ielts'}>
               <summary>{t('ieltsTools')}</summary>
@@ -87,7 +89,16 @@ export function AdminBreadcrumbs() {
   const t = useT('adminDashboard', adminDashboardMessages);
   const tc = useT('common', commonMessages);
   const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
+  const tt = useT('intermediateTopics', intermediateTopicsMessages);
   const segments = pathname.split('/');
+  if (pathname === '/admin/programs/intermediate/topics' || pathname.startsWith('/admin/programs/intermediate/topics/')) {
+    return <nav className="ad-breadcrumbs" aria-label={t('breadcrumbs')}><ol>
+      <li><Link href="/admin">{tc('admin')}</Link></li><li>{t('learningPrograms')}</li>
+      <li><Link href="/admin/programs/intermediate">{t('intermediate')}</Link></li>
+      <li>{segments[5] ? <Link href="/admin/programs/intermediate/topics">{tt('title')}</Link> : <span aria-current="page">{tt('title')}</span>}</li>
+      {segments[5] ? <li><span aria-current="page">{segments[5] === 'new' ? tt('newTitle') : t('details')}</span></li> : null}
+    </ol></nav>;
+  }
   const category = segments[1] === 'admin' && segments[2] === 'programs' && segments[3] === 'intermediate'
     && isIntermediateCategory(segments[4] ?? '') ? segments[4] : null;
   if (category && isIntermediateCategory(category)) {

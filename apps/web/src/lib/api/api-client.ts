@@ -119,7 +119,7 @@ export const sessionBlockDtoSchema = z.object({
   id: z.string(),
   type: z.enum(['activate', 'readDecode', 'listenReason', 'respond']),
   order: z.number(),
-  targetMinutes: z.literal(15),
+  targetMinutes: z.number().int().positive().max(150),
   activityIds: z.array(z.string()),
   status: z.enum(['available', 'completed']),
 });

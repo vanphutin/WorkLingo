@@ -10,13 +10,16 @@ import { apiClient } from '../../lib/api/api-client';
 import { ContentList } from '../admin-content/content-list';
 import { getIntermediateCategory } from './lesson-model';
 import './intermediate-navigation.css';
+import { isIntermediateTopicSource } from './topic-lesson-model';
+import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
 
-export function IntermediateCategoryWorkspace({ category }: { readonly category: IntermediateCategory }) {
-  return <CategoryLessons key={category} category={category} />;
+export function IntermediateCategoryWorkspace({ category, topic = false }: { readonly category: IntermediateCategory; readonly topic?: boolean }) {
+  return <CategoryLessons key={`${topic}:${category}`} category={category} topic={topic} />;
 }
 
-function CategoryLessons({ category }: { readonly category: IntermediateCategory }) {
+function CategoryLessons({ category, topic }: { readonly category: IntermediateCategory; readonly topic: boolean }) {
   const t = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
+  const tt = useT('intermediateTopics', intermediateTopicsMessages);
   const [imports, setImports] = useState<ContentImportDto[]>([]);
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading');
   const [attempt, setAttempt] = useState(0);
@@ -31,17 +34,18 @@ function CategoryLessons({ category }: { readonly category: IntermediateCategory
     return () => { generation.current += 1; };
   }, [attempt]);
 
-  const base = `/admin/programs/intermediate/${category}`;
-  const filtered = imports.filter((item) => getIntermediateCategory(item.rawSource) === category);
+  const base = `/admin/programs/intermediate/${topic ? 'topics' : category}`;
+  const filtered = imports.filter((item) => topic ? isIntermediateTopicSource(item.rawSource)
+    : !isIntermediateTopicSource(item.rawSource) && getIntermediateCategory(item.rawSource) === category);
   return <div className="ad-dashboard intermediate-category-workspace">
-    <header className="ad-page-header"><h1>{t('categoryLessons', { category: t(category) })}</h1><p>{t('categoryHelp')}</p>
+    <header className="ad-page-header"><h1>{topic ? tt('title') : t('categoryLessons', { category: t(category) })}</h1><p>{topic ? tt('description') : t('categoryHelp')}</p>
       <Link href="/admin/programs/intermediate">{t('back')}</Link></header>
     {status === 'loading' ? <p role="status">{t('loading')}</p> : null}
     {status === 'error' ? <div className="ad-panel ad-error" role="alert"><p>{t('loadError')}</p>
       <button className="secondary-button" type="button" onClick={() => { setStatus('loading'); setAttempt((value) => value + 1); }}>{t('retry')}</button>
     </div> : null}
     {status === 'ready' ? <ContentList imports={filtered} newImportHref={`${base}/new`}
-      newImportLabel={t('addLesson', { category: t(category) })} getItemHref={(item) => `${base}/${encodeURIComponent(item.id)}`}
+      newImportLabel={topic ? tt('add') : t('addLesson', { category: t(category) })} getItemHref={(item) => `${base}/${encodeURIComponent(item.id)}`}
       onReload={async () => {
         const stamp = generation.current;
         const items = await apiClient.listContentImports();

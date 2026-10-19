@@ -25,15 +25,13 @@ afterEach(() => { cleanup(); vi.resetAllMocks(); });
 beforeEach(() => { vi.mocked(adminDashboardClient.getOverview).mockResolvedValue(overview); vi.mocked(apiClient.listContentImports).mockResolvedValue([]); });
 
 describe('Admin dashboard', () => {
-  it('places all seven category Add lesson links ahead of program metrics and shared tools', async () => {
+  it('places the topic authoring entry ahead of program metrics and shared tools', async () => {
     render(<AdminDashboard programSlug="intermediate" />);
     await screen.findByRole('heading', { name: 'Intermediate' });
     const metrics = screen.getByRole('list', { name: 'Program metrics' });
-    for (const [category, label] of [['grammar', 'Grammar'], ['pronunciation', 'Pronunciation'], ['vocabulary', 'Vocabulary'], ['reading', 'Reading'], ['listening', 'Listening'], ['speaking', 'Speaking'], ['writing', 'Writing']]) {
-      const link = screen.getByRole('link', { name: `Add lesson: ${label}` });
-      expect(link).toHaveAttribute('href', `/admin/programs/intermediate/${category}/new`);
-      expect(link.compareDocumentPosition(metrics) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    }
+    const link = screen.getByRole('link', { name: 'Add a topic lesson' });
+    expect(link).toHaveAttribute('href', '/admin/programs/intermediate/topics/new');
+    expect(link.compareDocumentPosition(metrics) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
   it('renders stored metrics, a labeled activity chart and recent sessions', async () => {
     render(<AdminDashboard />);

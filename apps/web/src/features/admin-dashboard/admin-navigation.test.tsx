@@ -11,10 +11,13 @@ describe('Admin workspace navigation', () => {
   it('places category navigation immediately after Intermediate and before TOEIC and IELTS', () => {
     render(<AdminNavigation />);
     const intermediate = screen.getByRole('link', { name: 'Intermediate' });
-    const categories = screen.getByText('Intermediate categories').closest('details')!;
+    const categories = screen.getByText('Earlier category tools').closest('details')!;
     const toeic = screen.getByText('TOEIC');
     const ielts = screen.getByRole('link', { name: 'IELTS' });
-    expect(intermediate.nextElementSibling).toBe(categories);
+    const topics = screen.getByRole('link', { name: 'Topic lessons' });
+    expect(topics).toHaveAttribute('href', '/admin/programs/intermediate/topics');
+    expect(intermediate.nextElementSibling).toBe(topics);
+    expect(topics.nextElementSibling).toBe(categories);
     expect(categories.compareDocumentPosition(toeic) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(categories.compareDocumentPosition(ielts) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });

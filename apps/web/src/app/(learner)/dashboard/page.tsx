@@ -50,9 +50,10 @@ export default function DashboardPage() {
         return;
       }
       if (progressResult.status === 'rejected') throw progressResult.reason;
-      if (availabilityResult.status === 'rejected') throw availabilityResult.reason;
+      // Topic eligibility is loaded independently; a locked legacy mission must not hide it.
+      if (availabilityResult.status === 'rejected' && contextData.activeProgram.slug !== 'intermediate') throw availabilityResult.reason;
       setProgress(progressResult.value);
-      setAvailability(availabilityResult.value);
+      setAvailability(availabilityResult.status === 'fulfilled' ? availabilityResult.value : null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load progress data');
     } finally {

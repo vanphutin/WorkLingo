@@ -12,6 +12,8 @@ describe('Intermediate authoring hub', () => {
   it('keeps seven separate Add lesson and list links available while loading or offline', async () => {
     vi.mocked(apiClient.listContentImports).mockRejectedValue(new Error('offline'));
     render(<IntermediateAuthoringHub />);
+    expect(screen.getByRole('link', { name: 'Add a topic lesson' })).toHaveAttribute('href', '/admin/programs/intermediate/topics/new');
+    fireEvent.click(screen.getByText('Earlier category tools'));
     for (const [slug, label] of [['grammar', 'Grammar'], ['pronunciation', 'Pronunciation'], ['vocabulary', 'Vocabulary'], ['reading', 'Reading'], ['listening', 'Listening'], ['speaking', 'Speaking'], ['writing', 'Writing']] as const) {
       const card = screen.getByRole('article', { name: label });
       expect(within(card).getByRole('link', { name: `Add lesson: ${label}` })).toHaveAttribute('href', `/admin/programs/intermediate/${slug}/new`);
@@ -27,6 +29,8 @@ describe('Intermediate authoring hub', () => {
   it('translates category names and accessible add links into Vietnamese', async () => {
     vi.mocked(apiClient.listContentImports).mockResolvedValue([]);
     render(<LocaleProvider initialLocale="vi"><IntermediateAuthoringHub /></LocaleProvider>);
+    expect(screen.getByRole('link', { name: 'Thêm bài học theo chủ đề' })).toHaveAttribute('href', '/admin/programs/intermediate/topics/new');
+    fireEvent.click(screen.getByText('Công cụ chuyên mục trước đây'));
     expect(screen.getByRole('link', { name: 'Thêm bài học: Ngữ pháp' })).toHaveAttribute('href', '/admin/programs/intermediate/grammar/new');
     expect(screen.getByRole('link', { name: 'Xem bài học: Phát âm' })).toHaveAttribute('href', '/admin/programs/intermediate/pronunciation');
     expect(await screen.findAllByText('0 bài học')).toHaveLength(7);

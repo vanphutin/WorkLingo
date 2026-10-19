@@ -21,6 +21,7 @@ import { IeltsBandDashboardCard } from '../ielts-band-curriculum/ielts-band-path
 import { DashboardInsights, type DashboardInsightsProps } from '../learner-dashboard/dashboard-insights';
 import { learnerDashboardMessages } from '../../i18n/messages/learnerDashboard';
 import styles from '../learner-dashboard/learner-dashboard.module.css';
+import { IntermediateTopicPicker } from './intermediate-topic-picker';
 
 interface DashboardViewProps extends DashboardInsightsProps {
   readonly progress: LearnerProgressDto | null;
@@ -203,7 +204,7 @@ export function DashboardView({
             <Link className="primary-action-button inline-button" href={`/sessions/${resumableMission.activeSessionId}`}>
               {t('continueSaved')}
             </Link>
-          ) : <div className="session-launcher">
+          ) : <IntermediateTopicPicker enabled={activeProgramSlug === 'intermediate'} contextKey={currentLevelCode ?? ''}><div className="session-launcher">
             <div className="field-group">
               <label htmlFor="session-duration-select" className="field-label">
                 {t('sessionDuration')}
@@ -237,8 +238,8 @@ export function DashboardView({
             >
               {isStarting ? t('startingSession') : t('startSession', { minutes: selectedDuration })}
             </button>
-          </div>}
-          {!noActiveProgram && !resumableMission && availableDurationsState.length === 0 && (
+          </div></IntermediateTopicPicker>}
+          {!noActiveProgram && !resumableMission && activeProgramSlug !== 'intermediate' && availableDurationsState.length === 0 && (
             <p role="status">{t('noSessions')}</p>
           )}
         </section>

@@ -8,11 +8,14 @@ import { adminProgramAuthoringMessages } from '../../i18n/messages/adminProgramA
 import { apiClient } from '../../lib/api/api-client';
 import { getIntermediateCategory } from './lesson-model';
 import './intermediate-navigation.css';
+import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
+import { isIntermediateTopicSource } from './topic-lesson-model';
 
 type CountState = { status: 'loading' } | { status: 'error' } | { status: 'ready'; counts: Partial<Record<IntermediateCategory, number>> };
 
 export function IntermediateAuthoringHub() {
   const t = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
+  const tt = useT('intermediateTopics', intermediateTopicsMessages);
   const id = useId();
   const [state, setState] = useState<CountState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
@@ -21,6 +24,7 @@ export function IntermediateAuthoringHub() {
     void apiClient.listContentImports().then((imports) => {
       const counts: Partial<Record<IntermediateCategory, number>> = {};
       for (const item of imports) {
+        if (isIntermediateTopicSource(item.rawSource)) continue;
         const category = getIntermediateCategory(item.rawSource);
         if (category) counts[category] = (counts[category] ?? 0) + 1;
       }
@@ -30,7 +34,12 @@ export function IntermediateAuthoringHub() {
   }, [attempt]);
 
   return <section className="intermediate-authoring-hub" aria-labelledby={`${id}-title`}>
-    <header><h2 id={`${id}-title`}>{t('title')}</h2><p className="ad-muted">{t('description')}</p></header>
+    <header><h2 id={`${id}-title`}>{tt('title')}</h2><p className="ad-muted">{tt('description')}</p></header>
+    <div className="intermediate-category-actions">
+      <Link className="intermediate-add-link" href="/admin/programs/intermediate/topics/new">{tt('add')}</Link>
+      <Link href="/admin/programs/intermediate/topics">{tt('list')}</Link>
+    </div>
+    <details className="intermediate-legacy-tools"><summary>{tt('legacy')}</summary><p>{tt('legacyHelp')}</p>
     {state.status === 'loading' ? <p role="status">{t('loadingCounts')}</p> : null}
     {state.status === 'error' ? <div className="ad-notice" role="alert"><p>{t('countsError')}</p>
       <button type="button" className="secondary-button" onClick={() => { setState({ status: 'loading' }); setAttempt((value) => value + 1); }}>{t('retry')}</button>
@@ -45,5 +54,6 @@ export function IntermediateAuthoringHub() {
       </div>
     </article>)}</div>
     <div className="intermediate-library-note"><Link href="/admin/content">{t('library')}</Link><p className="ad-muted">{t('libraryHelp')}</p></div>
+    </details>
   </section>;
 }

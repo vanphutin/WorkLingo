@@ -37,6 +37,7 @@ describe('Intermediate category workspace', () => {
   it('counts only explicitly classified records in the hub', async () => {
     vi.mocked(apiClient.listContentImports).mockResolvedValue([grammar, reading, legacy, other]);
     render(<IntermediateAuthoringHub />);
+    fireEvent.click(screen.getByText('Earlier category tools'));
     await waitFor(() => expect(within(screen.getByRole('article', { name: 'Grammar' })).getByText('1 lesson')).toBeInTheDocument());
     expect(within(screen.getByRole('article', { name: 'Reading' })).getByText('1 lesson')).toBeInTheDocument();
     expect(within(screen.getByRole('article', { name: 'Writing' })).getByText('0 lessons')).toBeInTheDocument();
