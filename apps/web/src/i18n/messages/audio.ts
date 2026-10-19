@@ -64,7 +64,22 @@ export const audioMessages = {
     "lessonUnavailable": "Lesson audio is unavailable. Browser speech is ready as a fallback.",
     "lessonAudio": "Lesson audio",
     "playbackUnsupported": "Your browser does not support lesson audio playback.",
-    "simulationAudio": "Simulation audio"
+    "simulationAudio": "Simulation audio",
+    "adminSettingsBreadcrumb": "Settings",
+    "audioTab": "Audio Generation",
+    "aiTab": "AI Configuration",
+    "azureSpeechDesc": "High-fidelity neural text-to-speech engine powered by Microsoft Azure Cognitive Services for production lesson candidates.",
+    "simulationDesc": "Generates diagnostic audio tones locally without external API latency or quota consumption. Ideal for development and testing.",
+    "activeBadge": "Active Engine",
+    "voiceConfigTitle": "Voice and Synthesis Defaults",
+    "voiceConfigDesc": "Select the default voice applied when generating audio candidate files for new lessons.",
+    "voiceFormat": "Format: 24kHz 48kbps MP3 · Mono · Candidate Synthesis",
+    "securityTitle": "Zero Secret Exposure & Credential Isolation",
+    "securityDesc": "Provider credentials and API secrets are managed strictly through server environment variables and never exposed to the client interface.",
+    "unsavedChanges": "You have unsaved changes",
+    "azureReadyTitle": "Production Neural Voice Ready",
+    "azureReadyDesc": "Generated lesson candidates will use Azure Neural Speech with natural human pronunciation, intonation, and rhythm.",
+    "serverSetupNotice": "Configure AZURE_SPEECH_KEY and AZURE_SPEECH_REGION on the server to enable this provider."
   },
   "vi": {
     "audioSettings": "Cài đặt âm thanh",
@@ -131,6 +146,21 @@ export const audioMessages = {
     "lessonUnavailable": "Âm thanh bài học không khả dụng. Có thể dùng giọng đọc trình duyệt thay thế.",
     "lessonAudio": "Âm thanh bài học",
     "playbackUnsupported": "Trình duyệt không hỗ trợ phát âm thanh bài học.",
-    "simulationAudio": "Âm thanh mô phỏng"
+    "simulationAudio": "Âm thanh mô phỏng",
+    "adminSettingsBreadcrumb": "Cài đặt",
+    "audioTab": "Tạo âm thanh",
+    "aiTab": "Cấu hình AI",
+    "azureSpeechDesc": "Công cụ chuyển giọng nói chất lượng cao Microsoft Azure AI Speech dành cho các bản âm thanh bài học phát hành.",
+    "simulationDesc": "Tạo âm thanh mô phỏng cục bộ để kiểm thử quy trình mà không tốn hạn ngạch hoặc kết nối đám mây.",
+    "activeBadge": "Đang kích hoạt",
+    "voiceConfigTitle": "Cấu hình giọng đọc mặc định",
+    "voiceConfigDesc": "Chọn giọng đọc mặc định khi tạo tệp âm thanh cho các bài học mới được biên soạn.",
+    "voiceFormat": "Định dạng: 24kHz 48kbps MP3 · Mono · Tạo bản nháp",
+    "securityTitle": "Bảo mật và cách ly thông tin xác thực",
+    "securityDesc": "Toàn bộ khóa API và thông tin bí mật được quản lý độc quyền tại biến môi trường máy chủ, tuyệt đối không gửi về trình duyệt.",
+    "unsavedChanges": "Bạn có thay đổi chưa lưu",
+    "azureReadyTitle": "Giọng đọc nơ-ron sẵn sàng phát hành",
+    "azureReadyDesc": "Bản âm thanh tạo ra sẽ sử dụng giọng nơ-ron Azure với ngữ điệu và phát âm tiếng Anh tự nhiên.",
+    "serverSetupNotice": "Cấu hình AZURE_SPEECH_KEY và AZURE_SPEECH_REGION trên máy chủ để kích hoạt nhà cung cấp này."
   }
 } as const;
