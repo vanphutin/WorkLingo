@@ -4,7 +4,7 @@ Starting HEAD `67df2afa226f0d53c7b4f6c1bf206ca35beaac02`. Historical evidence re
 
 ## Backup/restore
 
-The previous full run loaded the old 20s test budget before its correction. That budget could cancel the async test before its bounded 45s migration plus 60s PowerShell subprocess completed, leaving the dependent restore test without its artifact. The already-committed outer budget is 120s. No backup-product or data assertion change is needed.
+The previous full run loaded the old20s test budget before its correction; that outer budget contradicted the bounded45s migration plus60s PowerShell subprocess. Observed facts: backup timed out; the later restore returned status0 but the restored sample-audio file did not exist. Vitest timeout marks the test failed without automatically cancelling its underlying async continuation. An incomplete/shared fixture or continuation overlap is an inference, not a separately demonstrated causal chain; the evidence does not establish that the entire backup artifact was missing. The already-committed outer budget is120s. No backup-product or data assertion change is needed.
 
 The fresh test now records `task.timeout` from the running Vitest task, alongside the unchanged child budgets. `backend-focused-current` records loaded timeout120000 and passes all10 backup/restore tests, including path/manifest protections, actual dump checksums and restored data. Setup40s and sequential teardown remain independent hook budgets; child processes are synchronous and bounded. No `.concurrent`, retries or assertion relaxation was added. A complete final backend result is still required.
 

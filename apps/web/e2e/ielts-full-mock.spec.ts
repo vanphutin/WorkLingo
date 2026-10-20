@@ -57,6 +57,15 @@ test('real mock API saves the writing snapshot and locks editing until delayed e
     await page.goto(`/ielts/mock-tests/${attempt.id}`);
     const writing = page.locator('.bridge-response textarea').first();
     await expect(writing).toBeEditable();
+    const text = 'Recovery writing snapshot remains available after save and exit.';
+    // Finish the real autosave before intercepting the distinct exit save.
+    // Otherwise its held response keeps busy=true and disables the exit button.
+    const autosaved = page.waitForResponse(response => response.request().method() === 'PUT'
+      && new URL(response.url()).pathname === `${root}/responses`);
+    await writing.fill(text);
+    expect((await autosaved).status()).toBe(200);
+    const exit = page.getByRole('button', { name: 'Save and exit', exact: true });
+    await expect(exit).toBeEnabled();
     let release!: () => void;
     let received!: () => void;
     const blocked = new Promise<void>(resolve => { release = resolve; });
@@ -68,10 +77,8 @@ test('real mock API saves the writing snapshot and locks editing until delayed e
       await blocked;
       await route.fulfill({ response });
     });
-    const text = 'Recovery writing snapshot remains available after save and exit.';
-    await writing.fill(text);
-    await page.getByRole('button', { name: 'Save and exit', exact: true }).click();
     try {
+      await exit.click();
       await pending;
       await expect(writing).toBeDisabled();
       await expect(page).toHaveURL(new RegExp(`/ielts/mock-tests/${attempt.id}$`));

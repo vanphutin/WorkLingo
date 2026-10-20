@@ -7,6 +7,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { JobsService } from '../../src/jobs/application/jobs.service.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
+import { inspectJobClaim } from './job-claim-diagnostics.js';
 
 describe('leased PostgreSQL job worker', () => {
   const schemaName = `jobs_worker_${randomUUID().replaceAll('-', '')}`;
@@ -81,6 +82,40 @@ describe('leased PostgreSQL job worker', () => {
     expect(claims.filter(Boolean)).toHaveLength(1);
     expect(claims.find(Boolean)?.id).toBe(job.id);
     await expect(firstDatabase.jobAttempt.count({ where: { jobId: job.id } })).resolves.toBe(1);
+  });
+
+  it('observes a granted competing lock when SKIP LOCKED returns no eligible row', async () => {
+    const job = await enqueue(`held-lock-${randomUUID()}`);
+    const now = new Date('2026-10-08T01:00:00.000Z');
+    let release!: () => void;
+    let acquired!: (pid: number) => void;
+    let failed!: (cause: unknown) => void;
+    let holdingError: unknown;
+    const hold = new Promise<void>(resolve => { release = resolve; });
+    const ready = new Promise<number>((resolve, reject) => { acquired = resolve; failed = reject; });
+    const holding = secondDatabase.$transaction(async transaction => {
+      await transaction.$queryRaw`SELECT "id" FROM "Job" WHERE "id" = ${job.id}::uuid FOR UPDATE`;
+      const [backend] = await transaction.$queryRaw<Array<{ pid: number }>>`SELECT pg_backend_pid() AS pid`;
+      acquired(backend!.pid);
+      await hold;
+    }, { timeout: 10_000 }).catch(cause => { holdingError = cause; failed(cause); });
+    try {
+      const holderPid = await ready;
+      await expect(first.claimNext('worker-skip', now, 30_000)).resolves.toBeNull();
+      const snapshot = await inspectJobClaim(firstDatabase, now);
+      console.info(JSON.stringify({ event: 'controlled-skip-locked', jobId: job.id,
+        capturedNow: now.toISOString(), holderPid, snapshot }));
+      expect(snapshot.jobs).toEqual([expect.objectContaining({
+        id: job.id, status: 'PENDING', dueAtCapturedNow: true, waitingLocks: 0,
+      })]);
+      expect(snapshot.locks).toEqual(expect.arrayContaining([expect.objectContaining({
+        pid: holderPid, locktype: 'relation', mode: 'RowShareLock', granted: true,
+      })]));
+    } finally { release(); await holding; }
+    if (holdingError) throw holdingError;
+    await expect(first.claimNext('worker-after-release', now, 30_000)).resolves.toMatchObject({ id: job.id });
+    await expect(firstDatabase.job.findUniqueOrThrow({ where: { id: job.id } }))
+      .resolves.toMatchObject({ status: 'RUNNING', attemptCount: 1, leaseOwner: 'worker-after-release' });
   });
 
   it('replays an enqueue inside a transaction without aborting its other writes', async () => {

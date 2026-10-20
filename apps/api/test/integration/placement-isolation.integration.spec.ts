@@ -7,6 +7,7 @@ import { JobsService } from '../../src/jobs/application/jobs.service.js';
 import { PlacementRecommendationService } from '../../src/onboarding/application/placement-recommendation.service.js';
 import { seedPlacementCurriculum } from '../../src/curriculum/infrastructure/seed-placement.js';
 import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
+import { inspectJobClaim } from './job-claim-diagnostics.js';
 import {
   createLearningSessionTestContext,
   registerLearner,
@@ -45,19 +46,11 @@ describe('placement evidence isolation', () => {
       // Failure-only mode leaves the successful hot path free of diagnostic I/O.
       const earlyResult = diagnostics === 'failure' ? await claim(workerId, now, leaseMs) : null;
       if (earlyResult) return earlyResult;
-      const timeline = await context.database.$queryRaw`
-        SELECT "id", "type", "status", "attemptCount", "maxAttempts",
-          to_char("availableAt", 'YYYY-MM-DD HH24:MI:SS.US') AS "availableAt",
-          to_char(clock_timestamp(), 'YYYY-MM-DD HH24:MI:SS.US') AS "databaseNow",
-          "availableAt" <= ${now} AS "dueAtCapturedNow",
-          "leaseOwner", "leaseExpiresAt",
-          (SELECT count(*)::int FROM pg_locks WHERE relation = '"Job"'::regclass AND NOT granted) AS "waitingLocks"
-        FROM "Job" ORDER BY "createdAt", "id"
-      `;
+      const snapshot = await inspectJobClaim(context.database, now);
       const result = diagnostics === 'failure' ? earlyResult : await claim(workerId, now, leaseMs);
       console.log(JSON.stringify({ event: 'placement-claim', hostNow: now.toISOString(),
         workerId, backgroundWorker: process.env.JOB_WORKER_ENABLED, schema: context.schemaName,
-        timeline, claimedId: result?.id ?? null,
+        timeline: snapshot.jobs, locks: snapshot.locks, claimedId: result?.id ?? null,
         after: await context.database.job.findMany({ select: { id: true, status: true, attemptCount: true, leaseOwner: true } }),
       }));
       return result;
