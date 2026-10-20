@@ -109,6 +109,19 @@ const mockTree: AdminCurriculumTreeDto = {
 };
 
 describe('CurriculumWorkspace', () => {
+  it('retains preserved search and collapse controls without changing curriculum mutations', async () => {
+    const createPath = vi.spyOn(adminCurriculumClient, 'createPath');
+    render(<CurriculumWorkspace />);
+    const search = await screen.findByPlaceholderText('Search paths, levels, missions, slugs…');
+    fireEvent.change(search, { target: { value: 'no-matching-curriculum-item' } });
+    expect(screen.getByText('No curriculum items match your search.')).toBeVisible();
+    fireEvent.change(search, { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }));
+    expect(screen.queryByText('Greetings Mission')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }));
+    expect(screen.getByText('Greetings Mission')).toBeVisible();
+    expect(createPath).not.toHaveBeenCalled();
+  });
   beforeEach(() => {
     vi.restoreAllMocks();
     vi.spyOn(adminCurriculumClient, 'getTree').mockResolvedValue(mockTree);
