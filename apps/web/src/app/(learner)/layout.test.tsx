@@ -36,6 +36,33 @@ afterEach(() => {
 });
 
 describe('LearnerLayout', () => {
+  it.each(['/sessions/session-id', '/onboarding/placement/session-id', '/ielts/bridge/module-id',
+    '/ielts/practice/session-id', '/ielts/mock-tests/attempt-id'])('reduces shell chrome on %s without changing the destination', async (route) => {
+    pathname = route;
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({ displayName: 'An Nguyen', email: 'an@example.test',
+      id: '828a1927-c4fa-487f-93d5-96c556667869', onboardingStatus: 'COMPLETE', roles: ['LEARNER'] });
+    render(<LearnerLayout><label>Answer<textarea defaultValue="Still my draft" /></label></LearnerLayout>);
+    expect(await screen.findByText('Focus mode')).toBeVisible();
+    const toggle = screen.getByRole('button', { name: 'Learning navigation' });
+    fireEvent.click(toggle);
+    expect(screen.getByRole('link', { name: 'Settings' })).toHaveAttribute('href', '/settings');
+    fireEvent.keyDown(toggle, { key: 'Escape' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('textbox')).toHaveValue('Still my draft');
+    expect(apiClient.getCurrentUser).toHaveBeenCalledTimes(1);
+    expect(replace).not.toHaveBeenCalled();
+  });
+
+  it.each(['/ielts/bridge', '/ielts/practice', '/ielts/mock-tests'])('keeps the ordinary shell on catalog %s', async (route) => {
+    pathname = route;
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({ displayName: 'An Nguyen', email: 'an@example.test',
+      id: '828a1927-c4fa-487f-93d5-96c556667869', onboardingStatus: 'COMPLETE', roles: ['LEARNER'] });
+    render(<LearnerLayout>Catalog content</LearnerLayout>);
+    await screen.findByText('Catalog content');
+    expect(screen.queryByText('Focus mode')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Skip to learning content' })).toHaveAttribute('href', '#learner-main-content');
+    expect(screen.queryByRole('link', { name: 'Admin workspace' })).not.toBeInTheDocument();
+  });
   it('clears the expired account so guest language switching remains usable after redirect', async () => {
     vi.mocked(apiClient.getCurrentUser).mockRejectedValue(new ApiError({ code: 'UNAUTHORIZED', status: 401, message: 'expired' }));
     render(<LocaleProvider initialLocale="vi" initialUserId="expired-account"><LanguageSwitcher /><LearnerLayout>Protected content</LearnerLayout></LocaleProvider>);

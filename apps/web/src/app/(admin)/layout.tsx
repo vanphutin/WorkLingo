@@ -3,14 +3,15 @@
 import '../../features/admin-content/admin.css';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { ThemeControl } from '../../components/theme-control';
-import { WorkspaceNavigation } from '../../components/workspace-navigation';
+import { WorkspaceNavigation, isNavigationItemActive } from '../../components/workspace-navigation';
+import { GlassSurface } from '../../components/glass-surface';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { useLocalePreference, useT } from '../../i18n/provider';
 import { commonMessages } from '../../i18n/messages/common';
@@ -42,6 +43,8 @@ export default function AdminLayout({
   const t = useT('common', commonMessages);
   const { synchronizeUser, clearUser } = useLocalePreference();
   const destinations = adminDestinations.map((item) => ({ href: item.href, label: t(item.label) }));
+  const pathname = usePathname();
+  const context = destinations.find((item) => isNavigationItemActive(pathname, item.href))?.label ?? t('adminWorkspace');
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -112,43 +115,46 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="admin-shell">
+    <div className="admin-shell application-shell">
       <a className="skip-link" href="#admin-main-content">
         {t('skipAdmin')}
       </a>
       <header className="admin-top-nav">
-        <div className="nav-container">
-          <div className="nav-left">
-            <Link href="/admin/content" className="brand-logo">
-              <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
-            </Link>
-          </div>
+        <GlassSurface className="shell-header-surface">
+          <div className="nav-container">
+            <div className="nav-left">
+              <Link href="/admin/content" className="brand-logo">
+                <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
+              </Link>
+            </div>
+            <p className="shell-context"><span>{t('adminWorkspace')}</span><strong>{context}</strong></p>
 
-          <div className="nav-user-meta">
-            <ThemeControl />
-            <LanguageSwitcher />
-            <span className="user-greeting">
-              {t('adminName', { name: currentUser?.displayName ?? '' })}
-            </span>
-            <button
-              type="button"
-              className="logout-button"
-              onClick={async () => {
-                try {
-                  const response = await fetch('/api/v1/auth/logout', {
-                    method: 'POST',
-                    credentials: 'include',
-                  });
-                  if (response.ok) clearUser();
-                } finally {
-                  router.push('/login');
-                }
-              }}
-            >
-              {t('signOut')}
-            </button>
+            <div className="nav-user-meta">
+              <ThemeControl />
+              <LanguageSwitcher />
+              <span className="user-greeting">
+                {t('adminName', { name: currentUser?.displayName ?? '' })}
+              </span>
+              <button
+                type="button"
+                className="logout-button"
+                onClick={async () => {
+                  try {
+                    const response = await fetch('/api/v1/auth/logout', {
+                      method: 'POST',
+                      credentials: 'include',
+                    });
+                    if (response.ok) clearUser();
+                  } finally {
+                    router.push('/login');
+                  }
+                }}
+              >
+                {t('signOut')}
+              </button>
+            </div>
           </div>
-        </div>
+        </GlassSurface>
       </header>
       <WorkspaceNavigation items={destinations} label={t('adminWorkspace')} variant="admin" />
       <main id="admin-main-content" tabIndex={-1} className="admin-main-content">

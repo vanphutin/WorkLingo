@@ -7,8 +7,19 @@ import { apiClient } from '../lib/api/api-client';
 import { LanguageSwitcher } from '../components/language-switcher';
 import { useT } from '../i18n/provider';
 import { publicMessages } from '../i18n/messages/public';
+import { commonMessages } from '../i18n/messages/common';
+import { GlassSurface } from '../components/glass-surface';
 
 const landingStyles = `
+  .landing-page .landing-topbar { margin-block-end: clamp(2rem, 5vw, 3rem); }
+  .landing-page .public-nav-surface { width: 100%; padding: 1rem 1.25rem; }
+  .landing-page .public-header-navigation { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-4); }
+  .landing-page .public-header-navigation .landing-brand { margin: 0; }
+  .landing-page .public-brand-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--text-primary); text-decoration: none; }
+  .landing-page .public-nav-actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-inline-start: auto; min-width: 0; }
+  .landing-page .public-nav-actions select { border-color: var(--control-border); font-size: 1rem; }
+  .landing-page .public-nav-actions select:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .landing-page .skip-link { z-index: var(--z-toast); max-width: calc(100vw - 1.5rem); }
   main.landing-page {
     display: block;
     min-height: 100dvh;
@@ -109,6 +120,7 @@ const landingStyles = `
 
 export default function HomePage() {
   const t = useT('public', publicMessages);
+  const common = useT('common', commonMessages);
   const [hasSession, setHasSession] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -124,8 +136,10 @@ export default function HomePage() {
       <a className="skip-link" href="#main-content">{t('skipMain')}</a>
       <style>{landingStyles}</style>
       <header className="landing-topbar">
-        <h1 className="landing-brand" id="home-title" translate="no">WorkLingo</h1>
-        <div className="landing-actions"><LanguageSwitcher /><ThemeControl /></div>
+        <GlassSurface className="public-nav-surface"><nav className="public-header-navigation" aria-label={common('publicNavigation')}>
+          <h1 className="landing-brand" id="home-title" translate="no"><Link href="/" className="public-brand-link">WorkLingo</Link></h1>
+          <div className="public-nav-actions"><LanguageSwitcher /><ThemeControl /></div>
+        </nav></GlassSurface>
       </header>
       <section className="landing-hero" aria-labelledby="learning-title">
         <div>

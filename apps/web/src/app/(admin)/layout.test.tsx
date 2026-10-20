@@ -33,6 +33,20 @@ afterEach(() => {
 });
 
 describe('AdminLayout', () => {
+  it('preserves all thirteen destinations and the skip target for SYSTEM_ADMIN', async () => {
+    vi.mocked(apiClient.getCurrentUser).mockResolvedValue({ id: '22222222-2222-4222-8222-222222222222',
+      email: 'admin@worklingo.test', displayName: 'Admin User', onboardingStatus: null, roles: ['SYSTEM_ADMIN'] });
+    render(<AdminLayout>Administrative work</AdminLayout>);
+    await screen.findByText('Administrative work');
+    const nav = screen.getByRole('navigation', { name: 'Admin workspace' });
+    expect([...nav.querySelectorAll('a')].map((link) => link.getAttribute('href'))).toEqual([
+      '/admin/content', '/admin/curriculum', '/admin/ielts-orientation', '/admin/ielts-bridge',
+      '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum', '/admin/audit',
+      '/admin/operations', '/admin/analytics', '/admin/settings/audio', '/admin/settings/ai', '/dashboard',
+    ]);
+    expect(screen.getByRole('link', { name: 'Skip to administrative content' })).toHaveAttribute('href', '#admin-main-content');
+    expect(replace).not.toHaveBeenCalled();
+  });
   it('redirects unauthenticated users to /login', async () => {
     vi.mocked(apiClient.getCurrentUser).mockRejectedValue(
       new ApiError({ code: 'UNAUTHORIZED', message: 'Auth required', status: 401 }),
