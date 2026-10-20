@@ -133,3 +133,5 @@ Slice3 c3166b0: session-experience.css is imported by existing SessionShell and 
 Slice4: Orientation header uses one regularGlassSurface; its solid slides retain version/slide keys. Bridge progress uses one solidGlassSurface, solid module/stage cards; native answer/task/timer handlers unchanged. Owner CSS makes narration/range/select fluid with44px targets, readable responsive stage counts, wraps longlabels; no clipping. BridgeCSS has existing integrated/mock consumers, assigned real owner migration nextSlice5; those are not verified by sharedCSS.
 
 Slice5: solid exam reading/editor/report, semantic timer badge and visible answered text derived from drafts. Target band separate from measured evidence. Disjoint progress uses GlassSurface solid; existing handlers/deadlines retained.
+
+Slice6: existing authoring roots adopt authoring-experience.css for solid headers/forms/preview, bounded native source scrolling and named keyboard-scrollable table. Tree/list/editor tracks use minmax(0,1fr); source focus ring is inset to survive existing clipping wrappers. Publication/status/revision remain domain-owned.

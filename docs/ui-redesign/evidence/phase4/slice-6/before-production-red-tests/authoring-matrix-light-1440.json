@@ -1,0 +1,70 @@
+{
+  "title": "authoring matrix light 1440",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/admin/content",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/content/new",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/curriculum",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/ielts-orientation",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/ielts-bridge",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/ielts-integrated",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/ielts-band-curriculum",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/ielts-mocks",
+      "theme": "light",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    }
+  ]
+}

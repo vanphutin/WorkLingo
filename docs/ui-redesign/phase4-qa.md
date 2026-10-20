@@ -17,10 +17,10 @@ Fresh entry checks: isolated branch/path/HEAD clean, main7a5e383 unchanged, no u
 | 3 Onboarding/Learning/Media | 3 | Verified (Chromium fixtures) | c3166b0; [evidence](evidence/phase4/slice-3/README.md) |
 | 4 IELTS orientation/bridge | 3 | Verified (Chromium fixtures) | bb9a63b + touch follow-up; [evidence](evidence/phase4/slice-4/README.md) |
 | 5 IELTS integrated/pathway/mock | 5 | Verified (Chromium fixtures) | 41d05ba; [evidence](evidence/phase4/slice-5/README.md) |
-| 6 Admin authoring | 9 | Discovered | Pending |
+| 6 Admin authoring | 9 | Verified (Chromium fixtures) | 57d33f3; [evidence](evidence/phase4/slice-6/README.md) |
 | 7 Operations/settings | 8 | Discovered | Pending |
 
-Coverage now:34 total,17 implemented,17 verified,0 blocked,17 remaining. Error/not-found boundaries are additional owners, not routes.
+Coverage now:34 total,26 implemented,26 verified,0 blocked,8 remaining. Error/not-found boundaries are additional owners, not routes.
 
 ## Slice 1 — Public/Auth
 
@@ -61,3 +61,7 @@ Code bb9a63b + follow-up narration target fix (manifest exact hash). Orientation
 ## Slice5 checkpoint
 
 Code 41d05ba09b2a6b220218074f3c53123d42a52e1c;17/34 verified,17 remain.15 optimized Chromium,17 targeted,403 full web tests and lint/types/i18n/build pass. [Evidence](evidence/phase4/slice-5/README.md). Next Slice6, no Phase5 authorization.
+
+## Slice6 checkpoint
+
+Code 57d33f32fb59d497235af06d31727127168bff0b;26/34 verified,8 remain.18 optimized Chromium/78 targeted; lint/types/build pass. Review evidence gaps and real clipped source focus fixed; no product business changes. [Evidence](evidence/phase4/slice-6/README.md). P4-AUTHORING-CONFLICT-001 records pre-existing Orientation409 reload. Next Slice7; no Phase5/merge/push/deploy.

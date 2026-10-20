@@ -4,11 +4,11 @@ Updated: 2026-10-20 (Asia/Saigon).
 
 ## Current status
 
-**Phase1–3: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase4: APPROVED and IN PROGRESS,2026-10-20.** Phase5/6, merge, push and deployment remain unapproved. **12/34 routes redesigned and verified with Chromium fixtures;22 remaining.** Shell/token adoption is not route migration.
+**Phase1–3: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase4: APPROVED and IN PROGRESS,2026-10-20.** Phase5/6, merge, push and deployment remain unapproved. **26/34 routes redesigned and verified with Chromium fixtures;8 remaining.** Shell/token adoption is not route migration.
 
 ## Phase 4 current checkpoint
 
-Approved human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b, clean isolated branch/worktree; original1,295 hashes/status/main remain unchanged. Execute the existing plan's seven slices; current Slice5 IELTS Integrated/Pathway/Mock. [QA and acceptance](phase4-qa.md). Historical approval statements below are superseded by this current approval.
+Approved human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b, clean isolated branch/worktree; original1,295 hashes/status/main remain unchanged. Execute the existing plan's seven slices; current Slice7 Operations/Settings. [QA and acceptance](phase4-qa.md). Historical approval statements below are superseded by this current approval.
 
 Slice1 complete:7a37bed, actual Home/Auth +2 boundaries;15 targeted/402 full web tests and10 production Chromium checks pass. Comparable optimized before/after screenshots,198 contrast samples(min5.5666:1),12 narrow CSS200 keyboard/reflow cases. Independent review gaps corrected; owner-scoped focus scrolling fixed actual bottom-edge outline clipping. [Evidence](evidence/phase4/slice-1/README.md). Next: Slice2 Dashboard/Programs/Mastery; schema-valid baseline browser matrix captured, feature-only reflow RED recorded, original dirty Mastery CSS compared read-only. Do not restart Phase1–3 or broad discovery. Live API/hardware/cross-engine/native assistive limits remain explicit; no merge/push/deploy/Phase5.
 
@@ -147,3 +147,7 @@ Not used: redundant visual/implementation skill workflows, extra implementer age
 ## Slice5 checkpoint
 
 Code 41d05ba09b2a6b220218074f3c53123d42a52e1c;17/34 verified,17 remain.15 optimized Chromium,17 targeted,403 full web tests and lint/types/i18n/build pass. [Evidence](evidence/phase4/slice-5/README.md). Next Slice6, no Phase5 authorization.
+
+## Slice6 checkpoint
+
+Code 57d33f32fb59d497235af06d31727127168bff0b;26/34 verified,8 remain.18 optimized Chromium/78 targeted; lint/types/build pass. Review evidence gaps and real clipped source focus fixed; no product business changes. [Evidence](evidence/phase4/slice-6/README.md). P4-AUTHORING-CONFLICT-001 records pre-existing Orientation409 reload. Next Slice7; no Phase5/merge/push/deploy.
