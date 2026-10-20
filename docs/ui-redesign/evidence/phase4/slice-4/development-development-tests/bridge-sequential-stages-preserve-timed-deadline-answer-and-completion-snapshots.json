@@ -1,0 +1,15 @@
+{
+  "title": "bridge sequential stages preserve timed deadline answer and completion snapshots",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "pinnedVersion": "22222222-2222-4222-8222-222222222222",
+      "stageSequence": true,
+      "timerPreserved": true,
+      "completeResume": true,
+      "writes": 11
+    }
+  ]
+}

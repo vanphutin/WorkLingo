@@ -15,12 +15,12 @@ Fresh entry checks: isolated branch/path/HEAD clean, main7a5e383 unchanged, no u
 | 1 Public/Auth + boundaries | 3 | Verified (Chromium fixtures) | 7a37bed; [evidence](evidence/phase4/slice-1/README.md) |
 | 2 Dashboard/Programs/Mastery | 3 | Verified (Chromium fixtures) | 0dbb076; [evidence](evidence/phase4/slice-2/README.md) |
 | 3 Onboarding/Learning/Media | 3 | Verified (Chromium fixtures) | c3166b0; [evidence](evidence/phase4/slice-3/README.md) |
-| 4 IELTS orientation/bridge | 3 | In progress | Baseline captured |
-| 5 IELTS integrated/pathway/mock | 5 | Discovered | Pending |
+| 4 IELTS orientation/bridge | 3 | Verified (Chromium fixtures) | bb9a63b + touch follow-up; [evidence](evidence/phase4/slice-4/README.md) |
+| 5 IELTS integrated/pathway/mock | 5 | In progress | Pending |
 | 6 Admin authoring | 9 | Discovered | Pending |
 | 7 Operations/settings | 8 | Discovered | Pending |
 
-Coverage now:34 total,9 implemented,9 verified,0 blocked,25 remaining. Error/not-found boundaries are additional owners, not routes.
+Coverage now:34 total,12 implemented,12 verified,0 blocked,22 remaining. Error/not-found boundaries are additional owners, not routes.
 
 ## Slice 1 — Public/Auth
 
@@ -51,3 +51,9 @@ Code c3166b0. Actual production owners: SessionShell adds solid grouped session 
 97 targeted tests(18files),403 full web tests(85files),18 optimized Chromium checks(16+2 review), lint/typecheck/i18n/build/whitespace pass.36 paired required viewport/theme states on immutable optimized2d9 versus optimized source;498 effective opaque contrast samples min4.87497:1. Baseline reflow RED418px/320; final8 narrow renderer cases fit. Pending writing save test holds response, keeps latest text and selection[7,14] through theme/resize and verifies revisions0→1. Actual autosave/reload/pause/resume/submit completes fixture session and displays pending inline evaluation. Native audio node keeps playback; native MediaRecorder synthetic source retains one live track across theme/navigation/resize, releases on stop, consent gates upload. Reading answer/placement start/version/checkpoint, error retry, loading/empty/complete/disabled states exercised. Browser upload/deletion/provider evaluation are not claimed; corresponding existing unit callbacks pass.
 
 Independent scoped review found no product regression; parent treated three acceptance-evidence gaps as Important and fixed in one pass. Harness errors and true CSS root cause are distinguished in [review](evidence/phase4/slice-3/review.md). Full403 pass did not reproduce historical Focus Mode intermittent failure; no unproven root-cause claim. UI-only limitations: fixtures, no live backend/provider/hardware, native zoom/screenreader, cross-engine or performance certification. No unresolved Critical/Important in this slice.
+
+## Slice4 — IELTS Orientation/Bridge
+
+Code bb9a63b + follow-up narration target fix (manifest exact hash). Orientation/Bridge owner CSS refines solid slide/stage/module hierarchy and fluid narration/answer controls; actual header/progress add disjoint regular/solid GlassSurface. Handlers/effects/keys/version/revisions and answer/timer progression unchanged. Shared Bridge CSS also reaches existing integrated/mock consumers; those real owners are explicitly next Slice5, never counted verified by this shared adoption.
+
+13 targeted tests,14 optimized Chromium, lint/type/build/i18n/whitespace pass. Full403 reused from Slice3 P0 gate; no duplicate suite for these style owners.18 paired actual route cells across3 viewports/two themes.132 opaque text samples min6.1049:1. RED389px at320/CSS200 fixed at narration/fieldset/flex owner; final four narrow cases plus native keyboard full indicator bounds pass. Visual QA found25px narration controls, reproduced RED and fixed44px; optimized14/14 fresh. Orientation wrong/correct answers, revisions2→3→4, version, same radio through theme/resize, reload/completion; Bridge all10stages, answer gating, timed deadline and completed resume; locked/empty/error/loading preserved. Parent self-review, no Critical/Important; P0 review next Slice5. Fixtures are not live API/narration/provider certification; native zoom/assistive/other engines/performance remain unmeasured.

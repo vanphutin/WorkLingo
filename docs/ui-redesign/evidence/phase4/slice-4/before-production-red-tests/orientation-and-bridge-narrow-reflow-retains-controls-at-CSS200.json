@@ -1,0 +1,37 @@
+{
+  "title": "orientation and bridge narrow reflow retains controls at CSS200",
+  "status": "failed",
+  "mode": "before-production",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/ielts/orientation",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 389,
+      "offenders": [
+        {
+          "class": "",
+          "right": 327.65625
+        },
+        {
+          "class": "",
+          "right": 327.65625
+        },
+        {
+          "class": "",
+          "right": 372
+        },
+        {
+          "class": "",
+          "right": 368
+        },
+        {
+          "class": "audio-settings-note",
+          "right": 372
+        }
+      ]
+    }
+  ]
+}

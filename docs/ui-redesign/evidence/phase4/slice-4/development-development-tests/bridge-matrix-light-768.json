@@ -1,0 +1,356 @@
+{
+  "title": "bridge matrix light 768",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Knowledge check",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Check body",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Giọng đọc dự phòng của trình duyệt",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tốc độ0,75×1×1,25×1,5×",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Âm lượng",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đang dùng Microsoft David - English (United States)",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Check transcript",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "How many skills?",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Two",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Four",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/orientation",
+      "name": "orientation-player-light-768",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình IELTS",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "IELTS Bridge",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập từng kỹ năng theo cùng một quy trình học gồm mười giai đoạn.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Listening foundations",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Description",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa bắt đầu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/bridge",
+      "name": "bridge-catalog-light-768",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nghe · Giai đoạn 1 trên 10",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Listening foundations",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Giới thiệu",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Stage 1",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Instruction 1",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc hướng dẫn, rồi đánh dấu hoàn thành giai đoạn khi bạn đã sẵn sàng.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "url": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "name": "bridge-player-light-768",
+      "client": 768,
+      "scroll": 768
+    }
+  ]
+}
