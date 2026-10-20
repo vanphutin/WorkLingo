@@ -55,6 +55,10 @@ describe('IeltsMockPlayer', () => {
     expect(screen.getByText('Preserve this supplied English passage.')).toHaveAttribute('lang', 'en');
     const answer = screen.getByRole('textbox');
     expect(answer).toHaveValue('My saved answer');
+    expect(screen.getByText('Đã trả lời')).toBeVisible();
+    fireEvent.change(answer, { target: { value: '' } });
+    expect(screen.getByText('Chưa trả lời')).toBeVisible();
+    fireEvent.change(answer, { target: { value: 'My saved answer' } });
     fireEvent.click(screen.getByRole('button', { name: 'Switch language' }));
     expect(screen.getByRole('button', { name: 'Save progress' })).toBeVisible();
     expect(screen.getByRole('textbox')).toBe(answer);

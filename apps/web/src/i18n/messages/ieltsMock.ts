@@ -1,5 +1,7 @@
 export const ieltsMockMessages = {
   "en": {
+    "answered": "Answered",
+    "unanswered": "Unanswered",
     "academic": "IELTS Academic",
     "catalogTitle": "Full Mock Tests",
     "description": "Complete all four skills against one immutable published test version. Results are mock estimates, not official IELTS scores.",
@@ -62,6 +64,8 @@ export const ieltsMockMessages = {
     "loadingReport": "Loading your mock report..."
   },
   "vi": {
+    "answered": "Đã trả lời",
+    "unanswered": "Chưa trả lời",
     "academic": "IELTS Học thuật",
     "catalogTitle": "Bài thi thử đầy đủ",
     "description": "Hoàn thành cả bốn kỹ năng trên cùng một phiên bản bài thi đã xuất bản cố định. Kết quả là ước tính từ bài thi thử, không phải điểm IELTS chính thức.",
