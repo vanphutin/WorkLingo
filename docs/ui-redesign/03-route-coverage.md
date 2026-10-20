@@ -1,0 +1,62 @@
+# Liquid Glass route coverage
+
+Ngày 2026-10-19. **34 page routes; 14 layouts; 0 routes migrated trong nhiệm vụ mới này.** Existing V2 không được tính thành Liquid Glass completed. `Discovered` nghĩa đã đối chiếu page imports/source; protected rendered states vẫn pending. E2E column ghi test source hiện có, không tuyên bố đã chạy hôm nay.
+
+Phase 1 update: token aliases/theme/material foundation và preference trong settings đã tích hợp. Settings route có Chromium integration check với network fixture; các owner chỉ kế thừa token vẫn không được đóng thành migrated/fully verified. Phase 2–6 chưa được phép thực thi. Baseline trong inventory là dirty checkout gốc; worktree Phase 1 từ HEAD được phân biệt trong [QA](phase1-qa.md).
+
+Layouts: `R` root server layout; `L` `(learner)/layout.tsx`; `A` `(admin)/layout.tsx`; `M` metadata layout; `S` style/pass-through layout. Source page và ancestor layouts chính xác cho từng route nằm trong [inventory JSON](evidence/source-inventory.json). Admin role `CA/SA` = CONTENT_ADMIN/SYSTEM_ADMIN theo shell; endpoint-specific permissions giữ nguyên, chưa independently audited backend.
+
+UI: `G` globals, `W` workspace, `D` learning; stylesheet tên feature nằm tại `apps/web/src/features/<feature>/`, settings tại app. Shared shell/navigation/theme/language được tính cho mọi protected route. Risk thể hiện mức cần bảo vệ, không phải bug severity.
+
+Risk totals: **P0 14, P1 15, P2 4, P3 1**. Có 34/34 matrix rows khớp source inventory, không thiếu hoặc thêm URL.
+
+| Route | Role | Layout | Components | Current UI | Redesign scope | Risk | Test coverage | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `/` | Public; authenticated CTA | R | HomePage, ThemeControl, LanguageSwitcher | G + landing.css; animated example | Solid hero, floating glass top controls; finite motion | P3 | page.test; ui-redesign/i18n E2E | Discovered; Chromium baseline |
+| `/login` | Public | R + M | AuthPage, AuthForm | auth.module.css + G/W | Solid form, consistent labels/actions/errors | P0 | auth form/i18n tests; ui-redesign/i18n E2E | Discovered; Chromium baseline |
+| `/register` | Public | R + M | AuthPage, AuthForm | auth.module.css + G/W | Same auth system, retain validation/focus | P0 | auth tests; onboarding/i18n/accessibility E2E | Discovered; Chromium baseline |
+| `/dashboard` | Signed-in/onboarded | R + L + M | DashboardView, roadmap, engagement, IELTS cards | G/W/D | Mission-first solid surface; glass shell | P1 | dashboard-view/roadmap/engagement units; adaptive/engagement/ui-redesign E2E | Discovered; runtime pending |
+| `/programs` | Signed-in/onboarded | R + L + M | ProgramCatalog | program-catalog.css + D | Solid program cards; active/disabled status | P1 | program-catalog units/E2E | Discovered; runtime pending |
+| `/mastery` | Signed-in/onboarded | R + L + M | MasteryWorkspace/Overview, ErrorBank, Checkpoint | mastery.css + D | Stable charts/evidence, restrained filter glass | P1 | mastery/checkpoint/error-bank units; adaptive/ui-redesign E2E | Discovered; runtime pending |
+| `/onboarding` | Signed-in, including pending | R + L + S | OnboardingWorkspace, PlacementStatus | onboarding.css | Choice forms and readiness states | P1 | onboarding/placement-status units; onboarding-placement E2E | Discovered; runtime pending |
+| `/onboarding/placement/[sessionId]` | Signed-in placement | R + L + S + M | PlacementSessionPage, SessionShell, PlacementStatus | G/D/onboarding.css | Quiet assessment, solid questions, errors/loading | P0 | placement page/session units; onboarding-placement E2E | Discovered; runtime pending |
+| `/sessions/[sessionId]` | Signed-in/session owner | R + L + M | SessionShell, ActivityRenderer, 4 skills, EvaluationFeedback | G/D | Solid reader/editor, control toolbar; overlay a11y | P0 | session/activity/media/evaluation units; foundation/teacher-ai/adaptive E2E | Discovered; runtime pending |
+| `/settings` | Signed-in/onboarded | R + L | SettingsPage, theme/language | settings.css | Semantic preference groups and 44px focus controls | P1 | settings page unit; ai-settings E2E | Discovered; runtime pending |
+| `/settings/audio` | Signed-in/onboarded | R + L + S | AudioSettingsPanel | G/D/settings.css | Native media + readable forms/errors | P1 | audio panel/browser-speech units; audio-settings E2E | Discovered; runtime pending |
+| `/settings/ai` | Signed-in/onboarded | R + L | AiSettingsPanel | settings.css + admin-ai-settings.css | Scope shared CSS, retain provider availability | P1 | AI panel units; ai-settings E2E | Discovered; runtime pending |
+| `/ielts/orientation` | Signed-in; admission gated | R + L | OrientationPlayer | orientation-player.css | Content-led slides, clear progress/control bar | P1 | orientation units; ielts-orientation E2E | Discovered; runtime pending |
+| `/ielts/bridge` | Signed-in; admission gated | R + L | IeltsBridgeCatalog | ielts-bridge.css | Solid catalog + eligibility/status labels | P2 | dashboard-card unit (indirect); ielts-bridge E2E | Discovered; runtime pending |
+| `/ielts/bridge/[moduleId]` | Signed-in; version-bound learner | R + L | IeltsBridgePlayer | ielts-bridge.css | 10-stage controls, solid content/media/answers | P0 | bridge-player units; ielts-bridge E2E | Discovered; runtime pending |
+| `/ielts/practice` | Signed-in; eligibility gated | R + L | IntegratedPracticeLauncher | ielts-bridge.css | Duration/difficulty selection, disabled/error states | P1 | integrated-practice units; ielts-integrated-practice E2E | Discovered; runtime pending |
+| `/ielts/practice/[sessionId]` | Signed-in/session owner | R + L | IntegratedPracticePlayer | ielts-bridge.css | Quiet multi-skill player; preserve timer/drafts | P0 | integrated-practice units; ielts-integrated-practice E2E | Discovered; runtime pending |
+| `/ielts/pathway` | Signed-in; evidence gated | R + L | IeltsBandPathway | ielts-bridge.css + ielts-band-pathway.css | Target/evidence separation, solid progress panels | P1 | band-pathway units; ielts-band-curriculum E2E | Discovered; runtime pending |
+| `/ielts/mock-tests` | Signed-in; eligibility gated | R + L | IeltsMockCatalog | ielts-bridge.css | Eligible/empty catalog and resume action | P1 | ielts-mock units; ielts-full-mock E2E | Discovered; runtime pending |
+| `/ielts/mock-tests/[attemptId]` | Signed-in/attempt owner | R + L | IeltsMockPlayer | ielts-bridge.css | Solid exam; timer, submit, expiry, results readable | P0 | ielts-mock units; ielts-full-mock E2E | Discovered; runtime pending |
+| `/admin/content` | CA/SA | R + A + M | ContentList | admin.css | Solid list/table, toolbar glass, empty/loading/error | P2 | content-list units; admin-content-authoring E2E | Discovered; runtime pending |
+| `/admin/content/new` | CA/SA | R + A + M | NewContentImport | admin.css | Solid import form, validation, submit state | P1 | new-content-import units; admin-content-authoring E2E | Discovered; runtime pending |
+| `/admin/content/[importId]` | CA/SA | R + A + M | ContentAuthoringWorkspace, SourceEditor, Preview, Validate, Publish | admin.css + editor tokens | Keep fixed editor palette exception; restyle real controls | P0 | detail/authoring/editor/preview/publish units; admin-content-authoring E2E | Discovered; runtime pending |
+| `/admin/curriculum` | CA/SA | R + A | CurriculumWorkspace, FoundationDefinitionEditor | curriculum.css | Solid tree/forms, accessible tabs, scope CSS | P0 | curriculum/editor units; curriculum-foundation/admin-curriculum-audit E2E | Discovered; runtime pending |
+| `/admin/ielts-orientation` | CA/SA | R + A | OrientationAuthoringWorkspace | orientation-authoring.css | Solid authored content + validation/publication states | P0 | orientation-authoring units; ielts-orientation E2E | Discovered; runtime pending |
+| `/admin/ielts-bridge` | CA/SA | R + A | IeltsBridgeAuthoringWorkspace | ielts-bridge-authoring.css | Solid editors, stage toolbar and warnings | P0 | bridge-authoring units; ielts-bridge E2E | Discovered; runtime pending |
+| `/admin/ielts-integrated` | CA/SA | R + A | IntegratedProfileWorkspace | ielts-bridge.css | Allocation forms, validation and publish controls | P0 | integrated-profile units; ielts-integrated-practice E2E | Discovered; runtime pending |
+| `/admin/ielts-band-curriculum` | CA/SA | R + A | BandCurriculumWorkspace | ielts-bridge.css | Readable JSON editor, validation and publication | P0 | band-workspace units; ielts-band-curriculum E2E | Discovered; runtime pending |
+| `/admin/ielts-mocks` | CA/SA | R + A | IeltsMockWorkspace | ielts-bridge.css | Source editor, review/evaluation, validate/publish | P0 | mock-workspace units; ielts-full-mock E2E | Discovered; runtime pending |
+| `/admin/audit` | CA/SA; endpoint permission retained | R + A | AuditWorkspace | audit.css | Solid paginated tables/details, filter toolbar | P2 | audit units; admin-curriculum-audit E2E | Discovered; runtime pending |
+| `/admin/operations` | CA/SA; endpoint permission retained | R + A | OperationsWorkspace | observability.css | Solid metrics/job details; filters/status labels | P1 | observability units; admin-observability E2E | Discovered; runtime pending |
+| `/admin/analytics` | CA/SA; endpoint permission retained | R + A | AnalyticsWorkspace | observability.css | Legible data and metric labels; no fake analytics | P2 | observability units; admin-observability E2E | Discovered; runtime pending |
+| `/admin/settings/audio` | CA/SA; endpoint permission retained | R + A + S | AdminAudioSettingsPanel | admin-audio-settings.css | Real provider/voice controls, save/error states | P1 | admin-audio unit; audio-settings E2E | Discovered; runtime pending |
+| `/admin/settings/ai` | CA/SA; endpoint permission retained | R + A | AiSettingsPanel(admin), tabs | admin-ai-settings.css | Global/account groups, safe readiness, save states | P1 | AI panel units; ai-settings E2E | Discovered; runtime pending |
+
+## Layout and boundary acceptance
+
+All 14 layouts are explicitly listed in source-inventory.json. Root owns token imports, SSR locale, metadata and pre-paint preference; learner/admin own shell and UI guards. The other 11 are metadata or style/pass-through wrappers. `(auth)` has no group layout file; its two page layouts own metadata. No inferred reset-password, standalone reading/writing/listening/speaking, notifications, or additional admin route is introduced by this inventory.
+
+| Boundary / state | Existing owner | Acceptance | Status |
+| --- | --- | --- | --- |
+| Unhandled rendering error | `app/error.tsx` | Visible localized error and existing recovery integration; verify framework callback before any change | Source inspected; runtime pending |
+| Missing URL | `app/not-found.tsx` | Solid error surface, readable return Link, light/dark and keyboard | Source inspected; runtime pending |
+| Auth loading/error/expired; admin denied | Learner/admin layouts | Existing redirects, retry and role filtering unchanged | Unit baseline passed; runtime pending |
+| Per-feature empty/loading/error/disabled | Feature components | Test real existing fixtures; do not invent populated states | Source mapped; visual pending |
+| Feedback overlay/toast | EvaluationFeedback + globals | Focus lifecycle, keyboard, readable status; fixed UI cannot hide inputs | Source finding F03; runtime pending |
+
+Completion rule: change each row to migrated only after integration plus relevant behavior/state tests; verified requires evidence paths for light/dark, required viewports and accessible interactions. Inherited token updates alone do not close a route. New discovered routes extend this matrix before final QA. Exceptions require explicit approval and a reason.

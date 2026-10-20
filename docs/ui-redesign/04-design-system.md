@@ -1,0 +1,89 @@
+# WorkLingo Liquid Glass — Design Foundation (Phase 1)
+
+Implemented on `codex/worklingo-liquid-glass-redesign` in `D:/Projects/WorkLingo-Liquid-Glass`. Scope: foundations and appearance preference only; no route is certified as fully redesigned. Existing V2 structure is extended in place.
+
+## Source ownership
+
+| Owner | Responsibility |
+| --- | --- |
+| `apps/web/src/styles/tokens.css` | Exact iOS primitive palette; semantic light/dark/system colors, typography/spacing/radius/motion/z/shadow tokens; legacy aliases |
+| `apps/web/src/styles/glass.css` | Material composition, opaque fallback, nesting/accessibility rules; scoped new appearance preference layout |
+| `apps/web/src/components/glass-surface.tsx` | Server-compatible neutral surface, native div props/ref/className; no business logic or client directive |
+| `apps/web/src/lib/theme.ts` | Existing versioned theme key and static pre-paint script; added versioned transparency key |
+| `apps/web/src/components/theme-control.tsx` | Existing System→Light→Dark cycle and storage subscription, reused without replacing its manager |
+| `apps/web/src/components/transparency-control.tsx` | Native checkbox, localized label/help, external-store snapshot; root-mounted TransparencySync owns cross-tab synchronization even outside Settings |
+| `apps/web/src/app/(learner)/settings/page.tsx` | Appearance group uses solid GlassSurface and the real theme/transparency controls |
+
+Root imports tokens → glass → existing globals → workspace → learning. No parallel CSS token system, UI library, font request or new application dependency. Existing feature CSS and state ownership remain. No showcase/public route was added; fixture markup is under E2E only.
+
+## Palette and semantics
+
+All 12 requested iOS colors plus six neutral levels exist as `--ios-*` primitives with the exact light/dark values in the approved plan. Primitives are inputs, not automatically accessible text/fill combinations.
+
+| Semantic role | Light | Dark |
+| --- | --- | --- |
+| Primary text / fill | #0066CC / #0066CC | #66B3FF / #0091FF |
+| On primary | #FFFFFF | #000000 |
+| Primary hover / active | #005BB8 / #004F9E | #33A6FF / #66BAFF |
+| Primary subtle | #E6F1FF | #102942 |
+| Indigo accent / subtle | #5145CD / #F0EDFF | #B2B9FF / #252347 |
+| Surface primary / secondary | #FFFFFF / #F2F2F7 | #000000 / #1C1C1E |
+| Surface tertiary / elevated | #FFFFFF / #FFFFFF | #2C2C2E / #2C2C2E |
+| Text primary / secondary / muted | #1C1C1E / #48484A / #5E5E63 | #F5F5F7 / #D1D1D6 / #AEAEB2 |
+| Decorative border / control border | #D1D1D6 / #85858A | #48484A / #929297 |
+| Focus ring | #005FCC | #88C7FF |
+| Success label / fill | #176B42 / #176B42 | #76E899 / #30D158 |
+| Warning label / fill | #875000 / #875000 | #FFC078 / #FF9230 |
+| Danger label / fill | #B4232C / #B4232C | #FF9295 / #FF4245 |
+| Info label / fill | #0066CC / #0066CC | #66B3FF / #0091FF |
+
+On-status colors are white in light, black in dark. Text placeholders and disabled/inverse roles are separate. Never fill a button with a light label token. `--border-default` and glass border are decorative; actionable control boundaries use `--border-strong`, not the faint glass outline.
+
+Compatibility aliases preserve every old token in the original stylesheet: background→surface-secondary, surface→surface-primary, surface-soft→surface-secondary, foreground→text-primary, muted→text-secondary; primary/fill/hover/soft/on-primary→their color roles; border/control-border/focus→default/strong/ring; status soft/fill/border and old radius/motion/shadow aliases remain. The fixed source editor palette is retained as an explicit exception. No legacy token was deleted because route migration is still pending.
+
+Both manual dark and no-attribute system dark expose identical computed custom properties, verified in Chromium. Light is the CSS default; system dark works without JS or stored preferences. No page remount or business state key depends on appearance.
+
+## Material API
+
+```tsx
+<GlassSurface variant="regular" tint="none" className="consumer">
+  <nav aria-label="Learning">...</nav>
+</GlassSurface>
+```
+
+Props extend `ComponentPropsWithRef<'div'>`; variant is `regular | clear | tinted | solid`, tint is `none | primary | indigo`. Default is regular/none. Native props/ref and classes compose; child semantics stay intact. The primitive does not create a button, modal, form or accessible role on the caller's behalf.
+
+| Variant | Blur / saturation | Surface |
+| --- | --- | --- |
+| regular | 20px / 180% | White or dark neutral at 92% opacity by default |
+| clear | 6px / 180% | 80% neutral; only use for an actual verified media/controls backdrop |
+| tinted | 28px / 180% | Higher-opacity blue-neutral 96%; optional restrained primary/indigo tint |
+| solid | None | Opaque elevated semantic surface |
+
+Glass uses `--glass-bg`, `--glass-bg-clear`, `--glass-bg-tinted`, border/highlight/shadow, blur/saturation/tint and `--glass-opacity`. Changing root opacity affects regular material background, not text opacity. Local internal `--_glass-*` variables select variant values; no `opacity` is applied to the whole component. CSS declares an opaque baseline, then enhances through standard/prefixed backdrop-filter `@supports`.
+
+Reduced-transparency attribute, supported OS reduced-transparency, increased contrast or forced-colors media queries force opaque material with a stronger border. Accidental nested GlassSurfaces become solid. No SVG displacement, WebGL, will-change, infinite animation or per-row/card blur is added. Clear is not a general content card: its use must be checked with its actual text/control colors, not the primary label sample alone.
+
+Settings adopts the solid variant. Navigation/overlays and feature consumers are deferred to Phase 2–4; do not apply this primitive everywhere simply because it exists.
+
+## Appearance preferences and hydration
+
+- Existing key `worklingo:theme:v1`: `light`, `dark`, or absence for system. Existing ThemeControl keeps its cycle and storage-event behavior.
+- New key `worklingo:reduce-transparency:v1`: `reduce`, or absence to follow default/OS. Attribute `data-reduce-transparency="true"` selects solid glass. Disabling the checkbox removes the manual reduction; OS requirements may still force solid. Help text explains that distinction.
+- The existing head script independently reads both validated keys before paint; failure reading either key cannot suppress the other. No user-controlled text is interpolated into script source.
+- TransparencyControl uses a stable false server snapshot and the initialized DOM state after hydration. It never reads storage in render, resets a form, changes the locale/auth provider or persists learner data.
+- Root mounts the null-rendering `TransparencySync` client island. Its listener survives route changes and remains active without any checkbox mounted; it also reconciles storage once after hydration to cover changes between the head script and mount. Unavailable storage leaves the pre-paint snapshot usable. This fixes the initial review finding without remounting children or creating another preference manager.
+- Native checkbox uses a full label hit target ≥44px, associated description and focus-visible ring. Values persist when storage is available, stay usable in-page when blocked, and synchronize through same-tab custom events and cross-tab storage/clear events.
+- VI/EN labels live in `commonMessages`. No new backend preference contract, route, cookie, user field or API endpoint.
+
+## Shape, typography and motion
+
+System font stack uses Apple system names when installed and system-ui/Segoe UI fallback, with no font download. Title/body reference 34/28/22/17px; callout16/subhead15/footnote13/caption12. Existing CSS consumers determine where these tokens are adopted; dense UI is not forcibly rewritten.
+
+Spacing is 4px units (1/2/3/4/5/6/8/10/12/16), page max75rem/reader70ch. Radius scale4/8/12/20/28px/pill999px; old control/panel/feature aliases map to12/20/28px. Duration150/220/280ms, standard/spring easings and z content0/navigation10/backdrop20/dialog30/toast40 are available. Reduced motion sets durations to0 and the existing workspace reduced-motion override still disables nonessential animations. Adopting z/motion/radius consistently across legacy feature CSS belongs to later phases.
+
+## Verification boundary
+
+See [Phase 1 QA](phase1-qa.md) and [browser evidence](evidence/phase1/browser-results.json). Chromium measured80 semantic pairs: normal-text minimum4.875:1, applicable UI boundary/focus minimum3.290:1;48 actual screenshot-pixel glass composites had primary-label minimum8.249:1. These validate defined pairs and sampled surfaces, not every legacy descendant, screen reader or full product accessibility.
+
+Three required sizes are tested in both themes; actual settings integration uses the real Next route with a network fixture for `/me`. Fixture tests are explicitly not real backend/IELTS journeys. Cross-engine browser qualification and complete 34-route migration remain pending future authorization.

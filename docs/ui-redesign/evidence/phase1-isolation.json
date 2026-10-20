@@ -1,0 +1,18 @@
+{
+  "baselineHead": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",
+  "mainUnchanged": true,
+  "originBranch": "main",
+  "originFilesPreserved": 1295,
+  "originStatusUnchanged": true,
+  "worktree": "D:\\Projects\\WorkLingo-Liquid-Glass",
+  "branch": "codex/worklingo-liquid-glass-redesign",
+  "foundationMatchesOrigin": [
+    "apps/web/src/styles/tokens.css",
+    "apps/web/src/lib/theme.ts",
+    "apps/web/src/components/theme-control.tsx",
+    "apps/web/src/app/layout.tsx",
+    "apps/web/src/i18n/messages/common.ts"
+  ],
+  "dirtySourceTransferred": [],
+  "rationale": "Foundation dependencies match HEAD. Existing user UI changes have no required dependency for Phase 1; settings integration uses the committed existing page. Only assistant-created Phase 0 docs and mandate artifacts were copied."
+}
