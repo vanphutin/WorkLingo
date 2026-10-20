@@ -92,7 +92,8 @@ export function canAttemptTopicJsonRepair(source: string): boolean {
     return !result.success && result.error.issues.every(issue => issue.code === 'custom' && issue.message === 'Use a single line; replace line breaks with spaces.');
   } catch {
     const values = tokens(source);
-    return values !== null && Object.keys(intermediateTopicJsonSchema.shape).every(key => values.includes(JSON.stringify(['key', key])));
+    return values !== null && Object.entries(intermediateTopicJsonSchema.shape)
+      .every(([key, field]) => field.isOptional() || values.includes(JSON.stringify(['key', key])));
   }
 }
 export function applyTopicJsonRepairEdits(source: string, edits: readonly { search: string; replacement: string }[]): string | null {

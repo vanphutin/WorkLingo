@@ -1,8 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { applyTopicJsonRepairEdits, isSafeTopicJsonRepair, intermediateTopicJsonSchema } from './index.ts';
+import { applyTopicJsonRepairEdits, canAttemptTopicJsonRepair, isSafeTopicJsonRepair, intermediateTopicJsonSchema } from './index.ts';
 const source = readFileSync(new URL('../../../docs/examples/intermediate-topic.json', import.meta.url), 'utf8');
 describe('Conservative topic JSON repair', () => {
+  it('offers punctuation repair without requiring optional speech overrides', () => {
+    expect(intermediateTopicJsonSchema.safeParse(JSON.parse(source)).success).toBe(true);
+    const broken = source.replace('"level": "B1",', '"level": "B1",,');
+    expect(canAttemptTopicJsonRepair(broken)).toBe(true);
+    expect(canAttemptTopicJsonRepair(broken.replace(/"objective": [^\n]+\n/u, ''))).toBe(false);
+  });
   it('accepts punctuation repair without changing primitives or question counts', () => {
     const broken = source.replace('"level": "B1",', '"level": "B1",,');
     expect(isSafeTopicJsonRepair(broken, source)).toBe(true);
