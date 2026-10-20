@@ -1,8 +1,9 @@
 import { randomUUID } from 'node:crypto';
 
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { JobRunnerService } from '../../src/jobs/application/job-runner.service.js';
+import { JobsService } from '../../src/jobs/application/jobs.service.js';
 import { PlacementRecommendationService } from '../../src/onboarding/application/placement-recommendation.service.js';
 import { seedPlacementCurriculum } from '../../src/curriculum/infrastructure/seed-placement.js';
 import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
@@ -33,10 +34,38 @@ describe('placement evidence isolation', () => {
     context = await createLearningSessionTestContext('placement_isolation');
     await seedPlacementCurriculum(context.database, context.app.get(ObjectStorage));
   }, 45_000);
-  beforeEach(async () => context.resetLearners());
+  beforeEach(async () => {
+    vi.restoreAllMocks();
+    await context.resetLearners();
+    const diagnostics = process.env.WORKLINGO_PLACEMENT_DIAGNOSTICS;
+    if (!['true', 'failure'].includes(diagnostics ?? '')) return;
+    const jobs = context.app.get(JobsService);
+    const claim = jobs.claimNext.bind(jobs);
+    vi.spyOn(jobs, 'claimNext').mockImplementation(async (workerId, now, leaseMs) => {
+      // Failure-only mode leaves the successful hot path free of diagnostic I/O.
+      const earlyResult = diagnostics === 'failure' ? await claim(workerId, now, leaseMs) : null;
+      if (earlyResult) return earlyResult;
+      const timeline = await context.database.$queryRaw`
+        SELECT "id", "type", "status", "attemptCount", "maxAttempts",
+          to_char("availableAt", 'YYYY-MM-DD HH24:MI:SS.US') AS "availableAt",
+          to_char(clock_timestamp(), 'YYYY-MM-DD HH24:MI:SS.US') AS "databaseNow",
+          "availableAt" <= ${now} AS "dueAtCapturedNow",
+          "leaseOwner", "leaseExpiresAt",
+          (SELECT count(*)::int FROM pg_locks WHERE relation = '"Job"'::regclass AND NOT granted) AS "waitingLocks"
+        FROM "Job" ORDER BY "createdAt", "id"
+      `;
+      const result = diagnostics === 'failure' ? earlyResult : await claim(workerId, now, leaseMs);
+      console.log(JSON.stringify({ event: 'placement-claim', hostNow: now.toISOString(),
+        workerId, backgroundWorker: process.env.JOB_WORKER_ENABLED, schema: context.schemaName,
+        timeline, claimedId: result?.id ?? null,
+        after: await context.database.job.findMany({ select: { id: true, status: true, attemptCount: true, leaseOwner: true } }),
+      }));
+      return result;
+    });
+  });
   afterAll(async () => context?.close());
 
-  it('completes and recommends from all four placement skills without learning side effects', async () => {
+  it.each(Array.from({ length: Math.min(100, Math.max(1, Number(process.env.WORKLINGO_PLACEMENT_REPEATS) || 1)) }, (_, index) => index))('completes and recommends from all four placement skills without learning side effects (run %i)', async () => {
     const { agent, user } = await registerPendingLearner(context.app, {
       displayName: 'Isolated placement learner', email: 'placement-isolation@example.test',
     });

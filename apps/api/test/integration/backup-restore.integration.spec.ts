@@ -287,7 +287,9 @@ describe('backup and restore rehearsal', () => {
     await expect(readdir(failedBackupRoot)).resolves.toEqual([]);
   }, 20_000);
 
-  it('backs up test database records and files with manifest and sha256 checksums', async () => {
+  it('backs up test database records and files with manifest and sha256 checksums', async ({ task }) => {
+    console.info(JSON.stringify({ event: 'backup-rehearsal-budget', loadedTestTimeoutMs: task.timeout,
+      migrationTimeoutMs: 45_000, powerShellTimeoutMs: 60_000 }));
     // 1. Prepare test database data
     await sourcePrisma.$executeRawUnsafe(`CREATE SCHEMA IF NOT EXISTS "${sourceSchema}"`);
     const prismaCli = createRequire(path.resolve('package.json')).resolve('prisma/build/index.js');
