@@ -58,6 +58,12 @@ test('orientation and bridge pending transport announces loading then resolves',
     await expect(page.locator(kind === 'orientation' ? '.orientation-player[aria-busy=true]' : '.bridge-state [role=status]')).toBeVisible(); release(); await expect(page.locator(kind === 'orientation' ? '.orientation-question' : '.bridge-module-card')).toBeVisible(); observations.push({ kind, pendingResolved: true });
   }
 });
+test('orientation narration speed and volume controls expose44px touch targets', async ({ page }) => {
+  test.skip(baseline); await installOrientationBridgeFixtures(page); await page.setViewportSize({ width: 390, height: 844 }); await page.goto('http://127.0.0.1:33300/ielts/orientation');
+  await expect(page.locator('.orientation-narration select')).toBeVisible();
+  for (const control of await page.locator('.orientation-narration select, .orientation-narration input[type=range]').all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  observations.push({ narrationTouchTargets: 44 });
+});
 for (const state of ['locked', 'empty', 'error'] as const) test(`orientation and bridge ${state} states remain honest`, async ({ page }) => {
   test.skip(baseline); for (const kind of ['orientation', 'bridge'] as const) { await page.unrouteAll(); await installOrientationBridgeFixtures(page, { kind, state }); await page.goto('http://127.0.0.1:33300/ielts/' + (kind === 'orientation' ? 'orientation' : 'bridge')); const owner = page.locator(kind === 'orientation' ? '.orientation-player' : '.bridge-shell'); await expect(owner).toBeVisible(); if (state === 'error') await expect(owner.getByRole('alert')).toBeVisible(); else if (kind === 'orientation') await expect(page.locator('.orientation-player--locked')).toBeVisible(); else await expect(page.locator('.bridge-module-card')).toHaveCount(0); observations.push({ kind, state }); }
 });

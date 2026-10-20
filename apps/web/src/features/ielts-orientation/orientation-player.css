@@ -41,6 +41,8 @@
 .orientation-player .audio-settings-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
 .orientation-player :is(.audio-settings-actions, .orientation-narration__settings) label { display: grid; min-width: 0; max-width: 100%; gap: .5rem; }
 .orientation-player :is(select, input[type=range], audio) { width: 100%; min-width: 0; max-width: 100%; }
+.orientation-player :is(select, input[type=range]) { min-height: 44px; font: inherit; }
+.orientation-player select { padding: .5rem; color: var(--text-primary); background: var(--surface-primary); border: 1px solid var(--control-border); border-radius: var(--radius-control); }
 .orientation-player :is(button, a, input, summary, select) { min-width: 0; max-width: 100%; scroll-margin-block: 1rem; }
 .orientation-player :is(button, a) { white-space: normal; overflow-wrap: anywhere; }
 .orientation-player button:not(.orientation-player__primary) { background: var(--surface-primary); color: var(--primary); }
