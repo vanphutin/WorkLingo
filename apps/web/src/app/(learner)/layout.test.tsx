@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type * as ApiClientModule from '../../lib/api/api-client';
@@ -41,7 +41,11 @@ describe('LearnerLayout', () => {
     pathname = route;
     vi.mocked(apiClient.getCurrentUser).mockResolvedValue({ displayName: 'An Nguyen', email: 'an@example.test',
       id: '828a1927-c4fa-487f-93d5-96c556667869', onboardingStatus: 'COMPLETE', roles: ['LEARNER'] });
-    render(<LearnerLayout><label>Answer<textarea defaultValue="Still my draft" /></label></LearnerLayout>);
+    // Settle the mocked async authentication and mounted navigation effects before
+    // dispatching a synchronous test click. Browser interaction follows hydration.
+    await act(async () => {
+      render(<LearnerLayout><label>Answer<textarea defaultValue="Still my draft" /></label></LearnerLayout>);
+    });
     expect(await screen.findByText('Focus mode')).toBeVisible();
     const toggle = screen.getByRole('button', { name: 'Learning navigation' });
     fireEvent.click(toggle);
