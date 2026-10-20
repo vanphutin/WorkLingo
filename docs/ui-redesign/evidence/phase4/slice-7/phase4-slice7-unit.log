@@ -1,0 +1,22 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-audit" "src/features/admin-observability" "src/features/audio/audio-settings-panel.test.tsx" "src/features/audio/admin-audio-settings-panel.test.tsx" "src/features/ai/ai-settings-panel.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/audio/audio-settings-panel.test.tsx (2 tests) 614ms
+   ✓ AudioSettingsPanel > loads sources, shows browser voices conditionally and saves selection  477ms
+ ✓ src/features/audio/admin-audio-settings-panel.test.tsx (1 test) 649ms
+   ✓ AdminAudioSettingsPanel > shows safe readiness and disables unavailable providers  647ms
+ ✓ src/features/admin-observability/observability-workspaces.test.tsx (4 tests) 673ms
+   ✓ admin observability workspaces > localizes operations filters while retaining API status values  484ms
+ ✓ src/features/ai/ai-settings-panel.test.tsx (2 tests) 757ms
+   ✓ AI settings panel > saves Discovery selection and fallback opt-out, and disables unconfigured OpenAI  643ms
+ ✓ src/features/admin-audit/audit-workspace.test.tsx (5 tests) 809ms
+   ✓ AuditWorkspace > localizes audit labels and counts while retaining diagnostic codes and payloads  387ms
+
+ Test Files  5 passed (5)
+      Tests  14 passed (14)
+   Start at  13:55:19
+   Duration  3.82s (transform 1.01s, setup 0ms, collect 7.05s, tests 3.50s, environment 5.74s, prepare 822ms)

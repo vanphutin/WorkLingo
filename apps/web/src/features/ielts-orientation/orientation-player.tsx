@@ -10,6 +10,7 @@ import type { OrientationLearnerStatusDto } from '@worklingo/contracts';
 import { BrowserSpeechControls } from '../audio/browser-speech-controls';
 import { ieltsOrientationClient } from '../../lib/api/ielts-orientation-client';
 import './orientation-player.css';
+import { GlassSurface } from '../../components/glass-surface';
 
 function Narration({ audioUrl, transcript, sessionId, itemId }: { audioUrl: string | null; transcript: string; sessionId: string; itemId: string }) {
   const t = useT('ieltsOrientation', ieltsOrientationMessages);
@@ -72,7 +73,7 @@ export function OrientationPlayer() {
   const continueDisabled = busy || (slide.question !== null && selectedAnswer === null);
 
   return <main className="orientation-player">
-    <header className="orientation-player__header"><Link href="/dashboard">{t('exit')}</Link><p>{t('version', { version: formatNumber(locale, status.presentation.version) })}</p></header>
+    <GlassSurface className="orientation-player__control-surface"><header className="orientation-player__header"><Link href="/dashboard">{t('exit')}</Link><p>{t('version', { version: formatNumber(locale, status.presentation.version) })}</p></header></GlassSurface>
     <div className="orientation-player__progress" aria-label={t('slideProgress', { slide: formatNumber(locale, index + 1), total: formatNumber(locale, status.presentation.slides.length) })}><span style={{ width: `${((index + 1) / status.presentation.slides.length) * 100}%` }} /></div>
     <article className="orientation-player__slide">
       <div className="orientation-player__meta"><span>{t('slideCounter', { slide: formatNumber(locale, index + 1), total: formatNumber(locale, status.presentation.slides.length) })}</span><span lang="en">{status.presentation.title}</span></div>

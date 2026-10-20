@@ -1,0 +1,157 @@
+[WebServer] (node:8568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  x  1 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi light (647ms)
+  x  2 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi dark (630ms)
+  x  3 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en light (646ms)
+  x  4 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en dark (626ms)
+
+
+  1) e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi light ────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert')
+    Expected: visible
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <section role="alert" class="status-card error-card error-state-module__4lTEfG__card">…</section> aka getByText('Đã có lỗi xảy ra. Vui lòng thử lại.Thử lại')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      10 |   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('http://127.0.0.1:33301/login');
+      11 |   await page.locator('[data-phase6-fault]').click();
+    > 12 |   await expect(page.getByRole('alert')).toBeVisible(); await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+         |                                         ^
+      13 |   await expect(page.locator('body')).not.toContainText('Phase6 isolated diagnostic');
+      14 |   const retry = page.getByRole('button', { name: locale === 'vi' ? 'Thử lại' : 'Retry', exact: true });
+      15 |   await page.keyboard.press('Tab'); await expect(retry).toBeFocused();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-error.spec.ts:12:41
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-vi-light\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-vi-light\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-vi-light\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi dark ─────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert')
+    Expected: visible
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <section role="alert" class="status-card error-card error-state-module__4lTEfG__card">…</section> aka getByText('Đã có lỗi xảy ra. Vui lòng thử lại.Thử lại')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      10 |   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('http://127.0.0.1:33301/login');
+      11 |   await page.locator('[data-phase6-fault]').click();
+    > 12 |   await expect(page.getByRole('alert')).toBeVisible(); await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+         |                                         ^
+      13 |   await expect(page.locator('body')).not.toContainText('Phase6 isolated diagnostic');
+      14 |   const retry = page.getByRole('button', { name: locale === 'vi' ? 'Thử lại' : 'Retry', exact: true });
+      15 |   await page.keyboard.press('Tab'); await expect(retry).toBeFocused();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-error.spec.ts:12:41
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-vi-dark\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-vi-dark\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-vi-dark\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en light ────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert')
+    Expected: visible
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <section role="alert" class="status-card error-card error-state-module__4lTEfG__card">…</section> aka getByText('Something went wrong. Please try again.Retry')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      10 |   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('http://127.0.0.1:33301/login');
+      11 |   await page.locator('[data-phase6-fault]').click();
+    > 12 |   await expect(page.getByRole('alert')).toBeVisible(); await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+         |                                         ^
+      13 |   await expect(page.locator('body')).not.toContainText('Phase6 isolated diagnostic');
+      14 |   const retry = page.getByRole('button', { name: locale === 'vi' ? 'Thử lại' : 'Retry', exact: true });
+      15 |   await page.keyboard.press('Tab'); await expect(retry).toBeFocused();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-error.spec.ts:12:41
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-en-light\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-en-light\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-en-light\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en dark ─────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert')
+    Expected: visible
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <section role="alert" class="status-card error-card error-state-module__4lTEfG__card">…</section> aka getByText('Something went wrong. Please try again.Retry')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      10 |   await page.setViewportSize({ width: 390, height: 844 }); await page.goto('http://127.0.0.1:33301/login');
+      11 |   await page.locator('[data-phase6-fault]').click();
+    > 12 |   await expect(page.getByRole('alert')).toBeVisible(); await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+         |                                         ^
+      13 |   await expect(page.locator('body')).not.toContainText('Phase6 isolated diagnostic');
+      14 |   const retry = page.getByRole('button', { name: locale === 'vi' ? 'Thử lại' : 'Retry', exact: true });
+      15 |   await page.keyboard.press('Tab'); await expect(retry).toBeFocused();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-error.spec.ts:12:41
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-en-dark\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-en-dark\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-error-results\liquid-glass-phase6-error-real-Next-error-boundary-en-dark\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi light ─────────────────
+    e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi dark ──────────────────
+    e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en light ─────────────────
+    e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en dark ──────────────────
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6-error.config.ts

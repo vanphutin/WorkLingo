@@ -1,0 +1,44 @@
+/* Adopted by the existing Integrated, Mock and Pathway owners only. */
+.exam-surface { min-width: 0; width: min(100%, 75rem); overflow-wrap: anywhere; }
+.exam-surface :is(.bridge-heading, .bridge-stage-card, .bridge-response, .band-select, .band-actions, .band-skill-grid article) { min-width: 0; }
+.exam-surface .bridge-heading { margin-block-end: 2rem; padding-block-end: 1.5rem; }
+.exam-surface .bridge-heading h1 { max-width: 32ch; line-height: 1.2; }
+.exam-surface .bridge-heading p { max-width: 64ch; line-height: 1.75; color: var(--text-secondary); }
+.exam-surface .bridge-heading .bridge-kicker { color: var(--color-accent); }
+.exam-surface :is(button, select, textarea, input, a, audio) { min-width: 0; max-width: 100%; scroll-margin-block: 1rem; }
+.exam-surface :is(button, a) { min-height: 44px; white-space: normal; overflow-wrap: anywhere; }
+.exam-surface button { border: 1px solid var(--control-border); border-radius: var(--radius-control); padding: .75rem 1rem; font: inherit; font-weight: 650; color: var(--primary); background: var(--surface-primary); }
+.exam-surface button.bridge-primary { border-color: var(--primary); background: var(--primary-fill); color: var(--on-primary); }
+.exam-surface button:disabled { opacity: 1; cursor: not-allowed; color: var(--text-disabled); background: var(--surface-secondary); border-color: var(--border); }
+.exam-surface :is(button, a):hover:not(:disabled) { text-decoration-thickness: 2px; }
+.exam-surface button.bridge-primary:hover:not(:disabled) { background: var(--primary-hover); }
+.exam-surface select { min-height: 44px; width: 100%; border: 1px solid var(--control-border); border-radius: var(--radius-control); padding: .625rem; color: var(--text-primary); background: var(--surface-primary); font: inherit; }
+.exam-surface :is(.bridge-stage-card > label, .bridge-shell > label, .band-select, .band-actions label) { display: grid; gap: .75rem; min-width: 0; max-width: 100%; font-weight: 600; line-height: 1.65; }
+.exam-surface > label { display: grid; gap: .75rem; margin-block-end: 1.5rem; width: min(100%, 24rem); line-height: 1.65; }
+.exam-surface .bridge-stage-card { margin-block-end: 1.5rem; max-width: none; padding: clamp(1rem, 3vw, 2rem); background: var(--surface-primary); border-radius: var(--radius-panel); }
+.exam-surface .bridge-stage-card h2 { margin-block: .75rem 1.5rem; line-height: 1.3; }
+.exam-surface .bridge-stage-card > p:not(.bridge-kicker):not(.bridge-timer) { max-width: var(--width-reader); font-size: 1.0625rem; line-height: 1.85; }
+.exam-surface .exam-progress-surface { min-width: 0; padding: .75rem; margin-block-end: 1.5rem; box-shadow: none; }
+.exam-surface .bridge-stage-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin: 0; }
+.exam-surface .bridge-stage-nav > span { gap: .25rem; min-height: 44px; line-height: 1.5; padding: .5rem; }
+.exam-surface .bridge-timer { width: fit-content; max-width: 100%; padding: .75rem 1rem; border: 1px solid var(--color-warning-border); border-radius: var(--radius-control); background: var(--color-warning-subtle); color: var(--color-warning); font-size: 1rem; line-height: 1.6; font-variant-numeric: tabular-nums; }
+.mock-page .bridge-stage-card > section { min-width: 0; max-width: var(--width-reader); margin-block: 1.5rem 2rem; padding: 1.5rem; background: var(--surface-secondary); border-radius: var(--radius-control); }
+.mock-page .bridge-stage-card > section :is(h3,p) { line-height: 1.85; }
+.mock-page .bridge-response { padding-block: 1.25rem; border-block-start: 1px solid var(--border); }
+.mock-page .bridge-response > span { font-weight: 600; line-height: 1.7; }
+.mock-page .bridge-response textarea { min-height: 12rem; padding: 1rem; line-height: 1.85; font-size: 1.0625rem; border-radius: var(--radius-control); resize: vertical; background: var(--surface-primary); color: var(--text-primary); }
+.mock-page .exam-answer-state { justify-self: start; padding: .25rem .625rem; border-radius: var(--radius-control); color: var(--text-secondary); background: var(--surface-secondary); font-size: .875rem; font-weight: 650; }
+.mock-page .bridge-response[data-answer-state=answered] .exam-answer-state { color: var(--color-success); background: var(--color-success-subtle); }
+.mock-page .bridge-stage-card > div:last-child { display: flex; flex-wrap: wrap; gap: .75rem; padding-block-start: 1.25rem; border-block-start: 1px solid var(--border); }
+.mock-page.bridge-state > ul { list-style: none; display: grid; gap: .75rem; padding: 0; width: 100%; }
+.mock-page.bridge-state > ul li { padding: 1rem; background: var(--surface-secondary); border-radius: var(--radius-control); line-height: 1.75; }
+.integrated-page .bridge-stage-card > label { margin-block-end: 1.25rem; }
+.integrated-page .bridge-stage-card > button { margin-block-start: 1rem; }
+.pathway-page .band-target { padding: 1.25rem; border-radius: var(--radius-control); background: var(--color-accent-subtle); }
+.pathway-page .band-target strong { color: var(--color-accent); }
+.pathway-page .band-target span { line-height: 1.7; color: var(--text-secondary); }
+.pathway-page .band-skill-grid article { background: var(--surface-secondary); border-radius: var(--radius-control); gap: .75rem; line-height: 1.65; }
+.pathway-page .band-skill-grid small { font-size: .9375rem; }
+.pathway-page .band-actions { padding-block-start: 1.5rem; border-block-start: 1px solid var(--border); }
+@media (max-width: 767px) { .exam-surface .bridge-stage-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 399px) { .exam-surface .bridge-stage-card, .mock-page .bridge-stage-card > section, .pathway-page .band-target { padding: .75rem; } .exam-surface .exam-progress-surface { padding: .5rem; } .exam-surface .bridge-stage-nav { gap: .5rem; } }

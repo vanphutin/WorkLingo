@@ -1,0 +1,11 @@
+[WebServer] (node:11384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi light (733ms)
+  ok 2 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary vi dark (630ms)
+  ok 3 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en light (612ms)
+  ok 4 e2e\liquid-glass-phase6-error.spec.ts:6:79 › real Next error boundary en dark (605ms)
+
+  4 passed (4.8s)

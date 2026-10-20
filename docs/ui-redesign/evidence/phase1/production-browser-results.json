@@ -1,0 +1,27 @@
+{
+  "mode": "production",
+  "colors": [],
+  "observations": [
+    {
+      "route": "/settings",
+      "width": 390,
+      "preferenceReload": true,
+      "syncOutsideSettings": true,
+      "authNetworkFixture": true
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "width": 390,
+      "textContrast": 15.247942489892495,
+      "borderContrast": 3.2904950012640626
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "width": 390,
+      "textContrast": 15.626445165292282,
+      "borderContrast": 5.4938354382734165
+    }
+  ]
+}

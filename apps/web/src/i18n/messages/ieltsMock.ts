@@ -22,6 +22,8 @@ export const ieltsMockMessages = {
     "cancelPreflight": "Cancel",
 
     "pausePractice": "Pause practice", "resumePractice": "Resume practice", "elapsedTime": "Elapsed time: {time}", "paused": "Practice is paused. Your saved answers are kept.", "simulationUnavailable": "A reviewed simulation paper is not available yet.", "practiceRules": "Practice all four sections at your own pace. Pause, replay audio and review feedback after submitting each section.", "simulationRules": "Timed four-skill simulation: no pause, one listen per part and no answers during the test. The server keeps time across reloads.", "reviewSection": "Review {section}", "sectionFeedback": "Submitted section feedback", "correctAnswer": "Accepted answer", "transcript": "Listening transcript", "ieltsHome": "IELTS home",
+    "answered": "Answered",
+    "unanswered": "Unanswered",
     "academic": "IELTS Academic",
     "catalogTitle": "Full Mock Tests",
     "description": "Complete all four skills against one immutable published test version. Results are mock estimates, not official IELTS scores.",
@@ -106,6 +108,8 @@ export const ieltsMockMessages = {
     "cancelPreflight": "Hủy",
 
     "pausePractice": "Tạm dừng luyện tập", "resumePractice": "Tiếp tục luyện tập", "elapsedTime": "Thời gian đã dùng: {time}", "paused": "Buổi luyện tập đang tạm dừng. Các đáp án đã lưu được giữ nguyên.", "simulationUnavailable": "Chưa có đề mô phỏng đã được duyệt đủ điều kiện.", "practiceRules": "Luyện đủ bốn phần theo nhịp của bạn. Có thể tạm dừng, nghe lại và xem phản hồi sau khi nộp từng phần.", "simulationRules": "Mô phỏng đủ bốn kỹ năng: không tạm dừng, mỗi phần nghe một lượt và không hiện đáp án khi đang thi. Server giữ thời gian qua lần tải lại.", "reviewSection": "Xem lại phần {section}", "sectionFeedback": "Phản hồi phần đã nộp", "correctAnswer": "Đáp án chấp nhận", "transcript": "Bản chép lời phần nghe", "ieltsHome": "Trang IELTS",
+    "answered": "Đã trả lời",
+    "unanswered": "Chưa trả lời",
     "academic": "IELTS Học thuật",
     "catalogTitle": "Bài thi thử đầy đủ",
     "description": "Hoàn thành cả bốn kỹ năng trên cùng một phiên bản bài thi đã xuất bản cố định. Kết quả là ước tính từ bài thi thử, không phải điểm IELTS chính thức.",

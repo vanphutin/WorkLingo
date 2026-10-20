@@ -1,0 +1,48 @@
+[WebServer] (node:6104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-phase5-guards.spec.ts:15:44 › all routes expose reachable visible keyboard focus light (11.2s)
+  ok 2 e2e\liquid-glass-phase5-guards.spec.ts:15:44 › all routes expose reachable visible keyboard focus dark (11.9s)
+  x  3 e2e\liquid-glass-phase5-guards.spec.ts:42:5 › client navigation audio AI curriculum retains owner styles and preference edits (745ms)
+  ok 4 e2e\liquid-glass-phase5-guards.spec.ts:70:5 › system appearance media fallback and safe area declarations remain usable (906ms)
+
+
+  1) e2e\liquid-glass-phase5-guards.spec.ts:42:5 › client navigation audio AI curriculum retains owner styles and preference edits
+
+    Error: locator.click: Error: strict mode violation: locator('a[href="/admin/settings/ai"]') resolved to 2 elements:
+        1) <a href="/admin/settings/ai" class="workspace-nav-link">…</a> aka getByRole('link', { name: 'AI settings' })
+        2) <a href="/admin/settings/ai" class="admin-settings-tab">…</a> aka getByRole('link', { name: 'AI Configuration' })
+
+    Call log:
+      - waiting for locator('a[href="/admin/settings/ai"]')
+
+
+      48 |   // A marker proves Next client navigation, rather than document reload between CSS owners.
+      49 |   await page.evaluate(() => { (window as Window & { phase5Marker?: string }).phase5Marker = 'same-document'; });
+    > 50 |   await page.locator('a[href="/admin/settings/ai"]').click();
+         |                                                      ^
+      51 |   const panel = page.locator('.admin-ai-card').first();
+      52 |   await expect(panel.locator('select')).toBeVisible();
+      53 |   await panel.locator('select').selectOption('discovery');
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-guards.spec.ts:50:54
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-guards-1f2ad-styles-and-preference-edits\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-guards-1f2ad-styles-and-preference-edits\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-guards-1f2ad-styles-and-preference-edits\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e\liquid-glass-phase5-guards.spec.ts:42:5 › client navigation audio AI curriculum retains owner styles and preference edits
+  3 passed (30.0s)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase5.config.ts liquid-glass-phase5-guards.spec.ts

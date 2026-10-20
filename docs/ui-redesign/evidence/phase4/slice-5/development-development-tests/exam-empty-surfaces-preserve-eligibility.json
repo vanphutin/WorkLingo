@@ -1,0 +1,20 @@
+{
+  "title": "exam empty surfaces preserve eligibility",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "integrated",
+      "state": "empty"
+    },
+    {
+      "kind": "pathway",
+      "state": "empty"
+    },
+    {
+      "kind": "mock",
+      "state": "empty"
+    }
+  ]
+}

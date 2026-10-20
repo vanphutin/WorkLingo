@@ -1,0 +1,218 @@
+{
+  "sourceCommit": "18e00fdafb74ede460c5f7fd8302ed8aa15167d6",
+  "timestamp": "2026-10-20T12:57:53.256Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-cls.config.ts",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "controlled Operations initial data insertion shift attribution",
+  "result": "passed",
+  "testSourceSHA256": "34cf6437735e9d034c8764b5b8466f053dfefdf78eb657487efb68d5cefce332",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [
+    {
+      "repeat": 0,
+      "originalCommittedBaseline": false,
+      "actualProductCommit": "38746314e4f474ebef201f6509c508d4e673684d",
+      "shifts": [
+        {
+          "start": 538.4000000003725,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "start": 672.7000000001863,
+          "value": 0.13647572105125844,
+          "sources": [
+            {
+              "node": "observability-card observability-filters",
+              "previous": {
+                "x": 24,
+                "y": 533.625,
+                "width": 342,
+                "height": 236.28125,
+                "top": 533.625,
+                "right": 366,
+                "bottom": 769.90625,
+                "left": 24
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    },
+    {
+      "repeat": 1,
+      "originalCommittedBaseline": false,
+      "actualProductCommit": "38746314e4f474ebef201f6509c508d4e673684d",
+      "shifts": [
+        {
+          "start": 201.40000000037253,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "start": 279.29999999981374,
+          "value": 0.13647572105125844,
+          "sources": [
+            {
+              "node": "observability-card observability-filters",
+              "previous": {
+                "x": 24,
+                "y": 533.625,
+                "width": 342,
+                "height": 236.28125,
+                "top": 533.625,
+                "right": 366,
+                "bottom": 769.90625,
+                "left": 24
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    },
+    {
+      "repeat": 2,
+      "originalCommittedBaseline": false,
+      "actualProductCommit": "38746314e4f474ebef201f6509c508d4e673684d",
+      "shifts": [
+        {
+          "start": 268,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "start": 364.20000000018626,
+          "value": 0.13647572105125844,
+          "sources": [
+            {
+              "node": "observability-card observability-filters",
+              "previous": {
+                "x": 24,
+                "y": 533.625,
+                "width": 342,
+                "height": 236.28125,
+                "top": 533.625,
+                "right": 366,
+                "bottom": 769.90625,
+                "left": 24
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

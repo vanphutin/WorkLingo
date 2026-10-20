@@ -1,0 +1,29 @@
+{
+  "title": "curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/admin/content/new",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 64,
+        "right": 256,
+        "top": 362.015625,
+        "bottom": 1454.546875,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 142.875,
+        "right": 256,
+        "top": 361.921875,
+        "bottom": 1917.921875,
+        "outline": 3
+      }
+    }
+  ]
+}

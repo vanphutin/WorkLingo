@@ -1,0 +1,43 @@
+[WebServer] (node:13728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  x  1 e2e\liquid-glass-phase4-authoring.spec.ts:70:5 › curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200 (1.5s)
+
+
+  1) e2e\liquid-glass-phase4-authoring.spec.ts:70:5 › curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200
+
+    Error: source-editor-wrapper
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 246
+    Received:    256
+
+      77 |     expect(bounds.outline).toBeGreaterThanOrEqual(2); expect(bounds.left).toBeGreaterThanOrEqual(0); expect(bounds.right).toBeLessThanOrEqual(320); observations.push({ url, CSSZoom: 2, focus: bounds });
+      78 |     const clips = await control.evaluate((el) => { const result: { left: number; right: number; class: string }[] = []; for (let parent = el.parentElement; parent; parent = parent.parentElement) { if (/hidden|auto|scroll|clip/u.test(getComputedStyle(parent).overflowX)) { const r = parent.getBoundingClientRect(); result.push({ left: r.left, right: r.right, class: parent.className }); } } return result; });
+    > 79 |     for (const clip of clips) { expect(bounds.left, clip.class).toBeGreaterThanOrEqual(clip.left); expect(bounds.right, clip.class).toBeLessThanOrEqual(clip.right); }
+         |                                                                                                                                     ^
+      80 |   }
+      81 | });
+      82 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-authoring.spec.ts:79:133
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-author-12ecd-ain-accessible-at320-CSS200\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-author-12ecd-ain-accessible-at320-CSS200\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-author-12ecd-ain-accessible-at320-CSS200\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e\liquid-glass-phase4-authoring.spec.ts:70:5 › curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts liquid-glass-phase4-authoring.spec.ts --grep curriculum blockers

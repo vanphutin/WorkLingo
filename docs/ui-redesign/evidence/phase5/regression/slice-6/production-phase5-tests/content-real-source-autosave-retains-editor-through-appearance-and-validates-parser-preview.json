@@ -1,0 +1,23 @@
+{
+  "title": "content real source autosave retains editor through appearance and validates parser preview",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "realSourceSaved": true,
+      "editorIdentity": true,
+      "parserValidation": true,
+      "previewAndPublishView": true,
+      "writes": [
+        {
+          "method": "PATCH",
+          "url": "http://127.0.0.1:33300/api/v1/admin/content-imports/11111111-1111-4111-8111-111111111111/source"
+        },
+        {
+          "method": "POST",
+          "url": "http://127.0.0.1:33300/api/v1/admin/content-imports/11111111-1111-4111-8111-111111111111/validate"
+        }
+      ]
+    }
+  ]
+}

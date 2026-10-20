@@ -1,0 +1,84 @@
+{
+  "title": "curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/admin/content/new",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 64,
+        "right": 256,
+        "top": 362.015625,
+        "bottom": 1454.546875,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 152.875,
+        "right": 246,
+        "top": 371.921875,
+        "bottom": 1907.921875,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/ielts-orientation",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 64,
+        "right": 256,
+        "top": 362.125,
+        "bottom": 482.09375,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/ielts-bridge",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 64,
+        "right": 256,
+        "top": 361.8125,
+        "bottom": 481.78125,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/ielts-integrated",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 88,
+        "right": 232,
+        "top": 362.171875,
+        "bottom": 482.140625,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/ielts-band-curriculum",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 88,
+        "right": 232,
+        "top": 356.8125,
+        "bottom": 1894.09375,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/admin/ielts-mocks",
+      "CSSZoom": 2,
+      "focus": {
+        "left": 88,
+        "right": 232,
+        "top": 357.34375,
+        "bottom": 1894.625,
+        "outline": 3
+      }
+    }
+  ]
+}

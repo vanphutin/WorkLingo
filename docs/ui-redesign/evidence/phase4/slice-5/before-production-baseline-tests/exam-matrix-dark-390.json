@@ -1,0 +1,38 @@
+{
+  "title": "exam matrix dark 390",
+  "status": "passed",
+  "mode": "before-production",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/ielts/practice",
+      "name": "integrated-catalog-dark-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/ielts/practice/44444444-4444-4444-8444-444444444444",
+      "name": "integrated-player-dark-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/ielts/pathway",
+      "name": "pathway-catalog-dark-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/ielts/mock-tests",
+      "name": "mock-catalog-dark-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "name": "mock-player-dark-390",
+      "client": 390,
+      "scroll": 390
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "mode": "before",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "before-home-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "before-login-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "before-register-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "before-phase4-missing-page-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-home-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-login-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-register-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-phase4-missing-page-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-home-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-login-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-register-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-phase4-missing-page-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "before-home-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "before-login-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "before-register-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "before-phase4-missing-page-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-home-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-login-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-register-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-phase4-missing-page-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "before-home-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "before-login-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "before-register-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "before-phase4-missing-page-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    }
+  ]
+}

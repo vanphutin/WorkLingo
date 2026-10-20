@@ -1,0 +1,15 @@
+{
+  "title": "sr-only table captions and progress labels remain accessible without visible layout",
+  "status": "passed",
+  "observations": [
+    {
+      "caption": {
+        "x": 312,
+        "y": 633.953125,
+        "width": 1,
+        "height": 1
+      }
+    }
+  ],
+  "fixtures": true
+}

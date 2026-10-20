@@ -18,6 +18,8 @@ import { apiClient } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
 import { EvaluationFeedback } from './evaluation-feedback';
 import { useEvaluation } from './use-evaluation';
+import { GlassSurface } from '../../components/glass-surface';
+import './session-experience.css';
 
 interface SessionShellProps {
   readonly session: LearningSessionDto;
@@ -360,7 +362,7 @@ export function SessionShell({
             <h1 className="session-mission-title" lang="en">{session.mission.title}</h1>
           </div>
 
-          {!isCompleted && <div className="session-actions">
+          {!isCompleted && <GlassSurface className="session-actions" variant="solid">
             {session.status === 'paused' ? (
               <button
                 type="button"
@@ -380,7 +382,7 @@ export function SessionShell({
                 {sessionAction === 'pause' ? t('pausing') : t('pauseSession')}
               </button>
             )}
-          </div>}
+          </GlassSurface>}
         </div>
 
         {/* Blocks Progress Bar */}

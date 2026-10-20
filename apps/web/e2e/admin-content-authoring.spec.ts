@@ -94,6 +94,9 @@ test.describe('Content Authoring & Publishing Acceptance Journey', () => {
     const adminContext = await browser.newContext({
       viewport: testInfo.project.use?.viewport,
       userAgent: testInfo.project.use?.userAgent,
+      // newContext does not inherit the project's English guest locale.
+      // Keep this English journey independent of earlier tests changing the admin profile.
+      storageState: { cookies: [{ name: 'worklingo_locale', value: 'en', domain: '127.0.0.1', path: '/', expires: -1, httpOnly: false, secure: false, sameSite: 'Lax' }], origins: [] },
     });
     const adminPage = await adminContext.newPage();
     let publishedLessonVersionId: string | undefined;

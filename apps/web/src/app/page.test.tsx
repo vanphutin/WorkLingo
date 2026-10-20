@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { apiClient } from '../lib/api/api-client';
@@ -19,11 +19,19 @@ afterEach(() => {
 });
 
 describe('HomePage', () => {
-  it('introduces WorkLingo as the primary page heading', () => {
+  it('exposes the real home link, locale and theme controls in public navigation', async () => {
+    render(<HomePage />);
+    await screen.findByRole('link', { name: 'Log in' });
+    const nav = screen.getByRole('navigation', { name: 'Public navigation' });
+    expect(within(nav).getByRole('link', { name: 'WorkLingo' })).toHaveAttribute('href', '/');
+    expect(within(nav).getByRole('combobox', { name: 'Interface language' })).toBeVisible();
+    expect(within(nav).getByRole('button', { name: /Color theme:/ })).toBeVisible();
+  });
+  it('introduces the learning purpose as the primary heading and keeps the brand link in navigation', () => {
     render(<HomePage />);
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'WorkLingo' }),
+      screen.getByRole('heading', { level: 1, name: 'English for your working life.' }),
     ).toBeInTheDocument();
   });
 

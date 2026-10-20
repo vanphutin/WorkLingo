@@ -1,0 +1,13 @@
+{
+  "mode": "production",
+  "title": "completion empty onboarding and pending request states use existing semantic UI",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "completedRoute": true,
+      "noEligibleLevelGate": true,
+      "loadingAnnouncement": true
+    }
+  ]
+}

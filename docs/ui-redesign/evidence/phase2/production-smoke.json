@@ -1,0 +1,18 @@
+{
+  "mode": "production",
+  "measurements": [],
+  "observations": [
+    {
+      "actualLogin": true,
+      "theme": "light",
+      "validation": true,
+      "valuesPreserved": true
+    },
+    {
+      "actualLogin": true,
+      "theme": "dark",
+      "validation": true,
+      "valuesPreserved": true
+    }
+  ]
+}

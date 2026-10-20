@@ -1,0 +1,14 @@
+{
+  "title": "system dark reduced motion transparency and forced colors keep settings usable",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "systemDark": true,
+      "reducedMotionRequested": true,
+      "reducedTransparency": true,
+      "forcedColorsControlUsable": true,
+      "screenReader": "not run"
+    }
+  ]
+}

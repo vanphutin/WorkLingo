@@ -41,6 +41,25 @@ function isCurrent(pathname: string, href: string) {
   return pathname === href || (href !== '/admin' && pathname.startsWith(`${href}/`));
 }
 
+/** Existing program/category destinations rendered by the shared Liquid Glass shell. */
+export function useAdminNavigationItems() {
+  const t = useT('adminDashboard', adminDashboardMessages);
+  const tc = useT('common', commonMessages);
+  const ta = useT('adminProgramAuthoring', adminProgramAuthoringMessages);
+  const tt = useT('intermediateTopics', intermediateTopicsMessages);
+  const tg = useT('intermediateGroups', intermediateGroupsMessages);
+  return [
+    { href: '/admin', label: t('overview') },
+    ...adminProgramDestinations.filter(({ slug }) => !isAdminProgramDeferred(slug))
+      .map(({ slug, label }) => ({ href: `/admin/programs/${slug}`, label: t(label) })),
+    { href: '/admin/programs/intermediate/topic-groups', label: tg('title') },
+    { href: '/admin/programs/intermediate/topics', label: tt('title') },
+    ...intermediateCategories.map(category => ({ href: `/admin/programs/intermediate/${category}`, label: ta(category) })),
+    ...adminIeltsDestinations.map(({ href, label }) => ({ href, label: tc(label) })),
+    ...sharedDestinations.map(({ href, label }) => ({ href, label: tc(label) })),
+  ];
+}
+
 export function AdminNavigation() {
   const pathname = usePathname();
   const t = useT('adminDashboard', adminDashboardMessages);

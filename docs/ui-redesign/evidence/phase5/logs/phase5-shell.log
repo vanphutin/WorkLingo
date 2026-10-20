@@ -1,0 +1,13 @@
+[WebServer] (node:9168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-shell.spec.ts:104:40 › learner mobile disclosure keyboard, outside click, resize and history (1.7s)
+  ok 2 e2e\liquid-glass-shell.spec.ts:104:40 › admin mobile disclosure keyboard, outside click, resize and history (1.4s)
+  ok 3 e2e\liquid-glass-shell.spec.ts:142:5 › actual mock player retains node, answer, deadline and API payload across shell interactions (1.6s)
+  ok 4 e2e\liquid-glass-shell.spec.ts:176:5 › system theme, reduced material/motion, forced colors and skip link remain usable (578ms)
+
+  4 passed (8.9s)

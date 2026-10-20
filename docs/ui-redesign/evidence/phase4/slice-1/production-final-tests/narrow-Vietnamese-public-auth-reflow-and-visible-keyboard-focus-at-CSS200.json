@@ -1,0 +1,46 @@
+{
+  "mode": "production",
+  "title": "narrow Vietnamese public/auth reflow and visible keyboard focus at CSS200",
+  "status": "failed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320
+    },
+    {
+      "url": "/",
+      "width": 320,
+      "CSSZoom": 2,
+      "reached": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "expected": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "nativeTab": true,
+      "indicator": "outline>=2px, full viewport bounds"
+    },
+    {
+      "url": "/login",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320
+    }
+  ]
+}

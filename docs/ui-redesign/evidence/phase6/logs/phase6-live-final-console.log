@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "cleanup": true,
+  "container": "worklingo-liquid-glass-phase6-532f3dceec",
+  "projects": [
+    "onboarding-desktop",
+    "foundation-desktop",
+    "foundation-mobile",
+    "teacher-ai-mobile",
+    "engagement-mobile",
+    "ielts-orientation-desktop",
+    "ielts-bridge-desktop",
+    "ielts-integrated-desktop",
+    "ielts-band-curriculum-desktop",
+    "ielts-full-mock-desktop",
+    "admin-desktop",
+    "audio-desktop",
+    "ai-settings-desktop",
+    "programs-desktop",
+    "adaptive-desktop",
+    "i18n-desktop"
+  ]
+}

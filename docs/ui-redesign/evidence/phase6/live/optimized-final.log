@@ -1,0 +1,93 @@
+[WebServer] (node:1492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:19784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:14784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 30 tests using 1 worker
+
+  ok  1 [ai-settings-desktop] › e2e\ai-settings.spec.ts:14:5 › AI account settings persist, switch language and protect unavailable providers (2.2s)
+  ok  2 [ai-settings-desktop] › e2e\ai-settings.spec.ts:36:5 › admin AI page exposes global and account settings without provider secrets (814ms)
+  ok  3 [i18n-desktop] › e2e\i18n.spec.ts:25:5 › guest SSR, reload, immediate auth labels, keyboard and mobile layout (1.1s)
+  ok  4 [i18n-desktop] › e2e\i18n.spec.ts:52:5 › unknown URLs render the localized shared missing-page state (731ms)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+  ok  5 [i18n-desktop] › e2e\i18n.spec.ts:67:5 › account preference wins at login, navigation, tabs, reload and another device (3.1s)
+  ok  6 [i18n-desktop] › e2e\i18n.spec.ts:105:5 › switching during a lesson preserves English content, draft and progression identifiers (903ms)
+  ok  7 [i18n-desktop] › e2e\i18n.spec.ts:134:5 › another account in the same browser does not inherit the previous server preference (1.1s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+  ok  8 [i18n-desktop] › e2e\i18n.spec.ts:146:5 › an account changed in another tab transitions identity and locale together on focus (918ms)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+  ok  9 [i18n-desktop] › e2e\i18n.spec.ts:164:5 › admin preference persists across routes with complete selected UI translations (2.3s)
+  ok 10 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:8:7 › Onboarding and placement assessment journey › learner registers, completes self-placement, confirms level, and lands on dashboard (1.3s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+  ok 11 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:45:7 › Onboarding and placement assessment journey › pending learner cannot bypass route guards to access dashboard or ordinary sessions (969ms)
+  ok 12 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:68:7 › Onboarding and placement assessment journey › completed learner bypasses onboarding and is redirected to dashboard (1.0s)
+  ok 13 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:88:7 › Onboarding and placement assessment journey › learner starts placement, resumes after refresh, completes all four skills, and confirms recommendation (5.5s)
+  ok 14 [audio-desktop] › e2e\audio-settings.spec.ts:12:7 › Audio source and publishing journeys › learner saves browser speech and gets explicit playback fallbacks (3.0s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+  ok 15 [audio-desktop] › e2e\audio-settings.spec.ts:81:7 › Audio source and publishing journeys › admin previews, selects and publishes one immutable local audio candidate (3.9s)
+  ok 16 [audio-desktop] › e2e\audio-settings.spec.ts:145:7 › Audio source and publishing journeys › renders Azure readiness from a test-only stub without exposing credentials (1.2s)
+  ok 17 [adaptive-desktop] › e2e\adaptive-learning.spec.ts:5:5 › learner sees own evidence, transfers a review, and cannot advance on unscored work (4.3s)
+  ok 18 [foundation-desktop] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (4.5s)
+  ok 19 [foundation-mobile] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (6.2s)
+  ok 20 [teacher-ai-mobile] › e2e\teacher-ai-learning.spec.ts:6:7 › Teacher AI speaking and writing journey › records, resumes processing, retries safely and preserves a writing draft (16.0s)
+  ok 21 [engagement-mobile] › e2e\engagement-progress.spec.ts:8:7 › Weekly Engagement and Progress Evidence Journey › tracks weekly mission, protects active week target changes, and surfaces progress evidence (4.0s)
+  ok 22 [programs-desktop] › e2e\program-catalog.spec.ts:13:7 › Learner Program Catalog E2E Journey › learner explores the catalog without opening unavailable programs (2.9s)
+  ok 23 [ielts-orientation-desktop] › e2e\ielts-orientation.spec.ts:49:7 › IELTS Orientation browser journey › Admin publishes while learner remains locked, then resumes a pinned version after eligibility (3.1s)
+  ok 24 [ielts-bridge-desktop] › e2e\ielts-bridge.spec.ts:57:5 › learner starts, resumes and remains pinned while Admin publishes a new Bridge version (2.2s)
+  ok 25 [ielts-integrated-desktop] › e2e\ielts-integrated-practice.spec.ts:50:5 › learner configures and resumes an immutable four-skill session without a band score (2.4s)
+  ok 26 [ielts-band-curriculum-desktop] › e2e\ielts-band-curriculum.spec.ts:50:5 › Admin publishes seven stages and learner remains pinned to the started curriculum version (2.3s)
+  ok 27 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (1.3s)
+  ok 28 [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation (8.7s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '84558299'
+[WebServer] }
+  ok 29 [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety (2.3s)
+  ok 30 [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics (1.2s)
+
+  30 passed (2.2m)

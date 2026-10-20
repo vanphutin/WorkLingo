@@ -1,0 +1,10 @@
+Loaded Prisma config from prisma.config.ts.
+
+Prisma config detected, skipping environment variable loading.
+Prisma schema loaded from prisma\schema.prisma
+
+✔ Generated Prisma Client (v6.19.1) to .\..\..\node_modules\.pnpm\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\node_modules\@prisma\client in 692ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Need your database queries to be 1000x faster? Accelerate offers you that and more: https://pris.ly/tip-2-accelerate

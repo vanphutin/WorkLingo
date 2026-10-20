@@ -1,0 +1,147 @@
+{
+  "title": "remediation screenshots preserve equivalent route theme and viewport conditions",
+  "status": "passed",
+  "observations": [
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/content",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/content",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/content",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "locale": "vi"
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/content",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "locale": "vi"
+    }
+  ],
+  "fixtures": true
+}

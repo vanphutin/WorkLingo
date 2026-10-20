@@ -4,14 +4,16 @@ import '../../features/admin-content/admin.css';
 import '../../features/admin-dashboard/admin-dashboard.css';
 
 import { AdminLink as Link, AdminNavigationGuardProvider } from '../../features/admin-dashboard/admin-navigation-guard';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { ThemeControl } from '../../components/theme-control';
-import { AdminBreadcrumbs, AdminNavigation } from '../../features/admin-dashboard/admin-navigation';
+import { AdminBreadcrumbs, useAdminNavigationItems } from '../../features/admin-dashboard/admin-navigation';
+import { WorkspaceNavigation, isNavigationItemActive } from '../../components/workspace-navigation';
+import { GlassSurface } from '../../components/glass-surface';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { useLocalePreference, useT } from '../../i18n/provider';
 import { commonMessages } from '../../i18n/messages/common';
@@ -26,6 +28,9 @@ export default function AdminLayout({
   const router = useRouter();
   const t = useT('common', commonMessages);
   const { synchronizeUser, clearUser } = useLocalePreference();
+  const destinations = useAdminNavigationItems();
+  const pathname = usePathname();
+  const context = [...destinations].sort((a, b) => b.href.length - a.href.length).find((item) => isNavigationItemActive(pathname, item.href))?.label ?? t('adminWorkspace');
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -97,51 +102,52 @@ export default function AdminLayout({
 
   return (
     <AdminNavigationGuardProvider>
-    <div className="admin-shell ad-shell">
+    <div className="admin-shell application-shell">
       <a className="skip-link" href="#admin-main-content">
         {t('skipAdmin')}
       </a>
       <header className="admin-top-nav">
-        <div className="nav-container">
-          <div className="nav-left">
-            <Link href="/admin" className="brand-logo">
-              <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
-            </Link>
-          </div>
+        <GlassSurface className="shell-header-surface">
+          <div className="nav-container">
+            <div className="nav-left">
+              <Link href="/admin" className="brand-logo">
+                <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
+              </Link>
+            </div>
+            <p className="shell-context"><span>{t('adminWorkspace')}</span><strong>{context}</strong></p>
 
-          <div className="nav-user-meta">
-            <ThemeControl />
-            <LanguageSwitcher />
-            <span className="user-greeting">
-              {t('adminName', { name: currentUser?.displayName ?? '' })}
-            </span>
-            <button
-              type="button"
-              className="logout-button"
-              onClick={async () => {
-                try {
-                  const response = await fetch('/api/v1/auth/logout', {
-                    method: 'POST',
-                    credentials: 'include',
-                  });
-                  if (response.ok) clearUser();
-                } finally {
-                  router.push('/login');
-                }
-              }}
-            >
-              {t('signOut')}
-            </button>
+            <div className="nav-user-meta">
+              <ThemeControl />
+              <LanguageSwitcher />
+              <span className="user-greeting">
+                {t('adminName', { name: currentUser?.displayName ?? '' })}
+              </span>
+              <button
+                type="button"
+                className="logout-button"
+                onClick={async () => {
+                  try {
+                    const response = await fetch('/api/v1/auth/logout', {
+                      method: 'POST',
+                      credentials: 'include',
+                    });
+                    if (response.ok) clearUser();
+                  } finally {
+                    router.push('/login');
+                  }
+                }}
+              >
+                {t('signOut')}
+              </button>
+            </div>
           </div>
-        </div>
+        </GlassSurface>
       </header>
-      <div className="ad-workspace">
-        <AdminNavigation />
-        <main id="admin-main-content" tabIndex={-1} className="admin-main-content">
-          <AdminBreadcrumbs />
-          {children}
-        </main>
-      </div>
+      <WorkspaceNavigation items={destinations} label={t('adminWorkspace')} variant="admin" linkComponent={Link} />
+      <main id="admin-main-content" tabIndex={-1} className="admin-main-content">
+        <AdminBreadcrumbs />
+        {children}
+      </main>
     </div>
     </AdminNavigationGuardProvider>
   );

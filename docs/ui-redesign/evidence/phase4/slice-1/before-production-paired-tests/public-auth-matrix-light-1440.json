@@ -1,0 +1,45 @@
+{
+  "mode": "before-production",
+  "title": "public/auth matrix light 1440",
+  "status": "passed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-production-home-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-production-login-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-production-register-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "before-production-phase4-missing-page-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    }
+  ]
+}

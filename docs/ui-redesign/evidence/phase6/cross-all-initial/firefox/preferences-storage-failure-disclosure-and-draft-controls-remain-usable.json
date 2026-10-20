@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "b9ae26ccb1dcfe6817ad451e33943529de11270f",
+  "timestamp": "2026-10-20T12:29:37.647Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6.config.ts -g representative|preferences",
+  "environment": {
+    "engine": "firefox",
+    "browserVersion": "155.0",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "preferences storage failure disclosure and draft controls remain usable",
+  "result": "failed",
+  "testSourceSHA256": "f5f6b96d9064d6b7b1c4321a3e211c2f16f4cc8a5ca3ababc2afc9634ed12651",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

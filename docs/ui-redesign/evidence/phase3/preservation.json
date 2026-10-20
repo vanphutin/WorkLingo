@@ -1,0 +1,11 @@
+{
+  "baseline": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",
+  "branch": "codex/worklingo-liquid-glass-redesign",
+  "worktree": "D:\\Projects\\WorkLingo-Liquid-Glass",
+  "originMainUnchanged": true,
+  "originStatusUnchanged": true,
+  "originFilesPreserved": 1295,
+  "backendContractsAndDependenciesUnchanged": true,
+  "applicationRouteCount": 34,
+  "userDirtyApplicationSourceTransferred": false
+}

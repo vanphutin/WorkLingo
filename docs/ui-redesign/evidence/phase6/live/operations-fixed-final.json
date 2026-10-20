@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "3ad9bf2d7c65c3969eba041a8ba7d46287624410",
+  "timestamp": "2026-10-20T13:06:33.139Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "admin-desktop"
+  ],
+  "container": "worklingo-liquid-glass-phase6-9b7fc417bc",
+  "result": "FAIL",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 7309,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_9b7fc417bc8a4c7c8c3723e1ffd0e403",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "optimizedWeb": true,
+  "playwrightCommand": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-live.config.ts --no-deps --project=admin-desktop",
+  "harnessSHA256": "60aaf84a063ae657b717f0a2b0149a79338668b79196c27a730a2ec7bdfec63a",
+  "e2eDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "exitCode": 1,
+  "finished": "2026-10-20T13:07:23.249Z"
+}

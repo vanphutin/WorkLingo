@@ -1,0 +1,1446 @@
+{
+  "mode": "development",
+  "colors": [
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "regular",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        235,
+        235,
+        235
+      ],
+      "ratio": 14.272444033365831
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "regular",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "clear",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        204,
+        204,
+        204
+      ],
+      "ratio": 10.59495147071753
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "clear",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "tinted",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        223,
+        229,
+        243
+      ],
+      "ratio": 13.481773370738807
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "tinted",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        233,
+        239,
+        253
+      ],
+      "ratio": 14.770166088761844
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "solid",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "variant": "solid",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "regular",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        235,
+        235,
+        235
+      ],
+      "ratio": 14.272444033365831
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "regular",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "clear",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        204,
+        204,
+        204
+      ],
+      "ratio": 10.59495147071753
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "clear",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "tinted",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        223,
+        229,
+        243
+      ],
+      "ratio": 13.481773370738807
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "tinted",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        233,
+        239,
+        253
+      ],
+      "ratio": 14.770166088761844
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "solid",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "variant": "solid",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "regular",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        235,
+        235,
+        235
+      ],
+      "ratio": 14.272444033365831
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "regular",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "clear",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        204,
+        204,
+        204
+      ],
+      "ratio": 10.59495147071753
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "clear",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "tinted",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        223,
+        229,
+        243
+      ],
+      "ratio": 13.481773370738807
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "tinted",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        233,
+        239,
+        253
+      ],
+      "ratio": 14.770166088761844
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "solid",
+      "backdrop": "black",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "variant": "solid",
+      "backdrop": "white",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "regular",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        26,
+        26,
+        28
+      ],
+      "ratio": 15.959755175672491
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "regular",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        46,
+        46,
+        48
+      ],
+      "ratio": 12.445766332347919
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "clear",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        22,
+        22,
+        24
+      ],
+      "ratio": 16.59673917127264
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "clear",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        73,
+        73,
+        75
+      ],
+      "ratio": 8.24947550309882
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "tinted",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        23,
+        36,
+        60
+      ],
+      "ratio": 14.243793324037105
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "tinted",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        32,
+        45,
+        69
+      ],
+      "ratio": 12.665981090117539
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "solid",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "variant": "solid",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "regular",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        26,
+        26,
+        28
+      ],
+      "ratio": 15.959755175672491
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "regular",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        46,
+        46,
+        48
+      ],
+      "ratio": 12.445766332347919
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "clear",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        22,
+        22,
+        24
+      ],
+      "ratio": 16.59673917127264
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "clear",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        73,
+        73,
+        75
+      ],
+      "ratio": 8.24947550309882
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "tinted",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        23,
+        36,
+        60
+      ],
+      "ratio": 14.243793324037105
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "tinted",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        32,
+        45,
+        69
+      ],
+      "ratio": 12.665981090117539
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "solid",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "variant": "solid",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "regular",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        26,
+        26,
+        28
+      ],
+      "ratio": 15.959755175672491
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "regular",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        46,
+        46,
+        48
+      ],
+      "ratio": 12.445766332347919
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "clear",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        22,
+        22,
+        24
+      ],
+      "ratio": 16.59673917127264
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "clear",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        73,
+        73,
+        75
+      ],
+      "ratio": 8.24947550309882
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "tinted",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        23,
+        36,
+        60
+      ],
+      "ratio": 14.243793324037105
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "tinted",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        32,
+        45,
+        69
+      ],
+      "ratio": 12.665981090117539
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "solid",
+      "backdrop": "black",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "variant": "solid",
+      "backdrop": "white",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "theme": "light",
+      "foreground": "text-primary",
+      "background": "surface-primary",
+      "ratio": 17.014735210873155,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-primary",
+      "background": "surface-secondary",
+      "ratio": 15.247942489892495,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-primary",
+      "background": "surface-tertiary",
+      "ratio": 17.014735210873155,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-primary",
+      "background": "surface-elevated",
+      "ratio": 17.014735210873155,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-secondary",
+      "background": "surface-primary",
+      "ratio": 9.124991947050793,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-secondary",
+      "background": "surface-secondary",
+      "ratio": 8.177462105930854,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-secondary",
+      "background": "surface-tertiary",
+      "ratio": 9.124991947050793,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-secondary",
+      "background": "surface-elevated",
+      "ratio": 9.124991947050793,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-muted",
+      "background": "surface-primary",
+      "ratio": 6.447277806119058,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-muted",
+      "background": "surface-secondary",
+      "ratio": 5.777799065673426,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-muted",
+      "background": "surface-tertiary",
+      "ratio": 6.447277806119058,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-muted",
+      "background": "surface-elevated",
+      "ratio": 6.447277806119058,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-placeholder",
+      "background": "surface-primary",
+      "ratio": 6.447277806119058,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-placeholder",
+      "background": "surface-secondary",
+      "ratio": 5.777799065673426,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-placeholder",
+      "background": "surface-tertiary",
+      "ratio": 6.447277806119058,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "text-placeholder",
+      "background": "surface-elevated",
+      "ratio": 6.447277806119058,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-primary",
+      "background": "surface-primary",
+      "ratio": 5.566637067604819,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-primary",
+      "background": "surface-secondary",
+      "ratio": 4.988603161728912,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-primary",
+      "background": "surface-tertiary",
+      "ratio": 5.566637067604819,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-primary",
+      "background": "surface-elevated",
+      "ratio": 5.566637067604819,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-accent",
+      "background": "surface-primary",
+      "ratio": 6.812275430189897,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-accent",
+      "background": "surface-secondary",
+      "ratio": 6.104895709365123,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-accent",
+      "background": "surface-tertiary",
+      "ratio": 6.812275430189897,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-accent",
+      "background": "surface-elevated",
+      "ratio": 6.812275430189897,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-on-primary",
+      "background": "color-primary-fill",
+      "ratio": 5.566637067604819,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-primary",
+      "background": "color-primary-subtle",
+      "ratio": 4.874973825384874,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-on-success",
+      "background": "color-success-fill",
+      "ratio": 6.525429018794959,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-success",
+      "background": "color-success-subtle",
+      "ratio": 5.733375406521888,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-on-warning",
+      "background": "color-warning-fill",
+      "ratio": 6.608670563029884,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-warning",
+      "background": "color-warning-subtle",
+      "ratio": 6.002620117262243,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-on-danger",
+      "background": "color-danger-fill",
+      "ratio": 6.526923780919475,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-danger",
+      "background": "color-danger-subtle",
+      "ratio": 5.710088520826668,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-on-info",
+      "background": "color-info-fill",
+      "ratio": 5.566637067604819,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "color-info",
+      "background": "color-info-subtle",
+      "ratio": 4.874973825384874,
+      "minimum": 4.5
+    },
+    {
+      "theme": "light",
+      "foreground": "border-strong",
+      "background": "surface-primary",
+      "ratio": 3.6717675972559682,
+      "minimum": 3
+    },
+    {
+      "theme": "light",
+      "foreground": "focus-ring",
+      "background": "surface-primary",
+      "ratio": 5.984934612252126,
+      "minimum": 3
+    },
+    {
+      "theme": "light",
+      "foreground": "border-strong",
+      "background": "surface-secondary",
+      "ratio": 3.2904950012640626,
+      "minimum": 3
+    },
+    {
+      "theme": "light",
+      "foreground": "focus-ring",
+      "background": "surface-secondary",
+      "ratio": 5.363465116698946,
+      "minimum": 3
+    },
+    {
+      "theme": "light",
+      "foreground": "border-strong",
+      "background": "surface-elevated",
+      "ratio": 3.6717675972559682,
+      "minimum": 3
+    },
+    {
+      "theme": "light",
+      "foreground": "focus-ring",
+      "background": "surface-elevated",
+      "ratio": 5.984934612252126,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-primary",
+      "background": "surface-primary",
+      "ratio": 19.2865386621728,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-primary",
+      "background": "surface-secondary",
+      "ratio": 15.626445165292282,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-primary",
+      "background": "surface-tertiary",
+      "ratio": 12.799508140631932,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-primary",
+      "background": "surface-elevated",
+      "ratio": 12.799508140631932,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-secondary",
+      "background": "surface-primary",
+      "ratio": 13.80225551248017,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-secondary",
+      "background": "surface-secondary",
+      "ratio": 11.182939183698306,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-secondary",
+      "background": "surface-tertiary",
+      "ratio": 9.159864550374918,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-secondary",
+      "background": "surface-elevated",
+      "ratio": 9.159864550374918,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-muted",
+      "background": "surface-primary",
+      "ratio": 9.497025409142978,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-muted",
+      "background": "surface-secondary",
+      "ratio": 7.69473202988105,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-muted",
+      "background": "surface-tertiary",
+      "ratio": 6.302699316105245,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-muted",
+      "background": "surface-elevated",
+      "ratio": 6.302699316105245,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-placeholder",
+      "background": "surface-primary",
+      "ratio": 9.497025409142978,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-placeholder",
+      "background": "surface-secondary",
+      "ratio": 7.69473202988105,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-placeholder",
+      "background": "surface-tertiary",
+      "ratio": 6.302699316105245,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "text-placeholder",
+      "background": "surface-elevated",
+      "ratio": 6.302699316105245,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-primary",
+      "background": "surface-primary",
+      "ratio": 9.45699594096478,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-primary",
+      "background": "surface-secondary",
+      "ratio": 7.66229913456276,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-primary",
+      "background": "surface-tertiary",
+      "ratio": 6.276133766278677,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-primary",
+      "background": "surface-elevated",
+      "ratio": 6.276133766278677,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-accent",
+      "background": "surface-primary",
+      "ratio": 11.27658022164503,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-accent",
+      "background": "surface-secondary",
+      "ratio": 9.136572693117119,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-accent",
+      "background": "surface-tertiary",
+      "ratio": 7.4837005682373725,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-accent",
+      "background": "surface-elevated",
+      "ratio": 7.4837005682373725,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-on-primary",
+      "background": "color-primary-fill",
+      "ratio": 6.494159583110607,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-primary",
+      "background": "color-primary-subtle",
+      "ratio": 6.669830152450631,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-on-success",
+      "background": "color-success-fill",
+      "ratio": 10.386777474913053,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-success",
+      "background": "color-success-subtle",
+      "ratio": 10.164278366853907,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-on-warning",
+      "background": "color-warning-fill",
+      "ratio": 9.406233811774023,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-warning",
+      "background": "color-warning-subtle",
+      "ratio": 9.167678471429165,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-on-danger",
+      "background": "color-danger-fill",
+      "ratio": 6.11722010214004,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-danger",
+      "background": "color-danger-subtle",
+      "ratio": 7.242327212980778,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-on-info",
+      "background": "color-info-fill",
+      "ratio": 6.494159583110607,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "color-info",
+      "background": "color-info-subtle",
+      "ratio": 6.669830152450631,
+      "minimum": 4.5
+    },
+    {
+      "theme": "dark",
+      "foreground": "border-strong",
+      "background": "surface-primary",
+      "ratio": 6.780625309409163,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "focus-ring",
+      "background": "surface-primary",
+      "ratio": 11.66021760182726,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "border-strong",
+      "background": "surface-secondary",
+      "ratio": 5.4938354382734165,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "focus-ring",
+      "background": "surface-secondary",
+      "ratio": 9.447405476012058,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "border-strong",
+      "background": "surface-elevated",
+      "ratio": 4.499960846607402,
+      "minimum": 3
+    },
+    {
+      "theme": "dark",
+      "foreground": "focus-ring",
+      "background": "surface-elevated",
+      "ratio": 7.738301451096876,
+      "minimum": 3
+    }
+  ],
+  "observations": [
+    {
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/settings",
+      "width": 390,
+      "preferenceReload": true,
+      "syncOutsideSettings": true,
+      "authNetworkFixture": true
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "width": 390,
+      "textContrast": 15.247942489892495,
+      "borderContrast": 3.2904950012640626
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "width": 390,
+      "textContrast": 15.626445165292282,
+      "borderContrast": 5.4938354382734165
+    }
+  ]
+}

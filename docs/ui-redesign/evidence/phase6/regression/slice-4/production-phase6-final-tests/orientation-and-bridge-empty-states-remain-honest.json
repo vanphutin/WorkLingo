@@ -1,0 +1,16 @@
+{
+  "title": "orientation and bridge empty states remain honest",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "orientation",
+      "state": "empty"
+    },
+    {
+      "kind": "bridge",
+      "state": "empty"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "18e00fdafb74ede460c5f7fd8302ed8aa15167d6",
+  "timestamp": "2026-10-20T13:03:03.177Z",
+  "command": "WORKLINGO_PHASE6_BASELINE=true WORKLINGO_PHASE6_SNAPSHOT_REF=18e00fdafb74ede460c5f7fd8302ed8aa15167d6 pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-cls.config.ts -g \"pending Operations\"",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "pending Operations summary retains filter geometry",
+  "result": "failed",
+  "testSourceSHA256": "1e6fdf3974389937be54a9017a47d692885978b6520637f0862a29e54f6a17f0",
+  "productionWorkingDiffSHA256": "355cda6130b6f947c73d3c667877e8ce2a887f391998892d770d823c80c71ac7",
+  "observations": [
+    {
+      "before": {
+        "x": 24,
+        "y": 533.625,
+        "width": 342,
+        "height": 236.28125
+      },
+      "after": {
+        "x": 24,
+        "y": 1003.375,
+        "width": 342,
+        "height": 236.28125
+      },
+      "snapshotCommit": "18e00fdafb74ede460c5f7fd8302ed8aa15167d6",
+      "method": "Same fixture; hold only summary response, retain real pending and loaded rendering"
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

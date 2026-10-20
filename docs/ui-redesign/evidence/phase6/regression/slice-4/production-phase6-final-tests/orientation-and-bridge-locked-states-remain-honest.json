@@ -1,0 +1,16 @@
+{
+  "title": "orientation and bridge locked states remain honest",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "orientation",
+      "state": "locked"
+    },
+    {
+      "kind": "bridge",
+      "state": "locked"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  width: min(100%, 48rem);
+  padding: clamp(1rem, 4vw, 3rem);
+  overflow-wrap: anywhere;
+}
+.card {
+  display: grid;
+  justify-items: start;
+  gap: 1.5rem;
+  min-width: 0;
+  width: 100%;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-block-start: 3px solid var(--color-accent);
+  border-radius: var(--radius-panel);
+  background: var(--surface-primary);
+  text-align: start;
+}
+.card h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.5rem); letter-spacing: -.035em; line-height: 1.2; text-wrap: balance; }
+.card p { margin: 0; color: var(--text-secondary); line-height: 1.75; }
+.card button, .card a { min-width: 0; max-width: 100%; min-height: 44px; white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 399px) { .page { padding: .75rem; } .card { padding: .75rem; } }

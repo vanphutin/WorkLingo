@@ -1,0 +1,21 @@
+import { test, expect } from '@playwright/test';
+import { mkdirSync } from 'node:fs';
+import path from 'node:path';
+import { phase6Recorder, phase6Root } from './fixtures/phase6-evidence';
+const observations = phase6Recorder();
+for (const locale of ['vi', 'en']) for (const theme of ['light', 'dark']) test(`real Next error boundary ${locale} ${theme}`, async ({ page }) => {
+  await page.context().addCookies([{ name: 'worklingo_locale', value: locale, domain: '127.0.0.1', path: '/' }]);
+  await page.addInitScript(value => { if (location.origin === 'http://127.0.0.1:33301') localStorage.setItem('worklingo:theme:v1', value); }, theme);
+  await page.route('**/api/v1/me', route => route.fulfill({ status: 401, json: { message: 'Guest fixture' } }));
+  await page.setViewportSize({ width: 390, height: 844 }); await page.goto('http://127.0.0.1:33301/login');
+  await page.locator('[data-phase6-fault]').click();
+  await expect(page.getByRole('main').getByRole('alert')).toBeVisible(); await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('Phase6 isolated diagnostic');
+  const retry = page.getByRole('button', { name: locale === 'vi' ? 'Thử lại' : 'Retry', exact: true });
+  await page.keyboard.press('Tab'); await expect(retry).toBeFocused();
+  expect(await retry.evaluate(el => parseFloat(getComputedStyle(el).outlineWidth))).toBeGreaterThanOrEqual(2);
+  const dir = path.join(phase6Root, 'error'); mkdirSync(dir, { recursive: true });
+  await page.screenshot({ path: path.join(dir, `${locale}-${theme}.png`), fullPage: true });
+  await retry.click(); await expect(page.locator('input[type=email]')).toBeVisible();
+  observations.push({ locale, theme, actualNextBoundary: true, privateDiagnosticHidden: true, keyboardRetry: true, recovery: true, isolatedSnapshot: true, liveBackend: false });
+});

@@ -1,0 +1,35 @@
+{
+  "mode": "after",
+  "title": "learning matrix light 1440",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "file": "after-dashboard-light-1440.png"
+    },
+    {
+      "url": "/programs",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "file": "after-programs-light-1440.png"
+    },
+    {
+      "url": "/mastery",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "file": "after-mastery-light-1440.png"
+    }
+  ]
+}

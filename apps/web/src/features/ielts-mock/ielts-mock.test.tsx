@@ -19,6 +19,7 @@ describe('IeltsMockDashboardCard', () => {
     vi.mocked(ieltsMockClient.catalog).mockResolvedValue({ flowVersion: 'v3', eligible: true, lockedReason: null, mocks: [{ id: crypto.randomUUID(), title: 'Practice paper', variant: 'ACADEMIC', version: 1, allowedModes: ['PRACTICE'], activeAttemptId: null }] });
     render(<IeltsMockCatalog />);
     const mode = await screen.findByLabelText('Test mode');
+    expect(mode.closest('main')).toHaveClass('exam-surface', 'mock-page');
     expect(mode).toHaveValue('PRACTICE');
     expect(screen.queryByRole('option', { name: 'Learning' })).not.toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Exam simulation' })).toBeDisabled();
@@ -106,6 +107,10 @@ describe('IeltsMockPlayer', () => {
     expect(screen.getByText('Preserve this supplied English passage.')).toHaveAttribute('lang', 'en');
     const answer = screen.getByRole('textbox');
     expect(answer).toHaveValue('My saved answer');
+    expect(screen.getByText('Đã trả lời')).toBeVisible();
+    fireEvent.change(answer, { target: { value: '' } });
+    expect(screen.getByText('Chưa trả lời')).toBeVisible();
+    fireEvent.change(answer, { target: { value: 'My saved answer' } });
     fireEvent.click(screen.getByRole('button', { name: 'Switch language' }));
     expect(screen.getByRole('button', { name: 'Save progress' })).toBeVisible();
     expect(screen.getByRole('textbox')).toBe(answer);

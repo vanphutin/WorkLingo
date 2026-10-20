@@ -1,0 +1,27 @@
+{
+  "title": "authoring empty actual states",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "content",
+      "state": "empty"
+    },
+    {
+      "kind": "curriculum",
+      "state": "empty"
+    },
+    {
+      "kind": "bridge",
+      "state": "empty"
+    },
+    {
+      "kind": "integrated",
+      "state": "empty"
+    },
+    {
+      "kind": "mock",
+      "state": "empty"
+    }
+  ]
+}

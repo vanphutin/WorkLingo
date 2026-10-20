@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-20",
+  "phase": 2,
+  "phase1Acceptance": "ACCEPTED WITH LIMITATIONS",
+  "baseline": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+  "codeCommit": "41825150e3ff17bf36508fa85a6e57fc7482ea3f",
+  "testCommit": "12de4a484c3cdd4057145bb8d4842934fb54cc82",
+  "checks": [
+    {
+      "command": "pnpm --filter @worklingo/web test",
+      "exitCode": 0,
+      "files": 84,
+      "tests": 383,
+      "durationSeconds": 64.52
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec vitest run src/features/learning-session/evaluation-feedback.test.tsx src/features/learning-session/session-shell.test.tsx src/features/auth",
+      "exitCode": 0,
+      "files": 6,
+      "tests": 35
+    },
+    {
+      "command": "pnpm --filter @worklingo/web lint",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm i18n:check",
+      "exitCode": 0,
+      "errors": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web build",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec playwright test --config playwright.foundation.config.ts",
+      "exitCode": 0,
+      "passed": 16
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec playwright test --config playwright.core.config.ts",
+      "exitCode": 0,
+      "passed": 12
+    },
+    {
+      "command": "WORKLINGO_FOUNDATION_PRODUCTION=true pnpm --filter @worklingo/web exec playwright test --config playwright.core.config.ts --grep actual",
+      "exitCode": 0,
+      "passed": 2
+    }
+  ],
+  "minTextContrast": 4.874973825384874,
+  "minBoundaryContrast": 3.6717675972559682,
+  "minGlassCompositeContrast": 15.626445165292282,
+  "textSamples": 72,
+  "boundarySamples": 12,
+  "compositeSamples": 6,
+  "sourceFiles": [
+    "apps/web/e2e/fixtures/liquid-glass-core-client.tsx",
+    "apps/web/e2e/fixtures/liquid-glass-core-server.tsx",
+    "apps/web/e2e/fixtures/liquid-glass-core.tsx",
+    "apps/web/e2e/liquid-glass-core.spec.ts",
+    "apps/web/playwright.core.config.ts",
+    "apps/web/src/app/globals.css",
+    "apps/web/src/features/auth/auth.module.css",
+    "apps/web/src/features/learning-session/evaluation-feedback.test.tsx",
+    "apps/web/src/features/learning-session/evaluation-feedback.tsx",
+    "apps/web/src/styles/learning.css",
+    "apps/web/src/styles/workspace.css"
+  ],
+  "review": {
+    "critical": 0,
+    "importantUnresolved": 0,
+    "fixes": [
+      "Scoped adopted hover RED to GREEN",
+      "Controlled async completion after draft focus",
+      "Outline/group/ancestor geometry after explicit scrolling"
+    ]
+  },
+  "fullyRedesignedRoutes": 0,
+  "totalRoutes": 34,
+  "phase3Approved": false,
+  "mergeApproved": false,
+  "engines": {
+    "chromium": "passed",
+    "firefox": "not installed/not run",
+    "webkit": "not installed/not run"
+  },
+  "zoomMethod": "CSS200%; focus owner explicitly centered by test; not native zoom or automatic scrolling certification"
+}

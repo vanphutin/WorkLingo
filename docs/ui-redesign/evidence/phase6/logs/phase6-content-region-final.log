@@ -1,0 +1,13 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-content/content-list.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/admin-content/content-list.test.tsx (3 tests) 484ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  19:41:40
+   Duration  3.77s (transform 226ms, setup 0ms, collect 999ms, tests 484ms, environment 1.45s, prepare 161ms)

@@ -1,0 +1,194 @@
+[WebServer] (node:15088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 105 tests using 1 worker
+
+  ok   1 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 390 (3.3s)
+  ok   2 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 768 (3.6s)
+  ok   3 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 1440 (4.2s)
+  ok   4 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix dark 390 (3.1s)
+  ok   5 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix dark 768 (3.3s)
+  ok   6 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix dark 1440 (4.3s)
+  ok   7 e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls (2.4s)
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/admin/audio-settings Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+  ok   8 e2e\liquid-glass-phase4-authoring.spec.ts:31:5 › content real source autosave retains editor through appearance and validates parser preview (1.9s)
+  ok   9 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring orientation draft identity save revision and publish gate (879ms)
+  ok  10 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring bridge draft identity save revision and publish gate (878ms)
+  ok  11 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring integrated draft identity save revision and publish gate (879ms)
+  ok  12 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring band draft identity save revision and publish gate (858ms)
+  ok  13 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring mock draft identity save revision and publish gate (8.1s)
+  ok  14 e2e\liquid-glass-phase4-authoring.spec.ts:60:5 › content table can be reached and scrolled with the native keyboard (431ms)
+  ok  15 e2e\liquid-glass-phase4-authoring.spec.ts:63:5 › orientation validation publication and stale revision preserve UI gates (736ms)
+  ok  16 e2e\liquid-glass-phase4-authoring.spec.ts:69:54 › authoring empty actual states (1.3s)
+  ok  17 e2e\liquid-glass-phase4-authoring.spec.ts:69:54 › authoring error actual states (1.8s)
+  ok  18 e2e\liquid-glass-phase4-authoring.spec.ts:77:5 › curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200 (2.8s)
+  ok  19 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix light 390 (1.1s)
+  ok  20 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix light 768 (1.1s)
+  ok  21 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix light 1440 (1.2s)
+  ok  22 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix dark 390 (977ms)
+  ok  23 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix dark 768 (1.1s)
+  ok  24 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix dark 1440 (1.2s)
+  ok  25 e2e\liquid-glass-phase4-bridge.spec.ts:20:5 › orientation and bridge narrow reflow retains controls at CSS200 (1.2s)
+  ok  26 e2e\liquid-glass-phase4-bridge.spec.ts:33:5 › orientation answer feedback version revisions and resume retain actual controls (1.0s)
+  ok  27 e2e\liquid-glass-phase4-bridge.spec.ts:39:5 › bridge sequential stages preserve timed deadline answer and completion snapshots (1.7s)
+  ok  28 e2e\liquid-glass-phase4-bridge.spec.ts:52:5 › orientation and bridge pending transport announces loading then resolves (634ms)
+  ok  29 e2e\liquid-glass-phase4-bridge.spec.ts:61:5 › orientation narration speed and volume controls expose44px touch targets (428ms)
+  ok  30 e2e\liquid-glass-phase4-bridge.spec.ts:67:64 › orientation and bridge locked states remain honest (614ms)
+  ok  31 e2e\liquid-glass-phase4-bridge.spec.ts:67:64 › orientation and bridge empty states remain honest (575ms)
+  ok  32 e2e\liquid-glass-phase4-bridge.spec.ts:67:64 › orientation and bridge error states remain honest (595ms)
+  ok  33 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 390 (1.9s)
+  ok  34 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 768 (2.1s)
+  ok  35 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 1440 (3.4s)
+  ok  36 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix dark 390 (1.9s)
+  ok  37 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix dark 768 (2.2s)
+  ok  38 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix dark 1440 (2.3s)
+  ok  39 e2e\liquid-glass-phase4-exam.spec.ts:26:5 › exam launcher pathway and player reflow at320 CSS200 (1.5s)
+  ok  40 e2e\liquid-glass-phase4-exam.spec.ts:33:5 › mock real editor autosave deadline theme locale resize navigation reload submit and pending result (2.4s)
+  ok  41 e2e\liquid-glass-phase4-exam.spec.ts:50:5 › expired mock disables edits and submits existing server snapshot without save (2.8s)
+  ok  42 e2e\liquid-glass-phase4-exam.spec.ts:55:5 › mock multiple question keyboard navigation exposes text answer state and unclipped focus (1.4s)
+  ok  43 e2e\liquid-glass-phase4-exam.spec.ts:68:5 › integrated blocks preserve answer duration snapshot deadline progression and completion (1.1s)
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me/ielts-integrated/sessions/a19e6194-9b4d-4d7d-befe-483f182769aa Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me/ielts-mocks/attempts/0155887b-d99b-4cb6-91e5-b6e9893ddbb0 Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+  ok  44 e2e\liquid-glass-phase4-exam.spec.ts:82:5 › launchers preserve actual start payloads and pathway target is not measured score (1.7s)
+  ok  45 e2e\liquid-glass-phase4-exam.spec.ts:88:64 › exam locked surfaces preserve eligibility (1.2s)
+  ok  46 e2e\liquid-glass-phase4-exam.spec.ts:88:64 › exam empty surfaces preserve eligibility (1.7s)
+  ok  47 e2e\liquid-glass-phase4-exam.spec.ts:88:64 › exam error surfaces preserve eligibility (1.5s)
+  ok  48 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix light 390 (2.8s)
+  ok  49 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix light 768 (2.9s)
+  ok  50 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix light 1440 (2.5s)
+  ok  51 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix dark 390 (1.9s)
+  ok  52 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix dark 768 (2.0s)
+  ok  53 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix dark 1440 (2.8s)
+  ok  54 e2e\liquid-glass-phase4-learning.spec.ts:42:5 › learning content reflows at narrow widths and CSS200 without hiding overflow (2.9s)
+  ok  55 e2e\liquid-glass-phase4-learning.spec.ts:57:71 › learning empty states preserve eligibility and retry (1.0s)
+  ok  56 e2e\liquid-glass-phase4-learning.spec.ts:57:71 › learning error states preserve eligibility and retry (1.1s)
+  ok  57 e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts (1.4s)
+  ok  58 e2e\liquid-glass-phase4-learning.spec.ts:109:5 › English evidence keeps authored content and form selection through appearance changes (638ms)
+  ok  59 e2e\liquid-glass-phase4-learning.spec.ts:133:5 › learning loading states announce pending data and resolve on real component routes (1.3s)
+  ok  60 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix light 390 (1.1s)
+  ok  61 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix light 768 (1.1s)
+  ok  62 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix light 1440 (1.3s)
+  ok  63 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix dark 390 (1.1s)
+  ok  64 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix dark 768 (1.1s)
+  ok  65 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix dark 1440 (1.2s)
+  ok  66 e2e\liquid-glass-phase4-public.spec.ts:47:5 › narrow Vietnamese public/auth reflow and visible keyboard focus at CSS200 (3.7s)
+  ok  67 e2e\liquid-glass-phase4-public.spec.ts:106:5 › auth fields and validation survive appearance/locale; server errors and pending state remain operable (1.2s)
+  ok  68 e2e\liquid-glass-phase4-public.spec.ts:134:5 › public authenticated CTA and appearance fallbacks retain real destinations (421ms)
+  ok  69 e2e\liquid-glass-phase4-public.spec.ts:147:5 › actual auth form submits unchanged payload and follows learner, onboarding and admin redirects (1.4s)
+  ok  70 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix light 390 (2.2s)
+  ok  71 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix light 768 (2.1s)
+  ok  72 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix light 1440 (2.7s)
+  ok  73 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix dark 390 (4.3s)
+  ok  74 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix dark 768 (4.5s)
+  ok  75 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix dark 1440 (3.3s)
+  ok  76 e2e\liquid-glass-phase4-session.spec.ts:37:5 › learning content reflow at320 and390 CSS200 preserves full questions and controls (3.7s)
+  ok  77 e2e\liquid-glass-phase4-session.spec.ts:47:5 › actual writing draft survives theme navigation resize pause reload and submit (2.5s)
+  ok  78 e2e\liquid-glass-phase4-session.spec.ts:70:5 › pending writing save retains latest edit selection and next revision through presentation changes (2.6s)
+  ok  79 e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize (910ms)
+  ok  80 e2e\liquid-glass-phase4-session.spec.ts:95:5 › reading answer persists through appearance changes and advances actual checkpoint (805ms)
+  ok  81 e2e\liquid-glass-phase4-session.spec.ts:102:5 › onboarding choices keep unavailable level disabled and placement start resumable (943ms)
+  ok  82 e2e\liquid-glass-phase4-session.spec.ts:114:5 › recording track and native recorder survive theme resize and navigation then release on stop (1.0s)
+  ok  83 e2e\liquid-glass-phase4-session.spec.ts:131:73 › onboarding error retry retains actual owner (861ms)
+  ok  84 e2e\liquid-glass-phase4-session.spec.ts:131:73 › placement error retry retains actual owner (594ms)
+  ok  85 e2e\liquid-glass-phase4-session.spec.ts:131:73 › session error retry retains actual owner (636ms)
+  ok  86 e2e\liquid-glass-phase4-session.spec.ts:139:5 › completion empty onboarding and pending request states use existing semantic UI (918ms)
+  ok  87 e2e\liquid-glass-phase4-session.spec.ts:150:5 › narrow onboarding and learning native focus reaches choices and submit with visible indicators (1.2s)
+  ok  88 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 390 (4.2s)
+  ok  89 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 768 (4.4s)
+  ok  90 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 1440 (6.6s)
+  ok  91 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 390 (5.3s)
+  ok  92 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 768 (5.1s)
+  ok  93 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 1440 (5.8s)
+  ok  94 e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow vi at390 CSS200 equivalent baseline and narrow matrix (2.8s)
+  ok  95 e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow en at390 CSS200 equivalent baseline and narrow matrix (2.7s)
+  ok  96 e2e\liquid-glass-phase4-settings.spec.ts:29:5 › all settings and operations owners reflow at320 CSS200 (3.1s)
+  ok  97 e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text (1.6s)
+  ok  98 e2e\liquid-glass-phase4-settings.spec.ts:48:5 › learner audio actual source save and resume remain available (1.1s)
+  ok  99 e2e\liquid-glass-phase4-settings.spec.ts:52:51 › ai provider availability draft fallback save reload (1.3s)
+  ok 100 e2e\liquid-glass-phase4-settings.spec.ts:52:51 › adminAi provider availability draft fallback save reload (1.4s)
+  ok 101 e2e\liquid-glass-phase4-settings.spec.ts:55:5 › system audio unavailable provider and existing save contract retain gates (850ms)
+  ok 102 e2e\liquid-glass-phase4-settings.spec.ts:58:5 › content admin cannot edit system AI while account settings remain usable (635ms)
+  ok 103 e2e\liquid-glass-phase4-settings.spec.ts:61:5 › audit filter cursor details operations filter page and analytics range preserve queries (2.4s)
+  ok 104 e2e\liquid-glass-phase4-settings.spec.ts:68:5 › settings errors retry and honest operations empty states (4.7s)
+  ok 105 e2e\liquid-glass-phase4-settings.spec.ts:72:5 › system dark reduced motion transparency and forced colors keep settings usable (709ms)
+
+  105 passed (3.7m)

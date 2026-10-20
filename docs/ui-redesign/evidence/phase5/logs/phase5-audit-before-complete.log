@@ -1,0 +1,1433 @@
+[WebServer] (node:19328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+  x   1 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 320 (11.3s)
+  x   2 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 360 (9.4s)
+  x   3 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 390 (8.7s)
+  x   4 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 768 (8.8s)
+  x   5 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 1440 (10.0s)
+  x   6 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 320 (8.8s)
+  x   7 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 360 (9.8s)
+  x   8 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 390 (9.9s)
+  x   9 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 768 (9.2s)
+  x  10 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 1440 (10.5s)
+
+
+  1) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 320 ───────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-320\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-320\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-320\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 360 ───────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-360\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-360\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-360\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 390 ───────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-390\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-390\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-390\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 768 ───────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-768\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-768\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 1440 ──────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-1440\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-1440\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-1440\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 320 ────────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-320\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-320\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-320\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 360 ────────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-360\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-360\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-360\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 390 ────────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-390\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-390\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-390\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 768 ────────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-768\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-768\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 1440 ──────────────────────────
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-1440\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-1440\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-dark-1440\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10 failed
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 320 ────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 360 ────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 390 ────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 768 ────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 1440 ───────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 320 ─────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 360 ─────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 390 ─────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 768 ─────────────────────────────
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit dark 1440 ────────────────────────────
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase5.config.ts liquid-glass-phase5-audit.spec.ts

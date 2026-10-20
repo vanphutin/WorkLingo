@@ -1,0 +1,12 @@
+{
+  "mode": "production",
+  "title": "placement error retry retains actual owner",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "placement",
+      "retryRecovered": true
+    }
+  ]
+}

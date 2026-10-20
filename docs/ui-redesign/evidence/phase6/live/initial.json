@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "b9ae26ccb1dcfe6817ad451e33943529de11270f",
+  "timestamp": "2026-10-20T12:25:36.973Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "onboarding-desktop",
+    "foundation-desktop",
+    "foundation-mobile",
+    "teacher-ai-mobile",
+    "engagement-mobile",
+    "ielts-full-mock-desktop",
+    "admin-desktop"
+  ],
+  "container": "worklingo-liquid-glass-phase6-4800a49caf",
+  "result": "FAIL",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 6187,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_4800a49caf15479ea877cc4df850f7d9",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "playwrightCommand": "pnpm --filter @worklingo/web exec playwright test -c playwright.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=foundation-mobile --project=teacher-ai-mobile --project=engagement-mobile --project=ielts-full-mock-desktop --project=admin-desktop",
+  "exitCode": 1,
+  "finished": "2026-10-20T12:25:59.547Z"
+}

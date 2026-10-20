@@ -1,0 +1,16 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/ai/ai-settings-panel.test.tsx" "src/features/admin-content/content-list.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/admin-content/content-list.test.tsx (3 tests) 820ms
+   ✓ ContentList > renders list of imports with status, revision, and links to edit or view  367ms
+ ✓ src/features/ai/ai-settings-panel.test.tsx (3 tests) 679ms
+   ✓ AI settings panel > keeps one page heading when account settings accompany system settings  379ms
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  18:30:41
+   Duration  4.71s (transform 652ms, setup 0ms, collect 3.24s, tests 1.50s, environment 2.54s, prepare 469ms)

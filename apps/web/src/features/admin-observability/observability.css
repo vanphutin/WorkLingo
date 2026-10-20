@@ -23,3 +23,19 @@
 .observability-button:disabled { opacity: .55; cursor: not-allowed; }
 .job-detail { margin-top: .75rem; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .82rem; }
 @media (max-width: 640px) { .observability-table th:nth-child(3), .observability-table td:nth-child(3) { display: none; } }
+
+/* Real operations/analytics owners: readable data and bounded local table scrolling. */
+.operations-experience.observability-shell { min-width: 0; max-width: 100%; gap: 1.5rem; overflow-wrap: anywhere; }
+.operations-experience .observability-header { padding: clamp(.8rem,2vw,1.5rem); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); }
+.operations-experience .observability-header h1 { font-size: clamp(1.65rem,3vw,2.5rem); letter-spacing: -.035em; }
+.operations-experience .observability-grid { grid-template-columns: repeat(auto-fit,minmax(min(100%,12rem),1fr)); }
+.operations-experience .observability-card { border-radius: var(--radius-lg); padding: clamp(.75rem,2vw,1.5rem); }
+.operations-experience .observability-filters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)) auto; background: var(--surface-soft); }
+.operations-experience :is(.observability-field,.observability-field input,.observability-field select) { min-width: 0; width: 100%; max-width: 100%; color: var(--foreground); }
+.operations-experience .observability-button { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.operations-experience .observability-table-wrap { min-width: 0; max-width: 100%; border-radius: var(--radius-lg); }
+.operations-experience .observability-table { min-width: 40rem; }
+.operations-experience .observability-table :is(th,td):nth-child(3) { display: table-cell; }
+.operations-experience :is(button,input,select,summary,[tabindex]):focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; scroll-margin-block: 1.5rem; }
+.operations-experience .observability-actions { align-items: center; justify-content: space-between; }
+@media (max-width: 620px) { .operations-experience .observability-filters { grid-template-columns: minmax(0,1fr); } }

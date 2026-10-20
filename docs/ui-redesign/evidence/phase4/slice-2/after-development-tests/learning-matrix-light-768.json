@@ -1,0 +1,35 @@
+{
+  "mode": "after",
+  "title": "learning matrix light 768",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "file": "after-dashboard-light-768.png"
+    },
+    {
+      "url": "/programs",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "file": "after-programs-light-768.png"
+    },
+    {
+      "url": "/mastery",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "file": "after-mastery-light-768.png"
+    }
+  ]
+}

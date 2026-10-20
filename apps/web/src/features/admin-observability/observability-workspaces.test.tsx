@@ -34,6 +34,16 @@ describe('admin observability workspaces', () => {
 
   afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
+  it('reserves all four summary cards while initial operations data is pending', () => {
+    vi.mocked(adminOperationsClient.getSummary).mockReturnValue(new Promise(() => {}));
+    render(<OperationsWorkspace />);
+    const grid = screen.getByText('Queue depth').closest('.observability-grid');
+    expect(grid).toHaveAttribute('aria-busy', 'true');
+    expect(grid?.querySelectorAll('.metric-value')).toHaveLength(4);
+    expect(grid).not.toHaveTextContent('0');
+    expect(screen.getByRole('status')).toHaveTextContent('Loading operations');
+  });
+
   it('localizes operations filters while retaining API status values', async () => {
     render(<LocaleProvider initialLocale="vi"><OperationsWorkspace /></LocaleProvider>);
     expect(await screen.findByText('Độ dài hàng đợi')).toBeInTheDocument();
@@ -51,12 +61,14 @@ describe('admin observability workspaces', () => {
 
   it('renders queue health and an honest empty state', async () => {
     render(<OperationsWorkspace />);
+    expect((await screen.findByRole('table')).parentElement).toHaveAttribute('tabindex', '0');
     expect(await screen.findByText('Queue depth')).toBeInTheDocument();
     expect(screen.getByText('No jobs match these filters.')).toBeInTheDocument();
   });
 
   it('renders aggregate retention and event totals without learner identifiers', async () => {
     render(<AnalyticsWorkspace />);
+    expect((await screen.findByRole('table')).parentElement).toHaveAttribute('tabindex', '0');
     expect(await screen.findByText('60%')).toBeInTheDocument();
     expect(screen.getByText('40%')).toBeInTheDocument();
     expect(screen.queryByText(/learner@example\.com|private spoken response/iu)).not.toBeInTheDocument();

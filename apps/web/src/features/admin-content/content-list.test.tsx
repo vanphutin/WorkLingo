@@ -141,6 +141,7 @@ describe('ContentList', () => {
 
   it('renders empty state when no imports exist', () => {
     render(<ContentList imports={[]} />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/no content imports yet/i);
     expect(screen.getByText(/no content imports yet/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /new import/i })).toHaveAttribute(
       'href',
@@ -159,6 +160,10 @@ describe('ContentList', () => {
 
   it('renders list of imports with status, revision, and links to edit or view', () => {
     render(<ContentList imports={sampleImports} />);
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getAllByRole('region', { name: /^Content imports$/u })).toHaveLength(1);
+    expect(screen.getByRole('table').parentElement).toHaveAttribute('tabindex', '0');
+    expect(screen.getByRole('table').parentElement).toHaveAccessibleName();
 
     expect(screen.getByText('Draft')).toBeInTheDocument();
     expect(screen.getByText('Published')).toBeInTheDocument();

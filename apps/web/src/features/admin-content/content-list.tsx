@@ -7,6 +7,7 @@ import React, { useRef, useState } from 'react';
 import { adminContentLifecycleClient } from '../../lib/api/admin-content-lifecycle-client';
 
 import type { ContentImportDto } from '@worklingo/contracts';
+import './authoring-experience.css';
 
 interface ContentListProps {
   readonly imports: readonly ContentImportDto[];
@@ -70,9 +71,9 @@ export function ContentList({ imports, onRemoved, onReload, newImportHref = '/ad
   }
   if (imports.length === 0) {
     return (
-      <div className="content-list-empty" role="region" aria-label={t('importsRegion')}>
+      <div className="content-list-empty authoring-experience" role="region" aria-label={t('importsRegion')}>
         <div className="empty-card">
-          <h2>{t('importsEmpty')}</h2>
+          <h1>{t('importsEmpty')}</h1>
           <p>{t('importsEmptyHelp')}</p>
           <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
         </div>
@@ -82,16 +83,16 @@ export function ContentList({ imports, onRemoved, onReload, newImportHref = '/ad
   }
 
   return (
-    <div className="content-list-container" role="region" aria-label={t('importsRegion')}>
+    <div className="content-list-container authoring-experience">
       <div className="content-list-header">
         <div>
-          <h2>{t('allImports', { count: imports.length })}</h2>
+          <h1>{t('allImports', { count: imports.length })}</h1>
           <p className="subtitle">{t('importsHelp')}</p>
         </div>
         <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
       </div>
 
-      <div className="content-table-wrapper">
+      <div className="content-table-wrapper" tabIndex={0} role="region" aria-label={t('importsRegion')}>
         {error ? <div className="error-card" role="alert"><p>{message(error)}</p>
           {onReload ? <button type="button" disabled={busyId !== null} onClick={() => { void reload(); }}>{t('reloadImports')}</button> : null}
         </div> : null}

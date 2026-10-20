@@ -1,0 +1,11 @@
+[WebServer] (node:19240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-phase6-cls.spec.ts:8:5 › controlled Operations initial data insertion shift attribution (3.5s)
+  ok 2 e2e\liquid-glass-phase6-cls.spec.ts:30:5 › pending Operations summary retains filter geometry (1.6s)
+
+  2 passed (13.1s)

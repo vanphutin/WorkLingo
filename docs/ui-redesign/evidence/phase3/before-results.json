@@ -1,0 +1,120 @@
+{
+  "mode": "before",
+  "observations": [
+    {
+      "name": "public-desktop",
+      "url": "/",
+      "width": 1440,
+      "height": 900,
+      "theme": "light",
+      "file": "before-public-desktop-light.png",
+      "authenticatedNetworkFixture": false
+    },
+    {
+      "name": "learner-desktop",
+      "url": "/settings",
+      "width": 1440,
+      "height": 900,
+      "theme": "light",
+      "file": "before-learner-desktop-light.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "learner-mobile",
+      "url": "/settings",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "before-learner-mobile-light.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "admin-desktop",
+      "url": "/admin/content",
+      "width": 1440,
+      "height": 900,
+      "theme": "light",
+      "file": "before-admin-desktop-light.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "admin-mobile",
+      "url": "/admin/content",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "before-admin-mobile-light.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "focus-mobile",
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "file": "before-focus-mobile-light.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "public-desktop",
+      "url": "/",
+      "width": 1440,
+      "height": 900,
+      "theme": "dark",
+      "file": "before-public-desktop-dark.png",
+      "authenticatedNetworkFixture": false
+    },
+    {
+      "name": "learner-desktop",
+      "url": "/settings",
+      "width": 1440,
+      "height": 900,
+      "theme": "dark",
+      "file": "before-learner-desktop-dark.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "learner-mobile",
+      "url": "/settings",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "before-learner-mobile-dark.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "admin-desktop",
+      "url": "/admin/content",
+      "width": 1440,
+      "height": 900,
+      "theme": "dark",
+      "file": "before-admin-desktop-dark.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "admin-mobile",
+      "url": "/admin/content",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "before-admin-mobile-dark.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "name": "focus-mobile",
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "file": "before-focus-mobile-dark.png",
+      "authenticatedNetworkFixture": true
+    },
+    {
+      "baseline": "429a8d0",
+      "kind": "Settings CSS200 overflow",
+      "viewport": 390,
+      "scroll": 564,
+      "contentRight": 563.8125
+    }
+  ]
+}

@@ -74,7 +74,7 @@ export function AuditWorkspace() {
   };
 
   return (
-    <div className="audit-container">
+    <div className="audit-container operations-experience">
       <header className="audit-header">
         <div>
           <h1>{t('title')}</h1>

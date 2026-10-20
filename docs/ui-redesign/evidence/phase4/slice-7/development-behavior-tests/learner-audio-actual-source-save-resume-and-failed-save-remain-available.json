@@ -1,0 +1,13 @@
+{
+  "title": "learner audio actual source save resume and failed save remain available",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "sourceSave": true,
+      "reload": true,
+      "realControls": true,
+      "playback": "not claimed"
+    }
+  ]
+}

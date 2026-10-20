@@ -14,6 +14,7 @@ import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
 import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
 import { FoundationDefinitionEditor, type PrerequisiteOption } from './foundation-definition-editor';
 import './curriculum.css';
+import '../admin-content/authoring-experience.css';
 
 export function CurriculumWorkspace() {
   const { t, number, label, message: displayMessage } = useAdminCurriculum();
@@ -308,14 +309,14 @@ export function CurriculumWorkspace() {
 
   if (isLoading && !tree) {
     return (
-      <div className="curriculum-container" role="status">
+      <div className="curriculum-container authoring-experience" role="status">
         <p>{t('loadingTree')}</p>
       </div>
     );
   }
 
   return (
-    <div className="curriculum-container">
+    <div className="curriculum-container authoring-experience">
       <header className="curriculum-header">
         <div>
           <h1>{t('title')}</h1>

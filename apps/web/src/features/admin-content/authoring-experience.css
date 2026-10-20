@@ -1,0 +1,58 @@
+/* Existing authoring owners share presentation, never editing or publication state. */
+.authoring-experience {
+  min-width: 0;
+  max-width: 100%;
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+  gap: 1.5rem;
+}
+.authoring-experience *, .authoring-experience *::before, .authoring-experience *::after { box-sizing: border-box; }
+.authoring-experience :is(div,section,article,aside,header,nav,form,fieldset,label) { min-width: 0; }
+.authoring-experience :is(h1,h2,h3,p) { text-wrap: pretty; }
+.authoring-experience h1 { font-size: clamp(1.65rem, 3vw, 2.5rem); letter-spacing: -.035em; line-height: 1.15; }
+.authoring-experience :is(button,.btn,select,input:not([type=checkbox]):not([type=radio])) { min-height: 2.75rem; max-width: 100%; }
+.authoring-experience :is(button,.btn) { white-space: normal; overflow-wrap: anywhere; line-height: 1.4; }
+.authoring-experience :is(input,select,textarea) { min-width: 0; max-width: 100%; font: inherit; }
+.authoring-experience :is(input:not([type=checkbox]):not([type=radio]),select,textarea) { width: 100%; background: var(--surface); color: var(--foreground); border: 1px solid var(--control-border); border-radius: var(--radius-sm); padding: .7rem; }
+.authoring-experience textarea { line-height: 1.6; resize: vertical; }
+.authoring-experience :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; scroll-margin-block: 1.5rem; }
+.authoring-experience :is(.workspace-header,.new-import-header,.content-list-header,.curriculum-header,.orientation-admin__header,.bridge-admin__header,.bridge-heading) { padding: clamp(.8rem,2vw,1.5rem); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); margin-bottom: 1.25rem; }
+.authoring-experience :is(.workspace-tabs,.orientation-admin__toolbar,.bridge-admin__toolbar,.bridge-actions) { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; padding: .75rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-soft); }
+.authoring-experience :is(.workspace-badges,.conflict-banner,.form-actions,.curriculum-actions,.node-actions,.node-title-group) { flex-wrap: wrap; }
+.authoring-experience :is(.new-import-form,.workspace-pane,.workspace-view,.curriculum-form-card,.path-card,.orientation-slide-list,.orientation-editor,.orientation-preview,.bridge-module-list,.bridge-stage-list,.bridge-editor,.bridge-preview,.bridge-stage-card) { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: clamp(.75rem,2vw,1.5rem); }
+.authoring-experience .workspace-layout { grid-template-columns: minmax(0,1.4fr) minmax(0,1fr); }
+.authoring-experience .preview-grid { grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); }
+.authoring-experience .content-table-wrapper { min-width: 0; max-width: 100%; border-radius: var(--radius-lg); }
+.authoring-experience .content-table { min-width: 35rem; }
+.authoring-experience .content-table td { vertical-align: top; }
+.authoring-experience .new-import-form { gap: 1.25rem; }
+.authoring-experience :is(.status-pill,.revision-badge,.status-badge,.bridge-admin__status,.orientation-admin__status) { white-space: normal; max-width: 100%; }
+.authoring-experience .editor-textarea { min-width: 0; width: 0; max-width: 100%; background: var(--editor-background); color: var(--editor-text); border: 0; border-radius: 0; font-family: Consolas,monospace; resize: none; }
+.authoring-experience .editor-textarea:focus-visible { outline-offset: -3px; }
+.authoring-experience .source-editor-wrapper { min-width: 0; }
+.authoring-experience .editor-gutter { flex: 0 0 auto; }
+.authoring-experience.curriculum-container { overflow: visible; }
+.authoring-experience :is(.path-header,.level-header,.mission-header,.lesson-item) { flex-wrap: wrap; gap: .75rem; }
+.authoring-experience :is(.levels-container,.missions-container,.lessons-list) { margin-inline: 0; padding-inline: clamp(.35rem,1vw,.8rem); }
+.authoring-experience .orientation-admin__grid { grid-template-columns: minmax(0,.7fr) minmax(0,1.4fr) minmax(0,1fr); }
+.authoring-experience .bridge-admin__grid { grid-template-columns: minmax(0,.7fr) minmax(0,.8fr) minmax(0,1.5fr) minmax(0,1fr); }
+.authoring-experience :is(.orientation-preview,.bridge-preview) { position: static; }
+.authoring-experience :is(.orientation-media-fields,.bridge-editor__split,.foundation-form-grid) { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.authoring-experience .bridge-stage-nav { grid-template-columns: repeat(auto-fit,minmax(min(100%,9rem),1fr)); gap: .65rem; }
+.authoring-experience .bridge-stage-card { margin-block: 1rem; }
+.authoring-experience .bridge-stage-card > label { display: grid; gap: .5rem; margin-block: 1rem; }
+.authoring-experience :is(pre,code) { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 1100px) {
+  .authoring-experience :is(.orientation-admin__grid,.bridge-admin__grid) { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .authoring-experience :is(.orientation-preview,.bridge-preview) { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  .authoring-experience :is(.workspace-layout,.preview-grid) { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 620px) {
+  .authoring-experience :is(.orientation-admin__grid,.bridge-admin__grid,.orientation-media-fields,.bridge-editor__split,.foundation-form-grid) { grid-template-columns: minmax(0,1fr); }
+  .authoring-experience :is(.orientation-preview,.bridge-preview,.bridge-editor) { grid-column: auto; }
+  .authoring-experience :is(.workspace-title-row,.content-list-header,.curriculum-header,.orientation-admin__header,.bridge-admin__header,.bridge-heading,.conflict-banner) { flex-direction: column; align-items: stretch; }
+  .authoring-experience :is(.workspace-badges,.bridge-create,.bridge-create label,.orientation-slide-list__heading,.orientation-slide-list__actions) { display: flex; flex-wrap: wrap; }
+  .authoring-experience .content-table :is(th,td) { padding: .75rem; }
+}

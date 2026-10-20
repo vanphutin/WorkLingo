@@ -1,5 +1,9 @@
 export const commonMessages = {
   en: {
+    focusMode: 'Focus mode', learningGroup: 'Your learning', authoringGroup: 'Content & curriculum',
+    operationsGroup: 'Workspace operations', accountGroup: 'Preferences & access', publicNavigation: 'Public navigation',
+    appearance: 'Appearance', reduceTransparency: 'Reduce transparency',
+    reduceTransparencyDescription: 'Use solid surfaces for floating controls. Your device may also reduce transparency or increase contrast.',
     aiSettings: 'AI settings',
     pageNotFound: 'Page not found', backHome: 'Back to WorkLingo',
     language: 'Interface language', savingLanguage: 'Saving language…', preferenceError: 'Your language could not be saved. Check your connection and try again.',
@@ -14,6 +18,10 @@ export const commonMessages = {
     networkError: 'Connection failed. Check your connection and try again.', unauthorized: 'Your session has expired. Log in again.', forbidden: 'You do not have permission to perform this action.', notFound: 'This content is not available.', conflict: 'This information has changed. Reload and try again.', invalidInput: 'Check the information you entered and try again.', rateLimited: 'Too many requests. Please wait and try again.', serverError: 'Something went wrong. Please try again.', unavailableContent: 'This content is not ready yet.', metadataDescription: 'English for work, learned in context.',
   },
   vi: {
+    focusMode: 'Không gian tập trung', learningGroup: 'Hành trình học tập', authoringGroup: 'Nội dung và giáo trình',
+    operationsGroup: 'Vận hành không gian làm việc', accountGroup: 'Tùy chọn và truy cập', publicNavigation: 'Điều hướng công khai',
+    appearance: 'Giao diện', reduceTransparency: 'Giảm độ trong suốt',
+    reduceTransparencyDescription: 'Dùng bề mặt đặc cho các điều khiển nổi. Thiết bị cũng có thể giảm độ trong suốt hoặc tăng độ tương phản.',
     aiSettings: 'Cài đặt AI',
     pageNotFound: 'Không tìm thấy trang', backHome: 'Về WorkLingo',
     language: 'Ngôn ngữ giao diện', savingLanguage: 'Đang lưu ngôn ngữ…', preferenceError: 'Không thể lưu ngôn ngữ. Kiểm tra kết nối rồi thử lại.',

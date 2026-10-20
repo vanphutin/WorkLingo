@@ -1,0 +1,135 @@
+{
+  "title": "actual not-found boundary reflows with named return link in both themes",
+  "status": "passed",
+  "observations": [
+    {
+      "boundary": "not-found",
+      "width": 320,
+      "CSSZoom": 1,
+      "theme": "light",
+      "scroll": 320,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 320,
+      "CSSZoom": 2,
+      "theme": "light",
+      "scroll": 320,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 390,
+      "CSSZoom": 1,
+      "theme": "light",
+      "scroll": 390,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 390,
+      "CSSZoom": 2,
+      "theme": "light",
+      "scroll": 390,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 768,
+      "CSSZoom": 1,
+      "theme": "light",
+      "scroll": 768,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 768,
+      "CSSZoom": 2,
+      "theme": "light",
+      "scroll": 768,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 1440,
+      "CSSZoom": 1,
+      "theme": "light",
+      "scroll": 1440,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 1440,
+      "CSSZoom": 2,
+      "theme": "light",
+      "scroll": 1440,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 320,
+      "CSSZoom": 1,
+      "theme": "dark",
+      "scroll": 320,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 320,
+      "CSSZoom": 2,
+      "theme": "dark",
+      "scroll": 320,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 390,
+      "CSSZoom": 1,
+      "theme": "dark",
+      "scroll": 390,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 390,
+      "CSSZoom": 2,
+      "theme": "dark",
+      "scroll": 390,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 768,
+      "CSSZoom": 1,
+      "theme": "dark",
+      "scroll": 768,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 768,
+      "CSSZoom": 2,
+      "theme": "dark",
+      "scroll": 768,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 1440,
+      "CSSZoom": 1,
+      "theme": "dark",
+      "scroll": 1440,
+      "liveTransport": false
+    },
+    {
+      "boundary": "not-found",
+      "width": 1440,
+      "CSSZoom": 2,
+      "theme": "dark",
+      "scroll": 1440,
+      "liveTransport": false
+    }
+  ],
+  "fixtures": true
+}

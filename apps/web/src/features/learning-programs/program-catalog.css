@@ -7,7 +7,9 @@
 .program-catalog-header {
   display: grid;
   gap: 0.75rem;
-  max-width: 46rem;
+  max-width: none;
+  padding-block-end: 2rem;
+  border-block-end: 1px solid var(--border);
   margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
 }
 
@@ -22,8 +24,9 @@
 
 .program-catalog-header h1 {
   color: var(--foreground);
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1.05;
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -.04em;
   max-width: 14ch;
   text-wrap: balance;
 }
@@ -36,11 +39,12 @@
 
 .program-catalog-kicker,
 .program-proficiency {
-  color: var(--primary);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--color-accent);
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .program-list {
@@ -54,23 +58,25 @@
 
 .program-card {
   box-sizing: border-box;
-  display: grid;
-  gap: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  overflow-wrap: anywhere;
   min-width: 0;
   border: 1px solid var(--border);
-  border-radius: 0.85rem;
+  border-radius: var(--radius-panel);
   background: var(--surface);
   padding: clamp(1.1rem, 3vw, 1.6rem);
 }
 
 .program-card-intermediate {
   border-color: var(--control-border);
-  background: var(--primary-soft);
+  background: var(--surface-primary);
 }
 
 .program-card-heading {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 0.85rem;
   align-items: start;
 }
@@ -86,7 +92,7 @@
   width: 2.75rem;
   height: 2.75rem;
   place-items: center;
-  border-radius: 0.65rem;
+  border-radius: var(--radius-control);
   background: var(--primary-soft);
   color: var(--primary);
   font-size: 1.15rem;
@@ -95,13 +101,17 @@
 
 .program-status {
   border: 1px solid var(--border);
-  border-radius: 0.35rem;
+  border-radius: var(--radius-control);
+  grid-column: 2;
+  width: fit-content;
+  max-width: 100%;
   padding: 0.3rem 0.45rem;
   color: var(--foreground);
   background: var(--background);
   font-size: 0.75rem;
   font-weight: 800;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .program-status-AVAILABLE,
@@ -131,7 +141,7 @@
 
 .program-content-summary dt {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: .875rem;
 }
 
 .program-content-summary dd {
@@ -148,9 +158,14 @@
   min-height: 2.75rem;
   align-items: center;
   justify-content: center;
-  align-self: end;
+  align-self: stretch;
+  margin-block-start: auto;
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
   border: 1px solid transparent;
-  border-radius: 0.55rem;
+  border-radius: var(--radius-control);
   padding: 0.65rem 1rem;
   font: inherit;
   font-weight: 800;
@@ -172,9 +187,9 @@
   opacity: 1;
 }
 
-.program-action-primary:hover,
-.program-retry:hover {
-  background: var(--primary-fill);
+.program-action-primary:hover:not(:disabled),
+.program-retry:hover:not(:disabled) {
+  background: var(--primary-hover);
 }
 
 .program-action:focus-visible,
@@ -187,7 +202,7 @@
   display: grid;
   gap: 0.75rem;
   border: 1px solid var(--border);
-  border-radius: 0.85rem;
+  border-radius: var(--radius-panel);
   background: var(--surface);
   padding: clamp(1.25rem, 4vw, 2.5rem);
 }
@@ -228,3 +243,9 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.program-catalog-page { overflow-wrap: anywhere; }
+.program-catalog-page .program-card-active { border: 2px solid var(--primary); }
+.program-active-label { color: var(--primary); font-weight: 650; font-size: .875rem; }
+.program-goal { padding-block-start: 1rem; border-block-start: 1px solid var(--border); color: var(--text-secondary); }
+.program-catalog-page :is(a, button) { scroll-margin-block: 1rem; }

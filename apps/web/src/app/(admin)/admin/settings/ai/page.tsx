@@ -47,7 +47,7 @@ export default function AdminAiSettingsPage() {
   const t = useT('audio', audioMessages);
 
   return (
-    <div className="admin-ai-page-wrapper">
+    <div className="admin-ai-page-wrapper preferences-experience">
       {/* Settings Navigation Tabs */}
       <nav className="admin-settings-tabs-nav" aria-label="Settings categories">
         <Link href="/admin/settings/audio" className="admin-settings-tab">
@@ -63,7 +63,7 @@ export default function AdminAiSettingsPage() {
       {/* Panels for System & Account */}
       <div className="admin-ai-panels-container">
         <AiSettingsPanel admin />
-        <AiSettingsPanel />
+        <AiSettingsPanel headingLevel={2} />
       </div>
     </div>
   );

@@ -1,0 +1,45 @@
+{
+  "mode": "before-production",
+  "title": "learning content reflows at narrow widths and CSS200 without hiding overflow",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 325,
+      "offenders": [
+        {
+          "tag": "DIV",
+          "class": "skill-evidence-card skill-reading",
+          "right": 324.984375,
+          "minWidth": "auto",
+          "whiteSpace": "normal"
+        },
+        {
+          "tag": "DIV",
+          "class": "skill-evidence-card skill-listening",
+          "right": 324.984375,
+          "minWidth": "auto",
+          "whiteSpace": "normal"
+        },
+        {
+          "tag": "DIV",
+          "class": "skill-evidence-card skill-speaking",
+          "right": 324.984375,
+          "minWidth": "auto",
+          "whiteSpace": "normal"
+        },
+        {
+          "tag": "DIV",
+          "class": "skill-evidence-card skill-writing",
+          "right": 324.984375,
+          "minWidth": "auto",
+          "whiteSpace": "normal"
+        }
+      ]
+    }
+  ]
+}

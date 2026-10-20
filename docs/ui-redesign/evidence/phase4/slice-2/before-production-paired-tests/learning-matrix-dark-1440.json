@@ -1,0 +1,35 @@
+{
+  "mode": "before-production",
+  "title": "learning matrix dark 1440",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "file": "before-production-dashboard-dark-1440.png"
+    },
+    {
+      "url": "/programs",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "file": "before-production-programs-dark-1440.png"
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "file": "before-production-mastery-dark-1440.png"
+    }
+  ]
+}

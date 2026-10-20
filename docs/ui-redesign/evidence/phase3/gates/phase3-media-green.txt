@@ -1,0 +1,9 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/components/workspace-navigation.test.tsx (8 tests) 516ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  11:48:40
+   Duration  2.10s (transform 138ms, setup 0ms, collect 503ms, tests 516ms, environment 707ms, prepare 133ms)

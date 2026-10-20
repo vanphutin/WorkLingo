@@ -8,6 +8,14 @@ import { LocaleProvider } from '../../i18n/provider';
 const settings = { routingEnabled: true, canManageSystem: false, accountId: '00000000-0000-4000-8000-000000000001', preferredProvider: 'system-default' as const, fallbackEnabled: true, effectiveProvider: 'discovery' as const, effectiveFallbackEnabled: true, systemFallbackEnabled: true, simulation: false, maxOutputTokens: 2048, providers: [{ id: 'discovery' as const, available: true, model: 'intern-s2' }, { id: 'openai' as const, available: false, model: null }] };
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 describe('AI settings panel', () => {
+  it('keeps one page heading when account settings accompany system settings', async () => {
+    vi.spyOn(aiSettingsClient, 'get').mockResolvedValue(settings);
+    render(<><AiSettingsPanel admin /><AiSettingsPanel headingLevel={2} /></>);
+    expect(await screen.findAllByRole('combobox')).toHaveLength(2);
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('System AI settings');
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('AI settings');
+  });
   it('saves Discovery selection and fallback opt-out, and disables unconfigured OpenAI', async () => {
     vi.spyOn(aiSettingsClient, 'get').mockResolvedValue(settings);
     vi.spyOn(aiSettingsClient, 'update').mockImplementation(async (_admin, input) => ({ ...settings, ...input, effectiveFallbackEnabled: input.fallbackEnabled }));

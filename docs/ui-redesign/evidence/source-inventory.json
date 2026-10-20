@@ -1,0 +1,1332 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Asia/Saigon",
+  "revision": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",
+  "branch": "main",
+  "routes": [
+    {
+      "route": "/admin/analytics",
+      "source": "apps/web/src/app/(admin)/admin/analytics/page.tsx",
+      "lines": 6,
+      "imports": [
+        "react",
+        "../../../../features/admin-observability/analytics-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/audit",
+      "source": "apps/web/src/app/(admin)/admin/audit/page.tsx",
+      "lines": 7,
+      "imports": [
+        "react",
+        "../../../../features/admin-audit/audit-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/content/[importId]",
+      "source": "apps/web/src/app/(admin)/admin/content/[importId]/page.tsx",
+      "lines": 82,
+      "imports": [
+        "next/navigation",
+        "react",
+        "../../../../../i18n/provider",
+        "../../../../../i18n/messages/routes",
+        "../../../../../i18n/errors",
+        "@worklingo/contracts",
+        "../../../../../features/admin-content/content-authoring-workspace",
+        "../../../../../lib/api/api-client"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/admin/content/layout.tsx",
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/content/new",
+      "source": "apps/web/src/app/(admin)/admin/content/new/page.tsx",
+      "lines": 10,
+      "imports": [
+        "react",
+        "../../../../../features/admin-content/new-content-import"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/admin/content/layout.tsx",
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/content",
+      "source": "apps/web/src/app/(admin)/admin/content/page.tsx",
+      "lines": 66,
+      "imports": [
+        "react",
+        "@worklingo/contracts",
+        "../../../../features/admin-content/content-list",
+        "../../../../lib/api/api-client",
+        "../../../../i18n/provider",
+        "../../../../i18n/messages/routes",
+        "../../../../i18n/errors"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/admin/content/layout.tsx",
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/curriculum",
+      "source": "apps/web/src/app/(admin)/admin/curriculum/page.tsx",
+      "lines": 7,
+      "imports": [
+        "react",
+        "../../../../features/admin-curriculum/curriculum-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/ielts-band-curriculum",
+      "source": "apps/web/src/app/(admin)/admin/ielts-band-curriculum/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../features/admin-ielts-band-curriculum/band-curriculum-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/ielts-bridge",
+      "source": "apps/web/src/app/(admin)/admin/ielts-bridge/page.tsx",
+      "lines": 6,
+      "imports": [
+        "../../../../features/admin-ielts-bridge/ielts-bridge-authoring-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/ielts-integrated",
+      "source": "apps/web/src/app/(admin)/admin/ielts-integrated/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../features/admin-ielts-integrated/integrated-profile-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/ielts-mocks",
+      "source": "apps/web/src/app/(admin)/admin/ielts-mocks/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../features/admin-ielts-mock/ielts-mock-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/ielts-orientation",
+      "source": "apps/web/src/app/(admin)/admin/ielts-orientation/page.tsx",
+      "lines": 6,
+      "imports": [
+        "../../../../features/admin-ielts-orientation/orientation-authoring-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/operations",
+      "source": "apps/web/src/app/(admin)/admin/operations/page.tsx",
+      "lines": 6,
+      "imports": [
+        "react",
+        "../../../../features/admin-observability/operations-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/settings/ai",
+      "source": "apps/web/src/app/(admin)/admin/settings/ai/page.tsx",
+      "lines": 71,
+      "imports": [
+        "next/link",
+        "../../../../../features/ai/ai-settings-panel",
+        "../../../../../i18n/provider",
+        "../../../../../i18n/messages/audio"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/admin/settings/audio",
+      "source": "apps/web/src/app/(admin)/admin/settings/audio/page.tsx",
+      "lines": 6,
+      "imports": [
+        "../../../../../features/audio/admin-audio-settings-panel"
+      ],
+      "layouts": [
+        "apps/web/src/app/(admin)/admin/settings/audio/layout.tsx",
+        "apps/web/src/app/(admin)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/login",
+      "source": "apps/web/src/app/(auth)/login/page.tsx",
+      "lines": 24,
+      "imports": [
+        "next/link",
+        "../../../i18n/provider",
+        "../../../i18n/messages/auth",
+        "../../../features/auth/auth-page"
+      ],
+      "layouts": [
+        "apps/web/src/app/(auth)/login/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/register",
+      "source": "apps/web/src/app/(auth)/register/page.tsx",
+      "lines": 24,
+      "imports": [
+        "next/link",
+        "../../../i18n/provider",
+        "../../../i18n/messages/auth",
+        "../../../features/auth/auth-page"
+      ],
+      "layouts": [
+        "apps/web/src/app/(auth)/register/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "source": "apps/web/src/app/(learner)/dashboard/page.tsx",
+      "lines": 119,
+      "imports": [
+        "next/navigation",
+        "react",
+        "@worklingo/contracts",
+        "../../../features/learning-session/dashboard-view",
+        "../../../lib/api/api-client",
+        "../../../lib/api/engagement-client",
+        "../../../lib/api/learning-program-client"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/dashboard/layout.tsx",
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/bridge/[moduleId]",
+      "source": "apps/web/src/app/(learner)/ielts/bridge/[moduleId]/page.tsx",
+      "lines": 7,
+      "imports": [
+        "../../../../../features/ielts-bridge/ielts-bridge-player"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/bridge",
+      "source": "apps/web/src/app/(learner)/ielts/bridge/page.tsx",
+      "lines": 4,
+      "imports": [
+        "../../../../features/ielts-bridge/ielts-bridge-catalog"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/mock-tests/[attemptId]",
+      "source": "apps/web/src/app/(learner)/ielts/mock-tests/[attemptId]/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../../features/ielts-mock/ielts-mock"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/mock-tests",
+      "source": "apps/web/src/app/(learner)/ielts/mock-tests/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../features/ielts-mock/ielts-mock"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/orientation",
+      "source": "apps/web/src/app/(learner)/ielts/orientation/page.tsx",
+      "lines": 6,
+      "imports": [
+        "../../../../features/ielts-orientation/orientation-player"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/pathway",
+      "source": "apps/web/src/app/(learner)/ielts/pathway/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../features/ielts-band-curriculum/ielts-band-pathway"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/practice/[sessionId]",
+      "source": "apps/web/src/app/(learner)/ielts/practice/[sessionId]/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../../features/ielts-integrated/integrated-practice"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/ielts/practice",
+      "source": "apps/web/src/app/(learner)/ielts/practice/page.tsx",
+      "lines": 3,
+      "imports": [
+        "../../../../features/ielts-integrated/integrated-practice"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/mastery",
+      "source": "apps/web/src/app/(learner)/mastery/page.tsx",
+      "lines": 8,
+      "imports": [
+        "react",
+        "../../../features/mastery/mastery-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/(learner)/mastery/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/onboarding",
+      "source": "apps/web/src/app/(learner)/onboarding/page.tsx",
+      "lines": 6,
+      "imports": [
+        "../../../features/onboarding/onboarding-workspace"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/(learner)/onboarding/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/onboarding/placement/[sessionId]",
+      "source": "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/page.tsx",
+      "lines": 176,
+      "imports": [
+        "next/navigation",
+        "react",
+        "../../../../../i18n/provider",
+        "../../../../../i18n/messages/routes",
+        "../../../../../features/learning-session/session-shell",
+        "../../../../../lib/api/api-client"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/(learner)/onboarding/layout.tsx",
+        "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/programs",
+      "source": "apps/web/src/app/(learner)/programs/page.tsx",
+      "lines": 6,
+      "imports": [
+        "../../../features/learning-programs/program-catalog"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/(learner)/programs/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/sessions/[sessionId]",
+      "source": "apps/web/src/app/(learner)/sessions/[sessionId]/page.tsx",
+      "lines": 155,
+      "imports": [
+        "react",
+        "../../../../i18n/provider",
+        "../../../../i18n/messages/routes",
+        "../../../../i18n/errors",
+        "../../../../features/learning-session/session-shell",
+        "../../../../lib/api/api-client"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/(learner)/sessions/[sessionId]/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/settings/ai",
+      "source": "apps/web/src/app/(learner)/settings/ai/page.tsx",
+      "lines": 45,
+      "imports": [
+        "next/link",
+        "../../../../features/ai/ai-settings-panel",
+        "../../../../i18n/provider",
+        "../../../../i18n/messages/common"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/settings/audio",
+      "source": "apps/web/src/app/(learner)/settings/audio/page.tsx",
+      "lines": 45,
+      "imports": [
+        "next/link",
+        "../../../../features/audio/audio-settings-panel",
+        "../../../../i18n/provider",
+        "../../../../i18n/messages/common"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/(learner)/settings/audio/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/settings",
+      "source": "apps/web/src/app/(learner)/settings/page.tsx",
+      "lines": 328,
+      "imports": [
+        "next/link",
+        "../../../components/language-switcher",
+        "../../../components/theme-control",
+        "../../../i18n/provider",
+        "../../../i18n/messages/common",
+        "../../../i18n/messages/ai"
+      ],
+      "layouts": [
+        "apps/web/src/app/(learner)/layout.tsx",
+        "apps/web/src/app/layout.tsx"
+      ]
+    },
+    {
+      "route": "/",
+      "source": "apps/web/src/app/page.tsx",
+      "lines": 852,
+      "imports": [
+        "next/link",
+        "react",
+        "../components/theme-control",
+        "../lib/api/api-client",
+        "../components/language-switcher",
+        "../i18n/provider",
+        "../i18n/messages/public"
+      ],
+      "layouts": [
+        "apps/web/src/app/layout.tsx"
+      ]
+    }
+  ],
+  "layouts": [
+    "apps/web/src/app/(admin)/admin/content/layout.tsx",
+    "apps/web/src/app/(admin)/admin/settings/audio/layout.tsx",
+    "apps/web/src/app/(admin)/layout.tsx",
+    "apps/web/src/app/(auth)/login/layout.tsx",
+    "apps/web/src/app/(auth)/register/layout.tsx",
+    "apps/web/src/app/(learner)/dashboard/layout.tsx",
+    "apps/web/src/app/(learner)/layout.tsx",
+    "apps/web/src/app/(learner)/mastery/layout.tsx",
+    "apps/web/src/app/(learner)/onboarding/layout.tsx",
+    "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/layout.tsx",
+    "apps/web/src/app/(learner)/programs/layout.tsx",
+    "apps/web/src/app/(learner)/sessions/[sessionId]/layout.tsx",
+    "apps/web/src/app/(learner)/settings/audio/layout.tsx",
+    "apps/web/src/app/layout.tsx"
+  ],
+  "css": [
+    {
+      "source": "apps/web/src/app/(learner)/settings/settings.css",
+      "lines": 415,
+      "hexLiterals": 6,
+      "functionalColors": 16,
+      "important": 213,
+      "transitionAll": 4,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/app/globals.css",
+      "lines": 2142,
+      "hexLiterals": 2,
+      "functionalColors": 11,
+      "important": 0,
+      "transitionAll": 1,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/app/landing.css",
+      "lines": 1183,
+      "hexLiterals": 0,
+      "functionalColors": 30,
+      "important": 117,
+      "transitionAll": 11,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/components/language-switcher.css",
+      "lines": 5,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/admin-audit/audit.css",
+      "lines": 164,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/admin-content/admin.css",
+      "lines": 1139,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 5,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/admin-curriculum/curriculum.css",
+      "lines": 1392,
+      "hexLiterals": 83,
+      "functionalColors": 107,
+      "important": 21,
+      "transitionAll": 9,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring.css",
+      "lines": 44,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-orientation/orientation-authoring.css",
+      "lines": 38,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/admin-observability/observability.css",
+      "lines": 26,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/ai/admin-ai-settings.css",
+      "lines": 640,
+      "hexLiterals": 17,
+      "functionalColors": 40,
+      "important": 182,
+      "transitionAll": 3,
+      "backdrop": 1
+    },
+    {
+      "source": "apps/web/src/features/audio/admin-audio-settings.css",
+      "lines": 1067,
+      "hexLiterals": 9,
+      "functionalColors": 15,
+      "important": 527,
+      "transitionAll": 1,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/auth/auth.module.css",
+      "lines": 121,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/ielts-band-curriculum/ielts-band-pathway.css",
+      "lines": 14,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/ielts-bridge/ielts-bridge.css",
+      "lines": 32,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/ielts-orientation/orientation-player.css",
+      "lines": 30,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/learning-programs/program-catalog.css",
+      "lines": 231,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/features/mastery/mastery.css",
+      "lines": 709,
+      "hexLiterals": 6,
+      "functionalColors": 39,
+      "important": 0,
+      "transitionAll": 8,
+      "backdrop": 1
+    },
+    {
+      "source": "apps/web/src/features/onboarding/onboarding.css",
+      "lines": 383,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/styles/learning.css",
+      "lines": 71,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/styles/tokens.css",
+      "lines": 89,
+      "hexLiterals": 78,
+      "functionalColors": 1,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0
+    },
+    {
+      "source": "apps/web/src/styles/workspace.css",
+      "lines": 97,
+      "hexLiterals": 0,
+      "functionalColors": 0,
+      "important": 3,
+      "transitionAll": 0,
+      "backdrop": 0
+    }
+  ],
+  "components": [
+    {
+      "source": "apps/web/src/components/language-switcher.tsx",
+      "exports": [
+        "LanguageSwitcher"
+      ]
+    },
+    {
+      "source": "apps/web/src/components/theme-control.tsx",
+      "exports": [
+        "ThemeControl"
+      ]
+    },
+    {
+      "source": "apps/web/src/components/workspace-navigation.tsx",
+      "exports": [
+        "WorkspaceNavigation"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-audit/audit-workspace.tsx",
+      "exports": [
+        "AuditWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/audio-preview.tsx",
+      "exports": [
+        "AudioPreview"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/content-authoring-workspace.tsx",
+      "exports": [
+        "ContentAuthoringWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/content-list.tsx",
+      "exports": [
+        "ContentList"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/lesson-preview.tsx",
+      "exports": [
+        "LessonPreview"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/new-content-import.tsx",
+      "exports": [
+        "NewContentImport"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/publish-panel.tsx",
+      "exports": [
+        "PublishPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/source-editor.tsx",
+      "exports": [
+        "SourceEditor"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-content/validation-panel.tsx",
+      "exports": [
+        "ValidationPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx",
+      "exports": [
+        "CurriculumWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-curriculum/foundation-definition-editor.tsx",
+      "exports": [
+        "FoundationDefinitionEditor"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-band-curriculum/band-curriculum-workspace.tsx",
+      "exports": [
+        "BandCurriculumWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.tsx",
+      "exports": [
+        "IeltsBridgeAuthoringWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-integrated/integrated-profile-workspace.tsx",
+      "exports": [
+        "IntegratedProfileWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-mock/ielts-mock-workspace.tsx",
+      "exports": [
+        "IeltsMockWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-orientation/orientation-authoring-workspace.tsx",
+      "exports": [
+        "OrientationAuthoringWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-observability/analytics-workspace.tsx",
+      "exports": [
+        "AnalyticsWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/admin-observability/operations-workspace.tsx",
+      "exports": [
+        "OperationsWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ai/ai-settings-panel.tsx",
+      "exports": [
+        "AiSettingsPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+      "exports": [
+        "AdminAudioSettingsPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/audio/audio-settings-panel.tsx",
+      "exports": [
+        "AudioSettingsPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/audio/browser-speech-controls.tsx",
+      "exports": [
+        "BrowserSpeechControls"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/audio/lesson-audio-player.tsx",
+      "exports": [
+        "LessonAudioPlayer"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/auth/auth-form.tsx",
+      "exports": [
+        "AuthForm"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/auth/auth-page.tsx",
+      "exports": [
+        "getPostAuthenticationPath",
+        "AuthPage"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/curriculum-roadmap/curriculum-roadmap.tsx",
+      "exports": [
+        "CurriculumRoadmap"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/engagement/engagement-panel.tsx",
+      "exports": [
+        "EngagementPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-band-curriculum/ielts-band-pathway.tsx",
+      "exports": [
+        "IeltsBandPathway",
+        "IeltsBandDashboardCard"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-bridge/ielts-bridge-catalog.tsx",
+      "exports": [
+        "IeltsBridgeCatalog"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-bridge/ielts-bridge-dashboard-card.tsx",
+      "exports": [
+        "IeltsBridgeDashboardCard"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-bridge/ielts-bridge-player.tsx",
+      "exports": [
+        "IeltsBridgePlayer"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-integrated/integrated-practice.tsx",
+      "exports": [
+        "IntegratedPracticeLauncher",
+        "IntegratedPracticePlayer",
+        "IntegratedPracticeDashboardCard"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-mock/ielts-mock.tsx",
+      "exports": [
+        "IeltsMockCatalog",
+        "IeltsMockPlayer",
+        "IeltsMockDashboardCard"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-orientation/orientation-dashboard-card.tsx",
+      "exports": [
+        "OrientationDashboardCard"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/ielts-orientation/orientation-player.tsx",
+      "exports": [
+        "OrientationPlayer"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-programs/program-catalog.tsx",
+      "exports": [
+        "ProgramCatalog"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderer.tsx",
+      "exports": [
+        "isActivityComplete",
+        "ActivityRenderer"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/language-focus-panel.tsx",
+      "exports": [
+        "LanguageFocusPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/listening-activity.tsx",
+      "exports": [
+        "ListeningActivity"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/pronunciation-focus-panel.tsx",
+      "exports": [
+        "PronunciationFocusPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/reading-activity.tsx",
+      "exports": [
+        "ReadingActivity"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/speaking-activity.tsx",
+      "exports": [
+        "SpeakingActivity"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/vocabulary-focus-panel.tsx",
+      "exports": [
+        "VocabularyFocusPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/activity-renderers/writing-activity.tsx",
+      "exports": [
+        "WritingActivity"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/dashboard-view.tsx",
+      "exports": [
+        "DashboardView"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/evaluation-feedback.tsx",
+      "exports": [
+        "EvaluationFeedback"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/learning-session/session-shell.tsx",
+      "exports": [
+        "findRestorableEvaluationAttemptId",
+        "SessionShell"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/mastery/checkpoint-panel.tsx",
+      "exports": [
+        "CheckpointPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/mastery/error-bank-panel.tsx",
+      "exports": [
+        "ErrorBankPanel"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/mastery/mastery-overview.tsx",
+      "exports": [
+        "MasteryOverview"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/mastery/mastery-workspace.tsx",
+      "exports": [
+        "MasteryWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/onboarding/onboarding-workspace.tsx",
+      "exports": [
+        "OnboardingWorkspace"
+      ]
+    },
+    {
+      "source": "apps/web/src/features/onboarding/placement-status.tsx",
+      "exports": [
+        "PlacementStatus"
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "apps/web/src/app/(admin)/admin/analytics/page.tsx": "86b2840587d188c8c88ab155a98922dd4df7825bcfeba28ffdefee1b7bbe1a19",
+    "apps/web/src/app/(admin)/admin/audit/page.tsx": "85c9d1f3627812eead023e5cf3dfe96ccbb0c909f2e43e3b4b822706bbee5c7d",
+    "apps/web/src/app/(admin)/admin/content/[importId]/page.test.tsx": "337b14e1c18888901103036d37b9bdda5c12cc4c110372bf307e4b6af7deb97e",
+    "apps/web/src/app/(admin)/admin/content/[importId]/page.tsx": "ec82af0de601c647fddee560525c3d9ed9d5778f34095cdff3d6044eae2fd9c6",
+    "apps/web/src/app/(admin)/admin/content/layout.tsx": "0595f9ceab9f6bb96a3b9f1664dd088b63c7d895ea1352bf67ba3b33cb884a0a",
+    "apps/web/src/app/(admin)/admin/content/new/page.tsx": "95e7cef7846aca598f34fa37f882564fd430ffc4d9583d8e481ec66bf7075161",
+    "apps/web/src/app/(admin)/admin/content/page.tsx": "cb89b8c920789e2c3fed324505c3b5e6b6d45b1b18429a1803bfb1a418f119b2",
+    "apps/web/src/app/(admin)/admin/curriculum/page.tsx": "590b885d1815ee0150ef8a1a8ec437d7f106c11e8f5e89f429ace11cf7b57512",
+    "apps/web/src/app/(admin)/admin/ielts-band-curriculum/page.tsx": "98eecf0aa801486967b96014608beee33f066aa130d63b4f44cda740e20bd889",
+    "apps/web/src/app/(admin)/admin/ielts-bridge/page.tsx": "a880a58c22c9d4aa779d2d0871cf83cf1836fff132fb78275a53e7530be60998",
+    "apps/web/src/app/(admin)/admin/ielts-integrated/page.tsx": "a0b8301fd5acf5fb53231b465d7424d928f99db0eef60ec3a59b310f9a26b484",
+    "apps/web/src/app/(admin)/admin/ielts-mocks/page.tsx": "7e36127e8f194c2bb58622c0ca6dae793fab61dd537f369c5601b101dc998ee0",
+    "apps/web/src/app/(admin)/admin/ielts-orientation/page.tsx": "addb403b492b1cc14d1464a2c81297974f23eb23204a1ec151393ebf44be91f8",
+    "apps/web/src/app/(admin)/admin/operations/page.tsx": "5de2e70960be5218c4f3fb3ab9391ffd6c9d49db8f5d896a1989a15cf098e8f3",
+    "apps/web/src/app/(admin)/admin/settings/ai/page.tsx": "d1921dbba9e5322f686c2c8a0a01f9575603e9c38d2eee9e2321b97f181cf8f1",
+    "apps/web/src/app/(admin)/admin/settings/audio/layout.tsx": "cae588e7044150722686a6d95e5fcc7a68f4873c50efa5602b5c297dd56788eb",
+    "apps/web/src/app/(admin)/admin/settings/audio/page.tsx": "2450301d312c72fe75e7c909d575d822a8089547af8a5bdaef9d66911855ab07",
+    "apps/web/src/app/(admin)/layout.test.tsx": "bb9db641954ac0765f68ee0ac2eb416a055ed184b0a30b8080349e585f8aca64",
+    "apps/web/src/app/(admin)/layout.tsx": "82bf8afeb82ac6670bcbff128d5a7ea210576d4c88c691f67472d9fc05372f24",
+    "apps/web/src/app/(auth)/login/layout.tsx": "8b4d5a0ef73891fe94c339cbb14cd757a5a01052ea2dc963a8d0081946bd8c68",
+    "apps/web/src/app/(auth)/login/page.tsx": "2f9565bc20b00c0ddeb580c3cec364d1f7d22c589aee911d3dd222882c9157f3",
+    "apps/web/src/app/(auth)/register/layout.tsx": "a6db98c5d104f456cc2dbced6037a7ffea09d4cf813dc38f89c71645af4ae1f7",
+    "apps/web/src/app/(auth)/register/page.tsx": "55144011e48deacde241e8c5a2f66ebc47331d2961e536bbf66f50421d1788d5",
+    "apps/web/src/app/(learner)/dashboard/layout.tsx": "176677111fa89d1b07a6ffdbe7ec0f6ac420a803d13d4ed34d76b6c777da82b7",
+    "apps/web/src/app/(learner)/dashboard/page.tsx": "78266bada5cba59fc0f54c4635a75be7350669cf89516e44cdc587dd782902b9",
+    "apps/web/src/app/(learner)/ielts/bridge/[moduleId]/page.tsx": "fdf0b532a963406aa23b6c332822d8d1858a11991c41df9aeb6d622d659f4405",
+    "apps/web/src/app/(learner)/ielts/bridge/page.tsx": "e01d9b33a321963b82924a36eb2d4acb35939da8db1e4dc03f916a7b7f2e9606",
+    "apps/web/src/app/(learner)/ielts/mock-tests/[attemptId]/page.tsx": "1d3c82756e8e2e3b778d79313466435537ba26b94b35d20be1ab5de1c005d902",
+    "apps/web/src/app/(learner)/ielts/mock-tests/page.tsx": "f329e64dcfcd9cb2cae38d3744a3bea3ae1c010c3847eaa255d9d4a775a8cbff",
+    "apps/web/src/app/(learner)/ielts/orientation/page.tsx": "bd6998e254b5d80f4e0ba8089c0f072f34066ec9b1dab3a04c4beff4558e294d",
+    "apps/web/src/app/(learner)/ielts/pathway/page.tsx": "9403159a21d2a170186ad4a2771a77a4117d872381a55a1eb9ada644d37d0a6e",
+    "apps/web/src/app/(learner)/ielts/practice/[sessionId]/page.tsx": "377575d1c8d917e41fd4f97551b46d7dba78e113dcd6725236d10ee7d4979058",
+    "apps/web/src/app/(learner)/ielts/practice/page.tsx": "72b238b8f594793e14e2734451d0a144a5749e3628cb8611a08f1a7bdf824b21",
+    "apps/web/src/app/(learner)/layout.test.tsx": "bdb7ce7442fb2b120f53e12ca9098e963b7881204bd2c006bfc65811f15f4c3c",
+    "apps/web/src/app/(learner)/layout.tsx": "ddac03cf32686b457b579ba00ea5357abaab4ac88afb0daef58d7511cd766200",
+    "apps/web/src/app/(learner)/mastery/layout.tsx": "bd9bf9056ebff3f09f4756f4026bfbc0727dff7d26729b412dd9641f63f9c911",
+    "apps/web/src/app/(learner)/mastery/page.tsx": "5811c2b39866192200f6335c855a054ed243a36a303d53b1bdd125421332489b",
+    "apps/web/src/app/(learner)/onboarding/layout.tsx": "df7df1a4c4a69a87ce05c294e9447fd8d64817827ba1ca7c533f0a51c97e87e7",
+    "apps/web/src/app/(learner)/onboarding/page.tsx": "57a8e2bedb9fc353ffbc727351dc361d8963508c529b47fb508683e1752791b5",
+    "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/layout.tsx": "3d464ac3fc0aca02bfcba36f8786c805bad4413b71a0908a62779f86c626d903",
+    "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/page.test.tsx": "2a265e054b709a2e7e861454ddc89cd43afae1a526ea1982836ab018313cf546",
+    "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/page.tsx": "69702bef87235b057db924713e341ff7082e8ac2a21e452f9ffb9980fd6e3370",
+    "apps/web/src/app/(learner)/programs/layout.tsx": "a30b6e8b9b475decb61509f5e19a3608aa00b9550f75dc4c5e3231657a905209",
+    "apps/web/src/app/(learner)/programs/page.tsx": "ca7380ff96533d6153c07a5c841e6449a0bfa1a5de57fa13fd3b0f9337b37ad2",
+    "apps/web/src/app/(learner)/sessions/[sessionId]/layout.tsx": "dcc6bad6a9fc829fe880cfe80be5cbd935c359f9476f941d2bb3de4ae5ce3fb5",
+    "apps/web/src/app/(learner)/sessions/[sessionId]/page.tsx": "7208605b30cc175538ccf2907178ab1312d739449a2a9e09c86fb770324b777a",
+    "apps/web/src/app/(learner)/settings/ai/page.tsx": "7747701fc1d4fb4b4fb5fb7148d84ec2dd098a34243b2bc087c5aaf3e1acb379",
+    "apps/web/src/app/(learner)/settings/audio/layout.tsx": "76f8a60c287f4b5034936aa7fb37a7009d807400659d98ef4bf4baed7cbd79f0",
+    "apps/web/src/app/(learner)/settings/audio/page.tsx": "e90e0dfed8a63924c06d36d8d04514b1908addfe5918f4170d2103fe32afa6f7",
+    "apps/web/src/app/(learner)/settings/page.test.tsx": "41af17b5935ba29bfef5a871e8425e4856fb6c9bd17b7d4dcba2e8eceef53d76",
+    "apps/web/src/app/(learner)/settings/page.tsx": "2d484b84f35add771274615dee81a56d0dedd06529d33db7d8f54c012f31c9fe",
+    "apps/web/src/app/(learner)/settings/settings.css": "a5def66fcf0ee811764ff5e3c0f8c1b8527d942792afe69a34131f772225fa13",
+    "apps/web/src/app/error-states.test.tsx": "e41995101d292a3be9cf4a03aca8336213f08786ce87c49de3cd67794c020d82",
+    "apps/web/src/app/error.tsx": "17581a30775942eff775588c1b346135917638bbf35ca44852d633c5446f041c",
+    "apps/web/src/app/globals.css": "44664536c918b8fbd0fccc4676023a6dd4c25211aeac656aabcce05af718fea8",
+    "apps/web/src/app/landing.css": "2a3d848f355310337ae0af8699461098a7e79f1ea6d154777b7a19bcdca307da",
+    "apps/web/src/app/layout.tsx": "c9fe0cc44dcdff5dec756c07481b84638e734d3bd12ed4995ef1e2700f5ab77b",
+    "apps/web/src/app/not-found.tsx": "eef6782a9e7e6792445db0289f75798959b6f95faa89855821e345b98dfe8e13",
+    "apps/web/src/app/page.test.tsx": "445a5f92df95c58d66a0d373eea640a6f1ea909e497a43d9ca4294fdcbb09f74",
+    "apps/web/src/app/page.tsx": "56e3aa14e11dea624c1e44c5cc0e18cd55fa8e712a0d1cacfcc2e5e765309e42",
+    "apps/web/src/components/language-switcher.css": "2874e5785a112e5483887b55f22bbde0f7eed98def21d2569bcdc33069c09699",
+    "apps/web/src/components/language-switcher.test.tsx": "4271cab4488470779d17ff61db811d58d88ccde439d374f9bd30a3351f983899",
+    "apps/web/src/components/language-switcher.tsx": "9b221a966f49739768917be74444754ad3876814b51db3d04335a90ecc0bb4b8",
+    "apps/web/src/components/theme-control.test.tsx": "8cccd4f5644969ba62d02ddd4f52e8f35fe63ff0e31967a1bc701e743792f935",
+    "apps/web/src/components/theme-control.tsx": "02aba7a581b1dde4e024a0f5ab343d9be8d9256d13bbad19477e4260f108d228",
+    "apps/web/src/components/workspace-navigation.tsx": "ec05b43d93590796d6a86c66255183d70a6b8b0d2109a62fdf386c755234f54b",
+    "apps/web/src/features/admin-audit/audit-workspace.test.tsx": "51fc333bbe55446a8b0629f505a080b12ba46bbbf0fce25231cea67d3a776c82",
+    "apps/web/src/features/admin-audit/audit-workspace.tsx": "a759752a294a29e365cf6688231685cb3e4e2d8c23a000ea302469cce6737340",
+    "apps/web/src/features/admin-audit/audit.css": "6bf40343b1cd90c80781dc5af8b0572d8af5be291c196e458265fb89f4024ea2",
+    "apps/web/src/features/admin-audit/i18n.ts": "07ca7f725396f1590eb9550fd2f094029beb404fcefe4aedfbe4252ae0bd0cee",
+    "apps/web/src/features/admin-content/admin-system-labels.test.tsx": "384e26d4d6389c0f25532596d7d9cf2444373b2bdd17e00bda8894a11b186ff4",
+    "apps/web/src/features/admin-content/admin.css": "ebbe9d1eeb472b06e968b75f7bc83e4f095182c91540273b31607a31861508e0",
+    "apps/web/src/features/admin-content/audio-preview.test.tsx": "fd1c06921ea439d4397ab154810384fb5b47d727d8ef8489dff8b0233820ac87",
+    "apps/web/src/features/admin-content/audio-preview.tsx": "2b9b295ff8b6205afa227d5fd7cd83cc67addbf27dd095c713445327c3075946",
+    "apps/web/src/features/admin-content/content-authoring-workspace.test.tsx": "4c882774172f7d4be68dd512d4501497264febc8377a0ef3b5b3b6e5100ae5cf",
+    "apps/web/src/features/admin-content/content-authoring-workspace.tsx": "bd29fb98cb236b612d5c1b5074f9914607288b1540531fbbd82083f4d625dea1",
+    "apps/web/src/features/admin-content/content-list.test.tsx": "15c60413a1847ef183719191136596b22a5c9864300aab063096518c21fbdea5",
+    "apps/web/src/features/admin-content/content-list.tsx": "44c7d8498ad14f971f6f99f227c5ffcdcdbb954e942a45de2605a301c89fd0f7",
+    "apps/web/src/features/admin-content/i18n.ts": "3e0ed0e729cf2ef36b3d67c73805f5a16c43db5b648a2b78da33571b121d4f52",
+    "apps/web/src/features/admin-content/lesson-preview.test.tsx": "9cfc5a4bdbbafe659f8793fef18cfc5d9da23dbf6a737abf104fabbd97c483b5",
+    "apps/web/src/features/admin-content/lesson-preview.tsx": "a4ad610e8ee9af75400103897400dcd8b0ccebcda22aae2afb3794b9aac7b591",
+    "apps/web/src/features/admin-content/new-content-import.test.tsx": "5ff8144e85ad9e3d3b92d9a651a71eee0548301859f6687052b9adb77bb422c5",
+    "apps/web/src/features/admin-content/new-content-import.tsx": "a4ca51922f8fa1f4dc1014d3c1c18240efc0ceff356816d02d33306da8d6fc0f",
+    "apps/web/src/features/admin-content/publish-panel.test.tsx": "8e208ae899fabed89baa3cda462553a3c828aefbf1c73c7d130874f65269fdca",
+    "apps/web/src/features/admin-content/publish-panel.tsx": "0792c80bc41d56c362bc0b98ec7a3fef5c2acb1145eacdf7ea05632174802da0",
+    "apps/web/src/features/admin-content/source-editor.test.tsx": "2da094200f0626bd3749f47b62f251334b1abd6a395df3cc1229d719714faec0",
+    "apps/web/src/features/admin-content/source-editor.tsx": "ce8e2092f1575ed369766150034faef4ff005ee4d38e2054e8271d3714f8f8a0",
+    "apps/web/src/features/admin-content/source-position.test.ts": "24307851f9871334f0f2c34cc74f7d71bc5c6029ee56a032d2aae8bc69501b51",
+    "apps/web/src/features/admin-content/source-position.ts": "9f927262fda0d6ac860bdc847a03e0d08ec5f4c75be4f25a91f4f43c1b2a6651",
+    "apps/web/src/features/admin-content/validation-panel.tsx": "9c1bb55f6fd35e5af8cd37d18745b4af3ce5c7eed1efb2f957145794705f3ac5",
+    "apps/web/src/features/admin-curriculum/curriculum-workspace.test.tsx": "db959411d45c65657247719c5282ded3ddbd589d3d5e3d9e60d24e993087832c",
+    "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx": "d6e942cb51b1f173d7d983d5cee9deef67a081d4a967d05f95a386f9243a1328",
+    "apps/web/src/features/admin-curriculum/curriculum.css": "fccc4c8df5787b6fbaf57c6a5df0a68aa5ee7dbfd02f00010a6ed1d39d335012",
+    "apps/web/src/features/admin-curriculum/foundation-definition-editor.test.tsx": "e06a42027fbfe105dd67c5adc40956d47954060a2fe6a8c9059c56d7feeaf212",
+    "apps/web/src/features/admin-curriculum/foundation-definition-editor.tsx": "23491bc784fe88a3ad9269b67d3b14a88eae6183e744c2c27bf87e1a5960d9d6",
+    "apps/web/src/features/admin-curriculum/i18n.ts": "85cccb94346f99c2aab3eebfac69792eaf7bca886e5653be75090a7a2437897a",
+    "apps/web/src/features/admin-ielts-band-curriculum/band-curriculum-workspace.test.tsx": "8747fe0c88b97e561a0eed65110e9b760bcce852aa7c63387e7fb67080cf17ed",
+    "apps/web/src/features/admin-ielts-band-curriculum/band-curriculum-workspace.tsx": "ed5da9dd5af19167db9c485ac7d5abdd23e65d1ee910f7f43970b4bc8a84a17d",
+    "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.test.tsx": "39d00cfdfd036c05577a530db147457eba3071df77300321fa631af2121358c9",
+    "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.tsx": "032bc9f784c44ccb3ffe5a3cf6921fa0115a1d983c8aa12c0936bcea8bcbc927",
+    "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring.css": "68425cbce7a06ba8c0dc5b16ade5ba9140bfd61269c4dbf7eede769cd1ec321a",
+    "apps/web/src/features/admin-ielts-integrated/integrated-profile-workspace.test.tsx": "ffd67c5592ee8051fa9fbc18fe8f7ba8a79bc71fb70198a6cae4582bc7d28570",
+    "apps/web/src/features/admin-ielts-integrated/integrated-profile-workspace.tsx": "cc2e8e4d33d41c6d32a68aecfc5a912154659163015dc21ecdb00080cd3853ed",
+    "apps/web/src/features/admin-ielts-mock/ielts-mock-workspace.test.tsx": "8c18b223493db9cff41c394e3fb103433eb2194c9c83b458f369d461db363b9c",
+    "apps/web/src/features/admin-ielts-mock/ielts-mock-workspace.tsx": "47b2381e6071acd0c8225ad1531b2242098e1cdd811f244ffe9b209e5a7113e2",
+    "apps/web/src/features/admin-ielts-orientation/orientation-authoring-workspace.test.tsx": "cc09955b684747414b1f787f5d7372ecd4459b9af1f95c3bf88360ee3f2c2e41",
+    "apps/web/src/features/admin-ielts-orientation/orientation-authoring-workspace.tsx": "b2f6a500246409b62c5523e47fc1c475c4c5c272a98df0e22578813c5a687ed3",
+    "apps/web/src/features/admin-ielts-orientation/orientation-authoring.css": "4f319165c87fa0fd0b5e87667a9a84f9f3ce1c17b76111faed7bd344229975f8",
+    "apps/web/src/features/admin-observability/analytics-workspace.tsx": "e11d71690ed1e685b9adfe76d591465fc74df8179a3056ca587c5382f878594c",
+    "apps/web/src/features/admin-observability/i18n.ts": "d203352299d7b9882b2158a973e775b4c2ae26ec789cc07612e5f853dc5c743c",
+    "apps/web/src/features/admin-observability/observability-workspaces.test.tsx": "50219bbea22f6aada9046a2be8639b6719d27bac6f2990433fa58b10ab02766e",
+    "apps/web/src/features/admin-observability/observability.css": "dcdb3e4d261a028902b2d14e4cab7f8cbba44441d5ef7b0ac8a8fd2320163ca4",
+    "apps/web/src/features/admin-observability/operations-workspace.tsx": "08c49364478def5b56558bfc7baea1b1b37e1c6b12e91afae5f31e21ba4b45cb",
+    "apps/web/src/features/ai/admin-ai-settings.css": "8030318a480719f3be254bf9c11326b5092d725adfb45e825021366e0e4d741e",
+    "apps/web/src/features/ai/ai-settings-panel.test.tsx": "18fd2e28199da313915cd96a7880a0c3f22f2db8e3d9b7a84af39cfc15b558b0",
+    "apps/web/src/features/ai/ai-settings-panel.tsx": "c4610ea47c0594b88d5de958d2ae2b36aacf5d04415553d45b8498db836bd5bf",
+    "apps/web/src/features/audio/admin-audio-settings-panel.test.tsx": "3b37834319a73e774ebcb99a7831ec74a4b54faa08de189f2f1cefb398077da7",
+    "apps/web/src/features/audio/admin-audio-settings-panel.tsx": "09b8e9fd7ccd0e2b60cc8dc38e6888703b5d84909472fc2f8dabdec44d6857ac",
+    "apps/web/src/features/audio/admin-audio-settings.css": "b89beda9e920b62c44c015869c5ae185a15420b0090b0058a6bb08afd44e5fed",
+    "apps/web/src/features/audio/audio-settings-panel.test.tsx": "b77418caf2e5b171307058514bbd3577a73bd45929bdbed9c8517bab1da856a4",
+    "apps/web/src/features/audio/audio-settings-panel.tsx": "a5263db88ee4c49c96875a8192cd8833bf595600b24e27ec49af29efddec127d",
+    "apps/web/src/features/audio/browser-speech-controls.test.tsx": "0a85442d3a85acb94fcdd729309c59249a89dc4d8f76e3a64eaafe58cc3cfe1a",
+    "apps/web/src/features/audio/browser-speech-controls.tsx": "80283f22d3f0beaff22bdcafaf022153b9c535d04a4778274449b2e05350c248",
+    "apps/web/src/features/audio/i18n.test.tsx": "a3f0c6fcf2b83e0141bf57e1462d9a0eb262b7d1d70bf23b7fdbf43dea364ab5",
+    "apps/web/src/features/audio/lesson-audio-player.test.tsx": "7c37cb0d8630a7aedeccfd3bb22f7fbba2701edc2240d0b2c7a7e4b46bc12fd4",
+    "apps/web/src/features/audio/lesson-audio-player.tsx": "2d56615f34e8aae9c28d1c91a508049a767ac0f367a81aa798dc3514728a6268",
+    "apps/web/src/features/audio/use-browser-speech.test.tsx": "4fde5d7c384e7a668936d94dfc8b15eda0546a120895cc8351e39cc7779a7437",
+    "apps/web/src/features/audio/use-browser-speech.ts": "17005c4da92de75253a1ab86285a312978b5d0f8e9190c23102b471619dcd788",
+    "apps/web/src/features/auth/auth-form.test.tsx": "a5f648e93edf56fbf730fbb28c16b76d9867fdff6201bb3571fa37ffec45e8d1",
+    "apps/web/src/features/auth/auth-form.tsx": "c48c3fe38eff1db6238350ced362b76f6479b62d4ad7a5b6fcac56caf3702c71",
+    "apps/web/src/features/auth/auth-i18n.test.tsx": "b6a807f76a374a67ad8f836c66bc07558b57e2d26b527396a3f02ba3a24de9f2",
+    "apps/web/src/features/auth/auth-page.test.ts": "3940855872b876de113509eb991da9cd71e09c7bac540f81269950cfaea4d2c6",
+    "apps/web/src/features/auth/auth-page.tsx": "e5279efa80c50f28f0b93158b09f4d0faccec853bf75d3edea0ac6c0a8cf1306",
+    "apps/web/src/features/auth/auth.module.css": "2ed701fb31783e6b72c4adabba844843adf69fd1d5342a2c242a63ac25ff1bc6",
+    "apps/web/src/features/auth/submit-auth.test.ts": "a5d8b19514799f169d12d736faef4a9ba07d933434826e9e45400b0bde95bb33",
+    "apps/web/src/features/auth/submit-auth.ts": "1222a363545c644ab1ac89affe5515df88bf2ebac9b4bb70dda4d8eca74a5f96",
+    "apps/web/src/features/curriculum-roadmap/curriculum-roadmap.test.tsx": "4ff48c3f976a887e89dbd33a4253baa82360442109214cf470d1c7dfb38ce48e",
+    "apps/web/src/features/curriculum-roadmap/curriculum-roadmap.tsx": "a43c9b0e54aa70356d024b64fcbb655eac0f9b2466952598968c503274430b30",
+    "apps/web/src/features/engagement/engagement-panel.test.tsx": "5c4ea27dabd7f2671193899b1a18429794f1d699df04907d710e6262f73043c5",
+    "apps/web/src/features/engagement/engagement-panel.tsx": "7d6d9ad67c5ba30633cb514a88951c60cae96dfa59072a8716aed0d8fbb5d2de",
+    "apps/web/src/features/ielts-band-curriculum/ielts-band-pathway.css": "4470941b868d8654507b9fe33781f9c58a762c7b8f264d7de7e8bcffb5eea0fb",
+    "apps/web/src/features/ielts-band-curriculum/ielts-band-pathway.test.tsx": "fe4b2412c44e617a88bde861247d39d72e086144d52a32339c33b660f3a8a314",
+    "apps/web/src/features/ielts-band-curriculum/ielts-band-pathway.tsx": "07355231b323ebce1f2c1136be2692782e672d1547ba9e79fde531d851d16189",
+    "apps/web/src/features/ielts-bridge/ielts-bridge-catalog.tsx": "aac5c57ed4e0e1af67b18e096ea5a4ca94f152aad6fe8aa1f35957ba3d9f6db3",
+    "apps/web/src/features/ielts-bridge/ielts-bridge-dashboard-card.test.tsx": "cc8a80d94e0a0fa4e403196947cf3af2574bc0d5b87b43f27a155277b320b7b6",
+    "apps/web/src/features/ielts-bridge/ielts-bridge-dashboard-card.tsx": "ab8be43734cb6396f507fc1a090cfda1329acdcd33103f6c2dc44c38e597791b",
+    "apps/web/src/features/ielts-bridge/ielts-bridge-player.test.tsx": "0b2f293326511aad3dc62dd0d2708129f70146108c88fe5c789edc38d00327e5",
+    "apps/web/src/features/ielts-bridge/ielts-bridge-player.tsx": "fe1e2c7876e104c33613627354847530f3fb2d02741bf153c40b2d32d0ce19a5",
+    "apps/web/src/features/ielts-bridge/ielts-bridge.css": "cde042f7f84a99a34e4577b11e67e3291b7b7d4323311a00e35dcb69c46f04d2",
+    "apps/web/src/features/ielts-integrated/integrated-practice.test.tsx": "3d74353c06162cdde58cbd20e2826199ab5cf42d8a3e547c8924fc550b85cc68",
+    "apps/web/src/features/ielts-integrated/integrated-practice.tsx": "49c09c6a4b8345233a1ee6ed5836fcd8960e4689aa06d90d81c9f31f94e3bee0",
+    "apps/web/src/features/ielts-mock/ielts-mock.test.tsx": "c35ea017fdc38e0e3d6b9d245a5c0ee8325cbb0493f5a7296f900ca059f1738c",
+    "apps/web/src/features/ielts-mock/ielts-mock.tsx": "e656e6b6094eda759d9c6935d3284e3138a0e025f29d9a9025d3db52b1ddd8e0",
+    "apps/web/src/features/ielts-orientation/orientation-dashboard-card.test.tsx": "64a98d29499df97685835b6b4e12100f2efee6b13d0f6aaeb7fb065ef24b0ab1",
+    "apps/web/src/features/ielts-orientation/orientation-dashboard-card.tsx": "9ed1bf88e1ee91ef36c71f7cad2d0aaf40785c906fbaf1ee7d0910b7696892ad",
+    "apps/web/src/features/ielts-orientation/orientation-player.css": "0c89560ef332cb403beb07ace0d963308087dc67971be8b92cc2673fb10453ed",
+    "apps/web/src/features/ielts-orientation/orientation-player.test.tsx": "0c41750edcf45fe4fdade60ae0af85f7abe029bc4c1a30fb60e5c6f84c6b3f8a",
+    "apps/web/src/features/ielts-orientation/orientation-player.tsx": "9b3f39695f6fb12de1e19299ece555896982138d42eaf81fbaecef6642582576",
+    "apps/web/src/features/learning-programs/program-catalog.css": "78666ba1d843e9cf2ebc89e10c03ecf41ab7e1bb64013f6a238e5fafda4ad344",
+    "apps/web/src/features/learning-programs/program-catalog.test.tsx": "149c88f67f94b1bd1017f7bae8f97d45d0594f33687164375244150eb6c780ef",
+    "apps/web/src/features/learning-programs/program-catalog.tsx": "a04edc18e38233a62655395c3723c8870958ba02d84d95e27da9776bb1ddacea",
+    "apps/web/src/features/learning-session/activity-renderer.tsx": "98ed3e43cda1d91dc2f53bab8bf0a7f4236d2b73f7f30da5c7937c38b645b977",
+    "apps/web/src/features/learning-session/activity-renderers/language-focus-panel.tsx": "1a0796059a67cf64dd66b7803e52f099c17466961ba5413ff03c70e8bdffcc2e",
+    "apps/web/src/features/learning-session/activity-renderers/listening-activity.test.tsx": "60113bff843f226739792ed0485070225cbbfdf431da21ba32b816420cb3e3d3",
+    "apps/web/src/features/learning-session/activity-renderers/listening-activity.tsx": "65f78466b226028bd82cc73b08686d650cc33083ec8603b7297b9a8644fca37b",
+    "apps/web/src/features/learning-session/activity-renderers/pronunciation-focus-panel.tsx": "989ab35ccdd6884114db7bc22dc0f22315c8dccbc52cd0a5d005dc91b22fba15",
+    "apps/web/src/features/learning-session/activity-renderers/reading-activity.tsx": "7daa9af231bab6321d79aca7fe62bfde9f5a20f3a58002731d0db0154e67b6e5",
+    "apps/web/src/features/learning-session/activity-renderers/speaking-activity.test.tsx": "88c504a87162c3203ec5618b5d82244c8c2f97068794e305274a655dea20348a",
+    "apps/web/src/features/learning-session/activity-renderers/speaking-activity.tsx": "98dac5ef0eb290357268c06fb0e2bedf0938ad48c84d17529dc11d577ed7b0ae",
+    "apps/web/src/features/learning-session/activity-renderers/vocabulary-focus-panel.tsx": "6ab2b899831847623aad5b58545fcccf2647e2567d38bd83e18f867ef90e0b5c",
+    "apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx": "c56487981445e06c1dcbad968ad83bbfa6b09da5858e60dff2d4747dc5231ad3",
+    "apps/web/src/features/learning-session/activity-renderers/writing-activity.tsx": "08f7b7b3b3458582180dde6addee8eae042787567f22387a6a5f38da1c0452f1",
+    "apps/web/src/features/learning-session/dashboard-view.test.tsx": "6a4ebe2839572149dd2f96b76475f9a179b67399c91c959b4310685953e2bb24",
+    "apps/web/src/features/learning-session/dashboard-view.tsx": "5962fc87b0da306b125cae953114fc521de28bae32b13f337f97886bdc88c0fa",
+    "apps/web/src/features/learning-session/evaluation-feedback.test.tsx": "ff27ff2e4e0b94dbdd92a055a48ad62b8bdf5ee4f0ac03c8870cbc773be292a8",
+    "apps/web/src/features/learning-session/evaluation-feedback.tsx": "2e631113851d11dad31dfec5149287fe1933074eedf6cfa8eda7e934fbbb1a5c",
+    "apps/web/src/features/learning-session/i18n.test.tsx": "a64d8b86c388e7543ecc21b9cd757e737a0b1b66ae3d74f47bdb78df74e9a628",
+    "apps/web/src/features/learning-session/session-shell.test.tsx": "d72ff2f94cd4c235a093e0746ccf842f8991c07b410155644ff782bf5ccde4a6",
+    "apps/web/src/features/learning-session/session-shell.tsx": "b100286e982f654700d0aef654cee9f4f36e6f6f3bbed470287351f940c1ddca",
+    "apps/web/src/features/learning-session/use-audio-recorder.test.tsx": "c56b01fee026232eb75d444658d18351b479cbd03d40b0e68202f2103e4e18cf",
+    "apps/web/src/features/learning-session/use-audio-recorder.ts": "150f351a887ae3ccfd07495c569568956937e7e49f92c6be1f0d40ee23316918",
+    "apps/web/src/features/learning-session/use-evaluation.test.tsx": "343afb5a4da4ce4f001649a3dc50571806f71e364cabac95acb7d03bd2b24cfc",
+    "apps/web/src/features/learning-session/use-evaluation.ts": "d2b4ec6463411ff990782a0b12ba42983d0d36f7be894c6aa7454b2cb3dc3e27",
+    "apps/web/src/features/mastery/checkpoint-panel.test.tsx": "9b3441d39c971263110fec0cc3f057127da88fcb856c07f30a4cda60026ea7fc",
+    "apps/web/src/features/mastery/checkpoint-panel.tsx": "4584afcff03ab07892e91b703af325798dbf8e472b1b5bf130a961dd9173fa23",
+    "apps/web/src/features/mastery/error-bank-panel.test.tsx": "6990b9b85dd2c80c33e50d87a13b3a9bc3bdc679b333c78604f33369dd6c531e",
+    "apps/web/src/features/mastery/error-bank-panel.tsx": "0257a9092c78bbca3f336767c079ac60b8fbf7fc3e9435bbe29a1d564809be16",
+    "apps/web/src/features/mastery/evidence-format.test.ts": "52157e8e9af98c77b3a748726eac8e81befb336363260f413d0f59651ca9377b",
+    "apps/web/src/features/mastery/evidence-format.ts": "03f8146c4037c4831ee2b8ce70b29f76bb242e961e738e02aa2c7db7b4131d8d",
+    "apps/web/src/features/mastery/mastery-overview.test.tsx": "6fd310f8ec3debcec29a7164752e84a96724b30e57ce5f92c1d9b35781fe1f1d",
+    "apps/web/src/features/mastery/mastery-overview.tsx": "daa0662b5fcd3bcfe4e1d5515c473d5f5434f67def9790d1d633d49bb43635bc",
+    "apps/web/src/features/mastery/mastery-workspace.test.tsx": "922d4f48eccd100d20fc0d33e947388e85722914dd9d7ea4c094ac3e5779ce10",
+    "apps/web/src/features/mastery/mastery-workspace.tsx": "6f774ba91b0c2cac432923b99a7b77ab3fd6ed8a2692a58c4f3ef9205747b3f3",
+    "apps/web/src/features/mastery/mastery.css": "0505dfacd7f3fd9e03340d97e0c1bab602e11c3b6ca27a3feec4e44635c9bfe4",
+    "apps/web/src/features/mastery/test-fixtures.ts": "f34cb2c4f64df643b1634be5b030cbc3fb5c44bc13f55fdf8023a6280d1ce119",
+    "apps/web/src/features/mastery/use-learner-resource.ts": "332f1bc46880d09c72621a4db00443c278f36bcba01aad48dfb9b0e52b3c32ff",
+    "apps/web/src/features/onboarding/onboarding-workspace.test.tsx": "7a05c78701124847e9708bc1b958567545fdc428c991c48c86b8e363656fd7c0",
+    "apps/web/src/features/onboarding/onboarding-workspace.tsx": "6fe1732c36de925e283ffb87c53514b84368718c318c7527b9f2c97ee1b9430c",
+    "apps/web/src/features/onboarding/onboarding.css": "b11f36437752cdc48cc51022b04bb7dfbbf5afab895696e5354c3b4cc70ead03",
+    "apps/web/src/features/onboarding/placement-status.test.tsx": "e139e5d86d6d9c778c5ebb7111b5b83420b81583022c9db0db2f501d7ff7c455",
+    "apps/web/src/features/onboarding/placement-status.tsx": "a011d3bbdbc34fc59268dc1227414d0d6455256b558fc229c8202489ddfdd73e",
+    "apps/web/src/features/onboarding/system-text.ts": "7ed02d145a00dbb31c3315762a36f28c5b491af2c36248b22056e9d9467e1f21",
+    "apps/web/src/i18n/authentication-transition.tsx": "8f997bafc9ccfc7eee4108b3b563f8afb0347ae6184521acb859d7c2d2bbd70b",
+    "apps/web/src/i18n/errors.ts": "c6f48a77a934d98c66569f6183d85028a2ccbaa7cccef70a76515c6d2c452a5c",
+    "apps/web/src/i18n/locale.ts": "145f5741566bf3f3068cf4c7cd827fda5917234235c84fab85fa14d7f6fe26df",
+    "apps/web/src/i18n/messages/adminAudit.ts": "b8a8794119af0b9db3dc17d6de204947544794e227d75797c523bc1e599f165b",
+    "apps/web/src/i18n/messages/adminContent.ts": "5f850e46cc1ebd06a2e1acfbe6564e356bcb4178af9af8bafd765b5d985dd7e5",
+    "apps/web/src/i18n/messages/adminCurriculum.ts": "f5b7f85e13013d55dd1038acaa20e5407b3dcd8e59a841d4c0f0c73760dc75ef",
+    "apps/web/src/i18n/messages/adminIeltsBand.ts": "f9611177c1c30f71a7fdc5412272680e0b2f8a1d1edfffe610308799116d9698",
+    "apps/web/src/i18n/messages/adminIeltsBridge.ts": "c2cb4e756328f64f039e8992e8aa579b8d38890922db2f46db71ebbf7909fb3c",
+    "apps/web/src/i18n/messages/adminIeltsIntegrated.ts": "585019df8d536cd2516dca624bb8b48776a5bec8c7cdaa1367c140ec3fe23699",
+    "apps/web/src/i18n/messages/adminIeltsMock.ts": "a17e6b98125512760834e38ae8e6079ef7e42ac96d87695c785a8bf9a9a3b95d",
+    "apps/web/src/i18n/messages/adminIeltsOrientation.ts": "12a2b04b68a707d081b80c9f7874630ef47275c058841a7abe3d6a16a8eb4fb7",
+    "apps/web/src/i18n/messages/adminObservability.ts": "0dcf5fd441a76cfc171f6571c2e01432638e749c3fa0e48a1b611f573a211ed7",
+    "apps/web/src/i18n/messages/ai.ts": "728ca1fc09373959ac036da6c6c903168de1267d2caf04251f0affa0b295b565",
+    "apps/web/src/i18n/messages/audio.ts": "087c07ba6581766c051a21a37ec138551594ea97af1da26af250dfd4a4b0fd72",
+    "apps/web/src/i18n/messages/auth.ts": "f90e5d86035225c15fdde8ec3d68585c7dad0b5d907d70b6e58fbd27a24da208",
+    "apps/web/src/i18n/messages/common.ts": "afa1c27a0f1548214364da6c2fbce1717a29dbbb0be13c8fc717aed619585a50",
+    "apps/web/src/i18n/messages/curriculumRoadmap.ts": "7e753c03bdb86e51b200c4d2e732a330e4faedf3a3b966cd4a2fb18b75501197",
+    "apps/web/src/i18n/messages/engagement.ts": "a386500aa925e3155ddc32f5ab7047d265db255e252bd4b0c16b4d3bd58dff12",
+    "apps/web/src/i18n/messages/ieltsBand.ts": "7d60f4526150cbc8d25ad45e170eeee5b84784ef7bec03bcad44df5e57378cd9",
+    "apps/web/src/i18n/messages/ieltsBridge.ts": "a2ef026b99b8331d6913288cc6728e440e9704bd4af80d7f31536a8dc3e4c547",
+    "apps/web/src/i18n/messages/ieltsIntegrated.ts": "0969cd66bd0724a45fc9259b9431dacb6bfdf19561be9890940e7128c8164281",
+    "apps/web/src/i18n/messages/ieltsMock.ts": "f8c41b41f02d304d88a5f525399b35f035fe6952d59faba13c35c76f3950f9a4",
+    "apps/web/src/i18n/messages/ieltsOrientation.ts": "12c3745214ef258e3cfbab1e55412790e2fc58555d9d49e12ce253bea8b10667",
+    "apps/web/src/i18n/messages/learningSession.ts": "ca82544e51cb7b3fa97867881d5557bce1b7a5b9d4bdfec0a211bbcc306fdd74",
+    "apps/web/src/i18n/messages/mastery.ts": "2a7ef140825c15be4fd0b45c5eb51e4de1884039b991c61f5b409ccc7565b27c",
+    "apps/web/src/i18n/messages/metadata.ts": "c0a2ce434277e9d0276a40ca4fb65283debcbec00339fbe5232801011f1e3ac0",
+    "apps/web/src/i18n/messages/onboarding.ts": "3c875a2669184e6650d5b587e88eb3f453d96c407017153bcb8ebb3bf0826317",
+    "apps/web/src/i18n/messages/programs.ts": "832424acfb9bae70ef665bcd794ab1d4037834ac00ff21f417328a95dae83759",
+    "apps/web/src/i18n/messages/public.ts": "fb96b70896e1a064b3572eb0a25427d73dd7eca142f0f71d797e71e4696b9c70",
+    "apps/web/src/i18n/messages/routes.ts": "db31ad61734abb278ec1cd070f0ed89dab77441e6344f47937aabfde2d04331f",
+    "apps/web/src/i18n/page-title.tsx": "eb389fd94e24c3913cac45fa9b175929a904701bab3fcaf9cf9aff7b0db18b65",
+    "apps/web/src/i18n/provider.test.tsx": "3f7b0d05223688e78e86eadbac70fdc07c3aba1cd984cbabb2c34d83f5cbccd2",
+    "apps/web/src/i18n/provider.tsx": "19d83422fc8fa6edb73d801c42921ae96126c27b14a15a5cb5a718a3e96067e4",
+    "apps/web/src/i18n/server.test.ts": "cca5e6e84e276cc4584b9ceb23c531c24081a0c61148f359412e17ecd2c15f81",
+    "apps/web/src/i18n/server.ts": "e1a2b105287d13125fcd77d7f93aa0979b95f27bbf5cddbc063105d6e6a89baa",
+    "apps/web/src/i18n/translator.test.ts": "83cf81d95a56456a892648046d244c67207a72cd82e0dce6cd65c77008763b1c",
+    "apps/web/src/i18n/translator.ts": "a19d88bb2f2b9632916b20fc6fe17c83d3ca3d0859836b0798445bb12c9bd67f",
+    "apps/web/src/lib/api/admin-analytics-client.ts": "3bc24fcb3b0a11d063ce62c0a87415f7323208653bde0aac93e2ea60dec09dae",
+    "apps/web/src/lib/api/admin-audit-client.test.ts": "b0dc7d5b49181ab25a8219d83bfdb97d11fcf54bc09b87f6f6b7aba775eda7b5",
+    "apps/web/src/lib/api/admin-audit-client.ts": "95e90811f9d9eae88fbdf091829ac84069e33ff84a40c16ed01c020afc036313",
+    "apps/web/src/lib/api/admin-curriculum-client.test.ts": "5eb21e1e2b4a910e6568cb1772c19835db3297e34d50e324e90ce0fbf258fadc",
+    "apps/web/src/lib/api/admin-curriculum-client.ts": "6a42c3a910d32055776877a2dcbbe607f3477e456a0b884778c263f3e5c82ead",
+    "apps/web/src/lib/api/admin-ielts-band-client.ts": "ba00276afcf2cc1d5400259dbb8d0079d53e68ec3a1a248de23bd04b6cd36a11",
+    "apps/web/src/lib/api/admin-ielts-bridge-client.test.ts": "2b746fc92bc02c2164a110cd4d2dc79ec76ffb0b29581efb0fcdff65cff226cf",
+    "apps/web/src/lib/api/admin-ielts-bridge-client.ts": "f6375b3f8b5369678ca414f053c2e7d569db2e29c94f81aa451922030cd9d534",
+    "apps/web/src/lib/api/admin-ielts-integrated-client.ts": "3f984958bdb2f35ac1a1c969c108a30b318bb5195bc07ffbcab7f581646e5864",
+    "apps/web/src/lib/api/admin-ielts-mock-client.ts": "24a1b59c9d6ae645a1979165139cb725d8f5fc266ecf89cf805dab665be0431f",
+    "apps/web/src/lib/api/admin-ielts-orientation-client.test.ts": "32f3b0597cec82d95171c46b234a2dcd11c9b03cd1491ce6694403ad030d0ce1",
+    "apps/web/src/lib/api/admin-ielts-orientation-client.ts": "59d11215482a389ecbcfcdb04391fee1689fe9bb7a352e19fad4466034fc4bbd",
+    "apps/web/src/lib/api/admin-observability-clients.test.ts": "ea23e01eb732f504da41bed5390fa8ba66660d45e2dac1c2496f2fddb66e94bd",
+    "apps/web/src/lib/api/admin-operations-client.ts": "f622ed3d84af43279be5f7eab55fef81c8cf9983aab072031b40d701cf732ad3",
+    "apps/web/src/lib/api/ai-settings-client.ts": "c15118bb6defde79043b16ffad063337a685c22219c94d8408e506467ffdaa8d",
+    "apps/web/src/lib/api/api-client.learner.test.ts": "69a0d16b321facf6e5d042af89cf193b3f5f59582993e97da8e2741622a45707",
+    "apps/web/src/lib/api/api-client.test.ts": "93de90783a534b73730bca0d4d6b111585d0214c2a97fe031f6be4572374fed1",
+    "apps/web/src/lib/api/api-client.ts": "c9838eee7f23d6fe3575f05110999b049e2442eb5beb6379b0491020deab65ba",
+    "apps/web/src/lib/api/audio-settings-client.test.ts": "05c703261ac3e80232138de6c1fbf9af981e09a6c78216694bc215b03f17698f",
+    "apps/web/src/lib/api/audio-settings-client.ts": "8dcfa539ec6f1299dc1e71093a3c1b03e497201b48041256a095db76d658571e",
+    "apps/web/src/lib/api/curriculum-foundation-client.test.ts": "bee56e443758bf567b66d77437953e39bf09b12a4ad9ee186189c15f140f4de3",
+    "apps/web/src/lib/api/curriculum-foundation-client.ts": "2e104bcfd83dff7aeec8c62cdb10e852994b0999d5bd385058d91f088ff41a73",
+    "apps/web/src/lib/api/engagement-client.ts": "ebfd5554219d5016f134dbab36192fe4fbb311d0273e0ecd80189a1463b175e3",
+    "apps/web/src/lib/api/ielts-band-client.ts": "6f3b90e094daf6e8a2b1127fcf39dce84508fed025a80d3f2a04e3a69262c318",
+    "apps/web/src/lib/api/ielts-bridge-client.test.ts": "35719962e505a201c292ad470da051102d927bba987c10e895bde22cf8d9c786",
+    "apps/web/src/lib/api/ielts-bridge-client.ts": "c3aabd1b433ffb49a46dfe01131561d21776696d6ddee61c3de8fe1b9ba9f89c",
+    "apps/web/src/lib/api/ielts-integrated-client.test.ts": "64ae6983142b6d87550afb4b13caf3125ab683cea3367babead4cc195673297c",
+    "apps/web/src/lib/api/ielts-integrated-client.ts": "a878b672ea9cd2432c3f56c2f2241ae3d29ab9838425596573567e1108fa5cc0",
+    "apps/web/src/lib/api/ielts-mock-client.ts": "893746fbd57cb6be7ddb2e627f3e5d78f7fb3bbdfd5d3e6bd26824513478c568",
+    "apps/web/src/lib/api/ielts-orientation-client.test.ts": "14d04dfab43e5d115c257ce14d5eaa0f3a802967a88e3961467dd17e69100572",
+    "apps/web/src/lib/api/ielts-orientation-client.ts": "2004501b5732924caac6a776513391b8236a5cb83537a8c001a1428179bb34fc",
+    "apps/web/src/lib/api/learner-schemas.ts": "510c1ae64070264a4322d5d964112158c38b338eb87102aad50e9f3511b0dd83",
+    "apps/web/src/lib/api/learning-program-client.test.ts": "f17346b67c72152e5488e8aec99b246dffe7321897c56f4b053ef99c840c623f",
+    "apps/web/src/lib/api/learning-program-client.ts": "b0e5726ae87b066104e64c7345101532636f82dddff0798e58ad4e5f9be463db",
+    "apps/web/src/lib/api/onboarding-client.test.ts": "54c25372fbe1b55c1d2c0e30296dcdb87aa2fec05d0e869aa66ed7b64c0854ee",
+    "apps/web/src/lib/api/onboarding-client.ts": "c2d2f215d15d2813e93a4701a1941505de4e5bd41d2e42f329031e15d0fb5388",
+    "apps/web/src/lib/theme.ts": "e64d6ca4c10e1e55e86a99261f0efa076fd0574e84456240afd20ca79a11e6b6",
+    "apps/web/src/local-startup.spec.ts": "b377b2448a3ba2d813c17476552fd0b5b738b0c0ebeba694941d30a600352797",
+    "apps/web/src/styles/learning.css": "f8d2419b5be2b98fcf75e9f4e0c4cc6bc8287f1c86d40c85798ab5cc44b56901",
+    "apps/web/src/styles/tokens.css": "8b817594ffe31a8a1924005d80c6d7e056c693a1e89600e543e9c9e8d749f014",
+    "apps/web/src/styles/workspace.css": "406add3ca107dd4e1df5186fad21d4f35de492163782f502b77f6d9d952267eb"
+  }
+}

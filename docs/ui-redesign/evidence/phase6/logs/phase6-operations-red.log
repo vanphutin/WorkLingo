@@ -1,0 +1,246 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-observability/observability-workspaces.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ❯ src/features/admin-observability/observability-workspaces.test.tsx (5 tests | 1 failed) 400ms
+   × admin observability workspaces > reserves all four summary cards while initial operations data is pending 56ms
+     → Unable to find an element with the text: Queue depth. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <section
+      class="observability-shell operations-experience"
+    >
+      <header
+        class="observability-header"
+      >
+        <div>
+          <h1>
+            Operations
+          </h1>
+          <p>
+            Queue health, workers, and privacy-safe job diagnostics.
+          </p>
+        </div>
+        <button
+          class="observability-button secondary"
+          disabled=""
+          type="button"
+        >
+          Refresh
+        </button>
+      </header>
+      <form
+        class="observability-card observability-filters"
+      >
+        <div
+          class="observability-field"
+        >
+          <label
+            for="job-status"
+          >
+            Status
+          </label>
+          <select
+            id="job-status"
+          >
+            <option
+              value=""
+            >
+              All statuses
+            </option>
+            <option
+              value="PENDING"
+            >
+              Pending
+            </option>
+            <option
+              value="RUNNING"
+            >
+              Running
+            </option>
+            <option
+              value="RETRY_WAIT"
+            >
+              Waiting to retry
+            </option>
+            <option
+              value="COMPLETED"
+            >
+              Completed
+            </option>
+            <option
+              value="FAILED"
+            >
+              Failed
+            </option>
+          </select>
+        </div>
+        <div
+          class="observability-field"
+        >
+          <label
+            for="job-type"
+          >
+            Job type
+          </label>
+          <input
+            id="job-type"
+            placeholder="e.g. GENERATE_AUDIO"
+            value=""
+          />
+        </div>
+        <button
+          class="observability-button"
+          disabled=""
+          type="submit"
+        >
+          Apply filters
+        </button>
+      </form>
+      <p
+        role="status"
+      >
+        Loading operations…
+      </p>
+    </section>
+  </div>
+</body>
+   ✓ admin observability workspaces > localizes operations filters while retaining API status values 226ms
+   ✓ admin observability workspaces > localizes aggregate metrics and definitions without translating machine event codes 21ms
+   ✓ admin observability workspaces > renders queue health and an honest empty state 63ms
+   ✓ admin observability workspaces > renders aggregate retention and event totals without learner identifiers 33ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/admin-observability/observability-workspaces.test.tsx > admin observability workspaces > reserves all four summary cards while initial operations data is pending
+TestingLibraryElementError: Unable to find an element with the text: Queue depth. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <section
+      class="observability-shell operations-experience"
+    >
+      <header
+        class="observability-header"
+      >
+        <div>
+          <h1>
+            Operations
+          </h1>
+          <p>
+            Queue health, workers, and privacy-safe job diagnostics.
+          </p>
+        </div>
+        <button
+          class="observability-button secondary"
+          disabled=""
+          type="button"
+        >
+          Refresh
+        </button>
+      </header>
+      <form
+        class="observability-card observability-filters"
+      >
+        <div
+          class="observability-field"
+        >
+          <label
+            for="job-status"
+          >
+            Status
+          </label>
+          <select
+            id="job-status"
+          >
+            <option
+              value=""
+            >
+              All statuses
+            </option>
+            <option
+              value="PENDING"
+            >
+              Pending
+            </option>
+            <option
+              value="RUNNING"
+            >
+              Running
+            </option>
+            <option
+              value="RETRY_WAIT"
+            >
+              Waiting to retry
+            </option>
+            <option
+              value="COMPLETED"
+            >
+              Completed
+            </option>
+            <option
+              value="FAILED"
+            >
+              Failed
+            </option>
+          </select>
+        </div>
+        <div
+          class="observability-field"
+        >
+          <label
+            for="job-type"
+          >
+            Job type
+          </label>
+          <input
+            id="job-type"
+            placeholder="e.g. GENERATE_AUDIO"
+            value=""
+          />
+        </div>
+        <button
+          class="observability-button"
+          disabled=""
+          type="submit"
+        >
+          Apply filters
+        </button>
+      </form>
+      <p
+        role="status"
+      >
+        Loading operations…
+      </p>
+    </section>
+  </div>
+</body>
+ ❯ Object.getElementError ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/admin-observability/observability-workspaces.test.tsx:40:25
+     38|     vi.mocked(adminOperationsClient.getSummary).mockReturnValue(new Pr…
+     39|     render(<OperationsWorkspace />);
+     40|     const grid = screen.getByText('Queue depth').closest('.observabili…
+       |                         ^
+     41|     expect(grid).toHaveAttribute('aria-busy', 'true');
+     42|     expect(grid?.querySelectorAll('.metric-value')).toHaveLength(4);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:00:11
+   Duration  2.80s (transform 298ms, setup 0ms, collect 1.21s, tests 400ms, environment 759ms, prepare 134ms)
+
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/web@0.0.0 test: `vitest run "src/features/admin-observability/observability-workspaces.test.tsx"`
+Exit status 1

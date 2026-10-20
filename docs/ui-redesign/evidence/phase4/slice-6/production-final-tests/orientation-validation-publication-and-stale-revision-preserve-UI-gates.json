@@ -1,0 +1,13 @@
+{
+  "title": "orientation validation publication and stale revision preserve UI gates",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "validateBeforePublish": true,
+      "publication": true,
+      "staleRevisionError": true,
+      "existingConflictReload": true
+    }
+  ]
+}

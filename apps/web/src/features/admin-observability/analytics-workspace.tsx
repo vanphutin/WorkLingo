@@ -38,7 +38,7 @@ export function AnalyticsWorkspace() {
   const eventTotals = new Map<string, number>();
   for (const metric of data?.metrics ?? []) eventTotals.set(metric.eventType, (eventTotals.get(metric.eventType) ?? 0) + metric.count);
 
-  return <section className="observability-shell">
+  return <section className="observability-shell operations-experience">
     <header className="observability-header"><div><h1>{t('analyticsTitle')}</h1><p>{t('analyticsHelp')}</p></div></header>
     {Boolean(error) && <div className="observability-alert" role="alert">{displayMessage(error)}</div>}
     <form className="observability-card observability-filters" onSubmit={(event) => { event.preventDefault(); void load(); }}>
@@ -53,7 +53,7 @@ export function AnalyticsWorkspace() {
         <article className="observability-card"><span>{t('sessionsCompleted')}</span><strong className="metric-value">{number(eventTotals.get('LEARNING_SESSION_COMPLETED') ?? 0)}</strong></article>
         <article className="observability-card"><span>{t('weeklyTargets')}</span><strong className="metric-value">{number(eventTotals.get('ENGAGEMENT_TARGET_MET') ?? 0)}</strong></article>
       </div>
-      <div className="observability-table-wrap"><table className="observability-table"><caption className="sr-only">{t('eventTotals')}</caption><thead><tr><th>{t('event')}</th><th>{t('total')}</th><th>{t('definition')}</th></tr></thead><tbody>{data.definitions.map((definition) => <tr key={definition.eventType}><td>{definition.eventType}</td><td>{number(eventTotals.get(definition.eventType) ?? 0)}</td><td>{definitionKeys[definition.eventType] ? t(definitionKeys[definition.eventType]!) : definition.description}</td></tr>)}</tbody></table></div>
+      <div className="observability-table-wrap" tabIndex={0} role="region" aria-label={t('eventTotals')}><table className="observability-table"><caption className="sr-only">{t('eventTotals')}</caption><thead><tr><th>{t('event')}</th><th>{t('total')}</th><th>{t('definition')}</th></tr></thead><tbody>{data.definitions.map((definition) => <tr key={definition.eventType}><td>{definition.eventType}</td><td>{number(eventTotals.get(definition.eventType) ?? 0)}</td><td>{definitionKeys[definition.eventType] ? t(definitionKeys[definition.eventType]!) : definition.description}</td></tr>)}</tbody></table></div>
     </>}
   </section>;
 }

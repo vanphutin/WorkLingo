@@ -1,0 +1,92 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "theme": "dark",
+  "samples": [
+    {
+      "url": "/dashboard",
+      "repeat": 0,
+      "deltas": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "ScriptDuration": 0.0031940000000000024,
+        "TaskDuration": 0.032462999999999964
+      },
+      "frameMedianMs": 16.69999999999999,
+      "frameP95Ms": 16.700000000000045
+    },
+    {
+      "url": "/dashboard",
+      "repeat": 1,
+      "deltas": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "ScriptDuration": 0.002145000000000008,
+        "TaskDuration": 0.028115
+      },
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 16.799999999999727
+    },
+    {
+      "url": "/dashboard",
+      "repeat": 2,
+      "deltas": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "ScriptDuration": 0.00212699999999999,
+        "TaskDuration": 0.030918
+      },
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 16.800000000000182
+    },
+    {
+      "url": "/admin/settings/ai",
+      "repeat": 0,
+      "deltas": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "ScriptDuration": 0.0019759999999999986,
+        "TaskDuration": 0.033443999999999974
+      },
+      "frameMedianMs": 16.69999999999999,
+      "frameP95Ms": 16.800000000000068
+    },
+    {
+      "url": "/admin/settings/ai",
+      "repeat": 1,
+      "deltas": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "ScriptDuration": 0.0019730000000000025,
+        "TaskDuration": 0.056360999999999994
+      },
+      "frameMedianMs": 16.700000000000045,
+      "frameP95Ms": 16.799999999999955
+    },
+    {
+      "url": "/admin/settings/ai",
+      "repeat": 2,
+      "deltas": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "ScriptDuration": 0.0014949999999999963,
+        "TaskDuration": 0.025665999999999967
+      },
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 16.800000000000182
+    }
+  ],
+  "chunkBytes": {
+    "css": 195820,
+    "js": 1933329
+  },
+  "limitation": "Headless Chromium, three repeats, noisy same-host observation; no performance SLA assertion."
+}

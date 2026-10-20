@@ -1,0 +1,34 @@
+{
+  "sourceCommit": "b9ae26ccb1dcfe6817ad451e33943529de11270f",
+  "timestamp": "2026-10-20T12:31:23.149Z",
+  "command": "playwright test -c playwright.phase6.config.ts",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "preferences storage failure disclosure and draft controls remain usable",
+  "result": "passed",
+  "testSourceSHA256": "155583d1b69ee710c863ad7ea47a2706206e0f4e686892206195662d7350ae68",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [
+    {
+      "diagnostic": "increased contrast capability",
+      "contrastMore": true,
+      "actualFilter": "none"
+    },
+    {
+      "manualReducedTransparency": true,
+      "independentIncreasedContrast": "PASS",
+      "forcedColors": "PASS: controls usable",
+      "keyboardDisclosure": true,
+      "storageBlockedUsable": true,
+      "authDraftRetained": true,
+      "realAuthentication": false
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

@@ -1,0 +1,44 @@
+[WebServer] (node:2240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  x  1 e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text (1.6s)
+  ok 2 e2e\liquid-glass-phase4-settings.spec.ts:55:5 › system audio unavailable provider and existing save contract retain gates (1.1s)
+  ok 3 e2e\liquid-glass-phase4-settings.spec.ts:58:5 › content admin cannot edit system AI while account settings remain usable (796ms)
+
+
+  1) e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 844
+    Received:    851.515625
+
+      39 |     const controls = page.locator('.settings-page :is(a,button,select,input)'); await controls.first().focus();
+      40 |     for (let index = 0; index < await controls.count(); index++) {
+    > 41 |       await expect(controls.nth(index)).toBeFocused(); const b = await controls.nth(index).evaluate((el) => { const r = el.getBoundingClientRect(), s = getComputedStyle(el), n = 2 * (parseFloat(s.outlineWidth)+parseFloat(s.outlineOffset)); return { left:r.left-n,right:r.right+n,top:r.top-n,bottom:r.bottom+n,outline:parseFloat(s.outlineWidth) }; }); expect(b.outline).toBeGreaterThanOrEqual(2); expect(b.left).toBeGreaterThanOrEqual(0); expect(b.right).toBeLessThanOrEqual(width); expect(b.top).toBeGreaterThanOrEqual(0); expect(b.bottom).toBeLessThanOrEqual(844); observations.push({ width, CSSZoom:2, nativeTab:index, focus:b }); if(index+1<await controls.count()) await page.keyboard.press('Tab');
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+      42 |     }
+      43 |     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      44 |   }
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-settings.spec.ts:41:541
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-f32a1-tive-narrow-focus-long-text\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-f32a1-tive-narrow-focus-long-text\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-f32a1-tive-narrow-focus-long-text\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text
+  2 passed (8.9s)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts liquid-glass-phase4-settings.spec.ts --grep settings real|system audio|content admin

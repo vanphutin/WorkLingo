@@ -1,0 +1,194 @@
+{
+  "sourceCommit": "b9ae26ccb1dcfe6817ad451e33943529de11270f",
+  "timestamp": "2026-10-20T12:30:00.174Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6.config.ts -g representative|preferences",
+  "environment": {
+    "engine": "webkit",
+    "browserVersion": "26.6",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "representative routes dark 1440",
+  "result": "passed",
+  "testSourceSHA256": "f5f6b96d9064d6b7b1c4321a3e211c2f16f4cc8a5ca3ababc2afc9634ed12651",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(0, 0, 0)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "client": 1440,
+      "scroll": 1440,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

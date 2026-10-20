@@ -1,0 +1,12 @@
+{
+  "mode": "development",
+  "title": "session error retry retains actual owner",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "session",
+      "retryRecovered": true
+    }
+  ]
+}

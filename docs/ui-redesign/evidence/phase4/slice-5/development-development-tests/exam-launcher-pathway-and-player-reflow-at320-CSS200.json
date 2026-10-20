@@ -1,0 +1,48 @@
+{
+  "title": "exam launcher pathway and player reflow at320 CSS200",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/ielts/practice",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/practice/44444444-4444-4444-8444-444444444444",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/pathway",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/mock-tests",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    }
+  ]
+}

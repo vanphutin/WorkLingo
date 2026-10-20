@@ -1,0 +1,80 @@
+{
+  "mode": "production",
+  "title": "learning content reflows at narrow widths and CSS200 without hiding overflow",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/programs",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/mastery",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/dashboard",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360,
+      "offenders": []
+    },
+    {
+      "url": "/programs",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360,
+      "offenders": []
+    },
+    {
+      "url": "/mastery",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360,
+      "offenders": []
+    },
+    {
+      "url": "/dashboard",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "url": "/programs",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "url": "/mastery",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "title": "owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum",
+  "status": "failed",
+  "observations": [
+    {
+      "url": "/settings/ai",
+      "transitions": [
+        {
+          "class": "admin-ai-select",
+          "properties": "all",
+          "duration": "0.15s"
+        },
+        {
+          "class": "admin-ai-toggle-card active",
+          "properties": "all",
+          "duration": "0.18s"
+        },
+        {
+          "class": "admin-ai-insight-item",
+          "properties": "all",
+          "duration": "0.15s"
+        },
+        {
+          "class": "admin-ai-insight-item",
+          "properties": "all",
+          "duration": "0.15s"
+        }
+      ]
+    },
+    {
+      "url": "/settings/ai",
+      "reduced": [
+        {
+          "class": "admin-ai-select",
+          "transition": "0s",
+          "animation": "none"
+        },
+        {
+          "class": "admin-ai-toggle-card active",
+          "transition": "0.18s",
+          "animation": "none"
+        },
+        {
+          "class": "admin-ai-insight-item",
+          "transition": "0s",
+          "animation": "none"
+        },
+        {
+          "class": "admin-ai-insight-item",
+          "transition": "0s",
+          "animation": "none"
+        }
+      ]
+    },
+    {
+      "url": "/admin/curriculum",
+      "transitions": [
+        {
+          "class": "action-button action-button-secondary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-primary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-primary",
+          "properties": "all",
+          "duration": "0.2s"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "properties": "all",
+          "duration": "0.2s"
+        }
+      ]
+    },
+    {
+      "url": "/admin/curriculum",
+      "reduced": [
+        {
+          "class": "action-button action-button-secondary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-primary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-secondary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-primary",
+          "transition": "1e-05s",
+          "animation": "none"
+        },
+        {
+          "class": "action-button action-button-danger",
+          "transition": "1e-05s",
+          "animation": "none"
+        }
+      ]
+    },
+    {
+      "url": "/admin/settings/audio",
+      "transitions": [
+        {
+          "class": "admin-save-btn",
+          "properties": "background-color, transform, box-shadow",
+          "duration": "0.15s, 0.12s, 0.15s"
+        }
+      ]
+    },
+    {
+      "url": "/admin/settings/audio",
+      "reduced": [
+        {
+          "class": "admin-save-btn",
+          "transition": "0s",
+          "animation": "none"
+        }
+      ]
+    }
+  ],
+  "fixtures": true
+}

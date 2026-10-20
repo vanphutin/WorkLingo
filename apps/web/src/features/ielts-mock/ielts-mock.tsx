@@ -14,6 +14,9 @@ import { MockAudioPlayer } from './mock-audio-player';
 import { MockSpeakingRecorder } from './mock-speaking-recorder';
 import { MockTaskPrompt } from './mock-task-prompt';
 import { MockPreflight } from './mock-preflight';
+import '../ielts-mock/exam-experience.css';
+
+import { GlassSurface } from '../../components/glass-surface';
 
 const formatTime = (milliseconds: number) => { const seconds = Math.max(0, Math.ceil(milliseconds / 1000)); return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`; };
 
@@ -40,7 +43,7 @@ export function IeltsMockCatalog() {
     try { const attempt = await ieltsMockClient.start({ clientAttemptId: pending.current.id, mockTestId, mode: selectedMode }); router.push(`/ielts/mock-tests/${attempt.id}`); }
     catch (cause) { setError(cause); setBusy(false); }
   };
-  return <main className="bridge-shell"><header className="bridge-heading"><div><Link href="/ielts">{t('ieltsHome')}</Link><p className="bridge-kicker">{t('academic')}</p><h1>{t('catalogTitle')}</h1><p>{t('description')}</p></div></header>
+  return <main className="bridge-shell exam-surface mock-page"><header className="bridge-heading"><div><Link href="/ielts">{t('ieltsHome')}</Link><p className="bridge-kicker">{t('academic')}</p><h1>{t('catalogTitle')}</h1><p>{t('description')}</p></div></header>
     {error ? <p role="alert" className="bridge-error">{localizedError(error, locale)}</p> : null}
     {!catalog && !error ? <p role="status">{t('loading')}</p> : null}
     {catalog && (v3 || catalog.eligible) ? <><label>{t('testMode')}<select disabled={busy} value={selectedMode} onChange={event => { setMode(event.target.value as typeof mode); setPreflightId(null); }}>{(v3 ? choices : available).map(candidate => <option key={candidate} value={candidate} disabled={!available.includes(candidate)}>{t(candidate)}</option>)}</select></label>{v3 ? <><p>{t(selectedMode === 'PRACTICE' ? 'practiceRules' : 'simulationRules')}</p>{!available.includes('EXAM_SIMULATION') ? <p>{t('simulationUnavailable')}</p> : null}</> : null}</> : null}
@@ -52,7 +55,7 @@ export function IeltsMockCatalog() {
 
 function Report({ report }: { readonly report: IeltsMockReportDto }) {
   const t = useT('ieltsMock', ieltsMockMessages);
-  const { locale } = useLocalePreference(); return <main className="bridge-shell bridge-state"><p className="bridge-kicker">{t('report')}</p><h1>{report.status === 'COMPLETED' ? t('overallBand', { band: report.overallMockBand === null ? '—' : formatNumber(locale, report.overallMockBand) }) : t('reviewPending')}</h1><p lang="en">{report.disclosure}</p><ul>{Object.entries(report.skills).map(([skill, result]) => <li key={skill}><strong>{t(skill as keyof typeof report.skills)}</strong>: {result.mockBand === null ? t(result.status) : formatNumber(locale, result.mockBand)}</li>)}</ul>{report.nextActions.length ? <><h2>{t('nextActions')}</h2><ul>{report.nextActions.map((action) => <li key={action}>{action === 'Wait for teacher review of Writing and Speaking.' ? t('waitReview') : <span lang="en">{action}</span>}</li>)}</ul></> : null}<Link className="bridge-primary" href="/ielts/mock-tests">{t('back')}</Link></main>; }
+  const { locale } = useLocalePreference(); return <main className="bridge-shell exam-surface mock-page bridge-state"><p className="bridge-kicker">{t('report')}</p><h1>{report.status === 'COMPLETED' ? t('overallBand', { band: report.overallMockBand === null ? '—' : formatNumber(locale, report.overallMockBand) }) : t('reviewPending')}</h1><p lang="en">{report.disclosure}</p><ul>{Object.entries(report.skills).map(([skill, result]) => <li key={skill}><strong>{t(skill as keyof typeof report.skills)}</strong>: {result.mockBand === null ? t(result.status) : formatNumber(locale, result.mockBand)}</li>)}</ul>{report.nextActions.length ? <><h2>{t('nextActions')}</h2><ul>{report.nextActions.map((action) => <li key={action}>{action === 'Wait for teacher review of Writing and Speaking.' ? t('waitReview') : <span lang="en">{action}</span>}</li>)}</ul></> : null}<Link className="bridge-primary" href="/ielts/mock-tests">{t('back')}</Link></main>; }
 
 function ListeningAudio({ part, mode }: { readonly part: IeltsMockAttemptDto['sectionContent']['listening'][number]; readonly mode: IeltsMockAttemptDto['mode'] }) {
   const t = useT('ieltsMock', ieltsMockMessages);
@@ -62,6 +65,7 @@ function ListeningAudio({ part, mode }: { readonly part: IeltsMockAttemptDto['se
 }
 
 export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
+  const router = useRouter();
   const t = useT('ieltsMock', ieltsMockMessages);
   const { locale } = useLocalePreference();
   const [attempt, setAttempt] = useState<IeltsMockAttemptDto | null>(null);
@@ -103,8 +107,8 @@ export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
     void ieltsMockClient.get(attemptId).then(async value => { synchronizedAt.current = Date.now(); setAttempt(value); setDrafts(value.responses); if (value.currentSection === 'COMPLETE') setReport(await ieltsMockClient.report(attemptId)); }).catch(setError).finally(() => setBusy(false));
   }, [attempt, attemptId, busy, clock, remaining]);
   if (report) return <Report report={report} />;
-  if (!attempt) return <main className="bridge-shell bridge-state"><p role={error ? 'alert' : 'status'}>{error ? localizedError(error, locale) : t('restoring')}</p></main>;
-  if (attempt.currentSection === 'COMPLETE') return <main className="bridge-shell bridge-state"><p>{t('loadingReport')}</p>{error ? <p role="alert">{localizedError(error, locale)}</p> : null}</main>;
+  if (!attempt) return <main className="bridge-shell exam-surface mock-page bridge-state"><p role={error ? 'alert' : 'status'}>{error ? localizedError(error, locale) : t('restoring')}</p></main>;
+  if (attempt.currentSection === 'COMPLETE') return <main className="bridge-shell exam-surface mock-page bridge-state"><p>{t('loadingReport')}</p>{error ? <p role="alert">{localizedError(error, locale)}</p> : null}</main>;
   const save = async () => { try { const value = await ieltsMockClient.save(attemptId, { expectedRevision: attempt.revision, responses: Object.fromEntries(fields.map(field => [field.id, drafts[field.id] ?? ''])) }); apply(value); return value; } catch(cause) { await recover(cause); throw cause; } };
   const togglePause = async () => {
     setBusy(true); setError(null);
@@ -129,7 +133,7 @@ export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
       if (value.currentSection === 'COMPLETE') setReport(await ieltsMockClient.report(attemptId));
     } catch (cause) { await recover(cause); } finally { setBusy(false); }
   };
-  return <main className="bridge-shell"><header className="bridge-heading"><div><Link href="/ielts/mock-tests">{t('back')}</Link><p className="bridge-kicker">{t('attemptMeta',{version:formatNumber(locale,attempt.mockTestVersion),mode:t(attempt.mode)})}</p><h1 lang="en">{attempt.title}</h1></div></header><article className="bridge-stage-card">
+  return <main className="bridge-shell exam-surface mock-page bridge-player"><header className="bridge-heading"><div><Link href="/ielts/mock-tests">{t('back')}</Link><p className="bridge-kicker">{t('attemptMeta',{version:formatNumber(locale,attempt.mockTestVersion),mode:t(attempt.mode)})}</p><h1 lang="en">{attempt.title}</h1></div><button type="button" disabled={busy || !canWork} onClick={() => { setBusy(true); void save().then(() => router.push('/dashboard')).catch(setError).finally(() => setBusy(false)); }}>{t('exit')}</button></header><GlassSurface className="exam-progress-surface" variant="solid"><nav className="bridge-stage-nav" aria-label={t('sections')}>{(['LISTENING', 'READING', 'WRITING', 'SPEAKING'] as const).map((section, index) => <span key={section} aria-current={section === attempt.currentSection ? 'step' : undefined} className={attempt.submittedSections.includes(section) ? 'done' : ''}>{formatNumber(locale, index + 1)}<span className="sr-only"> {t(section)}</span></span>)}</nav></GlassSurface><article className="bridge-stage-card">
     <p className="bridge-kicker">{t(attempt.currentSection)}</p><h2>{t('sectionTitle', { skill: t(attempt.currentSection) })}</h2>
     <p role="timer" className="bridge-timer">{practice ? t('elapsedTime', { time: formatTime(attempt.elapsedMs + (paused ? 0 : Math.max(0, clock - synchronizedAt.current))) }) : remaining > 0 ? t('remainingTime', { time: formatTime(remaining) }) : t('expired')}</p>
     {practice ? <><button type="button" disabled={busy} onClick={() => void togglePause()}>{t(paused ? 'resumePractice' : 'pausePractice')}</button>{paused ? <p role="status">{t('paused')}</p> : null}<div>{attempt.submittedSections.filter(section => section === 'LISTENING' || section === 'READING').map(section => <button key={section} type="button" disabled={busy} onClick={() => void showReview(section)}>{t('reviewSection', { section: t(section as 'LISTENING' | 'READING') })}</button>)}</div></> : null}
@@ -138,7 +142,7 @@ export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
     {attempt.currentSection === 'READING' ? attempt.sectionContent.reading.map(passage => <section key={passage.section}><h3 lang="en">{passage.title}</h3><p lang="en">{passage.passage}</p></section>) : null}
     {attempt.currentSection === 'SPEAKING' && attempt.policyVersion === 'v2' ? attempt.sectionContent.speaking.map(part => <MockSpeakingRecorder key={part.part} attemptId={attemptId} part={part} paused={!canWork} saved={recordings.find(recording => recording.part === part.part)} onSaved={recording => setRecordings(current => [...current.filter(item => item.part !== recording.part), recording])} />) : null}
     {attempt.currentSection === 'WRITING' ? attempt.sectionContent.writing.map(task=><section key={task.task}><h3 lang="en">{task.title}</h3><MockTaskPrompt prompt={task.prompt} /></section>):null}
-    {fields.map(field => <label className="bridge-response" key={field.id}><span lang="en">{field.order ? `${formatNumber(locale, field.order)}. ` : null}{field.label}</span>{field.minimumWords ? <small>{t('minimumWords', { count: formatNumber(locale, field.minimumWords) })}</small> : null}{field.options.length ? <select disabled={!canWork} value={drafts[field.id] ?? ''} onChange={event => setDrafts({ ...drafts, [field.id]: event.target.value })}><option value="">{t('selectAnswer')}</option>{field.options.map(option => <option key={option} lang="en">{option}</option>)}</select> : <textarea lang="en" disabled={!canWork} rows={attempt.currentSection === 'WRITING' ? 12 : 4} value={drafts[field.id] ?? ''} onChange={event => setDrafts({ ...drafts, [field.id]: event.target.value })} />}</label>)}
+    {fields.map(field => <label className="bridge-response" key={field.id} data-answer-state={(drafts[field.id] ?? '').trim() ? 'answered' : 'unanswered'}><small className="exam-answer-state">{t((drafts[field.id] ?? '').trim() ? 'answered' : 'unanswered')}</small><span lang="en">{field.order ? `${formatNumber(locale, field.order)}. ` : null}{field.label}</span>{field.minimumWords ? <small>{t('minimumWords', { count: formatNumber(locale, field.minimumWords) })}</small> : null}{field.options.length ? <select disabled={!canWork} value={drafts[field.id] ?? ''} onChange={event => setDrafts({ ...drafts, [field.id]: event.target.value })}><option value="">{t('selectAnswer')}</option>{field.options.map(option => <option key={option} lang="en">{option}</option>)}</select> : <textarea lang="en" disabled={!canWork} rows={attempt.currentSection === 'WRITING' ? 12 : 4} value={drafts[field.id] ?? ''} onChange={event => setDrafts({ ...drafts, [field.id]: event.target.value })} />}</label>)}
     {error ? <p role="alert" className="bridge-error">{localizedError(error, locale)}</p> : null}
     <div><button disabled={busy || !canWork} onClick={() => { setBusy(true); void save().catch(setError).finally(() => setBusy(false)); }}>{t('save')}</button> <button className="bridge-primary" disabled={busy || paused || (attempt.policyVersion === 'v2' && attempt.currentSection === 'SPEAKING' && ![1, 2, 3].every(part => recordings.some(recording => recording.part === part)))} onClick={() => void submit()}>{attempt.currentSection === 'SPEAKING' ? t('submitMock') : t('submitSection')}</button></div>
   </article></main>;

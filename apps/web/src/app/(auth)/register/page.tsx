@@ -10,9 +10,11 @@ export default function RegisterPage() {
   return (
     <main className="auth-page">
       <section className="auth-panel" aria-labelledby="register-title">
+        <header className="auth-introduction">
         <p className="eyebrow">{t('practicalEnglish')}</p>
         <h1 id="register-title">{t('start')}</h1>
         <p>{t('registerDescription')}</p>
+        </header>
         <AuthPage mode="register" />
         <p>
           {t('alreadyLearning')} <Link href="/login">{t('logIn')}</Link>

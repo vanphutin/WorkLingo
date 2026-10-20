@@ -1,0 +1,22 @@
+[WebServer] (node:4840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 13 tests using 1 worker
+
+  ok  1 e2e\liquid-glass-phase5-checks.spec.ts:10:5 › AI content is solid without redundant manual dark backdrop filtering (1.7s)
+  ok  2 e2e\liquid-glass-phase5-checks.spec.ts:13:5 › sr-only table captions and progress labels remain accessible without visible layout (1.0s)
+  ok  3 e2e\liquid-glass-phase5-checks.spec.ts:18:5 › owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum (1.3s)
+  ok  4 e2e\liquid-glass-phase5-checks.spec.ts:23:5 › loading AI indicator honors reduced motion (422ms)
+  ok  5 e2e\liquid-glass-phase5-checks.spec.ts:36:5 › remediation screenshots preserve equivalent route theme and viewport conditions (6.5s)
+  ok  6 e2e\liquid-glass-phase5-checks.spec.ts:48:5 › contrast sampler rejects a favorable corner and accounts for foreground alpha (406ms)
+  ok  7 e2e\liquid-glass-phase5-checks.spec.ts:58:42 › actual glass composite text and native control contrast light (5.3s)
+  ok  8 e2e\liquid-glass-phase5-checks.spec.ts:58:42 › actual glass composite text and native control contrast dark (5.0s)
+  ok  9 e2e\liquid-glass-phase5-guards.spec.ts:15:44 › all routes expose reachable visible keyboard focus light (15.5s)
+  ok 10 e2e\liquid-glass-phase5-guards.spec.ts:15:44 › all routes expose reachable visible keyboard focus dark (14.9s)
+  ok 11 e2e\liquid-glass-phase5-guards.spec.ts:45:5 › client navigation audio AI curriculum retains owner styles and preference edits (1.1s)
+  ok 12 e2e\liquid-glass-phase5-guards.spec.ts:73:5 › system appearance media fallback and safe area declarations remain usable (789ms)
+  ok 13 e2e\liquid-glass-phase5-guards.spec.ts:100:5 › actual not-found boundary reflows with named return link in both themes (1.0s)
+
+  13 passed (58.4s)

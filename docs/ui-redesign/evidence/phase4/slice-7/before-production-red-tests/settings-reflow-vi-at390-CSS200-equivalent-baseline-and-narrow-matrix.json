@@ -1,0 +1,45 @@
+{
+  "title": "settings reflow vi at390 CSS200 equivalent baseline and narrow matrix",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "locale": "vi",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 564,
+      "cards": [
+        {
+          "class": "settings-card",
+          "left": 32,
+          "right": 563.8125,
+          "minWidth": "auto",
+          "columns": "178.102px 13.8047px 0px"
+        },
+        {
+          "class": "settings-card",
+          "left": 32,
+          "right": 563.8125,
+          "minWidth": "auto",
+          "columns": "28px 150.102px 13.8047px"
+        },
+        {
+          "class": "settings-card",
+          "left": 32,
+          "right": 563.8125,
+          "minWidth": "auto",
+          "columns": "43.9062px 148px 0px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 32,
+          "right": 563.8125,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "265.906px"
+    }
+  ]
+}

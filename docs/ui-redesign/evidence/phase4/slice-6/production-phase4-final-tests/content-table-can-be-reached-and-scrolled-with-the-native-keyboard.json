@@ -1,0 +1,11 @@
+{
+  "title": "content table can be reached and scrolled with the native keyboard",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "namedTableRegion": true,
+      "nativeKeyboardHorizontalScroll": true
+    }
+  ]
+}

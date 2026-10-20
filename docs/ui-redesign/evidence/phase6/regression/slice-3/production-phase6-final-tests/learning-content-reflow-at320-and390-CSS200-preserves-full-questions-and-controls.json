@@ -1,0 +1,72 @@
+{
+  "mode": "production",
+  "title": "learning content reflow at320 and390 CSS200 preserves full questions and controls",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "width": 320,
+      "skill": "reading",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "width": 320,
+      "skill": "listening",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "width": 320,
+      "skill": "speaking",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "width": 320,
+      "skill": "writing",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "width": 390,
+      "skill": "reading",
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "width": 390,
+      "skill": "listening",
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "width": 390,
+      "skill": "speaking",
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "width": 390,
+      "skill": "writing",
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    }
+  ]
+}

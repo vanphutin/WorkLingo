@@ -1,0 +1,27 @@
+{
+  "title": "exam launcher pathway and player reflow at320 CSS200",
+  "status": "failed",
+  "mode": "before-production",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/ielts/practice",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 332,
+      "offenders": [
+        {
+          "class": "",
+          "tag": "LABEL",
+          "right": 332
+        },
+        {
+          "class": "",
+          "tag": "SELECT",
+          "right": 332
+        }
+      ]
+    }
+  ]
+}

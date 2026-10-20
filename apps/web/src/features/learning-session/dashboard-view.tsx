@@ -23,6 +23,8 @@ import { DashboardInsights, type DashboardInsightsProps } from '../learner-dashb
 import { learnerDashboardMessages } from '../../i18n/messages/learnerDashboard';
 import styles from '../learner-dashboard/learner-dashboard.module.css';
 import { IntermediateTopicPicker } from './intermediate-topic-picker';
+import './dashboard.css';
+import { formatLevel } from '../mastery/evidence-format';
 
 interface DashboardViewProps extends DashboardInsightsProps {
   readonly initialTopics?: LearnerTopic[] | undefined;
@@ -178,11 +180,13 @@ export function DashboardView({
   return (
     <main className={`dashboard-container ${styles.compact}`}>
       <header className="dashboard-header">
+        <div className="dashboard-introduction">
         <span className="eyebrow">{t('learningSpace')}</span>
         <h1 className={`dashboard-title ${styles.welcome}`}>{analytics?.displayName.trim() ? dashboardT('welcome', { name: analytics.displayName.trim() }) : t('todayLearning')}</h1>
         <p className="dashboard-subtitle">
           {t('dashboardDescription')}
         </p>
+        </div>
         <nav className="dashboard-shortcuts" aria-label={t('dashboardShortcuts')}>
           <Link href="/programs">{t('explorePrograms')}</Link>
           <Link href="/mastery">{t('viewMastery')}</Link>
@@ -262,7 +266,7 @@ export function DashboardView({
             </div>}
             <div className="stat-item stat-item-wide">
               <span className="stat-label">{t('currentLevel')}</span>
-              <strong className="stat-value">{(currentLevelCode !== undefined ? currentLevelCode : analytics ? activeProgram?.currentLevelCode : progress?.currentLevelCode) ?? dashboardT('noLevel')}</strong>
+              <strong className="stat-value">{formatLevel((currentLevelCode !== undefined ? currentLevelCode : analytics ? activeProgram?.currentLevelCode : progress?.currentLevelCode) ?? dashboardT('noLevel'), locale)}</strong>
             </div>
 
             <div className="stat-item">

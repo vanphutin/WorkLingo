@@ -1,0 +1,27 @@
+[WebServer] (node:18980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+  ok  1 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 390 (3.8s)
+  ok  2 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 768 (4.5s)
+  ok  3 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 1440 (5.1s)
+  ok  4 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 390 (3.8s)
+  ok  5 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 768 (3.8s)
+  ok  6 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 1440 (5.5s)
+  ok  7 e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow vi at390 CSS200 equivalent baseline and narrow matrix (2.1s)
+  ok  8 e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow en at390 CSS200 equivalent baseline and narrow matrix (2.3s)
+  ok  9 e2e\liquid-glass-phase4-settings.spec.ts:29:5 › all settings and operations owners reflow at320 CSS200 (2.7s)
+  ok 10 e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text (2.2s)
+  ok 11 e2e\liquid-glass-phase4-settings.spec.ts:48:5 › learner audio actual source save and resume remain available (1.3s)
+  ok 12 e2e\liquid-glass-phase4-settings.spec.ts:52:51 › ai provider availability draft fallback save reload (1.8s)
+  ok 13 e2e\liquid-glass-phase4-settings.spec.ts:52:51 › adminAi provider availability draft fallback save reload (1.8s)
+  ok 14 e2e\liquid-glass-phase4-settings.spec.ts:55:5 › system audio unavailable provider and existing save contract retain gates (817ms)
+  ok 15 e2e\liquid-glass-phase4-settings.spec.ts:58:5 › content admin cannot edit system AI while account settings remain usable (603ms)
+  ok 16 e2e\liquid-glass-phase4-settings.spec.ts:61:5 › audit filter cursor details operations filter page and analytics range preserve queries (3.0s)
+  ok 17 e2e\liquid-glass-phase4-settings.spec.ts:68:5 › settings errors retry and honest operations empty states (4.0s)
+  ok 18 e2e\liquid-glass-phase4-settings.spec.ts:72:5 › system dark reduced motion transparency and forced colors keep settings usable (828ms)
+
+  18 passed (54.1s)

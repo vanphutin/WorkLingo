@@ -16,6 +16,7 @@ import { JsonTransfer } from '../admin-authoring/json-transfer';
 import { AuthoringConfirmation } from '../admin-authoring/authoring-confirmation';
 import { mockFields, newMockTemplate } from './mock-fields';
 import '../ielts-bridge/ielts-bridge.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsMockMessages['en']; values?: MessageValues };
 
@@ -187,8 +188,8 @@ export function IeltsMockWorkspace() {
     }).catch(setError).finally(() => setBusy(false));
   };
 
-  if (loading) return <main className="bridge-shell" aria-busy="true"><p role="status">{t('loading')}</p></main>;
-  return <main className="bridge-shell" aria-busy={busy}>
+  if (loading) return <section className="bridge-shell authoring-experience" aria-busy="true"><p role="status">{t('loading')}</p></section>;
+  return <section className="bridge-shell authoring-experience" aria-busy={busy}>
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
     {error ? <div role="alert" className="bridge-error"><p>{error instanceof Error && error.name === 'ZodError' ? error.message : localizedError(error, locale)}</p><button disabled={busy} onClick={retry}>{t('retry')}</button></div> : null}
     {message ? <p role="status" className="bridge-feedback">{t(message.key, message.values)}</p> : null}
@@ -220,5 +221,5 @@ export function IeltsMockWorkspace() {
       {pending.length === 0 ? <p>{t('noReviews')}</p> : pending.map(attempt => <ReviewForm key={attempt.id} attempt={attempt} busy={busy} review={input => runReview(attempt, input)} />)}
       {nextReviewCursor !== null ? <button disabled={busy} onClick={loadMoreReviews}>{t('moreReviews')}</button> : null}
     </section>
-  </main>;
+  </section>;
 }

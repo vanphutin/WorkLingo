@@ -1,0 +1,582 @@
+[WebServer] (node:18488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+  x  1 e2e\liquid-glass-phase5-checks.spec.ts:9:5 › AI content is solid without redundant manual dark backdrop filtering (2.2s)
+  x  2 e2e\liquid-glass-phase5-checks.spec.ts:12:5 › sr-only table captions and progress labels remain accessible without visible layout (674ms)
+  x  3 e2e\liquid-glass-phase5-checks.spec.ts:16:5 › owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum (1.8s)
+  x  4 e2e\liquid-glass-phase5-checks.spec.ts:23:42 › actual glass composite text and native control contrast light (4.6s)
+  x  5 e2e\liquid-glass-phase5-checks.spec.ts:23:42 › actual glass composite text and native control contrast dark (4.2s)
+
+
+  1) e2e\liquid-glass-phase5-checks.spec.ts:9:5 › AI content is solid without redundant manual dark backdrop filtering
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "none"
+    Received: "blur(12px)"
+
+       8 | async function open(page:Page,url:string,theme='light'){await page.context().addCookies([{name:'worklingo_locale',value:'vi',domain:'127.0.0.1',path:'/'}]);await page.addInitScript(t=>{if(t==='system')localStorage.removeItem('worklingo:theme:v1');else localStorage.setItem('worklingo:theme:v1',t);},theme);const item=auditRoutes.find(item=>item[1]===url)!;await prepareAuditRoute(page,item);await page.goto('http://127.0.0.1:33300'+url);await expect(page.locator(item[2]).first()).toBeVisible();}
+       9 | test('AI content is solid without redundant manual dark backdrop filtering',async({page})=>{
+    > 10 |   for(const theme of ['light','dark','system']){await page.emulateMedia({colorScheme:'dark'});await open(page,'/admin/settings/ai',theme);const styles=await page.locator('.admin-ai-card').evaluateAll(els=>els.map(el=>({background:getComputedStyle(el).backgroundColor,filter:getComputedStyle(el).backdropFilter})));records.push({theme,styles});const out=path.join(evidence,run);mkdirSync(out,{recursive:true});await page.screenshot({path:path.join(out,`ai-solid-${theme}.png`),fullPage:true});for(const style of styles)expect.soft(style.filter).toBe('none');}
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+      13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:10:545
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "none"
+    Received: "blur(12px)"
+
+       8 | async function open(page:Page,url:string,theme='light'){await page.context().addCookies([{name:'worklingo_locale',value:'vi',domain:'127.0.0.1',path:'/'}]);await page.addInitScript(t=>{if(t==='system')localStorage.removeItem('worklingo:theme:v1');else localStorage.setItem('worklingo:theme:v1',t);},theme);const item=auditRoutes.find(item=>item[1]===url)!;await prepareAuditRoute(page,item);await page.goto('http://127.0.0.1:33300'+url);await expect(page.locator(item[2]).first()).toBeVisible();}
+       9 | test('AI content is solid without redundant manual dark backdrop filtering',async({page})=>{
+    > 10 |   for(const theme of ['light','dark','system']){await page.emulateMedia({colorScheme:'dark'});await open(page,'/admin/settings/ai',theme);const styles=await page.locator('.admin-ai-card').evaluateAll(els=>els.map(el=>({background:getComputedStyle(el).backgroundColor,filter:getComputedStyle(el).backdropFilter})));records.push({theme,styles});const out=path.join(evidence,run);mkdirSync(out,{recursive:true});await page.screenshot({path:path.join(out,`ai-solid-${theme}.png`),fullPage:true});for(const style of styles)expect.soft(style.filter).toBe('none');}
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+      13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:10:545
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-2ebf3-ual-dark-backdrop-filtering\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-2ebf3-ual-dark-backdrop-filtering\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-2ebf3-ual-dark-backdrop-filtering\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase5-checks.spec.ts:12:5 › sr-only table captions and progress labels remain accessible without visible layout
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    1090
+
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+    > 13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName();
+         |                                                                                                                                                                                 ^
+      14 |   await open(page,'/ielts/practice');
+      15 | });
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:13:177
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    25.59375
+
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+    > 13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName();
+         |                                                                                                                                                                                                                                    ^
+      14 |   await open(page,'/ielts/practice');
+      15 | });
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:13:228
+
+    Error: expect(locator).toHaveAccessibleName(expected) failed
+
+    Locator: getByRole('table')
+    Error: expected value must be a string or regular expression
+    Expected has value: undefined
+
+
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+    > 13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName();
+         |                                                                                                                                                                                                                                                                                                 ^
+      14 |   await open(page,'/ielts/practice');
+      15 | });
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:13:289
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-623fb-ible-without-visible-layout\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-623fb-ible-without-visible-layout\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-623fb-ible-without-visible-layout\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e\liquid-glass-phase5-checks.spec.ts:16:5 › owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "0.18s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "all"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                      ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:374
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^0s(?:, 0s)*$/u
+    Received string:  "1e-05s"
+
+      16 | test('owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum',async({page})=>{
+      17 |   for(const [url,selectors] of [['/settings/ai','.admin-ai-select,.admin-ai-toggle-card,.admin-ai-insight-item'],['/admin/curriculum','.action-button'],['/admin/settings/audio','.admin-save-btn']] as const){
+    > 18 |     await open(page,url);await page.emulateMedia({reducedMotion:'no-preference'});const transitions=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,properties:getComputedStyle(el).transitionProperty,duration:getComputedStyle(el).transitionDuration})));records.push({url,transitions});for(const x of transitions)expect.soft(x.properties).not.toBe('all');await page.emulateMedia({reducedMotion:'reduce'});const reduced=await page.locator(selectors).evaluateAll(els=>els.map(el=>({class:el.className,transition:getComputedStyle(el).transitionDuration,animation:getComputedStyle(el).animationName})));records.push({url,reduced});for(const x of reduced)expect.soft(x.transition).toMatch(/^0s(?:, 0s)*$/u);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      19 |   }
+      20 | });
+      21 | const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:18:707
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-ffd0d--across-audio-AI-curriculum\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-ffd0d--across-audio-AI-curriculum\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-ffd0d--across-audio-AI-curriculum\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) e2e\liquid-glass-phase5-checks.spec.ts:23:42 › actual glass composite text and native control contrast light
+
+    Error: /login boundary
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    1.5214904535719933
+
+      29 |     }
+      30 |     const fields=page.locator('select:visible,input:not([type=checkbox]):not([type=radio]):visible,textarea:visible');for(const field of await fields.all()){
+    > 31 |       if(await field.isDisabled())continue;const colors=await field.evaluate(el=>{const s=getComputedStyle(el),rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);return{class:el.className,background:rgb(s.backgroundColor),border:rgb(s.borderTopColor),foreground:rgb(s.color)};});if((colors.background[3]??1)!==1)continue;const boundary=ratio(colors.border,colors.background);records.push({url,kind:'control-boundary',...colors,ratio:boundary});expect.soft(boundary,url+' boundary').toBeGreaterThanOrEqual(3);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+      32 |     }
+      33 |   }
+      34 | });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:31:480
+
+    Error: /settings boundary
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    1.5214904535719933
+
+      29 |     }
+      30 |     const fields=page.locator('select:visible,input:not([type=checkbox]):not([type=radio]):visible,textarea:visible');for(const field of await fields.all()){
+    > 31 |       if(await field.isDisabled())continue;const colors=await field.evaluate(el=>{const s=getComputedStyle(el),rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);return{class:el.className,background:rgb(s.backgroundColor),border:rgb(s.borderTopColor),foreground:rgb(s.color)};});if((colors.background[3]??1)!==1)continue;const boundary=ratio(colors.border,colors.background);records.push({url,kind:'control-boundary',...colors,ratio:boundary});expect.soft(boundary,url+' boundary').toBeGreaterThanOrEqual(3);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+      32 |     }
+      33 |   }
+      34 | });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:31:480
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-ca47e-tive-control-contrast-light\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-ca47e-tive-control-contrast-light\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-ca47e-tive-control-contrast-light\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) e2e\liquid-glass-phase5-checks.spec.ts:23:42 › actual glass composite text and native control contrast dark
+
+    Error: /login boundary
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.301371894008873
+
+      29 |     }
+      30 |     const fields=page.locator('select:visible,input:not([type=checkbox]):not([type=radio]):visible,textarea:visible');for(const field of await fields.all()){
+    > 31 |       if(await field.isDisabled())continue;const colors=await field.evaluate(el=>{const s=getComputedStyle(el),rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);return{class:el.className,background:rgb(s.backgroundColor),border:rgb(s.borderTopColor),foreground:rgb(s.color)};});if((colors.background[3]??1)!==1)continue;const boundary=ratio(colors.border,colors.background);records.push({url,kind:'control-boundary',...colors,ratio:boundary});expect.soft(boundary,url+' boundary').toBeGreaterThanOrEqual(3);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+      32 |     }
+      33 |   }
+      34 | });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:31:480
+
+    Error: /settings boundary
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.301371894008873
+
+      29 |     }
+      30 |     const fields=page.locator('select:visible,input:not([type=checkbox]):not([type=radio]):visible,textarea:visible');for(const field of await fields.all()){
+    > 31 |       if(await field.isDisabled())continue;const colors=await field.evaluate(el=>{const s=getComputedStyle(el),rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);return{class:el.className,background:rgb(s.backgroundColor),border:rgb(s.borderTopColor),foreground:rgb(s.color)};});if((colors.background[3]??1)!==1)continue;const boundary=ratio(colors.border,colors.background);records.push({url,kind:'control-boundary',...colors,ratio:boundary});expect.soft(boundary,url+' boundary').toBeGreaterThanOrEqual(3);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+      32 |     }
+      33 |   }
+      34 | });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:31:480
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-63306-ative-control-contrast-dark\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-63306-ative-control-contrast-dark\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-63306-ative-control-contrast-dark\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    e2e\liquid-glass-phase5-checks.spec.ts:9:5 › AI content is solid without redundant manual dark backdrop filtering
+    e2e\liquid-glass-phase5-checks.spec.ts:12:5 › sr-only table captions and progress labels remain accessible without visible layout
+    e2e\liquid-glass-phase5-checks.spec.ts:16:5 › owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum
+    e2e\liquid-glass-phase5-checks.spec.ts:23:42 › actual glass composite text and native control contrast light
+    e2e\liquid-glass-phase5-checks.spec.ts:23:42 › actual glass composite text and native control contrast dark
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase5.config.ts liquid-glass-phase5-checks.spec.ts
