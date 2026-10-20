@@ -169,7 +169,13 @@ test.describe('Audio source and publishing journeys', () => {
 
     await page.goto('/admin/settings/audio');
     await expect(page.getByRole('radio', { name: /azure ai speech/i })).toBeChecked();
-    await expect(page.getByText('Configured and available')).toBeVisible();
+    // Selected providers have used Active Engine since the committed baseline.
+    // Exercise both readiness and selected states instead of expecting both at once.
+    await expect(page.getByText('Active Engine', { exact: true })).toBeVisible();
+    await page.getByRole('radio', { name: /simulation audio/i }).check();
+    await expect(page.getByText('Configured and available', { exact: true })).toBeVisible();
+    await page.getByRole('radio', { name: /azure ai speech/i }).check();
+    await expect(page.getByText('Active Engine', { exact: true })).toBeVisible();
     expect(JSON.stringify(response)).not.toMatch(/subscription|secret|speechKey|apiKey/iu);
     await page.getByRole('button', { name: 'Save provider settings' }).click();
     await expect(page.getByText('Provider settings saved.')).toBeVisible();

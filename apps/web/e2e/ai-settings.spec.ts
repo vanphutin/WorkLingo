@@ -1,7 +1,15 @@
 import { randomUUID } from 'node:crypto';
+import path from 'node:path';
+import { mkdirSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 import { ADMIN_CREDENTIALS } from './helpers/content-admin';
 import { completeSelfPlacementViaApi, expectNoHorizontalOverflow } from './helpers/learner-onboarding';
+
+function screenshotPath(name: string) {
+  const directory = process.env.WORKLINGO_E2E_SCREENSHOT_DIR ?? '../../docs';
+  mkdirSync(directory, { recursive: true });
+  return path.join(directory, name);
+}
 
 test('AI account settings persist, switch language and protect unavailable providers', async ({ page }) => {
   const errors: string[] = [];
@@ -21,7 +29,7 @@ test('AI account settings persist, switch language and protect unavailable provi
   await page.locator('.language-control select').first().selectOption('vi');
   await expect(page.getByRole('heading', { name: 'Cài đặt AI', exact: true })).toBeVisible();
   await expectNoHorizontalOverflow(page);
-  if (test.info().project.name === 'ai-settings-mobile') await page.screenshot({ path: '../../docs/ai-settings-learner-mobile.png', fullPage: true });
+  if (test.info().project.name === 'ai-settings-mobile') await page.screenshot({ path: screenshotPath('ai-settings-learner-mobile.png'), fullPage: true });
   expect(errors).toEqual([]);
 });
 
@@ -36,5 +44,5 @@ test('admin AI page exposes global and account settings without provider secrets
   expect(settings.status()).toBe(200);
   expect(await settings.text()).not.toMatch(/apiKey|Bearer|sk-/u);
   await expectNoHorizontalOverflow(page);
-  if (test.info().project.name === 'ai-settings-desktop') await page.screenshot({ path: '../../docs/ai-settings-admin-desktop.png', fullPage: true });
+  if (test.info().project.name === 'ai-settings-desktop') await page.screenshot({ path: screenshotPath('ai-settings-admin-desktop.png'), fullPage: true });
 });

@@ -121,7 +121,10 @@ test.describe('Foundation 60-Minute Learning Session Journey', () => {
     // 10. Verify persisted progress summary. Reading and listening finish
     // synchronously; Teacher AI work remains queued and must not be counted yet.
     await expect(page.getByText('Current Level')).toBeVisible();
-    await expect(page.getByText('FOUNDATION_1')).toBeVisible();
+    const persistedProgress = await page.request.get('/api/v1/me/progress');
+    expect(persistedProgress.ok()).toBe(true);
+    expect(await persistedProgress.json()).toMatchObject({ currentLevelCode: 'FOUNDATION_1' });
+    await expect(page.getByText('Foundation 1', { exact: true })).toBeVisible();
     await expect(page.getByText('Completed Activities').locator('..')).toContainText('2');
     await expect(page.getByText('Completed Sessions').locator('..')).toContainText('1');
   });
