@@ -1,4 +1,18 @@
 /* Admin Audit Browser Styles */
+.operations-experience.audit-container { min-width: 0; overflow: visible; overflow-wrap: anywhere; }
+.operations-experience .audit-header { padding: clamp(.8rem,2vw,1.5rem); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); }
+.operations-experience .audit-header h1 { font-size: clamp(1.65rem,3vw,2.5rem); letter-spacing: -.035em; }
+.operations-experience .audit-filters-card { background: var(--surface-soft); border-radius: var(--radius-lg); }
+.operations-experience .audit-filters-grid { grid-template-columns: repeat(auto-fit,minmax(min(100%,12rem),1fr)); }
+.operations-experience :is(.audit-filter-item,.audit-filter-input) { min-width: 0; max-width: 100%; width: 100%; }
+.operations-experience .audit-card { border-radius: var(--radius-lg); background: var(--surface); }
+.operations-experience :is(.audit-card,.audit-card-body,.audit-meta-item,.audit-diff-section) { min-width: 0; }
+.operations-experience .audit-card-body { grid-template-columns: repeat(auto-fit,minmax(min(100%,12rem),1fr)); }
+.operations-experience .audit-pagination { flex-wrap: wrap; }
+.operations-experience .audit-card-top { flex-wrap: wrap; gap: .75rem; }
+.operations-experience :is(button,input,summary) { max-width: 100%; white-space: normal; overflow-wrap: anywhere; scroll-margin-block: 1.5rem; }
+.operations-experience :is(button,input,summary):focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.operations-experience pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .audit-container {
   width: 100%;
   max-width: 100%;

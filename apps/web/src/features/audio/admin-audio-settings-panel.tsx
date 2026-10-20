@@ -9,6 +9,7 @@ import { localizedError } from '../../i18n/errors';
 import { audioMessages } from '../../i18n/messages/audio';
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import './admin-audio-settings.css';
+import './preferences-experience.css';
 
 /* Icons with strict sizing */
 function AudioWaveIcon({ size = 16 }: { readonly size?: number }) {
@@ -222,7 +223,7 @@ export function AdminAudioSettingsPanel() {
 
   if (loadError) {
     return (
-      <section className="audio-settings-state admin-state-container" aria-labelledby="admin-audio-settings-title">
+      <section className="audio-settings-state admin-state-container preferences-experience" aria-labelledby="admin-audio-settings-title">
         <h1 id="admin-audio-settings-title">{t('generationSettings')}</h1>
         <div role="alert" className="admin-callout-warning">
           <AlertTriangleIcon />
@@ -238,7 +239,7 @@ export function AdminAudioSettingsPanel() {
 
   if (!settings) {
     return (
-      <div className="audio-settings-state admin-state-container" role="status">
+      <div className="audio-settings-state admin-state-container preferences-experience" role="status">
         <div className="admin-state-spinner" aria-hidden="true" />
         <p>{t('loadingProviders')}</p>
       </div>
@@ -271,7 +272,7 @@ export function AdminAudioSettingsPanel() {
   };
 
   return (
-    <div className="admin-audio-page">
+    <div className="admin-audio-page preferences-experience">
       {/* Settings Hub Tabs */}
       <nav className="admin-settings-tabs-nav" aria-label="Settings categories">
         <Link href="/admin/settings/audio" className="admin-settings-tab active" aria-current="page">

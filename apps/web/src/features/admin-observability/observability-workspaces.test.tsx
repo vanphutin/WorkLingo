@@ -51,12 +51,14 @@ describe('admin observability workspaces', () => {
 
   it('renders queue health and an honest empty state', async () => {
     render(<OperationsWorkspace />);
+    expect((await screen.findByRole('table')).parentElement).toHaveAttribute('tabindex', '0');
     expect(await screen.findByText('Queue depth')).toBeInTheDocument();
     expect(screen.getByText('No jobs match these filters.')).toBeInTheDocument();
   });
 
   it('renders aggregate retention and event totals without learner identifiers', async () => {
     render(<AnalyticsWorkspace />);
+    expect((await screen.findByRole('table')).parentElement).toHaveAttribute('tabindex', '0');
     expect(await screen.findByText('60%')).toBeInTheDocument();
     expect(screen.getByText('40%')).toBeInTheDocument();
     expect(screen.queryByText(/learner@example\.com|private spoken response/iu)).not.toBeInTheDocument();

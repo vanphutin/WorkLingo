@@ -10,6 +10,7 @@ import type { AudioSettings, AudioSourceId } from '@worklingo/contracts';
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import { BrowserSpeechControls } from './browser-speech-controls';
 import { useBrowserSpeech } from './use-browser-speech';
+import './preferences-experience.css';
 
 const PREVIEW_TEXT = 'Could you share the updated project timeline with the team?';
 
@@ -58,7 +59,7 @@ export function AudioSettingsPanel() {
 
   if (loadError) {
     return (
-      <section className="audio-settings-state" aria-labelledby="audio-settings-title">
+      <section className="audio-settings-state preferences-experience" aria-labelledby="audio-settings-title">
         <h1 id="audio-settings-title">{t('audioSettings')}</h1>
         <div role="alert">
           <p>{t('learnerLoadError')}</p>
@@ -68,7 +69,7 @@ export function AudioSettingsPanel() {
       </section>
     );
   }
-  if (!settings) return <p className="audio-settings-state" role="status">{t('loadingSettings')}</p>;
+  if (!settings) return <p className="audio-settings-state preferences-experience" role="status">{t('loadingSettings')}</p>;
 
   const save = async () => {
     setSaving(true);
@@ -85,7 +86,7 @@ export function AudioSettingsPanel() {
   };
 
   return (
-    <section className="audio-settings-panel" aria-labelledby="audio-settings-title">
+    <section className="audio-settings-panel preferences-experience" aria-labelledby="audio-settings-title">
       <header>
         <p className="eyebrow">{t('playback')}</p>
         <h1 id="audio-settings-title">{t('audioSettings')}</h1>
