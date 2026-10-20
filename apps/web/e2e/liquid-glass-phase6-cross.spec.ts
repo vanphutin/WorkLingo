@@ -6,7 +6,7 @@ import { importId } from './fixtures/phase4-authoring-contracts';
 import { phase6Recorder } from './fixtures/phase6-evidence';
 
 const observations = phase6Recorder();
-const urls = ['/login', '/dashboard', `/sessions/${learningId}`, `/ielts/mock-tests/${attemptId}`, `/admin/content/${importId}`, '/settings', '/'];
+const urls = ['/login', '/dashboard', `/sessions/${learningId}`, `/ielts/mock-tests/${attemptId}`, `/admin/content/${importId}`, '/settings', '/', '/admin/operations'];
 for (const theme of ['light', 'dark']) for (const [width, height] of [[390, 844], [768, 1024], [1440, 900]]) {
   test(`representative routes ${theme} ${width}`, async ({ page }) => {
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
