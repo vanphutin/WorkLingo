@@ -41,7 +41,7 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color var(--duration-micro) ease, border-color var(--duration-micro) ease, color var(--duration-micro) ease, box-shadow var(--duration-micro) ease;
   border: 1px solid transparent;
   text-decoration: none;
 }
