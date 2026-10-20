@@ -1,0 +1,45 @@
+{
+  "mode": "before-production",
+  "title": "public/auth matrix light 768",
+  "status": "passed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-home-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-login-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-register-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-phase4-missing-page-light-768.png",
+      "client": 768,
+      "scroll": 768
+    }
+  ]
+}

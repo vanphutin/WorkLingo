@@ -169,6 +169,18 @@ Dependency: Phase 0 approval → task 1 foundation → task 2 core controls/over
 - [ ] For each route, inspect loaded/empty/loading/error/disabled and actual interactions at required viewports/themes; test one representative overlay state where present. Record fixtures, screenshots and gaps against each row. No fake data replacing real controls.
 - [ ] After the slice's checks pass, review explicit changed files and make an atomic commit for only owned changes if approved Git execution scope permits. Keep unrelated dirty work out; no push/merge. Update progress/coverage once per slice.
 
+#### Phase 4 execution contract — approved 2026-10-20
+
+Source: human master attachment `e5a41d65-254b-4b8e-9246-71c3e78f82f2/Pasted text.txt`. Execute the seven slices above, in order, on the existing isolated branch. Phase3 technical acceptance is recorded in `phase4-qa.md`; Phase5/6 and publication remain unapproved.
+
+For each slice, inspect its actual page/feature owners and original dirty overlaps; retain domain handlers, effects, state, keys and API contracts. Redesign the actual page hierarchy, spacing, solid content and control grouping. Reuse the existing tokens, native controls and GlassSurface. No unused parallel component system, fake metrics or feature additions. Public landing may extract its existing inline styles into an owner stylesheet; the original untracked landing.css is not a dependency and must not be copied wholesale.
+
+Test changed behavior before implementation. Browser RED for reflow/focus defects; existing contract tests for unchanged behavior; no tests that merely assert class names. Compare the committed baseline2d9ba79 with the resulting slice under identical fixtures, viewport, locale and appearance. For each route, cover important loaded/empty/error/disabled states, actual interactions, Light/Dark, 390×844,768×1024,1440×900, and narrow/CSS200 where risky. Keep screenshots and machine results under `evidence/phase4/slice-N/`. Fixture-backed checks are separate from live API certification.
+
+Seven slice checkpoints: public/auth(3 routes +2 boundaries); dashboard/programs/mastery(3); onboarding/placement/session(3); IELTS orientation/bridge(3); integrated/pathway/mock(5); admin authoring(9); operations/settings(8). Each checkpoint requires targeted tests, browser evidence, diff review, scoped atomic commit, coverage/progress/QA update. Use statuses Discovered/In progress/Implemented/Verified/Blocked/Approved exception; no invented human exceptions and no route verification from token adoption alone.
+
+P0 review focus: draft/answer/media node identity across theme/locale/resize; server-owned timer and autosave/reload/submit payloads; admin unsaved/version/conflict/publish guards; CSS owner isolation; Settings whole-page reflow. Fix P4-SETTINGS-REFLOW-001 at its feature owner in Slice7 without hiding overflow. Bounded independent review after important P0 slices and once at the end; do not duplicate review or full suites per file. Final gates: web test/lint/typecheck/build, i18n and whitespace, affected Chromium journeys; report unavailable engines, hardware, live services and native assistive testing honestly.
+
 ### Task 5 / Phase 5 — consistency/accessibility audit
 
 **Files:** the migrated owners, `03-route-coverage.md`, `04-design-system.md`, targeted Playwright visual checks in existing `e2e/ui-redesign.spec.ts` or a scoped additional spec.

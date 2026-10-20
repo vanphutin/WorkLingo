@@ -4,7 +4,13 @@ Updated: 2026-10-20 (Asia/Saigon).
 
 ## Current status
 
-**Phase1 and Phase2: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase3: implemented, reviewed and verified with documented limitations; ready for human acceptance,2026-10-20.** Phase4–6, merge, push and deployment remain unapproved. **0/34 routes fully redesigned.** Shell integration does not count as route migration.
+**Phase1–3: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase4: APPROVED and IN PROGRESS,2026-10-20.** Phase5/6, merge, push and deployment remain unapproved. **3/34 routes redesigned and verified with Chromium fixtures;31 remaining.** Shell/token adoption is not route migration.
+
+## Phase 4 current checkpoint
+
+Approved human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b, clean isolated branch/worktree; original1,295 hashes/status/main remain unchanged. Execute the existing plan's seven slices; current Slice2 Dashboard/Programs/Mastery. [QA and acceptance](phase4-qa.md). Historical approval statements below are superseded by this current approval.
+
+Slice1 complete:7a37bed, actual Home/Auth +2 boundaries;15 targeted/402 full web tests and10 production Chromium checks pass. Comparable optimized before/after screenshots,198 contrast samples(min5.5666:1),12 narrow CSS200 keyboard/reflow cases. Independent review gaps corrected; owner-scoped focus scrolling fixed actual bottom-edge outline clipping. [Evidence](evidence/phase4/slice-1/README.md). Next: Slice2 Dashboard/Programs/Mastery; schema-valid baseline browser matrix captured, feature-only reflow RED recorded, original dirty Mastery CSS compared read-only. Do not restart Phase1–3 or broad discovery. Live API/hardware/cross-engine/native assistive limits remain explicit; no merge/push/deploy/Phase5.
 
 ## Phase 3 Final Responsive Remediation
 

@@ -1,6 +1,6 @@
 # Liquid Glass route coverage
 
-Ngày 2026-10-19. **34 page routes; 14 layouts; 0 routes migrated trong nhiệm vụ mới này.** Existing V2 không được tính thành Liquid Glass completed. `Discovered` nghĩa đã đối chiếu page imports/source; protected rendered states vẫn pending. E2E column ghi test source hiện có, không tuyên bố đã chạy hôm nay.
+Updated2026-10-20. **34 page routes;14 layouts;3 redesigned and verified with Chromium fixtures,31 remaining.** Phase4 is approved; Phase5/6 are not. Verified rows link actual state/interaction/responsive/appearance evidence; no token/shell-only migration counts. Other rows retain historical inventory status, not fresh runtime certification. See [Phase4 QA](phase4-qa.md).
 
 Phase 3 update (2026-10-20): Phase1–3 được phê duyệt; Phase4–6 chưa được phép. Learner/Admin/shared/public navigation và focus-mode shell đã tích hợp; các route nhận shell mới vẫn **0/34 migrated**. Chromium fixture checks đại diện `/`, `/settings`, `/admin/content`, `/ielts/mock-tests/[attemptId]` kiểm tra presentation và tương tác shell, không chứng nhận toàn bộ nội dung route hoặc live backend. Năm focus-mode pathname families được kiểm tra ở layout unit tests. Final responsive remediation:regression shell32px đã được loại bỏ; Settings trở về baseline564px ở VI/390px/CSS200%. Feature issue **P4-SETTINGS-REFLOW-001** vẫn open cho Phase4, có evidence/acceptance criteria trong [Phase3 QA](phase3-qa.md#p4-settings-reflow-001--inherited-feature-issue). Chưa triển khai feature fix. Baseline inventory là dirty checkout gốc; worktree từ HEAD được phân biệt trong [QA](phase1-qa.md). Trạng thái từng route dưới đây vẫn là inventory lịch sử, không bị nâng thành completed vì nhận shell/token.
 
@@ -12,9 +12,9 @@ Risk totals: **P0 14, P1 15, P2 4, P3 1**. Có 34/34 matrix rows khớp source i
 
 | Route | Role | Layout | Components | Current UI | Redesign scope | Risk | Test coverage | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `/` | Public; authenticated CTA | R | HomePage, ThemeControl, LanguageSwitcher | G + landing.css; animated example | Solid hero, floating glass top controls; finite motion | P3 | page.test; ui-redesign/i18n E2E | Discovered; Chromium baseline |
-| `/login` | Public | R + M | AuthPage, AuthForm | auth.module.css + G/W | Solid form, consistent labels/actions/errors | P0 | auth form/i18n tests; ui-redesign/i18n E2E | Discovered; Chromium baseline |
-| `/register` | Public | R + M | AuthPage, AuthForm | auth.module.css + G/W | Same auth system, retain validation/focus | P0 | auth tests; onboarding/i18n/accessibility E2E | Discovered; Chromium baseline |
+| `/` | Public; authenticated CTA | R | HomePage, ThemeControl, LanguageSwitcher | G + landing.css; static workplace example | Solid hero, floating glass top controls; finite motion | P3 | page.test; ui-redesign/i18n E2E | Verified — [Slice1](evidence/phase4/slice-1/README.md), Chromium fixtures |
+| `/login` | Public | R + M | AuthPage, AuthForm | auth.module.css + G/W | Solid form, consistent labels/actions/errors | P0 | auth form/i18n tests; ui-redesign/i18n E2E | Verified — [Slice1](evidence/phase4/slice-1/README.md), Chromium fixtures |
+| `/register` | Public | R + M | AuthPage, AuthForm | auth.module.css + G/W | Same auth system, retain validation/focus | P0 | auth tests; onboarding/i18n/accessibility E2E | Verified — [Slice1](evidence/phase4/slice-1/README.md), Chromium fixtures |
 | `/dashboard` | Signed-in/onboarded | R + L + M | DashboardView, roadmap, engagement, IELTS cards | G/W/D | Mission-first solid surface; glass shell | P1 | dashboard-view/roadmap/engagement units; adaptive/engagement/ui-redesign E2E | Discovered; runtime pending |
 | `/programs` | Signed-in/onboarded | R + L + M | ProgramCatalog | program-catalog.css + D | Solid program cards; active/disabled status | P1 | program-catalog units/E2E | Discovered; runtime pending |
 | `/mastery` | Signed-in/onboarded | R + L + M | MasteryWorkspace/Overview, ErrorBank, Checkpoint | mastery.css + D | Stable charts/evidence, restrained filter glass | P1 | mastery/checkpoint/error-bank units; adaptive/ui-redesign E2E | Discovered; runtime pending |
