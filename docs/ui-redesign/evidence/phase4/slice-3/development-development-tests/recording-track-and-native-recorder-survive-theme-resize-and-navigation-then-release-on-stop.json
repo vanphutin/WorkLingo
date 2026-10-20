@@ -1,0 +1,16 @@
+{
+  "mode": "development",
+  "title": "recording track and native recorder survive theme resize and navigation then release on stop",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "nativeMediaRecorderSyntheticInput": true,
+      "sameTrack": true,
+      "releasedOnStop": true,
+      "consentGate": true,
+      "physicalMicrophone": false,
+      "uploadVerified": false
+    }
+  ]
+}

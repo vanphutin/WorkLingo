@@ -4,15 +4,17 @@ Updated: 2026-10-20 (Asia/Saigon).
 
 ## Current status
 
-**Phase1–3: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase4: APPROVED and IN PROGRESS,2026-10-20.** Phase5/6, merge, push and deployment remain unapproved. **6/34 routes redesigned and verified with Chromium fixtures;28 remaining.** Shell/token adoption is not route migration.
+**Phase1–3: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase4: APPROVED and IN PROGRESS,2026-10-20.** Phase5/6, merge, push and deployment remain unapproved. **9/34 routes redesigned and verified with Chromium fixtures;25 remaining.** Shell/token adoption is not route migration.
 
 ## Phase 4 current checkpoint
 
-Approved human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b, clean isolated branch/worktree; original1,295 hashes/status/main remain unchanged. Execute the existing plan's seven slices; current Slice3 Onboarding/Learning/Media. [QA and acceptance](phase4-qa.md). Historical approval statements below are superseded by this current approval.
+Approved human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b, clean isolated branch/worktree; original1,295 hashes/status/main remain unchanged. Execute the existing plan's seven slices; current Slice4 IELTS Orientation/Bridge. [QA and acceptance](phase4-qa.md). Historical approval statements below are superseded by this current approval.
 
 Slice1 complete:7a37bed, actual Home/Auth +2 boundaries;15 targeted/402 full web tests and10 production Chromium checks pass. Comparable optimized before/after screenshots,198 contrast samples(min5.5666:1),12 narrow CSS200 keyboard/reflow cases. Independent review gaps corrected; owner-scoped focus scrolling fixed actual bottom-edge outline clipping. [Evidence](evidence/phase4/slice-1/README.md). Next: Slice2 Dashboard/Programs/Mastery; schema-valid baseline browser matrix captured, feature-only reflow RED recorded, original dirty Mastery CSS compared read-only. Do not restart Phase1–3 or broad discovery. Live API/hardware/cross-engine/native assistive limits remain explicit; no merge/push/deploy/Phase5.
 
 Slice2 complete:0dbb076, Dashboard/Programs/Mastery;61 targeted tests and12 optimized Chromium checks,18 matrix cells/696 text samples(min4.9886:1)/9 narrow reflow cases. Resume/program activation/weekly target/filter/checkpoint pending/loading/retry retained. [Evidence](evidence/phase4/slice-2/README.md). Next Slice3: session-contract fixture helper prepared, not yet browser-certified; no Slice3 product edits. Perform baseline captures, browser reproduction, owner-scoped changes, P0 review and fresh full web suite.
+
+Slice3 complete:c3166b0, Onboarding/Placement/Session+4 renderers.97 targeted/403 full web tests;18 optimized Chromium(36 paired states,498 contrast min4.87497:1,8 CSS200 renderer cases). Pending-save revisions/selection, draft reload/submit, inline evaluation, synthetic native recorder tracks/consent and native WAV playback retained. Independent P0 review gaps addressed; no unresolved Critical/Important. Original1295/main/status unchanged. NextSlice4: fixture and browser harness prepared,6 baseline matrix tests captured; no Slice4 product edit yet. Do not redo earlier phases/slices. No merge/push/deploy/Phase5.
 
 ## Phase 3 Final Responsive Remediation
 

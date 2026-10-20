@@ -1,0 +1,44 @@
+{
+  "mode": "before-production",
+  "title": "session matrix dark 390",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "name": "onboarding-reading-dark-390",
+      "url": "/onboarding",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "placement-reading-dark-390",
+      "url": "/onboarding/placement/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "session-reading-dark-390",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "session-listening-dark-390",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "session-speaking-dark-390",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "session-writing-dark-390",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 390,
+      "scroll": 390
+    }
+  ]
+}

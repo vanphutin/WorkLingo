@@ -1,0 +1,67 @@
+{
+  "mode": "before-production",
+  "title": "learning content reflow at320 and390 CSS200 preserves full questions and controls",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "width": 320,
+      "skill": "reading",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 418,
+      "offenders": [
+        {
+          "class": "questions-list",
+          "right": 418,
+          "minWidth": "auto"
+        },
+        {
+          "class": "question-block",
+          "right": 418,
+          "minWidth": "0px"
+        },
+        {
+          "class": "question-prompt",
+          "right": 418,
+          "minWidth": "0px"
+        },
+        {
+          "class": "options-group",
+          "right": 418,
+          "minWidth": "0px"
+        },
+        {
+          "class": "option-label ",
+          "right": 418,
+          "minWidth": "auto"
+        },
+        {
+          "class": "option-text",
+          "right": 384,
+          "minWidth": "auto"
+        },
+        {
+          "class": "option-label ",
+          "right": 418,
+          "minWidth": "auto"
+        },
+        {
+          "class": "option-text",
+          "right": 384,
+          "minWidth": "auto"
+        },
+        {
+          "class": "activity-footer",
+          "right": 418,
+          "minWidth": "auto"
+        },
+        {
+          "class": "continue-button",
+          "right": 418,
+          "minWidth": "160px"
+        }
+      ]
+    }
+  ]
+}

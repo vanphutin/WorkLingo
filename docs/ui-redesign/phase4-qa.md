@@ -14,13 +14,13 @@ Fresh entry checks: isolated branch/path/HEAD clean, main7a5e383 unchanged, no u
 | --- | ---: | --- | --- |
 | 1 Public/Auth + boundaries | 3 | Verified (Chromium fixtures) | 7a37bed; [evidence](evidence/phase4/slice-1/README.md) |
 | 2 Dashboard/Programs/Mastery | 3 | Verified (Chromium fixtures) | 0dbb076; [evidence](evidence/phase4/slice-2/README.md) |
-| 3 Onboarding/Learning/Media | 3 | In progress | Pending |
-| 4 IELTS orientation/bridge | 3 | Discovered | Pending |
+| 3 Onboarding/Learning/Media | 3 | Verified (Chromium fixtures) | c3166b0; [evidence](evidence/phase4/slice-3/README.md) |
+| 4 IELTS orientation/bridge | 3 | In progress | Baseline captured |
 | 5 IELTS integrated/pathway/mock | 5 | Discovered | Pending |
 | 6 Admin authoring | 9 | Discovered | Pending |
 | 7 Operations/settings | 8 | Discovered | Pending |
 
-Coverage now:34 total,6 implemented,6 verified,0 blocked,28 remaining. Error/not-found boundaries are additional owners, not routes.
+Coverage now:34 total,9 implemented,9 verified,0 blocked,25 remaining. Error/not-found boundaries are additional owners, not routes.
 
 ## Slice 1 — Public/Auth
 
@@ -43,3 +43,11 @@ Nine files61 targeted tests pass. Baseline narrow RED identified four skill-evid
 Lint/typecheck/i18n/build/whitespace pass; full402-test web suite reused from Slice1, not rerun for each style owner. Fresh full suite planned at Slice3 P0 milestone. Parent self-review of the bounded diff and actual desktop/mobile/Dark screenshots found no Critical/Important. P0 independent review remains planned after Slice3; no duplicate reviewer for this P1 slice.
 
 Schema-valid transport fixtures use existing owner unit data. They do not certify live data, scoring/advancement, real provider/backend, Firefox/WebKit, native browser zoom, screen readers or performance. Loading/error checks are actual rendered component states with delayed/rejected fixture requests. Every route now has actual owner changes plus linked browser/state/interaction evidence; shell/token adoption was not counted. New shared test-only contrast helper is explicit about opaque samples; glass fallback/composite evidence remains inherited from prior phases.
+
+## Slice3 — Onboarding/Learning/Media
+
+Code c3166b0. Actual production owners: SessionShell adds solid grouped session actions and imports session-experience.css; onboarding.css refines real choice/placement presentation. CSS scopes reading/listening/speaking/writing/editor/media/inline feedback/progress/support layouts without changing renderers, IDs, handlers, effects, state or API. Original dirty shell/topup feedback examined read-only and deliberately not copied; inline Phase2 contract retained.
+
+97 targeted tests(18files),403 full web tests(85files),18 optimized Chromium checks(16+2 review), lint/typecheck/i18n/build/whitespace pass.36 paired required viewport/theme states on immutable optimized2d9 versus optimized source;498 effective opaque contrast samples min4.87497:1. Baseline reflow RED418px/320; final8 narrow renderer cases fit. Pending writing save test holds response, keeps latest text and selection[7,14] through theme/resize and verifies revisions0→1. Actual autosave/reload/pause/resume/submit completes fixture session and displays pending inline evaluation. Native audio node keeps playback; native MediaRecorder synthetic source retains one live track across theme/navigation/resize, releases on stop, consent gates upload. Reading answer/placement start/version/checkpoint, error retry, loading/empty/complete/disabled states exercised. Browser upload/deletion/provider evaluation are not claimed; corresponding existing unit callbacks pass.
+
+Independent scoped review found no product regression; parent treated three acceptance-evidence gaps as Important and fixed in one pass. Harness errors and true CSS root cause are distinguished in [review](evidence/phase4/slice-3/review.md). Full403 pass did not reproduce historical Focus Mode intermittent failure; no unproven root-cause claim. UI-only limitations: fixtures, no live backend/provider/hardware, native zoom/screenreader, cross-engine or performance certification. No unresolved Critical/Important in this slice.

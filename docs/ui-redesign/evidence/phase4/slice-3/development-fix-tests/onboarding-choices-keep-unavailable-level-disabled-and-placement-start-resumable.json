@@ -1,0 +1,13 @@
+{
+  "mode": "development",
+  "title": "onboarding choices keep unavailable level disabled and placement start resumable",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "disabledLevel": true,
+      "placementStart": true,
+      "pinnedVersion": "b2c3d4e5-f6a7-4b9c-8d1e-2f3a4b5c6d7e"
+    }
+  ]
+}
