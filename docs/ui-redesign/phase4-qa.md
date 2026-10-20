@@ -16,11 +16,11 @@ Fresh entry checks: isolated branch/path/HEAD clean, main7a5e383 unchanged, no u
 | 2 Dashboard/Programs/Mastery | 3 | Verified (Chromium fixtures) | 0dbb076; [evidence](evidence/phase4/slice-2/README.md) |
 | 3 Onboarding/Learning/Media | 3 | Verified (Chromium fixtures) | c3166b0; [evidence](evidence/phase4/slice-3/README.md) |
 | 4 IELTS orientation/bridge | 3 | Verified (Chromium fixtures) | bb9a63b + touch follow-up; [evidence](evidence/phase4/slice-4/README.md) |
-| 5 IELTS integrated/pathway/mock | 5 | In progress | Pending |
+| 5 IELTS integrated/pathway/mock | 5 | Verified (Chromium fixtures) | 41d05ba; [evidence](evidence/phase4/slice-5/README.md) |
 | 6 Admin authoring | 9 | Discovered | Pending |
 | 7 Operations/settings | 8 | Discovered | Pending |
 
-Coverage now:34 total,12 implemented,12 verified,0 blocked,22 remaining. Error/not-found boundaries are additional owners, not routes.
+Coverage now:34 total,17 implemented,17 verified,0 blocked,17 remaining. Error/not-found boundaries are additional owners, not routes.
 
 ## Slice 1 — Public/Auth
 
@@ -57,3 +57,7 @@ Independent scoped review found no product regression; parent treated three acce
 Code bb9a63b + follow-up narration target fix (manifest exact hash). Orientation/Bridge owner CSS refines solid slide/stage/module hierarchy and fluid narration/answer controls; actual header/progress add disjoint regular/solid GlassSurface. Handlers/effects/keys/version/revisions and answer/timer progression unchanged. Shared Bridge CSS also reaches existing integrated/mock consumers; those real owners are explicitly next Slice5, never counted verified by this shared adoption.
 
 13 targeted tests,14 optimized Chromium, lint/type/build/i18n/whitespace pass. Full403 reused from Slice3 P0 gate; no duplicate suite for these style owners.18 paired actual route cells across3 viewports/two themes.132 opaque text samples min6.1049:1. RED389px at320/CSS200 fixed at narration/fieldset/flex owner; final four narrow cases plus native keyboard full indicator bounds pass. Visual QA found25px narration controls, reproduced RED and fixed44px; optimized14/14 fresh. Orientation wrong/correct answers, revisions2→3→4, version, same radio through theme/resize, reload/completion; Bridge all10stages, answer gating, timed deadline and completed resume; locked/empty/error/loading preserved. Parent self-review, no Critical/Important; P0 review next Slice5. Fixtures are not live API/narration/provider certification; native zoom/assistive/other engines/performance remain unmeasured.
+
+## Slice5 checkpoint
+
+Code 41d05ba09b2a6b220218074f3c53123d42a52e1c;17/34 verified,17 remain.15 optimized Chromium,17 targeted,403 full web tests and lint/types/i18n/build pass. [Evidence](evidence/phase4/slice-5/README.md). Next Slice6, no Phase5 authorization.

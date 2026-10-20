@@ -143,3 +143,7 @@ Rollback, if separately authorized: revert the known Phase 1 code commit on this
 Used: using-superpowers → routing; ui-ux-pro-max → UI/contrast guidance; codex-quota-optimizer → scoped discovery and targeted checks; using-git-worktrees / git-workflow-and-versioning → isolation and atomic own-file commits; executing-plans / test-driven-development → inline Phase 1 and RED/GREEN; vercel-react-best-practices → storage/hydration boundaries; systematic-debugging / receiving-code-review → evidence-based fixes; requesting-code-review / code-review-and-quality → one independent review and mutation check; verification-before-completion → fresh final evidence; finishing-a-development-branch → keep branch per explicit user policy. Mandate-steward governs preserved historical proposal boundaries; no broader implementation approval was invented.
 
 Not used: redundant visual/implementation skill workflows, extra implementer agents, new framework/dependencies, backend/database/Sites/imagegen. No account quota estimate or model setting change.
+
+## Slice5 checkpoint
+
+Code 41d05ba09b2a6b220218074f3c53123d42a52e1c;17/34 verified,17 remain.15 optimized Chromium,17 targeted,403 full web tests and lint/types/i18n/build pass. [Evidence](evidence/phase4/slice-5/README.md). Next Slice6, no Phase5 authorization.

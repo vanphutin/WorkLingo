@@ -1,0 +1,23 @@
+{
+  "title": "integrated blocks preserve answer duration snapshot deadline progression and completion",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "duration": 60,
+      "pinnedPlan": true,
+      "profileVersionId": "77777777-7777-4777-8777-777777777777",
+      "moduleVersions": [
+        "99999999-9999-4999-8999-000000000001",
+        "99999999-9999-4999-8999-000000000002",
+        "99999999-9999-4999-8999-000000000003",
+        "99999999-9999-4999-8999-000000000004"
+      ],
+      "answerPreserved": true,
+      "fourBlocks": true,
+      "reloadCompleted": true,
+      "writes": 4
+    }
+  ]
+}

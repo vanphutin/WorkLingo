@@ -1,0 +1,10 @@
+{
+  "beforeCommit": "2d9ba797f92daf2583210c66ab2141769dcfd95b",
+  "afterCommit": "41d05ba09b2a6b220218074f3c53123d42a52e1c",
+  "environment": "optimized Next; Chromium; schema-valid intercepted API fixtures; VI",
+  "routes": 5,
+  "pairedCells": 30,
+  "browserTests": 15,
+  "fullWebTests": 403,
+  "targetedTests": 17
+}
