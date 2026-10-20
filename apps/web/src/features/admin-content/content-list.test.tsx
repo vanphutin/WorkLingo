@@ -68,6 +68,7 @@ describe('ContentList', () => {
   it('renders list of imports with status, revision, and links to edit or view', () => {
     render(<ContentList imports={sampleImports} />);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getAllByRole('region', { name: 'Content imports', exact: true })).toHaveLength(1);
     expect(screen.getByRole('table').parentElement).toHaveAttribute('tabindex', '0');
     expect(screen.getByRole('table').parentElement).toHaveAccessibleName();
 

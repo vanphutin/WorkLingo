@@ -35,7 +35,7 @@ export function ContentList({ imports }: ContentListProps) {
   }
 
   return (
-    <div className="content-list-container authoring-experience" role="region" aria-label={t('importsRegion')}>
+    <div className="content-list-container authoring-experience">
       <div className="content-list-header">
         <div>
           <h1>{t('allImports', { count: imports.length })}</h1>
