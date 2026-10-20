@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
 import { DashboardView } from './dashboard-view';
+import { LocaleProvider } from '../../i18n/provider';
 
 const mockProgress: LearnerProgressDto = {
   activityAttempts: 4,
@@ -163,8 +164,15 @@ describe('DashboardView', () => {
     );
 
     expect(screen.getByText('Introduce yourself to a new colleague')).toBeInTheDocument();
-    expect(screen.getByText('FOUNDATION_1')).toBeInTheDocument();
+    expect(screen.getByText('Foundation 1')).toBeInTheDocument();
     expect(screen.getByText('3')).toBeInTheDocument(); // completed activities
+  });
+
+  it('localizes the known current-level label without changing an authored level code', () => {
+    const { rerender } = render(<LocaleProvider initialLocale="vi"><DashboardView progress={mockProgress} onStartSession={vi.fn()} /></LocaleProvider>);
+    expect(screen.getByText('Nền tảng 1')).toBeInTheDocument();
+    rerender(<LocaleProvider initialLocale="vi"><DashboardView progress={{ ...mockProgress, currentLevelCode: 'WORKPLACE_CUSTOM' }} onStartSession={vi.fn()} /></LocaleProvider>);
+    expect(screen.getByText('WORKPLACE_CUSTOM')).toBeInTheDocument();
   });
 
   it('triggers session creation with duration 60 and updates button label dynamically', async () => {

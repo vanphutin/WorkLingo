@@ -18,6 +18,8 @@ import { IeltsBridgeDashboardCard } from '../ielts-bridge/ielts-bridge-dashboard
 import { IntegratedPracticeDashboardCard } from '../ielts-integrated/integrated-practice';
 import { IeltsMockDashboardCard } from '../ielts-mock/ielts-mock';
 import { IeltsBandDashboardCard } from '../ielts-band-curriculum/ielts-band-pathway';
+import './dashboard.css';
+import { formatLevel } from '../mastery/evidence-format';
 
 interface DashboardViewProps {
   readonly progress: LearnerProgressDto | null;
@@ -155,11 +157,13 @@ export function DashboardView({
   return (
     <main className="dashboard-container">
       <header className="dashboard-header">
+        <div className="dashboard-introduction">
         <span className="eyebrow">{t('learningSpace')}</span>
         <h1 className="dashboard-title">{t('todayLearning')}</h1>
         <p className="dashboard-subtitle">
           {t('dashboardDescription')}
         </p>
+        </div>
         <nav className="dashboard-shortcuts" aria-label={t('dashboardShortcuts')}>
           <Link href="/programs">{t('explorePrograms')}</Link>
           <Link href="/mastery">{t('viewMastery')}</Link>
@@ -238,7 +242,7 @@ export function DashboardView({
             </div>}
             <div className="stat-item">
               <span className="stat-label">{t('currentLevel')}</span>
-              <strong className="stat-value">{progress?.currentLevelCode ?? 'FOUNDATION_1'}</strong>
+              <strong className="stat-value">{formatLevel(progress?.currentLevelCode ?? 'FOUNDATION_1', locale)}</strong>
             </div>
 
             <div className="stat-item">

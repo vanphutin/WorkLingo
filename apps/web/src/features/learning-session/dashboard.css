@@ -1,0 +1,45 @@
+/* Dashboard content owner. Shared shell/player selectors remain in their owners. */
+.dashboard-container { min-width: 0; overflow-wrap: anywhere; }
+.dashboard-container .dashboard-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; max-width: none; padding-block-end: 2rem; }
+.dashboard-container .dashboard-introduction { flex: 1 1 28rem; min-width: 0; }
+.dashboard-container .dashboard-title { font-size: clamp(1.75rem, 3vw, 3rem); line-height: 1.15; letter-spacing: -.04em; }
+.dashboard-container .dashboard-subtitle { max-width: 60ch; margin-block-end: 0; line-height: 1.75; color: var(--text-secondary); }
+.dashboard-container .dashboard-shortcuts { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; }
+.dashboard-container .dashboard-shortcuts a { min-height: 44px; padding: .5rem .75rem; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface-primary); text-decoration: none; }
+.dashboard-container .dashboard-shortcuts a:hover { background: var(--color-primary-subtle); }
+.dashboard-container .dashboard-grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: stretch; }
+.dashboard-container .dashboard-card { background: var(--surface-primary); border-radius: var(--radius-panel); padding: clamp(1rem, 2.5vw, 2rem); box-shadow: none; }
+.dashboard-container .next-mission-card { border-block-start: 3px solid var(--primary); border-radius: var(--radius-feature); }
+.dashboard-container .card-tag { color: var(--color-accent); }
+.dashboard-container .mission-title { margin-block: 1rem; max-width: 28ch; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.25; letter-spacing: -.03em; }
+.dashboard-container .mission-description { color: var(--text-secondary); line-height: 1.75; }
+.dashboard-container .session-launcher { min-width: 0; background: var(--surface-secondary); border-radius: var(--radius-control); padding: 1rem; }
+.dashboard-container :is(.field-group, .stat-item, .engagement-stat-card, .skill-evidence-card, .skill-card-top) { min-width: 0; }
+.dashboard-container :is(select, button, .inline-button) { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.dashboard-container select { width: 100%; font-size: 1rem; }
+.dashboard-container .progress-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.dashboard-container .stat-item { display: flex; flex-direction: column; gap: .5rem; }
+.dashboard-container .stat-item-wide { grid-column: 1 / -1; }
+.dashboard-container .stat-label { color: var(--text-secondary); font-size: .875rem; text-transform: none; letter-spacing: 0; }
+.dashboard-container .stat-value { font-size: clamp(1.375rem, 2.5vw, 2rem); font-variant-numeric: tabular-nums; }
+.dashboard-container .roadmap-panel { margin-block-start: 0; }
+.dashboard-container .roadmap-heading-row { flex-wrap: wrap; }
+.dashboard-container .roadmap-card { border-inline-start-width: 3px; border-radius: var(--radius-control); }
+.dashboard-container .roadmap-card-locked { opacity: 1; background: var(--surface-secondary); }
+.dashboard-container .roadmap-state { font-size: .875rem; line-height: 1.5; }
+.dashboard-container :is(.engagement-overview-grid, .evidence-skills-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.dashboard-container :is(.engagement-stat-card, .skill-evidence-card) { background: var(--surface-secondary); border-radius: var(--radius-control); padding: 1rem; }
+.dashboard-container .skill-card-top { flex-wrap: wrap; gap: .75rem; }
+.dashboard-container :is(.status-badge, .summary-chip) { white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
+.dashboard-container .neutral-subtext { font-size: .9375rem; line-height: 1.6; }
+.dashboard-container .evidence-summary-chips { gap: .5rem; }
+.dashboard-container .evidence-progress-section { margin-block-start: 2rem; padding-block-start: 1.5rem; border-block-start: 1px solid var(--border); }
+.dashboard-container :is(a, button, input, select) { scroll-margin-block: 1rem; }
+@media (max-width: 999px) {
+  .dashboard-container .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 540px) {
+  .dashboard-container :is(.engagement-overview-grid, .evidence-skills-grid, .progress-stats) { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-container .dashboard-card { padding: .875rem; }
+  .dashboard-container :is(.engagement-stat-card, .skill-evidence-card, .session-launcher) { padding: .75rem; }
+}
