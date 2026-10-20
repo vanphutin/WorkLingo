@@ -13,14 +13,14 @@ Fresh entry checks: isolated branch/path/HEAD clean, main7a5e383 unchanged, no u
 | Slice | Routes | Status | Evidence / commit |
 | --- | ---: | --- | --- |
 | 1 Public/Auth + boundaries | 3 | Verified (Chromium fixtures) | 7a37bed; [evidence](evidence/phase4/slice-1/README.md) |
-| 2 Dashboard/Programs/Mastery | 3 | Discovered | Pending |
-| 3 Onboarding/Learning/Media | 3 | Discovered | Pending |
+| 2 Dashboard/Programs/Mastery | 3 | Verified (Chromium fixtures) | 0dbb076; [evidence](evidence/phase4/slice-2/README.md) |
+| 3 Onboarding/Learning/Media | 3 | In progress | Pending |
 | 4 IELTS orientation/bridge | 3 | Discovered | Pending |
 | 5 IELTS integrated/pathway/mock | 5 | Discovered | Pending |
 | 6 Admin authoring | 9 | Discovered | Pending |
 | 7 Operations/settings | 8 | Discovered | Pending |
 
-Coverage now:34 total,3 implemented,3 verified,0 blocked,31 remaining. Error/not-found boundaries are additional owners, not routes.
+Coverage now:34 total,6 implemented,6 verified,0 blocked,28 remaining. Error/not-found boundaries are additional owners, not routes.
 
 ## Slice 1 — Public/Auth
 
@@ -33,3 +33,13 @@ TDD/evidence: baseline reflow RED333px at320; strengthened heading RED1/4 then G
 Independent review: two verification gaps addressed in one parent fix pass; [review and declined-to-judge rulings](evidence/phase4/slice-1/review.md). Per-test/per-run persistence now retains all24 matrix observations even on partial rerun/worker restart. Lint/typecheck/i18n/build/whitespace pass. Historical Focus Mode intermittent failure did not reproduce in the fresh402-test full run; cause remains unproven, not labelled fixed.
 
 Limits: schema-valid browser transports simulate authentication/data responses. Live auth/API, native browser zoom, screen-reader, Firefox/WebKit and performance remain unmeasured. Error boundary recovery is covered by callback/confidentiality unit tests, not by injecting a live Next runtime exception. Glass composite contrast is inherited Phase1–3 evidence; new content contrast samples are opaque effective-background checks. No Critical/Important finding remains within Slice1.
+
+## Slice 2 — Dashboard/Programs/Mastery
+
+Code0dbb076 (`feat(ui): redesign dashboard programs and mastery workspaces`). DashboardView imports its owner dashboard.css and groups the introduction/shortcuts, prioritizes the existing resume action and separates solid progress/roadmap/evidence regions. ProgramCatalog's owner stylesheet groups availability under titles, wraps status labels, retains active/unavailable actions and uses solid content. MasteryWorkspace adds one GlassSurface around existing section links; mastery.css owns readable evidence/data/filter layouts. All state/handlers/keys/IDs/API calls stay unchanged. Current-level display reuses existing formatLevel: known code localized, unknown authored code retained; source code remains unchanged in API/state. Original dirty Mastery CSS was compared read-only; its independent animation/dark literal overrides were not copied.
+
+Nine files61 targeted tests pass. Baseline narrow RED identified four skill-evidence-card flex items with min-width:auto extending to324.984375px at320/CSS200. Feature-owned min-width:0, zero-minimum grid tracks and wrapping repair it without clipping; nine narrow cases pass. Known-level presentation RED2 assertions then GREEN61. Twelve optimized Chromium checks pass:18 loaded route/appearance/viewport cells, loaded/empty/error/retry/disabled/loading,696 opaque text samples(min4.9886:1), VI/EN, System appearance, reduced motion/transparency and forced colors. Real controls preserve saved-session href, program activation PUT, weekly-target PATCH, skill-filter query, pending checkpoint POST/no advancement, loading resolution and native Tab filter→Practice again→assessment with full outline viewport bounds. The first Tab assertion omitted the existing Practice again link; recorded DOM order established the test mistake and the corrected order passes, with no product change.
+
+Lint/typecheck/i18n/build/whitespace pass; full402-test web suite reused from Slice1, not rerun for each style owner. Fresh full suite planned at Slice3 P0 milestone. Parent self-review of the bounded diff and actual desktop/mobile/Dark screenshots found no Critical/Important. P0 independent review remains planned after Slice3; no duplicate reviewer for this P1 slice.
+
+Schema-valid transport fixtures use existing owner unit data. They do not certify live data, scoring/advancement, real provider/backend, Firefox/WebKit, native browser zoom, screen readers or performance. Loading/error checks are actual rendered component states with delayed/rejected fixture requests. Every route now has actual owner changes plus linked browser/state/interaction evidence; shell/token adoption was not counted. New shared test-only contrast helper is explicit about opaque samples; glass fallback/composite evidence remains inherited from prior phases.

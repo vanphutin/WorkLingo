@@ -1,0 +1,35 @@
+{
+  "mode": "before-production",
+  "title": "learning matrix dark 768",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "file": "before-production-dashboard-dark-768.png"
+    },
+    {
+      "url": "/programs",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "file": "before-production-programs-dark-768.png"
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "file": "before-production-mastery-dark-768.png"
+    }
+  ]
+}

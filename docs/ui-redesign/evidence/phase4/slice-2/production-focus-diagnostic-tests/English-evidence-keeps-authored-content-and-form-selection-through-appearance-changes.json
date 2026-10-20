@@ -1,0 +1,59 @@
+{
+  "mode": "production",
+  "title": "English evidence keeps authored content and form selection through appearance changes",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "focusDiagnostic": {
+        "active": "<a href=\"/dashboard\">Practice again</a>",
+        "controls": [
+          {
+            "name": "Back to dashboard"
+          },
+          {
+            "name": "Memory Health"
+          },
+          {
+            "name": "Mastery Map"
+          },
+          {
+            "name": "Error Bank"
+          },
+          {
+            "name": "Checkpoint assessment"
+          },
+          {
+            "name": "follow up"
+          },
+          {
+            "name": "Practice your review items"
+          },
+          {
+            "name": "All skillsReadingListeningSpeakingWriting",
+            "disabled": false
+          },
+          {
+            "name": "Practice again"
+          },
+          {
+            "name": "Previous page",
+            "disabled": true
+          },
+          {
+            "name": "Next page",
+            "disabled": true
+          },
+          {
+            "name": "Assess completed session",
+            "disabled": false
+          },
+          {
+            "name": "Refresh checkpoint",
+            "disabled": false
+          }
+        ]
+      }
+    }
+  ]
+}

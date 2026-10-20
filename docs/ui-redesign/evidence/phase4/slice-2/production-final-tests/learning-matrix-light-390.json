@@ -1,0 +1,1775 @@
+{
+  "mode": "production",
+  "title": "learning matrix light 390",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Việc học hôm nay",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ công việc rồi xem kỹ năng của bạn đang tiến bộ thế nào.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Handle a workplace request",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tự tin hơn qua đọc, nghe, nói và viết. Chương trình học quyết định các bài luyện",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Hành trình học của bạn",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chương trình đang học: Intermediate",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cấp độ hiện tại",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nền tảng 1",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Hoạt động đã hoàn thành",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "3",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng số lần làm bài",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "4",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Buổi học đã hoàn thành",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tiến độ dựa trên minh chứng đã được đánh giá và lưu trên máy chủ.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Handle a workplace request",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Report an issue",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đến hạn ôn tập",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nhiệm vụ và minh chứng hằng tuần",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tuần này",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "2 trên 3 ngày học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Còn 1 ngày trong tuần này",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Sự đều đặn",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "2 tuần học đều đặn",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tốt nhất: 4 tuần",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Sự đều đặn được tính bằng số tuần liên tiếp bạn đạt mục tiêu.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Minh chứng tiến bộ",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Dựa trên các phiên học đã được đánh giá trong hai giai đoạn so sánh, mỗi giai đo",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "url": "/dashboard",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "file": "production-dashboard-light-390.png"
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Các lộ trình tiếng Anh công sở",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn chương trình học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với lộ trình phù hợp nền tảng hiện tại. Chương trình luyện thi mới sẽ mở",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chương trình đang học: Trung cấp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nền tảng / Pre-A1-A2",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Sơ cấp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh nền tảng qua bài luyện bốn kỹ năng có hướng dẫn.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mục tiêu học tập: Hiểu tiếng Anh thực tế trong các tình huống quen thuộc.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trình độ đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chương trình bạn đang học",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trung cấp / B1-B2",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trung cấp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tự tin dùng tiếng Anh trong các tình huống công sở hằng ngày.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mục tiêu học tập: Giao tiếp, hiểu và phản hồi hiệu quả tại nơi làm việc.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trình độ đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "2",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Định hướng TOEIC",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "TOEIC",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Luyện thi TOEIC qua ngôn ngữ công sở thực tế.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mục tiêu học tập: Củng cố kỹ năng nghe và đọc.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trình độ đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Định hướng band IELTS",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "IELTS",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phát triển tiếng Anh tích hợp cho lộ trình IELTS trong tương lai.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mục tiêu học tập: Tích lũy minh chứng ngôn ngữ để luyện thi IELTS.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trình độ đã xuất bản",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/programs",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "file": "production-programs-light-390.png"
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Minh chứng học tập của bạn",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Biết kỹ năng nào đang tiến bộ, nội dung nào cần ôn lại và khi nào bạn sẵn sàng l",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mức độ ghi nhớ",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Dựa trên bài luyện đã được đánh giá và lịch ôn tập. Kỹ năng chưa đánh giá chưa c",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng quan: 0%",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0%",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0%",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1 cụm ngôn ngữ đã đánh giá",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1 đến hạn · 1 cần chú ý",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nghe",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đánh giá",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 cụm ngôn ngữ đã đánh giá",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 đến hạn · 0 cần chú ý",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nói",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đánh giá",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 cụm ngôn ngữ đã đánh giá",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 đến hạn · 0 cần chú ý",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Viết",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đánh giá",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 cụm ngôn ngữ đã đánh giá",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 đến hạn · 0 cần chú ý",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bản đồ thành thạo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Xem minh chứng cho từng cụm từ công sở ở cả bốn kỹ năng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "follow up",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Check on progress",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0%",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cần chú ý",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Độ tin cậy: 25%",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Minh chứng gần nhất: 7 thg 10, 2026",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa có lịch ôn tập",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đánh giá",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa có minh chứng đã đánh giá.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đánh giá",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa có minh chứng đã đánh giá.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đánh giá",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 4.988603161728912
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa có minh chứng đã đánh giá.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Danh sách ôn tập",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ngân hàng lỗi",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Dùng lỗi từ bài luyện đã được đánh giá để định hướng phiên học tiếp theo.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1 mục",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "follow up",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc · 2 lần",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ghi nhận lần đầu: 7 thg 10, 2026",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ghi nhận gần nhất: 7 thg 10, 2026",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mục này phản ánh toàn bộ hoạt động.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đánh giá chuyển trình độ",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đánh giá phiên đã hoàn thành theo ngưỡng 70% cho từng kỹ năng. Việc lên trình độ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trình độ hiện tại: Nền tảng 1",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa có đánh giá chuyển trình độ. Hoàn thành một phiên nhiệm vụ để bắt đầu.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/mastery",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "file": "production-mastery-light-390.png"
+    }
+  ]
+}
