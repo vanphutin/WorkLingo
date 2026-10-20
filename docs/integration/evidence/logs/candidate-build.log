@@ -1,0 +1,104 @@
+
+> @worklingo/web@0.0.0 build D:\Projects\WorkLingo-Integration\apps\web
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 606ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 19.3s
+  Running TypeScript ...
+  Finished TypeScript in 20.6s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/39) ...
+  Generating static pages using 7 workers (9/39) 
+  Generating static pages using 7 workers (19/39) 
+  Generating static pages using 7 workers (29/39) 
+✓ Generating static pages using 7 workers (39/39) in 887ms
+  Finalizing page optimization ...
+Turbopack build encountered 1 warning:
+./apps/web/src/features/admin-curriculum/curriculum.css:887:63
+Warning: Parsing CSS source code failed
+  885 | ...ground);
+  886 | ...
+> 887 | ...er .mission-header .action-button:has-text("Foundation"), .curriculum-container .missi...
+      |                                               ^
+  888 | ...(--control-border);
+  889 | ...ground);
+  890 | ...-surface-soft);
+
+'has-text' is not recognized as a valid pseudo-class. Did you mean '::has-text' (pseudo-element) or is this a typo?
+
+Generated code of PostCSS transform of file content of apps/web/src/features/admin-curriculum/curriculum.css:
+./apps/web/src/features/admin-curriculum/curriculum.css:887:63
+  885 | ...ground);
+  886 | ...
+> 887 | ...er .mission-header .action-button:has-text("Foundation"), .curriculum-container .missi...
+      |                                               ^
+  888 | ...(--control-border);
+  889 | ...ground);
+  890 | ...-surface-soft);
+
+Import trace:
+  Client Component Browser:
+    ./apps/web/src/features/admin-curriculum/curriculum.css [Client Component Browser]
+    ./apps/web/src/features/admin-curriculum/curriculum-workspace.tsx [Client Component Browser]
+    ./apps/web/src/features/admin-curriculum/curriculum-workspace.tsx [Server Component]
+    ./apps/web/src/app/(admin)/admin/curriculum/page.tsx [Server Component]
+
+
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /admin
+├ ƒ /admin/analytics
+├ ƒ /admin/audit
+├ ƒ /admin/content
+├ ƒ /admin/content/[importId]
+├ ƒ /admin/content/new
+├ ƒ /admin/curriculum
+├ ƒ /admin/ielts-band-curriculum
+├ ƒ /admin/ielts-bridge
+├ ƒ /admin/ielts-integrated
+├ ƒ /admin/ielts-mocks
+├ ƒ /admin/ielts-orientation
+├ ƒ /admin/ielts-topics
+├ ƒ /admin/operations
+├ ƒ /admin/programs/[slug]
+├ ƒ /admin/programs/intermediate/[category]
+├ ƒ /admin/programs/intermediate/[category]/[importId]
+├ ƒ /admin/programs/intermediate/[category]/new
+├ ƒ /admin/programs/intermediate/topic-groups
+├ ƒ /admin/programs/intermediate/topics
+├ ƒ /admin/programs/intermediate/topics/[importId]
+├ ƒ /admin/programs/intermediate/topics/new
+├ ƒ /admin/settings/ai
+├ ƒ /admin/settings/audio
+├ ƒ /dashboard
+├ ƒ /ielts
+├ ƒ /ielts/bridge
+├ ƒ /ielts/bridge/[moduleId]
+├ ƒ /ielts/history
+├ ƒ /ielts/introduction
+├ ƒ /ielts/learn
+├ ƒ /ielts/mock-tests
+├ ƒ /ielts/mock-tests/[attemptId]
+├ ƒ /ielts/orientation
+├ ƒ /ielts/pathway
+├ ƒ /ielts/practice
+├ ƒ /ielts/practice/[sessionId]
+├ ƒ /login
+├ ƒ /mastery
+├ ƒ /onboarding
+├ ƒ /onboarding/placement/[sessionId]
+├ ƒ /programs
+├ ƒ /register
+├ ƒ /sessions/[sessionId]
+├ ƒ /settings
+├ ƒ /settings/ai
+└ ƒ /settings/audio
+
+
+ƒ  (Dynamic)  server-rendered on demand
+

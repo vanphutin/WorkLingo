@@ -1,0 +1,79 @@
+[WebServer] (node:11216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:2384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  x  1 e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200 (1.2s)
+  x  2 e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse (6.7s)
+
+
+  1) e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200 
+
+    Error: curriculum CSS200 320
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    566
+
+      12 |     await expect(search).toBeVisible();
+      13 |     await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
+    > 14 |     expect(await page.evaluate(() => document.documentElement.scrollWidth), `curriculum CSS200 ${width}`).toBeLessThanOrEqual(width);
+         |                                                                                                           ^
+      15 |     await search.focus();
+      16 |     await page.keyboard.type('A long curriculum query');
+      17 |     await expect(search).toHaveValue('A long curriculum query');
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\liquid-glass-phase4-integration.spec.ts:14:107
+
+    Error Context: ..\..\.superpowers\sdd\plan\css-red-results\liquid-glass-phase4-integr-fe782-le-keyboard-focus-at-CSS200\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\plan\css-red-results\liquid-glass-phase4-integr-fe782-le-keyboard-focus-at-CSS200\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\plan\css-red-results\liquid-glass-phase4-integr-fe782-le-keyboard-focus-at-CSS200\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('Objective statement', { exact: true })
+    Expected: "Unsaved objective preserved"
+    Received: "Saved objective"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('Objective statement', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Objective statement', { exact: true })
+        14 × locator resolved to <textarea aria-label="Objective statement">Saved objective</textarea>
+           - unexpected value "Saved objective"
+
+
+      54 |   await page.getByRole('button', { name: 'Collapse all', exact: true }).click();
+      55 |   await page.getByRole('button', { name: 'Expand all', exact: true }).click();
+    > 56 |   await expect(statement).toHaveValue('Unsaved objective preserved');
+         |                           ^
+      57 | });
+      58 |
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\liquid-glass-phase4-integration.spec.ts:56:27
+
+    Error Context: ..\..\.superpowers\sdd\plan\css-red-results\liquid-glass-phase4-integr-00e40--objective-through-collapse\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\plan\css-red-results\liquid-glass-phase4-integr-00e40--objective-through-collapse\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\plan\css-red-results\liquid-glass-phase4-integr-00e40--objective-through-collapse\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200 
+    e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse 
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts --output=../../.superpowers/sdd/plan/css-red-results -g preserved curriculum search|Foundation fields retain

@@ -1,0 +1,2659 @@
+{
+  "collectedAt": "2026-10-20T18:21:16.298409+00:00",
+  "candidateAtCollection": "168b37736cec6666e771678d6ab43b2e83cc2337",
+  "method": "Copies of existing observed logs and hashes of all integration evidence; this script does not execute tests or assign PASS.",
+  "runs": [
+    {
+      "log": "logs/main-web-baseline.log",
+      "tailSummary": [
+        "   \u2713 PublishPanel > disables publish button if validation or audio is not ready  551ms",
+        "   \u2713 shows Vietnamese allocation validation and enables publishing only for a valid saved revision  358ms",
+        "   \u2713 AuthForm > renders accessible registration fields and validation messages  501ms",
+        "   \u2713 localizes invalid JSON and retains the same source editor across a locale switch  877ms",
+        "   \u2713 admin system enum display > localizes validation summaries and actionable issue names while retaining diagnostic codes  454ms",
+        "   \u2713 localized authentication > updates labels and existing validation without resetting entered values  583ms",
+        " Test Files  81 passed (81)",
+        "      Tests  366 passed (366)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-web-final.log",
+      "tailSummary": [
+        "   \u2713 locale preference > switches a mounted form without losing its answer and writes a validated cookie  524ms",
+        "   \u2713 admin system enum display > localizes validation summaries and actionable issue names while retaining diagnostic codes  551ms",
+        "   \u2713 AuthForm > renders accessible registration fields and validation messages  909ms",
+        "   \u2713 localized authentication > updates labels and existing validation without resetting entered values  766ms",
+        "   \u2713 Topic-first authoring entry rules > validates a topic exists before exposing a new lesson editor  428ms",
+        " \u2713 src/features/admin-content/validation-panel.test.tsx (1 test) 206ms",
+        " Test Files  128 passed (128)",
+        "      Tests  795 passed (795)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-web-qualified.log",
+      "tailSummary": [
+        "   \u2713 locale preference > switches a mounted form without losing its answer and writes a validated cookie  650ms",
+        "   \u2713 AuthForm > renders accessible registration fields and validation messages  819ms",
+        "   \u2713 admin system enum display > localizes validation summaries and actionable issue names while retaining diagnostic codes  668ms",
+        "   \u2713 localized authentication > updates labels and existing validation without resetting entered values  1246ms",
+        " \u2713 src/features/admin-content/validation-panel.test.tsx (1 test) 281ms",
+        "   \u2713 Topic-first authoring entry rules > validates a topic exists before exposing a new lesson editor  576ms",
+        " Test Files  128 passed (128)",
+        "      Tests  798 passed (798)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-packages.log",
+      "tailSummary": [
+        "packages/content-format test:  \u2713 src/validator.spec.ts (7 tests) 25ms",
+        "packages/content-format test:  \u2713 src/dialogue-validation.spec.ts (11 tests) 102ms",
+        "packages/content-format test:  Test Files  11 passed (11)",
+        "packages/content-format test:       Tests  135 passed (135)",
+        "packages/contracts test:  Test Files  25 passed (25)",
+        "packages/contracts test:       Tests  124 passed (124)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/contracts-final.log",
+      "tailSummary": [
+        " Test Files  25 passed (25)",
+        "      Tests  125 passed (125)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/full-lint.log",
+      "tailSummary": [
+        "packages/test-fixtures lint: Done",
+        "packages/content-format lint: Done",
+        "packages/contracts lint: Done",
+        "apps/web lint: Done",
+        "apps/api lint: Done"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/lint-qualified.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-web-types.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-api-types.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/types-qualified.log",
+      "tailSummary": [
+        "packages/test-fixtures typecheck: Done",
+        "packages/content-format typecheck: Done",
+        "packages/contracts typecheck: Done",
+        "apps/web typecheck: Done",
+        "apps/api typecheck: Done"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/i18n-qualified.log",
+      "tailSummary": [
+        "> worklingo@0.0.0 i18n:check D:\\Projects\\WorkLingo-Integration",
+        "i18n: 38 namespaces, 2478 paired keys, 2218 static usages; 0 errors, 521 candidate unused keys."
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-build.log",
+      "tailSummary": [
+        "\u2713 Compiled successfully in 19.3s",
+        "'has-text' is not recognized as a valid pseudo-class. Did you mean '::has-text' (pseudo-element) or is this a typo?",
+        "\u0192  (Dynamic)  server-rendered on demand"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-e2e-build.log",
+      "tailSummary": [
+        "\u2713 Compiled successfully in 23.2s",
+        "'has-text' is not recognized as a valid pseudo-class. Did you mean '::has-text' (pseudo-element) or is this a typo?",
+        "\u0192  (Dynamic)  server-rendered on demand"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-build-final.log",
+      "tailSummary": [
+        "\u2713 Compiled successfully in 3.3s",
+        "'has-text' is not recognized as a valid pseudo-class. Did you mean '::has-text' (pseudo-element) or is this a typo?",
+        "\u0192  (Dynamic)  server-rendered on demand"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/mandate-final.log",
+      "tailSummary": [
+        "> node .agents/skills/mandate-steward/scripts/mandate.mjs validate",
+        "  \"valid\": true,"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/cross-smoke-console.log",
+      "tailSummary": [
+        "  1 failed"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/cross-smoke-fixture-console.log",
+      "tailSummary": [
+        "  1 passed (9.8s)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/cross-native-console.log",
+      "tailSummary": [
+        "  1 failed",
+        "  24 passed (3.9m)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/webkit-settled-console.log",
+      "tailSummary": [
+        "  7 passed (1.5m)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/cross-qualified-console.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/cross-final-console.log",
+      "tailSummary": [
+        "  25 passed (3.8m)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/owner-console.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/owner-adapted-console.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/owner-structured-console.log",
+      "tailSummary": [
+        "  ok   8 e2e\\liquid-glass-phase4-authoring.spec.ts:31:5 \u203a content real source autosave retains editor through appearance and validates parser preview (4.6s)",
+        "  ok  15 e2e\\liquid-glass-phase4-authoring.spec.ts:62:5 \u203a orientation validation publication and stale revision preserve UI gates (2.3s)",
+        "  ok  67 e2e\\liquid-glass-phase4-public.spec.ts:106:5 \u203a auth fields and validation survive appearance/locale; server errors and pending state remain operable (2.0s)",
+        "      31 | test('content real source autosave retains editor through appearance and validates parser preview', async ({ page }) => {",
+        "  4 failed",
+        "  26 did not run",
+        "  75 passed (6.3m)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/owner-qualified-console.log",
+      "tailSummary": [
+        "  ok   8 e2e\\liquid-glass-phase4-authoring.spec.ts:31:5 \u203a content real source autosave retains editor through appearance and validates parser preview (2.8s)",
+        "  ok  15 e2e\\liquid-glass-phase4-authoring.spec.ts:62:5 \u203a orientation validation publication and stale revision preserve UI gates (1.5s)",
+        "  ok  69 e2e\\liquid-glass-phase4-public.spec.ts:106:5 \u203a auth fields and validation survive appearance/locale; server errors and pending state remain operable (2.1s)",
+        "  107 passed (5.6m)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/topic-repair-red.log",
+      "tailSummary": [
+        " \u276f src/intermediate-topic-json.contracts.spec.ts (6 tests | 1 failed) 40ms",
+        "   \u2713 Conservative topic JSON repair > keeps exact field diagnostics for multiple invalid scalar fields 3ms",
+        "\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af",
+        " Test Files  1 failed (1)",
+        "      Tests  1 failed | 5 passed (6)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/topic-repair-api-green.log",
+      "tailSummary": [
+        " Test Files  1 passed (1)",
+        "      Tests  6 passed (6)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/review-draft-red.log",
+      "tailSummary": [
+        " \u276f src/features/ielts-mock/ielts-mock.test.tsx (15 tests | 2 failed) 1365ms",
+        " \u276f src/features/admin-curriculum/curriculum-workspace.test.tsx (8 tests | 1 failed) 2140ms",
+        "\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 3 \u23af\u23af\u23af\u23af\u23af\u23af\u23af",
+        " Test Files  2 failed (2)",
+        "      Tests  3 failed | 20 passed (23)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/review-draft-green.log",
+      "tailSummary": [
+        " Test Files  2 passed (2)",
+        "      Tests  23 passed (23)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/curriculum-reflow-red.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/curriculum-focus-red.log",
+      "tailSummary": [
+        "  2 failed"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/candidate-api-tests.log",
+      "tailSummary": [
+        "   \u2193 learner progression HTTP API > does not make an invalid completed plan assessable",
+        "   \u2193 learner progression HTTP API > finds a valid completed session when the newest completed plan is invalid",
+        "   \u2193 Transactional publish, archive, and session version isolation > atomically publishes a validated lesson version with child records"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/performance-qualified-console.log",
+      "tailSummary": [
+        "  1 passed (35.0s)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/security-qualified.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/utility-qualified.log",
+      "tailSummary": [
+        "# Subtest: rejects invalid ICU messages and unknown used keys",
+        "ok 2 - rejects invalid ICU messages and unknown used keys",
+        "# Subtest: reports unused keys without rejecting valid plural differences between languages",
+        "ok 3 - reports unused keys without rejecting valid plural differences between languages",
+        "> node .agents/skills/mandate-steward/scripts/mandate.mjs validate",
+        "  \"valid\": true,",
+        "# Subtest: invalid dates and malformed frontmatter fail clearly",
+        "ok 12 - invalid dates and malformed frontmatter fail clearly"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/api-test-lint-qualified.log",
+      "tailSummary": [],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/task-2-tests.log",
+      "tailSummary": [
+        " Test Files  2 passed (2)",
+        "      Tests  15 passed (15)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    },
+    {
+      "log": "logs/task-3-tests.log",
+      "tailSummary": [
+        " Test Files  2 passed (2)",
+        "      Tests  8 passed (8)"
+      ],
+      "note": "Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition."
+    }
+  ],
+  "artifacts": {
+    "audio-resolutions.json": {
+      "sha256": "ce9110adaf88535d8d3a5c1a1704969478ad08387fec43ca7461a610854572f9",
+      "bytes": 5332
+    },
+    "candidate-source.json": {
+      "sha256": "7730a885f2d52aad2351c53beb2cfcac96300b5b070593496c5f566779d35516",
+      "bytes": 168055
+    },
+    "collect_qa.py": {
+      "sha256": "5beb74630eff80743411880583c41a420f867a9eff925a187f60945d8a716dac",
+      "bytes": 3078
+    },
+    "curriculum-resolutions.json": {
+      "sha256": "a73389a2528de74f7f61dd7958670da36e33ce751b5ce69afcc7a02992703be9",
+      "bytes": 3503
+    },
+    "dirty-reconciliation.json": {
+      "sha256": "f78daeacb37bf92bd644c08c20dd56edc4601178ce0c399ad2ed5d1f55a91893",
+      "bytes": 41426
+    },
+    "glass-resolutions.json": {
+      "sha256": "7542286a8621e7aa6eea846e2b6fcf9e2305989b6f2f9f623f100662670c1d6d",
+      "bytes": 7937
+    },
+    "inventory.json": {
+      "sha256": "dca113d803f9c6ce92105821eac18dc4720f36b1a9b4c66c28727ee9222fc8bc",
+      "bytes": 480690
+    },
+    "inventory.py": {
+      "sha256": "75433d1c565f71c5d25f22687aff409b49aa473cd2c89ec78fe98c072b7428f2",
+      "bytes": 7337
+    },
+    "preservation.json": {
+      "sha256": "c88d6be06ad1074b3ef4db107beeddd733240a83cabdd89d989d764585f8efbe",
+      "bytes": 593
+    },
+    "preservation.py": {
+      "sha256": "80a524e03b69eb77ee2e667cabc2fd573d5998a1d527522ac0d829c17f14920d",
+      "bytes": 2929
+    },
+    "reconcile_curriculum.cjs": {
+      "sha256": "85441361acb928b14fa4a95860a22ff24e9d96d1ae427e54e79f5ba324318f2a",
+      "bytes": 5237
+    },
+    "reconcile_dirty.py": {
+      "sha256": "72b28e7d656bf9fd020004e6652c07be78dc543df0466a5211847a12d305948e",
+      "bytes": 8110
+    },
+    "resolve_audio.py": {
+      "sha256": "7bb4d7523d6a91040b9c748c0835fa30ec4bbbf612505b64ad222f8464018887",
+      "bytes": 3513
+    },
+    "resolve_glass.py": {
+      "sha256": "cd1a1ea1cb03821085334920e47257ef3f1d41f89b077783be1185815c59aa07",
+      "bytes": 6296
+    },
+    "utility-results.json": {
+      "sha256": "75b32946aae4a3e02eaf49f013e22845ac1057f016b0e051c10eff2e9b34295a",
+      "bytes": 421
+    },
+    "verify_candidate.py": {
+      "sha256": "37b09335f9cab50cad5fbc64ffb3211529e4d8dc31ec278743ce734f24b7b3c9",
+      "bytes": 4998
+    },
+    "cross-final/chromium/actual-browser-zoom200-dark-physical-window-1440.json": {
+      "sha256": "51541e0ee40b10d44d5c1a0c88680fcc41c661fedbb36c3f17910bda180cf524",
+      "bytes": 2719
+    },
+    "cross-final/chromium/actual-browser-zoom200-dark-physical-window-780.json": {
+      "sha256": "3287677a19fdfa6fba285cb9b4f3fc4c75dbfc2ab459db5e7418b17080742bd9",
+      "bytes": 2710
+    },
+    "cross-final/chromium/actual-browser-zoom200-light-physical-window-1440.json": {
+      "sha256": "e5f8c6558079dbf3002824627646bed8184f03f26cc51716876f1aa4bdc08312",
+      "bytes": 2724
+    },
+    "cross-final/chromium/actual-browser-zoom200-light-physical-window-780.json": {
+      "sha256": "6f4e51172b5bf58d2653b9647fc3486340a7d3e0a06385341d127cf2dbb02784",
+      "bytes": 2715
+    },
+    "cross-final/chromium/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "2f8e947243fdb1a0f321ef362ce2a3b747c5b531bd68b91453b484376b177f32",
+      "bytes": 1840
+    },
+    "cross-final/chromium/representative-routes-dark-1440.json": {
+      "sha256": "688fdb82c8597a7780d1341ef2d57d1070e3e3aaf48c8b4b1c089e3ec89b97a0",
+      "bytes": 5516
+    },
+    "cross-final/chromium/representative-routes-dark-390.json": {
+      "sha256": "6f49e7528a6b76852b0c7c31046521d2e1e38c3a05d07607001fc643a7c93713",
+      "bytes": 5491
+    },
+    "cross-final/chromium/representative-routes-dark-768.json": {
+      "sha256": "38a1018fb1bcbf4d3a42b0f41838902e3a2bee01042baf6f3620f361117b8598",
+      "bytes": 5499
+    },
+    "cross-final/chromium/representative-routes-light-1440.json": {
+      "sha256": "14599c470f5c1e53d564bf226b9ddefceff6d56aa12b6694b24cfdb40fc98898",
+      "bytes": 5579
+    },
+    "cross-final/chromium/representative-routes-light-390.json": {
+      "sha256": "b0c11b4d4e0417dbf7fe87b39b603ba86f59efa3108fc71e958f0b66028bc87b",
+      "bytes": 5554
+    },
+    "cross-final/chromium/representative-routes-light-768.json": {
+      "sha256": "c3c9a3c2918e116f88dc12dde739825e4f357eecda62944d9be374034a0e7a72",
+      "bytes": 5562
+    },
+    "cross-final/firefox/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "18379f9a246ca2f8bd5caa4094b3339214c4b16d4c30e344d677de2ac01b63ed",
+      "bytes": 2166
+    },
+    "cross-final/firefox/representative-routes-dark-1440.json": {
+      "sha256": "a66d25384033489e4f840cc63e82b457e703afaa5f1a286e84a04ccee83cb7a2",
+      "bytes": 5507
+    },
+    "cross-final/firefox/representative-routes-dark-390.json": {
+      "sha256": "33a73ad333f7c2325436674e23c1a4389d657743424e5a81bd7496c16bede444",
+      "bytes": 5482
+    },
+    "cross-final/firefox/representative-routes-dark-768.json": {
+      "sha256": "74d81bbbf9d1c993d0120d1ffc16f4699f6f5ab778132b9885165199a209ea1f",
+      "bytes": 5490
+    },
+    "cross-final/firefox/representative-routes-light-1440.json": {
+      "sha256": "c36f61b0705e30c7fc1a90e95a7a7f41b5556b220ba7d5806f927cca309cb3c3",
+      "bytes": 5570
+    },
+    "cross-final/firefox/representative-routes-light-390.json": {
+      "sha256": "6c97b8217a386542546c986a6ecd9862a283172588362f781cd2bb774d1e042c",
+      "bytes": 5545
+    },
+    "cross-final/firefox/representative-routes-light-768.json": {
+      "sha256": "71af253ce2a8976047a13dbb1492be29a15b0f491916479cc3ffd063c4d3df3a",
+      "bytes": 5553
+    },
+    "cross-final/webkit/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "c512e616aa5c1b2c0779bfaa3761c90dbabbf42021124372583ff1096cbf0a85",
+      "bytes": 1858
+    },
+    "cross-final/webkit/representative-routes-dark-1440.json": {
+      "sha256": "fd1163335653f79d07246880462ca983d32c64f1a2b401a6c19306d18e18eef1",
+      "bytes": 5505
+    },
+    "cross-final/webkit/representative-routes-dark-390.json": {
+      "sha256": "b3353a44e8599a3bdd2abdff6eb9bc069dcab86904c510101f394567e615db72",
+      "bytes": 5480
+    },
+    "cross-final/webkit/representative-routes-dark-768.json": {
+      "sha256": "d4886488a625b599820ef44da642f7330b33a3854caa6113101980e28ade2b9c",
+      "bytes": 5488
+    },
+    "cross-final/webkit/representative-routes-light-1440.json": {
+      "sha256": "ba028754fa64f04180fd03396f70ba24358cb151f9cf0c915b40e31d31cdec8b",
+      "bytes": 5568
+    },
+    "cross-final/webkit/representative-routes-light-390.json": {
+      "sha256": "9cc7ed50056fff575c081342c47b90817eedfa2903a80207c0c9dac119d038e4",
+      "bytes": 5543
+    },
+    "cross-final/webkit/representative-routes-light-768.json": {
+      "sha256": "777b5416a8cc3ea55daa1d0c77f8e0d01193a27dacb0fdeab93bea26ba72dab3",
+      "bytes": 5551
+    },
+    "cross-native/chromium/actual-browser-zoom200-dark-physical-window-1440.json": {
+      "sha256": "e9c4c63278399417b7cc11219062909ad1d76c5156c1f6106eea7be39fa52032",
+      "bytes": 2592
+    },
+    "cross-native/chromium/actual-browser-zoom200-dark-physical-window-780.json": {
+      "sha256": "29a4c660d7e0acb5d28f14b8c3c7db128e9cdb4b2c74f76da2a8bce27eac8655",
+      "bytes": 2583
+    },
+    "cross-native/chromium/actual-browser-zoom200-light-physical-window-1440.json": {
+      "sha256": "a1853cbc23fbd0d3bb1e405fbfab30797fcdb74b17b2c84ce8844c11a85fc6e3",
+      "bytes": 2597
+    },
+    "cross-native/chromium/actual-browser-zoom200-light-physical-window-780.json": {
+      "sha256": "bcf4895e7f1338f699f93e227edca6b22f852711d341c1b4daf4d61cf840e091",
+      "bytes": 2588
+    },
+    "cross-native/chromium/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "e97b10dad5b458ac35950e5c3de315ecb96f8d2577626d5f5193b89d1f19abef",
+      "bytes": 1713
+    },
+    "cross-native/chromium/representative-routes-dark-1440.json": {
+      "sha256": "cece26642cd82453b066dae6b7f50cf09885c0f06a02f72853068d74542cff4f",
+      "bytes": 5389
+    },
+    "cross-native/chromium/representative-routes-dark-390.json": {
+      "sha256": "2e620ee838d4ab31bb2b295cb8b17602de1973c21d12989f252ec16922d65596",
+      "bytes": 5364
+    },
+    "cross-native/chromium/representative-routes-dark-768.json": {
+      "sha256": "b07b0e50d2285b08fd6bca318d6357c082c6eaacfa181a5cfdf5ff0e6a3eb1d7",
+      "bytes": 5372
+    },
+    "cross-native/chromium/representative-routes-light-1440.json": {
+      "sha256": "265b9306696fb8802b8cd06641d74c7168afde772bdeff8eb86463603dc67b1e",
+      "bytes": 5452
+    },
+    "cross-native/chromium/representative-routes-light-390.json": {
+      "sha256": "25e9218698be3b8cdaa6bb050db4bc5600ce1f8e4acbc1e90a514970ffd22675",
+      "bytes": 5427
+    },
+    "cross-native/chromium/representative-routes-light-768.json": {
+      "sha256": "544a3636f7dbefe80284009a7acb7894ce6046c3f36a8ba275420c430750cf6a",
+      "bytes": 5435
+    },
+    "cross-native/firefox/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "ffdeed30950c369c18ed683d73763686b0ed71fb752008f687cc3596814589b4",
+      "bytes": 2039
+    },
+    "cross-native/firefox/representative-routes-dark-1440.json": {
+      "sha256": "395a6a93d2f9b336adbf3a213f1ef29082f49daac6a1b902d8ab50ed4dded1b1",
+      "bytes": 5380
+    },
+    "cross-native/firefox/representative-routes-dark-390.json": {
+      "sha256": "2296d63f786d3739e4af8247f87b1d995f8810180028fb5ea88247921a70fe07",
+      "bytes": 5355
+    },
+    "cross-native/firefox/representative-routes-dark-768.json": {
+      "sha256": "bec74c0c42cd99cc107e30baac6722d366db8b6214348f57a59e0b22a1c134c8",
+      "bytes": 5363
+    },
+    "cross-native/firefox/representative-routes-light-1440.json": {
+      "sha256": "9c1910563badf5dd33298fc2f148e3422e6cc1bfbedb3b34b7c976d74927ef1d",
+      "bytes": 5443
+    },
+    "cross-native/firefox/representative-routes-light-390.json": {
+      "sha256": "1db642e80ee5df6f14091af32ef3267b2c71f84e2730761ddf04785dbf16a6f8",
+      "bytes": 5418
+    },
+    "cross-native/firefox/representative-routes-light-768.json": {
+      "sha256": "63b8027bc670f4272a03f0a6db3900328b1abd036f49219b334af56da8a42a26",
+      "bytes": 5426
+    },
+    "cross-native/webkit/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "0e48add3629f01e0505da1563851769994ff6622589c03b835b3a2c20a1e2861",
+      "bytes": 1731
+    },
+    "cross-native/webkit/representative-routes-dark-1440.json": {
+      "sha256": "843d08ef1b3671255fe018b61217eaec3232e38030da0d529f8a50b7cbb95508",
+      "bytes": 5378
+    },
+    "cross-native/webkit/representative-routes-dark-390.json": {
+      "sha256": "c2cb7dd71b012d5f354be15ca82813ffd46e48809d9169d3485dc9549cd0a12d",
+      "bytes": 5353
+    },
+    "cross-native/webkit/representative-routes-dark-768.json": {
+      "sha256": "c68eb1b236a757c8c0ea76000a8a432b8a9a5bec44ee80d99e1375c8d7f0b0c3",
+      "bytes": 5361
+    },
+    "cross-native/webkit/representative-routes-light-1440.json": {
+      "sha256": "bd274e2243666d59457c16af2b21fb24af62407ceeeae435401733a36fc5c426",
+      "bytes": 5441
+    },
+    "cross-native/webkit/representative-routes-light-390.json": {
+      "sha256": "6623442fe4bfec3f87da3995e7dbfa172700033973683a6c4ad166715f91e7d4",
+      "bytes": 6648
+    },
+    "cross-native/webkit/representative-routes-light-768.json": {
+      "sha256": "580bf38c933f419eb090a291f74aef373c7a0118aa067b02ba20d553eec0981a",
+      "bytes": 5424
+    },
+    "cross-qualified/chromium/representative-routes-light-390.json": {
+      "sha256": "82aaf8539d559abf44e05806a062b052cfba33570f907ad49f53206878231ae7",
+      "bytes": 5558
+    },
+    "cross-smoke/chromium/representative-routes-light-390.json": {
+      "sha256": "a726e7cac0eeb454b64e469aaa9f23c72a51d5b940cb3ae48ad173c9cd31ea8f",
+      "bytes": 1106
+    },
+    "cross-smoke-fixture/chromium/representative-routes-light-390.json": {
+      "sha256": "16b95af31083242b42d2c7a1302ab46af71b758e7a32aa4e6d314c859f284f3f",
+      "bytes": 5427
+    },
+    "live/backend-final.log": {
+      "sha256": "f5fe750097bf48c329eac0d66f184533d03db38e6def05ed8778129f2ba02ce4",
+      "bytes": 31726
+    },
+    "live/backend-hook-diagnostic.json": {
+      "sha256": "d0169288ea06b296dec19a195bb8474c7467e5aab6f2885d9ef68dadb4bdd7e5",
+      "bytes": 1196
+    },
+    "live/backend-hook-diagnostic.log": {
+      "sha256": "33156985c0425defb99b734550b7bb0beb71098e41e7433b8e5569e43ca66f5e",
+      "bytes": 4280
+    },
+    "live/backend-hook-green.json": {
+      "sha256": "8205ffb1e88b0afa40490d4e476d3dd53847cfa14897307a9bdce5d284935f5c",
+      "bytes": 1195
+    },
+    "live/backend-hook-green.log": {
+      "sha256": "71e886c9a824801ecf33e46c8903d9a43eb35ab6b101b7b91e6ef128c40df9b4",
+      "bytes": 309
+    },
+    "live/backend-isolated.json": {
+      "sha256": "4737a5ddd753a15aa56fd07073f3efed5ce58bd3bd614f4e32b2de4b0c6251a3",
+      "bytes": 1209
+    },
+    "live/backend-isolated.log": {
+      "sha256": "afaef1ac044b4f1c33c12922dbc70714eef09778fd4184c2290f1f4d57ed3281",
+      "bytes": 167466
+    },
+    "live/backend-qualified.json": {
+      "sha256": "d2582e76f2b40792c7266f999833b334ebafa95ce675354ac88aab96db5d37ee",
+      "bytes": 1289
+    },
+    "live/backend-qualified.log": {
+      "sha256": "e10726db381752517d44b6556bf84be3165b312224298cb5a03e2055321951a8",
+      "bytes": 38304
+    },
+    "live/backend-regressions.json": {
+      "sha256": "d2a8d87905576404aef57ede87c43906c24ec0329f8dd98c72908a8c42408078",
+      "bytes": 1616
+    },
+    "live/backend-regressions.log": {
+      "sha256": "e62c36db26be63f3e528f81834b62c7d4a2637c182b953b1285619ec1fc4a742",
+      "bytes": 5375
+    },
+    "live/backend-rehearsals.json": {
+      "sha256": "59936608dbc7262ebf303097f5aa36c337f9c6524c895abc26c9504f9fe6777f",
+      "bytes": 1841
+    },
+    "live/backend-rehearsals.log": {
+      "sha256": "fdc74093f75d6a328f691659a7189f2f65476922106bd6604e2ef13644209016",
+      "bytes": 2064
+    },
+    "live/live-admin-locale.json": {
+      "sha256": "21d00f65c482e6dea5e336a40ec6838277af3bfaed1f049c5b7b8a809f575893",
+      "bytes": 1184
+    },
+    "live/live-admin-locale.log": {
+      "sha256": "b6ed4e32608b879f7685558ae92c0ea094c3a540556090c3af696952cb8426db",
+      "bytes": 3948
+    },
+    "live/live-legacy.json": {
+      "sha256": "f77db2951f7b4ca0734d4e0ebf79dfd61320a481f69e2c63a6aa12d3a893529d",
+      "bytes": 1359
+    },
+    "live/live-legacy.log": {
+      "sha256": "e9ef440684c0384d69ccd49e5f76da5786d8926c9ef54d6564d6dfaee4eefe2a",
+      "bytes": 7692
+    },
+    "live/live-v3.json": {
+      "sha256": "0192026e18273aa2ee4c543bd741025987f9ed2794acfdd8cc2f1394f74aa732",
+      "bytes": 1258
+    },
+    "live/live-v3.log": {
+      "sha256": "3c8d54454e69e06a0e341fdf4be003841b9ba42905d7eb1eb97f9b9d9bd4d9ab",
+      "bytes": 3305
+    },
+    "logs/api-test-lint-qualified.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/candidate-api-tests.log": {
+      "sha256": "a2ca264178224d122632c736a8eb4c89cc2d30c0154cd3a0d56177ce3965ffda",
+      "bytes": 4595
+    },
+    "logs/candidate-api-types.log": {
+      "sha256": "099df50cdeade4717f1aa804691cf13ec3dc89b76b0e3add410d84bf804157e9",
+      "bytes": 97
+    },
+    "logs/candidate-build-final.log": {
+      "sha256": "9100b3a01c32914015175fc9d9859c815089746da09f23227d6cf71986d6f65d",
+      "bytes": 3523
+    },
+    "logs/candidate-build.log": {
+      "sha256": "c782e7f6567fa512e34ad1dc2f80632f25d334b8a3d15a484778e22be8b5378e",
+      "bytes": 3528
+    },
+    "logs/candidate-e2e-build.log": {
+      "sha256": "6e506be732d10db8c7b435f46a04bad9f6b219271a318c8d99737f9d64f04fd2",
+      "bytes": 3527
+    },
+    "logs/candidate-packages.log": {
+      "sha256": "0e20b1f2f1b4eda85bba9ac62f693db3d3edae61ebd28adfa58a9a060e1a6e6c",
+      "bytes": 3971
+    },
+    "logs/candidate-web-final.log": {
+      "sha256": "5b064ab9f1c84f9625ee6cf1a26f0068ed09b3b6b23d2e0ffa936a58d88ba6a8",
+      "bytes": 36210
+    },
+    "logs/candidate-web-qualified.log": {
+      "sha256": "762e67beb7553a6547d09d609a1a616419a6c559bb56cd7eb09f8305fd108f7b",
+      "bytes": 43381
+    },
+    "logs/candidate-web-types.log": {
+      "sha256": "81ac3d2481866ef4105eba3dcaf2684a98868465595e3f3634d65f5f5e363581",
+      "bytes": 97
+    },
+    "logs/contracts-final.log": {
+      "sha256": "722b3dfdcf706dfcf3bb7442ee84064f8b6adfeccc3a4196d1edd93d69c95643",
+      "bytes": 1868
+    },
+    "logs/cross-final-console.log": {
+      "sha256": "27e81f61e9b8121bd73e65ff2aba8910fa56629a262f067777789ed3642e93d2",
+      "bytes": 3363
+    },
+    "logs/cross-native-console.log": {
+      "sha256": "802fea517de2a3384e915e59b432ca1533f699c8300f193bd82fc4bd8878e9fa",
+      "bytes": 14841
+    },
+    "logs/cross-qualified-console.log": {
+      "sha256": "67780a983656dd7d5ecb2aa8d041ec59df3d489345a2142d44c9c807a59ad67e",
+      "bytes": 526
+    },
+    "logs/cross-smoke-console.log": {
+      "sha256": "a29309862879e50502195fca0b545c91d0f173ff3a1ed36c98c073c5a577eace",
+      "bytes": 4345
+    },
+    "logs/cross-smoke-fixture-console.log": {
+      "sha256": "e206a47dba79dab0cb363f59177f86753eba9d1a3de56aa72e5114eac6eff951",
+      "bytes": 701
+    },
+    "logs/curriculum-focus-red.log": {
+      "sha256": "12a65e4c2dc45be8c8c8bfff7bb556b8e38f35f19a0d3558669444c9c613c188",
+      "bytes": 5362
+    },
+    "logs/curriculum-reflow-red.log": {
+      "sha256": "88eef733a1926e95885d81be35272eae782cdb424e8899378a43d322ccd1dcdd",
+      "bytes": 380
+    },
+    "logs/full-lint.log": {
+      "sha256": "008a21b40582de396a0e8976b9de2a9db96d5ff3fe08d4cd2263cb20eb6421d3",
+      "bytes": 357
+    },
+    "logs/i18n-qualified.log": {
+      "sha256": "78b11fd7ad357de335bf073a7871ee3b5224994868d404186648bcdef9298453",
+      "bytes": 196
+    },
+    "logs/lint-qualified.log": {
+      "sha256": "a0662b4e2c7f7da79235966b6d387007fae1b26bf6dd665b8263351a70e43b86",
+      "bytes": 90
+    },
+    "logs/main-web-baseline.log": {
+      "sha256": "da1a11f3f49a0e244f1db6651c93f3a6d51f6860cb9347619f721ed21ba34ef8",
+      "bytes": 13802
+    },
+    "logs/mandate-final.log": {
+      "sha256": "ba63000e12d98bd5896755b41be7307fa9a58ed63ff7d5a2a668de4cf03191c5",
+      "bytes": 177
+    },
+    "logs/owner-adapted-console.log": {
+      "sha256": "003defb9d3befda1281d5b2198bc8bd4694b0db48191c00b79852c3bde16cd73",
+      "bytes": 810
+    },
+    "logs/owner-console.log": {
+      "sha256": "880c28b369f380fd9dc57027f9f285da24334056bce56289e1a372a99b3859e3",
+      "bytes": 712
+    },
+    "logs/owner-qualified-console.log": {
+      "sha256": "97fa560dfecdb56b3a179338512f9b82adc0caa8efc67bf0903f32a5c9c9b7ff",
+      "bytes": 16832
+    },
+    "logs/owner-structured-console.log": {
+      "sha256": "7c541f6f8ccf62493b9269de70a4e63789b5c40e7b6c8342551de396faf8e125",
+      "bytes": 21997
+    },
+    "logs/performance-qualified-console.log": {
+      "sha256": "1b4d74c9d85d05514ffbcdc635c773b6bb3cc025f3b78236410a73d9c961ebb0",
+      "bytes": 580
+    },
+    "logs/review-draft-green.log": {
+      "sha256": "9cc15b7380a0683e87a0c0988c9afa50bcde51ac68b27cf537d6523bb6cee271",
+      "bytes": 1139
+    },
+    "logs/review-draft-red.log": {
+      "sha256": "f92fe781f1c4a101cf043c3e50054fa8afecebee385b0ec2b847a7a06ee513e6",
+      "bytes": 5418
+    },
+    "logs/security-qualified.log": {
+      "sha256": "726cccc72b420f7d6a650b78e35956f6db8defdc10fdd29a3fc9921154652499",
+      "bytes": 77
+    },
+    "logs/task-2-tests.log": {
+      "sha256": "142d6143e089fb44ffcbfa5ac383c471515ac8e1f17e661ec73976e5203f794f",
+      "bytes": 796
+    },
+    "logs/task-3-tests.log": {
+      "sha256": "12a2a138b934072f0615766838eb5fb9cbf094aa0eb96c32c3f0444cb56ab4fa",
+      "bytes": 976
+    },
+    "logs/topic-repair-api-green.log": {
+      "sha256": "196de0c94d2ec721cac900bc31ca1e0d56b227beef572f7391767b5ebd9e4457",
+      "bytes": 331
+    },
+    "logs/topic-repair-red.log": {
+      "sha256": "fe60aae8f25c6fd7bedcaeb87d088ad2d2e383272634f893828c1b936c589e4b",
+      "bytes": 2203
+    },
+    "logs/types-qualified.log": {
+      "sha256": "e7b0366f0165d6680c80e70f73372cee8ceab64f8d5e68c1a6e10a61229a7397",
+      "bytes": 412
+    },
+    "logs/utility-qualified.log": {
+      "sha256": "7e93c4807d9001f6648f8653e41ad2e05d7555f61e86d23c483917d994dce6ce",
+      "bytes": 8550
+    },
+    "logs/webkit-settled-console.log": {
+      "sha256": "dfc1e56e521ce25aca0faa6fcd0d31f05a75dd2b9e8fa9a667cc16878d01339e",
+      "bytes": 2330
+    },
+    "native-zoom/admin-vi-dark-1440.png": {
+      "sha256": "2d1a9631b5b8ba5d7b9ff95734b3ac766070bab46eb6b4d69775c6fce2b17f49",
+      "bytes": 91506
+    },
+    "native-zoom/admin-vi-dark-780.png": {
+      "sha256": "2ada1be81c2bcd6177722e16b261a7cae96254d6fa230b5fafa6f4e8a8099fc9",
+      "bytes": 62126
+    },
+    "native-zoom/admin-vi-light-1440.png": {
+      "sha256": "25884f848da02ab3b5b9940bf3d1ece110f908af576c96bb0e981df510bf7b6e",
+      "bytes": 94102
+    },
+    "native-zoom/admin-vi-light-780.png": {
+      "sha256": "2d6aab380d88470a1959fc4b622d2291515bfd1f21b31baf2cfcd9c54b328bf5",
+      "bytes": 64159
+    },
+    "native-zoom/ielts-vi-dark-1440.png": {
+      "sha256": "e13ff7a459714e0beb368e53629d371975fd4833f446678f67bee2664ede9665",
+      "bytes": 70508
+    },
+    "native-zoom/ielts-vi-dark-780.png": {
+      "sha256": "af9478c5d8bc038ed721fca2d1a14c0fa8be7bc8299fc1e29c32bc11a1f95b9f",
+      "bytes": 58503
+    },
+    "native-zoom/ielts-vi-light-1440.png": {
+      "sha256": "d93ae6f8b3bd6fc6245ff7586bfee87fdb730316a6a4a7ba49ecc45ba8d0959e",
+      "bytes": 74560
+    },
+    "native-zoom/ielts-vi-light-780.png": {
+      "sha256": "45fa0a487947c8e6cc80c6e8b5dff30c3419a9945cfa775fc49f6f5f2048694a",
+      "bytes": 62290
+    },
+    "native-zoom/settings-en-dark-1440.png": {
+      "sha256": "09c6069484a47b1e23dab701c2d29c3498dafca9bf3fb8bff4b023a61481a11d",
+      "bytes": 89437
+    },
+    "native-zoom/settings-en-dark-780.png": {
+      "sha256": "b579485fe9ce0fb627d8b47d415611f34d81a102a5d9bed50ea2c0b318b4a6e3",
+      "bytes": 67861
+    },
+    "native-zoom/settings-en-light-1440.png": {
+      "sha256": "7b3265279348423ed4b3002c265c27c4e9518d39068f3bdf0e3bab4113b69975",
+      "bytes": 92182
+    },
+    "native-zoom/settings-en-light-780.png": {
+      "sha256": "580348b1926abdc236efc60f99e48c3df9ec73b4ec7348136337a8e5492ad265",
+      "bytes": 70882
+    },
+    "native-zoom/settings-vi-dark-1440.png": {
+      "sha256": "8a580120e8e50d406b0728a15415d8e1e274cfba9e6d6a59035aa1011d50f00f",
+      "bytes": 91970
+    },
+    "native-zoom/settings-vi-dark-780.png": {
+      "sha256": "1b70ca1d6b3a39e2d7b3f0156a2fbfbda7dca513085f7e9d1ae375e43c735e53",
+      "bytes": 71328
+    },
+    "native-zoom/settings-vi-light-1440.png": {
+      "sha256": "6bf3c2377d55d8be74a805d002ccd2ca76b19e28959f25442e00399b540f16d4",
+      "bytes": 94762
+    },
+    "native-zoom/settings-vi-light-780.png": {
+      "sha256": "14b9cedf28b439e1742e710e4801fc5b8ea444ab98b0f5861e57734b419cf9cd",
+      "bytes": 74334
+    },
+    "owner/slice-1/production-home-dark-1440.png": {
+      "sha256": "d72a88f9ef38da191b5eb227404b4def8e3e4c5f1893884edac12c07eb434181",
+      "bytes": 84161
+    },
+    "owner/slice-1/production-home-dark-390.png": {
+      "sha256": "eef8b6682af7568848f2c3525981bc9d1c5d23beea1f0350611cfd4ad5bede4e",
+      "bytes": 62376
+    },
+    "owner/slice-1/production-home-dark-768.png": {
+      "sha256": "d9ecb1b0d780930a1be99c076310435b4cbc0e30d15300bc47a7222864adf693",
+      "bytes": 68526
+    },
+    "owner/slice-1/production-home-light-1440.png": {
+      "sha256": "5dcecd2985ef65891d8f7a30260238b0e83a74275f80ec073c37d59197178e54",
+      "bytes": 82976
+    },
+    "owner/slice-1/production-home-light-390.png": {
+      "sha256": "03986732c1b879b991b9a749a010d0515eaa0be35af199d0f588fa876759be35",
+      "bytes": 61955
+    },
+    "owner/slice-1/production-home-light-768.png": {
+      "sha256": "9950d10e88bed1e173387997affc30016ca2042549713c6a3a79f1c15eeb0375",
+      "bytes": 67769
+    },
+    "owner/slice-1/production-login-dark-1440.png": {
+      "sha256": "ed9c89ba379dda19afa47badead6aa221ed926fae0e1ae30d0ae52145c37b8eb",
+      "bytes": 36648
+    },
+    "owner/slice-1/production-login-dark-390.png": {
+      "sha256": "c805d085e029a27afedd0081347019a483f139f9f1e6ebde6a8eb93691a82b9a",
+      "bytes": 27950
+    },
+    "owner/slice-1/production-login-dark-768.png": {
+      "sha256": "b36e3c2fd425248fa31e4d71e1c417e965f8a96dcbfa7e8df11dafa04219b2ed",
+      "bytes": 30480
+    },
+    "owner/slice-1/production-login-error.png": {
+      "sha256": "7898ba26c3498653d6c89398fd3114efddeec76db9a6a7f4f45f8d68eb35d015",
+      "bytes": 40458
+    },
+    "owner/slice-1/production-login-light-1440.png": {
+      "sha256": "c23dce06acd4c3ee15f69eb8aad30ff14ca4e4f8fe6cabd10f11f9ba23350318",
+      "bytes": 37890
+    },
+    "owner/slice-1/production-login-light-390.png": {
+      "sha256": "b4e2251f90655605f48df7a83b617fd43fb62173175d77882f5ef2e5eb376de0",
+      "bytes": 28690
+    },
+    "owner/slice-1/production-login-light-768.png": {
+      "sha256": "5e03f670a8afb6e4ec1b7cda019b1d9e599cdf52c14fb0757595264ad2eb5919",
+      "bytes": 31590
+    },
+    "owner/slice-1/production-phase4-missing-page-dark-1440.png": {
+      "sha256": "0da15275fbfa9ba656ffbf9e9ea06cd16e635c39c8fcd69222dff3c163485e9b",
+      "bytes": 17080
+    },
+    "owner/slice-1/production-phase4-missing-page-dark-390.png": {
+      "sha256": "5ef870fce6cb2fbbf0d422bfa4a3bad6627e5ebd4bdcff9fe0fa01651b695f96",
+      "bytes": 11141
+    },
+    "owner/slice-1/production-phase4-missing-page-dark-768.png": {
+      "sha256": "a797033cce18ae4dd7a5abd9c851c44db1e6e013f54a295dc87f32be86f58932",
+      "bytes": 14257
+    },
+    "owner/slice-1/production-phase4-missing-page-light-1440.png": {
+      "sha256": "9e0f736e7539da51ba3d8110c345490b962e0b10af1cd503e8819f891673a3c2",
+      "bytes": 17480
+    },
+    "owner/slice-1/production-phase4-missing-page-light-390.png": {
+      "sha256": "a14fa19ac862bb6137755709e66f94c302dc42446a3187146d42c88634696b4f",
+      "bytes": 11206
+    },
+    "owner/slice-1/production-phase4-missing-page-light-768.png": {
+      "sha256": "06729d5f0a09e3ec7264e48a5cf84f27f572d6530b9fb82f26e3f828614b720c",
+      "bytes": 14452
+    },
+    "owner/slice-1/production-register-dark-1440.png": {
+      "sha256": "fb806a6c172351c7595c4e22594fa7ebc3ddd127adab395c7903a55c99b42359",
+      "bytes": 41976
+    },
+    "owner/slice-1/production-register-dark-390.png": {
+      "sha256": "4ad950d3f4f15561c8d80632ddd95c4f1e848fa032eda4245a10b5b832aee03a",
+      "bytes": 32733
+    },
+    "owner/slice-1/production-register-dark-768.png": {
+      "sha256": "c198cdf52bed555d95a67d5bd8c8b675609e8ced02044f84445b6e24aadd7808",
+      "bytes": 35832
+    },
+    "owner/slice-1/production-register-error.png": {
+      "sha256": "42ebb52bb86aee67119d15a386b8915e1cee7b43949d34f79bc2c49b8a08843f",
+      "bytes": 47329
+    },
+    "owner/slice-1/production-register-light-1440.png": {
+      "sha256": "35258ccfba8bfe3c133c066d7cc4dc6a4c9169b6e29b4048de209a158c2ddfde",
+      "bytes": 43339
+    },
+    "owner/slice-1/production-register-light-390.png": {
+      "sha256": "1cf8fa9756198d97ee8f50cb8cf8df9ae0fad7a68969aa407bff128126e8235d",
+      "bytes": 33526
+    },
+    "owner/slice-1/production-register-light-768.png": {
+      "sha256": "3ae24d8f936625a3f7eeb996cc4e3ae6d41ab72f839891f0150fabc505bccda6",
+      "bytes": 36873
+    },
+    "owner/slice-1/production-candidate-structured-tests/actual-auth-form-submits-unchanged-payload-and-follows-learner-onboarding-and-admin-redirects.json": {
+      "sha256": "f5de36817472990f44cfb02594e9e670b246918abb84659d77e702e71745b9ef",
+      "bytes": 978
+    },
+    "owner/slice-1/production-candidate-structured-tests/auth-fields-and-validation-survive-appearance-locale-server-errors-and-pending-state-remain-operable.json": {
+      "sha256": "6c36dc41577ed3b1800a9b0e0a276976f5e7f4db9c0a06ea888f97938a5ee10d",
+      "bytes": 232
+    },
+    "owner/slice-1/production-candidate-structured-tests/narrow-Vietnamese-public-auth-reflow-and-visible-keyboard-focus-at-CSS200.json": {
+      "sha256": "97835c077287e90b4fe6c8e0ba2d67773bab1ca712b5384185361fa5bdaab031",
+      "bytes": 6098
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-auth-matrix-dark-1440.json": {
+      "sha256": "2c8fc83be4b45c7fbca82fb80a137a65275250f9d63c6eb28c403469389eff6b",
+      "bytes": 10889
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-auth-matrix-dark-390.json": {
+      "sha256": "b8dcdf54f0457e22dc8fb53be7dff8f423941b564be57059fe15bb8a20972198",
+      "bytes": 10839
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-auth-matrix-dark-768.json": {
+      "sha256": "cd1461b063b12c05c50a41f9f907730a88b810607d8cfa5699ec58e71efb3553",
+      "bytes": 10843
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-auth-matrix-light-1440.json": {
+      "sha256": "a0f11280d748661f4d34dd551d2a7851874463aa7149c9da687190c4e25ceffb",
+      "bytes": 11005
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-auth-matrix-light-390.json": {
+      "sha256": "7fdf0434aac84cc66ead8e0f2f96a86e997ba2b0a22b77aa723120e928dfb1b0",
+      "bytes": 10955
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-auth-matrix-light-768.json": {
+      "sha256": "e5fb529fc5ec85c22ed9091715909f2155025baee6012500c6cc9399ae789db1",
+      "bytes": 10959
+    },
+    "owner/slice-1/production-candidate-structured-tests/public-authenticated-CTA-and-appearance-fallbacks-retain-real-destinations.json": {
+      "sha256": "41c773b29bf24ba6287995ea5c781e9583d8a1493b2f1af6029862214fe2559d",
+      "bytes": 391
+    },
+    "owner/slice-1/production-qualified-tests/actual-auth-form-submits-unchanged-payload-and-follows-learner-onboarding-and-admin-redirects.json": {
+      "sha256": "f5de36817472990f44cfb02594e9e670b246918abb84659d77e702e71745b9ef",
+      "bytes": 978
+    },
+    "owner/slice-1/production-qualified-tests/auth-fields-and-validation-survive-appearance-locale-server-errors-and-pending-state-remain-operable.json": {
+      "sha256": "6c36dc41577ed3b1800a9b0e0a276976f5e7f4db9c0a06ea888f97938a5ee10d",
+      "bytes": 232
+    },
+    "owner/slice-1/production-qualified-tests/narrow-Vietnamese-public-auth-reflow-and-visible-keyboard-focus-at-CSS200.json": {
+      "sha256": "97835c077287e90b4fe6c8e0ba2d67773bab1ca712b5384185361fa5bdaab031",
+      "bytes": 6098
+    },
+    "owner/slice-1/production-qualified-tests/public-auth-matrix-dark-1440.json": {
+      "sha256": "2c8fc83be4b45c7fbca82fb80a137a65275250f9d63c6eb28c403469389eff6b",
+      "bytes": 10889
+    },
+    "owner/slice-1/production-qualified-tests/public-auth-matrix-dark-390.json": {
+      "sha256": "b8dcdf54f0457e22dc8fb53be7dff8f423941b564be57059fe15bb8a20972198",
+      "bytes": 10839
+    },
+    "owner/slice-1/production-qualified-tests/public-auth-matrix-dark-768.json": {
+      "sha256": "cd1461b063b12c05c50a41f9f907730a88b810607d8cfa5699ec58e71efb3553",
+      "bytes": 10843
+    },
+    "owner/slice-1/production-qualified-tests/public-auth-matrix-light-1440.json": {
+      "sha256": "a0f11280d748661f4d34dd551d2a7851874463aa7149c9da687190c4e25ceffb",
+      "bytes": 11005
+    },
+    "owner/slice-1/production-qualified-tests/public-auth-matrix-light-390.json": {
+      "sha256": "7fdf0434aac84cc66ead8e0f2f96a86e997ba2b0a22b77aa723120e928dfb1b0",
+      "bytes": 10955
+    },
+    "owner/slice-1/production-qualified-tests/public-auth-matrix-light-768.json": {
+      "sha256": "e5fb529fc5ec85c22ed9091715909f2155025baee6012500c6cc9399ae789db1",
+      "bytes": 10959
+    },
+    "owner/slice-1/production-qualified-tests/public-authenticated-CTA-and-appearance-fallbacks-retain-real-destinations.json": {
+      "sha256": "41c773b29bf24ba6287995ea5c781e9583d8a1493b2f1af6029862214fe2559d",
+      "bytes": 391
+    },
+    "owner/slice-2/production-dashboard-dark-1440.png": {
+      "sha256": "401dd1367c1efde610b887f183f384746d91fa9f9e8b2f8bbd8751c302ae50da",
+      "bytes": 106487
+    },
+    "owner/slice-2/production-dashboard-dark-390.png": {
+      "sha256": "57cd25734454da8d98726b4cbe900e0a443f1a81bf78c21af8b36b017f01b687",
+      "bytes": 77067
+    },
+    "owner/slice-2/production-dashboard-dark-768.png": {
+      "sha256": "cb2f692ee77883b8a9513d16e97913f6a623d6f6f78b6e91522d05ef2b15883f",
+      "bytes": 84942
+    },
+    "owner/slice-2/production-dashboard-empty.png": {
+      "sha256": "22f1cd30bc714f43f21ef2f440ac70d0a60c46dc304f5dbc6a27efa760ab4a89",
+      "bytes": 94000
+    },
+    "owner/slice-2/production-dashboard-error.png": {
+      "sha256": "a9c0a41d0f06de08fef2e303734da5719400eb23f2f050fc50664adc0635a0c9",
+      "bytes": 26330
+    },
+    "owner/slice-2/production-dashboard-light-1440.png": {
+      "sha256": "be6ee1dfc75e09c1ae3dcfae0e9e58a288258fd6e838b8bae2212d5d806deb33",
+      "bytes": 106135
+    },
+    "owner/slice-2/production-dashboard-light-390.png": {
+      "sha256": "781aea30349080df310c4a06e675c9011c445b143c300a3789ae853c56cfb880",
+      "bytes": 77297
+    },
+    "owner/slice-2/production-dashboard-light-768.png": {
+      "sha256": "0a524f2ddb80f9a81b29895449aae3ac249691e3130520acfc49fd38af2064cf",
+      "bytes": 84822
+    },
+    "owner/slice-2/production-dashboard-loading.png": {
+      "sha256": "73b705e8531348887e7b9fc42a2073f892b5d5ce8d76ead5005c040578eb555b",
+      "bytes": 105945
+    },
+    "owner/slice-2/production-mastery-dark-1440.png": {
+      "sha256": "eb64c6071e635ee4ce5386f3964c097ef6ee3707926281bd60a0b4fd0cd4be64",
+      "bytes": 195090
+    },
+    "owner/slice-2/production-mastery-dark-390.png": {
+      "sha256": "fbc44ae45f73a0a0f18aaecaff1a41a64f230a1d3f62f4288a9859a3b417db7b",
+      "bytes": 164673
+    },
+    "owner/slice-2/production-mastery-dark-768.png": {
+      "sha256": "8eefa9150936727edd603df275cd238101ddfb259ba83dcc93abb274aa3657f9",
+      "bytes": 169401
+    },
+    "owner/slice-2/production-mastery-empty.png": {
+      "sha256": "4e8e6de2c30e270945df8e097507abd80adee0a1beaa7da5a9e93f9ba3248354",
+      "bytes": 135317
+    },
+    "owner/slice-2/production-mastery-error.png": {
+      "sha256": "b8b0190aa3452ccadf6980252e3902791d4178191ec8c2e25820ce7d2452a64b",
+      "bytes": 106528
+    },
+    "owner/slice-2/production-mastery-light-1440.png": {
+      "sha256": "fb90a7ed5e3b0d31df033d8155b28e0979b5e181f63b60128afdab192e6d1926",
+      "bytes": 200273
+    },
+    "owner/slice-2/production-mastery-light-390.png": {
+      "sha256": "d75a9e02395402bd264cd5ef83bf5d30d6b3fb954ff94de9b1bee20156b1ca42",
+      "bytes": 168877
+    },
+    "owner/slice-2/production-mastery-light-768.png": {
+      "sha256": "1dbd96c9b84ff2c6c983cb8eb6c5ecd2c58bb01fb22cfe1f70dbe1f7915e74a7",
+      "bytes": 173339
+    },
+    "owner/slice-2/production-mastery-loading.png": {
+      "sha256": "cff9ec781ecd4f0fcaca2b4efd2929fe81545c034d825ca1a813f826ef8087ef",
+      "bytes": 177120
+    },
+    "owner/slice-2/production-programs-dark-1440.png": {
+      "sha256": "e23284c9d7e9b2decacc10649d74a207f96cb9dcced030620e5a12216e6b81e0",
+      "bytes": 129813
+    },
+    "owner/slice-2/production-programs-dark-390.png": {
+      "sha256": "e0941d8b23312c1fe67b603bc2fedda939d95744a47e7a88f899b42caabd9c14",
+      "bytes": 107053
+    },
+    "owner/slice-2/production-programs-dark-768.png": {
+      "sha256": "30e25c8ba89826ba3481f143af90194e74045ef27d1f6c527abb9b6e08e03839",
+      "bytes": 108963
+    },
+    "owner/slice-2/production-programs-empty.png": {
+      "sha256": "1f4848a2d7816a5112b6509038e0a4657e840f21b9a32ff5b8eb726f08b24bd4",
+      "bytes": 36622
+    },
+    "owner/slice-2/production-programs-error.png": {
+      "sha256": "6a33083d72dd1ea82e12b3f33ca74a228abad27a520b93cd70368cadbc4feefc",
+      "bytes": 39319
+    },
+    "owner/slice-2/production-programs-light-1440.png": {
+      "sha256": "7a06def6adc8914961c8c2656fc10fb96c1866c8a4070b29bba45b85601a579e",
+      "bytes": 133158
+    },
+    "owner/slice-2/production-programs-light-390.png": {
+      "sha256": "b4b99f7ecc7e412e33eec14ff4fc511d23c9d56e3a28a492a528fb2e0d2cbee2",
+      "bytes": 110609
+    },
+    "owner/slice-2/production-programs-light-768.png": {
+      "sha256": "54428ec48673ec8e6ccbabe5e23ee6d1b74f242d9bd755ab457298aa7f629c02",
+      "bytes": 111903
+    },
+    "owner/slice-2/production-programs-loading.png": {
+      "sha256": "2b851822b512f5a690059bbf68137b48639000a5d4993e92a2a133da97888c1c",
+      "bytes": 65450
+    },
+    "owner/slice-2/production-candidate-structured-tests/English-evidence-keeps-authored-content-and-form-selection-through-appearance-changes.json": {
+      "sha256": "99e357b6afd2f78e7ccc5392e308dcb85d1466170100cab8812d1eb1b76a2d31",
+      "bytes": 413
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-content-reflows-at-narrow-widths-and-CSS200-without-hiding-overflow.json": {
+      "sha256": "ebf8d8197291e312d1b532544ab489ce5a7303a9f5bb63419db384feb8aa2b3d",
+      "bytes": 1471
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-empty-states-preserve-eligibility-and-retry.json": {
+      "sha256": "2ce798069f6acfb2e9a75cf20ee392498a37d754f33203fa2ddf0ef19ff72db7",
+      "bytes": 346
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-error-states-preserve-eligibility-and-retry.json": {
+      "sha256": "d919be0ccef9921915f40c5b81723678ab500fd62ec7c585789265fb8edc5802",
+      "bytes": 346
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-loading-states-announce-pending-data-and-resolve-on-real-component-routes.json": {
+      "sha256": "c15d20808ca4757a0011189ba2665305b7ec59884e8b0d87496474093c882309",
+      "bytes": 481
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-matrix-dark-1440.json": {
+      "sha256": "8f84951283e2f963a032bf1435104176f68d2f697a7031d1ad16bd8b057435f1",
+      "bytes": 27886
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-matrix-dark-390.json": {
+      "sha256": "cafd4792ce878c3e154796f1397f66b402fa03cfee22d8fcccda309db36356de",
+      "bytes": 27873
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-matrix-dark-768.json": {
+      "sha256": "42757940aec46ac473be1682014df47d189227cac7056386c59d6c57a6c24a15",
+      "bytes": 27876
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-matrix-light-1440.json": {
+      "sha256": "6b24f8b86efc4b11e909867f45bddbe5ae4b340bcfe744940beb9388cf1f41e8",
+      "bytes": 28172
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-matrix-light-390.json": {
+      "sha256": "752f4610ff7397e74520d9c0c06400da37ede8f955bbc8dcabe9cd34041ae7fa",
+      "bytes": 28159
+    },
+    "owner/slice-2/production-candidate-structured-tests/learning-matrix-light-768.json": {
+      "sha256": "6700e9840fee6636abf243f3fd8231594f0b78c350c464d3320f428874f637b2",
+      "bytes": 28162
+    },
+    "owner/slice-2/production-candidate-structured-tests/saved-mission-program-availability-and-evidence-filters-keep-existing-contracts.json": {
+      "sha256": "5d67a6bbe047b208e0c3274f32d242040080f22107ae7cfafe36cc06b5644d98",
+      "bytes": 188
+    },
+    "owner/slice-2/production-qualified-tests/English-evidence-keeps-authored-content-and-form-selection-through-appearance-changes.json": {
+      "sha256": "99e357b6afd2f78e7ccc5392e308dcb85d1466170100cab8812d1eb1b76a2d31",
+      "bytes": 413
+    },
+    "owner/slice-2/production-qualified-tests/learning-content-reflows-at-narrow-widths-and-CSS200-without-hiding-overflow.json": {
+      "sha256": "ebf8d8197291e312d1b532544ab489ce5a7303a9f5bb63419db384feb8aa2b3d",
+      "bytes": 1471
+    },
+    "owner/slice-2/production-qualified-tests/learning-empty-states-preserve-eligibility-and-retry.json": {
+      "sha256": "2ce798069f6acfb2e9a75cf20ee392498a37d754f33203fa2ddf0ef19ff72db7",
+      "bytes": 346
+    },
+    "owner/slice-2/production-qualified-tests/learning-error-states-preserve-eligibility-and-retry.json": {
+      "sha256": "d919be0ccef9921915f40c5b81723678ab500fd62ec7c585789265fb8edc5802",
+      "bytes": 346
+    },
+    "owner/slice-2/production-qualified-tests/learning-loading-states-announce-pending-data-and-resolve-on-real-component-routes.json": {
+      "sha256": "c15d20808ca4757a0011189ba2665305b7ec59884e8b0d87496474093c882309",
+      "bytes": 481
+    },
+    "owner/slice-2/production-qualified-tests/learning-matrix-dark-1440.json": {
+      "sha256": "8f84951283e2f963a032bf1435104176f68d2f697a7031d1ad16bd8b057435f1",
+      "bytes": 27886
+    },
+    "owner/slice-2/production-qualified-tests/learning-matrix-dark-390.json": {
+      "sha256": "cafd4792ce878c3e154796f1397f66b402fa03cfee22d8fcccda309db36356de",
+      "bytes": 27873
+    },
+    "owner/slice-2/production-qualified-tests/learning-matrix-dark-768.json": {
+      "sha256": "42757940aec46ac473be1682014df47d189227cac7056386c59d6c57a6c24a15",
+      "bytes": 27876
+    },
+    "owner/slice-2/production-qualified-tests/learning-matrix-light-1440.json": {
+      "sha256": "6b24f8b86efc4b11e909867f45bddbe5ae4b340bcfe744940beb9388cf1f41e8",
+      "bytes": 28172
+    },
+    "owner/slice-2/production-qualified-tests/learning-matrix-light-390.json": {
+      "sha256": "752f4610ff7397e74520d9c0c06400da37ede8f955bbc8dcabe9cd34041ae7fa",
+      "bytes": 28159
+    },
+    "owner/slice-2/production-qualified-tests/learning-matrix-light-768.json": {
+      "sha256": "6700e9840fee6636abf243f3fd8231594f0b78c350c464d3320f428874f637b2",
+      "bytes": 28162
+    },
+    "owner/slice-2/production-qualified-tests/saved-mission-program-availability-and-evidence-filters-keep-existing-contracts.json": {
+      "sha256": "e5cacbe9ec53fb02ffc7871c2cd012a5763428d87e0860519bfc8a34e8f6ecf9",
+      "bytes": 377
+    },
+    "owner/slice-3/production-onboarding-reading-dark-1440.png": {
+      "sha256": "567090aa7f88fa5e6db18ff0fbcb01578352ccb4dfe1e1762816ef44b910e96c",
+      "bytes": 71508
+    },
+    "owner/slice-3/production-onboarding-reading-dark-390.png": {
+      "sha256": "3ec51157ca70748ad1ed8da282b2e5f123d4659d073fd1944a323d029fe74136",
+      "bytes": 43926
+    },
+    "owner/slice-3/production-onboarding-reading-dark-768.png": {
+      "sha256": "1b722b2dd6704e0fb24661799ad0454a6e7af03fa835d1cf40e503f690280ad5",
+      "bytes": 53967
+    },
+    "owner/slice-3/production-onboarding-reading-light-1440.png": {
+      "sha256": "b851969db26ba3b2d5232f4f200f52eb14dc1ac860f597ae841526a8973f12ae",
+      "bytes": 70864
+    },
+    "owner/slice-3/production-onboarding-reading-light-390.png": {
+      "sha256": "d57fa2d1601323effecdd6ab5f6fcda03ee6de6541df6e5567c8519d030e4140",
+      "bytes": 43933
+    },
+    "owner/slice-3/production-onboarding-reading-light-768.png": {
+      "sha256": "086b82c673b25753eae81d23c4dc2eb136ca46a843418d01ca86fe2de3519cc2",
+      "bytes": 53687
+    },
+    "owner/slice-3/production-placement-reading-dark-1440.png": {
+      "sha256": "3aad8b682a7fde404ade94fd4c13848adb29e75b997f95070f8e0565de285925",
+      "bytes": 104833
+    },
+    "owner/slice-3/production-placement-reading-dark-390.png": {
+      "sha256": "25c3ad7f06d1ce4b0f32c2e2c010419075f2ec51874475e23d7a282e5b61242e",
+      "bytes": 90159
+    },
+    "owner/slice-3/production-placement-reading-dark-768.png": {
+      "sha256": "12ec781c9a9da2fc520eda805c099ae4fac6d2f056950664879b2a82123004bb",
+      "bytes": 93165
+    },
+    "owner/slice-3/production-placement-reading-light-1440.png": {
+      "sha256": "d9b2e7e247654d1e7d6db225d889d9e06476fca0fb65895f166c552be341136c",
+      "bytes": 110755
+    },
+    "owner/slice-3/production-placement-reading-light-390.png": {
+      "sha256": "6b917a9706b081e05f1012ea22f8c836d6e2299d0d22b57eef8b68f347396004",
+      "bytes": 93876
+    },
+    "owner/slice-3/production-placement-reading-light-768.png": {
+      "sha256": "1869e92827d6e881f31a61d641f9163a149c033b0f0a503d2688867a57dd5771",
+      "bytes": 96943
+    },
+    "owner/slice-3/production-session-listening-dark-1440.png": {
+      "sha256": "b08b5c5dd4bc57ddef11fb60fe91f687bbc4bb3140a5487b23d9ecd00c96d9c5",
+      "bytes": 91895
+    },
+    "owner/slice-3/production-session-listening-dark-390.png": {
+      "sha256": "63df0b5844ca06ae2be88c64f8fb70a7666f6df8df6c38c4f6e08cd3d650eb7e",
+      "bytes": 78693
+    },
+    "owner/slice-3/production-session-listening-dark-768.png": {
+      "sha256": "f487cb424069c865d050b9d2dd90568656f5a48f53c232dfc1b9509c987e0301",
+      "bytes": 80376
+    },
+    "owner/slice-3/production-session-listening-light-1440.png": {
+      "sha256": "bdf14163d3d5aad0399f18015b4e364c5ca64f7b3c36cac1b133b81c36369090",
+      "bytes": 96905
+    },
+    "owner/slice-3/production-session-listening-light-390.png": {
+      "sha256": "f8944c2c2f270b35df2df6507f702b108913083ad4bd12d50d78907411aff077",
+      "bytes": 80784
+    },
+    "owner/slice-3/production-session-listening-light-768.png": {
+      "sha256": "9badf78f4bd69f9d53427a683f480cf89f897f3b36df0ebebbce33b1640a2615",
+      "bytes": 82180
+    },
+    "owner/slice-3/production-session-reading-dark-1440.png": {
+      "sha256": "8e239a76bbb52c30d2475290db71b71c081e873bfd5a7fe6b2db2e0854903409",
+      "bytes": 105354
+    },
+    "owner/slice-3/production-session-reading-dark-390.png": {
+      "sha256": "0012f76ffdfae014efdd6dc6df8e82f50c7a2302f6f99c57f191648567b622d0",
+      "bytes": 90643
+    },
+    "owner/slice-3/production-session-reading-dark-768.png": {
+      "sha256": "6dce3c2a4bc2952c567808e375affb5a49b5ff88109af7247f288882baa0c3ee",
+      "bytes": 93618
+    },
+    "owner/slice-3/production-session-reading-light-1440.png": {
+      "sha256": "4040f2532004dda8e36890aeaf450078f297d3ac9321ce2e3b07fd01453de9f4",
+      "bytes": 111391
+    },
+    "owner/slice-3/production-session-reading-light-390.png": {
+      "sha256": "836b19d6e31f931d644dfdeb85effa5570bc187fa3987e1eb92b0d8ef26fef77",
+      "bytes": 94104
+    },
+    "owner/slice-3/production-session-reading-light-768.png": {
+      "sha256": "be5bebf3decdaf7ec75d8767fcd2b168ebccc978d0b984be9a1ed0b284e17d53",
+      "bytes": 96909
+    },
+    "owner/slice-3/production-session-speaking-dark-1440.png": {
+      "sha256": "2cc0cba43d41997f1668d67088fa134561bfc1d4c463a92302e7e5b0efdde407",
+      "bytes": 69897
+    },
+    "owner/slice-3/production-session-speaking-dark-390.png": {
+      "sha256": "c809154dd7d7f5faf9c8dfe4e43a04d254914403c7406b559ce29d1921e80867",
+      "bytes": 60797
+    },
+    "owner/slice-3/production-session-speaking-dark-768.png": {
+      "sha256": "fdb1608f244db6eddccd7e52bcd4a88af514069e004c1ae7efb4d1007b4f7bec",
+      "bytes": 62134
+    },
+    "owner/slice-3/production-session-speaking-light-1440.png": {
+      "sha256": "f8e2004f0f24bc65774568540ac89252e300d11bb0ba0048368f4071035ebb8f",
+      "bytes": 76154
+    },
+    "owner/slice-3/production-session-speaking-light-390.png": {
+      "sha256": "9f08c5c1ac0910ff015b732b7e7f85eb85789074df2b15f01f86302665cd68e8",
+      "bytes": 65342
+    },
+    "owner/slice-3/production-session-speaking-light-768.png": {
+      "sha256": "9de5ec7d015f25d1e25731e77029c4dc8569a453330d9ebff3cec1ab9b59d0cb",
+      "bytes": 66512
+    },
+    "owner/slice-3/production-session-writing-dark-1440.png": {
+      "sha256": "3827b9a38cdd6aa0d78877cfa1c748ba2f763763a01a003374028a67a1b42161",
+      "bytes": 77786
+    },
+    "owner/slice-3/production-session-writing-dark-390.png": {
+      "sha256": "165e5a0dffb6035cce910b69dc7ae6201cb4ae23bcc81c1993269315fd453c7c",
+      "bytes": 68015
+    },
+    "owner/slice-3/production-session-writing-dark-768.png": {
+      "sha256": "43cbfa54119e3c89ece031c92afec32e53703a450475e15e993fc9fda82c2e29",
+      "bytes": 69065
+    },
+    "owner/slice-3/production-session-writing-light-1440.png": {
+      "sha256": "de6c4e5b329e9d1524a23e6e80e9e030b48c319bcf4258fd594fa1454b206d66",
+      "bytes": 84374
+    },
+    "owner/slice-3/production-session-writing-light-390.png": {
+      "sha256": "dbb2898b131fe91f1edb6979a68f7a0fe35fcc519dee5966ce01e323aca2429d",
+      "bytes": 72801
+    },
+    "owner/slice-3/production-session-writing-light-768.png": {
+      "sha256": "995f3eb2a0c367b7ef2fe32efda49ec76020950088925993fc8323b7a121c1ed",
+      "bytes": 73847
+    },
+    "owner/slice-3/production-candidate-structured-tests/actual-writing-draft-survives-theme-navigation-resize-pause-reload-and-submit.json": {
+      "sha256": "6274f5dd45faec8ad3b2f12ad3effdcd2bba089a592289d2816830d301f56627",
+      "bytes": 375
+    },
+    "owner/slice-3/production-candidate-structured-tests/learning-content-reflow-at320-and390-CSS200-preserves-full-questions-and-controls.json": {
+      "sha256": "c841e65bb080d17d05bf42ab3f41d88cc19c3951d38c2b6fef7d9380d2d41ce8",
+      "bytes": 1339
+    },
+    "owner/slice-3/production-candidate-structured-tests/native-lesson-audio-retains-playback-node-and-authored-transcript-through-appearance-resize.json": {
+      "sha256": "0fe584b65ee851a8a91d7a6e89353b5887470526d50b86fdbedc7fd61053aecc",
+      "bytes": 197
+    },
+    "owner/slice-3/production-candidate-structured-tests/pending-writing-save-retains-latest-edit-selection-and-next-revision-through-presentation-changes.json": {
+      "sha256": "159784ea667ebd21b2732ca8a5f9e1e54ac987c3a87679c82ba60a21e1a642c6",
+      "bytes": 404
+    },
+    "owner/slice-3/production-candidate-structured-tests/session-matrix-dark-1440.json": {
+      "sha256": "195f11c1e4e8b16941a4a936a0fb2c4769418a79625155b65e9a18dd1543a06e",
+      "bytes": 26728
+    },
+    "owner/slice-3/production-candidate-structured-tests/session-matrix-dark-390.json": {
+      "sha256": "f27e6c5c6495ab307892ef37062a2e007eac701e216b22b7320d9757c86e1ab5",
+      "bytes": 26709
+    },
+    "owner/slice-3/production-candidate-structured-tests/session-matrix-dark-768.json": {
+      "sha256": "84e043ec45c17d42d86d9c59e4cd102ec1b643d2433f16aa3349faba9984b363",
+      "bytes": 26709
+    },
+    "owner/slice-3/production-candidate-structured-tests/session-matrix-light-1440.json": {
+      "sha256": "585c584a04c7297a774530b6e4709609995fb37fcfc4b95c5ba3113fec09cb7f",
+      "bytes": 26840
+    },
+    "owner/slice-3/production-candidate-structured-tests/session-matrix-light-390.json": {
+      "sha256": "c56a61371c626ea8b998be12a8ee7474b245962a1ed843be25b032b81fc6a62b",
+      "bytes": 26821
+    },
+    "owner/slice-3/production-candidate-structured-tests/session-matrix-light-768.json": {
+      "sha256": "a1895b0ba0d43b62aedbbbb95bffd86e2044ac6986d88339550c75ff2bae643d",
+      "bytes": 26821
+    },
+    "owner/slice-3/production-qualified-tests/actual-writing-draft-survives-theme-navigation-resize-pause-reload-and-submit.json": {
+      "sha256": "6274f5dd45faec8ad3b2f12ad3effdcd2bba089a592289d2816830d301f56627",
+      "bytes": 375
+    },
+    "owner/slice-3/production-qualified-tests/completion-empty-onboarding-and-pending-request-states-use-existing-semantic-UI.json": {
+      "sha256": "ac4c76d863ab9485439afeb2cf40a205513b0b73aeb7cb289f773e0fd1d77c34",
+      "bytes": 299
+    },
+    "owner/slice-3/production-qualified-tests/learning-content-reflow-at320-and390-CSS200-preserves-full-questions-and-controls.json": {
+      "sha256": "c841e65bb080d17d05bf42ab3f41d88cc19c3951d38c2b6fef7d9380d2d41ce8",
+      "bytes": 1339
+    },
+    "owner/slice-3/production-qualified-tests/narrow-onboarding-and-learning-native-focus-reaches-choices-and-submit-with-visible-indicators.json": {
+      "sha256": "171eff9d1372f9ad1edfb61bfd9dc9804e1c57325f065d2c635a94bcc1cb9895",
+      "bytes": 590
+    },
+    "owner/slice-3/production-qualified-tests/native-lesson-audio-retains-playback-node-and-authored-transcript-through-appearance-resize.json": {
+      "sha256": "4df6026e271b1f1265c06f27b055c069f091cfab68ee6bff2265a2456dc914f4",
+      "bytes": 369
+    },
+    "owner/slice-3/production-qualified-tests/onboarding-choices-keep-unavailable-level-disabled-and-placement-start-resumable.json": {
+      "sha256": "2ca7b64049a028aa31edec1f5b99a4fe44a02771fdcdef8b5557b6e0d0359014",
+      "bytes": 322
+    },
+    "owner/slice-3/production-qualified-tests/onboarding-error-retry-retains-actual-owner.json": {
+      "sha256": "99ac58f70a26bfede3ebb4ae9ce8113af00eac55313e822cce98aded417b2d4d",
+      "bytes": 221
+    },
+    "owner/slice-3/production-qualified-tests/pending-writing-save-retains-latest-edit-selection-and-next-revision-through-presentation-changes.json": {
+      "sha256": "159784ea667ebd21b2732ca8a5f9e1e54ac987c3a87679c82ba60a21e1a642c6",
+      "bytes": 404
+    },
+    "owner/slice-3/production-qualified-tests/placement-error-retry-retains-actual-owner.json": {
+      "sha256": "4d623e4745c91cda7adf8c678a89caf7ad457f90ac4b3eb64da9c1807d125aed",
+      "bytes": 219
+    },
+    "owner/slice-3/production-qualified-tests/reading-answer-persists-through-appearance-changes-and-advances-actual-checkpoint.json": {
+      "sha256": "138723ead1307482b6608aeea8b396b5b9bfd49f6ff529816f833aae5b5aa081",
+      "bytes": 268
+    },
+    "owner/slice-3/production-qualified-tests/recording-track-and-native-recorder-survive-theme-resize-and-navigation-then-release-on-stop.json": {
+      "sha256": "5a0f890bf468a8247f10fa681bfdefd0747fd54b0a0711db81b8c07dea51895e",
+      "bytes": 409
+    },
+    "owner/slice-3/production-qualified-tests/session-error-retry-retains-actual-owner.json": {
+      "sha256": "e6abea4e42d926eb0186b7f2f42faa55a07d8ae1f01c319cf7435f12def87480",
+      "bytes": 215
+    },
+    "owner/slice-3/production-qualified-tests/session-matrix-dark-1440.json": {
+      "sha256": "195f11c1e4e8b16941a4a936a0fb2c4769418a79625155b65e9a18dd1543a06e",
+      "bytes": 26728
+    },
+    "owner/slice-3/production-qualified-tests/session-matrix-dark-390.json": {
+      "sha256": "f27e6c5c6495ab307892ef37062a2e007eac701e216b22b7320d9757c86e1ab5",
+      "bytes": 26709
+    },
+    "owner/slice-3/production-qualified-tests/session-matrix-dark-768.json": {
+      "sha256": "84e043ec45c17d42d86d9c59e4cd102ec1b643d2433f16aa3349faba9984b363",
+      "bytes": 26709
+    },
+    "owner/slice-3/production-qualified-tests/session-matrix-light-1440.json": {
+      "sha256": "585c584a04c7297a774530b6e4709609995fb37fcfc4b95c5ba3113fec09cb7f",
+      "bytes": 26840
+    },
+    "owner/slice-3/production-qualified-tests/session-matrix-light-390.json": {
+      "sha256": "c56a61371c626ea8b998be12a8ee7474b245962a1ed843be25b032b81fc6a62b",
+      "bytes": 26821
+    },
+    "owner/slice-3/production-qualified-tests/session-matrix-light-768.json": {
+      "sha256": "a1895b0ba0d43b62aedbbbb95bffd86e2044ac6986d88339550c75ff2bae643d",
+      "bytes": 26821
+    },
+    "owner/slice-4/production-bridge-catalog-dark-1440.png": {
+      "sha256": "5a2711d30db71c1d4476a48fa7fe4059f9e22bb0fcada046a8656ba386ee1d20",
+      "bytes": 64579
+    },
+    "owner/slice-4/production-bridge-catalog-dark-390.png": {
+      "sha256": "d7817bd3d9a62ff289d78282ab6b5cf6563ff7205062eda708b25752ace46f97",
+      "bytes": 36742
+    },
+    "owner/slice-4/production-bridge-catalog-dark-768.png": {
+      "sha256": "f3e7fe242d94b092564c1acfb4f29a4ea61c89f047c13053bb93985a91c5c11e",
+      "bytes": 46848
+    },
+    "owner/slice-4/production-bridge-catalog-light-1440.png": {
+      "sha256": "dcd5649ae2037d281b9784b8971783d561d7ea8617179600bf213d96d19dc730",
+      "bytes": 63905
+    },
+    "owner/slice-4/production-bridge-catalog-light-390.png": {
+      "sha256": "2faff79492bbc830c4838d897eb9d96f6bf4b6eec72d6a3ecfc46ee1b981f336",
+      "bytes": 36694
+    },
+    "owner/slice-4/production-bridge-catalog-light-768.png": {
+      "sha256": "d16e6317797d7da71a2cbdda6e7d5046ecb8a8bcf3cd156380b36dbf67576458",
+      "bytes": 46563
+    },
+    "owner/slice-4/production-bridge-player-dark-1440.png": {
+      "sha256": "e7464cf4e18025a9ee5f59800d17ae658c7935783f4e32b546d8c2160e7dbf3b",
+      "bytes": 41778
+    },
+    "owner/slice-4/production-bridge-player-dark-390.png": {
+      "sha256": "720bb0868252adb0a5562f90fbed3f6f1bf559f752fbd4bf6bb83cdcef4acb55",
+      "bytes": 34988
+    },
+    "owner/slice-4/production-bridge-player-dark-768.png": {
+      "sha256": "9469ff201e9f878f942b4aa8e753027aa06be52fa9d5fbb770f4caf2df3603c8",
+      "bytes": 36881
+    },
+    "owner/slice-4/production-bridge-player-light-1440.png": {
+      "sha256": "ce28ffe849de514d0a456f14ff82a0630c422aa4a8d6290c03ea61fa5ff828de",
+      "bytes": 44878
+    },
+    "owner/slice-4/production-bridge-player-light-390.png": {
+      "sha256": "0e6fe2f90dde16e4110dd75ac27b2a8f96505dae21cec72d697e4460ed2faea2",
+      "bytes": 37691
+    },
+    "owner/slice-4/production-bridge-player-light-768.png": {
+      "sha256": "fbe4a82a94004a885346d12d92214551226bb57f16d93cb70ddae39df9f0c268",
+      "bytes": 39058
+    },
+    "owner/slice-4/production-orientation-player-dark-1440.png": {
+      "sha256": "129a966d831b20e54f74817083f53ef1329a35a0f69bdf68f15bd21e97eb9b0d",
+      "bytes": 85470
+    },
+    "owner/slice-4/production-orientation-player-dark-390.png": {
+      "sha256": "7cc2da451777293a53cd5da23a072a84e528e11c9bec43aa753e33c1b948cd67",
+      "bytes": 53025
+    },
+    "owner/slice-4/production-orientation-player-dark-768.png": {
+      "sha256": "2010950d05f561565c0adcabe8ee7ab69f5401dfa090171b30d6773a4a554960",
+      "bytes": 63089
+    },
+    "owner/slice-4/production-orientation-player-light-1440.png": {
+      "sha256": "54e2d20568e66851f435bec751387de6204701ce276d757fafbf608c59c6a0da",
+      "bytes": 84692
+    },
+    "owner/slice-4/production-orientation-player-light-390.png": {
+      "sha256": "1bca010416352a2b35e7a84e465a37eacede359d94f6748199b1c1526c8de33c",
+      "bytes": 52872
+    },
+    "owner/slice-4/production-orientation-player-light-768.png": {
+      "sha256": "9d896735b8d6eae07bfe5b7ebbaf076773bf09edf9a4b448ba88c6acc0fa211b",
+      "bytes": 62700
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-matrix-dark-1440.json": {
+      "sha256": "a7e8b82e79d2dde71c2dfff070263c7590659e6b55fa378196c95480b5c568aa",
+      "bytes": 6296
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-matrix-dark-390.json": {
+      "sha256": "8b410edbd75a97e53b4d800ea74e6438fc7b11ef62a094ce890e33a52b99d392",
+      "bytes": 6286
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-matrix-dark-768.json": {
+      "sha256": "66cc7e40bc1afe51bdc1df9a151ad5ecf54bc0722cdc93bab62b38d720e4b5cf",
+      "bytes": 6286
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-matrix-light-1440.json": {
+      "sha256": "6c8f0d07edb44a71ff380d8dbe7604deaad58ed2ec094b5ed7949657149be8c9",
+      "bytes": 6358
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-matrix-light-390.json": {
+      "sha256": "c8231d96f4c9432303f2a5525050cf3b103ca2f6d45ac0ab3426ef785da14088",
+      "bytes": 6348
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-matrix-light-768.json": {
+      "sha256": "ede5f93c05e3dc13c9826e9144ef8b9eb9a69fe2f504e5c93351a1e870c186bc",
+      "bytes": 6348
+    },
+    "owner/slice-4/production-candidate-structured-tests/bridge-sequential-stages-preserve-timed-deadline-answer-and-completion-snapshots.json": {
+      "sha256": "531c1403dbec66c02cdd5bbf43e5f97f5b030ec4a9e362d93ce3ea69225c23db",
+      "bytes": 372
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-and-bridge-empty-states-remain-honest.json": {
+      "sha256": "c66de81d69e9ac7dd99508d979d7048fc660449c0c33dc2423ee5c1ca1df3549",
+      "bytes": 282
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-and-bridge-error-states-remain-honest.json": {
+      "sha256": "a8ead4c915590d4c3ecd7b02f3233df614b55d9ac79de52a64bc8f6baeabf38f",
+      "bytes": 282
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-and-bridge-locked-states-remain-honest.json": {
+      "sha256": "bf0424f311967ced77d54eb38efab860c16959f2ece6d0994c02b3c9a4cedda4",
+      "bytes": 285
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-and-bridge-narrow-reflow-retains-controls-at-CSS200.json": {
+      "sha256": "d1ff712612d00b2d993db8acc3e73ab6fd804513bd9561b87f853fd0f14ac500",
+      "bytes": 1970
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-and-bridge-pending-transport-announces-loading-then-resolves.json": {
+      "sha256": "6bb0e63eb4923afda1294000d0d2c9f0d3f4dbf22590a0050c60c9df0db0b49f",
+      "bytes": 319
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-answer-feedback-version-revisions-and-resume-retain-actual-controls.json": {
+      "sha256": "6e149866ce2c17938e02da1727502bc73d550ade7f4d6df3b286ad06f9302742",
+      "bytes": 367
+    },
+    "owner/slice-4/production-candidate-structured-tests/orientation-narration-speed-and-volume-controls-expose44px-touch-targets.json": {
+      "sha256": "59ab704b87d69c796870e34dbcbacb14b349fc194ce48dc18f00b17ee2441c54",
+      "bytes": 227
+    },
+    "owner/slice-4/production-qualified-tests/bridge-matrix-dark-1440.json": {
+      "sha256": "a7e8b82e79d2dde71c2dfff070263c7590659e6b55fa378196c95480b5c568aa",
+      "bytes": 6296
+    },
+    "owner/slice-4/production-qualified-tests/bridge-matrix-dark-390.json": {
+      "sha256": "8b410edbd75a97e53b4d800ea74e6438fc7b11ef62a094ce890e33a52b99d392",
+      "bytes": 6286
+    },
+    "owner/slice-4/production-qualified-tests/bridge-matrix-dark-768.json": {
+      "sha256": "66cc7e40bc1afe51bdc1df9a151ad5ecf54bc0722cdc93bab62b38d720e4b5cf",
+      "bytes": 6286
+    },
+    "owner/slice-4/production-qualified-tests/bridge-matrix-light-1440.json": {
+      "sha256": "6c8f0d07edb44a71ff380d8dbe7604deaad58ed2ec094b5ed7949657149be8c9",
+      "bytes": 6358
+    },
+    "owner/slice-4/production-qualified-tests/bridge-matrix-light-390.json": {
+      "sha256": "c8231d96f4c9432303f2a5525050cf3b103ca2f6d45ac0ab3426ef785da14088",
+      "bytes": 6348
+    },
+    "owner/slice-4/production-qualified-tests/bridge-matrix-light-768.json": {
+      "sha256": "ede5f93c05e3dc13c9826e9144ef8b9eb9a69fe2f504e5c93351a1e870c186bc",
+      "bytes": 6348
+    },
+    "owner/slice-4/production-qualified-tests/bridge-sequential-stages-preserve-timed-deadline-answer-and-completion-snapshots.json": {
+      "sha256": "531c1403dbec66c02cdd5bbf43e5f97f5b030ec4a9e362d93ce3ea69225c23db",
+      "bytes": 372
+    },
+    "owner/slice-4/production-qualified-tests/orientation-and-bridge-empty-states-remain-honest.json": {
+      "sha256": "c66de81d69e9ac7dd99508d979d7048fc660449c0c33dc2423ee5c1ca1df3549",
+      "bytes": 282
+    },
+    "owner/slice-4/production-qualified-tests/orientation-and-bridge-error-states-remain-honest.json": {
+      "sha256": "a8ead4c915590d4c3ecd7b02f3233df614b55d9ac79de52a64bc8f6baeabf38f",
+      "bytes": 282
+    },
+    "owner/slice-4/production-qualified-tests/orientation-and-bridge-locked-states-remain-honest.json": {
+      "sha256": "bf0424f311967ced77d54eb38efab860c16959f2ece6d0994c02b3c9a4cedda4",
+      "bytes": 285
+    },
+    "owner/slice-4/production-qualified-tests/orientation-and-bridge-narrow-reflow-retains-controls-at-CSS200.json": {
+      "sha256": "d1ff712612d00b2d993db8acc3e73ab6fd804513bd9561b87f853fd0f14ac500",
+      "bytes": 1970
+    },
+    "owner/slice-4/production-qualified-tests/orientation-and-bridge-pending-transport-announces-loading-then-resolves.json": {
+      "sha256": "6bb0e63eb4923afda1294000d0d2c9f0d3f4dbf22590a0050c60c9df0db0b49f",
+      "bytes": 319
+    },
+    "owner/slice-4/production-qualified-tests/orientation-answer-feedback-version-revisions-and-resume-retain-actual-controls.json": {
+      "sha256": "6e149866ce2c17938e02da1727502bc73d550ade7f4d6df3b286ad06f9302742",
+      "bytes": 367
+    },
+    "owner/slice-4/production-qualified-tests/orientation-narration-speed-and-volume-controls-expose44px-touch-targets.json": {
+      "sha256": "59ab704b87d69c796870e34dbcbacb14b349fc194ce48dc18f00b17ee2441c54",
+      "bytes": 227
+    },
+    "owner/slice-5/production-integrated-catalog-dark-1440.png": {
+      "sha256": "3df3700019e5612553d4f2a33d11033c927f7a0802fe2f2feea973a516279b91",
+      "bytes": 77663
+    },
+    "owner/slice-5/production-integrated-catalog-dark-390.png": {
+      "sha256": "dbcdabd88a379ea770dad0c6acffc926ce1a03155a9b626fca33b5a9e648f0cb",
+      "bytes": 45330
+    },
+    "owner/slice-5/production-integrated-catalog-dark-768.png": {
+      "sha256": "f300bd0abdb045222f91fadb7fd581bf888605bcd53e64741fae60de2d3cd8b0",
+      "bytes": 56067
+    },
+    "owner/slice-5/production-integrated-catalog-light-1440.png": {
+      "sha256": "6a8d322a55edb5017a3bc976edf2702e4154b7c2ea81509ef6c275d18b114818",
+      "bytes": 76829
+    },
+    "owner/slice-5/production-integrated-catalog-light-390.png": {
+      "sha256": "209ced6822c04d418577e6e9ce597563256f7637cba8d8d73f4148072cd78742",
+      "bytes": 45052
+    },
+    "owner/slice-5/production-integrated-catalog-light-768.png": {
+      "sha256": "0d55e282084a3d679c1ad992757c4e42357cd0a553b8eb54e8e47dc0a5649bab",
+      "bytes": 55710
+    },
+    "owner/slice-5/production-integrated-player-dark-1440.png": {
+      "sha256": "85a6332cc6686937a772ea98c432916b99123242014cff20a5ea44be78c65d2d",
+      "bytes": 45907
+    },
+    "owner/slice-5/production-integrated-player-dark-390.png": {
+      "sha256": "345ce62430c2f7dc6eb512ac55021b76cfb86d645a3b62b76bf9d83cc2698f8c",
+      "bytes": 36233
+    },
+    "owner/slice-5/production-integrated-player-dark-768.png": {
+      "sha256": "cc5b1ad3ff236bc0d8812012ac7c20d325c7b1568168cc643afb0624e9c7c55a",
+      "bytes": 40037
+    },
+    "owner/slice-5/production-integrated-player-light-1440.png": {
+      "sha256": "048ab0c173ecdd3cd1b12b23955173d0b9482f45d19f2348ad82343377d5c869",
+      "bytes": 48015
+    },
+    "owner/slice-5/production-integrated-player-light-390.png": {
+      "sha256": "52a8340aaf912d00710cdb909800756343e1348ad94947cb511b811559b5c97e",
+      "bytes": 38023
+    },
+    "owner/slice-5/production-integrated-player-light-768.png": {
+      "sha256": "391cb0f991f95297210b5029701fd7a19fde09a4b8ae7886c21cf9df1ffec405",
+      "bytes": 41778
+    },
+    "owner/slice-5/production-mock-catalog-dark-1440.png": {
+      "sha256": "31bf4f90c5021f114d37c0f0858b8a977d0d31b08d8e0980b7a8bf9956df8eb1",
+      "bytes": 72531
+    },
+    "owner/slice-5/production-mock-catalog-dark-390.png": {
+      "sha256": "ec9ca3a45ddf319ceb363542e7c12c7da77218ae02c0c11c798b8f838f04f7dd",
+      "bytes": 41571
+    },
+    "owner/slice-5/production-mock-catalog-dark-768.png": {
+      "sha256": "b6ee9ee0e64cc6e77614c30058948d6e811056ebd1d26265ae616389afc1ddb8",
+      "bytes": 52377
+    },
+    "owner/slice-5/production-mock-catalog-light-1440.png": {
+      "sha256": "dc1591a647108a897dcf512b22e1fd11179a9f4441b6567386c0e21e441abdbb",
+      "bytes": 71477
+    },
+    "owner/slice-5/production-mock-catalog-light-390.png": {
+      "sha256": "a96816fba569952707801c9eeb8852a80125dffa40683abfe336272220a12adc",
+      "bytes": 41557
+    },
+    "owner/slice-5/production-mock-catalog-light-768.png": {
+      "sha256": "0643671f4173d1f57b51d90c9ca35720a969a1bca9636f7f5737bdc82c38d67c",
+      "bytes": 52145
+    },
+    "owner/slice-5/production-mock-player-dark-1440.png": {
+      "sha256": "bca79ac795e89749fddffd69dfaae824c5697082e27e0fa54317173bdfda0318",
+      "bytes": 56526
+    },
+    "owner/slice-5/production-mock-player-dark-390.png": {
+      "sha256": "5c1d25e52a6b04f6627aad21eff6fcddc831a96ac8b231b048a05a566a3c2756",
+      "bytes": 45021
+    },
+    "owner/slice-5/production-mock-player-dark-768.png": {
+      "sha256": "f82ac9511695c4c20a82181ffd4042727d7ad133fc972df99531fdfe4d57544d",
+      "bytes": 49127
+    },
+    "owner/slice-5/production-mock-player-light-1440.png": {
+      "sha256": "43950c1249a8e069b8085a102ad845c3844294e15273eb0a17929f5bab66ab4a",
+      "bytes": 59332
+    },
+    "owner/slice-5/production-mock-player-light-390.png": {
+      "sha256": "03b8257a05a73666542176517928f40cd2d81287f05eee81a30cc389d950389e",
+      "bytes": 47479
+    },
+    "owner/slice-5/production-mock-player-light-768.png": {
+      "sha256": "fdd3a861347cb702dd09005ed72cf20323d5752032edbb8ca693e46898a6a275",
+      "bytes": 51617
+    },
+    "owner/slice-5/production-pathway-catalog-dark-1440.png": {
+      "sha256": "500d329281dbfa732ad0178384ff9d5ae7c0711aacf24933d791cf4c002f1490",
+      "bytes": 102267
+    },
+    "owner/slice-5/production-pathway-catalog-dark-390.png": {
+      "sha256": "f2d267addcc7059e808c69975c7af49d24bdb04a560482aba6a4b2a4f42b9461",
+      "bytes": 76651
+    },
+    "owner/slice-5/production-pathway-catalog-dark-768.png": {
+      "sha256": "52f63955f88e2b7ea9f2206d587231502216d9218ae5b16771a0ce24b85f38a9",
+      "bytes": 76713
+    },
+    "owner/slice-5/production-pathway-catalog-light-1440.png": {
+      "sha256": "d055a0558109a80de0ca72412d6c8ca367a8b545698148a07316367c42f5e48b",
+      "bytes": 101438
+    },
+    "owner/slice-5/production-pathway-catalog-light-390.png": {
+      "sha256": "b4b8e9ec7d16fd32c92351b187725ebc47ccc6bc580662f57030ae7fd3d22cee",
+      "bytes": 76114
+    },
+    "owner/slice-5/production-pathway-catalog-light-768.png": {
+      "sha256": "b7676ad4f43df0a4de259821f27236dd2f30d10cbb7378abacc6555df2da3bd8",
+      "bytes": 76142
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-empty-surfaces-preserve-eligibility.json": {
+      "sha256": "e6c7b53c24a3d951ce4c8070d92e8ffeb21ead9f8615348a6f23fc3ef3de3f8c",
+      "bytes": 331
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-error-surfaces-preserve-eligibility.json": {
+      "sha256": "017cc4d52dbd6b3f9e2d6e2e3558c4621d868343bcda355e8967f3d1edc0ec45",
+      "bytes": 331
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json": {
+      "sha256": "087a0f44783b9a0181a5972edd4733ee7d8fa173f1d2f9f734780c2a00d12678",
+      "bytes": 982
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-locked-surfaces-preserve-eligibility.json": {
+      "sha256": "2ca0a5aa808ab7bab371aa5c91de980f62e915442d62890f2d4011e6c5b9bdd7",
+      "bytes": 335
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-matrix-dark-1440.json": {
+      "sha256": "1764781120e2f909dbd4aedc1c40617aa6643a94db458627bf42a8f667c88eaa",
+      "bytes": 12738
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-matrix-dark-390.json": {
+      "sha256": "5a48de9d1633621305b5f863fe1482a44b72909aedb7559d2d66cc16e1cbf6a9",
+      "bytes": 12722
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-matrix-dark-768.json": {
+      "sha256": "ca0a7c6393f5cfe75552127b873ab1d316fed23c583c371ffe332136861902a0",
+      "bytes": 12722
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-matrix-light-1440.json": {
+      "sha256": "e156bfa68a82007ca0fa4cd3de43cb69d50f807270b9c0fb5056301dcd8670e4",
+      "bytes": 12824
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-matrix-light-390.json": {
+      "sha256": "42eb2e6f5d1907bb894907d1c864b5bef037ed523eaff2107923f1aa991350e1",
+      "bytes": 12808
+    },
+    "owner/slice-5/production-candidate-structured-tests/exam-matrix-light-768.json": {
+      "sha256": "122c46cf742c998a408e69cafc07d03b5a147d9a63a2cf5a647b82b5637b21ed",
+      "bytes": 12808
+    },
+    "owner/slice-5/production-candidate-structured-tests/expired-mock-disables-edits-and-submits-existing-server-snapshot-without-save.json": {
+      "sha256": "20afd2b1bb4ee7b1cabaca2d9a155e1ee490c65ea3bfcd585b547968112388ac",
+      "bytes": 301
+    },
+    "owner/slice-5/production-candidate-structured-tests/integrated-blocks-preserve-answer-duration-snapshot-deadline-progression-and-completion.json": {
+      "sha256": "fa9025c5967f0bd662efca4a73288057b5ee05313dc151451790b4cd76431702",
+      "bytes": 654
+    },
+    "owner/slice-5/production-candidate-structured-tests/launchers-preserve-actual-start-payloads-and-pathway-target-is-not-measured-score.json": {
+      "sha256": "418c047ff746239e0007ca2a3c5a7937835fd1381fa85527d4a915ce27fbefd2",
+      "bytes": 320
+    },
+    "owner/slice-5/production-candidate-structured-tests/mock-multiple-question-keyboard-navigation-exposes-text-answer-state-and-unclipped-focus.json": {
+      "sha256": "cfda69d0ebda647b658039d7e245fee099e5581f72aff76b58e03a1cfd0528b9",
+      "bytes": 479
+    },
+    "owner/slice-5/production-candidate-structured-tests/mock-real-editor-autosave-deadline-theme-locale-resize-navigation-reload-submit-and-pending-result.json": {
+      "sha256": "f0a112f6196cb32be5af9f6aa488f1d1af26c345395be125969aef6eb07e634a",
+      "bytes": 2988
+    },
+    "owner/slice-5/production-qualified-tests/exam-empty-surfaces-preserve-eligibility.json": {
+      "sha256": "e6c7b53c24a3d951ce4c8070d92e8ffeb21ead9f8615348a6f23fc3ef3de3f8c",
+      "bytes": 331
+    },
+    "owner/slice-5/production-qualified-tests/exam-error-surfaces-preserve-eligibility.json": {
+      "sha256": "017cc4d52dbd6b3f9e2d6e2e3558c4621d868343bcda355e8967f3d1edc0ec45",
+      "bytes": 331
+    },
+    "owner/slice-5/production-qualified-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json": {
+      "sha256": "087a0f44783b9a0181a5972edd4733ee7d8fa173f1d2f9f734780c2a00d12678",
+      "bytes": 982
+    },
+    "owner/slice-5/production-qualified-tests/exam-locked-surfaces-preserve-eligibility.json": {
+      "sha256": "2ca0a5aa808ab7bab371aa5c91de980f62e915442d62890f2d4011e6c5b9bdd7",
+      "bytes": 335
+    },
+    "owner/slice-5/production-qualified-tests/exam-matrix-dark-1440.json": {
+      "sha256": "1764781120e2f909dbd4aedc1c40617aa6643a94db458627bf42a8f667c88eaa",
+      "bytes": 12738
+    },
+    "owner/slice-5/production-qualified-tests/exam-matrix-dark-390.json": {
+      "sha256": "5a48de9d1633621305b5f863fe1482a44b72909aedb7559d2d66cc16e1cbf6a9",
+      "bytes": 12722
+    },
+    "owner/slice-5/production-qualified-tests/exam-matrix-dark-768.json": {
+      "sha256": "ca0a7c6393f5cfe75552127b873ab1d316fed23c583c371ffe332136861902a0",
+      "bytes": 12722
+    },
+    "owner/slice-5/production-qualified-tests/exam-matrix-light-1440.json": {
+      "sha256": "e156bfa68a82007ca0fa4cd3de43cb69d50f807270b9c0fb5056301dcd8670e4",
+      "bytes": 12824
+    },
+    "owner/slice-5/production-qualified-tests/exam-matrix-light-390.json": {
+      "sha256": "42eb2e6f5d1907bb894907d1c864b5bef037ed523eaff2107923f1aa991350e1",
+      "bytes": 12808
+    },
+    "owner/slice-5/production-qualified-tests/exam-matrix-light-768.json": {
+      "sha256": "122c46cf742c998a408e69cafc07d03b5a147d9a63a2cf5a647b82b5637b21ed",
+      "bytes": 12808
+    },
+    "owner/slice-5/production-qualified-tests/expired-mock-disables-edits-and-submits-existing-server-snapshot-without-save.json": {
+      "sha256": "20afd2b1bb4ee7b1cabaca2d9a155e1ee490c65ea3bfcd585b547968112388ac",
+      "bytes": 301
+    },
+    "owner/slice-5/production-qualified-tests/integrated-blocks-preserve-answer-duration-snapshot-deadline-progression-and-completion.json": {
+      "sha256": "fa9025c5967f0bd662efca4a73288057b5ee05313dc151451790b4cd76431702",
+      "bytes": 654
+    },
+    "owner/slice-5/production-qualified-tests/launchers-preserve-actual-start-payloads-and-pathway-target-is-not-measured-score.json": {
+      "sha256": "418c047ff746239e0007ca2a3c5a7937835fd1381fa85527d4a915ce27fbefd2",
+      "bytes": 320
+    },
+    "owner/slice-5/production-qualified-tests/mock-multiple-question-keyboard-navigation-exposes-text-answer-state-and-unclipped-focus.json": {
+      "sha256": "cfda69d0ebda647b658039d7e245fee099e5581f72aff76b58e03a1cfd0528b9",
+      "bytes": 479
+    },
+    "owner/slice-5/production-qualified-tests/mock-real-editor-autosave-deadline-theme-locale-resize-navigation-reload-submit-and-pending-result.json": {
+      "sha256": "5a355bfdc3b7d05542e754a155a59a5a98d2e083738c9e86972a55e73f0fe5b2",
+      "bytes": 2988
+    },
+    "owner/slice-6/production-content-11111111-1111-4111-8111-111111111111-dark-1440.png": {
+      "sha256": "649cbe58ab77ce59b3cd4f747590221c068a9307eb926bb9dbd97c368ab5c0b4",
+      "bytes": 137599
+    },
+    "owner/slice-6/production-content-11111111-1111-4111-8111-111111111111-dark-390.png": {
+      "sha256": "558b6525f95431b4002b377e8c1d4730f185efa884cea6a1dfa85b05f5a013ff",
+      "bytes": 75351
+    },
+    "owner/slice-6/production-content-11111111-1111-4111-8111-111111111111-dark-768.png": {
+      "sha256": "9146def2cb55fd2040eb182ac3a630490717f1a64b6ab160ade9cd673086defb",
+      "bytes": 99314
+    },
+    "owner/slice-6/production-content-11111111-1111-4111-8111-111111111111-light-1440.png": {
+      "sha256": "87981ac4ab9a441fc07db5a30f704d10d4bbf2de16f98a8a79f5e187c4623fe2",
+      "bytes": 138023
+    },
+    "owner/slice-6/production-content-11111111-1111-4111-8111-111111111111-light-390.png": {
+      "sha256": "76773a67c6d2cd9b85695e6728dbcb19e49807919435f5789ef12110c29acefc",
+      "bytes": 76146
+    },
+    "owner/slice-6/production-content-11111111-1111-4111-8111-111111111111-light-768.png": {
+      "sha256": "813e8ac0a70d5e6e4cd4d371619394262422d80ca801ec888c7535ee16cf38b7",
+      "bytes": 99643
+    },
+    "owner/slice-6/production-content-dark-1440.png": {
+      "sha256": "69dd1898d27761ce5f8eac45c5c38274d045f9c88071a71dc984ef937e5d5b7e",
+      "bytes": 76000
+    },
+    "owner/slice-6/production-content-dark-390.png": {
+      "sha256": "26b55cbc6eae0c6e300094d5e245091d06fe0c4f214fca0d95d6b2c699d5825c",
+      "bytes": 38326
+    },
+    "owner/slice-6/production-content-dark-768.png": {
+      "sha256": "4df463d5952d89ec238e324bd9cbbd797b1dd39979c402cb20390a1d51961111",
+      "bytes": 51384
+    },
+    "owner/slice-6/production-content-light-1440.png": {
+      "sha256": "01e06b1211ada513d91c82c01ac59481b5103902280e585eab8e916b129210ff",
+      "bytes": 75525
+    },
+    "owner/slice-6/production-content-light-390.png": {
+      "sha256": "61095b419d005d182b62788310e1b132fb46edf965e3b03b4dd19a712fe1eb95",
+      "bytes": 38271
+    },
+    "owner/slice-6/production-content-light-768.png": {
+      "sha256": "5deb4ec6d536fae4a6de6a1530d20dbd117d4b3957c9705a061a7eb07d33a83e",
+      "bytes": 51106
+    },
+    "owner/slice-6/production-content-new-dark-1440.png": {
+      "sha256": "d5d97e715c372e2f3f1b0fc3a97906f2d2148b5da2ba2ed37a46cb41db47eb73",
+      "bytes": 109273
+    },
+    "owner/slice-6/production-content-new-dark-390.png": {
+      "sha256": "c6edb88e0218a3433f72cb705bea78573d7fbdedf91f5abb17bb8bb4a269d3ce",
+      "bytes": 67245
+    },
+    "owner/slice-6/production-content-new-dark-768.png": {
+      "sha256": "a3465773f324b3e90cfaca988d9c4140fc80f0e54708ee8ff7a2d50712da05ba",
+      "bytes": 81964
+    },
+    "owner/slice-6/production-content-new-light-1440.png": {
+      "sha256": "4cad7eee396d4cc71c87a81223eb38ebc6054d25ef69da7770d0bca25f829feb",
+      "bytes": 109467
+    },
+    "owner/slice-6/production-content-new-light-390.png": {
+      "sha256": "aadf2e622bf77f7d4eda41bc306f2d85b38369a3b9be37f60fc6169fe82cdedf",
+      "bytes": 67685
+    },
+    "owner/slice-6/production-content-new-light-768.png": {
+      "sha256": "0637e02129e159c03d00bcac4feaa606e81a896909f4ab5c2fe5066e1c89b24c",
+      "bytes": 82308
+    },
+    "owner/slice-6/production-curriculum-dark-1440.png": {
+      "sha256": "3b6a5bea7797e3b17acb2a969d7936eeb281bfdde0d108e253bcaefda3ff04ba",
+      "bytes": 163064
+    },
+    "owner/slice-6/production-curriculum-dark-390.png": {
+      "sha256": "c7f1d9eb0406937cf74e5317f63565a491ca33d80ac49ab2e19ff81b0dc50603",
+      "bytes": 131481
+    },
+    "owner/slice-6/production-curriculum-dark-768.png": {
+      "sha256": "1c64fd4c19c2dfc551661bce08e09fb2144a69ca203bab8e6c7c0c39b3cd45dc",
+      "bytes": 136108
+    },
+    "owner/slice-6/production-curriculum-light-1440.png": {
+      "sha256": "abe2cf00aaf776ae4f5d13d956a4fdf844c7d228972bc92a65cc743aa3dafd49",
+      "bytes": 163372
+    },
+    "owner/slice-6/production-curriculum-light-390.png": {
+      "sha256": "ea447d0a3f6e30822082c5addab7f812e60e9ed05a866e9c26916d315e0b967e",
+      "bytes": 132218
+    },
+    "owner/slice-6/production-curriculum-light-768.png": {
+      "sha256": "96377a483d3db4d9f19cbd0d610cde8fb70a7a41c7f464ebfec6bab5ebd94b49",
+      "bytes": 136729
+    },
+    "owner/slice-6/production-ielts-band-curriculum-dark-1440.png": {
+      "sha256": "b2dc6bb4a011c0f0b3ac4d1cef401238f9d042b067d69ea946c55303c62418df",
+      "bytes": 314833
+    },
+    "owner/slice-6/production-ielts-band-curriculum-dark-390.png": {
+      "sha256": "83226f8b34d20382ae6ccd32d88eaf8002b89f2e150d1014d9f68432f16a4bb6",
+      "bytes": 246363
+    },
+    "owner/slice-6/production-ielts-band-curriculum-dark-768.png": {
+      "sha256": "9e57e537a98ed9d8626230e624562f2711965532072a2dcc4dd1fc60c6d68cd3",
+      "bytes": 269613
+    },
+    "owner/slice-6/production-ielts-band-curriculum-light-1440.png": {
+      "sha256": "c2b648bcb845c74b888df390b03204ac0d5357f5b01dc7a3cf41462e9bbb73b7",
+      "bytes": 316467
+    },
+    "owner/slice-6/production-ielts-band-curriculum-light-390.png": {
+      "sha256": "d6c86c656cba7ec33ed7d2b77645e54c0dda2f9b5bccc543e89dc6f1232bc09d",
+      "bytes": 247462
+    },
+    "owner/slice-6/production-ielts-band-curriculum-light-768.png": {
+      "sha256": "960c6beb81c0dc3f8c749f97c2549d63d2bb24b2445fbe0791594b4e1af7f533",
+      "bytes": 271275
+    },
+    "owner/slice-6/production-ielts-bridge-dark-1440.png": {
+      "sha256": "fc604c1479d95bad899c1037d386868b180dec1e96097139c0fe0c5a3a4819c7",
+      "bytes": 149459
+    },
+    "owner/slice-6/production-ielts-bridge-dark-390.png": {
+      "sha256": "29faf41e104b8d2e9404c12ca44294d1de5124373e956a05bdae4f784e847721",
+      "bytes": 116736
+    },
+    "owner/slice-6/production-ielts-bridge-dark-768.png": {
+      "sha256": "d215e27426031665bc63213e0a027ede974fbe1c70502bd4eabf9d2d9c29346e",
+      "bytes": 127630
+    },
+    "owner/slice-6/production-ielts-bridge-light-1440.png": {
+      "sha256": "1340b7aae6a6c130352fc00e34a3a82c263f4ca232ffc072815a3dc2333b6fc4",
+      "bytes": 149124
+    },
+    "owner/slice-6/production-ielts-bridge-light-390.png": {
+      "sha256": "42bcf172b04a927aa854a3929b6aa264b1649fc55fa2ee9a2ce12cd6c21b454a",
+      "bytes": 115798
+    },
+    "owner/slice-6/production-ielts-bridge-light-768.png": {
+      "sha256": "8a459403f218362559725319463a931b3d4ef8a351d31dda57f36ad446cdab15",
+      "bytes": 127033
+    },
+    "owner/slice-6/production-ielts-integrated-dark-1440.png": {
+      "sha256": "ca191d806597a1a4a38678fa83fea9084448276b3f305f14ec5f0614768510fb",
+      "bytes": 97788
+    },
+    "owner/slice-6/production-ielts-integrated-dark-390.png": {
+      "sha256": "65df7d88a8190781efcf240a8f44ab105ab8d2d59822db18eb234e9ead87d2c6",
+      "bytes": 62395
+    },
+    "owner/slice-6/production-ielts-integrated-dark-768.png": {
+      "sha256": "8b8c021e7c79ad415d0b9f1c82c8e556ff034183ebe1353d85a03ddba7750d20",
+      "bytes": 68838
+    },
+    "owner/slice-6/production-ielts-integrated-light-1440.png": {
+      "sha256": "00fb496322f14f2ed9deff50aae76493f88851f64f7a4b1cf666ff37501efa09",
+      "bytes": 97680
+    },
+    "owner/slice-6/production-ielts-integrated-light-390.png": {
+      "sha256": "aa4fba79d348999205962138c61edcb80cd1e25f095efd0a76d331322a24eb2b",
+      "bytes": 62413
+    },
+    "owner/slice-6/production-ielts-integrated-light-768.png": {
+      "sha256": "e216a6c00b70b1ddd71e1f3910c51cc0c8991402c0341ca4fd829a6a037ea955",
+      "bytes": 68931
+    },
+    "owner/slice-6/production-ielts-mocks-dark-1440.png": {
+      "sha256": "f9cc1c7db99c768ffc6e16f0f5187aacf82e648bb749e778e5ba5de72b63cd5c",
+      "bytes": 190417
+    },
+    "owner/slice-6/production-ielts-mocks-dark-390.png": {
+      "sha256": "e760a30bd713e2f5b6fe73b07ccb2319591201b2e278debe71e2bd3bfa0605f9",
+      "bytes": 137422
+    },
+    "owner/slice-6/production-ielts-mocks-dark-768.png": {
+      "sha256": "63a875fff75e62ef2b150d75892b8fcd82b71686c76096800813d65455a6ba30",
+      "bytes": 151894
+    },
+    "owner/slice-6/production-ielts-mocks-light-1440.png": {
+      "sha256": "7303a870fe041d8131a9b405fed8f35580f6994fcc11d6c9b00ecf05d64b37e5",
+      "bytes": 191750
+    },
+    "owner/slice-6/production-ielts-mocks-light-390.png": {
+      "sha256": "04498727c174b76ab44a2ce047e4e91555b9ddf76cd390d5065fcfb9123238be",
+      "bytes": 138564
+    },
+    "owner/slice-6/production-ielts-mocks-light-768.png": {
+      "sha256": "00ff4d5047f6688f3d3ae7f14727f3ab3a5d3b23a6d04bc75bfd312eeb3a19bd",
+      "bytes": 153277
+    },
+    "owner/slice-6/production-ielts-orientation-dark-1440.png": {
+      "sha256": "831325634c81d92859e58a559a69f356b93aee7610ae71a6a0ebd3bc63d20859",
+      "bytes": 138681
+    },
+    "owner/slice-6/production-ielts-orientation-dark-390.png": {
+      "sha256": "e6213564b154d2d0d6c674a62340b4341eaab65b02219fa0b74688f652db0e07",
+      "bytes": 103789
+    },
+    "owner/slice-6/production-ielts-orientation-dark-768.png": {
+      "sha256": "d78f05a7a875c16ac0d4fcac5feebfdbcb4d0fd7365177d42adb194ed4cb3c5d",
+      "bytes": 111249
+    },
+    "owner/slice-6/production-ielts-orientation-light-1440.png": {
+      "sha256": "196cba782003ff2ea189e29046a3f5a182dfc3db3951e61f25e92722e0b556b3",
+      "bytes": 138174
+    },
+    "owner/slice-6/production-ielts-orientation-light-390.png": {
+      "sha256": "3367057b56a6706203b6299b38ca9b086ab1acf12849cc0fd47da3810d0ffa90",
+      "bytes": 103336
+    },
+    "owner/slice-6/production-ielts-orientation-light-768.png": {
+      "sha256": "22eef10b6d112fd90c01f18ba5f66b24c0813472877164071e0ef58ac5905e33",
+      "bytes": 111086
+    },
+    "owner/slice-6/production-candidate-adapted-tests/authoring-matrix-dark-390.json": {
+      "sha256": "5445a5e40d9bb3cf4744c78f8a13cfb504f79b98b5b465cd14eec02f850fd093",
+      "bytes": 16007
+    },
+    "owner/slice-6/production-candidate-adapted-tests/authoring-matrix-light-1440.json": {
+      "sha256": "c532fa9c73faebaa5276ca685f5244db7a8c3b5ad8cfdef05da5801c9e5d4df8",
+      "bytes": 16257
+    },
+    "owner/slice-6/production-candidate-adapted-tests/authoring-matrix-light-390.json": {
+      "sha256": "636155348a05a0f6fbbf3da9fca7d821a182c048b1945751bad50100a6e95119",
+      "bytes": 16232
+    },
+    "owner/slice-6/production-candidate-adapted-tests/authoring-matrix-light-768.json": {
+      "sha256": "6181c1ca760fdf5eb25dc3c367d8b44656a273819e1b8da15464b76ab5d881a4",
+      "bytes": 16232
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-band-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "edecc3cf7ee93a90cd24afe9dca8dd5dd3fe7c6044a493d90ccee71207cd41a7",
+      "bytes": 314
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-bridge-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "fc0dfae1d3c481c6af5c90731225c702ae71697ac00865962facf81b2ab89400",
+      "bytes": 318
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-empty-actual-states.json": {
+      "sha256": "0f3d9fba2dc4d634d3afdf34349048f84bc977c4455ff6df0c9b948bd426bb2f",
+      "bytes": 420
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-error-actual-states.json": {
+      "sha256": "f0a93d79da14faa0d5b0a4d8c39339817ec603f1262ecb6bcf1b90b72b18e75b",
+      "bytes": 543
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-integrated-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "6eda7364ad6ab6427a7d5903696ebe9b47b14fb90e413d7c299b98486b62f410",
+      "bytes": 326
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-matrix-dark-1440.json": {
+      "sha256": "3750cee4ad49e95dc09d31ed88998411c500421e63478c3f4cc5355df091f4c3",
+      "bytes": 18128
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-matrix-dark-390.json": {
+      "sha256": "818dd0ab4dc5e997f373c3abed307d046fb8d2afc7289803756e10fe6615492e",
+      "bytes": 18100
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-matrix-dark-768.json": {
+      "sha256": "42aee1d0e6620e0b2075e7dfc3d0e812c5c8259f60914022e2ad0f40af880eb6",
+      "bytes": 18100
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-matrix-light-1440.json": {
+      "sha256": "4e12abe13d5327b409f098b91eb15fc089dced37f292f4b22c61d005a02fcae7",
+      "bytes": 18388
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-matrix-light-390.json": {
+      "sha256": "aa464e783f3110d6b1bb74c636aaeecac6b2215528a391b13773c939165b337c",
+      "bytes": 18360
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-matrix-light-768.json": {
+      "sha256": "5292cc9510da712acc0058f13935aa7728f3679b3d3bf1a5698cf46ea10b7b21",
+      "bytes": 18360
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-mock-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "983952e39c0ce1f624e3d9cd7d0f1bdafd965e887d3dde591a3f8e2a714775c8",
+      "bytes": 314
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-orientation-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "e7462d59777de14b2cd77046f5a84207a112370c6fc3232115b098abf66da338",
+      "bytes": 328
+    },
+    "owner/slice-6/production-candidate-structured-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json": {
+      "sha256": "9a35cf7ae24ea6d3cce36feec594375a6000d47178afe040f04d4b8da890b567",
+      "bytes": 1822
+    },
+    "owner/slice-6/production-candidate-structured-tests/content-real-source-autosave-retains-editor-through-appearance-and-validates-parser-preview.json": {
+      "sha256": "a770c80b076676406cc22c362e3cf762ae575791fdd8436060a19f1c80cf23fd",
+      "bytes": 674
+    },
+    "owner/slice-6/production-candidate-structured-tests/content-table-can-be-reached-and-scrolled-with-the-native-keyboard.json": {
+      "sha256": "e6d4feb58bb1d4424fa48a6425f80fe65aa560413f9754080001f51bc468f105",
+      "bytes": 240
+    },
+    "owner/slice-6/production-candidate-structured-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json": {
+      "sha256": "1725fb4516c40c49f510c092a1c59a4375e126034bcf3b34dbbbb8d62ffcfe7d",
+      "bytes": 1715
+    },
+    "owner/slice-6/production-candidate-structured-tests/orientation-validation-publication-and-stale-revision-preserve-UI-gates.json": {
+      "sha256": "04ecdc1ac3690adc9e4755f2086fed4212bb21d61c9c1bbd3fcd1e431461fc06",
+      "bytes": 303
+    },
+    "owner/slice-6/production-candidate-tests/authoring-matrix-light-1440.json": {
+      "sha256": "463b88802e2c43dbd86c50de7fa8be33c3f2189eee52308880ed0d5cae416759",
+      "bytes": 14700
+    },
+    "owner/slice-6/production-candidate-tests/authoring-matrix-light-390.json": {
+      "sha256": "9f42e8081d59411b7dbab70fc583419958286b4cc1ea0cb6051e37daed8e5f4b",
+      "bytes": 14678
+    },
+    "owner/slice-6/production-candidate-tests/authoring-matrix-light-768.json": {
+      "sha256": "d49a626b7c5638a65e8750b52678e3c904c215ad0e1a9ee98fd6596672d7c621",
+      "bytes": 14678
+    },
+    "owner/slice-6/production-qualified-tests/authoring-band-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "edecc3cf7ee93a90cd24afe9dca8dd5dd3fe7c6044a493d90ccee71207cd41a7",
+      "bytes": 314
+    },
+    "owner/slice-6/production-qualified-tests/authoring-bridge-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "fc0dfae1d3c481c6af5c90731225c702ae71697ac00865962facf81b2ab89400",
+      "bytes": 318
+    },
+    "owner/slice-6/production-qualified-tests/authoring-empty-actual-states.json": {
+      "sha256": "0f3d9fba2dc4d634d3afdf34349048f84bc977c4455ff6df0c9b948bd426bb2f",
+      "bytes": 420
+    },
+    "owner/slice-6/production-qualified-tests/authoring-error-actual-states.json": {
+      "sha256": "f0a93d79da14faa0d5b0a4d8c39339817ec603f1262ecb6bcf1b90b72b18e75b",
+      "bytes": 543
+    },
+    "owner/slice-6/production-qualified-tests/authoring-integrated-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "6eda7364ad6ab6427a7d5903696ebe9b47b14fb90e413d7c299b98486b62f410",
+      "bytes": 326
+    },
+    "owner/slice-6/production-qualified-tests/authoring-matrix-dark-1440.json": {
+      "sha256": "3750cee4ad49e95dc09d31ed88998411c500421e63478c3f4cc5355df091f4c3",
+      "bytes": 18128
+    },
+    "owner/slice-6/production-qualified-tests/authoring-matrix-dark-390.json": {
+      "sha256": "818dd0ab4dc5e997f373c3abed307d046fb8d2afc7289803756e10fe6615492e",
+      "bytes": 18100
+    },
+    "owner/slice-6/production-qualified-tests/authoring-matrix-dark-768.json": {
+      "sha256": "42aee1d0e6620e0b2075e7dfc3d0e812c5c8259f60914022e2ad0f40af880eb6",
+      "bytes": 18100
+    },
+    "owner/slice-6/production-qualified-tests/authoring-matrix-light-1440.json": {
+      "sha256": "4e12abe13d5327b409f098b91eb15fc089dced37f292f4b22c61d005a02fcae7",
+      "bytes": 18388
+    },
+    "owner/slice-6/production-qualified-tests/authoring-matrix-light-390.json": {
+      "sha256": "aa464e783f3110d6b1bb74c636aaeecac6b2215528a391b13773c939165b337c",
+      "bytes": 18360
+    },
+    "owner/slice-6/production-qualified-tests/authoring-matrix-light-768.json": {
+      "sha256": "5292cc9510da712acc0058f13935aa7728f3679b3d3bf1a5698cf46ea10b7b21",
+      "bytes": 18360
+    },
+    "owner/slice-6/production-qualified-tests/authoring-mock-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "983952e39c0ce1f624e3d9cd7d0f1bdafd965e887d3dde591a3f8e2a714775c8",
+      "bytes": 314
+    },
+    "owner/slice-6/production-qualified-tests/authoring-orientation-draft-identity-save-revision-and-publish-gate.json": {
+      "sha256": "e7462d59777de14b2cd77046f5a84207a112370c6fc3232115b098abf66da338",
+      "bytes": 328
+    },
+    "owner/slice-6/production-qualified-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json": {
+      "sha256": "55ba81765177429175373c1853a4440e8387372dabaa1555c70441b3461d3fd3",
+      "bytes": 2052
+    },
+    "owner/slice-6/production-qualified-tests/content-real-source-autosave-retains-editor-through-appearance-and-validates-parser-preview.json": {
+      "sha256": "a770c80b076676406cc22c362e3cf762ae575791fdd8436060a19f1c80cf23fd",
+      "bytes": 674
+    },
+    "owner/slice-6/production-qualified-tests/content-table-can-be-reached-and-scrolled-with-the-native-keyboard.json": {
+      "sha256": "e6d4feb58bb1d4424fa48a6425f80fe65aa560413f9754080001f51bc468f105",
+      "bytes": 240
+    },
+    "owner/slice-6/production-qualified-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json": {
+      "sha256": "1725fb4516c40c49f510c092a1c59a4375e126034bcf3b34dbbbb8d62ffcfe7d",
+      "bytes": 1715
+    },
+    "owner/slice-6/production-qualified-tests/orientation-validation-publication-and-stale-revision-preserve-UI-gates.json": {
+      "sha256": "04ecdc1ac3690adc9e4755f2086fed4212bb21d61c9c1bbd3fcd1e431461fc06",
+      "bytes": 303
+    },
+    "owner/slice-7/production-admin-analytics-dark-1440.png": {
+      "sha256": "0d854ddbc50e7c34eaa8dd871e3ed2ecf69e3058e4fd14b8486ca0aef06dc8cd",
+      "bytes": 85045
+    },
+    "owner/slice-7/production-admin-analytics-dark-390.png": {
+      "sha256": "1f9940b49292bc3b2d4f162012c41942aa8fc1d29880b07ab6f101a0e052efef",
+      "bytes": 57436
+    },
+    "owner/slice-7/production-admin-analytics-dark-768.png": {
+      "sha256": "084cfe055057a207c696a8f7dd0535523ff8c1a06cca56fc981c19394894d197",
+      "bytes": 63047
+    },
+    "owner/slice-7/production-admin-analytics-light-1440.png": {
+      "sha256": "55eda8db11fea5c3eae50c8377aeb8d8642bc6ad1820c87f0b079e380c5bbceb",
+      "bytes": 84905
+    },
+    "owner/slice-7/production-admin-analytics-light-390.png": {
+      "sha256": "8ffb8cc8bbae63c8a0f75cbabc87100103540a933b8970a8bc8fc3973defd32c",
+      "bytes": 57191
+    },
+    "owner/slice-7/production-admin-analytics-light-768.png": {
+      "sha256": "d9771ad3d65a782a8d2beb9db1ada4bb6cf002177edda9579c05291189c5a400",
+      "bytes": 63215
+    },
+    "owner/slice-7/production-admin-audit-dark-1440.png": {
+      "sha256": "f47cf50b84e692842298a5469ef046f811be66dcc486a810551e3c1ade8c022b",
+      "bytes": 351405
+    },
+    "owner/slice-7/production-admin-audit-dark-390.png": {
+      "sha256": "4e07efe33bb792c34aade60ff80c23128b6b80223ffdefcd049febd795766057",
+      "bytes": 303877
+    },
+    "owner/slice-7/production-admin-audit-dark-768.png": {
+      "sha256": "32798893f45f1242e2ae238ca9ecc77057048ae383ee9dc1e28dfa593db355c3",
+      "bytes": 320335
+    },
+    "owner/slice-7/production-admin-audit-light-1440.png": {
+      "sha256": "75f686777d4fb4f74ec3c4bbf883b91dfd2ab2f8a070a686ff66443551651a0b",
+      "bytes": 349843
+    },
+    "owner/slice-7/production-admin-audit-light-390.png": {
+      "sha256": "8a4e313fb380f3b724065678a202241c149ad8d312fb9b3c41147afd38e1ab95",
+      "bytes": 301956
+    },
+    "owner/slice-7/production-admin-audit-light-768.png": {
+      "sha256": "aaf5a0aad95f46abd4310c207ae947cecb2019a6c72e415cd3e3111dd498fc29",
+      "bytes": 317412
+    },
+    "owner/slice-7/production-admin-operations-dark-1440.png": {
+      "sha256": "303ecae2ee2891b6903f2c2e804b8dde644e19e228a30fd83aab81ae0638eb17",
+      "bytes": 228656
+    },
+    "owner/slice-7/production-admin-operations-dark-390.png": {
+      "sha256": "95e94ddf4163d752c5fa94b20ae55a8b63cf64dc0cdb4183d120c57afe3b5831",
+      "bytes": 138311
+    },
+    "owner/slice-7/production-admin-operations-dark-768.png": {
+      "sha256": "aba18d28f6a380f6fe6cb9f2b158875c27a2ecf59abbdd844932cd36a905ebd0",
+      "bytes": 221739
+    },
+    "owner/slice-7/production-admin-operations-light-1440.png": {
+      "sha256": "11577cf0eb6400dde4b34f585c06df77092aea82438ecc504a715221d191c3a3",
+      "bytes": 226264
+    },
+    "owner/slice-7/production-admin-operations-light-390.png": {
+      "sha256": "3d8b0d027a19f65c06957f4fa1db4ca1b1e8db4756abd260b1252aa31be096a0",
+      "bytes": 136503
+    },
+    "owner/slice-7/production-admin-operations-light-768.png": {
+      "sha256": "4ed6416b5b48947a027b3bbe4985cee861d54f0a6ec5e649de9c984c965fd532",
+      "bytes": 220523
+    },
+    "owner/slice-7/production-admin-settings-ai-dark-1440.png": {
+      "sha256": "cef149f6fde62585dfd15fe9c2fbc08b97c93c031b7158814ebdf4804b0fb148",
+      "bytes": 168789
+    },
+    "owner/slice-7/production-admin-settings-ai-dark-390.png": {
+      "sha256": "38b88e4d9959389fa72838826d9f87e55eb1d42e015118469dec1fa146082da6",
+      "bytes": 134238
+    },
+    "owner/slice-7/production-admin-settings-ai-dark-768.png": {
+      "sha256": "2081a56ee5265b39dd7e5e0673f2b4470eea4cb76220495af88ced93e7989ac6",
+      "bytes": 142859
+    },
+    "owner/slice-7/production-admin-settings-ai-light-1440.png": {
+      "sha256": "c59671090c4e446cd2c5ccff36d1c6171ca8e67486abb4f9b41f0fffe49de43c",
+      "bytes": 168154
+    },
+    "owner/slice-7/production-admin-settings-ai-light-390.png": {
+      "sha256": "3d1c4a37ed19044b6e13d69cfc179b24a46669017f225153afe726addc7b98db",
+      "bytes": 133469
+    },
+    "owner/slice-7/production-admin-settings-ai-light-768.png": {
+      "sha256": "9710263ec984729c817c7a80e14662bb7de885564fb03b07e65182dd9ba79688",
+      "bytes": 142101
+    },
+    "owner/slice-7/production-admin-settings-audio-dark-1440.png": {
+      "sha256": "e48d95aeb8cac19065549e0675d7464810e274917f5f2a0668d36ad2c752b472",
+      "bytes": 211047
+    },
+    "owner/slice-7/production-admin-settings-audio-dark-390.png": {
+      "sha256": "79867e518c09642f93481a9bcbbef30ef637e72e6a63f19e1642323b2351cd0e",
+      "bytes": 160497
+    },
+    "owner/slice-7/production-admin-settings-audio-dark-768.png": {
+      "sha256": "a608d8a20b6775c59c9e770412a5afe26a9f839b2ede0a7d33c589822a8200b5",
+      "bytes": 182915
+    },
+    "owner/slice-7/production-admin-settings-audio-light-1440.png": {
+      "sha256": "8f95a982e18b88d0340ea0a1573e140731cec7edfab0d41fdcf3d069be0aa476",
+      "bytes": 212808
+    },
+    "owner/slice-7/production-admin-settings-audio-light-390.png": {
+      "sha256": "ae00dfeb9caa354192531d851337d733ec288387e46a99ad73af0782d27a6c51",
+      "bytes": 161849
+    },
+    "owner/slice-7/production-admin-settings-audio-light-768.png": {
+      "sha256": "018d1b5766c446e7065749c2250c804de1a0c717cb89abc4f3495a3f04577abb",
+      "bytes": 184949
+    },
+    "owner/slice-7/production-settings-ai-dark-1440.png": {
+      "sha256": "43d3b647ee832f0c46d7fe6bc35ebb22cb33099b972ce82261fa50e1d4467741",
+      "bytes": 93281
+    },
+    "owner/slice-7/production-settings-ai-dark-390.png": {
+      "sha256": "2cdb4c9fb592117841ba0768603c2385ff68d4e8918fa0ecd1b88427cee80e89",
+      "bytes": 68531
+    },
+    "owner/slice-7/production-settings-ai-dark-768.png": {
+      "sha256": "c0abe335b9a174e309305f43ee38525262f458c5b92c368c54382812bf84e242",
+      "bytes": 76427
+    },
+    "owner/slice-7/production-settings-ai-light-1440.png": {
+      "sha256": "10f060518c997a9d79eaaa9cc93091b2f61f5abf3c30bcb4cc9e10abcf8b25d9",
+      "bytes": 92809
+    },
+    "owner/slice-7/production-settings-ai-light-390.png": {
+      "sha256": "98b73e832b277ef536087eb311330aaeb5a8bb2a9afb05f5252d6c01f58f89f2",
+      "bytes": 68308
+    },
+    "owner/slice-7/production-settings-ai-light-768.png": {
+      "sha256": "c0a1642d9b0543e24726546943a7951af8b24077a50fec09e47ebc7d53b19e56",
+      "bytes": 76203
+    },
+    "owner/slice-7/production-settings-audio-dark-1440.png": {
+      "sha256": "0adedd39cad19ef3fe6458555907f9d997eaba937931b9e8822fcf3ad325f91a",
+      "bytes": 73781
+    },
+    "owner/slice-7/production-settings-audio-dark-390.png": {
+      "sha256": "f1de9863a3459708739b1fc641ade7f83f5332c1720698bab2f0dc8ff89a69b8",
+      "bytes": 45903
+    },
+    "owner/slice-7/production-settings-audio-dark-768.png": {
+      "sha256": "3ab05ce583f1b1a23e478c29682da9994eaea797dd20d030536dfac8694dfdf0",
+      "bytes": 56745
+    },
+    "owner/slice-7/production-settings-audio-light-1440.png": {
+      "sha256": "379d96a45bc08afb6d2df78deeabf8a996e34fb7733f50960ea32d46aeb07433",
+      "bytes": 73180
+    },
+    "owner/slice-7/production-settings-audio-light-390.png": {
+      "sha256": "1db934241ded8c0b00722f1b207bbb98afbe474306d79b22143b584ad4b498b4",
+      "bytes": 46174
+    },
+    "owner/slice-7/production-settings-audio-light-768.png": {
+      "sha256": "a9c9c36318f96f6dfac40ddf1234b90c58f5e3c90a63119e6219b01bde78e290",
+      "bytes": 56767
+    },
+    "owner/slice-7/production-settings-dark-1440.png": {
+      "sha256": "a321a0f746d3174c0d169dd8d18555b1882dd63e97684e834e3a145432d5704d",
+      "bytes": 78975
+    },
+    "owner/slice-7/production-settings-dark-390.png": {
+      "sha256": "2ca6730c327553f3db4c06d8360c4b7423db39f8bdc48f8d180f9a7ab48af06e",
+      "bytes": 52048
+    },
+    "owner/slice-7/production-settings-dark-768.png": {
+      "sha256": "7f28cd3558d16206674cab131a308ddf2713678599902afade8eb6897a011807",
+      "bytes": 62764
+    },
+    "owner/slice-7/production-settings-en-390-css200.png": {
+      "sha256": "ebbe95a98c8cae011fd9c3f77a7b9014369d36103fdc157eff8644a5347c565e",
+      "bytes": 176996
+    },
+    "owner/slice-7/production-settings-light-1440.png": {
+      "sha256": "0bfdc50ac7d84d203b3f6290b0603e8e89d896869e9d2278f800a3aaa6e7a1c1",
+      "bytes": 78940
+    },
+    "owner/slice-7/production-settings-light-390.png": {
+      "sha256": "8db9c54f0bcb0b29c5e3a0546620df7d9036575855ddf9809db5096d6abb7885",
+      "bytes": 52130
+    },
+    "owner/slice-7/production-settings-light-768.png": {
+      "sha256": "c55a20f63e7de0a0d40f32b8dacc012ca200584f3e5b3aa3ca57a33097176f40",
+      "bytes": 63231
+    },
+    "owner/slice-7/production-settings-vi-390-css200.png": {
+      "sha256": "82b6d39901a5f974add71bd417bc8e27ee147f8293f9fe716a9e788804fd76f3",
+      "bytes": 182236
+    },
+    "owner/slice-7/production-qualified-tests/adminAi-provider-availability-draft-fallback-save-reload.json": {
+      "sha256": "26fa9329acb681d997b92d8d2030c00448f47a04af195a781f8b07f5bdeef9f9",
+      "bytes": 282
+    },
+    "owner/slice-7/production-qualified-tests/ai-provider-availability-draft-fallback-save-reload.json": {
+      "sha256": "204e8e090f9f017400c1c510c6ab02b1a81076b3a7f79681611d3a84b76030bc",
+      "bytes": 272
+    },
+    "owner/slice-7/production-qualified-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json": {
+      "sha256": "0704c99eb794a9a9e2667cc0dd064a38435495a257fd44365b6c01b53fe13f64",
+      "bytes": 2736
+    },
+    "owner/slice-7/production-qualified-tests/audit-filter-cursor-details-operations-filter-page-and-analytics-range-preserve-queries.json": {
+      "sha256": "3bf19b4cdca09bb3a23df0ed88e69cde4f6f9a5c0f2121a65b0e916934c25733",
+      "bytes": 408
+    },
+    "owner/slice-7/production-qualified-tests/content-admin-cannot-edit-system-AI-while-account-settings-remain-usable.json": {
+      "sha256": "b79c9a8d054605cfb84564946f5819d132768e1d952708797d02aa86b940ae92",
+      "bytes": 249
+    },
+    "owner/slice-7/production-qualified-tests/learner-audio-actual-source-save-and-resume-remain-available.json": {
+      "sha256": "bc183c9ac6e721845ecfd074dbe9231670eeebdbc10f55eb0d8672d71cf07f15",
+      "bytes": 265
+    },
+    "owner/slice-7/production-qualified-tests/settings-errors-retry-and-honest-operations-empty-states.json": {
+      "sha256": "2fc8a57f59f38afd43e4614c94a8539406c24fdf277b0839a59080dfb250c55e",
+      "bytes": 900
+    },
+    "owner/slice-7/production-qualified-tests/settings-operations-matrix-dark-1440.json": {
+      "sha256": "ec2d6e8ac28c509350850200082f3415d14e3cdfa68e0da7d7773eca239b47e5",
+      "bytes": 49880
+    },
+    "owner/slice-7/production-qualified-tests/settings-operations-matrix-dark-390.json": {
+      "sha256": "ae63f79ad52d679d9c6c32185578c1c326546e79a21231865dfdc07a3fe125d2",
+      "bytes": 49855
+    },
+    "owner/slice-7/production-qualified-tests/settings-operations-matrix-dark-768.json": {
+      "sha256": "1c02be5c01871a448b4127c48f0a0a5102491a3440fe610d191402c2b09b1f92",
+      "bytes": 49855
+    },
+    "owner/slice-7/production-qualified-tests/settings-operations-matrix-light-1440.json": {
+      "sha256": "2135c6a69e79aac143126b68742fe4446f1b9728490c3ed52f93a1295faa7aa8",
+      "bytes": 50601
+    },
+    "owner/slice-7/production-qualified-tests/settings-operations-matrix-light-390.json": {
+      "sha256": "31095a0036f0e4d686aff3eba9004c21a78154b5fd9fcafe6e2fa5a2b8e28111",
+      "bytes": 50576
+    },
+    "owner/slice-7/production-qualified-tests/settings-operations-matrix-light-768.json": {
+      "sha256": "e5f28f5550093e3702146d8f2e4c6a6a0d05bc92bbdd3ca96c23cf990af3a35a",
+      "bytes": 50576
+    },
+    "owner/slice-7/production-qualified-tests/settings-real-locale-theme-transparency-persistence-and-native-narrow-focus-long-text.json": {
+      "sha256": "166875dd70a8b4987c0dead7dc035c9069f05254ec33abef6dfffc26138128cf",
+      "bytes": 2565
+    },
+    "owner/slice-7/production-qualified-tests/settings-reflow-en-at390-CSS200-equivalent-baseline-and-narrow-matrix.json": {
+      "sha256": "b06e51c5dd12c625fd4f7c3e3f6b1d7e7049d9f65b757ffc5669f5469ae7e7a4",
+      "bytes": 8033
+    },
+    "owner/slice-7/production-qualified-tests/settings-reflow-vi-at390-CSS200-equivalent-baseline-and-narrow-matrix.json": {
+      "sha256": "dab38a242fbfd538a5073f53a2445a801536dae99ee998c28fee06578790a18f",
+      "bytes": 8033
+    },
+    "owner/slice-7/production-qualified-tests/system-audio-unavailable-provider-and-existing-save-contract-retain-gates.json": {
+      "sha256": "01a2f143f15d9c97355190874d56131b3bfb8401dcbe8031716d6abdc22e47cc",
+      "bytes": 288
+    },
+    "owner/slice-7/production-qualified-tests/system-dark-reduced-motion-transparency-and-forced-colors-keep-settings-usable.json": {
+      "sha256": "21c3b0f2ca6b226240baa37784beaba572d0205f914329a7e95f57d33529a875",
+      "bytes": 347
+    },
+    "performance-qualified/chromium/repeated-lab-paint-shift-interaction-and-scroll-observations.json": {
+      "sha256": "481f6ef9ae9b894f1f10407471535c154d600cd5ef7042eaea64e989795bba70",
+      "bytes": 41344
+    },
+    "webkit-settled/webkit/preferences-storage-failure-disclosure-and-draft-controls-remain-usable.json": {
+      "sha256": "fbd7af3783a70a3f0a4524b3d9265d4e640c2d5eb79804881d47e74c6000e220",
+      "bytes": 1779
+    },
+    "webkit-settled/webkit/representative-routes-dark-1440.json": {
+      "sha256": "f9e2019491272c5bf3c4257d28c84ed5cd28798560afad6395ac531faca1a6aa",
+      "bytes": 5426
+    },
+    "webkit-settled/webkit/representative-routes-dark-390.json": {
+      "sha256": "a602c81ea4ee3bcde04c3b8d99e4705e3fff1424335beb3348c980cadd66648a",
+      "bytes": 5401
+    },
+    "webkit-settled/webkit/representative-routes-dark-768.json": {
+      "sha256": "32a7ddc007b479970e4026263ae3df0559972a195b3e9116dc8f2570e8e4e64b",
+      "bytes": 5409
+    },
+    "webkit-settled/webkit/representative-routes-light-1440.json": {
+      "sha256": "9ed8f0452526e3d78722f1d40b6f78a0bb2b0d8b39731af2b02edeccfac07663",
+      "bytes": 5489
+    },
+    "webkit-settled/webkit/representative-routes-light-390.json": {
+      "sha256": "adec6c27da35bafe614e9b904c262165972d03c0dd6152cc859963ca3974176a",
+      "bytes": 5464
+    },
+    "webkit-settled/webkit/representative-routes-light-768.json": {
+      "sha256": "00fc3833d1a7752e1a1b80a8d0e4b6723bd24daf7d2a96525d31a232b9296443",
+      "bytes": 5472
+    }
+  }
+}

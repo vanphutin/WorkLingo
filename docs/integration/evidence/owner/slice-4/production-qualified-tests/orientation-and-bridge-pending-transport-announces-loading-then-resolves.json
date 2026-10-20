@@ -1,0 +1,16 @@
+{
+  "title": "orientation and bridge pending transport announces loading then resolves",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "orientation",
+      "pendingResolved": true
+    },
+    {
+      "kind": "bridge",
+      "pendingResolved": true
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:44:35.610Z",
+  "command": "Exact CLI not recorded here; see run registry/log",
+  "environment": {
+    "engine": "firefox",
+    "browserVersion": "155.0",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "preferences storage failure disclosure and draft controls remain usable",
+  "result": "passed",
+  "testSourceSHA256": "47732d7f5de3a81321730bfd93bdb2a3bb7e16de13c6f84d8f019655dd5dbaff",
+  "productionWorkingDiffSHA256": "620264b4114398e6d9c2db1cfcc6a2e7ccc5001747a5d3c46223d5b1d4349599",
+  "observations": [
+    {
+      "diagnostic": "increased contrast capability",
+      "contrastMore": true,
+      "actualFilter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "diagnostic": "actual compiled media rules",
+      "media": [
+        {
+          "condition": "(prefers-reduced-transparency:reduce), (prefers-contrast: more), (forced-colors: active)",
+          "matches": true,
+          "rule": "@media (prefers-reduced-transparency:reduce), (prefers-contrast: more), (forced-colors: active) {\n  .glass-surface.glass-surface { background-color: var(--surface-elevated); border-color: var(--border-strong); box-shadow: none; backdrop-filter: none; background-image: none; }\n}"
+        }
+      ]
+    },
+    {
+      "dynamicIncreasedContrast": "BLOCKED: Firefox155 emulator does not restyle existing sheets, including plain color-only control",
+      "reproduction": "phase6-firefox-controlled-variants.log",
+      "staticPreferenceCheck": "Reload under already-emulated preference; not a dynamic transition pass"
+    },
+    {
+      "manualReducedTransparency": true,
+      "independentIncreasedContrast": "PASS",
+      "forcedColors": "PASS: controls usable",
+      "keyboardDisclosure": true,
+      "storageBlockedUsable": true,
+      "authDraftRetained": true,
+      "realAuthentication": false
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

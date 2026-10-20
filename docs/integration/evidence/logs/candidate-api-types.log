@@ -1,0 +1,4 @@
+
+> @worklingo/api@0.0.0 typecheck D:\Projects\WorkLingo-Integration\apps\api
+> tsc --noEmit
+

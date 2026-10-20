@@ -1,0 +1,26 @@
+[
+  {
+    "command": "pnpm test:i18n",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm mandate:check",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm test:mandate",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm test:setup-local",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm test:postgres-client",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm test:secret-scan",
+    "exitCode": 0
+  }
+]

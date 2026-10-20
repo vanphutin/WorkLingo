@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:48:05.380Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6.config.ts --project=webkit",
+  "environment": {
+    "engine": "webkit",
+    "browserVersion": "26.6",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "preferences storage failure disclosure and draft controls remain usable",
+  "result": "passed",
+  "testSourceSHA256": "47732d7f5de3a81321730bfd93bdb2a3bb7e16de13c6f84d8f019655dd5dbaff",
+  "productionWorkingDiffSHA256": "620264b4114398e6d9c2db1cfcc6a2e7ccc5001747a5d3c46223d5b1d4349599",
+  "observations": [
+    {
+      "diagnostic": "increased contrast capability",
+      "contrastMore": true,
+      "actualFilter": "none"
+    },
+    {
+      "diagnostic": "actual compiled media rules",
+      "media": [
+        {
+          "condition": "(prefers-reduced-transparency:reduce), (prefers-contrast: more), (forced-colors: active)",
+          "matches": true,
+          "rule": "@media (prefers-reduced-transparency:reduce), (prefers-contrast: more), (forced-colors: active) {\n  .glass-surface.glass-surface { background-color: var(--surface-elevated); border-color: var(--border-strong); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; background-image: none; }\n}"
+        }
+      ]
+    },
+    {
+      "manualReducedTransparency": true,
+      "independentIncreasedContrast": "PASS",
+      "forcedColors": "PASS: controls usable",
+      "keyboardDisclosure": true,
+      "storageBlockedUsable": true,
+      "authDraftRetained": true,
+      "realAuthentication": false
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

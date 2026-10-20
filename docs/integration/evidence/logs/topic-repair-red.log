@@ -1,0 +1,42 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/packages/contracts
+
+ ❯ src/intermediate-topic-json.contracts.spec.ts (6 tests | 1 failed) 40ms
+   × Conservative topic JSON repair > offers punctuation repair without requiring optional speech overrides 23ms
+     → expected false to be true // Object.is equality
+   ✓ Conservative topic JSON repair > accepts punctuation repair without changing primitives or question counts 4ms
+   ✓ Conservative topic JSON repair > permits flattening model whitespace but preserves the source passage line structure 3ms
+   ✓ Conservative topic JSON repair > refuses changed answers, invented questions, missing data and ambiguous patches 4ms
+   ✓ Conservative topic JSON repair > refuses structural regrouping and duplicate keys that could silently discard content 2ms
+   ✓ Conservative topic JSON repair > keeps exact field diagnostics for multiple invalid scalar fields 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/intermediate-topic-json.contracts.spec.ts > Conservative topic JSON repair > offers punctuation repair without requiring optional speech overrides
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/intermediate-topic-json.contracts.spec.ts:9:47
+
+      7|     expect(intermediateTopicJsonSchema.safeParse(JSON.parse(source)).s…
+      8|     const broken = source.replace('"level": "B1",', '"level": "B1",,');
+      9|     expect(canAttemptTopicJsonRepair(broken)).toBe(true);
+       |                                               ^
+     10|     expect(canAttemptTopicJsonRepair(broken.replace(/"objective": [^\n…
+     11|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  22:50:09
+   Duration  2.62s (transform 586ms, setup 0ms, collect 1.94s, tests 40ms, environment 0ms, prepare 289ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\packages\contracts:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/intermediate-topic-json.contracts.spec.ts

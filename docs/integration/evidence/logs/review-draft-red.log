@@ -1,0 +1,97 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/web
+
+ ❯ src/features/ielts-mock/ielts-mock.test.tsx (15 tests | 2 failed) 1365ms
+   ✓ IeltsMockDashboardCard > offers exactly the two V3 choices and explains an unqualified simulation  419ms
+   ✓ IeltsMockDashboardCard > requires explicit equipment checks and rule confirmation before a new V3 attempt 148ms
+   ✓ IeltsMockDashboardCard > shows real Speaking recording controls and prevents a text-only V3 submission 123ms
+   ✓ IeltsMockDashboardCard > pauses a V3 practice attempt without submitting the current section 137ms
+   ✓ IeltsMockDashboardCard > opens a practice-only Beta mock in a supported mode without a disabled default action 42ms
+   ✓ IeltsMockDashboardCard > explains an empty eligible mock catalog in Vietnamese 21ms
+   ✓ IeltsMockDashboardCard > localizes the catalog and dashboard gate 42ms
+   ✓ IeltsMockDashboardCard > explains the Band Pathway gate and does not offer a start link 16ms
+   ✓ IeltsMockPlayer > shows a localized report failure without exposing completed-section submission controls 12ms
+   ✓ IeltsMockPlayer > preserves English passages and answers when localized controls switch 110ms
+   ✓ IeltsMockPlayer > formats mock bands in Vietnamese and preserves the authored report disclosure 23ms
+   ✓ IeltsMockPlayer > does not preload exam audio and removes it after the allowed play 26ms
+   ✓ recovers a committed save with a lost response while retaining newer local writing 121ms
+   × locks writing during save-and-exit and protects navigation on failure=false 72ms
+     → expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <textarea
+  lang="en"
+  rows="12"
+/>
+   × locks writing during save-and-exit and protects navigation on failure=true 51ms
+     → expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <textarea
+  lang="en"
+  rows="12"
+/>
+ ❯ src/features/admin-curriculum/curriculum-workspace.test.tsx (8 tests | 1 failed) 2140ms
+   × CurriculumWorkspace > retains an unsaved Foundation objective through collapse and all curriculum filters 841ms
+     → expected <textarea …(1)></textarea> to be <textarea …(1)></textarea> // Object.is equality
+   ✓ CurriculumWorkspace > retains preserved search and collapse controls without changing curriculum mutations 218ms
+   ✓ CurriculumWorkspace > keeps status styling keyed to machine states when the displayed label is Vietnamese 39ms
+   ✓ CurriculumWorkspace > renders curriculum tree with path, level, mission, and playability indicators 61ms
+   ✓ CurriculumWorkspace > creates a new path and reloads tree  334ms
+   ✓ CurriculumWorkspace > preserves the selected program after a recoverable create error  367ms
+   ✓ CurriculumWorkspace > displays conflict error without crashing when publish fails with 409 143ms
+   ✓ CurriculumWorkspace > supports reordering missions via accessible move buttons 136ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/admin-curriculum/curriculum-workspace.test.tsx > CurriculumWorkspace > retains an unsaved Foundation objective through collapse and all curriculum filters
+AssertionError: expected <textarea …(1)></textarea> to be <textarea …(1)></textarea> // Object.is equality
+
+- Expected
++ Received
+
+  <textarea
+    aria-label="Objective statement"
+  >
+-   Unsaved objective must survive
++   Saved statement
+  </textarea>
+
+ ❯ src/features/admin-curriculum/curriculum-workspace.test.tsx:130:65
+    128|     fireEvent.click(screen.getByRole('button', { name: 'Collapse all' …
+    129|     fireEvent.click(screen.getByRole('button', { name: 'Expand all' })…
+    130|     expect(await screen.findByLabelText('Objective statement')).toBe(s…
+       |                                                                 ^
+    131|     expect(statement).toHaveValue('Unsaved objective must survive');
+    132|     const search = screen.getByPlaceholderText('Search paths, levels, …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/features/ielts-mock/ielts-mock.test.tsx > locks writing during save-and-exit and protects navigation on failure=false
+ FAIL  src/features/ielts-mock/ielts-mock.test.tsx > locks writing during save-and-exit and protects navigation on failure=true
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <textarea
+  lang="en"
+  rows="12"
+/>
+ ❯ src/features/ielts-mock/ielts-mock.test.tsx:180:17
+    178|   fireEvent.change(field, { target: { value: 'Final writing to preserv…
+    179|   fireEvent.click(screen.getByRole('button', { name: /Save and exit/i …
+    180|   expect(field).toBeDisabled();
+       |                 ^
+    181|   expect(push).not.toHaveBeenCalled();
+    182|   finish();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 20 passed (23)
+   Start at  22:57:19
+   Duration  7.18s (transform 1.27s, setup 0ms, collect 4.51s, tests 3.50s, environment 2.33s, prepare 589ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/features/admin-curriculum/curriculum-workspace.test.tsx src/features/ielts-mock/ielts-mock.test.tsx

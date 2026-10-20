@@ -1,0 +1,100 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:43:21.630Z",
+  "command": "Exact CLI not recorded here; see run registry/log",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "actual browser zoom200 dark physical window 780",
+  "result": "passed",
+  "testSourceSHA256": "203a02a085b697f9bed31680b5141ca3a4f27273f3bded60e88aa0cb5b15c5a9",
+  "productionWorkingDiffSHA256": "620264b4114398e6d9c2db1cfcc6a2e7ccc5001747a5d3c46223d5b1d4349599",
+  "observations": [
+    {
+      "url": "/settings",
+      "locale": "vi",
+      "theme": "dark",
+      "windowWidth": 780,
+      "nativeZoomAPI": "chrome.tabs.setZoom/getZoom",
+      "factor": 2,
+      "before": {
+        "width": 762,
+        "dpr": 1
+      },
+      "after": {
+        "width": 381,
+        "scroll": 381,
+        "dpr": 2,
+        "CSSZoom": "1",
+        "pinchScale": 1
+      },
+      "extensionProfile": "temporary, not user profile"
+    },
+    {
+      "url": "/settings",
+      "locale": "en",
+      "theme": "dark",
+      "windowWidth": 780,
+      "nativeZoomAPI": "chrome.tabs.setZoom/getZoom",
+      "factor": 2,
+      "before": {
+        "width": 762,
+        "dpr": 1
+      },
+      "after": {
+        "width": 381,
+        "scroll": 381,
+        "dpr": 2,
+        "CSSZoom": "1",
+        "pinchScale": 1
+      },
+      "extensionProfile": "temporary, not user profile"
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "locale": "vi",
+      "theme": "dark",
+      "windowWidth": 780,
+      "nativeZoomAPI": "chrome.tabs.setZoom/getZoom",
+      "factor": 2,
+      "before": {
+        "width": 762,
+        "dpr": 1
+      },
+      "after": {
+        "width": 381,
+        "scroll": 381,
+        "dpr": 2,
+        "CSSZoom": "1",
+        "pinchScale": 1
+      },
+      "extensionProfile": "temporary, not user profile"
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "locale": "vi",
+      "theme": "dark",
+      "windowWidth": 780,
+      "nativeZoomAPI": "chrome.tabs.setZoom/getZoom",
+      "factor": 2,
+      "before": {
+        "width": 762,
+        "dpr": 1
+      },
+      "after": {
+        "width": 381,
+        "scroll": 381,
+        "dpr": 2,
+        "CSSZoom": "1",
+        "pinchScale": 1
+      },
+      "extensionProfile": "temporary, not user profile"
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

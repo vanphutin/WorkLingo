@@ -1,0 +1,10 @@
+[WebServer] (node:9060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 105 tests using 1 worker
+
+  x    1 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 390 (12.0s)
+  x    2 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 768 (11.6s)
+  x    3 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 1440 (15.4s)

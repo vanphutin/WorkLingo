@@ -75,7 +75,7 @@
       "addAdd": false,
       "resolution": "Semantic three-way reconciliation, retain LG authoring root and canonical colors; only new scoped functional CSS imported, clipping/old branding rejected",
       "tests": "New missing-control RED then7/7 owner tests; candidate browser reflow pending",
-      "candidateSHA256": "89070b55ea4ac1bf927039ff39199c866a6a970fd04d205174aa818d36195b17",
+      "candidateSHA256": "ac9cf7f2b2c5e3d82758d03e933ef8ef78a1c26742d91bb1ebc2fc130c910ba1",
       "conflictType": "semantic overlap",
       "originalDirtyIntent": "Curriculum search, status/issues filtering, program/path/level collapse, outline/copy and compact view; original mutation handlers",
       "preservation": "Private backup SHA256 verified, original unchanged"
@@ -88,7 +88,7 @@
       "addAdd": false,
       "resolution": "Semantic three-way reconciliation, retain LG authoring root and canonical colors; only new scoped functional CSS imported, clipping/old branding rejected",
       "tests": "New missing-control RED then7/7 owner tests; candidate browser reflow pending",
-      "candidateSHA256": "cfc54d204902c73fbeeda1a31d895cc27d5de0953b59a83f861bea4582cae129",
+      "candidateSHA256": "3f28f24c0ba6385e75fd8da187863df66e43005dd743d56ebaecca05a26af1c2",
       "conflictType": "semantic overlap",
       "originalDirtyIntent": "Curriculum search, status/issues filtering, program/path/level collapse, outline/copy and compact view; original mutation handlers",
       "preservation": "Private backup SHA256 verified, original unchanged"

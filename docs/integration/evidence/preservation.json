@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-20T15:12:42.914744+00:00",
+  "timestamp": "2026-10-20T18:18:37.247917+00:00",
   "command": "python docs/integration/evidence/preservation.py",
   "result": "PASS",
   "originalHEAD": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",

@@ -1,0 +1,5 @@
+Error: http://127.0.0.1:33300/login is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts -g preserved curriculum search --workers=1

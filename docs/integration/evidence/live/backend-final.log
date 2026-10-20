@@ -1,0 +1,230 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ❯ test/integration/backup-restore.integration.spec.ts (10 tests | 1 failed) 27478ms
+   ✓ backup and restore rehearsal > scripts/backup-local.ps1 rejects an unsafe backup path outside the allowed root  466ms
+   ✓ backup and restore rehearsal > rejects a sibling backup path that only shares the allowed-root prefix  449ms
+   ✓ backup and restore rehearsal > rejects a sibling restore target that only shares the allowed-root prefix  594ms
+   ✓ backup and restore rehearsal > rejects manifest entries that resolve outside the backup directory  705ms
+   × backup and restore rehearsal > rejects backup files that are not covered by the manifest 898ms
+     → expected 'D:\Projects\WorkLingo-Integration\scr…' to match /not covered by the manifest/i
+   ✓ backup and restore rehearsal > fails closed when the target database emptiness check cannot be completed  2416ms
+   ✓ backup and restore rehearsal > removes an incomplete artifact when database backup fails  1939ms
+   ✓ backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums  6873ms
+   ✓ backup and restore rehearsal > scripts/restore-local.ps1 rejects non-empty target directory or non-empty database  3596ms
+   ✓ backup and restore rehearsal > rehearses complete restore into an empty target schema and directory, verifying data integrity  8067ms
+ ✓ test/integration/curriculum-foundation-schema.integration.spec.ts (1 test) 4489ms
+   ✓ adds foundation bindings without changing historical sessions and protects referenced revisions  4487ms
+ ✓ test/integration/admin-curriculum-query.integration.spec.ts (2 tests) 7463ms
+ ✓ test/integration/learning-programs-api.integration.spec.ts (3 tests) 9029ms
+ ✓ test/integration/teacher-ai-pipeline.integration.spec.ts (1 test) 16852ms
+   ✓ Teacher AI pipeline > evaluates speaking and writing once while preserving immutable lesson evidence  7055ms
+ ✓ test/integration/engagement-api.integration.spec.ts (3 tests) 11715ms
+   ✓ Engagement HTTP API Integration > returns default engagement summary for newly registered learner  391ms
+   ✓ Engagement HTTP API Integration > updates weekly target immediately before study, but defers when study day exists  829ms
+ ✓ test/integration/program-enrollment-migration.integration.spec.ts (3 tests) 35305ms
+   ✓ Program enrollment migration > preserves complete learner levels and session history while pending learners stay unassigned  9183ms
+   ✓ Program enrollment migration > aborts atomically when a complete learner level is missing  10090ms
+   ✓ Program enrollment migration > aborts atomically when a complete learner level is foreign  16003ms
+ ✓ test/integration/ielts-mock-workflow.integration.spec.ts (1 test) 28501ms
+   ✓ IELTS full mock HTTP workflow > pins a version, submits four sections, waits for review, then produces a completed report  3098ms
+ ✓ test/integration/audio-settings-api.integration.spec.ts (2 tests) 17425ms
+   ✓ audio settings API > persists owner-scoped learner sources and nullable browser voices  727ms
+   ✓ audio settings API > protects Admin settings, rejects unsafe selections, and audits safe IDs  684ms
+ ✓ test/integration/ielts-orientation-admin.integration.spec.ts (1 test) 28832ms
+   ✓ IELTS orientation Admin API > updates, validates, publishes idempotently, and archives immutable versions  2948ms
+ ✓ test/integration/rate-limit.integration.spec.ts (4 tests) 29501ms
+   ✓ Durable PostgreSQL Rate Limiting HTTP Integration > enforces limit and returns 429 with RATE_LIMIT_EXCEEDED, Retry-After and correlation ID  4340ms
+   ✓ Durable PostgreSQL Rate Limiting HTTP Integration > isolates rate limit scopes across different routes  4749ms
+   ✓ Durable PostgreSQL Rate Limiting HTTP Integration > stores hashed subjects in PostgreSQL without persisting raw IP addresses or credentials  309ms
+   ✓ Durable PostgreSQL Rate Limiting HTTP Integration > handles concurrent requests atomically without lost updates or race conditions  908ms
+ ✓ test/integration/recording-retention.integration.spec.ts (1 test) 14081ms
+   ✓ recording and draft retention > deletes due terminal audio and expired drafts without touching queued audio  1913ms
+ ✓ test/integration/ielts-flow-overview.integration.spec.ts (1 test) 13494ms
+   ✓ opens a partial topic-only program and paginates owned saved history without prerequisite writes  2778ms
+ ✓ test/integration/admin-authorization.integration.spec.ts (4 tests) 9452ms
+   ✓ Admin authorization and local seed integration > rejects learner from admin route with 403 Forbidden  328ms
+ ✓ test/integration/teacher-ai-api.integration.spec.ts (1 test) 10867ms
+   ✓ learner Teacher AI API > enforces ownership, optimistic draft revisions, and learner-safe retry state  1593ms
+ ✓ test/integration/admin-audit-api.integration.spec.ts (2 tests) 4341ms
+ ✓ test/integration/program-learning-boundaries.integration.spec.ts (3 tests) 5857ms
+   ✓ Program-scoped learning boundaries > selects sessions and mastery from enrollment despite a stale legacy level mirror  425ms
+   ✓ Program-scoped learning boundaries > does not start content at an archived level but preserves an existing session checkpoint  342ms
+ ✓ test/integration/session-ownership.integration.spec.ts (3 tests) 5255ms
+   ✓ learning session ownership and recovery > returns 404 when another learner reads or submits to a session  391ms
+   ✓ learning session ownership and recovery > does not let an idempotency key bypass session ownership or change its target  441ms
+   ✓ learning session ownership and recovery > restores the persisted checkpoint after a fresh login  526ms
+ ✓ test/integration/auth.integration.spec.ts (6 tests) 4685ms
+ ✓ test/integration/ielts-bridge-learner.integration.spec.ts (1 test) 4736ms
+   ✓ IELTS Bridge learner API > gates new starts, pins a version, persists ten stages and protects owner data  622ms
+ ✓ test/integration/pilot-analytics.integration.spec.ts (3 tests) 4513ms
+ ✓ test/integration/ielts-flow-v3-compatibility.integration.spec.ts (1 test) 6089ms
+   ✓ keeps old progress, sixty-minute plans, grants and reports pinned through both rollout directions  1229ms
+ ✓ test/integration/curriculum-foundation-admin.integration.spec.ts (6 tests) 13880ms
+   ✓ Foundation Admin HTTP > publishes frozen bindings and replays the same command only once  1237ms
+   ✓ Foundation Admin HTTP > rejects evidence outside attached published versions and nonexistent activities  502ms
+   ✓ Foundation Admin HTTP > blocks archive when a published curriculum depends on the revision  3295ms
+   ✓ Foundation Admin HTTP > serializes competing publications and rejects cyclic mission prerequisites  1975ms
+ ✓ test/integration/content-audio.integration.spec.ts (5 tests) 11973ms
+   ✓ Content audio generation lifecycle and authorized streaming > runs complete lifecycle: 202 generate-audio -> poll job -> list audio -> stream content  678ms
+   ✓ Content audio generation lifecycle and authorized streaming > creates a new immutable candidate for regeneration without changing prior READY bytes  334ms
+   ✓ Content audio generation lifecycle and authorized streaming > requires a fresh narration review, rejects old audio and freezes reviewed speech on publication  1344ms
+ ✓ test/integration/placement-isolation.integration.spec.ts (2 tests) 7849ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects  1165ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  563ms
+ ✓ test/integration/content-publish.integration.spec.ts (8 tests) 10553ms
+   ✓ Transactional publish, archive, and session version isolation > preserves Foundation 1.1 metadata through publish and snapshot decoding  691ms
+   ✓ Transactional publish, archive, and session version isolation > atomically publishes a validated lesson version with child records  427ms
+   ✓ Transactional publish, archive, and session version isolation > publishes repeated source vocabulary in another bank with stable IDs and consistent references  438ms
+   ✓ Transactional publish, archive, and session version isolation > allows only one concurrent publish with different keys for the same draft  449ms
+   ✓ Transactional publish, archive, and session version isolation > clears the current published pointer when the current lesson version is archived  524ms
+   ✓ Transactional publish, archive, and session version isolation > publishes version 2 atomically archiving version 1 and preserving session isolation  991ms
+ ✓ test/integration/adaptive-learning.integration.spec.ts (3 tests) 6462ms
+   ✓ adaptive learning visibility and recurrence > requires authentication and isolates the four-skill map by learner  973ms
+   ✓ adaptive learning visibility and recurrence > brings evaluated knowledge back after injected time crosses its due date  327ms
+   ✓ adaptive learning visibility and recurrence > selects a new published workplace context without changing a learner existing version  761ms
+{"context":{"correlationId":"af99776d-7186-4a26-91ba-7f842e756094","method":"POST","path":"/api/v1/me/checkpoint-assessments/f44e3b65-8082-4e03-bf41-3a7528224cb6/confirm"},"level":"ERROR","message":"Unhandled error on POST /api/v1/me/checkpoint-assessments/f44e3b65-8082-4e03-bf41-3a7528224cb6/confirm: \nInvalid `transaction.progressionConfirmation.create()` invocation in\nD:\\Projects\\WorkLingo-Integration\\apps\\api\\src\\progression\\application\\progression.service.ts:153:49\n\n  150     await transaction.learnerProfile.update({ where: { userId: learnerId }, data: { currentLevelCode: nextLevelCode } });\n  151   }\n  152 }\n→ 153 await transaction.progressionConfirmation.create(\nError occurred during query execution:\nConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: \"P0001\", message: \"forced confirmation persistence failure\", severity: \"ERROR\", detail: None, column: None, hint: None }), transient: false })","timestamp":"2026-10-20T15:59:34.613Z","trace":"PrismaClientUnknownRequestError: \nInvalid `transaction.progressionConfirmation.create()` invocation in\nD:\\Projects\\WorkLingo-Integration\\apps\\api\\src\\progression\\application\\progression.service.ts:153:49\n\n  150     await transaction.learnerProfile.update({ where: { userId: learnerId }, data: { currentLevelCode: nextLevelCode } });\n  151   }\n  152 }\n→ 153 await transaction.progressionConfirmation.create(\nError occurred during query execution:\nConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: \"P0001\", message: \"forced confirmation persistence failure\", severity: \"ERROR\", detail: None, column: None, hint: None }), transient: false })\n    at ei.handleRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at ei.handleAndLogRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45... [TRUNCATED 2359 chars]"}
+ ✓ test/integration/progression.integration.spec.ts (26 tests) 33879ms
+   ✓ learner progression HTTP API > allows assessment of a completed session while speaking and writing remain honestly pending  1273ms
+   ✓ learner progression HTTP API > rejects confirmation while one of the four skills is still pending  848ms
+   ✓ learner progression HTTP API > confirms successful current-level completion without inventing next content  1334ms
+   ✓ learner progression HTTP API > serializes UUID replay and rejects reuse for a different session  1278ms
+   ✓ learner progression HTTP API > rejects learner scores, malformed UUIDs, foreign sessions and incomplete sessions  1365ms
+   ✓ learner progression HTTP API > retains the immutable pending snapshot after server evaluation and reassesses with a new UUID  1110ms
+   ✓ learner progression HTTP API > reports an actionable not_ready result for incomplete published missions  1230ms
+   ✓ learner progression HTTP API > advances once under concurrent confirmation and rejects a stale competing assessment  1452ms
+   ✓ learner progression HTTP API > uses enrollment level for progression even when the compatibility mirror is stale  1251ms
+   ✓ learner progression HTTP API > serializes activation with advancement and rolls back enrollment when confirmation persistence fails  1631ms
+   ✓ learner progression HTTP API > resumes historical work but rejects new and replayed assessment or confirmation across program contexts  1224ms
+   ✓ learner progression HTTP API > never skips an immediate next level that has no published content  1013ms
+   ✓ learner progression HTTP API > rejects confirmation after next-level content is withdrawn  1005ms
+   ✓ learner progression HTTP API > does not make an invalid completed plan assessable  855ms
+   ✓ learner progression HTTP API > keeps known weak reinforcement while other skills await evaluation  799ms
+   ✓ learner progression HTTP API > finds a valid completed session when the newest completed plan is invalid  893ms
+   ✓ learner progression HTTP API > reports unavailable curriculum honestly when a published mission has no published lesson  1204ms
+   ✓ learner progression HTTP API > does not lock progression on mastery required only by an unreachable later published lesson  1039ms
+   ✓ learner progression HTTP API > does not unlock a next mission through a later lesson when its selected first lesson lacks four skills  1028ms
+   ✓ learner progression HTTP API > does not unlock four-skill content that cannot form any canonical session  1263ms
+   ✓ learner progression HTTP API > blocks a stale pass when a new published current-level mission is still incomplete  1068ms
+   ✓ learner progression HTTP API > blocks a stale pass when the selected curriculum gains an unscored required Language Block  1733ms
+   ✓ learner progression HTTP API > blocks a stale pass when evaluated required mastery falls below the threshold  1622ms
+   ✓ learner progression HTTP API > scores the original frozen lesson after a newer version is published  1220ms
+ ✓ test/integration/curriculum-foundation-progress.integration.spec.ts (2 tests) 5874ms
+   ✓ Foundation curriculum objective progress > pending_failed_and_missing_evidence_never_completes and foreign evidence never contributes  529ms
+ ✓ test/integration/health.integration.spec.ts (1 test) 4225ms
+ ✓ test/integration/versioned-learner-audio.integration.spec.ts (2 tests) 4733ms
+   ✓ version-bound learner audio > does not expose seeded simulation tones as learner speech  451ms
+   ✓ version-bound learner audio > streams the artifact attached to the session version after the lesson current version changes  303ms
+ ✓ src/ielts-study/application/ielts-topic-admin.service.spec.ts (1 test) 3978ms
+   ✓ IELTS topic publishing with actual stored curriculum > rejects foreign or missing revisions and serializes publication while retaining old snapshots  349ms
+ ✓ test/integration/admin-operations-api.integration.spec.ts (5 tests) 3775ms
+ ✓ test/integration/ielts-bridge-admin.integration.spec.ts (1 test) 3967ms
+ ✓ test/integration/ielts-orientation-learner.integration.spec.ts (1 test) 4005ms
+   ✓ IELTS orientation learner API > gates on Foundation evidence, pins a version, persists checks, and completes explicitly  477ms
+ ✓ test/integration/program-context-api.integration.spec.ts (8 tests) 5518ms
+   ✓ Learner program context API > rechecks server availability even if an unfinished program has a released status  355ms
+ ✓ test/integration/learning-sessions.integration.spec.ts (13 tests) 6783ms
+   ✓ learning sessions > brings a weak reading item back into the next session review snapshot  304ms
+   ✓ learning sessions > requires authentication, returns 422 for insufficient content, and rejects unsupported durations  333ms
+   ✓ learning sessions > stores raw answers before deterministic evaluation and advances a checkpoint once  339ms
+   ✓ learning sessions > persists pause/resume transitions and reports invalid transitions  378ms
+   ✓ learning sessions > does not count a queued Teacher AI attempt as a completed activity  557ms
+ ✓ test/integration/content-imports.integration.spec.ts (11 tests) 4634ms
+ ✓ test/integration/admin-curriculum-commands.integration.spec.ts (6 tests) 3679ms
+{"context":{"correlationId":"1752424e-5a60-419e-841d-7e9a14a91012","method":"POST","path":"/api/v1/me/onboarding/placement-attempts"},"level":"ERROR","message":"Unhandled error on POST /api/v1/me/onboarding/placement-attempts: \nInvalid `prisma.placementAttempt.create()` invocation:\n\n\nError occurred during query execution:\nConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: \"P0001\", message: \"forced placement failure\", severity: \"ERROR\", detail: None, column: None, hint: None }), transient: false })","timestamp":"2026-10-20T16:01:23.327Z","trace":"PrismaClientUnknownRequestError: \nInvalid `prisma.placementAttempt.create()` invocation:\n\n\nError occurred during query execution:\nConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: \"P0001\", message: \"forced placement failure\", severity: \"ERROR\", detail: None, column: None, hint: None }), transient: false })\n    at ei.handleRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at ei.handleAndLogRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:174:12)\n    at ei.request (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:143:12)\n    at a (D:\\Projects\\WorkLingo-Integration\\n... [TRUNCATED 2055 chars]"}
+ ✓ test/integration/placement-attempt.integration.spec.ts (7 tests) 5901ms
+ ✓ test/integration/ielts-introduction-v3.integration.spec.ts (1 test) 9097ms
+   ✓ IELTS introduction V3 > reads without progress writes, freely revisits and preserves owned versions and media  1151ms
+{"context":{"correlationId":"0cc7fa08-87ee-4b59-83aa-66570246acce","method":"POST","path":"/api/v1/me/ielts-study/sessions"},"level":"ERROR","message":"Unhandled error on POST /api/v1/me/ielts-study/sessions: \nInvalid `tx.mission.findUniqueOrThrow()` invocation in\nD:\\Projects\\WorkLingo-Integration\\apps\\api\\src\\ielts-study\\application\\ielts-study.service.ts:71:46\n\n  68 const qualification = await this.authoring.qualify(tx, { ...content, packs: [pack] });\n  69 if (!qualification.canPublish || !qualification.supportedDurations.includes(parsed.durationMinutes)) throw new ConflictException({ code: 'IELTS_TOPIC_DURATION_UNAVAILABLE' });\n  70 const mission = await this.curriculum.getPublishedMissionForRevision(pack.curriculumRevisionId, tx);\n→ 71 const storedMission = await tx.mission.findUniqueOrThrow(\nResponse from the Engine was empty","timestamp":"2026-10-20T16:02:26.399Z","trace":"PrismaClientUnknownRequestError: \nInvalid `tx.mission.findUniqueOrThrow()` invocation in\nD:\\Projects\\WorkLingo-Integration\\apps\\api\\src\\ielts-study\\application\\ielts-study.service.ts:71:46\n\n  68 const qualification = await this.authoring.qualify(tx, { ...content, packs: [pack] });\n  69 if (!qualification.canPublish || !qualification.supportedDurations.includes(parsed.durationMinutes)) throw new ConflictException({ code: 'IELTS_TOPIC_DURATION_UNAVAILABLE' });\n  70 const mission = await this.curriculum.getPublishedMissionForRevision(pack.curriculumRevisionId, tx);\n→ 71 const storedMission = await tx.mission.findUniqueOrThrow(\nResponse from the Engine was empty\n    at ei.handleRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at ei.handleAndLogRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002... [TRUNCATED 2198 chars]"}
+ ❯ test/integration/ielts-study-session.integration.spec.ts (1 test | 1 failed) 51692ms
+   × IELTS study sessions and program isolation > creates distinct canonical plans, scopes evidence, and resumes pinned attempts after rollback 15021ms
+     → Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ✓ test/integration/speaking-submission.integration.spec.ts (2 tests) 34393ms
+   ✓ speaking recording submission > atomically creates attempt, recording, transcription job, and advances checkpoint  6323ms
+   ✓ speaking recording submission > enforces ownership, consent, and client-attempt target binding  5631ms
+ ✓ test/integration/onboarding-self-placement.integration.spec.ts (6 tests) 35595ms
+   ✓ learner onboarding and self-placement HTTP API > returns server-owned pending state and explainable eligible levels  1276ms
+   ✓ learner onboarding and self-placement HTTP API > confirms a playable self-selected level and replays the same UUID exactly once  2166ms
+   ✓ learner onboarding and self-placement HTTP API > rejects reuse of a confirmation UUID for a different target  2066ms
+   ✓ learner onboarding and self-placement HTTP API > rejects a published level that cannot form a canonical learning session  1205ms
+   ✓ learner onboarding and self-placement HTTP API > keeps learner state owner-scoped and rejects an administrator  3236ms
+   ✓ learner onboarding and self-placement HTTP API > serializes different concurrent confirmations so only one can complete onboarding  3486ms
+ ✓ test/integration/error-bank-api.integration.spec.ts (3 tests) 31040ms
+   ✓ Error Bank & Memory Health HTTP API Integration > returns null health for unassessed skills and empty error bank for fresh learner  1285ms
+   ✓ Error Bank & Memory Health HTTP API Integration > handles SUBMITTED vs EVALUATED correctly, populating error bank and isolating data per learner  2208ms
+ ✓ test/integration/placement-confirmation.integration.spec.ts (4 tests) 10552ms
+   ✓ placement status and confirmation > exposes owner-scoped IN_PROGRESS, PROCESSING, ACTION_REQUIRED, and RECOMMENDED states  810ms
+   ✓ placement status and confirmation > confirms once, replays the same UUID, and preserves the recommendation snapshot  1224ms
+   ✓ placement status and confirmation > keeps the recommendation immutable when learning curriculum is withdrawn  413ms
+ ✓ test/integration/ai-settings.integration.spec.ts (3 tests) 14397ms
+   ✓ AI settings API > requires authentication and preserves account ownership and strict input  639ms
+   ✓ AI settings API > allows system administration only and makes global fallback a hard ceiling  414ms
+   ✓ AI settings API > persists configured system defaults with audit evidence and resolves account overrides  352ms
+{"context":{"correlationId":"62dacd81-aa7f-4fb1-9ca8-0b0958f74148","method":"GET","path":"/api/v1/me/ielts-mocks/attempts/650581b9-32cd-423f-9700-48b7ee7d0780/audio/533358b9-c7e6-4024-a6c7-ddfe5c40c60a?leaseId=2ba9c956-8eb1-4d1a-995e-55737bf482c6"},"level":"ERROR","message":"Unhandled error on GET /api/v1/me/ielts-mocks/attempts/650581b9-32cd-423f-9700-48b7ee7d0780/audio/533358b9-c7e6-4024-a6c7-ddfe5c40c60a?leaseId=2ba9c956-8eb1-4d1a-995e-55737bf482c6: isolated delivery outage","timestamp":"2026-10-20T16:05:36.864Z","trace":"Error: isolated delivery outage\n    at D:\\Projects\\WorkLingo-Integration\\apps\\api\\test\\integration\\ielts-mock-media.integration.spec.ts:54:71\n    at file:///D:/Projects/WorkLingo-Integration/node_modules/.pnpm/@vitest+runner@3.2.6/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20"}
+ ✓ test/integration/ielts-mock-media.integration.spec.ts (2 tests) 10904ms
+   ✓ IELTS mock owned media > keeps one ordered strict lease across concurrent starts, HEAD, range and reload retries  2314ms
+   ✓ IELTS mock owned media > requires consented audio, persists retries once, and exposes retained audio only to owner/reviewer  1415ms
+ ✓ test/integration/curriculum-foundation-eligibility.integration.spec.ts (4 tests) 8871ms
+   ✓ Foundation curriculum eligibility and session binding > requires an exact prerequisite completion from the active enrollment  783ms
+   ✓ Foundation curriculum eligibility and session binding > binds new sessions to the current revision while old sessions remain frozen and resumable  796ms
+   ✓ Foundation curriculum eligibility and session binding > rejects direct creation while prerequisites are locked and rejects a mismatched bound version  618ms
+   ✓ Foundation curriculum eligibility and session binding > keeps legacy missions available without fabricating a revision binding  410ms
+ ✓ test/integration/locale-preferences.integration.spec.ts (20 tests) 10723ms
+   ✓ locale preferences API > rejects stale account-bound saves after a different account signs in on the same browser  560ms
+   ✓ locale preferences API > defaults old registration clients to vi and persists only the current account  407ms
+   ✓ locale preferences API > changes locale without changing learner progress, settings or sessions  890ms
+   ✓ locale preferences API > reads CONTENT_ADMIN without a profile without mutation and lazily creates only a profile on update  306ms
+   ✓ locale preferences API > reads SYSTEM_ADMIN without a profile without mutation and lazily creates only a profile on update  302ms
+ ✓ test/integration/ielts-mock-modes.integration.spec.ts (1 test) 10877ms
+   ✓ Two mock modes and preserved legacy attempts > pins policies, pauses practice idempotently, protects feedback and expires strict sections only once  2125ms
+ ✓ test/integration/dashboard-analytics.integration.spec.ts (6 tests) 12374ms
+   ✓ Dashboard analytics > returns honest empty metrics for a pending learner and a zero-denominator overview  489ms
+   ✓ Dashboard analytics > scopes activity and valid evaluated scores to the authenticated learner and active program  1253ms
+   ✓ Dashboard analytics > counts distinct active learners and excludes planned/placement sessions from completion rate  1280ms
+   ✓ Dashboard analytics > counts a published lesson once and requires completion evidence for the current mission revision  1190ms
+   ✓ Dashboard analytics > uses UTC event dates within a bounded window and omits scores outside that window  518ms
+ ✓ test/integration/engagement-projection.integration.spec.ts (5 tests) 9862ms
+   ✓ Engagement study day and session projection integration > projects an ordinary completed learning session into study day and active engagement week  828ms
+   ✓ Engagement study day and session projection integration > is completely idempotent when session completion is replayed  424ms
+ ✓ src/intermediate-topics/topic-json-repair.service.spec.ts (6 tests) 126ms
+ ✓ test/integration/onboarding-schema.integration.spec.ts (3 tests) 9239ms
+   ✓ Increment 5A1 onboarding and placement schema > binds a placement attempt to its learner, session, and immutable lesson version  593ms
+ ✓ test/integration/engagement-schema.integration.spec.ts (1 test) 7409ms
+ ✓ test/integration/ielts-orientation-schema.integration.spec.ts (1 test) 9295ms
+   ✓ adds immutable orientation releases and version-bound learner progress without changing users  9292ms
+ ✓ test/integration/ielts-mock-schema.integration.spec.ts (1 test) 11943ms
+   ✓ adds immutable mock versions, version-bound attempts and reviewer history  11940ms
+ ✓ test/integration/admin-curriculum-schema.integration.spec.ts (2 tests) 8224ms
+ ✓ test/integration/ielts-integrated-schema.integration.spec.ts (1 test) 9856ms
+   ✓ adds immutable configurable profiles and version-bound integrated sessions  9853ms
+ ✓ test/integration/onboarding-migration.integration.spec.ts (1 test) 10802ms
+   ✓ Increment 5A1 migration upgrade rehearsal > migrates an existing learner to complete without changing their level  3489ms
+ ✓ test/integration/ielts-flow-v3-schema.integration.spec.ts (1 test) 14335ms
+   ✓ upgrades legacy IELTS without changing answers, 60-minute plans, reports or grants  14332ms
+ ✓ test/integration/ielts-band-curriculum-schema.integration.spec.ts (1 test) 9741ms
+   ✓ adds immutable band curriculum versions and owner-scoped journeys  9739ms
+ ✓ test/integration/curriculum-seed.integration.spec.ts (15 tests) 34534ms
+   ✓ Foundation curriculum seed > can seed twice without duplicating curriculum or changing activity identities  2428ms
+   ✓ Foundation curriculum seed > isolates the idempotent placement seed and plans its four skills at 45 minutes  3872ms
+   ✓ Foundation curriculum seed > repairs a stale current pointer without republishing an intentionally archived lesson  2396ms
+   ✓ Foundation curriculum seed > rejects edits to a published lesson through the curriculum service  1470ms
+   ✓ Foundation curriculum seed > preserves a newer published version when the baseline seed runs again  2604ms
+   ✓ Foundation curriculum seed > protects published snapshots and child records even when writing directly to PostgreSQL  1714ms
+   ✓ Foundation curriculum seed > rejects empty draft titles without changing the stored lesson  1435ms
+   ✓ Foundation curriculum seed > reports a missing published level or lesson version with a typed not-found error  572ms
+   ✓ Foundation curriculum seed > keeps published language examples unchanged when the reusable Word Bank evolves  1109ms
+   ✓ Foundation curriculum seed > serializes concurrent seed calls without creating duplicate versions  2057ms
+   ✓ Foundation curriculum seed > rejects a published snapshot whose activities belong to another version  1165ms
+   ✓ Foundation curriculum seed > rejects a reused level slug owned by a different parent and rolls back the seed  458ms
+   ✓ Foundation curriculum seed > rejects a reused languageBlock slug owned by a different parent and rolls back the seed  452ms
+   ✓ Foundation curriculum seed > preserves database-generated UUIDs for existing auth tables after curriculum migration  340ms
+ ✓ test/integration/error-bank-schema.integration.spec.ts (1 test) 3512ms
+ ✓ test/integration/error-bank.integration.spec.ts (10 tests) 4299ms
+ ✓ test/integration/intermediate-topic-groups.integration.spec.ts (10 tests) 6684ms
+   ✓ Intermediate topic groups on PostgreSQL > seeds all categories repeatably while preserving custom names, IDs and subsequent edits  2162ms
+ ✓ test/integration/ielts-bridge-schema.integration.spec.ts (1 test) 5929ms
+   ✓ adds immutable bridge releases and module-bound learner progress without changing users  5927ms
+ ✓ test/integration/vocabulary-publication.integration.spec.ts (7 tests) 9471ms
+   ✓ Explicit vocabulary meanings and topic usage > makes a published topic visible and startable across Intermediate levels without manual curriculum binding  843ms
+   ✓ Explicit vocabulary meanings and topic usage > reuses one meaning across two topics while keeping both lesson contexts, or explicitly creates a new meaning  1363ms

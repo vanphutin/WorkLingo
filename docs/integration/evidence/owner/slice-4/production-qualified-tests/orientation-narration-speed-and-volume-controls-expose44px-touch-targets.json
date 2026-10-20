@@ -1,0 +1,11 @@
+{
+  "title": "orientation narration speed and volume controls expose44px touch targets",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "narrationTouchTargets": 44
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+
+> @worklingo/contracts@0.0.0 test D:\Projects\WorkLingo-Integration\packages\contracts
+> vitest run
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/packages/contracts
+
+ ✓ src/vocabulary-publication.contracts.spec.ts (1 test) 14ms
+ ✓ src/admin-operations.contracts.spec.ts (4 tests) 46ms
+ ✓ src/dashboard.contracts.spec.ts (2 tests) 19ms
+ ✓ src/admin-audit.contracts.spec.ts (3 tests) 33ms
+ ✓ src/admin-analytics.contracts.spec.ts (3 tests) 39ms
+ ✓ src/ielts-mock.contracts.spec.ts (6 tests) 76ms
+ ✓ src/admin-curriculum.contracts.spec.ts (9 tests) 53ms
+ ✓ src/ielts-orientation.contracts.spec.ts (5 tests) 37ms
+ ✓ src/ielts-bridge.contracts.spec.ts (6 tests) 60ms
+ ✓ src/learning-program.contracts.spec.ts (4 tests) 27ms
+ ✓ src/audio-settings.contracts.spec.ts (9 tests) 32ms
+ ✓ src/intermediate-topics.contracts.spec.ts (9 tests) 33ms
+ ✓ src/intermediate-topic-json.contracts.spec.ts (6 tests) 60ms
+ ✓ src/engagement.contracts.spec.ts (6 tests) 28ms
+ ✓ src/ielts-integrated-practice.contracts.spec.ts (3 tests) 18ms
+ ✓ src/program-context.contracts.spec.ts (4 tests) 21ms
+ ✓ src/onboarding.contracts.spec.ts (6 tests) 20ms
+ ✓ src/ielts-band-curriculum.contracts.spec.ts (3 tests) 24ms
+ ✓ src/intermediate-topic-groups.contracts.spec.ts (5 tests) 26ms
+ ✓ src/ai-settings.contracts.spec.ts (1 test) 24ms
+ ✓ src/dashboard-overview.contracts.spec.ts (2 tests) 17ms
+ ✓ src/curriculum-foundation.contracts.spec.ts (10 tests) 15ms
+ ✓ src/ielts-study.contracts.spec.ts (8 tests) 10ms
+ ✓ src/locale-preference.contracts.spec.ts (8 tests) 16ms
+ ✓ src/ielts-flow.contracts.spec.ts (2 tests) 11ms
+
+ Test Files  25 passed (25)
+      Tests  125 passed (125)
+   Start at  22:50:26
+   Duration  5.02s (transform 2.67s, setup 0ms, collect 13.34s, tests 760ms, environment 10ms, prepare 7.95s)
+

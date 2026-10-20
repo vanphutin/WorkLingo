@@ -1,0 +1,218 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:44:21.213Z",
+  "command": "Exact CLI not recorded here; see run registry/log",
+  "environment": {
+    "engine": "firefox",
+    "browserVersion": "155.0",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "representative routes dark 768",
+  "result": "passed",
+  "testSourceSHA256": "47732d7f5de3a81321730bfd93bdb2a3bb7e16de13c6f84d8f019655dd5dbaff",
+  "productionWorkingDiffSHA256": "620264b4114398e6d9c2db1cfcc6a2e7ccc5001747a5d3c46223d5b1d4349599",
+  "observations": [
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(0, 0, 0)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "client": 768,
+      "scroll": 768,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

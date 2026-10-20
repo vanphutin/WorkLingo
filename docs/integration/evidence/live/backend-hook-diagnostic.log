@@ -1,0 +1,67 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+(node:20040) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/auth.integration.spec.ts (6 tests | 6 skipped) 9862ms
+   ↓ authentication > uses a migrated isolated schema rather than the local learner database
+   ↓ authentication > registers a learner with a normalized email and session cookie
+   ↓ authentication > rejects duplicate normalized emails without creating a second user
+   ↓ authentication > rejects a password shorter than twelve characters
+   ↓ authentication > returns the same public error for unknown email and wrong password
+   ↓ authentication > invalidates the session on logout
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/auth.integration.spec.ts > authentication
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ src/app.module.ts:6:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/auth.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 skipped (6)
+     Errors  1 error
+   Start at  22:46:28
+   Duration  39.18s (transform 13.41s, setup 0ms, collect 28.46s, tests 9.86s, environment 0ms, prepare 278ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run test/integration/auth.integration.spec.ts

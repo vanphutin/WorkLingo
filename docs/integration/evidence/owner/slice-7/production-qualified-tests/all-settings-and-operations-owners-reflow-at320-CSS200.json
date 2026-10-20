@@ -1,0 +1,141 @@
+{
+  "title": "all settings and operations owners reflow at320 CSS200",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/settings",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/settings/audio",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/settings/ai",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/admin/settings/audio",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "SPAN",
+          "class": "admin-voice-item-badge",
+          "right": 346.265625
+        },
+        {
+          "tag": "SPAN",
+          "class": "admin-voice-item-badge",
+          "right": 346.265625
+        },
+        {
+          "tag": "SPAN",
+          "class": "admin-voice-item-badge",
+          "right": 346.265625
+        }
+      ]
+    },
+    {
+      "url": "/admin/settings/ai",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/admin/audit",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/admin/operations",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 699.953125
+        },
+        {
+          "tag": "SPAN",
+          "class": "observability-status",
+          "right": 675.953125
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 970.875
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 1116.984375
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 1330
+        },
+        {
+          "tag": "BUTTON",
+          "class": "observability-button secondary",
+          "right": 1306
+        }
+      ]
+    },
+    {
+      "url": "/admin/analytics",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "TH",
+          "class": "",
+          "right": 1330
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "right": 1330
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "right": 1330
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 622.359375
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 810.046875
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "right": 1330
+        }
+      ]
+    }
+  ]
+}

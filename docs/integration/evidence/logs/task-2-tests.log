@@ -1,0 +1,17 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/web
+
+stderr | src/components/workspace-navigation.test.tsx
+Not implemented: navigation to another Document
+
+ ✓ src/components/workspace-navigation.test.tsx (10 tests) 1226ms
+   ✓ WorkspaceNavigation > uses the supplied guarded link and marks only the most specific destination  411ms
+ ✓ src/app/(admin)/layout.test.tsx (5 tests) 1318ms
+   ✓ AdminLayout > preserves legacy and approved feature destinations without duplicates for SYSTEM_ADMIN  600ms
+   ✓ AdminLayout > renders admin navigation and children for authorized CONTENT_ADMIN  483ms
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  01:10:40
+   Duration  31.70s (transform 1.08s, setup 0ms, collect 18.69s, tests 2.54s, environment 38.82s, prepare 716ms)
+

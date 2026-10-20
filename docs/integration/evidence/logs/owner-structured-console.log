@@ -1,0 +1,277 @@
+[WebServer] (node:22976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 105 tests using 1 worker
+
+  ok   1 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 390 (9.1s)
+  ok   2 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 768 (11.2s)
+  ok   3 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix light 1440 (14.2s)
+  ok   4 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix dark 390 (9.4s)
+  ok   5 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix dark 768 (13.5s)
+  ok   6 e2e\liquid-glass-phase4-authoring.spec.ts:15:114 › authoring matrix dark 1440 (14.1s)
+  x    7 e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls (3.9s)
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/admin/audio-settings Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+  ok   8 e2e\liquid-glass-phase4-authoring.spec.ts:31:5 › content real source autosave retains editor through appearance and validates parser preview (4.6s)
+  ok   9 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring orientation draft identity save revision and publish gate (1.8s)
+  ok  10 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring bridge draft identity save revision and publish gate (3.3s)
+  ok  11 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring integrated draft identity save revision and publish gate (2.4s)
+  ok  12 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring band draft identity save revision and publish gate (2.9s)
+  ok  13 e2e\liquid-glass-phase4-authoring.spec.ts:43:90 › authoring mock draft identity save revision and publish gate (3.3s)
+  ok  14 e2e\liquid-glass-phase4-authoring.spec.ts:59:5 › content table can be reached and scrolled with the native keyboard (1.4s)
+  ok  15 e2e\liquid-glass-phase4-authoring.spec.ts:62:5 › orientation validation publication and stale revision preserve UI gates (2.3s)
+  ok  16 e2e\liquid-glass-phase4-authoring.spec.ts:68:54 › authoring empty actual states (4.2s)
+  ok  17 e2e\liquid-glass-phase4-authoring.spec.ts:68:54 › authoring error actual states (6.6s)
+  ok  18 e2e\liquid-glass-phase4-authoring.spec.ts:76:5 › curriculum blockers form cancel and authoring native focus remain accessible at320 CSS200 (9.8s)
+  ok  19 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix light 390 (3.7s)
+  ok  20 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix light 768 (2.8s)
+  ok  21 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix light 1440 (3.7s)
+  ok  22 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix dark 390 (2.8s)
+  ok  23 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix dark 768 (3.3s)
+  ok  24 e2e\liquid-glass-phase4-bridge.spec.ts:11:114 › bridge matrix dark 1440 (3.4s)
+  ok  25 e2e\liquid-glass-phase4-bridge.spec.ts:20:5 › orientation and bridge narrow reflow retains controls at CSS200 (3.5s)
+  ok  26 e2e\liquid-glass-phase4-bridge.spec.ts:33:5 › orientation answer feedback version revisions and resume retain actual controls (2.9s)
+  ok  27 e2e\liquid-glass-phase4-bridge.spec.ts:39:5 › bridge sequential stages preserve timed deadline answer and completion snapshots (3.5s)
+  ok  28 e2e\liquid-glass-phase4-bridge.spec.ts:52:5 › orientation and bridge pending transport announces loading then resolves (1.7s)
+  ok  29 e2e\liquid-glass-phase4-bridge.spec.ts:61:5 › orientation narration speed and volume controls expose44px touch targets (1.2s)
+  ok  30 e2e\liquid-glass-phase4-bridge.spec.ts:67:64 › orientation and bridge locked states remain honest (1.5s)
+  ok  31 e2e\liquid-glass-phase4-bridge.spec.ts:67:64 › orientation and bridge empty states remain honest (1.2s)
+  ok  32 e2e\liquid-glass-phase4-bridge.spec.ts:67:64 › orientation and bridge error states remain honest (1.3s)
+  x   33 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 390 (3.1s)
+  ok  34 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 768 (3.4s)
+  ok  35 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 1440 (4.8s)
+  ok  36 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix dark 390 (3.5s)
+  ok  37 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix dark 768 (3.1s)
+  ok  38 e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix dark 1440 (4.4s)
+  ok  39 e2e\liquid-glass-phase4-exam.spec.ts:26:5 › exam launcher pathway and player reflow at320 CSS200 (2.5s)
+  ok  40 e2e\liquid-glass-phase4-exam.spec.ts:33:5 › mock real editor autosave deadline theme locale resize navigation reload submit and pending result (3.6s)
+  ok  41 e2e\liquid-glass-phase4-exam.spec.ts:50:5 › expired mock disables edits and submits existing server snapshot without save (3.1s)
+  ok  42 e2e\liquid-glass-phase4-exam.spec.ts:55:5 › mock multiple question keyboard navigation exposes text answer state and unclipped focus (1.8s)
+  ok  43 e2e\liquid-glass-phase4-exam.spec.ts:68:5 › integrated blocks preserve answer duration snapshot deadline progression and completion (1.8s)
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me/ielts-integrated/sessions/a5b18def-51ab-4297-bbbe-5a1710316105 Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me/ielts-mocks/attempts/9529c485-4ce2-4f8e-b9e1-7186b39180be Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+  ok  44 e2e\liquid-glass-phase4-exam.spec.ts:82:5 › launchers preserve actual start payloads and pathway target is not measured score (2.1s)
+  ok  45 e2e\liquid-glass-phase4-exam.spec.ts:88:64 › exam locked surfaces preserve eligibility (1.3s)
+  ok  46 e2e\liquid-glass-phase4-exam.spec.ts:88:64 › exam empty surfaces preserve eligibility (1.5s)
+  ok  47 e2e\liquid-glass-phase4-exam.spec.ts:88:64 › exam error surfaces preserve eligibility (1.3s)
+  ok  48 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix light 390 (2.7s)
+  ok  49 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix light 768 (2.5s)
+  ok  50 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix light 1440 (3.3s)
+  ok  51 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix dark 390 (2.2s)
+  ok  52 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix dark 768 (3.0s)
+  ok  53 e2e\liquid-glass-phase4-learning.spec.ts:19:7 › learning matrix dark 1440 (2.4s)
+  ok  54 e2e\liquid-glass-phase4-learning.spec.ts:42:5 › learning content reflows at narrow widths and CSS200 without hiding overflow (4.4s)
+  ok  55 e2e\liquid-glass-phase4-learning.spec.ts:57:71 › learning empty states preserve eligibility and retry (1.9s)
+  ok  56 e2e\liquid-glass-phase4-learning.spec.ts:57:71 › learning error states preserve eligibility and retry (2.1s)
+  x   57 e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts (1.0m)
+  ok  58 e2e\liquid-glass-phase4-learning.spec.ts:109:5 › English evidence keeps authored content and form selection through appearance changes (1.6s)
+  ok  59 e2e\liquid-glass-phase4-learning.spec.ts:133:5 › learning loading states announce pending data and resolve on real component routes (2.6s)
+  ok  60 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix light 390 (2.7s)
+  ok  61 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix light 768 (2.0s)
+  ok  62 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix light 1440 (2.2s)
+  ok  63 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix dark 390 (2.0s)
+  ok  64 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix dark 768 (2.3s)
+  ok  65 e2e\liquid-glass-phase4-public.spec.ts:25:7 › public/auth matrix dark 1440 (1.8s)
+  ok  66 e2e\liquid-glass-phase4-public.spec.ts:47:5 › narrow Vietnamese public/auth reflow and visible keyboard focus at CSS200 (7.2s)
+  ok  67 e2e\liquid-glass-phase4-public.spec.ts:106:5 › auth fields and validation survive appearance/locale; server errors and pending state remain operable (2.0s)
+  ok  68 e2e\liquid-glass-phase4-public.spec.ts:134:5 › public authenticated CTA and appearance fallbacks retain real destinations (591ms)
+  ok  69 e2e\liquid-glass-phase4-public.spec.ts:147:5 › actual auth form submits unchanged payload and follows learner, onboarding and admin redirects (2.0s)
+  ok  70 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix light 390 (3.5s)
+  ok  71 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix light 768 (2.9s)
+  ok  72 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix light 1440 (3.1s)
+  ok  73 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix dark 390 (2.8s)
+  ok  74 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix dark 768 (2.9s)
+  ok  75 e2e\liquid-glass-phase4-session.spec.ts:19:114 › session matrix dark 1440 (3.7s)
+  ok  76 e2e\liquid-glass-phase4-session.spec.ts:37:5 › learning content reflow at320 and390 CSS200 preserves full questions and controls (3.0s)
+  ok  77 e2e\liquid-glass-phase4-session.spec.ts:47:5 › actual writing draft survives theme navigation resize pause reload and submit (2.4s)
+  ok  78 e2e\liquid-glass-phase4-session.spec.ts:70:5 › pending writing save retains latest edit selection and next revision through presentation changes (2.1s)
+  x   79 e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize (7.2s)
+Testing stopped early after 4 maximum allowed failures.
+
+
+  1) e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls 
+
+    Error: /admin/curriculum
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    566
+
+      26 |     await page.unrouteAll(); await installAuthoringFixtures(page, { kind }); await page.goto('http://127.0.0.1:33300' + url); await expect(page.locator(ready).first()).toBeVisible(); await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
+      27 |     await expect(page.locator(ready).first()).toBeVisible();
+    > 28 |     const bounds = await page.evaluate(() => ({ client: innerWidth, scroll: document.documentElement.scrollWidth, offenders: [...document.querySelectorAll('.admin-main-content *')].filter((el) => el.getBoundingClientRect().right > innerWidth + 1).slice(-6).map((el) => ({ class: el.className, tag: el.tagName, right: el.getBoundingClientRect().right })) })); observations.push({ url, CSSZoom: 2, ...bounds }); expect(bounds.scroll, url).toBeLessThanOrEqual(bounds.client);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+      29 |   }
+      30 | });
+      31 | test('content real source autosave retains editor through appearance and validates parser preview', async ({ page }) => {
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\liquid-glass-phase4-authoring.spec.ts:28:438
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-author-2139c-visible-editor-and-controls\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-author-2139c-visible-editor-and-controls\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-author-2139c-visible-editor-and-controls\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 390 ───────────────────────────
+
+    Error: browserContext.close: ENOENT: no such file or directory, open 'D:\Projects\WorkLingo-Integration\.superpowers\sdd\02-redesign-plan\phase4-browser-results\.playwright-artifacts-1\traces\01163e3819607779cc14-e8aeac11a138633eaf22-recording50.network'
+
+    Error: ENOENT: no such file or directory, open 'D:\Projects\WorkLingo-Integration\.superpowers\sdd\02-redesign-plan\phase4-browser-results\.playwright-artifacts-1\616df84885c8063a4a28c76d570e503f.zip'
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-exam-exam-matrix-light-390\error-context.md
+
+  3) e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('#weekly-target-select')
+
+
+      81 |   await expect(page.locator('.next-mission-card a')).toHaveAttribute('href', '/sessions/55555555-5555-4555-8555-555555555555');
+      82 |   await expect(page.locator('#session-duration-select')).toHaveCount(0);
+    > 83 |   await page.locator('#weekly-target-select').selectOption('4');
+         |                                               ^
+      84 |   await expect(page.locator('#weekly-target-select')).toHaveValue('4');
+      85 |   expect(requests.some((r) => r.method === 'PATCH' && r.body === '{"targetDays":4}')).toBe(true);
+      86 |   await page.goto('http://127.0.0.1:33300/programs');
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\liquid-glass-phase4-learning.spec.ts:83:47
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-learni-b8e0f-ers-keep-existing-contracts\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-learni-b8e0f-ers-keep-existing-contracts\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-learni-b8e0f-ers-keep-existing-contracts\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.transcript-text')
+    Expected substring: "engineering team"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" locator('.transcript-text') with timeout 5000ms
+      - waiting for locator('.transcript-text')
+
+
+      89 |   await page.locator('.theme-control').click(); await page.setViewportSize({ width: 390, height: 844 });
+      90 |   await expect(audio).toHaveAttribute('data-identity', 'same-audio'); expect(await audio.evaluate((el: HTMLAudioElement) => el.paused)).toBe(false);
+    > 91 |   await expect(page.locator('.transcript-text')).toContainText('engineering team');
+         |                                                  ^
+      92 |   await audio.evaluate((el: HTMLAudioElement) => el.pause());
+      93 |   observations.push({ nativeWavPlayback: true, sameAudioNode: true, playbackRetained: true, transcriptPreserved: true, realProvider: false });
+      94 | });
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\liquid-glass-phase4-session.spec.ts:91:50
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-sessio-473a4-t-through-appearance-resize\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-sessio-473a4-t-through-appearance-resize\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-sessio-473a4-t-through-appearance-resize\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls 
+    e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 390 ────────────────────────────
+    e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts 
+    e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize 
+  26 did not run
+  75 passed (6.3m)
+  1 error was not a part of any test, see above for details
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts --max-failures=4
