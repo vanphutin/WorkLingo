@@ -7,8 +7,10 @@ import { translate } from '../i18n/translator';
 import { commonMessages } from '../i18n/messages/common';
 import { LocalizedPageTitle } from '../i18n/page-title';
 import { AuthenticationTransition } from '../i18n/authentication-transition';
+import { TransparencySync } from '../components/transparency-control';
 
 import '../styles/tokens.css';
+import '../styles/glass.css';
 import './globals.css';
 import '../styles/workspace.css';
 import '../styles/learning.css';
@@ -33,7 +35,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang={locale} suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeInitScript }} /></head>
-      <body><LocaleProvider initialLocale={locale} initialUserId={userId}><AuthenticationTransition /><LocalizedPageTitle />{children}</LocaleProvider></body>
+      <body><LocaleProvider initialLocale={locale} initialUserId={userId}><TransparencySync /><AuthenticationTransition /><LocalizedPageTitle />{children}</LocaleProvider></body>
     </html>
   );
 }

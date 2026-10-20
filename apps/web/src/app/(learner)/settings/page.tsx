@@ -1,6 +1,9 @@
 'use client';
 import Link from 'next/link';
 import { LanguageSwitcher } from '../../../components/language-switcher';
+import { ThemeControl } from '../../../components/theme-control';
+import { TransparencyControl } from '../../../components/transparency-control';
+import { GlassSurface } from '../../../components/glass-surface';
 import { useT } from '../../../i18n/provider';
 import { commonMessages } from '../../../i18n/messages/common';
 import { aiMessages } from '../../../i18n/messages/ai';
@@ -23,6 +26,11 @@ export default function SettingsPage() {
           <span aria-hidden="true">→</span>
         </Link>
         <div className="settings-card"><span><strong>{t('language')}</strong><small>{t('languageDescription')}</small></span><LanguageSwitcher /></div>
+        <GlassSurface variant="solid" className="settings-card appearance-preferences">
+          <h2>{t('appearance')}</h2>
+          <ThemeControl />
+          <TransparencyControl />
+        </GlassSurface>
       </section>
     </main>
   );
