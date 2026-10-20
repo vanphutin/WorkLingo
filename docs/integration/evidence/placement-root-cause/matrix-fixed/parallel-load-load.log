@@ -1,0 +1,27 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ✓ test/integration/ielts-study-session.integration.spec.ts (1 test) 8853ms
+   ✓ IELTS study sessions and program isolation > creates distinct canonical plans, scopes evidence, and resumes pinned attempts after rollback  1996ms
+ ✓ test/integration/placement-confirmation.integration.spec.ts (4 tests) 6670ms
+   ✓ placement status and confirmation > exposes owner-scoped IN_PROGRESS, PROCESSING, ACTION_REQUIRED, and RECOMMENDED states  669ms
+   ✓ placement status and confirmation > confirms once, replays the same UUID, and preserves the recommendation snapshot  363ms
+ ✓ test/integration/ielts-mock-workflow.integration.spec.ts (1 test) 4446ms
+{"context":{"correlationId":"61c58a45-41f7-45f0-a0bf-936602e360a4","method":"POST","path":"/api/v1/me/onboarding/placement-attempts"},"level":"ERROR","message":"Unhandled error on POST /api/v1/me/onboarding/placement-attempts: \nInvalid `prisma.placementAttempt.create()` invocation:\n\n\nError occurred during query execution:\nConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: \"P0001\", message: \"forced placement failure\", severity: \"ERROR\", detail: None, column: None, hint: None }), transient: false })","timestamp":"2026-10-20T19:46:19.424Z","trace":"PrismaClientUnknownRequestError: \nInvalid `prisma.placementAttempt.create()` invocation:\n\n\nError occurred during query execution:\nConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: \"P0001\", message: \"forced placement failure\", severity: \"ERROR\", detail: None, column: None, hint: None }), transient: false })\n    at ei.handleRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:237:13)\n    at ei.handleAndLogRequestError (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:174:12)\n    at ei.request (D:\\Projects\\WorkLingo-Integration\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:143:12)\n    at a (D:\\Projects\\WorkLingo-Integration\\n... [TRUNCATED 2055 chars]"}
+ ✓ test/integration/placement-attempt.integration.spec.ts (7 tests) 4466ms
+ ✓ test/integration/onboarding-self-placement.integration.spec.ts (6 tests) 3887ms
+stdout | test/integration/jobs-worker.integration.spec.ts > leased PostgreSQL job worker > does not claim before availableAt and claims at its inclusive boundary
+{"event":"controlled-future-eligibility","capturedNow":"2026-10-07T23:59:59.999Z","observation":{"jobs":[{"id":"fa881b4e-9539-486a-955b-7ecc27df4c61","type":"TEST_JOB","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-08 00:00:00.000000","databaseNow":"2026-10-20 19:46:29.582117","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[]}}
+
+stdout | test/integration/jobs-worker.integration.spec.ts > leased PostgreSQL job worker > cannot see an uncommitted enqueue and claims it after the commit barrier
+{"event":"controlled-uncommitted-enqueue","id":"2b43a051-ce6d-434a-b694-7de0960210ef","visible":false}
+
+stdout | test/integration/jobs-worker.integration.spec.ts > leased PostgreSQL job worker > observes a granted competing lock when SKIP LOCKED returns no eligible row
+{"event":"controlled-skip-locked","jobId":"b3475f04-7c22-4a7e-a523-ad84ef6e4088","capturedNow":"2026-10-08T01:00:00.000Z","holderPid":188,"snapshot":{"jobs":[{"id":"b3475f04-7c22-4a7e-a523-ad84ef6e4088","type":"TEST_JOB","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-08 00:00:00.000000","databaseNow":"2026-10-20 19:46:29.631239","dueAtCapturedNow":true,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[{"pid":188,"locktype":"relation","mode":"RowShareLock","granted":true,"virtualtransaction":"93/4","transactionId":null,"relation":"\"Job\"","state":"idle in transaction","waitEventType":"Client","waitEvent":"ClientRead","transactionStartedAt":"2026-10-20 19:46:29.623423+00","backendTransactionId":"10019","observedAt":"2026-10-20 19:46:29.632408+00"},{"pid":188,"locktype":"transactionid","mode":"ExclusiveLock","granted":true,"virtualtransaction":"93/4","transactionId":"10019","relation":null,"state":"idle in transaction","waitEventType":"Client","waitEvent":"ClientRead","transactionStartedAt":"2026-10-20 19:46:29.623423+00","backendTransactionId":"10019","observedAt":"2026-10-20 19:46:29.632416+00"},{"pid":188,"locktype":"virtualxid","mode":"ExclusiveLock","granted":true,"virtualtransaction":"93/4","transactionId":null,"relation":null,"state":"idle in transaction","waitEventType":"Client","waitEvent":"ClientRead","transactionStartedAt":"2026-10-20 19:46:29.623423+00","backendTransactionId":"10019","observedAt":"2026-10-20 19:46:29.632417+00"}]}}
+
+ ✓ test/integration/jobs-worker.integration.spec.ts (12 tests) 3494ms
+
+ Test Files  6 passed (6)
+      Tests  31 passed (31)
+   Start at  02:45:30
+   Duration  59.64s (transform 7.02s, setup 0ms, collect 25.89s, tests 31.82s, environment 1ms, prepare 733ms)

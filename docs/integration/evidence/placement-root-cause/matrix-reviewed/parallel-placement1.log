@@ -1,0 +1,43 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > uses persisted database eligibility when the host instant is earlier than the job
+{"event":"placement-claim","hostNow":"2026-10-20T19:53:16.778Z","mode":"failure","enteredAt":"2026-10-20T19:53:16.778Z","returnedAt":"2026-10-20T19:53:16.778Z","claimDurationNs":"11670300","observation":"after-claim-not-atomic","workerId":"local-20336-c296ea25-e55c-4ce9-9d94-e080a6152d17","backgroundWorker":"false","schema":"placement_isolation_a7960fd26d98443ab675465c177dac09","timeline":[{"id":"5cd8a3a0-d633-458b-84c0-42fdb7a45724","type":"PLACEMENT_CLOCK_PROBE","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:53:16.779000","databaseNow":"2026-10-20 19:53:16.806145","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"5cd8a3a0-d633-458b-84c0-42fdb7a45724","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+ ✓ test/integration/placement-isolation.integration.spec.ts (32 tests) 24827ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 0)  896ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 1)  850ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 2)  570ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 3)  609ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 4)  537ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 5)  594ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 6)  543ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 7)  558ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 8)  549ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 9)  507ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 10)  559ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 11)  538ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 12)  537ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 13)  543ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 14)  540ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 15)  545ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 16)  516ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 17)  537ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 18)  533ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 19)  777ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 20)  524ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 21)  519ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 22)  528ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 23)  553ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 24)  502ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 25)  549ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 26)  693ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 27)  661ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 28)  730ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 29)  633ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  488ms
+
+ Test Files  1 passed (1)
+      Tests  32 passed (32)
+   Start at  02:52:56
+   Duration  39.41s (transform 6.85s, setup 0ms, collect 14.13s, tests 24.83s, environment 0ms, prepare 150ms)

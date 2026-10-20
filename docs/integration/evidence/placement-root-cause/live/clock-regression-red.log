@@ -1,0 +1,40 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ❯ test/integration/placement-isolation.integration.spec.ts (3 tests | 1 failed | 2 skipped) 3334ms
+   × placement evidence isolation > uses persisted database eligibility when the host instant is earlier than the job 134ms
+     → expected false to be true // Object.is equality
+   ↓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 0)
+   ↓ placement evidence isolation > preserves ordinary learning evidence and progress side effects
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > uses persisted database eligibility when the host instant is earlier than the job
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ runPlacementJob test/integration/placement-isolation.integration.spec.ts:40:5
+     38|     expect(job).toMatchObject({ type: expectedType, attemptCount: 0, l…
+     39|     expect(context.app.get(JOB_RUNNER_OPTIONS).enabled).toBe(false);
+     40|     await expect(context.app.get(JobRunnerService).runOnce()).resolves…
+       |     ^
+     41|     await expect(context.database.job.findUnique({ where: { id: job.id…
+     42|       status: 'COMPLETED', attemptCount: 1, leaseOwner: null,
+ ❯ test/integration/placement-isolation.integration.spec.ts:95:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  02:42:10
+   Duration  12.46s (transform 3.95s, setup 0ms, collect 8.83s, tests 3.33s, environment 0ms, prepare 97ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run test/integration/placement-isolation.integration.spec.ts --testNamePattern uses persisted database eligibility
