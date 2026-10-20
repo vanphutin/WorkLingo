@@ -120,6 +120,9 @@ audio { max-width: 100%; }
 
 @media (max-width: 999px) {
   .application-shell, .application-shell.admin-shell { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  /* The shell already owns inline safe-area spacing in the single-column layout. */
+  .application-shell .learner-content > main,
+  .application-shell .learner-content > .evidence-workspace { padding-inline: 0; }
   .workspace-navigation { position: static; }
   .workspace-navigation .navigation-identity { display: none; }
   .workspace-navigation-toggle { display: flex; }

@@ -4,7 +4,7 @@ import path from 'node:path';
 import { attemptId, questionId, shellAttempt, shellUser } from './fixtures/shell-contracts';
 
 const baseline = process.env.WORKLINGO_SHELL_BASELINE === 'true';
-const evidence = path.resolve(__dirname, '../../../docs/ui-redesign/evidence/phase3');
+const evidence = path.resolve(__dirname, process.env.WORKLINGO_SHELL_EVIDENCE_DIR ?? '../../../docs/ui-redesign/evidence/phase3');
 const observations: object[] = [];
 
 test.beforeAll(() => mkdirSync(evidence, { recursive: true }));

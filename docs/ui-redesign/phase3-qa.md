@@ -2,6 +2,36 @@
 
 Date:2026-10-20, Asia/Saigon. Status: implemented and verified with documented limitations; awaiting human acceptance. Phase4 remains unapproved.
 
+## Final Responsive Remediation — current acceptance evidence
+
+The human accepted the reported technical results and requested elimination of the Phase3 shell overflow regression before full acceptance. **The extra32px is removed; inherited Settings reflow remains P4-SETTINGS-REFLOW-001.** Phase4/merge/push/deploy are not authorized. The earlier Phase3 sections below retain their original source/commit measurements; this section supersedes their596px acceptance limitation. [Full measurement report, source snapshots and PNGs](evidence/phase3-remediation/README.md).
+
+Equivalent390×844, VI, CSS200%, Chromium/devicePixelRatio1/system font measurements:baseline429a8d0 **564px**, Phase3 pre-fix02d27b0 **596px**, corrected shell **564px** in development and optimized production. The unchanged Settings track is265.906 CSS px/531.8125 viewport px. Its left edge changed32→64px because the new outer16 CSS px inset compounded the existing inner16 CSS px main padding. At CSS200%, the added left inset contributes32 viewport px; this is not a sum of both side paddings. Controlled experiments separately removing either layer return564px. Existing shell/content `min-width:0` and `minmax(0,1fr)` already worked; no new minimum caused the difference.
+
+Fix:within the existing≤999px one-column shell query, remove inner main/evidence-workspace **inline** padding; keep outer `max(16px, env(safe-area-inset-*))`, vertical spacing and desktop rules. Only `workspace.css` changes product source (3 added lines). No Settings source, global feature card/grid CSS, LanguageSwitcher, React/auth/navigation/player logic, dependency or API change. No overflow clipping. Test-only snapshot runner/config and actual-route reflow tests provide reproducibility. Existing browser harness gains only an optional evidence directory so historical Phase3 artifacts remain untouched.
+
+Verification:8 matched width/zoom combinations (320/360/390/768px ×CSS100/200%). Narrow100% fits each viewport;320/360/390 at200% return the baseline564px reach.768 fits both. Native Tab without explicit scrolling reaches5 long VI menu labels at320/390 CSS200%, with horizontal outline bounds, vertical bounds, center hit-testing and Escape return focus. CDP safe-area24/20/28 CSS px is applied once:content/header/navigation left48px, header/nav right350px, shell bottom28 CSS px. Before fix content started80px. This is emulated safe-area and CSS zoom, not physical notch/native browser zoom certification.
+
+| Remediation gate | Result | Evidence |
+| --- | --- | --- |
+| RED before fix |2 failed/1 passed:596>564; safe-area80≠48 |remediation RED log |
+| Focused Chromium development |3/3 passed |remediation GREEN log |
+| Optimized Chromium remediation |3/3 passed |remediation production log |
+| Existing optimized shell/IELTS regression |13/13 passed;3 baseline-only captures skipped |shell-regression log/JSON |
+| Targeted units |8 files/45 passed |targeted log |
+| Build/lint/typecheck |Pass;34 page routes retained |individual logs |
+| Full web suite |Initial401/402; isolated learner14/14 and final85 files/402 tests passed |both initial and final logs retained |
+
+The initial full run failed `LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination`:the Settings link remained hidden after opening. No affected TSX/unit source was changed by this CSS remediation; the test passes in the45-targeted run and14-test isolated rerun. The rerun outcome is recorded without erasing the original failure or changing tests to hide it. Scheduling/load sensitivity is possible but not established as root cause. No unrelated test or production behavior is rewritten.
+
+### P4-SETTINGS-REFLOW-001 — inherited feature issue
+
+Status:open, deferred, not implemented. Owner:Settings card/grid and locale-control composition. Evidence:baseline and corrected root reach564px at390 CSS200%, content minimum265.906 CSS px, native locale select width148 CSS px. A diagnostic outer-feature-grid `minmax(0,1fr)` alone reduces pre-fix reach to522px but does not remove child overflow, confirming constraints at more than one grid/card level. Diagnostic styles were removed and never committed to feature source.
+
+Phase4 acceptance criteria:at320/360/390px, VI and EN, CSS100/200%, full document `scrollWidth≤clientWidth`; card columns/children/select reflow within available width; no clipped text or overflow hiding; labels/help/errors and native locale/theme controls remain operable; keyboard focus and outline stay visible, including safe-area emulation; verify Light/Dark and preference persistence. Retain auth/API/player contracts. Reconcile the original dirty Settings owner deliberately when Phase4 is approved. No route is marked migrated by this fix.
+
+Remediation commit:self-resolve with `git log -1 -- docs/ui-redesign/phase3-qa.md` for `fix(ui): remove cumulative mobile shell padding`. Original main/status/1295-file preservation and final diff review are checked before commit. Existing Phase3 commits and evidence remain intact.
+
 ## Phase 2 technical acceptance
 
 **ACCEPTED WITH LIMITATIONS.** Verified commits4182515,12de4a4,2395da1 and follow-up429a8d0 against source, Phase2 QA/browser artifacts, design contracts and fresh original preservation. Recorded84 files/383 tests,35 targeted,16 foundation+12 core Chromium and2 production smoke checks remain Phase2 evidence, not rerun claims. Actual native controls and inline EvaluationFeedback retain their contracts; GlassSurface/theme/reduced-transparency remain canonical. No critical foundation blocker found. Limitations: Chromium/fixtures, no real protected API journey, native browser zoom, screen-reader or Web Vitals certification;0/34 fully migrated routes.

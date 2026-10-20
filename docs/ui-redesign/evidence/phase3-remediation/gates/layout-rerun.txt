@@ -1,0 +1,10 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/app/(learner)/layout.test.tsx (14 tests) 1287ms
+   ✓ LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination  359ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  12:19:41
+   Duration  3.96s (transform 386ms, setup 0ms, collect 1.33s, tests 1.29s, environment 855ms, prepare 180ms)

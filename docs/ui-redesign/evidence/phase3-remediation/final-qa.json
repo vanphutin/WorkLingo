@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-20",
+  "timezone": "Asia/Saigon",
+  "task": "Phase3 Final Responsive Remediation",
+  "base": "02d27b09a79af3eed903a3fb018256e3a2f32d93",
+  "baseline": "429a8d0a79707e7d6f9677502349cfd0b132e9b3",
+  "acceptance": "PASS:Phase3 shell contribution removed; inherited feature issue remains",
+  "productionOwner": "apps/web/src/styles/workspace.css",
+  "protectedOwnersUnchanged": [
+    "apps/web/src/app/(learner)/settings/page.tsx",
+    "apps/web/src/app/globals.css",
+    "apps/web/src/components/language-switcher.tsx",
+    "apps/web/src/components/language-switcher.css",
+    "apps/web/src/app/(learner)/layout.tsx",
+    "apps/web/src/app/(admin)/layout.tsx",
+    "apps/web/src/components/workspace-navigation.tsx"
+  ],
+  "comparable": [
+    {
+      "width": 320,
+      "zoom": 1,
+      "baseline": 320,
+      "before": 320,
+      "after": 320,
+      "gridLeftBefore": 32,
+      "gridLeftAfter": 16
+    },
+    {
+      "width": 320,
+      "zoom": 2,
+      "baseline": 564,
+      "before": 596,
+      "after": 564,
+      "gridLeftBefore": 64,
+      "gridLeftAfter": 32
+    },
+    {
+      "width": 360,
+      "zoom": 1,
+      "baseline": 360,
+      "before": 360,
+      "after": 360,
+      "gridLeftBefore": 32,
+      "gridLeftAfter": 16
+    },
+    {
+      "width": 360,
+      "zoom": 2,
+      "baseline": 564,
+      "before": 596,
+      "after": 564,
+      "gridLeftBefore": 64,
+      "gridLeftAfter": 32
+    },
+    {
+      "width": 390,
+      "zoom": 1,
+      "baseline": 390,
+      "before": 390,
+      "after": 390,
+      "gridLeftBefore": 32,
+      "gridLeftAfter": 16
+    },
+    {
+      "width": 390,
+      "zoom": 2,
+      "baseline": 564,
+      "before": 596,
+      "after": 564,
+      "gridLeftBefore": 64,
+      "gridLeftAfter": 32
+    },
+    {
+      "width": 768,
+      "zoom": 1,
+      "baseline": 768,
+      "before": 768,
+      "after": 768,
+      "gridLeftBefore": 35.1875,
+      "gridLeftAfter": 16
+    },
+    {
+      "width": 768,
+      "zoom": 2,
+      "baseline": 768,
+      "before": 768,
+      "after": 768,
+      "gridLeftBefore": 70.390625,
+      "gridLeftAfter": 32
+    }
+  ],
+  "rootCause": "Duplicate inline insets:16 CSS px extra left padding ×CSSzoom2 =32 viewport px; unchanged intrinsic grid width531.8125px; no min-width regression",
+  "gates": {
+    "browserRed": "2failed1passed",
+    "browserDevelopment": "3passed",
+    "browserProduction": "3passed",
+    "existingProductionShell": "13passed3baselineOnlySkipped",
+    "targetedUnit": "8files45passed",
+    "fullWebInitial": "84filespassed/1failed;401passed1failed",
+    "isolatedLearnerRerun": "14passed",
+    "fullWebFinal": "85files402passed",
+    "lint": "pass",
+    "typecheck": "pass",
+    "build": "pass,34pageRoutes",
+    "i18n": "not rerun:no catalog changes"
+  },
+  "intermittentUnit": {
+    "test": "LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination",
+    "initial": "Settings link hidden after opening",
+    "reruns": "isolated14/14 and full402/402 pass without TSX/test edits",
+    "cause": "not established; timing/load sensitivity possible; original failure retained"
+  },
+  "knownIssue": {
+    "id": "P4-SETTINGS-REFLOW-001",
+    "status": "open,deferred",
+    "scope": "feature grid/card/native locale control composition",
+    "reachAt390Css200": 564,
+    "fullPageReflow": false
+  },
+  "pngs": [
+    {
+      "file": "baseline-390-css200.png",
+      "sha256": "052832a8c4a2ce8450afeb3849b970c12adc7c824bdab2d91e030e005b42c12d"
+    },
+    {
+      "file": "candidate-390-css200.png",
+      "sha256": "c4258ad76274f0c83f43435c04a29b130c95532ee56839274930eb5b8095770e"
+    },
+    {
+      "file": "candidate-production-390-css200.png",
+      "sha256": "b9ee717a80323f1b64190a52a6b534253a36df437bb8beafa53e1f1af4da6915"
+    },
+    {
+      "file": "phase3-before-fix-390-css200.png",
+      "sha256": "4a81af44c5d1af2794f7a80210002b0f0a0b07b98ba5f5397b6159725a6616ff"
+    }
+  ],
+  "sourceHash": {
+    "file": "apps/web/src/styles/workspace.css",
+    "sha256": "275aca080f4af7ef26b8b5df30e559ecfb83728564858ffe86a87b3f06798f8a"
+  },
+  "merge": false,
+  "push": false,
+  "deploy": false,
+  "phase4Started": false
+}

@@ -1,0 +1,12 @@
+[WebServer] (node:1804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:2328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-shell-reflow.spec.ts:41:5 › Settings retains baseline horizontal reach without cumulative shell padding (3.8s)
+  ok 2 e2e\liquid-glass-shell-reflow.spec.ts:72:5 › narrow long-label navigation keeps native Tab focus visible at CSS200% (2.1s)
+  ok 3 e2e\liquid-glass-shell-reflow.spec.ts:98:5 › shell safe-area insets apply once to feature content (1.7s)
+
+  3 passed (17.2s)

@@ -6,6 +6,14 @@ Updated: 2026-10-20 (Asia/Saigon).
 
 **Phase1 and Phase2: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase3: implemented, reviewed and verified with documented limitations; ready for human acceptance,2026-10-20.** Phase4–6, merge, push and deployment remain unapproved. **0/34 routes fully redesigned.** Shell integration does not count as route migration.
 
+## Phase 3 Final Responsive Remediation
+
+Human technical acceptance is recorded; the requested additional technical acceptance gate now passes with the32px shell regression removed. Paired committed snapshots429a8d0/02d27b0 confirm equivalent390px/VI/CSS200 measurements564→596px. The added16 CSS px shell left inset atzoom2 compounded inner main padding, shifting an unchanged531.8125px feature track fromleft32 to64. One-column shell now owns inline spacing once:inner inline padding0, outer safe-area preserved. Corrected reach564px, equal to baseline, also at320/360px. Settings/global feature/i18n/auth/navigation/player source unchanged; no overflow hiding.
+
+New browser TDD:RED2failed/1passed →GREEN3/3; optimized3/3 plus existing shell13/13 (including actual Mock state/autosave). Safe-area and native Tab long-label checks pass. Targeted45 pass; build/lint/typecheck pass. Initial full suite401/402 had a hidden-link Focus Mode unit failure; isolated14/14 and final full85 files/402 tests pass without source/test edits to that behavior. All outcomes are retained; no unrelated test edit. [Remediation report](evidence/phase3-remediation/README.md), [QA/current issue](phase3-qa.md#final-responsive-remediation--current-acceptance-evidence).
+
+Remaining **P4-SETTINGS-REFLOW-001** is baseline feature overflow564px at390 CSS200%; clear acceptance criteria are in Phase3 QA. This issue does not authorize Phase4. Fix commit will be `fix(ui): remove cumulative mobile shell padding`; resolve its self-hash with `git log -1 -- docs/ui-redesign/phase3-qa.md`. No merge/push/deploy; keep the dedicated branch/worktree.
+
 ## Phase 3 handoff
 
 Phase2 commits4182515,12de4a4,2395da1 plus429a8d0 evidence follow-up were reconciled against source/QA before starting. No critical foundation blocker found; previous383-test evidence was reused for acceptance. Phase3 begins from429a8d0a79707e7d6f9677502349cfd0b132e9b3, on the mandated branch/worktree. Original main/status and all1,295 file hashes remain preserved. Original dirty landing/globals/settings/curriculum/feedback were never transferred; only the committed HomePage header and inline scoped styles changed.
@@ -22,7 +30,7 @@ One independent bounded reviewer found an Important current-page link focus defe
 
 [Phase3 QA and changed owners](phase3-qa.md), [machine summary](evidence/phase3/final-qa.json), [12 real before/after comparisons](evidence/phase3/README.md),65 hashed PNGs. Before is optimized Phase2 baseline429a8d0; after is optimized source307829b. All three required viewports are covered in Light/Dark; VI and EN labels, keyboard/skip/history/resize, System, material/motion/contrast fallbacks are exercised. No pixel-equality, native browser zoom, screen-reader, cross-engine, live media/submission or FPS certification.
 
-**Remaining acceptance limitation:** at VI/390px/CSS200%, native Tab reaches all5/13 nav links with no explicit scrolling and shell header/nav fit; Admin content fits, but existing Settings feature content overflows564px before/596px after (extra32px from shell insets). This is an explicit incremental limitation for human acceptance and Phase4 feature repair, not a passing whole-page reflow claim. Firefox/WebKit executables absent. No route is marked migrated.
+**Historical pre-remediation limitation (superseded above):** at VI/390px/CSS200%, native Tab reaches all5/13 nav links with no explicit scrolling and shell header/nav fit; Admin content fits, but existing Settings feature content overflows564px before/596px after (extra32px from shell insets). This is an explicit incremental limitation for human acceptance and Phase4 feature repair, not a passing whole-page reflow claim. Firefox/WebKit executables absent. No route is marked migrated.
 
 Keep branch/worktree/ledger for review and later authorized work. Original checkout remains untouched; no stash/reset/clean/overwrite, merge, push or deploy. **Stop here pending human Phase3 acceptance and explicit Phase4 approval.** Historical Phase1/2 records below remain chronological evidence, superseded by this current status where approvals changed.
 
