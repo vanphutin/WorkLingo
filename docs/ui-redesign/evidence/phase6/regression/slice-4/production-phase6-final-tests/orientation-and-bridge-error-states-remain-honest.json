@@ -1,0 +1,16 @@
+{
+  "title": "orientation and bridge error states remain honest",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "orientation",
+      "state": "error"
+    },
+    {
+      "kind": "bridge",
+      "state": "error"
+    }
+  ]
+}

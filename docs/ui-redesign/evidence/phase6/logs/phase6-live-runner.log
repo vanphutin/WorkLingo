@@ -1,0 +1,14 @@
+{
+  "result": "FAIL",
+  "cleanup": true,
+  "container": "worklingo-liquid-glass-phase6-4800a49caf",
+  "projects": [
+    "onboarding-desktop",
+    "foundation-desktop",
+    "foundation-mobile",
+    "teacher-ai-mobile",
+    "engagement-mobile",
+    "ielts-full-mock-desktop",
+    "admin-desktop"
+  ]
+}

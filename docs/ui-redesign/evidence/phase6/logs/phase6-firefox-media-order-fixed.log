@@ -1,0 +1,89 @@
+{
+  "before": {
+    "single": false,
+    "combined": false,
+    "filter": "blur(20px) saturate(1.8)",
+    "rules": [
+      {
+        "condition": "(prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active)",
+        "matches": false
+      }
+    ]
+  },
+  "after": {
+    "single": true,
+    "combined": true,
+    "filter": "blur(20px) saturate(1.8)",
+    "rules": [
+      {
+        "condition": "(prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active)",
+        "matches": true
+      }
+    ]
+  },
+  "emptyStyle": {
+    "single": true,
+    "combined": true,
+    "filter": "blur(20px) saturate(1.8)",
+    "rules": [
+      {
+        "condition": "(prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active)",
+        "matches": true
+      }
+    ]
+  },
+  "activeAtParse": {
+    "single": true,
+    "combined": true,
+    "filter": "none",
+    "rules": [
+      {
+        "condition": "(prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active)",
+        "matches": true
+      }
+    ]
+  },
+  "reordered": {
+    "single": true,
+    "combined": true,
+    "filter": "none",
+    "rules": [
+      {
+        "condition": "(prefers-contrast: more), (forced-colors: active), (prefers-reduced-transparency: reduce)",
+        "matches": true
+      }
+    ]
+  },
+  "addedRule": {
+    "single": true,
+    "combined": true,
+    "filter": "none",
+    "rules": [
+      {
+        "condition": "(prefers-contrast: more), (forced-colors: active), (prefers-reduced-transparency: reduce)",
+        "matches": true
+      },
+      {
+        "condition": "(prefers-contrast: more)",
+        "matches": true
+      }
+    ]
+  },
+  "outline": "10px",
+  "toggled": {
+    "single": true,
+    "combined": true,
+    "filter": "none",
+    "rules": [
+      {
+        "condition": "(prefers-contrast: more), (forced-colors: active), (prefers-reduced-transparency: reduce)",
+        "matches": true
+      },
+      {
+        "condition": "(prefers-contrast: more)",
+        "matches": true
+      }
+    ]
+  },
+  "browser": "155.0"
+}

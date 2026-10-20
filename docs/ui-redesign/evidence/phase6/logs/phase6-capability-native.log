@@ -1,0 +1,54 @@
+[WebServer] (node:11036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ok 1 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (1.1s)
+  ok 2 [chromium] › e2e\liquid-glass-phase6-native.spec.ts:16:83 › actual browser zoom200 light physical window 780 (3.5s)
+  x  3 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (7.5s)
+  ok 4 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (1.7s)
+
+
+  1) [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.shell-header-surface')
+    Expected: "none"
+    Received: "blur(20px) saturate(1.8)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.shell-header-surface') with timeout 5000ms
+      - waiting for locator('.shell-header-surface')
+        13 × locator resolved to <div data-glass-tint="none" data-glass-variant="regular" class="glass-surface shell-header-surface">…</div>
+           - unexpected value "blur(20px) saturate(1.8)"
+
+
+      41 |   const contrastMore = await page.evaluate(() => matchMedia('(prefers-contrast: more)').matches);
+      42 |   observations.push({ diagnostic: 'increased contrast capability', contrastMore, actualFilter: await page.locator('.shell-header-surface').evaluate(el => getComputedStyle(el).backdropFilter) });
+    > 43 |   if (contrastMore) await expect(page.locator('.shell-header-surface')).toHaveCSS('backdrop-filter', 'none');
+         |                                                                         ^
+      44 |   await page.emulateMedia({ contrast: 'no-preference', forcedColors: 'active' });
+      45 |   await expect(page.locator('.settings-language-card select')).toBeEnabled();
+      46 |   const forcedColors = await page.evaluate(() => matchMedia('(forced-colors: active)').matches);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-cross.spec.ts:43:73
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+  3 passed (19.7s)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6.config.ts -g preferences storage|actual browser zoom200 light physical window 780

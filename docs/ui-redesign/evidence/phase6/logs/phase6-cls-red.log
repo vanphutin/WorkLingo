@@ -1,0 +1,41 @@
+[WebServer] (node:9084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  x  1 e2e\liquid-glass-phase6-cls.spec.ts:5:5 › controlled Operations initial data insertion shift attribution (1.3s)
+
+
+  1) e2e\liquid-glass-phase6-cls.spec.ts:5:5 › controlled Operations initial data insertion shift attribution
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.1
+    Received:    0.15543306702282242
+
+      21 |     const totalShift = shifts.reduce((sum, shift) => sum + shift.value, 0);
+      22 |     observations.push({ repeat, originalCommittedBaseline: process.env.WORKLINGO_PHASE6_BASELINE === 'true', shifts, totalShift, environment: 'Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage' });
+    > 23 |     expect(totalShift).toBeLessThanOrEqual(.1);
+         |                        ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-cls.spec.ts:23:24
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-cls-results\liquid-glass-phase6-cls-co-18201-insertion-shift-attribution\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-cls-results\liquid-glass-phase6-cls-co-18201-insertion-shift-attribution\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-cls-results\liquid-glass-phase6-cls-co-18201-insertion-shift-attribution\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e\liquid-glass-phase6-cls.spec.ts:5:5 › controlled Operations initial data insertion shift attribution
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6-cls.config.ts

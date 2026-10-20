@@ -1,0 +1,684 @@
+{
+  "sourceCommit": "69654e4dd6fd3fa7ed62249f69e36f20fd4f402d",
+  "timestamp": "2026-10-20T13:19:34.818Z",
+  "command": "node docs/ui-redesign/evidence/phase6/summarize.cjs",
+  "routes": [
+    {
+      "route": "/admin/analytics",
+      "source": "apps/web/src/app/(admin)/admin/analytics/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/admin/audit",
+      "source": "apps/web/src/app/(admin)/admin/audit/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/admin/content/[importId]",
+      "source": "apps/web/src/app/(admin)/admin/content/[importId]/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/content/new",
+      "source": "apps/web/src/app/(admin)/admin/content/new/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/content",
+      "source": "apps/web/src/app/(admin)/admin/content/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json"
+      ]
+    },
+    {
+      "route": "/admin/curriculum",
+      "source": "apps/web/src/app/(admin)/admin/curriculum/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json"
+      ]
+    },
+    {
+      "route": "/admin/ielts-band-curriculum",
+      "source": "apps/web/src/app/(admin)/admin/ielts-band-curriculum/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/ielts-bridge",
+      "source": "apps/web/src/app/(admin)/admin/ielts-bridge/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/ielts-integrated",
+      "source": "apps/web/src/app/(admin)/admin/ielts-integrated/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/ielts-mocks",
+      "source": "apps/web/src/app/(admin)/admin/ielts-mocks/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/ielts-orientation",
+      "source": "apps/web/src/app/(admin)/admin/ielts-orientation/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-dark-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-1440.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-390.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-matrix-light-768.json",
+        "regression/slice-6/production-phase6-final-tests/authoring-reflow-at320-CSS200-retains-visible-editor-and-controls.json",
+        "regression/slice-6/production-phase6-final-tests/curriculum-blockers-form-cancel-and-authoring-native-focus-remain-accessible-at320-CSS200.json"
+      ]
+    },
+    {
+      "route": "/admin/operations",
+      "source": "apps/web/src/app/(admin)/admin/operations/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/admin/settings/ai",
+      "source": "apps/web/src/app/(admin)/admin/settings/ai/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/admin/settings/audio",
+      "source": "apps/web/src/app/(admin)/admin/settings/audio/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/login",
+      "source": "apps/web/src/app/(auth)/login/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-1/production-phase6-final-tests/narrow-Vietnamese-public-auth-reflow-and-visible-keyboard-focus-at-CSS200.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-1440.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-390.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-768.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-1440.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-390.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/register",
+      "source": "apps/web/src/app/(auth)/register/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-1/production-phase6-final-tests/narrow-Vietnamese-public-auth-reflow-and-visible-keyboard-focus-at-CSS200.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-1440.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-390.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-768.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-1440.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-390.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "source": "apps/web/src/app/(learner)/dashboard/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-2/production-phase6-final-tests/learning-content-reflows-at-narrow-widths-and-CSS200-without-hiding-overflow.json",
+        "regression/slice-2/production-phase6-final-tests/learning-empty-states-preserve-eligibility-and-retry.json",
+        "regression/slice-2/production-phase6-final-tests/learning-error-states-preserve-eligibility-and-retry.json",
+        "regression/slice-2/production-phase6-final-tests/learning-loading-states-announce-pending-data-and-resolve-on-real-component-routes.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-1440.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-390.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-768.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-1440.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-390.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/ielts/bridge/[moduleId]",
+      "source": "apps/web/src/app/(learner)/ielts/bridge/[moduleId]/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-1440.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-390.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-768.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-1440.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-390.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-768.json",
+        "regression/slice-4/production-phase6-final-tests/orientation-and-bridge-narrow-reflow-retains-controls-at-CSS200.json"
+      ]
+    },
+    {
+      "route": "/ielts/bridge",
+      "source": "apps/web/src/app/(learner)/ielts/bridge/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-1440.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-390.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-768.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-1440.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-390.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/ielts/mock-tests/[attemptId]",
+      "source": "apps/web/src/app/(learner)/ielts/mock-tests/[attemptId]/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-5/production-phase6-final-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-768.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/ielts/mock-tests",
+      "source": "apps/web/src/app/(learner)/ielts/mock-tests/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-5/production-phase6-final-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-768.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/ielts/orientation",
+      "source": "apps/web/src/app/(learner)/ielts/orientation/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-1440.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-390.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-dark-768.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-1440.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-390.json",
+        "regression/slice-4/production-phase6-final-tests/bridge-matrix-light-768.json",
+        "regression/slice-4/production-phase6-final-tests/orientation-and-bridge-narrow-reflow-retains-controls-at-CSS200.json"
+      ]
+    },
+    {
+      "route": "/ielts/pathway",
+      "source": "apps/web/src/app/(learner)/ielts/pathway/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-5/production-phase6-final-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-768.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/ielts/practice/[sessionId]",
+      "source": "apps/web/src/app/(learner)/ielts/practice/[sessionId]/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-5/production-phase6-final-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-768.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/ielts/practice",
+      "source": "apps/web/src/app/(learner)/ielts/practice/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-5/production-phase6-final-tests/exam-launcher-pathway-and-player-reflow-at320-CSS200.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-dark-768.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-1440.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-390.json",
+        "regression/slice-5/production-phase6-final-tests/exam-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/mastery",
+      "source": "apps/web/src/app/(learner)/mastery/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-2/production-phase6-final-tests/learning-content-reflows-at-narrow-widths-and-CSS200-without-hiding-overflow.json",
+        "regression/slice-2/production-phase6-final-tests/learning-empty-states-preserve-eligibility-and-retry.json",
+        "regression/slice-2/production-phase6-final-tests/learning-error-states-preserve-eligibility-and-retry.json",
+        "regression/slice-2/production-phase6-final-tests/learning-loading-states-announce-pending-data-and-resolve-on-real-component-routes.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-1440.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-390.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-768.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-1440.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-390.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/onboarding",
+      "source": "apps/web/src/app/(learner)/onboarding/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-1440.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-390.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-768.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-1440.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-390.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/onboarding/placement/[sessionId]",
+      "source": "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-1440.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-390.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-768.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-1440.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-390.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/programs",
+      "source": "apps/web/src/app/(learner)/programs/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-2/production-phase6-final-tests/learning-content-reflows-at-narrow-widths-and-CSS200-without-hiding-overflow.json",
+        "regression/slice-2/production-phase6-final-tests/learning-empty-states-preserve-eligibility-and-retry.json",
+        "regression/slice-2/production-phase6-final-tests/learning-error-states-preserve-eligibility-and-retry.json",
+        "regression/slice-2/production-phase6-final-tests/learning-loading-states-announce-pending-data-and-resolve-on-real-component-routes.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-1440.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-390.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-dark-768.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-1440.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-390.json",
+        "regression/slice-2/production-phase6-final-tests/learning-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/sessions/[sessionId]",
+      "source": "apps/web/src/app/(learner)/sessions/[sessionId]/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-1440.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-390.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-dark-768.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-1440.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-390.json",
+        "regression/slice-3/production-phase6-final-tests/session-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/settings/ai",
+      "source": "apps/web/src/app/(learner)/settings/ai/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/settings/audio",
+      "source": "apps/web/src/app/(learner)/settings/audio/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/settings",
+      "source": "apps/web/src/app/(learner)/settings/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-7/production-phase6-final-tests/all-settings-and-operations-owners-reflow-at320-CSS200.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-dark-768.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-1440.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-390.json",
+        "regression/slice-7/production-phase6-final-tests/settings-operations-matrix-light-768.json"
+      ]
+    },
+    {
+      "route": "/",
+      "source": "apps/web/src/app/page.tsx",
+      "result": "PASS: owner fixture rendering",
+      "evidence": [
+        "regression/slice-1/production-phase6-final-tests/narrow-Vietnamese-public-auth-reflow-and-visible-keyboard-focus-at-CSS200.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-1440.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-390.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-dark-768.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-1440.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-390.json",
+        "regression/slice-1/production-phase6-final-tests/public-auth-matrix-light-768.json"
+      ]
+    }
+  ],
+  "routeTotal": 34,
+  "routeVerified": 34,
+  "ownerTests": 105,
+  "ownerFailures": [],
+  "performance": [
+    {
+      "url": "/dashboard",
+      "samples": 3,
+      "lcpMs": [
+        420,
+        244,
+        196
+      ],
+      "cls": [
+        0.0018772472109099766,
+        0.0018772472109099766,
+        0
+      ],
+      "interactionMaxMs": [
+        24,
+        32,
+        24
+      ],
+      "observedInteractions": [
+        6,
+        6,
+        6
+      ],
+      "frameMedianMs": 16.699999999999932,
+      "frameP95Ms": 16.700000000000045,
+      "frameMaxMs": 16.800000000000182
+    },
+    {
+      "url": "/settings",
+      "samples": 3,
+      "lcpMs": [
+        236,
+        196,
+        144
+      ],
+      "cls": [
+        0,
+        0,
+        0
+      ],
+      "interactionMaxMs": [
+        32,
+        24,
+        24
+      ],
+      "observedInteractions": [
+        6,
+        6,
+        6
+      ],
+      "frameMedianMs": 16.699999999999932,
+      "frameP95Ms": 16.799999999999955,
+      "frameMaxMs": 16.800000000000182
+    },
+    {
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "samples": 3,
+      "lcpMs": [
+        228,
+        176,
+        196
+      ],
+      "cls": [
+        0,
+        0,
+        0
+      ],
+      "interactionMaxMs": [
+        16,
+        32,
+        16
+      ],
+      "observedInteractions": [
+        6,
+        6,
+        6
+      ],
+      "frameMedianMs": 16.699999999999932,
+      "frameP95Ms": 16.700000000000045,
+      "frameMaxMs": 16.800000000000068
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "samples": 3,
+      "lcpMs": [
+        192,
+        172,
+        152
+      ],
+      "cls": [
+        0,
+        0,
+        0
+      ],
+      "interactionMaxMs": [
+        16,
+        16,
+        16
+      ],
+      "observedInteractions": [
+        5,
+        6,
+        6
+      ],
+      "frameMedianMs": 16.699999999999932,
+      "frameP95Ms": 16.799999999999955,
+      "frameMaxMs": 16.800000000000182
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "samples": 3,
+      "lcpMs": [
+        224,
+        176,
+        184
+      ],
+      "cls": [
+        0.018957345971563982,
+        0.018957345971563982,
+        0.018957345971563982
+      ],
+      "interactionMaxMs": [
+        56,
+        24,
+        24
+      ],
+      "observedInteractions": [
+        6,
+        6,
+        6
+      ],
+      "frameMedianMs": 16.699999999999932,
+      "frameP95Ms": 16.799999999999955,
+      "frameMaxMs": 16.800000000000182
+    },
+    {
+      "url": "/admin/operations",
+      "samples": 3,
+      "lcpMs": [
+        180,
+        172,
+        160
+      ],
+      "cls": [
+        0.018957345971563982,
+        0.018957345971563982,
+        0.018957345971563982
+      ],
+      "interactionMaxMs": [
+        40,
+        48,
+        32
+      ],
+      "observedInteractions": [
+        6,
+        6,
+        6
+      ],
+      "frameMedianMs": 16.699999999999932,
+      "frameP95Ms": 16.799999999999955,
+      "frameMaxMs": 16.800000000000068
+    }
+  ],
+  "performanceArtifact": "performance-fixed-final/chromium/repeated-lab-paint-shift-interaction-and-scroll-observations.json",
+  "staticAssetInventory": {
+    "js": {
+      "files": 51,
+      "rawBytes": 1933774,
+      "gzipBytes": 566691
+    },
+    "css": {
+      "files": 24,
+      "rawBytes": 195820,
+      "gzipBytes": 43895
+    }
+  },
+  "opaqueTextSamples": 3144,
+  "opaqueTextMinimum": 4.874973825384874,
+  "limits": [
+    "Owner105 source18e00fd predates Operations fix; use operations-regression-final for its18 affected cases. Other owners unchanged.",
+    "Asset sums include all chunks, NOT per-route transferred payload or a before/after regression metric.",
+    "Lab18 observations on one headless desktop with loopback fixtures, no CPU/network throttling; EventTiming maxima are not field INP; no physical60FPS or total CWV claim.",
+    "Original CLS baseline is controlled separately in cls-original-baseline; it is not an equivalent full LCP/INP baseline."
+  ]
+}

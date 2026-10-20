@@ -1,0 +1,21 @@
+{
+  "title": "mock multiple question keyboard navigation exposes text answer state and unclipped focus",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "twoRealQuestionFields": true,
+      "nativeTab": true,
+      "focusBounds": {
+        "left": 46,
+        "right": 274,
+        "top": 344.6875,
+        "bottom": 752.6875,
+        "outline": 3
+      },
+      "visibleAnsweredStates": true,
+      "CSSZoom": 2
+    }
+  ]
+}

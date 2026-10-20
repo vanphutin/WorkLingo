@@ -1,0 +1,87 @@
+[WebServer] (node:3776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:3440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:9556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 21 tests using 1 worker
+
+  ok  1 [ai-settings-desktop] › e2e\ai-settings.spec.ts:6:5 › AI account settings persist, switch language and protect unavailable providers (2.9s)
+  ok  2 [ai-settings-desktop] › e2e\ai-settings.spec.ts:28:5 › admin AI page exposes global and account settings without provider secrets (1.3s)
+  ok  3 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:8:7 › Onboarding and placement assessment journey › learner registers, completes self-placement, confirms level, and lands on dashboard (2.0s)
+  ok  4 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:45:7 › Onboarding and placement assessment journey › pending learner cannot bypass route guards to access dashboard or ordinary sessions (2.5s)
+  ok  5 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:68:7 › Onboarding and placement assessment journey › completed learner bypasses onboarding and is redirected to dashboard (1.5s)
+  ok  6 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:88:7 › Onboarding and placement assessment journey › learner starts placement, resumes after refresh, completes all four skills, and confirms recommendation (8.6s)
+  ok  7 [audio-desktop] › e2e\audio-settings.spec.ts:12:7 › Audio source and publishing journeys › learner saves browser speech and gets explicit playback fallbacks (6.4s)
+  ok  8 [audio-desktop] › e2e\audio-settings.spec.ts:81:7 › Audio source and publishing journeys › admin previews, selects and publishes one immutable local audio candidate (6.9s)
+  x   9 [audio-desktop] › e2e\audio-settings.spec.ts:145:7 › Audio source and publishing journeys › renders Azure readiness from a test-only stub without exposing credentials (6.7s)
+  ok 10 [foundation-desktop] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (6.1s)
+  ok 11 [foundation-mobile] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (5.9s)
+  ok 12 [teacher-ai-mobile] › e2e\teacher-ai-learning.spec.ts:6:7 › Teacher AI speaking and writing journey › records, resumes processing, retries safely and preserves a writing draft (16.3s)
+  ok 13 [engagement-mobile] › e2e\engagement-progress.spec.ts:8:7 › Weekly Engagement and Progress Evidence Journey › tracks weekly mission, protects active week target changes, and surfaces progress evidence (5.2s)
+  ok 14 [ielts-orientation-desktop] › e2e\ielts-orientation.spec.ts:49:7 › IELTS Orientation browser journey › Admin publishes while learner remains locked, then resumes a pinned version after eligibility (5.1s)
+  ok 15 [ielts-bridge-desktop] › e2e\ielts-bridge.spec.ts:57:5 › learner starts, resumes and remains pinned while Admin publishes a new Bridge version (4.2s)
+  ok 16 [ielts-integrated-desktop] › e2e\ielts-integrated-practice.spec.ts:50:5 › learner configures and resumes an immutable four-skill session without a band score (5.1s)
+  ok 17 [ielts-band-curriculum-desktop] › e2e\ielts-band-curriculum.spec.ts:50:5 › Admin publishes seven stages and learner remains pinned to the started curriculum version (3.6s)
+  ok 18 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (3.1s)
+  ok 19 [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation (10.9s)
+  ok 20 [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety (4.0s)
+  ok 21 [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics (2.4s)
+
+
+  1) [audio-desktop] › e2e\audio-settings.spec.ts:145:7 › Audio source and publishing journeys › renders Azure readiness from a test-only stub without exposing credentials
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Configured and available')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Configured and available') with timeout 5000ms
+      - waiting for getByText('Configured and available')
+
+
+      170 |     await page.goto('/admin/settings/audio');
+      171 |     await expect(page.getByRole('radio', { name: /azure ai speech/i })).toBeChecked();
+    > 172 |     await expect(page.getByText('Configured and available')).toBeVisible();
+          |                                                              ^
+      173 |     expect(JSON.stringify(response)).not.toMatch(/subscription|secret|speechKey|apiKey/iu);
+      174 |     await page.getByRole('button', { name: 'Save provider settings' }).click();
+      175 |     await expect(page.getByText('Provider settings saved.')).toBeVisible();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\audio-settings.spec.ts:172:62
+
+    Error Context: test-results\audio-settings-Audio-sourc-3784a-ithout-exposing-credentials-audio-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\audio-settings-Audio-sourc-3784a-ithout-exposing-credentials-audio-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\audio-settings-Audio-sourc-3784a-ithout-exposing-credentials-audio-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [audio-desktop] › e2e\audio-settings.spec.ts:145:7 › Audio source and publishing journeys › renders Azure readiness from a test-only stub without exposing credentials
+  20 passed (2.3m)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=foundation-mobile --project=teacher-ai-mobile --project=engagement-mobile --project=ielts-orientation-desktop --project=ielts-bridge-desktop --project=ielts-integrated-desktop --project=ielts-band-curriculum-desktop --project=ielts-full-mock-desktop --project=admin-desktop --project=audio-desktop --project=ai-settings-desktop

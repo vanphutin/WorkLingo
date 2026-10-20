@@ -1,0 +1,229 @@
+{
+  "sourceCommit": "b9ae26ccb1dcfe6817ad451e33943529de11270f",
+  "timestamp": "2026-10-20T12:22:54.877Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6.config.ts --project=chromium -g representative.*390",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "representative routes dark 390",
+  "result": "failed",
+  "testSourceSHA256": "1448c5b15140fb2526f540a73d13d317cfe17b039c7ea3fd51c8c436323d1daf",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    },
+    {
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(44, 44, 46)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    },
+    {
+      "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        },
+        {
+          "variant": "solid",
+          "filter": "none",
+          "background": "rgb(0, 0, 0)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "support": true,
+      "materials": [
+        {
+          "variant": "regular",
+          "filter": "blur(20px) saturate(1.8)",
+          "background": "rgba(28, 28, 30, 0.92)",
+          "nested": false
+        }
+      ],
+      "errors": [
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+        "Failed to read the 'localStorage' property from 'Window': Access is denied for this document."
+      ]
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

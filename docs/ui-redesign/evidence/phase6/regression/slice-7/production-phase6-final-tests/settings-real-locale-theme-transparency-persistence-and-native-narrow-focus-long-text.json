@@ -1,0 +1,133 @@
+{
+  "title": "settings real locale theme transparency persistence and native narrow focus long text",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": 0,
+      "focus": {
+        "left": 22,
+        "right": 298,
+        "top": 157.890625,
+        "bottom": 686.203125,
+        "outline": 3
+      }
+    },
+    {
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": 1,
+      "focus": {
+        "left": 22,
+        "right": 298,
+        "top": 219.203125,
+        "bottom": 774.390625,
+        "outline": 3
+      }
+    },
+    {
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": 2,
+      "focus": {
+        "left": 48,
+        "right": 272,
+        "top": 368.390625,
+        "bottom": 476.390625,
+        "outline": 3
+      }
+    },
+    {
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": 3,
+      "focus": {
+        "left": 48,
+        "right": 156,
+        "top": 666.171875,
+        "bottom": 774.171875,
+        "outline": 3
+      }
+    },
+    {
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": 4,
+      "focus": {
+        "left": 48,
+        "right": 108,
+        "top": 714.359375,
+        "bottom": 774.359375,
+        "outline": 3
+      }
+    },
+    {
+      "width": 390,
+      "CSSZoom": 2,
+      "nativeTab": 0,
+      "focus": {
+        "left": 22,
+        "right": 368,
+        "top": 233.921875,
+        "bottom": 610.921875,
+        "outline": 3
+      }
+    },
+    {
+      "width": 390,
+      "CSSZoom": 2,
+      "nativeTab": 1,
+      "focus": {
+        "left": 22,
+        "right": 368,
+        "top": 360.921875,
+        "bottom": 773.609375,
+        "outline": 3
+      }
+    },
+    {
+      "width": 390,
+      "CSSZoom": 2,
+      "nativeTab": 2,
+      "focus": {
+        "left": 48,
+        "right": 342,
+        "top": 368.109375,
+        "bottom": 476.109375,
+        "outline": 3
+      }
+    },
+    {
+      "width": 390,
+      "CSSZoom": 2,
+      "nativeTab": 3,
+      "focus": {
+        "left": 48,
+        "right": 156,
+        "top": 620.09375,
+        "bottom": 728.09375,
+        "outline": 3
+      }
+    },
+    {
+      "width": 390,
+      "CSSZoom": 2,
+      "nativeTab": 4,
+      "focus": {
+        "left": 48,
+        "right": 108,
+        "top": 714.28125,
+        "bottom": 774.28125,
+        "outline": 3
+      }
+    },
+    {
+      "preferencePersistence": true,
+      "reducedTransparency": true,
+      "longText": true,
+      "safeArea": "measured shell fallback insets; native hardware safe-area not emulated"
+    }
+  ]
+}

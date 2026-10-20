@@ -151,3 +151,11 @@ Each loaded page has one page h1 and one main: admin layout owns main, feature r
 Shared sr-only aliases visually-hidden so labels/captions remain in the accessibility tree without visible layout. LanguageSwitcher uses control-border rather than decorative border in every host. Content remains solid; AI content has no residual manual-Dark blur. Current motion owners transition only named visual properties using existing duration tokens; Reduced Motion is centralized in workspace CSS rather than a feature-wide universal tiny-duration override. Spinner normal animations yield to that fallback.
 
 Phase5 contrast acceptance uses pixel samples inside actual rendered text ranges, temporarily suppressing glyph paint while retaining material/background/layout. Foreground alpha is composited over each sampled background; unsupported ancestor group opacity fails the sampler instead of silently claiming compliance. Surface-corner measurements are superseded. Sampled values and limitations are in phase5-qa.md; no complete WCAG/native-device certification is implied.
+
+## Phase6 verified presentation contracts
+
+Phase5 accepted with limitations; Phase6 authorized. Current product600cd1f; no palette/token/CSS change in Phase6. Earlier authorization/status paragraphs above are historical checkpoints.
+
+Content imports has one named keyboard-scrollable region; its outer feature section must not duplicate that accessible name. Pending Operations reserves the same four metric cards as loaded content, uses em dash for unknown values and aria-busy during loading, and retains existing request/loading/error/data logic. Never render invented zero metrics to fill a loading skeleton. This prevents469.75px filter movement; original/pre-fix/fixed CLS comparison is in Phase6 QA. Loaded typography/contrast/material unchanged.
+
+Manual reduced transparency, static increased-contrast fallback, sampled forced-color control use and storage failure were checked across representative engines; Firefox155 dynamic contrast emulation is explicitly blocked. Actual browser zoom via tabs.setZoom is distinct from CSS zoom/device scaling. No native OS, full WCAG, physical Safari/assistive-tech/hardware or field-performance certification follows. See phase6-final-qa.md for bounded evidence.

@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "aace62cc695e227904123c92c7b79f278d0fb128",
+  "timestamp": "2026-10-20T12:43:49.112Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-error.config.ts",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "real Next error boundary vi light",
+  "result": "failed",
+  "testSourceSHA256": "a50748b38683f5d092a1158c084603959f8f2e84ca6765f15166d746091bee54",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

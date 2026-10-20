@@ -1,0 +1,131 @@
+{
+  "sourceCommit": "18e00fdafb74ede460c5f7fd8302ed8aa15167d6",
+  "timestamp": "2026-10-20T13:01:22.117Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-cls.config.ts",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "controlled Operations initial data insertion shift attribution",
+  "result": "passed",
+  "testSourceSHA256": "d5871aacd10109a94043f79be58a13425078dd5cb20cb80b5b5b5045925fbbc5",
+  "productionWorkingDiffSHA256": "355cda6130b6f947c73d3c667877e8ce2a887f391998892d770d823c80c71ac7",
+  "observations": [
+    {
+      "repeat": 0,
+      "originalCommittedBaseline": false,
+      "shifts": [
+        {
+          "start": 276,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "totalShift": 0.018957345971563982,
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    },
+    {
+      "repeat": 1,
+      "originalCommittedBaseline": false,
+      "shifts": [
+        {
+          "start": 135.5,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "totalShift": 0.018957345971563982,
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    },
+    {
+      "repeat": 2,
+      "originalCommittedBaseline": false,
+      "shifts": [
+        {
+          "start": 136.29999999981374,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "totalShift": 0.018957345971563982,
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

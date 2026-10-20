@@ -1,0 +1,12 @@
+{
+  "title": "system audio unavailable provider and existing save contract retain gates",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "unavailableProviderDisabled": true,
+      "existingUnchangedSaveAllowed": true,
+      "simulationHonest": true
+    }
+  ]
+}

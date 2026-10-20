@@ -1,0 +1,1289 @@
+{
+  "mode": "production",
+  "title": "session matrix light 1440",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Điểm bắt đầu của bạn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn cách bắt đầu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu từ trình độ bạn đã biết hoặc làm bài đánh giá công sở đủ bốn kỹ năng. Bạ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tự chọn trình độ bắt đầu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phù hợp nếu bạn đã hiểu nền tảng tiếng Anh công sở hiện tại của mình.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Làm bài đánh giá đầu vào",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Dùng minh chứng đọc, nghe, nói và viết để đề xuất trình độ.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "onboarding-reading-light-1440",
+      "url": "/onboarding",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Workplace Placement Assessment",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã lưu 1/5 hoạt động · Buổi học 60 phút",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Read the email and answer all questions.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ngôn ngữ chính cần chú ý:",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nền tảng · Ngữ pháp",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        230,
+        241,
+        255
+      ],
+      "ratio": 4.874973825384874
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trọng tâm ngữ pháp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        230,
+        241,
+        255
+      ],
+      "ratio": 14.900628115594163
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "háo hức làm gì",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mẫu câu: be + eager + to + base verb",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Project status",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Team introduction",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thông tin buổi học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời lượng",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng 60 phút (15 phút mỗi khối)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Khối hiện tại",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc và giải mã (Khối 2/4)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Kỹ năng được luyện",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Từ vựng / Ngôn ngữ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "placement-reading-light-1440",
+      "url": "/onboarding/placement/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Introduce yourself to a new colleague",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã lưu 1/5 hoạt động · Buổi học 60 phút",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Read the email and answer all questions.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ngôn ngữ chính cần chú ý:",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nền tảng · Ngữ pháp",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        230,
+        241,
+        255
+      ],
+      "ratio": 4.874973825384874
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trọng tâm ngữ pháp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        230,
+        241,
+        255
+      ],
+      "ratio": 14.900628115594163
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "háo hức làm gì",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mẫu câu: be + eager + to + base verb",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Project status",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Team introduction",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thông tin buổi học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời lượng",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng 60 phút (15 phút mỗi khối)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Khối hiện tại",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc và giải mã (Khối 2/4)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Kỹ năng được luyện",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Từ vựng / Ngôn ngữ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "session-reading-light-1440",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Introduce yourself to a new colleague",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã lưu 2/5 hoạt động · Buổi học 60 phút",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Listen to the greeting and choose the correct department.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung âm thanh / Bản chép lời",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "[Audio placeholder]: \"Hi, welcome to the engineering team.\"",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Engineering",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Marketing",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thông tin buổi học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời lượng",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng 60 phút (15 phút mỗi khối)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Khối hiện tại",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nghe và suy luận (Khối 3/4)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Kỹ năng được luyện",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nghe",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "session-listening-light-1440",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Introduce yourself to a new colleague",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã lưu 3/5 hoạt động · Buổi học 60 phút",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Say your name and department clearly.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Micro chỉ bật khi bạn chọn Ghi âm.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thông tin buổi học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời lượng",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng 60 phút (15 phút mỗi khối)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Khối hiện tại",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trả lời (Khối 4/4)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Kỹ năng được luyện",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nói",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "session-speaking-light-1440",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Introduce yourself to a new colleague",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã lưu 4/5 hoạt động · Buổi học 60 phút",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Write a short greeting to your new teammate.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mục tiêu bài viết",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Viết ít nhất 1 từ và dùng ngôn ngữ phù hợp với công việc.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bài viết của bạn:",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0/1 từ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã lưu bản nháp",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thông tin buổi học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời lượng",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tổng 60 phút (15 phút mỗi khối)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Khối hiện tại",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Trả lời (Khối 4/4)",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Kỹ năng được luyện",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Viết",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "session-writing-light-1440",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 1440,
+      "scroll": 1440
+    }
+  ]
+}

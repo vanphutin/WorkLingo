@@ -1,0 +1,58 @@
+
+> @worklingo/web@0.0.0 build D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 35ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1375ms
+  Running TypeScript ...
+  Finished TypeScript in 3.0s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/30) ...
+  Generating static pages using 7 workers (7/30)
+  Generating static pages using 7 workers (14/30)
+  Generating static pages using 7 workers (22/30)
+✓ Generating static pages using 7 workers (30/30) in 428ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /admin/analytics
+├ ƒ /admin/audit
+├ ƒ /admin/content
+├ ƒ /admin/content/[importId]
+├ ƒ /admin/content/new
+├ ƒ /admin/curriculum
+├ ƒ /admin/ielts-band-curriculum
+├ ƒ /admin/ielts-bridge
+├ ƒ /admin/ielts-integrated
+├ ƒ /admin/ielts-mocks
+├ ƒ /admin/ielts-orientation
+├ ƒ /admin/operations
+├ ƒ /admin/settings/ai
+├ ƒ /admin/settings/audio
+├ ƒ /dashboard
+├ ƒ /ielts/bridge
+├ ƒ /ielts/bridge/[moduleId]
+├ ƒ /ielts/mock-tests
+├ ƒ /ielts/mock-tests/[attemptId]
+├ ƒ /ielts/orientation
+├ ƒ /ielts/pathway
+├ ƒ /ielts/practice
+├ ƒ /ielts/practice/[sessionId]
+├ ƒ /login
+├ ƒ /mastery
+├ ƒ /onboarding
+├ ƒ /onboarding/placement/[sessionId]
+├ ƒ /programs
+├ ƒ /register
+├ ƒ /sessions/[sessionId]
+├ ƒ /settings
+├ ƒ /settings/ai
+└ ƒ /settings/audio
+
+
+ƒ  (Dynamic)  server-rendered on demand

@@ -1,0 +1,46 @@
+[WebServer] (node:19800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:1972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:18132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] node:internal/modules/cjs/loader:1207
+[WebServer]   const err = new Error(message);
+[WebServer]               ^
+[WebServer]
+[WebServer] Error: Cannot find module '.prisma/client/default'
+[WebServer] Require stack:
+[WebServer] - D:\Projects\WorkLingo-Liquid-Glass\node_modules\.pnpm\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\node_modules\@prisma\client\default.js
+[WebServer] - D:\Projects\WorkLingo-Liquid-Glass\apps\api\prisma\seed.ts
+[WebServer]     at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+[WebServer]     at nextResolveSimple (D:\Projects\WorkLingo-Liquid-Glass\node_modules\.pnpm\tsx@4.21.0\node_modules\tsx\dist\register-D46fvsV_.cjs:4:1004)
+[WebServer]     at D:\Projects\WorkLingo-Liquid-Glass\node_modules\.pnpm\tsx@4.21.0\node_modules\tsx\dist\register-D46fvsV_.cjs:3:2630
+[WebServer]     at D:\Projects\WorkLingo-Liquid-Glass\node_modules\.pnpm\tsx@4.21.0\node_modules\tsx\dist\register-D46fvsV_.cjs:3:1542
+[WebServer]     at resolveTsPaths (D:\Projects\WorkLingo-Liquid-Glass\node_modules\.pnpm\tsx@4.21.0\node_modules\tsx\dist\register-D46fvsV_.cjs:4:760)
+[WebServer]     at D:\Projects\WorkLingo-Liquid-Glass\node_modules\.pnpm\tsx@4.21.0\node_modules\tsx\dist\register-D46fvsV_.cjs:4:1102
+[WebServer]     at m._resolveFilename (file:///D:/Projects/WorkLingo-Liquid-Glass/node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/register-B7jrtLTO.mjs:1:789)
+[WebServer]     at Module._load (node:internal/modules/cjs/loader:1038:27)
+[WebServer]     at Module.require (node:internal/modules/cjs/loader:1289:19)
+[WebServer]     at require (node:internal/modules/helpers:182:18) {
+[WebServer]   code: 'MODULE_NOT_FOUND',
+[WebServer]   requireStack: [
+[WebServer]     'D:\\Projects\\WorkLingo-Liquid-Glass\\node_modules\\.pnpm\\@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7\\node_modules\\@prisma\\client\\default.js',
+[WebServer]     'D:\\Projects\\WorkLingo-Liquid-Glass\\apps\\api\\prisma\\seed.ts'
+[WebServer]   ]
+[WebServer] }
+[WebServer]
+[WebServer] Node.js v20.20.1
+[WebServer]
+[WebServer] An error occurred while running the seed command:
+[WebServer] Error: Command failed with exit code 1: tsx prisma/seed.ts
+Error: Process from config.webServer was not able to start. Exit code: 1
+
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=foundation-mobile --project=teacher-ai-mobile --project=engagement-mobile --project=ielts-full-mock-desktop --project=admin-desktop

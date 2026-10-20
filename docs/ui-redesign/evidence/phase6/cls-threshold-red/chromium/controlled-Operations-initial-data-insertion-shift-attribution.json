@@ -1,0 +1,86 @@
+{
+  "sourceCommit": "18e00fdafb74ede460c5f7fd8302ed8aa15167d6",
+  "timestamp": "2026-10-20T13:00:16.754Z",
+  "command": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-cls.config.ts",
+  "environment": {
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "controlled Operations initial data insertion shift attribution",
+  "result": "failed",
+  "testSourceSHA256": "d5871aacd10109a94043f79be58a13425078dd5cb20cb80b5b5b5045925fbbc5",
+  "productionWorkingDiffSHA256": "91c1e170c99375dfd689e055724086b671c3f884bd788ac1af54200a7a0bbf26",
+  "observations": [
+    {
+      "repeat": 0,
+      "originalCommittedBaseline": false,
+      "shifts": [
+        {
+          "start": 292.90000000037253,
+          "value": 0.018957345971563982,
+          "sources": [
+            {
+              "node": "",
+              "previous": {
+                "x": 0,
+                "y": 16,
+                "width": 390,
+                "height": 25.59375,
+                "top": 16,
+                "right": 390,
+                "bottom": 41.59375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "start": 377,
+          "value": 0.13647572105125844,
+          "sources": [
+            {
+              "node": "observability-card observability-filters",
+              "previous": {
+                "x": 24,
+                "y": 533.625,
+                "width": 342,
+                "height": 236.28125,
+                "top": 533.625,
+                "right": 366,
+                "bottom": 769.90625,
+                "left": 24
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "totalShift": 0.15543306702282242,
+      "environment": "Same Chromium390x844,localeVI,loopback API fixture, optimized build, initial insertion only; no theme clicks or synthetic passage"
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}
