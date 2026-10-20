@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import re
-import shutil
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -25,23 +24,44 @@ LOGS = [
     'api-test-lint-qualified.log', 'task-2-tests.log', 'task-3-tests.log',
 ]
 observed = []
+normalization = []
+
+
+def normalized_log(raw):
+    # Preserve every message/line; terminal trailing whitespace is not evidence.
+    return ('\n'.join(line.rstrip(' \t') for line in raw.decode('utf8', errors='strict').splitlines()).rstrip('\n') + '\n').encode('utf8')
+
+
 (EVIDENCE / 'logs').mkdir(exist_ok=True)
 for name in LOGS:
     source = SCRATCH / name
     if not source.exists():
         continue
     text = source.read_text(encoding='utf8', errors='replace')
-    shutil.copyfile(source, EVIDENCE / 'logs' / name)
+    raw = source.read_bytes()
+    destination = EVIDENCE / 'logs' / name
+    destination.write_bytes(normalized_log(raw))
+    normalization.append({'artifact': destination.relative_to(EVIDENCE).as_posix(), 'rawSHA256': hashlib.sha256(raw).hexdigest(), 'rawSource': f'.superpowers/sdd/plan/{name}'})
     summaries = re.findall(r'^.*(?:Test Files |Tests\s+\d|\d+ passed \(|\d+ failed|\d+ did not run|error TS\d+|typecheck: Done|lint: Done|i18n:|valid|Compilation|Compiled successfully|Dynamic\)).*$', text, re.M)
     observed.append({'log': f'logs/{name}', 'tailSummary': summaries[-8:],
                      'note': 'Observed text only; empty/partial logs are not passing gates. See integration-qa.md for source binding, exact commands, aborted attempts and final disposition.'})
+raw_live = SCRATCH / 'raw-live-evidence'
+raw_live.mkdir(exist_ok=True)
+for path in (EVIDENCE / 'live').glob('*.log'):
+    original = raw_live / path.name
+    if not original.exists():
+        original.write_bytes(path.read_bytes())
+    raw = original.read_bytes()
+    path.write_bytes(normalized_log(raw))
+    normalization.append({'artifact': path.relative_to(EVIDENCE).as_posix(), 'rawSHA256': hashlib.sha256(raw).hexdigest(), 'rawSource': f'.superpowers/sdd/plan/raw-live-evidence/{path.name}'})
 files = {}
 for path in EVIDENCE.rglob('*'):
     if path.is_file() and path.name != 'qa-artifacts.json':
         files[path.relative_to(EVIDENCE).as_posix()] = {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'bytes': path.stat().st_size}
 report = {'collectedAt': datetime.now(timezone.utc).isoformat(),
           'candidateAtCollection': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-          'method': 'Copies of existing observed logs and hashes of all integration evidence; this script does not execute tests or assign PASS.',
+          'method': 'Existing observed logs normalized only for line endings/trailing whitespace/final blank lines, with raw originals retained in ignored scratch and SHA256 recorded. No messages or internal whitespace removed; this script does not execute tests or assign PASS.',
+          'logNormalization': normalization,
           'runs': observed, 'artifacts': files}
 (EVIDENCE / 'qa-artifacts.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
 print(json.dumps({'collectedLogs': len(observed), 'artifacts': len(files), 'bytes': sum(item['bytes'] for item in files.values())}))

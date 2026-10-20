@@ -167,7 +167,7 @@ Running 105 tests using 1 worker
 Testing stopped early after 4 maximum allowed failures.
 
 
-  1) e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls 
+  1) e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls
 
     Error: /admin/curriculum
 
@@ -203,7 +203,7 @@ Testing stopped early after 4 maximum allowed failures.
 
     Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-exam-exam-matrix-light-390\error-context.md
 
-  3) e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts 
+  3) e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts
 
     Test timeout of 60000ms exceeded.
 
@@ -231,7 +231,7 @@ Testing stopped early after 4 maximum allowed failures.
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  4) e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize 
+  4) e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize
 
     Error: expect(locator).toContainText(expected) failed
 
@@ -265,10 +265,10 @@ Testing stopped early after 4 maximum allowed failures.
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   4 failed
-    e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls 
+    e2e\liquid-glass-phase4-authoring.spec.ts:23:5 › authoring reflow at320 CSS200 retains visible editor and controls
     e2e\liquid-glass-phase4-exam.spec.ts:18:114 › exam matrix light 390 ────────────────────────────
-    e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts 
-    e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize 
+    e2e\liquid-glass-phase4-learning.spec.ts:78:5 › saved mission, program availability and evidence filters keep existing contracts
+    e2e\liquid-glass-phase4-session.spec.ts:84:5 › native lesson audio retains playback node and authored transcript through appearance resize
   26 did not run
   75 passed (6.3m)
   1 error was not a part of any test, see above for details

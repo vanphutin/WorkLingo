@@ -40,6 +40,7 @@ assert len(set(deferred)) == 5
 assert not git('ls-files', '-u')
 subprocess.run(['git', 'diff', '--check'], cwd=ROOT, check=True)
 subprocess.run(['git', 'diff', '--cached', '--check'], cwd=ROOT, check=True)
+subprocess.run(['git', 'diff', '168b377', '--check', '--', 'docs/integration'], cwd=ROOT, check=True)
 historical = ['docs/ui-redesign/evidence/phase5', 'docs/ui-redesign/evidence/phase6']
 assert not git('diff', inventory['liquidGlass'], '--name-only', '--', *historical)
 dirty = json.loads((ROOT / 'docs/integration/evidence/dirty-reconciliation.json').read_text(encoding='utf8'))

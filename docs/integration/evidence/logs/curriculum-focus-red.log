@@ -9,7 +9,7 @@ Running 2 tests using 1 worker
   x  2 e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse (6.7s)
 
 
-  1) e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200 
+  1) e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200
 
     Error: curriculum CSS200 320
 
@@ -37,7 +37,7 @@ Running 2 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse 
+  2) e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse
 
     Error: expect(locator).toHaveValue(expected) failed
 
@@ -72,8 +72,8 @@ Running 2 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   2 failed
-    e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200 
-    e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse 
+    e2e\liquid-glass-phase4-integration.spec.ts:5:5 › preserved curriculum search and filters reflow with visible keyboard focus at CSS200
+    e2e\liquid-glass-phase4-integration.spec.ts:35:5 › Foundation fields retain a keyboard focus ring and the edited objective through collapse
 undefined
 D:\Projects\WorkLingo-Integration\apps\web:
  ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts --output=../../.superpowers/sdd/plan/css-red-results -g preserved curriculum search|Foundation fields retain

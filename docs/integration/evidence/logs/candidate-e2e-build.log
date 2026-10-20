@@ -11,9 +11,9 @@
   Finished TypeScript in 52s ...
   Collecting page data using 7 workers ...
   Generating static pages using 7 workers (0/39) ...
-  Generating static pages using 7 workers (9/39) 
-  Generating static pages using 7 workers (19/39) 
-  Generating static pages using 7 workers (29/39) 
+  Generating static pages using 7 workers (9/39)
+  Generating static pages using 7 workers (19/39)
+  Generating static pages using 7 workers (29/39)
 ✓ Generating static pages using 7 workers (39/39) in 1657ms
   Finalizing page optimization ...
 Turbopack build encountered 1 warning:
@@ -101,4 +101,3 @@ Route (app)
 
 
 ƒ  (Dynamic)  server-rendered on demand
-
