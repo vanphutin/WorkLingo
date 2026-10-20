@@ -49,12 +49,12 @@ export function OperationsWorkspace() {
   return <section className="observability-shell operations-experience">
     <header className="observability-header"><div><h1>{t('operationsTitle')}</h1><p>{t('operationsHelp')}</p></div><button className="observability-button secondary" type="button" onClick={() => void load(page)} disabled={loading}>{t('refresh')}</button></header>
     {Boolean(error) && <div className="observability-alert" role="alert">{displayMessage(error)}</div>}
-    {summary && <div className="observability-grid" aria-label={t('summary')}>
-      <article className="observability-card"><span>{t('queueDepth')}</span><strong className="metric-value">{number(summary.queueDepth)}</strong></article>
-      <article className="observability-card"><span>{t('running')}</span><strong className="metric-value">{number(summary.runningCount)}</strong></article>
-      <article className="observability-card"><span>{t('failed')}</span><strong className="metric-value">{number(summary.failedCount)}</strong></article>
-      <article className="observability-card"><span>{t('activeWorkers')}</span><strong className="metric-value">{number(summary.activeWorkers)}</strong></article>
-    </div>}
+    <div className="observability-grid" aria-label={t('summary')} aria-busy={loading}>
+      <article className="observability-card"><span>{t('queueDepth')}</span><strong className="metric-value">{summary ? number(summary.queueDepth) : '—'}</strong></article>
+      <article className="observability-card"><span>{t('running')}</span><strong className="metric-value">{summary ? number(summary.runningCount) : '—'}</strong></article>
+      <article className="observability-card"><span>{t('failed')}</span><strong className="metric-value">{summary ? number(summary.failedCount) : '—'}</strong></article>
+      <article className="observability-card"><span>{t('activeWorkers')}</span><strong className="metric-value">{summary ? number(summary.activeWorkers) : '—'}</strong></article>
+    </div>
     <form className="observability-card observability-filters" onSubmit={(event) => { event.preventDefault(); void load(1); }}>
       <div className="observability-field"><label htmlFor="job-status">{t('status')}</label><select id="job-status" value={status} onChange={(event) => setStatus(event.target.value as AdminJobStatus | '')}>{statuses.map((value) => <option key={value || 'all'} value={value}>{value ? label(value) : t('allStatuses')}</option>)}</select></div>
       <div className="observability-field"><label htmlFor="job-type">{t('jobType')}</label><input id="job-type" value={type} onChange={(event) => setType(event.target.value)} placeholder={t('jobTypePlaceholder')} /></div>

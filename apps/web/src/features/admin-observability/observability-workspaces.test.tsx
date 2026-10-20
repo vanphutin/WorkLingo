@@ -34,6 +34,16 @@ describe('admin observability workspaces', () => {
 
   afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
+  it('reserves all four summary cards while initial operations data is pending', () => {
+    vi.mocked(adminOperationsClient.getSummary).mockReturnValue(new Promise(() => {}));
+    render(<OperationsWorkspace />);
+    const grid = screen.getByText('Queue depth').closest('.observability-grid');
+    expect(grid).toHaveAttribute('aria-busy', 'true');
+    expect(grid?.querySelectorAll('.metric-value')).toHaveLength(4);
+    expect(grid).not.toHaveTextContent('0');
+    expect(screen.getByRole('status')).toHaveTextContent('Loading operations');
+  });
+
   it('localizes operations filters while retaining API status values', async () => {
     render(<LocaleProvider initialLocale="vi"><OperationsWorkspace /></LocaleProvider>);
     expect(await screen.findByText('Độ dài hàng đợi')).toBeInTheDocument();
