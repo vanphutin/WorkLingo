@@ -1,0 +1,17 @@
+{
+  "title": "audit filter cursor details operations filter page and analytics range preserve queries",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "auditCursor": true,
+      "auditFilter": true,
+      "payloadDetails": true,
+      "jobPaging": true,
+      "jobFilter": true,
+      "jobDetails": true,
+      "nativeTableKeyboard": true,
+      "analyticsQuery": true
+    }
+  ]
+}

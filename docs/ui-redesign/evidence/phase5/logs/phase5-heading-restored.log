@@ -1,0 +1,14 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/ai/ai-settings-panel.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/ai/ai-settings-panel.test.tsx (3 tests) 524ms
+   ✓ AI settings panel > keeps one page heading when account settings accompany system settings  326ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:31:06
+   Duration  2.91s (transform 293ms, setup 0ms, collect 1.14s, tests 524ms, environment 787ms, prepare 135ms)

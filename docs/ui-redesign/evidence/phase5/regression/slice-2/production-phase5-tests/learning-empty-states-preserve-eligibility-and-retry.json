@@ -1,0 +1,20 @@
+{
+  "mode": "production",
+  "title": "learning empty states preserve eligibility and retry",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "state": "empty"
+    },
+    {
+      "url": "/programs",
+      "state": "empty"
+    },
+    {
+      "url": "/mastery",
+      "state": "empty"
+    }
+  ]
+}

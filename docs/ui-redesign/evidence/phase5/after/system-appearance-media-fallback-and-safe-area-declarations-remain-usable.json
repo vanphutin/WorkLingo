@@ -1,0 +1,17 @@
+{
+  "title": "system appearance media fallback and safe area declarations remain usable",
+  "status": "passed",
+  "observations": [
+    {
+      "systemLightDark": [
+        "rgb(242, 242, 247)",
+        "rgb(28, 28, 30)"
+      ],
+      "reducedTransparency": true,
+      "increasedContrast": true,
+      "forcedColors": true,
+      "physicalNotch": "not available; env safe-area declarations reused and no shell insets changed"
+    }
+  ],
+  "fixtures": true
+}

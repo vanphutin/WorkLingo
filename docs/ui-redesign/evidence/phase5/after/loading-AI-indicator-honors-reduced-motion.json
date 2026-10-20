@@ -1,0 +1,13 @@
+{
+  "title": "loading AI indicator honors reduced motion",
+  "status": "passed",
+  "observations": [
+    {
+      "url": "/settings/ai",
+      "state": "loading",
+      "reducedMotion": true,
+      "animation": "none"
+    }
+  ],
+  "fixtures": true
+}

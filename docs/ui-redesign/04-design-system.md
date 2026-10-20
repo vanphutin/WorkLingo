@@ -141,3 +141,13 @@ Slice7: preference hub owns minmax(0,1fr) tracks and two-child language grouping
 ## Phase4 adoption complete — pending human acceptance
 
 All34 route owners now have real presentation adoption and scoped tests,105 final optimized Chromium checks and403 web tests. Shared shell/token adoption was never counted alone. See phase4-completion.md and per-route coverage for precise fixture-only acceptance and retained limitations; Phase5/6 audits remain unapproved.
+
+## Phase5 audited contracts — pending human acceptance
+
+Phase4 has since received technical acceptance with limitations; human approved Phase5 audit/remediation. Phase6 remains unapproved. No new palette or token is introduced.
+
+Each loaded page has one page h1 and one main: admin layout owns main, feature roots use sections; learner audio/AI route owns main. AiSettingsPanel defaults headingLevel1 and accepts headingLevel2 for the account panel embedded beneath system settings; this changes presentation only, not component identity/state/API ownership. Transient busy/loading status UI is not certified by the loaded-heading matrix.
+
+Shared sr-only aliases visually-hidden so labels/captions remain in the accessibility tree without visible layout. LanguageSwitcher uses control-border rather than decorative border in every host. Content remains solid; AI content has no residual manual-Dark blur. Current motion owners transition only named visual properties using existing duration tokens; Reduced Motion is centralized in workspace CSS rather than a feature-wide universal tiny-duration override. Spinner normal animations yield to that fallback.
+
+Phase5 contrast acceptance uses pixel samples inside actual rendered text ranges, temporarily suppressing glyph paint while retaining material/background/layout. Foreground alpha is composited over each sampled background; unsupported ancestor group opacity fails the sampler instead of silently claiming compliance. Surface-corner measurements are superseded. Sampled values and limitations are in phase5-qa.md; no complete WCAG/native-device certification is implied.

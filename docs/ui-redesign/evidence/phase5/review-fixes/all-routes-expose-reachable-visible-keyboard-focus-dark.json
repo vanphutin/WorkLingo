@@ -1,0 +1,687 @@
+{
+  "title": "all routes expose reachable visible keyboard focus dark",
+  "status": "passed",
+  "observations": [
+    {
+      "route": "/",
+      "theme": "dark",
+      "nativeTabCount": 1,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 12,
+        "bottom": 58.375,
+        "left": 12,
+        "right": 378,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "nativeTabCount": 1,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 12,
+        "bottom": 58.375,
+        "left": 12,
+        "right": 378,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/register",
+      "theme": "dark",
+      "nativeTabCount": 1,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 12,
+        "bottom": 58.375,
+        "left": 12,
+        "right": 378,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 470.953125,
+        "bottom": 514.953125,
+        "left": 16,
+        "right": 252.3125,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/programs",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 398.078125,
+        "bottom": 446.453125,
+        "left": 35.59375,
+        "right": 354.40625,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/mastery",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 302.78125,
+        "bottom": 346.78125,
+        "left": 16,
+        "right": 152.5,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/onboarding",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 700.5625,
+        "bottom": 720.5625,
+        "left": 31,
+        "right": 51,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/onboarding/placement/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "theme": "dark",
+      "nativeTabCount": 8,
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 424.546875,
+        "bottom": 442.9375,
+        "left": 43,
+        "right": 61.390625,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "theme": "dark",
+      "nativeTabCount": 8,
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 424.34375,
+        "bottom": 442.734375,
+        "left": 43,
+        "right": 61.390625,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/orientation",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 315.78125,
+        "bottom": 359.78125,
+        "left": 33,
+        "right": 211.984375,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/bridge",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 461.953125,
+        "bottom": 505.953125,
+        "left": 16,
+        "right": 374,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 382.765625,
+        "bottom": 426.765625,
+        "left": 16,
+        "right": 282.203125,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/practice",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 590.0625,
+        "bottom": 638.4375,
+        "left": 29,
+        "right": 193.359375,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/practice/44444444-4444-4444-8444-444444444444",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 384.875,
+        "bottom": 428.875,
+        "left": 16,
+        "right": 244.28125,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/pathway",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 595.890625,
+        "bottom": 639.890625,
+        "left": 29,
+        "right": 361,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/mock-tests",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 604.265625,
+        "bottom": 649.265625,
+        "left": 16,
+        "right": 374,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "3px",
+        "focusVisible": true,
+        "top": 384.875,
+        "bottom": 436.46875,
+        "left": 16,
+        "right": 211.71875,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/content",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 495.09375,
+        "bottom": 543.484375,
+        "left": 37.796875,
+        "right": 352.203125,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/content/new",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 607.46875,
+        "bottom": 654.84375,
+        "left": 37,
+        "right": 353,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 492.171875,
+        "bottom": 536.171875,
+        "left": 37,
+        "right": 353,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/curriculum",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 465.3125,
+        "bottom": 509.3125,
+        "left": 37.796875,
+        "right": 163.09375,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/ielts-orientation",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 655.203125,
+        "bottom": 699.203125,
+        "left": 37,
+        "right": 171.21875,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/ielts-bridge",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 660.015625,
+        "bottom": 707.390625,
+        "left": 37.796875,
+        "right": 352.203125,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/ielts-integrated",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 587.859375,
+        "bottom": 634.25,
+        "left": 36,
+        "right": 189.796875,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/ielts-band-curriculum",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 557.5,
+        "bottom": 626.28125,
+        "left": 36,
+        "right": 189.796875,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/ielts-mocks",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 650.453125,
+        "bottom": 697.828125,
+        "left": 49,
+        "right": 341,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 533.9375,
+        "bottom": 645.9375,
+        "left": 16,
+        "right": 374,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/settings/audio",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 566.640625,
+        "bottom": 585.03125,
+        "left": 51,
+        "right": 69.390625,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/settings/ai",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 521.875,
+        "bottom": 572.34375,
+        "left": 42,
+        "right": 348,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/settings/audio",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 357.96875,
+        "bottom": 432.59375,
+        "left": 41.59375,
+        "right": 191,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/settings/ai",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 357.96875,
+        "bottom": 432.59375,
+        "left": 33.59375,
+        "right": 191,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/audit",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 581.828125,
+        "bottom": 625.828125,
+        "left": 45,
+        "right": 345,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/operations",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 450.640625,
+        "bottom": 495.828125,
+        "left": 37.796875,
+        "right": 133.71875,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "route": "/admin/analytics",
+      "theme": "dark",
+      "nativeTabCount": 7,
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid",
+        "width": 3,
+        "offset": "2px",
+        "focusVisible": true,
+        "top": 537.578125,
+        "bottom": 583.171875,
+        "left": 37,
+        "right": 353,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    }
+  ],
+  "fixtures": true
+}

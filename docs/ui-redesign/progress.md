@@ -159,3 +159,17 @@ Code bcef16b7b4714ab2cf13faf05d8b692872006187;34/34 actual owners fixture-verifi
 ## Final Phase4 handoff
 
 Tested code bcef16b; all34 actual routes implemented and fixture-verified.105 optimized Chromium/403 web tests, lint/types/i18n/build/whitespace pass. Settings390CSS200 VI564/EN615 to390; no shell change. Original1295/main/status preserved. [Completion report](phase4-completion.md), [gallery](evidence/phase4/README.md), [final provenance](evidence/phase4/final-run/manifest.json). Await Phase4 acceptance; Phase5/6/merge/push/deploy remain unapproved.
+
+## Phase5 authorized — in progress
+
+2026-10-20: human Phase5 master c554440c / identical fbb6004f authorizes audit+UI remediation on existing branch, no Phase6/publication. StageA Phase4 ACCEPTED WITH LIMITATIONS after hash/log/34route/preservation review; prior403/105 evidence reused. Fresh Phase5 audit and findings in [Phase5 QA](phase5-qa.md).
+
+Phase5 remediation checkpoints: `f06cbc2` landmarks/headings (16 targeted plus heading regression/mutation and340 fresh browser cells); `e730ba8` hidden labels; `9141274` native language boundaries; `db10a8d` redundant AI blur; `37de9df` motion owner rules (targeted browser RED→GREEN); `0a7fd85` expanded bounded harness. Initial18-pass corner contrast/local programmatic focus evidence was superseded after independent review; see final correction below.
+
+## Phase5 technical handoff — awaiting human acceptance
+
+Final test harness `354c136` fixes all three independent review findings (1 Important,2 Minor): text-position/alpha contrast with negative control, native Tab reachability, independently reset preference fallbacks.13/13 affected checks pass. No remaining Critical/Important within sampled scope; six baseline UI finding groups fixed. Production code remains `37de9df`; later changes are tests/documentation/evidence only.
+
+Fresh gates: web404/404 (85 files), Phase5 unique24/24 (340 route cells plus corrected guards/performance), whole-owner Chromium105/105, shell4/4;133 unique browser cases across bounded source-equivalent runs. Lint/types/i18n/build/whitespace and preservation pass; main/status/1295 original files retained. Glass text contrast30 surfaces/96 positions min5.5229, opaque3144 min4.8750, native boundaries28 min3.2905. Settings VI/EN390CSS200 remains390. Old corner9.0532 is not acceptance evidence.
+
+34/34 audited/fixture-verified,0 blocked/remaining; precise boundary and per-route limits in [coverage](03-route-coverage.md#phase5-audit-matrix). Changed-file/commit hashes and QA evidence in [Phase5 QA](phase5-qa.md) and [manifest](evidence/phase5/manifest.json). Final documentation/evidence commit follows code; exact final HEAD supplied in handoff. One dormant legacy transition-all remains disclosed debt, no demonstrated live defect. Live backend/provider, Firefox/WebKit, real screenreader, native zoom, physical hardware and device performance remain separate qualification gaps. No merge/push/deploy. **Stop here; Phase6 requires separate human approval.**

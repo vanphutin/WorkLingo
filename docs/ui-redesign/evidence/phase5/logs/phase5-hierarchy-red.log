@@ -1,0 +1,231 @@
+[WebServer] (node:16768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  x  1 e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 390 (9.2s)
+  x  2 e2e\liquid-glass-phase5-checks.spec.ts:12:5 › sr-only table captions and progress labels remain accessible without visible layout (1.1s)
+
+
+  1) e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 390 ───────────────────────────
+
+    Error: /admin/content one page heading
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                                                                                     ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:245
+
+    Error: /admin/ielts-integrated one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-integrated no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-band-curriculum one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-band-curriculum no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /admin/ielts-mocks one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/ielts-mocks no nested main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                              ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:190
+
+    Error: /settings/audio one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /settings/ai one main
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                 ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:129
+
+    Error: /admin/settings/ai one page heading
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  ["Cài đặt AI hệ thống", "Cài đặt AI"]
+
+      21 |     });
+      22 |     records.push({route:item[1],theme,...ui,unnamedControls:names,headings:accessible.filter(n=>n.role?.value==='heading').map(n=>({name:n.name?.value,level:n.properties?.find(p=>p.name==='level')?.value.value}))});
+    > 23 |     expect.soft(ui.scroll,item[1]+' document reflow').toBeLessThanOrEqual(width!);expect.soft(ui.mainCount,item[1]+' one main').toBe(1);expect.soft(ui.nestedMain,item[1]+' no nested main').toBe(0);expect.soft(ui.h1,item[1]+' one page heading').toHaveLength(1);expect.soft(names,item[1]+' named controls').toEqual([]);
+         |                                                                                                                                                                                                                                                     ^
+      24 |   }
+      25 | });
+      26 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-audit.spec.ts:23:245
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-390\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-390\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-audit-route-audit-light-390\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase5-checks.spec.ts:12:5 › sr-only table captions and progress labels remain accessible without visible layout
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    1090
+
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+    > 13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName(/\S/u);
+         |                                                                                                                                                                                 ^
+      14 |   const out=path.join(evidence,run);mkdirSync(out,{recursive:true});await page.screenshot({path:path.join(out,'operations-caption.png'),fullPage:true});
+      15 |   await open(page,'/ielts/practice');for(const label of await page.locator('.sr-only').all()){expect.soft((await label.boundingBox())!.width).toBeLessThanOrEqual(1);}await expect(page.getByRole('combobox').last()).toHaveAccessibleName(/\S/u);
+      16 | });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:13:177
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    25.59375
+
+      11 | });
+      12 | test('sr-only table captions and progress labels remain accessible without visible layout',async({page})=>{
+    > 13 |   await open(page,'/admin/operations');const caption=page.locator('caption');const bounds=await caption.boundingBox();records.push({caption:bounds});expect.soft(bounds!.width).toBeLessThanOrEqual(1);expect.soft(bounds!.height).toBeLessThanOrEqual(1);await expect(page.getByRole('table')).toHaveAccessibleName(/\S/u);
+         |                                                                                                                                                                                                                                    ^
+      14 |   const out=path.join(evidence,run);mkdirSync(out,{recursive:true});await page.screenshot({path:path.join(out,'operations-caption.png'),fullPage:true});
+      15 |   await open(page,'/ielts/practice');for(const label of await page.locator('.sr-only').all()){expect.soft((await label.boundingBox())!.width).toBeLessThanOrEqual(1);}await expect(page.getByRole('combobox').last()).toHaveAccessibleName(/\S/u);
+      16 | });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase5-checks.spec.ts:13:228
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-623fb-ible-without-visible-layout\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-623fb-ible-without-visible-layout\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase5-browser-results\liquid-glass-phase5-checks-623fb-ible-without-visible-layout\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e\liquid-glass-phase5-audit.spec.ts:9:125 › route audit light 390 ────────────────────────────
+    e2e\liquid-glass-phase5-checks.spec.ts:12:5 › sr-only table captions and progress labels remain accessible without visible layout
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase5.config.ts -g route audit light 390|sr-only

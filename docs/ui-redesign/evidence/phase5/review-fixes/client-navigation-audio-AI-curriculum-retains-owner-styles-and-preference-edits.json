@@ -1,0 +1,18 @@
+{
+  "title": "client navigation audio AI curriculum retains owner styles and preference edits",
+  "status": "passed",
+  "observations": [
+    {
+      "nextClientNavigation": [
+        "audio",
+        "ai",
+        "curriculum"
+      ],
+      "sameDocument": true,
+      "unsavedAiInputsRetainedAcrossPreferences": true,
+      "reducedMotionOwnerStyles": true,
+      "persistenceAcrossRouteUnmount": "not asserted or changed"
+    }
+  ],
+  "fixtures": true
+}

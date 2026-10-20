@@ -1,0 +1,586 @@
+{
+  "title": "actual glass composite text and native control contrast light",
+  "status": "failed",
+  "observations": [
+    {
+      "url": "/",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface public-nav-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface auth-module__zlf-ua__preferences",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        209,
+        209,
+        214
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 1.5214904535719933
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.2904950012640626
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.2904950012640626
+    },
+    {
+      "url": "/dashboard",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/dashboard",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "url": "/dashboard",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/dashboard",
+      "kind": "control-boundary",
+      "class": "field-select target-select",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/mastery",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/mastery",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "url": "/mastery",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface evidence-nav-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/mastery",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/mastery",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface orientation-player__control-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/settings",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/settings",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "url": "/settings",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface settings-card appearance-preferences",
+      "variant": "solid",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "filter": "none",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "url": "/settings",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "url": "/settings",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        209,
+        209,
+        214
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 1.5214904535719933
+    },
+    {
+      "url": "/admin/content",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "url": "/admin/content",
+      "theme": "light",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-admin",
+      "variant": "regular",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "url": "/admin/content",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    }
+  ],
+  "fixtures": true
+}

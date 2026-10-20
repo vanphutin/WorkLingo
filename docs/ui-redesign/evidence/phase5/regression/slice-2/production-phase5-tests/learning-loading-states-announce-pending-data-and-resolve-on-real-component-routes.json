@@ -1,0 +1,23 @@
+{
+  "mode": "production",
+  "title": "learning loading states announce pending data and resolve on real component routes",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "loadingAnnouncement": true,
+      "resolved": true
+    },
+    {
+      "url": "/programs",
+      "loadingAnnouncement": true,
+      "resolved": true
+    },
+    {
+      "url": "/mastery",
+      "loadingAnnouncement": true,
+      "resolved": true
+    }
+  ]
+}

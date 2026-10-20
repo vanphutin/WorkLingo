@@ -1,0 +1,35 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/app/error-states.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ❯ src/app/error-states.test.tsx (2 tests | 1 failed) 377ms
+   ✓ shared localized error states > renders an accessible Vietnamese missing-page state with a return route  319ms
+   × shared localized error states > provides localized retry without exposing internal error details 56ms
+     → expected "spy" to be called once, but got 0 times
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/app/error-states.test.tsx > shared localized error states > provides localized retry without exposing internal error details
+AssertionError: expected "spy" to be called once, but got 0 times
+
+ Test Files  1 failed (1)
+ ❯ src/app/error-states.test.tsx:21:19
+     19|     expect(screen.queryByText(/private database/)).not.toBeInTheDocume…
+     20|     fireEvent.click(screen.getByRole('button', { name: 'Thử lại' }));
+     21|     expect(reset).toHaveBeenCalledOnce();
+       |                   ^
+     22|   });
+     23| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+      Tests  1 failed | 1 passed (2)
+   Start at  18:16:21
+   Duration  27.13s (transform 1.16s, setup 0ms, collect 9.51s, tests 377ms, environment 16.45s, prepare 421ms)
+
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/web@0.0.0 test: `vitest run "src/app/error-states.test.tsx"`
+Exit status 1
