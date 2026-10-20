@@ -86,7 +86,7 @@ export function EvaluationFeedback({
 
       {error ? <p className="feedback-error" role="alert">{error}</p> : null}
       {evaluation?.status === 'evaluation_failed' && evaluation.retryable && onRetry ? (
-        <button type="button" className="secondary-action-button" onClick={onRetry} disabled={isRetrying}>
+        <button type="button" className="secondary-action-button" onClick={onRetry} disabled={isRetrying} aria-busy={isRetrying}>
           {isRetrying ? t('retryingEvaluation') : t('retryEvaluation')}
         </button>
       ) : null}
@@ -98,8 +98,8 @@ export function EvaluationFeedback({
             <>
               <p>{t('recordingRetention')}</p>
               {onDeleteRecording ? (
-                <button type="button" className="secondary-action-button"
-                  onClick={() => onDeleteRecording(evaluation.recording!.id)} disabled={isDeletingRecording}>
+                <button type="button" className="secondary-action-button recording-delete-button"
+                  onClick={() => onDeleteRecording(evaluation.recording!.id)} disabled={isDeletingRecording} aria-busy={isDeletingRecording}>
                   {isDeletingRecording ? t('deletingRecording') : t('deleteRecording')}
                 </button>
               ) : null}
