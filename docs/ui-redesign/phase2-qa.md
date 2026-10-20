@@ -82,4 +82,6 @@ Not used: new brainstorming/writing-plans/design-system generation (existing app
 
 ## Limits and readiness
 
+User-requested visual follow-up: [before/after gallery](evidence/phase2-before-after/README.md) provides6 light/dark pairs and12 original PNGs comparing8ad9ba8→2395da1. Login uses the actual Next route; feedback uses the actual component from each version in isolated SSR with matching props. The gallery records viewport/state/runtime modes and limits; no generated mockup or dirty-main overwrite.
+
 0/34 fully redesigned routes. No backend/API/auth policy/business/data changes. No cross-engine, real-service IELTS, screen-reader or performance pass claimed. Original dirty checkout's existing `pIndent` lint and EOF-format findings remain outside this worktree's changes. Phase 3 requires a new explicit approval; merge requires its own approval and safe dirty-main integration.

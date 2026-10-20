@@ -1,0 +1,80 @@
+{
+  "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+  "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+  "observations": [
+    {
+      "name": "auth-form",
+      "theme": "light",
+      "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+      "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+      "method": "AuthForm: route /login thật, validation + focus, viewport 768×1024",
+      "files": [
+        "auth-form-light-before.png",
+        "auth-form-light-after.png"
+      ],
+      "comparison": "compare-auth-form-light.png"
+    },
+    {
+      "name": "feedback-result",
+      "theme": "light",
+      "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+      "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+      "method": "EvaluationFeedback thật: render cô lập với cùng props fixture, viewport 390×844",
+      "files": [
+        "feedback-result-light-before.png",
+        "feedback-result-light-after.png"
+      ],
+      "comparison": "compare-feedback-result-light.png"
+    },
+    {
+      "name": "feedback-retry",
+      "theme": "light",
+      "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+      "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+      "method": "EvaluationFeedback thật: render cô lập với cùng props fixture, viewport 390×844",
+      "files": [
+        "feedback-retry-light-before.png",
+        "feedback-retry-light-after.png"
+      ],
+      "comparison": "compare-feedback-retry-light.png"
+    },
+    {
+      "name": "auth-form",
+      "theme": "dark",
+      "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+      "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+      "method": "AuthForm: route /login thật, validation + focus, viewport 768×1024",
+      "files": [
+        "auth-form-dark-before.png",
+        "auth-form-dark-after.png"
+      ],
+      "comparison": "compare-auth-form-dark.png"
+    },
+    {
+      "name": "feedback-result",
+      "theme": "dark",
+      "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+      "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+      "method": "EvaluationFeedback thật: render cô lập với cùng props fixture, viewport 390×844",
+      "files": [
+        "feedback-result-dark-before.png",
+        "feedback-result-dark-after.png"
+      ],
+      "comparison": "compare-feedback-result-dark.png"
+    },
+    {
+      "name": "feedback-retry",
+      "theme": "dark",
+      "before": "8ad9ba8759c604521d87a6c9f9103b2a917d94bc",
+      "after": "2395da17dc634a55ef6fa7a9e3388b6c9f420b75",
+      "method": "EvaluationFeedback thật: render cô lập với cùng props fixture, viewport 390×844",
+      "files": [
+        "feedback-retry-dark-before.png",
+        "feedback-retry-dark-after.png"
+      ],
+      "comparison": "compare-feedback-retry-dark.png"
+    }
+  ],
+  "productCodeChanged": false,
+  "originalDirtySourceCopied": false
+}

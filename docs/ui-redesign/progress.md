@@ -10,6 +10,8 @@ Phase 1 acceptance reviewed both commits `0ef6204a8fbf76e7b00d30ec93113c35523209
 
 ## Phase 2 handoff — 2026-10-20
 
+Visual follow-up requested by user: [six before/after component comparisons](evidence/phase2-before-after/README.md),12 original PNGs and provenance manifest. Baseline8ad9ba8 versus after2395da1; actual Login route and production EvaluationFeedback rendered with identical fixture props. Product source unchanged; this evidence does not mark any route migrated.
+
 - `41825150e3ff17bf36508fa85a6e57fc7482ea3f` — `feat(ui): standardize core controls and inline feedback` (6 existing source/test owners).
 - `12de4a484c3cdd4057145bb8d4842934fb54cc82` — `test(ui): cover core controls and feedback accessibility` (5 isolated browser harness files).
 - Documentation/evidence commit follows with message `docs(ui): record phase two acceptance and QA`; its self-hash is resolved with `git log -1 -- docs/ui-redesign/phase2-qa.md`.
