@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-10-20T15:12:02.862640+00:00",
+  "command": "python docs/integration/evidence/preservation.py",
+  "result": "PASS",
+  "originalHEAD": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",
+  "originalProtectedFiles": 1295,
+  "dirtyFiles": 52,
+  "backupFiles": 2978,
+  "originalIndexStatusAndFingerprintsUnchanged": true,
+  "allSelectedIgnoredBytesAndBackupHashesVerified": true,
+  "liquidGlassHEADStatusUnchanged": true,
+  "mainUnchanged": true,
+  "limitations": "Private backup remains outside Git; other worktree dirty source is inventoried but not transplanted."
+}
