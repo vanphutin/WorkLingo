@@ -1,0 +1,21 @@
+{
+  "mode": "after",
+  "observations": [
+    {
+      "admin": false,
+      "disclosure": true,
+      "escapeRestoresFocus": true,
+      "noTrap": true,
+      "resizeRepairsFocus": true,
+      "history": true
+    },
+    {
+      "admin": true,
+      "disclosure": true,
+      "escapeRestoresFocus": true,
+      "noTrap": true,
+      "resizeRepairsFocus": true,
+      "history": true
+    }
+  ]
+}

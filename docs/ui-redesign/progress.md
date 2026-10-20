@@ -4,7 +4,27 @@ Updated: 2026-10-20 (Asia/Saigon).
 
 ## Current status
 
-**Phase 1: ACCEPTED WITH LIMITATIONS (technical acceptance, 2026-10-20). Phase 2: implemented, reviewed and verified; ready for human acceptance.** The attached user directive authorizes Phase 2 after the technical gate; Phase 3–6 and merge remain unapproved. **0/34 routes fully redesigned.** Appearance integration and inherited shared styles do not count as route migration.
+**Phase1 and Phase2: ACCEPTED WITH LIMITATIONS (technical acceptance). Phase3: implemented, reviewed and verified with documented limitations; ready for human acceptance,2026-10-20.** Phase4–6, merge, push and deployment remain unapproved. **0/34 routes fully redesigned.** Shell integration does not count as route migration.
+
+## Phase 3 handoff
+
+Phase2 commits4182515,12de4a4,2395da1 plus429a8d0 evidence follow-up were reconciled against source/QA before starting. No critical foundation blocker found; previous383-test evidence was reused for acceptance. Phase3 begins from429a8d0a79707e7d6f9677502349cfd0b132e9b3, on the mandated branch/worktree. Original main/status and all1,295 file hashes remain preserved. Original dirty landing/globals/settings/curriculum/feedback were never transferred; only the committed HomePage header and inline scoped styles changed.
+
+- `307829b24b402312897e317b9186933b62359cb3` — `feat(ui): redesign application shells and responsive navigation` (6 production owners +4 unit-test owners).
+- `80177eb3381d069420647c9e4dcdfb0490a424da` — `test(ui): verify responsive shells and player continuity` (3 isolated browser harness files).
+- Documentation/evidence commit: `docs(ui): record phase three QA and shell comparisons`; resolve its exact self-hash with `git log -1 -- docs/ui-redesign/phase3-qa.md`.
+
+Delivered actual learner/admin header/sidebar, shared nonmodal responsive navigation with5/13 retained URLs, public header only, and quiet solid focus mode for all five dynamic route families. Auth/role effects, redirects/logout, child slots, player state and API contracts stay unchanged. Existing ThemeControl, locale and Reduced Transparency integration reused; no framework/dependency/backend changes.
+
+Final gates: **85 files/402 web tests**, **8 files/45 targeted tests**, **13 production Chromium checks**; development13 before review plus2 post-fix disclosure checks. Lint/typecheck/i18n/build/whitespace pass. Build retains34 page routes.42 composite samples minimum9.053:1;24 locale-control boundary samples minimum3.672:1 in each dev/production matrix. Actual IeltsMockPlayer retains answer/timer nodes, deadline and expected revision1/revision2 autosave/explicit-save payloads through shell/theme/locale/resize actions. These are fixture-backed real components/routes, not live authenticated API certification.
+
+One independent bounded reviewer found an Important current-page link focus defect. Parent reproduced unit RED1failed/8passed and production browser RED2failed, then restored trigger focus before hiding an opened focused panel. GREEN45 targeted,2 development browser and13 final production checks; full402-test suite and final build/type/lint were rerun after the fix. No unresolved Critical/Important; no second reviewer. [Review/rulings](evidence/phase3/review.md).
+
+[Phase3 QA and changed owners](phase3-qa.md), [machine summary](evidence/phase3/final-qa.json), [12 real before/after comparisons](evidence/phase3/README.md),65 hashed PNGs. Before is optimized Phase2 baseline429a8d0; after is optimized source307829b. All three required viewports are covered in Light/Dark; VI and EN labels, keyboard/skip/history/resize, System, material/motion/contrast fallbacks are exercised. No pixel-equality, native browser zoom, screen-reader, cross-engine, live media/submission or FPS certification.
+
+**Remaining acceptance limitation:** at VI/390px/CSS200%, native Tab reaches all5/13 nav links with no explicit scrolling and shell header/nav fit; Admin content fits, but existing Settings feature content overflows564px before/596px after (extra32px from shell insets). This is an explicit incremental limitation for human acceptance and Phase4 feature repair, not a passing whole-page reflow claim. Firefox/WebKit executables absent. No route is marked migrated.
+
+Keep branch/worktree/ledger for review and later authorized work. Original checkout remains untouched; no stash/reset/clean/overwrite, merge, push or deploy. **Stop here pending human Phase3 acceptance and explicit Phase4 approval.** Historical Phase1/2 records below remain chronological evidence, superseded by this current status where approvals changed.
 
 Phase 1 acceptance reviewed both commits `0ef6204a8fbf76e7b00d30ec93113c3552320935` and `8ad9ba8759c604521d87a6c9f9103b2a917d94bc`, actual source contracts, [QA](phase1-qa.md), machine measurements and fresh original-checkout preservation. Its recorded checks remain evidence from Phase 1, not newly rerun tests. Limitations: Chromium only, no real API/IELTS E2E, screen-reader or performance certification; legacy route migration remains pending. No critical foundation blocker found. See [Phase 2 QA](phase2-qa.md) for the new verification and scope rulings.
 

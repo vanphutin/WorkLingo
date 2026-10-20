@@ -1,0 +1,26 @@
+[WebServer] (node:9752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+  ok  1 e2e\liquid-glass-shell.spec.ts:58:7 › light shell matrix at 390 (10.6s)
+  ok  2 e2e\liquid-glass-shell.spec.ts:58:7 › light shell matrix at 768 (5.7s)
+  ok  3 e2e\liquid-glass-shell.spec.ts:58:7 › light shell matrix at 1440 (3.8s)
+  ok  4 e2e\liquid-glass-shell.spec.ts:58:7 › dark shell matrix at 390 (3.8s)
+  ok  5 e2e\liquid-glass-shell.spec.ts:58:7 › dark shell matrix at 768 (3.8s)
+  ok  6 e2e\liquid-glass-shell.spec.ts:58:7 › dark shell matrix at 1440 (3.4s)
+  ok  7 e2e\liquid-glass-shell.spec.ts:104:40 › learner mobile disclosure keyboard, outside click, resize and history (1.6s)
+  ok  8 e2e\liquid-glass-shell.spec.ts:104:40 › admin mobile disclosure keyboard, outside click, resize and history (2.0s)
+  ok  9 e2e\liquid-glass-shell.spec.ts:142:5 › actual mock player retains node, answer, deadline and API payload across shell interactions (1.7s)
+  ok 10 e2e\liquid-glass-shell.spec.ts:176:5 › system theme, reduced material/motion, forced colors and skip link remain usable (718ms)
+  ok 11 e2e\liquid-glass-shell.spec.ts:196:40 › learner Vietnamese mobile CSS200% zoom and native keyboard auto-scroll (1.0s)
+  ok 12 e2e\liquid-glass-shell.spec.ts:196:40 › admin Vietnamese mobile CSS200% zoom and native keyboard auto-scroll (1.3s)
+  -  13 e2e\liquid-glass-shell.spec.ts:260:44 › representative shell captures light
+  -  14 e2e\liquid-glass-shell.spec.ts:260:44 › representative shell captures dark
+  -  15 e2e\liquid-glass-shell.spec.ts:288:5 › baseline Settings content at Vietnamese mobile CSS200% zoom
+  ok 16 e2e\liquid-glass-shell.spec.ts:302:5 › English shell labels reflow and guest public CTAs retain their destinations (2.1s)
+
+  3 skipped
+  13 passed (53.8s)

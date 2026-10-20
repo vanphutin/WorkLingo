@@ -1,0 +1,1492 @@
+{
+  "mode": "production",
+  "observations": [
+    {
+      "name": "public-light-390",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "public-light-390",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "public",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "learner-light-390",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "learner-light-390",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "name": "learner-light-390",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "learner",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "admin-light-390",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "admin-light-390",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "name": "admin-light-390",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "admin",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "focus-light-390",
+      "kind": "composite",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "focus-light-390",
+      "kind": "composite",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "focus-light-390",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "focus",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "public-light-768",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "public-light-768",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "public",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "learner-light-768",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "learner-light-768",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "name": "learner-light-768",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "learner",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "admin-light-768",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "admin-light-768",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "name": "admin-light-768",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "admin",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "focus-light-768",
+      "kind": "composite",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "focus-light-768",
+      "kind": "composite",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "focus-light-768",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "focus",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "public-light-1440",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "public-light-1440",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "public",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "learner-light-1440",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "learner-light-1440",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "name": "learner-light-1440",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "learner",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "admin-light-1440",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 16.880959297333114
+    },
+    {
+      "name": "admin-light-1440",
+      "kind": "composite",
+      "background": [
+        254,
+        254,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.05324800753993
+    },
+    {
+      "name": "admin-light-1440",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "admin",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "focus-light-1440",
+      "kind": "composite",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "focus-light-1440",
+      "kind": "composite",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "focus-light-1440",
+      "kind": "boundary",
+      "border": [
+        133,
+        133,
+        138
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 3.6717675972559682
+    },
+    {
+      "kind": "focus",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "public-dark-390",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "public-dark-390",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "public",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "learner-dark-390",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "learner-dark-390",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "learner-dark-390",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "learner",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "admin-dark-390",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "admin-dark-390",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "admin-dark-390",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "admin",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "focus-dark-390",
+      "kind": "composite",
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "name": "focus-dark-390",
+      "kind": "composite",
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 9.159864550374918
+    },
+    {
+      "name": "focus-dark-390",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "focus",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "public-dark-768",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "public-dark-768",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "public",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "learner-dark-768",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "learner-dark-768",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "learner-dark-768",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "learner",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "admin-dark-768",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "admin-dark-768",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "admin-dark-768",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "admin",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "focus-dark-768",
+      "kind": "composite",
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "name": "focus-dark-768",
+      "kind": "composite",
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 9.159864550374918
+    },
+    {
+      "name": "focus-dark-768",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "focus",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "public-dark-1440",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "public-dark-1440",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "public",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "learner-dark-1440",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "learner-dark-1440",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "learner-dark-1440",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "learner",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "admin-dark-1440",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "admin-dark-1440",
+      "kind": "composite",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "admin-dark-1440",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "name": "focus-dark-1440",
+      "kind": "composite",
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 12.799508140631932
+    },
+    {
+      "name": "focus-dark-1440",
+      "kind": "composite",
+      "background": [
+        44,
+        44,
+        46
+      ],
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ratio": 9.159864550374918
+    },
+    {
+      "name": "focus-dark-1440",
+      "kind": "boundary",
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "text": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "kind": "focus",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "errors": [],
+      "networkFixture": true,
+      "realAuthentication": false
+    },
+    {
+      "admin": false,
+      "disclosure": true,
+      "escapeRestoresFocus": true,
+      "noTrap": true,
+      "resizeRepairsFocus": true,
+      "history": true
+    },
+    {
+      "admin": true,
+      "disclosure": true,
+      "escapeRestoresFocus": true,
+      "noTrap": true,
+      "resizeRepairsFocus": true,
+      "history": true
+    },
+    {
+      "actualPlayer": "IeltsMockPlayer",
+      "fixtureFromExistingUnit": true,
+      "initialLoads": 1,
+      "sameAnswerNode": true,
+      "sameTimerNode": true,
+      "deadline": "2026-10-20T05:33:38.065Z",
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/v1/me",
+          "body": null
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111",
+          "body": null
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/responses",
+          "body": {
+            "expectedRevision": 1,
+            "responses": {
+              "33333333-3333-4333-8333-333333333333": "Keep this actual player answer"
+            }
+          }
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/me/preferences",
+          "body": {
+            "locale": "en"
+          }
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/responses",
+          "body": {
+            "expectedRevision": 2,
+            "responses": {
+              "33333333-3333-4333-8333-333333333333": "Keep this actual player answer"
+            }
+          }
+        }
+      ],
+      "realAPI": false
+    },
+    {
+      "systemDark": true,
+      "reducedMotion": true,
+      "reducedTransparency": true,
+      "increasedContrast": true,
+      "forcedColors": true,
+      "skipLinkFocus": true
+    },
+    {
+      "admin": false,
+      "kind": "CSS200-content-overflow",
+      "scroll": 596,
+      "viewport": 390,
+      "shell": [
+        {
+          "left": 32,
+          "right": 358
+        },
+        {
+          "left": 32,
+          "right": 358
+        }
+      ],
+      "featureContentOwnedByLaterPhase": true
+    },
+    {
+      "admin": false,
+      "width": 390,
+      "locale": "vi",
+      "CSSZoom": 2,
+      "nativeKeyboardAutoScroll": true,
+      "explicitScrolling": false,
+      "nativeBrowserZoom": false
+    },
+    {
+      "admin": true,
+      "kind": "CSS200-content-overflow",
+      "scroll": 390,
+      "viewport": 390,
+      "shell": [
+        {
+          "left": 32,
+          "right": 358
+        },
+        {
+          "left": 32,
+          "right": 358
+        }
+      ],
+      "featureContentOwnedByLaterPhase": false
+    },
+    {
+      "admin": true,
+      "width": 390,
+      "locale": "vi",
+      "CSSZoom": 2,
+      "nativeKeyboardAutoScroll": true,
+      "explicitScrolling": false,
+      "nativeBrowserZoom": false
+    },
+    {
+      "locale": "en",
+      "widths": [
+        390,
+        1440
+      ],
+      "learnerLinks": 5,
+      "adminLinks": 13,
+      "publicGuestCTAs": [
+        "/login",
+        "/register"
+      ]
+    }
+  ]
+}

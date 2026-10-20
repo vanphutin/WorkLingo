@@ -1,6 +1,6 @@
 # WorkLingo Liquid Glass Implementation Plan — proposed V2 addendum
 
-Approval update2026-10-20: the human explicitly approved **Phase1 only** and the required isolated branch/worktree. Phase1 is implemented and technically verified; see [approval boundaries](phase1-approval.md), [design system](04-design-system.md), [QA](phase1-qa.md) and [progress](progress.md). Phases2–6 and merging require their own explicit authorization. The broader approval-gate text below is the original proposal, not authorization for later work.
+Approval update2026-10-20: sequential human directives approved **Phase1, Phase2 and now Phase3 Application Shell** on the required isolated branch/worktree. Phase1/2 technical acceptance and Phase3 evidence are recorded in [progress](progress.md), [design system](04-design-system.md) and [Phase3 QA](phase3-qa.md). Phase4–6, merge, push and deployment remain unapproved. The broader proposal below is historical planning, not authorization for later work; current execution rulings preserve committed worktree owners without transferring dirty original UI.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans for approved inline execution, or superpowers:subagent-driven-development if the human chooses delegation. Checkboxes below are execution gates, not claims of completed implementation.
 

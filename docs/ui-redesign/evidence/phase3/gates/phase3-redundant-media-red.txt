@@ -1,0 +1,47 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ❯ src/components/workspace-navigation.test.tsx (8 tests | 1 failed) 538ms
+   ✓ WorkspaceNavigation > retains all destinations and marks only the real active route segment 271ms
+   ✓ WorkspaceNavigation > uses a nonmodal disclosure with Escape returning focus and no trapped Tab 56ms
+   ✓ WorkspaceNavigation > closes on outside interaction without stealing focus or changing a draft 24ms
+   ✓ WorkspaceNavigation > closes on route changes and stays closed when returning to the previous URL 26ms
+   ✓ WorkspaceNavigation > resets responsive state, moves focus out of hidden controls and removes its media listener 67ms
+   ✓ WorkspaceNavigation > keeps compact exam navigation hidden until explicitly requested 23ms
+   ✓ WorkspaceNavigation > keeps compact navigation usable across responsive breakpoints 48ms
+   × WorkspaceNavigation > ignores media notifications that retain the current breakpoint 21ms
+     → expect(element).toHaveAttribute("aria-expanded", "true") // element.getAttribute("aria-expanded") === "true"
+
+Expected the element to have attribute:
+  aria-expanded="true"
+Received:
+  aria-expanded="false"
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/workspace-navigation.test.tsx > WorkspaceNavigation > ignores media notifications that retain the current breakpoint
+Error: expect(element).toHaveAttribute("aria-expanded", "true") // element.getAttribute("aria-expanded") === "true"
+
+Expected the element to have attribute:
+  aria-expanded="true"
+Received:
+  aria-expanded="false"
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  11:47:53
+   Duration  19.81s (transform 166ms, setup 0ms, collect 5.81s, tests 538ms, environment 12.75s, prepare 375ms)
+
+ ❯ src/components/workspace-navigation.test.tsx:111:21
+    109|     fireEvent.click(trigger);
+    110|     act(() => changed({ matches: true }));
+    111|     expect(trigger).toHaveAttribute('aria-expanded', 'true');
+       |                     ^
+    112|     expect(screen.getByRole('navigation')).toBeVisible();
+    113|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/workspace-navigation.test.tsx

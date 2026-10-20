@@ -1,0 +1,402 @@
+{
+  "before": "429a8d0a79707e7d6f9677502349cfd0b132e9b3",
+  "after": "307829b24b402312897e317b9186933b62359cb3",
+  "source": "Existing real Next routes, intercepted network contracts; no live authentication/backend",
+  "method": "Unedited original full-page PNGs arranged as HTML images; desktop scaled equally to fit comparison sheet. Open-state PNGs are fixed viewport captures.",
+  "comparisons": [
+    {
+      "name": "public-desktop",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "files": [
+        "before-public-desktop-light.png",
+        "after-public-light-1440.png"
+      ],
+      "comparison": "compare-public-desktop-light.png"
+    },
+    {
+      "name": "learner-desktop",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "files": [
+        "before-learner-desktop-light.png",
+        "after-learner-light-1440.png"
+      ],
+      "comparison": "compare-learner-desktop-light.png"
+    },
+    {
+      "name": "learner-mobile",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "files": [
+        "before-learner-mobile-light.png",
+        "after-learner-light-390.png"
+      ],
+      "comparison": "compare-learner-mobile-light.png"
+    },
+    {
+      "name": "admin-desktop",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "files": [
+        "before-admin-desktop-light.png",
+        "after-admin-light-1440.png"
+      ],
+      "comparison": "compare-admin-desktop-light.png"
+    },
+    {
+      "name": "admin-mobile",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "files": [
+        "before-admin-mobile-light.png",
+        "after-admin-light-390.png"
+      ],
+      "comparison": "compare-admin-mobile-light.png"
+    },
+    {
+      "name": "focus-mobile",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "files": [
+        "before-focus-mobile-light.png",
+        "after-focus-light-390.png"
+      ],
+      "comparison": "compare-focus-mobile-light.png"
+    },
+    {
+      "name": "public-desktop",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "files": [
+        "before-public-desktop-dark.png",
+        "after-public-dark-1440.png"
+      ],
+      "comparison": "compare-public-desktop-dark.png"
+    },
+    {
+      "name": "learner-desktop",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "files": [
+        "before-learner-desktop-dark.png",
+        "after-learner-dark-1440.png"
+      ],
+      "comparison": "compare-learner-desktop-dark.png"
+    },
+    {
+      "name": "learner-mobile",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "files": [
+        "before-learner-mobile-dark.png",
+        "after-learner-dark-390.png"
+      ],
+      "comparison": "compare-learner-mobile-dark.png"
+    },
+    {
+      "name": "admin-desktop",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "files": [
+        "before-admin-desktop-dark.png",
+        "after-admin-dark-1440.png"
+      ],
+      "comparison": "compare-admin-desktop-dark.png"
+    },
+    {
+      "name": "admin-mobile",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "files": [
+        "before-admin-mobile-dark.png",
+        "after-admin-dark-390.png"
+      ],
+      "comparison": "compare-admin-mobile-dark.png"
+    },
+    {
+      "name": "focus-mobile",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "files": [
+        "before-focus-mobile-dark.png",
+        "after-focus-dark-390.png"
+      ],
+      "comparison": "compare-focus-mobile-dark.png"
+    }
+  ],
+  "pngs": [
+    {
+      "file": "after-admin-dark-1440.png",
+      "sha256": "5c500aedc37f0a66f3fe041ef3002dba4d376896ceca8c9d3c52c7a1269fe835"
+    },
+    {
+      "file": "after-admin-dark-390.png",
+      "sha256": "f033f8b72669587ad5361ad27148a1bf7701828b59a5d2d728312b493bb12068"
+    },
+    {
+      "file": "after-admin-dark-768.png",
+      "sha256": "52c6a2d5e94133d2acd2a3ef62672e846283d7012a8578021ef2eb14dbcbe174"
+    },
+    {
+      "file": "after-admin-light-1440.png",
+      "sha256": "9987673b985287f184ae2e2d5fa724f6b8d1ee757cfb5b825c70ddb26d26eaad"
+    },
+    {
+      "file": "after-admin-light-390.png",
+      "sha256": "11b018e69a4a71d5f7c5534ea52642626371ea6651b333ab3e43a7a0d39ec1d3"
+    },
+    {
+      "file": "after-admin-light-768.png",
+      "sha256": "f701401dd903f03eaa5a264dff3ea442794352d394a6236230b291bda37a80e4"
+    },
+    {
+      "file": "after-focus-dark-1440.png",
+      "sha256": "c83d140e221086356ed00a67e65c7c1694286740714e812674edb0a1fcf88acd"
+    },
+    {
+      "file": "after-focus-dark-390.png",
+      "sha256": "e35ffb5c1408c6f2df37cce0315246c82d692ecc4819b1dcee54aaebf9574934"
+    },
+    {
+      "file": "after-focus-dark-768.png",
+      "sha256": "28acb940a8eaea0c52292328e5bbad73a17681d32ed406243a1ebf0c4cfcd24c"
+    },
+    {
+      "file": "after-focus-light-1440.png",
+      "sha256": "31328f4432fbbeda6fe53090db3d271fa6fd199d401bdcedc77f46fed86f6627"
+    },
+    {
+      "file": "after-focus-light-390.png",
+      "sha256": "2764e0dc7b1bdf8bba0e804d6c92ece169c261ca917c59d57ac2efde195fb936"
+    },
+    {
+      "file": "after-focus-light-768.png",
+      "sha256": "ec030de3dc1d0a60f0a650dd8a4d6fbcb03bb5b43051d4cb0817d57f372d5ffe"
+    },
+    {
+      "file": "after-learner-dark-1440.png",
+      "sha256": "26a91785e7b1bb5ad96c2602ce94120e4468550d74dabda4a79f9c01f30a1be6"
+    },
+    {
+      "file": "after-learner-dark-390.png",
+      "sha256": "4d1caf64d9df6497826979f69383681a2a429b2e6b0459bdc23e34e72b694c79"
+    },
+    {
+      "file": "after-learner-dark-768.png",
+      "sha256": "6be1e3c8ff19a28573755dc55685882d5bdd50b8ae9e1755f4e2a8f1f9036f19"
+    },
+    {
+      "file": "after-learner-light-1440.png",
+      "sha256": "5042c8e8e120bcff62a5a47b989af9b4256feb18056dbacc82f9e5d1d90e2463"
+    },
+    {
+      "file": "after-learner-light-390.png",
+      "sha256": "a32462ac32b9c260a40473e72e325d84717b368fffea4b63764d874546b18309"
+    },
+    {
+      "file": "after-learner-light-768.png",
+      "sha256": "555d4defb7eb04d1defad1f6606fd95e98ad40b5e98a1af343356087a7fa6e53"
+    },
+    {
+      "file": "after-open-admin-dark-390.png",
+      "sha256": "04245ec3fd63629459253690b634885c96af2aae0c2f93ea7ab0872156aaf886"
+    },
+    {
+      "file": "after-open-admin-dark-768.png",
+      "sha256": "4701a280eb50b5f9a37836ec0bab5483e3f429d565ad9acdec0f51380642e8ca"
+    },
+    {
+      "file": "after-open-admin-light-390.png",
+      "sha256": "113dea4ed7662e5d194a1bbdcf731d95141eaeecfa5c3709afc22e5be791a886"
+    },
+    {
+      "file": "after-open-admin-light-768.png",
+      "sha256": "2e8ef145a6dd6336ea975478fbaa38e29e878ad58ab015efabbc9ec78b14d263"
+    },
+    {
+      "file": "after-open-focus-dark-1440.png",
+      "sha256": "98c20ef107a1456a08cae7f62587f18158ecc3ce69baa72a277e7808f2456db2"
+    },
+    {
+      "file": "after-open-focus-dark-390.png",
+      "sha256": "4469702f9fcac188b1c192315a49f327cf1859a21e07df41d356013490836115"
+    },
+    {
+      "file": "after-open-focus-dark-768.png",
+      "sha256": "0909bc2ea5de58af86b4690422000f88cf2d36300d9a2b74a2945592c18196f5"
+    },
+    {
+      "file": "after-open-focus-light-1440.png",
+      "sha256": "60216f845bc274ef783b3b1acc922e2df3ef3f44c354f8aa8c595697287e8d0f"
+    },
+    {
+      "file": "after-open-focus-light-390.png",
+      "sha256": "1246160fd8de358ab4335e241c12032583da5583293bcd5a4b58583f182984e8"
+    },
+    {
+      "file": "after-open-focus-light-768.png",
+      "sha256": "c466fb01243622493dd1977c0b58d2d8a8fc8ea0ff23dd1c5371b4bb38c8d87f"
+    },
+    {
+      "file": "after-open-learner-dark-390.png",
+      "sha256": "7f0bbf033de3db9a8d6f7ce76be3a43c397aba3136130eeefc3dd3050a139b39"
+    },
+    {
+      "file": "after-open-learner-dark-768.png",
+      "sha256": "446f8928af3b489a60e573ff1cb4a62fc65fff9881384b706ecb2067fe586962"
+    },
+    {
+      "file": "after-open-learner-light-390.png",
+      "sha256": "d11312c0692b7b98adc7381c3bda90ab51f72a47d864c130864acfc43ae379f2"
+    },
+    {
+      "file": "after-open-learner-light-768.png",
+      "sha256": "d54929c4e276f1c1ea15f4d938cce23f48613044a29496b370651a81ec23f223"
+    },
+    {
+      "file": "after-public-dark-1440.png",
+      "sha256": "564ad77d00de22db1b27f8f2e522142fcc22b30e7dd6e382253f6938c0e140bd"
+    },
+    {
+      "file": "after-public-dark-390.png",
+      "sha256": "9a559541260f78676cded0e7d7a8c855ff68f90230ce6cbaece9e9e5eff09f66"
+    },
+    {
+      "file": "after-public-dark-768.png",
+      "sha256": "32b7a60f88f4a51a093f05967474b6e73659855c01b68c057c96134877bd274a"
+    },
+    {
+      "file": "after-public-light-1440.png",
+      "sha256": "973384e47a10c05fb08582014a38f282191f986d398f77a858650a3aa26bc68a"
+    },
+    {
+      "file": "after-public-light-390.png",
+      "sha256": "f77b3dd9d602415b087a2b800e8bf7256b52a9f5fe00a222052d1d59c69fc5c1"
+    },
+    {
+      "file": "after-public-light-768.png",
+      "sha256": "c5347df4be9d83230545d707eef98884fd01cd42d0b428874d895bbe056d2a5e"
+    },
+    {
+      "file": "before-admin-desktop-dark.png",
+      "sha256": "ae618e43f4c5a4b2d4db03bd490861432ef9f0b7e61d75a1218cf672fe495261"
+    },
+    {
+      "file": "before-admin-desktop-light.png",
+      "sha256": "909745328e3789aa4fd720f105ba051602eeace4b988607b9e1fb2f707e83528"
+    },
+    {
+      "file": "before-admin-mobile-dark.png",
+      "sha256": "a35edb44bfb30c88420f6f22eba1a04062611ab630a495c4ac9a38ceea217050"
+    },
+    {
+      "file": "before-admin-mobile-light.png",
+      "sha256": "dfad97c9225020a972b9f3baab6a51dc30ca925051dc84e219d9884ac4d0a938"
+    },
+    {
+      "file": "before-focus-mobile-dark.png",
+      "sha256": "627d119476f55917aedaa963fb6a2bad94eb2d9b14226b8ab0498fc7e7ec72c6"
+    },
+    {
+      "file": "before-focus-mobile-light.png",
+      "sha256": "105c6a47b1728edff9b9c2c7ca0c6f3f475058b43bfb5131d12b5b036b9a22b6"
+    },
+    {
+      "file": "before-learner-desktop-dark.png",
+      "sha256": "d78493f68a82910480e8e32a336ddcb1d80071fb5aaeed37f07a0ca75060f97d"
+    },
+    {
+      "file": "before-learner-desktop-light.png",
+      "sha256": "6ff6635cad646d4651cae5f65194da95043a20b59b66cc0348f622875660beca"
+    },
+    {
+      "file": "before-learner-mobile-dark.png",
+      "sha256": "1f7f21e67a3c75d3aa908496c0446dc59eb58d923240c0f2a60fa8003af0592b"
+    },
+    {
+      "file": "before-learner-mobile-light.png",
+      "sha256": "e6ac76fd9d23b3356e9e2c6e7cf7a2ed6b3b8ad1f58df64223fd4f170d7ec83d"
+    },
+    {
+      "file": "before-public-desktop-dark.png",
+      "sha256": "a8430cd0a3e4407d8cf50e281f47507fee48aa2146d980cc1762cde05ae8eb91"
+    },
+    {
+      "file": "before-public-desktop-light.png",
+      "sha256": "fe531699f63d5d5f4871544543efaca0c13c19b9c795abb65abeb8c833346fd7"
+    },
+    {
+      "file": "before-settings-zoom200.png",
+      "sha256": "6f6ef0b0004693387055c1d0c7e54be5985f17eeb5f969fd339774864b6c686e"
+    },
+    {
+      "file": "compare-admin-desktop-dark.png",
+      "sha256": "bbbe6b3f0e58304c41e9e144a6959ae1252d717b48e589d69d3270bdfb254361"
+    },
+    {
+      "file": "compare-admin-desktop-light.png",
+      "sha256": "d3049ecfecfe42008de713746c541b6c671e5137e3381b5dcbc4cbb18956d94c"
+    },
+    {
+      "file": "compare-admin-mobile-dark.png",
+      "sha256": "683949aab584205fdce2fcf330c4a963302328b1bdfc17764034de3975815ab3"
+    },
+    {
+      "file": "compare-admin-mobile-light.png",
+      "sha256": "945bbfd7f6b2474296196e9d9538cd5fef13179a9c52bba3baece29c019bb657"
+    },
+    {
+      "file": "compare-focus-mobile-dark.png",
+      "sha256": "614412f7b119513e8556d4d13cd8463b607e7c4cfc5aa45c5931ab2b70a2aa5f"
+    },
+    {
+      "file": "compare-focus-mobile-light.png",
+      "sha256": "94b5a06e54ed94f26e6a263822cf97a41c5186806112b2e38a15b3182aae0706"
+    },
+    {
+      "file": "compare-learner-desktop-dark.png",
+      "sha256": "f65a796332e962cf298ca0c4fe83802cc55972aa3053e70d50b0850340b1dec1"
+    },
+    {
+      "file": "compare-learner-desktop-light.png",
+      "sha256": "891e8ed907c9f2bb3dae8cbdec5120803d6f1371b274c9ac5c86c675e4922013"
+    },
+    {
+      "file": "compare-learner-mobile-dark.png",
+      "sha256": "cc2f4be6be72ddaf217aa7cf83443b2f21c11c25c6052a0e9334aabf4538f693"
+    },
+    {
+      "file": "compare-learner-mobile-light.png",
+      "sha256": "5a44239494bb25efb12f0fca928c9fe93a6bace299b8c54ebff11294f99d0240"
+    },
+    {
+      "file": "compare-public-desktop-dark.png",
+      "sha256": "ae82106ac4881832fc260200d09dcfe5c21afd073942470fa8df6cb6791f4d2f"
+    },
+    {
+      "file": "compare-public-desktop-light.png",
+      "sha256": "0503bd67a9d7b68ac4b355b201c5d85690421e0d3985038c52a0fa10d430df17"
+    },
+    {
+      "file": "zoom200-admin-390.png",
+      "sha256": "267e35caa0ce4e3b1807b8a613f085c53d5de54c5fdf7da9cdf4f7199a9c7348"
+    },
+    {
+      "file": "zoom200-learner-390.png",
+      "sha256": "806a59da29e44e4cc3a02adf679b553bb1a00736b468395037bc0c081540d9bf"
+    }
+  ]
+}
