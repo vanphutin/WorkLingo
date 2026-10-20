@@ -29,6 +29,9 @@ export async function loginAsContentAdmin(
   await page.waitForURL(/\/admin\/content/, { timeout: 15_000 });
   await page.locator('.language-control select').first().selectOption('en');
   await expect(page.locator('.language-control select').first()).toHaveAttribute('aria-busy', 'false');
+  // Route metadata is server localized; load it again after persisting the
+  // English account preference rather than asserting the earlier locale's title.
+  await page.reload();
   await expect(page.getByRole('region', { name: 'Content imports' })).toBeVisible();
 }
 

@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 
-export const phase6Root = path.resolve(__dirname, '../../../../docs/ui-redesign/evidence/phase6');
+export const phase6Root = path.resolve(__dirname, '../../../..', process.env.WORKLINGO_PHASE6_EVIDENCE_ROOT ?? 'docs/ui-redesign/evidence/phase6');
 export function phase6Recorder(fixtureOnly = true) {
   const observations: object[] = [];
   test.afterEach(async ({ browser }, info) => {

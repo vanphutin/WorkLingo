@@ -10,7 +10,7 @@ test.afterEach(({}, info) => { const dir = path.join(evidence, `${mode}-${proces
 const cases = [
   ['content', '/admin/content', '.content-table'], ['content', '/admin/content/new', '#raw-source-input'], ['content', `/admin/content/${importId}`, '.editor-textarea'],
   ['curriculum', '/admin/curriculum', '.curriculum-header'], ['orientation', '/admin/ielts-orientation', '.orientation-editor'], ['bridge', '/admin/ielts-bridge', '.bridge-editor'],
-  ['integrated', '/admin/ielts-integrated', '.bridge-stage-card input'], ['band', '/admin/ielts-band-curriculum', '.bridge-response textarea'], ['mock', '/admin/ielts-mocks', '.bridge-response textarea'],
+  ['integrated', '/admin/ielts-integrated', '.bridge-stage-card input'], ['band', '/admin/ielts-band-curriculum', '.band-editor input'], ['mock', '/admin/ielts-mocks', '.authoring-fields input'],
 ] as const;
 for (const theme of ['light', 'dark']) for (const [width, height] of [[390, 844], [768, 1024], [1440, 900]]) test(`authoring matrix ${theme} ${width}`, async ({ page }) => {
   await page.context().addCookies([{ name: 'worklingo_locale', value: 'vi', domain: '127.0.0.1', path: '/' }]); await page.addInitScript((value) => localStorage.setItem('worklingo:theme:v1', value), theme); await page.setViewportSize({ width: width!, height: height! });
@@ -44,11 +44,10 @@ for (const kind of ['orientation', 'bridge', 'integrated', 'band', 'mock'] as co
   test.skip(baseline); const { data, requests } = await installAuthoringFixtures(page, { kind, locale: 'en' });
   await page.context().addCookies([{ name: 'worklingo_locale', value: 'en', domain: '127.0.0.1', path: '/' }]);
   const route = cases.find((item) => item[0] === kind)!; await page.goto('http://127.0.0.1:33300' + route[1]); await expect(page.locator(route[2]).first()).toBeVisible();
-  const field = kind === 'orientation' ? page.locator('input[name=courseTitle]') : kind === 'bridge' ? page.locator('.bridge-editor__module input').first() : kind === 'integrated' ? page.locator('.bridge-stage-card input').first() : page.locator('.bridge-response textarea').first();
+  const field = kind === 'orientation' ? page.locator('input[name=courseTitle]') : kind === 'bridge' ? page.locator('.bridge-editor__module input').first() : kind === 'integrated' ? page.locator('.bridge-stage-card input').first() : kind === 'band' ? page.locator('.band-editor input').first() : page.locator('.authoring-fields input').first();
   const original = await field.inputValue(); let changed = original;
-  if (kind === 'orientation' || kind === 'bridge') changed += ' — long authored workplace title';
+  if (kind === 'orientation' || kind === 'bridge' || kind === 'band' || kind === 'mock') changed += ' — long authored workplace title';
   if (kind === 'integrated') { changed = String(Number(original) + 1); const second = page.locator('.bridge-stage-card input').nth(1); await second.fill(String(Number(await second.inputValue()) - 1)); }
-  if (kind === 'band' || kind === 'mock') { const parsed = JSON.parse(original); parsed.title += ' revised'; changed = JSON.stringify(parsed, null, 2); }
   await field.fill(changed); await field.evaluate((el) => el.setAttribute('data-identity', 'same-authoring-field')); await page.locator('.theme-control').click(); await page.setViewportSize({ width: 390, height: 844 }); await expect(field).toHaveValue(changed); await expect(field).toHaveAttribute('data-identity', 'same-authoring-field');
   const publish = kind === 'orientation' ? page.locator('.orientation-admin__toolbar button').nth(2) : kind === 'bridge' ? page.locator('.bridge-admin__toolbar button').nth(2) : kind === 'mock' ? page.locator('.bridge-stage-card').first().locator('button.bridge-primary').last() : page.locator('.bridge-actions button.bridge-primary'); await expect(publish).toBeDisabled();
   await page.getByRole('button', { name: /^save draft$/iu }).click();

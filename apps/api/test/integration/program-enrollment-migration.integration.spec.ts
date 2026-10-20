@@ -21,7 +21,8 @@ describe('Program enrollment migration', () => {
       const mission = await database.mission.create({ data: {
         levelId: archived.id, slug: randomUUID(), title: 'Legacy mission', objective: 'Preserve', order: 0,
       } });
-      const lesson = await database.lesson.create({ data: { slug: randomUUID() } });
+      // Return only columns present at this historical migration boundary.
+      const lesson = await database.lesson.create({ data: { slug: randomUUID() }, select: { id: true } });
       const version = await database.lessonVersion.create({ data: {
         lessonId: lesson.id, version: 1, title: 'Legacy lesson', sourceHash: randomUUID(), parsedContent: {},
       } });

@@ -22,7 +22,7 @@ if (!fs.existsSync(path.join(web, 'package.json'))) {
 }
 const originalError = fs.readFileSync(path.join(root, 'apps/web/src/app/error.tsx'));
 if (!originalError.equals(fs.readFileSync(path.join(web, 'src/app/error.tsx')))) throw new Error('Snapshot error owner differs from product');
-const evidence = path.join(root, 'docs/ui-redesign/evidence/phase6/error'); fs.mkdirSync(evidence, { recursive: true });
+const evidence = path.resolve(root, process.env.WORKLINGO_PHASE6_EVIDENCE_ROOT ?? 'docs/ui-redesign/evidence/phase6', 'error'); fs.mkdirSync(evidence, { recursive: true });
 fs.writeFileSync(path.join(evidence, 'snapshot.json'), JSON.stringify({ sourceCommit: ref, timestamp: new Date().toISOString(), method: 'Immutable git archive, only Login leaf injected in ignored snapshot; actual error owner unchanged', injectedFile: 'apps/web/src/app/(auth)/login/page.tsx', errorOwnerSHA256: crypto.createHash('sha256').update(originalError).digest('hex'), productionSourceModified: false }, null, 2) + '\n');
 const next = require.resolve('next/dist/bin/next');
 const env = { ...process.env, WORKLINGO_API_URL: 'http://127.0.0.1:9', NEXT_TELEMETRY_DISABLED: '1' };

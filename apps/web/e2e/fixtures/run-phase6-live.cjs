@@ -6,7 +6,7 @@ const os = require('node:os');
 const crypto = require('node:crypto');
 const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '../../../..');
-const evidence = path.join(root, 'docs/ui-redesign/evidence/phase6/live'); fs.mkdirSync(evidence, { recursive: true });
+const evidence = path.resolve(root, process.env.WORKLINGO_PHASE6_EVIDENCE_ROOT ?? 'docs/ui-redesign/evidence/phase6', 'live'); fs.mkdirSync(evidence, { recursive: true });
 const run = process.env.WORKLINGO_PHASE6_RUN || 'initial';
 const owner = crypto.randomUUID().replaceAll('-', '');
 const schema = `worklingo_e2e_${owner}`;
@@ -34,10 +34,19 @@ const redact = text => [password, adminPassword, sessionSecret].reduce((value, s
       try { docker('exec', name, 'pg_isready', '-U', 'phase6', '-d', 'worklingo_phase6'); ready = true; break; } catch { await new Promise(resolve => setTimeout(resolve, 500)); }
     }
     assert.ok(ready, 'Disposable PostgreSQL not ready');
-    const args = ['--filter', '@worklingo/web', 'exec', 'playwright', 'test', '-c', 'playwright.phase6-live.config.ts', '--no-deps', ...record.projects.map(project => `--project=${project}`)];
-    record.optimizedWeb = true;
+    const apiSuite = process.env.WORKLINGO_INTEGRATION_API_SUITE === 'true';
+    const args = apiSuite ? ['--filter', '@worklingo/api', 'exec', 'vitest', 'run', ...process.argv.slice(2)] : ['--filter', '@worklingo/web', 'exec', 'playwright', 'test', '-c', 'playwright.phase6-live.config.ts', '--no-deps', ...record.projects.map(project => `--project=${project}`)];
+    record.operation = apiSuite ? 'full backend suite on owned disposable PostgreSQL' : 'optimized browser/API integration';
+    record.invocation = { evidenceRoot: process.env.WORKLINGO_PHASE6_EVIDENCE_ROOT ?? 'docs/ui-redesign/evidence/phase6', run, apiSuite, v3: process.env.WORKLINGO_INTEGRATION_IELTS_V3 === 'true', arguments: process.argv.slice(2) };
+    if (apiSuite) { record.testArguments = process.argv.slice(2); record.projects = []; }
+    record.optimizedWeb = !apiSuite;
     record.playwrightCommand = 'pnpm ' + args.join(' ');
-    const env = { ...childEnv, TEST_DATABASE_URL: `postgresql://phase6:${password}@127.0.0.1:${port}/worklingo_phase6`, DATABASE_URL: '', WORKLINGO_E2E_SCHEMA: schema, WORKLINGO_E2E_API_PORT: '34106', WORKLINGO_E2E_WEB_PORT: '33106', WORKLINGO_ADMIN_EMAIL: 'phase6-admin@fixture.invalid', WORKLINGO_ADMIN_PASSWORD: adminPassword, SESSION_SECRET: sessionSecret };
+    // ConfigModule validates at import time, before individual suite hooks can
+    // replace DATABASE_URL/data directory with their own isolated schema.
+    const databaseUrl = `postgresql://phase6:${password}@127.0.0.1:${port}/worklingo_phase6`;
+    const dataDirectory = path.join(root, '.superpowers/sdd/plan', `live-data-${owner}`);
+    fs.mkdirSync(dataDirectory, { recursive: true });
+    const env = { ...childEnv, TEST_DATABASE_URL: databaseUrl, DATABASE_URL: databaseUrl, WORKLINGO_DATA_DIR: dataDirectory, WORKLINGO_E2E_SCHEMA: schema, WORKLINGO_E2E_API_PORT: '34106', WORKLINGO_E2E_WEB_PORT: '33106', WORKLINGO_ADMIN_EMAIL: 'phase6-admin@fixture.invalid', WORKLINGO_ADMIN_PASSWORD: adminPassword, SESSION_SECRET: sessionSecret };
     env.WORKLINGO_E2E_SCREENSHOT_DIR = path.join(evidence, run);
     record.harnessSHA256 = crypto.createHash('sha256').update(fs.readFileSync(__filename)).digest('hex');
     record.e2eDiffSHA256 = crypto.createHash('sha256').update(cp.execFileSync('git', ['diff', 'HEAD', '--', 'apps/web/e2e'], { cwd: root })).digest('hex');

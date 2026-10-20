@@ -80,6 +80,7 @@ test('saved mission, program availability and evidence filters keep existing con
   await page.goto('http://127.0.0.1:33300/dashboard');
   await expect(page.locator('.next-mission-card a')).toHaveAttribute('href', '/sessions/55555555-5555-4555-8555-555555555555');
   await expect(page.locator('#session-duration-select')).toHaveCount(0);
+  await page.locator('#dashboard-tab-weekly').click();
   await page.locator('#weekly-target-select').selectOption('4');
   await expect(page.locator('#weekly-target-select')).toHaveValue('4');
   expect(requests.some((r) => r.method === 'PATCH' && r.body === '{"targetDays":4}')).toBe(true);

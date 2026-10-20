@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import {
   activateProgramSchema, authUserSchema, curriculumRoadmapSchema,
   engagementSummarySchema, learningProgramCatalogSchema, programContextSchema,
-  sessionAvailabilitySchema, weeklyTargetInputSchema, createCheckpointAssessmentSchema,
+  sessionAvailabilitySchema, weeklyTargetInputSchema, createCheckpointAssessmentSchema, dashboardOverviewSchema,
 } from '@worklingo/contracts';
 import { learnerProgressDtoSchema } from '../../src/lib/api/api-client';
 import {
@@ -12,6 +12,7 @@ import {
   emptyErrorBank, emptyMasteryMap, errorItem, masteryMap, memoryHealth, progression, pendingAssessment,
 } from '../../src/features/mastery/test-fixtures';
 import { shellUser } from './shell-contracts';
+import { dashboardFixture } from '../../src/features/learner-dashboard/dashboard.test-fixtures';
 
 export type LearningFixtureState = 'loaded' | 'empty' | 'error';
 export interface LearningFixtureOptions {
@@ -250,6 +251,15 @@ export async function installLearningFixtures(page: Page, options: LearningFixtu
     requests.push({ method, url: request.url(), body: request.postData() });
     const path = url.pathname.replace(/^\/api\/v1/u, '');
     const reads: Record<string, unknown> = {
+      '/me/dashboard/overview': dashboardOverviewSchema.parse({
+        programContext: data.context,
+        progress: { status: 'ready', data: data.progress },
+        availability: { status: 'ready', data: data.availability },
+        roadmap: { status: 'ready', data: data.roadmap },
+        analytics: { status: 'ready', data: dashboardFixture },
+        engagement: { status: 'ready', data: data.engagement },
+        topics: { status: 'ready', data: [] },
+      }),
       '/me': data.user,
       '/learning-programs': data.catalog,
       '/me/program-context': data.context,

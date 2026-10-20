@@ -1,7 +1,9 @@
 import { defineConfig } from '@playwright/test';
-import existing from './playwright.config';
+import legacy from './playwright.config';
+import v3 from './playwright.ielts-v3.config';
 
 // Preserve existing isolated API/setup/teardown and journeys; qualify optimized web.
+const existing = process.env.WORKLINGO_INTEGRATION_IELTS_V3 === 'true' ? v3 : legacy;
 const servers = Array.isArray(existing.webServer) ? existing.webServer : [];
 export default defineConfig({
   ...existing,

@@ -88,6 +88,19 @@ test('native lesson audio retains playback node and authored transcript through 
   await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(0);
   await page.locator('.theme-control').click(); await page.setViewportSize({ width: 390, height: 844 });
   await expect(audio).toHaveAttribute('data-identity', 'same-audio'); expect(await audio.evaluate((el: HTMLAudioElement) => el.paused)).toBe(false);
+  // The approved listening policy gates script help on six complete listens.
+  await expect(page.locator('.transcript-text')).toHaveCount(0);
+  await audio.evaluate(async (el: HTMLAudioElement) => {
+    el.pause(); el.loop = false;
+    for (let count = 0; count < 6; count++) {
+      el.currentTime = 0;
+      await new Promise<void>((resolve, reject) => {
+        el.addEventListener('ended', () => resolve(), { once: true });
+        void el.play().catch(reject);
+      });
+    }
+  });
+  await page.getByRole('button', { name: /Show script|Hiện script/u }).click();
   await expect(page.locator('.transcript-text')).toContainText('engineering team');
   await audio.evaluate((el: HTMLAudioElement) => el.pause());
   observations.push({ nativeWavPlayback: true, sameAudioNode: true, playbackRetained: true, transcriptPreserved: true, realProvider: false });
