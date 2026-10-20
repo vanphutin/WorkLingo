@@ -1,0 +1,15 @@
+
+> worklingo@0.0.0 lint D:\Projects\WorkLingo-Integration
+> pnpm -r --if-present lint
+
+Scope: 5 of 6 workspace projects
+packages/test-fixtures lint$ eslint src
+packages/test-fixtures lint: Done
+packages/content-format lint$ eslint src
+packages/content-format lint: Done
+packages/contracts lint$ eslint src
+packages/contracts lint: Done
+apps/web lint$ eslint src
+apps/api lint$ eslint src test
+apps/web lint: Done
+apps/api lint: Done

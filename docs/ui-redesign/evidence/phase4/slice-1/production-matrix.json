@@ -1,0 +1,3489 @@
+{
+  "mode": "production",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "WorkLingo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255,
+        0.92
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếng Anh cho công việc của bạn.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập qua tình huống công việc thực tế. Xây dựng năng lự",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản miễn phí",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Ví dụ tiếng Anh trong ngữ cảnh",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Một cách hữu ích để hỏi rõ thông tin trong cuộc họp. Hiểu ý ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "//light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Hiểu, phản hồi và vận dụng.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "production-home-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ của bạn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Chào mừng bạn trở lại",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Quay lại hoạt động học tiếp theo trên WorkLingo.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục luyện tập từ nơi bạn đã dừng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/login/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn mới dùng WorkLingo? Tạo tài khoản",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "production-login-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh thực tiễn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với WorkLingo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo hồ sơ học viên và bắt đầu ở trình độ phù hợp.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tên hiển thị",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Sử dụng ít nhất 12 ký tự.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp theo, chọn điểm bắt đầu qua bài đánh giá trình độ.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/register/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn đã có tài khoản? Đăng nhập",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "production-register-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "/phase4-missing-page/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Không tìm thấy trang",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/phase4-missing-page/light/390",
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung này hiện không khả dụng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "file": "production-phase4-missing-page-light-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "WorkLingo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255,
+        0.92
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếng Anh cho công việc của bạn.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập qua tình huống công việc thực tế. Xây dựng năng lự",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản miễn phí",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Ví dụ tiếng Anh trong ngữ cảnh",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Một cách hữu ích để hỏi rõ thông tin trong cuộc họp. Hiểu ý ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "//light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Hiểu, phản hồi và vận dụng.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "production-home-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ của bạn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Chào mừng bạn trở lại",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Quay lại hoạt động học tiếp theo trên WorkLingo.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục luyện tập từ nơi bạn đã dừng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/login/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn mới dùng WorkLingo? Tạo tài khoản",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "production-login-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh thực tiễn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với WorkLingo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo hồ sơ học viên và bắt đầu ở trình độ phù hợp.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tên hiển thị",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Sử dụng ít nhất 12 ký tự.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp theo, chọn điểm bắt đầu qua bài đánh giá trình độ.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/register/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn đã có tài khoản? Đăng nhập",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "production-register-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "/phase4-missing-page/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Không tìm thấy trang",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/phase4-missing-page/light/768",
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung này hiện không khả dụng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "file": "production-phase4-missing-page-light-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "WorkLingo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255,
+        0.92
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếng Anh cho công việc của bạn.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập qua tình huống công việc thực tế. Xây dựng năng lự",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản miễn phí",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        0,
+        102,
+        204
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Ví dụ tiếng Anh trong ngữ cảnh",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Một cách hữu ích để hỏi rõ thông tin trong cuộc họp. Hiểu ý ",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "//light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Hiểu, phản hồi và vận dụng.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "url": "/",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "production-home-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ của bạn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Chào mừng bạn trở lại",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Quay lại hoạt động học tiếp theo trên WorkLingo.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục luyện tập từ nơi bạn đã dừng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/login/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn mới dùng WorkLingo? Tạo tài khoản",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/login",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "production-login-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh thực tiễn",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với WorkLingo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo hồ sơ học viên và bắt đầu ở trình độ phù hợp.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tên hiển thị",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Sử dụng ít nhất 12 ký tự.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        0,
+        102,
+        204
+      ],
+      "ratio": 5.566637067604819
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp theo, chọn điểm bắt đầu qua bài đánh giá trình độ.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "name": "/register/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn đã có tài khoản? Đăng nhập",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/register",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "production-register-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "/phase4-missing-page/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Không tìm thấy trang",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "name": "/phase4-missing-page/light/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung này hiện không khả dụng.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 9.124991947050793
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "file": "production-phase4-missing-page-light-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30,
+        0.92
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếng Anh cho công việc của bạn.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập qua tình huống công việc thực tế. Xây dựng năng lự",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản miễn phí",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Ví dụ tiếng Anh trong ngữ cảnh",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Một cách hữu ích để hỏi rõ thông tin trong cuộc họp. Hiểu ý ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "//dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Hiểu, phản hồi và vận dụng.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "production-home-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ của bạn",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Chào mừng bạn trở lại",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Quay lại hoạt động học tiếp theo trên WorkLingo.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục luyện tập từ nơi bạn đã dừng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/login/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn mới dùng WorkLingo? Tạo tài khoản",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "production-login-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh thực tiễn",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo hồ sơ học viên và bắt đầu ở trình độ phù hợp.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tên hiển thị",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Sử dụng ít nhất 12 ký tự.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp theo, chọn điểm bắt đầu qua bài đánh giá trình độ.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/register/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn đã có tài khoản? Đăng nhập",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "production-register-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "/phase4-missing-page/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Không tìm thấy trang",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/phase4-missing-page/dark/390",
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung này hiện không khả dụng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "file": "production-phase4-missing-page-dark-390.png",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30,
+        0.92
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếng Anh cho công việc của bạn.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập qua tình huống công việc thực tế. Xây dựng năng lự",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản miễn phí",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Ví dụ tiếng Anh trong ngữ cảnh",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Một cách hữu ích để hỏi rõ thông tin trong cuộc họp. Hiểu ý ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "//dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Hiểu, phản hồi và vận dụng.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "production-home-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ của bạn",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Chào mừng bạn trở lại",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Quay lại hoạt động học tiếp theo trên WorkLingo.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục luyện tập từ nơi bạn đã dừng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/login/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn mới dùng WorkLingo? Tạo tài khoản",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "production-login-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh thực tiễn",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo hồ sơ học viên và bắt đầu ở trình độ phù hợp.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tên hiển thị",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Sử dụng ít nhất 12 ký tự.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp theo, chọn điểm bắt đầu qua bài đánh giá trình độ.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/register/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn đã có tài khoản? Đăng nhập",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "production-register-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "/phase4-missing-page/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Không tìm thấy trang",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/phase4-missing-page/dark/768",
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung này hiện không khả dụng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "production-phase4-missing-page-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30,
+        0.92
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếng Anh cho công việc của bạn.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập qua tình huống công việc thực tế. Xây dựng năng lự",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản miễn phí",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Ví dụ tiếng Anh trong ngữ cảnh",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Một cách hữu ích để hỏi rõ thông tin trong cuộc họp. Hiểu ý ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "//dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Hiểu, phản hồi và vận dụng.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "production-home-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục nhiệm vụ của bạn",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Chào mừng bạn trở lại",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Quay lại hoạt động học tiếp theo trên WorkLingo.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Đăng nhập",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục luyện tập từ nơi bạn đã dừng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/login/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn mới dùng WorkLingo? Tạo tài khoản",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "production-login-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Xây dựng tiếng Anh thực tiễn",
+      "foreground": [
+        178,
+        185,
+        255
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 9.136572693117119
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Bắt đầu với WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo hồ sơ học viên và bắt đầu ở trình độ phù hợp.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tên hiển thị",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Email",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Mật khẩu",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Sử dụng ít nhất 12 ký tự.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tạo tài khoản",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp theo, chọn điểm bắt đầu qua bài đánh giá trình độ.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "name": "/register/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Bạn đã có tài khoản? Đăng nhập",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "production-register-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "name": "/phase4-missing-page/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Không tìm thấy trang",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "name": "/phase4-missing-page/dark/1440",
+      "kind": "opaque-text-contrast",
+      "text": "Nội dung này hiện không khả dụng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "file": "production-phase4-missing-page-dark-1440.png",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320
+    },
+    {
+      "url": "/login",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320
+    },
+    {
+      "url": "/register",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320
+    },
+    {
+      "url": "/phase4-missing-page",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320
+    },
+    {
+      "url": "/",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360
+    },
+    {
+      "url": "/login",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360
+    },
+    {
+      "url": "/register",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360
+    },
+    {
+      "url": "/phase4-missing-page",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360
+    },
+    {
+      "url": "/",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/login",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/register",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/phase4-missing-page",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "authenticatedCTA": true,
+      "systemDark": true,
+      "reducedMotion": true,
+      "increasedContrast": true,
+      "forcedColors": true,
+      "realAPI": false
+    }
+  ]
+}

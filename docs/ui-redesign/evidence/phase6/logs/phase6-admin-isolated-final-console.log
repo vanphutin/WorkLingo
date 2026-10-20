@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "cleanup": true,
+  "container": "worklingo-liquid-glass-phase6-41fc4b4550",
+  "projects": [
+    "admin-desktop"
+  ]
+}

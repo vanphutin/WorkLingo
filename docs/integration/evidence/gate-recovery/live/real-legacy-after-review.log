@@ -1,0 +1,47 @@
+[WebServer] (node:17784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:8316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:23220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+  ok  1 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:8:7 › Onboarding and placement assessment journey › learner registers, completes self-placement, confirms level, and lands on dashboard (4.1s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok  2 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:45:7 › Onboarding and placement assessment journey › pending learner cannot bypass route guards to access dashboard or ordinary sessions (2.4s)
+  ok  3 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:68:7 › Onboarding and placement assessment journey › completed learner bypasses onboarding and is redirected to dashboard (2.1s)
+  ok  4 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:88:7 › Onboarding and placement assessment journey › learner starts placement, resumes after refresh, completes all four skills, and confirms recommendation (12.7s)
+  ok  5 [foundation-desktop] › e2e\foundation-session.spec.ts:15:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (9.9s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok  6 [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:56:5 › published objective evidence completes one pinned revision and unlocks its dependent unit (14.5s)
+  ok  7 [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:127:5 › real curriculum API retains an unsaved Foundation objective through collapse and filtering (4.2s)
+  ok  8 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (3.0s)
+  ok  9 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:35:5 › real mock API saves the writing snapshot and locks editing until delayed exit completes (3.3s)
+  ok 10 [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation (17.3s)
+  ok 11 [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety (5.4s)
+  ok 12 [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics (3.4s)
+
+  12 passed (2.3m)

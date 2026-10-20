@@ -3,20 +3,64 @@
 import { useT } from '../../i18n/provider';
 import { audioMessages } from '../../i18n/messages/audio';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AudioSettings } from '@worklingo/contracts';
 
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import { BrowserSpeechControls } from './browser-speech-controls';
+import { claimMediaPlayback, stopMediaPlayback, subscribeNativeMedia } from './playback-owner';
 
 const DEFAULT_SETTINGS: AudioSettings = {
   browserVoiceId: null,
   sourceId: 'system-default',
 };
 
+function LessonMedia(props: { readonly src: string; readonly onError: () => void; readonly onPlaybackComplete?: (() => void) | undefined }) {
+  const t = useT('audio', audioMessages);
+  const audio = useRef<HTMLAudioElement>(null);
+  const fullPlayback = useRef(false);
+  useEffect(() => {
+    const media = audio.current;
+    const unsubscribe = subscribeNativeMedia();
+    return () => {
+      if (media) stopMediaPlayback(media);
+      unsubscribe();
+    };
+  }, []);
+
+  return (
+    <audio
+      aria-label={t('lessonAudio')}
+      ref={audio}
+      controls
+      onPlay={(event) => {
+        if (event.currentTarget.currentTime <= 0.5) fullPlayback.current = true;
+        claimMediaPlayback(event.currentTarget);
+      }}
+      onSeeking={() => { fullPlayback.current = false; }}
+      onEnded={() => {
+        if (!fullPlayback.current) return;
+        fullPlayback.current = false;
+        props.onPlaybackComplete?.();
+      }}
+      onError={(event) => {
+        fullPlayback.current = false;
+        stopMediaPlayback(event.currentTarget);
+        props.onError();
+      }}
+      preload="metadata"
+      src={props.src}
+    >
+      {t('playbackUnsupported')}
+    </audio>
+  );
+}
+
 export function LessonAudioPlayer(props: {
   readonly audioUrl: string;
+  readonly dialogue?: boolean;
   readonly preferBrowserSpeech?: boolean;
+  readonly onPlaybackComplete?: () => void;
   readonly text: string;
 }) {
   const t = useT('audio', audioMessages);
@@ -43,8 +87,11 @@ export function LessonAudioPlayer(props: {
   ) {
     return (
       <BrowserSpeechControls
+        itemId={props.audioUrl}
+        dialogue={props.dialogue === true}
         lang="en-US"
         preferredVoiceId={settings.browserVoiceId}
+        onPlaybackComplete={props.onPlaybackComplete}
         text={props.text}
       />
     );
@@ -64,8 +111,11 @@ export function LessonAudioPlayer(props: {
           {t('lessonUnavailable')}
         </p>
         <BrowserSpeechControls
+          itemId={props.audioUrl}
+          dialogue={props.dialogue === true}
           lang="en-US"
           preferredVoiceId={settings.browserVoiceId}
+          onPlaybackComplete={props.onPlaybackComplete}
           text={props.text}
         />
       </div>
@@ -73,14 +123,11 @@ export function LessonAudioPlayer(props: {
   }
 
   return (
-    <audio
-      aria-label={t('lessonAudio')}
-      controls
+    <LessonMedia
+      key={props.audioUrl}
       onError={() => setMediaFailed(true)}
-      preload="metadata"
+      onPlaybackComplete={props.onPlaybackComplete}
       src={props.audioUrl}
-    >
-      {t('playbackUnsupported')}
-    </audio>
+    />
   );
 }

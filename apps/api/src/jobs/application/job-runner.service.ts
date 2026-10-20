@@ -9,12 +9,13 @@ import {
 } from '@nestjs/common';
 
 import { ProviderError } from '../../ai-gateway/domain/provider-errors.js';
+import { RetryableJobError } from '../domain/job-handler.port.js';
 import type { JobHandler } from '../domain/job-handler.port.js';
 import { JobsService } from './jobs.service.js';
 
 const MAX_BACKOFF_MS = 60_000;
 const TRANSIENT_CODES = new Set([
-  'PROVIDER_TIMEOUT', 'PROVIDER_RATE_LIMITED', 'PROVIDER_UPSTREAM',
+  'PROVIDER_TIMEOUT', 'PROVIDER_RATE_LIMITED', 'PROVIDER_UPSTREAM', 'STORAGE_CLEANUP_FAILED',
 ]);
 const SINGLE_RETRY_CODES = new Set(['PROVIDER_RESPONSE_INVALID', 'PROVIDER_REFUSED']);
 const MANUAL_RETRY_CODES = new Set([
@@ -62,6 +63,7 @@ const safeErrorSummary = (code: string): string => ({
   RECORDING_CONSENT_REQUIRED: 'Recording consent is required.',
   RECORDING_EXPIRED: 'Recording is no longer available.',
   UNKNOWN_JOB_TYPE: 'No handler is registered for this job type.',
+  STORAGE_CLEANUP_FAILED: 'Recording cleanup is temporarily unavailable.',
   JOB_HANDLER_FAILED: 'Background processing failed.',
 })[code] ?? 'Background processing failed.';
 
@@ -140,15 +142,16 @@ export class JobRunnerService implements OnApplicationBootstrap, OnApplicationSh
         workerId: this.options.workerId,
       });
     } catch (error) {
-      const code = error instanceof ProviderError ? error.code : 'JOB_HANDLER_FAILED';
-      const retry = error instanceof ProviderError && error.retryable
+      const retryable = error instanceof RetryableJobError || (error instanceof ProviderError && error.retryable);
+      const code = error instanceof ProviderError || error instanceof RetryableJobError ? error.code : 'JOB_HANDLER_FAILED';
+      const retry = retryable
         ? decideJobRetry({
             attemptNumber: job.attemptNumber,
             code,
             maxAttempts: job.maxAttempts,
             now,
             random: Math.random,
-            ...(error.retryAfterMs === undefined ? {} : { retryAfterMs: error.retryAfterMs }),
+            ...(error instanceof ProviderError && error.retryAfterMs !== undefined ? { retryAfterMs: error.retryAfterMs } : {}),
           })
         : { retry: false } as const;
       await this.jobs.failClaim({
@@ -156,9 +159,7 @@ export class JobRunnerService implements OnApplicationBootstrap, OnApplicationSh
         code,
         errorSummary: safeErrorSummary(code),
         jobId: job.id,
-        manuallyRetryable: error instanceof ProviderError
-          && error.retryable
-          && MANUAL_RETRY_CODES.has(code),
+        manuallyRetryable: retryable && MANUAL_RETRY_CODES.has(code),
         retry: retry.retry,
         workerId: this.options.workerId,
         ...(retry.retry ? { availableAt: retry.availableAt } : {}),

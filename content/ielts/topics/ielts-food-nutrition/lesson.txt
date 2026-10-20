@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-food-nutrition-objective]
+statement: Infer and accurately use contextual Food & Nutrition vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-food-nutrition-lesson
+title: Food & Nutrition: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Recommend a menu and purchasing policy that considers cost, waste and different needs.
+[/LESSON]
+
+[WORD_BANK ielts-food-nutrition-bank]
+title: Food & Nutrition in context
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-food-security]]
+expression: food security
+meaning_vi: an ninh lương thực
+pronunciation: /fuːd sɪˈkjʊərəti/
+collocations: improve food security
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our kitchen's food security discussion considers whether households can reliably obtain suitable food throughout the month.
+common_error: Security refers to reliable access here, not guards at a food shop.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-nutritional-value]]
+expression: nutritional value
+meaning_vi: giá trị dinh dưỡng
+pronunciation: /njuːˈtrɪʃənəl ˈvæljuː/
+collocations: compare nutritional value
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The menu exercise compares nutritional value using labelled fictional products rather than promoting a particular brand.
+common_error: Nutritional describes food content; nutritious describes food that nourishes.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-local-produce]]
+expression: local produce
+meaning_vi: nông sản địa phương
+pronunciation: /ˈləʊkəl ˈprɒdjuːs/
+collocations: buy local produce
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: We will buy local produce when price, availability and storage needs fit the kitchen's weekly plan.
+common_error: Produce is uncountable when it means agricultural products.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-seasonal-ingredients]]
+expression: seasonal ingredients
+meaning_vi: nguyên liệu theo mùa
+pronunciation: /ˈsiːzənəl ɪnˈɡriːdiənts/
+collocations: use seasonal ingredients
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A flexible recipe list will use seasonal ingredients without assuming that every familiar dish must be changed.
+common_error: Seasonal refers to availability at particular times of year.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-food-waste]]
+expression: food waste
+meaning_vi: lãng phí thực phẩm
+pronunciation: /fuːd weɪst/
+collocations: reduce food waste
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Staff will measure food waste from preparation and uneaten portions separately to understand where changes are needed.
+common_error: Waste is uncountable in this phrase.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-dietary-requirements]]
+expression: dietary requirements
+meaning_vi: nhu cầu ăn uống đặc thù
+pronunciation: /ˈdaɪətəri rɪˈkwaɪəmənts/
+collocations: meet dietary requirements
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Booking forms will ask about dietary requirements while limiting access to any sensitive information supplied.
+common_error: Use requirements for multiple needs; do not treat preferences as diagnoses.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-processed-food]]
+expression: processed food
+meaning_vi: thực phẩm đã qua chế biến
+pronunciation: /ˈprəʊsest fuːd/
+collocations: compare processed food
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The comparison of processed food will consider ingredients, storage and convenience rather than use the label as a complete judgement.
+common_error: Processed describes preparation; avoid assuming it always means one nutritional profile.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-sustainable-agriculture]]
+expression: sustainable agriculture
+meaning_vi: nông nghiệp bền vững
+pronunciation: /səˈsteɪnəbəl ˈæɡrɪkʌltʃə/
+collocations: support sustainable agriculture
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Suppliers will be asked to explain sustainable agriculture claims with specific practices rather than decorative logos.
+common_error: Agriculture is uncountable when naming the sector.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-portion-sizes]]
+expression: portion sizes
+meaning_vi: khẩu phần ăn
+pronunciation: /ˈpɔːʃən saɪzɪz/
+collocations: adjust portion sizes
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Guests may choose portion sizes and request more, allowing the kitchen to compare waste without leaving people hungry.
+common_error: Portion is a noun modifier; pluralize sizes for several serving amounts.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-food-supply-chain]]
+expression: food supply chain
+meaning_vi: chuỗi cung ứng thực phẩm
+pronunciation: /fuːd səˈplaɪ tʃeɪn/
+collocations: a resilient food supply chain
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Mapping the food supply chain will show where delivery delays could disrupt the weekly menu.
+common_error: Use a before one chain linking production and delivery.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-consumer-preferences]]
+expression: consumer preferences
+meaning_vi: sở thích người tiêu dùng
+pronunciation: /kənˈsjuːmə ˈprefərənsɪz/
+collocations: understand consumer preferences
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The survey of consumer preferences will allow open comments instead of asking guests to choose only between two unfamiliar dishes.
+common_error: Preferences are choices people favour, not necessarily requirements.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-food-nutrition-meal-planning]]
+expression: meal planning
+meaning_vi: việc lên kế hoạch bữa ăn
+pronunciation: /miːl ˈplænɪŋ/
+collocations: weekly meal planning
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Weekly meal planning will connect the number of bookings with purchasing decisions and safe storage capacity.
+common_error: Planning is uncountable when naming an activity.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-food-nutrition-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a community kitchen comparing affordable menu and purchasing options. Please compare the priorities below before our next meeting.
+Our kitchen's food security discussion considers whether households can reliably obtain suitable food throughout the month.
+The menu exercise compares nutritional value using labelled fictional products rather than promoting a particular brand.
+We will buy local produce when price, availability and storage needs fit the kitchen's weekly plan.
+A flexible recipe list will use seasonal ingredients without assuming that every familiar dish must be changed.
+Staff will measure food waste from preparation and uneaten portions separately to understand where changes are needed.
+Booking forms will ask about dietary requirements while limiting access to any sensitive information supplied.
+The comparison of processed food will consider ingredients, storage and convenience rather than use the label as a complete judgement.
+Suppliers will be asked to explain sustainable agriculture claims with specific practices rather than decorative logos.
+Guests may choose portion sizes and request more, allowing the kitchen to compare waste without leaving people hungry.
+Mapping the food supply chain will show where delivery delays could disrupt the weekly menu.
+The survey of consumer preferences will allow open comments instead of asking guests to choose only between two unfamiliar dishes.
+Weekly meal planning will connect the number of bookings with purchasing decisions and safe storage capacity.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-food-nutrition-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Food security concerns choice and consistency, so a one-off donation does not answer every household's needs.
+Lan: Nutritional value is useful to compare, but serving size must be clear or two labels can appear misleadingly different.
+An: Local produce is attractive, but a small supplier needs predictable orders rather than last-minute demands.
+Lan: Seasonal ingredients could help us vary the menu if cooks are given alternatives when a delivery is unavailable.
+An: Reducing food waste requires knowing why food was left; smaller portions are not the answer if the recipe was unpopular.
+Lan: Dietary requirements should be discussed respectfully, and guests should not have to explain private details to everyone at the table.
+An: Processed food can be convenient for busy households, so our discussion should examine actual labels instead of making assumptions.
+Lan: Sustainable agriculture claims should identify what a farm does and what evidence supports that description.
+An: Different portion sizes would let me choose a smaller first serving while knowing I could ask for more.
+Lan: A food supply chain map should include storage and transport, not only the farm and the final kitchen.
+An: Consumer preferences may change after people try a dish, so a tasting event could complement a written survey.
+Lan: Meal planning would be easier if booking changes reached the cooks before they placed the final order.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-food-nutrition-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Food security concerns choice and consistency, so a one-off donation does not answer every household's needs.
+Lan: Nutritional value is useful to compare, but serving size must be clear or two labels can appear misleadingly different.
+An: Local produce is attractive, but a small supplier needs predictable orders rather than last-minute demands.
+Lan: Seasonal ingredients could help us vary the menu if cooks are given alternatives when a delivery is unavailable.
+An: Reducing food waste requires knowing why food was left; smaller portions are not the answer if the recipe was unpopular.
+Lan: Dietary requirements should be discussed respectfully, and guests should not have to explain private details to everyone at the table.
+An: Processed food can be convenient for busy households, so our discussion should examine actual labels instead of making assumptions.
+Lan: Sustainable agriculture claims should identify what a farm does and what evidence supports that description.
+An: Different portion sizes would let me choose a smaller first serving while knowing I could ask for more.
+Lan: A food supply chain map should include storage and transport, not only the farm and the final kitchen.
+An: Consumer preferences may change after people try a dish, so a tasting event could complement a written survey.
+Lan: Meal planning would be easier if booking changes reached the cooks before they placed the final order.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-food-nutrition-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-food-security | ielts-food-nutrition-nutritional-value | ielts-food-nutrition-local-produce
+prompt: Our kitchen's food security discussion considers whether households can reliably obtain suitable food throughout the month. The menu exercise compares nutritional value using labelled fictional products rather than promoting a particular brand. We will buy local produce when price, availability and storage needs fit the kitchen's weekly plan.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-food-supply-chain | ielts-food-nutrition-consumer-preferences | ielts-food-nutrition-meal-planning
+prompt: Mapping the food supply chain will show where delivery delays could disrupt the weekly menu. The survey of consumer preferences will allow open comments instead of asking guests to choose only between two unfamiliar dishes. Weekly meal planning will connect the number of bookings with purchasing decisions and safe storage capacity.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-food-security | ielts-food-nutrition-nutritional-value | ielts-food-nutrition-local-produce | ielts-food-nutrition-seasonal-ingredients
+
+QUESTION:
+What does the kitchen’s access discussion consider?
+
+OPTIONS:
+A. Reliable access throughout the month
+B. Only a one-day donation total
+C. Only the size of the kitchen
+
+ANSWER:
+A
+
+EXPLANATION:
+Reliable access throughout the month. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-food-nutrition-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-discussion
+language_block_refs: ielts-food-nutrition-food-security | ielts-food-nutrition-nutritional-value | ielts-food-nutrition-local-produce | ielts-food-nutrition-seasonal-ingredients
+audio_ref: ielts-food-nutrition-discussion-audio
+
+QUESTION:
+Why is a one-off donation an incomplete measure?
+
+OPTIONS:
+A. Households also need consistency and choice
+B. It always guarantees future supplies
+C. All households want identical food
+
+ANSWER:
+A
+
+EXPLANATION:
+Households also need consistency and choice. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-food-nutrition-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-food-waste | ielts-food-nutrition-dietary-requirements | ielts-food-nutrition-processed-food | ielts-food-nutrition-sustainable-agriculture
+
+QUESTION:
+Why will two kinds of discarded food be measured separately?
+
+OPTIONS:
+A. To avoid speaking with guests
+B. To count only successful recipes
+C. To understand where changes are needed
+
+ANSWER:
+C
+
+EXPLANATION:
+To understand where changes are needed. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-food-nutrition-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-discussion
+language_block_refs: ielts-food-nutrition-food-waste | ielts-food-nutrition-dietary-requirements | ielts-food-nutrition-processed-food | ielts-food-nutrition-sustainable-agriculture
+audio_ref: ielts-food-nutrition-discussion-audio
+
+QUESTION:
+What should the kitchen find out before changing servings?
+
+OPTIONS:
+A. Only how many plates it owns
+B. Only which supplier has a logo
+C. Why people left food
+
+ANSWER:
+C
+
+EXPLANATION:
+Why people left food. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-food-nutrition-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-portion-sizes | ielts-food-nutrition-food-supply-chain | ielts-food-nutrition-consumer-preferences | ielts-food-nutrition-meal-planning
+
+QUESTION:
+What serving option is proposed?
+
+OPTIONS:
+A. No additional food under any circumstances
+B. A choice of size with the opportunity to ask for more
+C. One identical large portion for everyone
+
+ANSWER:
+B
+
+EXPLANATION:
+A choice of size with the opportunity to ask for more. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-food-nutrition-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-discussion
+language_block_refs: ielts-food-nutrition-portion-sizes | ielts-food-nutrition-food-supply-chain | ielts-food-nutrition-consumer-preferences | ielts-food-nutrition-meal-planning
+audio_ref: ielts-food-nutrition-discussion-audio
+
+QUESTION:
+Why does the speaker welcome different serving amounts?
+
+OPTIONS:
+A. They want all menus to be identical
+B. They can begin with less and request more
+C. They must never have a second helping
+
+ANSWER:
+B
+
+EXPLANATION:
+They can begin with less and request more. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-food-nutrition-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-discussion
+language_block_refs: ielts-food-nutrition-food-security | ielts-food-nutrition-food-waste | ielts-food-nutrition-portion-sizes
+prompt: Food security concerns choice and consistency, so a one-off donation does not answer every household's needs. Reducing food waste requires knowing why food was left; smaller portions are not the answer if the recipe was unpopular. Different portion sizes would let me choose a smaller first serving while knowing I could ask for more.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Recommend a menu and purchasing policy that considers cost, waste and different needs. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-discussion
+language_block_refs: ielts-food-nutrition-local-produce | ielts-food-nutrition-processed-food | ielts-food-nutrition-consumer-preferences
+prompt: Local produce is attractive, but a small supplier needs predictable orders rather than last-minute demands. Processed food can be convenient for busy households, so our discussion should examine actual labels instead of making assumptions. Consumer preferences may change after people try a dish, so a tasting event could complement a written survey.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Recommend a menu and purchasing policy that considers cost, waste and different needs. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-nutritional-value | ielts-food-nutrition-dietary-requirements | ielts-food-nutrition-food-supply-chain
+prompt: The menu exercise compares nutritional value using labelled fictional products rather than promoting a particular brand. Booking forms will ask about dietary requirements while limiting access to any sensitive information supplied. Mapping the food supply chain will show where delivery delays could disrupt the weekly menu.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Recommend a menu and purchasing policy that considers cost, waste and different needs. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-food-nutrition-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-food-nutrition-objective
+content_refs: ielts-food-nutrition-proposal
+language_block_refs: ielts-food-nutrition-seasonal-ingredients | ielts-food-nutrition-sustainable-agriculture | ielts-food-nutrition-meal-planning
+prompt: A flexible recipe list will use seasonal ingredients without assuming that every familiar dish must be changed. Suppliers will be asked to explain sustainable agriculture claims with specific practices rather than decorative logos. Weekly meal planning will connect the number of bookings with purchasing decisions and safe storage capacity.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Recommend a menu and purchasing policy that considers cost, waste and different needs. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

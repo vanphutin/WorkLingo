@@ -1,0 +1,120 @@
+{
+  "fixtureOnly": true,
+  "routeCount": 34,
+  "cells": 340,
+  "passedMatrices": 10,
+  "overflowCells": 0,
+  "invalidLandmarks": 0,
+  "invalidPageHeadings": 0,
+  "unnamedControls": 0,
+  "contrastKinds": {
+    "text-position-composite": {
+      "count": 30,
+      "pixelSamples": 96,
+      "minimum": 5.522870182617457
+    },
+    "control-boundary": {
+      "count": 28,
+      "pixelSamples": 0,
+      "minimum": 3.2904950012640626
+    }
+  },
+  "cssBefore": {
+    "hex": 26,
+    "functionalColors": 57,
+    "important": 759,
+    "transitionAll": 5,
+    "backdrop": 9
+  },
+  "cssAfter": {
+    "hex": 26,
+    "functionalColors": 57,
+    "important": 752,
+    "transitionAll": 1,
+    "backdrop": 8
+  },
+  "regression": {
+    "total": 105,
+    "passed": 105,
+    "failures": []
+  },
+  "performance": {
+    "before": {
+      "css": 195676,
+      "js": 1933134
+    },
+    "after": {
+      "css": 195820,
+      "js": 1933329
+    }
+  },
+  "limitations": [
+    "Loaded route matrix and bounded sampled semantics, not all possible business states or complete WCAG certification.",
+    "Headless Chromium only; fixture transport, no live backend/provider, screenreader, native zoom, physical notch or GPU SLA certification."
+  ],
+  "opaqueText": {
+    "count": 3144,
+    "minimum": 4.874973825384874,
+    "limitation": "Opaque ancestor backgrounds only; does not model group opacity or glass."
+  },
+  "keyboard": {
+    "routes": 34,
+    "samples": 68,
+    "minimumNativeTabs": 1,
+    "maximumNativeTabs": 8
+  },
+  "correctedChecks": [
+    {
+      "title": "actual glass composite text and native control contrast dark",
+      "status": "passed"
+    },
+    {
+      "title": "actual glass composite text and native control contrast light",
+      "status": "passed"
+    },
+    {
+      "title": "actual not-found boundary reflows with named return link in both themes",
+      "status": "passed"
+    },
+    {
+      "title": "AI content is solid without redundant manual dark backdrop filtering",
+      "status": "passed"
+    },
+    {
+      "title": "all routes expose reachable visible keyboard focus dark",
+      "status": "passed"
+    },
+    {
+      "title": "all routes expose reachable visible keyboard focus light",
+      "status": "passed"
+    },
+    {
+      "title": "client navigation audio AI curriculum retains owner styles and preference edits",
+      "status": "passed"
+    },
+    {
+      "title": "contrast sampler rejects a favorable corner and accounts for foreground alpha",
+      "status": "passed"
+    },
+    {
+      "title": "loading AI indicator honors reduced motion",
+      "status": "passed"
+    },
+    {
+      "title": "owner motion budgets exclude layout transitions and honor reduced motion across audio AI curriculum",
+      "status": "passed"
+    },
+    {
+      "title": "remediation screenshots preserve equivalent route theme and viewport conditions",
+      "status": "passed"
+    },
+    {
+      "title": "sr-only table captions and progress labels remain accessible without visible layout",
+      "status": "passed"
+    },
+    {
+      "title": "system appearance media fallback and safe area declarations remain usable",
+      "status": "passed"
+    }
+  ]
+}

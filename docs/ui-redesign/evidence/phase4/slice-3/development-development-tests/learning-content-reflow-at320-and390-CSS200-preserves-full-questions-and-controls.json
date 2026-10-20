@@ -1,0 +1,75 @@
+{
+  "mode": "development",
+  "title": "learning content reflow at320 and390 CSS200 preserves full questions and controls",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "width": 320,
+      "skill": "reading",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "width": 320,
+      "skill": "listening",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 350,
+      "offenders": [
+        {
+          "class": "",
+          "right": 350,
+          "minWidth": "0px"
+        },
+        {
+          "class": "secondary-action-button",
+          "right": 350,
+          "minWidth": "0px"
+        },
+        {
+          "class": "secondary-action-button",
+          "right": 350,
+          "minWidth": "0px"
+        },
+        {
+          "class": "audio-settings-actions",
+          "right": 350,
+          "minWidth": "auto"
+        },
+        {
+          "class": "",
+          "right": 350,
+          "minWidth": "auto"
+        },
+        {
+          "class": "",
+          "right": 346,
+          "minWidth": "0px"
+        },
+        {
+          "class": "audio-settings-note",
+          "right": 350,
+          "minWidth": "auto"
+        },
+        {
+          "class": "audio-transcript-box",
+          "right": 350,
+          "minWidth": "auto"
+        },
+        {
+          "class": "section-subtitle",
+          "right": 350,
+          "minWidth": "0px"
+        },
+        {
+          "class": "transcript-text",
+          "right": 350,
+          "minWidth": "0px"
+        }
+      ]
+    }
+  ]
+}

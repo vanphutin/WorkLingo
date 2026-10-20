@@ -1,0 +1,65 @@
+[WebServer] (node:15592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] Failed to proxy http://127.0.0.1:4000/api/v1/me/dashboard/overview Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:4000
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:4000) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4000
+[WebServer] }
+warning: in the working copy of 'apps/web/src/features/admin-curriculum/curriculum-workspace.tsx', LF will be replaced by CRLF the next time Git touches it
+  x  1 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (6.3s)
+
+
+  1) [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 ─────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.next-mission-card').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('.next-mission-card').first() with timeout 5000ms
+      - waiting for locator('.next-mission-card').first()
+
+
+      17 |       const route = auditRoutes.find(item => item[1] === url)!;
+      18 |       await prepareAuditRoute(page, route); await page.goto('http://127.0.0.1:33300' + url);
+    > 19 |       await expect(page.locator(route[2]).first()).toBeVisible();
+         |                                                    ^
+      20 |       await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      21 |       await expect(page.getByRole('main')).toHaveCount(1); await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+      22 |       const bounds = await page.evaluate(() => ({ client: innerWidth, scroll: document.documentElement.scrollWidth, support: CSS.supports('backdrop-filter', 'blur(1px)'), materials: [...document.querySelectorAll('.glass-surface')].map(el => ({ variant: el.getAttribute('data-glass-variant'), filter: getComputedStyle(el).backdropFilter, background: getComputedStyle(el).backgroundColor, nested: !!el.parentElement?.closest('.glass-surface') })) }));
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\liquid-glass-phase6-cross.spec.ts:19:52
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross-representative-routes-light-390-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross-representative-routes-light-390-chromium\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross-representative-routes-light-390-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 ──────
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6.config.ts --project=chromium -g representative routes light 390

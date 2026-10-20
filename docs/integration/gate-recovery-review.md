@@ -1,0 +1,15 @@
+# Independent recovery review and one remediation pass
+
+Reviewer Laplace read only67df2af..077ee67, eight recovery files. No services/tests/database/edits or reviewer subagents. No Critical finding; RED retained. The earlier whole-integration review is unchanged and was not repeated.
+
+| Finding | Effect | Disposition / evidence |
+| --- | --- | --- |
+| Important: exit test holds every responses request | Existing800ms autosave can be intercepted first, making busy disable exit while release is reachable only after click | Controlled probe awaits intercepted autosave then clicks exit: reproduced disabled-button failure, not a product failure. New flow completes actual autosave before installing the interceptor for the distinct exit save; cleanup includes click. `autosave-interception-red`1pass/1fail → `autosave-interception-green`2/2. Real API persists snapshot, fields lock until delivery and draft survives revisit. |
+| Important: ungranted relation locks cannot explain SKIP LOCKED | A granted competing row lock can cause null claim without any waiting lock | Two real clients, one eligible row and controlled transaction barrier. Null claim + due PENDING row + waitingLocks0 observed; regression expected holder's granted RowShareLock and failed with old empty diagnostics. New test-only helper includes granted relation/transaction/tuple locks, backend PID/state/transaction timing, no SQL text/payload. Valid RED assertion → GREEN30/30 adjacent queue/placement/runner tests. Original assertions/scheduler unchanged. |
+| Minor: timeout causality overstated | Vitest timeout does not cancel underlying async continuation; old restore status0 preceded missing restored sample file assertion | Documentation corrected: budget mismatch/timeout is observed; incomplete fixture/continuation chain is inference. No unsupported claim that whole artifact was absent. |
+
+First lock probe had a fixture UUID-vs-text SQL error and an unresolved ready promise; that attempt is retained as an error, not valid RED evidence. Added explicit UUID cast, propagated acquisition failure and bounded transaction cleanup before the valid regression. ESLint then caught throw-in-finally in the new test; moved error propagation after cleanup and verified gates. No production source changed.
+
+Review limits: historical placement cause/clock skew/unseen historical locks, timeout stress, unfinished qualification at review cutoff, commercial providers and protected state were not independently certified. Author rulings: preserve historical blocker until cause is proven; current snapshot/lock observations are successive observations, not a reconstruction of the destroyed historical DB; final full backend and preservation are separate measured gates. Cost if wrong: candidate stays blocked despite potentially healthy product. User explicitly requires retaining an unproven cause as a blocker, so no waiver is inferred.
+
+One remediation pass, no second reviewer or implicit release approval. The minor wording finding was corrected while revising the same investigation paragraph. Historical UI/CSS minors remain deferred.

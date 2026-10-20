@@ -37,7 +37,8 @@ it('adds foundation bindings without changing historical sessions and protects r
     const learningPath = await database.learningPath.create({ data: { slug: randomUUID(), name: 'Legacy' } });
     const level = await database.level.create({ data: { pathId: learningPath.id, code: randomUUID(), name: 'Legacy', cefrReference: 'A1', order: 1 } });
     const mission = await database.mission.create({ data: { levelId: level.id, slug: randomUUID(), title: 'Legacy', objective: 'Keep', order: 1 } });
-    const lesson = await database.lesson.create({ data: { slug: randomUUID() } });
+    // Later topic-group columns do not exist at this historical boundary.
+    const lesson = await database.lesson.create({ data: { slug: randomUUID() }, select: { id: true } });
     const version = await database.lessonVersion.create({ data: { lessonId: lesson.id, version: 1, title: 'Legacy', sourceHash: randomUUID(), parsedContent: {} } });
     // Use raw old-session insert: the generated client will know the newly added column.
     const sessionId = randomUUID();

@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class EvaluationResponseDto {
+  @ApiPropertyOptional({ type: 'array', items: { type: 'object', additionalProperties: true } }) processingSteps?: object[];
   @ApiProperty({ format: 'uuid' }) attemptId!: string;
   @ApiProperty({ nullable: true }) completedAt!: string | null;
   @ApiProperty({ additionalProperties: true, nullable: true, type: 'object' }) feedback!: object | null;

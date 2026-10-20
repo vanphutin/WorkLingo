@@ -27,7 +27,67 @@ async function expectNoHorizontalOverflow(page: Page) { const size = await page.
 test('learner starts and resumes the pinned full mock version', async ({ page }) => {
   const registration = await page.request.post('/api/v1/auth/register', { data: { locale: 'en', displayName: 'Full Mock E2E', email: `full-mock-${randomUUID()}@test.local`, password: 'full-mock-e2e-password' } }); expect(registration.ok()).toBeTruthy(); const learner = await registration.json() as { id: string }; expect((await page.request.post('/api/v1/me/onboarding/self-placement', { data: { clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1' } })).ok()).toBeTruthy(); const seeded = await seedJourneyAndMock(learner.id);
   try {
-    await page.goto('/ielts/mock-tests'); await expect(page.getByRole('heading', { level: 1, name: 'Full Mock Tests' })).toBeVisible(); await expectNoHorizontalOverflow(page); await page.getByRole('heading', { name: seeded.title }).locator('..').getByRole('button', { name: 'Start full mock' }).click(); await expect(page.getByText('Version 1 · EXAM SIMULATION')).toBeVisible(); const attemptId = new URL(page.url()).pathname.split('/').at(-1) ?? '';
-    const version2 = await seeded.database.ieltsMockTestVersion.create({ data: { mockTestId: seeded.mockId, version: 2, sourceHash: 'e2e-v2', content: seeded.content } }); await seeded.database.ieltsMockTest.update({ where: { id: seeded.mockId }, data: { currentPublishedVersionId: version2.id } }); await page.reload(); await expect(page.getByText('Version 1 · EXAM SIMULATION')).toBeVisible(); const resumed = await (await page.request.get(`/api/v1/me/ielts-mock-attempts/${attemptId}`)).json() as { mockTestVersionId: string }; expect(resumed.mockTestVersionId).toBe(seeded.versionId); await expectNoHorizontalOverflow(page);
+    await page.goto('/ielts/mock-tests'); await expect(page.getByRole('heading', { level: 1, name: 'Full Mock Tests' })).toBeVisible(); await expectNoHorizontalOverflow(page); await page.getByRole('heading', { name: seeded.title }).locator('..').getByRole('button', { name: 'Start full mock' }).click(); await expect(page.getByText('Version 1 · Exam simulation')).toBeVisible(); const attemptId = new URL(page.url()).pathname.split('/').at(-1) ?? '';
+    const version2 = await seeded.database.ieltsMockTestVersion.create({ data: { mockTestId: seeded.mockId, version: 2, sourceHash: 'e2e-v2', content: {...seeded.content,title:seeded.title+' new edition'} } }); await seeded.database.ieltsMockTest.update({ where: { id: seeded.mockId }, data: { currentPublishedVersionId: version2.id } }); await page.reload(); await expect(page.getByText('Version 1 · Exam simulation')).toBeVisible(); const resumed = await (await page.request.get(`/api/v1/me/ielts-mock-attempts/${attemptId}`)).json() as { mockTestVersionId: string }; expect(resumed.mockTestVersionId).toBe(seeded.versionId); await expect(page.getByRole('heading',{name:seeded.title,exact:true})).toBeVisible(); await expectNoHorizontalOverflow(page);
+  } finally { await seeded.database.$disconnect(); }
+});
+
+test('real mock API saves the writing snapshot and locks editing until delayed exit completes', async ({ page }) => {
+  const registered = await page.request.post('/api/v1/auth/register', { data: {
+    locale: 'en', displayName: 'Exit recovery learner', email: `${randomUUID()}@test.local`, password: 'full-mock-e2e-password',
+  } });
+  expect(registered.status()).toBe(201);
+  const learner = await registered.json() as { id: string };
+  expect((await page.request.post('/api/v1/me/onboarding/self-placement', { data: {
+    clientConfirmationId: randomUUID(), selectedLevelCode: 'FOUNDATION_1',
+  } })).status()).toBe(200);
+  const seeded = await seedJourneyAndMock(learner.id);
+  try {
+    const started = await page.request.post('/api/v1/me/ielts-mocks/attempts', { data: {
+      clientAttemptId: randomUUID(), mockTestId: seeded.mockId, mode: 'EXAM_SIMULATION',
+    } });
+    expect(started.status()).toBe(200);
+    let attempt = await started.json() as { id: string; revision: number };
+    const root = `/api/v1/me/ielts-mocks/attempts/${attempt.id}`;
+    for (const section of ['LISTENING', 'READING']) {
+      const advanced = await page.request.post(`${root}/sections/${section}/submit`, { data: { expectedRevision: attempt.revision } });
+      expect(advanced.status()).toBe(200);
+      attempt = await advanced.json() as typeof attempt;
+    }
+    await page.goto(`/ielts/mock-tests/${attempt.id}`);
+    const writing = page.locator('.bridge-response textarea').first();
+    await expect(writing).toBeEditable();
+    const text = 'Recovery writing snapshot remains available after save and exit.';
+    // Finish the real autosave before intercepting the distinct exit save.
+    // Otherwise its held response keeps busy=true and disables the exit button.
+    const autosaved = page.waitForResponse(response => response.request().method() === 'PUT'
+      && new URL(response.url()).pathname === `${root}/responses`);
+    await writing.fill(text);
+    expect((await autosaved).status()).toBe(200);
+    const exit = page.getByRole('button', { name: 'Save and exit', exact: true });
+    await expect(exit).toBeEnabled();
+    let release!: () => void;
+    let received!: () => void;
+    const blocked = new Promise<void>(resolve => { release = resolve; });
+    const pending = new Promise<void>(resolve => { received = resolve; });
+    await page.route(`**${root}/responses`, async route => {
+      // Keep the real response/persistence, delay only delivery to the UI.
+      const response = await route.fetch();
+      received();
+      await blocked;
+      await route.fulfill({ response });
+    });
+    try {
+      await exit.click();
+      await pending;
+      await expect(writing).toBeDisabled();
+      await expect(page).toHaveURL(new RegExp(`/ielts/mock-tests/${attempt.id}$`));
+      const stored = await (await page.request.get(root)).json() as { responses: Record<string, string> };
+      expect(stored.responses['writing-1']).toBe(text);
+    } finally { release(); }
+    await expect(page).toHaveURL(/\/dashboard$/u);
+    await page.unroute(`**${root}/responses`);
+    await page.goto(`/ielts/mock-tests/${attempt.id}`);
+    await expect(page.locator('.bridge-response textarea').first()).toHaveValue(text);
   } finally { await seeded.database.$disconnect(); }
 });

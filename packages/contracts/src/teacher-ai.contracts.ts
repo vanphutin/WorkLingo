@@ -29,7 +29,16 @@ export const evaluationFeedbackSchema = z.object({
 }).readonly();
 export type EvaluationFeedback = z.infer<typeof evaluationFeedbackSchema>;
 
+export const evaluationProcessingStepSchema = z.object({
+  key: z.enum(['submission', 'transcription', 'evaluation']),
+  status: z.enum(['waiting', 'queued', 'processing', 'completed', 'failed']),
+  providerName: z.string().nullable(),
+  model: z.string().nullable(),
+}).readonly();
+export type EvaluationProcessingStep = z.infer<typeof evaluationProcessingStepSchema>;
+
 export const evaluationDtoSchema = z.object({
+  processingSteps: z.array(evaluationProcessingStepSchema).min(2).max(3).readonly().optional(),
   attemptId: z.uuid(),
   status: evaluationStatusSchema,
   transcript: z.string().max(20_000).nullable(),

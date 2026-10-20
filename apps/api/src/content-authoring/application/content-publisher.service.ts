@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import type { ActivityType, LearningBlockType, Prisma } from '@prisma/client';
 import {
-  analyzeLessonSource,
+  audioScriptFingerprintText,
+  spokenScript,
   parseLessonSource,
 } from '@worklingo/content-format';
 import {
@@ -20,8 +21,13 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
+import { approvedTopicForPublication, isTopicSource } from '../../intermediate-topics/topic-source.js';
+import { ensureTopicMission } from '../../intermediate-topics/topic-mission.js';
+import { buildVocabularyPublicationReview, normalizeVocabularyExpression, validateVocabularyPublicationSelection } from './publication-vocabulary.js';
+import { analyzeReviewedSource as analyzeLessonSource, assertNarrationReviewed } from './audio-narration.js';
 
 @Injectable()
 export class ContentPublisherService {
@@ -42,6 +48,7 @@ export class ContentPublisherService {
           expectedSourceHash: input.expectedSourceHash,
           idempotencyKey: input.idempotencyKey,
           selectedAudioArtifacts: input.selectedAudioArtifacts,
+          ...(input.vocabularyReview ? { vocabularyReview: input.vocabularyReview } : {}),
         }),
       )
       .digest('hex');
@@ -143,11 +150,12 @@ export class ContentPublisherService {
 
     // 3. Audio readiness check
     const parseRes = parseLessonSource(contentImport.rawSource);
+    assertNarrationReviewed(parseRes.document);
     const audioScriptsMap = new Map<string, { script: string; hash: string }>();
     for (const script of parseRes.document.audioScripts) {
       audioScriptsMap.set(script.slug, {
-        script: script.script,
-        hash: createHash('sha256').update(script.script).digest('hex'),
+        script: spokenScript(script),
+        hash: createHash('sha256').update(audioScriptFingerprintText(script)).digest('hex'),
       });
     }
 
@@ -212,6 +220,7 @@ export class ContentPublisherService {
 
     // 4. Execute publication transaction with PostgreSQL advisory lock
     const published = await this.database.$transaction(async (tx) => {
+      if (isTopicSource(contentImport.rawSource)) await lockTopicGroups(tx);
       // Advisory transaction lock scoped to lesson slug
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${normalizedDraft.slug}))`;
 
@@ -281,6 +290,7 @@ export class ContentPublisherService {
         });
       }
 
+      const intermediateTopic = await approvedTopicForPublication(tx, lockedImport);
       const lockedSelectedArtifacts = await tx.audioArtifact.findMany({
         where: { id: { in: selectedIds } },
       });
@@ -311,6 +321,16 @@ export class ContentPublisherService {
         update: {},
         create: { slug: normalizedDraft.slug },
       });
+      // Revision zero means this new import has never been assigned or cleared.
+      // Preserve the logical lesson's group until an administrator makes an
+      // explicit draft assignment; null with a positive revision means clear.
+      const topicGroupId = lockedImport.topicGroupRevision > 0 ? lockedImport.topicGroupId : lesson.topicGroupId;
+      // Serialize expression lookup and creation across lessons, including legacy publishers.
+      for (const expression of [...new Set(normalizedDraft.wordBanks.flatMap(bank => bank.languageBlocks.map(block => normalizeVocabularyExpression(block.canonicalForm))))].sort()) {
+        await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`vocabulary:${expression}`}))`;
+      }
+      const vocabularyReview = intermediateTopic ? await buildVocabularyPublicationReview(tx, lockedImport) : null;
+      const vocabularyChoices = vocabularyReview ? validateVocabularyPublicationSelection(vocabularyReview, input.vocabularyReview) : null;
 
       // Allocate next version number
       const maxVer = await tx.lessonVersion.aggregate({
@@ -326,6 +346,7 @@ export class ContentPublisherService {
         wb: (typeof normalizedDraft.wordBanks)[number];
         blocks: Array<(typeof normalizedDraft.wordBanks)[number]['languageBlocks'][number] & { id: string }>;
       }> = [];
+      const resolvedLanguageSlugs = new Map<string, string>();
 
       for (const wb of normalizedDraft.wordBanks) {
         const wordBank = await tx.wordBank.upsert({
@@ -334,13 +355,16 @@ export class ContentPublisherService {
           create: { id: wb.id ?? randomUUID(), slug: wb.slug, name: wb.name },
         });
 
-        const blocks = [];
+        const blocks: (typeof wordBankRecords)[number]['blocks'] = [];
         for (const lb of wb.languageBlocks) {
-          const canonical = await tx.languageBlock.upsert({
-            where: { slug: lb.slug },
+          // A source-local slug can legitimately occur in different word banks.
+          // Prefer an already allocated scoped identity so later versions keep mastery IDs stable.
+          const scopedSlug = `lb-${wordBank.id}-${lb.slug}`;
+          const upsertBlock = (slug: string) => tx.languageBlock.upsert({
+            where: { slug },
             update: {},
             create: {
-              slug: lb.slug,
+              slug,
               wordBankId: wordBank.id,
               canonicalForm: lb.canonicalForm,
               meaning: lb.meaning,
@@ -353,14 +377,35 @@ export class ContentPublisherService {
               transferContexts: [...lb.transferContexts],
             },
           });
-          if (canonical.wordBankId !== wordBank.id) {
-            throw new ConflictException('Language Block belongs to another Word Bank');
+          const choice = vocabularyChoices?.get(lb.slug);
+          let canonical = choice?.action === 'reuse'
+            ? await tx.languageBlock.findUnique({ where: { id: choice.languageBlockId } })
+            : choice?.action === 'new' ? await upsertBlock(`sense-${randomUUID()}`)
+            : await tx.languageBlock.findUnique({ where: { slug: scopedSlug } });
+          if (!canonical && choice?.action === 'reuse') throw new ConflictException({ code: 'VOCABULARY_REVIEW_STALE', message: 'The selected meaning no longer exists. Review vocabulary again.' });
+          if (!canonical) {
+            canonical = await upsertBlock(lb.slug);
+            if (canonical.wordBankId !== wordBank.id) canonical = await upsertBlock(scopedSlug);
           }
-          blocks.push({ ...lb, id: canonical.id });
+          if (choice?.action !== 'reuse' && canonical.wordBankId !== wordBank.id) {
+            throw new ConflictException({ code: 'LANGUAGE_BLOCK_IDENTITY_CONFLICT',
+              message: 'Vocabulary identity is already owned by another word bank.', statusCode: 409 });
+          }
+          resolvedLanguageSlugs.set(lb.slug, canonical.slug);
+          const resolved = { ...lb, id: canonical.id, slug: canonical.slug, ...(choice?.action === 'reuse'
+            ? { canonicalForm: canonical.canonicalForm, meaning: canonical.meaning, pronunciation: canonical.pronunciation || lb.pronunciation } : {}) };
+          const repeated = blocks.findIndex(block => block.id === canonical.id);
+          if (repeated < 0) blocks.push(resolved);
+          else {
+            const previous = blocks[repeated]!;
+            blocks[repeated] = { ...previous, examples: [...new Set([...previous.examples, ...resolved.examples])],
+              collocations: [...new Set([...previous.collocations, ...resolved.collocations])], commonErrors: [...new Set([...previous.commonErrors, ...resolved.commonErrors])],
+              transferContexts: [...new Set([...previous.transferContexts, ...resolved.transferContexts])] };
+          }
         }
 
         const wbHash = createHash('sha256')
-          .update(JSON.stringify(wb))
+          .update(JSON.stringify(intermediateTopic ? { source: wb, resolved: blocks } : wb))
           .digest('hex');
 
         let wbVersion = await tx.wordBankVersion.findFirst({
@@ -383,10 +428,10 @@ export class ContentPublisherService {
             },
           });
 
-          for (const lb of wb.languageBlocks) {
+          for (const lb of blocks) {
             await tx.languageBlockVersion.create({
               data: {
-                id: lb.id ?? randomUUID(),
+                id: randomUUID(),
                 wordBankVersionId: wbVersion.id,
                 slug: lb.slug,
                 canonicalForm: lb.canonicalForm,
@@ -408,6 +453,7 @@ export class ContentPublisherService {
 
       // Build UUID-backed snapshot conforming to lessonSnapshotSchema
       const snapshot = {
+        ...(intermediateTopic ? { intermediateTopic } : {}),
         ...(normalizedDraft.foundation ? { foundation: normalizedDraft.foundation } : {}),
         title: normalizedDraft.title,
         contentBlocks: normalizedDraft.contentBlocks.map((b) => ({
@@ -456,6 +502,8 @@ export class ContentPublisherService {
               })),
             };
           }
+          const audioRef = parseRes.document.activities.find(act => act.slug === a.slug)?.audioRef;
+          const audioText = audioRef ? audioScriptsMap.get(audioRef)?.script : undefined;
           return {
             id: a.id ?? randomUUID(),
             slug: a.slug,
@@ -464,8 +512,8 @@ export class ContentPublisherService {
             learningBlock: a.learningBlock,
             skills: [...a.skills],
             contentReferences: [...a.contentReferences],
-            languageBlockReferences: [...a.languageBlockReferences],
-            payload,
+            languageBlockReferences: a.languageBlockReferences.map(slug => resolvedLanguageSlugs.get(slug) ?? slug),
+            payload: audioText ? { ...(payload as Record<string, unknown>), audioText } : payload,
           };
         }),
       };
@@ -484,6 +532,15 @@ export class ContentPublisherService {
           parsedContent: validatedSnapshot as unknown as Prisma.InputJsonValue,
         },
       });
+
+      if (vocabularyReview && vocabularyChoices) {
+        await tx.lessonVocabularyUsage.createMany({ data: vocabularyReview.entries.map(entry => ({
+          lessonVersionId: newVersion.id, sourceWordBankSlug: entry.sourceBankSlug, sourceSlug: entry.sourceSlug,
+          languageBlockId: wordBankRecords.flatMap(record => record.blocks).find(block => block.slug === resolvedLanguageSlugs.get(entry.sourceSlug))!.id,
+          decision: vocabularyChoices.get(entry.sourceSlug)!.action,
+          topicGroupId: vocabularyReview.topic?.id ?? null, topicName: vocabularyReview.topic?.name ?? null, topicNameEn: vocabularyReview.topic?.nameEn ?? null,
+        })) });
+      }
 
       // Materialize ContentBlocks
       for (const [order, block] of validatedSnapshot.contentBlocks.entries()) {
@@ -560,7 +617,8 @@ export class ContentPublisherService {
       // Update Lesson currentPublishedVersionId
       await tx.lesson.update({
         where: { id: lesson.id },
-        data: { currentPublishedVersionId: newVersion.id },
+        data: { currentPublishedVersionId: newVersion.id,
+          ...(intermediateTopic ? { topicGroupId } : {}) },
       });
 
       // Update ContentImport status to PUBLISHED
@@ -573,6 +631,12 @@ export class ContentPublisherService {
           updatedById: actorId,
         },
       });
+
+      if (intermediateTopic) {
+        await ensureTopicMission(tx, { id: lesson.id, title: normalizedDraft.title, objective: normalizedDraft.objective });
+        await tx.contentImport.updateMany({ where: { lessonId: lesson.id },
+          data: { topicGroupId, topicGroupRevision: { increment: 1 } } });
+      }
 
       // Record AuditLog
       await tx.auditLog.create({
@@ -618,6 +682,13 @@ export class ContentPublisherService {
       });
 
       return responseBody;
+    }).catch((error: unknown) => {
+      const code = error && typeof error === 'object' && 'code' in error ? error.code : undefined;
+      if (code === 'P2003' || code === 'P2025' || code === 'P2034') {
+        throw new ConflictException({ code: 'CONTENT_PUBLICATION_CONFLICT',
+          message: 'Content or topic group changed concurrently. Refresh before publishing again.', statusCode: 409 });
+      }
+      throw error;
     });
     await this.pilotMetrics?.recordBestEffort({
       dimensions: { outcome: 'completed' },

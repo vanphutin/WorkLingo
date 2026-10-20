@@ -1,0 +1,47 @@
+{
+  "name": "single-load",
+  "workers": 1,
+  "load": true,
+  "started": {
+    "wall": "2026-10-20T19:44:32.944Z",
+    "monotonicNs": "6149882614000"
+  },
+  "finished": {
+    "wall": "2026-10-20T19:45:29.033Z",
+    "monotonicNs": "6205971536000"
+  },
+  "children": [
+    {
+      "role": "placement0",
+      "started": {
+        "wall": "2026-10-20T19:44:32.944Z",
+        "monotonicNs": "6149882625500"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:45:09.291Z",
+        "monotonicNs": "6186229635000"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "boundary",
+      "log": "single-load-placement0.log"
+    },
+    {
+      "role": "load",
+      "started": {
+        "wall": "2026-10-20T19:44:32.950Z",
+        "monotonicNs": "6149889124200"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:45:29.033Z",
+        "monotonicNs": "6205971523900"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/jobs-worker.integration.spec.ts test/integration/placement-attempt.integration.spec.ts test/integration/placement-confirmation.integration.spec.ts test/integration/onboarding-self-placement.integration.spec.ts test/integration/ielts-mock-workflow.integration.spec.ts test/integration/ielts-study-session.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "single-load-load.log"
+    }
+  ]
+}

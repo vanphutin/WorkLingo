@@ -1,0 +1,17 @@
+{
+  "mode": "production",
+  "title": "public authenticated CTA and appearance fallbacks retain real destinations",
+  "status": "passed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "authenticatedCTA": true,
+      "systemDark": true,
+      "reducedMotion": true,
+      "increasedContrast": true,
+      "forcedColors": true,
+      "realAPI": false
+    }
+  ]
+}

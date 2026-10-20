@@ -40,6 +40,8 @@ export interface ScheduledReviewItem extends ReviewCandidate {
 }
 
 export interface ReviewSelectionOptions {
+  programId?: string;
+  languageBlockIds?: readonly string[];
   skill?: ActivityType;
   limit?: number;
   includeWeakUnscheduled?: boolean;

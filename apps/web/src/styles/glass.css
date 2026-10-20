@@ -1,0 +1,83 @@
+/* Opaque baseline first; no supported blur is required for legibility. */
+.glass-surface {
+  --_glass-bg: var(--glass-bg);
+  --_glass-blur: var(--glass-blur);
+  --_glass-tint: var(--glass-tint);
+  position: relative;
+  color: var(--text-primary);
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-surface[data-glass-variant='clear'] { --_glass-bg: var(--glass-bg-clear); --_glass-blur: 6px; }
+.glass-surface[data-glass-variant='tinted'] { --_glass-bg: var(--glass-bg-tinted); --_glass-blur: 28px; }
+.glass-surface[data-glass-tint='primary'] { --_glass-tint: var(--glass-tint-primary); }
+.glass-surface[data-glass-tint='indigo'] { --_glass-tint: var(--glass-tint-indigo); }
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-surface:not([data-glass-variant='solid']) {
+    background-color: var(--_glass-bg);
+    background-image: linear-gradient(var(--_glass-tint), var(--_glass-tint));
+    border-color: var(--glass-border);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+    -webkit-backdrop-filter: blur(var(--_glass-blur)) saturate(var(--glass-saturation));
+    backdrop-filter: blur(var(--_glass-blur)) saturate(var(--glass-saturation));
+  }
+}
+
+/* Nested surfaces become solid even if a consumer accidentally compounds material. */
+.glass-surface .glass-surface,
+:root[data-reduce-transparency='true'] .glass-surface,
+:root[data-reduce-transparency='true'] .glass-surface:not([data-glass-variant='solid']) {
+  background-color: var(--surface-elevated);
+  background-image: none;
+  border-color: var(--border-strong);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active) {
+  .glass-surface.glass-surface {
+    background-color: var(--surface-elevated);
+    background-image: none;
+    border-color: var(--border-strong);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+.transparency-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-block-size: 44px;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+.transparency-control input {
+  flex: 0 0 auto;
+  inline-size: 20px;
+  block-size: 20px;
+  margin: 0;
+  accent-color: var(--color-primary-fill);
+}
+.transparency-control small {
+  display: block;
+  margin-block-start: var(--space-1);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.transparency-control input:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+.appearance-preferences.appearance-preferences {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-4);
+  min-inline-size: 0;
+}
+.appearance-preferences h2 { margin: 0; font-size: var(--text-h3); }
+.appearance-preferences .theme-control { align-self: flex-start; min-block-size: 44px; }

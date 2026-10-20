@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { CheckpointPanel } from './checkpoint-panel';
 import { ErrorBankPanel } from './error-bank-panel';
 import { MasteryOverview } from './mastery-overview';
+import { GlassSurface } from '../../components/glass-surface';
 
 export function MasteryWorkspace() {
   const t = useT('mastery', masteryMessages);
@@ -18,12 +19,12 @@ export function MasteryWorkspace() {
       <span className="eyebrow">{t('eyebrow')}</span>
       <h1>{t('title')}</h1>
       <p>{t('introduction')}</p>
-      <nav className="evidence-section-links" aria-label={t('sections')}>
+      <GlassSurface className="evidence-nav-surface"><nav className="evidence-section-links" aria-label={t('sections')}>
         <a href="#memory-heading">{t('memory')}</a>
         <a href="#mastery-heading">{t('map')}</a>
         <a href="#errors-heading">{t('errors')}</a>
         <a href="#checkpoint-heading">{t('checkpoint')}</a>
-      </nav>
+      </nav></GlassSurface>
     </header>
     <MasteryOverview key={evidenceLevel} />
     <ErrorBankPanel />

@@ -1,0 +1,19 @@
+{
+  "title": "settings real locale theme transparency persistence and native narrow focus long text",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": 0,
+      "focus": {
+        "left": 22,
+        "right": 298,
+        "top": 157.890625,
+        "bottom": 686.203125,
+        "outline": 3
+      }
+    }
+  ]
+}

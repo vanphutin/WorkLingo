@@ -22,10 +22,12 @@ const attempt = {
   startedAt, submittedAt: null, completedAt: null, updatedAt: startedAt, mockTestVersion: version,
 };
 
-async function setup(options: { journey?: boolean; existing?: typeof attempt | null } = {}) {
+async function setup(options: { journey?: boolean; existing?: typeof attempt | null; earlyAccess?: boolean } = {}) {
   const existing = options.existing ?? null;
+  const profile = { ieltsEarlyAccess: options.earlyAccess ?? false, user: { status: 'ACTIVE', role: 'LEARNER' } };
   const tx = {
     $executeRaw: vi.fn(),
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(profile) },
     ieltsBandJourney: { findUnique: vi.fn().mockResolvedValue(options.journey === false ? null : { id: 'journey' }) },
     ieltsMockAttempt: {
       findUnique: vi.fn().mockResolvedValue(existing), findFirst: vi.fn().mockResolvedValue(existing), create: vi.fn().mockResolvedValue(attempt),
@@ -35,6 +37,7 @@ async function setup(options: { journey?: boolean; existing?: typeof attempt | n
     audioArtifact: { findFirst: vi.fn() },
   };
   const database = {
+    learnerProfile: { findUnique: vi.fn().mockResolvedValue(profile) },
     ieltsBandJourney: { findUnique: vi.fn().mockResolvedValue(options.journey === false ? null : { id: 'journey' }) },
     ieltsMockTest: { findMany: vi.fn().mockResolvedValue([{ id: mockId, status: 'PUBLISHED', currentPublishedVersion: version }]) },
     ieltsMockAttempt: { findFirst: vi.fn().mockResolvedValue(existing), findMany: vi.fn().mockResolvedValue([]) },
@@ -43,10 +46,46 @@ async function setup(options: { journey?: boolean; existing?: typeof attempt | n
   };
   const storage = { read: vi.fn() };
   const module = await Test.createTestingModule({ providers: [IeltsMockLearnerService, { provide: PrismaService, useValue: database }, { provide: ObjectStorage, useValue: storage }] }).compile();
-  return { service: module.get(IeltsMockLearnerService), tx, storage };
+  return { service: module.get(IeltsMockLearnerService), tx, storage, database };
 }
 
 describe('IeltsMockLearnerService', () => {
+  it('opens the catalog and direct start for a granted learner without creating a Band journey or scores', async () => {
+    const { service, tx } = await setup({ journey: false, earlyAccess: true });
+    await expect(service.catalog(learnerId)).resolves.toMatchObject({ eligible: true, lockedReason: null,
+      mocks: [expect.objectContaining({ id: mockId })] });
+    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'EXAM_SIMULATION' }))
+      .resolves.toMatchObject({ currentSection: 'LISTENING', responses: {}, submittedSections: [], submittedAt: null });
+    const created = tx.ieltsMockAttempt.create.mock.calls[0]?.[0] as { data: Record<string, unknown> };
+    expect(created.data).not.toHaveProperty('objectiveScore');
+    expect(created.data).not.toHaveProperty('reportSnapshot');
+  });
+
+  it('relocks the catalog and direct start after revocation without a journey', async () => {
+    const { service, database, tx } = await setup({ journey: false, earlyAccess: true });
+    const revoked = { ieltsEarlyAccess: false, user: { status: 'ACTIVE', role: 'LEARNER' } };
+    database.learnerProfile.findUnique.mockResolvedValue(revoked);
+    tx.learnerProfile.findUnique.mockResolvedValue(revoked);
+    await expect(service.catalog(learnerId)).resolves.toMatchObject({ eligible: false, lockedReason: 'BAND_PATHWAY_REQUIRED', mocks: [] });
+    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'EXAM_SIMULATION' })).rejects.toBeInstanceOf(ConflictException);
+    expect(tx.ieltsMockAttempt.create).not.toHaveBeenCalled();
+  });
+
+  it('keeps publication and allowed-mode gates for a granted learner', async () => {
+    const { service, database, tx } = await setup({ journey: false, earlyAccess: true });
+    database.ieltsMockTest.findMany.mockResolvedValue([]);
+    tx.ieltsMockTest.findUnique.mockResolvedValue(null);
+    await expect(service.catalog(learnerId)).resolves.toMatchObject({ eligible: false, lockedReason: 'MOCK_NOT_PUBLISHED' });
+    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'EXAM_SIMULATION' }))
+      .rejects.toMatchObject({ response: { code: 'IELTS_MOCK_NOT_PUBLISHED' } });
+    tx.ieltsMockTest.findUnique.mockResolvedValue({ id: mockId, status: 'PUBLISHED', currentPublishedVersion: {
+      ...version, content: { ...version.content, allowedModes: ['PRACTICE'] },
+    } });
+    await expect(service.start(learnerId, { clientAttemptId, mockTestId: mockId, mode: 'EXAM_SIMULATION' }))
+      .rejects.toMatchObject({ response: { code: 'IELTS_MOCK_MODE_NOT_ALLOWED' } });
+    expect(tx.ieltsMockAttempt.create).not.toHaveBeenCalled();
+  });
+
   it('keeps the catalog locked until a Band Pathway journey exists', async () => {
     const { service } = await setup({ journey: false });
     await expect(service.catalog(learnerId)).resolves.toEqual({ eligible: false, lockedReason: 'BAND_PATHWAY_REQUIRED', mocks: [] });
@@ -61,6 +100,7 @@ describe('IeltsMockLearnerService', () => {
     expect(result.sectionContent.reading).toEqual([]);
     expect(result.sectionContent.writing).toEqual([]);
     expect(result.sectionContent.speaking).toEqual([]);
+    expect(tx.learnerProfile.findUnique).not.toHaveBeenCalled();
     expect(tx.ieltsMockAttempt.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ mockTestVersionId: versionId }) }));
   });
 
@@ -131,3 +171,5 @@ describe('IeltsMockLearnerService', () => {
     expect(tx.ieltsMockAttempt.update).not.toHaveBeenCalled();
   });
 });
+
+it('blocks new V3 paper starts on rollback even for grant holders',async()=>{const {service,tx}=await setup({journey:false,earlyAccess:true});tx.ieltsMockTest.findUnique.mockResolvedValue({id:mockId,status:'PUBLISHED',currentPublishedVersion:{...version,content:{...version.content,schemaVersion:2,allowedModes:['PRACTICE'],qualification:{reviewedBy:'Reviewer',reviewedAt:startedAt.toISOString(),evidenceRevision:'reviewed',qualifiedModes:['PRACTICE']}}}});await expect(service.start(learnerId,{clientAttemptId,mockTestId:mockId,mode:'PRACTICE'})).rejects.toMatchObject({response:{code:'IELTS_V3_NOT_AVAILABLE'}});expect(tx.ieltsMockAttempt.create).not.toHaveBeenCalled();});

@@ -1,11 +1,11 @@
 .orientation-player { min-height: calc(100dvh - 5rem); max-width: 960px; margin: 0 auto; padding: clamp(1rem, 3vw, 2.5rem); color: var(--foreground); }
 .orientation-player--loading, .orientation-player--locked, .orientation-player--intro, .orientation-player--complete { display: grid; align-content: center; justify-items: start; max-width: 720px; }
-.orientation-player__kicker { color: var(--primary); font-size: .8rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.orientation-player__kicker { color: var(--primary); font-size: .875rem; font-weight: 650; letter-spacing: 0; text-transform: none; }
 .orientation-player__header, .orientation-player__meta, .orientation-player__actions, .orientation-narration__settings { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; }
 .orientation-player__progress { height: 6px; margin: 1rem 0 2rem; background: var(--border); overflow: hidden; border-radius: 999px; }
 .orientation-player__progress span { display: block; height: 100%; background: var(--primary-fill); transition: width .2s ease; }
-.orientation-player__slide { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: clamp(1rem, 4vw, 2.5rem); }
-.orientation-player__slide h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; margin: 1.5rem 0; }
+.orientation-player__slide { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-panel); padding: clamp(1rem, 4vw, 2.5rem); }
+.orientation-player__slide h1 { font-size: clamp(1.75rem, 3vw, 2.75rem); line-height: 1.2; letter-spacing: -.035em; margin: 1.5rem 0; }
 .orientation-player__slide img { display: block; width: 100%; max-height: 420px; object-fit: cover; border-radius: 8px; }
 .orientation-player__meta { color: var(--muted); font-size: .9rem; }
 .orientation-player__body { font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.65; max-width: 68ch; }
@@ -16,14 +16,39 @@
 .orientation-transcript { margin: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; }
 .orientation-question { border: 0; padding: 1rem 0; display: grid; gap: .6rem; }
 .orientation-question legend { font-size: 1.2rem; font-weight: 750; margin-bottom: .75rem; }
-.orientation-question label { display: flex; gap: .7rem; padding: .85rem; border: 1px solid var(--border); border-radius: 7px; cursor: pointer; }
+.orientation-question label { display: flex; gap: .7rem; padding: .85rem; border: 1px solid var(--border); border-radius: var(--radius-control); cursor: pointer; }
 .orientation-feedback { padding: .85rem 1rem; border-left: 4px solid; }
 .orientation-feedback.correct { background: var(--primary-soft); border-color: var(--primary); }
 .orientation-feedback.incorrect { background: var(--danger-soft); border-color: var(--danger); }
-.orientation-player button, .orientation-player__primary { min-height: 44px; border: 1px solid var(--primary); border-radius: 6px; padding: .65rem 1rem; font-weight: 700; text-decoration: none; cursor: pointer; }
+.orientation-player button, .orientation-player__primary { min-height: 44px; border: 1px solid var(--primary); border-radius: var(--radius-control); padding: .65rem 1rem; font-weight: 700; text-decoration: none; cursor: pointer; }
 .orientation-player__primary { background: var(--primary-fill); color: var(--on-primary); }
 .orientation-player button:disabled { opacity: .5; cursor: not-allowed; }
 .orientation-player button:focus-visible, .orientation-player a:focus-visible, .orientation-player input:focus-visible, .orientation-player select:focus-visible, .orientation-player summary:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
 .orientation-player__actions { margin-top: 2rem; }
 @media (max-width: 620px) { .orientation-player { padding: .75rem; } .orientation-player__slide { border-radius: 8px; } .orientation-player__actions button { flex: 1; } }
 @media (prefers-reduced-motion: reduce) { .orientation-player__progress span { transition: none; } }
+
+/* Orientation owner: calm solid slides with a separate navigation material. */
+.orientation-player { min-width: 0; width: min(100%, 68rem); overflow-wrap: anywhere; }
+.orientation-player__control-surface { padding: .75rem 1rem; margin-block-end: 1.25rem; }
+.orientation-player__header a { display: inline-flex; align-items: center; min-height: 44px; }
+.orientation-player__header p { margin: 0; line-height: 1.6; }
+.orientation-player__slide { min-width: 0; box-shadow: none; padding: clamp(1rem, 3vw, 2.5rem); }
+.orientation-player__body { color: var(--text-primary); line-height: 1.85; }
+.orientation-player__meta { gap: .75rem; font-size: .9375rem; color: var(--text-secondary); }
+.orientation-player .orientation-narration { min-width: 0; padding: 1rem; border-inline-start-width: 3px; border-radius: var(--radius-control); background: var(--surface-secondary); }
+.orientation-player :is(.audio-speech-controls, .audio-settings-actions, .orientation-narration__settings, fieldset, .orientation-question label) { min-width: 0; max-width: 100%; }
+.orientation-player .audio-settings-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.orientation-player :is(.audio-settings-actions, .orientation-narration__settings) label { display: grid; min-width: 0; max-width: 100%; gap: .5rem; }
+.orientation-player :is(select, input[type=range], audio) { width: 100%; min-width: 0; max-width: 100%; }
+.orientation-player :is(select, input[type=range]) { min-height: 44px; font: inherit; }
+.orientation-player select { padding: .5rem; color: var(--text-primary); background: var(--surface-primary); border: 1px solid var(--control-border); border-radius: var(--radius-control); }
+.orientation-player :is(button, a, input, summary, select) { min-width: 0; max-width: 100%; scroll-margin-block: 1rem; }
+.orientation-player :is(button, a) { white-space: normal; overflow-wrap: anywhere; }
+.orientation-player button:not(.orientation-player__primary) { background: var(--surface-primary); color: var(--primary); }
+.orientation-player button:disabled { opacity: 1; color: var(--text-disabled); background: var(--surface-secondary); border-color: var(--border); }
+.orientation-player .orientation-question label { min-height: 48px; line-height: 1.65; align-items: start; border-color: var(--control-border); }
+.orientation-player .orientation-question input { flex: 0 0 auto; accent-color: var(--primary); }
+.orientation-player .orientation-player__actions { padding-block-start: 1.25rem; border-block-start: 1px solid var(--border); gap: .75rem; }
+.orientation-player .orientation-transcript { color: var(--text-secondary); line-height: 1.75; }
+@media (max-width: 399px) { .orientation-player .orientation-player__slide, .orientation-player .orientation-narration { padding: .75rem; } .orientation-player .orientation-player__actions { align-items: stretch; flex-direction: column; } }

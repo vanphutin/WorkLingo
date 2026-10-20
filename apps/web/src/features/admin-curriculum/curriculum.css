@@ -41,7 +41,7 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color var(--duration-micro) ease, border-color var(--duration-micro) ease, color var(--duration-micro) ease, box-shadow var(--duration-micro) ease;
   border: 1px solid transparent;
   text-decoration: none;
 }
@@ -381,3 +381,588 @@
   color: var(--foreground);
   padding: 0.25rem 0;
 }
+
+/* Preserved curriculum controls: scoped layout; Liquid Glass colors remain canonical. */
+
+
+.curriculum-container .curriculum-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.curriculum-container .curriculum-header p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.curriculum-container .action-button:focus-visible {
+  outline: 2px solid var(--primary-fill);
+  outline-offset: 2px;
+}
+
+.curriculum-container .action-button-primary:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.96);
+}
+
+.curriculum-container .action-button-secondary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.curriculum-container .action-button:disabled, .curriculum-container .action-button-icon:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.curriculum-container .curriculum-form-card h2, .curriculum-container .curriculum-form-card h3, .curriculum-container .curriculum-form-card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  color: var(--foreground);
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--border);
+}
+.curriculum-container .curriculum-tabs-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.25rem 0 0.875rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: thin;
+}
+
+.curriculum-container .curriculum-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  transition: background-color var(--duration-fast, 150ms), border-color var(--duration-fast, 150ms);
+  white-space: normal;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.curriculum-container .curriculum-tab:hover {
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border-color: var(--muted);
+}
+
+.curriculum-container .curriculum-tab-active {
+  background: var(--surface-soft) !important;
+  color: var(--foreground) !important;
+  border-color: var(--control-border) !important;
+  box-shadow: none;
+}
+
+.curriculum-container .curriculum-tab-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  color: inherit;
+}
+.curriculum-container .curriculum-nav-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.875rem 1.125rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: none;
+}
+
+.curriculum-container .search-input-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1 1 280px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.curriculum-container .search-icon {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.875rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.curriculum-container .search-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 0.45rem 2rem 0.45rem 2.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  transition: background-color var(--duration-fast, 150ms), border-color var(--duration-fast, 150ms);
+}
+
+.curriculum-container .search-input:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-color: var(--primary-fill);
+  box-shadow: none;
+  background: var(--surface);
+}
+
+.curriculum-container .search-clear-btn {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.8125rem;
+  border-radius: 0.25rem;
+}
+
+.curriculum-container .search-clear-btn:hover {
+  color: var(--foreground);
+}
+
+.curriculum-container .toolbar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+}
+
+.curriculum-container .toolbar-select {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 38px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.curriculum-container .toolbar-select:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-color: var(--primary-fill);
+}
+
+.curriculum-container .toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 38px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color var(--duration-fast, 150ms), border-color var(--duration-fast, 150ms);
+  white-space: normal;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.curriculum-container .toolbar-btn:hover {
+  background: var(--surface);
+  border-color: var(--muted);
+}
+
+.curriculum-container .toolbar-btn-active {
+  background: var(--surface-soft) !important;
+  color: var(--foreground) !important;
+  border-color: var(--control-border) !important;
+}
+
+.curriculum-container .toolbar-separator {
+  width: 1px;
+  height: 22px;
+  background: var(--border);
+  margin: 0 0.25rem;
+}
+.curriculum-container .collapse-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--duration-fast, 150ms), border-color var(--duration-fast, 150ms);
+  flex-shrink: 0;
+}
+
+.curriculum-container .collapse-toggle-btn:hover {
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border-color: var(--primary-fill);
+}
+
+.curriculum-container .collapse-summary {
+  background: var(--surface-soft) !important;
+  color: var(--foreground) !important;
+  border-color: var(--control-border) !important;
+  font-weight: 600 !important;
+}
+
+.curriculum-container .compact-lessons-chip {
+  margin-top: 0.45rem;
+  font-size: 0.775rem;
+  color: var(--muted);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.curriculum-container .tree-overview-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 0.875rem;
+  margin-bottom: 1.5rem;
+  box-shadow: none;
+  transition: background-color var(--duration-fast, 150ms), border-color var(--duration-fast, 150ms);
+}
+
+.curriculum-container .tree-overview-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.35rem;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.curriculum-container .tree-overview-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.curriculum-container .tree-overview-title-group h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.curriculum-container .tree-overview-title-group p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.curriculum-container .tree-overview-content {
+  padding: 1.25rem 1.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  overflow-x: auto;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.curriculum-container .tree-node-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  white-space: pre;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.375rem;
+  transition: background 0.12s ease;
+}
+
+.curriculum-container .tree-node-row:hover {
+  background: var(--surface-soft);
+}
+
+.curriculum-container .tree-branch-line {
+  color: var(--muted);
+  user-select: none;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.curriculum-container .tree-node-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--foreground);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: left;
+  border-radius: 0.25rem;
+  transition: color 0.12s ease;
+}
+
+.curriculum-container .tree-node-btn:hover {
+  color: var(--primary-fill);
+  text-decoration: underline;
+}
+
+.curriculum-container .tree-badge-sm {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.45rem;
+  line-height: 1;
+}
+
+.curriculum-container .tree-program-title {
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.curriculum-container .tree-node-empty {
+  opacity: 0.65;
+  font-style: italic;
+  font-size: 0.8125rem;
+}
+
+.curriculum-container .tree-empty-text {
+  color: var(--muted);
+}
+
+.curriculum-container .status-program-available {
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border: 1px solid var(--control-border);
+}
+
+.curriculum-container .status-program-coming_soon {
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border: 1px solid var(--control-border);
+}
+
+.curriculum-container .status-program-in_development {
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border: 1px solid var(--control-border);
+}
+
+@keyframes jumpHighlightAnim {
+  .curriculum-container 0% { box-shadow: 0 0 0 3px var(--primary-fill); }
+}
+
+@keyframes jumpHighlightAnim {
+  .curriculum-container 50% { box-shadow: none; }
+}
+
+@keyframes jumpHighlightAnim {
+  .curriculum-container 100% { box-shadow: none; }
+}
+
+.curriculum-container .jump-highlight {
+  animation: jumpHighlightAnim 1.8s ease-out;
+}
+.curriculum-container .program-folder {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.curriculum-container .program-folder-header {
+  background: var(--surface-soft);
+  padding: 1.15rem 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+
+.curriculum-container .program-folder-title-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.curriculum-container .program-folder-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.curriculum-container .program-folder-content {
+  padding: 1.25rem;
+}
+
+.curriculum-container .program-paths-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.curriculum-container .status-badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.curriculum-container .status-PUBLISHED::before {
+  background-color: var(--surface-soft);
+  box-shadow: none;
+}
+
+.curriculum-container .status-DRAFT::before {
+  background-color: var(--surface-soft);
+}
+
+.curriculum-container .status-ARCHIVED::before {
+  background-color: var(--surface-soft);
+}
+
+.curriculum-container .level-header .node-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+.curriculum-container .level-header .node-meta[translate="no"] {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.775rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border: 1px solid var(--control-border);
+}
+
+.curriculum-container .mission-card:hover {
+  border-color: var(--control-border);
+  box-shadow: none;
+}
+
+.curriculum-container .mission-header .node-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+.curriculum-container .mission-header .action-button:has-text("Foundation"), .curriculum-container .mission-header button[aria-label*="Foundation"] {
+  border-color: var(--control-border);
+  color: var(--foreground);
+  background: var(--surface-soft);
+}
+
+.curriculum-container .lesson-item:hover {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+}
+
+.curriculum-container .lesson-item code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.curriculum-container .lesson-item .node-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.curriculum-container .curriculum-empty-hint {
+  padding: 1.25rem;
+  border: 1.5px dashed var(--border);
+  border-radius: 0.625rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+  background: var(--surface-soft);
+  margin: 0.5rem 0;
+}
+
+.curriculum-container .curriculum-empty-hint-sm {
+  padding: 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.curriculum-container .foundation-editor-header h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  color: var(--foreground);
+}
+
+.curriculum-container .foundation-editor-header p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.curriculum-container .foundation-form-grid input:focus, .curriculum-container .foundation-form-grid select:focus, .curriculum-container .foundation-form-grid textarea:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-color: var(--control-border);
+  box-shadow: none;
+}
+.curriculum-container.authoring-experience { min-width: 0; overflow-x: visible; }

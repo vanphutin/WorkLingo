@@ -3,12 +3,19 @@
 import Link from 'next/link';
 import { useAdminContent } from './i18n';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { adminContentLifecycleClient } from '../../lib/api/admin-content-lifecycle-client';
 
 import type { ContentImportDto } from '@worklingo/contracts';
+import './authoring-experience.css';
 
 interface ContentListProps {
   readonly imports: readonly ContentImportDto[];
+  readonly onRemoved?: (result: { id: string; action: 'deleted' | 'archived' }) => void;
+  readonly onReload?: () => Promise<void>;
+  readonly newImportHref?: string;
+  readonly newImportLabel?: string;
+  readonly getItemHref?: (item: ContentImportDto) => string;
 }
 
 function extractLessonInfo(rawSource: string): { title: string; slug: string } {
@@ -19,31 +26,76 @@ function extractLessonInfo(rawSource: string): { title: string; slug: string } {
   return { title, slug };
 }
 
-export function ContentList({ imports }: ContentListProps) {
-  const { t, date, label } = useAdminContent();
+export function ContentList({ imports, onRemoved, onReload, newImportHref = '/admin/content/new', newImportLabel, getItemHref }: ContentListProps) {
+  const { t, date, label, message } = useAdminContent();
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
+  const mutationInFlight = useRef(false);
+  const requests = useRef(new Map<string, { revision: number; action: 'deleted' | 'archived'; key: string }>());
+
+  async function reload() {
+    if (!onReload || mutationInFlight.current) return;
+    mutationInFlight.current = true;
+    setBusyId('reload');
+    try { await onReload(); setError(null); }
+    catch (cause) { setError(cause); }
+    finally { mutationInFlight.current = false; setBusyId(null); }
+  }
+
+  async function remove(item: ContentImportDto) {
+    if (mutationInFlight.current) return;
+    const { title } = extractLessonInfo(item.rawSource);
+    const hasHistory = Boolean(item.lessonId || item.lessonVersionId);
+    const action = hasHistory ? 'archived' : 'deleted';
+    if (!window.confirm(t(hasHistory ? 'confirmArchiveLesson' : 'confirmDeleteDraft', { title }))) return;
+    mutationInFlight.current = true;
+    setBusyId(item.id);
+    setError(null);
+    let request = requests.current.get(item.id);
+    if (!request || request.revision !== item.draftRevision || request.action !== action) {
+      request = { revision: item.draftRevision, action, key: crypto.randomUUID() };
+      requests.current.set(item.id, request);
+    }
+    try {
+      const result = await adminContentLifecycleClient.remove('lesson', item.id, {
+        expectedRevision: request.revision, expectedAction: action, idempotencyKey: request.key,
+      });
+      requests.current.delete(item.id);
+      onRemoved?.(result);
+    } catch (cause) {
+      setError(cause);
+    } finally {
+      mutationInFlight.current = false;
+      setBusyId(null);
+    }
+  }
   if (imports.length === 0) {
     return (
-      <div className="content-list-empty" role="region" aria-label={t('importsRegion')}>
+      <div className="content-list-empty authoring-experience" role="region" aria-label={t('importsRegion')}>
         <div className="empty-card">
-          <h2>{t('importsEmpty')}</h2>
+          <h1>{t('importsEmpty')}</h1>
           <p>{t('importsEmptyHelp')}</p>
-          <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
+          <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
         </div>
       </div>
+
     );
   }
 
   return (
-    <div className="content-list-container" role="region" aria-label={t('importsRegion')}>
+    <div className="content-list-container authoring-experience">
       <div className="content-list-header">
         <div>
-          <h2>{t('allImports', { count: imports.length })}</h2>
+          <h1>{t('allImports', { count: imports.length })}</h1>
           <p className="subtitle">{t('importsHelp')}</p>
         </div>
-        <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
+        <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
       </div>
 
-      <div className="content-table-wrapper">
+      <div className="content-table-wrapper" tabIndex={0} role="region" aria-label={t('importsRegion')}>
+        {error ? <div className="error-card" role="alert"><p>{message(error)}</p>
+          {onReload ? <button type="button" disabled={busyId !== null} onClick={() => { void reload(); }}>{t('reloadImports')}</button> : null}
+        </div> : null}
         <table className="content-table">
           <thead>
             <tr>
@@ -58,7 +110,8 @@ export function ContentList({ imports }: ContentListProps) {
             {imports.map((item) => {
               const { title, slug } = extractLessonInfo(item.rawSource);
               const formattedDate = date(item.updatedAt);
-              const actionLabel = item.status === 'PUBLISHED' ? t('view') : t('openDraft');
+              const actionLabel = item.status === 'PUBLISHED' || item.status === 'ARCHIVED' ? t('view') : t('openDraft');
+              const removeLabel = t(item.lessonId || item.lessonVersionId ? 'archiveLesson' : 'deleteDraft');
 
               return (
                 <tr key={item.id} className={`status-row status-${item.status.toLowerCase()}`}>
@@ -83,11 +136,16 @@ export function ContentList({ imports }: ContentListProps) {
                   </td>
                   <td>
                     <Link
-                      href={`/admin/content/${item.id}`}
+                      href={getItemHref ? getItemHref(item) : `/admin/content/${item.id}`}
                       className="btn btn-sm btn-secondary"
                     >
                       {actionLabel}
                     </Link>
+                    {item.status !== 'ARCHIVED' ? <button type="button" className="btn btn-sm btn-secondary"
+                      aria-label={`${removeLabel}: ${title}`} disabled={busyId !== null}
+                      onClick={() => { void remove(item); }}>
+                      {busyId === item.id ? t('removingLesson') : removeLabel}
+                    </button> : null}
                   </td>
                 </tr>
               );

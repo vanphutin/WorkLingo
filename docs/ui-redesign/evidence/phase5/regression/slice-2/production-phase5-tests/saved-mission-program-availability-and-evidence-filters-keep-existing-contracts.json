@@ -1,0 +1,15 @@
+{
+  "mode": "production",
+  "title": "saved mission, program availability and evidence filters keep existing contracts",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "resumeDestination": true,
+      "unavailableDisabled": 3,
+      "activationPayloadPreserved": true,
+      "evidenceFilterRequests": true,
+      "checkpointAnchor": true
+    }
+  ]
+}

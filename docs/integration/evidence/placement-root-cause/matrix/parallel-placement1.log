@@ -1,0 +1,160 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 2)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:34.101Z","mode":"failure","enteredAt":"2026-10-20T19:39:34.101Z","returnedAt":"2026-10-20T19:39:34.104Z","claimDurationNs":"3308400","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"a979a27e-0f62-4da6-87cb-f385163ce855","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:34.102000","databaseNow":"2026-10-20 19:39:34.113081","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"a979a27e-0f62-4da6-87cb-f385163ce855","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 3)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:34.347Z","mode":"failure","enteredAt":"2026-10-20T19:39:34.347Z","returnedAt":"2026-10-20T19:39:34.351Z","claimDurationNs":"4023000","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"36f47d56-5947-40bf-9848-f563d123b08c","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:34.348000","databaseNow":"2026-10-20 19:39:34.357878","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"36f47d56-5947-40bf-9848-f563d123b08c","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 4)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:34.583Z","mode":"failure","enteredAt":"2026-10-20T19:39:34.583Z","returnedAt":"2026-10-20T19:39:34.586Z","claimDurationNs":"3398000","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"8d06d618-ee40-4aa9-bc74-d2f44af9bc82","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:34.584000","databaseNow":"2026-10-20 19:39:34.592732","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"8d06d618-ee40-4aa9-bc74-d2f44af9bc82","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 5)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:34.818Z","mode":"failure","enteredAt":"2026-10-20T19:39:34.818Z","returnedAt":"2026-10-20T19:39:34.821Z","claimDurationNs":"3185900","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"e90c5121-df68-4fef-8347-14c2d685849f","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:34.819000","databaseNow":"2026-10-20 19:39:34.828063","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"e90c5121-df68-4fef-8347-14c2d685849f","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 6)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:35.048Z","mode":"failure","enteredAt":"2026-10-20T19:39:35.048Z","returnedAt":"2026-10-20T19:39:35.051Z","claimDurationNs":"2812100","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"19544f6c-9db7-462e-83ba-d4d52bc45226","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:35.049000","databaseNow":"2026-10-20 19:39:35.057209","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"19544f6c-9db7-462e-83ba-d4d52bc45226","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 8)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:35.704Z","mode":"failure","enteredAt":"2026-10-20T19:39:35.704Z","returnedAt":"2026-10-20T19:39:35.707Z","claimDurationNs":"3346900","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"86b16eda-df45-48ca-ad1d-493d4bb3528a","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:35.705000","databaseNow":"2026-10-20 19:39:35.715943","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"86b16eda-df45-48ca-ad1d-493d4bb3528a","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 9)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:35.944Z","mode":"failure","enteredAt":"2026-10-20T19:39:35.944Z","returnedAt":"2026-10-20T19:39:35.947Z","claimDurationNs":"3218800","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"343b6e0f-b574-4a39-800c-b5126d7895a3","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:35.945000","databaseNow":"2026-10-20 19:39:35.954016","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"343b6e0f-b574-4a39-800c-b5126d7895a3","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 11)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:36.585Z","mode":"failure","enteredAt":"2026-10-20T19:39:36.585Z","returnedAt":"2026-10-20T19:39:36.588Z","claimDurationNs":"2978100","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"5de99b2f-5e37-44e9-ac21-3e67fb56bf8d","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:36.586000","databaseNow":"2026-10-20 19:39:36.594560","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"5de99b2f-5e37-44e9-ac21-3e67fb56bf8d","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 12)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:36.807Z","mode":"failure","enteredAt":"2026-10-20T19:39:36.807Z","returnedAt":"2026-10-20T19:39:36.810Z","claimDurationNs":"3162400","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"073f86e5-02c1-471f-85f1-1b045eb6a7e9","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:36.808000","databaseNow":"2026-10-20 19:39:36.815905","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"073f86e5-02c1-471f-85f1-1b045eb6a7e9","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 13)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:37.027Z","mode":"failure","enteredAt":"2026-10-20T19:39:37.027Z","returnedAt":"2026-10-20T19:39:37.031Z","claimDurationNs":"3151300","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"8cd5cdf5-58d4-4f33-a949-67edd28edf36","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:37.028000","databaseNow":"2026-10-20 19:39:37.036937","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"8cd5cdf5-58d4-4f33-a949-67edd28edf36","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 14)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:37.275Z","mode":"failure","enteredAt":"2026-10-20T19:39:37.275Z","returnedAt":"2026-10-20T19:39:37.279Z","claimDurationNs":"3376000","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"f9b71581-fb14-42af-94ef-593fbf883286","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:37.276000","databaseNow":"2026-10-20 19:39:37.285278","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"f9b71581-fb14-42af-94ef-593fbf883286","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 15)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:37.502Z","mode":"failure","enteredAt":"2026-10-20T19:39:37.502Z","returnedAt":"2026-10-20T19:39:37.506Z","claimDurationNs":"4067300","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"a46f7a97-3b56-4829-9781-ceaf53d31d71","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:37.503000","databaseNow":"2026-10-20 19:39:37.512354","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"a46f7a97-3b56-4829-9781-ceaf53d31d71","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 17)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:38.220Z","mode":"failure","enteredAt":"2026-10-20T19:39:38.220Z","returnedAt":"2026-10-20T19:39:38.223Z","claimDurationNs":"2875400","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"73f552d2-8f56-48fa-bf9a-52c8d0350e62","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:38.221000","databaseNow":"2026-10-20 19:39:38.229062","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"73f552d2-8f56-48fa-bf9a-52c8d0350e62","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 19)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:38.845Z","mode":"failure","enteredAt":"2026-10-20T19:39:38.845Z","returnedAt":"2026-10-20T19:39:38.850Z","claimDurationNs":"4151700","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"7073298b-8c18-47c9-99ee-de906daf173b","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:38.846000","databaseNow":"2026-10-20 19:39:38.856260","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"7073298b-8c18-47c9-99ee-de906daf173b","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 20)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:39.084Z","mode":"failure","enteredAt":"2026-10-20T19:39:39.084Z","returnedAt":"2026-10-20T19:39:39.087Z","claimDurationNs":"3063700","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"d48618b2-f854-4b83-b509-7c74f2f95e6e","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:39.086000","databaseNow":"2026-10-20 19:39:39.093447","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"d48618b2-f854-4b83-b509-7c74f2f95e6e","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 22)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:39.712Z","mode":"failure","enteredAt":"2026-10-20T19:39:39.712Z","returnedAt":"2026-10-20T19:39:39.715Z","claimDurationNs":"3171700","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"64b85170-f421-4561-9e71-03d4dd418477","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:39.713000","databaseNow":"2026-10-20 19:39:39.721948","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"64b85170-f421-4561-9e71-03d4dd418477","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 25)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:40.785Z","mode":"failure","enteredAt":"2026-10-20T19:39:40.785Z","returnedAt":"2026-10-20T19:39:40.796Z","claimDurationNs":"10684600","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"fbd3a9d7-3393-4ae1-a02d-0b4531634000","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:40.786000","databaseNow":"2026-10-20 19:39:40.802562","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"fbd3a9d7-3393-4ae1-a02d-0b4531634000","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 26)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:41.020Z","mode":"failure","enteredAt":"2026-10-20T19:39:41.020Z","returnedAt":"2026-10-20T19:39:41.024Z","claimDurationNs":"3801100","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"ed194691-859c-40c3-8d18-963ad8fd276b","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:41.021000","databaseNow":"2026-10-20 19:39:41.030975","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"ed194691-859c-40c3-8d18-963ad8fd276b","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+stdout | test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 27)
+{"event":"placement-claim","hostNow":"2026-10-20T19:39:41.260Z","mode":"failure","enteredAt":"2026-10-20T19:39:41.260Z","returnedAt":"2026-10-20T19:39:41.263Z","claimDurationNs":"3024200","observation":"after-claim-not-atomic","workerId":"local-18812-8916d438-6d44-48b4-a94f-43a05a829482","backgroundWorker":"false","schema":"placement_isolation_2d7d0c7fb5ae45c59563584375b41cce","timeline":[{"id":"e8dd66f6-f9c5-43d3-a164-6f4fdfd541be","type":"TRANSCRIBE_SPEECH","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-20 19:39:41.261000","databaseNow":"2026-10-20 19:39:41.269491","dueAtCapturedNow":false,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[],"claimedId":null,"after":[{"id":"e8dd66f6-f9c5-43d3-a164-6f4fdfd541be","status":"PENDING","attemptCount":0,"leaseOwner":null}]}
+
+ ❯ test/integration/placement-isolation.integration.spec.ts (31 tests | 19 failed) 14206ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 0)  726ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 1)  559ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 2) 269ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 3) 233ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 4) 234ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 5) 236ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 6) 229ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 7)  425ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 8) 239ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 9) 233ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 10)  413ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 11) 227ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 12) 222ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 13) 222ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 14) 247ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 15) 226ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 16)  483ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 17) 233ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 18)  405ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 19) 225ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 20) 235ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 21)  406ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 22) 222ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 23)  445ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 24)  404ms
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 25) 231ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 26) 228ms
+     → expected false to be true // Object.is equality
+   × placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 27) 238ms
+     → expected false to be true // Object.is equality
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 28)  528ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 29)  610ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  408ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 19 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 2)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 3)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 4)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 5)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 6)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 8)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 9)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 11)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 12)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 13)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 14)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 15)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 17)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 19)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 20)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 22)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 25)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 26)
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 27)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/integration/placement-isolation.integration.spec.ts:89:9
+     87|           .attach('audio', clearShadowingWav(), { filename: 'voice.wav…
+     88|           .expect(202);
+     89|         await expect(runner.runOnce()).resolves.toBe(true);
+       |         ^
+     90|         await expect(runner.runOnce()).resolves.toBe(true);
+     91|         continue;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/19]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  19 failed | 12 passed (31)
+   Start at  02:39:18
+   Duration  25.28s (transform 5.01s, setup 0ms, collect 10.68s, tests 14.21s, environment 0ms, prepare 131ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run test/integration/placement-isolation.integration.spec.ts

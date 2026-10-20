@@ -1,0 +1,45 @@
+{
+  "mode": "before-production",
+  "title": "public/auth matrix dark 768",
+  "status": "passed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-home-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-login-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/register",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-register-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/phase4-missing-page",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "file": "before-production-phase4-missing-page-dark-768.png",
+      "client": 768,
+      "scroll": 768
+    }
+  ]
+}

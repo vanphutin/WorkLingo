@@ -1,0 +1,274 @@
+[
+  {
+    "path": "checks/launcher-green-final.log",
+    "rawSHA256": "c4f13e26221aaa9d655f462ac104e60737bb293b8901389fe63e786301e3e9ec",
+    "archiveSHA256": "12a260e25e1f978474f75dcc3e6fc7dd87afac8e710438c7f7673365dd3adc16",
+    "rawBytes": 533,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/launcher-green-final.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "checks/launcher-green.log",
+    "rawSHA256": "e93a8155b0b0d807fee80047a2748d046bc16df3b76bbd2acea2e8a11a1ef60b",
+    "archiveSHA256": "496d2362439f2ae4bcad69be1beec3532d964b8ddc850900db0db20a4401943f",
+    "rawBytes": 533,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/launcher-green.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "checks/launcher-red.log",
+    "rawSHA256": "4f8b7c01e4cdde7e74e83d9cfb7e22760125f42117f9afda93995527d4aa1af5",
+    "archiveSHA256": "3c994764e06141589e55f6580f0ac5317b4afec70e58074f86a651d56ff5de3b",
+    "rawBytes": 179077,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/launcher-red.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "checks/lint-final.log",
+    "rawSHA256": "edbabfafb48383f261ab5ec91ac31607f7bb249b5618223d52471dc0069f7a2f",
+    "archiveSHA256": "b85c63ec97f56a5425cc759776b081e4e5aa30e336fd764db2b9b5df135d8f9a",
+    "rawBytes": 95,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/lint-final.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "checks/preservation-final.log",
+    "rawSHA256": "413c27376fc19a75cb8f19a44ae7b90bd3eedf4cfad0cf32d9ab954bcce57e91",
+    "archiveSHA256": "40774bab8bda9bbdf22cb784043869a68f2c853292712f2ec37cf82d275f20f6",
+    "rawBytes": 1644,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/preservation-final.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "checks/preservation-preflight.log",
+    "rawSHA256": "f88ea04027683c1f30fa7581a3c15ef421b123b90ef589d57b5511df21ffa54f",
+    "archiveSHA256": "969f6c377c56e7610394a755ec320d97b277fb901f5e48766278ceb243936204",
+    "rawBytes": 2196,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/preservation-preflight.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "checks/typecheck-final.log",
+    "rawSHA256": "099df50cdeade4717f1aa804691cf13ec3dc89b76b0e3add410d84bf804157e9",
+    "archiveSHA256": "75baeb7c2862e81b2bdf63cd6cbb08c04f43755de27c3be381017d885e65ace0",
+    "rawBytes": 97,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/checks/typecheck-final.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "live/backend-final.log",
+    "rawSHA256": "21a1390ece2c152de12294ba346a7d7a90a14851749dd59999dd3fc081e5e1dd",
+    "archiveSHA256": "40fbedb8e0a0a3c42d1c8c6d4a1913dc6f5b713415318a1f11f4dfae3fffed42",
+    "rawBytes": 38260,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/live/backend-final.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "live/clock-regression-green.log",
+    "rawSHA256": "46590321f08a8c32465864088a1c25a398ec0100489a8e34b3083ac9e1f97ee2",
+    "archiveSHA256": "ca7c1e007e24a0d43bf81014ea7234ac5af767f268132e06386186d394a3b378",
+    "rawBytes": 3146,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/live/clock-regression-green.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "live/clock-regression-red.log",
+    "rawSHA256": "4920e5c84cddca4e764c8c51ea28883304059a1b180d50b25db9b3369d105c62",
+    "archiveSHA256": "4920e5c84cddca4e764c8c51ea28883304059a1b180d50b25db9b3369d105c62",
+    "rawBytes": 2011,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/live/clock-regression-red.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/parallel-load-load.log",
+    "rawSHA256": "6195399f2fb607683730e389c86c03091c9196d4612560de5387fc671de61f0a",
+    "archiveSHA256": "a828da435eaaabd06cd1044de6738fa0c03850b025e163ce75ca1b893ed2a464",
+    "rawBytes": 5496,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/parallel-load-load.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/parallel-load-placement0.log",
+    "rawSHA256": "ab0a44b86fd20e7fe2da41c05eef16ffd9bf69245042480af30c57fa458f70d4",
+    "archiveSHA256": "1370b5a09bd19a6e183c8718dcabf157785056c766ac34c115acea102900a6cd",
+    "rawBytes": 145293,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/parallel-load-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/parallel-load-placement1.log",
+    "rawSHA256": "54fe93b60c80857fccf28f49e797d25baf744f57dcaf735831ddd21311537fb1",
+    "archiveSHA256": "23e499c05b28ac7834142e6697f407fef9c4bf949fd953a3223b43eb888a8c51",
+    "rawBytes": 4626,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/parallel-load-placement1.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/parallel-placement0.log",
+    "rawSHA256": "ec95542bad99cd1ba09a95688d4ee96dc2882342cd9ad94d113c1cdbf73fe27e",
+    "archiveSHA256": "05dc45e63db55b9b9f77c89f11bda7863057d5c2f0da35fc3b12a10b32e2619d",
+    "rawBytes": 145275,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/parallel-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/parallel-placement1.log",
+    "rawSHA256": "9dffeeb7d00dcbcfdb1c199e6a1468a95b7beed76a73c06c5c2a495cf78eb28e",
+    "archiveSHA256": "9dffeeb7d00dcbcfdb1c199e6a1468a95b7beed76a73c06c5c2a495cf78eb28e",
+    "rawBytes": 29517,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/parallel-placement1.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/single-load-load.log",
+    "rawSHA256": "5f3c59c06ce48a33abdedc08cd21b663aa22f9af57f8950aaaa12443cb679e61",
+    "archiveSHA256": "3a3d6fec5ba31131df515e158160a74e61497808258726f02bd28591299c0084",
+    "rawBytes": 5486,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/single-load-load.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/single-load-placement0.log",
+    "rawSHA256": "ed8e7d22c69a56dba00d189fe4d3bf0e1701f88bf08b923540d7d2c46d67780d",
+    "archiveSHA256": "9a55c4286215f40d7dea738eaba4b9b71c4c788b03714ad9cfef00b7588b848b",
+    "rawBytes": 144735,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/single-load-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix/single-placement0.log",
+    "rawSHA256": "f82c446a90faaeffb684f3526dc125fb1ecedae79a1c7e5fdf30a4600045069d",
+    "archiveSHA256": "29c81c0e44942705aff54dd7b7eb4a7b0a03b876d8fab9b861e2e0ed9eb14445",
+    "rawBytes": 145162,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix/single-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/parallel-load-load.log",
+    "rawSHA256": "123f6234a3b7f25e435fb9e31d0337717beb62e230bb02cb8489c2773d588341",
+    "archiveSHA256": "19e16103eb5f636631dc07215e7c7122772721f7b54b263edd535a0069ea1f3b",
+    "rawBytes": 5364,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/parallel-load-load.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/parallel-load-placement0.log",
+    "rawSHA256": "2d48c607150b3f4f7ff50f4075e76d5b5ae995f862061a2abbff28974d4456a0",
+    "archiveSHA256": "0b667f1473522a5b1f52d60ef357dcf83a06f6a8b318d5d8245adbc8de07c0e5",
+    "rawBytes": 147187,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/parallel-load-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/parallel-load-placement1.log",
+    "rawSHA256": "2cac98c973567af1a0e775686ca574c6431100c32af0058a5f07f7b6e3478618",
+    "archiveSHA256": "0fa40fc65dcdc6cc4a9558fc5310fe9a9a778850a774043865e8bbd42fc19db2",
+    "rawBytes": 5638,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/parallel-load-placement1.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/parallel-placement0.log",
+    "rawSHA256": "f2c2bc6d3e4a6e01979646eda73a61d98af1d2b0966858e9e2df1821d808aa9c",
+    "archiveSHA256": "0ed63ac10165a5f9c7b9712e068f93163b7a6b50ff1815b6cf2a33a59d06a2bf",
+    "rawBytes": 147168,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/parallel-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/parallel-placement1.log",
+    "rawSHA256": "1a5fd2a8937a8d302e68cc3d058edf427624fb460731be7944ceb0636c06f43e",
+    "archiveSHA256": "df6a01047d977bf73001b927b9bedc72602399f59e974669fc3bec8999d2f6aa",
+    "rawBytes": 5638,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/parallel-placement1.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/single-load-load.log",
+    "rawSHA256": "0e2831f52becade61b7084aee65624907692a9bbf381c2f276fa08f136d9aac8",
+    "archiveSHA256": "b65b7b6d1421ede4c133b855391745667794d537570e15efc56e27d2a9c71679",
+    "rawBytes": 5230,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/single-load-load.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/single-load-placement0.log",
+    "rawSHA256": "c81a6e3a98aff4cf3ec2118a4b155f6b54d9d83dbcb89836ff6326de193845c3",
+    "archiveSHA256": "cb66d15b599416ce93b417e8e83e115e608b366676ee17d1a9c90a83d5176198",
+    "rawBytes": 147578,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/single-load-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-fixed/single-placement0.log",
+    "rawSHA256": "d7a2643d32b10e92d0f0fe8faeb11e1acffdb8353c0ab61cf625d4056a292c7b",
+    "archiveSHA256": "a81832e2655e94301992397716e51f035b5aa781603be6090deb65bd4eb2295e",
+    "rawBytes": 147457,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-fixed/single-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/parallel-load-load.log",
+    "rawSHA256": "ba11b7c358a25eb3aefe544eb35aa4a25fae852e55fcfa0cd623f5f507a0ec85",
+    "archiveSHA256": "84815fcc7d8af6dfe7c257661ba36867430277642cf6e43e9572885f19a43ce5",
+    "rawBytes": 5365,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/parallel-load-load.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/parallel-load-placement0.log",
+    "rawSHA256": "b5f71febc76f88852b079f816603a11684504234c0197441bef520ff04d92dc9",
+    "archiveSHA256": "987397cfb137f4460a8b5ad1be95703e3ba28840ef15b6c7ef52d20ec0affd5d",
+    "rawBytes": 147208,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/parallel-load-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/parallel-load-placement1.log",
+    "rawSHA256": "bd676d52a01362389022feb98092a132139116234d22ab8d7eed916359ef5a60",
+    "archiveSHA256": "8641d4683890eed62c7046498a1b8c606318c11332abf3ce665d48691c5ffb11",
+    "rawBytes": 5639,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/parallel-load-placement1.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/parallel-placement0.log",
+    "rawSHA256": "4c963d9747f028254dda9fb7a459e79ea3249824bbf011954afd1be832f76a22",
+    "archiveSHA256": "56cc790d0bf24e5a36d43232ba6f2c7dfa07f1a798ec026dd1f2300e8d963e91",
+    "rawBytes": 147183,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/parallel-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/parallel-placement1.log",
+    "rawSHA256": "f99833da7589a738d9ac2de80a9ff20bd5f0638fb9a69f730f2694ecbe59504c",
+    "archiveSHA256": "0a4fb995925e1ddcfd3b27b593286975fd577d7acf704bb4a7d3c864b9763f85",
+    "rawBytes": 5638,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/parallel-placement1.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/single-load-load.log",
+    "rawSHA256": "a6bfbf6428b472411acc535af7020bc253e6c9f677a163b07405a7c99d295c5a",
+    "archiveSHA256": "756c1f6241e6a62758ba4c3bf979939127a25fc199b4d8ae9f3e7031bd68a87f",
+    "rawBytes": 5360,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/single-load-load.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/single-load-placement0.log",
+    "rawSHA256": "12485ec3186891a29eecb0e4f246b4f0736896acc5e1eb2a005e1ca1ddae4813",
+    "archiveSHA256": "c195d9af1f926769a95639a4732d63f999832d8e6d4e8ab826d63b54d1bb7e4d",
+    "rawBytes": 147189,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/single-load-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  },
+  {
+    "path": "matrix-reviewed/single-placement0.log",
+    "rawSHA256": "aba1ef37d5ffcc2e403d11924ed1064ab444c4abaa0833882075c365ff6344d9",
+    "archiveSHA256": "e37ca4075a8a8b08d2959299939649ff18be4fe73c49b046aa42bd5c86a1424d",
+    "rawBytes": 147443,
+    "rawRetainedAt": ".superpowers/sdd/placement-investigation-plan/raw-logs/matrix-reviewed/single-placement0.log",
+    "normalization": "Line endings, trailing whitespace and trailing empty lines only; no test content removed."
+  }
+]

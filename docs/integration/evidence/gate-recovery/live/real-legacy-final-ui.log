@@ -1,0 +1,122 @@
+[WebServer] (node:21804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:21948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:19984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+  ok  1 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:8:7 › Onboarding and placement assessment journey › learner registers, completes self-placement, confirms level, and lands on dashboard (4.1s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok  2 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:45:7 › Onboarding and placement assessment journey › pending learner cannot bypass route guards to access dashboard or ordinary sessions (3.2s)
+  ok  3 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:68:7 › Onboarding and placement assessment journey › completed learner bypasses onboarding and is redirected to dashboard (3.2s)
+  ok  4 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:88:7 › Onboarding and placement assessment journey › learner starts placement, resumes after refresh, completes all four skills, and confirms recommendation (8.6s)
+  ok  5 [foundation-desktop] › e2e\foundation-session.spec.ts:15:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (8.3s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  x   6 [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:56:5 › published objective evidence completes one pinned revision and unlocks its dependent unit (9.5s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok  7 [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:124:5 › real curriculum API retains an unsaved Foundation objective through collapse and filtering (3.0s)
+  ok  8 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (2.1s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok  9 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:35:5 › real mock API saves the writing snapshot and locks editing until delayed exit completes (2.2s)
+  ok 10 [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation (11.2s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok 11 [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety (3.8s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok 12 [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics (1.9s)
+
+
+  1) [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:56:5 › published objective evidence completes one pinned revision and unlocks its dependent unit
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('article', { name: 'Introduce yourself to a new colleague' })
+    Expected substring: "Available"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('article', { name: 'Introduce yourself to a new colleague' }) with timeout 5000ms
+      - waiting for getByRole('article', { name: 'Introduce yourself to a new colleague' })
+
+
+      89 |   await completeSelfPlacementViaApi(page);
+      90 |   await page.goto('/dashboard');
+    > 91 |   await expect(page.getByRole('article', { name: sourceMission.title })).toContainText('Available');
+         |                                                                          ^
+      92 |   await expect(page.getByRole('article', { name: dependentMission.title })).toContainText('Locked');
+      93 |   await expectNoHorizontalOverflow(page);
+      94 |
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\curriculum-foundation.spec.ts:91:74
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-live-results\curriculum-foundation-publ-94a8b--unlocks-its-dependent-unit-curriculum-foundation-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-live-results\curriculum-foundation-publ-94a8b--unlocks-its-dependent-unit-curriculum-foundation-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-live-results\curriculum-foundation-publ-94a8b--unlocks-its-dependent-unit-curriculum-foundation-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:56:5 › published objective evidence completes one pinned revision and unlocks its dependent unit
+  11 passed (1.8m)
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6-live.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=ielts-full-mock-desktop --project=admin-desktop --project=curriculum-foundation-desktop

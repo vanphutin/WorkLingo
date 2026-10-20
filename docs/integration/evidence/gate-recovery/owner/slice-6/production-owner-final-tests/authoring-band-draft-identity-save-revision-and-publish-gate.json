@@ -1,0 +1,17 @@
+{
+  "title": "authoring band draft identity save revision and publish gate",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "band",
+      "draftIdentity": true,
+      "saveRevision": [
+        1,
+        2
+      ],
+      "reload": true,
+      "publicationGate": true
+    }
+  ]
+}

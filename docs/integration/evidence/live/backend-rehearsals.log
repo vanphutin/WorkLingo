@@ -1,0 +1,24 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ✓ test/integration/backup-restore.integration.spec.ts (10 tests) 21970ms
+   ✓ backup and restore rehearsal > scripts/backup-local.ps1 rejects an unsafe backup path outside the allowed root  592ms
+   ✓ backup and restore rehearsal > rejects a sibling backup path that only shares the allowed-root prefix  496ms
+   ✓ backup and restore rehearsal > rejects a sibling restore target that only shares the allowed-root prefix  534ms
+   ✓ backup and restore rehearsal > rejects manifest entries that resolve outside the backup directory  555ms
+   ✓ backup and restore rehearsal > rejects backup files that are not covered by the manifest  663ms
+   ✓ backup and restore rehearsal > fails closed when the target database emptiness check cannot be completed  1537ms
+   ✓ backup and restore rehearsal > removes an incomplete artifact when database backup fails  1504ms
+   ✓ backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums  5246ms
+   ✓ backup and restore rehearsal > scripts/restore-local.ps1 rejects non-empty target directory or non-empty database  2660ms
+   ✓ backup and restore rehearsal > rehearses complete restore into an empty target schema and directory, verifying data integrity  6887ms
+ ✓ test/integration/placement-isolation.integration.spec.ts (2 tests) 5241ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects  809ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  363ms
+ ✓ test/integration/ielts-study-session.integration.spec.ts (1 test) 5488ms
+   ✓ IELTS study sessions and program isolation > creates distinct canonical plans, scopes evidence, and resumes pinned attempts after rollback  1614ms
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  01:11:57
+   Duration  48.99s (transform 5.59s, setup 0ms, collect 15.40s, tests 32.70s, environment 1ms, prepare 332ms)

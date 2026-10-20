@@ -1,0 +1,46 @@
+{
+  "title": "AI content is solid without redundant manual dark backdrop filtering",
+  "status": "passed",
+  "observations": [
+    {
+      "theme": "light",
+      "styles": [
+        {
+          "background": "rgb(255, 255, 255)",
+          "filter": "none"
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "filter": "none"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "styles": [
+        {
+          "background": "rgb(0, 0, 0)",
+          "filter": "none"
+        },
+        {
+          "background": "rgb(0, 0, 0)",
+          "filter": "none"
+        }
+      ]
+    },
+    {
+      "theme": "system",
+      "styles": [
+        {
+          "background": "rgb(0, 0, 0)",
+          "filter": "none"
+        },
+        {
+          "background": "rgb(0, 0, 0)",
+          "filter": "none"
+        }
+      ]
+    }
+  ],
+  "fixtures": true
+}

@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:53:32.145Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "test/integration/backup-restore.integration.spec.ts",
+    "test/integration/curriculum-foundation-schema.integration.spec.ts",
+    "test/integration/program-enrollment-migration.integration.spec.ts",
+    "src/intermediate-topics/topic-json-repair.service.spec.ts"
+  ],
+  "container": "worklingo-liquid-glass-phase6-fb99399ccc",
+  "result": "FAIL",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 2507,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_fb99399cccfd4cbabc44dcb421769a06",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "full backend suite on owned disposable PostgreSQL",
+  "optimizedWeb": false,
+  "playwrightCommand": "pnpm --filter @worklingo/api exec vitest run test/integration/backup-restore.integration.spec.ts test/integration/curriculum-foundation-schema.integration.spec.ts test/integration/program-enrollment-migration.integration.spec.ts src/intermediate-topics/topic-json-repair.service.spec.ts",
+  "harnessSHA256": "0de4493383367a35dfe67d2cdbad6b03ca8a3c8f7e38da64c445fc1dd7c8e67f",
+  "e2eDiffSHA256": "834940688d6a411562cfaed9e0359231afaa3359b263820b2d4740d5570cdcb3",
+  "exitCode": 1,
+  "finished": "2026-10-20T15:56:55.838Z"
+}

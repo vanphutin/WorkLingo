@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:51:59.306Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "ielts-flow-v3-desktop",
+    "ielts-flow-v3-mobile"
+  ],
+  "container": "worklingo-liquid-glass-phase6-079e1d33f6",
+  "result": "PASS",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 9319,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_079e1d33f6d24f48b064e64c14ca955c",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "optimized browser/API integration",
+  "optimizedWeb": true,
+  "playwrightCommand": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-live.config.ts --no-deps --project=ielts-flow-v3-desktop --project=ielts-flow-v3-mobile",
+  "harnessSHA256": "0de4493383367a35dfe67d2cdbad6b03ca8a3c8f7e38da64c445fc1dd7c8e67f",
+  "e2eDiffSHA256": "766c4756828b78563df74ef8a2641619b87552317c1e887f8fba42f2f32b7d34",
+  "exitCode": 0,
+  "finished": "2026-10-20T15:56:05.775Z"
+}

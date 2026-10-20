@@ -1,0 +1,45 @@
+{
+  "mode": "production",
+  "title": "actual auth form submits unchanged payload and follows learner, onboarding and admin redirects",
+  "status": "passed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "mode": "login",
+      "roles": [
+        "LEARNER"
+      ],
+      "destination": "/dashboard",
+      "actualFormPayload": true,
+      "fixtureAuthentication": true
+    },
+    {
+      "mode": "login",
+      "roles": [
+        "LEARNER"
+      ],
+      "destination": "/onboarding",
+      "actualFormPayload": true,
+      "fixtureAuthentication": true
+    },
+    {
+      "mode": "login",
+      "roles": [
+        "CONTENT_ADMIN"
+      ],
+      "destination": "/admin/content",
+      "actualFormPayload": true,
+      "fixtureAuthentication": true
+    },
+    {
+      "mode": "register",
+      "roles": [
+        "LEARNER"
+      ],
+      "destination": "/onboarding",
+      "actualFormPayload": true,
+      "fixtureAuthentication": true
+    }
+  ]
+}

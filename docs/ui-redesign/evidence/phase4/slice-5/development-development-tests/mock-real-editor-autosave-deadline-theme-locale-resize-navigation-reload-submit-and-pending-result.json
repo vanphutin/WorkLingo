@@ -1,0 +1,59 @@
+{
+  "title": "mock real editor autosave deadline theme locale resize navigation reload submit and pending result",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "sameEditor": true,
+      "autosave": true,
+      "serverDeadlinePreserved": "2026-10-20T07:04:13.840Z",
+      "reloadResume": true,
+      "threeSectionSubmit": true,
+      "reportPending": true,
+      "scoring": "fixture-only",
+      "writes": [
+        {
+          "method": "PUT",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/responses",
+          "body": "{\"expectedRevision\":1,\"responses\":{\"33333333-3333-4333-8333-333333333333\":\"Preserve this response through actual autosave\"}}"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/me/preferences",
+          "body": "{\"locale\":\"en\"}"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/responses",
+          "body": "{\"expectedRevision\":2,\"responses\":{\"33333333-3333-4333-8333-333333333333\":\"This is a considered fixture response for this task. It preserves the actual exam input and the request contract.\"}}"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/sections/READING/submit",
+          "body": "{\"expectedRevision\":3}"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/responses",
+          "body": "{\"expectedRevision\":4,\"responses\":{\"writing-1\":\"This is a considered fixture response for this task. It preserves the actual exam input and the request contract.\",\"writing-2\":\"This is a considered fixture response for this task. It preserves the actual exam input and the request contract.\"}}"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/sections/WRITING/submit",
+          "body": "{\"expectedRevision\":5}"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/responses",
+          "body": "{\"expectedRevision\":6,\"responses\":{\"speaking-1\":\"This is a considered fixture response for this task. It preserves the actual exam input and the request contract.\",\"speaking-2\":\"This is a considered fixture response for this task. It preserves the actual exam input and the request contract.\",\"speaking-3\":\"This is a considered fixture response for this task. It preserves the actual exam input and the request contract.\"}}"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/me/ielts-mocks/attempts/11111111-1111-4111-8111-111111111111/sections/SPEAKING/submit",
+          "body": "{\"expectedRevision\":7}"
+        }
+      ]
+    }
+  ]
+}

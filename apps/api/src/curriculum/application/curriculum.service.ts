@@ -67,7 +67,7 @@ export class CurriculumService {
   }
 
   async getPublishedMissionsForLevel(
-    levelCode: string,
+    levelCode: string | undefined,
     purpose: MissionPurpose = 'learning',
     database: Pick<Prisma.TransactionClient, 'mission'> = this.database,
     programId?: string,
@@ -77,7 +77,7 @@ export class CurriculumService {
         purpose: purpose === 'learning' ? 'LEARNING' : 'PLACEMENT',
         status: 'PUBLISHED',
         level: {
-          code: levelCode,
+          ...(levelCode ? { code: levelCode } : {}),
           ...(purpose === 'learning' ? { status: 'PUBLISHED' } : {}),
           path: { status: 'PUBLISHED', ...(programId ? { programId } : {}) },
         },
@@ -94,6 +94,7 @@ export class CurriculumService {
       },
       orderBy: [{ order: 'asc' }, { id: 'asc' }],
       include: {
+        level: { select: { code: true } },
         lessons: {
           where: {
             lesson: {
@@ -138,7 +139,7 @@ export class CurriculumService {
         : lesson?.versions[0];
       const version = candidate?.status === 'PUBLISHED' ? candidate : undefined;
       if (!mission || !version) throw new NotFoundException('No published mission for this level');
-      return this.toPublishedMission(mission, levelCode, version);
+      return this.toPublishedMission(mission, levelCode ?? mission.level.code, version);
     });
   }
 

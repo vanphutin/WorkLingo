@@ -1,19 +1,20 @@
 import { createHash } from 'node:crypto';
-import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable, Optional, NotFoundException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { ieltsMockContentSchema, ieltsMockReportSchema, reviewIeltsMockAttemptSchema, type IeltsMockReportDto } from '@worklingo/contracts';
 
+import { MockAttemptClock } from './mock-attempt-clock.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { scoreProductiveSkills, toOverallMockBand } from '../domain/ielts-mock-scoring.js';
 
 @Injectable()
 export class IeltsMockReviewService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly database: PrismaService, @Optional() @Inject(MockAttemptClock) private readonly clock?: MockAttemptClock) {}
 
   async listPending(cursor?: string) {
     const after = cursor ? this.decodeCursor(cursor) : null;
-    const rows = await this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING', submittedAt: { not: null }, ...(after ? { OR: [{ submittedAt: { gt: after.at } }, { submittedAt: after.at, id: { gt: after.id } }] } : {}) }, select: { id: true, learnerId: true, revision: true, responses: true, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: [{ submittedAt: 'asc' }, { id: 'asc' }], take: 51 });
-    const items = rows.slice(0, 50); const last = items.at(-1);
+    const rows = await this.database.ieltsMockAttempt.findMany({ where: { status: 'EVALUATION_PENDING', submittedAt: { not: null }, ...(after ? { OR: [{ submittedAt: { gt: after.at } }, { submittedAt: after.at, id: { gt: after.id } }] } : {}) }, select: { id: true, learnerId: true, revision: true, responses: true, policyVersion: true, mockRecordings: { where: { deletedAt: null, retainUntil: { gt: this.clock?.now() ?? new Date() } }, select: { id: true, part: true, durationSeconds: true, createdAt: true }, orderBy: { createdAt: 'desc' } }, submittedAt: true, mockTestVersion: { select: { version: true } } }, orderBy: [{ submittedAt: 'asc' }, { id: 'asc' }], take: 51 });
+    const items = rows.slice(0, 50).map(({ mockRecordings, ...row }) => ({ ...row, recordings: mockRecordings ?? [] })); const last = items.at(-1);
     return { items, nextCursor: rows.length > 50 && last?.submittedAt ? this.encodeCursor(last.submittedAt, last.id) : null };
   }
 
@@ -26,6 +27,10 @@ export class IeltsMockReviewService {
       const attempt = await tx.ieltsMockAttempt.findUnique({ where: { id: attemptId }, include: { mockTestVersion: true } });
       if (!attempt) throw new NotFoundException('IELTS mock attempt was not found.');
       if (attempt.status !== 'EVALUATION_PENDING' || attempt.revision !== parsed.expectedRevision) throw new ConflictException({ code: 'IELTS_MOCK_REVIEW_REVISION_STALE' });
+      if (attempt.policyVersion === 'v2') {
+        const recordings = await tx.ieltsMockRecording.findMany({ where: { attemptId, deletedAt: null, retainUntil: { gt: this.clock?.now() ?? new Date() } }, select: { part: true } });
+        if (![1, 2, 3].every(part => recordings.some(recording => recording.part === part))) throw new ConflictException({ code: 'IELTS_MOCK_SPEAKING_AUDIO_REQUIRED' });
+      }
       const objective = attempt.objectiveScore as { listening?: { rawScore: number; mockBand: number }; reading?: { rawScore: number; mockBand: number } } | null;
       if (!objective?.listening || !objective.reading) throw new ConflictException({ code: 'IELTS_MOCK_OBJECTIVE_SCORE_MISSING' });
       const productive = scoreProductiveSkills(parsed); const completedAt = new Date();

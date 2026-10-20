@@ -1,0 +1,23 @@
+
+> @worklingo/content-format@0.0.0 test D:\Projects\WorkLingo-Integration\packages\content-format
+> vitest run
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/packages/content-format
+
+ ✓ src/validator.spec.ts (7 tests) 69ms
+ ✓ src/normalizer.spec.ts (4 tests) 50ms
+ ✓ src/audio-narration.spec.ts (9 tests) 52ms
+ ✓ src/dialogue.spec.ts (49 tests) 68ms
+ ✓ src/dialogue-validation.spec.ts (11 tests) 88ms
+ ✓ src/foundation-templates.spec.ts (8 tests) 150ms
+ ✓ src/foundation-format.spec.ts (13 tests) 107ms
+ ✓ src/source-location.spec.ts (6 tests) 19ms
+ ✓ src/intermediate-authoring.spec.ts (13 tests) 39ms
+ ✓ src/parser.spec.ts (10 tests) 54ms
+ ✓ src/ielts-topic-manifest.spec.ts (5 tests) 19ms
+
+ Test Files  11 passed (11)
+      Tests  135 passed (135)
+   Start at  01:52:32
+   Duration  6.58s (transform 4.26s, setup 0ms, collect 14.86s, tests 714ms, environment 9ms, prepare 9.79s)

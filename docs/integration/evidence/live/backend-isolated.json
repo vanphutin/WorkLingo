@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "f172cd9e6ae4d1c538870a8d407f09dc1a3e3950",
+  "timestamp": "2026-10-20T15:36:09.177Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "onboarding-desktop",
+    "foundation-desktop",
+    "ielts-full-mock-desktop",
+    "admin-desktop"
+  ],
+  "container": "worklingo-liquid-glass-phase6-84a32c4e65",
+  "result": "FAIL",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 14540,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_84a32c4e65554abfb004b595b28cc4d3",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "full backend suite on owned disposable PostgreSQL",
+  "optimizedWeb": false,
+  "playwrightCommand": "pnpm --filter @worklingo/api exec vitest run",
+  "harnessSHA256": "16e03c0def022a6d96f3e981759f4823447483899ae3a9b28edc6588bb07c660",
+  "e2eDiffSHA256": "0f8898a6aa75b162e2455eca8bd95f3ee42cb55042e15d603be303b74b5b935a",
+  "exitCode": 1,
+  "finished": "2026-10-20T15:50:44.496Z"
+}

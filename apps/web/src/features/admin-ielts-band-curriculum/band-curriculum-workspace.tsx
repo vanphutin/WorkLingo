@@ -1,6 +1,6 @@
 'use client';
 
-import { ieltsBandStageSchema, type AdminIeltsBandCurriculumDto, type IeltsBandStage } from '@worklingo/contracts';
+import { INITIAL_IELTS_BAND_CURRICULUM, ieltsBandCurriculumContentSchema, type AdminIeltsBandCurriculumDto, type IeltsBandStage } from '@worklingo/contracts';
 import { useEffect, useState } from 'react';
 import { ZodError } from 'zod';
 import { useT, useLocalePreference } from '../../i18n/provider';
@@ -8,7 +8,11 @@ import { adminIeltsBandMessages } from '../../i18n/messages/adminIeltsBand';
 import { localizedError } from '../../i18n/errors';
 import type { MessageValues } from '../../i18n/translator';
 import { adminIeltsBandClient } from '../../lib/api/admin-ielts-band-client';
+import { JsonTransfer } from '../admin-authoring/json-transfer';
 import '../ielts-bridge/ielts-bridge.css';
+import { BandStageEditor } from './band-stage-editor';
+import './band-curriculum.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsBandMessages['en']; values?: MessageValues };
 type Issue = { path: string; message: string };
@@ -18,26 +22,35 @@ export function BandCurriculumWorkspace() {
   const { locale } = useLocalePreference();
   const [workspace, setWorkspace] = useState<AdminIeltsBandCurriculumDto | null>(null);
   const [selected, setSelected] = useState(0);
-  const [source, setSource] = useState('');
   const [validatedRevision, setValidatedRevision] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<Notice | null>(null);
   const [error, setError] = useState<unknown>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [importDirty, setImportDirty] = useState(false);
 
   useEffect(() => {
-    void adminIeltsBandClient.get().then((value) => { setWorkspace(value); setSource(JSON.stringify(value.draft.stages[0], null, 2)); }).catch(setError);
+    void adminIeltsBandClient.get().then(setWorkspace).catch(setError);
   }, []);
   const selectStage = (index: number) => {
     if (!workspace) return;
-    setSelected(index); setSource(JSON.stringify(workspace.draft.stages[index], null, 2)); setError(null); setIssues([]);
+    setSelected(index);
   };
-  const contentFromSource = () => {
-    if (!workspace) throw new Error('Curriculum is not loaded.');
-    let parsed: unknown;
-    try { parsed = JSON.parse(source); } catch { throw new Error('Stage definition must be valid JSON.'); }
-    const stage = ieltsBandStageSchema.parse(parsed);
-    return { ...workspace.draft, stages: workspace.draft.stages.map((item, index) => index === selected ? stage : item) as IeltsBandStage[] };
+  const updateStage = (patch: Partial<IeltsBandStage>) => {
+    setWorkspace((current) => current ? { ...current, status: 'DRAFT', draft: { ...current.draft, stages: current.draft.stages.map((stage, index) => index === selected ? { ...stage, ...patch } : stage) } } : current);
+    setValidatedRevision(null); setMessage(null); setIssues([]);
+  };
+  const applyImport = (value: unknown) => {
+    const content = ieltsBandCurriculumContentSchema.parse(value);
+    const changedTopology = content.stages.some((stage, index) => {
+      const fixed = INITIAL_IELTS_BAND_CURRICULUM.stages[index]!;
+      return stage.code !== fixed.code || stage.order !== fixed.order
+        || stage.targetBand.from !== fixed.targetBand.from || stage.targetBand.to !== fixed.targetBand.to
+        || JSON.stringify(stage.prerequisiteStageCodes) !== JSON.stringify(fixed.prerequisiteStageCodes);
+    });
+    if (changedTopology) throw new Error(t('fixedTopologyImport'));
+    setWorkspace((current) => current ? { ...current, status: 'DRAFT', draft: content } : current);
+    setValidatedRevision(null); setError(null); setIssues([]); setMessage({ key: 'importApplied' });
   };
   const run = async (work: () => Promise<void>) => {
     setBusy(true); setError(null); setMessage(null); setIssues([]);
@@ -48,14 +61,13 @@ export function BandCurriculumWorkspace() {
     } finally { setBusy(false); }
   };
   const save = async () => {
-    if (!workspace) return null;
-    const saved = await adminIeltsBandClient.save({ expectedRevision: workspace.draftRevision, idempotencyKey: crypto.randomUUID(), content: contentFromSource() });
-    setWorkspace(saved); setSource(JSON.stringify(saved.draft.stages[selected], null, 2)); setValidatedRevision(null);
+    if (!workspace || importDirty) return null;
+    const content = ieltsBandCurriculumContentSchema.parse(workspace.draft);
+    const saved = await adminIeltsBandClient.save({ expectedRevision: workspace.draftRevision, idempotencyKey: crypto.randomUUID(), content });
+    setWorkspace(saved); setValidatedRevision(null);
     return saved;
   };
   const errorMessage = () => {
-    if (error instanceof Error && error.message === 'Stage definition must be valid JSON.') return t('invalidJson');
-    if (error instanceof Error && error.message === 'Curriculum is not loaded.') return t('notLoaded');
     return localizedError(error, locale);
   };
   const validationMessage = (issue: Issue) => {
@@ -73,29 +85,35 @@ export function BandCurriculumWorkspace() {
     return t('invalidField');
   };
 
-  if (!workspace && !error) return <main className="bridge-shell bridge-state"><p role="status">{t('loading')}</p></main>;
-  return <main className="bridge-shell">
-    <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
+  if (!workspace && !error) return <section className="bridge-shell authoring-experience bridge-state"><p role="status">{t('loading')}</p></section>;
+  return <section className="bridge-shell authoring-experience band-config">
+    <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p><a href="/admin/content">{t('authorLessons')}</a></div></header>
     {error ? <p className="bridge-error" role="alert">{errorMessage()}</p> : null}
     {message ? <p className="bridge-feedback" role="status">{t(message.key, message.values)}</p> : null}
     {workspace ? <>
       <nav className="bridge-stage-nav" aria-label={t('stages')}>
-        {workspace.draft.stages.map((stage, index) => <button key={stage.code} type="button" aria-current={selected === index ? 'page' : undefined} onClick={() => selectStage(index)}><span lang="en">{stage.title}</span></button>)}
+        {workspace.draft.stages.map((stage, index) => <button key={stage.code} type="button" disabled={busy} aria-current={selected === index ? 'page' : undefined} onClick={() => selectStage(index)}><span lang="en">{stage.title}</span></button>)}
       </nav>
       <section className="bridge-stage-card">
         <p className="bridge-kicker">{t('revision', { status: t(workspace.status), revision: workspace.draftRevision })}</p>
         <h2 lang="en">{workspace.draft.stages[selected]?.title}</h2>
-        <label className="bridge-response"><span>{t('source')}</span><textarea lang="en" rows={24} value={source} onChange={(event) => { setSource(event.target.value); setValidatedRevision(null); }} spellCheck={false} /></label>
+        <JsonTransfer content={workspace.draft} schema={ieltsBandCurriculumContentSchema}
+          label={t('curriculumJson')} summary={t('transfer')} importLabel={t('applyJson')}
+          exportLabel={t('exportJson')} templateLabel={t('templateJson')} template={() => INITIAL_IELTS_BAND_CURRICULUM}
+          locale={locale} disabled={busy} onChange={applyImport}
+          onDirty={(dirty) => { setImportDirty(dirty); if (dirty) { setValidatedRevision(null); setMessage(null); } }} />
+        {importDirty ? <p className="bridge-feedback">{t('unappliedJson')}</p> : null}
+        {workspace.draft.stages[selected] ? <BandStageEditor stage={workspace.draft.stages[selected]} onChange={updateStage} disabled={busy || importDirty} /> : null}
         {issues.length > 0 ? <section aria-label={t('validationIssues')} role="alert"><h3>{t('validationIssues')}</h3><ul>{issues.map((issue, index) => <li key={`${issue.path}-${index}`}><code>{issue.path}</code>: {validationMessage(issue)}</li>)}</ul></section> : null}
         <div className="bridge-actions">
-          <button type="button" disabled={busy} onClick={() => void run(async () => { if (await save()) setMessage({ key: 'draftSaved' }); })}>{t('saveDraft')}</button>
-          <button type="button" disabled={busy} onClick={() => void run(async () => {
+          <button type="button" disabled={busy || importDirty} onClick={() => void run(async () => { if (await save()) setMessage({ key: 'draftSaved' }); })}>{t('saveDraft')}</button>
+          <button type="button" disabled={busy || importDirty} onClick={() => void run(async () => {
             const saved = await save(); if (!saved) return;
             const result = await adminIeltsBandClient.validate({ expectedRevision: saved.draftRevision, idempotencyKey: crypto.randomUUID() });
             setValidatedRevision(result.canPublish ? result.draftRevision : null); setIssues(result.issues);
             if (result.canPublish) setMessage({ key: 'ready' });
           })}>{t('saveValidate')}</button>
-          <button className="bridge-primary" type="button" disabled={busy || validatedRevision !== workspace.draftRevision} onClick={() => void run(async () => {
+          <button className="bridge-primary" type="button" disabled={busy || importDirty || validatedRevision !== workspace.draftRevision} onClick={() => void run(async () => {
             const result = await adminIeltsBandClient.publish({ expectedRevision: workspace.draftRevision, idempotencyKey: crypto.randomUUID() });
             setMessage({ key: 'published', values: { version: result.version } });
             setWorkspace(await adminIeltsBandClient.get()); setValidatedRevision(null);
@@ -103,5 +121,5 @@ export function BandCurriculumWorkspace() {
         </div>
       </section>
     </> : null}
-  </main>;
+  </section>;
 }

@@ -1,0 +1,44 @@
+{
+  "mode": "before-production",
+  "title": "session matrix light 768",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "name": "onboarding-reading-light-768",
+      "url": "/onboarding",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "placement-reading-light-768",
+      "url": "/onboarding/placement/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "session-reading-light-768",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "session-listening-light-768",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "session-speaking-light-768",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "name": "session-writing-light-768",
+      "url": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "client": 768,
+      "scroll": 768
+    }
+  ]
+}

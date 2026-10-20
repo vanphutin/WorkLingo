@@ -44,7 +44,7 @@ test.describe('Weekly Engagement and Progress Evidence Journey', () => {
 
     // Verify evidence of progress empty state
     await expect(page.getByRole('heading', { name: 'Evidence of Progress' })).toBeVisible();
-    await expect(page.getByText('0 sessions')).toBeVisible();
+    await expect(page.getByText('0 sessions', { exact: true })).toBeVisible();
     await expect(page.getByText('0 study days')).toBeVisible();
 
     // Check insufficient evidence labels
@@ -99,7 +99,7 @@ test.describe('Weekly Engagement and Progress Evidence Journey', () => {
     // Session completion confirmation
     await expect(page.getByRole('heading', { name: 'Session Completed!' })).toBeVisible();
     await page.getByRole('link', { name: 'Return to Dashboard' }).click();
-    await expect(page.getByRole('heading', { name: "Today's learning", exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: `Welcome back, ${displayName}`, exact: true })).toBeVisible();
 
     // 5. Verify updated engagement projections
     await expect(page.getByText('1 of 4 learning days')).toBeVisible();

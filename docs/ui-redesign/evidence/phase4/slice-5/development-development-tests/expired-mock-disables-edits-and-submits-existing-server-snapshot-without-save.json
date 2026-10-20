@@ -1,0 +1,13 @@
+{
+  "title": "expired mock disables edits and submits existing server snapshot without save",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "expiryDisablesEditor": true,
+      "noPostExpirySave": true,
+      "serverSectionAdvance": true
+    }
+  ]
+}

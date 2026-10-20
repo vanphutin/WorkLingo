@@ -1,5 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMaxSize, ArrayMinSize, IsArray, IsInt, IsNumber, IsObject, IsString, IsUUID, Max, Min } from 'class-validator';
+export class CreateIeltsMockDto {
+  @ApiProperty({ format: 'uuid' }) @IsUUID() idempotencyKey!: string;
+  @ApiProperty({ type: 'object', additionalProperties: true }) @IsObject() content!: Record<string, unknown>;
+}
 export class SaveIeltsMockDraftDto { @ApiProperty({ minimum: 1 }) @IsInt() @Min(1) expectedRevision!: number; @ApiProperty({ format: 'uuid' }) @IsUUID() idempotencyKey!: string; @ApiProperty({ type: 'object', additionalProperties: true }) @IsObject() content!: Record<string, unknown>; }
 export class IeltsMockCommandDto { @ApiProperty({ minimum: 1 }) @IsInt() @Min(1) expectedRevision!: number; @ApiProperty({ format: 'uuid' }) @IsUUID() idempotencyKey!: string; }
 export class ReviewIeltsMockAttemptDto {

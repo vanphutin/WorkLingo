@@ -1,0 +1,950 @@
+{
+  "matrices": {
+    "matrix": {
+      "sourceCommitAtLaunch": "010f31d5262bfbc80d71b302b43a7940a66ba5fe",
+      "result": "FAIL",
+      "cleanup": true,
+      "cells": [
+        {
+          "name": "single",
+          "workers": 1,
+          "load": false,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "single-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  31 passed (31)",
+                "   Duration  29.89s (transform 4.23s, setup 0ms, collect 10.17s, tests 19.41s, environment 0ms, prepare 98ms)"
+              ],
+              "observedClaimEvents": 90,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        },
+        {
+          "name": "parallel",
+          "workers": 2,
+          "load": false,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "parallel-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  31 passed (31)",
+                "   Duration  31.23s (transform 5.03s, setup 0ms, collect 10.72s, tests 20.11s, environment 0ms, prepare 123ms)"
+              ],
+              "observedClaimEvents": 90,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            },
+            {
+              "role": "placement1",
+              "exitCode": 1,
+              "log": "parallel-placement1.log",
+              "testSummary": [
+                "\n\n Test Files  1 failed (1)",
+                "      Tests  19 failed | 12 passed (31)",
+                "   Duration  25.28s (transform 5.01s, setup 0ms, collect 10.68s, tests 14.21s, environment 0ms, prepare 131ms)"
+              ],
+              "observedClaimEvents": 19,
+              "unexpectedNulls": [
+                {
+                  "hostNow": "2026-10-20T19:39:34.101Z",
+                  "enteredAt": "2026-10-20T19:39:34.101Z",
+                  "returnedAt": "2026-10-20T19:39:34.104Z",
+                  "claimDurationNs": "3308400",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "a979a27e-0f62-4da6-87cb-f385163ce855",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:34.102000",
+                      "databaseNow": "2026-10-20 19:39:34.113081",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:34.347Z",
+                  "enteredAt": "2026-10-20T19:39:34.347Z",
+                  "returnedAt": "2026-10-20T19:39:34.351Z",
+                  "claimDurationNs": "4023000",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "36f47d56-5947-40bf-9848-f563d123b08c",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:34.348000",
+                      "databaseNow": "2026-10-20 19:39:34.357878",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:34.583Z",
+                  "enteredAt": "2026-10-20T19:39:34.583Z",
+                  "returnedAt": "2026-10-20T19:39:34.586Z",
+                  "claimDurationNs": "3398000",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "8d06d618-ee40-4aa9-bc74-d2f44af9bc82",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:34.584000",
+                      "databaseNow": "2026-10-20 19:39:34.592732",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:34.818Z",
+                  "enteredAt": "2026-10-20T19:39:34.818Z",
+                  "returnedAt": "2026-10-20T19:39:34.821Z",
+                  "claimDurationNs": "3185900",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "e90c5121-df68-4fef-8347-14c2d685849f",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:34.819000",
+                      "databaseNow": "2026-10-20 19:39:34.828063",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:35.048Z",
+                  "enteredAt": "2026-10-20T19:39:35.048Z",
+                  "returnedAt": "2026-10-20T19:39:35.051Z",
+                  "claimDurationNs": "2812100",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "19544f6c-9db7-462e-83ba-d4d52bc45226",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:35.049000",
+                      "databaseNow": "2026-10-20 19:39:35.057209",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:35.704Z",
+                  "enteredAt": "2026-10-20T19:39:35.704Z",
+                  "returnedAt": "2026-10-20T19:39:35.707Z",
+                  "claimDurationNs": "3346900",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "86b16eda-df45-48ca-ad1d-493d4bb3528a",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:35.705000",
+                      "databaseNow": "2026-10-20 19:39:35.715943",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:35.944Z",
+                  "enteredAt": "2026-10-20T19:39:35.944Z",
+                  "returnedAt": "2026-10-20T19:39:35.947Z",
+                  "claimDurationNs": "3218800",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "343b6e0f-b574-4a39-800c-b5126d7895a3",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:35.945000",
+                      "databaseNow": "2026-10-20 19:39:35.954016",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:36.585Z",
+                  "enteredAt": "2026-10-20T19:39:36.585Z",
+                  "returnedAt": "2026-10-20T19:39:36.588Z",
+                  "claimDurationNs": "2978100",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "5de99b2f-5e37-44e9-ac21-3e67fb56bf8d",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:36.586000",
+                      "databaseNow": "2026-10-20 19:39:36.594560",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:36.807Z",
+                  "enteredAt": "2026-10-20T19:39:36.807Z",
+                  "returnedAt": "2026-10-20T19:39:36.810Z",
+                  "claimDurationNs": "3162400",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "073f86e5-02c1-471f-85f1-1b045eb6a7e9",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:36.808000",
+                      "databaseNow": "2026-10-20 19:39:36.815905",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:37.027Z",
+                  "enteredAt": "2026-10-20T19:39:37.027Z",
+                  "returnedAt": "2026-10-20T19:39:37.031Z",
+                  "claimDurationNs": "3151300",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "8cd5cdf5-58d4-4f33-a949-67edd28edf36",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:37.028000",
+                      "databaseNow": "2026-10-20 19:39:37.036937",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:37.275Z",
+                  "enteredAt": "2026-10-20T19:39:37.275Z",
+                  "returnedAt": "2026-10-20T19:39:37.279Z",
+                  "claimDurationNs": "3376000",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "f9b71581-fb14-42af-94ef-593fbf883286",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:37.276000",
+                      "databaseNow": "2026-10-20 19:39:37.285278",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:37.502Z",
+                  "enteredAt": "2026-10-20T19:39:37.502Z",
+                  "returnedAt": "2026-10-20T19:39:37.506Z",
+                  "claimDurationNs": "4067300",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "a46f7a97-3b56-4829-9781-ceaf53d31d71",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:37.503000",
+                      "databaseNow": "2026-10-20 19:39:37.512354",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:38.220Z",
+                  "enteredAt": "2026-10-20T19:39:38.220Z",
+                  "returnedAt": "2026-10-20T19:39:38.223Z",
+                  "claimDurationNs": "2875400",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "73f552d2-8f56-48fa-bf9a-52c8d0350e62",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:38.221000",
+                      "databaseNow": "2026-10-20 19:39:38.229062",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:38.845Z",
+                  "enteredAt": "2026-10-20T19:39:38.845Z",
+                  "returnedAt": "2026-10-20T19:39:38.850Z",
+                  "claimDurationNs": "4151700",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "7073298b-8c18-47c9-99ee-de906daf173b",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:38.846000",
+                      "databaseNow": "2026-10-20 19:39:38.856260",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:39.084Z",
+                  "enteredAt": "2026-10-20T19:39:39.084Z",
+                  "returnedAt": "2026-10-20T19:39:39.087Z",
+                  "claimDurationNs": "3063700",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "d48618b2-f854-4b83-b509-7c74f2f95e6e",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:39.086000",
+                      "databaseNow": "2026-10-20 19:39:39.093447",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    2.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:39.712Z",
+                  "enteredAt": "2026-10-20T19:39:39.712Z",
+                  "returnedAt": "2026-10-20T19:39:39.715Z",
+                  "claimDurationNs": "3171700",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "64b85170-f421-4561-9e71-03d4dd418477",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:39.713000",
+                      "databaseNow": "2026-10-20 19:39:39.721948",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:40.785Z",
+                  "enteredAt": "2026-10-20T19:39:40.785Z",
+                  "returnedAt": "2026-10-20T19:39:40.796Z",
+                  "claimDurationNs": "10684600",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "fbd3a9d7-3393-4ae1-a02d-0b4531634000",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:40.786000",
+                      "databaseNow": "2026-10-20 19:39:40.802562",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:41.020Z",
+                  "enteredAt": "2026-10-20T19:39:41.020Z",
+                  "returnedAt": "2026-10-20T19:39:41.024Z",
+                  "claimDurationNs": "3801100",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "ed194691-859c-40c3-8d18-963ad8fd276b",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:41.021000",
+                      "databaseNow": "2026-10-20 19:39:41.030975",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                },
+                {
+                  "hostNow": "2026-10-20T19:39:41.260Z",
+                  "enteredAt": "2026-10-20T19:39:41.260Z",
+                  "returnedAt": "2026-10-20T19:39:41.263Z",
+                  "claimDurationNs": "3024200",
+                  "schema": "placement_isolation_2d7d0c7fb5ae45c59563584375b41cce",
+                  "jobs": [
+                    {
+                      "id": "e8dd66f6-f9c5-43d3-a164-6f4fdfd541be",
+                      "type": "TRANSCRIBE_SPEECH",
+                      "status": "PENDING",
+                      "attemptCount": 0,
+                      "maxAttempts": 3,
+                      "availableAt": "2026-10-20 19:39:41.261000",
+                      "databaseNow": "2026-10-20 19:39:41.269491",
+                      "dueAtCapturedNow": false,
+                      "leaseOwner": null,
+                      "leaseExpiresAt": null,
+                      "waitingLocks": 0
+                    }
+                  ],
+                  "locks": [],
+                  "observation": "after-claim-not-atomic",
+                  "availableMinusCapturedNowMs": [
+                    1.0
+                  ]
+                }
+              ],
+              "expectedNullControls": 0
+            }
+          ]
+        },
+        {
+          "name": "single-load",
+          "workers": 1,
+          "load": true,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "single-load-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  31 passed (31)",
+                "   Duration  31.93s (transform 5.37s, setup 0ms, collect 11.58s, tests 19.76s, environment 0ms, prepare 256ms)"
+              ],
+              "observedClaimEvents": 90,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            },
+            {
+              "role": "load",
+              "exitCode": 0,
+              "log": "single-load-load.log",
+              "testSummary": [
+                "\n Test Files  6 passed (6)",
+                "      Tests  31 passed (31)",
+                "   Duration  50.93s (transform 5.77s, setup 0ms, collect 21.18s, tests 27.48s, environment 1ms, prepare 993ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        },
+        {
+          "name": "parallel-load",
+          "workers": 2,
+          "load": true,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "parallel-load-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  31 passed (31)",
+                "   Duration  37.57s (transform 6.63s, setup 0ms, collect 13.84s, tests 23.30s, environment 0ms, prepare 150ms)"
+              ],
+              "observedClaimEvents": 90,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            },
+            {
+              "role": "placement1",
+              "exitCode": 0,
+              "log": "parallel-load-placement1.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  31 passed (31)",
+                "   Duration  38.13s (transform 6.59s, setup 0ms, collect 13.82s, tests 23.86s, environment 0ms, prepare 153ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            },
+            {
+              "role": "load",
+              "exitCode": 0,
+              "log": "parallel-load-load.log",
+              "testSummary": [
+                "\n Test Files  6 passed (6)",
+                "      Tests  31 passed (31)",
+                "   Duration  58.06s (transform 7.00s, setup 0ms, collect 25.10s, tests 31.04s, environment 1ms, prepare 732ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        }
+      ],
+      "clockSampleCount": 0,
+      "databaseMinusHostReceiveMsRange": null,
+      "clockCaveat": "Query send/receive brackets and Date millisecond precision; not proof of NTP skew or the destroyed historical event."
+    },
+    "matrix-fixed": {
+      "sourceCommitAtLaunch": "010f31d5262bfbc80d71b302b43a7940a66ba5fe",
+      "result": "PASS",
+      "cleanup": true,
+      "cells": [
+        {
+          "name": "single",
+          "workers": 1,
+          "load": false,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "single-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  31.95s (transform 4.65s, setup 0ms, collect 10.03s, tests 21.59s, environment 0ms, prepare 102ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            }
+          ]
+        },
+        {
+          "name": "parallel",
+          "workers": 2,
+          "load": false,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "parallel-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  32.59s (transform 6.10s, setup 0ms, collect 12.84s, tests 19.23s, environment 0ms, prepare 189ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "placement1",
+              "exitCode": 0,
+              "log": "parallel-placement1.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  33.17s (transform 6.16s, setup 0ms, collect 12.90s, tests 19.78s, environment 0ms, prepare 179ms)"
+              ],
+              "observedClaimEvents": 1,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            }
+          ]
+        },
+        {
+          "name": "single-load",
+          "workers": 1,
+          "load": true,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "single-load-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  34.65s (transform 5.52s, setup 0ms, collect 11.75s, tests 22.49s, environment 0ms, prepare 136ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "load",
+              "exitCode": 0,
+              "log": "single-load-load.log",
+              "testSummary": [
+                "\n Test Files  6 passed (6)",
+                "      Tests  31 passed (31)",
+                "   Duration  54.42s (transform 5.72s, setup 0ms, collect 21.96s, tests 30.42s, environment 1ms, prepare 788ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        },
+        {
+          "name": "parallel-load",
+          "workers": 2,
+          "load": true,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "parallel-load-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  39.11s (transform 6.84s, setup 0ms, collect 14.04s, tests 24.61s, environment 0ms, prepare 158ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "placement1",
+              "exitCode": 0,
+              "log": "parallel-load-placement1.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  39.70s (transform 6.77s, setup 0ms, collect 14.07s, tests 25.14s, environment 0ms, prepare 157ms)"
+              ],
+              "observedClaimEvents": 1,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "load",
+              "exitCode": 0,
+              "log": "parallel-load-load.log",
+              "testSummary": [
+                "\n Test Files  6 passed (6)",
+                "      Tests  31 passed (31)",
+                "   Duration  59.64s (transform 7.02s, setup 0ms, collect 25.89s, tests 31.82s, environment 1ms, prepare 733ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        }
+      ],
+      "clockSampleCount": 64,
+      "databaseMinusHostReceiveMsRange": [
+        3.31298828125,
+        4.77197265625
+      ],
+      "clockCaveat": "Query send/receive brackets and Date millisecond precision; not proof of NTP skew or the destroyed historical event."
+    },
+    "matrix-reviewed": {
+      "sourceCommitAtLaunch": "4577379d9b5d76bc4a293dcf2050bdc41e73f1bc",
+      "result": "PASS",
+      "cleanup": true,
+      "cells": [
+        {
+          "name": "single",
+          "workers": 1,
+          "load": false,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "single-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  32.15s (transform 5.23s, setup 0ms, collect 11.37s, tests 20.43s, environment 0ms, prepare 117ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            }
+          ]
+        },
+        {
+          "name": "parallel",
+          "workers": 2,
+          "load": false,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "parallel-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  38.47s (transform 6.70s, setup 0ms, collect 14.02s, tests 24.01s, environment 0ms, prepare 141ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "placement1",
+              "exitCode": 0,
+              "log": "parallel-placement1.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  39.41s (transform 6.85s, setup 0ms, collect 14.13s, tests 24.83s, environment 0ms, prepare 150ms)"
+              ],
+              "observedClaimEvents": 1,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            }
+          ]
+        },
+        {
+          "name": "single-load",
+          "workers": 1,
+          "load": true,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "single-load-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  39.58s (transform 7.09s, setup 0ms, collect 15.06s, tests 23.97s, environment 0ms, prepare 182ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "load",
+              "exitCode": 0,
+              "log": "single-load-load.log",
+              "testSummary": [
+                "\n Test Files  6 passed (6)",
+                "      Tests  31 passed (31)",
+                "   Duration  62.39s (transform 7.39s, setup 0ms, collect 26.39s, tests 33.82s, environment 2ms, prepare 821ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        },
+        {
+          "name": "parallel-load",
+          "workers": 2,
+          "load": true,
+          "children": [
+            {
+              "role": "placement0",
+              "exitCode": 0,
+              "log": "parallel-load-placement0.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  44.74s (transform 7.82s, setup 0ms, collect 16.22s, tests 27.90s, environment 0ms, prepare 242ms)"
+              ],
+              "observedClaimEvents": 92,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "placement1",
+              "exitCode": 0,
+              "log": "parallel-load-placement1.log",
+              "testSummary": [
+                "\n Test Files  1 passed (1)",
+                "      Tests  32 passed (32)",
+                "   Duration  45.49s (transform 7.92s, setup 0ms, collect 16.15s, tests 28.72s, environment 4ms, prepare 222ms)"
+              ],
+              "observedClaimEvents": 1,
+              "unexpectedNulls": [],
+              "expectedNullControls": 1
+            },
+            {
+              "role": "load",
+              "exitCode": 0,
+              "log": "parallel-load-load.log",
+              "testSummary": [
+                "\n Test Files  6 passed (6)",
+                "      Tests  31 passed (31)",
+                "   Duration  69.46s (transform 8.10s, setup 0ms, collect 28.90s, tests 38.11s, environment 2ms, prepare 960ms)"
+              ],
+              "observedClaimEvents": 0,
+              "unexpectedNulls": [],
+              "expectedNullControls": 0
+            }
+          ]
+        }
+      ],
+      "clockSampleCount": 64,
+      "databaseMinusHostReceiveMsRange": [
+        -2.819091796875,
+        0.825927734375
+      ],
+      "clockCaveat": "Query send/receive brackets and Date millisecond precision; not proof of NTP skew or the destroyed historical event."
+    }
+  }
+}

@@ -58,7 +58,7 @@ export default defineConfig({
     },
     {
       name: 'ui-redesign',
-      testMatch: /ui-redesign\.spec\.ts/u,
+      testMatch: /(?:ui-redesign|dashboard-v2)\.spec\.ts/u,
       use: { ...devices['Desktop Chrome'] },
     },
     {
@@ -139,6 +139,16 @@ export default defineConfig({
     {
       name: 'curriculum-foundation-mobile',
       testMatch: /curriculum-foundation\.spec\.ts/u,
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'ielts-beta-desktop',
+      testMatch: /ielts-beta\.spec\.ts/u,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'ielts-beta-mobile',
+      testMatch: /ielts-beta\.spec\.ts/u,
       use: { ...devices['Pixel 5'] },
     },
     {

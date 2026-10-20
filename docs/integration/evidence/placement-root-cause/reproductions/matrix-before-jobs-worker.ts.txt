@@ -1,0 +1,323 @@
+import { randomUUID } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+
+import { JobsService } from '../../src/jobs/application/jobs.service.js';
+import { PrismaService } from '../../src/common/database/prisma.service.js';
+import { inspectJobClaim } from './job-claim-diagnostics.js';
+
+describe('leased PostgreSQL job worker', () => {
+  const schemaName = `jobs_worker_${randomUUID().replaceAll('-', '')}`;
+  const baseUrl = process.env.TEST_DATABASE_URL
+    ?? 'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
+  const admin = new PrismaService({ datasourceUrl: baseUrl });
+  let firstDatabase: PrismaService;
+  let secondDatabase: PrismaService;
+  let first: JobsService;
+  let second: JobsService;
+  let actorId: string;
+  let schemaCreated = false;
+
+  beforeAll(async () => {
+    const url = new URL(baseUrl);
+    url.searchParams.set('schema', schemaName);
+    const cli = createRequire(path.resolve('package.json')).resolve('prisma/build/index.js');
+    const migration = spawnSync(process.execPath, [cli, 'migrate', 'deploy'], {
+      env: { ...process.env, DATABASE_URL: url.toString() },
+      encoding: 'utf8', timeout: 45_000,
+    });
+    if (migration.status !== 0) throw new Error(migration.stderr || migration.stdout);
+    firstDatabase = new PrismaService({ datasourceUrl: url.toString() });
+    secondDatabase = new PrismaService({ datasourceUrl: url.toString() });
+    await Promise.all([firstDatabase.$connect(), secondDatabase.$connect()]);
+    schemaCreated = true;
+    first = new JobsService(firstDatabase);
+    second = new JobsService(secondDatabase);
+    const actor = await firstDatabase.user.create({
+      data: {
+        email: `worker-${randomUUID()}@example.com`,
+        displayName: 'Worker Test Actor',
+        passwordHash: 'test-hash',
+      },
+    });
+    actorId = actor.id;
+  }, 50_000);
+
+  beforeEach(async () => {
+    await firstDatabase.job.deleteMany();
+  });
+
+  afterAll(async () => {
+    await Promise.all([firstDatabase?.$disconnect(), secondDatabase?.$disconnect()]);
+    if (schemaCreated) await admin.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaName}" CASCADE`);
+    await admin.$disconnect();
+  });
+
+  const availableAt = new Date('2026-10-08T00:00:00.000Z');
+  const enqueue = async (idempotencyKey: string) => {
+    const job = await first.enqueue({
+      createdById: actorId,
+      idempotencyKey,
+      payload: { fixture: true },
+      resourceId: idempotencyKey,
+      resourceType: 'test',
+      type: 'TEST_JOB',
+    });
+    await firstDatabase.job.update({ where: { id: job.id }, data: { availableAt } });
+    return job;
+  };
+
+  it('allows only one concurrent runner to claim a row', async () => {
+    const job = await enqueue(`claim-${randomUUID()}`);
+    const now = new Date('2026-10-08T01:00:00.000Z');
+
+    const claims = await Promise.all([
+      first.claimNext('worker-a', now, 30_000),
+      second.claimNext('worker-b', now, 30_000),
+    ]);
+
+    expect(claims.filter(Boolean)).toHaveLength(1);
+    expect(claims.find(Boolean)?.id).toBe(job.id);
+    await expect(firstDatabase.jobAttempt.count({ where: { jobId: job.id } })).resolves.toBe(1);
+  });
+
+  it('does not claim before availableAt and claims at its inclusive boundary', async () => {
+    const job = await enqueue(`eligibility-${randomUUID()}`);
+    const early = new Date(availableAt.getTime() - 1);
+    await expect(first.claimNext('worker-early', early, 30_000)).resolves.toBeNull();
+    await expect(firstDatabase.job.findUnique({ where: { id: job.id } })).resolves.toMatchObject({
+      status: 'PENDING', attemptCount: 0, leaseOwner: null,
+    });
+    await expect(firstDatabase.jobAttempt.count({ where: { jobId: job.id } })).resolves.toBe(0);
+    const observation = await inspectJobClaim(firstDatabase, early);
+    console.info(JSON.stringify({ event: 'controlled-future-eligibility', capturedNow: early.toISOString(), observation }));
+    await expect(first.claimNext('worker-due', availableAt, 30_000)).resolves.toMatchObject({ id: job.id, attemptNumber: 1 });
+  });
+
+  it('cannot see an uncommitted enqueue and claims it after the commit barrier', async () => {
+    let release!: () => void;
+    let ready!: (id: string) => void;
+    let failed!: (cause: unknown) => void;
+    const held = new Promise<void>(resolve => { release = resolve; });
+    const enqueued = new Promise<string>((resolve, reject) => { ready = resolve; failed = reject; });
+    const transaction = secondDatabase.$transaction(async tx => {
+      const job = await second.enqueue({ createdById: actorId, idempotencyKey: randomUUID(), payload: {}, type: 'TEST_JOB' }, tx);
+      await tx.job.update({ where: { id: job.id }, data: { availableAt } });
+      ready(job.id);
+      await held;
+      return job.id;
+    }, { timeout: 10_000 });
+    // Attach a rejection handler immediately; still propagate through the awaited transaction.
+    void transaction.catch(failed);
+    try {
+      const id = await enqueued;
+      await expect(first.claimNext('worker-before-commit', availableAt, 30_000)).resolves.toBeNull();
+      await expect(firstDatabase.job.count({ where: { id } })).resolves.toBe(0);
+      console.info(JSON.stringify({ event: 'controlled-uncommitted-enqueue', id, visible: false }));
+    } finally {
+      release();
+    }
+    const id = await transaction;
+    await expect(first.claimNext('worker-after-commit', availableAt, 30_000)).resolves.toMatchObject({ id });
+  });
+
+  it('observes a granted competing lock when SKIP LOCKED returns no eligible row', async () => {
+    const job = await enqueue(`held-lock-${randomUUID()}`);
+    const now = new Date('2026-10-08T01:00:00.000Z');
+    let release!: () => void;
+    let acquired!: (pid: number) => void;
+    let failed!: (cause: unknown) => void;
+    let holdingError: unknown;
+    const hold = new Promise<void>(resolve => { release = resolve; });
+    const ready = new Promise<number>((resolve, reject) => { acquired = resolve; failed = reject; });
+    const holding = secondDatabase.$transaction(async transaction => {
+      await transaction.$queryRaw`SELECT "id" FROM "Job" WHERE "id" = ${job.id}::uuid FOR UPDATE`;
+      const [backend] = await transaction.$queryRaw<Array<{ pid: number }>>`SELECT pg_backend_pid() AS pid`;
+      acquired(backend!.pid);
+      await hold;
+    }, { timeout: 10_000 }).catch(cause => { holdingError = cause; failed(cause); });
+    try {
+      const holderPid = await ready;
+      await expect(first.claimNext('worker-skip', now, 30_000)).resolves.toBeNull();
+      const snapshot = await inspectJobClaim(firstDatabase, now);
+      console.info(JSON.stringify({ event: 'controlled-skip-locked', jobId: job.id,
+        capturedNow: now.toISOString(), holderPid, snapshot }));
+      expect(snapshot.jobs).toEqual([expect.objectContaining({
+        id: job.id, status: 'PENDING', dueAtCapturedNow: true, waitingLocks: 0,
+      })]);
+      expect(snapshot.locks).toEqual(expect.arrayContaining([expect.objectContaining({
+        pid: holderPid, locktype: 'relation', mode: 'RowShareLock', granted: true,
+      })]));
+    } finally { release(); await holding; }
+    if (holdingError) throw holdingError;
+    await expect(first.claimNext('worker-after-release', now, 30_000)).resolves.toMatchObject({ id: job.id });
+    await expect(firstDatabase.job.findUniqueOrThrow({ where: { id: job.id } }))
+      .resolves.toMatchObject({ status: 'RUNNING', attemptCount: 1, leaseOwner: 'worker-after-release' });
+  });
+
+  it('replays an enqueue inside a transaction without aborting its other writes', async () => {
+    const idempotencyKey = `transaction-${randomUUID()}`;
+    const input = {
+      createdById: actorId, idempotencyKey, payload: { fixture: true },
+      resourceId: idempotencyKey, resourceType: 'test', type: 'TEST_JOB',
+    };
+    const job = await first.enqueue(input);
+
+    const replay = await firstDatabase.$transaction(async transaction => {
+      const existing = await first.enqueue(input, transaction);
+      await transaction.user.update({ where: { id: actorId }, data: { displayName: 'Replay committed' } });
+      return existing;
+    });
+
+    expect(replay).toEqual(job);
+    await expect(firstDatabase.job.count()).resolves.toBe(1);
+    await expect(firstDatabase.user.findUniqueOrThrow({ where: { id: actorId } }))
+      .resolves.toMatchObject({ displayName: 'Replay committed' });
+  });
+
+  it('does not replay another actor\'s job when the idempotency key collides', async () => {
+    const idempotencyKey = `owner-${randomUUID()}`;
+    const input = {
+      createdById: actorId, idempotencyKey, payload: {},
+      resourceId: idempotencyKey, resourceType: 'test', type: 'TEST_JOB',
+    };
+    await first.enqueue(input);
+    const other = await firstDatabase.user.create({ data: {
+      email: `${randomUUID()}@example.com`, displayName: 'Other actor', passwordHash: 'test-hash',
+    } });
+
+    await expect(second.enqueue({ ...input, createdById: other.id }))
+      .rejects.toMatchObject({ status: 409 });
+  });
+
+  it('deduplicates concurrent transactional enqueues while committing both callers', async () => {
+    const idempotencyKey = `concurrent-${randomUUID()}`;
+    const input = {
+      createdById: actorId, idempotencyKey, payload: {},
+      resourceId: idempotencyKey, resourceType: 'test', type: 'TEST_JOB',
+    };
+    const jobs = await Promise.all([firstDatabase, secondDatabase].map(database =>
+      database.$transaction(transaction => first.enqueue(input, transaction))));
+
+    expect(jobs[0]).toEqual(jobs[1]);
+    await expect(firstDatabase.job.count()).resolves.toBe(1);
+  });
+
+  it('protects a live lease and reclaims an expired lease without accepting stale completion', async () => {
+    const job = await enqueue(`lease-${randomUUID()}`);
+    const startedAt = new Date('2026-10-08T01:00:00.000Z');
+    const firstClaim = await first.claimNext('worker-a', startedAt, 30_000);
+    expect(firstClaim).not.toBeNull();
+
+    await expect(second.claimNext('worker-b', new Date(startedAt.getTime() + 29_999), 30_000))
+      .resolves.toBeNull();
+    const reclaimed = await second.claimNext(
+      'worker-b', new Date(startedAt.getTime() + 30_001), 30_000,
+    );
+    expect(reclaimed).toMatchObject({ id: job.id, attemptNumber: 2 });
+
+    await expect(first.completeClaim({
+      attemptNumber: 1, jobId: job.id, result: { stale: true }, workerId: 'worker-a',
+    })).resolves.toBe(false);
+    await expect(second.completeClaim({
+      attemptNumber: 2, jobId: job.id, result: { completed: true }, workerId: 'worker-b',
+    })).resolves.toBe(true);
+    await expect(firstDatabase.job.findUniqueOrThrow({ where: { id: job.id } }))
+      .resolves.toMatchObject({ status: 'COMPLETED', attemptCount: 2 });
+    await expect(firstDatabase.jobAttempt.count({ where: { jobId: job.id } })).resolves.toBe(2);
+  });
+
+  it('keeps the same job identity while waiting for retry', async () => {
+    const job = await enqueue(`retry-${randomUUID()}`);
+    const startedAt = new Date('2026-10-08T01:00:00.000Z');
+    const claim = await first.claimNext('worker-a', startedAt, 30_000);
+    const availableAt = new Date(startedAt.getTime() + 5_000);
+
+    await first.failClaim({
+      attemptNumber: claim!.attemptNumber,
+      availableAt,
+      code: 'PROVIDER_TIMEOUT',
+      errorSummary: 'Provider request timed out.',
+      jobId: job.id,
+      manuallyRetryable: true,
+      retry: true,
+      workerId: 'worker-a',
+    });
+
+    await expect(second.claimNext('worker-b', new Date(availableAt.getTime() - 1), 30_000))
+      .resolves.toBeNull();
+    await expect(second.claimNext('worker-b', availableAt, 30_000))
+      .resolves.toMatchObject({ id: job.id, attemptNumber: 2 });
+  });
+
+  it('allows an admin retry to preserve identity and grant one explicit attempt', async () => {
+    const job = await enqueue(`manual-${randomUUID()}`);
+    const claim = await first.claimNext('worker-a', new Date(), 30_000);
+    await first.failClaim({
+      attemptNumber: claim!.attemptNumber,
+      code: 'PROVIDER_RESPONSE_INVALID',
+      errorSummary: 'Provider returned an invalid response.',
+      jobId: job.id,
+      manuallyRetryable: true,
+      retry: false,
+      workerId: 'worker-a',
+    });
+
+    await expect(first.retryJob(job.id, actorId)).resolves.toMatchObject({
+      id: job.id, status: 'PENDING', type: 'TEST_JOB',
+    });
+    await expect(firstDatabase.job.findUniqueOrThrow({ where: { id: job.id } }))
+      .resolves.toMatchObject({ id: job.id, maxAttempts: 4, retryable: false });
+  });
+
+  it('accepts only one concurrent manual retry without replacing a live worker lease', async () => {
+    const job = await enqueue(`retry-race-${randomUUID()}`);
+    await firstDatabase.job.update({ where: { id: job.id }, data: {
+      status: 'FAILED', attemptCount: 3, maxAttempts: 3, retryable: true,
+    } });
+    let reads = 0;
+    let release!: () => void;
+    const bothRead = new Promise<void>(resolve => { release = resolve; });
+    const gated = firstDatabase.$extends({ query: { job: {
+      async findFirst({ args, query }) {
+        const row = await query(args);
+        if (++reads === 2) release();
+        await bothRead;
+        return row;
+      },
+    } } });
+    const service = new JobsService(gated as unknown as PrismaService);
+    const retryAndClaim = async () => {
+      const retried = await service.retryJob(job.id, actorId);
+      await second.claimNext('retry-worker', new Date(Date.now() + 1000), 30_000);
+      return retried;
+    };
+    const results = await Promise.allSettled([retryAndClaim(), retryAndClaim()]);
+
+    expect(results.filter(result => result.status === 'fulfilled')).toHaveLength(1);
+    expect(results.find(result => result.status === 'rejected'))
+      .toMatchObject({ reason: { status: 409 } });
+    await expect(firstDatabase.job.findUniqueOrThrow({ where: { id: job.id } }))
+      .resolves.toMatchObject({
+        status: 'RUNNING', attemptCount: 4, maxAttempts: 4, leaseOwner: 'retry-worker',
+      });
+  });
+
+  it('keeps existing fake-audio job records readable', async () => {
+    const row = await firstDatabase.job.create({
+      data: {
+        type: 'generate-audio',
+        payload: { contentImportId: 'legacy-fixture' },
+        createdById: actorId,
+        idempotencyKey: `legacy-audio-${randomUUID()}`,
+      },
+    });
+
+    await expect(first.getJob(row.id, actorId)).resolves.toMatchObject({
+      id: row.id, status: 'PENDING', type: 'generate-audio',
+    });
+  });
+});

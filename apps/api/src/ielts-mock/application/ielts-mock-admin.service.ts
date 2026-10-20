@@ -1,7 +1,9 @@
-import { createHash } from 'node:crypto';
-import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { createHash, randomUUID } from 'node:crypto';
+import { BadRequestException, ConflictException, ForbiddenException, Inject, Injectable, Optional, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { adminIeltsMockSchema, ieltsMockContentSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
+import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
+import { qualifyStoredMock } from '../infrastructure/qualify-stored-mock.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 const includeMock = { currentPublishedVersion: true, versions: { orderBy: { version: 'desc' as const }, take: 20 } } as const;
 type MockRecord = Prisma.IeltsMockTestGetPayload<{ include: typeof includeMock }>;
@@ -9,7 +11,30 @@ type VersionRecord = Prisma.IeltsMockTestVersionGetPayload<Record<string, never>
 
 @Injectable()
 export class IeltsMockAdminService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly database: PrismaService, @Optional() @Inject(ObjectStorage) private readonly storage?: ObjectStorage) {}
+  async create(actorId: string, input: { idempotencyKey: string; content: unknown }) {
+    const parsed = ieltsMockContentSchema.safeParse(input.content);
+    if (!parsed.success) throw new BadRequestException({ code: 'INVALID_IELTS_MOCK_CONTENT', message: 'IELTS mock content is invalid.', details: parsed.error.issues });
+    const content = parsed.data;
+    const operation = 'create-ielts-mock';
+    const requestHash = this.hash({ content });
+    return this.database.$transaction(async tx => {
+      const actor = await tx.user.findUnique({ where: { id: actorId }, select: { role: true, status: true } });
+      if (!actor || actor.status !== 'ACTIVE' || !['CONTENT_ADMIN', 'SYSTEM_ADMIN'].includes(actor.role)) throw new ForbiddenException('Active content administrator required.');
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${operation + ':' + actorId + ':' + input.idempotencyKey}))`;
+      const receipt = await tx.mutationReceipt.findUnique({ where: { actorId_operation_idempotencyKey: { actorId, operation, idempotencyKey: input.idempotencyKey } } });
+      if (receipt) {
+        if (receipt.requestHash !== requestHash) throw new ConflictException('Idempotency key reused.');
+        return adminIeltsMockSchema.parse(receipt.responseBody);
+      }
+      const id = randomUUID();
+      const row = await tx.ieltsMockTest.create({ data: { id, slug: `${content.variant.toLowerCase()}-mock-${id}`, draftContent: content as Prisma.InputJsonValue }, include: includeMock });
+      const response = this.dto(row);
+      await tx.auditLog.create({ data: { actorId, action: 'CREATE_IELTS_MOCK', resourceType: 'IeltsMockTest', resourceId: id, newState: { draftRevision: row.draftRevision }, metadata: { variant: content.variant } } });
+      await tx.mutationReceipt.create({ data: { actorId, operation, idempotencyKey: input.idempotencyKey, requestHash, responseStatus: 201, responseBody: response as Prisma.InputJsonValue } });
+      return response;
+    });
+  }
   async list(cursor?: string) {
     const after = cursor ? this.decodeCursor(cursor) : null;
     const rows = await this.database.ieltsMockTest.findMany({ ...(after ? { where: { OR: [{ createdAt: { lt: after.at } }, { createdAt: after.at, id: { gt: after.id } }] } } : {}), include: includeMock, orderBy: [{ createdAt: 'desc' }, { id: 'asc' }], take: 51 });
@@ -33,7 +58,7 @@ export class IeltsMockAdminService {
     return this.database.$transaction(async (tx) => {
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-mock:' + id}))`;
       const mock = await tx.ieltsMockTest.findUnique({ where: { id } }); if (!mock) throw new NotFoundException('IELTS mock not found.'); if (mock.draftRevision !== input.expectedRevision) throw new ConflictException('IELTS mock revision is stale.');
-      const parsed = ieltsMockContentSchema.safeParse(mock.draftContent); const issues = parsed.success ? [] : parsed.error.issues.map((issue) => ({ path: issue.path.join('.'), message: issue.message })); const status = issues.length ? 'DRAFT' as const : 'VALIDATED' as const;
+      const parsed = ieltsMockContentSchema.safeParse(mock.draftContent); const issues = parsed.success ? [] : parsed.error.issues.map((issue) => ({ path: issue.path.join('.'), message: issue.message })); if (parsed.success && parsed.data.schemaVersion===2) issues.push(...(await qualifyStoredMock(tx,this.storage,parsed.data)).issues.map(issue=>({path:issue.path,message:issue.message}))); const status = issues.length ? 'DRAFT' as const : 'VALIDATED' as const;
       const updated = await tx.ieltsMockTest.updateMany({ where: { id, draftRevision: input.expectedRevision }, data: { status } }); if (updated.count !== 1) throw new ConflictException('IELTS mock revision is stale.');
       return ieltsMockValidationSchema.parse({ mockTestId: id, draftRevision: mock.draftRevision, status, canPublish: !issues.length, issues });
     });
@@ -44,7 +69,9 @@ export class IeltsMockAdminService {
       const replay = await tx.mutationReceipt.findUnique({ where: { actorId_operation_idempotencyKey: { actorId, operation, idempotencyKey: input.idempotencyKey } } }); if (replay) { if (replay.requestHash !== requestHash) throw new ConflictException('Idempotency key reused.'); return publishIeltsMockResultSchema.parse(replay.responseBody); }
       const mock = await tx.ieltsMockTest.findUnique({ where: { id }, include: { versions: { orderBy: { version: 'desc' }, take: 1 } } }); if (!mock) throw new NotFoundException('IELTS mock not found.'); if (mock.draftRevision !== input.expectedRevision) throw new ConflictException('IELTS mock revision is stale.');
       if (mock.status !== 'VALIDATED') throw new ConflictException('IELTS mock must be validated before publication.');
-      const content = ieltsMockContentSchema.parse(mock.draftContent); const audioIds = content.listening.parts.map((part) => part.audioAssetId);
+      const content = ieltsMockContentSchema.parse(mock.draftContent);
+      if (content.schemaVersion===2) { const qualification=await qualifyStoredMock(tx,this.storage,content); if (!qualification.canPublish) throw new UnprocessableEntityException({code:'IELTS_MOCK_CONTENT_NOT_QUALIFIED',issues:qualification.issues}); }
+      const audioIds = content.listening.parts.map((part) => part.audioAssetId);
       if (audioIds.some((assetId) => assetId === null)) throw new UnprocessableEntityException('Every Listening part requires release-ready audio.');
       const readyAudio = await tx.audioArtifact.count({ where: { id: { in: audioIds as string[] }, status: 'READY', adapterName: { not: 'fake-tts' } } });
       if (readyAudio !== new Set(audioIds).size) throw new UnprocessableEntityException('Every Listening part requires release-ready audio.');

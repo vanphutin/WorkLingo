@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-science-research-objective]
+statement: Infer and accurately use contextual Science & Research vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-science-research-lesson
+title: Science & Research: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Critique the proposed research design and recommend one improvement without inventing findings.
+[/LESSON]
+
+[WORD_BANK ielts-science-research-bank]
+title: Science & Research in context
+
+[[LANGUAGE_BLOCK ielts-science-research-scientific-evidence]]
+expression: scientific evidence
+meaning_vi: bằng chứng khoa học
+pronunciation: /ˌsaɪənˈtɪfɪk ˈevɪdəns/
+collocations: evaluate scientific evidence
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our team will distinguish scientific evidence from an attractive story when reporting a fictional survey of neighbourhood gardens.
+common_error: Evidence is uncountable; avoid evidences in this general use.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-research-methods]]
+expression: research methods
+meaning_vi: phương pháp nghiên cứu
+pronunciation: /rɪˈsɜːtʃ ˈmeθədz/
+collocations: compare research methods
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The research methods document compares direct observation with residents' self-reported estimates.
+common_error: Methods are procedures, not the findings themselves.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-sample-size]]
+expression: sample size
+meaning_vi: cỡ mẫu
+pronunciation: /ˈsɑːmpəl saɪz/
+collocations: increase the sample size
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The sample size is forty gardens, and the report will explain why that number limits detailed subgroup comparisons.
+common_error: Size refers to the number of observations in the sample.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-control-group]]
+expression: control group
+meaning_vi: nhóm đối chứng
+pronunciation: /kənˈtrəʊl ɡruːp/
+collocations: include a control group
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A control group will follow the usual gardening routine while another group tries a different watering schedule.
+common_error: Use a before one control group.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-reliable-results]]
+expression: reliable results
+meaning_vi: kết quả đáng tin cậy
+pronunciation: /rɪˈlaɪəbəl rɪˈzʌlts/
+collocations: obtain reliable results
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: To obtain reliable results, observers will use the same recording sheet and compare how they classify uncertain cases.
+common_error: Reliable describes consistency; it does not automatically prove a causal claim.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-ethical-approval]]
+expression: ethical approval
+meaning_vi: sự phê duyệt về đạo đức nghiên cứu
+pronunciation: /ˈeθɪkəl əˈpruːvəl/
+collocations: obtain ethical approval
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The team will seek ethical approval before collecting any identifiable interviews and will explain withdrawal rights.
+common_error: Approval is uncountable in this administrative sense.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-data-collection]]
+expression: data collection
+meaning_vi: việc thu thập dữ liệu
+pronunciation: /ˈdeɪtə kəˈlekʃən/
+collocations: systematic data collection
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The data collection schedule covers weekdays and weekends to avoid observing only one type of garden use.
+common_error: Collection is the noun; collect is the verb.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-peer-review]]
+expression: peer review
+meaning_vi: sự phản biện của chuyên gia cùng lĩnh vực
+pronunciation: /pɪə rɪˈvjuː/
+collocations: independent peer review
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Independent peer review will assess whether the conclusions follow from the methods and observations.
+common_error: Peer review is a process, not a guarantee of perfect accuracy.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-causal-relationship]]
+expression: causal relationship
+meaning_vi: mối quan hệ nhân quả
+pronunciation: /ˈkɔːzəl rɪˈleɪʃənʃɪp/
+collocations: establish a causal relationship
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The report will not claim a causal relationship between garden visits and wellbeing from an observational survey alone.
+common_error: Do not confuse causal with casual.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-statistical-analysis]]
+expression: statistical analysis
+meaning_vi: phân tích thống kê
+pronunciation: /stəˈtɪstɪkəl əˈnæləsɪs/
+collocations: conduct statistical analysis
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The statistical analysis plan will be written before the team inspects the final results.
+common_error: Analysis is singular; analyses is plural.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-research-limitations]]
+expression: research limitations
+meaning_vi: hạn chế của nghiên cứu
+pronunciation: /rɪˈsɜːtʃ ˌlɪmɪˈteɪʃənz/
+collocations: acknowledge research limitations
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The research limitations section will describe missing observations and the lack of winter measurements.
+common_error: Limitations are constraints on interpretation, not excuses to omit results.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-science-research-practical-applications]]
+expression: practical applications
+meaning_vi: ứng dụng thực tiễn
+pronunciation: /ˈpræktɪkəl ˌæplɪˈkeɪʃənz/
+collocations: explore practical applications
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Possible practical applications include improving the observation process before deciding whether to fund a larger study.
+common_error: Applications can mean uses, not only software or forms.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-science-research-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a fictional research team designing a neighbourhood survey. Please compare the priorities below before our next meeting.
+Our team will distinguish scientific evidence from an attractive story when reporting a fictional survey of neighbourhood gardens.
+The research methods document compares direct observation with residents' self-reported estimates.
+The sample size is forty gardens, and the report will explain why that number limits detailed subgroup comparisons.
+A control group will follow the usual gardening routine while another group tries a different watering schedule.
+To obtain reliable results, observers will use the same recording sheet and compare how they classify uncertain cases.
+The team will seek ethical approval before collecting any identifiable interviews and will explain withdrawal rights.
+The data collection schedule covers weekdays and weekends to avoid observing only one type of garden use.
+Independent peer review will assess whether the conclusions follow from the methods and observations.
+The report will not claim a causal relationship between garden visits and wellbeing from an observational survey alone.
+The statistical analysis plan will be written before the team inspects the final results.
+The research limitations section will describe missing observations and the lack of winter measurements.
+Possible practical applications include improving the observation process before deciding whether to fund a larger study.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-science-research-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Scientific evidence would be stronger if readers could see how observations were collected rather than only a confident headline.
+Lan: Research methods should fit the question; a survey of opinions cannot directly measure the number of insects in a garden.
+An: A larger sample size may help, but adding only gardens from the same street could leave other areas unrepresented.
+Lan: A control group would let us compare the new routine with what would happen without the change.
+An: Reliable results depend on consistent observations, so we should practise recording a few examples before starting.
+Lan: Ethical approval should come before recruitment, and participants still need a clear explanation in ordinary language.
+An: Data collection only on sunny afternoons could give a misleading picture of how often people use the space.
+Lan: Peer review can identify weaknesses, but readers should still examine the evidence instead of assuming a reviewed claim is final.
+An: A causal relationship cannot be assumed just because the most frequent visitors also report feeling happier.
+Lan: Statistical analysis should answer our original questions rather than search until one comparison looks impressive.
+An: Research limitations should be visible in the summary too, because many readers will not reach the final page.
+Lan: Practical applications may begin with a better pilot study rather than an immediate recommendation for every neighbourhood.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-science-research-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Scientific evidence would be stronger if readers could see how observations were collected rather than only a confident headline.
+Lan: Research methods should fit the question; a survey of opinions cannot directly measure the number of insects in a garden.
+An: A larger sample size may help, but adding only gardens from the same street could leave other areas unrepresented.
+Lan: A control group would let us compare the new routine with what would happen without the change.
+An: Reliable results depend on consistent observations, so we should practise recording a few examples before starting.
+Lan: Ethical approval should come before recruitment, and participants still need a clear explanation in ordinary language.
+An: Data collection only on sunny afternoons could give a misleading picture of how often people use the space.
+Lan: Peer review can identify weaknesses, but readers should still examine the evidence instead of assuming a reviewed claim is final.
+An: A causal relationship cannot be assumed just because the most frequent visitors also report feeling happier.
+Lan: Statistical analysis should answer our original questions rather than search until one comparison looks impressive.
+An: Research limitations should be visible in the summary too, because many readers will not reach the final page.
+Lan: Practical applications may begin with a better pilot study rather than an immediate recommendation for every neighbourhood.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-science-research-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-scientific-evidence | ielts-science-research-research-methods | ielts-science-research-sample-size
+prompt: Our team will distinguish scientific evidence from an attractive story when reporting a fictional survey of neighbourhood gardens. The research methods document compares direct observation with residents' self-reported estimates. The sample size is forty gardens, and the report will explain why that number limits detailed subgroup comparisons.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-statistical-analysis | ielts-science-research-research-limitations | ielts-science-research-practical-applications
+prompt: The statistical analysis plan will be written before the team inspects the final results. The research limitations section will describe missing observations and the lack of winter measurements. Possible practical applications include improving the observation process before deciding whether to fund a larger study.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-scientific-evidence | ielts-science-research-research-methods | ielts-science-research-sample-size | ielts-science-research-control-group
+
+QUESTION:
+What distinction will the team make in its report?
+
+OPTIONS:
+A. Only large versus small gardens
+B. Only weekday versus weekend workers
+C. Evidence versus an attractive story
+
+ANSWER:
+C
+
+EXPLANATION:
+Evidence versus an attractive story. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-science-research-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-discussion
+language_block_refs: ielts-science-research-scientific-evidence | ielts-science-research-research-methods | ielts-science-research-sample-size | ielts-science-research-control-group
+audio_ref: ielts-science-research-discussion-audio
+
+QUESTION:
+What would make the report more transparent?
+
+OPTIONS:
+A. Using a more confident headline
+B. Hiding the recording process
+C. Showing how observations were gathered
+
+ANSWER:
+C
+
+EXPLANATION:
+Showing how observations were gathered. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-science-research-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-reliable-results | ielts-science-research-ethical-approval | ielts-science-research-data-collection | ielts-science-research-peer-review
+
+QUESTION:
+How will observers promote consistency?
+
+OPTIONS:
+A. By discarding uncertain cases without discussion
+B. By using the same sheet and comparing uncertain classifications
+C. By inventing new categories each day
+
+ANSWER:
+B
+
+EXPLANATION:
+By using the same sheet and comparing uncertain classifications. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-science-research-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-discussion
+language_block_refs: ielts-science-research-reliable-results | ielts-science-research-ethical-approval | ielts-science-research-data-collection | ielts-science-research-peer-review
+audio_ref: ielts-science-research-discussion-audio
+
+QUESTION:
+What should happen before observations begin?
+
+OPTIONS:
+A. All uncertain evidence is removed
+B. Observers practise recording examples
+C. Observers inspect the desired final result
+
+ANSWER:
+B
+
+EXPLANATION:
+Observers practise recording examples. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-science-research-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-causal-relationship | ielts-science-research-statistical-analysis | ielts-science-research-research-limitations | ielts-science-research-practical-applications
+
+QUESTION:
+What conclusion will the observational survey avoid?
+
+OPTIONS:
+A. That visits alone cause improved wellbeing
+B. That some people visit gardens
+C. That observations were collected
+
+ANSWER:
+A
+
+EXPLANATION:
+That visits alone cause improved wellbeing. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-science-research-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-discussion
+language_block_refs: ielts-science-research-causal-relationship | ielts-science-research-statistical-analysis | ielts-science-research-research-limitations | ielts-science-research-practical-applications
+audio_ref: ielts-science-research-discussion-audio
+
+QUESTION:
+Why does the speaker reject a simple causal conclusion?
+
+OPTIONS:
+A. An association does not by itself show cause
+B. Every survey proves causation
+C. Wellbeing cannot ever be discussed
+
+ANSWER:
+A
+
+EXPLANATION:
+An association does not by itself show cause. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-science-research-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-discussion
+language_block_refs: ielts-science-research-scientific-evidence | ielts-science-research-reliable-results | ielts-science-research-causal-relationship
+prompt: Scientific evidence would be stronger if readers could see how observations were collected rather than only a confident headline. Reliable results depend on consistent observations, so we should practise recording a few examples before starting. A causal relationship cannot be assumed just because the most frequent visitors also report feeling happier.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Critique the proposed research design and recommend one improvement without inventing findings. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-discussion
+language_block_refs: ielts-science-research-sample-size | ielts-science-research-data-collection | ielts-science-research-research-limitations
+prompt: A larger sample size may help, but adding only gardens from the same street could leave other areas unrepresented. Data collection only on sunny afternoons could give a misleading picture of how often people use the space. Research limitations should be visible in the summary too, because many readers will not reach the final page.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Critique the proposed research design and recommend one improvement without inventing findings. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-research-methods | ielts-science-research-ethical-approval | ielts-science-research-statistical-analysis
+prompt: The research methods document compares direct observation with residents' self-reported estimates. The team will seek ethical approval before collecting any identifiable interviews and will explain withdrawal rights. The statistical analysis plan will be written before the team inspects the final results.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Critique the proposed research design and recommend one improvement without inventing findings. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-science-research-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-science-research-objective
+content_refs: ielts-science-research-proposal
+language_block_refs: ielts-science-research-control-group | ielts-science-research-peer-review | ielts-science-research-practical-applications
+prompt: A control group will follow the usual gardening routine while another group tries a different watering schedule. Independent peer review will assess whether the conclusions follow from the methods and observations. Possible practical applications include improving the observation process before deciding whether to fund a larger study.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Critique the proposed research design and recommend one improvement without inventing findings. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

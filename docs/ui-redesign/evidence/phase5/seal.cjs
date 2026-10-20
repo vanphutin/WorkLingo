@@ -1,0 +1,32 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
+const root = path.resolve(__dirname, '../../../..');
+const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const list = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? list(path.join(dir, entry.name)) : [path.join(dir, entry.name)]);
+const logs = path.join(__dirname, 'logs'); fs.mkdirSync(logs, { recursive: true });
+for (const file of fs.readdirSync(path.join(root, '.superpowers/sdd/02-redesign-plan')).filter(file => /^phase5-.*\.log$/u.test(file))) {
+  const text = fs.readFileSync(path.join(root, '.superpowers/sdd/02-redesign-plan', file), 'utf8').replace(/\x1b\[[\d;]*m/gu, '');
+  fs.writeFileSync(path.join(logs, file), text.split(/\r?\n/u).map(line => line.trimEnd()).join('\n').trimEnd() + '\n');
+}
+const summary = JSON.parse(fs.readFileSync(path.join(__dirname, 'summary.json'), 'utf8'));
+assert.equal(summary.cells, 340); assert.equal(summary.routeCount, 34); assert.equal(summary.passedMatrices, 10);
+assert.equal(summary.invalidLandmarks + summary.invalidPageHeadings + summary.overflowCells + summary.unnamedControls, 0);
+assert.equal(summary.regression.total, 105); assert.equal(summary.regression.passed, 105);
+assert.equal(summary.correctedChecks.length, 13); assert.ok(summary.correctedChecks.every(row => row.status === 'passed'));
+assert.ok(summary.contrastKinds['text-position-composite'].minimum >= 4.5); assert.ok(summary.contrastKinds['control-boundary'].minimum >= 3);
+assert.equal(summary.keyboard.samples, 68); assert.ok(summary.keyboard.minimumNativeTabs > 0);
+assert.equal(git('branch', '--show-current'), 'codex/worklingo-liquid-glass-redesign');
+assert.equal(git('rev-parse', 'main'), '7a5e383763ccd63c4befa4ab07a5559ba7cabfbe');
+for (const operation of ['MERGE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD', 'rebase-merge', 'rebase-apply']) assert.ok(!fs.existsSync(path.resolve(root, git('rev-parse', '--git-path', operation))), 'Unfinished Git operation: ' + operation);
+const old = JSON.parse(fs.readFileSync(path.join(__dirname, '../phase4/final-run/manifest.json'), 'utf8'));
+for (const [file, digest] of Object.entries(old.captureSHA256)) assert.equal(hash(path.join(__dirname, '../phase4/final-run', file)), digest, 'Historical capture changed: ' + file);
+const inventory = JSON.parse(fs.readFileSync(path.join(__dirname, '../source-inventory.json'), 'utf8'));
+const changed = [...new Set([...git('diff', '--name-only', 'cfd7e27').split('\n').filter(Boolean), 'docs/ui-redesign/phase5-qa.md', ...list(__dirname).map(file => path.relative(root, file).replaceAll('\\', '/'))])].sort();
+const sources = [...new Set([...changed.filter(file => file.startsWith('apps/web/')), ...inventory.routes.flatMap(row => [row.source, ...row.layouts]), ...git('ls-files', 'apps/web/e2e/fixtures').split('\n'), ...JSON.parse(fs.readFileSync(path.join(__dirname, 'css-after.json'), 'utf8')).files.map(row => row.source)])].sort();
+const manifest = { sourceCommit: git('rev-parse', 'HEAD'), phase5Start: 'cfd7e27d69cca88cc739eaa7cd8f245815784f67', fixtureOnly: true, scope: '34 routes +2 boundaries, headless Chromium; precise scope in phase5-qa.md', browserCases: { phase5: 24, ownerRegression: 105, shell: 4, uniquePassing: 133, note: 'Source-equivalent bounded runs; not one133-case invocation.' }, web: { tests: 404, files: 85 }, historicalCaptureHashesVerified: Object.keys(old.captureSHA256).length, changedFiles: changed, sourceSHA256: Object.fromEntries(sources.map(file => [file, hash(path.join(root, file))])), artifactSHA256: Object.fromEntries(list(__dirname).filter(file => path.basename(file) !== 'manifest.json').sort().map(file => [path.relative(__dirname, file).replaceAll('\\', '/'), hash(file)])), originPreservation: JSON.parse(fs.readFileSync(path.join(__dirname, '../phase1-preservation.json'), 'utf8')) };
+fs.writeFileSync(path.join(__dirname, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+console.log(JSON.stringify({ sourceCommit: manifest.sourceCommit, sources: sources.length, artifacts: Object.keys(manifest.artifactSHA256).length, historical: manifest.historicalCaptureHashesVerified, passed: true }, null, 2));

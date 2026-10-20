@@ -1,0 +1,16 @@
+{
+  "title": "integrated blocks preserve answer duration snapshot deadline progression and completion",
+  "status": "passed",
+  "mode": "development",
+  "fixtures": true,
+  "observations": [
+    {
+      "duration": 60,
+      "pinnedPlan": true,
+      "answerPreserved": true,
+      "fourBlocks": true,
+      "reloadCompleted": true,
+      "writes": 4
+    }
+  ]
+}

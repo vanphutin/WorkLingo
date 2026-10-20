@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "077ee67e29d1adbb98a1376fff4102d7caa76a37",
+  "timestamp": "2026-10-20T18:56:41.574Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "ielts-full-mock-desktop"
+  ],
+  "container": "worklingo-liquid-glass-phase6-5a5b08a203",
+  "result": "PASS",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 2670,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_5a5b08a20341423bae056ae500f6743d",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "optimized browser/API integration",
+  "invocation": {
+    "evidenceRoot": "docs/integration/evidence/gate-recovery",
+    "run": "autosave-interception-green",
+    "apiSuite": false,
+    "v3": false,
+    "arguments": [
+      "ielts-full-mock-desktop"
+    ]
+  },
+  "optimizedWeb": true,
+  "playwrightCommand": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-live.config.ts --no-deps --project=ielts-full-mock-desktop",
+  "harnessSHA256": "a32bd796dde160a32f4e1a0e01fd11b1166f6dfb481b1ff573a74867157d0971",
+  "e2eDiffSHA256": "790a34f19a0c0b60d18a702e8c99286245c796b1ec32d1f8723a9bad58d94bbb",
+  "exitCode": 0,
+  "finished": "2026-10-20T18:57:55.073Z"
+}

@@ -1,0 +1,249 @@
+
+> worklingo@0.0.0 test:i18n D:\Projects\WorkLingo-Integration
+> node --test scripts/i18n-check.test.mjs
+
+TAP version 13
+# Subtest: rejects missing translations and mismatched interpolation arguments
+ok 1 - rejects missing translations and mismatched interpolation arguments
+  ---
+  duration_ms: 49.1009
+  ...
+# Subtest: rejects invalid ICU messages and unknown used keys
+ok 2 - rejects invalid ICU messages and unknown used keys
+  ---
+  duration_ms: 1.1285
+  ...
+# Subtest: reports unused keys without rejecting valid plural differences between languages
+ok 3 - reports unused keys without rejecting valid plural differences between languages
+  ---
+  duration_ms: 4.474
+  ...
+# Subtest: does not mistake literal words inside plural clauses for interpolation arguments
+ok 4 - does not mistake literal words inside plural clauses for interpolation arguments
+  ---
+  duration_ms: 1.9993
+  ...
+# Subtest: inventories static UI while distinguishing English education and machine identifiers
+ok 5 - inventories static UI while distinguishing English education and machine identifiers
+  ---
+  duration_ms: 17.0617
+  ...
+# Subtest: ignores declared brand names, language autonyms and version notation
+ok 6 - ignores declared brand names, language autonyms and version notation
+  ---
+  duration_ms: 2.2403
+  ...
+# Subtest: tracks semantic keys used through feature hooks and dynamic label descriptors
+ok 7 - tracks semantic keys used through feature hooks and dynamic label descriptors
+  ---
+  duration_ms: 3.5788
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1534.4614
+
+> worklingo@0.0.0 mandate:check D:\Projects\WorkLingo-Integration
+> node .agents/skills/mandate-steward/scripts/mandate.mjs validate
+
+{
+  "valid": true,
+  "count": 2
+}
+
+> worklingo@0.0.0 test:mandate D:\Projects\WorkLingo-Integration
+> node --test .agents/skills/mandate-steward/scripts/mandate.test.mjs
+
+TAP version 13
+# Subtest: creates a parseable item and matching index with unique daily IDs
+ok 1 - creates a parseable item and matching index with unique daily IDs
+  ---
+  duration_ms: 586.8081
+  ...
+# Subtest: rejects exact duplicates across categories without changing files
+ok 2 - rejects exact duplicates across categories without changing files
+  ---
+  duration_ms: 401.4494
+  ...
+# Subtest: find returns token-similar candidates and exact normalized title duplicates are blocked
+ok 3 - find returns token-similar candidates and exact normalized title duplicates are blocked
+  ---
+  duration_ms: 396.5463
+  ...
+# Subtest: rejects missing evidence, empty value and unknown metadata
+ok 4 - rejects missing evidence, empty value and unknown metadata
+  ---
+  duration_ms: 514.3824
+  ...
+# Subtest: rejects missing evidence references and unsafe path escapes
+ok 5 - rejects missing evidence references and unsafe path escapes
+  ---
+  duration_ms: 374.0253
+  ...
+# Subtest: requires owner, human approval reference and execution plan before implementation
+ok 6 - requires owner, human approval reference and execution plan before implementation
+  ---
+  duration_ms: 898.5626
+  ...
+# Subtest: full lifecycle records verification and archives with consistent index
+ok 7 - full lifecycle records verification and archives with consistent index
+  ---
+  duration_ms: 1537.0971
+  ...
+# Subtest: archived rejected proposals retain outcome and IDs are never reused
+ok 8 - archived rejected proposals retain outcome and IDs are never reused
+  ---
+  duration_ms: 1090.4024
+  ...
+# Subtest: approved scope is immutable and explicit update revokes its approval
+ok 9 - approved scope is immutable and explicit update revokes its approval
+  ---
+  duration_ms: 754.3558
+  ...
+# Subtest: detects hand-edited approved body even when index still matches
+ok 10 - detects hand-edited approved body even when index still matches
+  ---
+  duration_ms: 797.832
+  ...
+# Subtest: stale INDEX is detected and only explicit reindex repairs it
+ok 11 - stale INDEX is detected and only explicit reindex repairs it
+  ---
+  duration_ms: 734.3119
+  ...
+# Subtest: invalid dates and malformed frontmatter fail clearly
+ok 12 - invalid dates and malformed frontmatter fail clearly
+  ---
+  duration_ms: 463.2512
+  ...
+# Subtest: reference directories cannot masquerade as evidence files
+ok 13 - reference directories cannot masquerade as evidence files
+  ---
+  duration_ms: 304.6618
+  ...
+# Subtest: history cannot reset an implementing scope by hand
+ok 14 - history cannot reset an implementing scope by hand
+  ---
+  duration_ms: 754.5817
+  ...
+# Subtest: exclusive lock fails closed and does not alter proposals
+ok 15 - exclusive lock fails closed and does not alter proposals
+  ---
+  duration_ms: 415.0143
+  ...
+# Subtest: register directory symlinks cannot redirect writes
+ok 16 - register directory symlinks cannot redirect writes
+  ---
+  duration_ms: 208.0516
+  ...
+# Subtest: concurrent creation cannot allocate duplicate IDs or corrupt INDEX
+ok 17 - concurrent creation cannot allocate duplicate IDs or corrupt INDEX
+  ---
+  duration_ms: 331.7154
+  ...
+# Subtest: partial creation never exposes an incomplete item at its final filename
+ok 18 - partial creation never exposes an incomplete item at its final filename
+  ---
+  duration_ms: 555.4127
+  ...
+# Subtest: archive partial-write failure preserves source and can finish through explicit recovery
+ok 19 - archive partial-write failure preserves source and can finish through explicit recovery
+  ---
+  duration_ms: 878.0244
+  ...
+# Subtest: explicit recovery is idempotent after interrupted archive: exit-after-publish
+ok 20 - explicit recovery is idempotent after interrupted archive: exit-after-publish
+  ---
+  duration_ms: 1258.7643
+  ...
+# Subtest: explicit recovery is idempotent after interrupted archive: exit-after-source-remove
+ok 21 - explicit recovery is idempotent after interrupted archive: exit-after-source-remove
+  ---
+  duration_ms: 1323.4107
+  ...
+# Subtest: recovery rejects escaping journal paths and preserves changed source evidence
+ok 22 - recovery rejects escaping journal paths and preserves changed source evidence
+  ---
+  duration_ms: 914.1933
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15644.6168
+
+> worklingo@0.0.0 test:setup-local D:\Projects\WorkLingo-Integration
+> powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-local.credentials.test.ps1
+
+setup-local credentials regression test passed.
+
+> worklingo@0.0.0 test:postgres-client D:\Projects\WorkLingo-Integration
+> powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/postgres-client.test.ps1
+
+PASS: Docker maps bracketed IPv6 loopback to the host
+PASS: PostgreSQL URL without an explicit port defaults to 5432
+PASS: Explicit PostgreSQL ports are preserved, including 80
+PASS: Docker preserves a remote endpoint instead of selecting local Compose data
+PostgreSQL client connection regression checks passed.
+
+> worklingo@0.0.0 test:secret-scan D:\Projects\WorkLingo-Integration
+> node --test scripts/qualification/scan-secrets.test.mjs
+
+TAP version 13
+# Subtest: a clean tracked repository including the scanner passes
+ok 1 - a clean tracked repository including the scanner passes
+  ---
+  duration_ms: 737.8716
+  ...
+# Subtest: rejects a tracked PKCS8 private key header
+ok 2 - rejects a tracked PKCS8 private key header
+  ---
+  duration_ms: 1055.3549
+  ...
+# Subtest: rejects a tracked RSA private key header
+ok 3 - rejects a tracked RSA private key header
+  ---
+  duration_ms: 877.1835
+  ...
+# Subtest: rejects a tracked EC private key header
+ok 4 - rejects a tracked EC private key header
+  ---
+  duration_ms: 893.21
+  ...
+# Subtest: rejects a tracked OPENSSH private key header
+ok 5 - rejects a tracked OPENSSH private key header
+  ---
+  duration_ms: 907.395
+  ...
+# Subtest: rejects a tracked ENCRYPTED private key header
+ok 6 - rejects a tracked ENCRYPTED private key header
+  ---
+  duration_ms: 958.3069
+  ...
+# Subtest: rejects a tracked environment file
+ok 7 - rejects a tracked environment file
+  ---
+  duration_ms: 651.1946
+  ...
+# Subtest: permits the tracked example environment file
+ok 8 - permits the tracked example environment file
+  ---
+  duration_ms: 606.41
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6847.9808

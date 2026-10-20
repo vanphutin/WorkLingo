@@ -1,0 +1,54 @@
+{
+  "title": "settings errors retry and honest operations empty states",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "audio",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "ai",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "adminAudio",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "adminAi",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "audit",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "operations",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "analytics",
+      "state": "error",
+      "retry": true
+    },
+    {
+      "kind": "audit",
+      "state": "empty"
+    },
+    {
+      "kind": "operations",
+      "state": "empty"
+    },
+    {
+      "kind": "analytics",
+      "state": "empty"
+    }
+  ]
+}

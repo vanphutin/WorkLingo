@@ -1,0 +1,35 @@
+[
+  {
+    "command": "pnpm --filter @worklingo/api typecheck",
+    "exitCode": 0,
+    "sourceCommit": "4577379",
+    "evidence": "checks/typecheck-final.log"
+  },
+  {
+    "command": "pnpm --filter @worklingo/api lint",
+    "exitCode": 0,
+    "sourceCommit": "4577379",
+    "evidence": "checks/lint-final.log"
+  },
+  {
+    "command": "node --test docs/integration/evidence/placement-root-cause/launcher.test.cjs",
+    "exitCode": 0,
+    "toolingCommit": "0446e87",
+    "tests": 2,
+    "evidence": "checks/launcher-green-final.log"
+  },
+  {
+    "command": "pnpm --filter @worklingo/api exec vitest run",
+    "exitCode": 0,
+    "sourceCommit": "4577379",
+    "passed": 1179,
+    "skipped": 1,
+    "durationSeconds": 650.8,
+    "evidence": "live/backend-final.json"
+  },
+  {
+    "command": "python docs/integration/evidence/placement-root-cause/verify.py",
+    "exitCode": 0,
+    "evidence": "checks/preservation-final.log"
+  }
+]

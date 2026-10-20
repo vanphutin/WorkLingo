@@ -1,0 +1,14 @@
+{
+  "title": "launchers preserve actual start payloads and pathway target is not measured score",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "startContracts": true,
+      "targetUpdate": true,
+      "noTargetAsScore": true,
+      "evaluationGate": true
+    }
+  ]
+}

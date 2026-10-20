@@ -1,0 +1,93 @@
+[WebServer] (node:22632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] ┌─────────────────────────────────────────────────────────┐
+[WebServer] │  Update available 6.19.1 -> 8.0.0-rc.23                 │
+[WebServer] │                                                         │
+[WebServer] │  This is a major update - please follow the guide at    │
+[WebServer] │  https://pris.ly/d/major-version-upgrade                │
+[WebServer] │                                                         │
+[WebServer] │  Run the following to update                            │
+[WebServer] │    npm i --save-dev prisma@latest                       │
+[WebServer] │    npm i @prisma/client@latest                          │
+[WebServer] └─────────────────────────────────────────────────────────┘
+[WebServer] (node:22504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:22016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+  ok 1 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:8:7 › Onboarding and placement assessment journey › learner registers, completes self-placement, confirms level, and lands on dashboard (6.3s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok 2 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:45:7 › Onboarding and placement assessment journey › pending learner cannot bypass route guards to access dashboard or ordinary sessions (2.1s)
+  ok 3 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:68:7 › Onboarding and placement assessment journey › completed learner bypasses onboarding and is redirected to dashboard (2.9s)
+  ok 4 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:88:7 › Onboarding and placement assessment journey › learner starts placement, resumes after refresh, completes all four skills, and confirms recommendation (14.7s)
+  ok 5 [foundation-desktop] › e2e\foundation-session.spec.ts:15:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (8.4s)
+  ok 6 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (3.3s)
+  x  7 [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation (10.5s)
+  ok 8 [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety (3.9s)
+  ok 9 [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics (2.4s)
+
+
+  1) [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation
+
+    Error: expect(page).toHaveTitle(expected) failed
+
+    Expected: "Content Admin | WorkLingo"
+    Received: "Quản trị nội dung | WorkLingo"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveTitle" with timeout 5000ms
+        14 × locator resolved to <html lang="en">…</html>
+           - unexpected value "Quản trị nội dung | WorkLingo"
+
+
+      108 |         adminPage.request, s1BeforePublish.mission.id, s1BeforePublish.lessonVersionId, readingActivity.slug,
+      109 |       );
+    > 110 |       await expect(adminPage).toHaveTitle('Content Admin | WorkLingo');
+          |                               ^
+      111 |       await adminPage.getByRole('link', { name: /new import/i }).click();
+      112 |       await expect(adminPage).toHaveURL(/.*\/admin\/content\/new/);
+      113 |       if (testInfo.project.name === 'admin-mobile') {
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\admin-content-authoring.spec.ts:110:31
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-live-results\admin-content-authoring-Co-faddc--verifies-session-isolation-admin-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-live-results\admin-content-authoring-Co-faddc--verifies-session-isolation-admin-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-live-results\admin-content-authoring-Co-faddc--verifies-session-isolation-admin-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation
+  8 passed (2.2m)
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6-live.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=ielts-full-mock-desktop --project=admin-desktop

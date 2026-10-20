@@ -1,0 +1,91 @@
+[WebServer] (node:7196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  x  1 e2e\liquid-glass-shell.spec.ts:104:40 › learner mobile disclosure keyboard, outside click, resize and history (6.0s)
+  x  2 e2e\liquid-glass-shell.spec.ts:104:40 › admin mobile disclosure keyboard, outside click, resize and history (6.0s)
+
+
+  1) e2e\liquid-glass-shell.spec.ts:104:40 › learner mobile disclosure keyboard, outside click, resize and history
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Điều hướng học tập', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Điều hướng học tập', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Điều hướng học tập', exact: true })
+        14 × locator resolved to <button type="button" aria-expanded="false" aria-controls="_r_1_" aria-label="Điều hướng học tập" class="workspace-navigation-toggle">…</button>
+           - unexpected value "inactive"
+
+
+      130 |   await page.keyboard.press('Enter');
+      131 |   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    > 132 |   await expect(toggle).toBeFocused();
+          |                        ^
+      133 |   // Browser history between real existing destinations; feature data beyond the
+      134 |   // empty content/settings fixture is not certified by this navigation check.
+      135 |   await page.goto('http://127.0.0.1:33300/');
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-shell.spec.ts:132:24
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-learner-7b0e6-de-click-resize-and-history\error-context.md
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-learner-7b0e6-de-click-resize-and-history\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-learner-7b0e6-de-click-resize-and-history\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-learner-7b0e6-de-click-resize-and-history\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-shell.spec.ts:104:40 › admin mobile disclosure keyboard, outside click, resize and history
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Không gian quản trị', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Không gian quản trị', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Không gian quản trị', exact: true })
+        14 × locator resolved to <button type="button" aria-expanded="false" aria-controls="_r_1_" aria-label="Không gian quản trị" class="workspace-navigation-toggle">…</button>
+           - unexpected value "inactive"
+
+
+      130 |   await page.keyboard.press('Enter');
+      131 |   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    > 132 |   await expect(toggle).toBeFocused();
+          |                        ^
+      133 |   // Browser history between real existing destinations; feature data beyond the
+      134 |   // empty content/settings fixture is not certified by this navigation check.
+      135 |   await page.goto('http://127.0.0.1:33300/');
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-shell.spec.ts:132:24
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-admin-m-5a5f8-de-click-resize-and-history\error-context.md
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-admin-m-5a5f8-de-click-resize-and-history\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-admin-m-5a5f8-de-click-resize-and-history\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\shell-browser-results\liquid-glass-shell-admin-m-5a5f8-de-click-resize-and-history\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e\liquid-glass-shell.spec.ts:104:40 › learner mobile disclosure keyboard, outside click, resize and history
+    e2e\liquid-glass-shell.spec.ts:104:40 › admin mobile disclosure keyboard, outside click, resize and history
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config playwright.shell.config.ts --grep mobile disclosure keyboard

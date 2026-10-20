@@ -1,0 +1,405 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Integration\apps\web
+> vitest run
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/web
+
+ ✓ src/features/ielts-study-admin/topic-editor.test.tsx (13 tests) 10045ms
+   ✓ TopicEditor > ignores a cancelled initial load that completes after a StrictMode removal  1806ms
+   ✓ TopicEditor > reports refresh failure after deletion and removes the deleted row immediately  496ms
+   ✓ TopicEditor > keeps a successful save and reports a failed list refresh  1119ms
+   ✓ TopicEditor > reloads selected metadata after a lifecycle conflict and requires a new confirmation  993ms
+   ✓ TopicEditor > requires an explicit choice before replacing dirty content with a reloaded revision  1257ms
+   ✓ TopicEditor > updates selected publication history after publish so the next removal archives  539ms
+   ✓ TopicEditor > authors a new topic with pack, context and phrase fields without mandatory JSON  571ms
+   ✓ TopicEditor > protects dirty edits when selecting another topic and explicitly discards on confirmation  682ms
+   ✓ TopicEditor > rejects an import with unknown fields without replacing the topic fields  574ms
+   ✓ TopicEditor > confirms named removal and refreshes list (published history: false)  661ms
+   ✓ TopicEditor > confirms named removal and refreshes list (published history: true)  483ms
+   ✓ TopicEditor > shows exact content qualification issues and blocks publication  374ms
+   ✓ TopicEditor > requires revalidation after editing a previously valid draft  487ms
+ ✓ src/features/admin-ielts-mock/ielts-mock-workspace.test.tsx (16 tests) 11117ms
+   ✓ Mock structured authoring > reconciles the selected paper after reload and renews lifecycle confirmation  2272ms
+   ✓ Mock structured authoring > finds a later-page selection on reload before reconciling its current revision  1623ms
+   ✓ Mock structured authoring > reconciles a successfully loaded paper even when the review queue is unavailable  954ms
+   ✓ Mock structured authoring > keeps a dirty paper at its original revision until the author explicitly loads the latest  1287ms
+   ✓ Mock structured authoring > creates a full four-skill draft from the new paper template without seeded rows  394ms
+   ✓ Mock structured authoring > guards dirty selection and retains edited fields on cancellation  795ms
+   ✓ Mock structured authoring > retains version 2 qualification and media IDs when saving a labeled field  506ms
+   ✓ Mock structured authoring > rejects invalid imports and leaves existing paper fields intact  392ms
+   ✓ Mock structured authoring > confirms named removal, then refreshes mocks (history: false)  644ms
+   ✓ Mock structured authoring > confirms named removal, then refreshes mocks (history: true)  569ms
+   ✓ IeltsMockWorkspace pagination > displays failed mock validation in Vietnamese with the technical field path and blocks publication  368ms
+   ✓ IeltsMockWorkspace pagination > preserves source and teacher feedback drafts while localizing the review controls  421ms
+   ✓ IeltsMockWorkspace pagination > loads subsequent mock and review pages when explicit next offsets exist  529ms
+ ✓ src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.test.tsx (15 tests) 12339ms
+   ✓ IeltsBridgeAuthoringWorkspace > localizes taxonomy and task controls without replacing authored stage content or edits  2132ms
+   ✓ IeltsBridgeAuthoringWorkspace > localizes answerable task editors and preserves English prompts, choices and feedback  767ms
+   ✓ IeltsBridgeAuthoringWorkspace > edits the selected stage and saves with optimistic revision  365ms
+   ✓ IeltsBridgeAuthoringWorkspace > shows validation issues and enables publish only after validation succeeds  1412ms
+   ✓ IeltsBridgeAuthoringWorkspace > creates another module with the same question type and selects its independent draft  787ms
+   ✓ IeltsBridgeAuthoringWorkspace > removes a never-published draft with its revision and refreshes selection  593ms
+   ✓ IeltsBridgeAuthoringWorkspace > preserves another module’s dirty edits when removal refreshes the list  911ms
+   ✓ IeltsBridgeAuthoringWorkspace > archives a previously published module even when its current publication is empty  1306ms
+   ✓ IeltsBridgeAuthoringWorkspace > retains the selected draft and reports a failed removal  503ms
+   ✓ IeltsBridgeAuthoringWorkspace > keeps remaining local drafts accessible if refresh fails after a successful removal  880ms
+   ✓ IeltsBridgeAuthoringWorkspace > reuses the receipt after a lost deleted response  617ms
+   ✓ IeltsBridgeAuthoringWorkspace > reuses the receipt after a lost archived response  569ms
+   ✓ IeltsBridgeAuthoringWorkspace > starts a new removal receipt when a saved revision changes  1010ms
+ ✓ src/features/admin-ielts-band-curriculum/band-curriculum-workspace.test.tsx (12 tests) 17698ms
+   ✓ edits labeled fields without JSON and retains the mounted draft across a locale switch  2623ms
+   ✓ retains edits across stage navigation and saves all seven stages with unchanged topology and values  1880ms
+   ✓ edits nested competencies, remediation, and array rows while preserving untouched fields  1068ms
+   ✓ shows local schema errors without sending invalid content or losing the entered value  618ms
+   ✓ imports a validated curriculum and exports every untouched value  2061ms
+   ✓ retains unapplied JSON across stage and locale switches and blocks mutation until discard  3197ms
+   ✓ rejects imported topology changes: stage count  895ms
+   ✓ rejects imported topology changes: order  809ms
+   ✓ rejects imported topology changes: range  1068ms
+   ✓ rejects imported topology changes: prerequisites  891ms
+   ✓ rejects imported topology changes: shifted contiguous ranges  866ms
+   ✓ loads the canonical seven-stage template as unapplied input before validation  1721ms
+ ✓ src/features/admin-intermediate/topic-json-repair.test.tsx (5 tests) 6888ms
+   ✓ identifies the bad field and keeps the AI proposal separate until explicitly accepted  2643ms
+   ✓ refuses a provider candidate that changes an answer  810ms
+   ✓ reports unavailable AI without retrying or replacing the JSON  1244ms
+   ✓ requires confirmation to replace manual edits made while AI was processing  1495ms
+   ✓ locates incomplete JSON and refuses to ask AI to invent missing content  693ms
+ ✓ src/features/admin-dashboard/admin-navigation-guard.test.tsx (16 tests) 20332ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > cancel blocks dirty sidebar navigation and retains the input, prompting once  2795ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > cancel blocks dirty breadcrumb navigation and retains the input, prompting once  1148ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > cancel blocks dirty brand navigation and retains the input, prompting once  1858ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > cancel blocks dirty editor navigation and retains the input, prompting once  1682ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > cancel blocks dirty advanced navigation and retains the input, prompting once  1302ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > confirm allows dirty sidebar navigation exactly once  1191ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > confirm allows dirty breadcrumb navigation exactly once  709ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > confirm allows dirty brand navigation exactly once  1524ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > confirm allows dirty editor navigation exactly once  1391ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > confirm allows dirty advanced navigation exactly once  1446ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > does not prompt for a clean draft through sidebar or breadcrumbs  654ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > clears the dirty registration after a successful save  1201ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > unregisters an unmounted dirty editor while the admin shell stays mounted  887ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > keeps guarding dirty edits after a save failure  1121ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > retains browser beforeunload protection while dirty  549ms
+   ✓ Admin navigation guard with the real layout and Intermediate editor > leaves modified link clicks to native browser behavior without a prompt  871ms
+ ✓ src/features/admin-intermediate/intermediate-lesson-editor.test.tsx (28 tests) 22678ms
+   ✓ IntermediateLessonEditor > makes grammar inputs primary with optional supporting activities  2664ms
+   ✓ IntermediateLessonEditor > makes pronunciation inputs primary with optional supporting activities  1558ms
+   ✓ IntermediateLessonEditor > makes vocabulary inputs primary with optional supporting activities  1544ms
+   ✓ IntermediateLessonEditor > makes reading inputs primary with optional supporting activities  1392ms
+   ✓ IntermediateLessonEditor > makes listening inputs primary with optional supporting activities  1275ms
+   ✓ IntermediateLessonEditor > makes speaking inputs primary with optional supporting activities  1114ms
+   ✓ IntermediateLessonEditor > makes writing inputs primary with optional supporting activities  1417ms
+   ✓ IntermediateLessonEditor > creates a private grammar draft with explicit metadata and its own destination  599ms
+   ✓ IntermediateLessonEditor > creates a private pronunciation draft with explicit metadata and its own destination  741ms
+   ✓ IntermediateLessonEditor > creates a private vocabulary draft with explicit metadata and its own destination  564ms
+   ✓ IntermediateLessonEditor > creates a private reading draft with explicit metadata and its own destination  632ms
+   ✓ IntermediateLessonEditor > creates a private listening draft with explicit metadata and its own destination  749ms
+   ✓ IntermediateLessonEditor > creates a private speaking draft with explicit metadata and its own destination  650ms
+   ✓ IntermediateLessonEditor > creates a private writing draft with explicit metadata and its own destination  596ms
+   ✓ IntermediateLessonEditor > edits only the selected ID and advances the saved revision  875ms
+   ✓ IntermediateLessonEditor > preserves dirty fields and the original revision on conflict, without retrying  737ms
+   ✓ IntermediateLessonEditor > ignores a previous ID fetch after switching records  472ms
+   ✓ IntermediateLessonEditor > ignores a create response after unmount, avoiding a late redirect  309ms
+   ✓ IntermediateLessonEditor > keeps PUBLISHED source read-only  326ms
+   ✓ IntermediateLessonEditor > edits independent reading/listening questions, options, answers and evidence  1380ms
+   ✓ IntermediateLessonEditor > keeps edits when switching English to Vietnamese and localizes controls  631ms
+   ✓ IntermediateLessonEditor > shows a private failure message and preserves local edits after save failure  651ms
+   ✓ ignores a stale save result after moving to another record  785ms
+   ✓ rejects source delimiters locally without exposing serializer internals or losing edits  536ms
+ ✓ src/features/admin-curriculum/curriculum-workspace.test.tsx (8 tests) 6017ms
+   ✓ CurriculumWorkspace > retains an unsaved Foundation objective through collapse and all curriculum filters  2469ms
+   ✓ CurriculumWorkspace > retains preserved search and collapse controls without changing curriculum mutations  627ms
+   ✓ CurriculumWorkspace > creates a new path and reloads tree  870ms
+   ✓ CurriculumWorkspace > preserves the selected program after a recoverable create error  916ms
+   ✓ CurriculumWorkspace > displays conflict error without crashing when publish fails with 409  384ms
+   ✓ CurriculumWorkspace > supports reordering missions via accessible move buttons  423ms
+ ✓ src/features/admin-dashboard/admin-navigation.test.tsx (21 tests) 4769ms
+   ✓ Admin workspace navigation > groups topic authoring and legacy tools beneath Intermediate before TOEIC and IELTS  1023ms
+   ✓ Admin workspace navigation > selects only the listening category on its editor route  390ms
+   ✓ Admin workspace navigation > retains every pre-existing management destination in the grouped navigation  393ms
+   ✓ Admin workspace navigation > defers Foundation and TOEIC while retaining Intermediate and IELTS authoring  323ms
+ ✓ src/features/admin-intermediate/topic-editor.test.tsx (14 tests) 25438ms
+   ✓ A topic contains the source passage and its connected practice > keeps the selected topic while JSON fills the lesson and creates both in one request  2670ms
+   ✓ A topic contains the source passage and its connected practice > keeps exactly 10 imported reading questions and links to each from the outline  9249ms
+   ✓ A topic contains the source passage and its connected practice > opens JSON from the outline and keeps reading/listening anchor targets distinct  789ms
+   ✓ A topic contains the source passage and its connected practice > automatically fills valid pasted JSON into review fields without saving or approving it  1726ms
+   ✓ A topic contains the source passage and its connected practice > keeps JSON synchronized until the administrator edits the form manually  1175ms
+   ✓ A topic contains the source passage and its connected practice > does not overwrite manual edits made while a local JSON file is being read  889ms
+   ✓ A topic contains the source passage and its connected practice > preserves edited fields when JSON is invalid or replacement is cancelled  1192ms
+   ✓ A topic contains the source passage and its connected practice > automatically fills a local JSON file for review and saves only on explicit submission  993ms
+   ✓ A topic contains the source passage and its connected practice > blocks saving during a file read and restores it when reading fails  833ms
+   ✓ A topic contains the source passage and its connected practice > guards unapplied JSON on browser unload and releases the guard after clearing it  562ms
+   ✓ A topic contains the source passage and its connected practice > releases saving and browser navigation when the JSON buffer is erased manually  683ms
+   ✓ A topic contains the source passage and its connected practice > creates one topic with its own route and the same passage for audio  1333ms
+   ✓ A topic contains the source passage and its connected practice > loads the topic and requires source changes to be saved before approval  1534ms
+   ✓ A topic contains the source passage and its connected practice > requires confirmation before saving a source change discards an unsaved allocation  1807ms
+ ✓ src/features/learning-session/dashboard-view.test.tsx (28 tests) 5543ms
+   ✓ DashboardView > shows learning first and reveals detailed sections only when selected  1167ms
+   ✓ DashboardView > supports keyboard navigation and a shared link to the programs tab  347ms
+   ✓ DashboardView > shows real UTC activity, accuracy ratios and only assessed skills with text equivalents  711ms
+   ✓ DashboardView > localizes the new dashboard insights in Vietnamese  309ms
+ ✓ src/features/admin-ielts-orientation/orientation-authoring-workspace.test.tsx (10 tests) 4110ms
+   ✓ OrientationAuthoringWorkspace > localizes authoring controls while preserving the mounted English slide draft  909ms
+   ✓ OrientationAuthoringWorkspace > localizes validation feedback and re-renders it when the locale changes  421ms
+   ✓ OrientationAuthoringWorkspace > formats published versions in Vietnamese and localizes confirmation without changing the authored title  354ms
+   ✓ OrientationAuthoringWorkspace > shows semantic validation issues and publishes only after validation succeeds  618ms
+   ✓ OrientationAuthoringWorkspace > retains slide edits across selection and removes only from the current draft  740ms
+   ✓ OrientationAuthoringWorkspace > prevents slide navigation and edits while a draft save is pending  327ms
+ ✓ src/app/(learner)/layout.test.tsx (14 tests) 3593ms
+   ✓ LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination  1189ms
+   ✓ LearnerLayout > reduces shell chrome on /onboarding/placement/session-id without changing the destination  328ms
+ ✓ src/features/learning-session/session-shell.test.tsx (28 tests) 4480ms
+   ✓ SessionShell and Activity Renderers > does not invent a source panel for an activity without source text  709ms
+   ✓ SessionShell and Activity Renderers > preserves a writing session and its response when switching from English to Vietnamese  567ms
+   ✓ SessionShell and Activity Renderers > reuses the same idempotency key when a failed submission is retried  347ms
+ ✓ src/features/mastery/checkpoint-panel.test.tsx (13 tests) 3620ms
+   ✓ Checkpoint > keeps an uncertain assessment UUID while switching locale and localizes pending evidence  1156ms
+   ✓ Checkpoint > invalidates a pending request UUID when the eligible session changes  316ms
+   ✓ Checkpoint > preserves an uncertain assessment UUID through a failed progression refresh  343ms
+ ✓ src/features/admin-intermediate/topic-group-workspace.test.tsx (7 tests) 2535ms
+   ✓ Intermediate topic group workspace > requires choosing a topic before exposing Add lesson  890ms
+   ✓ Intermediate topic group workspace > finds a bilingual topic through an alias and edits its registered names  301ms
+   ✓ Intermediate topic group workspace > shows Vietnamese names alone on Vietnamese category menus and assignment options  322ms
+ ✓ src/features/admin-dashboard/admin-dashboard.test.tsx (14 tests) 3430ms
+   ✓ Admin dashboard > places the topic authoring entry ahead of program metrics and shared tools  1155ms
+   ✓ Admin dashboard > renders stored metrics, a labeled activity chart and recent sessions  377ms
+   ✓ Admin dashboard > filters and sorts program data without changing the totals  329ms
+   ✓ Admin dashboard > scopes program metrics and explains unsupported management features  353ms
+ ✓ src/features/onboarding/onboarding-workspace.test.tsx (7 tests) 2591ms
+   ✓ OnboardingWorkspace > switches Vietnamese system controls without losing the selected starting level  1189ms
+   ✓ OnboardingWorkspace > reuses one confirmation UUID after an uncertain failure and opens the dashboard on success  451ms
+ ✓ src/features/learning-session/activity-renderers/listening-activity.test.tsx (9 tests) 3047ms
+   ✓ ListeningActivity > speaks the reviewed rendition rather than the original email in browser mode  685ms
+   ✓ ListeningActivity > keeps the script out of the page until six complete listens and an explicit reveal  428ms
+   ✓ ListeningActivity > counts a complete browser dialogue once, excluding stopped, failed and partial speech  1182ms
+ ✓ src/features/learning-programs/program-catalog.test.tsx (10 tests) 2400ms
+   ✓ ProgramCatalog > opens IELTS Beta without replacing the Intermediate enrollment or showing fictional level counts  636ms
+   ✓ ProgramCatalog > localizes program discovery and TOEIC availability with safe disabled actions  324ms
+   ✓ ProgramCatalog > shows a retryable error without removing the page heading  353ms
+   ✓ ProgramCatalog > refreshes stale context and requires a new click with the fresh revision  303ms
+ ✓ src/features/learning-session/intermediate-topic-picker.test.tsx (10 tests) 2337ms
+   ✓ Learner topic choice > retries the same filtered random request but allocates a new identity when the time changes  979ms
+   ✓ Learner topic choice > filters by approved duration, resets the selected topic and limits random selection to matching lessons  391ms
+   ✓ Learner topic choice > preserves the random request UUID on retry after a network failure  300ms
+ ✓ src/features/admin-intermediate/intermediate-authoring-hub.test.tsx (2 tests) 2302ms
+   ✓ Intermediate authoring hub > keeps seven separate Add lesson and list links available while loading or offline  1776ms
+   ✓ Intermediate authoring hub > translates category names and accessible add links into Vietnamese  524ms
+ ✓ src/app/(learner)/dashboard/page.test.tsx (8 tests) 2161ms
+   ✓ Learner dashboard overview > retries failed progress without refetching healthy sections  890ms
+   ✓ Learner dashboard overview > refreshes the overview when program context changes during a focused retry  304ms
+   ✓ Learner dashboard overview > retries analytics independently while keeping the saved session available  544ms
+ ✓ src/features/ielts-mock/ielts-mock.test.tsx (15 tests) 2738ms
+   ✓ IeltsMockDashboardCard > offers exactly the two V3 choices and explains an unqualified simulation  659ms
+   ✓ IeltsMockDashboardCard > pauses a V3 practice attempt without submitting the current section  312ms
+ ✓ src/features/audio/admin-audio-settings-panel.test.tsx (2 tests) 1895ms
+   ✓ AdminAudioSettingsPanel > shows safe readiness and disables unavailable providers  1036ms
+   ✓ AdminAudioSettingsPanel > exposes actual device voices and applies tab-scoped enable and rotation controls to playback  856ms
+ ✓ src/features/admin-content/content-list.test.tsx (9 tests) 2194ms
+   ✓ ContentList > uses category add and edit destinations for empty=false  803ms
+   ✓ ContentList > deletes only the confirmed draft and keeps the other lesson editable  492ms
+ ✓ src/features/admin-intermediate/intermediate-category-workspace.test.tsx (6 tests) 1990ms
+   ✓ Intermediate category workspace > filters explicit metadata only and links each row to its category editor  952ms
+   ✓ Intermediate category workspace > counts only explicitly classified records in the hub  303ms
+ ✓ src/features/audio/use-browser-speech.test.tsx (32 tests) 1663ms
+   ✓ useBrowserSpeech > does not autoplay and falls back to the first English voice  462ms
+ ✓ src/features/admin-ielts-integrated/integrated-profile-workspace.test.tsx (5 tests) 2092ms
+   ✓ localizes skill allocations and retains unsaved minutes in the mounted input  824ms
+   ✓ shows Vietnamese allocation validation and enables publishing only for a valid saved revision  463ms
+   ✓ labels the four fixed durations as configuration and links lesson authoring  308ms
+   ✓ keeps edits in another profile when publishing refreshes saved profiles  328ms
+ ✓ src/features/admin-curriculum/foundation-definition-editor.test.tsx (9 tests) 2638ms
+   ✓ FoundationDefinitionEditor > localizes prerequisite revision metadata without translating its authored title  838ms
+   ✓ FoundationDefinitionEditor > localizes mapping validation and preserves the unsaved objective when switching locale  365ms
+ ✓ src/features/ielts-hub/ielts-hub.test.tsx (5 tests) 1622ms
+   ✓ shows five ordered phases and actual prerequisite guidance without claiming an official band  891ms
+ ✓ src/features/ielts-introduction/introduction-player.test.tsx (5 tests) 1637ms
+   ✓ IntroductionPlayer > pins slide one before enabling navigation and records it as viewed  849ms
+ ✓ src/app/page.test.tsx (4 tests) 1192ms
+   ✓ HomePage > exposes the real home link, locale and theme controls in public navigation  900ms
+ ✓ src/features/ielts-study/topic-catalog.test.tsx (3 tests) 1529ms
+   ✓ IELTS topic catalogue > previews actual vocabulary, offers only authored durations and starts 90 minutes by default  923ms
+   ✓ IELTS topic catalogue > retries an uncertain start using its same UUID  384ms
+ ✓ src/features/admin-content/publish-panel.test.tsx (7 tests) 1767ms
+   ✓ PublishPanel > requires a deliberate meaning choice and sends that choice with the publication  1102ms
+ ✓ src/features/ielts-orientation/orientation-narration.test.tsx (1 test) 1275ms
+   ✓ Orientation narration replay > keeps the same named voice when returning to a previously played slide  1273ms
+ ✓ src/app/(learner)/settings/page.test.tsx (1 test) 1036ms
+   ✓ retains all four preference destinations and actual theme/transparency controls  1034ms
+ ✓ src/features/learning-session/i18n.test.tsx (6 tests) 1473ms
+   ✓ uses consistent English system labels while preserving the writing prompt and phrase  663ms
+   ✓ switches language during an unsaved writing draft without replacing the editor or changing lesson content  348ms
+ ✓ src/features/admin-content/content-authoring-workspace.test.tsx (7 tests) 1726ms
+   ✓ ContentAuthoringWorkspace > shows localized validation API errors while preserving the mounted source across a locale switch  783ms
+ ✓ src/features/audio/i18n.test.tsx (4 tests) 1538ms
+   ✓ localizes the learner audio panel while preserving the English speech preview  994ms
+   ✓ localizes the admin simulation provider while retaining technical voice identifiers  424ms
+ ✓ src/features/ielts-integrated/integrated-practice.test.tsx (5 tests) 1313ms
+   ✓ IntegratedPracticeDashboardCard > localizes the duration and difficulty choices and dashboard access  994ms
+ ✓ src/features/admin-intermediate/topic-group-field.test.tsx (6 tests) 1764ms
+   ✓ Topic selection inside the lesson editor > preselects a known topic from the group workspace Add lesson link  749ms
+   ✓ Topic selection inside the lesson editor > searches Vietnamese, English and spelling aliases but selects the same stable ID  533ms
+ ✓ src/features/ai/ai-settings-panel.test.tsx (3 tests) 1683ms
+   ✓ AI settings panel > keeps one page heading when account settings accompany system settings  1074ms
+   ✓ AI settings panel > saves Discovery selection and fallback opt-out, and disables unconfigured OpenAI  439ms
+ ✓ src/features/admin-intermediate/topic-review-panel.test.tsx (4 tests) 1637ms
+   ✓ Human approval of topic time > loads without asking AI or approving, and dirty source disables both actions  722ms
+   ✓ Human approval of topic time > AI proposal remains pending until the human explicitly approves its revision and source  608ms
+ ✓ src/features/mastery/mastery-workspace.test.tsx (1 test) 1540ms
+   ✓ refreshes the current curriculum after confirmation and hides the old map while loading  1538ms
+ ✓ src/features/mastery/mastery-overview.test.tsx (4 tests) 1662ms
+   ✓ Mastery and Memory Health > localizes evidence states while preserving English phrases and Vietnamese meanings  982ms
+   ✓ Mastery and Memory Health > loads independently, keeps health visible when the map fails and retries the failed panel  313ms
+ ✓ src/features/ielts-mock/mock-task-prompt.test.tsx (1 test) 753ms
+   ✓ renders authored Task 1 data as an accessible table without inventing values  750ms
+ ✓ src/features/learning-session/use-audio-recorder.test.tsx (7 tests) 1646ms
+   ✓ useAudioRecorder > requests the microphone only after an explicit action and releases tracks on stop  784ms
+ ✓ src/features/admin-intermediate/topic-lesson-outline.test.tsx (1 test) 711ms
+   ✓ marks the visible question instead of a large containing section as current  709ms
+ ✓ src/features/admin-observability/observability-workspaces.test.tsx (5 tests) 947ms
+   ✓ admin observability workspaces > reserves all four summary cards while initial operations data is pending  424ms
+ ✓ src/i18n/provider.test.tsx (9 tests) 1317ms
+   ✓ locale preference > switches a mounted form without losing its answer and writes a validated cookie  626ms
+ ✓ src/features/audio/audio-settings-panel.test.tsx (3 tests) 1405ms
+   ✓ AudioSettingsPanel > loads sources, shows browser voices conditionally and saves selection  1031ms
+ ✓ src/components/transparency-control.test.tsx (6 tests) 1059ms
+   ✓ persists the checkbox and updates every mounted control without replacing a draft  618ms
+ ✓ src/features/admin-content/vocabulary-review.test.tsx (3 tests) 916ms
+   ✓ Vocabulary prepublication review > defaults only unmatched terms to new and clears choices when the source changes  699ms
+ ✓ src/features/ielts-bridge/ielts-bridge-player.test.tsx (3 tests) 1021ms
+   ✓ IeltsBridgePlayer > localizes the stage and response requirements without replacing English drafts on locale change  792ms
+ ✓ src/features/learning-session/evaluation-feedback.test.tsx (7 tests) 1049ms
+   ✓ EvaluationFeedback > exposes busy actions and blocks retry/deletion activation while pending  453ms
+ ✓ src/features/mastery/error-bank-panel.test.tsx (4 tests) 1184ms
+   ✓ Error Bank > preserves the selected skill while localizing pagination and untouched phrases  790ms
+ ✓ src/features/admin-content/audio-preview.test.tsx (4 tests) 1043ms
+   ✓ AudioPreview > labels simulation artifacts as diagnostic tones and does not expose them in an audio player  564ms
+ ✓ src/features/ielts-orientation/orientation-player.test.tsx (3 tests) 1085ms
+   ✓ OrientationPlayer > localizes navigation and captions while preserving English content and the selected answer on switching  834ms
+ ✓ src/features/admin-audit/audit-workspace.test.tsx (5 tests) 1300ms
+   ✓ AuditWorkspace > localizes audit labels and counts while retaining diagnostic codes and payloads  634ms
+ ✓ src/features/learning-session/activity-renderers/writing-activity.test.tsx (4 tests) 1048ms
+   ✓ WritingActivity > requires active recall without exposing target phrases in a vocabulary lesson  562ms
+ ✓ src/features/admin-content/narration-editor.test.tsx (3 tests) 975ms
+   ✓ NarrationEditor > requires explicit review before applying an email body suggestion  726ms
+ ✓ src/features/onboarding/placement-status.test.tsx (4 tests) 1180ms
+   ✓ PlacementStatus > localizes recommendation and skill evidence while preserving policy identifiers  559ms
+ ✓ src/features/engagement/engagement-panel.test.tsx (6 tests) 1064ms
+   ✓ EngagementPanel > renders Vietnamese progress states, counts and decimal formatting  332ms
+   ✓ EngagementPanel > renders target selector with options 2 through 5 and handles target change  509ms
+ ✓ src/features/auth/auth-form.test.tsx (4 tests) 1088ms
+   ✓ AuthForm > renders accessible registration fields and validation messages  619ms
+ ✓ src/features/ielts-band-curriculum/ielts-band-pathway.test.tsx (5 tests) 1182ms
+   ✓ IELTS band pathway > localizes evidence and generated criteria while keeping curriculum content and the target selection  920ms
+ ✓ src/features/admin-content/admin-system-labels.test.tsx (3 tests) 895ms
+   ✓ admin system enum display > localizes validation summaries and actionable issue names while retaining diagnostic codes  520ms
+ ✓ src/app/(admin)/layout.test.tsx (5 tests) 3061ms
+   ✓ AdminLayout > preserves legacy and approved feature destinations without duplicates for SYSTEM_ADMIN  1462ms
+   ✓ AdminLayout > renders admin navigation and children for authorized CONTENT_ADMIN  1296ms
+ ✓ src/features/auth/auth-i18n.test.tsx (1 test) 740ms
+   ✓ localized authentication > updates labels and existing validation without resetting entered values  738ms
+ ✓ src/app/(learner)/dashboard/topic-availability.test.tsx (1 test) 1167ms
+   ✓ Topic selection independent from generic mission availability > uses prefetched topics even when generic mission availability fails with 422  1165ms
+ ✓ src/features/learning-session/activity-renderers/speaking-activity.test.tsx (3 tests) 1391ms
+   ✓ SpeakingActivity > teaches pronunciation and offers the version-bound shadowing model before recording  716ms
+   ✓ SpeakingActivity > requires versioned consent before uploading a preview  314ms
+   ✓ SpeakingActivity > reuses the client attempt id when a failed upload is retried  358ms
+ ✓ src/features/curriculum-roadmap/curriculum-roadmap.test.tsx (3 tests) 1373ms
+   ✓ CurriculumRoadmap > localizes roadmap status and actions without translating curriculum content  901ms
+ ✓ src/features/admin-content/lesson-preview.test.tsx (5 tests) 1751ms
+   ✓ LessonPreview > localizes educational wrappers while preserving English passages, prompts, vocabulary and answers  1127ms
+   ✓ LessonPreview > shows Foundation pedagogy metadata as validated draft state  404ms
+stderr | src/components/workspace-navigation.test.tsx
+Not implemented: navigation to another Document
+
+ ✓ src/components/workspace-navigation.test.tsx (10 tests) 4292ms
+   ✓ WorkspaceNavigation > uses the supplied guarded link and marks only the most specific destination  1764ms
+   ✓ WorkspaceNavigation > retains all destinations and marks only the real active route segment  477ms
+   ✓ WorkspaceNavigation > uses a nonmodal disclosure with Escape returning focus and no trapped Tab  343ms
+   ✓ WorkspaceNavigation > resets responsive state, moves focus out of hidden controls and removes its media listener  482ms
+   ✓ WorkspaceNavigation > keeps compact navigation usable across responsive breakpoints  472ms
+ ✓ src/features/admin-content/new-content-import.test.tsx (3 tests) 1945ms
+   ✓ NewContentImport > fills the editable source from a selected Foundation template  307ms
+   ✓ NewContentImport > submits rawSource and navigates to the created import id  1109ms
+   ✓ NewContentImport > displays error when creation fails  522ms
+ ✓ src/features/ielts-mock/mock-speaking-recorder.test.tsx (1 test) 1871ms
+   ✓ requires consent before microphone use and keeps an upload ID through a network retry  1864ms
+ ✓ src/features/ielts-orientation/orientation-dashboard-card.test.tsx (8 tests) 2030ms
+   ✓ OrientationDashboardCard > explains the readiness gate in Vietnamese  951ms
+ ✓ src/components/language-switcher.test.tsx (2 tests) 1643ms
+   ✓ LanguageSwitcher > exposes both language names, selection and translated accessible label  1303ms
+   ✓ LanguageSwitcher > exposes a saving status only during an authenticated save, without an empty idle status  337ms
+ ✓ src/features/ielts-study/study-summary.test.tsx (1 test) 822ms
+   ✓ distinguishes practice, pending evaluations and stable mastery without inventing scores  817ms
+ ✓ src/features/admin-authoring/structured-fields.test.tsx (4 tests) 1147ms
+   ✓ edits labeled nested values without dropping fields not described by the form  1021ms
+ ✓ src/features/ielts-mock/mock-audio-player.test.tsx (2 tests) 1481ms
+   ✓ does not autoplay or create a lease on mount and restores the same lease after a failed play  1241ms
+ ✓ src/features/audio/browser-speech-controls.test.tsx (1 test) 844ms
+   ✓ BrowserSpeechControls > explains unsupported browsers and disables playback  842ms
+ ✓ src/features/ielts-bridge/ielts-bridge-dashboard-card.test.tsx (4 tests) 1057ms
+   ✓ IeltsBridgeDashboardCard > explains an empty eligible module catalog in Vietnamese  641ms
+ ✓ src/components/theme-control.test.tsx (3 tests) 1184ms
+   ✓ cycles through icon themes, persists preference and preserves entered content  929ms
+ ✓ src/app/error-states.test.tsx (2 tests) 2162ms
+   ✓ shared localized error states > renders an accessible Vietnamese missing-page state with a return route  1795ms
+   ✓ shared localized error states > provides localized retry without exposing internal error details  349ms
+ ✓ src/components/glass-surface.test.tsx (2 tests) 947ms
+   ✓ defaults to a regular untinted surface without replacing child navigation semantics  925ms
+ ✓ src/features/admin-content/source-editor.test.tsx (4 tests) 1825ms
+   ✓ SourceEditor > renders line gutter and controlled textarea  1170ms
+   ✓ SourceEditor > calls onChange when user types into textarea  403ms
+ ✓ src/features/ielts-study/ielts-history.test.tsx (1 test) 2181ms
+   ✓ keeps pinned legacy links and loads the next server cursor  2143ms
+ ✓ src/features/audio/lesson-audio-player.test.tsx (5 tests) 1348ms
+   ✓ LessonAudioPlayer > keeps published-only failures explicit without silently changing source  658ms
+ ✓ src/app/(admin)/admin/content/[importId]/page.test.tsx (2 tests) 1339ms
+   ✓ ContentImportDetailPage > renders loading state initially and then renders workspace on success  1220ms
+ ✓ src/app/(learner)/onboarding/placement/[sessionId]/page.test.tsx (3 tests) 1862ms
+   ✓ PlacementSessionPage > restores placement session and checkpoint on load/refresh  337ms
+   ✓ PlacementSessionPage > rejects ordinary learning sessions that do not have placement purpose  1020ms
+   ✓ PlacementSessionPage > renders completion state with link returning to /onboarding  502ms
+ ✓ src/features/ielts-mock/recording-wav.test.ts (3 tests) 283ms
+ ✓ src/features/admin-intermediate/lesson-model.test.ts (20 tests) 238ms
+ ✓ src/features/admin-content/validation-panel.test.tsx (1 test) 298ms
+ ✓ src/features/admin-intermediate/topic-json.test.ts (10 tests) 78ms
+ ✓ src/features/admin-intermediate/topic-authoring-flow.test.tsx (7 tests) 852ms
+   ✓ Topic-first authoring entry rules > validates a topic exists before exposing a new lesson editor  721ms
+ ✓ src/lib/api/api-client.learner.test.ts (16 tests) 135ms
+ ✓ src/lib/api/ielts-bridge-client.test.ts (1 test) 58ms
+ ✓ src/i18n/translator.test.ts (5 tests) 110ms
+ ✓ src/lib/api/api-client.test.ts (17 tests) 189ms
+ ✓ src/lib/api/admin-ielts-mock-client.test.ts (1 test) 88ms
+ ✓ src/lib/api/onboarding-client.test.ts (3 tests) 46ms
+ ✓ src/features/mastery/evidence-format.test.ts (3 tests) 74ms
+ ✓ src/lib/api/admin-ielts-bridge-client.test.ts (1 test) 79ms
+ ✓ src/lib/api/learning-program-client.test.ts (8 tests) 52ms
+ ✓ src/lib/theme.test.ts (6 tests) 83ms
+ ✓ src/features/learning-session/use-evaluation.test.tsx (1 test) 166ms
+ ✓ src/lib/api/learner-dashboard-client.test.ts (8 tests) 62ms
+ ✓ src/lib/api/admin-content-lifecycle-client.test.ts (5 tests) 164ms
+ ✓ src/lib/api/admin-ielts-orientation-client.test.ts (2 tests) 168ms
+ ✓ src/i18n/server.test.ts (3 tests) 41ms
+ ✓ src/lib/api/ielts-study-client.test.ts (4 tests) 84ms
+ ✓ src/lib/api/admin-dashboard-client.test.ts (4 tests) 68ms
+ ✓ src/features/admin-intermediate/intermediate-routes.test.tsx (11 tests) 25ms
+ ✓ src/features/admin-intermediate/topic-lesson-model.test.ts (2 tests) 67ms
+ ✓ src/lib/api/admin-curriculum-client.test.ts (4 tests) 41ms
+ ✓ src/lib/api/admin-observability-clients.test.ts (2 tests) 21ms
+ ✓ src/lib/api/curriculum-foundation-client.test.ts (2 tests) 24ms
+ ✓ src/features/audio/voice-registry.test.ts (9 tests) 43ms
+ ✓ src/lib/api/audio-settings-client.test.ts (2 tests) 30ms
+ ✓ src/lib/api/admin-audit-client.test.ts (2 tests) 32ms
+ ✓ src/lib/api/ielts-orientation-client.test.ts (1 test) 20ms
+ ✓ src/features/auth/submit-auth.test.ts (1 test) 25ms
+ ✓ src/features/admin-intermediate/topic-json-diagnostics.test.ts (2 tests) 17ms
+ ✓ src/lib/api/ielts-integrated-client.test.ts (1 test) 11ms
+ ✓ src/features/admin-content/source-position.test.ts (7 tests) 8ms
+ ✓ src/local-startup.spec.ts (2 tests) 5ms
+ ✓ src/features/auth/auth-page.test.ts (3 tests) 6ms
+
+ Test Files  128 passed (128)
+      Tests  798 passed (798)
+   Start at  01:43:46
+   Duration  157.00s (transform 36.06s, setup 0ms, collect 286.20s, tests 285.20s, environment 349.37s, prepare 63.36s)

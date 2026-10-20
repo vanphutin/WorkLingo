@@ -1,0 +1,26 @@
+{
+  "title": "bridge matrix light 1440",
+  "status": "passed",
+  "mode": "before-production",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/ielts/orientation",
+      "name": "orientation-player-light-1440",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/ielts/bridge",
+      "name": "bridge-catalog-light-1440",
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "name": "bridge-player-light-1440",
+      "client": 1440,
+      "scroll": 1440
+    }
+  ]
+}

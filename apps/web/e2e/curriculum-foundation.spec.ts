@@ -88,10 +88,12 @@ test('published objective evidence completes one pinned revision and unlocks its
   await registerLearner(page, { displayName: `Curriculum Learner ${suffix}`, email: `curriculum-${suffix}@example.test` });
   await completeSelfPlacementViaApi(page);
   await page.goto('/dashboard');
+  await page.getByRole('tab', { name: 'Progress', exact: true }).click();
   await expect(page.getByRole('article', { name: sourceMission.title })).toContainText('Available');
   await expect(page.getByRole('article', { name: dependentMission.title })).toContainText('Locked');
   await expectNoHorizontalOverflow(page);
 
+  await page.getByRole('tab', { name: 'Today', exact: true }).click();
   await page.getByRole('button', { name: /start 60-minute session/i }).click();
   await expect(page).toHaveURL(/\/sessions\/[\da-f-]+$/u);
   const sessionId = new URL(page.url()).pathname.split('/').at(-1)!;
@@ -100,6 +102,7 @@ test('published objective evidence completes one pinned revision and unlocks its
   await completeSession(page, sessionId);
 
   await page.goto('/dashboard');
+  await page.getByRole('tab', { name: 'Progress', exact: true }).click();
   await expect(page.getByRole('article', { name: sourceMission.title })).toContainText('Completed');
   await expect(page.getByRole('article', { name: dependentMission.title })).toContainText('Available');
 
@@ -119,4 +122,26 @@ test('published objective evidence completes one pinned revision and unlocks its
     expect.objectContaining({ revisionId: dependentRevisionId, state: 'available' }),
   ]));
   expect(roadmap.items.some((item) => item.revisionId === sourceRevisionId)).toBe(false);
+});
+
+test('real curriculum API retains an unsaved Foundation objective through collapse and filtering', async ({ page }) => {
+  await loginAsContentAdmin(page);
+  const tree = await requestJson<CurriculumTree>(page.request, 'get', '/api/v1/admin/curriculum');
+  const mission = tree.paths.flatMap(path => path.levels).flatMap(level => level.missions)
+    .find(item => item.slug === 'introduce-yourself-to-a-new-colleague')!;
+  await page.goto('/admin/curriculum');
+  await page.getByRole('button', { name: new RegExp(`Edit Foundation.*${mission.title}`, 'i') }).click();
+  const statement = page.getByLabel('Objective statement', { exact: true }).first();
+  const text = `Unsaved recovery objective ${crypto.randomUUID()}`;
+  await statement.fill(text);
+  await page.getByRole('button', { name: 'Collapse all', exact: true }).click();
+  await expect(statement).toHaveValue(text);
+  await page.locator('.search-input').fill('no-mission-matches-this-filter');
+  await expect(statement).toHaveValue(text);
+  await page.locator('.search-input').fill('');
+  await page.getByRole('button', { name: 'Expand all', exact: true }).click();
+  await expect(statement).toHaveValue(text);
+  // The browser draft must not silently write to the real API.
+  const stored = await requestJson<{ definition: { objectives: Array<{ statement: string }> } | null }>(page.request, 'get', `/api/v1/admin/curriculum/missions/${mission.id}/foundation`);
+  expect(stored.definition?.objectives.some(objective => objective.statement === text) ?? false).toBe(false);
 });

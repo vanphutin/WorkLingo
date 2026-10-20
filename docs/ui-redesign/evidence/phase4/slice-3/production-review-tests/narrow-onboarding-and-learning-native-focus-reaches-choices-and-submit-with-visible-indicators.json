@@ -1,0 +1,19 @@
+{
+  "mode": "production",
+  "title": "narrow onboarding and learning native focus reaches choices and submit with visible indicators",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "onboarding",
+      "width": 320,
+      "CSSZoom": 2,
+      "nativeTab": true,
+      "reached": [
+        "starting-level",
+        "confirm"
+      ],
+      "indicatorBounds": true
+    }
+  ]
+}

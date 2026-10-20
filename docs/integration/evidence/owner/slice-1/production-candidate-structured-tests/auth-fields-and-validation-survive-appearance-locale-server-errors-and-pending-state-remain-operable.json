@@ -1,0 +1,8 @@
+{
+  "mode": "production",
+  "title": "auth fields and validation survive appearance/locale; server errors and pending state remain operable",
+  "status": "passed",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": []
+}

@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-environment-objective]
+statement: Infer and accurately use contextual Environment vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-environment-lesson
+title: Environment: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Compare two proposals and recommend a measurable environmental priority.
+[/LESSON]
+
+[WORD_BANK ielts-environment-bank]
+title: Environment in context
+
+[[LANGUAGE_BLOCK ielts-environment-carbon-emissions]]
+expression: carbon emissions
+meaning_vi: lượng khí thải carbon
+pronunciation: /ˈkɑːbən ɪˈmɪʃənz/
+collocations: reduce carbon emissions
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The council will compare carbon emissions from its vehicles before deciding which ones to replace.
+common_error: Use emissions in the plural for released gases.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-renewable-energy]]
+expression: renewable energy
+meaning_vi: năng lượng tái tạo
+pronunciation: /rɪˈnjuːəbəl ˈenədʒi/
+collocations: invest in renewable energy
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A proposed roof installation would supply renewable energy to the community hall during daylight hours.
+common_error: Energy is uncountable in this phrase.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-waste-management]]
+expression: waste management
+meaning_vi: quản lý chất thải
+pronunciation: /weɪst ˈmænɪdʒmənt/
+collocations: effective waste management
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The waste management contract will require separate collection of food scraps from the market.
+common_error: Waste is a noun modifier; do not pluralize it here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-biodiversity-loss]]
+expression: biodiversity loss
+meaning_vi: sự suy giảm đa dạng sinh học
+pronunciation: /ˌbaɪəʊdaɪˈvɜːsəti lɒs/
+collocations: prevent biodiversity loss
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Surveyors will assess biodiversity loss along the river before any further paths are built.
+common_error: Loss is the noun; lose is a verb.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-public-transport]]
+expression: public transport
+meaning_vi: giao thông công cộng
+pronunciation: /ˌpʌblɪk ˈtrænspɔːt/
+collocations: improve public transport
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The budget proposal extends public transport on Sunday mornings rather than adding a new car park.
+common_error: Transport is normally uncountable in British English.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-energy-efficiency]]
+expression: energy efficiency
+meaning_vi: hiệu quả sử dụng năng lượng
+pronunciation: /ˈenədʒi ɪˈfɪʃənsi/
+collocations: improve energy efficiency
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: An energy efficiency audit found that sealing windows should come before replacing the hall's heating system.
+common_error: Efficiency is a noun; efficient is an adjective.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-natural-habitats]]
+expression: natural habitats
+meaning_vi: môi trường sống tự nhiên
+pronunciation: /ˈnætʃərəl ˈhæbɪtæts/
+collocations: protect natural habitats
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Volunteers will mark natural habitats on a map so maintenance crews can avoid disturbing them.
+common_error: Use habitats for different places where species live.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-single-use-plastic]]
+expression: single-use plastic
+meaning_vi: nhựa dùng một lần
+pronunciation: /ˌsɪŋɡəl juːs ˈplæstɪk/
+collocations: reduce single-use plastic
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Market stalls will trial reusable cups to reduce single-use plastic, with a refundable deposit on each cup.
+common_error: Plastic is a material noun in this use.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-sustainable-consumption]]
+expression: sustainable consumption
+meaning_vi: tiêu dùng bền vững
+pronunciation: /səˈsteɪnəbəl kənˈsʌmpʃən/
+collocations: encourage sustainable consumption
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A repair fair will encourage sustainable consumption by helping residents keep useful appliances for longer.
+common_error: Consumption is the noun, not consume.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-environmental-awareness]]
+expression: environmental awareness
+meaning_vi: nhận thức về môi trường
+pronunciation: /ɪnˌvaɪrənˈmentəl əˈweənəs/
+collocations: raise environmental awareness
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: School visits will build environmental awareness through a river survey rather than a poster competition alone.
+common_error: Use raise awareness, not rise awareness.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-climate-adaptation]]
+expression: climate adaptation
+meaning_vi: thích ứng với khí hậu
+pronunciation: /ˈklaɪmət ˌædæpˈteɪʃən/
+collocations: plan climate adaptation
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The climate adaptation plan prioritizes shaded waiting areas for residents during unusually hot weather.
+common_error: Adaptation differs from mitigation, which addresses causes.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-environment-resource-conservation]]
+expression: resource conservation
+meaning_vi: bảo tồn tài nguyên
+pronunciation: /rɪˈsɔːs ˌkɒnsəˈveɪʃən/
+collocations: support resource conservation
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Monthly water-meter readings will show whether the resource conservation campaign changes actual use.
+common_error: Resource modifies conservation and stays singular here.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-environment-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a town deciding how to use a limited environmental budget. Please compare the priorities below before our next meeting.
+The council will compare carbon emissions from its vehicles before deciding which ones to replace.
+A proposed roof installation would supply renewable energy to the community hall during daylight hours.
+The waste management contract will require separate collection of food scraps from the market.
+Surveyors will assess biodiversity loss along the river before any further paths are built.
+The budget proposal extends public transport on Sunday mornings rather than adding a new car park.
+An energy efficiency audit found that sealing windows should come before replacing the hall's heating system.
+Volunteers will mark natural habitats on a map so maintenance crews can avoid disturbing them.
+Market stalls will trial reusable cups to reduce single-use plastic, with a refundable deposit on each cup.
+A repair fair will encourage sustainable consumption by helping residents keep useful appliances for longer.
+School visits will build environmental awareness through a river survey rather than a poster competition alone.
+The climate adaptation plan prioritizes shaded waiting areas for residents during unusually hot weather.
+Monthly water-meter readings will show whether the resource conservation campaign changes actual use.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-environment-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Could we publish carbon emissions per journey as well as the annual total, so different routes can be compared?
+Lan: Renewable energy on the hall roof sounds promising, but we should check maintenance costs before voting.
+An: Better waste management would help our market because mixed rubbish currently makes the recycling bins unusable.
+Lan: I am concerned about biodiversity loss because the new path could remove nesting areas as well as weeds.
+An: Public transport would be more useful to my family if buses ran early enough for weekend work.
+Lan: Energy efficiency improvements might reduce bills sooner than an expensive replacement that we cannot yet afford.
+An: Protecting natural habitats needs a clear map; a sign saying be careful is too vague for contractors.
+Lan: A reduction in single-use plastic is worthwhile only if customers can easily return and reuse the cups.
+An: Sustainable consumption should include repairing what we own rather than buying a new product with a green label.
+Lan: Environmental awareness may improve when children see the local river themselves and discuss what they find.
+An: Climate adaptation must consider older residents who cannot comfortably walk to a distant shaded park.
+Lan: To assess resource conservation, we need water readings from comparable months, not only a count of leaflets.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-environment-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Could we publish carbon emissions per journey as well as the annual total, so different routes can be compared?
+Lan: Renewable energy on the hall roof sounds promising, but we should check maintenance costs before voting.
+An: Better waste management would help our market because mixed rubbish currently makes the recycling bins unusable.
+Lan: I am concerned about biodiversity loss because the new path could remove nesting areas as well as weeds.
+An: Public transport would be more useful to my family if buses ran early enough for weekend work.
+Lan: Energy efficiency improvements might reduce bills sooner than an expensive replacement that we cannot yet afford.
+An: Protecting natural habitats needs a clear map; a sign saying be careful is too vague for contractors.
+Lan: A reduction in single-use plastic is worthwhile only if customers can easily return and reuse the cups.
+An: Sustainable consumption should include repairing what we own rather than buying a new product with a green label.
+Lan: Environmental awareness may improve when children see the local river themselves and discuss what they find.
+An: Climate adaptation must consider older residents who cannot comfortably walk to a distant shaded park.
+Lan: To assess resource conservation, we need water readings from comparable months, not only a count of leaflets.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-environment-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-carbon-emissions | ielts-environment-renewable-energy | ielts-environment-waste-management
+prompt: The council will compare carbon emissions from its vehicles before deciding which ones to replace. A proposed roof installation would supply renewable energy to the community hall during daylight hours. The waste management contract will require separate collection of food scraps from the market.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-environmental-awareness | ielts-environment-climate-adaptation | ielts-environment-resource-conservation
+prompt: School visits will build environmental awareness through a river survey rather than a poster competition alone. The climate adaptation plan prioritizes shaded waiting areas for residents during unusually hot weather. Monthly water-meter readings will show whether the resource conservation campaign changes actual use.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-carbon-emissions | ielts-environment-renewable-energy | ielts-environment-waste-management | ielts-environment-biodiversity-loss
+
+QUESTION:
+What will guide replacement of council vehicles?
+
+OPTIONS:
+A. A comparison of their emissions
+B. A poster competition
+C. The colour of each vehicle
+
+ANSWER:
+A
+
+EXPLANATION:
+A comparison of their emissions. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-environment-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-discussion
+language_block_refs: ielts-environment-carbon-emissions | ielts-environment-renewable-energy | ielts-environment-waste-management | ielts-environment-biodiversity-loss
+audio_ref: ielts-environment-discussion-audio
+
+QUESTION:
+What additional comparison is requested?
+
+OPTIONS:
+A. Emissions per journey
+B. The age of all drivers
+C. Vehicle paint colours
+
+ANSWER:
+A
+
+EXPLANATION:
+Emissions per journey. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-environment-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-public-transport | ielts-environment-energy-efficiency | ielts-environment-natural-habitats | ielts-environment-single-use-plastic
+
+QUESTION:
+What does the budget extend?
+
+OPTIONS:
+A. A new car park
+B. A private taxi fleet
+C. Sunday morning transport services
+
+ANSWER:
+C
+
+EXPLANATION:
+Sunday morning transport services. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-environment-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-discussion
+language_block_refs: ielts-environment-public-transport | ielts-environment-energy-efficiency | ielts-environment-natural-habitats | ielts-environment-single-use-plastic
+audio_ref: ielts-environment-discussion-audio
+
+QUESTION:
+Why would earlier buses help?
+
+OPTIONS:
+A. They would close the market earlier
+B. They would replace all walking routes
+C. They would support weekend workers
+
+ANSWER:
+C
+
+EXPLANATION:
+They would support weekend workers. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-environment-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-sustainable-consumption | ielts-environment-environmental-awareness | ielts-environment-climate-adaptation | ielts-environment-resource-conservation
+
+QUESTION:
+How will the repair fair reduce consumption?
+
+OPTIONS:
+A. By selling more disposable cups
+B. By keeping appliances useful for longer
+C. By replacing every old appliance
+
+ANSWER:
+B
+
+EXPLANATION:
+By keeping appliances useful for longer. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-environment-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-discussion
+language_block_refs: ielts-environment-sustainable-consumption | ielts-environment-environmental-awareness | ielts-environment-climate-adaptation | ielts-environment-resource-conservation
+audio_ref: ielts-environment-discussion-audio
+
+QUESTION:
+What does the speaker prefer to buying a new green-labelled item?
+
+OPTIONS:
+A. Ignoring maintenance costs
+B. Repairing an existing possession
+C. Throwing away usable goods
+
+ANSWER:
+B
+
+EXPLANATION:
+Repairing an existing possession. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-environment-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-discussion
+language_block_refs: ielts-environment-carbon-emissions | ielts-environment-public-transport | ielts-environment-sustainable-consumption
+prompt: Could we publish carbon emissions per journey as well as the annual total, so different routes can be compared? Public transport would be more useful to my family if buses ran early enough for weekend work. Sustainable consumption should include repairing what we own rather than buying a new product with a green label.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Compare two proposals and recommend a measurable environmental priority. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-discussion
+language_block_refs: ielts-environment-waste-management | ielts-environment-natural-habitats | ielts-environment-climate-adaptation
+prompt: Better waste management would help our market because mixed rubbish currently makes the recycling bins unusable. Protecting natural habitats needs a clear map; a sign saying be careful is too vague for contractors. Climate adaptation must consider older residents who cannot comfortably walk to a distant shaded park.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Compare two proposals and recommend a measurable environmental priority. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-renewable-energy | ielts-environment-energy-efficiency | ielts-environment-environmental-awareness
+prompt: A proposed roof installation would supply renewable energy to the community hall during daylight hours. An energy efficiency audit found that sealing windows should come before replacing the hall's heating system. School visits will build environmental awareness through a river survey rather than a poster competition alone.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Compare two proposals and recommend a measurable environmental priority. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-environment-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-environment-objective
+content_refs: ielts-environment-proposal
+language_block_refs: ielts-environment-biodiversity-loss | ielts-environment-single-use-plastic | ielts-environment-resource-conservation
+prompt: Surveyors will assess biodiversity loss along the river before any further paths are built. Market stalls will trial reusable cups to reduce single-use plastic, with a refundable deposit on each cup. Monthly water-meter readings will show whether the resource conservation campaign changes actual use.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Compare two proposals and recommend a measurable environmental priority. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

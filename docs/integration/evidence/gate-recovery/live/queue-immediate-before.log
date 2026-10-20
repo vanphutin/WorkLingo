@@ -1,0 +1,10 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ✓ test/integration/placement-isolation.integration.spec.ts (3 tests | 2 skipped) 17521ms
+   ✓ placement evidence isolation > diagnoses immediate enqueue eligibility without HTTP latency  8815ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 2 skipped (3)
+   Start at  01:39:42
+   Duration  44.52s (transform 13.24s, setup 0ms, collect 26.56s, tests 17.52s, environment 0ms, prepare 134ms)

@@ -231,7 +231,7 @@ describe('backup and restore rehearsal', () => {
     });
 
     expect(result.status).not.toBe(0);
-    expect(result.stderr + result.stdout).toMatch(/not covered by the manifest/i);
+    expect(result.stderr + result.stdout).toMatch(/not covered by the\s+manifest/i);
   }, 20_000);
 
   it('fails closed when the target database emptiness check cannot be completed', async () => {
@@ -287,7 +287,9 @@ describe('backup and restore rehearsal', () => {
     await expect(readdir(failedBackupRoot)).resolves.toEqual([]);
   }, 20_000);
 
-  it('backs up test database records and files with manifest and sha256 checksums', async () => {
+  it('backs up test database records and files with manifest and sha256 checksums', async ({ task }) => {
+    console.info(JSON.stringify({ event: 'backup-rehearsal-budget', loadedTestTimeoutMs: task.timeout,
+      migrationTimeoutMs: 45_000, powerShellTimeoutMs: 60_000 }));
     // 1. Prepare test database data
     await sourcePrisma.$executeRawUnsafe(`CREATE SCHEMA IF NOT EXISTS "${sourceSchema}"`);
     const prismaCli = createRequire(path.resolve('package.json')).resolve('prisma/build/index.js');
@@ -456,7 +458,9 @@ describe('backup and restore rehearsal', () => {
     // Checksum for file must match
     const recordedFileHash = manifest.files['data/sample-audio.txt'] || manifest.files['sample-audio.txt'];
     expect(recordedFileHash).toBe(expectedChecksum);
-  }, 20_000);
+  // This journey includes a migrate subprocess (45s bound) and backup process
+  // (60s bound). Its outer timeout must allow both to finish before teardown.
+  }, 120_000);
 
   it('scripts/restore-local.ps1 rejects non-empty target directory or non-empty database', async () => {
     const backupListResult = runPowerShellScript('scripts/backup-local.ps1', {

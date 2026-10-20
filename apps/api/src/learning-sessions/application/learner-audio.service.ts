@@ -65,7 +65,9 @@ export class LearnerAudioService {
     const reference = await this.database.lessonVersionAudioArtifact.findFirst({
       where: {
         lessonVersionId: session.lessonVersionId,
-        audioScriptSlug: { in: scriptSlugs },
+        // Every published topic script is validated against the same passage.
+        // Passage evidence uses content slugs, independently of the script slug.
+        ...(plan.kind === 'topic' ? {} : { audioScriptSlug: { in: scriptSlugs } }),
         audioArtifact: {
           status: 'READY',
           adapterName: { not: 'fake-tts' },

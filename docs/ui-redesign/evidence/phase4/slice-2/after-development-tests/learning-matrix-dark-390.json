@@ -1,0 +1,35 @@
+{
+  "mode": "after",
+  "title": "learning matrix dark 390",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "file": "after-dashboard-dark-390.png"
+    },
+    {
+      "url": "/programs",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "file": "after-programs-dark-390.png"
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "client": 390,
+      "scroll": 390,
+      "file": "after-mastery-dark-390.png"
+    }
+  ]
+}

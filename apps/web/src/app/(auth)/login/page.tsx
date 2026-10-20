@@ -10,9 +10,11 @@ export default function LoginPage() {
   return (
     <main className="auth-page">
       <section className="auth-panel" aria-labelledby="login-title">
+        <header className="auth-introduction">
         <p className="eyebrow">{t('continueMission')}</p>
         <h1 id="login-title">{t('welcome')}</h1>
         <p>{t('loginDescription')}</p>
+        </header>
         <AuthPage mode="login" />
         <p>
           {t('newHere')} <Link href="/register">{t('createAnAccount')}</Link>

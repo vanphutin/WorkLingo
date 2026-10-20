@@ -1,5 +1,7 @@
 export const programsMessages = {
   en: {
+    ieltsBetaDescription: 'A guided IELTS practice pathway from orientation to four-skill practice and teacher-reviewed mock tests.',
+    ieltsPhases: 'Orientation → Bridge → Integrated Practice → Band Pathway → Full Mock',
     available: 'Available', beta: 'Beta', comingSoon: 'Coming soon', disabled: 'Unavailable', inDevelopment: 'In development',
     openAria: 'Open {name} program', continue: 'Continue with {name}', unavailableAria: '{name} program unavailable', notAvailable: 'Not available yet',
     contextChanged: 'Learning context changed. Review the updated program and try again.', refreshError: 'Unable to refresh learning context. Reload programs before trying again.',
@@ -19,6 +21,8 @@ export const programsMessages = {
     beginnerGoalLegacy: 'Understand practical English in familiar situations.', toeicGoalLegacy: 'Strengthen listening and reading.', ieltsGoalLegacy: 'Build language evidence for IELTS preparation.',
   },
   vi: {
+    ieltsBetaDescription: 'Lộ trình luyện IELTS có hướng dẫn, từ định hướng đến luyện bốn kỹ năng và thi thử có giáo viên chấm.',
+    ieltsPhases: 'Định hướng → Bridge → Luyện tập tích hợp → Lộ trình band → Thi thử',
     available: 'Có thể học', beta: 'Thử nghiệm', comingSoon: 'Sắp ra mắt', disabled: 'Chưa khả dụng', inDevelopment: 'Đang phát triển',
     openAria: 'Mở chương trình {name}', continue: 'Tiếp tục với {name}', unavailableAria: 'Chương trình {name} chưa khả dụng', notAvailable: 'Chưa thể học',
     contextChanged: 'Chương trình đang học đã thay đổi. Xem lại chương trình được cập nhật và thử lại.', refreshError: 'Không thể cập nhật chương trình đang học. Tải lại danh sách trước khi thử lại.',

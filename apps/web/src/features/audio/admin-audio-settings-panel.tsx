@@ -8,7 +8,9 @@ import { useT, useLocalePreference } from '../../i18n/provider';
 import { localizedError } from '../../i18n/errors';
 import { audioMessages } from '../../i18n/messages/audio';
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
+import { useVoiceRegistry } from './use-voice-registry';
 import './admin-audio-settings.css';
+import './preferences-experience.css';
 
 /* Icons with strict sizing */
 function AudioWaveIcon({ size = 16 }: { readonly size?: number }) {
@@ -116,6 +118,27 @@ function SlidersIcon({ size = 18 }: { readonly size?: number }) {
   );
 }
 
+function DevicesIcon({ size = 18 }: { readonly size?: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: size, height: size, maxWidth: size, maxHeight: size, flexShrink: 0 }}
+    >
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+      <line x1="8" y1="21" x2="16" y2="21" />
+      <line x1="12" y1="17" x2="12" y2="21" />
+    </svg>
+  );
+}
+
 function ShieldCheckIcon({ size = 18 }: { readonly size?: number }) {
   return (
     <svg
@@ -200,6 +223,7 @@ function CheckCircleIcon({ size = 13 }: { readonly size?: number }) {
 export function AdminAudioSettingsPanel() {
   const t = useT('audio', audioMessages);
   const { locale } = useLocalePreference();
+  const registry = useVoiceRegistry();
   const [settings, setSettings] = useState<AdminAudioSettings | null>(null);
   const [initialSettings, setInitialSettings] = useState<AdminAudioSettings | null>(null);
   const [loadError, setLoadError] = useState<{ cause: unknown } | null>(null);
@@ -222,7 +246,7 @@ export function AdminAudioSettingsPanel() {
 
   if (loadError) {
     return (
-      <section className="audio-settings-state admin-state-container" aria-labelledby="admin-audio-settings-title">
+      <section className="audio-settings-state admin-state-container preferences-experience" aria-labelledby="admin-audio-settings-title">
         <h1 id="admin-audio-settings-title">{t('generationSettings')}</h1>
         <div role="alert" className="admin-callout-warning">
           <AlertTriangleIcon />
@@ -238,7 +262,7 @@ export function AdminAudioSettingsPanel() {
 
   if (!settings) {
     return (
-      <div className="audio-settings-state admin-state-container" role="status">
+      <div className="audio-settings-state admin-state-container preferences-experience" role="status">
         <div className="admin-state-spinner" aria-hidden="true" />
         <p>{t('loadingProviders')}</p>
       </div>
@@ -271,7 +295,7 @@ export function AdminAudioSettingsPanel() {
   };
 
   return (
-    <div className="admin-audio-page">
+    <div className="admin-audio-page preferences-experience">
       {/* Settings Hub Tabs */}
       <nav className="admin-settings-tabs-nav" aria-label="Settings categories">
         <Link href="/admin/settings/audio" className="admin-settings-tab active" aria-current="page">
@@ -391,7 +415,7 @@ export function AdminAudioSettingsPanel() {
 
                   {!isAvailable && (
                     <div className="admin-unconfigured-note">
-                      <AlertTriangleIcon />
+                      <AlertTriangleIcon size={16} />
                       <span>{t('serverSetupNotice')}</span>
                     </div>
                   )}
@@ -407,7 +431,7 @@ export function AdminAudioSettingsPanel() {
             <div className="admin-section-header">
               <div className="admin-section-title-group">
                 <h2 className="admin-section-title">
-                  <AudioWaveIcon />
+                  <AudioWaveIcon size={18} />
                   <span>{t('voiceConfigTitle')}</span>
                 </h2>
                 <p className="admin-section-desc">
@@ -437,7 +461,7 @@ export function AdminAudioSettingsPanel() {
                       {selected.defaultVoiceId ?? t('providerDefault')}
                     </option>
                   </select>
-                  <ChevronDownIcon />
+                  <ChevronDownIcon size={16} />
                 </div>
                 <div className="admin-voice-meta-badge">
                   <span>{t('voiceFormat')}</span>
@@ -447,10 +471,14 @@ export function AdminAudioSettingsPanel() {
                 </div>
               </div>
 
+              {/* Server rotation note & locales for tests & clarity */}
+              <p className="audio-settings-note">{t('serverRotationUnavailable')}</p>
+              <p className="audio-settings-note">{t('providerLocales', { locales: selected.supportedLocales.join(', ') })}</p>
+
               {/* Dynamic Callout based on provider */}
               {selected.simulation ? (
                 <div className="audio-settings-warning admin-callout-warning">
-                  <AlertTriangleIcon />
+                  <AlertTriangleIcon size={18} />
                   <div className="admin-callout-content">
                     <span className="admin-callout-title">{t('simulationWarning')}</span>
                     <p className="admin-callout-desc">{t('simulationDesc')}</p>
@@ -458,7 +486,7 @@ export function AdminAudioSettingsPanel() {
                 </div>
               ) : (
                 <div className="admin-callout-success">
-                  <CheckCircleIcon />
+                  <CheckCircleIcon size={18} />
                   <div className="admin-callout-content">
                     <span className="admin-callout-title">{t('azureReadyTitle')}</span>
                     <p className="admin-callout-desc">{t('azureReadyDesc')}</p>
@@ -469,10 +497,81 @@ export function AdminAudioSettingsPanel() {
           </section>
         ) : null}
 
-        {/* Section 3: Security & Isolation Notice */}
+        {/* Section 3: Device Voice Registry & Rotation (Compact, elegant scrollable card) */}
+        <section className="admin-audio-section">
+          <div className="admin-section-header">
+            <div className="admin-section-title-group">
+              <h2 className="admin-section-title">
+                <DevicesIcon size={18} />
+                <span>{t('deviceVoiceRegistry')}</span>
+              </h2>
+              <p className="admin-section-desc audio-settings-note">
+                {t('deviceRegistryScope')}
+              </p>
+            </div>
+          </div>
+
+          <div className="admin-device-registry-card">
+            {/* Master Rotation Toggle */}
+            <label className="audio-source-option admin-rotation-toggle-card" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <input
+                type="checkbox"
+                checked={registry.rotationEnabled}
+                disabled={!registry.supported}
+                onChange={(event) => registry.store?.setRotation(event.target.checked)}
+              />
+              <div className="admin-rotation-toggle-text">
+                <strong>{t('rotateVoices')}</strong>
+                <small>{t('rotationDescription')}</small>
+              </div>
+            </label>
+
+            {/* Voices List */}
+            {!registry.supported ? (
+              <p className="audio-settings-note">{t('speechUnsupported')}</p>
+            ) : registry.voices.length === 0 ? (
+              <p role="status">{t('voicesUnavailable')}</p>
+            ) : (
+              <div className="admin-voice-registry-scroll">
+                <fieldset className="audio-source-list admin-voice-registry-grid">
+                  <legend className="sr-only" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0 }}>
+                    {t('deviceVoiceRegistry')}
+                  </legend>
+                  {registry.voices.map((voice) => {
+                    const isEnabled = !registry.disabledIds.has(voice.id);
+                    return (
+                      <label
+                        className={`audio-source-option admin-voice-registry-item ${isEnabled ? 'active' : ''}`}
+                        key={voice.id}
+                        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+                      >
+                        <div className="admin-voice-registry-item-left" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
+                          <input
+                            type="checkbox"
+                            checked={isEnabled}
+                            onChange={(event) => registry.store?.setEnabled(voice.id, event.target.checked)}
+                          />
+                          <div className="admin-voice-item-info">
+                            <strong className="admin-voice-item-title">{voice.displayName}</strong>
+                            <small className="admin-voice-item-desc">
+                              {voice.id} · {voice.localService ? t('deviceVoiceService') : t('remoteVoiceService')}
+                            </small>
+                          </div>
+                        </div>
+                        <span className="admin-voice-item-badge">{voice.locale}</span>
+                      </label>
+                    );
+                  })}
+                </fieldset>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Section 4: Security & Isolation Notice */}
         <div className="admin-security-card">
           <div className="admin-security-icon">
-            <ShieldCheckIcon />
+            <ShieldCheckIcon size={18} />
           </div>
           <div className="admin-security-body">
             <h3 className="admin-security-title">{t('securityTitle')}</h3>
@@ -480,7 +579,7 @@ export function AdminAudioSettingsPanel() {
           </div>
         </div>
 
-        {/* Section 4: Action Footer */}
+        {/* Section 5: Action Footer */}
         <div className="audio-settings-footer admin-settings-footer-bar">
           <div className="admin-footer-status">
             {hasChanges && !saved && !saving ? (
@@ -491,13 +590,13 @@ export function AdminAudioSettingsPanel() {
             ) : null}
             {saved ? (
               <p className="admin-save-success" role="status">
-                <CheckCircleIcon />
+                <CheckCircleIcon size={14} />
                 <span>{t('providerSaved')}</span>
               </p>
             ) : null}
             {saveError ? (
               <p className="admin-save-error field-error" role="alert">
-                <AlertTriangleIcon />
+                <AlertTriangleIcon size={16} />
                 <span>{localizedError(saveError.cause, locale)}</span>
               </p>
             ) : null}

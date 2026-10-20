@@ -151,6 +151,57 @@ ${scriptA}
     expect(artifactStatus).toBe('READY');
   });
 
+  it('versions Azure candidates and persists actual assignments in the direct execution path', async () => {
+    const database = {
+      contentImport: { findUnique: vi.fn().mockResolvedValue({ rawSource: lessonSourceWithScriptA }) },
+      mutationReceipt: { findUnique: vi.fn().mockResolvedValue(null), create: vi.fn().mockResolvedValue({}) },
+      audioArtifact: { create: vi.fn().mockResolvedValue({}), updateMany: vi.fn().mockResolvedValue({ count: 1 }) },
+      job: { create: vi.fn().mockResolvedValue({ id: 'direct-job', status: 'PENDING' }), update: vi.fn().mockResolvedValue({}) },
+    };
+    Object.assign(database, { $transaction: vi.fn((work) => work(database)) });
+    const tts = {
+      providerName: 'azure-speech',
+      synthesize: vi.fn().mockResolvedValue({
+        mimeType: 'audio/wav', audioBytes: Buffer.alloc(48), checksum: 'checksum', sampleRate: 24_000, durationSeconds: 1,
+        provider: {
+          name: 'azure-speech', requestId: null, voice: 'en-US-JennyNeural',
+          speakerVoices: [{ speaker: 'an', name: 'An', gender: null, voice: 'en-US-GuyNeural', voiceGender: 'male' }],
+        },
+      }),
+    } as unknown as TextToSpeechPort;
+    const service = new AudioGenerationService(
+      database as unknown as PrismaService,
+      { put: vi.fn().mockResolvedValue({ key: 'generated-audio/id', size: 48 }) } as unknown as ObjectStorage,
+      tts, registryFor(tts),
+    );
+
+    await service.generateAudio(importId, actorId, {
+      audioScriptSlug, idempotencyKey: 'azure-version', providerId: 'azure-speech', voiceId: 'en-US-JennyNeural',
+      voiceConfig: { generationVersion: 'old', speakerVoices: [{ voice: 'forged' }] },
+    });
+    await service.waitForJob('direct-job');
+
+    expect(database.audioArtifact.create).toHaveBeenCalledWith({ data: expect.objectContaining({
+      voiceConfig: { generationVersion: 'azure-dialogue-v1', voice: 'en-US-JennyNeural' },
+    }) });
+    const oldVariant = `azure-speech:en-US-JennyNeural:${createHash('sha256')
+      .update(JSON.stringify({ voice: 'en-US-JennyNeural' })).digest('hex')}`;
+    expect(database.audioArtifact.create.mock.calls[0]![0].data.variantKey).not.toBe(oldVariant);
+    expect(database.audioArtifact.updateMany).toHaveBeenCalledWith({
+      where: expect.objectContaining({ status: 'GENERATING' }),
+      data: expect.objectContaining({
+        status: 'READY',
+        voiceConfig: {
+          generationVersion: 'azure-dialogue-v1', voice: 'en-US-JennyNeural',
+          speakerVoices: [{ speaker: 'an', name: 'An', gender: null, voice: 'en-US-GuyNeural', voiceGender: 'male' }],
+        },
+      }),
+    });
+    expect(database.job.create).toHaveBeenCalledWith({ data: expect.objectContaining({
+      payload: expect.objectContaining({ voiceConfig: { generationVersion: 'azure-dialogue-v1', voice: 'en-US-JennyNeural' } }),
+    }) });
+  });
+
   it('handles idempotency replay and detects key reuse conflict', async () => {
     const existingReceipt = {
       id: randomUUID(),
@@ -203,6 +254,26 @@ ${scriptA}
         statusCode: 409,
       }),
     });
+  });
+
+  it('does not replay an Azure receipt made before dialogue configuration versioning', async () => {
+    const database = {
+      mutationReceipt: { findUnique: vi.fn().mockResolvedValue({
+        requestHash: createHash('sha256').update(JSON.stringify({
+          audioScriptSlug, contentImportId: importId, idempotencyKey: 'old-azure', providerId: 'azure-speech',
+          voiceConfig: { voice: 'en-US-JennyNeural' }, voiceId: 'en-US-JennyNeural',
+        })).digest('hex'),
+        responseBody: { jobId: 'old-single-voice-job', status: 'COMPLETED' },
+      }) },
+    } as unknown as PrismaService;
+    const tts = { providerName: 'azure-speech' } as TextToSpeechPort;
+    const service = new AudioGenerationService(database, {} as ObjectStorage, tts, registryFor(tts));
+
+    await expect(service.generateAudio(importId, actorId, {
+      audioScriptSlug, idempotencyKey: 'old-azure', providerId: 'azure-speech', voiceId: 'en-US-JennyNeural',
+    })).rejects.toMatchObject({ response: expect.objectContaining({
+      code: ContentAuthoringErrorCode.IDEMPOTENCY_KEY_REUSED,
+    }) });
   });
 
   it('marks artifact STALE when out-of-order completion occurs after source was edited', async () => {

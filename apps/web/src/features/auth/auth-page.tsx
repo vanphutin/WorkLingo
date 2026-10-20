@@ -11,6 +11,8 @@ import { ThemeControl } from '../../components/theme-control';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { useLocalePreference, useT } from '../../i18n/provider';
 import { authMessages } from '../../i18n/messages/auth';
+import { commonMessages } from '../../i18n/messages/common';
+import { GlassSurface } from '../../components/glass-surface';
 
 interface AuthPageProps {
   readonly mode: 'login' | 'register';
@@ -28,13 +30,16 @@ export function getPostAuthenticationPath(
 export function AuthPage({ mode }: AuthPageProps) {
   const router = useRouter();
   const t = useT('auth', authMessages);
+  const common = useT('common', commonMessages);
   const { synchronizeUser } = useLocalePreference();
 
   return (
     <div className={styles.content}>
       <a className="skip-link" href="#account-form">{t('skipForm')}</a>
-      <ThemeControl />
-      <LanguageSwitcher />
+      <GlassSurface className={styles.preferences} role="group" aria-label={common('preferences')}>
+        <LanguageSwitcher />
+        <ThemeControl />
+      </GlassSurface>
       <AuthForm
         mode={mode}
         onAuthenticated={(user) => { synchronizeUser(user); router.replace(getPostAuthenticationPath(user)); }}

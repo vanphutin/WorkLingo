@@ -1,0 +1,8 @@
+{
+  "sourceCommit": "aace62cc695e227904123c92c7b79f278d0fb128",
+  "timestamp": "2026-10-20T12:49:25.212Z",
+  "method": "Immutable git archive, only Login leaf injected in ignored snapshot; actual error owner unchanged",
+  "injectedFile": "apps/web/src/app/(auth)/login/page.tsx",
+  "errorOwnerSHA256": "1d35e92753b3e3095d8c341bf40fc6cbc811676220b218a8eb99c0cf5b18e668",
+  "productionSourceModified": false
+}

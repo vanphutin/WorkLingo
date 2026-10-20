@@ -1,0 +1,192 @@
+[WebServer] (node:11804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:7036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:2032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+  ok  1 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:8:7 › Onboarding and placement assessment journey › learner registers, completes self-placement, confirms level, and lands on dashboard (3.8s)
+  ok  2 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:45:7 › Onboarding and placement assessment journey › pending learner cannot bypass route guards to access dashboard or ordinary sessions (3.0s)
+  ok  3 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:68:7 › Onboarding and placement assessment journey › completed learner bypasses onboarding and is redirected to dashboard (2.0s)
+  ok  4 [onboarding-desktop] › e2e\onboarding-placement.spec.ts:88:7 › Onboarding and placement assessment journey › learner starts placement, resumes after refresh, completes all four skills, and confirms recommendation (9.3s)
+  x   5 [foundation-desktop] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (11.2s)
+  x   6 [foundation-mobile] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress (11.1s)
+  ok  7 [teacher-ai-mobile] › e2e\teacher-ai-learning.spec.ts:6:7 › Teacher AI speaking and writing journey › records, resumes processing, retries safely and preserves a writing draft (14.2s)
+  ok  8 [engagement-mobile] › e2e\engagement-progress.spec.ts:8:7 › Weekly Engagement and Progress Evidence Journey › tracks weekly mission, protects active week target changes, and surfaces progress evidence (6.7s)
+  ok  9 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (3.6s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '535420707'
+[WebServer] }
+  ok 10 [admin-desktop] › e2e\admin-content-authoring.spec.ts:61:7 › Content Authoring & Publishing Acceptance Journey › admin authors, validates, previews audio, publishes lesson version, and verifies session isolation (16.8s)
+  x  11 [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety (1.2s)
+  x  12 [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics (1.2s)
+
+
+  1) [foundation-desktop] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('FOUNDATION_1')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('FOUNDATION_1') with timeout 5000ms
+      - waiting for getByText('FOUNDATION_1')
+
+
+      122 |     // synchronously; Teacher AI work remains queued and must not be counted yet.
+      123 |     await expect(page.getByText('Current Level')).toBeVisible();
+    > 124 |     await expect(page.getByText('FOUNDATION_1')).toBeVisible();
+          |                                                  ^
+      125 |     await expect(page.getByText('Completed Activities').locator('..')).toContainText('2');
+      126 |     await expect(page.getByText('Completed Sessions').locator('..')).toContainText('1');
+      127 |   });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\foundation-session.spec.ts:124:50
+
+    Error Context: test-results\foundation-session-Foundat-007cd-d-session-and-sees-progress-foundation-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\foundation-session-Foundat-007cd-d-session-and-sees-progress-foundation-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\foundation-session-Foundat-007cd-d-session-and-sees-progress-foundation-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [foundation-mobile] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('FOUNDATION_1')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('FOUNDATION_1') with timeout 5000ms
+      - waiting for getByText('FOUNDATION_1')
+
+
+      122 |     // synchronously; Teacher AI work remains queued and must not be counted yet.
+      123 |     await expect(page.getByText('Current Level')).toBeVisible();
+    > 124 |     await expect(page.getByText('FOUNDATION_1')).toBeVisible();
+          |                                                  ^
+      125 |     await expect(page.getByText('Completed Activities').locator('..')).toContainText('2');
+      126 |     await expect(page.getByText('Completed Sessions').locator('..')).toContainText('1');
+      127 |   });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\foundation-session.spec.ts:124:50
+
+    Error Context: test-results\foundation-session-Foundat-007cd-d-session-and-sees-progress-foundation-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\foundation-session-Foundat-007cd-d-session-and-sees-progress-foundation-mobile\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\foundation-session-Foundat-007cd-d-session-and-sees-progress-foundation-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Content imports' })
+    Expected: visible
+    Error: strict mode violation: getByRole('region', { name: 'Content imports' }) resolved to 2 elements:
+        1) <div role="region" aria-label="Content imports" class="content-list-container authoring-experience">…</div> aka getByRole('region', { name: 'Content imports' }).first()
+        2) <div tabindex="0" role="region" aria-label="Content imports" class="content-table-wrapper">…</div> aka getByRole('region', { name: 'Content imports' }).nth(1)
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Content imports' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Content imports' })
+
+
+       at helpers\content-admin.ts:32
+
+      30 |   await page.locator('.language-control select').first().selectOption('en');
+      31 |   await expect(page.locator('.language-control select').first()).toHaveAttribute('aria-busy', 'false');
+    > 32 |   await expect(page.getByRole('region', { name: 'Content imports' })).toBeVisible();
+         |                                                                       ^
+      33 | }
+      34 |
+      35 | export function createValidLessonSource(slug: string, title = 'Admin E2E Publishing Journey'): string {
+        at loginAsContentAdmin (D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\helpers\content-admin.ts:32:71)
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\admin-curriculum-audit.spec.ts:27:5
+
+    Error Context: test-results\admin-curriculum-audit-Adm-af651-and-verifies-privacy-safety-admin-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\admin-curriculum-audit-Adm-af651-and-verifies-privacy-safety-admin-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\admin-curriculum-audit-Adm-af651-and-verifies-privacy-safety-admin-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Content imports' })
+    Expected: visible
+    Error: strict mode violation: getByRole('region', { name: 'Content imports' }) resolved to 2 elements:
+        1) <div role="region" aria-label="Content imports" class="content-list-container authoring-experience">…</div> aka getByRole('region', { name: 'Content imports' }).first()
+        2) <div tabindex="0" role="region" aria-label="Content imports" class="content-table-wrapper">…</div> aka getByRole('region', { name: 'Content imports' }).nth(1)
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Content imports' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Content imports' })
+
+
+       at helpers\content-admin.ts:32
+
+      30 |   await page.locator('.language-control select').first().selectOption('en');
+      31 |   await expect(page.locator('.language-control select').first()).toHaveAttribute('aria-busy', 'false');
+    > 32 |   await expect(page.getByRole('region', { name: 'Content imports' })).toBeVisible();
+         |                                                                       ^
+      33 | }
+      34 |
+      35 | export function createValidLessonSource(slug: string, title = 'Admin E2E Publishing Journey'): string {
+        at loginAsContentAdmin (D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\helpers\content-admin.ts:32:71)
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\admin-observability.spec.ts:6:3
+
+    Error Context: test-results\admin-observability-admin--a19f0-ons-and-aggregate-analytics-admin-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\admin-observability-admin--a19f0-ons-and-aggregate-analytics-admin-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\admin-observability-admin--a19f0-ons-and-aggregate-analytics-admin-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [foundation-desktop] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress
+    [foundation-mobile] › e2e\foundation-session.spec.ts:14:7 › Foundation 60-Minute Learning Session Journey › learner restores the checkpoint, completes the seeded session, and sees progress
+    [admin-desktop] › e2e\admin-curriculum-audit.spec.ts:14:7 › Admin Curriculum Operations & Audit Browser E2E Journey › content admin creates curriculum hierarchy, navigates audit browser and verifies privacy safety
+    [admin-desktop] › e2e\admin-observability.spec.ts:5:5 › admin can inspect safe operations and aggregate analytics
+  8 passed (2.3m)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=foundation-mobile --project=teacher-ai-mobile --project=engagement-mobile --project=ielts-full-mock-desktop --project=admin-desktop

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { seedIntermediateTopicCatalog } from '../src/intermediate-topics/seed-topic-catalog.js';
 
 import { seedFoundationCurriculum } from '../src/curriculum/infrastructure/seed-foundation.js';
 import { seedContentAdmin } from '../src/users/infrastructure/seed-content-admin.js';
@@ -16,6 +17,7 @@ async function main(): Promise<void> {
   const database = new PrismaClient();
   const storage = createLocalSeedStorage();
   try {
+    await seedIntermediateTopicCatalog(database);
     await seedLearningPrograms(database);
     await seedIeltsOrientation(database);
     await seedIeltsBridge(database);

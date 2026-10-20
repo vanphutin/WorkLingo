@@ -17,3 +17,4 @@ export class SubmitIeltsMockSectionDto {
   @ApiProperty({ enum: ['LISTENING', 'READING', 'WRITING', 'SPEAKING'] }) @IsEnum(['LISTENING', 'READING', 'WRITING', 'SPEAKING']) section!: 'LISTENING' | 'READING' | 'WRITING' | 'SPEAKING';
 }
 export class IeltsMockRevisionDto { @ApiProperty({ minimum: 1 }) @IsInt() @Min(1) expectedRevision!: number; }
+export class IeltsMockClockOperationDto extends IeltsMockRevisionDto { @ApiProperty({ format: 'uuid' }) @IsUUID() clientOperationId!: string; }

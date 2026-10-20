@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "077ee67e29d1adbb98a1376fff4102d7caa76a37",
+  "timestamp": "2026-10-20T18:59:42.605Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [],
+  "container": "worklingo-liquid-glass-phase6-2ae0ea2e4c",
+  "result": "PASS",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 10430,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_2ae0ea2e4c0d4013b6f2209c570f80bf",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "full backend suite on owned disposable PostgreSQL",
+  "invocation": {
+    "evidenceRoot": "docs/integration/evidence/gate-recovery",
+    "run": "lock-diagnostics-final",
+    "apiSuite": true,
+    "v3": false,
+    "arguments": [
+      "test/integration/jobs-worker.integration.spec.ts",
+      "test/integration/placement-isolation.integration.spec.ts",
+      "src/jobs/application/job-runner.service.spec.ts",
+      "src/jobs/application/jobs.service.spec.ts"
+    ]
+  },
+  "testArguments": [
+    "test/integration/jobs-worker.integration.spec.ts",
+    "test/integration/placement-isolation.integration.spec.ts",
+    "src/jobs/application/job-runner.service.spec.ts",
+    "src/jobs/application/jobs.service.spec.ts"
+  ],
+  "optimizedWeb": false,
+  "playwrightCommand": "pnpm --filter @worklingo/api exec vitest run test/integration/jobs-worker.integration.spec.ts test/integration/placement-isolation.integration.spec.ts src/jobs/application/job-runner.service.spec.ts src/jobs/application/jobs.service.spec.ts",
+  "harnessSHA256": "a32bd796dde160a32f4e1a0e01fd11b1166f6dfb481b1ff573a74867157d0971",
+  "e2eDiffSHA256": "790a34f19a0c0b60d18a702e8c99286245c796b1ec32d1f8723a9bad58d94bbb",
+  "exitCode": 0,
+  "finished": "2026-10-20T19:01:03.031Z"
+}

@@ -13,6 +13,7 @@ vi.mock('./browser-speech-controls', () => ({
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 describe('AudioSettingsPanel', () => {
@@ -42,5 +43,22 @@ describe('AudioSettingsPanel', () => {
     expect(await screen.findByRole('alert')).not.toHaveTextContent(/private backend details/i);
     fireEvent.click(screen.getByRole('button', { name: /retry/i }));
     expect(await screen.findByRole('radio', { name: /automatic/i })).toBeChecked();
+  });
+
+  it('preserves an unavailable saved preference and uses stable IDs for voices without a URI', async () => {
+    vi.spyOn(audioSettingsClient, 'getLearnerSettings').mockResolvedValue({ browserVoiceId: 'missing-voice', sourceId: 'browser-tts' });
+    vi.stubGlobal('SpeechSynthesisUtterance', class {});
+    vi.stubGlobal('speechSynthesis', {
+      getVoices: () => [
+        { default: false, lang: 'en-CA', localService: true, name: 'Canadian', voiceURI: '' },
+        { default: false, lang: 'english', localService: true, name: 'Invalid language', voiceURI: 'invalid' },
+      ], addEventListener: vi.fn(), removeEventListener: vi.fn(),
+    });
+    render(<AudioSettingsPanel />);
+    const select = await screen.findByLabelText(/voice on this device/i);
+    expect(select).toHaveValue('missing-voice');
+    expect(screen.getByRole('option', { name: /Canadian/ })).toHaveValue('en-CA:Canadian');
+    expect(screen.queryByRole('option', { name: /Invalid language/ })).not.toBeInTheDocument();
+    expect(screen.getByText(/saved voice is unavailable/i)).toBeInTheDocument();
   });
 });

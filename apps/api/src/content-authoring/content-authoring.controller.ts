@@ -68,7 +68,7 @@ export class ContentAuthoringController {
     @Req() request: AuthenticatedRequest,
     @Body() input: CreateContentImportDto,
   ): Promise<ContentImportDto> {
-    return this.contentImportsService.create(request.authUser.id, input.rawSource);
+    return this.contentImportsService.create(request.authUser.id, input.rawSource, input.topicGroupId);
   }
 
   @Get()
@@ -148,6 +148,10 @@ export class ContentAuthoringController {
   ): Promise<ContentPreviewDto> {
     return this.contentImportsService.getPreview(id, request.authUser.id);
   }
+
+  @Get(':id/vocabulary-review')
+  @ApiOperation({ summary: 'Review existing vocabulary meanings and their lesson/topic contexts' })
+  vocabularyReview(@Param('id', ParseUUIDPipe) id: string) { return this.contentImportsService.getVocabularyReview(id); }
 
   @Post(':id/publish')
   @HttpCode(200)

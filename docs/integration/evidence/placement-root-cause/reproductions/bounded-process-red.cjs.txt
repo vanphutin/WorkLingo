@@ -1,0 +1,13 @@
+const cp = require('node:child_process');
+
+// Extracted diagnostic child lifecycle, initially retaining the unbounded wait.
+async function runBounded(command, args, options) {
+  const { timeoutMs, ...spawnOptions } = options;
+  void timeoutMs;
+  const child = cp.spawn(command, args, spawnOptions);
+  return new Promise(resolve => {
+    child.on('error', error => resolve({ exitCode: null, error: String(error) }));
+    child.on('close', (exitCode, signal) => resolve({ exitCode, signal, timedOut: false }));
+  });
+}
+module.exports = { runBounded };

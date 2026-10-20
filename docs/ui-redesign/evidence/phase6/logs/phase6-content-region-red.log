@@ -1,0 +1,43 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-content/content-list.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ❯ src/features/admin-content/content-list.test.tsx (3 tests | 1 failed) 311ms
+   ✓ ContentList > renders empty state when no imports exist 180ms
+   ✓ ContentList > localizes import statuses and dates while preserving lesson source titles and links 97ms
+   × ContentList > renders list of imports with status, revision, and links to edit or view 33ms
+     → expected [ <div …(3)>…(2)</div>, …(1) ] to have a length of 1 but got 2
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/admin-content/content-list.test.tsx > ContentList > renders list of imports with status, revision, and links to edit or view
+AssertionError: expected [ <div …(3)>…(2)</div>, …(1) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ src/features/admin-content/content-list.test.tsx:71:85
+
+     69|     render(<ContentList imports={sampleImports} />);
+     70|     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(…
+     71|     expect(screen.getAllByRole('region', { name: 'Content imports', ex…
+       |                                                                                     ^
+     72|     expect(screen.getByRole('table').parentElement).toHaveAttribute('t…
+     73|     expect(screen.getByRole('table').parentElement).toHaveAccessibleNa…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  19:38:34
+   Duration  2.59s (transform 153ms, setup 0ms, collect 704ms, tests 311ms, environment 1.03s, prepare 185ms)
+
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/web@0.0.0 test: `vitest run "src/features/admin-content/content-list.test.tsx"`
+Exit status 1

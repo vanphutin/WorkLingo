@@ -1,0 +1,14 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
+const root = path.resolve(__dirname, '../../../..');
+const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, 'manifest.json'), 'utf8'));
+const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+for (const [file, digest] of Object.entries(manifest.sourceSHA256)) assert.equal(hash(path.join(root, file)), digest, 'Source changed: ' + file);
+for (const [file, digest] of Object.entries(manifest.artifactSHA256)) assert.equal(hash(path.join(__dirname, file)), digest, 'Evidence changed: ' + file);
+const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+assert.equal(git('branch', '--show-current'), 'codex/worklingo-liquid-glass-redesign');
+assert.equal(git('rev-parse', 'main'), '7a5e383763ccd63c4befa4ab07a5559ba7cabfbe');
+console.log(JSON.stringify({ sourceHashes: Object.keys(manifest.sourceSHA256).length, evidenceHashes: Object.keys(manifest.artifactSHA256).length, finalHead: git('rev-parse', 'HEAD'), workingTreeClean: git('status', '--porcelain=v1', '-uall') === '', hashesVerified: true }, null, 2));

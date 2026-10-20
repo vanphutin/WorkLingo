@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Education",
+  "description": "Build contextual IELTS vocabulary through a college committee planning support for adult students. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-education-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "ae83cf96-9afb-4fe5-ae2c-9ae98ef8a3d3",
+      "focusChunkSlugs": [
+        "ielts-education-higher-education",
+        "ielts-education-tuition-fees",
+        "ielts-education-learning-outcomes",
+        "ielts-education-critical-thinking",
+        "ielts-education-practical-skills",
+        "ielts-education-independent-study",
+        "ielts-education-academic-performance",
+        "ielts-education-equal-opportunities",
+        "ielts-education-lifelong-learning",
+        "ielts-education-vocational-training",
+        "ielts-education-student-engagement",
+        "ielts-education-assessment-criteria"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-education-proposal",
+          "title": "Planning proposal: Education"
+        },
+        {
+          "slug": "ielts-education-discussion",
+          "title": "Residents discuss alternatives: Education"
+        }
+      ]
+    }
+  ]
+}

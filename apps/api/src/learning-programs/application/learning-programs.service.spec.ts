@@ -4,24 +4,64 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { LearningProgramsService } from './learning-programs.service.js';
+import { ieltsBetaFixture } from './__fixtures__/ielts-beta.js';
 
 describe('LearningProgramsService', () => {
   const findMany = vi.fn();
+  let fixture: ReturnType<typeof ieltsBetaFixture>;
   let service: LearningProgramsService;
 
   beforeEach(async () => {
     findMany.mockReset();
+    fixture = ieltsBetaFixture();
     const moduleRef = await Test.createTestingModule({
       providers: [
         LearningProgramsService,
         {
           provide: PrismaService,
-          useValue: { learningProgram: { findMany } },
+          useValue: { ...fixture.database, learningProgram: { findMany },
+            $transaction: (callback: (tx: unknown) => unknown) => callback({ ...fixture.database, learningProgram: { findMany } }),
+          },
         },
       ],
     }).compile();
 
     service = moduleRef.get(LearningProgramsService);
+  });
+
+  it.each(['BETA', 'AVAILABLE'])('opens guided IELTS entry for a complete published chain with status %s', async (availabilityStatus) => {
+    findMany.mockResolvedValue([{ ...fixture.program, availabilityStatus }]);
+    const catalog = await service.listCatalog();
+    const { paths: _paths, ...metadata } = fixture.program;
+    expect(catalog.programs[0]).toEqual({ ...metadata, availabilityStatus,
+      destination: '/ielts', isSelectable: true, publishedLevelCount: 0, publishedPathCount: 0,
+    });
+  });
+
+  it.each(['IN_DEVELOPMENT', 'COMING_SOON'])('keeps %s IELTS locked without scanning content', async (availabilityStatus) => {
+    findMany.mockResolvedValue([{ ...fixture.program, availabilityStatus }]);
+    expect((await service.listCatalog()).programs[0]).toMatchObject({ destination: null, isSelectable: false });
+    expect(fixture.database.ieltsOrientation.findUnique).not.toHaveBeenCalled();
+  });
+
+  it('relocks Beta entry when current mock audio disappears', async () => {
+    findMany.mockResolvedValue([fixture.program]);
+    expect((await service.listCatalog()).programs[0]?.destination).toBe('/ielts');
+    fixture.audio.pop();
+    expect((await service.listCatalog()).programs[0]).toMatchObject({ destination: null, isSelectable: false });
+  });
+
+  it('does not expose generic IELTS path or level counts even for stray rows', async () => {
+    findMany.mockResolvedValue([{ ...fixture.program, paths: [{ levels: [{ id: 'stray' }] }] }]);
+    expect((await service.listCatalog()).programs[0]).toMatchObject({
+      destination: '/ielts', publishedPathCount: 0, publishedLevelCount: 0,
+    });
+  });
+
+  it('maps readiness query failures to the safe catalog-unavailable response', async () => {
+    findMany.mockResolvedValue([fixture.program]);
+    fixture.database.audioArtifact.findMany.mockRejectedValue(new Error('private database details'));
+    await expect(service.listCatalog()).rejects.toThrow(ServiceUnavailableException);
   });
 
   it('returns ordered catalog entries with published-only path and level counts', async () => {

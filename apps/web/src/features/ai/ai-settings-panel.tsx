@@ -7,6 +7,7 @@ import { useLocalePreference, useT } from '../../i18n/provider';
 import { localizedError } from '../../i18n/errors';
 import { aiMessages } from '../../i18n/messages/ai';
 import './admin-ai-settings.css';
+import '../audio/preferences-experience.css';
 
 /* SVG Icons with strict sizing */
 function SparklesIcon({ size = 16 }: { readonly size?: number }) {
@@ -213,7 +214,8 @@ function ChevronDownIcon({ size = 16 }: { readonly size?: number }) {
   );
 }
 
-export function AiSettingsPanel({ admin = false }: { readonly admin?: boolean }) {
+export function AiSettingsPanel({ admin = false, headingLevel = 1 }: { readonly admin?: boolean; readonly headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2';
   const t = useT('ai', aiMessages);
   const { locale } = useLocalePreference();
   const id = useId();
@@ -265,8 +267,8 @@ export function AiSettingsPanel({ admin = false }: { readonly admin?: boolean })
 
   if (!settings) {
     return (
-      <section className="admin-ai-card admin-ai-state-container" aria-labelledby={`${id}-title`}>
-        <h1 id={`${id}-title`}>{t(admin ? 'systemTitle' : 'title')}</h1>
+      <section className="admin-ai-card preferences-experience admin-ai-state-container" aria-labelledby={`${id}-title`}>
+        <Heading className="admin-ai-title" id={`${id}-title`}>{t(admin ? 'systemTitle' : 'title')}</Heading>
         {error ? (
           <div role="alert" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
             <p style={{ color: 'var(--danger)', fontWeight: 600, margin: 0 }}>{t('loadError')}</p>
@@ -293,7 +295,7 @@ export function AiSettingsPanel({ admin = false }: { readonly admin?: boolean })
   const readOnly = !settings.routingEnabled || (admin && !settings.canManageSystem);
 
   return (
-    <section className="admin-ai-card" aria-labelledby={`${id}-title`} aria-busy={saving}>
+    <section className="admin-ai-card preferences-experience" aria-labelledby={`${id}-title`} aria-busy={saving}>
       {/* Header */}
       <header className="admin-ai-header">
         <div className="eyebrow-badge">
@@ -301,7 +303,7 @@ export function AiSettingsPanel({ admin = false }: { readonly admin?: boolean })
           <span>{admin ? t('systemBadge') : t('accountBadge')}</span>
         </div>
         <div className="admin-ai-title-row">
-          <h1 id={`${id}-title`}>{t(admin ? 'systemTitle' : 'title')}</h1>
+          <Heading className="admin-ai-title" id={`${id}-title`}>{t(admin ? 'systemTitle' : 'title')}</Heading>
           {settings.effectiveProvider ? (
             <span
               className="admin-status-badge badge-active"

@@ -1,0 +1,30 @@
+[WebServer] (node:20236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 21 tests using 1 worker
+
+  ok  1 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (4.8s)
+  ok  2 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 768 (4.7s)
+  ok  3 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 1440 (5.0s)
+  ok  4 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 390 (4.0s)
+  ok  5 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 768 (4.3s)
+  ok  6 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 1440 (5.0s)
+  ok  7 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (2.4s)
+  ok  8 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (14.4s)
+  ok  9 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 768 (8.2s)
+  ok 10 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 1440 (10.4s)
+  ok 11 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 390 (6.2s)
+  ok 12 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 768 (4.9s)
+  ok 13 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 1440 (5.0s)
+  ok 14 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (2.3s)
+  ok 15 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (4.8s)
+  ok 16 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 768 (3.3s)
+  ok 17 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 1440 (3.8s)
+  ok 18 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 390 (3.2s)
+  ok 19 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 768 (3.3s)
+  ok 20 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 1440 (3.5s)
+  ok 21 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (1.8s)
+
+  21 passed (2.0m)

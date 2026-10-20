@@ -1,0 +1,24 @@
+/* Preference hub owns its reflow; shell safe-area insets stay authoritative. */
+html:has(main.settings-page) { scroll-padding-block: 1rem; }
+.settings-page.settings-page { min-width: 0; max-width: 100%; grid-template-columns: minmax(0,1fr); overflow-wrap: anywhere; }
+.settings-page .settings-header { max-width: 48rem; padding-block: .5rem; }
+.settings-page .settings-grid { min-width: 0; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; }
+.settings-page .settings-card { min-width: 0; max-width: 100%; padding: clamp(.75rem,2vw,1.5rem); border-radius: var(--radius-lg); gap: .85rem; }
+.settings-page .settings-card > * { min-width: 0; }
+.settings-page .settings-navigation-card { grid-template-columns: minmax(0,1fr) auto; min-height: 9rem; }
+.settings-page .settings-audio-card { grid-template-columns: auto minmax(0,1fr) auto; }
+.settings-page .settings-card strong { font-size: 1.1rem; }
+.settings-page .settings-card small { font-size: .9rem; line-height: 1.65; }
+.settings-page .settings-language-card { grid-template-columns: minmax(0,1fr) auto; }
+.settings-page .language-control, .settings-page .language-control select { min-width: 0; max-width: 100%; }
+.settings-page .settings-card.appearance-preferences { min-width: 0; display: flex; flex-direction: column; }
+.settings-page .transparency-control { align-items: flex-start; }
+.settings-page :is(a,button,input,select):focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; scroll-margin-block: 1.5rem; }
+@media (max-width: 620px) {
+  .settings-page .settings-grid { grid-template-columns: minmax(0,1fr); }
+  .settings-page .settings-language-card { grid-template-columns: minmax(0,1fr); }
+  .settings-page .settings-navigation-card { min-height: 7rem; }
+  .settings-page .settings-audio-card { grid-template-columns: minmax(0,1fr) auto; }
+  .settings-page .settings-audio-card > svg { grid-column: 1 / -1; }
+  .settings-page .language-control, .settings-page .language-control select { width: 100%; }
+}

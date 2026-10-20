@@ -259,6 +259,39 @@ describe('Transactional publish, archive, and session version isolation', () => 
       .expect(409);
   });
 
+  it('publishes repeated source vocabulary in another bank with stable IDs and consistent references', async () => {
+    const owner = await database.wordBank.create({ data: { slug: `original-${randomUUID()}`, name: 'Original vocabulary' } });
+    const original = await database.languageBlock.upsert({ where: { slug: 'apologize' }, update: {}, create: {
+      wordBankId: owner.id, slug: 'apologize', canonicalForm: 'apologize', meaning: 'Original meaning', pronunciation: '',
+      collocations: [], grammarPattern: '', examples: [], commonErrors: [], cefrLevel: 'B1', transferContexts: [],
+    } });
+    const bankSlug = `another-bank-${randomUUID()}`;
+    const source = canonicalLessonSource.replace('slug: handling-customer-complaints', `slug: separate-bank-${randomUUID()}`)
+      .replace('[WORD_BANK customer-service]', `[WORD_BANK ${bankSlug}]`);
+    const publish = async () => {
+      const draft = await prepareValidatedDraftWithAudio(source);
+      const result = await request(app.getHttpServer()).post(`/api/v1/admin/content-imports/${draft.importId}/publish`)
+        .set('Cookie', adminCookie).send({ expectedDraftRevision: draft.revision, expectedSourceHash: draft.sourceHash,
+          selectedAudioArtifacts: draft.selectedAudioArtifacts, idempotencyKey: randomUUID() }).expect(200);
+      const version = await database.lessonVersion.findUniqueOrThrow({ where: { id: result.body.lessonVersionId } });
+      return lessonSnapshotSchema.parse(version.parsedContent);
+    };
+    const snapshot = await publish();
+    const block = snapshot.wordBanks[0]!.languageBlocks.find(item => item.canonicalForm === 'apologize')!;
+    expect(block.id).not.toBe(original.id);
+    expect(block.slug).not.toBe(original.slug);
+    expect(snapshot.activities.some(activity => activity.languageBlockReferences.includes(block.slug))).toBe(true);
+    expect(snapshot.activities.flatMap(activity => activity.languageBlockReferences)).not.toContain('apologize');
+    const canonical = await database.languageBlock.findUniqueOrThrow({ where: { id: block.id } });
+    expect(canonical.slug).toBe(block.slug);
+    expect((await database.wordBank.findUniqueOrThrow({ where: { id: canonical.wordBankId } })).slug).toBe(bankSlug);
+    expect(await database.languageBlock.findUniqueOrThrow({ where: { id: original.id } })).toEqual(original);
+    const bankVersion = await database.wordBankVersion.findFirstOrThrow({ where: { wordBankId: canonical.wordBankId } });
+    expect(await database.languageBlockVersion.findFirst({ where: { wordBankVersionId: bankVersion.id, slug: block.slug } })).not.toBeNull();
+    const again = await publish();
+    expect(again.wordBanks[0]!.languageBlocks.find(item => item.canonicalForm === 'apologize')).toMatchObject({ id: block.id, slug: block.slug });
+  });
+
   it('returns the same result for concurrent identical publish requests', async () => {
     const slug = `same-key-${randomUUID()}`;
     const source = canonicalLessonSource.replace('handling-customer-complaints', slug);

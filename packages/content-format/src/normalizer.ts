@@ -75,6 +75,8 @@ export interface NormalizedAudioScript {
   readonly slug: string;
   readonly speaker?: string | undefined;
   readonly script: string;
+  readonly spokenText?: string | undefined;
+  readonly speechReview?: string | undefined;
 }
 
 export interface NormalizedLessonDraft {
@@ -152,6 +154,8 @@ export function normalizeLessonDocument(
     slug: as.slug,
     speaker: as.speaker,
     script: as.script,
+    ...(as.spokenText !== undefined ? { spokenText: as.spokenText } : {}),
+    ...(as.speechReview !== undefined ? { speechReview: as.speechReview } : {}),
   }));
 
   // Activities

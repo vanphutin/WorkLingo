@@ -1,0 +1,586 @@
+{
+  "title": "actual glass composite text and native control contrast dark",
+  "status": "failed",
+  "observations": [
+    {
+      "url": "/",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface public-nav-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface auth-module__zlf-ua__preferences",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        26,
+        26,
+        28
+      ],
+      "ratio": 15.959755175672491
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        72,
+        72,
+        74
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 2.301371894008873
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 5.4938354382734165
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 5.4938354382734165
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "url": "/dashboard",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/dashboard",
+      "kind": "control-boundary",
+      "class": "field-select target-select",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface evidence-nav-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/mastery",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/mastery",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface orientation-player__control-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        245,
+        245,
+        247
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface settings-card appearance-preferences",
+      "variant": "solid",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "filter": "none",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/settings",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/settings",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        72,
+        72,
+        74
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 2.301371894008873
+    },
+    {
+      "url": "/admin/content",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "url": "/admin/content",
+      "theme": "dark",
+      "kind": "screenshot-composite",
+      "class": "glass-surface workspace-navigation workspace-navigation-admin",
+      "variant": "regular",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "filter": "blur(20px) saturate(1.8)",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "url": "/admin/content",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    }
+  ],
+  "fixtures": true
+}

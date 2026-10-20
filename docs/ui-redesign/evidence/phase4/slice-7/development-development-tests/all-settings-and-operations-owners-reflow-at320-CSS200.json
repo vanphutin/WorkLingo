@@ -1,0 +1,80 @@
+{
+  "title": "all settings and operations owners reflow at320 CSS200",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/settings",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/settings/audio",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/settings/ai",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/admin/settings/audio",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/admin/settings/ai",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/admin/audit",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 490,
+      "offenders": [
+        {
+          "tag": "DIV",
+          "class": "audit-meta-item",
+          "right": 490
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 455.28125
+        },
+        {
+          "tag": "DIV",
+          "class": "audit-meta-item",
+          "right": 490
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 401.59375
+        },
+        {
+          "tag": "DIV",
+          "class": "audit-meta-item",
+          "right": 490
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "right": 455.28125
+        }
+      ]
+    }
+  ]
+}

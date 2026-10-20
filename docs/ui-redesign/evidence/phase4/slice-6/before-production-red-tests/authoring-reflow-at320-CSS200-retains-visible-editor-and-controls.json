@@ -1,0 +1,83 @@
+{
+  "title": "authoring reflow at320 CSS200 retains visible editor and controls",
+  "status": "failed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/admin/content",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": [
+        {
+          "class": "",
+          "tag": "TD",
+          "right": 357.703125
+        },
+        {
+          "class": "revision-badge",
+          "tag": "SPAN",
+          "right": 325.203125
+        },
+        {
+          "class": "",
+          "tag": "TD",
+          "right": 439.6875
+        },
+        {
+          "class": "updated-time",
+          "tag": "TIME",
+          "right": 405.234375
+        },
+        {
+          "class": "",
+          "tag": "TD",
+          "right": 615.25
+        },
+        {
+          "class": "btn btn-sm btn-secondary",
+          "tag": "A",
+          "right": 583.25
+        }
+      ]
+    },
+    {
+      "url": "/admin/content/new",
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 441,
+      "offenders": [
+        {
+          "class": "",
+          "tag": "SELECT",
+          "right": 441
+        },
+        {
+          "class": "form-group",
+          "tag": "DIV",
+          "right": 441
+        },
+        {
+          "class": "form-label",
+          "tag": "LABEL",
+          "right": 441
+        },
+        {
+          "class": "raw-source-textarea",
+          "tag": "TEXTAREA",
+          "right": 441
+        },
+        {
+          "class": "form-actions",
+          "tag": "DIV",
+          "right": 441
+        },
+        {
+          "class": "btn btn-primary",
+          "tag": "BUTTON",
+          "right": 363.375
+        }
+      ]
+    }
+  ]
+}

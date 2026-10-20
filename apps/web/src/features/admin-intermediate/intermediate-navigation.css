@@ -1,0 +1,22 @@
+.intermediate-authoring-hub { display: grid; gap: var(--space-4); min-width: 0; }
+.intermediate-authoring-hub h2 { margin: 0; font-size: 1.25rem; }
+.intermediate-authoring-hub header p { margin: .5rem 0 0; }
+.intermediate-category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--space-4); }
+.intermediate-category-card { display: flex; flex-direction: column; min-width: 0; padding: var(--space-5, 1.25rem); border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); }
+.intermediate-category-card h3 { margin: 0; font-size: 1.0625rem; }
+.intermediate-category-card p { color: var(--muted); line-height: 1.5; margin: .5rem 0 1rem; max-width: 65ch; }
+.intermediate-category-card small { color: var(--muted); font-size: .875rem; margin-bottom: .5rem; }
+.intermediate-category-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-top: auto; }
+.intermediate-category-actions a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
+.intermediate-add-link { padding: .5rem .75rem; border-radius: var(--radius-control); background: var(--primary-fill); color: var(--on-primary); font-weight: 600; text-decoration: none; }
+.intermediate-add-link:hover { background: var(--primary-hover); }
+.intermediate-library-note { border-top: 1px solid var(--border); padding-top: var(--space-4); }
+.intermediate-library-note > a, .intermediate-category-workspace header > a { display: inline-flex; align-items: center; min-height: 44px; }
+.intermediate-library-note p { margin: .25rem 0 0; max-width: 75ch; }
+.intermediate-program-navigation { margin: .25rem 0 .75rem .75rem; padding-inline-start: .5rem; border-inline-start: 1px solid var(--border); }
+.intermediate-program-navigation summary { cursor: pointer; min-height: 44px; padding: .5rem .75rem; align-content: center; font-size: .875rem; color: var(--muted); overflow-wrap: anywhere; }
+.intermediate-program-navigation > .ad-nav-link { font-weight: 400; }
+.intermediate-program-navigation summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.intermediate-category-navigation { margin-inline-start: .25rem; }
+.intermediate-category-navigation .ad-nav-link { margin-left: .75rem; font-weight: 400; border-left: 1px solid var(--border); border-radius: 0; }
+.intermediate-authoring-hub :where(a, button):focus-visible, .intermediate-category-workspace :where(a, button):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }

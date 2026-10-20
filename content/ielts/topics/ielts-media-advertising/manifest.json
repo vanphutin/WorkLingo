@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Media & Advertising",
+  "description": "Build contextual IELTS vocabulary through a student newsroom deciding how to fund a local information project. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-media-advertising-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "804a503f-ed8b-4466-aaef-f2c59ec909a2",
+      "focusChunkSlugs": [
+        "ielts-media-advertising-target-audience",
+        "ielts-media-advertising-advertising-revenue",
+        "ielts-media-advertising-media-coverage",
+        "ielts-media-advertising-brand-awareness",
+        "ielts-media-advertising-misleading-claims",
+        "ielts-media-advertising-editorial-independence",
+        "ielts-media-advertising-consumer-behaviour",
+        "ielts-media-advertising-sponsored-content",
+        "ielts-media-advertising-source-credibility",
+        "ielts-media-advertising-public-opinion",
+        "ielts-media-advertising-digital-footprint",
+        "ielts-media-advertising-fact-checking"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-media-advertising-proposal",
+          "title": "Planning proposal: Media & Advertising"
+        },
+        {
+          "slug": "ielts-media-advertising-discussion",
+          "title": "Residents discuss alternatives: Media & Advertising"
+        }
+      ]
+    }
+  ]
+}

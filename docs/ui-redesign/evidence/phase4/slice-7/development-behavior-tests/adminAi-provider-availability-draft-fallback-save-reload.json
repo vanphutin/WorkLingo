@@ -1,0 +1,13 @@
+{
+  "title": "adminAi provider availability draft fallback save reload",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "adminAi",
+      "unavailableProviderDisabled": true,
+      "unsavedDraftRetained": true,
+      "saveReload": true
+    }
+  ]
+}

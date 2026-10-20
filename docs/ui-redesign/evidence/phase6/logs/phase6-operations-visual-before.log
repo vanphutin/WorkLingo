@@ -1,0 +1,41 @@
+[WebServer] (node:19600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  x  1 e2e\liquid-glass-phase6-cls.spec.ts:30:5 › pending Operations summary retains filter geometry (2.5s)
+
+
+  1) e2e\liquid-glass-phase6-cls.spec.ts:30:5 › pending Operations summary retains filter geometry ─
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    469.75
+
+      44 |     await page.screenshot({ path: path.join(directory, 'loaded.png'), fullPage: true });
+      45 |     observations.push({ before, after, snapshotCommit: process.env.WORKLINGO_PHASE6_SNAPSHOT_REF ?? null, method: 'Same fixture; hold only summary response, retain real pending and loaded rendering' });
+    > 46 |     expect(Math.abs(after!.y - before!.y)).toBeLessThanOrEqual(1);
+         |                                            ^
+      47 |   } finally { release(); }
+      48 | });
+      49 |
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-cls.spec.ts:46:44
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-cls-results\liquid-glass-phase6-cls-pe-1ba26-ary-retains-filter-geometry\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-cls-results\liquid-glass-phase6-cls-pe-1ba26-ary-retains-filter-geometry\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-cls-results\liquid-glass-phase6-cls-pe-1ba26-ary-retains-filter-geometry\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e\liquid-glass-phase6-cls.spec.ts:30:5 › pending Operations summary retains filter geometry ──
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6-cls.config.ts -g pending Operations

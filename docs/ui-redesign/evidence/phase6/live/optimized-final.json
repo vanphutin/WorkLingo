@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "aace62cc695e227904123c92c7b79f278d0fb128",
+  "timestamp": "2026-10-20T12:51:59.241Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [
+    "onboarding-desktop",
+    "foundation-desktop",
+    "foundation-mobile",
+    "teacher-ai-mobile",
+    "engagement-mobile",
+    "ielts-orientation-desktop",
+    "ielts-bridge-desktop",
+    "ielts-integrated-desktop",
+    "ielts-band-curriculum-desktop",
+    "ielts-full-mock-desktop",
+    "admin-desktop",
+    "audio-desktop",
+    "ai-settings-desktop",
+    "programs-desktop",
+    "adaptive-desktop",
+    "i18n-desktop"
+  ],
+  "container": "worklingo-liquid-glass-phase6-532f3dceec",
+  "result": "PASS",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 11762,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_532f3dceec4e4c56871da1bd112097be",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "optimizedWeb": true,
+  "playwrightCommand": "pnpm --filter @worklingo/web exec playwright test -c playwright.phase6-live.config.ts --no-deps --project=onboarding-desktop --project=foundation-desktop --project=foundation-mobile --project=teacher-ai-mobile --project=engagement-mobile --project=ielts-orientation-desktop --project=ielts-bridge-desktop --project=ielts-integrated-desktop --project=ielts-band-curriculum-desktop --project=ielts-full-mock-desktop --project=admin-desktop --project=audio-desktop --project=ai-settings-desktop --project=programs-desktop --project=adaptive-desktop --project=i18n-desktop",
+  "harnessSHA256": "60aaf84a063ae657b717f0a2b0149a79338668b79196c27a730a2ec7bdfec63a",
+  "e2eDiffSHA256": "6ef9878b5890a2b8626535c010195cb184ebaac36a7743cb5592e47b1882e0ad",
+  "exitCode": 0,
+  "finished": "2026-10-20T12:54:16.618Z"
+}

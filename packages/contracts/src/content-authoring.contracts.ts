@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { vocabularyPublicationSelectionSchema } from './vocabulary-publication.contracts.ts';
 import type { NormalizedLessonDraft } from '@worklingo/content-format';
 
 export const ContentAuthoringErrorCode = {
@@ -49,6 +50,8 @@ export const contentIssueSchema = z.object({
 export type ContentIssueDto = z.infer<typeof contentIssueSchema>;
 
 export const contentImportSchema = z.object({
+  topicGroupId: z.uuid().nullable().optional(),
+  topicGroupRevision: z.number().int().nonnegative().optional(),
   id: z.string().uuid(),
   lessonId: z.string().uuid().nullable(),
   lessonVersionId: z.string().uuid().nullable(),
@@ -66,6 +69,7 @@ export const contentImportSchema = z.object({
 export type ContentImportDto = z.infer<typeof contentImportSchema>;
 
 export const createContentImportSchema = z.object({
+  topicGroupId: z.uuid().optional(),
   rawSource: z.string(),
 });
 export type CreateContentImportInput = z.infer<typeof createContentImportSchema>;
@@ -103,6 +107,7 @@ export interface ContentPreviewDto {
 }
 
 export const publishContentImportSchema = z.object({
+  vocabularyReview: vocabularyPublicationSelectionSchema.optional(),
   expectedDraftRevision: z.number().int().positive(),
   expectedSourceHash: z.string().min(1),
   idempotencyKey: z.string().min(1),

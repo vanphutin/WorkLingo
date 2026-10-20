@@ -63,7 +63,7 @@ a {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--primary);
-  border-radius: 0.65rem;
+  border-radius: var(--radius-control);
   padding: 0.75rem 1.1rem;
   font-weight: 700;
   text-decoration: none;
@@ -118,7 +118,7 @@ input {
 button {
   min-height: 2.75rem;
   border: 0;
-  border-radius: 0.65rem;
+  border-radius: var(--radius-control);
   background: var(--primary-fill);
   color: var(--on-primary);
   cursor: pointer;
@@ -131,7 +131,8 @@ button:disabled {
   opacity: 0.68;
 }
 
-.visually-hidden {
+.visually-hidden,
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -502,7 +503,7 @@ a:focus-visible {
   min-width: 0;
   min-height: 2.75rem;
   border: 1px solid var(--control-border);
-  border-radius: 0.55rem;
+  border-radius: var(--radius-control);
   background: var(--surface);
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
@@ -518,6 +519,11 @@ a:focus-visible {
   color: var(--on-primary);
   min-height: 3rem;
   font-size: 1rem;
+  border: 1px solid var(--primary-fill);
+  border-radius: var(--radius-control);
+  min-width: 44px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .primary-action-button.inline-button {
@@ -588,16 +594,26 @@ a:focus-visible {
 }
 
 .secondary-action-button {
-  background: transparent;
+  background: var(--primary-soft);
   color: var(--primary);
   border: 1px solid var(--primary);
   min-height: 2.75rem;
   padding: 0.5rem 1rem;
+  min-width: 44px;
+  max-width: 100%;
+  border-radius: var(--radius-control);
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-.secondary-action-button:hover {
-  background: var(--primary-soft);
+.secondary-action-button:not(:disabled):hover {
+  background: var(--surface);
 }
+
+.primary-action-button:not(:disabled):hover { background: var(--primary-hover); }
+.primary-action-button:not(:disabled):active { background: var(--color-primary-active); }
+.primary-action-button:disabled,
+.secondary-action-button:disabled { opacity: 1; color: var(--text-disabled); background: var(--surface-secondary); border-color: var(--border); }
 
 /* Blocks Progress Navigation */
 .blocks-progress-nav {
@@ -1084,16 +1100,19 @@ a:focus-visible {
 }
 
 .teacher-feedback {
-  background: var(--primary-soft);
+  background: var(--surface-primary);
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-panel);
   color: var(--foreground);
-  overflow: hidden;
+  min-width: 0;
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-4);
 }
 
 .teacher-feedback-processing,
 .teacher-feedback-result {
-  padding: 1.15rem 1.25rem;
+  padding: 0;
 }
 
 .teacher-feedback-processing {
@@ -1148,7 +1167,17 @@ a:focus-visible {
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.45rem;
+  gap: var(--space-3);
 }
+
+.feedback-dimensions dt { min-width: 0; overflow-wrap: anywhere; }
+.feedback-dimensions dd { margin-inline-start: 0; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.teacher-feedback-result > header > h2 { min-width: 0; overflow-wrap: anywhere; }
+.teacher-feedback .feedback-error { color: var(--danger); }
+.teacher-feedback > .secondary-action-button { justify-self: start; }
+.recording-retention-controls .recording-delete-button { color: var(--danger); border-color: var(--danger); background: var(--danger-soft); justify-self: start; }
+.recording-retention-controls .recording-delete-button:not(:disabled):hover { background: var(--surface); }
+.recording-retention-controls .recording-delete-button:disabled { color: var(--text-disabled); border-color: var(--border); background: var(--surface-secondary); }
 
 .feedback-dimensions dd {
   font-weight: 800;
@@ -1179,7 +1208,7 @@ a:focus-visible {
   border-top: 1px solid var(--border);
   display: grid;
   gap: 0.65rem;
-  padding: 1rem 1.25rem;
+  padding: var(--space-4) 0 0;
 }
 
 .recording-retention-controls p {
@@ -1234,7 +1263,7 @@ a:focus-visible {
 
 .recording-stop-button {
   background: var(--danger-fill);
-  color: var(--on-primary);
+  color: var(--color-on-danger);
 }
 
 .speaking-fallback-notice {
@@ -1249,6 +1278,7 @@ a:focus-visible {
 
 @media (max-width: 640px) {
   .feedback-columns { grid-template-columns: 1fr; }
+  .teacher-feedback-result > header { grid-template-columns: minmax(0, 1fr); }
   .writing-editor-meta { align-items: flex-start; flex-direction: column; gap: 0.25rem; }
 }
 
@@ -1285,7 +1315,7 @@ a:focus-visible {
 
 .retry-button {
   background: var(--danger-fill);
-  color: var(--on-primary);
+  color: var(--color-on-danger);
   min-height: 2.75rem;
   padding: 0.25rem 0.85rem;
   font-size: 0.9rem;
@@ -1676,7 +1706,7 @@ a:focus-visible {
 .status-badge {
   display: inline-block;
   border: 1px solid transparent;
-  border-radius: 0.35rem;
+  border-radius: var(--radius-sm);
   padding: 0.2rem 0.5rem;
   font-size: 0.75rem;
   font-weight: 700;

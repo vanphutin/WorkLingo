@@ -1,0 +1,64 @@
+/* Existing SessionShell owns this presentation; no activity state or API changes. */
+.session-layout { min-width: 0; padding: clamp(.75rem, 2vw, 1.5rem); overflow-wrap: anywhere; }
+.session-layout .session-header { padding-block-end: 1.5rem; }
+.session-layout .session-header-content { align-items: start; gap: 1rem; }
+.session-layout .header-meta { min-width: 0; flex: 1 1 24rem; }
+.session-layout .session-mission-title { max-width: 36ch; font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.2; letter-spacing: -.035em; margin-block: .75rem; }
+.session-layout .session-actions { display: flex; flex-wrap: wrap; gap: .5rem; padding: .5rem; box-shadow: none; min-width: 0; max-width: 100%; }
+.session-layout .blocks-progress-nav { border-block-start: 0; padding-block-start: 1rem; }
+.session-layout .blocks-progress-list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+.session-layout .block-progress-step { min-width: 0; padding: .75rem; border: 1px solid var(--border); border-radius: var(--radius-control); color: var(--text-secondary); background: var(--surface-primary); font-size: .9375rem; line-height: 1.5; }
+.session-layout .block-progress-step.active { border-color: var(--primary); border-inline-start: 3px solid var(--primary); color: var(--primary); background: var(--color-primary-subtle); }
+.session-layout .block-progress-step.completed { color: var(--text-primary); background: var(--surface-secondary); }
+.session-layout .step-number { flex: 0 0 1.5rem; width: 1.5rem; height: 1.5rem; background: var(--surface-secondary); color: var(--text-primary); }
+.session-layout :is(.active, .completed) .step-number { background: var(--primary-fill); color: var(--on-primary); }
+.session-layout .step-label { min-width: 0; overflow-wrap: anywhere; }
+.session-layout .session-progress-note { font-size: .9375rem; line-height: 1.6; color: var(--text-secondary); }
+.session-layout .session-body-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); gap: 1.5rem; }
+.session-layout .session-main-content { min-width: 0; padding: clamp(1rem, 2.5vw, 2rem); border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface-primary); box-shadow: none; }
+.session-layout :is(.activity-container, .activity-header, .questions-list, .reading-content-item, .writing-input-group, .speaking-input-group, .audio-player-panel, .speaking-recorder, .recording-preview, .feedback-columns, .feedback-card, .language-focus-panel, .vocabulary-focus-panel, .pronunciation-focus-panel) { min-width: 0; }
+.session-layout .activity-header { padding-block-end: 1rem; }
+.session-layout .activity-prompt { margin: 0; font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.6; font-weight: 650; }
+.session-layout .reading-content-item { background: var(--surface-secondary); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 1.25rem; }
+.session-layout :is(.reading-text, .transcript-text) { width: 100%; max-width: var(--width-reader); margin: 0; font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+.session-layout .question-block { min-width: 0; padding-block: 1.5rem; border-block-start: 1px solid var(--border); }
+.session-layout .question-prompt { font-size: 1rem; line-height: 1.7; }
+.session-layout .options-group { min-width: 0; display: grid; gap: .75rem; }
+.session-layout .option-label { min-width: 0; min-height: 48px; padding: .875rem; border-radius: var(--radius-control); align-items: start; gap: .75rem; line-height: 1.65; }
+.session-layout .option-text { min-width: 0; overflow-wrap: anywhere; }
+.session-layout :is(.option-label input, .recording-consent input) { flex: 0 0 auto; accent-color: var(--primary); }
+.session-layout :is(button, select, textarea, audio, a) { min-width: 0; max-width: 100%; scroll-margin-block: 1rem; }
+.session-layout :is(button, a) { white-space: normal; overflow-wrap: anywhere; }
+.session-layout :is(.writing-textarea, .speaking-textarea) { display: block; width: 100%; min-height: 16rem; padding: 1rem; font-size: 1.0625rem; line-height: 1.85; background: var(--surface-primary); border: 1px solid var(--control-border); border-radius: var(--radius-control); }
+.session-layout :is(.writing-label, .speaking-label) { display: block; margin-block-end: .75rem; line-height: 1.6; }
+.session-layout :is(.writing-editor-meta, .recording-actions) { display: flex; flex-wrap: wrap; gap: .75rem; min-width: 0; }
+.session-layout :is(.input-help-text, .draft-status, .rubric-text) { font-size: .9375rem; line-height: 1.65; }
+.session-layout .writing-rubric-box { background: var(--surface-secondary); border-radius: var(--radius-control); padding: 1rem; }
+.session-layout :is(.audio-speech-controls, .audio-settings-actions, .audio-transcript-box) { min-width: 0; max-width: 100%; }
+.session-layout .audio-settings-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.session-layout .audio-settings-actions label { min-width: 0; max-width: 100%; display: grid; gap: .5rem; }
+.session-layout .audio-settings-actions input { min-width: 0; width: 100%; max-width: 100%; }
+.session-layout :is(.audio-player-panel, .speaking-recorder) { background: var(--surface-secondary); border: 1px solid var(--border); border-radius: var(--radius-panel); padding: 1rem; }
+.session-layout :is(.audio-player-panel audio, .recording-preview audio) { display: block; width: 100%; min-width: 0; }
+.session-layout .recording-consent { min-height: 48px; min-width: 0; padding: .875rem; border-radius: var(--radius-control); background: var(--surface-primary); line-height: 1.65; }
+.session-layout .recorder-status { font-weight: 650; line-height: 1.65; }
+.session-layout .recording-stop-button { min-height: 48px; border: 1px solid var(--danger); border-radius: var(--radius-control); padding: .75rem 1rem; font: inherit; font-weight: 650; }
+.session-layout .activity-footer { position: static; display: flex; flex-wrap: wrap; margin-block-start: 1.5rem; padding-block-start: 1.25rem; }
+.session-layout .activity-footer button { min-width: 0; width: min(100%, 18rem); min-height: 48px; }
+.session-layout .session-support-panel { min-width: 0; position: static; background: var(--surface-secondary); border-radius: var(--radius-panel); box-shadow: none; }
+.session-layout .panel-header { flex-wrap: wrap; gap: .75rem; }
+.session-layout .panel-content { min-width: 0; font-size: .9375rem; line-height: 1.65; }
+.session-layout .teacher-feedback { background: var(--surface-secondary); border-radius: var(--radius-panel); padding: 1rem; box-shadow: none; }
+.session-layout :is(.teacher-feedback-processing, .teacher-feedback-result, .teacher-feedback-result header) { min-width: 0; }
+.session-layout :is(.session-paused-banner, .submit-error-banner, .evaluation-feedback-banner) { min-width: 0; flex-wrap: wrap; line-height: 1.65; }
+@media (max-width: 1100px) { .session-layout .session-body-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767px) {
+  .session-layout .blocks-progress-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .session-layout .activity-footer button { width: 100%; }
+}
+@media (max-width: 399px) {
+  .session-layout { padding-inline: 0; }
+  .session-layout .blocks-progress-list { grid-template-columns: minmax(0, 1fr); }
+  .session-layout :is(.session-main-content, .reading-content-item, .speaking-recorder, .audio-player-panel, .teacher-feedback) { padding: .75rem; }
+  .session-layout .option-label { padding: .5rem; }
+}

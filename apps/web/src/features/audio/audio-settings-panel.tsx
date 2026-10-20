@@ -9,7 +9,8 @@ import type { AudioSettings, AudioSourceId } from '@worklingo/contracts';
 
 import { audioSettingsClient } from '../../lib/api/audio-settings-client';
 import { BrowserSpeechControls } from './browser-speech-controls';
-import { useBrowserSpeech } from './use-browser-speech';
+import { useVoiceRegistry } from './use-voice-registry';
+import './preferences-experience.css';
 
 const PREVIEW_TEXT = 'Could you share the updated project timeline with the team?';
 
@@ -40,9 +41,7 @@ export function AudioSettingsPanel() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<{ cause: unknown } | null>(null);
-  const speech = useBrowserSpeech({
-    lang: 'en-US', preferredVoiceId: settings?.browserVoiceId ?? null, text: PREVIEW_TEXT,
-  });
+  const registry = useVoiceRegistry();
 
   const load = useCallback(async () => {
     setLoadError(null);
@@ -58,7 +57,7 @@ export function AudioSettingsPanel() {
 
   if (loadError) {
     return (
-      <section className="audio-settings-state" aria-labelledby="audio-settings-title">
+      <section className="audio-settings-state preferences-experience" aria-labelledby="audio-settings-title">
         <h1 id="audio-settings-title">{t('audioSettings')}</h1>
         <div role="alert">
           <p>{t('learnerLoadError')}</p>
@@ -68,7 +67,12 @@ export function AudioSettingsPanel() {
       </section>
     );
   }
-  if (!settings) return <p className="audio-settings-state" role="status">{t('loadingSettings')}</p>;
+  if (!settings) return <p className="audio-settings-state preferences-experience" role="status">{t('loadingSettings')}</p>;
+  const preferredVoice = registry.voices.find((entry) =>
+    entry.id === settings.browserVoiceId || entry.displayName === settings.browserVoiceId,
+  );
+  const preferenceUnavailable = !!settings.browserVoiceId
+    && (!preferredVoice || registry.disabledIds.has(preferredVoice.id));
 
   const save = async () => {
     setSaving(true);
@@ -85,7 +89,7 @@ export function AudioSettingsPanel() {
   };
 
   return (
-    <section className="audio-settings-panel" aria-labelledby="audio-settings-title">
+    <section className="audio-settings-panel preferences-experience" aria-labelledby="audio-settings-title">
       <header>
         <p className="eyebrow">{t('playback')}</p>
         <h1 id="audio-settings-title">{t('audioSettings')}</h1>
@@ -123,10 +127,17 @@ export function AudioSettingsPanel() {
             }))}
           >
             <option value="">{t('automaticVoice')}</option>
-            {speech.voices.filter((voice) => voice.lang.toLowerCase().startsWith('en')).map((voice) => (
-              <option key={voice.voiceURI} value={voice.voiceURI}>{voice.name} ({voice.lang})</option>
+            {settings.browserVoiceId && !preferredVoice ? (
+              <option value={settings.browserVoiceId}>{settings.browserVoiceId}</option>
+            ) : null}
+            {preferredVoice && settings.browserVoiceId === preferredVoice.displayName && settings.browserVoiceId !== preferredVoice.id ? (
+              <option value={settings.browserVoiceId}>{preferredVoice.displayName} ({preferredVoice.locale})</option>
+            ) : null}
+            {registry.voices.map((voice) => (
+              <option key={voice.id} value={voice.id} disabled={registry.disabledIds.has(voice.id)}>{voice.displayName} ({voice.locale})</option>
             ))}
           </select>
+          {preferenceUnavailable ? <p className="audio-settings-note" role="status">{t('preferredVoiceUnavailable')}</p> : null}
           <p className="audio-preview-sentence"><span>{t('testSentence')}</span> “<span lang="en">{PREVIEW_TEXT}</span>”</p>
           <BrowserSpeechControls
             lang="en-US"

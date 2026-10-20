@@ -1,0 +1,7 @@
+{
+  "mode": "production",
+  "title": "native lesson audio retains playback node and authored transcript through appearance resize",
+  "status": "failed",
+  "fixtures": true,
+  "observations": []
+}

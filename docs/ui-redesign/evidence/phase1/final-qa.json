@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-20",
+  "phase": 1,
+  "codeCommit": "0ef6204a8fbf76e7b00d30ec93113c3552320935",
+  "checks": [
+    {
+      "command": "pnpm --filter @worklingo/web test",
+      "exitCode": 0,
+      "files": 84,
+      "tests": 380
+    },
+    {
+      "command": "pnpm --filter @worklingo/web lint",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm i18n:check",
+      "exitCode": 0,
+      "errors": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web build",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec playwright test --config playwright.foundation.config.ts",
+      "exitCode": 0,
+      "passed": 16
+    },
+    {
+      "command": "WORKLINGO_FOUNDATION_PRODUCTION=true pnpm --filter @worklingo/web exec playwright test --config playwright.foundation.config.ts --grep actual",
+      "exitCode": 0,
+      "passed": 3
+    }
+  ],
+  "semanticPairs": 80,
+  "compositeSamples": 48,
+  "minTextContrast": 4.874973825384874,
+  "minUIContrast": 3.2904950012640626,
+  "minCompositeContrast": 8.24947550309882,
+  "sourceFiles": [
+    "apps/web/e2e/fixtures/liquid-glass-client.tsx",
+    "apps/web/e2e/fixtures/liquid-glass-foundation.tsx",
+    "apps/web/e2e/fixtures/liquid-glass-server.tsx",
+    "apps/web/e2e/liquid-glass-foundation.spec.ts",
+    "apps/web/playwright.foundation.config.ts",
+    "apps/web/src/app/(learner)/settings/page.tsx",
+    "apps/web/src/app/layout.tsx",
+    "apps/web/src/components/glass-surface.test.tsx",
+    "apps/web/src/components/glass-surface.tsx",
+    "apps/web/src/components/transparency-control.test.tsx",
+    "apps/web/src/components/transparency-control.tsx",
+    "apps/web/src/i18n/messages/common.ts",
+    "apps/web/src/lib/theme.test.ts",
+    "apps/web/src/lib/theme.ts",
+    "apps/web/src/styles/glass.css",
+    "apps/web/src/styles/tokens.css"
+  ],
+  "fullyRedesignedRoutes": 0,
+  "totalRoutes": 34,
+  "mergeApproved": false,
+  "nextPhaseApproved": false
+}

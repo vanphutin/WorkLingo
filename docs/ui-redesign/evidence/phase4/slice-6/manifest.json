@@ -1,0 +1,26 @@
+{
+  "beforeCommit": "2d9ba797f92daf2583210c66ab2141769dcfd95b",
+  "afterCommit": "57d33f32fb59d497235af06d31727127168bff0b",
+  "routes": 9,
+  "pairedCells": 54,
+  "browserTests": 18,
+  "targetedTests": 78,
+  "opaqueContrastSamples": 348,
+  "minimumContrast": 5.566637067604819,
+  "files": [
+    "apps/web/e2e/fixtures/phase4-authoring-contracts.ts",
+    "apps/web/e2e/fixtures/phase4-authoring-data.ts",
+    "apps/web/e2e/liquid-glass-phase4-authoring.spec.ts",
+    "apps/web/src/features/admin-content/authoring-experience.css",
+    "apps/web/src/features/admin-content/content-authoring-workspace.tsx",
+    "apps/web/src/features/admin-content/content-list.test.tsx",
+    "apps/web/src/features/admin-content/content-list.tsx",
+    "apps/web/src/features/admin-content/new-content-import.tsx",
+    "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx",
+    "apps/web/src/features/admin-ielts-band-curriculum/band-curriculum-workspace.tsx",
+    "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.tsx",
+    "apps/web/src/features/admin-ielts-integrated/integrated-profile-workspace.tsx",
+    "apps/web/src/features/admin-ielts-mock/ielts-mock-workspace.tsx",
+    "apps/web/src/features/admin-ielts-orientation/orientation-authoring-workspace.tsx"
+  ]
+}

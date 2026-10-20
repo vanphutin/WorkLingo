@@ -1,0 +1,2583 @@
+{
+  "title": "settings operations matrix dark 390",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Điều chỉnh WorkLingo theo nhu cầu của bạn. Các tùy chọn mới sẽ được bổ sung khi ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt AI",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn nhà cung cấp đánh giá và cách dùng dự phòng.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Âm thanh",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn nguồn phát, nhà cung cấp và giọng đọc.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ngôn ngữ giao diện",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn ngôn ngữ giao diện. Nội dung học tiếng Anh vẫn giữ nguyên tiếng Anh.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Giao diện",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Giảm độ trong suốt",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Dùng bề mặt đặc cho các điều khiển nổi. Thiết bị cũng có thể giảm độ trong suốt ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phát âm thanh",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt âm thanh",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn cách WorkLingo phát tiếng Anh trong bài học. Âm thanh chỉ bắt đầu khi bạn t",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tự động",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 13.602410100246022
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Ưu tiên âm thanh bài học, sau đó dùng giọng đọc trình duyệt nếu không phát được.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 9.734454848415274
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Âm thanh bài học đã xuất bản",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chỉ dùng âm thanh được chọn và xuất bản cùng bài học.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Giọng đọc trình duyệt",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc văn bản bài học bằng giọng có sẵn trong trình duyệt này.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lưu cài đặt âm thanh",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "url": "/settings/audio",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tùy chọn Tài khoản",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt AI",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Discovery",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn cách đánh giá bài nói và bài viết của bạn.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lưu cài đặt AI",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mặc định hiện tại: Discovery",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đầu ra tối đa mỗi yêu cầu: 2048 token.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tác vụ cần khả năng riêng của OpenAI luôn dùng OpenAI. Nhận diện giọng nói, điểm",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cấu hình nhà cung cấp chưa xác nhận chất lượng chấm bài. Cần hiệu chuẩn bởi ngườ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tạo âm thanh",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt tạo âm thanh",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đặt giá trị mặc định không chứa thông tin bí mật cho các bản âm thanh tạo sau nà",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nhà cung cấp chuyển văn bản thành giọng nói",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn nhà cung cấp TTS mặc định cho các bài học mới được biên soạn.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đang kích hoạt",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tạo âm thanh mô phỏng cục bộ để kiểm thử quy trình mà không tốn hạn ngạch hoặc k",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 9.734454848415274
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa khả dụng cho đến khi được cấu hình trên máy chủ",
+      "foreground": [
+        255,
+        192,
+        120
+      ],
+      "background": [
+        51,
+        38,
+        15
+      ],
+      "ratio": 9.167678471429165
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Công cụ chuyển giọng nói chất lượng cao Microsoft Azure AI Speech dành cho các b",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cấu hình giọng đọc mặc định",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn giọng đọc mặc định khi tạo tệp âm thanh cho các bài học mới được biên soạn.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tạo âm thanh mô phỏng cục bộ để kiểm thử quy trình mà không tốn hạn ngạch hoặc k",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        51,
+        38,
+        15
+      ],
+      "ratio": 13.535318495908658
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Toàn bộ khóa API và thông tin bí mật được quản lý độc quyền tại biến môi trường ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 11.182939183698306
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lưu cài đặt nhà cung cấp",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "url": "/admin/settings/audio",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cổng AI Hệ thống",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt AI hệ thống",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Discovery",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn nhà cung cấp mặc định và chính sách dự phòng cho các tài khoản dùng cài đặt",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lưu cài đặt AI",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mặc định hiện tại: Discovery",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đầu ra tối đa mỗi yêu cầu: 2048 token.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tác vụ cần khả năng riêng của OpenAI luôn dùng OpenAI. Nhận diện giọng nói, điểm",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cấu hình nhà cung cấp chưa xác nhận chất lượng chấm bài. Cần hiệu chuẩn bởi ngườ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tùy chọn Tài khoản",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cài đặt AI",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Discovery",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        16,
+        41,
+        66
+      ],
+      "ratio": 6.669830152450631
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn cách đánh giá bài nói và bài viết của bạn.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lưu cài đặt AI",
+      "foreground": [
+        0,
+        0,
+        0
+      ],
+      "background": [
+        0,
+        145,
+        255
+      ],
+      "ratio": 6.494159583110607
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Mặc định hiện tại: Discovery",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đầu ra tối đa mỗi yêu cầu: 2048 token.",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "ratio": 15.626445165292282
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tác vụ cần khả năng riêng của OpenAI luôn dùng OpenAI. Nhận diện giọng nói, điểm",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Cấu hình nhà cung cấp chưa xác nhận chất lượng chấm bài. Cần hiệu chuẩn bởi ngườ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "url": "/admin/settings/ai",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Nhật ký kiểm toán",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bản ghi bất biến, bảo vệ quyền riêng tư về các thay đổi chương trình học và thao",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Người thực hiện:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tài nguyên:",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/admin/audit",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Vận hành",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tình trạng hàng đợi, tiến trình xử lý và chẩn đoán tác vụ bảo vệ quyền riêng tư.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "7",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "2",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000001",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000002",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000003",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000004",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000005",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000007",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000008",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000009",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000010",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000011",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000012",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000013",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000014",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000015",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000016",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000017",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000018",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000019",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "AUDIO_GENERATION",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "72000000-0000-4000-8000-000000000020",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phân tích thí điểm",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chỉ tổng hợp dữ liệu sản phẩm; không xuất văn bản, âm thanh, email hoặc dữ liệu ",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 13.80225551248017
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "60%",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "6/10 học viên đủ thời gian theo dõi",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "40%",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "2/5 học viên đủ thời gian theo dõi",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "4",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "ratio": 9.45699594096478
+    },
+    {
+      "url": "/admin/analytics",
+      "theme": "dark",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    }
+  ]
+}

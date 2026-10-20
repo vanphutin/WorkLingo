@@ -1,0 +1,35 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+stdout | test/integration/backup-restore.integration.spec.ts > backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums
+{"event":"backup-rehearsal-budget","loadedTestTimeoutMs":120000,"migrationTimeoutMs":45000,"powerShellTimeoutMs":60000}
+
+ ✓ test/integration/backup-restore.integration.spec.ts (10 tests) 23961ms
+   ✓ backup and restore rehearsal > scripts/backup-local.ps1 rejects an unsafe backup path outside the allowed root  500ms
+   ✓ backup and restore rehearsal > rejects a sibling backup path that only shares the allowed-root prefix  417ms
+   ✓ backup and restore rehearsal > rejects a sibling restore target that only shares the allowed-root prefix  504ms
+   ✓ backup and restore rehearsal > rejects manifest entries that resolve outside the backup directory  532ms
+   ✓ backup and restore rehearsal > rejects backup files that are not covered by the manifest  528ms
+   ✓ backup and restore rehearsal > fails closed when the target database emptiness check cannot be completed  1510ms
+   ✓ backup and restore rehearsal > removes an incomplete artifact when database backup fails  1577ms
+   ✓ backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums  5998ms
+   ✓ backup and restore rehearsal > scripts/restore-local.ps1 rejects non-empty target directory or non-empty database  3242ms
+   ✓ backup and restore rehearsal > rehearses complete restore into an empty target schema and directory, verifying data integrity  7703ms
+ ✓ test/integration/placement-isolation.integration.spec.ts (2 tests) 39299ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 0)  8545ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  5029ms
+ ✓ test/integration/jobs-worker.integration.spec.ts (9 tests) 23820ms
+   ✓ leased PostgreSQL job worker > allows only one concurrent runner to claim a row  754ms
+   ✓ leased PostgreSQL job worker > replays an enqueue inside a transaction without aborting its other writes  547ms
+   ✓ leased PostgreSQL job worker > protects a live lease and reclaims an expired lease without accepting stale completion  858ms
+   ✓ leased PostgreSQL job worker > keeps the same job identity while waiting for retry  521ms
+   ✓ leased PostgreSQL job worker > accepts only one concurrent manual retry without replacing a live worker lease  480ms
+[Nest] 15128  - 01:45:04 21/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code PROVIDER_TIMEOUT.
+[Nest] 15128  - 01:45:04 21/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code STORAGE_CLEANUP_FAILED.
+ ✓ src/jobs/application/job-runner.service.spec.ts (15 tests) 32ms
+ ✓ src/jobs/application/jobs.service.spec.ts (3 tests) 17ms
+
+ Test Files  5 passed (5)
+      Tests  39 passed (39)
+   Start at  01:43:01
+   Duration  125.20s (transform 17.46s, setup 0ms, collect 33.48s, tests 87.13s, environment 2ms, prepare 1.38s)

@@ -1,0 +1,9 @@
+{
+  "sourceCommitAtLaunch": "4577379d9b5d76bc4a293dcf2050bdc41e73f1bc",
+  "launcherSHA256AtLaunch": "c7337cc1a69c13689259d7f0d8c88578f7b3ea8718533cd6a8f106db7cda95c1",
+  "launcherBytesStillMatch": true,
+  "boundedProcessModuleSHA256CollectedAfterRun": "ff1d83e423d66f9280cb7c289eef1f2439433c824ffef5afcb47efbb26452532",
+  "toolingCommit": "0446e878eb41673a65fd24993c16c99d30976bbe",
+  "scope": "Module bytes were not separately hashed at launch; committed after successful run without intervening edits. Launcher hash was captured at launch. All apps/packages hashes were captured at launch and verified after run.",
+  "allChildrenClosedWithinDeadline": true
+}

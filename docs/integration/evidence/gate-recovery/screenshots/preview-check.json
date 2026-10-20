@@ -1,0 +1,9 @@
+{
+  "web": "http://127.0.0.1:33300",
+  "api": "http://127.0.0.1:4000",
+  "apiHealth": 200,
+  "title": "WorkLingo",
+  "result": "PASS",
+  "providers": "fake",
+  "disposableDatabase": true
+}

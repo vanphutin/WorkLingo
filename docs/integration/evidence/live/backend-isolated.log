@@ -1,0 +1,1890 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+(node:3452) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/progression.integration.spec.ts (26 tests | 26 skipped) 3183ms
+   ↓ learner progression HTTP API > starts at the persisted Foundation level with no assessable session
+   ↓ learner progression HTTP API > allows assessment of a completed session while speaking and writing remain honestly pending
+   ↓ learner progression HTTP API > rejects confirmation while one of the four skills is still pending
+   ↓ learner progression HTTP API > confirms successful current-level completion without inventing next content
+   ↓ learner progression HTTP API > uses enrollment current level in the existing progress API even when the legacy mirror disagrees
+   ↓ learner progression HTTP API > serializes UUID replay and rejects reuse for a different session
+   ↓ learner progression HTTP API > rejects learner scores, malformed UUIDs, foreign sessions and incomplete sessions
+   ↓ learner progression HTTP API > retains the immutable pending snapshot after server evaluation and reassesses with a new UUID
+   ↓ learner progression HTTP API > reports an actionable not_ready result for incomplete published missions
+   ↓ learner progression HTTP API > advances once under concurrent confirmation and rejects a stale competing assessment
+   ↓ learner progression HTTP API > uses enrollment level for progression even when the compatibility mirror is stale
+   ↓ learner progression HTTP API > serializes activation with advancement and rolls back enrollment when confirmation persistence fails
+   ↓ learner progression HTTP API > resumes historical work but rejects new and replayed assessment or confirmation across program contexts
+   ↓ learner progression HTTP API > never skips an immediate next level that has no published content
+   ↓ learner progression HTTP API > rejects confirmation after next-level content is withdrawn
+   ↓ learner progression HTTP API > does not make an invalid completed plan assessable
+   ↓ learner progression HTTP API > keeps known weak reinforcement while other skills await evaluation
+   ↓ learner progression HTTP API > finds a valid completed session when the newest completed plan is invalid
+   ↓ learner progression HTTP API > reports unavailable curriculum honestly when a published mission has no published lesson
+   ↓ learner progression HTTP API > does not lock progression on mastery required only by an unreachable later published lesson
+   ↓ learner progression HTTP API > does not unlock a next mission through a later lesson when its selected first lesson lacks four skills
+   ↓ learner progression HTTP API > does not unlock four-skill content that cannot form any canonical session
+   ↓ learner progression HTTP API > blocks a stale pass when a new published current-level mission is still incomplete
+   ↓ learner progression HTTP API > blocks a stale pass when the selected curriculum gains an unscored required Language Block
+   ↓ learner progression HTTP API > blocks a stale pass when evaluated required mastery falls below the threshold
+   ↓ learner progression HTTP API > scores the original frozen lesson after a newer version is published
+(node:11540) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/content-publish.integration.spec.ts (8 tests | 8 skipped) 3267ms
+   ↓ Transactional publish, archive, and session version isolation > preserves Foundation 1.1 metadata through publish and snapshot decoding
+   ↓ Transactional publish, archive, and session version isolation > atomically publishes a validated lesson version with child records
+   ↓ Transactional publish, archive, and session version isolation > publishes repeated source vocabulary in another bank with stable IDs and consistent references
+   ↓ Transactional publish, archive, and session version isolation > returns the same result for concurrent identical publish requests
+   ↓ Transactional publish, archive, and session version isolation > rejects a READY candidate owned by another content import
+   ↓ Transactional publish, archive, and session version isolation > allows only one concurrent publish with different keys for the same draft
+   ↓ Transactional publish, archive, and session version isolation > clears the current published pointer when the current lesson version is archived
+   ↓ Transactional publish, archive, and session version isolation > publishes version 2 atomically archiving version 1 and preserving session isolation
+ ❯ test/integration/backup-restore.integration.spec.ts (10 tests | 1 failed) 36840ms
+   ✓ backup and restore rehearsal > scripts/backup-local.ps1 rejects an unsafe backup path outside the allowed root  540ms
+   ✓ backup and restore rehearsal > rejects a sibling backup path that only shares the allowed-root prefix  445ms
+   ✓ backup and restore rehearsal > rejects a sibling restore target that only shares the allowed-root prefix  613ms
+   ✓ backup and restore rehearsal > rejects manifest entries that resolve outside the backup directory  562ms
+   × backup and restore rehearsal > rejects backup files that are not covered by the manifest 566ms
+     → expected 'D:\Projects\WorkLingo-Integration\scr…' to match /not covered by the manifest/i
+   ✓ backup and restore rehearsal > fails closed when the target database emptiness check cannot be completed  4192ms
+   ✓ backup and restore rehearsal > removes an incomplete artifact when database backup fails  2954ms
+   ✓ backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums  14025ms
+   ✓ backup and restore rehearsal > scripts/restore-local.ps1 rejects non-empty target directory or non-empty database  4149ms
+   ✓ backup and restore rehearsal > rehearses complete restore into an empty target schema and directory, verifying data integrity  7654ms
+ ✓ src/learning-sessions/domain/session-planner.spec.ts (39 tests) 81ms
+(node:20456) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/content-audio.integration.spec.ts (5 tests | 5 skipped) 3457ms
+   ↓ Content audio generation lifecycle and authorized streaming > runs complete lifecycle: 202 generate-audio -> poll job -> list audio -> stream content
+   ↓ Content audio generation lifecycle and authorized streaming > replays idempotent requests and rejects changed requests under same key
+   ↓ Content audio generation lifecycle and authorized streaming > creates a new immutable candidate for regeneration without changing prior READY bytes
+   ↓ Content audio generation lifecycle and authorized streaming > returns one job and one candidate for concurrent requests with the same key
+   ↓ Content audio generation lifecycle and authorized streaming > requires a fresh narration review, rejects old audio and freezes reviewed speech on publication
+ ✓ test/integration/error-bank.integration.spec.ts (10 tests) 5464ms
+(node:18116) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/learning-sessions.integration.spec.ts (13 tests | 13 skipped) 2719ms
+   ↓ learning sessions > creates and transactionally persists a complete 60-minute plan
+   ↓ learning sessions > creates and persists a 45-minute session with three canonical blocks
+   ↓ learning sessions > defaults to 60-minute duration when durationMinutes is omitted
+   ↓ learning sessions > brings a weak reading item back into the next session review snapshot
+   ↓ learning sessions > requires authentication, returns 422 for insufficient content, and rejects unsupported durations
+   ↓ learning sessions > returns the original session for a repeated clientSessionId
+   ↓ learning sessions > returns a learner-safe activity payload for the current session
+   ↓ learning sessions > returns JSON null for an empty writing draft and restores a subsequently saved draft
+   ↓ learning sessions > stores raw answers before deterministic evaluation and advances a checkpoint once
+   ↓ learning sessions > persists pause/resume transitions and reports invalid transitions
+   ↓ learning sessions > does not count a queued Teacher AI attempt as a completed activity
+   ↓ learning sessions > requires authentication for session availability query
+   ↓ learning sessions > returns session availability without mutating database or triggering :id route
+ ✓ src/content-authoring/application/audio-generation.service.spec.ts (7 tests) 21ms
+ ✓ test/integration/curriculum-seed.integration.spec.ts (15 tests) 6826ms
+   ✓ Foundation curriculum seed > can seed twice without duplicating curriculum or changing activity identities  605ms
+   ✓ Foundation curriculum seed > isolates the idempotent placement seed and plans its four skills at 45 minutes  372ms
+   ✓ Foundation curriculum seed > preserves a newer published version when the baseline seed runs again  348ms
+   ✓ Foundation curriculum seed > serializes concurrent seed calls without creating duplicate versions  398ms
+ ✓ src/content-authoring/application/content-imports.service.spec.ts (13 tests) 38ms
+ ✓ src/admin-content-lifecycle/admin-content-lifecycle.service.spec.ts (35 tests) 130ms
+ ✓ test/integration/mastery.integration.spec.ts (8 tests) 3706ms
+ ✓ test/integration/vocabulary-publication.integration.spec.ts (7 tests) 4359ms
+   ✓ Explicit vocabulary meanings and topic usage > makes a published topic visible and startable across Intermediate levels without manual curriculum binding  349ms
+   ✓ Explicit vocabulary meanings and topic usage > reuses one meaning across two topics while keeping both lesson contexts, or explicitly creates a new meaning  453ms
+ ✓ test/integration/intermediate-topic-groups.integration.spec.ts (10 tests) 4992ms
+   ✓ Intermediate topic groups on PostgreSQL > seeds all categories repeatably while preserving custom names, IDs and subsequent edits  1854ms
+(node:12904) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/content-imports.integration.spec.ts (11 tests | 11 skipped) 2695ms
+   ↓ Content authoring draft, autosave, validation, and preview API > rejects learner access to content-imports endpoints with 403 Forbidden
+   ↓ Content authoring draft, autosave, validation, and preview API > rejects unauthenticated requests to content-imports endpoints with 401 Unauthorized
+   ↓ Content authoring draft, autosave, validation, and preview API > creates an import and persists invalid raw source exactly with 201 Created
+   ↓ Content authoring draft, autosave, validation, and preview API > accepts a draft source above the default JSON parser limit but below the lesson limit
+   ↓ Content authoring draft, autosave, validation, and preview API > enforces source-size limits on draft creation
+   ↓ Content authoring draft, autosave, validation, and preview API > updates draft source with expectedDraftRevision and increments revision with 200 OK
+   ↓ Content authoring draft, autosave, validation, and preview API > returns 409 conflict when updating source with outdated expectedDraftRevision and preserves stored text
+   ↓ Content authoring draft, autosave, validation, and preview API > validates canonical source successfully with 200 OK and status VALIDATED
+   ↓ Content authoring draft, autosave, validation, and preview API > returns 422 with stored invalid source when validation finds errors
+   ↓ Content authoring draft, autosave, validation, and preview API > resets VALIDATED status back to DRAFT when source is edited
+   ↓ Content authoring draft, autosave, validation, and preview API > lists content imports in reverse chronological order
+ ✓ src/ielts-mock/application/ielts-mock-learner.service.spec.ts (16 tests) 76ms
+ ✓ src/intermediate-topics/topic-groups.service.spec.ts (12 tests) 73ms
+(node:19444) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/placement-confirmation.integration.spec.ts (4 tests | 4 skipped) 2323ms
+   ↓ placement status and confirmation > exposes owner-scoped IN_PROGRESS, PROCESSING, ACTION_REQUIRED, and RECOMMENDED states
+   ↓ placement status and confirmation > confirms once, replays the same UUID, and preserves the recommendation snapshot
+   ↓ placement status and confirmation > serializes concurrent confirmations so only one distinct UUID wins
+   ↓ placement status and confirmation > keeps the recommendation immutable when learning curriculum is withdrawn
+ ✓ src/learning-programs/application/ielts-program-readiness.spec.ts (38 tests) 189ms
+(node:7432) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/dashboard-analytics.integration.spec.ts (6 tests | 6 skipped) 2214ms
+   ↓ Dashboard analytics > enforces server-side authentication and separates learner and admin roles
+   ↓ Dashboard analytics > returns honest empty metrics for a pending learner and a zero-denominator overview
+   ↓ Dashboard analytics > scopes activity and valid evaluated scores to the authenticated learner and active program
+   ↓ Dashboard analytics > counts distinct active learners and excludes planned/placement sessions from completion rate
+   ↓ Dashboard analytics > counts a published lesson once and requires completion evidence for the current mission revision
+   ↓ Dashboard analytics > uses UTC event dates within a bounded window and omits scores outside that window
+ ✓ src/common/config/app-config.schema.spec.ts (33 tests) 26ms
+(node:5236) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/admin-curriculum-commands.integration.spec.ts (6 tests | 6 skipped) 2685ms
+   ↓ Admin Curriculum Commands HTTP Integration > rejects learner from curriculum mutations with 403 Forbidden
+   ↓ Admin Curriculum Commands HTTP Integration > allows content admin to create a learning path, level, and mission
+   ↓ Admin Curriculum Commands HTTP Integration > handles idempotent replay and conflicts correctly
+   ↓ Admin Curriculum Commands HTTP Integration > supports explicit program assignment and rejects missing or disabled programs
+   ↓ Admin Curriculum Commands HTTP Integration > rejects stale expectedRevision with 409 CURRICULUM_REVISION_CONFLICT
+   ↓ Admin Curriculum Commands HTTP Integration > blocks path archive when published levels exist
+ ✓ src/teacher-ai/application/evaluation.service.spec.ts (7 tests) 21ms
+(node:3520) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-mock-media.integration.spec.ts (2 tests | 2 skipped) 2272ms
+   ↓ IELTS mock owned media > keeps one ordered strict lease across concurrent starts, HEAD, range and reload retries
+   ↓ IELTS mock owned media > requires consented audio, persists retries once, and exposes retained audio only to owner/reviewer
+ ✓ src/ai-gateway/infrastructure/microsoft-tts.adapter.spec.ts (21 tests) 160ms
+(node:6276) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/locale-preferences.integration.spec.ts (20 tests | 20 skipped) 2243ms
+   ↓ locale preferences API > uses a migrated isolated schema
+   ↓ locale preferences API > rejects stale account-bound saves after a different account signs in on the same browser
+   ↓ locale preferences API > defaults old registration clients to vi and persists only the current account
+   ↓ locale preferences API > persists an explicitly selected registration locale
+   ↓ locale preferences API > rejects invalid registration locale en-US without creating an account
+   ↓ locale preferences API > rejects invalid registration locale  without creating an account
+   ↓ locale preferences API > rejects invalid registration locale null without creating an account
+   ↓ locale preferences API > rejects invalid registration locale 1 without creating an account
+   ↓ locale preferences API > rejects invalid or owner-supplied input {"locale":"en-US"} without changing preferences
+   ↓ locale preferences API > rejects invalid or owner-supplied input {"locale":""} without changing preferences
+   ↓ locale preferences API > rejects invalid or owner-supplied input {"locale":null} without changing preferences
+   ↓ locale preferences API > rejects invalid or owner-supplied input {"locale":1} without changing preferences
+   ↓ locale preferences API > rejects invalid or owner-supplied input {} without changing preferences
+   ↓ locale preferences API > rejects invalid or owner-supplied input {"locale":"en","userId":"someone-else"} without changing preferences
+   ↓ locale preferences API > rejects missing, invalid and revoked authentication
+   ↓ locale preferences API > changes locale without changing learner progress, settings or sessions
+   ↓ locale preferences API > reads LEARNER without a profile without mutation and lazily creates only a profile on update
+   ↓ locale preferences API > reads CONTENT_ADMIN without a profile without mutation and lazily creates only a profile on update
+   ↓ locale preferences API > reads SYSTEM_ADMIN without a profile without mutation and lazily creates only a profile on update
+   ↓ locale preferences API > returns vi for unsupported legacy stored locales without repairing the profile on read
+ ✓ src/admin-curriculum/domain/curriculum-mutation-policy.spec.ts (15 tests) 9ms
+ ✓ src/admin-curriculum/application/admin-curriculum-command.service.spec.ts (10 tests) 21ms
+ ✓ src/ielts-orientation/application/orientation-learner.service.spec.ts (12 tests) 47ms
+ ✓ test/integration/jobs-worker.integration.spec.ts (9 tests) 2890ms
+(node:18072) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/engagement-projection.integration.spec.ts (5 tests | 5 skipped) 2151ms
+   ↓ Engagement study day and session projection integration > projects an ordinary completed learning session into study day and active engagement week
+   ↓ Engagement study day and session projection integration > is completely idempotent when session completion is replayed
+   ↓ Engagement study day and session projection integration > aggregates multiple sessions on the same local date into one study day
+   ↓ Engagement study day and session projection integration > strictly ignores placement session completion
+   ↓ Engagement study day and session projection integration > transitions week status to MET once distinct study days reach target
+(node:11404) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/program-context-api.integration.spec.ts (8 tests | 8 skipped) 2734ms
+   ↓ Learner program context API > returns coherent null context for a pending authenticated learner
+   ↓ Learner program context API > reads only the authenticated enrollment and not another learner or the legacy mirror
+   ↓ Learner program context API > rejects an incomplete or cross-program enrollment without inventing defaults
+   ↓ Learner program context API > enforces authentication and learner roles
+   ↓ Learner program context API > requires onboarding and rejects untrusted activation fields
+   ↓ Learner program context API > rechecks server availability even if an unfinished program has a released status
+   ↓ Learner program context API > rejects stale revisions and keeps repeated concurrent activation of the active program a no-op
+   ↓ Learner program context API > persists return to an existing Intermediate enrollment and audits only stable context identifiers
+ ✓ src/learning-sessions/application/learning-sessions.service.spec.ts (4 tests) 16ms
+ ✓ src/admin-content-lifecycle/admin-content-lifecycle.learner.spec.ts (4 tests) 45ms
+ ✓ src/ielts-integrated-practice/application/ielts-integrated-learner.service.spec.ts (9 tests) 54ms
+ ✓ src/content-authoring/application/content-publisher.service.spec.ts (7 tests) 12ms
+ ✓ src/intermediate-topics/topic-publication.spec.ts (13 tests) 110ms
+ ↓ test/integration/ielts-flow-v3-release.integration.spec.ts (1 test | 1 skipped)
+(node:12120) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-mock-modes.integration.spec.ts (1 test | 1 skipped) 2226ms
+   ↓ Two mock modes and preserved legacy attempts > pins policies, pauses practice idempotently, protects feedback and expires strict sections only once
+(node:3164) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/admin-operations-api.integration.spec.ts (5 tests | 5 skipped) 2847ms
+   ↓ Admin Operations HTTP Integration > rejects unauthenticated and learner access with 401 and 403
+   ↓ Admin Operations HTTP Integration > exposes system operations summary, queue depth and worker status to admin
+   ↓ Admin Operations HTTP Integration > lists jobs with filtering and pagination
+   ↓ Admin Operations HTTP Integration > returns scrubbed job detail and attempt history without exposing secrets
+   ↓ Admin Operations HTTP Integration > returns 404 for unknown job ID
+(node:9956) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/adaptive-learning.integration.spec.ts (3 tests | 3 skipped) 3267ms
+   ↓ adaptive learning visibility and recurrence > requires authentication and isolates the four-skill map by learner
+   ↓ adaptive learning visibility and recurrence > brings evaluated knowledge back after injected time crosses its due date
+   ↓ adaptive learning visibility and recurrence > selects a new published workplace context without changing a learner existing version
+(node:8608) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/curriculum-foundation-admin.integration.spec.ts (6 tests | 6 skipped) 3471ms
+   ↓ Foundation Admin HTTP > rejects unauthorized and learner access without writes
+   ↓ Foundation Admin HTTP > publishes frozen bindings and replays the same command only once
+   ↓ Foundation Admin HTTP > rejects stale and nested malformed inputs
+   ↓ Foundation Admin HTTP > rejects evidence outside attached published versions and nonexistent activities
+   ↓ Foundation Admin HTTP > blocks archive when a published curriculum depends on the revision
+   ↓ Foundation Admin HTTP > serializes competing publications and rejects cyclic mission prerequisites
+ ✓ test/integration/learning-program-migration.integration.spec.ts (1 test) 3796ms
+   ✓ LearningProgram migration > backfills an existing path to Intermediate without changing historical identifiers  1354ms
+(node:20076) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/curriculum-foundation-eligibility.integration.spec.ts (4 tests | 4 skipped) 2259ms
+   ↓ Foundation curriculum eligibility and session binding > requires an exact prerequisite completion from the active enrollment
+   ↓ Foundation curriculum eligibility and session binding > binds new sessions to the current revision while old sessions remain frozen and resumable
+   ↓ Foundation curriculum eligibility and session binding > rejects direct creation while prerequisites are locked and rejects a mismatched bound version
+   ↓ Foundation curriculum eligibility and session binding > keeps legacy missions available without fabricating a revision binding
+ ❯ test/integration/program-enrollment-migration.integration.spec.ts (3 tests | 1 failed) 10954ms
+   × Program enrollment migration > preserves complete learner levels and session history while pending learners stay unassigned 2404ms
+     →
+Invalid `database.lesson.create()` invocation in
+D:\Projects\WorkLingo-Integration\apps\api\test\integration\program-enrollment-migration.integration.spec.ts:24:44
+
+  21 const mission = await database.mission.create({ data: {
+  22   levelId: archived.id, slug: randomUUID(), title: 'Legacy mission', objective: 'Preserve', order: 0,
+  23 } });
+→ 24 const lesson = await database.lesson.create(
+The column `Lesson.topicGroupId` does not exist in the current database.
+   ✓ Program enrollment migration > aborts atomically when a complete learner level is missing  4438ms
+   ✓ Program enrollment migration > aborts atomically when a complete learner level is foreign  4110ms
+(node:13036) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-study-session.integration.spec.ts (1 test | 1 skipped) 2533ms
+   ↓ IELTS study sessions and program isolation > creates distinct canonical plans, scopes evidence, and resumes pinned attempts after rollback
+(node:18404) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/versioned-learner-audio.integration.spec.ts (2 tests | 2 skipped) 2975ms
+   ↓ version-bound learner audio > does not expose seeded simulation tones as learner speech
+   ↓ version-bound learner audio > streams the artifact attached to the session version after the lesson current version changes
+ ✓ test/integration/audio-settings-schema.integration.spec.ts (5 tests) 3917ms
+(node:2708) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/placement-attempt.integration.spec.ts (7 tests | 7 skipped) 2626ms
+   ↓ placement attempt creation > atomically creates a fixed 45-minute placement session bound to its lesson version
+   ↓ placement attempt creation > replays one client UUID and rejects a second active placement attempt
+   ↓ placement attempt creation > serializes concurrent creation so exactly one active attempt is committed
+   ↓ placement attempt creation > rejects ordinary learning sessions while onboarding is pending
+   ↓ placement attempt creation > checks completed onboarding before exposing placement curriculum availability
+   ↓ placement attempt creation > keeps the placement session owner-scoped
+   ↓ placement attempt creation > rolls back the session when placement-attempt persistence fails
+ ✓ test/integration/ielts-flow-v3-schema.integration.spec.ts (1 test) 7648ms
+   ✓ upgrades legacy IELTS without changing answers, 60-minute plans, reports or grants  7647ms
+ ✓ src/ai-gateway/infrastructure/openai-language-evaluation.adapter.spec.ts (12 tests) 211ms
+(node:16132) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-flow-v3-compatibility.integration.spec.ts (1 test | 1 skipped) 3477ms
+   ↓ keeps old progress, sixty-minute plans, grants and reports pinned through both rollout directions
+ ✓ src/ielts-band-curriculum/application/ielts-band-learner.service.spec.ts (7 tests) 45ms
+[Nest] 20160  - 22:40:11 20/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code PROVIDER_TIMEOUT.
+[Nest] 20160  - 22:40:11 20/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code STORAGE_CLEANUP_FAILED.
+ ✓ src/jobs/application/job-runner.service.spec.ts (15 tests) 22ms
+ ✓ src/onboarding/application/placement-recommendation.service.spec.ts (5 tests) 12ms
+ ✓ src/ielts-mock/application/ielts-mock-admin.service.spec.ts (10 tests) 105ms
+ ✓ src/content-authoring/application/audio-generation.dialogue.spec.ts (4 tests) 105ms
+(node:8492) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ai-settings.integration.spec.ts (3 tests | 3 skipped) 2321ms
+   ↓ AI settings API > requires authentication and preserves account ownership and strict input
+   ↓ AI settings API > allows system administration only and makes global fallback a hard ceiling
+   ↓ AI settings API > persists configured system defaults with audit evidence and resolves account overrides
+{"context":{"correlationId":"corr-err-789","method":"GET","path":"/api/v1/me/progress"},"level":"ERROR","message":"Unhandled error on GET /api/v1/me/progress: FATAL: database authentication failed for [REDACTED_USER] at [REDACTED_IP]","timestamp":"2026-10-20T15:40:19.832Z","trace":"Secret stack trace at PrismaClient.execute..."}
+ ✓ src/common/http/safe-exception.filter.spec.ts (7 tests) 19ms
+ ✓ src/mastery/application/mastery.service.spec.ts (5 tests) 28ms
+(node:9816) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/onboarding-self-placement.integration.spec.ts (6 tests | 6 skipped) 2447ms
+   ↓ learner onboarding and self-placement HTTP API > returns server-owned pending state and explainable eligible levels
+   ↓ learner onboarding and self-placement HTTP API > confirms a playable self-selected level and replays the same UUID exactly once
+   ↓ learner onboarding and self-placement HTTP API > rejects reuse of a confirmation UUID for a different target
+   ↓ learner onboarding and self-placement HTTP API > rejects a published level that cannot form a canonical learning session
+   ↓ learner onboarding and self-placement HTTP API > keeps learner state owner-scoped and rejects an administrator
+   ↓ learner onboarding and self-placement HTTP API > serializes different concurrent confirmations so only one can complete onboarding
+ ✓ src/operations/application/operations-query.service.spec.ts (5 tests) 12ms
+(node:12260) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-orientation-learner.integration.spec.ts (1 test | 1 skipped) 2789ms
+   ↓ IELTS orientation learner API > gates on Foundation evidence, pins a version, persists checks, and completes explicitly
+(node:6532) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/error-bank-api.integration.spec.ts (3 tests | 3 skipped) 2360ms
+   ↓ Error Bank & Memory Health HTTP API Integration > rejects unauthenticated requests with 401
+   ↓ Error Bank & Memory Health HTTP API Integration > returns null health for unassessed skills and empty error bank for fresh learner
+   ↓ Error Bank & Memory Health HTTP API Integration > handles SUBMITTED vs EVALUATED correctly, populating error bank and isolating data per learner
+ ✓ test/integration/content-schema.integration.spec.ts (5 tests) 3794ms
+ ✓ src/ielts-bridge/application/ielts-bridge-admin.service.spec.ts (8 tests) 48ms
+(node:5396) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/placement-isolation.integration.spec.ts (2 tests | 2 skipped) 3377ms
+   ↓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects
+   ↓ placement evidence isolation > preserves ordinary learning evidence and progress side effects
+ ✓ src/intermediate-topics/intermediate-topics.service.spec.ts (10 tests) 60ms
+ ✓ src/ielts-bridge/application/ielts-bridge-learner.service.spec.ts (7 tests) 57ms
+ ✓ src/learning-programs/application/learning-programs.service.spec.ts (10 tests) 86ms
+ ✓ test/integration/teacher-ai-schema.integration.spec.ts (4 tests) 3815ms
+ ✓ src/media/application/recordings.service.spec.ts (4 tests) 14ms
+ ✓ test/integration/ielts-beta-catalog.integration.spec.ts (3 tests) 469ms
+   ✓ IELTS Beta catalog and context integration > opens the complete Beta catalog at /ielts while HTTP and direct activation preserve Intermediate evidence  435ms
+(node:2408) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-introduction-v3.integration.spec.ts (1 test | 1 skipped) 2569ms
+   ↓ IELTS introduction V3 > reads without progress writes, freely revisits and preserves owned versions and media
+ ✓ src/learning-sessions/application/session-creation.service.spec.ts (2 tests) 21ms
+(node:17804) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-bridge-learner.integration.spec.ts (1 test | 1 skipped) 3741ms
+   ↓ IELTS Bridge learner API > gates new starts, pins a version, persists ten stages and protects owner data
+ ✓ src/engagement/application/engagement.service.spec.ts (3 tests) 15ms
+ ✓ src/engagement/domain/evidence-of-progress.spec.ts (3 tests) 6ms
+ ✓ src/ai-gateway/infrastructure/microsoft-speech.adapter.spec.ts (9 tests) 135ms
+ ✓ src/intermediate-topics/seed-topic-catalog.spec.ts (6 tests) 13ms
+(node:6344) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/curriculum-foundation-progress.integration.spec.ts (2 tests | 2 skipped) 3163ms
+   ↓ Foundation curriculum objective progress > pending_failed_and_missing_evidence_never_completes and foreign evidence never contributes
+   ↓ Foundation curriculum objective progress > duplicate_projection_writes_one_receipt and late evaluation updates only the bound old revision
+ ✓ src/intermediate-topics/topic-groups.controller.spec.ts (11 tests) 501ms
+ ✓ test/integration/ielts-bridge-schema.integration.spec.ts (1 test) 4951ms
+   ✓ adds immutable bridge releases and module-bound learner progress without changing users  4949ms
+(node:6036) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/admin-audit-api.integration.spec.ts (2 tests | 2 skipped) 6675ms
+   ↓ Admin Audit Events HTTP Integration > rejects learner from querying audit events with 403 Forbidden
+   ↓ Admin Audit Events HTTP Integration > allows content admin to query audit events with cursor pagination and filters
+ ✓ src/audit/domain/audit-metadata-policy.spec.ts (9 tests) 11ms
+(node:21660) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/speaking-submission.integration.spec.ts (2 tests | 2 skipped) 2513ms
+   ↓ speaking recording submission > atomically creates attempt, recording, transcription job, and advances checkpoint
+   ↓ speaking recording submission > enforces ownership, consent, and client-attempt target binding
+ ✓ src/ielts-beta-release/review-regressions.spec.ts (3 tests) 47ms
+(node:15592) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/pilot-analytics.integration.spec.ts (3 tests | 3 skipped) 3571ms
+   ↓ privacy-safe pilot analytics HTTP integration > enforces Admin authorization before returning aggregate data
+   ↓ privacy-safe pilot analytics HTTP integration > returns idempotent aggregate counts and no learner identity or raw content
+   ↓ privacy-safe pilot analytics HTTP integration > rejects reversed and unbounded date ranges
+ ✓ src/learning-sessions/application/learner-audio.service.spec.ts (2 tests) 21ms
+(node:16512) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/admin-authorization.integration.spec.ts (4 tests | 4 skipped) 6781ms
+   ↓ Admin authorization and local seed integration > seeds content admin idempotently
+   ↓ Admin authorization and local seed integration > rejects learner from admin route with 403 Forbidden
+   ↓ Admin authorization and local seed integration > allows content admin to access admin route with 200 OK
+   ↓ Admin authorization and local seed integration > rejects unauthenticated request to admin route with 401 Unauthorized
+(node:21648) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-mock-workflow.integration.spec.ts (1 test | 1 skipped) 9547ms
+   ↓ IELTS full mock HTTP workflow > pins a version, submits four sections, waits for review, then produces a completed report
+ ❯ test/integration/curriculum-foundation-schema.integration.spec.ts (1 test | 1 failed) 22259ms
+   × adds foundation bindings without changing historical sessions and protects referenced revisions 22255ms
+     →
+Invalid `database.lesson.create()` invocation in
+D:\Projects\WorkLingo-Integration\apps\api\test\integration\curriculum-foundation-schema.integration.spec.ts:40:42
+
+  37 const learningPath = await database.learningPath.create({ data: { slug: randomUUID(), name: 'Legacy' } });
+  38 const level = await database.level.create({ data: { pathId: learningPath.id, code: randomUUID(), name: 'Legacy', cefrReference: 'A1', order: 1 } });
+  39 const mission = await database.mission.create({ data: { levelId: level.id, slug: randomUUID(), title: 'Legacy', objective: 'Keep', order: 1 } });
+→ 40 const lesson = await database.lesson.create(
+The column `Lesson.topicGroupId` does not exist in the current database.
+ ✓ src/progression/domain/checkpoint-policy.spec.ts (10 tests) 16ms
+(node:22424) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/audio-settings-api.integration.spec.ts (2 tests | 2 skipped) 9159ms
+   ↓ audio settings API > persists owner-scoped learner sources and nullable browser voices
+   ↓ audio settings API > protects Admin settings, rejects unsafe selections, and audits safe IDs
+(node:17268) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/admin-curriculum-query.integration.spec.ts (2 tests | 2 skipped) 11871ms
+   ↓ Admin Curriculum Query HTTP Integration > rejects learner from querying curriculum tree with 403 Forbidden
+   ↓ Admin Curriculum Query HTTP Integration > allows content admin to query complete curriculum tree with playability
+ ✓ test/integration/multipart-security.integration.spec.ts (6 tests) 395ms
+(node:16044) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/engagement-api.integration.spec.ts (3 tests | 3 skipped) 11026ms
+   ↓ Engagement HTTP API Integration > requires authentication for engagement endpoints
+   ↓ Engagement HTTP API Integration > returns default engagement summary for newly registered learner
+   ↓ Engagement HTTP API Integration > updates weekly target immediately before study, but defers when study day exists
+ ✓ test/integration/onboarding-migration.integration.spec.ts (1 test) 8918ms
+   ✓ Increment 5A1 migration upgrade rehearsal > migrates an existing learner to complete without changing their level  3473ms
+ ✓ src/engagement/domain/engagement-week.spec.ts (10 tests) 38ms
+(node:5960) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/session-ownership.integration.spec.ts (3 tests | 3 skipped) 5536ms
+   ↓ learning session ownership and recovery > returns 404 when another learner reads or submits to a session
+   ↓ learning session ownership and recovery > does not let an idempotency key bypass session ownership or change its target
+   ↓ learning session ownership and recovery > restores the persisted checkpoint after a fresh login
+ ✓ test/integration/engagement-schema.integration.spec.ts (1 test) 16228ms
+(node:9240) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/teacher-ai-api.integration.spec.ts (1 test | 1 skipped) 6706ms
+   ↓ learner Teacher AI API > enforces ownership, optimistic draft revisions, and learner-safe retry state
+(node:20996) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/auth.integration.spec.ts (6 tests | 6 skipped) 5034ms
+   ↓ authentication > uses a migrated isolated schema rather than the local learner database
+   ↓ authentication > registers a learner with a normalized email and session cookie
+   ↓ authentication > rejects duplicate normalized emails without creating a second user
+   ↓ authentication > rejects a password shorter than twelve characters
+   ↓ authentication > returns the same public error for unknown email and wrong password
+   ↓ authentication > invalidates the session on logout
+(node:18052) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-orientation-admin.integration.spec.ts (1 test | 1 skipped) 9084ms
+   ↓ IELTS orientation Admin API > updates, validates, publishes idempotently, and archives immutable versions
+ ✓ src/curriculum/domain/playable-level-policy.spec.ts (4 tests) 16ms
+ ✓ src/ai-gateway/infrastructure/routing-language-evaluation.adapter.spec.ts (9 tests) 20ms
+(node:11348) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/teacher-ai-pipeline.integration.spec.ts (1 test | 1 skipped) 11298ms
+   ↓ Teacher AI pipeline > evaluates speaking and writing once while preserving immutable lesson evidence
+ ✓ src/ai-gateway/application/text-to-speech-provider.registry.spec.ts (6 tests) 77ms
+ ✓ test/integration/onboarding-schema.integration.spec.ts (3 tests) 16893ms
+   ✓ Increment 5A1 onboarding and placement schema > binds a placement attempt to its learner, session, and immutable lesson version  1360ms
+ ✓ src/mastery/domain/memory-health-calculator.spec.ts (5 tests) 9ms
+(node:23200) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/learning-programs-api.integration.spec.ts (3 tests | 3 skipped) 11507ms
+   ↓ Learning programs learner API integration > returns the closed, ordered catalog to a learner
+   ↓ Learning programs learner API integration > rejects an anonymous request
+   ↓ Learning programs learner API integration > rejects a content admin from the learner catalog
+ ✓ src/admin-content-lifecycle/admin-content-lifecycle.controller.spec.ts (16 tests) 37ms
+(node:9640) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/rate-limit.integration.spec.ts (4 tests | 4 skipped) 7956ms
+   ↓ Durable PostgreSQL Rate Limiting HTTP Integration > enforces limit and returns 429 with RATE_LIMIT_EXCEEDED, Retry-After and correlation ID
+   ↓ Durable PostgreSQL Rate Limiting HTTP Integration > isolates rate limit scopes across different routes
+   ↓ Durable PostgreSQL Rate Limiting HTTP Integration > stores hashed subjects in PostgreSQL without persisting raw IP addresses or credentials
+   ↓ Durable PostgreSQL Rate Limiting HTTP Integration > handles concurrent requests atomically without lost updates or race conditions
+ ✓ test/integration/ielts-integrated-schema.integration.spec.ts (1 test) 9046ms
+   ✓ adds immutable configurable profiles and version-bound integrated sessions  9044ms
+(node:18732) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/recording-retention.integration.spec.ts (1 test | 1 skipped) 7137ms
+   ↓ recording and draft retention > deletes due terminal audio and expired drafts without touching queued audio
+ ✓ src/ielts-orientation/application/orientation-admin.service.spec.ts (6 tests) 71ms
+ ✓ src/learning-sessions/domain/context-transfer.spec.ts (6 tests) 52ms
+ ✓ src/dashboard-overview/dashboard-overview.service.spec.ts (5 tests) 29ms
+ ✓ src/mastery/domain/review-scheduler.spec.ts (5 tests) 71ms
+ ✓ src/learning-sessions/application/activity-drafts.service.spec.ts (3 tests) 34ms
+ ❯ src/intermediate-topics/topic-json-repair.service.spec.ts (6 tests | 4 failed) 156ms
+   × AI topic JSON repair is a proposal, never content generation > uses the configured provider once and returns a verified punctuation-only candidate 54ms
+     → A safe formatting-only repair could not be verified. Correct the reported fields manually.
+   ✓ AI topic JSON repair is a proposal, never content generation > refuses a changed answer instead of trusting the AI explanation 12ms
+   ✓ AI topic JSON repair is a proposal, never content generation > can flatten model paragraphs without adding or changing words 29ms
+   × AI topic JSON repair is a proposal, never content generation > stops on refusal and never retries 9ms
+     → expected "spy" to be called 1 times, but got 0 times
+   × AI topic JSON repair is a proposal, never content generation > rejects missing data before calling AI and never invents a repair in fake mode 35ms
+     → expected UnprocessableEntityException: A safe form… { …(3) } to match object { status: 503 }
+(6 matching properties omitted from actual)
+   × AI topic JSON repair is a proposal, never content generation > hides upstream response data on failure 12ms
+     → expected UnprocessableEntityException: A safe form… { …(3) } to match object { status: 503, …(1) }
+(4 matching properties omitted from actual)
+ ✓ src/admin-curriculum/application/admin-curriculum-query.service.spec.ts (1 test) 18ms
+ ✓ test/integration/ielts-orientation-schema.integration.spec.ts (1 test) 15972ms
+   ✓ adds immutable orientation releases and version-bound learner progress without changing users  15969ms
+(node:328) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/program-learning-boundaries.integration.spec.ts (3 tests | 3 skipped) 5715ms
+   ↓ Program-scoped learning boundaries > selects sessions and mastery from enrollment despite a stale legacy level mirror
+   ↓ Program-scoped learning boundaries > does not start content at an archived level but preserves an existing session checkpoint
+   ↓ Program-scoped learning boundaries > keeps ordinary onboarding limited to Intermediate even when IELTS has playable content
+ ✓ src/common/rate-limit/rate-limit.service.spec.ts (5 tests) 12ms
+(node:21956) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-flow-overview.integration.spec.ts (1 test | 1 skipped) 7031ms
+   ↓ opens a partial topic-only program and paginates owned saved history without prerequisite writes
+ ✓ test/integration/ielts-mock-schema.integration.spec.ts (1 test) 15697ms
+   ✓ adds immutable mock versions, version-bound attempts and reviewer history  15694ms
+ ✓ src/ielts-mock/application/ielts-mock-review.service.spec.ts (4 tests) 93ms
+ ✓ test/integration/admin-curriculum-schema.integration.spec.ts (2 tests) 11117ms
+ ✓ src/teacher-ai/application/evaluate-attempt.handler.spec.ts (3 tests) 26ms
+ ✓ src/admin-curriculum/domain/curriculum-reorder-policy.spec.ts (6 tests) 7ms
+ ✓ src/engagement/application/study-day-projector.service.spec.ts (3 tests) 21ms
+ ✓ src/ielts-beta-release/safety.spec.ts (10 tests) 23ms
+ ✓ src/ielts-access/ielts-early-access.spec.ts (8 tests) 27ms
+ ✓ src/intermediate-topics/topic-review.service.spec.ts (7 tests) 58ms
+ ✓ test/integration/ielts-band-curriculum-schema.integration.spec.ts (1 test) 7579ms
+   ✓ adds immutable band curriculum versions and owner-scoped journeys  7576ms
+ ✓ src/ielts-integrated-practice/application/ielts-integrated-admin.service.spec.ts (4 tests) 40ms
+ ✓ test/integration/mastery-schema.integration.spec.ts (2 tests) 3778ms
+ ✓ src/teacher-ai/application/transcribe-speech.handler.spec.ts (2 tests) 10ms
+ ✓ src/common/logging/safe-logger.service.spec.ts (4 tests) 11ms
+ ✓ src/content-authoring/application/audio-generation.handler.spec.ts (1 test) 14ms
+ ✓ src/onboarding/domain/placement-policy.spec.ts (5 tests) 7ms
+(node:6684) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/ielts-bridge-admin.integration.spec.ts (1 test | 1 skipped) 2830ms
+   ↓ IELTS Bridge Admin API > creates idempotently, validates, publishes idempotently, and archives a module
+ ✓ src/ielts-mock/domain/mock-content-qualification.spec.ts (3 tests) 56ms
+ ✓ src/ai-gateway/infrastructure/fake-provider-contract.spec.ts (4 tests) 9ms
+(node:23416) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ src/ielts-study/application/ielts-topic-admin.service.spec.ts (1 test | 1 skipped) 2955ms
+   ↓ IELTS topic publishing with actual stored curriculum > rejects foreign or missing revisions and serializes publication while retaining old snapshots
+ ✓ src/media/domain/audio-upload-policy.spec.ts (10 tests) 10ms
+ ✓ src/content-authoring/application/audio-narration-pipeline.spec.ts (2 tests) 33ms
+ ✓ src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.spec.ts (7 tests) 46ms
+ ✓ src/ielts-band-curriculum/application/ielts-band-admin.service.spec.ts (3 tests) 26ms
+ ✓ src/teacher-ai/domain/foundation-rubrics.spec.ts (4 tests) 11ms
+ ✓ src/mastery/domain/mastery-calculator.spec.ts (4 tests) 6ms
+ ✓ src/intermediate-topics/topic-json-repair.controller.spec.ts (5 tests) 464ms
+ ✓ src/ielts-mock/ielts-mock-admin.controller.spec.ts (2 tests) 69ms
+ ✓ src/ielts-beta-release/transaction.spec.ts (4 tests) 7ms
+ ✓ src/common/request-context/correlation-id.middleware.spec.ts (3 tests) 25ms
+ ✓ test/integration/error-bank-schema.integration.spec.ts (1 test) 6478ms
+ ✓ src/ielts-orientation/application/orientation-media.service.spec.ts (3 tests) 54ms
+ ✓ src/analytics/application/pilot-metrics.service.spec.ts (3 tests) 14ms
+ ✓ src/users/application/users.service.spec.ts (6 tests) 52ms
+ ✓ src/ielts-beta-release/publisher-transaction.spec.ts (1 test) 12ms
+ ✓ src/curriculum-foundation/domain/objective-evidence-policy.spec.ts (3 tests) 9ms
+ ✓ src/jobs/application/jobs.service.spec.ts (3 tests) 16ms
+ ✓ src/media/application/retention-cleanup.handler.spec.ts (1 test) 18ms
+ ✓ src/ielts-beta-release/answer-variants.spec.ts (23 tests) 207ms
+ ✓ src/ielts-integrated-practice/domain/integrated-session-planner.spec.ts (3 tests) 12ms
+ ✓ src/learning-programs/infrastructure/seed-learning-programs.spec.ts (1 test) 5ms
+ ✓ src/ielts-mock/application/mock-recording.service.spec.ts (1 test) 146ms
+ ✓ src/intermediate-topics/topic-proposal.service.spec.ts (2 tests) 12ms
+ ✓ src/audit/application/audit-query.service.spec.ts (1 test) 9ms
+ ✓ src/ielts-bridge/infrastructure/seed-ielts-bridge.spec.ts (3 tests) 10ms
+ ✓ src/auth/infrastructure/roles.guard.spec.ts (4 tests) 12ms
+ ✓ src/ielts-beta-release/content.spec.ts (4 tests) 156ms
+ ✓ src/media/application/audio-stream-response.spec.ts (3 tests) 24ms
+ ✓ src/audio-settings/application/audio-settings.service.spec.ts (1 test) 11ms
+ ✓ src/ielts-beta-release/curation.spec.ts (3 tests) 34ms
+ ✓ src/teacher-ai/application/evaluation-processing.spec.ts (5 tests) 11ms
+ ✓ src/ielts-flow/release/release-policy.spec.ts (4 tests) 35ms
+ ✓ src/ielts-orientation/application/ielts-introduction.service.spec.ts (1 test) 26ms
+ ✓ src/storage/infrastructure/local-object-storage.adapter.spec.ts (4 tests) 31ms
+ ✓ src/curriculum-foundation/domain/prerequisite-graph.spec.ts (6 tests) 11ms
+ ✓ src/ielts-study/infrastructure/topic-content-qualification.spec.ts (1 test) 488ms
+   ✓ qualifies twelve original contextual packs through the actual 90/120/150 planner  482ms
+ ✓ src/teacher-ai/evaluation-harness.spec.ts (3 tests) 17ms
+ ✓ src/ielts-orientation/domain/orientation-validation.spec.ts (2 tests) 10ms
+ ✓ src/dashboard-overview/dashboard-overview.controller.spec.ts (2 tests) 847ms
+ ✓ src/intermediate-topics/topic-audio.spec.ts (1 test) 64ms
+ ✓ src/ielts-study/domain/ielts-topic-validation.spec.ts (4 tests) 52ms
+ ✓ src/ielts-mock/application/mock-playback.service.spec.ts (1 test) 23ms
+ ✓ src/intermediate-topics/topic-catalog.spec.ts (3 tests) 74ms
+ ✓ src/analytics/application/pilot-retention.service.spec.ts (1 test) 18ms
+ ✓ src/ielts-flow/domain/ielts-v3-readiness.spec.ts (2 tests) 22ms
+ ✓ src/analytics/domain/pilot-metric.spec.ts (3 tests) 31ms
+ ✓ src/ielts-band-curriculum/domain/evaluate-band-progression.spec.ts (2 tests) 5ms
+ ✓ src/ielts-flow/application/ielts-flow.service.spec.ts (1 test) 8ms
+ ✓ test/qualification/performance.qualification.spec.ts (2 tests) 360ms
+   ✓ pilot performance qualification > parses and validates the large lesson below the local 1 second p95 budget  323ms
+ ✓ src/ai-gateway/ai-gateway.module.spec.ts (1 test) 8ms
+ ✓ src/content-authoring/application/audio-narration.spec.ts (1 test) 73ms
+ ✓ src/ielts-study/application/ielts-study-progress.service.spec.ts (2 tests) 5ms
+ ✓ src/media/domain/audio-byte-range.spec.ts (14 tests) 7ms
+ ✓ src/curriculum/infrastructure/seed-audio.spec.ts (1 test) 19ms
+ ✓ src/users/infrastructure/seed-content-admin.spec.ts (2 tests) 14ms
+ ✓ src/ielts-beta-release/lock-order.spec.ts (1 test) 6ms
+(node:23016) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ test/integration/health.integration.spec.ts (1 test | 1 skipped) 2989ms
+   ↓ GET /api/v1/health > reports database and storage readiness without leaking config
+ ✓ src/users/dto/register-locale.spec.ts (7 tests) 22ms
+ ✓ src/intermediate-topics/topic-source.spec.ts (3 tests) 42ms
+ ✓ src/ielts-mock/domain/ielts-mock-scoring.spec.ts (3 tests) 5ms
+ ✓ src/ai-gateway/infrastructure/fake-tts.adapter.spec.ts (2 tests) 21ms
+ ✓ src/ielts-orientation/infrastructure/seed-ielts-orientation.spec.ts (2 tests) 46ms
+ ✓ src/intermediate-topics/intermediate-topics.controller.spec.ts (4 tests) 12ms
+ ✓ src/learning-programs/domain/program-availability.spec.ts (5 tests) 9ms
+ ✓ src/intermediate-topics/topic-planner.spec.ts (3 tests) 54ms
+ ✓ src/ielts-mock/domain/mock-mode-policy.spec.ts (3 tests) 8ms
+ ✓ src/users/dto/user-preferences.dto.spec.ts (9 tests) 14ms
+ ✓ src/ielts-mock/application/mock-attempt-clock.spec.ts (2 tests) 6ms
+ ✓ test/qualification/security.qualification.spec.ts (2 tests) 7ms
+ ✓ test/qualification/recovery.qualification.spec.ts (1 test) 8ms
+ ✓ src/ielts-flow/release/offline-speech.spec.ts (2 tests) 24ms
+ ✓ src/ielts-flow/domain/ielts-flow-policy.spec.ts (5 tests) 6ms
+ ✓ test/smoke/app.smoke.spec.ts (1 test) 2883ms
+   ✓ AppModule > compiles the application dependency graph  2880ms
+ ✓ src/ielts-beta-release/archive-policy.spec.ts (1 test) 5ms
+ ✓ src/local-startup.spec.ts (2 tests) 6ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 50 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/adaptive-learning.integration.spec.ts > adaptive learning visibility and recurrence
+ FAIL  test/integration/admin-audit-api.integration.spec.ts > Admin Audit Events HTTP Integration
+ FAIL  test/integration/admin-authorization.integration.spec.ts > Admin authorization and local seed integration
+ FAIL  test/integration/admin-curriculum-commands.integration.spec.ts > Admin Curriculum Commands HTTP Integration
+ FAIL  test/integration/admin-curriculum-query.integration.spec.ts > Admin Curriculum Query HTTP Integration
+ FAIL  test/integration/admin-operations-api.integration.spec.ts > Admin Operations HTTP Integration
+ FAIL  test/integration/ai-settings.integration.spec.ts > AI settings API
+ FAIL  test/integration/audio-settings-api.integration.spec.ts > audio settings API
+ FAIL  test/integration/auth.integration.spec.ts > authentication
+ FAIL  test/integration/content-audio.integration.spec.ts > Content audio generation lifecycle and authorized streaming
+ FAIL  test/integration/content-imports.integration.spec.ts > Content authoring draft, autosave, validation, and preview API
+ FAIL  test/integration/content-publish.integration.spec.ts > Transactional publish, archive, and session version isolation
+ FAIL  test/integration/curriculum-foundation-admin.integration.spec.ts > Foundation Admin HTTP
+ FAIL  test/integration/curriculum-foundation-eligibility.integration.spec.ts > Foundation curriculum eligibility and session binding
+ FAIL  test/integration/curriculum-foundation-progress.integration.spec.ts > Foundation curriculum objective progress
+ FAIL  test/integration/dashboard-analytics.integration.spec.ts > Dashboard analytics
+ FAIL  test/integration/engagement-api.integration.spec.ts > Engagement HTTP API Integration
+ FAIL  test/integration/engagement-projection.integration.spec.ts > Engagement study day and session projection integration
+ FAIL  test/integration/error-bank-api.integration.spec.ts > Error Bank & Memory Health HTTP API Integration
+ FAIL  test/integration/health.integration.spec.ts > GET /api/v1/health
+ FAIL  test/integration/ielts-bridge-admin.integration.spec.ts > IELTS Bridge Admin API
+ FAIL  test/integration/ielts-bridge-learner.integration.spec.ts > IELTS Bridge learner API
+ FAIL  test/integration/ielts-flow-overview.integration.spec.ts [ test/integration/ielts-flow-overview.integration.spec.ts ]
+ FAIL  test/integration/ielts-flow-v3-compatibility.integration.spec.ts [ test/integration/ielts-flow-v3-compatibility.integration.spec.ts ]
+ FAIL  test/integration/ielts-introduction-v3.integration.spec.ts > IELTS introduction V3
+ FAIL  test/integration/ielts-mock-media.integration.spec.ts > IELTS mock owned media
+ FAIL  test/integration/ielts-mock-modes.integration.spec.ts > Two mock modes and preserved legacy attempts
+ FAIL  test/integration/ielts-mock-workflow.integration.spec.ts > IELTS full mock HTTP workflow
+ FAIL  test/integration/ielts-orientation-admin.integration.spec.ts > IELTS orientation Admin API
+ FAIL  test/integration/ielts-orientation-learner.integration.spec.ts > IELTS orientation learner API
+ FAIL  test/integration/ielts-study-session.integration.spec.ts > IELTS study sessions and program isolation
+ FAIL  test/integration/learning-programs-api.integration.spec.ts > Learning programs learner API integration
+ FAIL  test/integration/learning-sessions.integration.spec.ts > learning sessions
+ FAIL  test/integration/locale-preferences.integration.spec.ts > locale preferences API
+ FAIL  test/integration/onboarding-self-placement.integration.spec.ts > learner onboarding and self-placement HTTP API
+ FAIL  test/integration/pilot-analytics.integration.spec.ts > privacy-safe pilot analytics HTTP integration
+ FAIL  test/integration/placement-attempt.integration.spec.ts > placement attempt creation
+ FAIL  test/integration/placement-confirmation.integration.spec.ts > placement status and confirmation
+ FAIL  test/integration/placement-isolation.integration.spec.ts > placement evidence isolation
+ FAIL  test/integration/program-context-api.integration.spec.ts > Learner program context API
+ FAIL  test/integration/program-learning-boundaries.integration.spec.ts > Program-scoped learning boundaries
+ FAIL  test/integration/progression.integration.spec.ts > learner progression HTTP API
+ FAIL  test/integration/rate-limit.integration.spec.ts > Durable PostgreSQL Rate Limiting HTTP Integration
+ FAIL  test/integration/recording-retention.integration.spec.ts > recording and draft retention
+ FAIL  test/integration/session-ownership.integration.spec.ts > learning session ownership and recovery
+ FAIL  test/integration/speaking-submission.integration.spec.ts > speaking recording submission
+ FAIL  test/integration/teacher-ai-api.integration.spec.ts > learner Teacher AI API
+ FAIL  test/integration/teacher-ai-pipeline.integration.spec.ts > Teacher AI pipeline
+ FAIL  test/integration/versioned-learner-audio.integration.spec.ts > version-bound learner audio
+ FAIL  src/ielts-study/application/ielts-topic-admin.service.spec.ts > IELTS topic publishing with actual stored curriculum
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ src/app.module.ts:6:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/57]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/intermediate-topics/topic-json-repair.service.spec.ts > AI topic JSON repair is a proposal, never content generation > uses the configured provider once and returns a verified punctuation-only candidate
+UnprocessableEntityException: A safe formatting-only repair could not be verified. Correct the reported fields manually.
+ ❯ unsafe src/intermediate-topics/topic-json-repair.service.ts:19:28
+
+ ❯ TopicJsonRepairService2.repair src/intermediate-topics/topic-json-repair.service.ts:26:114
+ ❯ src/intermediate-topics/topic-json-repair.service.spec.ts:28:36
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/57]⎯
+
+ FAIL  src/intermediate-topics/topic-json-repair.service.spec.ts > AI topic JSON repair is a proposal, never content generation > stops on refusal and never retries
+AssertionError: expected "spy" to be called 1 times, but got 0 times
+ ❯ src/intermediate-topics/topic-json-repair.service.spec.ts:47:33
+     45|     reply([], 'cannot_repair');
+     46|     await expect((await service()).repair(broken, 'admin')).rejects.to…
+     47|     expect(requestProviderJson).toHaveBeenCalledTimes(1);
+       |                                 ^
+     48|   });
+     49|   it('rejects missing data before calling AI and never invents a repai…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/57]⎯
+
+ FAIL  src/intermediate-topics/topic-json-repair.service.spec.ts > AI topic JSON repair is a proposal, never content generation > rejects missing data before calling AI and never invents a repair in fake mode
+AssertionError: expected UnprocessableEntityException: A safe form… { …(3) } to match object { status: 503 }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "status": 503,
++ UnprocessableEntityException {
++   "status": 422,
+  }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/57]⎯
+
+ FAIL  src/intermediate-topics/topic-json-repair.service.spec.ts > AI topic JSON repair is a proposal, never content generation > hides upstream response data on failure
+AssertionError: expected UnprocessableEntityException: A safe form… { …(3) } to match object { status: 503, …(1) }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
++ UnprocessableEntityException {
+    "response": {
+-     "code": "TOPIC_JSON_REPAIR_UNAVAILABLE",
++     "code": "TOPIC_JSON_REPAIR_UNSAFE",
+    },
+-   "status": 503,
++   "status": 422,
+  }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/57]⎯
+
+ FAIL  test/integration/backup-restore.integration.spec.ts > backup and restore rehearsal > rejects backup files that are not covered by the manifest
+AssertionError: expected 'D:\Projects\WorkLingo-Integration\scr…' to match /not covered by the manifest/i
+
+- Expected:
+/not covered by the manifest/i
+
++ Received:
+"D:\\Projects\\WorkLingo-Integration\\scripts\\restore-local.ps1 : Backup file 'data/unlisted.txt' is not covered by the
+manifest.
+At D:\\Projects\\WorkLingo-Integration\\scripts\\restore-local.ps1:142 char:5
++     Write-Error \"Backup file '$normalizedPath' is not covered by the  ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,restore-local.ps1
+
+"
+
+ ❯ test/integration/backup-restore.integration.spec.ts:234:43
+    232|
+    233|     expect(result.status).not.toBe(0);
+    234|     expect(result.stderr + result.stdout).toMatch(/not covered by the …
+       |                                           ^
+    235|   }, 20_000);
+    236|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/57]⎯
+
+ FAIL  test/integration/curriculum-foundation-schema.integration.spec.ts > adds foundation bindings without changing historical sessions and protects referenced revisions
+PrismaClientKnownRequestError:
+Invalid `database.lesson.create()` invocation in
+D:\Projects\WorkLingo-Integration\apps\api\test\integration\curriculum-foundation-schema.integration.spec.ts:40:42
+
+  37 const learningPath = await database.learningPath.create({ data: { slug: randomUUID(), name: 'Legacy' } });
+  38 const level = await database.level.create({ data: { pathId: learningPath.id, code: randomUUID(), name: 'Legacy', cefrReference: 'A1', order: 1 } });
+  39 const mission = await database.mission.create({ data: { levelId: level.id, slug: randomUUID(), title: 'Legacy', objective: 'Keep', order: 1 } });
+→ 40 const lesson = await database.lesson.create(
+The column `Lesson.topicGroupId` does not exist in the current database.
+ ❯ ei.handleRequestError ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:228:13
+ ❯ ei.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12
+ ❯ ei.request ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24
+ ❯ test/integration/curriculum-foundation-schema.integration.spec.ts:40:20
+     38|     const level = await database.level.create({ data: { pathId: learni…
+     39|     const mission = await database.mission.create({ data: { levelId: l…
+     40|     // Later topic-group columns do not exist at this historical bound…
+       |                    ^
+     41|     const lesson = await database.lesson.create({ data: { slug: random…
+     42|     const version = await database.lessonVersion.create({ data: { less…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/57]⎯
+
+ FAIL  test/integration/program-enrollment-migration.integration.spec.ts > Program enrollment migration > preserves complete learner levels and session history while pending learners stay unassigned
+PrismaClientKnownRequestError:
+Invalid `database.lesson.create()` invocation in
+D:\Projects\WorkLingo-Integration\apps\api\test\integration\program-enrollment-migration.integration.spec.ts:24:44
+
+  21 const mission = await database.mission.create({ data: {
+  22   levelId: archived.id, slug: randomUUID(), title: 'Legacy mission', objective: 'Preserve', order: 0,
+  23 } });
+→ 24 const lesson = await database.lesson.create(
+The column `Lesson.topicGroupId` does not exist in the current database.
+ ❯ ei.handleRequestError ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:228:13
+ ❯ ei.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12
+ ❯ ei.request ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24
+ ❯ test/integration/program-enrollment-migration.integration.spec.ts:24:22
+     22|         levelId: archived.id, slug: randomUUID(), title: 'Legacy missi…
+     23|       } });
+     24|       // Return only columns present at this historical migration boun…
+       |                      ^
+     25|       const lesson = await database.lesson.create({ data: { slug: rand…
+     26|       const version = await database.lessonVersion.create({ data: {
+ ❯ rehearse test/integration/program-enrollment-migration.integration.spec.ts:134:5
+ ❯ test/integration/program-enrollment-migration.integration.spec.ts:17:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/57]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 51 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/progression.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/content-publish.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/content-audio.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/learning-sessions.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/content-imports.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/placement-confirmation.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/dashboard-analytics.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/admin-curriculum-commands.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-mock-media.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/locale-preferences.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/engagement-projection.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/program-context-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-flow-v3-release.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-mock-modes.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/admin-operations-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/adaptive-learning.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/curriculum-foundation-admin.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/curriculum-foundation-eligibility.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-study-session.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/versioned-learner-audio.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/placement-attempt.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-flow-v3-compatibility.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ai-settings.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/onboarding-self-placement.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-orientation-learner.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/error-bank-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/placement-isolation.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-introduction-v3.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-bridge-learner.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/curriculum-foundation-progress.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/admin-audit-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/speaking-submission.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/pilot-analytics.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/admin-authorization.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-mock-workflow.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/audio-settings-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/admin-curriculum-query.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/engagement-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/session-ownership.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/teacher-ai-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/auth.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-orientation-admin.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/teacher-ai-pipeline.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/learning-programs-api.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/rate-limit.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/recording-retention.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/program-learning-boundaries.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-flow-overview.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/ielts-bridge-admin.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "src/ielts-study/application/ielts-topic-admin.service.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: Invalid application configuration: DATABASE_URL: Too small: expected string to have >=1 characters; WORKLINGO_DATA_DIR: Invalid input: expected string, received undefined
+ ❯ Object.parseAppConfig [as validate] src/common/config/app-config.schema.ts:175:11
+    173|       .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+    174|       .join('; ');
+    175|     throw new Error(`Invalid application configuration: ${details}`);
+       |           ^
+    176|   }
+    177|
+ ❯ Function.forRoot ../../node_modules/.pnpm/@nestjs+config@4.0.2_@nestj_2a1f060b1504521faf916111616e27d6/node_modules/@nestjs/config/dist/config.module.js:88:45
+ ❯ src/common/config/app-config.module.ts:10:18
+ ❯ processTicksAndRejections node:internal/process/task_queues:95:5
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+ ❯ VitestExecutor.directRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:375:3
+ ❯ VitestExecutor.cachedRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:189:11
+ ❯ VitestExecutor.dependencyRequest ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:239:10
+ ❯ src/app.module.ts:6:1
+ ❯ VitestExecutor.runModule ../../node_modules/.pnpm/vite-node@3.2.4_@types+node@20.19.37_jiti@2.7.0_tsx@4.21.0/node_modules/vite-node/dist/client.mjs:397:4
+
+This error originated in "test/integration/health.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  54 failed | 166 passed | 1 skipped (221)
+      Tests  7 failed | 959 passed | 210 skipped (1176)
+     Errors  51 errors
+   Start at  22:36:13
+   Duration  869.89s (transform 12.02s, setup 0ms, collect 285.61s, tests 476.83s, environment 78ms, prepare 43.36s)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run

@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "b9ae26ccb1dcfe6817ad451e33943529de11270f",
+  "timestamp": "2026-10-20T12:35:13.035Z",
+  "command": "playwright test -c playwright.phase6.config.ts",
+  "environment": {
+    "engine": "firefox",
+    "browserVersion": "155.0",
+    "optimized": true
+  },
+  "fixtureOnly": true,
+  "test": "preferences storage failure disclosure and draft controls remain usable",
+  "result": "failed",
+  "testSourceSHA256": "198dcb5bbdf0b05084d1515cb51c083c3694d3fe7c780557a4f8e10028520357",
+  "productionWorkingDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observations": [
+    {
+      "diagnostic": "increased contrast capability",
+      "contrastMore": true,
+      "actualFilter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "diagnostic": "actual compiled media rules",
+      "media": [
+        {
+          "condition": "(prefers-reduced-transparency:reduce), (prefers-contrast: more), (forced-colors: active)",
+          "matches": true,
+          "rule": "@media (prefers-reduced-transparency:reduce), (prefers-contrast: more), (forced-colors: active) {\n  .glass-surface.glass-surface { background-color: var(--surface-elevated); border-color: var(--border-strong); box-shadow: none; backdrop-filter: none; background-image: none; }\n}"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Automation is not physical-device, screenreader, live-provider or total-WCAG certification."
+  ]
+}

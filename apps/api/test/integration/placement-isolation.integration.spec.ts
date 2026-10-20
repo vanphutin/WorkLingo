@@ -1,11 +1,13 @@
 import { randomUUID } from 'node:crypto';
 
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { JobRunnerService } from '../../src/jobs/application/job-runner.service.js';
+import { JOB_RUNNER_OPTIONS, JobHandlerRegistry, JobRunnerService } from '../../src/jobs/application/job-runner.service.js';
+import { JobsService } from '../../src/jobs/application/jobs.service.js';
 import { PlacementRecommendationService } from '../../src/onboarding/application/placement-recommendation.service.js';
 import { seedPlacementCurriculum } from '../../src/curriculum/infrastructure/seed-placement.js';
 import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
+import { inspectJobClaim } from './job-claim-diagnostics.js';
 import {
   createLearningSessionTestContext,
   registerLearner,
@@ -29,14 +31,77 @@ const clearShadowingWav = (): Buffer => {
 describe('placement evidence isolation', () => {
   let context: LearningSessionTestContext;
 
+  const runPlacementJob = async (expectedType: string) => {
+    const pending = await context.database.job.findMany({ where: { status: 'PENDING' },
+      select: { id: true, type: true, attemptCount: true, leaseOwner: true, availableAt: true } });
+    expect(pending).toHaveLength(1);
+    const job = pending[0]!;
+    expect(job).toMatchObject({ type: expectedType, attemptCount: 0, leaseOwner: null });
+    expect(context.app.get(JOB_RUNNER_OPTIONS).enabled).toBe(false);
+    // This tests evidence isolation, not wall-clock polling. Job timestamps and
+    // host Date need not share an instant; exercise the inclusive due boundary.
+    await expect(context.app.get(JobRunnerService).runOnce(job.availableAt)).resolves.toBe(true);
+    await expect(context.database.job.findUnique({ where: { id: job.id } })).resolves.toMatchObject({
+      status: 'COMPLETED', attemptCount: 1, leaseOwner: null,
+    });
+  };
+
   beforeAll(async () => {
     context = await createLearningSessionTestContext('placement_isolation');
     await seedPlacementCurriculum(context.database, context.app.get(ObjectStorage));
   }, 45_000);
-  beforeEach(async () => context.resetLearners());
+  beforeEach(async () => {
+    vi.restoreAllMocks();
+    await context.resetLearners();
+    const diagnostics = process.env.WORKLINGO_PLACEMENT_DIAGNOSTICS;
+    if (!['true', 'failure', 'boundary'].includes(diagnostics ?? '')) return;
+    const jobs = context.app.get(JobsService);
+    const claim = jobs.claimNext.bind(jobs);
+    vi.spyOn(jobs, 'claimNext').mockImplementation(async (workerId, now, leaseMs) => {
+      // Failure-only mode leaves the successful hot path free of diagnostic I/O.
+      const enteredAt = new Date().toISOString();
+      const enteredMono = process.hrtime.bigint();
+      const earlyResult = diagnostics !== 'true' ? await claim(workerId, now, leaseMs) : null;
+      const returnedAt = new Date().toISOString();
+      const claimDurationNs = (process.hrtime.bigint() - enteredMono).toString();
+      if (earlyResult && diagnostics === 'failure') return earlyResult;
+      const snapshot = await inspectJobClaim(context.database, now);
+      const result = diagnostics !== 'true' ? earlyResult : await claim(workerId, now, leaseMs);
+      console.log(JSON.stringify({ event: 'placement-claim', hostNow: now.toISOString(),
+        mode: diagnostics, enteredAt, returnedAt, claimDurationNs,
+        observation: diagnostics === 'true' ? 'before-claim' : 'after-claim-not-atomic',
+        workerId, backgroundWorker: process.env.JOB_WORKER_ENABLED, schema: context.schemaName,
+        timeline: snapshot.jobs, locks: snapshot.locks, claimedId: result?.id ?? null,
+        after: await context.database.job.findMany({ select: { id: true, status: true, attemptCount: true, leaseOwner: true } }),
+      }));
+      return result;
+    });
+  });
   afterAll(async () => context?.close());
 
-  it('completes and recommends from all four placement skills without learning side effects', async () => {
+  it('uses persisted database eligibility when the host instant is earlier than the job', async () => {
+    const { user } = await registerPendingLearner(context.app, {
+      displayName: 'Eligibility clock learner', email: 'eligibility-clock@example.test',
+    });
+    context.app.get(JobHandlerRegistry).register({ type: 'PLACEMENT_CLOCK_PROBE', handle: async () => ({ fixture: true }) });
+    const reference = await context.app.get(JobsService).enqueue({
+      createdById: user.id, idempotencyKey: randomUUID(), payload: {}, type: 'PLACEMENT_CLOCK_PROBE',
+    });
+    const job = await context.database.job.findUniqueOrThrow({ where: { id: reference.id } });
+    // Reproduce the observed one-millisecond gap without changing database time,
+    // production methods, retries or timers. Only Date is controlled in this scope.
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(job.availableAt.getTime() - 1));
+    try {
+      await expect(context.app.get(JobRunnerService).runOnce()).resolves.toBe(false);
+      await expect(context.database.jobAttempt.count()).resolves.toBe(0);
+      await runPlacementJob('PLACEMENT_CLOCK_PROBE');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it.each(Array.from({ length: Math.min(100, Math.max(1, Number(process.env.WORKLINGO_PLACEMENT_REPEATS) || 1)) }, (_, index) => index))('completes and recommends from all four placement skills without learning side effects (run %i)', async () => {
     const { agent, user } = await registerPendingLearner(context.app, {
       displayName: 'Isolated placement learner', email: 'placement-isolation@example.test',
     });
@@ -44,7 +109,6 @@ describe('placement evidence isolation', () => {
       .send({ clientAttemptId: randomUUID() }).expect(201);
     const session = await agent.get(`/api/v1/learning-sessions/${placement.body.learningSessionId}`).expect(200);
     await agent.post(`/api/v1/learning-sessions/${session.body.id}/start`).expect(200);
-    const runner = context.app.get(JobRunnerService);
 
     for (const activityId of session.body.plan.blocks.flatMap((block: { activityIds: string[] }) => block.activityIds)) {
       const activity = await context.database.activity.findUniqueOrThrow({ where: { id: activityId } });
@@ -58,8 +122,8 @@ describe('placement evidence isolation', () => {
           .field('consentScope', 'teacher-ai')
           .attach('audio', clearShadowingWav(), { filename: 'voice.wav', contentType: 'audio/wav' })
           .expect(202);
-        await expect(runner.runOnce()).resolves.toBe(true);
-        await expect(runner.runOnce()).resolves.toBe(true);
+        await runPlacementJob('TRANSCRIBE_SPEECH');
+        await runPlacementJob('EVALUATE_ATTEMPT');
         continue;
       }
       const response = activity.activityType === 'reading' || activity.activityType === 'listening'
@@ -68,7 +132,7 @@ describe('placement evidence isolation', () => {
       await agent.post(`/api/v1/activities/${activity.id}/attempts`).send({
         clientAttemptId: randomUUID(), response, sessionId: session.body.id,
       }).expect(201);
-      if (activity.activityType === 'writing') await expect(runner.runOnce()).resolves.toBe(true);
+      if (activity.activityType === 'writing') await runPlacementJob('EVALUATE_ATTEMPT');
     }
 
     const recommendation = await context.app.get(PlacementRecommendationService)

@@ -1,0 +1,35 @@
+[WebServer] (node:4048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:12544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:14816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+  ok 1 [ielts-flow-v3-desktop] › e2e\ielts-flow-v3.spec.ts:10:5 › captures real browser audio, reloads saved recordings and lets a teacher hear and review them (35.5s)
+  ok 2 [ielts-flow-v3-desktop] › e2e\ielts-flow-v3.spec.ts:64:5 › strict browser controls retain one listening play and advance an expired section with saved answers (11.5s)
+  ok 3 [ielts-flow-v3-desktop] › e2e\ielts-study.spec.ts:12:5 › topic study starts 90/120/150 minutes and resumes with Intermediate unchanged (33.3s)
+  ok 4 [ielts-flow-v3-desktop] › e2e\ielts-study.spec.ts:54:5 › independent hub, introduction replay and history work in both locales and themes (25.2s)
+  ok 5 [ielts-flow-v3-mobile] › e2e\ielts-flow-v3.spec.ts:10:5 › captures real browser audio, reloads saved recordings and lets a teacher hear and review them (23.6s)
+  ok 6 [ielts-flow-v3-mobile] › e2e\ielts-flow-v3.spec.ts:64:5 › strict browser controls retain one listening play and advance an expired section with saved answers (6.3s)
+  ok 7 [ielts-flow-v3-mobile] › e2e\ielts-study.spec.ts:12:5 › topic study starts 90/120/150 minutes and resumes with Intermediate unchanged (19.5s)
+  ok 8 [ielts-flow-v3-mobile] › e2e\ielts-study.spec.ts:54:5 › independent hub, introduction replay and history work in both locales and themes (15.3s)
+
+  8 passed (4.5m)

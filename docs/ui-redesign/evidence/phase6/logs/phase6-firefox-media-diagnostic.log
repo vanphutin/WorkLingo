@@ -1,0 +1,50 @@
+[WebServer] (node:352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  x  1 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (9.1s)
+
+
+  1) [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.shell-header-surface')
+    Expected: "none"
+    Received: "blur(20px) saturate(1.8)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.shell-header-surface') with timeout 5000ms
+      - waiting for locator('.shell-header-surface')
+        12 × locator resolved to <div data-glass-tint="none" data-glass-variant="regular" class="glass-surface shell-header-surface">…</div>
+           - unexpected value "blur(20px) saturate(1.8)"
+
+
+      47 |     return { diagnostic: 'actual compiled media rules', media };
+      48 |   }));
+    > 49 |   if (contrastMore) await expect(page.locator('.shell-header-surface')).toHaveCSS('backdrop-filter', 'none');
+         |                                                                         ^
+      50 |   await page.emulateMedia({ contrast: 'no-preference', forcedColors: 'active' });
+      51 |   await expect(page.locator('.settings-language-card select')).toBeEnabled();
+      52 |   const forcedColors = await page.evaluate(() => matchMedia('(forced-colors: active)').matches);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-cross.spec.ts:49:73
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6.config.ts --project=firefox -g preferences storage

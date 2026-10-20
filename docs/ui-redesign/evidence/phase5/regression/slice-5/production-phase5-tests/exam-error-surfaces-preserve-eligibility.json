@@ -1,0 +1,20 @@
+{
+  "title": "exam error surfaces preserve eligibility",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "integrated",
+      "state": "error"
+    },
+    {
+      "kind": "pathway",
+      "state": "error"
+    },
+    {
+      "kind": "mock",
+      "state": "error"
+    }
+  ]
+}

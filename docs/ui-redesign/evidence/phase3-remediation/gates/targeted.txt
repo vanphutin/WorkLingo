@@ -1,0 +1,30 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/components/language-switcher.test.tsx (2 tests) 912ms
+   ✓ LanguageSwitcher > exposes both language names, selection and translated accessible label  846ms
+ ✓ src/components/theme-control.test.tsx (3 tests) 1000ms
+   ✓ cycles through icon themes, persists preference and preserves entered content  743ms
+ ✓ src/components/transparency-control.test.tsx (6 tests) 1338ms
+   ✓ persists the checkbox and updates every mounted control without replacing a draft  745ms
+   ✓ synchronizes other tabs while keeping the independent theme preference  335ms
+ ✓ src/app/page.test.tsx (4 tests) 1626ms
+   ✓ HomePage > exposes the real home link, locale and theme controls in public navigation  1175ms
+stderr | src/components/workspace-navigation.test.tsx
+Not implemented: navigation to another Document
+
+ ✓ src/components/workspace-navigation.test.tsx (9 tests) 2057ms
+   ✓ WorkspaceNavigation > retains all destinations and marks only the real active route segment  903ms
+   ✓ WorkspaceNavigation > uses a nonmodal disclosure with Escape returning focus and no trapped Tab  343ms
+ ✓ src/app/(admin)/layout.test.tsx (5 tests) 1739ms
+   ✓ AdminLayout > preserves all thirteen destinations and the skip target for SYSTEM_ADMIN  923ms
+   ✓ AdminLayout > renders admin navigation and children for authorized CONTENT_ADMIN  541ms
+ ✓ src/components/glass-surface.test.tsx (2 tests) 327ms
+   ✓ defaults to a regular untinted surface without replacing child navigation semantics  319ms
+ ✓ src/app/(learner)/layout.test.tsx (14 tests) 2779ms
+   ✓ LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination  954ms
+
+ Test Files  8 passed (8)
+      Tests  45 passed (45)
+   Start at  12:15:52
+   Duration  10.75s (transform 2.20s, setup 0ms, collect 14.42s, tests 11.78s, environment 28.20s, prepare 3.07s)

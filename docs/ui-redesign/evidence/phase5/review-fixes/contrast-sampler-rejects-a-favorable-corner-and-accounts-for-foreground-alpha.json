@@ -1,0 +1,13 @@
+{
+  "title": "contrast sampler rejects a favorable corner and accounts for foreground alpha",
+  "status": "passed",
+  "observations": [
+    {
+      "negativeControl": true,
+      "rejectedCornerRatio": 18.883060964594996,
+      "actualTextRatio": 1.1121078324840545,
+      "alphaRatio": 5.280822809644651
+    }
+  ],
+  "fixtures": true
+}

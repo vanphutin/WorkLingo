@@ -14,4 +14,17 @@ describe('Foundation authoring scaffolds', () => {
     expect(result.normalizedDraft).toBeNull();
     expect(result.issues.some((i) => i.code === 'VAL_INCOMPLETE_TEMPLATE')).toBe(true);
   });
+
+  it('models gender declarations and bare-name continuation in the listening scaffold', () => {
+    const template = format.getFoundationTemplate('listening');
+    const parsed = format.parseLessonSource(template.source);
+    const dialogue = format.parseDialogue(parsed.document.audioScripts[0]!.script);
+    expect(dialogue.isDialogue).toBe(true);
+    expect(dialogue.issues).toEqual([]);
+    expect(dialogue.speakers).toEqual([
+      { id: 'an', name: 'An', gender: 'male' },
+      { id: 'lan', name: 'Lan', gender: 'female' },
+    ]);
+    expect(dialogue.turns.map((turn) => turn.speaker)).toEqual(['an', 'lan', 'an']);
+  });
 });

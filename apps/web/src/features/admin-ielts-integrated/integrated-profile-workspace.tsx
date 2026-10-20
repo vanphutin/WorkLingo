@@ -1,13 +1,14 @@
 'use client';
 
 import type { AdminIeltsIntegratedProfileDto } from '@worklingo/contracts';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useT, useLocalePreference } from '../../i18n/provider';
 import { adminIeltsIntegratedMessages } from '../../i18n/messages/adminIeltsIntegrated';
 import { localizedError } from '../../i18n/errors';
 import type { MessageValues } from '../../i18n/translator';
 import { adminIeltsIntegratedClient } from '../../lib/api/admin-ielts-integrated-client';
 import '../ielts-bridge/ielts-bridge.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsIntegratedMessages['en']; values?: MessageValues };
 type Issue = { path: string; message: string };
@@ -23,10 +24,11 @@ export function IntegratedProfileWorkspace() {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
+  const dirtyIds = useRef(new Set<string>());
 
   const load = async () => {
     const values = await adminIeltsIntegratedClient.list();
-    setProfiles(values);
+    setProfiles((current) => values.map((profile) => dirtyIds.current.has(profile.id) ? current.find((item) => item.id === profile.id) ?? profile : profile));
     setSelectedId((current) => current ?? values[0]?.id ?? null);
   };
   useEffect(() => { void load().catch(setError).finally(() => setLoading(false)); }, []);
@@ -38,6 +40,7 @@ export function IntegratedProfileWorkspace() {
   };
   const updateMinutes = (skill: string, targetMinutes: number) => {
     if (!selected) return;
+    dirtyIds.current.add(selected.id);
     replace({ ...selected, status: 'DRAFT', draft: { ...selected.draft, allocations: selected.draft.allocations.map((allocation) => allocation.skill === skill ? { ...allocation, targetMinutes } : allocation) } });
     setValidatedRevision(null);
   };
@@ -48,26 +51,29 @@ export function IntegratedProfileWorkspace() {
     return t('invalidField');
   };
 
-  return <main className="bridge-shell">
+  return <section className="bridge-shell authoring-experience">
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
+    <p>{t('configuration')} <a href="/admin/content">{t('authorLessons')}</a></p>
     {error ? <p className="bridge-error" role="alert">{localizedError(error, locale)}</p> : null}
     {message ? <p className="bridge-feedback" role="status">{t(message.key, message.values)}</p> : null}
     <div className="bridge-stage-nav" aria-label={t('profiles')}>
-      {profiles.map((profile) => <button key={profile.id} type="button" aria-current={profile.id === selectedId ? 'page' : undefined} onClick={() => { setSelectedId(profile.id); setValidatedRevision(null); setIssues([]); }}>{t('minutes', { count: profile.durationMinutes })}</button>)}
+      {profiles.map((profile) => <button key={profile.id} type="button" disabled={busy} aria-current={profile.id === selectedId ? 'page' : undefined} onClick={() => { setSelectedId(profile.id); setValidatedRevision(null); setIssues([]); }}>{t('minutes', { count: profile.durationMinutes })}</button>)}
     </div>
     {selected ? <section className="bridge-stage-card">
       <p className="bridge-kicker">{t('revision', { status: t(selected.status), revision: selected.draftRevision })}</p>
       <h2>{t('allocation', { count: selected.durationMinutes })}</h2>
-      {selected.draft.allocations.map((allocation) => <label key={allocation.skill}>{t(allocation.skill)}<input type="number" min="1" max={selected.durationMinutes} value={allocation.targetMinutes} onChange={(event) => updateMinutes(allocation.skill, Number(event.target.value))} /></label>)}
+      {selected.draft.allocations.map((allocation) => <label key={allocation.skill}>{t(allocation.skill)}<input type="number" disabled={busy} min="1" max={selected.durationMinutes} value={allocation.targetMinutes} onChange={(event) => updateMinutes(allocation.skill, Number(event.target.value))} /></label>)}
       <p><strong>{t('total')}</strong> {t('totalMinutes', { total: selected.draft.allocations.reduce((sum, allocation) => sum + allocation.targetMinutes, 0), duration: selected.durationMinutes })}</p>
       {issues.length > 0 ? <section aria-label={t('validationIssues')}><h3>{t('validationIssues')}</h3><ul>{issues.map((issue, index) => <li key={`${issue.path}-${index}`}><code>{issue.path}</code> {validationMessage(issue)}</li>)}</ul></section> : null}
       <div className="bridge-actions">
         <button type="button" disabled={busy} onClick={() => void run(async () => {
           replace(await adminIeltsIntegratedClient.update(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID(), content: selected.draft }));
+          dirtyIds.current.delete(selected.id); setValidatedRevision(null);
           setMessage({ key: 'draftSaved' });
         })}>{t('saveDraft')}</button>
         <button type="button" disabled={busy} onClick={() => void run(async () => {
           const saved = await adminIeltsIntegratedClient.update(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID(), content: selected.draft });
+          dirtyIds.current.delete(selected.id);
           replace(saved);
           const result = await adminIeltsIntegratedClient.validate(saved.id, { expectedRevision: saved.draftRevision, idempotencyKey: crypto.randomUUID() });
           setValidatedRevision(result.canPublish ? result.draftRevision : null); setIssues(result.issues);
@@ -79,5 +85,5 @@ export function IntegratedProfileWorkspace() {
         })}>{t('publishVersion')}</button>
       </div>
     </section> : <p role="status">{t(loading ? 'loading' : 'empty')}</p>}
-  </main>;
+  </section>;
 }

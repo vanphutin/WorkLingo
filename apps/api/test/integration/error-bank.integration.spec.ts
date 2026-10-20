@@ -109,7 +109,7 @@ describe('Error Bank & Memory Health Domain & Service Integration', () => {
         order: 1,
       },
     });
-    await database.mission.create({
+    const missionObj = await database.mission.create({
       data: {
         slug: `mission_${randomUUID()}`,
         title: 'Mission 1',
@@ -125,6 +125,7 @@ describe('Error Bank & Memory Health Domain & Service Integration', () => {
       },
     });
     lessonId = lessonObj.id;
+    await database.missionLesson.create({data:{missionId:missionObj.id,lessonId,order:1}});
 
     const lv = await database.lessonVersion.create({
       data: {

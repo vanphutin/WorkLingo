@@ -1,0 +1,83 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ❯ test/integration/backup-restore.integration.spec.ts (10 tests | 3 failed) 111535ms
+   ✓ backup and restore rehearsal > scripts/backup-local.ps1 rejects an unsafe backup path outside the allowed root  3277ms
+   ✓ backup and restore rehearsal > rejects a sibling backup path that only shares the allowed-root prefix  2843ms
+   ✓ backup and restore rehearsal > rejects a sibling restore target that only shares the allowed-root prefix  1957ms
+   ✓ backup and restore rehearsal > rejects manifest entries that resolve outside the backup directory  1442ms
+   ✓ backup and restore rehearsal > rejects backup files that are not covered by the manifest  1563ms
+   ✓ backup and restore rehearsal > fails closed when the target database emptiness check cannot be completed  5634ms
+   ✓ backup and restore rehearsal > removes an incomplete artifact when database backup fails  7754ms
+   × backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums 20057ms
+     → Test timed out in 20000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × backup and restore rehearsal > scripts/restore-local.ps1 rejects non-empty target directory or non-empty database 20107ms
+     → Test timed out in 20000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × backup and restore rehearsal > rehearses complete restore into an empty target schema and directory, verifying data integrity 43112ms
+     → expected false to be true // Object.is equality
+ ✓ test/integration/curriculum-foundation-schema.integration.spec.ts (1 test) 15835ms
+   ✓ adds foundation bindings without changing historical sessions and protects referenced revisions  15833ms
+ ✓ test/integration/program-enrollment-migration.integration.spec.ts (3 tests) 31784ms
+   ✓ Program enrollment migration > preserves complete learner levels and session history while pending learners stay unassigned  11750ms
+   ✓ Program enrollment migration > aborts atomically when a complete learner level is missing  8447ms
+   ✓ Program enrollment migration > aborts atomically when a complete learner level is foreign  11582ms
+ ✓ src/intermediate-topics/topic-json-repair.service.spec.ts (6 tests) 73ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/backup-restore.integration.spec.ts > backup and restore rehearsal > backs up test database records and files with manifest and sha256 checksums
+Error: Test timed out in 20000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/integration/backup-restore.integration.spec.ts:290:3
+    288|   }, 20_000);
+    289|
+    290|   it('backs up test database records and files with manifest and sha25…
+       |   ^
+    291|     // 1. Prepare test database data
+    292|     await sourcePrisma.$executeRawUnsafe(`CREATE SCHEMA IF NOT EXISTS …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/integration/backup-restore.integration.spec.ts > backup and restore rehearsal > scripts/restore-local.ps1 rejects non-empty target directory or non-empty database
+Error: Test timed out in 20000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/integration/backup-restore.integration.spec.ts:461:3
+    459|   }, 20_000);
+    460|
+    461|   it('scripts/restore-local.ps1 rejects non-empty target directory or …
+       |   ^
+    462|     const backupListResult = runPowerShellScript('scripts/backup-local…
+    463|       BackupRoot: backupDir,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/integration/backup-restore.integration.spec.ts > backup and restore rehearsal > rehearses complete restore into an empty target schema and directory, verifying data integrity
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/integration/backup-restore.integration.spec.ts:523:42
+    521|     // 5. Verify restored file and checksum
+    522|     const restoredFilePath = path.join(cleanTargetDataDir, 'sample-aud…
+    523|     expect(existsSync(restoredFilePath)).toBe(true);
+       |                                          ^
+    524|     const restoredContent = await readFile(restoredFilePath, 'utf8');
+    525|     expect(restoredContent).toBe('Hello WorkLingo storage test asset');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  3 failed | 17 passed (20)
+   Start at  22:53:50
+   Duration  183.17s (transform 13.85s, setup 0ms, collect 20.12s, tests 159.23s, environment 1ms, prepare 1.47s)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run test/integration/backup-restore.integration.spec.ts test/integration/curriculum-foundation-schema.integration.spec.ts test/integration/program-enrollment-migration.integration.spec.ts src/intermediate-topics/topic-json-repair.service.spec.ts

@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-20",
+  "timezone": "Asia/Saigon",
+  "phase": 3,
+  "status": "implemented and verified with documented limitations; awaiting human acceptance",
+  "phase2TechnicalAcceptance": "ACCEPTED WITH LIMITATIONS",
+  "base": "429a8d0a79707e7d6f9677502349cfd0b132e9b3",
+  "gates": [
+    {
+      "command": "pnpm --filter @worklingo/web test",
+      "result": "85 files,402 passed",
+      "exitCode": 0
+    },
+    {
+      "command": "targeted layouts,components,home Vitest",
+      "result": "8 files,45 passed",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web lint",
+      "result": "pass",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web typecheck",
+      "result": "pass",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm i18n:check",
+      "result": "27 namespaces,1671 pairs,0 errors",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @worklingo/web build",
+      "result": "pass,34 page routes",
+      "exitCode": 0
+    },
+    {
+      "command": "Playwright shell development",
+      "result": "13 passed before final review,3 baseline-only skipped;2 post-fix disclosure checks passed",
+      "exitCode": 0
+    },
+    {
+      "command": "Playwright shell optimized production",
+      "result": "13 passed after review fix,3 baseline-only skipped",
+      "exitCode": 0
+    },
+    {
+      "command": "Playwright baseline capture",
+      "result": "3 passed,13 after-only skipped",
+      "exitCode": 0
+    }
+  ],
+  "measurements": {
+    "after": {
+      "composite": {
+        "samples": 42,
+        "minimum": 9.05324800753993
+      },
+      "boundary": {
+        "samples": 24,
+        "minimum": 3.6717675972559682
+      }
+    },
+    "production": {
+      "composite": {
+        "samples": 42,
+        "minimum": 9.05324800753993
+      },
+      "boundary": {
+        "samples": 24,
+        "minimum": 3.6717675972559682
+      }
+    }
+  },
+  "bundle": {
+    "before": {
+      "source": "Phase2 production build retained alongside .next/dev",
+      "kind": "aggregate all production chunks, not per-route load or Web Vitals",
+      "js": 1908214,
+      "css": 143526,
+      "jsGzip": 558633,
+      "cssGzip": 31730,
+      "files": 64
+    },
+    "after": {
+      "js": 1917637,
+      "css": 147561,
+      "jsGzip": 561642,
+      "cssGzip": 32465,
+      "files": 64
+    }
+  },
+  "preserved": {
+    "baseline": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",
+    "branch": "codex/worklingo-liquid-glass-redesign",
+    "worktree": "D:\\Projects\\WorkLingo-Liquid-Glass",
+    "originMainUnchanged": true,
+    "originStatusUnchanged": true,
+    "originFilesPreserved": 1295,
+    "backendContractsAndDependenciesUnchanged": true,
+    "applicationRouteCount": 34,
+    "userDirtyApplicationSourceTransferred": false
+  },
+  "sourceHashes": [
+    {
+      "file": "apps/web/src/app/(learner)/layout.tsx",
+      "sha256": "fcfd25a13b1247ce0eee8061c1c723da66cb7ad96092fc17cfdee7b52d610ad2"
+    },
+    {
+      "file": "apps/web/src/app/(admin)/layout.tsx",
+      "sha256": "52afb23e79403c83c8a629a7422549ee591fa1a7537cd4e8667e96322a6b1d18"
+    },
+    {
+      "file": "apps/web/src/app/page.tsx",
+      "sha256": "c294cd56e7414fd92092ebf0e733fb8603f00cde7fdff81b3da6f771a1a72b14"
+    },
+    {
+      "file": "apps/web/src/components/workspace-navigation.tsx",
+      "sha256": "dcda4ccb1e05113b83ebbc32430d284b39dc26488b26ba8178f4f534854630d8"
+    },
+    {
+      "file": "apps/web/src/styles/workspace.css",
+      "sha256": "3afb8ab8a5eb689b8e6bf3adb326e54f3b8bacc98d4437c9de613b3f10173ef5"
+    },
+    {
+      "file": "apps/web/src/i18n/messages/common.ts",
+      "sha256": "20101adb0ce8c32fb027ef1db2f03bb78e6dc3bf4886e40904a4fbd718f99b66"
+    }
+  ],
+  "routeCoverage": {
+    "discovered": 34,
+    "fullyMigrated": 0,
+    "remaining": 34
+  },
+  "limitations": [
+    "Network fixtures; no live authenticated backend journey",
+    "Chromium only;Firefox/WebKit absent",
+    "CSS200% zoom and native Tab scrolling,not native browser zoom",
+    "Existing Settings content overflow564→596px at390px CSS200%;header/nav fit",
+    "No recording-hardware,submission,screen-reader,FPS or Web Vitals certification"
+  ],
+  "independentReview": {
+    "reviewers": 1,
+    "critical": 0,
+    "important": 1,
+    "resolved": 1,
+    "unresolvedCriticalOrImportant": 0,
+    "fix": "restore trigger focus before hiding a focused open panel on ordinary link activation",
+    "unitRed": "1 failed,8 passed",
+    "browserRed": "2 failed",
+    "targetedGreen": "45 passed",
+    "developmentBrowserGreen": "2 passed",
+    "finalProductionGreen": "13 passed",
+    "declinedScopeAndParentRulings": "review.md"
+  },
+  "merge": false,
+  "push": false,
+  "deploy": false,
+  "codeCommit": "307829b24b402312897e317b9186933b62359cb3",
+  "browserTestCommit": "80177eb3381d069420647c9e4dcdfb0490a424da",
+  "documentationCommit": "resolve with git log -1 -- docs/ui-redesign/phase3-qa.md"
+}

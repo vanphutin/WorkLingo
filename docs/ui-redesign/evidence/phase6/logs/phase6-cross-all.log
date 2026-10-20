@@ -1,0 +1,107 @@
+[WebServer] (node:16712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 21 tests using 1 worker
+
+  ok  1 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (2.3s)
+  ok  2 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 768 (2.1s)
+  ok  3 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 1440 (2.2s)
+  ok  4 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 390 (2.1s)
+  ok  5 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 768 (2.1s)
+  ok  6 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 1440 (2.3s)
+  x   7 [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (5.7s)
+  ok  8 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (6.0s)
+  ok  9 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 768 (3.4s)
+  ok 10 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 1440 (3.6s)
+  ok 11 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 390 (3.4s)
+  ok 12 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 768 (3.5s)
+  ok 13 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 1440 (4.1s)
+  x  14 [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (6.2s)
+  ok 15 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 390 (3.3s)
+  ok 16 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 768 (3.2s)
+  ok 17 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes light 1440 (3.8s)
+  ok 18 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 390 (3.4s)
+  ok 19 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 768 (3.4s)
+  ok 20 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:11:7 › representative routes dark 1440 (3.7s)
+  ok 21 [webkit] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable (1.5s)
+
+
+  1) [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.workspace-navigation-toggle')
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('.workspace-navigation-toggle') with timeout 5000ms
+      - waiting for locator('.workspace-navigation-toggle')
+        14 × locator resolved to <button type="button" aria-expanded="false" aria-controls="_r_1_" aria-label="Điều hướng học tập" class="workspace-navigation-toggle">…</button>
+           - unexpected value "false"
+
+
+      43 |   await page.emulateMedia({ forcedColors: 'none' }); await page.setViewportSize({ width: 390, height: 844 });
+      44 |   const toggle = page.locator('.workspace-navigation-toggle'); await toggle.focus(); await page.keyboard.press('Enter');
+    > 45 |   await expect(toggle).toHaveAttribute('aria-expanded', 'true'); await page.keyboard.press('Escape'); await expect(toggle).toBeFocused();
+         |                        ^
+      46 |   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      47 |   await page.addInitScript(() => { for (const method of ['getItem', 'setItem', 'removeItem']) Object.defineProperty(Storage.prototype, method, { configurable: true, value() { throw new DOMException('Blocked test storage', 'SecurityError'); } }); });
+      48 |   const auth = auditRoutes.find(item => item[1] === '/login')!; await prepareAuditRoute(page, auth);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-cross.spec.ts:45:24
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-chromium\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.shell-header-surface')
+    Expected: "none"
+    Received: "blur(20px) saturate(1.8)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.shell-header-surface') with timeout 5000ms
+      - waiting for locator('.shell-header-surface')
+        13 × locator resolved to <div data-glass-tint="none" data-glass-variant="regular" class="glass-surface shell-header-surface">…</div>
+           - unexpected value "blur(20px) saturate(1.8)"
+
+
+      38 |   const reduced = page.locator('.settings-page .transparency-control input'); await reduced.check();
+      39 |   await expect(page.locator('.shell-header-surface')).toHaveCSS('backdrop-filter', 'none'); await reduced.uncheck();
+    > 40 |   await page.emulateMedia({ contrast: 'more' }); await expect(page.locator('.shell-header-surface')).toHaveCSS('backdrop-filter', 'none');
+         |                                                                                                      ^
+      41 |   await page.emulateMedia({ contrast: 'no-preference', forcedColors: 'active' });
+      42 |   await expect(page.locator('.settings-language-card select')).toBeEnabled();
+      43 |   await page.emulateMedia({ forcedColors: 'none' }); await page.setViewportSize({ width: 390, height: 844 });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase6-cross.spec.ts:40:102
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase6-browser-results\liquid-glass-phase6-cross--65758-raft-controls-remain-usable-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+    [firefox] › e2e\liquid-glass-phase6-cross.spec.ts:32:5 › preferences storage failure disclosure and draft controls remain usable
+  19 passed (1.3m)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6.config.ts -g representative|preferences storage

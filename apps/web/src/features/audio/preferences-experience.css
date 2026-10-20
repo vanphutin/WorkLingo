@@ -1,0 +1,36 @@
+/* Adopted by the existing account/system provider owners. */
+.preferences-experience { min-width: 0; max-width: 100%; color: var(--foreground); overflow-wrap: anywhere; }
+.preferences-experience *, .preferences-experience *::before, .preferences-experience *::after { box-sizing: border-box; }
+.preferences-experience :is(div,section,header,footer,fieldset,label,nav,form,span) { min-width: 0; }
+.preferences-experience :is(h1,.admin-ai-title) { font-size: clamp(1.6rem,3vw,2.35rem); letter-spacing: -.035em; line-height: 1.2; }
+.preferences-experience :is(h1,h2,p) { text-wrap: pretty; }
+.preferences-experience :is(button,a,select,input,summary) { scroll-margin-block: 1.5rem; }
+.preferences-experience :is(button,select) { min-height: 2.75rem; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.preferences-experience :is(input:not([type=checkbox]):not([type=radio]),select,textarea) { min-width: 0 !important; max-width: 100% !important; width: 100%; background: var(--surface) !important; color: var(--foreground) !important; border-color: var(--control-border) !important; }
+.preferences-experience :is(button,a,input,select,textarea,summary):focus-visible { outline: 3px solid var(--focus) !important; outline-offset: 2px !important; }
+.preferences-experience:is(.admin-ai-card,.audio-settings-panel,.audio-settings-state), .preferences-experience :is(.admin-audio-section,.admin-ai-config-section,.admin-security-card,.admin-ai-note-box) { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: clamp(.75rem,2vw,1.5rem); box-shadow: none; }
+.preferences-experience .audio-source-list { grid-template-columns: repeat(auto-fit,minmax(min(100%,14rem),1fr)); min-width: 0; }
+.preferences-experience .audio-source-option { min-width: 0; max-width: 100%; border-radius: var(--radius-md); }
+.preferences-experience .audio-source-option input { flex: 0 0 auto; }
+.preferences-experience .audio-source-option:has(input:checked) { background: var(--primary-soft); border-color: var(--primary); }
+.preferences-experience .audio-settings-footer { border-top: 1px solid var(--border); padding-top: 1rem; }
+.preferences-experience .admin-settings-tabs-nav { flex-wrap: wrap !important; overflow: visible !important; gap: .5rem !important; border: 0 !important; padding: .6rem !important; border-radius: var(--radius-md); background: var(--surface-soft); }
+.preferences-experience .admin-settings-tab { white-space: normal !important; min-width: 0; border: 1px solid var(--border) !important; border-radius: var(--radius-sm) !important; }
+.preferences-experience .admin-settings-tab.active { background: var(--primary-soft) !important; color: var(--primary) !important; border-color: var(--primary) !important; }
+.preferences-experience :is(.admin-provider-grid,.admin-ai-insights-grid,.admin-voice-registry-grid) { grid-template-columns: repeat(auto-fit,minmax(min(100%,14rem),1fr)) !important; }
+.preferences-experience :is(.admin-provider-card,.admin-ai-toggle-card,.admin-ai-insight-item,.admin-voice-config-card) { background: var(--surface-soft) !important; border-color: var(--border) !important; border-radius: var(--radius-md) !important; box-shadow: none !important; }
+.preferences-experience :is(.admin-provider-card.selected,.admin-ai-toggle-card.active) { background: var(--primary-soft) !important; border-color: var(--primary) !important; }
+.preferences-experience :is(.admin-provider-card-top,.admin-provider-visual,.admin-settings-footer-bar,.admin-ai-footer) { flex-wrap: wrap; gap: .75rem; }
+.preferences-experience .admin-provider-name-box { flex: 1 1 6rem; }
+.preferences-experience :is(.admin-save-btn,.admin-retry-btn) { background: var(--primary-fill) !important; color: var(--on-primary) !important; border-color: var(--primary-fill) !important; white-space: normal !important; max-width: 100%; box-shadow: none !important; }
+.preferences-experience .admin-ai-header .eyebrow-badge, .preferences-experience .admin-status-badge.badge-active { background: var(--primary-soft) !important; color: var(--primary) !important; border-color: var(--primary) !important; }
+.preferences-experience .admin-status-badge.badge-available, .preferences-experience :is(.admin-save-success,.admin-callout-success) { background: var(--success-soft) !important; color: var(--success) !important; border-color: var(--success) !important; }
+.preferences-experience .admin-status-badge:is(.badge-unavailable,.badge-simulation), .preferences-experience :is(.callout-warning,.admin-callout-warning) { background: var(--warning-soft) !important; color: var(--warning) !important; border-color: var(--warning-border) !important; }
+.preferences-experience :is(.admin-ai-insight-icon,.admin-provider-icon) { background: var(--primary-soft) !important; color: var(--primary) !important; }
+.preferences-experience :is(.admin-ai-toggle-card,.admin-ai-footer,.admin-settings-footer-bar,.admin-ai-callout,.admin-security-card) { min-width: 0; max-width: 100%; }
+.preferences-experience :is(.admin-settings-footer-bar,.admin-ai-footer) { position: static; background: var(--surface); border-radius: var(--radius-md); }
+@media (max-width: 620px) {
+  .preferences-experience .admin-settings-tab { flex: 1 1 8rem; }
+  .preferences-experience .admin-ai-footer .admin-save-btn { width: 100%; }
+  .preferences-experience :is(.admin-ai-insights-grid,.admin-provider-grid,.admin-voice-registry-grid) { grid-template-columns: minmax(0,1fr) !important; }
+}

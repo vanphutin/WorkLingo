@@ -1,3 +1,14 @@
+import type { SpeakerGender } from '@worklingo/content-format';
+
+export interface SpeakerVoiceAssignment {
+  readonly speaker: string;
+  readonly name: string;
+  /** Author declaration; null means unknown, including legacy dialogue. */
+  readonly gender: SpeakerGender | null;
+  readonly voice: string;
+  readonly voiceGender: SpeakerGender;
+}
+
 export interface SynthesizeAudioInput {
   readonly script: string;
   readonly voiceConfig?: Record<string, unknown>;
@@ -14,6 +25,7 @@ export interface SynthesizedAudio {
     readonly name: string;
     readonly requestId: string | null;
     readonly voice: string;
+    readonly speakerVoices?: readonly SpeakerVoiceAssignment[];
   };
 }
 

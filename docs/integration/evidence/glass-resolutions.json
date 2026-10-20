@@ -1,0 +1,160 @@
+[
+  {
+    "file": "apps/web/e2e/foundation-session.spec.ts",
+    "decision": "Already resolved during prior interrupted script: localized label plus API enum assertion; verify exact diff and test."
+  },
+  {
+    "file": "apps/web/src/app/(admin)/layout.tsx",
+    "hunk": 0,
+    "originalLine": 6,
+    "decision": "Keep role/auth/navigation guard and new feature destinations; GlassSurface/header/disclosure/main ownership from LG; guarded link seam follows in TDD.",
+    "combinedSHA256": "6abb4af6234c3d6a7ce2c0568ec48b83f6a531255fec1c3e6c3f71ad54e54581"
+  },
+  {
+    "file": "apps/web/src/app/(admin)/layout.tsx",
+    "hunk": 1,
+    "originalLine": 19,
+    "decision": "Keep role/auth/navigation guard and new feature destinations; GlassSurface/header/disclosure/main ownership from LG; guarded link seam follows in TDD.",
+    "combinedSHA256": "84885d4ad9cfb60fc25a44aee7d18680175336ac4341de6b840d59b8c4c91a15"
+  },
+  {
+    "file": "apps/web/src/app/(admin)/layout.tsx",
+    "hunk": 2,
+    "originalLine": 39,
+    "decision": "Keep role/auth/navigation guard and new feature destinations; GlassSurface/header/disclosure/main ownership from LG; guarded link seam follows in TDD.",
+    "combinedSHA256": "35550dd1a031809382172bc71fc2bb97bc4f59fecda8455180c875b1fb075fcd"
+  },
+  {
+    "file": "apps/web/src/app/(admin)/layout.tsx",
+    "hunk": 3,
+    "originalLine": 115,
+    "decision": "Keep role/auth/navigation guard and new feature destinations; GlassSurface/header/disclosure/main ownership from LG; guarded link seam follows in TDD.",
+    "combinedSHA256": "17d352334ccbd16706b2a8a7abaf4ccfef003c13c11d3b8b3ff23a6cca5cbc07"
+  },
+  {
+    "file": "apps/web/src/app/(admin)/layout.tsx",
+    "hunk": 4,
+    "originalLine": 125,
+    "decision": "Keep role/auth/navigation guard and new feature destinations; GlassSurface/header/disclosure/main ownership from LG; guarded link seam follows in TDD.",
+    "combinedSHA256": "a1ec952784235aea41894d5fc58e94440df64d99d5f616876aaecd835ed120a7"
+  },
+  {
+    "file": "apps/web/src/features/admin-content/content-authoring-workspace.tsx",
+    "hunk": 0,
+    "originalLine": 22,
+    "decision": "Narration review feature and authoring styles are complementary imports.",
+    "combinedSHA256": "1f8e9af5c73c038a7eda903648fdb67a06b7bb994c1b36e41065ac4740231ade"
+  },
+  {
+    "file": "apps/web/src/features/admin-content/content-list.tsx",
+    "hunk": 0,
+    "originalLine": 95,
+    "decision": "Keep named keyboard scroll region plus new reload/error/lifecycle behavior.",
+    "combinedSHA256": "7d18e54d75b80bb75ef3a3998c3f8d6f66cdc8bb5c1a083f611f48f83e169bd7"
+  },
+  {
+    "file": "apps/web/src/features/admin-ielts-band-curriculum/band-curriculum-workspace.tsx",
+    "hunk": 0,
+    "originalLine": 13,
+    "decision": "Keep BandStageEditor/scoped feature CSS and LG section semantics/material classes; new handlers stay outside hunk.",
+    "combinedSHA256": "d46655464fd4b81de67948b734d388227973256e0b3bf5cee3c6b7c2f709bfcc"
+  },
+  {
+    "file": "apps/web/src/features/admin-ielts-band-curriculum/band-curriculum-workspace.tsx",
+    "hunk": 1,
+    "originalLine": 91,
+    "decision": "Keep BandStageEditor/scoped feature CSS and LG section semantics/material classes; new handlers stay outside hunk.",
+    "combinedSHA256": "32e14a64e1981917038b12240d75c51188ea56b46037473574a4dd22ee414293"
+  },
+  {
+    "file": "apps/web/src/features/admin-ielts-mock/ielts-mock-workspace.tsx",
+    "hunk": 0,
+    "originalLine": 191,
+    "decision": "Single admin main owns landmark; retain actual authoring busy state.",
+    "combinedSHA256": "762b5171e8f757336f236d26504ff0a1c298dbeeb45fd782908179e78353ee0c"
+  },
+  {
+    "file": "apps/web/src/features/audio/audio-settings-panel.tsx",
+    "hunk": 0,
+    "originalLine": 12,
+    "decision": "Voice registry/store is the approved new owner, not obsolete direct speech hook; retain LG preference classes and unavailable saved voice logic.",
+    "combinedSHA256": "9c6a067fdb21d0c5c061748bce89b07ec9679fcc55bb1ba3d161e6ed05ff9faa"
+  },
+  {
+    "file": "apps/web/src/features/audio/audio-settings-panel.tsx",
+    "hunk": 1,
+    "originalLine": 74,
+    "decision": "Voice registry/store is the approved new owner, not obsolete direct speech hook; retain LG preference classes and unavailable saved voice logic.",
+    "combinedSHA256": "acb176405608af12662c0ab93cd04ac7a6dbe829c8ebd6d4e83b249c813eee99"
+  },
+  {
+    "file": "apps/web/src/features/ielts-bridge/ielts-bridge.css",
+    "hunk": 0,
+    "originalLine": 33,
+    "decision": "New media/data-table styles and existing LG bridge owners both required; later browser reflow validates cascade.",
+    "combinedSHA256": "ddbbfac2689567c39d70ef4db67952c7ea9c2365e6462b2666cd9c6d28ced1ce"
+  },
+  {
+    "file": "apps/web/src/features/ielts-mock/ielts-mock.tsx",
+    "hunk": 0,
+    "originalLine": 13,
+    "decision": "Preserve V2/V3 preflight/idempotent start/pause/resume/recordings/expiry/revision recovery; reapply LG presentation without reverting server policy.",
+    "combinedSHA256": "41bd1c102afb6f43e23627ce0ea2aee72ae99a9bb681276cd701041aa5e77bb1"
+  },
+  {
+    "file": "apps/web/src/features/ielts-mock/ielts-mock.tsx",
+    "hunk": 1,
+    "originalLine": 29,
+    "decision": "Preserve V2/V3 preflight/idempotent start/pause/resume/recordings/expiry/revision recovery; reapply LG presentation without reverting server policy.",
+    "combinedSHA256": "336db98040ba2a3afa64508b82016571e370e0cb9bff1a0f10a892017a974fda"
+  },
+  {
+    "file": "apps/web/src/features/ielts-mock/ielts-mock.tsx",
+    "hunk": 2,
+    "originalLine": 94,
+    "decision": "Preserve V2/V3 preflight/idempotent start/pause/resume/recordings/expiry/revision recovery; reapply LG presentation without reverting server policy.",
+    "combinedSHA256": "d24f99bc650b3f403ebb2ca6c3c0579a3f3c24bd1ee5159d4d096fde0c2bb314"
+  },
+  {
+    "file": "apps/web/src/features/learning-session/dashboard-view.test.tsx",
+    "hunk": 0,
+    "originalLine": 8,
+    "decision": "Keep actual new overview API fixture used by dashboard tests.",
+    "combinedSHA256": "2712e18b3558015f7405c7b26a065eed06e39b9b93504bd4692ffdea7ed1b3bc"
+  },
+  {
+    "file": "apps/web/src/features/learning-session/dashboard-view.tsx",
+    "hunk": 0,
+    "originalLine": 22,
+    "decision": "Preserve new dashboard analytics/program level selection and honest missing level; localize actual known Foundation code without inventing default.",
+    "combinedSHA256": "2c6c9b4f32cc75b6c72d3bf9e1a3c06037065eabc116f3f5e1f4a57a13271b9e"
+  },
+  {
+    "file": "apps/web/src/features/learning-session/dashboard-view.tsx",
+    "hunk": 1,
+    "originalLine": 272,
+    "decision": "Preserve new dashboard analytics/program level selection and honest missing level; localize actual known Foundation code without inventing default.",
+    "combinedSHA256": "be01727e6d3980b1c4aa28a3cfc98ab341ff6a70915fd80c8780de7ba87cae1c"
+  },
+  {
+    "file": "apps/web/src/features/learning-session/evaluation-feedback.test.tsx",
+    "hunk": 0,
+    "originalLine": 18,
+    "decision": "Retain both real model-processing steps and LG inline/busy/delete/draft identity coverage.",
+    "combinedSHA256": "2cad42a8ce7c5127d9a4c7c1052d3cbc3ebdedb887bb1015cf7ab25af595d1c4"
+  },
+  {
+    "file": "apps/web/src/i18n/messages/ieltsMock.ts",
+    "hunk": 0,
+    "originalLine": 3,
+    "decision": "Retain all media/V3 translations and LG answer-state labels in both locales.",
+    "combinedSHA256": "7cb6147c4ae5dd01af453d2c041018e2a09862e408ff6e8a1241cfc3a63f616a"
+  },
+  {
+    "file": "apps/web/src/i18n/messages/ieltsMock.ts",
+    "hunk": 1,
+    "originalLine": 92,
+    "decision": "Retain all media/V3 translations and LG answer-state labels in both locales.",
+    "combinedSHA256": "6b124c78328716b804ad0c3ecb4f260fdcf23f239a1aac32758242e6fa631c64"
+  }
+]

@@ -1,0 +1,62 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-content" "src/features/admin-curriculum" "src/features/admin-ielts-orientation" "src/features/admin-ielts-bridge" "src/features/admin-ielts-integrated" "src/features/admin-ielts-band-curriculum" "src/features/admin-ielts-mock"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/admin-content/content-list.test.tsx (3 tests) 1149ms
+   ✓ ContentList > renders empty state when no imports exist  528ms
+   ✓ ContentList > localizes import statuses and dates while preserving lesson source titles and links  364ms
+ ✓ src/features/admin-ielts-band-curriculum/band-curriculum-workspace.test.tsx (3 tests) 1668ms
+   ✓ localizes invalid JSON and retains the same source editor across a locale switch  1152ms
+ ✓ src/features/admin-content/content-authoring-workspace.test.tsx (7 tests) 2427ms
+   ✓ ContentAuthoringWorkspace > shows localized validation API errors while preserving the mounted source across a locale switch  1199ms
+   ✓ ContentAuthoringWorkspace > validates source on demand and clicking issue highlights position  359ms
+   ✓ ContentAuthoringWorkspace > switches to publish tab, publishes lesson, and switches workspace to read-only  405ms
+ ✓ src/features/admin-curriculum/foundation-definition-editor.test.tsx (9 tests) 2979ms
+   ✓ FoundationDefinitionEditor > localizes prerequisite revision metadata without translating its authored title  842ms
+   ✓ FoundationDefinitionEditor > localizes mapping validation and preserves the unsaved objective when switching locale  484ms
+   ✓ FoundationDefinitionEditor > shows actionable mapping errors and labelled mobile-friendly controls  324ms
+   ✓ FoundationDefinitionEditor > preserves unsaved fields after stale save and offers refresh  308ms
+ ✓ src/features/admin-curriculum/curriculum-workspace.test.tsx (6 tests) 3210ms
+   ✓ CurriculumWorkspace > creates a new path and reloads tree  1577ms
+   ✓ CurriculumWorkspace > preserves the selected program after a recoverable create error  712ms
+ ✓ src/features/admin-ielts-orientation/orientation-authoring-workspace.test.tsx (8 tests) 3650ms
+   ✓ OrientationAuthoringWorkspace > localizes authoring controls while preserving the mounted English slide draft  1266ms
+   ✓ OrientationAuthoringWorkspace > localizes validation feedback and re-renders it when the locale changes  605ms
+   ✓ OrientationAuthoringWorkspace > edits and saves a selected slide with the current optimistic revision  341ms
+   ✓ OrientationAuthoringWorkspace > shows semantic validation issues and publishes only after validation succeeds  712ms
+ ✓ src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.test.tsx (6 tests) 5155ms
+   ✓ IeltsBridgeAuthoringWorkspace > localizes taxonomy and task controls without replacing authored stage content or edits  1914ms
+   ✓ IeltsBridgeAuthoringWorkspace > localizes answerable task editors and preserves English prompts, choices and feedback  723ms
+   ✓ IeltsBridgeAuthoringWorkspace > edits the selected stage and saves with optimistic revision  410ms
+   ✓ IeltsBridgeAuthoringWorkspace > shows validation issues and enables publish only after validation succeeds  1471ms
+   ✓ IeltsBridgeAuthoringWorkspace > requires confirmation before archiving a published module  409ms
+ ✓ src/features/admin-ielts-integrated/integrated-profile-workspace.test.tsx (2 tests) 1753ms
+   ✓ localizes skill allocations and retains unsaved minutes in the mounted input  1193ms
+   ✓ shows Vietnamese allocation validation and enables publishing only for a valid saved revision  558ms
+ ✓ src/features/admin-ielts-mock/ielts-mock-workspace.test.tsx (4 tests) 1824ms
+   ✓ IeltsMockWorkspace pagination > displays failed mock validation in Vietnamese with the technical field path and blocks publication  805ms
+   ✓ IeltsMockWorkspace pagination > preserves source and teacher feedback drafts while localizing the review controls  433ms
+   ✓ IeltsMockWorkspace pagination > loads subsequent mock and review pages when explicit next offsets exist  474ms
+ ✓ src/features/admin-content/audio-preview.test.tsx (4 tests) 1771ms
+   ✓ AudioPreview > labels simulation artifacts as diagnostic tones and does not expose them in an audio player  975ms
+   ✓ AudioPreview > triggers generate audio, polls job by status until completion, and refreshes artifact list  337ms
+ ✓ src/features/admin-content/lesson-preview.test.tsx (5 tests) 1898ms
+   ✓ LessonPreview > localizes educational wrappers while preserving English passages, prompts, vocabulary and answers  1043ms
+   ✓ LessonPreview > shows Foundation pedagogy metadata as validated draft state  592ms
+ ✓ src/features/admin-content/publish-panel.test.tsx (4 tests) 1573ms
+   ✓ PublishPanel > disables publish button if validation or audio is not ready  1205ms
+ ✓ src/features/admin-content/admin-system-labels.test.tsx (3 tests) 1173ms
+   ✓ admin system enum display > localizes validation summaries and actionable issue names while retaining diagnostic codes  829ms
+ ✓ src/features/admin-content/new-content-import.test.tsx (3 tests) 832ms
+   ✓ NewContentImport > submits rawSource and navigates to the created import id  464ms
+ ✓ src/features/admin-content/source-editor.test.tsx (4 tests) 600ms
+   ✓ SourceEditor > renders line gutter and controlled textarea  485ms
+ ✓ src/features/admin-content/source-position.test.ts (7 tests) 7ms
+
+ Test Files  16 passed (16)
+      Tests  78 passed (78)
+   Start at  13:44:51
+   Duration  20.45s (transform 5.96s, setup 0ms, collect 32.81s, tests 31.67s, environment 44.91s, prepare 9.44s)

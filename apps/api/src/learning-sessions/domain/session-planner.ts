@@ -49,8 +49,14 @@ function distributeActivities<T>(items: readonly T[], bucketCount: number): T[][
 }
 
 export function computeAvailableDurations(
-  mission: { readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities'> },
+  mission: { readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities' | 'intermediateTopic'> },
 ): readonly SessionDuration[] {
+  if (mission.lessonVersion.intermediateTopic) {
+    try {
+      planTopicSession({ id: '', lessonVersion: mission.lessonVersion }, mission.lessonVersion.intermediateTopic.durationMinutes, false);
+      return [mission.lessonVersion.intermediateTopic.durationMinutes];
+    } catch { return []; }
+  }
   const activities = mission.lessonVersion.activities;
   const availableDurations: SessionDuration[] = [];
 
@@ -90,6 +96,7 @@ export function computeAvailableDurations(
 }
 
 export function planFoundationSession(input: PlanFoundationSessionInput): SessionPlan {
+  if (input.mission.lessonVersion.intermediateTopic) return planTopicSession(input.mission, input.durationMinutes);
   if (!supportedSessionDurations.includes(input.durationMinutes as SessionDuration)) {
     throw new UnsupportedSessionDurationError(input.durationMinutes);
   }
@@ -183,10 +190,19 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
       return left.order - right.order;
     });
 
+    if (type === 'respond' && input.productivePairPerRespondBlock) {
+      const speaking = matchingActivities.filter(activity => activity.activityType === 'speaking').slice(0, occurrences);
+      const writing = matchingActivities.filter(activity => activity.activityType === 'writing').slice(0, occurrences);
+      if (speaking.length !== occurrences || writing.length !== occurrences) throw new InvalidLessonPlanError('IELTS respond blocks require distinct speaking and writing tasks');
+      // Preserve scheduler priority within each skill, then pair the two skills.
+      // Source order or a due-review priority must not put two speaking tasks in one block.
+      matchingActivities.splice(0, matchingActivities.length, ...speaking.flatMap((activity, index) => [activity, writing[index]!]));
+    }
+
     // A shorter session selects only the activities needed for its canonical blocks.
     // Respond keeps two activities when available so speaking and writing remain covered.
     const selectedActivityCount = type === 'respond'
-      ? Math.max(2, occurrences)
+      ? (input.productivePairPerRespondBlock ? occurrences * 2 : Math.max(2, occurrences))
       : occurrences;
     matchingActivities.splice(selectedActivityCount);
 
@@ -208,6 +224,10 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
     const activities = distributedByType.get(type)?.[bucketIndex] ?? [];
     if (activities.length === 0) {
       throw new InvalidLessonPlanError(`Lesson has an empty ${type} block`);
+    }
+    if (input.productivePairPerRespondBlock && type === 'respond' &&
+        (!activities.some(activity => activity.activityType === 'speaking') || !activities.some(activity => activity.activityType === 'writing'))) {
+      throw new InvalidLessonPlanError('IELTS respond blocks require distinct speaking and writing tasks');
     }
 
     return {
@@ -241,5 +261,26 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
     throw new InvalidLessonPlanError(`Invalid session plan: ${result.error.message}`);
   }
 
+  return deepFreeze(result.data);
+}
+
+function planTopicSession(
+  mission: { readonly id: string; readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities' | 'intermediateTopic'> & { readonly id?: string } },
+  durationMinutes: number,
+  validateIdentity = true,
+): SessionPlan {
+  const topic = mission.lessonVersion.intermediateTopic!;
+  if (durationMinutes !== topic.durationMinutes) throw new InsufficientContentForDurationError(durationMinutes, [topic.durationMinutes]);
+  const activities = mission.lessonVersion.activities;
+  const blocks = topic.allocations.map((allocation, index) => {
+    const selected = activities.filter(a => a.learningBlock === allocation.type).slice().sort((a, b) => a.order - b.order);
+    if (!selected.length) throw new InvalidLessonPlanError(`Topic has an empty ${allocation.type} stage`);
+    return { ...allocation, order: index + 1, activityIds: selected.map(a => a.id), skills: [...new Set(selected.flatMap(a => a.skills))] };
+  });
+  if (blocks.flatMap(b => b.activityIds).length !== activities.length) throw new InvalidLessonPlanError('Every topic activity must be scheduled');
+  const placeholderId = '00000000-0000-4000-8000-000000000001';
+  const result = sessionPlanSchema.safeParse({ kind: 'topic', durationMinutes, missionId: validateIdentity ? mission.id : placeholderId,
+    lessonVersionId: validateIdentity ? mission.lessonVersion.id : placeholderId, blocks });
+  if (!result.success) throw new InvalidLessonPlanError('Invalid topic plan');
   return deepFreeze(result.data);
 }

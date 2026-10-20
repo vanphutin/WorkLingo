@@ -1,0 +1,46 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/ai/ai-settings-panel.test.tsx" "-t" "one page heading"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ❯ src/features/ai/ai-settings-panel.test.tsx (3 tests | 1 failed | 2 skipped) 346ms
+   × AI settings panel > keeps one page heading when account settings accompany system settings 344ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  System AI settings
+Received:
+  AI settings
+   ↓ AI settings panel > saves Discovery selection and fallback opt-out, and disables unconfigured OpenAI
+   ↓ AI settings panel > shows localized settings and safely handles load errors
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/ai/ai-settings-panel.test.tsx > AI settings panel > keeps one page heading when account settings accompany system settings
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  System AI settings
+Received:
+  AI settings
+ ❯ src/features/ai/ai-settings-panel.test.tsx:16:55
+     14|     expect(await screen.findAllByRole('combobox')).toHaveLength(2);
+     15|     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(…
+     16|     expect(screen.getByRole('heading', { level: 1 })).toHaveTextConten…
+       |                                                       ^
+     17|     expect(screen.getByRole('heading', { level: 2 })).toHaveTextConten…
+     18|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  18:31:01
+   Duration  2.68s (transform 296ms, setup 0ms, collect 1.14s, tests 346ms, environment 785ms, prepare 125ms)
+
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/web@0.0.0 test: `vitest run "src/features/ai/ai-settings-panel.test.tsx" "-t" "one page heading"`
+Exit status 1

@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-culture-traditions-objective]
+statement: Infer and accurately use contextual Culture & Traditions vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-culture-traditions-lesson
+title: Culture & Traditions: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Recommend how the festival can welcome visitors while respecting participants.
+[/LESSON]
+
+[WORD_BANK ielts-culture-traditions-bank]
+title: Culture & Traditions in context
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-cultural-heritage]]
+expression: cultural heritage
+meaning_vi: di sản văn hóa
+pronunciation: /ˈkʌltʃərəl ˈherɪtɪdʒ/
+collocations: preserve cultural heritage
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our cultural heritage project will record residents' accounts with permission rather than treat museum labels as the only authority.
+common_error: Heritage is generally uncountable when naming shared traditions.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-local-traditions]]
+expression: local traditions
+meaning_vi: truyền thống địa phương
+pronunciation: /ˈləʊkəl trəˈdɪʃənz/
+collocations: maintain local traditions
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The festival will present local traditions through demonstrations led by people who practise them.
+common_error: Use traditions for distinct inherited practices.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-traditional-crafts]]
+expression: traditional crafts
+meaning_vi: nghề thủ công truyền thống
+pronunciation: /trəˈdɪʃənəl krɑːfts/
+collocations: learn traditional crafts
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Workshops on traditional crafts will pay makers for their preparation time as well as the public demonstration.
+common_error: Crafts can name different skilled activities, not only finished products.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-cultural-diversity]]
+expression: cultural diversity
+meaning_vi: sự đa dạng văn hóa
+pronunciation: /ˈkʌltʃərəl daɪˈvɜːsəti/
+collocations: celebrate cultural diversity
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The planning group will reflect cultural diversity by inviting recent arrivals to help choose the programme.
+common_error: Diversity is a noun; diverse is an adjective.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-shared-identity]]
+expression: shared identity
+meaning_vi: bản sắc chung
+pronunciation: /ʃeəd aɪˈdentəti/
+collocations: a sense of shared identity
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A discussion on shared identity will welcome disagreement instead of requiring everyone to describe the town in the same way.
+common_error: Shared means held in common; do not confuse it with identical.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-oral-history]]
+expression: oral history
+meaning_vi: lịch sử truyền khẩu
+pronunciation: /ˌɔːrəl ˈhɪstəri/
+collocations: record oral history
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Every oral history contributor can review their recording before deciding whether it may be displayed.
+common_error: Oral refers to spoken accounts; aural relates to hearing.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-community-participation]]
+expression: community participation
+meaning_vi: sự tham gia của cộng đồng
+pronunciation: /kəˈmjuːnəti pɑːˌtɪsɪˈpeɪʃən/
+collocations: encourage community participation
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Community participation will include telephone suggestions for residents who cannot attend the evening meeting.
+common_error: Participation is followed by in when naming the activity.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-historic-buildings]]
+expression: historic buildings
+meaning_vi: các tòa nhà có ý nghĩa lịch sử
+pronunciation: /hɪˈstɒrɪk ˈbɪldɪŋz/
+collocations: protect historic buildings
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A guided walk will discuss historic buildings without entering private homes or blocking residents' doorways.
+common_error: Historic means historically significant; historical means related to history.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-artistic-expression]]
+expression: artistic expression
+meaning_vi: sự biểu đạt nghệ thuật
+pronunciation: /ɑːˈtɪstɪk ɪkˈspreʃən/
+collocations: support artistic expression
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: An open stage will support artistic expression, with clear time limits applied equally to all performers.
+common_error: Expression is a noun; express is the verb.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-cultural-exchange]]
+expression: cultural exchange
+meaning_vi: giao lưu văn hóa
+pronunciation: /ˈkʌltʃərəl ɪksˈtʃeɪndʒ/
+collocations: encourage cultural exchange
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The cultural exchange table will pair demonstrations with questions so visitors can learn without treating makers as exhibits.
+common_error: Exchange implies interaction rather than one-way display.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-authentic-experience]]
+expression: authentic experience
+meaning_vi: trải nghiệm chân thực
+pronunciation: /ɔːˈθentɪk ɪkˈspɪəriəns/
+collocations: an authentic experience
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The brochure will not promise a single authentic experience because residents interpret the same tradition differently.
+common_error: Use an before authentic experience.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-culture-traditions-intergenerational-learning]]
+expression: intergenerational learning
+meaning_vi: học hỏi giữa các thế hệ
+pronunciation: /ˌɪntəˌdʒenəˈreɪʃənəl ˈlɜːnɪŋ/
+collocations: support intergenerational learning
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A repair workshop will support intergenerational learning by inviting older makers and younger digital designers to solve a problem together.
+common_error: Intergenerational describes exchange across generations.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-culture-traditions-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a museum and residents planning a small community festival. Please compare the priorities below before our next meeting.
+Our cultural heritage project will record residents' accounts with permission rather than treat museum labels as the only authority.
+The festival will present local traditions through demonstrations led by people who practise them.
+Workshops on traditional crafts will pay makers for their preparation time as well as the public demonstration.
+The planning group will reflect cultural diversity by inviting recent arrivals to help choose the programme.
+A discussion on shared identity will welcome disagreement instead of requiring everyone to describe the town in the same way.
+Every oral history contributor can review their recording before deciding whether it may be displayed.
+Community participation will include telephone suggestions for residents who cannot attend the evening meeting.
+A guided walk will discuss historic buildings without entering private homes or blocking residents' doorways.
+An open stage will support artistic expression, with clear time limits applied equally to all performers.
+The cultural exchange table will pair demonstrations with questions so visitors can learn without treating makers as exhibits.
+The brochure will not promise a single authentic experience because residents interpret the same tradition differently.
+A repair workshop will support intergenerational learning by inviting older makers and younger digital designers to solve a problem together.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-culture-traditions-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Cultural heritage includes everyday skills my grandmother uses, not only objects kept behind glass.
+Lan: Local traditions can change, so younger participants should be able to explain how they adapt an old practice.
+An: Traditional crafts deserve respect for the time involved; a maker should not be expected to work for exposure alone.
+Lan: Cultural diversity means listening to people who live here now rather than presenting one group as a curiosity.
+An: Shared identity should leave room for different experiences, because belonging does not require identical memories.
+Lan: Oral history contributors should be able to withdraw a recording if they later feel uncomfortable about public access.
+An: Community participation would improve if the meeting time did not exclude parents who collect children from school.
+Lan: Historic buildings can be interesting from the street, and visitors still need to respect the people living inside.
+An: Artistic expression should include new work, not only performances that match visitors' expectations of tradition.
+Lan: Cultural exchange works when both sides can ask questions rather than one group doing all the explaining.
+An: An authentic experience for me would involve an honest conversation, including things that do not fit a tourist brochure.
+Lan: Intergenerational learning can work in both directions when an older craftsperson and a younger designer each share useful knowledge.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-culture-traditions-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Cultural heritage includes everyday skills my grandmother uses, not only objects kept behind glass.
+Lan: Local traditions can change, so younger participants should be able to explain how they adapt an old practice.
+An: Traditional crafts deserve respect for the time involved; a maker should not be expected to work for exposure alone.
+Lan: Cultural diversity means listening to people who live here now rather than presenting one group as a curiosity.
+An: Shared identity should leave room for different experiences, because belonging does not require identical memories.
+Lan: Oral history contributors should be able to withdraw a recording if they later feel uncomfortable about public access.
+An: Community participation would improve if the meeting time did not exclude parents who collect children from school.
+Lan: Historic buildings can be interesting from the street, and visitors still need to respect the people living inside.
+An: Artistic expression should include new work, not only performances that match visitors' expectations of tradition.
+Lan: Cultural exchange works when both sides can ask questions rather than one group doing all the explaining.
+An: An authentic experience for me would involve an honest conversation, including things that do not fit a tourist brochure.
+Lan: Intergenerational learning can work in both directions when an older craftsperson and a younger designer each share useful knowledge.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-culture-traditions-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-cultural-heritage | ielts-culture-traditions-local-traditions | ielts-culture-traditions-traditional-crafts
+prompt: Our cultural heritage project will record residents' accounts with permission rather than treat museum labels as the only authority. The festival will present local traditions through demonstrations led by people who practise them. Workshops on traditional crafts will pay makers for their preparation time as well as the public demonstration.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-cultural-exchange | ielts-culture-traditions-authentic-experience | ielts-culture-traditions-intergenerational-learning
+prompt: The cultural exchange table will pair demonstrations with questions so visitors can learn without treating makers as exhibits. The brochure will not promise a single authentic experience because residents interpret the same tradition differently. A repair workshop will support intergenerational learning by inviting older makers and younger digital designers to solve a problem together.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-cultural-heritage | ielts-culture-traditions-local-traditions | ielts-culture-traditions-traditional-crafts | ielts-culture-traditions-cultural-diversity
+
+QUESTION:
+How will the project collect residents’ accounts?
+
+OPTIONS:
+A. With permission
+B. Without involving contributors
+C. Only by copying museum labels
+
+ANSWER:
+A
+
+EXPLANATION:
+With permission. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-culture-traditions-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-discussion
+language_block_refs: ielts-culture-traditions-cultural-heritage | ielts-culture-traditions-local-traditions | ielts-culture-traditions-traditional-crafts | ielts-culture-traditions-cultural-diversity
+audio_ref: ielts-culture-traditions-discussion-audio
+
+QUESTION:
+What does the speaker include in heritage?
+
+OPTIONS:
+A. Everyday skills used by a family member
+B. Only objects behind glass
+C. Only tourism brochures
+
+ANSWER:
+A
+
+EXPLANATION:
+Everyday skills used by a family member. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-culture-traditions-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-shared-identity | ielts-culture-traditions-oral-history | ielts-culture-traditions-community-participation | ielts-culture-traditions-historic-buildings
+
+QUESTION:
+What does the shared-identity discussion allow?
+
+OPTIONS:
+A. Only one approved description
+B. Only accounts from homeowners
+C. Different interpretations and disagreement
+
+ANSWER:
+C
+
+EXPLANATION:
+Different interpretations and disagreement. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-culture-traditions-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-discussion
+language_block_refs: ielts-culture-traditions-shared-identity | ielts-culture-traditions-oral-history | ielts-culture-traditions-community-participation | ielts-culture-traditions-historic-buildings
+audio_ref: ielts-culture-traditions-discussion-audio
+
+QUESTION:
+What does belonging allow in the speaker’s view?
+
+OPTIONS:
+A. Only identical memories
+B. Only the oldest account
+C. Different experiences and memories
+
+ANSWER:
+C
+
+EXPLANATION:
+Different experiences and memories. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-culture-traditions-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-artistic-expression | ielts-culture-traditions-cultural-exchange | ielts-culture-traditions-authentic-experience | ielts-culture-traditions-intergenerational-learning
+
+QUESTION:
+How will the open stage allocate performance time?
+
+OPTIONS:
+A. Without any timetable
+B. With equal published limits
+C. By giving sponsors all the time
+
+ANSWER:
+B
+
+EXPLANATION:
+With equal published limits. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-culture-traditions-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-discussion
+language_block_refs: ielts-culture-traditions-artistic-expression | ielts-culture-traditions-cultural-exchange | ielts-culture-traditions-authentic-experience | ielts-culture-traditions-intergenerational-learning
+audio_ref: ielts-culture-traditions-discussion-audio
+
+QUESTION:
+What should artistic work include?
+
+OPTIONS:
+A. Only works approved by tourists
+B. New creations as well as expected traditions
+C. Only what visitors already expect
+
+ANSWER:
+B
+
+EXPLANATION:
+New creations as well as expected traditions. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-culture-traditions-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-discussion
+language_block_refs: ielts-culture-traditions-cultural-heritage | ielts-culture-traditions-shared-identity | ielts-culture-traditions-artistic-expression
+prompt: Cultural heritage includes everyday skills my grandmother uses, not only objects kept behind glass. Shared identity should leave room for different experiences, because belonging does not require identical memories. Artistic expression should include new work, not only performances that match visitors' expectations of tradition.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Recommend how the festival can welcome visitors while respecting participants. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-discussion
+language_block_refs: ielts-culture-traditions-traditional-crafts | ielts-culture-traditions-community-participation | ielts-culture-traditions-authentic-experience
+prompt: Traditional crafts deserve respect for the time involved; a maker should not be expected to work for exposure alone. Community participation would improve if the meeting time did not exclude parents who collect children from school. An authentic experience for me would involve an honest conversation, including things that do not fit a tourist brochure.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Recommend how the festival can welcome visitors while respecting participants. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-local-traditions | ielts-culture-traditions-oral-history | ielts-culture-traditions-cultural-exchange
+prompt: The festival will present local traditions through demonstrations led by people who practise them. Every oral history contributor can review their recording before deciding whether it may be displayed. The cultural exchange table will pair demonstrations with questions so visitors can learn without treating makers as exhibits.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Recommend how the festival can welcome visitors while respecting participants. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-culture-traditions-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-culture-traditions-objective
+content_refs: ielts-culture-traditions-proposal
+language_block_refs: ielts-culture-traditions-cultural-diversity | ielts-culture-traditions-historic-buildings | ielts-culture-traditions-intergenerational-learning
+prompt: The planning group will reflect cultural diversity by inviting recent arrivals to help choose the programme. A guided walk will discuss historic buildings without entering private homes or blocking residents' doorways. A repair workshop will support intergenerational learning by inviting older makers and younger digital designers to solve a problem together.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Recommend how the festival can welcome visitors while respecting participants. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

@@ -6,6 +6,7 @@ import {
   type IeltsBandPathwayAvailabilityDto, type IeltsBandPathwayDto,
 } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { hasIeltsEarlyAccess } from '../../ielts-access/ielts-early-access.js';
 import { evaluateBandProgression } from '../domain/evaluate-band-progression.js';
 
 const includeJourney = { curriculumVersion: true } as const;
@@ -22,9 +23,10 @@ export class IeltsBandLearnerService {
       this.database.ieltsBandCurriculum.findFirst({ where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } } }),
       this.database.ieltsBandJourney.findUnique({ where: { learnerId }, include: includeJourney }),
     ]);
+    const canEnter = bridge || await hasIeltsEarlyAccess(this.database, learnerId);
     return ieltsBandPathwayAvailabilitySchema.parse({
-      eligible: bridge && !!curriculum,
-      lockedReason: !bridge ? 'BRIDGE_REQUIRED' : !curriculum ? 'CURRICULUM_NOT_PUBLISHED' : null,
+      eligible: canEnter && !!curriculum,
+      lockedReason: !canEnter ? 'BRIDGE_REQUIRED' : !curriculum ? 'CURRICULUM_NOT_PUBLISHED' : null,
       targetBands: [3, 4, 5, 6, 7, 8, 9], journey: journey ? this.toDto(journey) : null,
     });
   }
@@ -41,7 +43,7 @@ export class IeltsBandLearnerService {
       await transaction.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-band-start:' + learnerId}))`;
       const existing = await transaction.ieltsBandJourney.findUnique({ where: { learnerId }, include: includeJourney });
       if (existing) return this.toDto(existing);
-      if (!await this.bridgeComplete(learnerId, transaction)) throw new ConflictException({ code: 'IELTS_BAND_PATHWAY_LOCKED', reason: 'BRIDGE_REQUIRED' });
+      if (!await this.bridgeComplete(learnerId, transaction) && !await hasIeltsEarlyAccess(transaction, learnerId)) throw new ConflictException({ code: 'IELTS_BAND_PATHWAY_LOCKED', reason: 'BRIDGE_REQUIRED' });
       const curriculum = await transaction.ieltsBandCurriculum.findFirst({ where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } }, include: { currentPublishedVersion: true } });
       if (!curriculum?.currentPublishedVersion) throw new ConflictException({ code: 'IELTS_BAND_CURRICULUM_UNAVAILABLE' });
       const content = ieltsBandCurriculumContentSchema.parse(curriculum.currentPublishedVersion.content);

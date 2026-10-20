@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-travel-transport-objective]
+statement: Infer and accurately use contextual Travel & Transport vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-travel-transport-lesson
+title: Travel & Transport: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Recommend a transport improvement using accessibility, cost and reliability evidence.
+[/LESSON]
+
+[WORD_BANK ielts-travel-transport-bank]
+title: Travel & Transport in context
+
+[[LANGUAGE_BLOCK ielts-travel-transport-traffic-congestion]]
+expression: traffic congestion
+meaning_vi: tình trạng ùn tắc giao thông
+pronunciation: /ˈtræfɪk kənˈdʒestʃən/
+collocations: reduce traffic congestion
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our route study measures traffic congestion at school opening times rather than relying on a daily average.
+common_error: Congestion is uncountable; do not say many congestions.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-commuting-time]]
+expression: commuting time
+meaning_vi: thời gian đi lại thường ngày
+pronunciation: /kəˈmjuːtɪŋ taɪm/
+collocations: reduce commuting time
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A staff survey will record commuting time from door to door, including walks and transfers.
+common_error: Commuting concerns regular travel between home and work or study.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-transport-infrastructure]]
+expression: transport infrastructure
+meaning_vi: cơ sở hạ tầng giao thông
+pronunciation: /ˈtrænspɔːt ˈɪnfrəstrʌktʃə/
+collocations: invest in transport infrastructure
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The transport infrastructure budget includes pavements and shelters as well as vehicles.
+common_error: Infrastructure is normally uncountable.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-pedestrian-safety]]
+expression: pedestrian safety
+meaning_vi: an toàn cho người đi bộ
+pronunciation: /pəˈdestriən ˈseɪfti/
+collocations: improve pedestrian safety
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A crossing near the clinic is the first pedestrian safety proposal because residents report difficulty reaching the stop.
+common_error: Pedestrian modifies safety and stays singular in the phrase.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-affordable-fares]]
+expression: affordable fares
+meaning_vi: giá vé phải chăng
+pronunciation: /əˈfɔːdəbəl feəz/
+collocations: offer affordable fares
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The council proposes affordable fares through a weekly cap instead of a discount limited to smartphone users.
+common_error: Fares are transport prices; fees usually refer to other services.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-peak-hours]]
+expression: peak hours
+meaning_vi: giờ cao điểm
+pronunciation: /piːk ˈaʊəz/
+collocations: travel during peak hours
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Extra buses during peak hours will be tested before the team considers reducing quieter services.
+common_error: Use during peak hours, not in peak hour when referring generally.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-rail-connections]]
+expression: rail connections
+meaning_vi: các tuyến kết nối đường sắt
+pronunciation: /reɪl kəˈnekʃənz/
+collocations: improve rail connections
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The timetable will coordinate rail connections by allowing time for passengers to walk between platforms.
+common_error: Connections can refer to services that link two journeys.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-active-travel]]
+expression: active travel
+meaning_vi: di chuyển bằng vận động cơ thể
+pronunciation: /ˈæktɪv ˈtrævəl/
+collocations: encourage active travel
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Secure cycle parking and wider pavements are proposed to encourage active travel on short local trips.
+common_error: Travel is uncountable when naming walking and cycling as a policy area.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-service-reliability]]
+expression: service reliability
+meaning_vi: độ tin cậy của dịch vụ
+pronunciation: /ˈsɜːvɪs rɪˌlaɪəˈbɪləti/
+collocations: improve service reliability
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Published service reliability figures will include cancellations, not only the punctuality of buses that ran.
+common_error: Reliability is a noun; reliable is an adjective.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-tourist-destinations]]
+expression: tourist destinations
+meaning_vi: điểm đến du lịch
+pronunciation: /ˈtʊərɪst ˌdestɪˈneɪʃənz/
+collocations: popular tourist destinations
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Summer routes to tourist destinations will be funded separately from the core services residents use throughout the year.
+common_error: Destination is countable, so pluralize it for several places.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-accessible-routes]]
+expression: accessible routes
+meaning_vi: tuyến đường dễ tiếp cận cho nhiều đối tượng
+pronunciation: /əkˈsesəbəl ruːts/
+collocations: design accessible routes
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Auditors will test accessible routes with wheelchair users before describing the network as fully accessible.
+common_error: Accessible concerns usability, not just whether a road exists.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-travel-transport-travel-demand]]
+expression: travel demand
+meaning_vi: nhu cầu đi lại
+pronunciation: /ˈtrævəl dɪˈmɑːnd/
+collocations: forecast travel demand
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Counts in different seasons will help forecast travel demand and avoid treating a festival weekend as typical.
+common_error: Demand is uncountable for overall need.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-travel-transport-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a transport team comparing changes to a town bus network. Please compare the priorities below before our next meeting.
+Our route study measures traffic congestion at school opening times rather than relying on a daily average.
+A staff survey will record commuting time from door to door, including walks and transfers.
+The transport infrastructure budget includes pavements and shelters as well as vehicles.
+A crossing near the clinic is the first pedestrian safety proposal because residents report difficulty reaching the stop.
+The council proposes affordable fares through a weekly cap instead of a discount limited to smartphone users.
+Extra buses during peak hours will be tested before the team considers reducing quieter services.
+The timetable will coordinate rail connections by allowing time for passengers to walk between platforms.
+Secure cycle parking and wider pavements are proposed to encourage active travel on short local trips.
+Published service reliability figures will include cancellations, not only the punctuality of buses that ran.
+Summer routes to tourist destinations will be funded separately from the core services residents use throughout the year.
+Auditors will test accessible routes with wheelchair users before describing the network as fully accessible.
+Counts in different seasons will help forecast travel demand and avoid treating a festival weekend as typical.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-travel-transport-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Traffic congestion affects my morning trip, but the road is usually quiet when I travel home at night.
+Lan: My commuting time includes waiting for a second bus, so a faster first journey may not solve the problem.
+An: Transport infrastructure should include a safe pavement to the stop, not only a new bus.
+Lan: Pedestrian safety is my priority because my mother must cross a busy road to reach the clinic bus.
+An: Affordable fares would help occasional workers, especially if the price cap also applied to cash payments.
+Lan: I work outside peak hours, so I hope improving the morning service will not remove the last evening bus.
+An: Rail connections are stressful when a timetable allows only two minutes to change platforms with luggage.
+Lan: Active travel is realistic for my short shopping trip if there is somewhere secure to leave a bicycle.
+An: Service reliability matters more to me than an advertised journey time that ignores frequent cancellations.
+Lan: Tourist destinations need signs, but local commuters should not lose their regular route whenever visitor numbers rise.
+An: Accessible routes should account for broken lifts, because a nominally step-free station can still be unusable.
+Lan: Travel demand changes during school holidays, so we should compare similar weeks before judging the new timetable.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-travel-transport-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Traffic congestion affects my morning trip, but the road is usually quiet when I travel home at night.
+Lan: My commuting time includes waiting for a second bus, so a faster first journey may not solve the problem.
+An: Transport infrastructure should include a safe pavement to the stop, not only a new bus.
+Lan: Pedestrian safety is my priority because my mother must cross a busy road to reach the clinic bus.
+An: Affordable fares would help occasional workers, especially if the price cap also applied to cash payments.
+Lan: I work outside peak hours, so I hope improving the morning service will not remove the last evening bus.
+An: Rail connections are stressful when a timetable allows only two minutes to change platforms with luggage.
+Lan: Active travel is realistic for my short shopping trip if there is somewhere secure to leave a bicycle.
+An: Service reliability matters more to me than an advertised journey time that ignores frequent cancellations.
+Lan: Tourist destinations need signs, but local commuters should not lose their regular route whenever visitor numbers rise.
+An: Accessible routes should account for broken lifts, because a nominally step-free station can still be unusable.
+Lan: Travel demand changes during school holidays, so we should compare similar weeks before judging the new timetable.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-travel-transport-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-traffic-congestion | ielts-travel-transport-commuting-time | ielts-travel-transport-transport-infrastructure
+prompt: Our route study measures traffic congestion at school opening times rather than relying on a daily average. A staff survey will record commuting time from door to door, including walks and transfers. The transport infrastructure budget includes pavements and shelters as well as vehicles.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-tourist-destinations | ielts-travel-transport-accessible-routes | ielts-travel-transport-travel-demand
+prompt: Summer routes to tourist destinations will be funded separately from the core services residents use throughout the year. Auditors will test accessible routes with wheelchair users before describing the network as fully accessible. Counts in different seasons will help forecast travel demand and avoid treating a festival weekend as typical.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-traffic-congestion | ielts-travel-transport-commuting-time | ielts-travel-transport-transport-infrastructure | ielts-travel-transport-pedestrian-safety
+
+QUESTION:
+When does the route study measure busy conditions?
+
+OPTIONS:
+A. At school opening times
+B. Only at midnight
+C. Only during a festival
+
+ANSWER:
+A
+
+EXPLANATION:
+At school opening times. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-travel-transport-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-discussion
+language_block_refs: ielts-travel-transport-traffic-congestion | ielts-travel-transport-commuting-time | ielts-travel-transport-transport-infrastructure | ielts-travel-transport-pedestrian-safety
+audio_ref: ielts-travel-transport-discussion-audio
+
+QUESTION:
+How does the speaker’s return journey differ?
+
+OPTIONS:
+A. It takes place when the road is usually quiet
+B. It always takes place during school opening
+C. It uses a private rail platform
+
+ANSWER:
+A
+
+EXPLANATION:
+It takes place when the road is usually quiet. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-travel-transport-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-affordable-fares | ielts-travel-transport-peak-hours | ielts-travel-transport-rail-connections | ielts-travel-transport-active-travel
+
+QUESTION:
+How would the price proposal work?
+
+OPTIONS:
+A. Only through a smartphone discount
+B. With free taxis
+C. With a weekly cap
+
+ANSWER:
+C
+
+EXPLANATION:
+With a weekly cap. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-travel-transport-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-discussion
+language_block_refs: ielts-travel-transport-affordable-fares | ielts-travel-transport-peak-hours | ielts-travel-transport-rail-connections | ielts-travel-transport-active-travel
+audio_ref: ielts-travel-transport-discussion-audio
+
+QUESTION:
+What payment option should the cap include?
+
+OPTIONS:
+A. Only a smartphone app
+B. Only an annual subscription
+C. Cash
+
+ANSWER:
+C
+
+EXPLANATION:
+Cash. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-travel-transport-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-service-reliability | ielts-travel-transport-tourist-destinations | ielts-travel-transport-accessible-routes | ielts-travel-transport-travel-demand
+
+QUESTION:
+What must published reliability figures include?
+
+OPTIONS:
+A. Only advertised journey times
+B. Cancelled services
+C. Only buses that completed their routes
+
+ANSWER:
+B
+
+EXPLANATION:
+Cancelled services. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-travel-transport-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-discussion
+language_block_refs: ielts-travel-transport-service-reliability | ielts-travel-transport-tourist-destinations | ielts-travel-transport-accessible-routes | ielts-travel-transport-travel-demand
+audio_ref: ielts-travel-transport-discussion-audio
+
+QUESTION:
+What does the speaker value above an advertised fast trip?
+
+OPTIONS:
+A. A timetable without cancellation figures
+B. A service that actually runs reliably
+C. A shorter route on a map
+
+ANSWER:
+B
+
+EXPLANATION:
+A service that actually runs reliably. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-travel-transport-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-discussion
+language_block_refs: ielts-travel-transport-traffic-congestion | ielts-travel-transport-affordable-fares | ielts-travel-transport-service-reliability
+prompt: Traffic congestion affects my morning trip, but the road is usually quiet when I travel home at night. Affordable fares would help occasional workers, especially if the price cap also applied to cash payments. Service reliability matters more to me than an advertised journey time that ignores frequent cancellations.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Recommend a transport improvement using accessibility, cost and reliability evidence. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-discussion
+language_block_refs: ielts-travel-transport-transport-infrastructure | ielts-travel-transport-rail-connections | ielts-travel-transport-accessible-routes
+prompt: Transport infrastructure should include a safe pavement to the stop, not only a new bus. Rail connections are stressful when a timetable allows only two minutes to change platforms with luggage. Accessible routes should account for broken lifts, because a nominally step-free station can still be unusable.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Recommend a transport improvement using accessibility, cost and reliability evidence. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-commuting-time | ielts-travel-transport-peak-hours | ielts-travel-transport-tourist-destinations
+prompt: A staff survey will record commuting time from door to door, including walks and transfers. Extra buses during peak hours will be tested before the team considers reducing quieter services. Summer routes to tourist destinations will be funded separately from the core services residents use throughout the year.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Recommend a transport improvement using accessibility, cost and reliability evidence. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-travel-transport-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-travel-transport-objective
+content_refs: ielts-travel-transport-proposal
+language_block_refs: ielts-travel-transport-pedestrian-safety | ielts-travel-transport-active-travel | ielts-travel-transport-travel-demand
+prompt: A crossing near the clinic is the first pedestrian safety proposal because residents report difficulty reaching the stop. Secure cycle parking and wider pavements are proposed to encourage active travel on short local trips. Counts in different seasons will help forecast travel demand and avoid treating a festival weekend as typical.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Recommend a transport improvement using accessibility, cost and reliability evidence. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

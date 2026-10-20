@@ -7,7 +7,7 @@ import { apiClient, type LearnerActivityDto } from '../../lib/api/api-client';
 import { WritingActivity } from './activity-renderers/writing-activity';
 import { EvaluationFeedback } from './evaluation-feedback';
 import { DashboardView } from './dashboard-view';
-import { ReadingActivity } from './activity-renderers/reading-activity';
+import { ActivityRenderer } from './activity-renderer';
 
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
@@ -29,7 +29,8 @@ it('uses consistent English system labels while preserving the writing prompt an
 
 it('uses English evaluation system copy by default', () => {
   render(<EvaluationFeedback evaluation={{ status: 'queued' } as never} />);
-  expect(screen.getByRole('heading', { name: 'Teacher AI is analyzing' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Teacher AI feedback' })).toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('Queued');
 });
 
 function Switch() {
@@ -74,11 +75,11 @@ it('formats dashboard statistics in Vietnamese without translating the lesson ti
 });
 
 it('keeps reading passages, questions and answer options unchanged in Vietnamese UI', () => {
-  render(<LocaleProvider initialLocale="vi"><ReadingActivity activity={{ ...activity,
+  render(<LocaleProvider initialLocale="vi"><ActivityRenderer sessionId="reading-locale" activity={{ ...activity,
     activityType: 'reading', payload: { prompt: 'Read the status email.', questions: [{ slug: 'q', prompt: 'When is the meeting?', options: ['Monday', 'Tuesday'] }] },
     content: [{ slug: 'email', text: 'The meeting is on Monday.' }],
   }} value={{ answerIndexes: [0] }} onChange={vi.fn()} /></LocaleProvider>);
-  expect(screen.getByRole('region', { name: 'Đoạn văn đọc' })).toBeInTheDocument();
+  expect(screen.getByRole('region', { name: 'Văn bản nguồn' })).toBeInTheDocument();
   expect(screen.getByText('The meeting is on Monday.')).toHaveAttribute('lang', 'en');
   expect(screen.getByRole('radio', { name: 'Monday' })).toBeChecked();
   expect(screen.getByText('When is the meeting?')).toHaveAttribute('lang', 'en');

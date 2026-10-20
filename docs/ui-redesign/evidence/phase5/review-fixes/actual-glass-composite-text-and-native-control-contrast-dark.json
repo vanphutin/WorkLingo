@@ -1,0 +1,1735 @@
+{
+  "title": "actual glass composite text and native control contrast dark",
+  "status": "passed",
+  "observations": [
+    {
+      "url": "/",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 145,
+          "top": 69,
+          "width": 96.359375,
+          "height": 27
+        }
+      ],
+      "points": [
+        {
+          "x": 159.45390625,
+          "y": 82.5
+        },
+        {
+          "x": 193.1796875,
+          "y": 82.5
+        },
+        {
+          "x": 226.90546875,
+          "y": 82.5
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 159.45390625,
+            "y": 82.5
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 193.1796875,
+            "y": 82.5
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 226.90546875,
+            "y": 82.5
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface public-nav-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/login",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Ngôn ngữ giao diện",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 708.765625,
+          "top": 223.765625,
+          "width": 142.390625,
+          "height": 21
+        }
+      ],
+      "points": [
+        {
+          "x": 730.12421875,
+          "y": 234.265625
+        },
+        {
+          "x": 779.9609375,
+          "y": 234.265625
+        },
+        {
+          "x": 829.79765625,
+          "y": 234.265625
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 730.12421875,
+            "y": 234.265625
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 19.2865386621728
+        },
+        {
+          "point": {
+            "x": 779.9609375,
+            "y": 234.265625
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 19.2865386621728
+        },
+        {
+          "point": {
+            "x": 829.79765625,
+            "y": 234.265625
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 19.2865386621728
+        }
+      ],
+      "ratio": 19.2865386621728,
+      "class": "glass-surface auth-module__zlf-ua__preferences",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 5.4938354382734165
+    },
+    {
+      "url": "/login",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        28,
+        28,
+        30
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 5.4938354382734165
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 77,
+          "top": 49.390625,
+          "width": 112.359375,
+          "height": 30
+        }
+      ],
+      "points": [
+        {
+          "x": 93.85390625,
+          "y": 64.390625
+        },
+        {
+          "x": 133.1796875,
+          "y": 64.390625
+        },
+        {
+          "x": 172.50546874999998,
+          "y": 64.390625
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 93.85390625,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 133.1796875,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 172.50546874999998,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/dashboard",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Tài khoản học viên",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 85,
+          "top": 181.578125,
+          "width": 97.59375,
+          "height": 16
+        }
+      ],
+      "points": [
+        {
+          "x": 99.6390625,
+          "y": 189.578125
+        },
+        {
+          "x": 133.796875,
+          "y": 189.578125
+        },
+        {
+          "x": 167.95468749999998,
+          "y": 189.578125
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 99.6390625,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 133.796875,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 167.95468749999998,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        }
+      ],
+      "ratio": 11.182939183698306,
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/dashboard",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/dashboard",
+      "kind": "control-boundary",
+      "class": "field-select target-select",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 77,
+          "top": 49.390625,
+          "width": 112.359375,
+          "height": 30
+        }
+      ],
+      "points": [
+        {
+          "x": 93.85390625,
+          "y": 64.390625
+        },
+        {
+          "x": 133.1796875,
+          "y": 64.390625
+        },
+        {
+          "x": 172.50546874999998,
+          "y": 64.390625
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 93.85390625,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 133.1796875,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 172.50546874999998,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Tài khoản học viên",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 85,
+          "top": 181.578125,
+          "width": 97.59375,
+          "height": 16
+        }
+      ],
+      "points": [
+        {
+          "x": 99.6390625,
+          "y": 189.578125
+        },
+        {
+          "x": 133.796875,
+          "y": 189.578125
+        },
+        {
+          "x": 167.95468749999998,
+          "y": 189.578125
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 99.6390625,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 133.796875,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 167.95468749999998,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        }
+      ],
+      "ratio": 11.182939183698306,
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/mastery",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Mức độ ghi nhớ",
+      "foreground": [
+        102,
+        179,
+        255
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 337,
+          "top": 418.25,
+          "width": 113.125,
+          "height": 21
+        }
+      ],
+      "points": [
+        {
+          "x": 353.96875,
+          "y": 428.75
+        },
+        {
+          "x": 393.5625,
+          "y": 428.75
+        },
+        {
+          "x": 433.15625,
+          "y": 428.75
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 353.96875,
+            "y": 428.75
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            102,
+            179,
+            255
+          ],
+          "ratio": 7.66229913456276
+        },
+        {
+          "point": {
+            "x": 393.5625,
+            "y": 428.75
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            102,
+            179,
+            255
+          ],
+          "ratio": 7.66229913456276
+        },
+        {
+          "point": {
+            "x": 433.15625,
+            "y": 428.75
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            102,
+            179,
+            255
+          ],
+          "ratio": 7.66229913456276
+        }
+      ],
+      "ratio": 7.66229913456276,
+      "class": "glass-surface evidence-nav-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/mastery",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/mastery",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 77,
+          "top": 49.390625,
+          "width": 112.359375,
+          "height": 30
+        }
+      ],
+      "points": [
+        {
+          "x": 93.85390625,
+          "y": 64.390625
+        },
+        {
+          "x": 133.1796875,
+          "y": 64.390625
+        },
+        {
+          "x": 172.50546874999998,
+          "y": 64.390625
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 93.85390625,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 133.1796875,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 172.50546874999998,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Tài khoản học viên",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 85,
+          "top": 181.578125,
+          "width": 97.59375,
+          "height": 16
+        }
+      ],
+      "points": [
+        {
+          "x": 99.6390625,
+          "y": 189.578125
+        },
+        {
+          "x": 133.796875,
+          "y": 189.578125
+        },
+        {
+          "x": 167.95468749999998,
+          "y": 189.578125
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 99.6390625,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 133.796875,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 167.95468749999998,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        }
+      ],
+      "ratio": 11.182939183698306,
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/ielts/orientation",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Phiên bản 1",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 1291.6875,
+          "top": 186.1875,
+          "width": 83.3125,
+          "height": 21
+        }
+      ],
+      "points": [
+        {
+          "x": 1304.184375,
+          "y": 196.6875
+        },
+        {
+          "x": 1333.34375,
+          "y": 196.6875
+        },
+        {
+          "x": 1362.503125,
+          "y": 196.6875
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 1304.184375,
+            "y": 196.6875
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 1333.34375,
+            "y": 196.6875
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 1362.503125,
+            "y": 196.6875
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface orientation-player__control-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/ielts/orientation",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        245,
+        245,
+        247
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 19.2865386621728
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 77,
+          "top": 49.390625,
+          "width": 112.359375,
+          "height": 30
+        }
+      ],
+      "points": [
+        {
+          "x": 93.85390625,
+          "y": 64.390625
+        },
+        {
+          "x": 133.1796875,
+          "y": 64.390625
+        },
+        {
+          "x": 172.50546874999998,
+          "y": 64.390625
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 93.85390625,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 133.1796875,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 172.50546874999998,
+            "y": 64.390625
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Tài khoản học viên",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 85,
+          "top": 181.578125,
+          "width": 97.59375,
+          "height": 16
+        }
+      ],
+      "points": [
+        {
+          "x": 99.6390625,
+          "y": 189.578125
+        },
+        {
+          "x": 133.796875,
+          "y": 189.578125
+        },
+        {
+          "x": 167.95468749999998,
+          "y": 189.578125
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 99.6390625,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 133.796875,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 167.95468749999998,
+            "y": 189.578125
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        }
+      ],
+      "ratio": 11.182939183698306,
+      "class": "glass-surface workspace-navigation workspace-navigation-learner",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Dùng bề mặt đặc cho các điều khiển nổi. Thiết bị cũng có thể giảm độ trong suốt hoặc tăng độ tương phản.",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 919,
+          "top": 676.875,
+          "width": 445.53125,
+          "height": 20
+        },
+        {
+          "left": 919,
+          "top": 700.640625,
+          "width": 236.3125,
+          "height": 20
+        }
+      ],
+      "points": [
+        {
+          "x": 985.8296875,
+          "y": 686.875
+        },
+        {
+          "x": 1141.765625,
+          "y": 686.875
+        },
+        {
+          "x": 1297.7015625,
+          "y": 686.875
+        },
+        {
+          "x": 954.446875,
+          "y": 710.640625
+        },
+        {
+          "x": 1037.15625,
+          "y": 710.640625
+        },
+        {
+          "x": 1119.865625,
+          "y": 710.640625
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 985.8296875,
+            "y": 686.875
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 13.80225551248017
+        },
+        {
+          "point": {
+            "x": 1141.765625,
+            "y": 686.875
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 13.80225551248017
+        },
+        {
+          "point": {
+            "x": 1297.7015625,
+            "y": 686.875
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 13.80225551248017
+        },
+        {
+          "point": {
+            "x": 954.446875,
+            "y": 710.640625
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 13.80225551248017
+        },
+        {
+          "point": {
+            "x": 1037.15625,
+            "y": 710.640625
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 13.80225551248017
+        },
+        {
+          "point": {
+            "x": 1119.865625,
+            "y": 710.640625
+          },
+          "background": [
+            0,
+            0,
+            0
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 13.80225551248017
+        }
+      ],
+      "ratio": 13.80225551248017,
+      "class": "glass-surface settings-card appearance-preferences",
+      "variant": "solid",
+      "filter": "none"
+    },
+    {
+      "url": "/settings",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/settings",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    },
+    {
+      "url": "/admin/content",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "WorkLingo",
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 77,
+          "top": 45.796875,
+          "width": 112.359375,
+          "height": 30
+        }
+      ],
+      "points": [
+        {
+          "x": 93.85390625,
+          "y": 60.796875
+        },
+        {
+          "x": 133.1796875,
+          "y": 60.796875
+        },
+        {
+          "x": 172.50546874999998,
+          "y": 60.796875
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 93.85390625,
+            "y": 60.796875
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 133.1796875,
+            "y": 60.796875
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        },
+        {
+          "point": {
+            "x": 172.50546874999998,
+            "y": 60.796875
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            245,
+            245,
+            247
+          ],
+          "ratio": 15.626445165292282
+        }
+      ],
+      "ratio": 15.626445165292282,
+      "class": "glass-surface shell-header-surface",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/admin/content",
+      "theme": "dark",
+      "kind": "text-position-composite",
+      "text": "Không gian quản trị",
+      "foreground": [
+        209,
+        209,
+        214
+      ],
+      "ancestorOpacity": 1,
+      "rectangles": [
+        {
+          "left": 85,
+          "top": 174.375,
+          "width": 105.28125,
+          "height": 16
+        }
+      ],
+      "points": [
+        {
+          "x": 100.7921875,
+          "y": 182.375
+        },
+        {
+          "x": 137.640625,
+          "y": 182.375
+        },
+        {
+          "x": 174.4890625,
+          "y": 182.375
+        }
+      ],
+      "samples": [
+        {
+          "point": {
+            "x": 100.7921875,
+            "y": 182.375
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 137.640625,
+            "y": 182.375
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        },
+        {
+          "point": {
+            "x": 174.4890625,
+            "y": 182.375
+          },
+          "background": [
+            28,
+            28,
+            30
+          ],
+          "effectiveForeground": [
+            209,
+            209,
+            214
+          ],
+          "ratio": 11.182939183698306
+        }
+      ],
+      "ratio": 11.182939183698306,
+      "class": "glass-surface workspace-navigation workspace-navigation-admin",
+      "variant": "regular",
+      "filter": "blur(20px) saturate(1.8)"
+    },
+    {
+      "url": "/admin/content",
+      "kind": "control-boundary",
+      "class": "",
+      "background": [
+        0,
+        0,
+        0
+      ],
+      "border": [
+        146,
+        146,
+        151
+      ],
+      "foreground": [
+        245,
+        245,
+        247
+      ],
+      "ratio": 6.780625309409163
+    }
+  ],
+  "fixtures": true
+}

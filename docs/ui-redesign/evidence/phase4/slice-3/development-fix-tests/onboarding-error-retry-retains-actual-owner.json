@@ -1,0 +1,12 @@
+{
+  "mode": "development",
+  "title": "onboarding error retry retains actual owner",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "onboarding",
+      "retryRecovered": true
+    }
+  ]
+}

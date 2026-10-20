@@ -1,0 +1,9 @@
+warning: in the working copy of 'apps/web/src/app/(learner)/settings/ai/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/src/app/(learner)/settings/audio/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/src/app/(learner)/settings/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/src/app/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/src/features/admin-curriculum/curriculum.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/src/features/learning-session/evaluation-feedback.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/src/features/mastery/mastery.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'mandate/INDEX.md', LF will be replaced by CRLF the next time Git touches it
+{"timestamp": "2026-10-20T20:00:08.032341+00:00", "command": "python docs/integration/evidence/preservation.py", "result": "PASS", "originalHEAD": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe", "originalProtectedFiles": 1295, "dirtyFiles": 52, "backupFiles": 2978, "originalIndexStatusAndFingerprintsUnchanged": true, "allSelectedIgnoredBytesAndBackupHashesVerified": true, "liquidGlassHEADStatusUnchanged": true, "mainUnchanged": true, "limitations": "Private backup remains outside Git; other worktree dirty source is inventoried but not transplanted."}

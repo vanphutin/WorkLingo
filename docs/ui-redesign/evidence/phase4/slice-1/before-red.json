@@ -1,0 +1,14 @@
+{
+  "mode": "before",
+  "baseline": "2d9ba79",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 333
+    }
+  ]
+}

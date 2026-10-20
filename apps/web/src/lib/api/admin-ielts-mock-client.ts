@@ -1,8 +1,8 @@
-import { adminIeltsMockSchema, ieltsMockReportSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
+import { ieltsMockRecordingSchema, adminIeltsMockSchema, ieltsMockReportSchema, ieltsMockValidationSchema, publishIeltsMockResultSchema } from '@worklingo/contracts';
 import { z } from 'zod';
 import { ApiError } from './api-client';
 
-const pendingAttemptSchema = z.object({ id: z.string(), learnerId: z.string(), revision: z.number(), responses: z.record(z.string(), z.string()), submittedAt: z.union([z.string(), z.date(), z.null()]), mockTestVersion: z.object({ version: z.number() }) });
+const pendingAttemptSchema = z.object({ policyVersion: z.enum(['legacy-v1', 'v2']).optional(), recordings: z.array(ieltsMockRecordingSchema).optional(), id: z.string(), learnerId: z.string(), revision: z.number(), responses: z.record(z.string(), z.string()), submittedAt: z.union([z.string(), z.date(), z.null()]), mockTestVersion: z.object({ version: z.number() }) });
 const mockPageSchema = z.object({ items: z.array(adminIeltsMockSchema), nextCursor: z.string().nullable() });
 const pendingPageSchema = z.object({ items: z.array(pendingAttemptSchema), nextCursor: z.string().nullable() });
 const errorSchema = z.object({ code: z.string().optional(), message: z.union([z.string(), z.array(z.string())]).optional() });
@@ -10,6 +10,7 @@ export class AdminIeltsMockClient {
   private readonly baseUrl: string;
   constructor(baseUrl?: string) { this.baseUrl = (baseUrl ?? process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api/v1').replace(/\/+$/u, ''); }
   list(cursor?: string) { return this.request(`/admin/ielts-mocks${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ''}`, { method: 'GET' }, mockPageSchema); }
+  create(input: { idempotencyKey: string; content: unknown }) { return this.request('/admin/ielts-mocks', { method: 'POST', body: JSON.stringify(input) }, adminIeltsMockSchema); }
   save(id: string, input: { expectedRevision: number; idempotencyKey: string; content: unknown }) { return this.request(`/admin/ielts-mocks/${id}/draft`, { method: 'PUT', body: JSON.stringify(input) }, adminIeltsMockSchema); }
   validate(id: string, expectedRevision: number) { return this.request(`/admin/ielts-mocks/${id}/validate`, { method: 'POST', body: JSON.stringify({ expectedRevision, idempotencyKey: crypto.randomUUID() }) }, ieltsMockValidationSchema); }
   publish(id: string, expectedRevision: number) { return this.request(`/admin/ielts-mocks/${id}/publish`, { method: 'POST', body: JSON.stringify({ expectedRevision, idempotencyKey: crypto.randomUUID() }) }, publishIeltsMockResultSchema); }

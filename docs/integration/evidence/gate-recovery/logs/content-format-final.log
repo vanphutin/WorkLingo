@@ -1,0 +1,19 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/packages/content-format
+
+ ✓ src/foundation-templates.spec.ts (8 tests) 34ms
+ ✓ src/foundation-format.spec.ts (13 tests) 53ms
+ ✓ src/validator.spec.ts (7 tests) 21ms
+ ✓ src/dialogue-validation.spec.ts (11 tests) 46ms
+ ✓ src/parser.spec.ts (10 tests) 22ms
+ ✓ src/dialogue.spec.ts (49 tests) 38ms
+ ✓ src/audio-narration.spec.ts (9 tests) 34ms
+ ✓ src/normalizer.spec.ts (4 tests) 28ms
+ ✓ src/source-location.spec.ts (6 tests) 7ms
+ ✓ src/intermediate-authoring.spec.ts (13 tests) 21ms
+ ✓ src/ielts-topic-manifest.spec.ts (5 tests) 6ms
+
+ Test Files  11 passed (11)
+      Tests  135 passed (135)
+   Start at  02:14:06
+   Duration  3.21s (transform 432ms, setup 0ms, collect 1.59s, tests 310ms, environment 3ms, prepare 1.64s)

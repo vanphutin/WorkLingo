@@ -35,6 +35,39 @@ afterEach(async () => Promise.all(servers.splice(0).map((server) =>
   new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve())))));
 
 describe('MicrosoftTextToSpeechAdapter', () => {
+  it('synthesizes ordered dialogue once with distinct gendered voices and audits actual assignments', async () => {
+    const bodies: string[] = [];
+    const url = await endpoint((_request, response, body) => {
+      bodies.push(body);
+      response.end(wav());
+    });
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url, key: 'test-secret', region: 'test', timeoutMs: 1_000, voice: 'en-US-SaraNeural',
+    });
+
+    const result = await adapter.synthesize({ script: [
+      'An (nam): Hello, Lan & <team>.',
+      'Binh (male): Tell An "yes".',
+      'Lan (nữ): It\'s ready.',
+      'An: Thank you, Lan.',
+    ].join('\n') });
+
+    expect(bodies).toEqual([
+      '<speak version="1.0" xml:lang="en-US">'
+      + '<voice name="en-US-GuyNeural">Hello, Lan &amp; &lt;team&gt;.</voice>'
+      + '<voice name="en-US-DavisNeural">Tell An &quot;yes&quot;.</voice>'
+      + '<voice name="en-US-SaraNeural">It&apos;s ready.</voice>'
+      + '<voice name="en-US-GuyNeural">Thank you, Lan.</voice></speak>',
+    ]);
+    expect(result.provider).toMatchObject({
+      speakerVoices: [
+        { speaker: 'an', name: 'An', gender: 'male', voice: 'en-US-GuyNeural', voiceGender: 'male' },
+        { speaker: 'binh', name: 'Binh', gender: 'male', voice: 'en-US-DavisNeural', voiceGender: 'male' },
+        { speaker: 'lan', name: 'Lan', gender: 'female', voice: 'en-US-SaraNeural', voiceGender: 'female' },
+      ],
+    });
+  });
+
   it('sends escaped reviewed text and returns normalized WAV metadata', async () => {
     let capturedBody = '';
     let capturedHeaders: IncomingMessage['headers'] = {};
@@ -58,6 +91,111 @@ describe('MicrosoftTextToSpeechAdapter', () => {
       mimeType: 'audio/wav', sampleRate: 24_000,
       provider: { name: 'azure-speech', requestId: 'request-1', voice: 'en-US-JennyNeural' },
     });
+  });
+
+  it('preserves ordinary colon narration and escapes the requested narration voice', async () => {
+    let body = '';
+    const url = await endpoint((_request, response, ssml) => { body = ssml; response.end(wav()); });
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url, key: 'secret', region: 'test', timeoutMs: 1_000, voice: 'en-US-JennyNeural',
+    });
+
+    const result = await adapter.synthesize({
+      script: 'Reminder: Use <voice> & say "hello".',
+      voiceConfig: { voice: 'configured"/><audio src="bad' },
+    });
+
+    expect(body).toBe('<speak version="1.0" xml:lang="en-US">'
+      + '<voice name="configured&quot;/&gt;&lt;audio src=&quot;bad">'
+      + 'Reminder: Use &lt;voice&gt; &amp; say &quot;hello&quot;.</voice></speak>');
+    expect(result.provider).toMatchObject({ speakerVoices: [] });
+  });
+
+  it('keeps legacy genders unknown and stable while reserving a declared speaker voice first', async () => {
+    const bodies: string[] = [];
+    const url = await endpoint((_request, response, body) => { bodies.push(body); response.end(wav()); });
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url, key: 'secret', region: 'test', timeoutMs: 1_000, voice: 'en-US-JennyNeural',
+    });
+
+    const result = await adapter.synthesize({ script: 'Lan: Hello.\nAn (female): Hi.\nLan: See you.' });
+
+    expect(bodies).toEqual(['<speak version="1.0" xml:lang="en-US">'
+      + '<voice name="en-US-GuyNeural">Hello.</voice>'
+      + '<voice name="en-US-JennyNeural">Hi.</voice>'
+      + '<voice name="en-US-GuyNeural">See you.</voice></speak>']);
+    expect(result.provider).toMatchObject({ speakerVoices: [
+      { speaker: 'lan', name: 'Lan', gender: null, voice: 'en-US-GuyNeural', voiceGender: 'male' },
+      { speaker: 'an', name: 'An', gender: 'female', voice: 'en-US-JennyNeural', voiceGender: 'female' },
+    ] });
+  });
+
+  it('reads a two-speaker unannotated legacy dialogue without inventing author genders', async () => {
+    let body = '';
+    const url = await endpoint((_request, response, ssml) => { body = ssml; response.end(wav()); });
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url, key: 'secret', region: 'test', timeoutMs: 1_000, voice: 'en-US-JennyNeural',
+    });
+    const result = await adapter.synthesize({ script: 'An: Hi, Lan.\nLan: Hi, An.\nAn: Bye.' });
+
+    expect(body).toBe('<speak version="1.0" xml:lang="en-US">'
+      + '<voice name="en-US-JennyNeural">Hi, Lan.</voice>'
+      + '<voice name="en-US-GuyNeural">Hi, An.</voice>'
+      + '<voice name="en-US-JennyNeural">Bye.</voice></speak>');
+    expect(result.provider).toMatchObject({ speakerVoices: [
+      { speaker: 'an', gender: null, voiceGender: 'female' },
+      { speaker: 'lan', gender: null, voiceGender: 'male' },
+    ] });
+  });
+
+  it('uses the entire documented pool without changing narration or dropping continuation text', async () => {
+    let body = '';
+    const url = await endpoint((_request, response, ssml) => { body = ssml; response.end(wav()); });
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url, key: 'secret', region: 'test', timeoutMs: 1_000, voice: 'en-GB-RyanNeural',
+    });
+
+    await adapter.synthesize({ script: [
+      'At the office & reception.',
+      'An (male): First.',
+      'Still first.',
+      'Binh (male): Second.',
+      'Cuong (male): Third.',
+      'Lan (female): Fourth.',
+      'Mai (female): Fifth.',
+      'Nga (female): Sixth.',
+    ].join('\n') });
+
+    expect(body).toBe('<speak version="1.0" xml:lang="en-US">'
+      + '<voice name="en-GB-RyanNeural">At the office &amp; reception.</voice>'
+      + '<voice name="en-US-GuyNeural">First.\nStill first.</voice>'
+      + '<voice name="en-US-DavisNeural">Second.</voice>'
+      + '<voice name="en-US-TonyNeural">Third.</voice>'
+      + '<voice name="en-US-JennyNeural">Fourth.</voice>'
+      + '<voice name="en-US-AriaNeural">Fifth.</voice>'
+      + '<voice name="en-US-SaraNeural">Sixth.</voice></speak>');
+  });
+
+  it.each([
+    'An: Hi.\nBinh: Hello.\nLan: Good morning.',
+    'An (male): Hi.\nAn (female): Hello.',
+    'An (robot): Hi.\nLan: Hello.',
+    'An (robot): Hi.',
+    'An (): Hi.\nLan: Hello.',
+    'An (nam: Hi.\nLan: Hello.',
+    'An (nam: Hi.',
+    'An (male): Hi.\nBinh (male): Hello.\nLan: Morning.',
+    'An (male): Hi.\nBinh (male): Hi.\nCuong (male): Hi.\nDung (male): Hi.',
+    'An (female): Hi.\nBinh (female): Hi.\nCuong (female): Hi.\nDung (female): Hi.',
+  ])('rejects invalid or unallocatable dialogue before any HTTP request: %s', async (script) => {
+    let requests = 0;
+    const url = await endpoint((_request, response) => { requests += 1; response.end(wav()); });
+    const adapter = new MicrosoftTextToSpeechAdapter({
+      endpoint: url, key: 'secret', region: 'test', timeoutMs: 1_000, voice: 'en-US-JennyNeural',
+    });
+
+    await expect(adapter.synthesize({ script })).rejects.toThrow(/dialogue|distinct Azure/iu);
+    expect(requests).toBe(0);
   });
 
   it.each([

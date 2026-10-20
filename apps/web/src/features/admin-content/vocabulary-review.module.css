@@ -1,0 +1,19 @@
+.review { margin-block: 1.5rem; padding-block: 1.25rem; border-block: 1px solid var(--border); overflow-wrap: anywhere; }
+.heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; }
+.heading h4 { margin: 0; font-size: 1.125rem; }
+.review p { margin-block: .75rem; line-height: 1.6; }
+.review small { color: var(--muted); line-height: 1.5; display: block; }
+.progress { font-weight: 600; color: var(--primary); }
+.entries { display: grid; gap: 1.25rem; }
+.entry { min-width: 0; margin: 0; padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius-control); }
+.entry legend { font-size: 1.125rem; font-weight: 700; padding-inline: .4rem; }
+.warning { color: var(--warning); }
+.fresh { color: var(--primary); }
+.candidate { padding-block: .5rem; border-top: 1px solid var(--border); }
+.choice { display: flex; gap: .75rem; align-items: flex-start; min-height: 2.75rem; padding-block: .65rem; cursor: pointer; }
+.choice input { flex: 0 0 auto; margin-top: .25rem; width: 1.125rem; height: 1.125rem; accent-color: var(--primary); }
+.choice input:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.contexts { padding-inline-start: 1.875rem; font-size: .875rem; }
+.contexts ul { padding-inline-start: 1rem; margin-block: .5rem; }
+.newMeaning { border-top: 1px solid var(--border); }
+.entry:disabled { opacity: .7; }

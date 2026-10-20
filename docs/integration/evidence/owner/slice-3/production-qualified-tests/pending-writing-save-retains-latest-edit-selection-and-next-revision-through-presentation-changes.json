@@ -1,0 +1,21 @@
+{
+  "mode": "production",
+  "title": "pending writing save retains latest edit selection and next revision through presentation changes",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "inFlightSave": true,
+      "latestEdit": true,
+      "selection": [
+        7,
+        14
+      ],
+      "revisionOrder": [
+        0,
+        1
+      ],
+      "sameEditor": true
+    }
+  ]
+}

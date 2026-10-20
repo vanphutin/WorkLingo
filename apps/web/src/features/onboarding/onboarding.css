@@ -4,6 +4,8 @@
   max-width: 68rem;
   min-height: calc(100dvh - 5rem);
   padding-block: clamp(2rem, 6vw, 5rem);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .onboarding-header {
@@ -22,9 +24,9 @@
 }
 
 .onboarding-header h1 {
-  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-size: clamp(1.75rem, 3vw, 3rem);
   letter-spacing: -0.045em;
-  line-height: 1;
+  line-height: 1.15;
   text-wrap: balance;
 }
 
@@ -37,11 +39,12 @@
 
 .onboarding-kicker,
 .onboarding-section-label {
-  color: var(--primary);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--color-accent);
+  font-size: .875rem;
+  font-weight: 650;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .onboarding-methods,
@@ -68,7 +71,7 @@
 .onboarding-level {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-control);
   cursor: pointer;
   display: flex;
   gap: 0.9rem;
@@ -123,7 +126,7 @@
 .onboarding-status {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.85rem;
+  border-radius: var(--radius-panel);
   display: grid;
   gap: 1.5rem;
   padding: clamp(1.25rem, 4vw, 2.25rem);
@@ -144,7 +147,7 @@
 .onboarding-primary-link {
   align-items: center;
   background: var(--primary-fill);
-  border-radius: 0.65rem;
+  border-radius: var(--radius-control);
   color: var(--on-primary);
   display: inline-flex;
   font-weight: 700;
@@ -189,7 +192,7 @@
 .onboarding-status-error {
   background: var(--danger-soft);
   border: 1px solid var(--danger-border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-control);
   color: var(--danger);
   padding: 1rem 1.25rem;
 }
@@ -258,7 +261,7 @@
 .placement-recommendation {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.85rem;
+  border-radius: var(--radius-panel);
   padding: clamp(1.25rem, 4vw, 2.25rem);
 }
 
@@ -285,7 +288,7 @@
   align-items: center;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-control);
   display: flex;
   gap: 1rem;
   justify-content: space-between;
@@ -347,7 +350,7 @@
   align-items: center;
   background: var(--primary-fill);
   border: 1px solid transparent;
-  border-radius: 0.65rem;
+  border-radius: var(--radius-control);
   color: var(--on-primary);
   display: inline-flex;
   font-size: 1rem;
@@ -379,4 +382,21 @@
   .placement-recommendation dl { grid-template-columns: 1fr; }
   .placement-recommendation > button,
   .placement-refresh > button { justify-self: stretch; width: 100%; }
+}
+
+/* Phase4 ownership: native choices, solid assessment data and fluid controls. */
+.onboarding-page .onboarding-header { max-width: none; padding-block-end: 1.75rem; border-block-end: 1px solid var(--border); }
+.onboarding-page .onboarding-header > p:last-child { color: var(--text-secondary); }
+.onboarding-page :is(.onboarding-method, .onboarding-level, .onboarding-choice-panel, .onboarding-status, .onboarding-resume) { min-width: 0; box-shadow: none; }
+.onboarding-page :is(.onboarding-method span, .onboarding-level-copy) { min-width: 0; }
+.onboarding-page :is(.onboarding-method, .onboarding-level) { padding: 1.25rem; line-height: 1.65; }
+.onboarding-page :is(.onboarding-method, .onboarding-level):focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
+.onboarding-page :is(.onboarding-choice-panel, .onboarding-status, .onboarding-resume) { background: var(--surface-primary); padding: clamp(1rem, 3vw, 2rem); }
+.onboarding-page :is(button, a, input) { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; scroll-margin-block: 1rem; }
+.onboarding-page button { min-height: 48px; }
+.onboarding-page .onboarding-privacy-note { border-radius: var(--radius-control); line-height: 1.7; }
+.onboarding-page .placement-skill-list li { min-width: 0; }
+@media (max-width: 540px) {
+  .onboarding-page .onboarding-methods, .onboarding-page .onboarding-levels, .onboarding-page .placement-recommendation dl { grid-template-columns: minmax(0, 1fr); }
+  .onboarding-page :is(.onboarding-method, .onboarding-level, .onboarding-choice-panel, .onboarding-resume) { padding: .875rem; }
 }

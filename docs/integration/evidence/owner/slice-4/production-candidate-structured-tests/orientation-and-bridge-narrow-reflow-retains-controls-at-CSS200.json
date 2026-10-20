@@ -1,0 +1,92 @@
+{
+  "title": "orientation and bridge narrow reflow retains controls at CSS200",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/ielts/orientation",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/orientation",
+      "width": 320,
+      "nativeKeyboard": true,
+      "focus": {
+        "tag": "BUTTON",
+        "left": 46,
+        "right": 274,
+        "top": 702.984375,
+        "bottom": 823.765625,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "width": 320,
+      "nativeKeyboard": true,
+      "focus": {
+        "tag": "BUTTON",
+        "left": 46,
+        "right": 274,
+        "top": 475.296875,
+        "bottom": 749.640625,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/ielts/orientation",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/orientation",
+      "width": 390,
+      "nativeKeyboard": true,
+      "focus": {
+        "tag": "BUTTON",
+        "left": 46,
+        "right": 344,
+        "top": 703.0625,
+        "bottom": 823.84375,
+        "outline": 3
+      }
+    },
+    {
+      "url": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "url": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "width": 390,
+      "nativeKeyboard": true,
+      "focus": {
+        "tag": "BUTTON",
+        "left": 46,
+        "right": 344,
+        "top": 577.53125,
+        "bottom": 749.5,
+        "outline": 3
+      }
+    }
+  ]
+}

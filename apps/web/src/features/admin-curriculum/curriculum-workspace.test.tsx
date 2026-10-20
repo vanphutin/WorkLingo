@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { AdminCurriculumTreeDto } from '@worklingo/contracts';
 import { ApiError } from '../../lib/api/api-client';
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
+import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
 import { CurriculumWorkspace } from './curriculum-workspace';
 import { LocaleProvider } from '../../i18n/provider';
 
@@ -109,6 +110,50 @@ const mockTree: AdminCurriculumTreeDto = {
 };
 
 describe('CurriculumWorkspace', () => {
+  it('retains an unsaved Foundation objective through collapse and all curriculum filters', async () => {
+    const missionId = mockTree.paths[0]!.levels[0]!.missions[0]!.id;
+    const getDraft = vi.spyOn(curriculumFoundationClient, 'getDraft').mockResolvedValue({
+      missionId, revision: 2, status: 'DRAFT', publishedRevisions: [], definition: {
+        category: 'grammar', prerequisiteRevisionIds: [], objectives: [{ slug: 'request', statement: 'Saved statement', skills: ['reading'], required: true,
+          evidence: [{ lessonVersionId: '44444444-4444-4444-8444-444444444444', activitySlug: 'read-request', languageBlockSlugs: [] }] }],
+      },
+    });
+    vi.mocked(adminCurriculumClient.getTree).mockResolvedValue({ ...mockTree, paths: [...mockTree.paths,
+      { ...mockTree.paths[0]!, id: 'other-path', name: 'Other path', levels: [] } ] });
+    const { container } = render(<CurriculumWorkspace />);
+    fireEvent.click(await screen.findByRole('button', { name: /Edit Foundation.*Greetings Mission/i }));
+    const statement = await screen.findByLabelText('Objective statement');
+    fireEvent.change(statement, { target: { value: 'Unsaved objective must survive' } });
+    const loads = getDraft.mock.calls.length;
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }));
+    expect(await screen.findByLabelText('Objective statement')).toBe(statement);
+    expect(statement).toHaveValue('Unsaved objective must survive');
+    const search = screen.getByPlaceholderText('Search paths, levels, missions, slugs…');
+    fireEvent.change(search, { target: { value: 'no-matching-path' } });
+    fireEvent.change(search, { target: { value: '' } });
+    const status = container.querySelector('.toolbar-select')!;
+    fireEvent.change(status, { target: { value: 'ARCHIVED' } });
+    fireEvent.change(status, { target: { value: 'ALL' } });
+    fireEvent.click(screen.getByRole('tab', { name: /Other path/ }));
+    fireEvent.click(screen.getByRole('tab', { name: /All paths/i }));
+    expect(screen.getByLabelText('Objective statement')).toBe(statement);
+    expect(statement).toHaveValue('Unsaved objective must survive');
+    expect(getDraft).toHaveBeenCalledTimes(loads);
+  });
+  it('retains preserved search and collapse controls without changing curriculum mutations', async () => {
+    const createPath = vi.spyOn(adminCurriculumClient, 'createPath');
+    render(<CurriculumWorkspace />);
+    const search = await screen.findByPlaceholderText('Search paths, levels, missions, slugs…');
+    fireEvent.change(search, { target: { value: 'no-matching-curriculum-item' } });
+    expect(screen.getByText('No curriculum items match your search.')).toBeVisible();
+    fireEvent.change(search, { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }));
+    expect(screen.queryByText('Greetings Mission')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }));
+    expect(screen.getByText('Greetings Mission')).toBeVisible();
+    expect(createPath).not.toHaveBeenCalled();
+  });
   beforeEach(() => {
     vi.restoreAllMocks();
     vi.spyOn(adminCurriculumClient, 'getTree').mockResolvedValue(mockTree);

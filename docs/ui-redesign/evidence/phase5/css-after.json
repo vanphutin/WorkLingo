@@ -1,0 +1,303 @@
+{
+  "revision": "354c136d95603aea975a96057da1e1d86423d7f7",
+  "scope": "Same29 CSS file owners as css-before, counts are not defects",
+  "outsideTokens": {
+    "hex": 26,
+    "functionalColors": 57,
+    "important": 752,
+    "transitionAll": 1,
+    "backdrop": 8
+  },
+  "files": [
+    {
+      "source": "apps/web/src/styles/workspace.css",
+      "lines": 150,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 3,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "275aca080f4af7ef26b8b5df30e559ecfb83728564858ffe86a87b3f06798f8a"
+    },
+    {
+      "source": "apps/web/src/styles/tokens.css",
+      "lines": 319,
+      "hex": 172,
+      "functionalColors": 27,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "903b321699f4840c28c8e55a2ebcbcb512293c7ab08f118da670474ecd5f0ecd"
+    },
+    {
+      "source": "apps/web/src/styles/learning.css",
+      "lines": 71,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "736747654eae9242dcc84e16a93b40d3a7a6d1de3434043c78888bcf1152c088"
+    },
+    {
+      "source": "apps/web/src/styles/glass.css",
+      "lines": 84,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 8,
+      "sourceSHA256": "620a431d36df981d5c5528250ceebab459fb6766c851695c2f9f39fbd40e34ec"
+    },
+    {
+      "source": "apps/web/src/app/landing.css",
+      "lines": 51,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "5556bc893645fc9803bd3c47b2ed22d08a8d414640d07864e2d932c50a0edf6b"
+    },
+    {
+      "source": "apps/web/src/app/globals.css",
+      "lines": 1796,
+      "hex": 0,
+      "functionalColors": 2,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "070c6b6b3631b15c5036c82587293339a84c971d48df974ca4a1e76d4a24ce32"
+    },
+    {
+      "source": "apps/web/src/app/error-state.module.css",
+      "lines": 26,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "5ea83db9e2ebaa7b2c7269320816d1e963253ad0350515ca22c05ad78b75f9d2"
+    },
+    {
+      "source": "apps/web/src/app/(learner)/settings/settings.css",
+      "lines": 25,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "1e475d20f9434a207ceec55f6a6b44c00f72e045ab351a8f57945c56db1f3853"
+    },
+    {
+      "source": "apps/web/src/components/language-switcher.css",
+      "lines": 5,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "cf9c788c5cb0fc8e8a27c1b54b8ec9990de8e0942a3b9925a1474ee3b189d6c3"
+    },
+    {
+      "source": "apps/web/src/features/onboarding/onboarding.css",
+      "lines": 403,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "8fee99d848efc69ab616f503fad75424b29642395b8e283287b9472f2b30d525"
+    },
+    {
+      "source": "apps/web/src/features/mastery/mastery.css",
+      "lines": 276,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "76f078744905fae401b755b08bf4461ec889bb2165917d7235bbd369b10bb4af"
+    },
+    {
+      "source": "apps/web/src/features/auth/auth.module.css",
+      "lines": 139,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "81a3c7cd819da788a3a2945dabf7b377c7e9f92f8bb1bcc981b5271dad2e1591"
+    },
+    {
+      "source": "apps/web/src/features/learning-session/session-experience.css",
+      "lines": 65,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "e20a6c443341c84b795d5535ed143862749784886212950d26bb2e3dfc31feb1"
+    },
+    {
+      "source": "apps/web/src/features/learning-session/dashboard.css",
+      "lines": 46,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "1ee61554c6f9aab9d9e549ef0b7a49152bed5a449347c55320dc625066bcfc33"
+    },
+    {
+      "source": "apps/web/src/features/ielts-bridge/ielts-bridge.css",
+      "lines": 62,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "0a3f545efc771ae7abc1954e749052a297e6a8f8f3036a1dc3317dfa7ae9582d"
+    },
+    {
+      "source": "apps/web/src/features/admin-content/authoring-experience.css",
+      "lines": 59,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "0e8edcc68667c61b7141ee9b5da909376380e8f0f85ef131c5b01c15e277e918"
+    },
+    {
+      "source": "apps/web/src/features/admin-content/admin.css",
+      "lines": 1132,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 1,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "413527bf9bc918137c230ae74bafcb3a5d86ee47220373fd6b265b310528de8c"
+    },
+    {
+      "source": "apps/web/src/features/ielts-band-curriculum/ielts-band-pathway.css",
+      "lines": 14,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "4470941b868d8654507b9fe33781f9c58a762c7b8f264d7de7e8bcffb5eea0fb"
+    },
+    {
+      "source": "apps/web/src/features/ielts-mock/exam-experience.css",
+      "lines": 45,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "823b4995fe4f060238473df0f839678a7b4250c96789f2ca255824df0385f0fe"
+    },
+    {
+      "source": "apps/web/src/features/audio/preferences-experience.css",
+      "lines": 37,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 42,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "1d99c5b82f2b33d690e4c793b494bcdbd8996259d93fd7e0414ac84481e7bd6b"
+    },
+    {
+      "source": "apps/web/src/features/audio/admin-audio-settings.css",
+      "lines": 1067,
+      "hex": 9,
+      "functionalColors": 15,
+      "important": 526,
+      "transitionAll": 1,
+      "backdrop": 0,
+      "sourceSHA256": "29b41a25f79221868523b916c1e3d7143b15c1d050c5e56f44b15f173d410477"
+    },
+    {
+      "source": "apps/web/src/features/admin-audit/audit.css",
+      "lines": 178,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "a93ffcc192fa3737714eeeed80ef65d42b797a618a904d5aae25f7a9f8346a44"
+    },
+    {
+      "source": "apps/web/src/features/ielts-orientation/orientation-player.css",
+      "lines": 55,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "2530b9c49053417b65dfb3d7e290ac21d1d94612cf0f5be7d0522370c565948d"
+    },
+    {
+      "source": "apps/web/src/features/learning-programs/program-catalog.css",
+      "lines": 252,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "1447eaa2e197992bfe032e8f199736d86730c7a2a8987222a831d9af4347daa7"
+    },
+    {
+      "source": "apps/web/src/features/ai/admin-ai-settings.css",
+      "lines": 639,
+      "hex": 17,
+      "functionalColors": 40,
+      "important": 180,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "13d462be84981b3443df78d427a0f9d96abddcd1bf127d1b9ee4651e4b676c62"
+    },
+    {
+      "source": "apps/web/src/features/admin-curriculum/curriculum.css",
+      "lines": 384,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "fe8c2e6e4dc6a73af20f132b4426821356a9fd8be06e747466f8099ba117dd05"
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-bridge/ielts-bridge-authoring.css",
+      "lines": 44,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "68425cbce7a06ba8c0dc5b16ade5ba9140bfd61269c4dbf7eede769cd1ec321a"
+    },
+    {
+      "source": "apps/web/src/features/admin-ielts-orientation/orientation-authoring.css",
+      "lines": 38,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "4f319165c87fa0fd0b5e87667a9a84f9f3ce1c17b76111faed7bd344229975f8"
+    },
+    {
+      "source": "apps/web/src/features/admin-observability/observability.css",
+      "lines": 42,
+      "hex": 0,
+      "functionalColors": 0,
+      "important": 0,
+      "transitionAll": 0,
+      "backdrop": 0,
+      "sourceSHA256": "ebcf41a1c6086b23443559a239926413f1114c82c85004798d78ead86e9cd343"
+    }
+  ]
+}

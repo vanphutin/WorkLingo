@@ -7,6 +7,8 @@ import type {
 export function mapContentImportToDto(record: ContentImport): ContentImportDto {
   return {
     id: record.id,
+    topicGroupId: record.topicGroupId ?? null,
+    topicGroupRevision: record.topicGroupRevision ?? 0,
     lessonId: record.lessonId,
     lessonVersionId: record.lessonVersionId,
     rawSource: record.rawSource,

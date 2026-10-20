@@ -1,0 +1,63 @@
+{
+  "title": "settings operations matrix light 390",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/settings",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/settings/audio",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/admin/settings/audio",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/admin/settings/ai",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/admin/audit",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "url": "/admin/analytics",
+      "theme": "light",
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    }
+  ]
+}

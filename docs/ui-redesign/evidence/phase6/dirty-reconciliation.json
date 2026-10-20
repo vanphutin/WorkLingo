@@ -1,0 +1,481 @@
+{
+  "timestamp": "2026-10-20T13:19:34.058Z",
+  "originalMain": "7a5e383763ccd63c4befa4ab07a5559ba7cabfbe",
+  "branchHead": "69654e4dd6fd3fa7ed62249f69e36f20fd4f402d",
+  "divergenceMainFeature": "0\t40",
+  "mainIsAncestor": true,
+  "originalDirtyFiles": 52,
+  "overlappingOwners": 41,
+  "addAddFiles": 30,
+  "noOriginalMutation": true,
+  "rows": [
+    {
+      "file": "apps/web/src/app/(learner)/settings/ai/page.tsx",
+      "status": " M",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "7747701fc1d4fb4b4fb5fb7148d84ec2dd098a34243b2bc087c5aaf3e1acb379",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/app/(learner)/settings/audio/page.tsx",
+      "status": " M",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "e90e0dfed8a63924c06d36d8d04514b1908addfe5918f4170d2103fe32afa6f7",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/app/(learner)/settings/page.tsx",
+      "status": " M",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "2d484b84f35add771274615dee81a56d0dedd06529d33db7d8f54c012f31c9fe",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/app/globals.css",
+      "status": " M",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "44664536c918b8fbd0fccc4676023a6dd4c25211aeac656aabcce05af718fea8",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/app/page.tsx",
+      "status": " M",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "56e3aa14e11dea624c1e44c5cc0e18cd55fa8e712a0d1cacfcc2e5e765309e42",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx",
+      "status": " M",
+      "owner": "apps/web/src/features/admin-curriculum",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "d6e942cb51b1f173d7d983d5cee9deef67a081d4a967d05f95a386f9243a1328",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/features/admin-curriculum/curriculum.css",
+      "status": " M",
+      "owner": "apps/web/src/features/admin-curriculum",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "fccc4c8df5787b6fbaf57c6a5df0a68aa5ee7dbfd02f00010a6ed1d39d335012",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/features/learning-session/evaluation-feedback.test.tsx",
+      "status": " M",
+      "owner": "apps/web/src/features/learning-session",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "ff27ff2e4e0b94dbdd92a055a48ad62b8bdf5ee4f0ac03c8870cbc773be292a8",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/features/learning-session/evaluation-feedback.tsx",
+      "status": " M",
+      "owner": "apps/web/src/features/learning-session",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "2e631113851d11dad31dfec5149287fe1933074eedf6cfa8eda7e934fbbb1a5c",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/features/learning-session/session-shell.tsx",
+      "status": " M",
+      "owner": "apps/web/src/features/learning-session",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "b100286e982f654700d0aef654cee9f4f36e6f6f3bbed470287351f940c1ddca",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/features/mastery/mastery.css",
+      "status": " M",
+      "owner": "apps/web/src/features/mastery",
+      "conflictRisk": "HIGH overlapping owner",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "0505dfacd7f3fd9e03340d97e0c1bab602e11c3b6ca27a3feec4e44635c9bfe4",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/i18n/messages/adminCurriculum.ts",
+      "status": " M",
+      "owner": "apps/web/src/i18n",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "f5b7f85e13013d55dd1038acaa20e5407b3dcd8e59a841d4c0f0c73760dc75ef",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "apps/web/src/i18n/messages/learningSession.ts",
+      "status": " M",
+      "owner": "apps/web/src/i18n",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "ca82544e51cb7b3fa97867881d5557bce1b7a5b9d4bdfec0a211bbcc306fdd74",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "mandate/INDEX.md",
+      "status": " M",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "2d312032ad7880977d2d8dd328b96b382efd681653a3d2144c9ae1ecdfdf39ef",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "apps/web/src/app/(learner)/settings/page.test.tsx",
+      "status": "??",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "41af17b5935ba29bfef5a871e8425e4856fb6c9bd17b7d4dcba2e8eceef53d76",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "apps/web/src/app/(learner)/settings/settings.css",
+      "status": "??",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "a5def66fcf0ee811764ff5e3c0f8c1b8527d942792afe69a34131f772225fa13",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "apps/web/src/app/landing.css",
+      "status": "??",
+      "owner": "apps/web/src/app",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "2a3d848f355310337ae0af8699461098a7e79f1ea6d154777b7a19bcdca307da",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/reports/2026-10-19-intermediate-flow-audit.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "220c60b6a19eb1f54e9d0db719e31b01ffb949bf6b55ca42ed93e8569a5da137",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "docs/reports/intermediate-flow-evidence/json-autofill.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "987c2a751124b45f87ff2c0b550e1a76dea51bfd80b98d554570560e86d9033c",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "docs/reports/intermediate-flow-evidence/learner-60.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "83c397e35a49fb152ce9f60d6cf13464f485b2edaf51f145153c363fe4db7144",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "docs/reports/intermediate-flow-evidence/published.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "e734bd9a129af2a8c9265dd35d33f51442a5feb38e5f5089383f53a04d0a68d7",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "docs/reports/intermediate-flow-evidence/session-paused.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "3f5d3edee53e9c6e0d67c15fa05aa3c43a20859291e7b46798a952117bc10bd3",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "docs/superpowers/reports/2026-10-19-session-workspace-verification.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "4479eb2bb42e0213478eee9e802802abc5382bd9f4b3a237605bfcb4cacb6d12",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    },
+    {
+      "file": "docs/ui-redesign/01-ui-audit.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "2f9dbc87f1926a7edfe96dadd574e9f8f5e85ed054e5e95b85bd2b618cb1dc02",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/02-redesign-plan.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "ea78bd838d960f80d197697e68586e8ebba2d389724caebf8834132122103129",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/03-route-coverage.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "be132262598364c52a8114e4faee9c4893f11589617640394624a42b1d9a746e",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/collect-baseline.cjs",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "e290a958b5904d786e7553a73f108bf17cd6dc1cce8d9d410a1d93c5fed791b8",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/discovery-verification.json",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "32047298eee976d3e13fee54bdbf3fc110aa5fe2be769fad25a6fa769b04cde9",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/home-dark-desktop.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "40fe96cf5dd90207a53aa49c9adff3d083a3ec605766e5a461166ec2bc1ffacd",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/home-dark-mobile.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "73e491bdd171c6f6d64918bece89bb83d9dcad88cc09fad38bcd2c8775a95a62",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/home-dark-tablet.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "d007f9baf4ab08617b8b915cccc6ad58a2931b55003b5eb565577c6f22e085d9",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/home-light-desktop.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "dfc49e2835ecbf59287847046e3dcdb799798b22838b5b9c34cd7605d5674c8c",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/home-light-mobile.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "5a8d4007283d4136c66e92b49d87f6400ed45763955f235630fb5e07ab7a4939",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/home-light-tablet.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "0b0df6721e0fd419b66366025230e9901bec267ad75d74eb0fdf32242dd7ed99",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/login-dark-desktop.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "a2b6f1659b32b10dbe27bd9a05645bdcf5dd77db4579985e917372624f148c7b",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/login-dark-mobile.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "684c9f19d3a391598c6c8e51ad1a5a4541f8afbe9559fb84b586d095bef40993",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/login-dark-tablet.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "b3415a3b89a36cb7c86a819b97d0ccc8fc2e8c2bd94cbdbba56add10c3b1d6a3",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/login-light-desktop.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "e5d72d970c50489604404a733c3699b6ae277bd0b73711e8db4386b0d3805a52",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/login-light-mobile.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "4d09a884acfff56506205ed13a7bdfe8e81cbea86ba5180b34a46bfb85e4f924",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/login-light-tablet.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "d6d49bde961d04d77b6db36af206ed7c9b77321525e3cd53df5f90bd9d89f11a",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/mandate-proposal.json",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "734e3eede6234dbca8812aa76ef4d7bc528e28f3281967e63b82bcdcfc00e7de",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/public-baseline.json",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "658bb89c7df2b933d7d67ee55afd3067b6e6ee02dd3279da68e7455483ec214a",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/register-dark-desktop.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "ce1355e2bc9bc3f625e1365e95fadcd127843c0b53e7297cfdb6884cb0baede1",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/register-dark-mobile.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "439aa0612082ed511453dd80860dc23eb65d4417ea78bde8b47ac5d69c0b551a",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/register-dark-tablet.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "52c2942e7fda0182534926a32ebca2b38ac70e4fcda7448162cb2e919b0cc3df",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/register-light-desktop.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "87c0a3cf513d0e6da72c42853ece3a3b22ecaa72faa64de7b021bb3099f7dc82",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/register-light-mobile.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "c77c57c8c3545178b0a0dca7dd26f16e2d044d13d5e2c56d3474110dafff7057",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/register-light-tablet.png",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "ba9044e02d87314fd66c6aa235367d831979af476cbb520fb6cbdc871982fd5e",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/source-inventory.json",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "07f322d109c220187ff93868d60e7c15b11a0ffbd448286717c33b84e04ded93",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/evidence/verify-discovery.cjs",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "c9e68406a2d436fb926f3f59cf58015b1633250fa5e1911a9f3c007b9598dfa2",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "docs/ui-redesign/progress.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "HIGH add/add",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "9816ccbb344189655f5245926ab04073f95120e0757f6a9cbdd13712aa7259e5",
+      "proposedResolution": "Human-approved three-way/hunk reconciliation in a NEW isolated candidate after original work is preserved; retain business changes, resolve competing UI intentionally"
+    },
+    {
+      "file": "mandate/items/MND-20261019-001-ux-unify-worklingo-visual-materials-and-accessibility-fallbacks-for-liqui.md",
+      "status": "??",
+      "owner": "Repository/tooling/docs: separate user change",
+      "conflictRisk": "Separate source; review dependencies",
+      "preservation": "Preserved in original; not imported",
+      "sha256": "95a59781d11ec4179a616a2562d41071e64160b27c016020d485faab6635ea29",
+      "proposedResolution": "Preserve as a separate human-owned change; assess dependency and test before any approved integration"
+    }
+  ]
+}

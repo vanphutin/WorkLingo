@@ -1,0 +1,11 @@
+node:internal/process/promises:391
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.addStyleTag: Provide an object with a `url`, `path` or `content` property
+    at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\fixtures\phase6-firefox-media.cjs:12:16 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v20.20.1

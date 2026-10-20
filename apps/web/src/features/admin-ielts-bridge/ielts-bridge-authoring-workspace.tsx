@@ -7,7 +7,7 @@ import { formatNumber } from '../../i18n/translator';
 import type { MessageValues } from '../../i18n/translator';
 
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ieltsBridgeQuestionTypeSchema,
   ieltsBridgeStageTypes,
@@ -18,8 +18,10 @@ import {
 } from '@worklingo/contracts';
 
 import { adminIeltsBridgeClient } from '../../lib/api/admin-ielts-bridge-client';
+import { adminContentLifecycleClient } from '../../lib/api/admin-content-lifecycle-client';
 import { ApiError } from '../../lib/api/api-client';
 import './ielts-bridge-authoring.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsBridgeMessages['en']; values?: MessageValues };
 
@@ -97,10 +99,12 @@ export function IeltsBridgeAuthoringWorkspace() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<Notice | null>(null);
   const [error, setError] = useState<unknown>(null);
+  const dirtyIds = useRef(new Set<string>());
+  const removalReceipts = useRef(new Map<string, { signature: string; idempotencyKey: string }>());
 
   const selected = useMemo(() => modules.find((module) => module.id === selectedId) ?? null, [modules, selectedId]);
   const stage = selected?.draft.stages[selectedStageIndex] ?? null;
-  const questionTypeExists = modules.some((module) => module.draft.questionType === newQuestionType);
+  const hasHistory = selected ? selected.currentPublishedVersion !== null || selected.versions.length > 0 : false;
   const validationMessage = (issue: { message: string }) => {
     if (locale === 'en') return issue.message;
     switch (issue.message) {
@@ -117,9 +121,9 @@ export function IeltsBridgeAuthoringWorkspace() {
     return t('invalidField');
   };
 
-  const load = useCallback(async () => {
-    const data = await adminIeltsBridgeClient.list();
-    setModules(data);
+  const load = useCallback(async (removedId?: string) => {
+    const data = (await adminIeltsBridgeClient.list()).filter((module) => module.id !== removedId);
+    setModules((current) => data.map((module) => dirtyIds.current.has(module.id) ? current.find((item) => item.id === module.id) ?? module : module));
     setSelectedId((current) => data.some((module) => module.id === current) ? current : data[0]?.id ?? null);
     setSelectedStageIndex((current) => Math.min(current, ieltsBridgeStageTypes.length - 1));
   }, []);
@@ -133,7 +137,7 @@ export function IeltsBridgeAuthoringWorkspace() {
     try { await work(); }
     catch (cause) {
       if (cause instanceof ApiError && cause.status === 409) {
-        await load(); setError('revisionConflict');
+        setError('revisionConflict');
       } else setError(cause);
     } finally { setBusy(false); }
   };
@@ -141,6 +145,7 @@ export function IeltsBridgeAuthoringWorkspace() {
   const replaceModule = (next: AdminIeltsBridgeModuleDto) => setModules((current) => current.map((module) => module.id === next.id ? next : module));
   const updateDraft = (transform: (draft: IeltsBridgeModuleContent) => IeltsBridgeModuleContent) => {
     if (!selected) return;
+    dirtyIds.current.add(selected.id);
     setModules((current) => current.map((module) => module.id === selected.id ? { ...module, draft: transform(module.draft), status: 'DRAFT' } : module));
     setValidatedRevision(null); setIssues([]);
   };
@@ -150,7 +155,7 @@ export function IeltsBridgeAuthoringWorkspace() {
 
   if (loading) return <section className="bridge-admin-loading" aria-busy="true">{t('loading')}</section>;
 
-  return <section className="bridge-admin">
+  return <section className="bridge-admin authoring-experience">
     <header className="bridge-admin__header">
       <div><p className="bridge-admin__kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
       {selected ? <div className="bridge-admin__status"><strong>{statusLabel(selected.status)}</strong><span>{t('draftRevision', { revision: selected.draftRevision })}</span></div> : null}
@@ -164,13 +169,14 @@ export function IeltsBridgeAuthoringWorkspace() {
       <button type="button" onClick={() => void run(async () => {
         const created = await adminIeltsBridgeClient.create({ expectedRevision: null, idempotencyKey: crypto.randomUUID(), content: createDraft(newQuestionType) });
         setModules((current) => [...current, created]); setSelectedId(created.id); setSelectedStageIndex(0); setMessage({ key: 'moduleCreated' });
-      })} disabled={busy || questionTypeExists}>{t('createModule')}</button>
-      {questionTypeExists ? <span className="bridge-create__hint">{t('questionTypeExists')}</span> : null}
+        setValidatedRevision(null); setIssues([]);
+      })} disabled={busy}>{t('createModule')}</button>
     </div>
     {selected && stage ? <>
       <div className="bridge-admin__toolbar">
         <button type="button" onClick={() => void run(async () => {
           const saved = await adminIeltsBridgeClient.updateDraft(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID(), content: selected.draft });
+          dirtyIds.current.delete(selected.id);
           replaceModule(saved); setValidatedRevision(null); setMessage({ key: 'draftSaved' });
         })} disabled={busy}>{t('saveDraft')}</button>
         <button type="button" onClick={() => void run(async () => {
@@ -178,28 +184,45 @@ export function IeltsBridgeAuthoringWorkspace() {
           setIssues(result.issues); setValidatedRevision(result.canPublish ? selected.draftRevision : null);
           setModules((current) => current.map((module) => module.id === selected.id ? { ...module, status: result.status } : module));
           setMessage({ key: result.canPublish ? 'readyToPublish' : 'resolveIssues' });
-        })} disabled={busy}>{t('validateDraft')}</button>
+        })} disabled={busy || dirtyIds.current.has(selected.id)}>{t('validateDraft')}</button>
         <button type="button" className="primary" onClick={() => void run(async () => {
           const result = await adminIeltsBridgeClient.publish(selected.id, { expectedRevision: selected.draftRevision, idempotencyKey: crypto.randomUUID() });
           setMessage({ key: 'publishedVersion', values: { version: result.version } }); await load();
         })} disabled={busy || validatedRevision !== selected.draftRevision}>{t('publishVersion')}</button>
         <button type="button" onClick={() => {
-          if (window.confirm(t('archiveConfirm', { title: selected.draft.title }))) {
-            void run(async () => { replaceModule(await adminIeltsBridgeClient.archive(selected.id)); setMessage({ key: 'archived' }); });
+          if (window.confirm(t(hasHistory ? 'archiveConfirm' : 'deleteConfirm', { title: selected.draft.title }))) {
+            void run(async () => {
+              const expectedAction = hasHistory ? 'archived' : 'deleted';
+              const signature = `${selected.draftRevision}:${expectedAction}`;
+              let receipt = removalReceipts.current.get(selected.id);
+              if (!receipt || receipt.signature !== signature) {
+                receipt = { signature, idempotencyKey: crypto.randomUUID() };
+                removalReceipts.current.set(selected.id, receipt);
+              }
+              const result = await adminContentLifecycleClient.remove('bridge', selected.id, { expectedRevision: selected.draftRevision, expectedAction, idempotencyKey: receipt.idempotencyKey });
+              removalReceipts.current.delete(selected.id);
+              dirtyIds.current.delete(selected.id);
+              setModules((current) => current.filter((module) => module.id !== selected.id));
+              setSelectedId(modules.find((module) => module.id !== selected.id)?.id ?? null); setSelectedStageIndex(0); setValidatedRevision(null); setIssues([]);
+              setMessage({ key: result.action === 'deleted' ? 'deleted' : 'archived' });
+              await load(selected.id);
+            });
           }
-        }} disabled={busy || selected.currentPublishedVersion === null}>{t('archiveRelease')}</button>
+        }} disabled={busy}>{t(hasHistory ? 'archiveModule' : 'deleteModule', { title: selected.draft.title })}</button>
       </div>
+      {dirtyIds.current.has(selected.id) ? <p className="bridge-notice">{t('unsavedDraft')}</p> : null}
       {issues.length > 0 ? <section className="bridge-issues" aria-label={t('validationIssues')}><h2>{t('validationIssues')}</h2><ul>{issues.map((issue) => <li key={`${issue.path}-${issue.message}`}><code>{issue.path}</code> {validationMessage(issue)}</li>)}</ul></section> : null}
       <div className="bridge-admin__grid">
         <aside className="bridge-module-list" aria-label={t('modulesLabel')}>
           <h2>{t('modules')}</h2>
-          <ul>{modules.map((module) => <li key={module.id}><button type="button" className={module.id === selected.id ? 'active' : ''} aria-current={module.id === selected.id ? 'page' : undefined} onClick={() => { setSelectedId(module.id); setSelectedStageIndex(0); setValidatedRevision(null); setIssues([]); }}><span>{t(module.draft.skill)}</span><span lang="en">{module.draft.title}</span></button></li>)}</ul>
+          <ul>{modules.map((module) => <li key={module.id}><button type="button" disabled={busy} className={module.id === selected.id ? 'active' : ''} aria-current={module.id === selected.id ? 'page' : undefined} onClick={() => { setSelectedId(module.id); setSelectedStageIndex(0); setValidatedRevision(null); setIssues([]); }}><span>{t(module.draft.skill)}</span><span lang="en">{module.draft.title}</span></button></li>)}</ul>
         </aside>
         <aside className="bridge-stage-list" aria-label={t('tenStages')}>
           <h2>{t('stages')}</h2>
-          <ol>{selected.draft.stages.map((item, index) => <li key={item.slug}><button type="button" className={index === selectedStageIndex ? 'active' : ''} aria-current={index === selectedStageIndex ? 'step' : undefined} onClick={() => setSelectedStageIndex(index)}><span>{formatNumber(locale, index + 1)}</span><span lang="en">{item.title}</span></button></li>)}</ol>
+          <ol>{selected.draft.stages.map((item, index) => <li key={item.slug}><button type="button" disabled={busy} className={index === selectedStageIndex ? 'active' : ''} aria-current={index === selectedStageIndex ? 'step' : undefined} onClick={() => setSelectedStageIndex(index)}><span>{formatNumber(locale, index + 1)}</span><span lang="en">{item.title}</span></button></li>)}</ol>
         </aside>
         <form className="bridge-editor" autoComplete="off" onSubmit={(event) => event.preventDefault()}>
+          <fieldset className="bridge-editor__fields" disabled={busy}>
           <section className="bridge-editor__module"><h2>{t('moduleDetails')}</h2>
             <label>{t('moduleTitle')}<input lang="en" value={selected.draft.title} onChange={(event) => updateDraft((draft) => ({ ...draft, title: event.target.value }))} /></label>
             <label>{t('moduleDescription')}<textarea lang="en" value={selected.draft.description} onChange={(event) => updateDraft((draft) => ({ ...draft, description: event.target.value }))} /></label>
@@ -218,6 +241,7 @@ export function IeltsBridgeAuthoringWorkspace() {
               <label>{t('incorrectFeedback')}<textarea lang="en" value={stage.feedback?.incorrect ?? ''} onChange={(event) => updateStage({ feedback: { correct: stage.feedback?.correct ?? '', incorrect: event.target.value } })} /></label>
             </fieldset> : null}
           </section>
+          </fieldset>
         </form>
         <aside className="bridge-preview" aria-label={t('learnerPreview')}>
           <p>{t('stageProgress', { current: selectedStageIndex + 1 })}</p><h2 lang="en">{stage.title}</h2><p lang="en">{stage.instruction}</p>

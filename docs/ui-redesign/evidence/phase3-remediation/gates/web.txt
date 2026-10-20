@@ -1,0 +1,1072 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/learning-programs/program-catalog.test.tsx (9 tests) 2951ms
+   ✓ ProgramCatalog > localizes program discovery and TOEIC availability with safe disabled actions  1101ms
+   ✓ ProgramCatalog > renders cards in API order with explicit status and safe actions  510ms
+   ✓ ProgramCatalog > keeps cards available for explicit retry after an activation error  352ms
+   ✓ ProgramCatalog > refreshes stale context and requires a new click with the fresh revision  352ms
+ ✓ src/features/admin-curriculum/foundation-definition-editor.test.tsx (9 tests) 3431ms
+   ✓ FoundationDefinitionEditor > localizes prerequisite revision metadata without translating its authored title  1041ms
+   ✓ FoundationDefinitionEditor > localizes mapping validation and preserves the unsaved objective when switching locale  442ms
+   ✓ FoundationDefinitionEditor > shows actionable mapping errors and labelled mobile-friendly controls  370ms
+   ✓ FoundationDefinitionEditor > adds another objective with independent skill and evidence controls  436ms
+ ✓ src/features/onboarding/onboarding-workspace.test.tsx (7 tests) 3383ms
+   ✓ OnboardingWorkspace > switches Vietnamese system controls without losing the selected starting level  1662ms
+   ✓ OnboardingWorkspace > loads server state and explains unavailable levels without enabling them  576ms
+   ✓ OnboardingWorkspace > reuses one confirmation UUID after an uncertain failure and opens the dashboard on success  511ms
+ ✓ src/features/admin-ielts-orientation/orientation-authoring-workspace.test.tsx (8 tests) 3856ms
+   ✓ OrientationAuthoringWorkspace > localizes authoring controls while preserving the mounted English slide draft  1118ms
+   ✓ OrientationAuthoringWorkspace > localizes validation feedback and re-renders it when the locale changes  685ms
+   ✓ OrientationAuthoringWorkspace > formats published versions in Vietnamese and localizes confirmation without changing the authored title  355ms
+   ✓ OrientationAuthoringWorkspace > shows semantic validation issues and publishes only after validation succeeds  843ms
+ ✓ src/features/mastery/checkpoint-panel.test.tsx (13 tests) 4159ms
+   ✓ Checkpoint > keeps an uncertain assessment UUID while switching locale and localizes pending evidence  1236ms
+   ✓ Checkpoint > shows pending scores honestly, offers reassessment and never offers confirmation  365ms
+   ✓ Checkpoint > invalidates a pending request UUID when the eligible session changes  323ms
+   ✓ Checkpoint > preserves a pending UUID when refreshing the same eligible session  340ms
+   ✓ Checkpoint > preserves an uncertain assessment UUID through a failed progression refresh  448ms
+ ✓ src/features/learning-session/session-shell.test.tsx (20 tests) 3621ms
+   ✓ SessionShell and Activity Renderers > preserves a writing session and its response when switching from English to Vietnamese  1363ms
+   ✓ SessionShell and Activity Renderers > reuses the same idempotency key when a failed submission is retried  341ms
+ ✓ src/features/admin-ielts-bridge/ielts-bridge-authoring-workspace.test.tsx (6 tests) 5212ms
+   ✓ IeltsBridgeAuthoringWorkspace > localizes taxonomy and task controls without replacing authored stage content or edits  2084ms
+   ✓ IeltsBridgeAuthoringWorkspace > localizes answerable task editors and preserves English prompts, choices and feedback  811ms
+   ✓ IeltsBridgeAuthoringWorkspace > edits the selected stage and saves with optimistic revision  464ms
+   ✓ IeltsBridgeAuthoringWorkspace > shows validation issues and enables publish only after validation succeeds  1395ms
+ ✓ src/features/admin-curriculum/curriculum-workspace.test.tsx (6 tests) 3536ms
+   ✓ CurriculumWorkspace > creates a new path and reloads tree  1798ms
+   ✓ CurriculumWorkspace > preserves the selected program after a recoverable create error  560ms
+   ✓ CurriculumWorkspace > displays conflict error without crashing when publish fails with 409  312ms
+   ✓ CurriculumWorkspace > supports reordering missions via accessible move buttons  425ms
+stderr | src/components/workspace-navigation.test.tsx
+Not implemented: navigation to another Document
+
+ ✓ src/components/workspace-navigation.test.tsx (9 tests) 2713ms
+   ✓ WorkspaceNavigation > retains all destinations and marks only the real active route segment  1264ms
+   ✓ WorkspaceNavigation > keeps compact navigation usable across responsive breakpoints  323ms
+ ✓ src/features/admin-audit/audit-workspace.test.tsx (5 tests) 2018ms
+   ✓ AuditWorkspace > localizes audit labels and counts while retaining diagnostic codes and payloads  1139ms
+   ✓ AuditWorkspace > navigates to next page using cursor pagination  336ms
+ ✓ src/features/mastery/mastery-overview.test.tsx (4 tests) 2071ms
+   ✓ Mastery and Memory Health > localizes evidence states while preserving English phrases and Vietnamese meanings  1400ms
+   ✓ Mastery and Memory Health > shows four skills with scored zero distinct from unassessed evidence and displays the review queue  364ms
+ ✓ src/features/admin-content/content-authoring-workspace.test.tsx (7 tests) 2563ms
+   ✓ ContentAuthoringWorkspace > shows localized validation API errors while preserving the mounted source across a locale switch  1221ms
+   ✓ ContentAuthoringWorkspace > validates source on demand and clicking issue highlights position  508ms
+   ✓ ContentAuthoringWorkspace > switches to publish tab, publishes lesson, and switches workspace to read-only  328ms
+ ❯ src/app/(learner)/layout.test.tsx (14 tests | 1 failed) 5009ms
+   × LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination 2230ms
+     → Unable to find an accessible element with the role "link" and name "Settings"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "Skip to learning content":
+  [36m<a[39m
+    [33mclass[39m=[32m"skip-link"[39m
+    [33mhref[39m=[32m"#learner-main-content"[39m
+  [36m/>[39m
+
+  Name "WorkLingo":
+  [36m<a[39m
+    [33mclass[39m=[32m"brand-logo"[39m
+    [33mhref[39m=[32m"/dashboard"[39m
+    [33mtranslate[39m=[32m"no"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"learner-top-nav"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"shell-context"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong[39m
+    [33mtranslate[39m=[32m"no"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Color theme: System. Activate to change theme":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Color theme: System. Activate to change theme"[39m
+    [33mclass[39m=[32m"theme-control"[39m
+    [33mtitle[39m=[32m"Theme: System"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Sign out":
+  [36m<button[39m
+    [33mclass[39m=[32m"logout-button"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Learning navigation":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"Learning navigation"[39m
+    [33mclass[39m=[32m"workspace-navigation-toggle"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  combobox:
+
+  Name "Interface language":
+  [36m<select[39m
+    [33maria-busy[39m=[32m"false"[39m
+    [33mid[39m=[32m"_r_0_"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "Tiếng Việt":
+  [36m<option[39m
+    [33mlang[39m=[32m"vi"[39m
+    [33mtranslate[39m=[32m"no"[39m
+    [33mvalue[39m=[32m"vi"[39m
+  [36m/>[39m
+
+  Name "English":
+  [36m<option[39m
+    [33mlang[39m=[32m"en"[39m
+    [33mtranslate[39m=[32m"no"[39m
+    [33mvalue[39m=[32m"en"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Answer":
+  [36m<textarea />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"learner-shell application-shell learning-mode"[39m
+    [36m>[39m
+      [36m<a[39m
+        [33mclass[39m=[32m"skip-link"[39m
+        [33mhref[39m=[32m"#learner-main-content"[39m
+      [36m>[39m
+        [0mSkip to learning content[0m
+      [36m</a>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"learner-top-nav"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"glass-surface shell-header-surface"[39m
+          [33mdata-glass-tint[39m=[32m"none"[39m
+          [33mdata-glass-variant[39m=[32m"solid"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-container"[39m
+          [36m>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"brand-logo"[39m
+              [33mhref[39m=[32m"/dashboard"[39m
+              [33mtranslate[39m=[32m"no"[39m
+            [36m>[39m
+              [0mWorkLingo[0m
+            [36m</a>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"shell-context"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mLearner account[0m
+              [36m</span>[39m
+              [36m<strong>[39m
+                [0mFocus mode[0m
+              [36m</strong>[39m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"nav-user-meta"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Color theme: System. Activate to change theme"[39m
+                [33mclass[39m=[32m"theme-control"[39m
+                [33mtitle[39m=[32m"Theme: System"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [36m>[39m
+                  [36m<rect[39m
+                    [33mheight[39m=[32m"13"[39m
+                    [33mrx[39m=[32m"2"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mx[39m=[32m"3"[39m
+                    [33my[39m=[32m"4"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M8 21h8M12 17v4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"visually-hidden"[39m
+                [36m>[39m
+                  [0mTheme: System[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"language-control"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"visually-hidden"[39m
+                  [33mfor[39m=[32m"_r_0_"[39m
+                [36m>[39m
+                  [0mInterface language[0m
+                [36m</label>[39m
+                [36m<select[39m
+                  [33maria-busy[39m=[32m"false"[39m
+                  [33mid[39m=[32m"_r_0_"[39m
+                [36m>[39m
+                  [36m<option[39m
+                    [33mlang[39m=[32m"vi"[39m
+                    [33mtranslate[39m=[32m"no"[39m
+                    [33mvalue[39m=[32m"vi"[39m
+                  [36m>[39m
+                    [0mTiếng Việt[0m
+                  [36m</option>[39m
+                  [36m<option[39m
+                    [33mlang[39m=[32m"en"[39m
+                    [33mtranslate[39m=[32m"no"[39m
+                    [33mvalue[39m=[32m"en"[39m
+                  [36m>[39m
+                    [0mEnglish[0m
+                  [36m</option>[39m
+                [36m</select>[39m
+                [36m<span[39m
+                  [33maria-live[39m=[32m"polite"[39m
+                  [33mclass[39m=[32m"visually-hidden"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"Signed in as An Nguyen"[39m
+                [33mclass[39m=[32m"user-greeting"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"user-avatar"[39m
+                [36m>[39m
+                  [0mA[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"user-identity"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"user-identity-label"[39m
+                  [36m>[39m
+                    [0mLearner account[0m
+                  [36m</span>[39m
+                  [36m<strong>[39m
+                    [0mAn Nguyen[0m
+                  [36m</strong>[39m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"logout-button"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mSign out[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"glass-surface workspace-navigation workspace-navigation-learner"[39m
+        [33mdata-compact[39m=[32m"true"[39m
+        [33mdata-glass-tint[39m=[32m"none"[39m
+        [33mdata-glass-variant[39m=[32m"solid"[39m
+        [33mdata-open[39m=[32m"false"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"navigation-identity"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"navigation-monogram"[39m
+          [36m>[39m
+            [0mW[0m
+          [36m</span>[39m
+          [36m<span>[39m
+            [36m<strong[39m
+              [33mtranslate[39m=[32m"no"[39m
+            [36m>[39m
+              [0mWorkLingo[0m
+            [36m</strong>[39m
+            [36m<small>[39m
+              [0mLearner account[0m
+            [36m</small>[39m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-controls[39m=[32m"_r_1_"[39m
+          [33maria-expanded[39m=[32m"false"[39m
+          [33maria-label[39m=[32m"Learning navigation"[39m
+          [33mclass[39m=[32m"workspace-navigation-toggle"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mLearning navigation[0m
+            [36m<small[39m
+              [33maria-hidden[39m=[32m"true"[39m
+            [36m>[39m
+              [0mWorkspace navigation[0m
+            [36m</small>[39m
+          [36m</span>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"m6 9 6 6 6-6"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Learning navigation"[39m
+          [33mclass[39m=[32m"workspace-nav workspace-nav-learner"[39m
+          [33mhidden[39m=[32m""[39m
+          [33mid[39m=[32m"_r_1_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"workspace-nav-group"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"workspace-nav-group-label"[39m
+            [36m>[39m
+              [0mYour learning[0m
+            [36m</p>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"workspace-nav-link"[39m
+              [33mhref[39m=[32m"/dashboard"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span>[39m
+                [0mDashboard[0m
+              [36m</span>[39m
+            [36m</a>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"workspace-nav-link"[39m
+              [33mhref[39m=[32m"/programs"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M4 4h6a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H4zM13 7a3 3 0 0 1 3-3h4v14h-4a3 3 0 0 0-3 3"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span>[39m
+                [0mPrograms[0m
+              [36m</span>[39m
+            [36m</a>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"workspace-nav-link"[39m
+              [33mhref[39m=[32m"/mastery"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M4 20h16M6 16V9M12 16V4M18 16v-5"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span>[39m
+                [0mMastery[0m
+              [36m</span>[39m
+            [36m</a>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"workspace-nav-link"[39m
+              [33mhref[39m=[32m"/ielts/pathway"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M5 5h14v6H5v8h14M5 3v4M19 17v4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span>[39m
+                [0mIELTS pathway[0m
+              [36m</span>[39m
+            [36m</a>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"workspace-nav-group"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"workspace-nav-group-label"[39m
+            [36m>[39m
+              [0mPreferences & access[0m
+            [36m</p>[39m
+            [36m<a[39m
+              [33mclass[39m=[32m"workspace-nav-link"[39m
+              [33mhref[39m=[32m"/settings"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span>[39m
+                [0mSettings[0m
+              [36m</span>[39m
+            [36m</a>[39m
+          [36m</div>[39m
+        [36m</nav>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"learner-content"[39m
+        [33mid[39m=[32m"learner-main-content"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<label>[39m
+          [0mAnswer[0m
+          [36m<textarea>[39m
+            [0mStill my draft[0m
+          [36m</textarea>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   ✓ LearnerLayout > reduces shell chrome on /onboarding/placement/session-id without changing the destination  404ms
+   ✓ LearnerLayout > reduces shell chrome on /ielts/bridge/module-id without changing the destination  354ms
+   ✓ LearnerLayout > reduces shell chrome on /ielts/practice/session-id without changing the destination 278ms
+   ✓ LearnerLayout > reduces shell chrome on /ielts/mock-tests/attempt-id without changing the destination 293ms
+   ✓ LearnerLayout > keeps the ordinary shell on catalog /ielts/bridge  316ms
+   ✓ LearnerLayout > keeps the ordinary shell on catalog /ielts/practice 221ms
+   ✓ LearnerLayout > keeps the ordinary shell on catalog /ielts/mock-tests 207ms
+   ✓ LearnerLayout > clears the expired account so guest language switching remains usable after redirect 165ms
+   ✓ LearnerLayout > redirects unauthenticated learners without exposing server details 76ms
+   ✓ LearnerLayout > shows a retryable generic error for transient auth infrastructure failures 90ms
+   ✓ LearnerLayout > redirects a pending learner away from ordinary learner routes 84ms
+   ✓ LearnerLayout > allows a pending learner to use onboarding routes 104ms
+   ✓ LearnerLayout > groups learner preferences under one expandable settings destination 183ms
+ ✓ src/features/learning-session/dashboard-view.test.tsx (17 tests) 3222ms
+   ✓ DashboardView > makes the saved curriculum session the primary action instead of creating another session  875ms
+ ✓ src/features/ielts-integrated/integrated-practice.test.tsx (5 tests) 1441ms
+   ✓ IntegratedPracticeDashboardCard > localizes the duration and difficulty choices and dashboard access  959ms
+ ✓ src/features/audio/admin-audio-settings-panel.test.tsx (1 test) 1337ms
+   ✓ AdminAudioSettingsPanel > shows safe readiness and disables unavailable providers  1335ms
+ ✓ src/features/onboarding/placement-status.test.tsx (4 tests) 1467ms
+   ✓ PlacementStatus > localizes recommendation and skill evidence while preserving policy identifiers  751ms
+   ✓ PlacementStatus > shows all four evidence states and reuses EvaluationFeedback for retry  355ms
+ ✓ src/features/admin-ielts-mock/ielts-mock-workspace.test.tsx (4 tests) 1694ms
+   ✓ IeltsMockWorkspace pagination > displays failed mock validation in Vietnamese with the technical field path and blocks publication  865ms
+   ✓ IeltsMockWorkspace pagination > preserves source and teacher feedback drafts while localizing the review controls  420ms
+   ✓ IeltsMockWorkspace pagination > loads subsequent mock and review pages when explicit next offsets exist  306ms
+ ✓ src/app/(admin)/layout.test.tsx (5 tests) 2544ms
+   ✓ AdminLayout > preserves all thirteen destinations and the skip target for SYSTEM_ADMIN  1503ms
+   ✓ AdminLayout > renders admin navigation and children for authorized CONTENT_ADMIN  699ms
+ ✓ src/app/page.test.tsx (4 tests) 1400ms
+   ✓ HomePage > exposes the real home link, locale and theme controls in public navigation  1028ms
+ ✓ src/features/audio/audio-settings-panel.test.tsx (2 tests) 1084ms
+   ✓ AudioSettingsPanel > loads sources, shows browser voices conditionally and saves selection  887ms
+ ✓ src/features/learning-session/activity-renderers/speaking-activity.test.tsx (3 tests) 1239ms
+   ✓ SpeakingActivity > teaches pronunciation and offers the version-bound shadowing model before recording  701ms
+   ✓ SpeakingActivity > requires versioned consent before uploading a preview  330ms
+ ✓ src/features/mastery/error-bank-panel.test.tsx (4 tests) 1468ms
+   ✓ Error Bank > preserves the selected skill while localizing pagination and untouched phrases  889ms
+   ✓ Error Bank > loads server pages, filters by skill and resets pagination when the filter changes  379ms
+ ✓ src/features/admin-ielts-band-curriculum/band-curriculum-workspace.test.tsx (3 tests) 1537ms
+   ✓ localizes invalid JSON and retains the same source editor across a locale switch  1183ms
+ ✓ src/features/learning-session/activity-renderers/writing-activity.test.tsx (4 tests) 1219ms
+   ✓ WritingActivity > requires active recall without exposing target phrases in a vocabulary lesson  724ms
+ ✓ src/features/admin-ielts-integrated/integrated-profile-workspace.test.tsx (2 tests) 1373ms
+   ✓ localizes skill allocations and retains unsaved minutes in the mounted input  883ms
+   ✓ shows Vietnamese allocation validation and enables publishing only for a valid saved revision  487ms
+ ✓ src/features/ielts-bridge/ielts-bridge-player.test.tsx (3 tests) 1426ms
+   ✓ IeltsBridgePlayer > localizes the stage and response requirements without replacing English drafts on locale change  1034ms
+ ✓ src/i18n/provider.test.tsx (9 tests) 1380ms
+   ✓ locale preference > switches a mounted form without losing its answer and writes a validated cookie  599ms
+ ✓ src/features/learning-session/evaluation-feedback.test.tsx (6 tests) 1150ms
+   ✓ EvaluationFeedback > exposes busy actions and blocks retry/deletion activation while pending  678ms
+ ✓ src/features/ielts-mock/ielts-mock.test.tsx (7 tests) 1302ms
+   ✓ IeltsMockDashboardCard > explains an empty eligible mock catalog in Vietnamese  491ms
+   ✓ IeltsMockPlayer > preserves English passages and answers when localized controls switch  377ms
+ ✓ src/features/ai/ai-settings-panel.test.tsx (2 tests) 1362ms
+   ✓ AI settings panel > saves Discovery selection and fallback opt-out, and disables unconfigured OpenAI  1176ms
+ ✓ src/features/learning-session/i18n.test.tsx (6 tests) 1489ms
+   ✓ uses consistent English system labels while preserving the writing prompt and phrase  619ms
+   ✓ switches language during an unsaved writing draft without replacing the editor or changing lesson content  377ms
+ ✓ src/features/ielts-orientation/orientation-player.test.tsx (3 tests) 1369ms
+   ✓ OrientationPlayer > localizes navigation and captions while preserving English content and the selected answer on switching  981ms
+ ✓ src/features/ielts-band-curriculum/ielts-band-pathway.test.tsx (5 tests) 1328ms
+   ✓ IELTS band pathway > localizes evidence and generated criteria while keeping curriculum content and the target selection  956ms
+ ✓ src/features/admin-content/admin-system-labels.test.tsx (3 tests) 1196ms
+   ✓ admin system enum display > localizes validation summaries and actionable issue names while retaining diagnostic codes  704ms
+ ✓ src/features/learning-session/use-audio-recorder.test.tsx (6 tests) 1532ms
+   ✓ useAudioRecorder > requests the microphone only after an explicit action and releases tracks on stop  840ms
+ ✓ src/features/engagement/engagement-panel.test.tsx (6 tests) 1103ms
+   ✓ EngagementPanel > renders target selector with options 2 through 5 and handles target change  552ms
+ ✓ src/features/audio/i18n.test.tsx (4 tests) 1455ms
+   ✓ localizes the learner audio panel while preserving the English speech preview  863ms
+   ✓ localizes the admin simulation provider while retaining technical voice identifiers  397ms
+ ✓ src/features/mastery/mastery-workspace.test.tsx (1 test) 1483ms
+   ✓ refreshes the current curriculum after confirmation and hides the old map while loading  1478ms
+ ✓ src/components/transparency-control.test.tsx (6 tests) 1208ms
+   ✓ persists the checkbox and updates every mounted control without replacing a draft  644ms
+ ✓ src/features/admin-content/content-list.test.tsx (3 tests) 1108ms
+   ✓ ContentList > renders empty state when no imports exist  580ms
+   ✓ ContentList > localizes import statuses and dates while preserving lesson source titles and links  353ms
+ ✓ src/features/admin-content/lesson-preview.test.tsx (5 tests) 1628ms
+   ✓ LessonPreview > localizes educational wrappers while preserving English passages, prompts, vocabulary and answers  1018ms
+ ✓ src/features/admin-content/audio-preview.test.tsx (4 tests) 1409ms
+   ✓ AudioPreview > labels simulation artifacts as diagnostic tones and does not expose them in an audio player  749ms
+   ✓ AudioPreview > triggers generate audio, polls job by status until completion, and refreshes artifact list  319ms
+ ✓ src/features/admin-observability/observability-workspaces.test.tsx (4 tests) 1239ms
+   ✓ admin observability workspaces > localizes operations filters while retaining API status values  994ms
+ ✓ src/features/audio/use-browser-speech.test.tsx (4 tests) 1164ms
+   ✓ useBrowserSpeech > does not autoplay and falls back to the first English voice  693ms
+ ✓ src/features/admin-content/publish-panel.test.tsx (4 tests) 1435ms
+   ✓ PublishPanel > disables publish button if validation or audio is not ready  869ms
+ ✓ src/features/auth/auth-form.test.tsx (4 tests) 1450ms
+   ✓ AuthForm > renders accessible registration fields and validation messages  1011ms
+ ✓ src/features/admin-content/new-content-import.test.tsx (3 tests) 1421ms
+   ✓ NewContentImport > submits rawSource and navigates to the created import id  932ms
+ ✓ src/app/(learner)/onboarding/placement/[sessionId]/page.test.tsx (3 tests) 1268ms
+   ✓ PlacementSessionPage > restores placement session and checkpoint on load/refresh  310ms
+   ✓ PlacementSessionPage > rejects ordinary learning sessions that do not have placement purpose  634ms
+   ✓ PlacementSessionPage > renders completion state with link returning to /onboarding  323ms
+ ✓ src/features/curriculum-roadmap/curriculum-roadmap.test.tsx (3 tests) 1317ms
+   ✓ CurriculumRoadmap > localizes roadmap status and actions without translating curriculum content  939ms
+ ✓ src/features/ielts-orientation/orientation-dashboard-card.test.tsx (3 tests) 725ms
+   ✓ OrientationDashboardCard > explains the readiness gate in Vietnamese  524ms
+ ✓ src/components/theme-control.test.tsx (3 tests) 940ms
+   ✓ cycles through icon themes, persists preference and preserves entered content  760ms
+ ✓ src/components/language-switcher.test.tsx (2 tests) 985ms
+   ✓ LanguageSwitcher > exposes both language names, selection and translated accessible label  838ms
+ ✓ src/features/auth/auth-i18n.test.tsx (1 test) 908ms
+   ✓ localized authentication > updates labels and existing validation without resetting entered values  906ms
+ ✓ src/app/(admin)/admin/content/[importId]/page.test.tsx (2 tests) 992ms
+   ✓ ContentImportDetailPage > renders loading state initially and then renders workspace on success  890ms
+ ✓ src/features/ielts-bridge/ielts-bridge-dashboard-card.test.tsx (4 tests) 967ms
+   ✓ IeltsBridgeDashboardCard > explains an empty eligible module catalog in Vietnamese  606ms
+ ✓ src/features/admin-content/source-editor.test.tsx (4 tests) 961ms
+   ✓ SourceEditor > renders line gutter and controlled textarea  716ms
+ ✓ src/app/error-states.test.tsx (2 tests) 725ms
+   ✓ shared localized error states > renders an accessible Vietnamese missing-page state with a return route  611ms
+ ✓ src/features/learning-session/activity-renderers/listening-activity.test.tsx (3 tests) 831ms
+   ✓ ListeningActivity > uses browser speech immediately for a text-placeholder listening activity  529ms
+ ✓ src/features/audio/lesson-audio-player.test.tsx (4 tests) 937ms
+   ✓ LessonAudioPlayer > keeps published-only failures explicit without silently changing source  616ms
+ ✓ src/features/audio/browser-speech-controls.test.tsx (1 test) 865ms
+   ✓ BrowserSpeechControls > explains unsupported browsers and disables playback  858ms
+ ✓ src/components/glass-surface.test.tsx (2 tests) 797ms
+   ✓ defaults to a regular untinted surface without replacing child navigation semantics  768ms
+ ✓ src/lib/api/api-client.learner.test.ts (16 tests) 105ms
+ ✓ src/lib/api/api-client.test.ts (16 tests) 225ms
+ ✓ src/lib/api/learning-program-client.test.ts (8 tests) 78ms
+ ✓ src/features/learning-session/use-evaluation.test.tsx (1 test) 112ms
+ ✓ src/features/mastery/evidence-format.test.ts (3 tests) 89ms
+ ✓ src/i18n/translator.test.ts (5 tests) 82ms
+ ✓ src/lib/theme.test.ts (6 tests) 35ms
+ ✓ src/lib/api/admin-ielts-bridge-client.test.ts (1 test) 39ms
+ ✓ src/lib/api/admin-ielts-orientation-client.test.ts (2 tests) 54ms
+ ✓ src/lib/api/onboarding-client.test.ts (3 tests) 34ms
+ ✓ src/lib/api/admin-curriculum-client.test.ts (4 tests) 35ms
+ ✓ src/lib/api/ielts-bridge-client.test.ts (1 test) 43ms
+ ✓ src/lib/api/ielts-orientation-client.test.ts (1 test) 23ms
+ ✓ src/lib/api/audio-settings-client.test.ts (2 tests) 42ms
+ ✓ src/lib/api/curriculum-foundation-client.test.ts (2 tests) 33ms
+ ✓ src/i18n/server.test.ts (3 tests) 20ms
+ ✓ src/lib/api/admin-audit-client.test.ts (2 tests) 26ms
+ ✓ src/lib/api/admin-observability-clients.test.ts (2 tests) 22ms
+ ✓ src/features/admin-content/source-position.test.ts (7 tests) 14ms
+ ✓ src/features/auth/submit-auth.test.ts (1 test) 28ms
+ ✓ src/lib/api/ielts-integrated-client.test.ts (1 test) 13ms
+ ✓ src/local-startup.spec.ts (2 tests) 7ms
+ ✓ src/features/auth/auth-page.test.ts (3 tests) 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/app/(learner)/layout.test.tsx > LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination
+TestingLibraryElementError: Unable to find an accessible element with the role "link" and name "Settings"
+
+Here are the accessible roles:
+
+  link:
+
+  Name "Skip to learning content":
+  <a
+    class="skip-link"
+    href="#learner-main-content"
+  />
+
+  Name "WorkLingo":
+  <a
+    class="brand-logo"
+    href="/dashboard"
+    translate="no"
+  />
+
+  --------------------------------------------------
+  banner:
+
+  Name "":
+  <header
+    class="learner-top-nav"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p
+    class="shell-context"
+  />
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  <strong />
+
+  Name "":
+  <strong />
+
+  Name "":
+  <strong
+    translate="no"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Color theme: System. Activate to change theme":
+  <button
+    aria-label="Color theme: System. Activate to change theme"
+    class="theme-control"
+    title="Theme: System"
+    type="button"
+  />
+
+  Name "Sign out":
+  <button
+    class="logout-button"
+    type="button"
+  />
+
+  Name "Learning navigation":
+  <button
+    aria-controls="_r_1_"
+    aria-expanded="false"
+    aria-label="Learning navigation"
+    class="workspace-navigation-toggle"
+    type="button"
+  />
+
+  --------------------------------------------------
+  combobox:
+
+  Name "Interface language":
+  <select
+    aria-busy="false"
+    id="_r_0_"
+  />
+
+  --------------------------------------------------
+  option:
+
+  Name "Tiếng Việt":
+  <option
+    lang="vi"
+    translate="no"
+    value="vi"
+  />
+
+  Name "English":
+  <option
+    lang="en"
+    translate="no"
+    value="en"
+  />
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Answer":
+  <textarea />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="learner-shell application-shell learning-mode"
+    >
+      <a
+        class="skip-link"
+        href="#learner-main-content"
+      >
+        Skip to learning content
+      </a>
+      <header
+        class="learner-top-nav"
+      >
+        <div
+          class="glass-surface shell-header-surface"
+          data-glass-tint="none"
+          data-glass-variant="solid"
+        >
+          <div
+            class="nav-container"
+          >
+            <a
+              class="brand-logo"
+              href="/dashboard"
+              translate="no"
+            >
+              WorkLingo
+            </a>
+            <p
+              class="shell-context"
+            >
+              <span>
+                Learner account
+              </span>
+              <strong>
+                Focus mode
+              </strong>
+            </p>
+            <div
+              class="nav-user-meta"
+            >
+              <button
+                aria-label="Color theme: System. Activate to change theme"
+                class="theme-control"
+                title="Theme: System"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                >
+                  <rect
+                    height="13"
+                    rx="2"
+                    width="18"
+                    x="3"
+                    y="4"
+                  />
+                  <path
+                    d="M8 21h8M12 17v4"
+                  />
+                </svg>
+                <span
+                  class="visually-hidden"
+                >
+                  Theme: System
+                </span>
+              </button>
+              <div
+                class="language-control"
+              >
+                <label
+                  class="visually-hidden"
+                  for="_r_0_"
+                >
+                  Interface language
+                </label>
+                <select
+                  aria-busy="false"
+                  id="_r_0_"
+                >
+                  <option
+                    lang="vi"
+                    translate="no"
+                    value="vi"
+                  >
+                    Tiếng Việt
+                  </option>
+                  <option
+                    lang="en"
+                    translate="no"
+                    value="en"
+                  >
+                    English
+                  </option>
+                </select>
+                <span
+                  aria-live="polite"
+                  class="visually-hidden"
+                />
+              </div>
+              <div
+                aria-label="Signed in as An Nguyen"
+                class="user-greeting"
+              >
+                <span
+                  aria-hidden="true"
+                  class="user-avatar"
+                >
+                  A
+                </span>
+                <span
+                  class="user-identity"
+                >
+                  <span
+                    class="user-identity-label"
+                  >
+                    Learner account
+                  </span>
+                  <strong>
+                    An Nguyen
+                  </strong>
+                </span>
+              </div>
+              <button
+                class="logout-button"
+                type="button"
+              >
+                Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div
+        class="glass-surface workspace-navigation workspace-navigation-learner"
+        data-compact="true"
+        data-glass-tint="none"
+        data-glass-variant="solid"
+        data-open="false"
+      >
+        <div
+          class="navigation-identity"
+        >
+          <span
+            aria-hidden="true"
+            class="navigation-monogram"
+          >
+            W
+          </span>
+          <span>
+            <strong
+              translate="no"
+            >
+              WorkLingo
+            </strong>
+            <small>
+              Learner account
+            </small>
+          </span>
+        </div>
+        <button
+          aria-controls="_r_1_"
+          aria-expanded="false"
+          aria-label="Learning navigation"
+          class="workspace-navigation-toggle"
+          type="button"
+        >
+          <span>
+            Learning navigation
+            <small
+              aria-hidden="true"
+            >
+              Workspace navigation
+            </small>
+          </span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="m6 9 6 6 6-6"
+            />
+          </svg>
+        </button>
+        <nav
+          aria-label="Learning navigation"
+          class="workspace-nav workspace-nav-learner"
+          hidden=""
+          id="_r_1_"
+        >
+          <div
+            class="workspace-nav-group"
+          >
+            <p
+              class="workspace-nav-group-label"
+            >
+              Your learning
+            </p>
+            <a
+              class="workspace-nav-link"
+              href="/dashboard"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"
+                />
+              </svg>
+              <span>
+                Dashboard
+              </span>
+            </a>
+            <a
+              class="workspace-nav-link"
+              href="/programs"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4 4h6a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H4zM13 7a3 3 0 0 1 3-3h4v14h-4a3 3 0 0 0-3 3"
+                />
+              </svg>
+              <span>
+                Programs
+              </span>
+            </a>
+            <a
+              class="workspace-nav-link"
+              href="/mastery"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4 20h16M6 16V9M12 16V4M18 16v-5"
+                />
+              </svg>
+              <span>
+                Mastery
+              </span>
+            </a>
+            <a
+              class="workspace-nav-link"
+              href="/ielts/pathway"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M5 5h14v6H5v8h14M5 3v4M19 17v4"
+                />
+              </svg>
+              <span>
+                IELTS pathway
+              </span>
+            </a>
+          </div>
+          <div
+            class="workspace-nav-group"
+          >
+            <p
+              class="workspace-nav-group-label"
+            >
+              Preferences & access
+            </p>
+            <a
+              class="workspace-nav-link"
+              href="/settings"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"
+                />
+              </svg>
+              <span>
+                Settings
+              </span>
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="learner-content"
+        id="learner-main-content"
+        tabindex="-1"
+      >
+        <label>
+          Answer
+          <textarea>
+            Still my draft
+          </textarea>
+        </label>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/app/(learner)/layout.test.tsx:48:19
+     46|     const toggle = screen.getByRole('button', { name: 'Learning naviga…
+     47|     fireEvent.click(toggle);
+     48|     expect(screen.getByRole('link', { name: 'Settings' })).toHaveAttri…
+       |                   ^
+     49|     fireEvent.keyDown(toggle, { key: 'Escape' });
+     50|     expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 84 passed (85)
+      Tests  1 failed | 401 passed (402)
+   Start at  12:16:49
+   Duration  87.68s (transform 22.57s, setup 0ms, collect 158.83s, tests 109.57s, environment 229.20s, prepare 40.36s)
+
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/web@0.0.0 test: `vitest run`
+Exit status 1

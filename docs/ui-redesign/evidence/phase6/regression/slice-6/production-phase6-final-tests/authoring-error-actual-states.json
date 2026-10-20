@@ -1,0 +1,35 @@
+{
+  "title": "authoring error actual states",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "content",
+      "state": "error"
+    },
+    {
+      "kind": "curriculum",
+      "state": "error"
+    },
+    {
+      "kind": "orientation",
+      "state": "error"
+    },
+    {
+      "kind": "bridge",
+      "state": "error"
+    },
+    {
+      "kind": "integrated",
+      "state": "error"
+    },
+    {
+      "kind": "band",
+      "state": "error"
+    },
+    {
+      "kind": "mock",
+      "state": "error"
+    }
+  ]
+}

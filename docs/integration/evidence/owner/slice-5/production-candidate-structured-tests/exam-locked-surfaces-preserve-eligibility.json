@@ -1,0 +1,20 @@
+{
+  "title": "exam locked surfaces preserve eligibility",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "integrated",
+      "state": "locked"
+    },
+    {
+      "kind": "pathway",
+      "state": "locked"
+    },
+    {
+      "kind": "mock",
+      "state": "locked"
+    }
+  ]
+}

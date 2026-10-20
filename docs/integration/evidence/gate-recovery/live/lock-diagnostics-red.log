@@ -1,0 +1,75 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ❯ test/integration/jobs-worker.integration.spec.ts (10 tests | 1 failed | 9 skipped) 28848ms
+   ↓ leased PostgreSQL job worker > allows only one concurrent runner to claim a row
+   × leased PostgreSQL job worker > observes a granted competing lock when SKIP LOCKED returns no eligible row 15062ms
+     → Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ↓ leased PostgreSQL job worker > replays an enqueue inside a transaction without aborting its other writes
+   ↓ leased PostgreSQL job worker > does not replay another actor's job when the idempotency key collides
+   ↓ leased PostgreSQL job worker > deduplicates concurrent transactional enqueues while committing both callers
+   ↓ leased PostgreSQL job worker > protects a live lease and reclaims an expired lease without accepting stale completion
+   ↓ leased PostgreSQL job worker > keeps the same job identity while waiting for retry
+   ↓ leased PostgreSQL job worker > allows an admin retry to preserve identity and grant one explicit attempt
+   ↓ leased PostgreSQL job worker > accepts only one concurrent manual retry without replacing a live worker lease
+   ↓ leased PostgreSQL job worker > keeps existing fake-audio job records readable
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/jobs-worker.integration.spec.ts > leased PostgreSQL job worker > observes a granted competing lock when SKIP LOCKED returns no eligible row
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/integration/jobs-worker.integration.spec.ts:87:3
+     85|   });
+     86|
+     87|   it('observes a granted competing lock when SKIP LOCKED returns no el…
+       |   ^
+     88|     const job = await enqueue(`held-lock-${randomUUID()}`);
+     89|     const now = new Date('2026-10-08T01:00:00.000Z');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+PrismaClientKnownRequestError:
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Raw query failed. Code: `42883`. Message: `ERROR: operator does not exist: uuid = text
+HINT: No operator matches the given name and argument types. You might need to add explicit type casts.`
+ ❯ ei.handleRequestError ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:228:13
+ ❯ ei.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12
+ ❯ ei.request ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24
+ ❯ secondDatabase.$transaction.timeout test/integration/jobs-worker.integration.spec.ts:95:7
+     93|     const ready = new Promise<number>(resolve => { acquired = resolve;…
+     94|     const holding = secondDatabase.$transaction(async transaction => {
+     95|       await transaction.$queryRaw`SELECT "id" FROM "Job" WHERE "id" = …
+       |       ^
+     96|       const [backend] = await transaction.$queryRaw<Array<{ pid: numbe…
+     97|       acquired(backend!.pid);
+ ❯ Proxy._transactionWithCallback ../../node_modules/.pnpm/@prisma+client@6.19.1_prism_d4c309513f45d21f4e4aa7921d8002c7/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:722:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'P2010', meta: { code: '42883', message: 'ERROR: operator does not exist: uuid = text\nHINT: No operator matches the given name and argument types. You might need to add explicit type casts.' }, clientVersion: '6.19.1', batchRequestIdx: undefined }
+This error originated in "test/integration/jobs-worker.integration.spec.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "observes a granted competing lock when SKIP LOCKED returns no eligible row". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+     Errors  1 error
+   Start at  01:54:09
+   Duration  32.51s (transform 1.02s, setup 0ms, collect 2.34s, tests 28.85s, environment 1ms, prepare 427ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run test/integration/jobs-worker.integration.spec.ts -t observes a granted

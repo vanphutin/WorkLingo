@@ -34,6 +34,11 @@ import { IeltsBridgeModule } from './ielts-bridge/ielts-bridge.module.js';
 import { IeltsIntegratedPracticeModule } from './ielts-integrated-practice/ielts-integrated-practice.module.js';
 import { IeltsBandCurriculumModule } from './ielts-band-curriculum/ielts-band-curriculum.module.js';
 import { IeltsMockModule } from './ielts-mock/ielts-mock.module.js';
+import { IeltsFlowModule } from './ielts-flow/ielts-flow.module.js';
+import { IeltsStudyModule } from './ielts-study/ielts-study.module.js';
+import { AdminContentLifecycleModule } from './admin-content-lifecycle/admin-content-lifecycle.module.js';
+import { IntermediateTopicsModule } from './intermediate-topics/intermediate-topics.module.js';
+import { DashboardOverviewModule } from './dashboard-overview/dashboard-overview.module.js';
 
 @Module({
   imports: [
@@ -47,6 +52,9 @@ import { IeltsMockModule } from './ielts-mock/ielts-mock.module.js';
     AnalyticsModule,
     CurriculumModule,
     ContentAuthoringModule,
+    AdminContentLifecycleModule,
+    IntermediateTopicsModule,
+    DashboardOverviewModule,
     JobsModule,
     LearningSessionsModule,
     MasteryModule,
@@ -67,6 +75,8 @@ import { IeltsMockModule } from './ielts-mock/ielts-mock.module.js';
     IeltsIntegratedPracticeModule,
     IeltsBandCurriculumModule,
     IeltsMockModule,
+    IeltsStudyModule,
+    IeltsFlowModule,
   ],
   providers: [
     SafeLoggerService,

@@ -1,0 +1,63 @@
+{
+  "name": "parallel-load",
+  "workers": 2,
+  "load": true,
+  "started": {
+    "wall": "2026-10-20T19:40:42.715Z",
+    "monotonicNs": "5919654731600"
+  },
+  "finished": {
+    "wall": "2026-10-20T19:41:42.668Z",
+    "monotonicNs": "5979607244300"
+  },
+  "children": [
+    {
+      "role": "placement0",
+      "started": {
+        "wall": "2026-10-20T19:40:42.715Z",
+        "monotonicNs": "5919654742500"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:41:22.232Z",
+        "monotonicNs": "5959171789700"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "boundary",
+      "log": "parallel-load-placement0.log"
+    },
+    {
+      "role": "placement1",
+      "started": {
+        "wall": "2026-10-20T19:40:42.724Z",
+        "monotonicNs": "5919663608100"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:41:22.781Z",
+        "monotonicNs": "5959720507900"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "parallel-load-placement1.log"
+    },
+    {
+      "role": "load",
+      "started": {
+        "wall": "2026-10-20T19:40:42.731Z",
+        "monotonicNs": "5919670643000"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:41:42.668Z",
+        "monotonicNs": "5979607231600"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/jobs-worker.integration.spec.ts test/integration/placement-attempt.integration.spec.ts test/integration/placement-confirmation.integration.spec.ts test/integration/onboarding-self-placement.integration.spec.ts test/integration/ielts-mock-workflow.integration.spec.ts test/integration/ielts-study-session.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "parallel-load-load.log"
+    }
+  ]
+}

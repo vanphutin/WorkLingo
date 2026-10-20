@@ -1,0 +1,5 @@
+
+> worklingo@0.0.0 i18n:check D:\Projects\WorkLingo-Liquid-Glass
+> node scripts/i18n-check.mjs
+
+i18n: 27 namespaces, 1673 paired keys, 1421 static usages; 0 errors, 347 candidate unused keys.

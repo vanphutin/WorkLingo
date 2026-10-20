@@ -8,7 +8,8 @@ import {
   type OnApplicationShutdown,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { parseLessonSource } from '@worklingo/content-format';
+import { audioScriptFingerprintText, parseLessonSource, spokenScript } from '@worklingo/content-format';
+import { assertNarrationReviewed, narrationReviewIssues } from './audio-narration.js';
 import {
   ContentAuthoringErrorCode,
   type AudioArtifactDto,
@@ -21,6 +22,7 @@ import { PrismaService } from '../../common/database/prisma.service.js';
 import { TextToSpeechProviderRegistry } from '../../ai-gateway/application/text-to-speech-provider.registry.js';
 import { TextToSpeechPort } from '../../ai-gateway/domain/text-to-speech.port.js';
 import { SIMULATION_AUDIO_LABEL } from '../../ai-gateway/infrastructure/fake-tts.adapter.js';
+import { AZURE_AUDIO_GENERATION_VERSION } from '../../ai-gateway/infrastructure/azure-dialogue-ssml.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import { JobRunnerService } from '../../jobs/application/job-runner.service.js';
@@ -67,7 +69,11 @@ export class AudioGenerationService implements OnApplicationShutdown {
     const providerId = input.providerId ?? this.tts.providerName;
     const descriptor = this.ttsProviders.list().find((candidate) => candidate.id === providerId);
     const voiceId = input.voiceId ?? descriptor?.defaultVoiceId ?? '';
-    const voiceConfig = { ...(input.voiceConfig ?? {}), voice: voiceId };
+    const voiceConfig: Record<string, unknown> = { ...(input.voiceConfig ?? {}), voice: voiceId };
+    // Audit fields come from synthesis, never from the caller. Version participates
+    // in both variant and request hashes so pre-dialogue artifacts cannot be reused.
+    delete voiceConfig.speakerVoices;
+    if (providerId === 'azure-speech') voiceConfig.generationVersion = AZURE_AUDIO_GENERATION_VERSION;
     const normalizedVoiceConfig = canonicalizeJson(voiceConfig) as Record<string, unknown>;
     const variantKey = `${providerId}:${voiceId}:${createHash('sha256')
       .update(JSON.stringify(normalizedVoiceConfig)).digest('hex')}`;
@@ -122,6 +128,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
 
     // 3. Resolve target audio script from lesson source
     const parseRes = parseLessonSource(contentImport.rawSource);
+    assertNarrationReviewed(parseRes.document);
     const audioScripts = parseRes.document.audioScripts;
 
     let targetScriptText = '';
@@ -136,7 +143,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
           statusCode: 404,
         });
       }
-      targetScriptText = target.script;
+      targetScriptText = spokenScript(target);
       targetSlug = target.slug;
     } else {
       const firstScript = audioScripts[0];
@@ -147,12 +154,12 @@ export class AudioGenerationService implements OnApplicationShutdown {
           statusCode: 404,
         });
       }
-      targetScriptText = firstScript.script;
+      targetScriptText = spokenScript(firstScript);
       targetSlug = firstScript.slug;
     }
 
     const scriptHash = createHash('sha256')
-      .update(targetScriptText)
+      .update(audioScriptFingerprintText(audioScripts.find(s => s.slug === targetSlug)!))
       .digest('hex');
 
     const artifactId = randomUUID();
@@ -339,9 +346,10 @@ export class AudioGenerationService implements OnApplicationShutdown {
         where: { id: contentImportId },
       });
 
-      let isStale = false;
+      let isStale = !currentImport;
       if (currentImport) {
         const freshParse = parseLessonSource(currentImport.rawSource);
+        isStale = narrationReviewIssues(freshParse.document).some(i => i.severity === 'error');
         const currentScript = freshParse.document.audioScripts.find(
           (s) => s.slug === audioScriptSlug,
         );
@@ -349,7 +357,7 @@ export class AudioGenerationService implements OnApplicationShutdown {
           isStale = true;
         } else {
           const currentHash = createHash('sha256')
-            .update(currentScript.script)
+            .update(audioScriptFingerprintText(currentScript))
             .digest('hex');
           if (currentHash !== scriptHash) {
             isStale = true;
@@ -370,6 +378,9 @@ export class AudioGenerationService implements OnApplicationShutdown {
           voiceConfig: {
             ...voiceConfig,
             ...(synthesized.provider ? { voice: synthesized.provider.voice } : {}),
+            ...(synthesized.provider?.speakerVoices ? {
+              speakerVoices: synthesized.provider.speakerVoices.map((assignment) => ({ ...assignment })),
+            } : {}),
           },
           failureSummary: isStale ? 'Script changed during generation' : null,
         },
@@ -415,6 +426,11 @@ export class AudioGenerationService implements OnApplicationShutdown {
     contentImportId: string,
     _actorId: string,
   ): Promise<AudioArtifactDto[]> {
+    const currentImport = await this.database.contentImport.findUnique({ where: { id: contentImportId } });
+    const currentDocument = currentImport ? parseLessonSource(currentImport.rawSource).document : undefined;
+    const currentHashes = new Map(currentDocument?.audioScripts.map(script => [script.slug,
+      createHash('sha256').update(audioScriptFingerprintText(script)).digest('hex')]) ?? []);
+    const reviewInvalid = currentDocument ? narrationReviewIssues(currentDocument).some(i => i.severity === 'error') : false;
     const records = await this.database.audioArtifact.findMany({
       where: { contentImportId },
       orderBy: { createdAt: 'asc' },
@@ -435,7 +451,9 @@ export class AudioGenerationService implements OnApplicationShutdown {
         byteSize: record.byteSize,
         checksum: record.checksum,
         storageKey: record.storageKey,
-        status: record.status as AudioArtifactStatus,
+        status: (record.status === 'READY' && currentDocument
+          && (record.scriptHash !== currentHashes.get(record.audioScriptSlug) || reviewInvalid)
+          ? 'STALE' : record.status) as AudioArtifactStatus,
         failureSummary: record.failureSummary,
         ...(record.adapterName === 'fake-tts' ? { simulationLabel: SIMULATION_AUDIO_LABEL } : {}),
         createdAt: record.createdAt.toISOString(),

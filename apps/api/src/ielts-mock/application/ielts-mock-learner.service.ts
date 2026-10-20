@@ -1,12 +1,18 @@
-import { ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, Optional, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import type { Prisma } from '@prisma/client';
 import {
-  ieltsMockAttemptSchema, ieltsMockCatalogSchema, ieltsMockContentSchema, ieltsMockReportSchema,
+  ieltsMockCatalogSchema, ieltsMockContentSchema, ieltsMockReportSchema,
   saveIeltsMockResponsesSchema, startIeltsMockAttemptSchema, submitIeltsMockSectionSchema,
   type IeltsMockAttemptDto, type IeltsMockReportDto,
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { canEnterIeltsV3 } from '../../ielts-flow/domain/ielts-flow-policy.js';
+import { MockPlaybackService } from './mock-playback.service.js';
+import { MockAttemptClock } from './mock-attempt-clock.js';
+import { advanceMockSection, expireMockSections, lockMockAttempt, toMockAttemptDto } from './mock-attempt-state.js';
+import { hasIeltsEarlyAccess } from '../../ielts-access/ielts-early-access.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { scoreObjectiveAnswer } from '../domain/ielts-mock-scoring.js';
 
@@ -18,20 +24,23 @@ const durations: Record<Section, number> = { LISTENING: 30, READING: 60, WRITING
 
 @Injectable()
 export class IeltsMockLearnerService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService, @Inject(ObjectStorage) private readonly storage: ObjectStorage) {}
+  constructor(@Inject(PrismaService) private readonly database: PrismaService, @Inject(ObjectStorage) private readonly storage: ObjectStorage, @Optional() @Inject(ConfigService) private readonly config?: ConfigService, @Optional() @Inject(MockAttemptClock) private readonly clock?: MockAttemptClock, @Optional() @Inject(MockPlaybackService) private readonly playback?: MockPlaybackService) {}
 
   async catalog(learnerId: string) {
+    const v3 = this.config?.get('ieltsFlow') === 'v3';
+    if (v3) await this.admitV3(this.database, learnerId);
     const journey = await this.database.ieltsBandJourney.findUnique({ where: { learnerId } });
-    if (!journey) return ieltsMockCatalogSchema.parse({ eligible: false, lockedReason: 'BAND_PATHWAY_REQUIRED', mocks: [] });
+    if (!v3 && !journey && !await hasIeltsEarlyAccess(this.database, learnerId)) return ieltsMockCatalogSchema.parse({ eligible: false, lockedReason: 'BAND_PATHWAY_REQUIRED', mocks: [] });
     const [mocks, attempts] = await Promise.all([
       this.database.ieltsMockTest.findMany({ where: { status: 'PUBLISHED', currentPublishedVersionId: { not: null } }, include: { currentPublishedVersion: true }, orderBy: { updatedAt: 'desc' } }),
       this.database.ieltsMockAttempt.findMany({ where: { learnerId, status: 'IN_PROGRESS' }, select: { id: true, mockTestVersion: { select: { mockTestId: true } } } }),
     ]);
-    if (!mocks.length) return ieltsMockCatalogSchema.parse({ eligible: false, lockedReason: 'MOCK_NOT_PUBLISHED', mocks: [] });
-    return ieltsMockCatalogSchema.parse({ eligible: true, lockedReason: null, mocks: mocks.flatMap((mock) => {
+    if (!mocks.length) return ieltsMockCatalogSchema.parse({ ...(v3 ? { flowVersion: 'v3' } : {}), eligible: false, lockedReason: 'MOCK_NOT_PUBLISHED', mocks: [] });
+    return ieltsMockCatalogSchema.parse({ ...(v3 ? { flowVersion: 'v3' } : {}), eligible: true, lockedReason: null, mocks: mocks.flatMap((mock) => {
       if (!mock.currentPublishedVersion) return [];
       const content = ieltsMockContentSchema.parse(mock.currentPublishedVersion.content);
-      return [{ id: mock.id, title: content.title, variant: content.variant, version: mock.currentPublishedVersion.version, allowedModes: content.allowedModes, activeAttemptId: attempts.find((item) => item.mockTestVersion.mockTestId === mock.id)?.id ?? null }];
+      if (!v3 && content.schemaVersion === 2) return [];
+      return [{ id: mock.id, title: content.title, variant: content.variant, version: mock.currentPublishedVersion.version, allowedModes: v3 ? content.allowedModes.filter(mode => mode === 'PRACTICE' || (mode === 'EXAM_SIMULATION' && content.schemaVersion === 2 && content.qualification.qualifiedModes.includes('EXAM_SIMULATION'))) : content.allowedModes, activeAttemptId: attempts.find((item) => item.mockTestVersion.mockTestId === mock.id)?.id ?? null }];
     }) });
   }
 
@@ -44,13 +53,17 @@ export class IeltsMockLearnerService {
         if (existing.mockTestVersion.mockTestId !== parsed.mockTestId || existing.mode !== parsed.mode) throw new ConflictException({ code: 'IELTS_MOCK_CLIENT_ATTEMPT_REUSED' });
         return this.toDto(existing);
       }
-      if (!await tx.ieltsBandJourney.findUnique({ where: { learnerId } })) throw new ConflictException({ code: 'IELTS_BAND_PATHWAY_REQUIRED' });
+      const v3 = this.config?.get('ieltsFlow') === 'v3';
+      if (v3) await this.admitV3(tx, learnerId);
+      if (!v3 && !await tx.ieltsBandJourney.findUnique({ where: { learnerId } }) && !await hasIeltsEarlyAccess(tx, learnerId)) throw new ConflictException({ code: 'IELTS_BAND_PATHWAY_REQUIRED' });
       const mock = await tx.ieltsMockTest.findUnique({ where: { id: parsed.mockTestId }, include: { currentPublishedVersion: true } });
       if (!mock?.currentPublishedVersion || mock.status !== 'PUBLISHED') throw new ConflictException({ code: 'IELTS_MOCK_NOT_PUBLISHED' });
       const content = ieltsMockContentSchema.parse(mock.currentPublishedVersion.content);
-      if (!content.allowedModes.includes(parsed.mode)) throw new UnprocessableEntityException({ code: 'IELTS_MOCK_MODE_NOT_ALLOWED' });
-      const now = new Date();
-      const created = await tx.ieltsMockAttempt.create({ data: { learnerId, clientAttemptId: parsed.clientAttemptId, mockTestVersionId: mock.currentPublishedVersion.id, mode: parsed.mode, sectionStartedAt: now, sectionDeadlineAt: this.deadline(now, 'LISTENING') }, include: attemptInclude });
+      if (!v3 && content.schemaVersion === 2) throw new ConflictException({code:'IELTS_V3_NOT_AVAILABLE'});
+      if (!content.allowedModes.some(mode => mode === parsed.mode)) throw new UnprocessableEntityException({ code: 'IELTS_MOCK_MODE_NOT_ALLOWED' });
+      if (v3 && (parsed.mode === 'LEARNING' || (parsed.mode === 'EXAM_SIMULATION' && (content.schemaVersion !== 2 || !content.qualification.qualifiedModes.includes('EXAM_SIMULATION'))))) throw new UnprocessableEntityException({ code: 'IELTS_MOCK_MODE_NOT_QUALIFIED' });
+      const now = this.clock?.now() ?? new Date();
+      const created = await tx.ieltsMockAttempt.create({ data: { ...(v3 ? { policyVersion: 'v2', clockUpdatedAt: now, startedAt: now } : {}), learnerId, clientAttemptId: parsed.clientAttemptId, mockTestVersionId: mock.currentPublishedVersion.id, mode: parsed.mode, sectionStartedAt: now, sectionDeadlineAt: this.deadline(now, 'LISTENING') }, include: attemptInclude });
       return this.toDto(created);
     });
   }
@@ -58,15 +71,29 @@ export class IeltsMockLearnerService {
   async get(learnerId: string, attemptId: string): Promise<IeltsMockAttemptDto> {
     const attempt = await this.database.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
     if (!attempt) throw new NotFoundException('IELTS mock attempt was not found.');
+    if (attempt.policyVersion === 'v2' && this.clock) return this.clock.expireIfDue(learnerId, attemptId);
     if (attempt.status === 'IN_PROGRESS' && Date.now() > attempt.sectionDeadlineAt.getTime()) return this.submitSection(learnerId, attemptId, { expectedRevision: attempt.revision, section: attempt.currentSection });
     return this.toDto(attempt);
   }
 
   async saveResponses(learnerId: string, attemptId: string, input: unknown): Promise<IeltsMockAttemptDto> {
     const parsed = saveIeltsMockResponsesSchema.parse(input);
-    return this.database.$transaction(async (tx) => {
+    const result = await this.database.$transaction(async (tx) => {
       const attempt = await tx.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
       if (!attempt) throw new NotFoundException('IELTS mock attempt was not found.');
+      if (attempt.policyVersion === 'v2') {
+        const locked = await lockMockAttempt(tx, learnerId, attemptId);
+        const now = this.clock?.now() ?? new Date();
+        const current = await expireMockSections(tx, locked, now);
+        if (current.revision !== locked.revision) return { expired: true as const };
+        this.requireWritable(current, parsed.expectedRevision);
+        if (current.pausedAt) throw new ConflictException({ code: 'IELTS_MOCK_PAUSED' });
+        const content = ieltsMockContentSchema.parse(current.mockTestVersion.content);
+        const allowed = new Set(this.responseIds(content, current.currentSection as Section));
+        if (Object.keys(parsed.responses).some(id => !allowed.has(id))) throw new UnprocessableEntityException({ code: 'IELTS_MOCK_RESPONSE_NOT_IN_CURRENT_SECTION' });
+        const updated = await tx.ieltsMockAttempt.update({ where: { id: current.id }, data: { responses: { ...this.jsonRecord(current.responses), ...parsed.responses }, revision: { increment: 1 } }, include: attemptInclude });
+        return this.toDto(updated);
+      }
       this.requireWritable(attempt, parsed.expectedRevision);
       if (Date.now() > attempt.sectionDeadlineAt.getTime()) throw new ConflictException({ code: 'IELTS_MOCK_SECTION_EXPIRED' });
       const content = ieltsMockContentSchema.parse(attempt.mockTestVersion.content);
@@ -77,6 +104,8 @@ export class IeltsMockLearnerService {
       if (updated.count !== 1) this.stale();
       return this.toDto(await tx.ieltsMockAttempt.findUniqueOrThrow({ where: { id: attempt.id }, include: attemptInclude }));
     });
+    if ('expired' in result) throw new ConflictException({ code: 'IELTS_MOCK_SECTION_EXPIRED' });
+    return result;
   }
 
   async submitSection(learnerId: string, attemptId: string, input: unknown): Promise<IeltsMockAttemptDto> {
@@ -84,6 +113,16 @@ export class IeltsMockLearnerService {
     return this.database.$transaction(async (tx) => {
       const attempt = await tx.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
       if (!attempt) throw new NotFoundException('IELTS mock attempt was not found.');
+      if (attempt.policyVersion === 'v2') {
+        const locked = await lockMockAttempt(tx, learnerId, attemptId);
+        const now = this.clock?.now() ?? new Date();
+        const current = await expireMockSections(tx, locked, now);
+        if (current.revision !== locked.revision) return this.toDto(current);
+        this.requireWritable(current, parsed.expectedRevision);
+        if (current.pausedAt) throw new ConflictException({ code: 'IELTS_MOCK_PAUSED' });
+        if (current.currentSection !== parsed.section) throw new UnprocessableEntityException({ code: 'IELTS_MOCK_SECTION_LOCKED' });
+        return this.toDto(await advanceMockSection(tx, current, now));
+      }
       this.requireWritable(attempt, parsed.expectedRevision);
       if (attempt.currentSection !== parsed.section) throw new UnprocessableEntityException({ code: 'IELTS_MOCK_SECTION_LOCKED' });
       const content = ieltsMockContentSchema.parse(attempt.mockTestVersion.content);
@@ -113,7 +152,12 @@ export class IeltsMockLearnerService {
       overallMockBand: null, strengths: [], gaps: [], nextActions: ['Wait for teacher review of Writing and Speaking.'], completedAt: null });
   }
 
-  async getAudio(learnerId: string, attemptId: string, assetId: string) {
+  async getAudio(learnerId: string, attemptId: string, assetId: string, leaseId?: string) {
+    const pinned = await this.database.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId } });
+    if (pinned?.policyVersion === 'v2') {
+      if (!this.playback) throw new ConflictException({ code: 'IELTS_MOCK_AUDIO_LEASE_REQUIRED' });
+      return { ...await this.playback.stream(learnerId, attemptId, assetId, leaseId), allowRange: true };
+    }
     const artifact = await this.database.$transaction(async (tx) => {
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'ielts-mock-audio:' + attemptId + ':' + assetId}))`;
       const attempt = await tx.ieltsMockAttempt.findFirst({ where: { id: attemptId, learnerId }, include: attemptInclude });
@@ -156,15 +200,10 @@ export class IeltsMockLearnerService {
     const rawScore = questions.filter((question) => scoreObjectiveAnswer(responses[question.id] ?? '', question.answerPolicy)).length;
     return { rawScore, mockBand: source.conversion[rawScore]!.mockBand };
   }
-  private toDto(attempt: AttemptRecord): IeltsMockAttemptDto {
-    const content = ieltsMockContentSchema.parse(attempt.mockTestVersion.content);
-    const safeQuestion = (question: (typeof content.listening.parts)[number]['questions'][number]) => ({ id: question.id, order: question.order, type: question.type, prompt: question.prompt, options: question.options, competencyTags: question.competencyTags });
-    return ieltsMockAttemptSchema.parse({ id: attempt.id, mockTestVersionId: attempt.mockTestVersionId, mockTestVersion: attempt.mockTestVersion.version, title: content.title, mode: attempt.mode, status: attempt.status, currentSection: attempt.currentSection, revision: attempt.revision, responses: this.jsonRecord(attempt.responses), submittedSections: this.jsonStrings(attempt.submittedSections), sectionStartedAt: attempt.sectionStartedAt.toISOString(), sectionDeadlineAt: attempt.sectionDeadlineAt.toISOString(), startedAt: attempt.startedAt.toISOString(), submittedAt: attempt.submittedAt?.toISOString() ?? null,
-      sectionContent: {
-        listening: attempt.currentSection === 'LISTENING' ? content.listening.parts.map((part) => ({ part: part.part, audioUrl: `/api/v1/me/ielts-mocks/attempts/${attempt.id}/audio/${part.audioAssetId}`, questions: part.questions.map(safeQuestion) })) : [],
-        reading: attempt.currentSection === 'READING' ? content.reading.passages.map((passage) => ({ section: passage.section, title: passage.title, passage: passage.passage, questions: passage.questions.map(safeQuestion) })) : [],
-        writing: attempt.currentSection === 'WRITING' ? content.writing.tasks.map(({ task, title, prompt, minimumWords }) => ({ task, title, prompt, minimumWords })) : [],
-        speaking: attempt.currentSection === 'SPEAKING' ? content.speaking.parts.map(({ part, title, prompts, preparationSeconds, responseSeconds }) => ({ part, title, prompts, preparationSeconds, responseSeconds })) : [],
-      } });
+  private toDto(attempt: AttemptRecord): IeltsMockAttemptDto { return toMockAttemptDto(attempt, this.clock?.now() ?? new Date()); }
+
+  private async admitV3(db: PrismaService | Prisma.TransactionClient, learnerId: string) {
+    const [user, program] = await Promise.all([db.user.findUnique({ where: { id: learnerId }, include: { profile: true } }), db.learningProgram.findUnique({ where: { slug: 'ielts' } })]);
+    if (!canEnterIeltsV3({ role: user?.role ?? '', status: user?.status ?? '', onboardingStatus: user?.profile?.onboardingStatus ?? '', programStatus: program?.availabilityStatus ?? '' })) throw new ConflictException({ code: 'IELTS_V3_NOT_AVAILABLE' });
   }
 }

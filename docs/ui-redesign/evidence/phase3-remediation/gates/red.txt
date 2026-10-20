@@ -1,0 +1,77 @@
+[WebServer] (node:15996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  x  1 e2e\liquid-glass-shell-reflow.spec.ts:41:5 › Settings retains baseline horizontal reach without cumulative shell padding (3.3s)
+  ok 2 e2e\liquid-glass-shell-reflow.spec.ts:72:5 › narrow long-label navigation keeps native Tab focus visible at CSS200% (2.2s)
+  x  3 e2e\liquid-glass-shell-reflow.spec.ts:97:5 › shell safe-area insets apply once to feature content (1.8s)
+
+
+  1) e2e\liquid-glass-shell-reflow.spec.ts:41:5 › Settings retains baseline horizontal reach without cumulative shell padding
+
+    Error: 390px / CSS200% vs baseline
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 564
+    Received:    596
+
+      50 |         .find((row: { width: number; zoom: number | string }) => row.width === width && Number(row.zoom) === zoom);
+      51 |       // Captures use identical real Settings source, locale, font, viewport and runtime.
+    > 52 |       expect(result.scrollWidth, `${width}px / CSS${zoom * 100}% vs baseline`).toBeLessThanOrEqual(previous.scrollWidth);
+         |                                                                                ^
+      53 |     }
+      54 |     if (width === 390 && zoom === 2) {
+      55 |       await page.screenshot({ path: path.join(evidence, `${mode}-390-css200.png`), fullPage: true });
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-shell-reflow.spec.ts:52:80
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--f9a17-ut-cumulative-shell-padding\error-context.md
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--f9a17-ut-cumulative-shell-padding\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--f9a17-ut-cumulative-shell-padding\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--f9a17-ut-cumulative-shell-padding\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-shell-reflow.spec.ts:97:5 › shell safe-area insets apply once to feature content
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 48
+    Received: 80
+
+      107 |   // Layout inset should not be repeated inside the feature; the feature's
+      108 |   // unchanged intrinsic content width remains a separately recorded issue.
+    > 109 |   expect(grid.left).toBe(48);
+          |                     ^
+      110 |   for (const selector of ['.shell-header-surface', '.workspace-navigation']) {
+      111 |     const box = result.boxes.find((item) => item.selector === selector)!;
+      112 |     expect(box.left).toBe(48); expect(box.right).toBe(350);
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-shell-reflow.spec.ts:109:21
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--6a9e7-ply-once-to-feature-content\error-context.md
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--6a9e7-ply-once-to-feature-content\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--6a9e7-ply-once-to-feature-content\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase3-remediation\browser-results\liquid-glass-shell-reflow--6a9e7-ply-once-to-feature-content\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e\liquid-glass-shell-reflow.spec.ts:41:5 › Settings retains baseline horizontal reach without cumulative shell padding
+    e2e\liquid-glass-shell-reflow.spec.ts:97:5 › shell safe-area insets apply once to feature content
+  1 passed (22.3s)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test --config playwright.shell-reflow.config.ts

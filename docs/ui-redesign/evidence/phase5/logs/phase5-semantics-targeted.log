@@ -1,0 +1,24 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-content/content-list.test.tsx" "src/features/admin-ielts-integrated/integrated-profile-workspace.test.tsx" "src/features/admin-ielts-band-curriculum/band-curriculum-workspace.test.tsx" "src/features/admin-ielts-mock/ielts-mock-workspace.test.tsx" "src/features/ai/ai-settings-panel.test.tsx" "src/features/audio/audio-settings-panel.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ✓ src/features/admin-content/content-list.test.tsx (3 tests) 556ms
+ ✓ src/features/admin-ielts-integrated/integrated-profile-workspace.test.tsx (2 tests) 838ms
+   ✓ localizes skill allocations and retains unsaved minutes in the mounted input  497ms
+   ✓ shows Vietnamese allocation validation and enables publishing only for a valid saved revision  339ms
+ ✓ src/features/audio/audio-settings-panel.test.tsx (2 tests) 753ms
+   ✓ AudioSettingsPanel > loads sources, shows browser voices conditionally and saves selection  624ms
+ ✓ src/features/admin-ielts-mock/ielts-mock-workspace.test.tsx (4 tests) 866ms
+   ✓ IeltsMockWorkspace pagination > displays failed mock validation in Vietnamese with the technical field path and blocks publication  385ms
+ ✓ src/features/admin-ielts-band-curriculum/band-curriculum-workspace.test.tsx (3 tests) 900ms
+   ✓ localizes invalid JSON and retains the same source editor across a locale switch  659ms
+ ✓ src/features/ai/ai-settings-panel.test.tsx (2 tests) 896ms
+   ✓ AI settings panel > saves Discovery selection and fallback opt-out, and disables unconfigured OpenAI  787ms
+
+ Test Files  6 passed (6)
+      Tests  16 passed (16)
+   Start at  18:26:05
+   Duration  20.35s (transform 1.46s, setup 0ms, collect 30.59s, tests 4.81s, environment 80.57s, prepare 2.81s)

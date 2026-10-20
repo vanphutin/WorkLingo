@@ -1,5 +1,9 @@
 export const adminIeltsMockMessages = {
   en: {
+    newPaper: 'New mock paper', createDraft: 'Create draft', transfer: 'Import / export mock JSON', import: 'Import mock JSON', export: 'Export current mock', template: 'Mock JSON template',
+    example: 'Draft example: replace synthetic passages, questions and answers, attach listening audio, then validate before publication. Version 2 requires real qualification evidence.',
+    unsaved: 'Save changes and apply or discard pending JSON imports before validation.', delete: 'Delete draft', archive: 'Archive mock', removeTitle: 'Remove “{name}”?', confirmDelete: 'Confirm delete', confirmArchive: 'Confirm archive', cancel: 'Cancel', deleteHelp: 'This never-published paper draft will be deleted.', archiveHelp: 'This mock will leave the catalog. Published versions and attempts are retained.', deleted: 'Mock draft deleted.', archived: 'Mock archived.', discardTitle: 'Unsaved changes', discardHelp: 'Switching papers discards current edits and pending JSON imports.', keepEditing: 'Keep editing', discard: 'Discard changes', retry: 'Reload workspace', choose: 'Choose a mock paper',
+    recordedPart: 'Recorded Speaking part {part}', missingRecordings: 'Review requires retained recordings for all three Speaking parts.',
     admin: 'Content Admin', title: 'IELTS Full Mock Workspace', description: 'Author immutable Academic mock versions and complete teacher review for Writing and Speaking.',
     attempt: 'Attempt {id} · version {version, number}', responses: 'Submitted responses', criterion: 'Criterion {index, number}', writingTask1: 'Writing Task 1', writingTask2: 'Writing Task 2', speaking: 'Speaking', strengths: 'Strengths', gaps: 'Gaps', nextAction: 'Required next action', completeReview: 'Complete teacher review',
     selectMock: 'Select mock', moreMocks: 'Load more mocks', status: 'Status {status} · draft revision {revision, number} · published version {version}', none: 'none', source: 'Format 1 JSON content',
@@ -9,6 +13,10 @@ export const adminIeltsMockMessages = {
     invalidJson: 'Mock content must be valid JSON.', validationIssues: 'Validation issues', invalidField: 'Invalid mock content. Review this field.',
   },
   vi: {
+    newPaper: 'Đề thi thử mới', createDraft: 'Tạo bản nháp', transfer: 'Nhập / xuất JSON bài thi thử', import: 'Nhập JSON bài thi thử', export: 'Xuất bài thi thử hiện tại', template: 'Mẫu JSON bài thi thử',
+    example: 'Mẫu nháp: thay bài đọc, câu hỏi và đáp án giả lập, gắn âm thanh Nghe rồi kiểm tra trước khi xuất bản. Phiên bản 2 cần bằng chứng thẩm định thật.',
+    unsaved: 'Lưu thay đổi và áp dụng hoặc bỏ JSON đang nhập trước khi kiểm tra.', delete: 'Xóa bản nháp', archive: 'Lưu trữ bài thi thử', removeTitle: 'Gỡ “{name}”?', confirmDelete: 'Xác nhận xóa', confirmArchive: 'Xác nhận lưu trữ', cancel: 'Hủy', deleteHelp: 'Bản nháp đề thi chưa từng xuất bản này sẽ bị xóa.', archiveHelp: 'Bài thi thử sẽ rời danh mục. Phiên bản xuất bản và bài làm được giữ lại.', deleted: 'Đã xóa bản nháp đề thi.', archived: 'Đã lưu trữ bài thi thử.', discardTitle: 'Thay đổi chưa lưu', discardHelp: 'Đổi đề thi sẽ bỏ chỉnh sửa và JSON đang nhập.', keepEditing: 'Tiếp tục chỉnh sửa', discard: 'Bỏ thay đổi', retry: 'Tải lại không gian', choose: 'Chọn đề thi thử',
+    recordedPart: 'Bản ghi Speaking phần {part}', missingRecordings: 'Cần đủ bản ghi còn hạn của cả ba phần Speaking để chấm bài.',
     admin: 'Quản trị nội dung', title: 'Không gian bài thi thử IELTS toàn phần', description: 'Biên soạn các phiên bản cố định của bài thi thử Academic và hoàn tất chấm phần Viết và Nói.',
     attempt: 'Bài làm {id} · phiên bản {version, number}', responses: 'Câu trả lời đã nộp', criterion: 'Tiêu chí {index, number}', writingTask1: 'Viết: bài 1', writingTask2: 'Viết: bài 2', speaking: 'Nói', strengths: 'Điểm mạnh', gaps: 'Điểm cần cải thiện', nextAction: 'Hành động tiếp theo bắt buộc', completeReview: 'Hoàn tất chấm bài',
     selectMock: 'Chọn bài thi thử', moreMocks: 'Tải thêm bài thi thử', status: 'Trạng thái {status} · bản sửa đổi {revision, number} · phiên bản xuất bản {version}', none: 'chưa có', source: 'Nội dung JSON định dạng 1',

@@ -1,0 +1,43 @@
+
+> @worklingo/api@0.0.0 test D:\Projects\WorkLingo-Integration\apps\api
+> vitest run
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ❯ test/integration/progression.integration.spec.ts (26 tests | 26 skipped) 10089ms
+   ↓ learner progression HTTP API > starts at the persisted Foundation level with no assessable session
+   ↓ learner progression HTTP API > allows assessment of a completed session while speaking and writing remain honestly pending
+   ↓ learner progression HTTP API > rejects confirmation while one of the four skills is still pending
+   ↓ learner progression HTTP API > confirms successful current-level completion without inventing next content
+   ↓ learner progression HTTP API > uses enrollment current level in the existing progress API even when the legacy mirror disagrees
+   ↓ learner progression HTTP API > serializes UUID replay and rejects reuse for a different session
+   ↓ learner progression HTTP API > rejects learner scores, malformed UUIDs, foreign sessions and incomplete sessions
+   ↓ learner progression HTTP API > retains the immutable pending snapshot after server evaluation and reassesses with a new UUID
+   ↓ learner progression HTTP API > reports an actionable not_ready result for incomplete published missions
+   ↓ learner progression HTTP API > advances once under concurrent confirmation and rejects a stale competing assessment
+   ↓ learner progression HTTP API > uses enrollment level for progression even when the compatibility mirror is stale
+   ↓ learner progression HTTP API > serializes activation with advancement and rolls back enrollment when confirmation persistence fails
+   ↓ learner progression HTTP API > resumes historical work but rejects new and replayed assessment or confirmation across program contexts
+   ↓ learner progression HTTP API > never skips an immediate next level that has no published content
+   ↓ learner progression HTTP API > rejects confirmation after next-level content is withdrawn
+   ↓ learner progression HTTP API > does not make an invalid completed plan assessable
+   ↓ learner progression HTTP API > keeps known weak reinforcement while other skills await evaluation
+   ↓ learner progression HTTP API > finds a valid completed session when the newest completed plan is invalid
+   ↓ learner progression HTTP API > reports unavailable curriculum honestly when a published mission has no published lesson
+   ↓ learner progression HTTP API > does not lock progression on mastery required only by an unreachable later published lesson
+   ↓ learner progression HTTP API > does not unlock a next mission through a later lesson when its selected first lesson lacks four skills
+   ↓ learner progression HTTP API > does not unlock four-skill content that cannot form any canonical session
+   ↓ learner progression HTTP API > blocks a stale pass when a new published current-level mission is still incomplete
+   ↓ learner progression HTTP API > blocks a stale pass when the selected curriculum gains an unscored required Language Block
+   ↓ learner progression HTTP API > blocks a stale pass when evaluated required mastery falls below the threshold
+   ↓ learner progression HTTP API > scores the original frozen lesson after a newer version is published
+ ❯ test/integration/content-publish.integration.spec.ts (8 tests | 8 skipped) 6069ms
+   ↓ Transactional publish, archive, and session version isolation > preserves Foundation 1.1 metadata through publish and snapshot decoding
+   ↓ Transactional publish, archive, and session version isolation > atomically publishes a validated lesson version with child records
+   ↓ Transactional publish, archive, and session version isolation > publishes repeated source vocabulary in another bank with stable IDs and consistent references
+   ↓ Transactional publish, archive, and session version isolation > returns the same result for concurrent identical publish requests
+   ↓ Transactional publish, archive, and session version isolation > rejects a READY candidate owned by another content import
+   ↓ Transactional publish, archive, and session version isolation > allows only one concurrent publish with different keys for the same draft
+   ↓ Transactional publish, archive, and session version isolation > clears the current published pointer when the current lesson version is archived
+   ↓ Transactional publish, archive, and session version isolation > publishes version 2 atomically archiving version 1 and preserving session isolation

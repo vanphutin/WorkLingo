@@ -18,6 +18,8 @@ import { apiClient } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
 import { EvaluationFeedback } from './evaluation-feedback';
 import { useEvaluation } from './use-evaluation';
+import { GlassSurface } from '../../components/glass-surface';
+import './session-experience.css';
 
 interface SessionShellProps {
   readonly session: LearningSessionDto;
@@ -33,6 +35,7 @@ interface SessionShellProps {
   readonly isCompleted?: boolean;
   readonly contextLabel?: string;
   readonly completionHref?: string;
+  readonly completionLabel?: string;
 }
 
 
@@ -74,6 +77,7 @@ export function SessionShell({
   isCompleted = false,
   contextLabel = 'Workplace Learning Session',
   completionHref = '/dashboard',
+  completionLabel,
 }: SessionShellProps) {
   const t = useT('learningSession', learningSessionMessages);
   const { locale } = useLocalePreference();
@@ -250,6 +254,104 @@ export function SessionShell({
     session.plan.blocks[resolvedActiveBlockIndex]?.type ??
     'respond';
 
+  const actions = (
+    <>
+      {submitError && (
+        <div className="submit-error-banner" role="alert">
+          <p className="error-text">{t('submissionFailed', { error: localizedError(submitError.cause, locale) })}</p>
+          <button
+            type="button"
+            className="retry-button"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {t('retry')}
+          </button>
+        </div>
+      )}
+
+      <footer className="activity-footer">
+        <button
+          type="button"
+          className="continue-button"
+          onClick={handleSubmit}
+          disabled={!canContinue || isSubmitting || session.status === 'paused'}
+        >
+          {isSubmitting ? t('submitting') : t('continue')}
+        </button>
+      </footer>
+    </>
+  );
+  const support = ((!isCompleted && currentActivity) || evaluationAttemptId) ? (
+    <aside className="session-side-column" aria-label={t('supportAndFeedback')}>
+      {/* Information and feedback collapse independently. */}
+      {!isCompleted && currentActivity && <section
+        className={`session-support-panel ${isPanelCollapsed ? 'collapsed' : ''}`}
+        aria-label={t('supportInfo')}
+      >
+        <div className="panel-header">
+          <h2 className="panel-title">{t('sessionInfo')}</h2>
+          <button
+            type="button"
+            className="toggle-panel-button"
+            onClick={() => setIsPanelCollapsed((prev) => !prev)}
+            aria-expanded={!isPanelCollapsed}
+            aria-controls="session-support-content"
+            aria-label={isPanelCollapsed ? t('expandSupport') : t('collapseSupport')}
+          >
+            {isPanelCollapsed ? t('showInfo') : t('hideInfo')}
+          </button>
+        </div>
+
+        {!isPanelCollapsed && (
+          <div className="panel-content" id="session-support-content">
+            <div className="info-block">
+              <h3>{t('duration')}</h3>
+              <p>{session.plan.kind === 'topic'
+                ? t('topicDuration', { minutes: session.durationMinutes, stageMinutes: session.plan.blocks[resolvedActiveBlockIndex]?.targetMinutes ?? 0 })
+                : t('totalDuration', { minutes: session.durationMinutes })}</p>
+            </div>
+
+            <div className="info-block">
+              <h3>{t('currentBlock')}</h3>
+              <p>
+                {t('blockPosition', { label: blockLabels[currentBlockType] ?? currentBlockType, current: resolvedActiveBlockIndex + 1, total: session.plan.blocks.length })}
+              </p>
+            </div>
+
+            <div className="info-block">
+              <h3>{t('skillsCovered')}</h3>
+              <p>{currentActivity.skills.map((skill) => t(skill)).join(', ')}</p>
+            </div>
+
+            {currentActivity.languageBlocks.length > 0 && (
+              <div className="info-block">
+                <h3>{t('vocabularyLanguage')}</h3>
+                <ul className="info-vocab-list">
+                  {currentActivity.languageBlocks.map((lb, i) => (
+                    <li key={i} lang="en">{(lb.canonicalForm as string) || (lb.slug as string)}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+      </section>}
+      <EvaluationFeedback
+        showEmpty={!isCompleted}
+        loading={evaluationAttemptId !== null && !asyncEvaluation.evaluation && !asyncEvaluation.error}
+        evaluation={asyncEvaluation.evaluation}
+        error={asyncEvaluation.error}
+        isRetrying={asyncEvaluation.isRetrying}
+        onRetry={() => void asyncEvaluation.retry()}
+        onDeleteRecording={(recordingId) => void handleDeleteRecording(recordingId)}
+        isDeletingRecording={deletingRecordingId !== null}
+        recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
+        deletionError={recordingDeleteError ? localizedError(recordingDeleteError.cause, locale) : null}
+      />
+    </aside>
+  ) : null;
+
   return (
     <div className="session-layout">
       {/* Top Header */}
@@ -260,7 +362,7 @@ export function SessionShell({
             <h1 className="session-mission-title" lang="en">{session.mission.title}</h1>
           </div>
 
-          {!isCompleted && <div className="session-actions">
+          {!isCompleted && <GlassSurface className="session-actions" variant="solid">
             {session.status === 'paused' ? (
               <button
                 type="button"
@@ -280,7 +382,7 @@ export function SessionShell({
                 {sessionAction === 'pause' ? t('pausing') : t('pauseSession')}
               </button>
             )}
-          </div>}
+          </GlassSurface>}
         </div>
 
         {/* Blocks Progress Bar */}
@@ -336,17 +438,6 @@ export function SessionShell({
             </div>
           )}
 
-          <EvaluationFeedback
-            evaluation={asyncEvaluation.evaluation}
-            error={asyncEvaluation.error}
-            isRetrying={asyncEvaluation.isRetrying}
-            onRetry={() => void asyncEvaluation.retry()}
-            onDeleteRecording={(recordingId) => void handleDeleteRecording(recordingId)}
-            isDeletingRecording={deletingRecordingId !== null}
-            recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
-            deletionError={recordingDeleteError ? localizedError(recordingDeleteError.cause, locale) : null}
-          />
-
           {isCompleted ? (
             <section className="session-completed-card" aria-label={t('sessionCompletedLabel')}>
               <h2>{isPlacement ? t('placementComplete') : t('sessionComplete')}</h2>
@@ -355,13 +446,14 @@ export function SessionShell({
                 : t('sessionCompleteDescription', { count: session.plan.blocks.length, minutes: session.durationMinutes })}
               </p>
               <Link href={completionHref} className="primary-action-button inline-button">
-                {isPlacement ? t('reviewAssessment') : t('returnDashboard')}
+                {completionLabel ?? (isPlacement ? t('reviewAssessment') : t('returnDashboard'))}
               </Link>
             </section>
           ) : (
             <>
               {currentActivity && (
                 <ActivityRenderer
+                  tools={{ actions, support }}
                   activity={currentActivity}
                   sessionId={session.id}
                   onSubmitRecording={handleSubmitRecording}
@@ -371,85 +463,12 @@ export function SessionShell({
                 />
               )}
 
-              {submitError && (
-                <div className="submit-error-banner" role="alert">
-                  <p className="error-text">{t('submissionFailed', { error: localizedError(submitError.cause, locale) })}</p>
-                  <button
-                    type="button"
-                    className="retry-button"
-                    onClick={handleSubmit}
-                    disabled={isSubmitting}
-                  >
-                    {t('retry')}
-                  </button>
-                </div>
-              )}
 
-              <footer className="activity-footer">
-                <button
-                  type="button"
-                  className="continue-button"
-                  onClick={handleSubmit}
-                  disabled={!canContinue || isSubmitting || session.status === 'paused'}
-                >
-                  {isSubmitting ? t('submitting') : t('continue')}
-                </button>
-              </footer>
             </>
           )}
         </main>
 
-        {/* Collapsible Support Panel */}
-        {!isCompleted && currentActivity && <aside
-          className={`session-support-panel ${isPanelCollapsed ? 'collapsed' : ''}`}
-          aria-label={t('supportInfo')}
-        >
-          <div className="panel-header">
-            <h2 className="panel-title">{t('sessionInfo')}</h2>
-            <button
-              type="button"
-              className="toggle-panel-button"
-              onClick={() => setIsPanelCollapsed((prev) => !prev)}
-              aria-expanded={!isPanelCollapsed}
-              aria-controls="session-support-content"
-              aria-label={isPanelCollapsed ? t('expandSupport') : t('collapseSupport')}
-            >
-              {isPanelCollapsed ? t('showInfo') : t('hideInfo')}
-            </button>
-          </div>
-
-          {!isPanelCollapsed && (
-            <div className="panel-content" id="session-support-content">
-              <div className="info-block">
-                <h3>{t('duration')}</h3>
-                <p>{t('totalDuration', { minutes: session.durationMinutes })}</p>
-              </div>
-
-              <div className="info-block">
-                <h3>{t('currentBlock')}</h3>
-                <p>
-                  {t('blockPosition', { label: blockLabels[currentBlockType] ?? currentBlockType, current: resolvedActiveBlockIndex + 1, total: session.plan.blocks.length })}
-                </p>
-              </div>
-
-              <div className="info-block">
-                <h3>{t('skillsCovered')}</h3>
-                <p>{currentActivity.skills.map((skill) => t(skill)).join(', ')}</p>
-              </div>
-
-              {currentActivity.languageBlocks.length > 0 && (
-                <div className="info-block">
-                  <h3>{t('vocabularyLanguage')}</h3>
-                  <ul className="info-vocab-list">
-                    {currentActivity.languageBlocks.map((lb, i) => (
-                      <li key={i} lang="en">{(lb.canonicalForm as string) || (lb.slug as string)}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-        </aside>}
+        {isCompleted || !currentActivity ? support : null}
       </div>
     </div>
   );

@@ -1,0 +1,5 @@
+
+> worklingo@0.0.0 i18n:check D:\Projects\WorkLingo-Integration
+> node scripts/i18n-check.mjs
+
+i18n: 38 namespaces, 2478 paired keys, 2218 static usages; 0 errors, 521 candidate unused keys.

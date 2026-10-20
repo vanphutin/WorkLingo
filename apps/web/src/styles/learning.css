@@ -33,7 +33,8 @@
 .session-mission-title { font-size: clamp(1.5rem, 3vw, 2.25rem); }
 .session-progress-note { margin-block: .75rem 0; color: var(--muted); font-size: .875rem; }
 .session-body-grid { grid-template-columns: minmax(0, 1fr) 17rem; gap: 1.5rem; }
-.session-main-content { width: 100%; margin: 0; padding: clamp(1rem, 3vw, 2rem); border-radius: var(--radius-panel); box-shadow: var(--shadow); }
+.session-side-column { display: grid; gap: 1.25rem; min-width: 0; }
+.session-main-content { width: 100%; min-width: 0; margin: 0; padding: clamp(1rem, 3vw, 2rem); border-radius: var(--radius-panel); box-shadow: var(--shadow); }
 .session-support-panel { box-shadow: none; border-radius: var(--radius-panel); align-self: start; }
 .reading-content-item { background: var(--surface-soft); border: 0; border-radius: .5rem; padding: 1.25rem; }
 .reading-text, .transcript-text { max-width: var(--width-reader); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.8; white-space: pre-wrap; }
@@ -41,7 +42,7 @@
 .question-block { padding: 1.25rem 0; border: 0; border-top: 1px solid var(--border); background: transparent; }
 .option-label { min-height: 48px; padding: .75rem 1rem; border-color: var(--control-border); }
 .option-label.selected { box-shadow: inset 3px 0 var(--primary); }
-.speaking-textarea, .writing-textarea { font-size: 1rem; line-height: 1.8; min-height: 12rem; }
+.speaking-textarea, .writing-textarea { font-size: 1rem; line-height: 1.8; min-height: 12rem; border-radius: var(--radius-control); resize: vertical; }
 .speaking-recorder { background: var(--surface-soft); border-radius: var(--radius-panel); padding: 1.25rem; }
 .activity-footer { position: static; justify-content: flex-end; padding-top: 1.25rem; border-top: 1px solid var(--border); }
 .activity-footer button { min-width: 10rem; }

@@ -1,0 +1,47 @@
+{
+  "sourceCommit": "67df2afa226f0d53c7b4f6c1bf206ca35beaac02",
+  "timestamp": "2026-10-20T18:42:57.715Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [],
+  "container": "worklingo-liquid-glass-phase6-e09c05ac85",
+  "result": "PASS",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 7684,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_e09c05ac857f487fa9e6913089e2c011",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "full backend suite on owned disposable PostgreSQL",
+  "invocation": {
+    "evidenceRoot": "docs/integration/evidence/gate-recovery",
+    "run": "backend-focused-current",
+    "apiSuite": true,
+    "v3": false,
+    "arguments": [
+      "test/integration/backup-restore.integration.spec.ts",
+      "test/integration/placement-isolation.integration.spec.ts",
+      "test/integration/jobs-worker.integration.spec.ts",
+      "src/jobs/application/job-runner.service.spec.ts",
+      "src/jobs/application/jobs.service.spec.ts"
+    ]
+  },
+  "testArguments": [
+    "test/integration/backup-restore.integration.spec.ts",
+    "test/integration/placement-isolation.integration.spec.ts",
+    "test/integration/jobs-worker.integration.spec.ts",
+    "src/jobs/application/job-runner.service.spec.ts",
+    "src/jobs/application/jobs.service.spec.ts"
+  ],
+  "optimizedWeb": false,
+  "playwrightCommand": "pnpm --filter @worklingo/api exec vitest run test/integration/backup-restore.integration.spec.ts test/integration/placement-isolation.integration.spec.ts test/integration/jobs-worker.integration.spec.ts src/jobs/application/job-runner.service.spec.ts src/jobs/application/jobs.service.spec.ts",
+  "harnessSHA256": "a32bd796dde160a32f4e1a0e01fd11b1166f6dfb481b1ff573a74867157d0971",
+  "e2eDiffSHA256": "43e4eb83f076768ea431fc60274266e44e6b86f8c6a46935570963a532784fb3",
+  "exitCode": 0,
+  "finished": "2026-10-20T18:45:10.413Z"
+}

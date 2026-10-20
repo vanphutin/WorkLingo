@@ -1,0 +1,698 @@
+{
+  "title": "exam matrix light 390",
+  "status": "passed",
+  "mode": "production",
+  "fixtures": true,
+  "observations": [
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Luyện bốn kỹ năng IELTS",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập tích hợp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chọn thời lượng và độ khó độc lập. Mỗi buổi học gồm nghe, đọc, viết và nói.",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tiếp tục buổi học đã lưu",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tạo buổi học",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/practice",
+      "name": "integrated-catalog-light-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "60 phút · Nền tảng",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Luyện tập tích hợp",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "nghe · 15 phút · bài luyện mới",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Listen for detail",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời gian còn lại của phần: 15:00",
+      "foreground": [
+        135,
+        80,
+        0
+      ],
+      "background": [
+        255,
+        243,
+        217
+      ],
+      "ratio": 6.002620117262243
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Listen and identify the evidence.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc hướng dẫn và hoàn thành phần này khi đã sẵn sàng.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/practice/44444444-4444-4444-8444-444444444444",
+      "name": "integrated-player-light-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chương trình IELTS",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Lộ trình theo Band",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Tiến qua bảy giai đoạn chương trình dựa trên bằng chứng từ bài luyện bốn kỹ năng",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phiên bản 1 · tiến độ dựa trên bằng chứng",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Foundation to 3.0",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Band mục tiêu 6",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        240,
+        237,
+        255
+      ],
+      "ratio": 5.924320531451005
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đủ bằng chứng",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 mẫu · độ tin cậy chưa có",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đủ bằng chứng",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 mẫu · độ tin cậy chưa có",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đủ bằng chứng",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 mẫu · độ tin cậy chưa có",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Chưa đủ bằng chứng",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "0 mẫu · độ tin cậy chưa có",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bằng chứng luyện tập: 0 buổi học · 0 phần",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bằng chứng luyện tập:",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Điểm cần củng cố tiếp theo",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bài luyện được đề xuất",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/pathway",
+      "name": "pathway-catalog-light-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "IELTS Học thuật",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Bài thi thử đầy đủ",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Hoàn thành cả bốn kỹ năng trên cùng một phiên bản bài thi đã xuất bản cố định. K",
+      "foreground": [
+        72,
+        72,
+        74
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 8.177462105930854
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "HỌC THUẬT · Phiên bản 1",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Academic Mock",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/mock-tests",
+      "name": "mock-catalog-light-390",
+      "client": 390,
+      "scroll": 390
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phiên bản 1 · Luyện tập",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 6.104895709365123
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Academic Mock",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đọc",
+      "foreground": [
+        81,
+        69,
+        205
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.812275430189897
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Phần Đọc",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Thời gian còn lại: 30:00",
+      "foreground": [
+        135,
+        80,
+        0
+      ],
+      "background": [
+        255,
+        243,
+        217
+      ],
+      "ratio": 6.002620117262243
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "English passage",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Preserve this supplied English passage.",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        242,
+        242,
+        247
+      ],
+      "ratio": 15.247942489892495
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "Đã trả lời",
+      "foreground": [
+        23,
+        107,
+        66
+      ],
+      "background": [
+        232,
+        243,
+        235
+      ],
+      "ratio": 5.733375406521888
+    },
+    {
+      "kind": "opaque-text-contrast",
+      "text": "1. What is the main idea?",
+      "foreground": [
+        28,
+        28,
+        30
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.014735210873155
+    },
+    {
+      "url": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "name": "mock-player-light-390",
+      "client": 390,
+      "scroll": 390
+    }
+  ]
+}

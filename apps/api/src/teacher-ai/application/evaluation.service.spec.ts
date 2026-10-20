@@ -54,6 +54,31 @@ const languageResult = {
 } as const;
 
 describe('EvaluationService', () => {
+  it('shows the running speech job while language evaluation is still waiting', async () => {
+    const database = { activityAttempt: { findFirst: async () => ({ id: writingAttempt.id, evaluationStatus: 'QUEUED', score: null, evaluationResults: [],
+      recording: { id: writingAttempt.id, transcript: null, providerName: null, deletedAt: null, retentionUntil: null } }) },
+      job: { findMany: async () => [{ type: 'TRANSCRIBE_SPEECH', status: 'RUNNING' }] },
+    } as unknown as PrismaService;
+    const service = new EvaluationService(database, {} as LanguageEvaluationPort, {} as MasteryService, { recordingRetentionDays: 7 }, progress);
+    const response = await service.getForLearner(writingAttempt.learnerId, writingAttempt.id);
+    expect(response).toHaveProperty('processingSteps', [
+      { key: 'submission', status: 'completed', providerName: null, model: null },
+      { key: 'transcription', status: 'processing', providerName: null, model: null },
+      { key: 'evaluation', status: 'waiting', providerName: null, model: null },
+    ]);
+  });
+  it('returns recorded model provenance for completed feedback without exposing provider configuration', async () => {
+    const database = { activityAttempt: { findFirst: async () => ({ id: writingAttempt.id, evaluationStatus: 'EVALUATED', score: .8,
+      recording: null, evaluationResults: [{ completedAt: new Date('2026-10-19T00:00:00Z'), feedback: languageResult.feedback, scores: { ...languageResult.scores, pronunciationOrFluency: null }, score: .8,
+        providerName: 'discovery', providerModel: 'qwen3.8-27b', providerConfigVersion: 'private-config' }] }) } } as unknown as PrismaService;
+    const service = new EvaluationService(database, {} as LanguageEvaluationPort, {} as MasteryService, { recordingRetentionDays: 7, languageProviderModel: 'different-configured-model' }, progress);
+    const response = await service.getForLearner(writingAttempt.learnerId, writingAttempt.id);
+    expect(response).toHaveProperty('processingSteps', [
+      { key: 'submission', status: 'completed', providerName: null, model: null },
+      { key: 'evaluation', status: 'completed', providerName: 'discovery', model: 'qwen3.8-27b' },
+    ]);
+    expect(JSON.stringify(response)).not.toMatch(/private-config|different-configured-model/);
+  });
   it('persists actual routed provenance with scores and uses the attempt owner for routing', async () => {
     let persisted: Record<string, unknown> | undefined;
     const transaction = {
@@ -93,6 +118,10 @@ describe('EvaluationService', () => {
     await expect(service.getForLearner(writingAttempt.learnerId, writingAttempt.id)).resolves.toEqual({
       attemptId: writingAttempt.id,
       completedAt: completedAt.toISOString(),
+      processingSteps: [
+        { key: 'submission', status: 'completed', providerName: null, model: null },
+        { key: 'evaluation', status: 'completed', providerName: null, model: null },
+      ],
       feedback: languageResult.feedback,
       recording: null,
       retryable: false,

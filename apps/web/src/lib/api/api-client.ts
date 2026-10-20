@@ -1,7 +1,9 @@
+import { vocabularyPublicationReviewSchema, type VocabularyPublicationReview } from '@worklingo/contracts';
 import {
   audioArtifactDtoSchema,
   authUserSchema,
   contentImportSchema,
+  learnerProgressDtoSchema,
   contentIssueSchema,
   contentStatusSchema,
   createCheckpointAssessmentSchema,
@@ -102,6 +104,7 @@ export const activityAttemptDtoSchema = z.object({
 });
 
 export const learnerActivityDtoSchema = z.object({
+  audioText: z.string().min(1).optional(),
   id: z.string(),
   slug: z.string(),
   activityType: z.enum(['reading', 'listening', 'speaking', 'writing']),
@@ -119,12 +122,13 @@ export const sessionBlockDtoSchema = z.object({
   id: z.string(),
   type: z.enum(['activate', 'readDecode', 'listenReason', 'respond']),
   order: z.number(),
-  targetMinutes: z.literal(15),
+  targetMinutes: z.number().int().positive().max(150),
   activityIds: z.array(z.string()),
   status: z.enum(['available', 'completed']),
 });
 
 export const learningSessionDtoSchema = z.object({
+  ieltsTopic: z.object({ topicVersionId: z.uuid(), title: z.string(), packSlug: z.string() }).optional(),
   id: z.string(),
   clientSessionId: z.string(),
   lessonVersionId: z.string(),
@@ -141,17 +145,7 @@ export const learningSessionDtoSchema = z.object({
   attempts: z.array(activityAttemptDtoSchema),
 });
 
-export const learnerProgressDtoSchema = z.object({
-  activityAttempts: z.number(),
-  completedActivities: z.number(),
-  currentLevelCode: z.string().nullable(),
-  sessions: z.object({
-    completed: z.number(),
-    inProgress: z.number(),
-    paused: z.number(),
-    planned: z.number(),
-  }),
-});
+export { learnerProgressDtoSchema } from '@worklingo/contracts';
 
 export type ActivityAttemptDto = z.infer<typeof activityAttemptDtoSchema>;
 export type LearnerActivityDto = z.infer<typeof learnerActivityDtoSchema>;
@@ -441,12 +435,12 @@ export class ApiClient {
     return this.request('/admin/content-imports', { method: 'GET' }, z.array(contentImportSchema));
   }
 
-  async createContentImport(rawSource: string): Promise<ContentImportDto> {
+  async createContentImport(rawSource: string, topicGroupId?: string): Promise<ContentImportDto> {
     return this.request(
       '/admin/content-imports',
       {
         method: 'POST',
-        body: JSON.stringify({ rawSource }),
+        body: JSON.stringify({ rawSource, ...(topicGroupId ? { topicGroupId } : {}) }),
       },
       contentImportSchema,
     );
@@ -514,6 +508,10 @@ export class ApiClient {
 
   async getJob(id: string): Promise<JobDto> {
     return this.request(`/jobs/${id}`, { method: 'GET' }, jobDtoSchema);
+  }
+
+  async getVocabularyPublicationReview(id: string): Promise<VocabularyPublicationReview> {
+    return this.request(`/admin/content-imports/${id}/vocabulary-review`, { method: 'GET', cache: 'no-store' }, vocabularyPublicationReviewSchema);
   }
 
   async publishContentImport(
