@@ -9,6 +9,7 @@ import { ieltsBridgeMessages } from '../../i18n/messages/ieltsBridge';
 import { useEffect, useMemo, useState } from 'react';
 import { ieltsBridgeClient } from '../../lib/api/ielts-bridge-client';
 import './ielts-bridge.css';
+import { GlassSurface } from '../../components/glass-surface';
 
 type Answer = number | number[] | string | undefined;
 
@@ -65,7 +66,7 @@ export function IeltsBridgePlayer({ moduleId }: { readonly moduleId: string }) {
   const remaining = session.progress.timedStageDeadlineAt ? new Date(session.progress.timedStageDeadlineAt).getTime() - now : 0;
   return <main className="bridge-shell bridge-player">
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('skillStageProgress', { skill: t(session.module.skill), stage: formatNumber(locale, session.progress.currentStageIndex + 1) })}</p><h1 lang="en">{session.module.title}</h1></div><Link href="/ielts/bridge">{t('exit')}</Link></header>
-    <nav className="bridge-stage-nav" aria-label={t('stages')}>{session.module.stages.map((item, index) => <span key={item.slug} aria-current={index === session.progress.currentStageIndex ? 'step' : undefined} className={index < session.progress.currentStageIndex ? 'done' : ''}>{formatNumber(locale, index + 1)}<span className="sr-only" lang="en"> {item.title}</span></span>)}</nav>
+    <GlassSurface className="bridge-progress-surface" variant="solid"><nav className="bridge-stage-nav" aria-label={t('stages')}>{session.module.stages.map((item, index) => <span key={item.slug} aria-current={index === session.progress.currentStageIndex ? 'step' : undefined} className={index < session.progress.currentStageIndex ? 'done' : ''}>{formatNumber(locale, index + 1)}<span className="sr-only" lang="en"> {item.title}</span></span>)}</nav></GlassSurface>
     <article className="bridge-stage-card"><p className="bridge-kicker">{t(stage.type === 'review' ? 'reviewStage' : stage.type)}</p><h2 lang="en">{stage.title}</h2><p className="bridge-instruction" lang="en">{stage.instruction}</p>
       {stage.strategySteps.length ? <ol className="bridge-strategy" lang="en">{stage.strategySteps.map((step) => <li key={step}>{step}</li>)}</ol> : null}
       {timed && !timerStarted ? <button className="bridge-primary" type="button" disabled={saving} onClick={() => void update({ startTimer: true })}>{t('startTimer', { count: Math.ceil((stage.timeLimitSeconds ?? 60) / 60) })}</button> : null}
