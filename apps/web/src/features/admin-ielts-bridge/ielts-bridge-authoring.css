@@ -25,6 +25,7 @@
 .bridge-stage-list button { display: grid; grid-template-columns: 1.5rem 1fr; gap: .4rem; align-items: center; }
 .bridge-module-list button.active, .bridge-stage-list button.active { border-color: var(--primary); background: var(--primary-soft); }
 .bridge-editor { display: grid; gap: 1.2rem; }
+.bridge-editor .bridge-editor__fields { padding: 0; border: 0; }
 .bridge-editor section, .bridge-task-editor, .bridge-editor fieldset { display: grid; gap: .75rem; min-width: 0; }
 .bridge-editor__module { padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 .bridge-editor label { display: grid; gap: .35rem; font-weight: 650; }

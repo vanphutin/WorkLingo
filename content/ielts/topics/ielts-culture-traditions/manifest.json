@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Culture & Traditions",
+  "description": "Build contextual IELTS vocabulary through a museum and residents planning a small community festival. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-culture-traditions-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "449ce1df-4ef3-404b-ae7c-c1cc5ba669d1",
+      "focusChunkSlugs": [
+        "ielts-culture-traditions-cultural-heritage",
+        "ielts-culture-traditions-local-traditions",
+        "ielts-culture-traditions-traditional-crafts",
+        "ielts-culture-traditions-cultural-diversity",
+        "ielts-culture-traditions-shared-identity",
+        "ielts-culture-traditions-oral-history",
+        "ielts-culture-traditions-community-participation",
+        "ielts-culture-traditions-historic-buildings",
+        "ielts-culture-traditions-artistic-expression",
+        "ielts-culture-traditions-cultural-exchange",
+        "ielts-culture-traditions-authentic-experience",
+        "ielts-culture-traditions-intergenerational-learning"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-culture-traditions-proposal",
+          "title": "Planning proposal: Culture & Traditions"
+        },
+        {
+          "slug": "ielts-culture-traditions-discussion",
+          "title": "Residents discuss alternatives: Culture & Traditions"
+        }
+      ]
+    }
+  ]
+}

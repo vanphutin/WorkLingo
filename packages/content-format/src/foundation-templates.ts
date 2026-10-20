@@ -5,7 +5,7 @@ const guidance: Record<FoundationCategory, string> = {
   pronunciation: 'Notice a sound or stress contrast, shadow it, and explain the meaning difference.',
   vocabulary: 'Infer a phrase in context, retrieve it, then transfer it to another situation.',
   reading: 'Connect purpose, details and inference; justify answers using exact text lines.',
-  listening: 'Connect what speakers mean and need; justify answers using exact script lines.',
+  listening: 'Connect what speakers mean and need; justify answers using exact script lines. Declare dialogue voices with Name (nam/nữ) or Name (male/female); later turns may use Name alone. More than two characters requires gender for every character. Never infer gender from names.',
   speaking: 'Shadow a purposeful model; assess intelligibility and meaning with a clear rubric.',
   writing: 'Understand a model then produce a clear message for a specific reader and purpose.',
 };
@@ -84,7 +84,9 @@ TODO write the complete workplace situation.
 speaker: colleague
 script:
 <<<
-TODO write a related conversation, not isolated words.
+An (nam): TODO introduce a workplace situation.
+Lan (nữ): TODO respond with a related need or question.
+An: TODO continue the conversation, not isolated words.
 >>>
 [/AUDIO_SCRIPT]
 

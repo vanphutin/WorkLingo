@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
@@ -10,11 +10,13 @@ import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { ContentAuthoringErrorCode } from '@worklingo/contracts';
 import { canonicalLessonSource } from '@worklingo/test-fixtures';
+import { narrationReviewInput, parseLessonSource, setAudioNarration } from '@worklingo/content-format';
 
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { JobRunnerService } from '../../src/jobs/application/job-runner.service.js';
 import { seedContentAdmin } from '../../src/users/infrastructure/seed-content-admin.js';
+import { CurriculumService } from '../../src/curriculum/application/curriculum.service.js';
 
 describe('Content audio generation lifecycle and authorized streaming', () => {
   const schemaName = `content_audio_test_${randomUUID().replaceAll('-', '')}`;
@@ -381,5 +383,59 @@ describe('Content audio generation lifecycle and authorized streaming', () => {
     expect(second.body.jobId).toBe(first.body.jobId);
     await expect(database.audioArtifact.count({ where: { contentImportId: importId } }))
       .resolves.toBe(1);
+  });
+
+  it('requires a fresh narration review, rejects old audio and freezes reviewed speech on publication', async () => {
+    const created = await request(app.getHttpServer()).post('/api/v1/admin/content-imports').set('Cookie', adminCookie)
+      .send({ rawSource: canonicalLessonSource }).expect(201);
+    const importId = created.body.id;
+    const original = parseLessonSource(canonicalLessonSource).document.audioScripts[0]!;
+    const generate = async () => {
+      const response = await request(app.getHttpServer()).post(`/api/v1/admin/content-imports/${importId}/generate-audio`)
+        .set('Cookie', adminCookie).send({ audioScriptSlug: original.slug, providerId: 'fake-tts', idempotencyKey: randomUUID() }).expect(202);
+      for (let index = 0; index < 25; index++) {
+        await app.get(JobRunnerService).runOnce();
+        const job = await database.job.findUniqueOrThrow({ where: { id: response.body.jobId } });
+        if (job.status === 'COMPLETED') break;
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+      return database.audioArtifact.findFirstOrThrow({ where: { contentImportId: importId }, orderBy: { createdAt: 'desc' } });
+    };
+    const old = await generate();
+    const speech = original.script + '\nNarrator: Thank you.';
+    const unsigned = setAudioNarration(canonicalLessonSource, original.slug, speech);
+    const doc = parseLessonSource(unsigned).document;
+    const hash = createHash('sha256').update(narrationReviewInput(doc, doc.audioScripts[0]!)).digest('hex');
+    await request(app.getHttpServer()).patch(`/api/v1/admin/content-imports/${importId}/source`).set('Cookie', adminCookie)
+      .send({ rawSource: unsigned, expectedDraftRevision: 1 }).expect(200);
+    await request(app.getHttpServer()).post(`/api/v1/admin/content-imports/${importId}/generate-audio`).set('Cookie', adminCookie)
+      .send({ audioScriptSlug: original.slug, idempotencyKey: randomUUID(), providerId: 'fake-tts' }).expect(422);
+    const updated = await request(app.getHttpServer()).patch(`/api/v1/admin/content-imports/${importId}/source`).set('Cookie', adminCookie)
+      .send({ rawSource: setAudioNarration(unsigned, original.slug, speech, hash), expectedDraftRevision: 2 }).expect(200);
+    const validated = await request(app.getHttpServer()).post(`/api/v1/admin/content-imports/${importId}/validate`).set('Cookie', adminCookie)
+      .send({ expectedDraftRevision: 3 }).expect(200);
+    expect(validated.body.canPublish).toBe(true);
+    const listed = await request(app.getHttpServer()).get(`/api/v1/admin/content-imports/${importId}/audio`).set('Cookie', adminCookie).expect(200);
+    expect(listed.body.find((a: { id: string }) => a.id === old.id).status).toBe('STALE');
+    const publish = (audioId: string) => request(app.getHttpServer()).post(`/api/v1/admin/content-imports/${importId}/publish`).set('Cookie', adminCookie)
+      .send({ expectedDraftRevision: 3, expectedSourceHash: updated.body.sourceHash, idempotencyKey: randomUUID(), selectedAudioArtifacts: { [original.slug]: audioId } });
+    await publish(old.id).expect(422);
+    const candidate = await generate();
+    expect(candidate.status).toBe('READY');
+    const published = await publish(candidate.id).expect(200);
+    const version = await database.lessonVersion.findUniqueOrThrow({ where: { id: published.body.lessonVersionId } });
+    const snapshot = version.parsedContent as { activities: Array<{ activityType: string; payload: { audioText?: string } }>; contentBlocks: Array<{ text: string }> };
+    expect(snapshot.activities.filter(a => a.activityType === 'listening').map(a => a.payload.audioText)).toEqual([speech]);
+    expect(snapshot.contentBlocks.map(b => b.text)).toEqual(parseLessonSource(canonicalLessonSource).document.contents.map(c => c.text));
+    const storedVersion = await database.lessonVersion.findUniqueOrThrow({ where: { id: version.id }, include: {
+      activities: { orderBy: { order: 'asc' } }, contentBlocks: { orderBy: { order: 'asc' } }, wordBanks: { select: { wordBankId: true } },
+    } });
+    const curriculumBinding = { curriculumRevision: { findUnique: async () => ({ status: 'PUBLISHED',
+      mission: { id: randomUUID(), slug: 'narration-test', title: 'Narration test', objective: 'Listen', purpose: 'LEARNING', level: { code: 'FOUNDATION_1' } },
+      lessons: [{ lessonVersion: storedVersion }],
+    }) } };
+    const mission = await app.get(CurriculumService).getPublishedMissionForRevision(randomUUID(), curriculumBinding as never);
+    expect(mission.lessonVersion.id).toBe(version.id);
+    expect(await database.audioArtifact.findUniqueOrThrow({ where: { id: old.id } })).toMatchObject({ status: 'READY', checksum: old.checksum });
   });
 });

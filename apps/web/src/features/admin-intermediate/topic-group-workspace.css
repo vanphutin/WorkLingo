@@ -1,0 +1,19 @@
+.topic-groups { width: 100%; max-width: 82rem; }
+.topic-groups-layout { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.topic-groups-nav { display: grid; gap: .4rem; padding: .7rem; position: sticky; top: 1rem; }
+.topic-groups-nav button { width: 100%; text-align: start; overflow-wrap: anywhere; }
+.topic-groups-options { display: flex; flex-direction: column; gap: .4rem; max-height: 60dvh; overflow-y: auto; overscroll-behavior: contain; }
+.topic-groups-options button { flex-shrink: 0; }
+.topic-groups-nav .intermediate-field { margin: .25rem; }
+.topic-groups-nav button[aria-pressed="true"] { border-color: var(--primary); border-inline-start-width: 4px; color: var(--primary); }
+.topic-group-lessons header p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.topic-group-lesson-list { list-style: none; margin: 0; padding: 0; }
+.topic-group-lesson-list li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(10rem, 14rem); gap: 1rem; align-items: center; padding-block: 1rem; border-top: 1px solid var(--border); }
+.topic-group-lesson-list li > div { display: grid; gap: .5rem; }
+.topic-group-lesson-list small { color: var(--muted); }
+.topic-group-lesson-list .intermediate-field { margin: 0; }
+@media (max-width: 760px) {
+  .topic-groups-layout { grid-template-columns: minmax(0, 1fr); }
+  .topic-groups-nav { position: static; }
+  .topic-group-lesson-list li { grid-template-columns: minmax(0, 1fr); }
+}

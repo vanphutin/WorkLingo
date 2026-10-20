@@ -11,13 +11,13 @@ import { BrowserSpeechControls } from '../audio/browser-speech-controls';
 import { ieltsOrientationClient } from '../../lib/api/ielts-orientation-client';
 import './orientation-player.css';
 
-function Narration({ audioUrl, transcript }: { audioUrl: string | null; transcript: string }) {
+function Narration({ audioUrl, transcript, sessionId, itemId }: { audioUrl: string | null; transcript: string; sessionId: string; itemId: string }) {
   const t = useT('ieltsOrientation', ieltsOrientationMessages);
   const { locale } = useLocalePreference();
   const audio = useRef<HTMLAudioElement>(null);
   const [rate, setRate] = useState(1);
   const [volume, setVolume] = useState(1);
-  if (!audioUrl) return <div className="orientation-narration"><p>{t('browserVoice')}</p><BrowserSpeechControls lang="en-GB" text={transcript} /></div>;
+  if (!audioUrl) return <div className="orientation-narration"><p>{t('browserVoice')}</p><BrowserSpeechControls sessionId={sessionId} itemId={itemId} lang="en-GB" text={transcript} /></div>;
   return <div className="orientation-narration">
     <audio ref={audio} controls preload="metadata" src={audioUrl}>{t('audioUnsupported')}</audio>
     <div className="orientation-narration__settings">
@@ -79,7 +79,7 @@ export function OrientationPlayer() {
       <h1 lang="en">{slide.title}</h1>
       {slide.imageUrl ? <img src={slide.imageUrl} alt="" width="1200" height="675" loading="lazy" /> : null}
       <p className="orientation-player__body" lang="en">{slide.body}</p>
-      <Narration key={slide.id} audioUrl={slide.audioUrl} transcript={slide.transcript} />
+      <Narration key={slide.id} sessionId={status.progress.orientationVersionId} itemId={slide.id} audioUrl={slide.audioUrl} transcript={slide.transcript} />
       <details open className="orientation-transcript"><summary>{t('captions')}</summary><p lang="en">{slide.transcript}</p></details>
       {slide.question ? <fieldset className="orientation-question" lang="en"><legend>{slide.question.prompt}</legend>{slide.question.options.map((option, optionIndex) => <label key={option}><input type="radio" name={slide.question!.slug} checked={selectedAnswer === optionIndex} onChange={() => { setSelectedAnswer(optionIndex); setFeedback(null); }} />{option}</label>)}</fieldset> : null}
       {feedback ? <p className={`orientation-feedback ${feedback.correct ? 'correct' : 'incorrect'}`} role="status"><strong>{feedback.correct ? t('correct') : t('retry')}</strong> <span lang="en">{feedback.explanation}</span></p> : null}

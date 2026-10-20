@@ -24,6 +24,9 @@ export interface LessonNode extends AstNode {
   readonly level: string;
   readonly durationMinutes: number;
   readonly objective: string;
+  readonly program?: string | undefined;
+  readonly category?: string | undefined;
+  readonly authoringTemplate?: string | undefined;
 }
 
 export interface LanguageBlockNode extends AstNode {
@@ -57,6 +60,8 @@ export interface AudioScriptNode extends AstNode {
   readonly slug: string;
   readonly speaker?: string | undefined;
   readonly script: string;
+  readonly spokenText?: string | undefined;
+  readonly speechReview?: string | undefined;
 }
 
 export interface ActivityOptionNode extends AstNode {

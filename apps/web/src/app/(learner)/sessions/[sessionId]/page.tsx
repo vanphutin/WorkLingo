@@ -4,6 +4,7 @@ import React, { use, useCallback, useEffect, useState } from 'react';
 import { useLocalePreference, useT } from '../../../../i18n/provider';
 import { routeMessages } from '../../../../i18n/messages/routes';
 import { localizedError } from '../../../../i18n/errors';
+import { ieltsStudyMessages } from '../../../../i18n/messages/ieltsStudy';
 
 import { SessionShell } from '../../../../features/learning-session/session-shell';
 import {
@@ -20,6 +21,7 @@ export default function SessionPage({
 }) {
   const { sessionId } = use(params);
   const t = useT('routes', routeMessages);
+  const ti = useT('ieltsStudy', ieltsStudyMessages);
   const { locale } = useLocalePreference();
 
   const [session, setSession] = useState<LearningSessionDto | null>(null);
@@ -142,6 +144,7 @@ export default function SessionPage({
 
   return (
     <SessionShell
+      {...(session.ieltsTopic ? { contextLabel: ti('sessionContext', { title: session.ieltsTopic.title }), completionHref: '/ielts/learn', completionLabel: ti('backStudy') } : {})}
       session={session}
       currentActivity={currentActivity}
       onSubmitAttempt={handleSubmitAttempt}

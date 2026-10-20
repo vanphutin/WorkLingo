@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Travel & Transport",
+  "description": "Build contextual IELTS vocabulary through a transport team comparing changes to a town bus network. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-travel-transport-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "f1fd7f3d-0328-420a-a30c-8ea7316fe3e6",
+      "focusChunkSlugs": [
+        "ielts-travel-transport-traffic-congestion",
+        "ielts-travel-transport-commuting-time",
+        "ielts-travel-transport-transport-infrastructure",
+        "ielts-travel-transport-pedestrian-safety",
+        "ielts-travel-transport-affordable-fares",
+        "ielts-travel-transport-peak-hours",
+        "ielts-travel-transport-rail-connections",
+        "ielts-travel-transport-active-travel",
+        "ielts-travel-transport-service-reliability",
+        "ielts-travel-transport-tourist-destinations",
+        "ielts-travel-transport-accessible-routes",
+        "ielts-travel-transport-travel-demand"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-travel-transport-proposal",
+          "title": "Planning proposal: Travel & Transport"
+        },
+        {
+          "slug": "ielts-travel-transport-discussion",
+          "title": "Residents discuss alternatives: Travel & Transport"
+        }
+      ]
+    }
+  ]
+}

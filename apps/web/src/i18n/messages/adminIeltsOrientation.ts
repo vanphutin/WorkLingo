@@ -1,5 +1,6 @@
 export const adminIeltsOrientationMessages = {
   en: {
+    draftBoundary: 'Slide changes affect only this draft. Published versions and learner progress keep their historical slides.',
     pathway: 'IELTS pathway', title: 'Orientation authoring', description: 'Build, validate and publish the immutable introduction shown before IELTS learning.',
     loading: 'Loading IELTS orientation authoring…', draftRevision: 'Draft revision {revision, number}',
     DRAFT: 'Draft', VALIDATED: 'Validated', PUBLISHED: 'Published', ARCHIVED: 'Archived',
@@ -22,6 +23,7 @@ export const adminIeltsOrientationMessages = {
     versionSummary: 'Version {version, number} · {status} · {date}',
   },
   vi: {
+    draftBoundary: 'Thay đổi trang chiếu chỉ tác động đến bản nháp này. Các phiên bản đã xuất bản và tiến độ học viên giữ nguyên trang chiếu lịch sử.',
     pathway: 'Lộ trình IELTS', title: 'Biên soạn phần định hướng', description: 'Biên soạn, kiểm tra và xuất bản phần giới thiệu với phiên bản cố định trước khi học IELTS.',
     loading: 'Đang tải trình biên soạn định hướng IELTS…', draftRevision: 'Bản sửa đổi {revision, number}',
     DRAFT: 'Bản nháp', VALIDATED: 'Đã kiểm tra', PUBLISHED: 'Đã xuất bản', ARCHIVED: 'Đã lưu trữ',

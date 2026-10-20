@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-housing-cities-objective]
+statement: Infer and accurately use contextual Housing & Cities vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-housing-cities-lesson
+title: Housing & Cities: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Write a balanced response that links housing needs to the surrounding neighbourhood.
+[/LESSON]
+
+[WORD_BANK ielts-housing-cities-bank]
+title: Housing & Cities in context
+
+[[LANGUAGE_BLOCK ielts-housing-cities-affordable-housing]]
+expression: affordable housing
+meaning_vi: nhà ở có giá phù hợp khả năng chi trả
+pronunciation: /əˈfɔːdəbəl ˈhaʊzɪŋ/
+collocations: provide affordable housing
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The proposal reserves affordable housing for rent and requires the eligibility rules to be published.
+common_error: Housing is uncountable; use homes for individual units.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-urban-planning]]
+expression: urban planning
+meaning_vi: quy hoạch đô thị
+pronunciation: /ˈɜːbən ˈplænɪŋ/
+collocations: effective urban planning
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The urban planning meeting will examine how the new homes connect to schools, shops and transport.
+common_error: Planning is uncountable when naming the process.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-population-density]]
+expression: population density
+meaning_vi: mật độ dân số
+pronunciation: /ˌpɒpjəˈleɪʃən ˈdensəti/
+collocations: higher population density
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Higher population density may support local services, but the committee wants evidence about pressure on shared spaces.
+common_error: Density refers to people per area, not population growth alone.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-green-spaces]]
+expression: green spaces
+meaning_vi: không gian xanh
+pronunciation: /ɡriːn ˈspeɪsɪz/
+collocations: protect urban green spaces
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The design keeps green spaces open to existing residents rather than fencing them for new tenants only.
+common_error: Use spaces for separate parks and planted areas.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-rental-costs]]
+expression: rental costs
+meaning_vi: chi phí thuê nhà
+pronunciation: /ˈrentəl kɒsts/
+collocations: rising rental costs
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A comparison of rental costs will include heating and service charges, not just the advertised rent.
+common_error: Rental is an adjective before costs; rent can be the payment itself.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-public-amenities]]
+expression: public amenities
+meaning_vi: tiện ích công cộng
+pronunciation: /ˈpʌblɪk əˈmiːnətiz/
+collocations: access to public amenities
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The developer must explain how public amenities will be funded after construction ends.
+common_error: Amenities usually appears in the plural for useful shared facilities.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-mixed-use-development]]
+expression: mixed-use development
+meaning_vi: khu phát triển có nhiều chức năng
+pronunciation: /ˌmɪkst juːs dɪˈveləpmənt/
+collocations: a mixed-use development
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The mixed-use development combines homes with small shops, while delivery hours are limited to reduce disturbance.
+common_error: Use a before one development project.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-building-maintenance]]
+expression: building maintenance
+meaning_vi: bảo trì tòa nhà
+pronunciation: /ˈbɪldɪŋ ˈmeɪntənəns/
+collocations: regular building maintenance
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Tenants will receive a building maintenance schedule and a named contact for urgent repairs.
+common_error: Maintenance is uncountable; maintain is the verb.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-community-facilities]]
+expression: community facilities
+meaning_vi: cơ sở phục vụ cộng đồng
+pronunciation: /kəˈmjuːnəti fəˈsɪlətiz/
+collocations: shared community facilities
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The ground floor will include community facilities that local groups can book at a reduced charge.
+common_error: Facilities is plural when naming several shared services or spaces.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-housing-shortage]]
+expression: housing shortage
+meaning_vi: tình trạng thiếu nhà ở
+pronunciation: /ˈhaʊzɪŋ ˈʃɔːtɪdʒ/
+collocations: address a housing shortage
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The report recognizes the housing shortage but does not treat every objection as opposition to new homes.
+common_error: Use a for one identified shortage.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-neighbourhood-identity]]
+expression: neighbourhood identity
+meaning_vi: bản sắc khu dân cư
+pronunciation: /ˈneɪbəhʊd aɪˈdentəti/
+collocations: preserve neighbourhood identity
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Interviews about neighbourhood identity will include renters and recent arrivals as well as long-term homeowners.
+common_error: Identity concerns shared character, not proof-of-address documents.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-housing-cities-long-term-investment]]
+expression: long-term investment
+meaning_vi: đầu tư dài hạn
+pronunciation: /ˌlɒŋ tɜːm ɪnˈvestmənt/
+collocations: secure long-term investment
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A long-term investment plan will set aside money for drainage and maintenance after the opening ceremony.
+common_error: Hyphenate long-term when it comes before investment.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-housing-cities-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a residents association responding to a housing development proposal. Please compare the priorities below before our next meeting.
+The proposal reserves affordable housing for rent and requires the eligibility rules to be published.
+The urban planning meeting will examine how the new homes connect to schools, shops and transport.
+Higher population density may support local services, but the committee wants evidence about pressure on shared spaces.
+The design keeps green spaces open to existing residents rather than fencing them for new tenants only.
+A comparison of rental costs will include heating and service charges, not just the advertised rent.
+The developer must explain how public amenities will be funded after construction ends.
+The mixed-use development combines homes with small shops, while delivery hours are limited to reduce disturbance.
+Tenants will receive a building maintenance schedule and a named contact for urgent repairs.
+The ground floor will include community facilities that local groups can book at a reduced charge.
+The report recognizes the housing shortage but does not treat every objection as opposition to new homes.
+Interviews about neighbourhood identity will include renters and recent arrivals as well as long-term homeowners.
+A long-term investment plan will set aside money for drainage and maintenance after the opening ceremony.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-housing-cities-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Affordable housing would help my family, but we need clear information about deposits as well as monthly rent.
+Lan: Urban planning should consider the walk to school before deciding where the car park will go.
+An: Population density does not tell us whether a street feels crowded unless we also understand its layout.
+Lan: Green spaces should have benches and clear entrances so older neighbours can use them comfortably.
+An: Rental costs are hard to compare when one listing includes heating and another hides it in extra charges.
+Lan: Public amenities need a maintenance budget; a new play area is less useful if broken equipment stays unrepaired.
+An: A mixed-use development could let me buy groceries nearby, provided deliveries do not continue all night.
+Lan: Building maintenance should include the shared lift, because a failure can isolate residents on upper floors.
+An: Community facilities would be useful for our reading group if booking rules were simple and published in advance.
+Lan: The housing shortage is real for families on the waiting list, so we should propose workable changes rather than reject everything.
+An: Neighbourhood identity should reflect people who live here now, including recent arrivals, not only an old photograph.
+Lan: Long-term investment matters because a project should work ten years after its attractive launch brochure is forgotten.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-housing-cities-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Affordable housing would help my family, but we need clear information about deposits as well as monthly rent.
+Lan: Urban planning should consider the walk to school before deciding where the car park will go.
+An: Population density does not tell us whether a street feels crowded unless we also understand its layout.
+Lan: Green spaces should have benches and clear entrances so older neighbours can use them comfortably.
+An: Rental costs are hard to compare when one listing includes heating and another hides it in extra charges.
+Lan: Public amenities need a maintenance budget; a new play area is less useful if broken equipment stays unrepaired.
+An: A mixed-use development could let me buy groceries nearby, provided deliveries do not continue all night.
+Lan: Building maintenance should include the shared lift, because a failure can isolate residents on upper floors.
+An: Community facilities would be useful for our reading group if booking rules were simple and published in advance.
+Lan: The housing shortage is real for families on the waiting list, so we should propose workable changes rather than reject everything.
+An: Neighbourhood identity should reflect people who live here now, including recent arrivals, not only an old photograph.
+Lan: Long-term investment matters because a project should work ten years after its attractive launch brochure is forgotten.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-housing-cities-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-affordable-housing | ielts-housing-cities-urban-planning | ielts-housing-cities-population-density
+prompt: The proposal reserves affordable housing for rent and requires the eligibility rules to be published. The urban planning meeting will examine how the new homes connect to schools, shops and transport. Higher population density may support local services, but the committee wants evidence about pressure on shared spaces.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-housing-shortage | ielts-housing-cities-neighbourhood-identity | ielts-housing-cities-long-term-investment
+prompt: The report recognizes the housing shortage but does not treat every objection as opposition to new homes. Interviews about neighbourhood identity will include renters and recent arrivals as well as long-term homeowners. A long-term investment plan will set aside money for drainage and maintenance after the opening ceremony.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-affordable-housing | ielts-housing-cities-urban-planning | ielts-housing-cities-population-density | ielts-housing-cities-green-spaces
+
+QUESTION:
+What must accompany the reserved rental homes?
+
+OPTIONS:
+A. A private park for tenants only
+B. An end to all service charges
+C. Published eligibility rules
+
+ANSWER:
+C
+
+EXPLANATION:
+Published eligibility rules. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-housing-cities-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-discussion
+language_block_refs: ielts-housing-cities-affordable-housing | ielts-housing-cities-urban-planning | ielts-housing-cities-population-density | ielts-housing-cities-green-spaces
+audio_ref: ielts-housing-cities-discussion-audio
+
+QUESTION:
+What additional upfront cost concerns the speaker?
+
+OPTIONS:
+A. Rail fares
+B. School uniforms
+C. Deposits
+
+ANSWER:
+C
+
+EXPLANATION:
+Deposits. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-housing-cities-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-rental-costs | ielts-housing-cities-public-amenities | ielts-housing-cities-mixed-use-development | ielts-housing-cities-building-maintenance
+
+QUESTION:
+What will the rental comparison include?
+
+OPTIONS:
+A. Only the purchase price
+B. Heating and service charges
+C. Only headline rent
+
+ANSWER:
+B
+
+EXPLANATION:
+Heating and service charges. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-housing-cities-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-discussion
+language_block_refs: ielts-housing-cities-rental-costs | ielts-housing-cities-public-amenities | ielts-housing-cities-mixed-use-development | ielts-housing-cities-building-maintenance
+audio_ref: ielts-housing-cities-discussion-audio
+
+QUESTION:
+Why are current rental listings difficult to compare?
+
+OPTIONS:
+A. They do not state addresses
+B. They include different extra charges
+C. They all provide identical heating terms
+
+ANSWER:
+B
+
+EXPLANATION:
+They include different extra charges. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-housing-cities-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-community-facilities | ielts-housing-cities-housing-shortage | ielts-housing-cities-neighbourhood-identity | ielts-housing-cities-long-term-investment
+
+QUESTION:
+Who can use the proposed ground-floor shared rooms?
+
+OPTIONS:
+A. Local groups at a reduced charge
+B. Only the developer’s staff
+C. Only existing homeowners
+
+ANSWER:
+A
+
+EXPLANATION:
+Local groups at a reduced charge. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-housing-cities-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-discussion
+language_block_refs: ielts-housing-cities-community-facilities | ielts-housing-cities-housing-shortage | ielts-housing-cities-neighbourhood-identity | ielts-housing-cities-long-term-investment
+audio_ref: ielts-housing-cities-discussion-audio
+
+QUESTION:
+What condition would help the reading group?
+
+OPTIONS:
+A. Simple booking rules published early
+B. A ban on shared use
+C. Bookings restricted to an opening ceremony
+
+ANSWER:
+A
+
+EXPLANATION:
+Simple booking rules published early. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-housing-cities-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-discussion
+language_block_refs: ielts-housing-cities-affordable-housing | ielts-housing-cities-rental-costs | ielts-housing-cities-community-facilities
+prompt: Affordable housing would help my family, but we need clear information about deposits as well as monthly rent. Rental costs are hard to compare when one listing includes heating and another hides it in extra charges. Community facilities would be useful for our reading group if booking rules were simple and published in advance.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Write a balanced response that links housing needs to the surrounding neighbourhood. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-discussion
+language_block_refs: ielts-housing-cities-population-density | ielts-housing-cities-mixed-use-development | ielts-housing-cities-neighbourhood-identity
+prompt: Population density does not tell us whether a street feels crowded unless we also understand its layout. A mixed-use development could let me buy groceries nearby, provided deliveries do not continue all night. Neighbourhood identity should reflect people who live here now, including recent arrivals, not only an old photograph.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Write a balanced response that links housing needs to the surrounding neighbourhood. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-urban-planning | ielts-housing-cities-public-amenities | ielts-housing-cities-housing-shortage
+prompt: The urban planning meeting will examine how the new homes connect to schools, shops and transport. The developer must explain how public amenities will be funded after construction ends. The report recognizes the housing shortage but does not treat every objection as opposition to new homes.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Write a balanced response that links housing needs to the surrounding neighbourhood. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-housing-cities-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-housing-cities-objective
+content_refs: ielts-housing-cities-proposal
+language_block_refs: ielts-housing-cities-green-spaces | ielts-housing-cities-building-maintenance | ielts-housing-cities-long-term-investment
+prompt: The design keeps green spaces open to existing residents rather than fencing them for new tenants only. Tenants will receive a building maintenance schedule and a named contact for urgent repairs. A long-term investment plan will set aside money for drainage and maintenance after the opening ceremony.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Write a balanced response that links housing needs to the surrounding neighbourhood. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

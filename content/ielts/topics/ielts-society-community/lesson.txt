@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-society-community-objective]
+statement: Infer and accurately use contextual Society & Community vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-society-community-lesson
+title: Society & Community: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Suggest an inclusive activity and explain how residents should influence its design.
+[/LESSON]
+
+[WORD_BANK ielts-society-community-bank]
+title: Society & Community in context
+
+[[LANGUAGE_BLOCK ielts-society-community-social-cohesion]]
+expression: social cohesion
+meaning_vi: sự gắn kết xã hội
+pronunciation: /ˈsəʊʃəl kəʊˈhiːʒən/
+collocations: strengthen social cohesion
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our centre aims to strengthen social cohesion by creating regular opportunities for residents to cooperate.
+common_error: Cohesion is uncountable when naming a quality of society.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-voluntary-work]]
+expression: voluntary work
+meaning_vi: công việc tình nguyện
+pronunciation: /ˈvɒləntəri wɜːk/
+collocations: take part in voluntary work
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The voluntary work programme will list responsibilities clearly and reimburse agreed travel expenses.
+common_error: Work is uncountable; use a voluntary role for one position.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-social-inclusion]]
+expression: social inclusion
+meaning_vi: sự hòa nhập xã hội
+pronunciation: /ˈsəʊʃəl ɪnˈkluːʒən/
+collocations: promote social inclusion
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The social inclusion plan offers quiet sessions as well as busy events, rather than assuming everyone enjoys the same environment.
+common_error: Inclusion is a noun; inclusive is an adjective.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-income-inequality]]
+expression: income inequality
+meaning_vi: bất bình đẳng thu nhập
+pronunciation: /ˈɪnkʌm ˌɪnɪˈkwɒləti/
+collocations: reduce income inequality
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A discussion on income inequality will distinguish differences in household resources from differences in individual effort.
+common_error: Inequality describes a gap, not simply low income for everyone.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-community-engagement]]
+expression: community engagement
+meaning_vi: sự tham gia và gắn bó với cộng đồng
+pronunciation: /kəˈmjuːnəti ɪnˈɡeɪdʒmənt/
+collocations: encourage community engagement
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: To improve community engagement, residents will help choose the timetable before bookings open.
+common_error: Engagement refers to meaningful involvement, not only audience size.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-public-services]]
+expression: public services
+meaning_vi: dịch vụ công
+pronunciation: /ˈpʌblɪk ˈsɜːvɪsɪz/
+collocations: access to public services
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The advice desk will explain public services and direct residents to qualified staff instead of making decisions on their behalf.
+common_error: Services is plural when naming different organized provisions.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-ageing-population]]
+expression: ageing population
+meaning_vi: dân số đang già hóa
+pronunciation: /ˈeɪdʒɪŋ ˌpɒpjəˈleɪʃən/
+collocations: support an ageing population
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Planning for an ageing population will include varied interests rather than describe all older people as having identical needs.
+common_error: Use an before ageing population; ageing is the British spelling.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-civic-responsibility]]
+expression: civic responsibility
+meaning_vi: trách nhiệm công dân
+pronunciation: /ˈsɪvɪk rɪˌspɒnsəˈbɪləti/
+collocations: a sense of civic responsibility
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A workshop on civic responsibility will explore both residents' contributions and the council's obligations.
+common_error: Civic relates to community participation; civil has several other meanings.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-support-networks]]
+expression: support networks
+meaning_vi: mạng lưới hỗ trợ
+pronunciation: /səˈpɔːt ˈnetwɜːks/
+collocations: build support networks
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Existing support networks will be invited to explain their work without sharing private details about members.
+common_error: Support modifies networks and stays singular here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-social-mobility]]
+expression: social mobility
+meaning_vi: khả năng thay đổi vị thế xã hội
+pronunciation: /ˈsəʊʃəl məʊˈbɪləti/
+collocations: improve social mobility
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The mentoring discussion will examine social mobility while acknowledging barriers that individual advice cannot remove.
+common_error: Mobility here concerns opportunities over time, not transport access alone.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-interpersonal-trust]]
+expression: interpersonal trust
+meaning_vi: sự tin cậy giữa các cá nhân
+pronunciation: /ˌɪntəˈpɜːsənəl trʌst/
+collocations: build interpersonal trust
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Small groups can build interpersonal trust through reliable shared tasks and clear ways to raise concerns.
+common_error: Trust is normally uncountable in this meaning.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-society-community-shared-resources]]
+expression: shared resources
+meaning_vi: nguồn lực dùng chung
+pronunciation: /ʃeəd rɪˈsɔːsɪz/
+collocations: manage shared resources
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A published booking policy will govern shared resources such as meeting rooms, tools and storage space.
+common_error: Resources is plural when naming several useful assets.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-society-community-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are residents reviewing a plan for a shared community centre. Please compare the priorities below before our next meeting.
+Our centre aims to strengthen social cohesion by creating regular opportunities for residents to cooperate.
+The voluntary work programme will list responsibilities clearly and reimburse agreed travel expenses.
+The social inclusion plan offers quiet sessions as well as busy events, rather than assuming everyone enjoys the same environment.
+A discussion on income inequality will distinguish differences in household resources from differences in individual effort.
+To improve community engagement, residents will help choose the timetable before bookings open.
+The advice desk will explain public services and direct residents to qualified staff instead of making decisions on their behalf.
+Planning for an ageing population will include varied interests rather than describe all older people as having identical needs.
+A workshop on civic responsibility will explore both residents' contributions and the council's obligations.
+Existing support networks will be invited to explain their work without sharing private details about members.
+The mentoring discussion will examine social mobility while acknowledging barriers that individual advice cannot remove.
+Small groups can build interpersonal trust through reliable shared tasks and clear ways to raise concerns.
+A published booking policy will govern shared resources such as meeting rooms, tools and storage space.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-society-community-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Social cohesion develops when neighbours work together over time, not simply when they attend one large photograph session.
+Lan: Voluntary work should be manageable alongside paid work, so short roles would help people with limited free time.
+An: Social inclusion means I can choose a quieter event without being treated as less interested in the community.
+Lan: Income inequality affects access to activities when equipment costs exclude people even if entry is free.
+An: Community engagement would feel real if our suggestions could change the plan, not just decorate a completed proposal.
+Lan: Public services can be confusing when each office uses different terms, so a clear signposting sheet would help.
+An: An ageing population should not be seen only as a burden; older residents also bring skills and time.
+Lan: Civic responsibility includes questioning a poor decision respectfully, not just accepting every official proposal.
+An: Support networks should have clear boundaries so volunteers do not feel responsible for problems they cannot solve.
+Lan: Social mobility requires opportunities as well as encouragement, so a confident speech alone will not solve unequal access.
+An: Interpersonal trust would grow if organisers admitted mistakes and explained what they would do differently.
+Lan: Shared resources need fair booking rules, otherwise the same confident group may take every popular time slot.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-society-community-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: Social cohesion develops when neighbours work together over time, not simply when they attend one large photograph session.
+Lan: Voluntary work should be manageable alongside paid work, so short roles would help people with limited free time.
+An: Social inclusion means I can choose a quieter event without being treated as less interested in the community.
+Lan: Income inequality affects access to activities when equipment costs exclude people even if entry is free.
+An: Community engagement would feel real if our suggestions could change the plan, not just decorate a completed proposal.
+Lan: Public services can be confusing when each office uses different terms, so a clear signposting sheet would help.
+An: An ageing population should not be seen only as a burden; older residents also bring skills and time.
+Lan: Civic responsibility includes questioning a poor decision respectfully, not just accepting every official proposal.
+An: Support networks should have clear boundaries so volunteers do not feel responsible for problems they cannot solve.
+Lan: Social mobility requires opportunities as well as encouragement, so a confident speech alone will not solve unequal access.
+An: Interpersonal trust would grow if organisers admitted mistakes and explained what they would do differently.
+Lan: Shared resources need fair booking rules, otherwise the same confident group may take every popular time slot.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-society-community-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-social-cohesion | ielts-society-community-voluntary-work | ielts-society-community-social-inclusion
+prompt: Our centre aims to strengthen social cohesion by creating regular opportunities for residents to cooperate. The voluntary work programme will list responsibilities clearly and reimburse agreed travel expenses. The social inclusion plan offers quiet sessions as well as busy events, rather than assuming everyone enjoys the same environment.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-social-mobility | ielts-society-community-interpersonal-trust | ielts-society-community-shared-resources
+prompt: The mentoring discussion will examine social mobility while acknowledging barriers that individual advice cannot remove. Small groups can build interpersonal trust through reliable shared tasks and clear ways to raise concerns. A published booking policy will govern shared resources such as meeting rooms, tools and storage space.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-social-cohesion | ielts-society-community-voluntary-work | ielts-society-community-social-inclusion | ielts-society-community-income-inequality
+
+QUESTION:
+How does the centre aim to build connections?
+
+OPTIONS:
+A. By cancelling small groups
+B. Through regular cooperative opportunities
+C. Through one photograph session only
+
+ANSWER:
+B
+
+EXPLANATION:
+Through regular cooperative opportunities. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-society-community-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-discussion
+language_block_refs: ielts-society-community-social-cohesion | ielts-society-community-voluntary-work | ielts-society-community-social-inclusion | ielts-society-community-income-inequality
+audio_ref: ielts-society-community-discussion-audio
+
+QUESTION:
+What does the speaker associate with lasting connections?
+
+OPTIONS:
+A. Never making a shared decision
+B. Working together over time
+C. Only appearing in a photograph
+
+ANSWER:
+B
+
+EXPLANATION:
+Working together over time. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-society-community-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-community-engagement | ielts-society-community-public-services | ielts-society-community-ageing-population | ielts-society-community-civic-responsibility
+
+QUESTION:
+When will residents help choose the timetable?
+
+OPTIONS:
+A. Before bookings open
+B. After all sessions are sold out
+C. Only after the annual review
+
+ANSWER:
+A
+
+EXPLANATION:
+Before bookings open. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-society-community-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-discussion
+language_block_refs: ielts-society-community-community-engagement | ielts-society-community-public-services | ielts-society-community-ageing-population | ielts-society-community-civic-responsibility
+audio_ref: ielts-society-community-discussion-audio
+
+QUESTION:
+When would involvement feel meaningful to the speaker?
+
+OPTIONS:
+A. When suggestions can change the plan
+B. When proposals are already final
+C. When only attendance is counted
+
+ANSWER:
+A
+
+EXPLANATION:
+When suggestions can change the plan. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-society-community-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-support-networks | ielts-society-community-social-mobility | ielts-society-community-interpersonal-trust | ielts-society-community-shared-resources
+
+QUESTION:
+What privacy condition applies to support groups?
+
+OPTIONS:
+A. They must publish every member’s history
+B. They must stop all existing activities
+C. They must not disclose private member details
+
+ANSWER:
+C
+
+EXPLANATION:
+They must not disclose private member details. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-society-community-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-discussion
+language_block_refs: ielts-society-community-support-networks | ielts-society-community-social-mobility | ielts-society-community-interpersonal-trust | ielts-society-community-shared-resources
+audio_ref: ielts-society-community-discussion-audio
+
+QUESTION:
+Why should volunteers have boundaries?
+
+OPTIONS:
+A. They must never refer anyone
+B. They must promise unlimited support
+C. Some problems exceed what they can solve
+
+ANSWER:
+C
+
+EXPLANATION:
+Some problems exceed what they can solve. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-society-community-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-discussion
+language_block_refs: ielts-society-community-social-cohesion | ielts-society-community-community-engagement | ielts-society-community-support-networks
+prompt: Social cohesion develops when neighbours work together over time, not simply when they attend one large photograph session. Community engagement would feel real if our suggestions could change the plan, not just decorate a completed proposal. Support networks should have clear boundaries so volunteers do not feel responsible for problems they cannot solve.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Suggest an inclusive activity and explain how residents should influence its design. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-discussion
+language_block_refs: ielts-society-community-social-inclusion | ielts-society-community-ageing-population | ielts-society-community-interpersonal-trust
+prompt: Social inclusion means I can choose a quieter event without being treated as less interested in the community. An ageing population should not be seen only as a burden; older residents also bring skills and time. Interpersonal trust would grow if organisers admitted mistakes and explained what they would do differently.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Suggest an inclusive activity and explain how residents should influence its design. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-voluntary-work | ielts-society-community-public-services | ielts-society-community-social-mobility
+prompt: The voluntary work programme will list responsibilities clearly and reimburse agreed travel expenses. The advice desk will explain public services and direct residents to qualified staff instead of making decisions on their behalf. The mentoring discussion will examine social mobility while acknowledging barriers that individual advice cannot remove.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Suggest an inclusive activity and explain how residents should influence its design. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-society-community-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-society-community-objective
+content_refs: ielts-society-community-proposal
+language_block_refs: ielts-society-community-income-inequality | ielts-society-community-civic-responsibility | ielts-society-community-shared-resources
+prompt: A discussion on income inequality will distinguish differences in household resources from differences in individual effort. A workshop on civic responsibility will explore both residents' contributions and the council's obligations. A published booking policy will govern shared resources such as meeting rooms, tools and storage space.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Suggest an inclusive activity and explain how residents should influence its design. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

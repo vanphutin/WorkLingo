@@ -74,6 +74,21 @@ const catalog: LearningProgramCatalogDto = {
 };
 
 describe('ProgramCatalog', () => {
+  it('opens IELTS Beta without replacing the Intermediate enrollment or showing fictional level counts', async () => {
+    const ielts = catalog.programs.find(program => program.slug === 'ielts')!;
+    vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue({ programs: [
+      { ...ielts, availabilityStatus: 'BETA', destination: '/ielts', isSelectable: true },
+    ] });
+    const activate = vi.spyOn(learningProgramClient, 'activateProgram');
+    render(<LocaleProvider initialLocale="vi"><ProgramCatalog /></LocaleProvider>);
+    fireEvent.click(await screen.findByRole('button', { name: 'Mở chương trình IELTS' }));
+    expect(push).toHaveBeenCalledWith('/ielts');
+    expect(activate).not.toHaveBeenCalled();
+    expect(screen.queryByText('Lộ trình đã xuất bản')).not.toBeInTheDocument();
+    expect(screen.queryByText('Trình độ đã xuất bản')).not.toBeInTheDocument();
+    expect(screen.getByText(/Định hướng.*Bridge.*Luyện tập tích hợp.*Lộ trình band.*Thi thử/u)).toBeVisible();
+    expect(screen.getByText('Trung cấp', { selector: 'strong' })).toBeVisible();
+  });
   it('localizes program discovery and TOEIC availability with safe disabled actions', async () => {
     vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue(catalog);
     render(<LocaleProvider initialLocale="vi"><ProgramCatalog /></LocaleProvider>);

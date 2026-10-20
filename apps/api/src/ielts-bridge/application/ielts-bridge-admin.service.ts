@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 
 import {
   BadRequestException,
@@ -79,8 +79,9 @@ export class IeltsBridgeAdminService {
         if (input.expectedRevision !== null) {
           throw new BadRequestException('New IELTS Bridge modules must not provide an expected revision.');
         }
+        const id = randomUUID();
         const created = await transaction.ieltsBridgeModule.create({ data: {
-          slug: content.questionType.replaceAll('_', '-'), draftContent: content as Prisma.InputJsonValue,
+          id, slug: `${content.questionType.replaceAll('_', '-')}-${id}`, draftContent: content as Prisma.InputJsonValue,
         } });
         await transaction.auditLog.create({ data: {
           actorId, action: 'CREATE_IELTS_BRIDGE_MODULE', resourceType: 'IeltsBridgeModule', resourceId: created.id,

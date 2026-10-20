@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { MissionPurpose } from '@worklingo/contracts';
+import { approvedTopicSnapshotSchema, type MissionPurpose } from '@worklingo/contracts';
 import { foundationCategories } from '@worklingo/content-format';
 
 const text = z.string().min(1);
@@ -10,8 +10,9 @@ const questionSchema = z.object({
   slug, prompt: text, options: z.array(text).min(2), answerIndex: z.number().int().nonnegative(),
   explanation: text, evidence: text,
 }).refine((q) => q.answerIndex < q.options.length, 'Answer must reference an option');
-const comprehensionPayload = z.object({ prompt: text, questions: z.array(questionSchema).min(1) });
+const comprehensionPayload = z.object({ prompt: text, questions: z.array(questionSchema).min(1), audioText: text.optional() });
 const responsePayload = z.object({
+  audioText: text.optional(),
   prompt: text, sampleAnswer: text, requiredPhrases: z.array(text).min(1), minWords: z.number().int().positive(),
 });
 const activityBase = {
@@ -27,6 +28,7 @@ export const activitySchema = z.discriminatedUnion('activityType', [
   z.object({ ...activityBase, activityType: z.literal('writing'), payload: responsePayload }),
 ]);
 export const lessonSnapshotSchema = z.object({
+  intermediateTopic: approvedTopicSnapshotSchema.optional(),
   foundation: z.object({
     category: z.enum(foundationCategories), templateId: slug, templateVersion: z.literal(1),
     objectives: z.array(z.object({ slug, statement: text, skills: z.array(skill).min(1).max(4), required: z.boolean() })).min(1).max(50),

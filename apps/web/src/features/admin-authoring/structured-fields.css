@@ -1,0 +1,13 @@
+.authoring-fields { min-width: 0; margin: 16px 0; padding: 16px; border: 1px solid var(--control-border); border-radius: 8px; }
+.authoring-fields legend { padding: 0 6px; font-weight: 700; }
+.authoring-field { display: grid; gap: 6px; margin: 12px 0; }
+.authoring-field label { font-weight: 600; }
+.authoring-field input:not([type=checkbox]), .authoring-field select, .authoring-field textarea { box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; padding: 10px; border: 1px solid var(--control-border); border-radius: 6px; color: var(--foreground); background: var(--surface); font: inherit; }
+.authoring-field textarea { min-height: 90px; resize: vertical; }
+.authoring-field input[type=checkbox] { width: 24px; height: 24px; }
+.authoring-field p, .authoring-fields > p { margin: 0; color: var(--muted); font-size: .9rem; }
+.authoring-fields button, .authoring-actions button { min-height: 44px; margin: 4px 8px 4px 0; }
+.authoring-field :is(input, select, textarea):focus-visible, .authoring-item summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.authoring-item { margin: 12px 0; padding: 8px; border: 1px solid var(--control-border); border-radius: 6px; }
+.authoring-item summary { cursor: pointer; padding: 8px; min-height: 28px; overflow-wrap: anywhere; }
+.authoring-import textarea { box-sizing: border-box; width: 100%; min-height: 180px; padding: 12px; background: var(--surface); color: var(--foreground); border: 1px solid var(--control-border); font: .9rem/1.5 monospace; }

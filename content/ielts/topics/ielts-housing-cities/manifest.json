@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Housing & Cities",
+  "description": "Build contextual IELTS vocabulary through a residents association responding to a housing development proposal. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-housing-cities-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "64101e0c-6401-479e-a923-2f3d24c7349f",
+      "focusChunkSlugs": [
+        "ielts-housing-cities-affordable-housing",
+        "ielts-housing-cities-urban-planning",
+        "ielts-housing-cities-population-density",
+        "ielts-housing-cities-green-spaces",
+        "ielts-housing-cities-rental-costs",
+        "ielts-housing-cities-public-amenities",
+        "ielts-housing-cities-mixed-use-development",
+        "ielts-housing-cities-building-maintenance",
+        "ielts-housing-cities-community-facilities",
+        "ielts-housing-cities-housing-shortage",
+        "ielts-housing-cities-neighbourhood-identity",
+        "ielts-housing-cities-long-term-investment"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-housing-cities-proposal",
+          "title": "Planning proposal: Housing & Cities"
+        },
+        {
+          "slug": "ielts-housing-cities-discussion",
+          "title": "Residents discuss alternatives: Housing & Cities"
+        }
+      ]
+    }
+  ]
+}

@@ -6,9 +6,9 @@ export async function installBrowserSpeechStub(page: Page): Promise<void> {
       default: true,
       lang: 'en-US',
       localService: true,
-      name: 'WorkLingo Test Voice',
+      name: 'WorkLingo Test Voice Female',
       voiceURI: 'worklingo-test-voice',
-    }];
+    }, {default:false,lang:'en-US',localService:true,name:'WorkLingo Test Voice Male',voiceURI:'worklingo-test-male'}];
     let speakCalls = 0;
     class TestUtterance {
       lang = '';

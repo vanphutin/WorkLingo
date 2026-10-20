@@ -18,6 +18,11 @@ const validEnvironment = {
 } satisfies NodeJS.ProcessEnv;
 
 describe('parseAppConfig', () => {
+  it('defaults to legacy and accepts only an explicit valid IELTS rollout', () => {
+    expect(parseAppConfig(validEnvironment).ieltsFlow).toBe('legacy');
+    expect(parseAppConfig({ ...validEnvironment, WORKLINGO_IELTS_FLOW: 'v3' }).ieltsFlow).toBe('v3');
+    expect(() => parseAppConfig({ ...validEnvironment, WORKLINGO_IELTS_FLOW: 'everything' })).toThrow('WORKLINGO_IELTS_FLOW');
+  });
   it.each(['30000', '120000'])('keeps the worker lease beyond transcription and both AI calls at timeout %s', (timeout) => {
     const config = parseAppConfig({
       ...validEnvironment,

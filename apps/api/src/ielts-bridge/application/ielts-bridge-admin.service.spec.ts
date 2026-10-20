@@ -49,6 +49,24 @@ async function setup() {
 }
 
 describe('IeltsBridgeAdminService', () => {
+  it('creates multiple modules of the same question type with distinct stable slugs', async () => {
+    const { service, tx } = await setup();
+    const slugs = new Set<string>([moduleRecord.slug]);
+    tx.ieltsBridgeModule.create.mockImplementation(async ({ data }: { data: { id: string; slug: string } }) => {
+      if (slugs.has(data.slug)) throw new Error('Unique slug collision');
+      slugs.add(data.slug);
+      return { ...moduleRecord, ...data };
+    });
+    await service.saveDraft('actor', null, { expectedRevision: null, idempotencyKey: crypto.randomUUID(), content });
+    await service.saveDraft('actor', null, { expectedRevision: null, idempotencyKey: crypto.randomUUID(), content });
+    expect(slugs.size).toBe(3);
+    expect(tx.ieltsBridgeModule.create.mock.calls.map(([input]) => input.data.slug)).toEqual([
+      expect.stringMatching(/^listening-form-completion-[0-9a-f-]{36}$/u), expect.stringMatching(/^listening-form-completion-[0-9a-f-]{36}$/u),
+    ]);
+    await service.saveDraft('actor', moduleRecord.id, { expectedRevision: 1, idempotencyKey: crypto.randomUUID(), content });
+    expect(tx.ieltsBridgeModule.update.mock.calls.at(-1)?.[0].data).not.toHaveProperty('slug');
+  });
+
   it('lists bridge modules with immutable version history', async () => {
     const { service } = await setup();
     await expect(service.list()).resolves.toEqual([expect.objectContaining({ id: moduleRecord.id, draftRevision: 1 })]);

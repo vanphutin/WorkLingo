@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Science & Research",
+  "description": "Build contextual IELTS vocabulary through a fictional research team designing a neighbourhood survey. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-science-research-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "5774d464-9e83-43cb-a4cb-401723cdbb61",
+      "focusChunkSlugs": [
+        "ielts-science-research-scientific-evidence",
+        "ielts-science-research-research-methods",
+        "ielts-science-research-sample-size",
+        "ielts-science-research-control-group",
+        "ielts-science-research-reliable-results",
+        "ielts-science-research-ethical-approval",
+        "ielts-science-research-data-collection",
+        "ielts-science-research-peer-review",
+        "ielts-science-research-causal-relationship",
+        "ielts-science-research-statistical-analysis",
+        "ielts-science-research-research-limitations",
+        "ielts-science-research-practical-applications"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-science-research-proposal",
+          "title": "Planning proposal: Science & Research"
+        },
+        {
+          "slug": "ielts-science-research-discussion",
+          "title": "Residents discuss alternatives: Science & Research"
+        }
+      ]
+    }
+  ]
+}

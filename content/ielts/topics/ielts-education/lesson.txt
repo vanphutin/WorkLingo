@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-education-objective]
+statement: Infer and accurately use contextual Education vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-education-lesson
+title: Education: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Recommend one affordable change and explain how students would benefit.
+[/LESSON]
+
+[WORD_BANK ielts-education-bank]
+title: Education in context
+
+[[LANGUAGE_BLOCK ielts-education-higher-education]]
+expression: higher education
+meaning_vi: giáo dục đại học
+pronunciation: /ˌhaɪər ˌedʒʊˈkeɪʃən/
+collocations: access to higher education
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our college wants higher education to be accessible to adults returning after a long break.
+common_error: Do not omit education after higher.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-tuition-fees]]
+expression: tuition fees
+meaning_vi: học phí
+pronunciation: /tjuːˈɪʃən fiːz/
+collocations: pay tuition fees
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A new bursary would cover tuition fees for twenty students whose household income is low.
+common_error: Use fees in the plural for course charges.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-learning-outcomes]]
+expression: learning outcomes
+meaning_vi: kết quả học tập dự kiến
+pronunciation: /ˈlɜːnɪŋ ˈaʊtkʌmz/
+collocations: achieve learning outcomes
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Teachers will publish learning outcomes before registration so applicants can judge the course's relevance.
+common_error: Outcomes are results, not the subjects listed in a timetable.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-critical-thinking]]
+expression: critical thinking
+meaning_vi: tư duy phản biện
+pronunciation: /ˈkrɪtɪkəl ˈθɪŋkɪŋ/
+collocations: develop critical thinking
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Weekly debates will develop critical thinking by asking students to compare evidence from two sources.
+common_error: Treat thinking as uncountable here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-practical-skills]]
+expression: practical skills
+meaning_vi: kỹ năng thực hành
+pronunciation: /ˈpræktɪkəl skɪlz/
+collocations: gain practical skills
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The evening workshop will teach practical skills through repairing donated laptops rather than watching demonstrations.
+common_error: Practical means useful in action; it differs from practicable.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-independent-study]]
+expression: independent study
+meaning_vi: việc tự học
+pronunciation: /ˌɪndɪˈpendənt ˈstʌdi/
+collocations: time for independent study
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The library will reserve quiet desks for independent study, while group meetings stay upstairs.
+common_error: Use study without an article when referring to the activity.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-academic-performance]]
+expression: academic performance
+meaning_vi: kết quả học tập
+pronunciation: /ˌækəˈdemɪk pəˈfɔːməns/
+collocations: improve academic performance
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Tutors will discuss academic performance privately instead of ranking students on a public noticeboard.
+common_error: Do not confuse performance with attendance.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-equal-opportunities]]
+expression: equal opportunities
+meaning_vi: cơ hội bình đẳng
+pronunciation: /ˈiːkwəl ˌɒpəˈtjuːnətiz/
+collocations: promote equal opportunities
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: To promote equal opportunities, application forms will be available in print as well as online.
+common_error: Use opportunities, not opportunites.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-lifelong-learning]]
+expression: lifelong learning
+meaning_vi: học tập suốt đời
+pronunciation: /ˌlaɪflɒŋ ˈlɜːnɪŋ/
+collocations: encourage lifelong learning
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: An open lecture each month will encourage lifelong learning without requiring students to complete a qualification.
+common_error: Use lifelong as one word before learning.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-vocational-training]]
+expression: vocational training
+meaning_vi: đào tạo nghề
+pronunciation: /vəʊˈkeɪʃənəl ˈtreɪnɪŋ/
+collocations: provide vocational training
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Local employers will offer vocational training placements, but participation will remain optional.
+common_error: Training is normally uncountable; avoid a training here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-student-engagement]]
+expression: student engagement
+meaning_vi: sự tham gia tích cực của người học
+pronunciation: /ˈstjuːdənt ɪnˈɡeɪdʒmənt/
+collocations: increase student engagement
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The committee will measure student engagement through participation and feedback rather than login counts alone.
+common_error: Engagement describes involvement, not simply being present.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-education-assessment-criteria]]
+expression: assessment criteria
+meaning_vi: tiêu chí đánh giá
+pronunciation: /əˈsesmənt kraɪˈtɪəriə/
+collocations: transparent assessment criteria
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Published assessment criteria will explain how evidence, organization and accuracy contribute to each assignment.
+common_error: Criteria is plural; its singular form is criterion.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-education-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a college committee planning support for adult students. Please compare the priorities below before our next meeting.
+Our college wants higher education to be accessible to adults returning after a long break.
+A new bursary would cover tuition fees for twenty students whose household income is low.
+Teachers will publish learning outcomes before registration so applicants can judge the course's relevance.
+Weekly debates will develop critical thinking by asking students to compare evidence from two sources.
+The evening workshop will teach practical skills through repairing donated laptops rather than watching demonstrations.
+The library will reserve quiet desks for independent study, while group meetings stay upstairs.
+Tutors will discuss academic performance privately instead of ranking students on a public noticeboard.
+To promote equal opportunities, application forms will be available in print as well as online.
+An open lecture each month will encourage lifelong learning without requiring students to complete a qualification.
+Local employers will offer vocational training placements, but participation will remain optional.
+The committee will measure student engagement through participation and feedback rather than login counts alone.
+Published assessment criteria will explain how evidence, organization and accuracy contribute to each assignment.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-education-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: I left higher education ten years ago, so I would welcome a short introduction before enrolling.
+Lan: Lower tuition fees would help me, but I also need to know the cost of books.
+An: Clear learning outcomes would let me compare a digital course with a business course.
+Lan: I want critical thinking practice because advertisements often make claims without explaining their evidence.
+An: Could the practical skills workshop run on Saturday, when I do not have a work shift?
+Lan: I can do independent study at the library, but I cannot always find a quiet place at home.
+An: My academic performance improved when a tutor explained my mistakes instead of only giving a mark.
+Lan: Equal opportunities should include an accessible classroom, not only an identical application form.
+An: For me, lifelong learning means continuing to ask questions after my formal course ends.
+Lan: Vocational training appeals to my brother because he wants supervised experience in a real workshop.
+An: Student engagement might rise if learners could suggest examples drawn from their own jobs.
+Lan: Please show us the assessment criteria early so we can plan our work rather than guess what matters.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-education-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: I left higher education ten years ago, so I would welcome a short introduction before enrolling.
+Lan: Lower tuition fees would help me, but I also need to know the cost of books.
+An: Clear learning outcomes would let me compare a digital course with a business course.
+Lan: I want critical thinking practice because advertisements often make claims without explaining their evidence.
+An: Could the practical skills workshop run on Saturday, when I do not have a work shift?
+Lan: I can do independent study at the library, but I cannot always find a quiet place at home.
+An: My academic performance improved when a tutor explained my mistakes instead of only giving a mark.
+Lan: Equal opportunities should include an accessible classroom, not only an identical application form.
+An: For me, lifelong learning means continuing to ask questions after my formal course ends.
+Lan: Vocational training appeals to my brother because he wants supervised experience in a real workshop.
+An: Student engagement might rise if learners could suggest examples drawn from their own jobs.
+Lan: Please show us the assessment criteria early so we can plan our work rather than guess what matters.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-education-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-higher-education | ielts-education-tuition-fees | ielts-education-learning-outcomes
+prompt: Our college wants higher education to be accessible to adults returning after a long break. A new bursary would cover tuition fees for twenty students whose household income is low. Teachers will publish learning outcomes before registration so applicants can judge the course's relevance.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-vocational-training | ielts-education-student-engagement | ielts-education-assessment-criteria
+prompt: Local employers will offer vocational training placements, but participation will remain optional. The committee will measure student engagement through participation and feedback rather than login counts alone. Published assessment criteria will explain how evidence, organization and accuracy contribute to each assignment.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-higher-education | ielts-education-tuition-fees | ielts-education-learning-outcomes | ielts-education-critical-thinking
+
+QUESTION:
+What is the college trying to widen?
+
+OPTIONS:
+A. Access only for recent school leavers
+B. Access only to sports facilities
+C. Access for adults returning to study
+
+ANSWER:
+C
+
+EXPLANATION:
+Access for adults returning to study. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-education-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-education-objective
+content_refs: ielts-education-discussion
+language_block_refs: ielts-education-higher-education | ielts-education-tuition-fees | ielts-education-learning-outcomes | ielts-education-critical-thinking
+audio_ref: ielts-education-discussion-audio
+
+QUESTION:
+Why does the speaker want an introduction?
+
+OPTIONS:
+A. They already teach the course
+B. They want to avoid registration
+C. They have been away from formal study for years
+
+ANSWER:
+C
+
+EXPLANATION:
+They have been away from formal study for years. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-education-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-practical-skills | ielts-education-independent-study | ielts-education-academic-performance | ielts-education-equal-opportunities
+
+QUESTION:
+How will the evening workshop teach?
+
+OPTIONS:
+A. By reading advertisements
+B. By repairing donated laptops
+C. By watching demonstrations only
+
+ANSWER:
+B
+
+EXPLANATION:
+By repairing donated laptops. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-education-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-education-objective
+content_refs: ielts-education-discussion
+language_block_refs: ielts-education-practical-skills | ielts-education-independent-study | ielts-education-academic-performance | ielts-education-equal-opportunities
+audio_ref: ielts-education-discussion-audio
+
+QUESTION:
+Why does the speaker suggest Saturday?
+
+OPTIONS:
+A. All teachers work only on Saturday
+B. They do not have a work shift then
+C. The library closes on weekdays
+
+ANSWER:
+B
+
+EXPLANATION:
+They do not have a work shift then. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-education-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-lifelong-learning | ielts-education-vocational-training | ielts-education-student-engagement | ielts-education-assessment-criteria
+
+QUESTION:
+What can people attend without taking a qualification?
+
+OPTIONS:
+A. A monthly open lecture
+B. A compulsory employer placement
+C. A public ranking meeting
+
+ANSWER:
+A
+
+EXPLANATION:
+A monthly open lecture. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-education-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-education-objective
+content_refs: ielts-education-discussion
+language_block_refs: ielts-education-lifelong-learning | ielts-education-vocational-training | ielts-education-student-engagement | ielts-education-assessment-criteria
+audio_ref: ielts-education-discussion-audio
+
+QUESTION:
+How does the speaker understand ongoing learning?
+
+OPTIONS:
+A. As continuing to ask questions after a course
+B. As collecting attendance certificates only
+C. As refusing formal courses
+
+ANSWER:
+A
+
+EXPLANATION:
+As continuing to ask questions after a course. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-education-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-education-objective
+content_refs: ielts-education-discussion
+language_block_refs: ielts-education-higher-education | ielts-education-practical-skills | ielts-education-lifelong-learning
+prompt: I left higher education ten years ago, so I would welcome a short introduction before enrolling. Could the practical skills workshop run on Saturday, when I do not have a work shift? For me, lifelong learning means continuing to ask questions after my formal course ends.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Recommend one affordable change and explain how students would benefit. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-education-objective
+content_refs: ielts-education-discussion
+language_block_refs: ielts-education-learning-outcomes | ielts-education-academic-performance | ielts-education-student-engagement
+prompt: Clear learning outcomes would let me compare a digital course with a business course. My academic performance improved when a tutor explained my mistakes instead of only giving a mark. Student engagement might rise if learners could suggest examples drawn from their own jobs.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Recommend one affordable change and explain how students would benefit. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-tuition-fees | ielts-education-independent-study | ielts-education-vocational-training
+prompt: A new bursary would cover tuition fees for twenty students whose household income is low. The library will reserve quiet desks for independent study, while group meetings stay upstairs. Local employers will offer vocational training placements, but participation will remain optional.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Recommend one affordable change and explain how students would benefit. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-education-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-education-objective
+content_refs: ielts-education-proposal
+language_block_refs: ielts-education-critical-thinking | ielts-education-equal-opportunities | ielts-education-assessment-criteria
+prompt: Weekly debates will develop critical thinking by asking students to compare evidence from two sources. To promote equal opportunities, application forms will be available in print as well as online. Published assessment criteria will explain how evidence, organization and accuracy contribute to each assignment.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Recommend one affordable change and explain how students would benefit. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

@@ -123,6 +123,10 @@ export function ProgramCatalog() {
 
   async function activate(program: LearningProgramCatalogItemDto) {
     if (activationPending.current || needsRefresh || !program.isSelectable || !program.destination) return;
+    if (program.destination === '/ielts') {
+      router.push('/ielts');
+      return;
+    }
     activationPending.current = true;
     setIsActivating(true);
     setActivationError(null);
@@ -203,11 +207,11 @@ export function ProgramCatalog() {
                   {t(statusKeys[program.availabilityStatus])}
                 </span>
               </div>
-              <p className="program-description">{programText(program.description, locale)}</p>
+              <p className="program-description">{program.slug === 'ielts' && program.isSelectable ? t('ieltsBetaDescription') : programText(program.description, locale)}</p>
               <p className="program-goal">
                 <strong>{t('goal')}</strong> {programText(program.learningGoal, locale)}
               </p>
-              <dl className="program-content-summary">
+              {program.slug === 'ielts' ? <p className="program-ielts-phases">{t('ieltsPhases')}</p> : <dl className="program-content-summary">
                 <div>
                   <dt>{t('paths')}</dt>
                   <dd>{formatNumber(locale, program.publishedPathCount)}</dd>
@@ -216,7 +220,7 @@ export function ProgramCatalog() {
                   <dt>{t('levels')}</dt>
                   <dd>{formatNumber(locale, program.publishedLevelCount)}</dd>
                 </div>
-              </dl>
+              </dl>}
               <ProgramAction program={program} pending={isActivating || needsRefresh} onActivate={() => { void activate(program); }} />
             </li>
           ))}

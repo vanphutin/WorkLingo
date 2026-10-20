@@ -34,7 +34,9 @@ test.describe('Admin Curriculum Operations & Audit Browser E2E Journey', () => {
     // 3. Create a new Learning Path
     await page.getByRole('button', { name: '+ New Path' }).click();
     await page.getByLabel('Path Name').fill(pathName);
-    await page.getByLabel('Learning Program').selectOption('10000000-0000-4000-8000-000000000004');
+    await page.getByRole('combobox', { name: 'Learning Program', exact: true }).selectOption('10000000-0000-4000-8000-000000000004');
+    const programOption=await page.getByRole('combobox',{name:'Learning Program',exact:true}).locator('option:checked').innerText();
+    const programStatus=programOption.replace(/^IELTS - /u,'').trim();
     await page.getByLabel('Slug').fill(pathSlug);
     await page.getByRole('button', { name: 'Create Path' }).click();
 
@@ -46,7 +48,7 @@ test.describe('Admin Curriculum Operations & Audit Browser E2E Journey', () => {
 
     // 4. Create Level under this Path
     const pathCard = page.locator('section.path-card', { hasText: pathName });
-    await expect(pathCard.locator('.program-label')).toHaveText('Program: IELTS (In development)');
+    await expect(pathCard.locator('.program-label')).toHaveText(`Program: IELTS (${programStatus})`);
     await pathCard.getByRole('button', { name: '+ Add Level' }).click();
 
     await pathCard.getByLabel(/Level Code/i).fill(levelCode);

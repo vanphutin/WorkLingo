@@ -1,4 +1,5 @@
 import { useAdminContent } from './i18n';
+import { spokenScript } from '@worklingo/content-format';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -15,9 +16,12 @@ export interface AudioScriptItem {
   readonly slug: string;
   readonly speaker?: string | undefined;
   readonly script: string;
+  readonly spokenText?: string | undefined;
+  readonly speechReview?: string | undefined;
 }
 
 export interface AudioPreviewProps {
+  readonly onEditNarration?: () => void;
   readonly importId: string;
   readonly draftRevision: number;
   readonly audioScripts?: readonly AudioScriptItem[] | undefined;
@@ -39,6 +43,7 @@ export function AudioPreview({
   onAudioReadinessChange,
   onSelectedAudioArtifactsChange,
   selectedAudioArtifacts: selectedAudioArtifactsInput,
+  onEditNarration,
 }: AudioPreviewProps) {
   const { t, locale, label, message } = useAdminContent();
   const selectedAudioArtifacts: Readonly<Record<string, string>> =
@@ -175,6 +180,7 @@ export function AudioPreview({
   return (
     <div className="audio-preview-panel" role="region" aria-label={t('audioControls')}>
       <div className="audio-simulation-banner" role="note">
+        {onEditNarration ? <button type="button" className="btn btn-secondary" onClick={onEditNarration}>{t('narrationTitle')}</button> : null}
         <strong>{t('simulationBanner')}</strong>
         <p>{t('simulationHelp')}</p>
       </div>
@@ -214,9 +220,9 @@ export function AudioPreview({
                   </span>
                 </div>
 
-                <p className="audio-script-excerpt" lang="en">{audioScripts.length > 0 ? item.script : t('scriptFallback', { slug: item.slug })}</p>
+                <p className="audio-script-excerpt" lang="en">{audioScripts.length > 0 ? spokenScript(item) : t('scriptFallback', { slug: item.slug })}</p>
 
-                <BrowserSpeechControls lang="en-US" text={item.script} />
+                <BrowserSpeechControls lang="en-US" text={spokenScript(item)} />
 
                 {candidates.map((candidate) => (
                   <div className="audio-candidate" key={candidate.id}>

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Work & Careers",
+  "description": "Build contextual IELTS vocabulary through a small employer reviewing a flexible working pilot. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-work-careers-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "c6f48398-222c-4bc8-a81f-03cc6db680c2",
+      "focusChunkSlugs": [
+        "ielts-work-careers-job-satisfaction",
+        "ielts-work-careers-career-prospects",
+        "ielts-work-careers-work-life-balance",
+        "ielts-work-careers-professional-development",
+        "ielts-work-careers-transferable-skills",
+        "ielts-work-careers-job-security",
+        "ielts-work-careers-flexible-working",
+        "ielts-work-careers-team-collaboration",
+        "ielts-work-careers-performance-review",
+        "ielts-work-careers-staff-turnover",
+        "ielts-work-careers-workplace-culture",
+        "ielts-work-careers-income-stability"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-work-careers-proposal",
+          "title": "Planning proposal: Work & Careers"
+        },
+        {
+          "slug": "ielts-work-careers-discussion",
+          "title": "Residents discuss alternatives: Work & Careers"
+        }
+      ]
+    }
+  ]
+}

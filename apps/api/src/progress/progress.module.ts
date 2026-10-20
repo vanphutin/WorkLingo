@@ -9,5 +9,6 @@ import { LearningProgramsModule } from '../learning-programs/learning-programs.m
   controllers: [ProgressController],
   imports: [DatabaseModule, LearningProgramsModule],
   providers: [ProgressService],
+  exports: [ProgressService],
 })
 export class ProgressModule {}

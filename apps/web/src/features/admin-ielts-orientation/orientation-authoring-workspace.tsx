@@ -103,6 +103,7 @@ export function OrientationAuthoringWorkspace() {
       <div><p className="orientation-admin__kicker">{t('pathway')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
       <div className="orientation-admin__status"><strong>{statusLabel(status)}</strong><span>{t('draftRevision', { revision })}</span></div>
     </header>
+    <p>{t('draftBoundary')}</p>
     {error ? <p className="orientation-notice orientation-notice--error" role="alert">{error === 'revisionConflict' ? t('revisionConflict') : localizedError(error, locale)}</p> : null}
     {message ? <p className="orientation-notice" role="status">{t(message.key, message.values)}</p> : null}
     <div className="orientation-admin__toolbar">
@@ -114,15 +115,16 @@ export function OrientationAuthoringWorkspace() {
     {issues.length > 0 ? <section className="orientation-issues" aria-label={t('validationIssues')}><h2>{t('validationIssues')}</h2><ul>{issues.map((issue) => <li key={`${issue.path}-${issue.message}`}><code>{issue.path}</code> {validationMessage(issue)}</li>)}</ul></section> : null}
     <div className="orientation-admin__grid">
       <aside className="orientation-slide-list" aria-label={t('orientationSlides')}>
-        <div className="orientation-slide-list__heading"><h2>{t('slides')}</h2><button type="button" onClick={addSlide}>{t('addSlide')}</button></div>
-        <ol>{draft.slides.map((slide, index) => <li key={slide.id}><button type="button" className={index === selectedIndex ? 'active' : ''} aria-current={index === selectedIndex ? 'step' : undefined} onClick={() => setSelectedIndex(index)}><span>{formatNumber(locale, index + 1)}</span><span lang="en">{slide.title}</span></button></li>)}</ol>
+        <div className="orientation-slide-list__heading"><h2>{t('slides')}</h2><button type="button" disabled={busy} onClick={addSlide}>{t('addSlide')}</button></div>
+        <ol>{draft.slides.map((slide, index) => <li key={slide.id}><button type="button" disabled={busy} className={index === selectedIndex ? 'active' : ''} aria-current={index === selectedIndex ? 'step' : undefined} onClick={() => setSelectedIndex(index)}><span>{formatNumber(locale, index + 1)}</span><span lang="en">{slide.title}</span></button></li>)}</ol>
         <div className="orientation-slide-list__actions">
-          <button type="button" onClick={() => move(-1)} disabled={selectedIndex === 0}>{t('moveUp')}</button>
-          <button type="button" onClick={() => move(1)} disabled={selectedIndex === draft.slides.length - 1}>{t('moveDown')}</button>
-          <button type="button" onClick={removeSlide} disabled={draft.slides.length <= 3}>{t('deleteSlide')}</button>
+          <button type="button" onClick={() => move(-1)} disabled={busy || selectedIndex === 0}>{t('moveUp')}</button>
+          <button type="button" onClick={() => move(1)} disabled={busy || selectedIndex === draft.slides.length - 1}>{t('moveDown')}</button>
+          <button type="button" onClick={removeSlide} disabled={busy || draft.slides.length <= 3}>{t('deleteSlide')}</button>
         </div>
       </aside>
       <form className="orientation-editor" autoComplete="off" onSubmit={(event) => event.preventDefault()}>
+        <fieldset className="orientation-editor__fields" disabled={busy}>
         <label>{t('courseTitle')}<input lang="en" name="courseTitle" value={draft.title} onChange={(event) => { setDraft({ ...draft, title: event.target.value }); setValidatedRevision(null); }} /></label>
         <label>{t('courseDescription')}<textarea lang="en" name="courseDescription" value={draft.description} onChange={(event) => { setDraft({ ...draft, description: event.target.value }); setValidatedRevision(null); }} /></label>
         <hr />
@@ -141,6 +143,7 @@ export function OrientationAuthoringWorkspace() {
           <label>{t('correctOption')}<select value={selected.question.answerIndex} onChange={(event) => updateSelected({ question: { ...selected.question!, answerIndex: Number(event.target.value) } })}>{selected.question.options.map((_, index) => <option value={index} key={index}>{t('option', { index: index + 1 })}</option>)}</select></label>
           <label>{t('explanation')}<textarea lang="en" value={selected.question.explanation} onChange={(event) => updateSelected({ question: { ...selected.question!, explanation: event.target.value } })} /></label>
         </fieldset> : null}
+        </fieldset>
       </form>
       <aside className="orientation-preview" aria-label={t('learnerPreview')}><p>{t('slideProgress', { current: selectedIndex + 1, total: draft.slides.length })}</p><h2 lang="en">{selected.title}</h2>{selected.imageAssetId && mediaUrls[selected.imageAssetId] ? <img src={mediaUrls[selected.imageAssetId]} alt={t('imagePreview')} width="1200" height="675" loading="lazy" /> : null}<p lang="en">{selected.body}</p><details><summary>{t('transcript')}</summary><p lang="en">{selected.transcript}</p></details>{selected.audioAssetId && mediaUrls[selected.audioAssetId] ? <audio controls src={mediaUrls[selected.audioAssetId]} /> : <p className="orientation-preview__fallback">{t('speechFallback')}</p>}</aside>
     </div>

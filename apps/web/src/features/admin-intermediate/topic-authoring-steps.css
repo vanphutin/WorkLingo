@@ -1,0 +1,5 @@
+.topic-authoring-steps ol { display: flex; flex-wrap: wrap; gap: .65rem 1rem; list-style: none; padding: 0; margin: 1rem 0; }
+.topic-authoring-steps li { display: flex; align-items: center; gap: .5rem; color: var(--muted); }
+.topic-authoring-steps li span { display: grid; place-items: center; min-width: 1.75rem; height: 1.75rem; border: 1px solid var(--border); border-radius: 50%; }
+.topic-authoring-steps li[aria-current="step"] { color: var(--primary); font-weight: 700; }
+.topic-authoring-steps li[aria-current="step"] span { border-color: var(--primary); background: var(--surface-soft); }

@@ -10,18 +10,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import type { LearnerProgressDto } from '../../lib/api/api-client';
-import type { CurriculumRoadmapDto, EngagementSummaryDto } from '@worklingo/contracts';
+import type { CurriculumRoadmapDto, EngagementSummaryDto, LearnerTopic } from '@worklingo/contracts';
 import { EngagementPanel } from '../engagement/engagement-panel';
+import { DashboardSections } from '../learner-dashboard/dashboard-sections';
 import { CurriculumRoadmap } from '../curriculum-roadmap/curriculum-roadmap';
 import { OrientationDashboardCard } from '../ielts-orientation/orientation-dashboard-card';
 import { IeltsBridgeDashboardCard } from '../ielts-bridge/ielts-bridge-dashboard-card';
 import { IntegratedPracticeDashboardCard } from '../ielts-integrated/integrated-practice';
 import { IeltsMockDashboardCard } from '../ielts-mock/ielts-mock';
 import { IeltsBandDashboardCard } from '../ielts-band-curriculum/ielts-band-pathway';
+import { DashboardInsights, type DashboardInsightsProps } from '../learner-dashboard/dashboard-insights';
+import { learnerDashboardMessages } from '../../i18n/messages/learnerDashboard';
+import styles from '../learner-dashboard/learner-dashboard.module.css';
+import { IntermediateTopicPicker } from './intermediate-topic-picker';
 
-interface DashboardViewProps {
+interface DashboardViewProps extends DashboardInsightsProps {
+  readonly initialTopics?: LearnerTopic[] | undefined;
+  readonly topicsFailed?: boolean | undefined;
   readonly progress: LearnerProgressDto | null;
   readonly activeProgramName?: string | undefined;
+  readonly activeProgramSlug?: string | null | undefined;
+  readonly currentLevelCode?: string | null | undefined;
   readonly nextMissionTitle?: string | undefined;
   readonly availableDurations?: readonly number[] | undefined;
   readonly onStartSession: (
@@ -60,7 +69,9 @@ function getDurationLabel(duration: number, isAvailable: boolean, t: Translator<
 export function DashboardView({
   progress,
   activeProgramName,
-  nextMissionTitle = 'Introduce yourself to a new colleague',
+  activeProgramSlug,
+  currentLevelCode,
+  nextMissionTitle,
   availableDurations = DEFAULT_DURATIONS,
   onStartSession,
   isLoading = false,
@@ -75,8 +86,15 @@ export function DashboardView({
   roadmapLoading = false,
   roadmapError = null,
   onRetryRoadmap,
+  analytics,
+  analyticsLoading,
+  analyticsError,
+  onRetryAnalytics,
+  initialTopics,
+  topicsFailed,
 }: DashboardViewProps) {
   const t = useT('learningSession', learningSessionMessages);
+  const dashboardT = useT('learnerDashboard', learnerDashboardMessages);
   const { locale } = useLocalePreference();
   const [availabilityOverride, setAvailabilityOverride] = useState<{
     source: readonly number[];
@@ -92,6 +110,11 @@ export function DashboardView({
   const [startError, setStartError] = useState<{ cause: unknown } | null>(null);
   const pendingSessionId = useRef<{ id: string; duration: number } | null>(null);
   const resumableMission = roadmap?.items.find((item) => item.state === 'in_progress' && item.activeSessionId);
+  const activeProgram = analytics?.programs.find((program) => program.slug === analytics.activeProgramSlug);
+  const programName = activeProgram?.name ?? activeProgramName;
+  const noActiveProgram = activeProgramSlug === null || analytics?.activeProgramSlug === null;
+  const nextMilestone = roadmap?.items.find((item) => item.state === 'in_progress')
+    ?? roadmap?.items.find((item) => item.state === 'available');
   useEffect(() => {
     if (pendingSessionId.current?.duration !== selectedDuration) pendingSessionId.current = null;
   }, [selectedDuration]);
@@ -153,10 +176,10 @@ export function DashboardView({
   }
 
   return (
-    <main className="dashboard-container">
+    <main className={`dashboard-container ${styles.compact}`}>
       <header className="dashboard-header">
         <span className="eyebrow">{t('learningSpace')}</span>
-        <h1 className="dashboard-title">{t('todayLearning')}</h1>
+        <h1 className={`dashboard-title ${styles.welcome}`}>{analytics?.displayName.trim() ? dashboardT('welcome', { name: analytics.displayName.trim() }) : t('todayLearning')}</h1>
         <p className="dashboard-subtitle">
           {t('dashboardDescription')}
         </p>
@@ -166,6 +189,7 @@ export function DashboardView({
         </nav>
       </header>
 
+      <DashboardSections home={<>
       {startError && (
         <div className="form-error" role="alert">
           {localizedError(startError.cause, locale)}
@@ -175,18 +199,18 @@ export function DashboardView({
       <div className="dashboard-grid">
         <section className="dashboard-card next-mission-card" aria-labelledby="mission-heading">
           <span className="card-tag">{resumableMission ? t('continueWhereLeft') : t('currentMission')}</span>
-          <h2 id="mission-heading" className="mission-title" lang="en">
-            {resumableMission?.title ?? nextMissionTitle}
+          <h2 id="mission-heading" className="mission-title" lang={!noActiveProgram && (resumableMission?.title || nextMissionTitle) ? 'en' : undefined}>
+            {noActiveProgram ? dashboardT('chooseProgram') : resumableMission?.title ?? nextMissionTitle ?? dashboardT('chooseMission')}
           </h2>
           <p className="mission-description">
             {t('missionDescription')}
           </p>
 
-          {resumableMission ? (
+          {noActiveProgram ? <Link className="primary-action-button inline-button" href="/programs">{dashboardT('viewCatalog')}</Link> : resumableMission ? (
             <Link className="primary-action-button inline-button" href={`/sessions/${resumableMission.activeSessionId}`}>
               {t('continueSaved')}
             </Link>
-          ) : <div className="session-launcher">
+          ) : <IntermediateTopicPicker enabled={activeProgramSlug === 'intermediate'} contextKey={currentLevelCode ?? ''} initialTopics={initialTopics} initialError={topicsFailed}><div className="session-launcher">
             <div className="field-group">
               <label htmlFor="session-duration-select" className="field-label">
                 {t('sessionDuration')}
@@ -220,8 +244,8 @@ export function DashboardView({
             >
               {isStarting ? t('startingSession') : t('startSession', { minutes: selectedDuration })}
             </button>
-          </div>}
-          {!resumableMission && availableDurationsState.length === 0 && (
+          </div></IntermediateTopicPicker>}
+          {!noActiveProgram && !resumableMission && activeProgramSlug !== 'intermediate' && availableDurationsState.length === 0 && (
             <p role="status">{t('noSessions')}</p>
           )}
         </section>
@@ -233,33 +257,43 @@ export function DashboardView({
           </h2>
 
           <div className="progress-stats">
-            {activeProgramName && <div className="stat-item stat-item-wide">
-              <span className="stat-label">{t('activeProgram')} <strong>{activeProgramName}</strong></span>
+            {programName && !noActiveProgram && <div className="stat-item stat-item-wide">
+              <span className="stat-label">{t('activeProgram')} <strong>{programName}</strong></span>
             </div>}
-            <div className="stat-item">
+            <div className="stat-item stat-item-wide">
               <span className="stat-label">{t('currentLevel')}</span>
-              <strong className="stat-value">{progress?.currentLevelCode ?? 'FOUNDATION_1'}</strong>
+              <strong className="stat-value">{(currentLevelCode !== undefined ? currentLevelCode : analytics ? activeProgram?.currentLevelCode : progress?.currentLevelCode) ?? dashboardT('noLevel')}</strong>
             </div>
 
             <div className="stat-item">
               <span className="stat-label">{t('completedActivities')}</span>
-              <strong className="stat-value">{formatNumber(locale, progress?.completedActivities ?? 0)}</strong>
+              <strong className="stat-value">{progress ? formatNumber(locale, progress.completedActivities) : '—'}</strong>
             </div>
 
             <div className="stat-item">
               <span className="stat-label">{t('totalAttempts')}</span>
-              <strong className="stat-value">{formatNumber(locale, progress?.activityAttempts ?? 0)}</strong>
+              <strong className="stat-value">{progress ? formatNumber(locale, progress.activityAttempts) : '—'}</strong>
             </div>
 
             <div className="stat-item">
               <span className="stat-label">{t('completedSessions')}</span>
-              <strong className="stat-value">{formatNumber(locale, progress?.sessions.completed ?? 0)}</strong>
+              <strong className="stat-value">{progress ? formatNumber(locale, progress.sessions.completed) : '—'}</strong>
             </div>
           </div>
+          {!noActiveProgram && (roadmap !== undefined || analytics) ? <div className={styles.milestone}>
+            <span className="stat-label">{dashboardT('nextMilestone')}</span>
+            <p>{nextMilestone?.title ?? (roadmap?.items.length && roadmap.items.every((item) => item.state === 'completed') ? dashboardT('milestonesComplete') : dashboardT('noMilestone'))}</p>
+            {activeProgram && activeProgram.totalMissions > 0 ? <>
+              <p className="neutral-subtext">{dashboardT('missionProgress', { completed: activeProgram.completedMissions, total: activeProgram.totalMissions })}</p>
+              <progress className={styles.progress} aria-label={dashboardT('nextMilestone')} value={activeProgram.completedMissions} max={activeProgram.totalMissions} />
+            </> : null}
+          </div> : null}
         </section>
       </div>
 
-      {(roadmap !== undefined || roadmapLoading || roadmapError !== null) ? (
+      </>} progress={<>
+      <DashboardInsights section="activity" analytics={analytics} analyticsLoading={analyticsLoading} analyticsError={analyticsError} onRetryAnalytics={onRetryAnalytics} />
+      {!noActiveProgram && (roadmap !== undefined || roadmapLoading || roadmapError !== null) ? (
         <CurriculumRoadmap
           roadmap={roadmap ?? null}
           isLoading={roadmapLoading}
@@ -267,17 +301,9 @@ export function DashboardView({
           onRetry={onRetryRoadmap}
         />
       ) : null}
-
-      {(engagement !== undefined || engagementLoading || engagementError !== null) && (
-        <EngagementPanel
-          engagement={engagement ?? null}
-          isLoading={engagementLoading}
-          error={engagementError}
-          onRetry={onRetryEngagement}
-          onUpdateTarget={onUpdateTarget ?? (() => {})}
-        />
-      )}
-      {activeProgramName?.toLowerCase().includes('ielts') ? <section className="learning-pathways" aria-labelledby="learning-pathways-heading">
+      </>} programs={<>
+      <DashboardInsights section="programs" analytics={analytics} analyticsLoading={analyticsLoading} analyticsError={analyticsError} onRetryAnalytics={onRetryAnalytics} />
+      {!noActiveProgram && programName?.toLowerCase().includes('ielts') ? <section className="learning-pathways" aria-labelledby="learning-pathways-heading">
         <h2 id="learning-pathways-heading">{t('ieltsPathway')}</h2>
         <p className="neutral-subtext">{t('pathwayDescription')}</p>
         <div className="learning-pathways-grid">
@@ -288,6 +314,20 @@ export function DashboardView({
           <IeltsMockDashboardCard />
         </div>
       </section> : null}
+      </>} weekly={<>
+      {(engagement !== undefined || engagementLoading || engagementError !== null) && (
+        <div>
+          <p className="neutral-subtext">{dashboardT('engagementScope')}</p>
+          <EngagementPanel
+            engagement={engagement ?? null}
+            isLoading={engagementLoading}
+            error={engagementError}
+            onRetry={onRetryEngagement}
+            onUpdateTarget={onUpdateTarget ?? (() => {})}
+          />
+        </div>
+      )}
+      </>} />
     </main>
   );
 }

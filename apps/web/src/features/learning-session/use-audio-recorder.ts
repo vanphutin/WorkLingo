@@ -53,6 +53,7 @@ export function useAudioRecorder(): AudioRecorderState {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [mimeType, setMimeType] = useState<string | null>(null);
   const [errorKey, setError] = useState<'microphoneDenied' | 'microphoneError' | null>(null);
+  const activeRef = useRef(true);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const previewUrlRef = useRef<string | null>(null);
@@ -85,6 +86,7 @@ export function useAudioRecorder(): AudioRecorderState {
     setStatus('requesting');
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!activeRef.current) { stream.getTracks().forEach(track => track.stop()); return; }
       streamRef.current = stream;
       const selectedMimeType = selectMimeType();
       if (!selectedMimeType) throw new Error('No supported recording format is available.');
@@ -121,14 +123,15 @@ export function useAudioRecorder(): AudioRecorderState {
     releaseStream();
   }, [releaseStream]);
 
-  useEffect(() => () => {
+  useEffect(() => { activeRef.current = true; return () => {
+    activeRef.current = false;
     if (recorderRef.current?.state === 'recording') {
       recorderRef.current.onstop = null;
       recorderRef.current.stop();
     }
     releaseStream();
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
-  }, [releaseStream]);
+  }; }, [releaseStream]);
 
   return { blob, discard, error: errorKey ? t(errorKey) : null, mimeType, previewUrl, start, status, stop, supported };
 }

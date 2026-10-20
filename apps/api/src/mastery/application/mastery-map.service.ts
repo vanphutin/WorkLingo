@@ -15,12 +15,12 @@ export class MasteryMapService {
   ) {}
 
   async getMap(learnerId: string): Promise<MasteryMapResponseDto> {
-    const missions = await this.database.$transaction(async (tx) => {
+    const { missions, programId } = await this.database.$transaction(async (tx) => {
       const context = await this.programContext.resolve(learnerId, tx);
-      return this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', tx, context.programId);
+      return { missions: await this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', tx, context.programId), programId: context.programId };
     }, { isolationLevel: 'RepeatableRead' });
     const [records, queue] = await Promise.all([
-      this.mastery.getMasteryRecords(learnerId), this.mastery.getReviewQueue(learnerId),
+      this.mastery.getMasteryRecords(learnerId, undefined, { programId }), this.mastery.getReviewQueue(learnerId, { programId }),
     ]);
     const blocks = new Map(missions.flatMap((mission) => mission.lessonVersion.wordBanks
       .flatMap((bank) => bank.languageBlocks.map((block) => [block.id, block] as const))));

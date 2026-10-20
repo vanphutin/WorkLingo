@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Environment",
+  "description": "Build contextual IELTS vocabulary through a town deciding how to use a limited environmental budget. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-environment-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "c63f5154-cb48-476e-a13c-07d9c9e3e9c0",
+      "focusChunkSlugs": [
+        "ielts-environment-carbon-emissions",
+        "ielts-environment-renewable-energy",
+        "ielts-environment-waste-management",
+        "ielts-environment-biodiversity-loss",
+        "ielts-environment-public-transport",
+        "ielts-environment-energy-efficiency",
+        "ielts-environment-natural-habitats",
+        "ielts-environment-single-use-plastic",
+        "ielts-environment-sustainable-consumption",
+        "ielts-environment-environmental-awareness",
+        "ielts-environment-climate-adaptation",
+        "ielts-environment-resource-conservation"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-environment-proposal",
+          "title": "Planning proposal: Environment"
+        },
+        {
+          "slug": "ielts-environment-discussion",
+          "title": "Residents discuss alternatives: Environment"
+        }
+      ]
+    }
+  ]
+}

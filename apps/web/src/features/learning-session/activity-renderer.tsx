@@ -10,6 +10,7 @@ import { ListeningActivity, type ListeningResponseValue } from './activity-rende
 import { ReadingActivity, type ReadingResponseValue } from './activity-renderers/reading-activity';
 import { SpeakingActivity } from './activity-renderers/speaking-activity';
 import { WritingActivity } from './activity-renderers/writing-activity';
+import { ActivityWorkspace, type ActivityWorkspaceTools } from './activity-workspace';
 
 export type ActivityResponseState =
   | ReadingResponseValue
@@ -23,6 +24,7 @@ interface ActivityRendererProps {
   readonly savedResponse?: unknown;
   readonly disabled?: boolean;
   readonly sessionId: string;
+  readonly tools?: ActivityWorkspaceTools;
   readonly onSubmitRecording?: (input: SubmitRecordingInput) => Promise<RecordingSubmissionResult>;
 }
 
@@ -86,8 +88,10 @@ export function ActivityRenderer({
   disabled = false,
   sessionId,
   onSubmitRecording,
+  tools,
 }: ActivityRendererProps) {
   const t = useT('learningSession', learningSessionMessages);
+  let response: React.ReactNode;
   switch (activity.activityType) {
     case 'reading': {
       const readingValue: ReadingResponseValue =
@@ -95,7 +99,7 @@ export function ActivityRenderer({
           ? (value as ReadingResponseValue)
           : { answerIndexes: [] };
 
-      return (
+      response = (
         <ReadingActivity
           activity={activity}
           value={readingValue}
@@ -103,6 +107,7 @@ export function ActivityRenderer({
           disabled={disabled}
         />
       );
+      break;
     }
     case 'listening': {
       const listeningValue: ListeningResponseValue =
@@ -112,6 +117,7 @@ export function ActivityRenderer({
 
       return (
         <ListeningActivity
+          {...(tools ? { tools } : {})}
           activity={activity}
           sessionId={sessionId}
           value={listeningValue}
@@ -122,7 +128,7 @@ export function ActivityRenderer({
     }
     case 'speaking': {
       const speakingValue = typeof value === 'string' ? value : '';
-      return (
+      response = (
         <SpeakingActivity
           activity={activity}
           sessionId={sessionId}
@@ -134,10 +140,11 @@ export function ActivityRenderer({
           disabled={disabled}
         />
       );
+      break;
     }
     case 'writing': {
       const writingValue = typeof value === 'string' ? value : '';
-      return (
+      response = (
         <WritingActivity
           activity={activity}
           value={writingValue}
@@ -146,10 +153,12 @@ export function ActivityRenderer({
           sessionId={sessionId}
         />
       );
+      break;
     }
     default: {
       const _exhaustiveCheck: never = activity.activityType;
       throw new Error(`Unhandled activity type: ${_exhaustiveCheck}`);
     }
   }
+  return <ActivityWorkspace activity={activity} {...(tools ? { tools } : {})}>{response}</ActivityWorkspace>;
 }

@@ -19,6 +19,13 @@ async function setup(status = 'EVALUATION_PENDING') {
 }
 
 describe('IeltsMockReviewService', () => {
+  it('refuses a V2 speaking band without retained audio in all three parts', async () => {
+    const { service, tx } = await setup();
+    const base = await tx.ieltsMockAttempt.findUnique();
+    tx.ieltsMockAttempt.findUnique.mockResolvedValue({ ...base, policyVersion: 'v2' });
+    Object.assign(tx, { ieltsMockRecording: { findMany: vi.fn().mockResolvedValue([]) } });
+    await expect(service.review(reviewerId, attemptId, input)).rejects.toMatchObject({ response: { code: 'IELTS_MOCK_SPEAKING_AUDIO_REQUIRED' } });
+  });
   it('completes a report only after teacher-reviewed productive bands', async () => {
     const { service, tx } = await setup();
     const report = await service.review(reviewerId, attemptId, input);

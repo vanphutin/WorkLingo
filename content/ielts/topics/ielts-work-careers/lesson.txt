@@ -1,0 +1,470 @@
+FORMAT: WorkLingoLesson/1.1
+
+[FOUNDATION]
+category: vocabulary
+template_id: ielts-contextual-vocabulary
+template_version: 1
+[/FOUNDATION]
+
+[OBJECTIVE ielts-work-careers-objective]
+statement: Infer and accurately use contextual Work & Careers vocabulary when comparing evidence and recommending a realistic action.
+skills: reading | listening | speaking | writing
+required: true
+[/OBJECTIVE]
+
+[LESSON]
+slug: ielts-work-careers-lesson
+title: Work & Careers: evidence, choices and context
+level: foundation
+duration_minutes: 150
+objective: Advise the manager which workplace change should continue and why.
+[/LESSON]
+
+[WORD_BANK ielts-work-careers-bank]
+title: Work & Careers in context
+
+[[LANGUAGE_BLOCK ielts-work-careers-job-satisfaction]]
+expression: job satisfaction
+meaning_vi: sự hài lòng trong công việc
+pronunciation: /dʒɒb ˌsætɪsˈfækʃən/
+collocations: improve job satisfaction
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Our anonymous staff survey links job satisfaction to useful feedback, not just a higher salary.
+common_error: Use satisfaction as an uncountable noun here.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-career-prospects]]
+expression: career prospects
+meaning_vi: triển vọng nghề nghiệp
+pronunciation: /kəˈrɪə ˈprɒspekts/
+collocations: better career prospects
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The mentoring scheme should improve career prospects by making promotion requirements visible to everyone.
+common_error: Use prospects in the plural for future opportunities.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-work-life-balance]]
+expression: work-life balance
+meaning_vi: cân bằng công việc và cuộc sống
+pronunciation: /ˌwɜːk laɪf ˈbæləns/
+collocations: maintain work-life balance
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Flexible start times may support work-life balance, but staff still need a reliable handover each day.
+common_error: Use balance, not balancing, after work-life in this noun phrase.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-professional-development]]
+expression: professional development
+meaning_vi: phát triển chuyên môn
+pronunciation: /prəˈfeʃənəl dɪˈveləpmənt/
+collocations: ongoing professional development
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A paid afternoon each month will be reserved for professional development chosen with a supervisor.
+common_error: Development is normally uncountable in this use.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-transferable-skills]]
+expression: transferable skills
+meaning_vi: kỹ năng có thể áp dụng sang lĩnh vực khác
+pronunciation: /trænsˈfɜːrəbəl skɪlz/
+collocations: demonstrate transferable skills
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Recruiters will ask applicants to demonstrate transferable skills with examples from work, study or volunteering.
+common_error: Transferable describes a skill usable in a different role.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-job-security]]
+expression: job security
+meaning_vi: sự ổn định việc làm
+pronunciation: /dʒɒb sɪˈkjʊərəti/
+collocations: greater job security
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The pilot will not change contracts, and staff will receive a written explanation of job security during the trial.
+common_error: Do not use security to mean a guaranteed promotion.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-flexible-working]]
+expression: flexible working
+meaning_vi: làm việc linh hoạt
+pronunciation: /ˈfleksəbəl ˈwɜːkɪŋ/
+collocations: introduce flexible working
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: The flexible working pilot will last three months and include both office and home-based tasks.
+common_error: Working is the noun here; avoid flexible work-time when naming this policy.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-team-collaboration]]
+expression: team collaboration
+meaning_vi: sự phối hợp trong nhóm
+pronunciation: /tiːm kəˌlæbəˈreɪʃən/
+collocations: effective team collaboration
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: A shared project board will support team collaboration by showing who owns each unresolved task.
+common_error: Collaboration means working together, not competition.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-performance-review]]
+expression: performance review
+meaning_vi: buổi đánh giá hiệu quả công việc
+pronunciation: /pəˈfɔːməns rɪˈvjuː/
+collocations: a constructive performance review
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Each performance review will include a development goal rather than only a numerical rating.
+common_error: A review is countable when it means one scheduled meeting.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-staff-turnover]]
+expression: staff turnover
+meaning_vi: tỷ lệ nhân viên nghỉ và thay thế
+pronunciation: /stɑːf ˈtɜːnəʊvə/
+collocations: reduce staff turnover
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: We will compare staff turnover before and after the pilot, while recognizing that pay changes may also affect it.
+common_error: Turnover here concerns employees leaving, not sales revenue.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-workplace-culture]]
+expression: workplace culture
+meaning_vi: văn hóa nơi làm việc
+pronunciation: /ˈwɜːkpleɪs ˈkʌltʃə/
+collocations: an inclusive workplace culture
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Managers must model the workplace culture they describe by respecting agreed boundaries on evening messages.
+common_error: Workplace is one word when used as a noun modifier.
+[[/LANGUAGE_BLOCK]]
+
+[[LANGUAGE_BLOCK ielts-work-careers-income-stability]]
+expression: income stability
+meaning_vi: sự ổn định thu nhập
+pronunciation: /ˈɪnkʌm stəˈbɪləti/
+collocations: protect income stability
+grammar_pattern: Noun phrase: use as a subject, object, or complement after a suitable preposition.
+example: Hourly workers will keep their guaranteed shifts so that the pilot does not reduce income stability.
+common_error: Stability refers to predictability, not necessarily high income.
+[[/LANGUAGE_BLOCK]]
+
+[/WORD_BANK]
+
+[CONTENT ielts-work-careers-proposal]
+type: email
+text:
+<<<
+Dear planning group,
+We are a small employer reviewing a flexible working pilot. Please compare the priorities below before our next meeting.
+Our anonymous staff survey links job satisfaction to useful feedback, not just a higher salary.
+The mentoring scheme should improve career prospects by making promotion requirements visible to everyone.
+Flexible start times may support work-life balance, but staff still need a reliable handover each day.
+A paid afternoon each month will be reserved for professional development chosen with a supervisor.
+Recruiters will ask applicants to demonstrate transferable skills with examples from work, study or volunteering.
+The pilot will not change contracts, and staff will receive a written explanation of job security during the trial.
+The flexible working pilot will last three months and include both office and home-based tasks.
+A shared project board will support team collaboration by showing who owns each unresolved task.
+Each performance review will include a development goal rather than only a numerical rating.
+We will compare staff turnover before and after the pilot, while recognizing that pay changes may also affect it.
+Managers must model the workplace culture they describe by respecting agreed boundaries on evening messages.
+Hourly workers will keep their guaranteed shifts so that the pilot does not reduce income stability.
+Please recommend one change that we can explain and evaluate, while acknowledging what this proposal does not yet establish.
+Regards, the planning coordinator
+>>>
+[/CONTENT]
+
+[CONTENT ielts-work-careers-discussion]
+type: dialogue
+text:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: My job satisfaction increased when my manager explained how my work helped the wider team.
+Lan: I worry about my career prospects because I do not understand the requirements for a senior role.
+An: My work-life balance would improve if I could start early and collect my daughter after school.
+Lan: Professional development should include customer communication, not only new software certificates.
+An: I used transferable skills from volunteering when I had to organize a busy delivery team.
+Lan: Before joining the pilot, I need reassurance about job security rather than a vague promise about growth.
+An: Flexible working sounds useful, but some repairs still require equipment that stays in the office.
+Lan: Team collaboration would be easier if everyone updated the board before the afternoon handover.
+An: Could my performance review include feedback from colleagues who work with me every day?
+Lan: Lower staff turnover could save time, but we should ask people why they left instead of guessing.
+An: A supportive workplace culture should allow a new colleague to ask for help without embarrassment.
+Lan: Income stability matters to me because a predictable monthly amount helps me plan rent and transport.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT ielts-work-careers-discussion-audio]
+speaker: residents
+script:
+<<<
+An (nam): Let us review this proposal from the perspective of people who will actually use it.
+Lan (nữ): I agree. We should compare the intended benefits with practical barriers and decide what to ask the planning group.
+An: My job satisfaction increased when my manager explained how my work helped the wider team.
+Lan: I worry about my career prospects because I do not understand the requirements for a senior role.
+An: My work-life balance would improve if I could start early and collect my daughter after school.
+Lan: Professional development should include customer communication, not only new software certificates.
+An: I used transferable skills from volunteering when I had to organize a busy delivery team.
+Lan: Before joining the pilot, I need reassurance about job security rather than a vague promise about growth.
+An: Flexible working sounds useful, but some repairs still require equipment that stays in the office.
+Lan: Team collaboration would be easier if everyone updated the board before the afternoon handover.
+An: Could my performance review include feedback from colleagues who work with me every day?
+Lan: Lower staff turnover could save time, but we should ask people why they left instead of guessing.
+An: A supportive workplace culture should allow a new colleague to ask for help without embarrassment.
+Lan: Income stability matters to me because a predictable monthly amount helps me plan rent and transport.
+An: We have several reasonable priorities, but the budget cannot cover every suggestion immediately.
+Lan: Let us recommend one change, explain our reasons, and identify evidence that would tell us whether it worked.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY ielts-work-careers-activate-1]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-job-satisfaction | ielts-work-careers-career-prospects | ielts-work-careers-work-life-balance
+prompt: Our anonymous staff survey links job satisfaction to useful feedback, not just a higher salary. The mentoring scheme should improve career prospects by making promotion requirements visible to everyone. Flexible start times may support work-life balance, but staff still need a reliable handover each day.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Before reading in detail, write three connected sentences predicting how these target phrases might matter in the proposed situation. Then compare with the email.
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-activate-2]
+learning_block: activate
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-staff-turnover | ielts-work-careers-workplace-culture | ielts-work-careers-income-stability
+prompt: We will compare staff turnover before and after the pilot, while recognizing that pay changes may also affect it. Managers must model the workplace culture they describe by respecting agreed boundaries on evening messages. Hourly workers will keep their guaranteed shifts so that the pilot does not reduce income stability.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Read the model sentences for the final three phrases, then write a different practical example for each phrase in your own situation. Explain one limitation of your suggestion rather than copying the model.
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-read-1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-job-satisfaction | ielts-work-careers-career-prospects | ielts-work-careers-work-life-balance | ielts-work-careers-professional-development
+
+QUESTION:
+What does the survey associate with satisfaction?
+
+OPTIONS:
+A. Fewer customers
+B. Useful feedback
+C. Only salary increases
+
+ANSWER:
+B
+
+EXPLANATION:
+Useful feedback. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-work-careers-proposal:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-listen-1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-discussion
+language_block_refs: ielts-work-careers-job-satisfaction | ielts-work-careers-career-prospects | ielts-work-careers-work-life-balance | ielts-work-careers-professional-development
+audio_ref: ielts-work-careers-discussion-audio
+
+QUESTION:
+What improved the employee’s experience?
+
+OPTIONS:
+A. Avoiding contact with the wider team
+B. Understanding the contribution of their work
+C. Receiving a new job title
+
+ANSWER:
+B
+
+EXPLANATION:
+Understanding the contribution of their work. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-work-careers-discussion-audio:3
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-read-2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-transferable-skills | ielts-work-careers-job-security | ielts-work-careers-flexible-working | ielts-work-careers-team-collaboration
+
+QUESTION:
+How should applicants show adaptable abilities?
+
+OPTIONS:
+A. With examples from different areas of life
+B. Only with a job title
+C. Only with an examination score
+
+ANSWER:
+A
+
+EXPLANATION:
+With examples from different areas of life. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-work-careers-proposal:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-listen-2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-discussion
+language_block_refs: ielts-work-careers-transferable-skills | ielts-work-careers-job-security | ielts-work-careers-flexible-working | ielts-work-careers-team-collaboration
+audio_ref: ielts-work-careers-discussion-audio
+
+QUESTION:
+Where did the employee gain useful experience?
+
+OPTIONS:
+A. In volunteering
+B. In a salary survey
+C. In an equipment catalogue
+
+ANSWER:
+A
+
+EXPLANATION:
+In volunteering. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-work-careers-discussion-audio:7
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-read-3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-performance-review | ielts-work-careers-staff-turnover | ielts-work-careers-workplace-culture | ielts-work-careers-income-stability
+
+QUESTION:
+What will each evaluation meeting include?
+
+OPTIONS:
+A. An automatic promotion
+B. A public ranking
+C. A development goal
+
+ANSWER:
+C
+
+EXPLANATION:
+A development goal. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-work-careers-proposal:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-listen-3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-discussion
+language_block_refs: ielts-work-careers-performance-review | ielts-work-careers-staff-turnover | ielts-work-careers-workplace-culture | ielts-work-careers-income-stability
+audio_ref: ielts-work-careers-discussion-audio
+
+QUESTION:
+Whose feedback does the employee request?
+
+OPTIONS:
+A. Only customers they have never met
+B. Only a future employer
+C. Colleagues who work with them daily
+
+ANSWER:
+C
+
+EXPLANATION:
+Colleagues who work with them daily. This is supported by the cited line; the other choices change or contradict its stated purpose.
+
+EVIDENCE:
+ielts-work-careers-discussion-audio:11
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-speak-1]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-discussion
+language_block_refs: ielts-work-careers-job-satisfaction | ielts-work-careers-transferable-skills | ielts-work-careers-performance-review
+prompt: My job satisfaction increased when my manager explained how my work helped the wider team. I used transferable skills from volunteering when I had to organize a busy delivery team. Could my performance review include feedback from colleagues who work with me every day?
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+First shadow the model, then record a 60–90 second response in your own words. Advise the manager which workplace change should continue and why. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-speak-2]
+learning_block: respond
+activity_type: speaking
+response_type: shadowing
+skills: speaking
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-discussion
+language_block_refs: ielts-work-careers-work-life-balance | ielts-work-careers-flexible-working | ielts-work-careers-workplace-culture
+prompt: My work-life balance would improve if I could start early and collect my daughter after school. Flexible working sounds useful, but some repairs still require equipment that stays in the office. A supportive workplace culture should allow a new colleague to ask for help without embarrassment.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Transfer the language to your own neighbourhood or workplace. Record a 60–90 second alternative proposal. Advise the manager which workplace change should continue and why. Use the three target phrases and acknowledge one limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-write-1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-career-prospects | ielts-work-careers-job-security | ielts-work-careers-staff-turnover
+prompt: The mentoring scheme should improve career prospects by making promotion requirements visible to everyone. The pilot will not change contracts, and staff will receive a written explanation of job security during the trial. We will compare staff turnover before and after the pilot, while recognizing that pay changes may also affect it.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word recommendation to the planning group. Advise the manager which workplace change should continue and why. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]
+
+[ACTIVITY ielts-work-careers-write-2]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: ielts-work-careers-objective
+content_refs: ielts-work-careers-proposal
+language_block_refs: ielts-work-careers-professional-development | ielts-work-careers-team-collaboration | ielts-work-careers-income-stability
+prompt: A paid afternoon each month will be reserved for professional development chosen with a supervisor. A shared project board will support team collaboration by showing who owns each unresolved task. Hourly workers will keep their guaranteed shifts so that the pilot does not reduce income stability.
+rubric: Address the audience and decision; use all target chunks with their contextual meanings; organize reasons and one limitation; assess intelligibility or written coherence, vocabulary and grammatical accuracy.
+
+QUESTION:
+Write an 80–120 word reply to a resident with a different priority. Advise the manager which workplace change should continue and why. Use the three target phrases, a specific reason and a realistic limitation.
+[/ACTIVITY]

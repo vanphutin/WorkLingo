@@ -1,0 +1,25 @@
+.ielts-study { max-width: 1160px; margin: auto; padding: clamp(20px, 4vw, 48px); color: var(--foreground); }
+.ielts-study h1 { margin-top: 24px; font-size: clamp(1.8rem, 4vw, 2.8rem); }
+.ielts-study p { line-height: 1.65; }
+.ielts-study__summary { border-block: 1px solid var(--border); padding-block: 20px; margin-block: 28px; }
+.ielts-study__summary h2 { font-size: 1.15rem; }
+.ielts-study__counts { display: flex; flex-wrap: wrap; gap: 12px 24px; font-weight: 600; }
+.ielts-study__skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.ielts-study__skills dt, .ielts-study__chunks dt { font-weight: 700; }
+.ielts-study dd { margin: 8px 0 0; color: var(--muted); }
+.ielts-study__topics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 20px; }
+.ielts-study__topics article { display: flex; flex-direction: column; gap: 12px; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.ielts-study__topics article.is-selected { border: 2px solid var(--primary); padding: 23px; }
+.ielts-study__topics h2 { font-size: 1.3rem; margin: 0; }
+.ielts-study__topics button { margin-top: auto; }
+.ielts-study button, .ielts-study select { min-height: 44px; font: inherit; padding: 10px 14px; border: 1px solid var(--control-border); border-radius: 8px; color: var(--foreground); background: var(--surface); }
+.ielts-study button { cursor: pointer; }
+.ielts-study :is(button,a,select):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.ielts-study button:disabled { opacity: .65; cursor: default; }
+.ielts-study__launch { margin-top: 32px; padding: clamp(20px, 3vw, 32px); border-radius: 16px; background: var(--surface); border: 1px solid var(--border); }
+.ielts-study__selectors { display: flex; flex-wrap: wrap; gap: 24px; }
+.ielts-study__selectors label { display: grid; gap: 8px; }
+.ielts-study__chunks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; }
+.ielts-study button.ielts-study__primary { background: var(--primary-fill); color: var(--on-primary); }
+.ielts-study__recommendation { padding: 16px; background: var(--primary-soft); border-radius: 8px; }
+@media (max-width: 600px) { .ielts-study__skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { INITIAL_IELTS_INTEGRATED_PROFILES } from '@worklingo/contracts';
 import { afterEach, expect, it, vi } from 'vitest';
 import { LocaleProvider, useLocalePreference } from '../../i18n/provider';
@@ -39,4 +39,48 @@ it('shows Vietnamese allocation validation and enables publishing only for a val
   expect(screen.getByRole('status').textContent).toBe('Đã lưu bản nháp và sẵn sàng xuất bản.');
   fireEvent.click(screen.getByRole('button', { name: 'Switch to English' }));
   expect(screen.getByRole('status').textContent).toBe('Draft saved and ready to publish.');
+});
+
+it('labels the four fixed durations as configuration and links lesson authoring', async () => {
+  vi.mocked(adminIeltsIntegratedClient.list).mockResolvedValue(INITIAL_IELTS_INTEGRATED_PROFILES.map((draft) => ({ id: String(draft.durationMinutes), durationMinutes: draft.durationMinutes, status: 'DRAFT', draftRevision: 1, draft, currentPublishedVersion: null, versions: [], updatedAt: new Date().toISOString() })));
+  render(<IntegratedProfileWorkspace />);
+  await screen.findByRole('button', { name: '60 min' });
+  expect(screen.getByRole('link', { name: 'Author lesson content' }).getAttribute('href')).toBe('/admin/content');
+  expect(screen.getByText(/four fixed duration profiles/i)).not.toBeNull();
+  fireEvent.change(screen.getByLabelText('listening'), { target: { value: '18' } });
+  fireEvent.click(screen.getByRole('button', { name: '90 min' }));
+  fireEvent.click(screen.getByRole('button', { name: '60 min' }));
+  expect((screen.getByLabelText('listening') as HTMLInputElement).value).toBe('18');
+  expect(screen.getByRole('button', { name: '120 min' })).not.toBeNull();
+  expect(screen.getByRole('button', { name: '150 min' })).not.toBeNull();
+});
+
+it('keeps edits in another profile when publishing refreshes saved profiles', async () => {
+  const profiles = INITIAL_IELTS_INTEGRATED_PROFILES.map((draft) => ({ id: String(draft.durationMinutes), durationMinutes: draft.durationMinutes, status: 'DRAFT' as const, draftRevision: 1, draft, currentPublishedVersion: null, versions: [], updatedAt: new Date().toISOString() }));
+  vi.mocked(adminIeltsIntegratedClient.list).mockResolvedValue(profiles);
+  vi.mocked(adminIeltsIntegratedClient.update).mockResolvedValue({ ...profiles[1]!, draftRevision: 2 });
+  vi.mocked(adminIeltsIntegratedClient.validate).mockResolvedValue({ profileId: '90', draftRevision: 2, status: 'VALIDATED', canPublish: true, issues: [] });
+  vi.mocked(adminIeltsIntegratedClient.publish).mockResolvedValue({ profileId: '90', profileVersionId: crypto.randomUUID(), version: 1, publishedAt: new Date().toISOString() });
+  render(<IntegratedProfileWorkspace />);
+  fireEvent.change(await screen.findByLabelText('listening'), { target: { value: '18' } });
+  fireEvent.click(screen.getByRole('button', { name: '90 min' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Save & validate' }));
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Publish version' }).hasAttribute('disabled')).toBe(false));
+  fireEvent.click(screen.getByRole('button', { name: 'Publish version' }));
+  await waitFor(() => expect(adminIeltsIntegratedClient.list).toHaveBeenCalledTimes(2));
+  fireEvent.click(screen.getByRole('button', { name: '60 min' }));
+  expect((screen.getByLabelText('listening') as HTMLInputElement).value).toBe('18');
+});
+
+it('prevents selection and field changes while an allocation save is pending', async () => {
+  const profiles = INITIAL_IELTS_INTEGRATED_PROFILES.map((draft) => ({ id: String(draft.durationMinutes), durationMinutes: draft.durationMinutes, status: 'DRAFT' as const, draftRevision: 1, draft, currentPublishedVersion: null, versions: [], updatedAt: new Date().toISOString() }));
+  vi.mocked(adminIeltsIntegratedClient.list).mockResolvedValue(profiles);
+  let finish!: (value: typeof profiles[number]) => void;
+  vi.mocked(adminIeltsIntegratedClient.update).mockImplementation(() => new Promise((resolve) => { finish = resolve; }));
+  render(<IntegratedProfileWorkspace />);
+  await screen.findByLabelText('listening');
+  fireEvent.click(screen.getByRole('button', { name: 'Save draft' }));
+  expect((screen.getByLabelText('listening') as HTMLInputElement).disabled).toBe(true);
+  expect(screen.getByRole('button', { name: '90 min' }).hasAttribute('disabled')).toBe(true);
+  await act(async () => finish(profiles[0]!));
 });

@@ -9,8 +9,8 @@ import {
   Optional,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { evaluationDtoSchema, type EvaluationDto } from '@worklingo/contracts';
+import { Prisma, type JobStatus } from '@prisma/client';
+import { evaluationDtoSchema, evaluationStatusSchema, type EvaluationDto } from '@worklingo/contracts';
 
 import { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
@@ -20,6 +20,7 @@ import { JobsService } from '../../jobs/application/jobs.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
 import { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
 import { aggregateEvaluation, resolveFoundationRubric } from '../domain/foundation-rubrics.js';
+import { evaluationProcessingSteps } from './evaluation-processing.js';
 
 export interface EvaluationServiceOptions {
   readonly languageProviderConfigVersion?: string;
@@ -70,6 +71,14 @@ export class EvaluationService {
     });
     if (!attempt) throw new NotFoundException('Evaluation not found');
     const result = attempt.evaluationResults[0];
+    const processingJobs = attempt.recording && (attempt.evaluationStatus === 'QUEUED' || attempt.evaluationStatus === 'PROCESSING')
+      ? await this.database.job.findMany({ where: { resourceId: attempt.id, resourceType: 'ActivityAttempt', type: { in: ['TRANSCRIBE_SPEECH', 'EVALUATE_ATTEMPT'] } },
+          select: { type: true, status: true }, orderBy: { createdAt: 'desc' }, take: 4 }) : [];
+    const jobStates: { transcription?: JobStatus; evaluation?: JobStatus } = {};
+    for (const job of processingJobs) {
+      const key = job.type === 'TRANSCRIBE_SPEECH' ? 'transcription' : 'evaluation';
+      jobStates[key] ??= job.status;
+    }
     const failedJob = attempt.evaluationStatus === 'EVALUATION_FAILED'
       ? await this.database.job.findFirst({
           where: {
@@ -86,6 +95,7 @@ export class EvaluationService {
         && !attempt.recording.deletedAt
         && !attempt.recording.deletionRequestedAt);
     return evaluationDtoSchema.parse({
+      processingSteps: evaluationProcessingSteps(evaluationStatusSchema.parse(attempt.evaluationStatus.toLowerCase()), attempt.recording, result ?? null, jobStates),
       attemptId: attempt.id,
       completedAt: result?.completedAt.toISOString() ?? null,
       feedback: result?.feedback ?? null,

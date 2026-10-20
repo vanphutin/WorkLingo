@@ -16,6 +16,7 @@ import {
 } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
+import { hasIeltsEarlyAccess } from '../../ielts-access/ielts-early-access.js';
 import { INTERMEDIATE_PROGRAM_ID } from '../../learning-programs/domain/program-catalog.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 
@@ -186,7 +187,8 @@ export class OrientationLearnerService {
     const reasons: string[] = [];
     if (profile?.onboardingStatus !== 'COMPLETE') reasons.push('ONBOARDING_REQUIRED');
     if (!enrollment) reasons.push('INTERMEDIATE_ENROLLMENT_REQUIRED');
-    if (!checkpoint || checkpoint.status !== 'passed' || !checkpoint.canAdvance || !this.hasPassedFoundationSkills(checkpoint.skills)) {
+    const foundationComplete = checkpoint?.status === 'passed' && checkpoint.canAdvance && this.hasPassedFoundationSkills(checkpoint.skills);
+    if (!foundationComplete && !await hasIeltsEarlyAccess(database, learnerId)) {
       reasons.push('FOUNDATION_CHECKPOINT_REQUIRED');
     }
     if (!orientation?.currentPublishedVersion) reasons.push('ORIENTATION_NOT_PUBLISHED');

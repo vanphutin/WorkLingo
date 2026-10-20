@@ -17,6 +17,7 @@ export interface ActivityAttemptDto {
 }
 
 export interface LearnerActivityDto {
+  readonly audioText?: string;
   readonly id: string;
   readonly slug: string;
   readonly activityType: 'reading' | 'listening' | 'speaking' | 'writing';
@@ -29,6 +30,7 @@ export interface LearnerActivityDto {
 }
 
 export interface LearningSessionDto {
+  readonly ieltsTopic?: { readonly topicVersionId: string; readonly title: string; readonly packSlug: string };
   readonly id: string;
   readonly clientSessionId: string;
   readonly curriculumRevisionId: string | null;
@@ -43,7 +45,7 @@ export interface LearningSessionDto {
     readonly id: string;
     readonly type: 'activate' | 'readDecode' | 'listenReason' | 'respond';
     readonly order: number;
-    readonly targetMinutes: 15;
+    readonly targetMinutes: number;
     readonly activityIds: readonly string[];
     readonly status: 'available' | 'completed';
   }>;

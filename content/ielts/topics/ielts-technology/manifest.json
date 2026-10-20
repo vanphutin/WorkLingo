@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Technology",
+  "description": "Build contextual IELTS vocabulary through a library choosing a digital service for residents. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-technology-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "c0fd560c-045e-4a9a-aa13-ebb840b6df1c",
+      "focusChunkSlugs": [
+        "ielts-technology-digital-literacy",
+        "ielts-technology-data-privacy",
+        "ielts-technology-artificial-intelligence",
+        "ielts-technology-automation-tools",
+        "ielts-technology-reliable-information",
+        "ielts-technology-online-security",
+        "ielts-technology-user-experience",
+        "ielts-technology-technological-change",
+        "ielts-technology-remote-access",
+        "ielts-technology-digital-divide",
+        "ielts-technology-technical-support",
+        "ielts-technology-screen-time"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-technology-proposal",
+          "title": "Planning proposal: Technology"
+        },
+        {
+          "slug": "ielts-technology-discussion",
+          "title": "Residents discuss alternatives: Technology"
+        }
+      ]
+    }
+  ]
+}

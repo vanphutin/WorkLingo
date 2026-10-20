@@ -217,7 +217,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
           objectives.push({ range, slug: sectionSlug ?? '', statement: fields['statement']?.value ?? '', skills: (fields['skills']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean), required: fields['required']?.value ?? '' });
         }
       } else if (sectionType === 'LESSON') {
-        const fields = parseScalarSection(['slug', 'title', 'level', 'duration_minutes', 'objective']);
+        const fields = parseScalarSection(['slug', 'title', 'level', 'duration_minutes', 'objective', 'program', 'category', 'authoring_template']);
         const endOffset = lineIdx > 0 ? lines[lineIdx - 1]!.fullEndOffset : sectionStartOffset;
         const slugVal = fields['slug']?.value || sectionSlug || '';
         if (slugVal && !IDENTIFIER_REGEX.test(slugVal)) {
@@ -237,6 +237,9 @@ export function parseLessonSource(source: string): ParseLessonResult {
           level: fields['level']?.value || '',
           durationMinutes: parseInt(fields['duration_minutes']?.value || '0', 10),
           objective: fields['objective']?.value || '',
+          ...(fields['program'] ? { program: fields['program'].value } : {}),
+          ...(fields['category'] ? { category: fields['category'].value } : {}),
+          ...(fields['authoring_template'] ? { authoringTemplate: fields['authoring_template'].value } : {}),
         };
       } else if (sectionType === 'WORD_BANK') {
         const bankSlug = sectionSlug || '';
@@ -481,6 +484,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
         const audioSlug = sectionSlug || '';
         let speaker: string | undefined;
         let scriptText = '';
+        let spokenText: string | undefined;
+        let speechReview: string | undefined;
         let closed = false;
         const audioStartOffset = sectionStartOffset;
 
@@ -509,17 +514,21 @@ export function parseLessonSource(source: string): ParseLessonResult {
             break;
           }
 
-          if (at.startsWith('script:')) {
+          if (at.startsWith('script:') || at.startsWith('spoken_text:')) {
+            const isSpoken = at.startsWith('spoken_text:');
             lineIdx++;
             if (lineIdx < lines.length && lines[lineIdx]!.text.trim() === '<<<') {
               const multi = readMultiline(lineIdx + 1);
               if (!multi.closed) {
                 addIssue('PARSE_UNCLOSED_MULTILINE', 'Unclosed multiline block in AUDIO_SCRIPT', aLine.startOffset, aLine.endOffset);
               }
-              scriptText = multi.text;
+              if (isSpoken) spokenText = multi.text;
+              else scriptText = multi.text;
               lineIdx = multi.nextLineIdx;
             } else {
-              scriptText = aLine.text.slice(7).trim();
+              const value = aLine.text.slice(aLine.text.indexOf(':') + 1).trim();
+              if (isSpoken) spokenText = value;
+              else scriptText = value;
             }
             continue;
           }
@@ -530,6 +539,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
             const v = aLine.text.slice(colonIdx + 1).trim();
             if (k === 'speaker') {
               speaker = v;
+            } else if (k === 'speech_review') {
+              speechReview = v;
             } else {
               addIssue('PARSE_UNKNOWN_FIELD', `Unknown field '${k}' in AUDIO_SCRIPT`, aLine.startOffset, aLine.endOffset);
             }
@@ -548,6 +559,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
           slug: audioSlug,
           speaker,
           script: scriptText,
+          ...(spokenText !== undefined ? { spokenText } : {}),
+          ...(speechReview !== undefined ? { speechReview } : {}),
         });
       } else if (sectionType === 'ACTIVITY') {
         const actSlug = sectionSlug || '';
@@ -631,7 +644,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
                 break;
               }
               // Option format: A. Text
-              const optMatch = ot.match(/^([A-Z])\.\s*(.+)$/);
+              const optMatch = ot.match(/^([A-Z])\.\s*(.*)$/);
               if (optMatch) {
                 options.push({
                   label: optMatch[1]!,

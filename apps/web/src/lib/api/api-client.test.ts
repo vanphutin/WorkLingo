@@ -332,6 +332,13 @@ describe('ApiClient', () => {
       updatedAt: '2026-10-04T00:00:00.000Z',
     };
 
+    it('refreshes vocabulary publication review without using a cached result', async () => {
+      const review = { importId, draftRevision: 1, sourceHash: 'hash-123', reviewHash: 'review-1', topic: null, entries: [] };
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json(review));
+      expect(await new ApiClient('/api/v1').getVocabularyPublicationReview(importId)).toEqual(review);
+      expect(fetchSpy).toHaveBeenCalledWith(`/api/v1/admin/content-imports/${importId}/vocabulary-review`, expect.objectContaining({ method: 'GET', cache: 'no-store', credentials: 'include' }));
+    });
+
     it('lists content imports from /admin/content-imports', async () => {
       const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
         new Response(JSON.stringify([sampleImport]), {

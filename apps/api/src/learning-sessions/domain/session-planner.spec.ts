@@ -36,6 +36,28 @@ function createMission(useExtendedFixture = false): PublishedMission {
 }
 
 describe('Foundation session planner', () => {
+  it('can require a distinct speaking and writing pair in each IELTS respond block without changing legacy plans', () => {
+    const mission = createMission(true);
+    const responses = mission.lessonVersion.activities.filter(activity => activity.learningBlock === 'respond');
+    const expanded = { ...mission, lessonVersion: { ...mission.lessonVersion, activities: [
+      ...mission.lessonVersion.activities,
+      ...responses.map((activity, index) => ({ ...activity, id: fixtureId(800 + index), slug: `${activity.slug}-transfer`, order: activity.order + 100 })),
+    ] } };
+    const plan = planFoundationSession({ mission: expanded, durationMinutes: 120, productivePairPerRespondBlock: true });
+    for (const block of plan.blocks.filter(item => item.type === 'respond')) {
+      expect(expanded.lessonVersion.activities.filter(activity => block.activityIds.includes(activity.id)).map(activity => activity.activityType).sort()).toEqual(['speaking', 'writing']);
+    }
+    expect(planFoundationSession({ mission, durationMinutes: 120 }).blocks.flatMap(block => block.activityIds)).toHaveLength(8);
+  });
+  it('pairs IELTS productive tasks even when authored and review order groups the same skill together', () => {
+    const mission = createMission(true);
+    const responses = mission.lessonVersion.activities.filter(a => a.learningBlock === 'respond');
+    const expanded = { ...mission, lessonVersion: { ...mission.lessonVersion, activities: [...mission.lessonVersion.activities, ...responses.map((a, i) => ({ ...a, id: fixtureId(900 + i), slug: a.slug + '-more' }))].map((a, i) => ({ ...a, order: a.learningBlock === 'respond' ? (a.activityType === 'speaking' ? 100 : 200) + i : a.order })) } };
+    for (const durationMinutes of [90, 120, 150]) {
+      const plan = planFoundationSession({ mission: expanded, durationMinutes, productivePairPerRespondBlock: true });
+      for (const block of plan.blocks.filter(b => b.type === 'respond')) expect(block.activityIds.map(id => expanded.lessonVersion.activities.find(a => a.id === id)!.activityType).sort()).toEqual(['speaking', 'writing']);
+    }
+  });
   it('offers every learner-selected duration for the published Foundation fixture', () => {
     expect(computeAvailableDurations(createMission(true))).toEqual([45, 60, 90, 120, 150]);
   });

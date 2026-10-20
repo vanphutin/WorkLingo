@@ -1,0 +1,9 @@
+.ielts-topic-editor .ielts-intro__layout { margin-top: 28px; }
+.ielts-topic-editor nav ul { list-style: none; padding: 0; }
+.ielts-topic-editor nav li { margin-top: 8px; }
+.ielts-topic-editor label { display: block; margin-bottom: 8px; font-weight: 700; }
+.ielts-topic-editor .authoring-import textarea { box-sizing: border-box; width: 100%; min-height: 400px; resize: vertical; padding: 16px; background: var(--surface); color: var(--foreground); border: 1px solid var(--control-border); border-radius: 8px; font: .9rem/1.6 monospace; }
+.ielts-topic-editor .authoring-field label { padding: 0; margin-bottom: 0; }
+.ielts-topic-editor textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.ielts-topic-editor section { min-width: 0; }
+.ielts-topic-editor code { overflow-wrap: anywhere; }

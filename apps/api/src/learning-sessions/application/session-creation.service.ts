@@ -1,6 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import type { ActivityAttempt, Prisma } from '@prisma/client';
-import { sessionPlanSchema } from '@worklingo/contracts';
+import { sessionPlanSchema, type SessionDuration } from '@worklingo/contracts';
+import { parseIeltsTopicManifest } from '@worklingo/content-format';
 
 import type { PublishedMission } from '../../curriculum/domain/curriculum.types.js';
 import type { ScheduledReviewItemReference } from '../domain/session-plan.types.js';
@@ -8,6 +9,7 @@ import { planFoundationSession } from '../domain/session-planner.js';
 import type { ActivityAttemptDto, LearningSessionDto } from './learning-session.types.js';
 
 export const learningSessionInclude = {
+  ieltsTopicSession: { include: { topicVersion: true } },
   attempts: { orderBy: { createdAt: 'asc' as const } },
   blocks: { orderBy: { order: 'asc' as const } },
   mission: { include: { level: { select: { code: true } } } },
@@ -18,6 +20,9 @@ export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{
 }>;
 
 export interface CreateMissionSessionInput {
+  readonly topicSelection?: 'chosen' | 'random';
+  readonly topicDurationFilter?: SessionDuration;
+  readonly productivePairPerRespondBlock?: boolean;
   readonly clientSessionId: string;
   readonly curriculumRevisionId?: string | null;
   readonly durationMinutes: number;
@@ -42,11 +47,14 @@ export class SessionCreationService {
       include: learningSessionInclude,
     });
     if (existing) {
+      const existingPlan = sessionPlanSchema.parse(existing.planSnapshot);
       if (
         existing.durationMinutes !== input.durationMinutes ||
         (existing.curriculumRevisionId ?? null) !== (input.curriculumRevisionId ?? null) ||
         existing.lessonVersionId !== input.mission.lessonVersion.id ||
         existing.missionId !== input.mission.id
+        || existingPlan.topicSelection !== input.topicSelection
+        || existingPlan.topicDurationFilter !== input.topicDurationFilter
       ) {
         throw new ConflictException({
           code: 'IDEMPOTENCY_CONFLICT',
@@ -57,11 +65,14 @@ export class SessionCreationService {
       return toLearningSessionDto(existing);
     }
 
-    const plan = planFoundationSession({
+    const basePlan = planFoundationSession({
       durationMinutes: input.durationMinutes,
       mission: input.mission,
       reviewItems: input.reviewItems,
+      productivePairPerRespondBlock: input.productivePairPerRespondBlock ?? false,
     });
+    const plan = input.topicSelection ? sessionPlanSchema.parse({ ...basePlan, topicSelection: input.topicSelection,
+      ...(input.topicDurationFilter !== undefined ? { topicDurationFilter: input.topicDurationFilter } : {}) }) : basePlan;
     const created = await transaction.learningSession.create({
       data: {
         blocks: {
@@ -89,13 +100,14 @@ export class SessionCreationService {
 export function toLearningSessionDto(session: LearningSessionRecord): LearningSessionDto {
   const plan = sessionPlanSchema.parse(session.planSnapshot);
   return {
+    ...(session.ieltsTopicSession ? { ieltsTopic: { topicVersionId: session.ieltsTopicSession.topicVersionId, packSlug: session.ieltsTopicSession.packSlug, title: parseIeltsTopicManifest(session.ieltsTopicSession.topicVersion.content).title } } : {}),
     attempts: session.attempts.map(toActivityAttemptDto),
     blocks: session.blocks.map((block) => ({
       activityIds: block.activityIds,
       id: block.id,
       order: block.order,
       status: block.status.toLowerCase() as 'available' | 'completed',
-      targetMinutes: 15,
+      targetMinutes: block.targetMinutes,
       type: block.type,
     })),
     clientSessionId: session.clientSessionId,

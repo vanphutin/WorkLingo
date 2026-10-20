@@ -1,4 +1,5 @@
 'use client';
+import { parseLessonSource } from '@worklingo/content-format';
 
 import { useAdminContent } from './i18n';
 
@@ -18,8 +19,9 @@ import { PublishPanel } from './publish-panel';
 import { SourceEditor, type SourceEditorHandle } from './source-editor';
 import { offsetForPosition } from './source-position';
 import { ValidationPanel } from './validation-panel';
+import { NarrationEditor } from './narration-editor';
 
-export type WorkspaceTab = 'source' | 'validation' | 'preview' | 'publish';
+export type WorkspaceTab = 'source' | 'validation' | 'preview' | 'publish' | 'narration';
 
 export interface ContentAuthoringWorkspaceProps {
   readonly initialImport: ContentImportDto;
@@ -85,7 +87,7 @@ export function ContentAuthoringWorkspace({
 
   const triggerSave = useCallback(
     async (sourceToSave: string, expectedRevision: number) => {
-      if (isReadOnly) return;
+      if (isReadOnly) return false;
 
       try {
         setSavingState('saving');
@@ -103,8 +105,9 @@ export function ContentAuthoringWorkspace({
           setStatus(updated.status);
           setSavingState('saved');
         }
+        return true;
       } catch (err: unknown) {
-        if (!isMountedRef.current) return;
+        if (!isMountedRef.current) return false;
 
         const is409 =
           (err instanceof ApiError && err.status === 409) ||
@@ -122,6 +125,7 @@ export function ContentAuthoringWorkspace({
           setSavingState('error');
           setErrorMessage(err);
         }
+        return false;
       }
     },
     [initialImport.id, isReadOnly],
@@ -292,6 +296,7 @@ export function ContentAuthoringWorkspace({
           className={`tab-btn ${activeTab === 'preview' ? 'active' : ''}`}
           onClick={() => setActiveTab('preview')}
         >{t('previewTab')}</button>
+        <button type="button" role="tab" aria-selected={activeTab === 'narration'} className={`tab-btn ${activeTab === 'narration' ? 'active' : ''}`} onClick={() => setActiveTab('narration')}>{t('narrationTitle')}</button>
         <button
           type="button"
           role="tab"
@@ -300,6 +305,12 @@ export function ContentAuthoringWorkspace({
           onClick={() => setActiveTab('publish')}
         >{t('publishTab')}</button>
       </div>
+
+      {activeTab === 'narration' ? <NarrationEditor source={localSource} readOnly={isReadOnly} busy={savingState === 'saving' || savingState === 'conflict'} onApply={async source => {
+        if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+        setLocalSource(source); setSelectedAudioArtifacts({}); setPreview(null); setCanPublish(false); setLastValidatedRevision(null);
+        return triggerSave(source, currentDraftRevision);
+      }} /> : null}
 
       {activeTab === 'source' && (
         <div className="workspace-layout">
@@ -356,6 +367,7 @@ export function ContentAuthoringWorkspace({
                 audioScripts={preview.normalizedDraft?.audioScripts}
                 selectedAudioArtifacts={selectedAudioArtifacts}
                 onSelectedAudioArtifactsChange={setSelectedAudioArtifacts}
+                onEditNarration={() => setActiveTab('narration')}
               />
             </div>
           ) : (
@@ -369,6 +381,7 @@ export function ContentAuthoringWorkspace({
       {activeTab === 'publish' && (
         <div className="workspace-view publish-view">
           <PublishPanel
+            vocabularyReviewRequired={parseLessonSource(localSource).document.lesson?.authoringTemplate === 'intermediate-topic-v1'}
             importId={initialImport.id}
             draftRevision={currentDraftRevision}
             sourceHash={sourceHash}

@@ -1,0 +1,96 @@
+[
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 11,
+    "match": "use-voice-registry",
+    "decision": "Keep new device registry hook; existing side has no corresponding import.",
+    "existingHunkSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "incomingHunkSHA256": "8691653ff40d52bc18e17f8d18b1195c182f6db6b42acf450d108e46f241a884"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 123,
+    "match": "function DevicesIcon",
+    "decision": "Keep new device registry icon with explicit dimensions; no competing behavior.",
+    "existingHunkSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "incomingHunkSHA256": "45130b08cb2f577d6daabd8d612c292263d873db668e64391b890af34a7aa66a"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 423,
+    "match": "<AlertTriangleIcon size={16}",
+    "decision": "Retain explicit16px warning/error icon sizing; existing call uses same icon default.",
+    "existingHunkSHA256": "664ca260a1a69f031c0a3216fba26021010ace259364862474f28883af2d24d9",
+    "incomingHunkSHA256": "1795ddc7dbc50a6a95174ff6fda8c6a3017917532f9920b4f82c98134d44e52a"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 443,
+    "match": "<AudioWaveIcon size={18}",
+    "decision": "Retain explicit18px title icon sizing; no API/state difference.",
+    "existingHunkSHA256": "ff70b217551bf7dfecd9a652ed3f808d754931d26a78638ee360f0c3bd216e3a",
+    "incomingHunkSHA256": "253e00fc5680e6c5f8c6a75f661faf6b116dad90eebb4a9963c11b4803a15a42"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 477,
+    "match": "<ChevronDownIcon size={16}",
+    "decision": "Retain explicit16px chevron sizing; no API/state difference.",
+    "existingHunkSHA256": "7d63537d7cf7f308a47cecbdcdfe5bada13f1423ef134c5201851bb8c86e4dbf",
+    "incomingHunkSHA256": "51a0cd9f43b45457c3e2e7077b6336cf52326bf4fb7ed05b8b856b2fcc122b52"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 491,
+    "match": "serverRotationUnavailable",
+    "decision": "Preserve new supported-locales/server-rotation explanation plus existing simulation warning.",
+    "existingHunkSHA256": "aab94d9973bcc2cde917c3182ba593bb782b4b8edf1838c0a15de2e88d1f221b",
+    "incomingHunkSHA256": "5a525a61adb12f2eb9cc46e0e1a7649dc4cfad7bfe8b593b3c969aa7dd37972b"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 513,
+    "match": "<CheckCircleIcon size={18}",
+    "decision": "Retain explicit18px success icon sizing; preserve surrounding main status content.",
+    "existingHunkSHA256": "8b0ce4a8b6ea875301207b7cfb7dace8092034a2dcca5a6b5312a6d439298ff0",
+    "incomingHunkSHA256": "9e35b241c476aa38e412384596d2ca3c7b514a652ff308ec39c7454aba01a835"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 528,
+    "match": "Device Voice Registry & Rotation",
+    "decision": "Insert approved device registry/rotation controls before existing security notice; retain security copy.",
+    "existingHunkSHA256": "896fd72c2a1cff6c19772fba5d12d3d8bb0072003c1e926a437170f0efbe805b",
+    "incomingHunkSHA256": "a8a9af20fe6bde4e1c900a376e86d4c5c977f8b60d57f05ad9c4d4af15351971"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 617,
+    "match": "Section 5: Action Footer",
+    "decision": "Comment numbering reflects added device section; footer state/actions unchanged.",
+    "existingHunkSHA256": "25ce2f4f2232ffc4d6516721ccbd24c663a292a13d9e4ab85ae8762e8b38ec9d",
+    "incomingHunkSHA256": "8570244e0dc03948fec90658938fe882318d9aa2384d4fc2200db988e8961220"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 632,
+    "match": "<CheckCircleIcon size={14}",
+    "decision": "Retain explicit14px saved indicator; no persistence behavior change.",
+    "existingHunkSHA256": "927c059912f3b1565d6655cc282a0f76a4c50cc35be821a0f4fd928dfdb168ac",
+    "incomingHunkSHA256": "1a83ee32726451c2facc6c09e1672990b001b6be8cda97495e6f6abc88369bf9"
+  },
+  {
+    "file": "apps/web/src/features/audio/admin-audio-settings-panel.tsx",
+    "line": 642,
+    "match": "<AlertTriangleIcon size={16}",
+    "decision": "Retain explicit16px warning/error icon sizing; existing call uses same icon default.",
+    "existingHunkSHA256": "c338e7fba918e1b556dc8312bdea2b2eab1bc3cd5a9abe3e802ea6ca59778c1e",
+    "incomingHunkSHA256": "582fb645023ba8066097021f512dbe4b1fed07b8b40a774e0620e94329c12116"
+  },
+  {
+    "file": "mandate/items/MND-20261015-001-feature-open-a-curated-local-ielts-beta-pathway.md",
+    "decision": "Direct human approval: duplicate imported mandate preserved byte-exact in historical namespace; main Intermediate ID/approval remains active; no ID or approval rewriting.",
+    "historicalPath": "docs/integration/historical/mandate/audio-dashboard-v2/MND-20261015-001-feature-open-a-curated-local-ielts-beta-pathway.md",
+    "sha256": "bf62140aa3a7362deabe9dae11c8c7266a023d72db94c37f723fda1c6a069011"
+  }
+]

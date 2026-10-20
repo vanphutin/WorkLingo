@@ -1,7 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsObject, IsString, MaxLength, Min } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import type { VocabularyPublicationSelection } from '@worklingo/contracts';
+import { IsInt, IsNotEmpty, IsObject, IsString, IsUUID, MaxLength, Min, ValidateIf } from 'class-validator';
 
 export class CreateContentImportDto {
+  @ApiPropertyOptional({ format: 'uuid' })
+  @ValidateIf((_object, value: unknown) => value !== undefined) @IsUUID() topicGroupId?: string;
+
   @ApiProperty({ description: 'Raw lesson format source text' })
   @IsString()
   @IsNotEmpty()
@@ -30,6 +34,9 @@ export class ValidateContentImportDto {
 }
 
 export class PublishContentImportDto {
+  @ApiPropertyOptional({ description: 'Explicit vocabulary decisions from the current publication review' })
+  @ValidateIf((_object, value: unknown) => value !== undefined) @IsObject()
+  vocabularyReview?: VocabularyPublicationSelection;
   @ApiProperty({ description: 'Expected draft revision' })
   @IsInt()
   @Min(1)

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "title": "Food & Nutrition",
+  "description": "Build contextual IELTS vocabulary through a community kitchen comparing affordable menu and purchasing options. Compare evidence, explain priorities, and transfer the language into your own speaking and writing.",
+  "packs": [
+    {
+      "slug": "ielts-food-nutrition-foundation",
+      "difficulty": "foundation",
+      "curriculumRevisionId": "53ce902e-12c2-468e-a556-0013c86e958f",
+      "focusChunkSlugs": [
+        "ielts-food-nutrition-food-security",
+        "ielts-food-nutrition-nutritional-value",
+        "ielts-food-nutrition-local-produce",
+        "ielts-food-nutrition-seasonal-ingredients",
+        "ielts-food-nutrition-food-waste",
+        "ielts-food-nutrition-dietary-requirements",
+        "ielts-food-nutrition-processed-food",
+        "ielts-food-nutrition-sustainable-agriculture",
+        "ielts-food-nutrition-portion-sizes",
+        "ielts-food-nutrition-food-supply-chain",
+        "ielts-food-nutrition-consumer-preferences",
+        "ielts-food-nutrition-meal-planning"
+      ],
+      "contexts": [
+        {
+          "slug": "ielts-food-nutrition-proposal",
+          "title": "Planning proposal: Food & Nutrition"
+        },
+        {
+          "slug": "ielts-food-nutrition-discussion",
+          "title": "Residents discuss alternatives: Food & Nutrition"
+        }
+      ]
+    }
+  ]
+}

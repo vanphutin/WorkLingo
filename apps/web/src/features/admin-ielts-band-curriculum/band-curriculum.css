@@ -1,0 +1,21 @@
+.band-editor { display: grid; gap: 1rem; min-width: 0; margin-top: 1rem; border: 0; padding: 0; }
+.band-editor fieldset { display: grid; gap: .75rem; min-width: 0; padding: 1rem; border: 1px solid var(--border); border-radius: 6px; }
+.band-editor legend { font-weight: 700; }
+.band-editor label { display: grid; gap: .35rem; }
+.band-editor input, .band-editor textarea, .band-editor select { width: 100%; min-height: 44px; box-sizing: border-box; padding: .65rem; border: 1px solid var(--control-border); border-radius: 5px; background: var(--surface); color: var(--foreground); font: inherit; }
+.band-editor input[readonly] { background: var(--surface-soft); }
+.band-editor__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: .75rem; }
+.band-editor__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: .75rem; }
+.band-editor button, .band-config .bridge-actions button, .band-config .bridge-stage-nav button { min-height: 44px; padding: .65rem; border: 1px solid var(--control-border); border-radius: 5px; background: var(--surface); color: var(--foreground); font: inherit; cursor: pointer; }
+.band-config .bridge-actions { flex-wrap: wrap; gap: .75rem; }
+.band-config .bridge-stage-nav { grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); }
+.band-config button[aria-current] { border-color: var(--primary); background: var(--primary-soft); }
+.band-config button:disabled { opacity: .5; cursor: not-allowed; }
+.band-editor summary { min-height: 44px; cursor: pointer; }
+.band-config .authoring-import { margin: 1rem 0; padding: 1rem; border: 1px solid var(--border); border-radius: 6px; }
+.band-config .authoring-import summary { min-height: 44px; cursor: pointer; font-weight: 700; }
+.band-config .authoring-import label { display: block; margin: .5rem 0; }
+.band-config .authoring-import textarea { width: 100%; min-height: 240px; box-sizing: border-box; padding: .75rem; border: 1px solid var(--control-border); border-radius: 5px; background: var(--surface); color: var(--foreground); font: inherit; resize: vertical; }
+.band-config .authoring-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .75rem; }
+.band-config .authoring-actions button { min-height: 44px; padding: .65rem; border: 1px solid var(--control-border); border-radius: 5px; background: var(--surface); color: var(--foreground); font: inherit; cursor: pointer; }
+@media (max-width: 620px) { .band-editor__row { grid-template-columns: 1fr; } }

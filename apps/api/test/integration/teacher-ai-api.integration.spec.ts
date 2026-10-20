@@ -85,6 +85,10 @@ describe('learner Teacher AI API', () => {
     await other.get(`/api/v1/attempts/${attempt.id}/evaluation`).expect(404);
     const evaluation = await owner.get(`/api/v1/attempts/${attempt.id}/evaluation`).expect(200);
     expect(evaluation.body).toEqual({
+      processingSteps: [
+        { key: 'submission', status: 'completed', providerName: null, model: null },
+        { key: 'evaluation', status: 'failed', providerName: null, model: null },
+      ],
       attemptId: attempt.id,
       completedAt: null,
       feedback: null,

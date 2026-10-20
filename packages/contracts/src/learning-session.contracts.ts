@@ -27,7 +27,7 @@ export const canonicalBlockTypesByDuration: Record<SessionDuration, readonly Ses
 export const sessionBlockSchema = z.object({
   type: sessionBlockTypeSchema,
   order: z.number().int().min(1).max(10),
-  targetMinutes: z.literal(15),
+  targetMinutes: z.number().int().positive().max(150),
   activityIds: z.array(z.uuid()).min(1).readonly(),
   skills: z.array(learningSkillSchema).min(1).readonly(),
 }).readonly();
@@ -35,6 +35,9 @@ export const sessionBlockSchema = z.object({
 // A plan is a provider-free immutable reference list, not a learner activity payload.
 // Answers and rubrics remain in the backend's published curriculum snapshot.
 export const sessionPlanSchema = z.object({
+  kind: z.literal('topic').optional(),
+  topicSelection: z.enum(['chosen', 'random']).optional(),
+  topicDurationFilter: sessionDurationSchema.optional(),
   durationMinutes: sessionDurationSchema,
   missionId: z.uuid(),
   lessonVersionId: z.uuid(),
@@ -44,7 +47,15 @@ export const sessionPlanSchema = z.object({
     reviewItemId: z.uuid(), activityId: z.uuid(), transferred: z.boolean(),
   }).readonly()).readonly().optional(),
 }).superRefine((plan, context) => {
-  const expectedBlockTypes = canonicalBlockTypesByDuration[plan.durationMinutes];
+  if (plan.topicDurationFilter !== undefined && (plan.kind !== 'topic' || plan.topicDurationFilter !== plan.durationMinutes)) {
+    context.addIssue({ code: 'custom', path: ['topicDurationFilter'], message: 'Topic duration filter must match the approved session duration.' });
+  }
+  const expectedBlockTypes = plan.kind === 'topic'
+    ? ['activate', 'readDecode', 'listenReason', 'respond']
+    : canonicalBlockTypesByDuration[plan.durationMinutes];
+  if (plan.kind !== 'topic' && (plan.topicSelection || plan.blocks.some(block => block.targetMinutes !== 15))) {
+    context.addIssue({ code: 'custom', path: ['blocks'], message: 'Legacy sessions require fifteen-minute blocks.' });
+  }
   if (!expectedBlockTypes || plan.blocks.length !== expectedBlockTypes.length) {
     context.addIssue({
       code: 'custom',

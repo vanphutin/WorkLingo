@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "QUALIFIED",
+  "evidenceRevision": "academic-02-original-v1",
+  "contentReviewer": {
+    "name": "Mendel independent bounded review, corrected findings verified by Codex regressions",
+    "evidenceRevision": "academic-02-original-v1"
+  },
+  "audioAudition": {
+    "name": "Project owner — direct confirmation in this conversation",
+    "kind": "human",
+    "reviewedAt": "2026-10-15T15:23:42Z",
+    "sourceFingerprint": "e3e343b124bc3e0fd54a40b4de390d210fc86e0435ccbd98fc2f5cbd52eda452",
+    "confirmation": "Đã nghe kiểm tra, audio ổn"
+  },
+  "limitations": [
+    "Original fictional content, not an official IELTS paper.",
+    "Offline Microsoft US voices; no external band calibration.",
+    "Automated checks do not substitute for content review or actual audio audition."
+  ]
+}

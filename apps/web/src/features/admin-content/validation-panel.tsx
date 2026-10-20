@@ -9,6 +9,11 @@ import React from 'react';
 import type { ContentIssueDto } from '@worklingo/contracts';
 
 const issueKeys: Readonly<Record<string, keyof typeof adminContentMessages.en>> = {
+  "DIALOGUE_INVALID_GENDER": "issueDialogueGender",
+  "DIALOGUE_CONFLICTING_GENDER": "issueDialogueGender",
+  "DIALOGUE_MISSING_GENDER": "issueDialogueGender",
+  "DIALOGUE_EMPTY_TURN": "issueDialogueTurn",
+  "DIALOGUE_INVALID_LABEL": "issueDialogueTurn",
   "VAL_MISSING_CONTENT_REF": "issueMissingContent",
   "VAL_MISSING_LANGUAGE_BLOCK_REF": "issueMissingLanguageBlock",
   "VAL_MISSING_AUDIO_REF": "issueMissingAudio",

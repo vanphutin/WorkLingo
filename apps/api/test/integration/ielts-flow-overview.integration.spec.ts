@@ -1,0 +1,38 @@
+import { randomUUID } from 'node:crypto';
+import { ConfigService } from '@nestjs/config';
+import { afterAll, beforeAll, expect, it } from 'vitest';
+import { IeltsTopicAdminService } from '../../src/ielts-study/application/ielts-topic-admin.service.js';
+import { createLearningSessionTestContext, registerPendingLearner, type LearningSessionTestContext } from './learning-session-test-harness.js';
+import { seedIeltsTopicCurriculum } from './ielts-topic-test-fixture.js';
+let context:LearningSessionTestContext;
+beforeAll(async()=>{context=await createLearningSessionTestContext('ielts_overview');context.app.get(ConfigService).set('ieltsFlow','v3');await context.database.learningProgram.update({where:{slug:'ielts'},data:{availabilityStatus:'BETA'}});},60000);
+afterAll(async()=>context?.close());
+it('opens a partial topic-only program and paginates owned saved history without prerequisite writes',async()=>{
+  const db=context.database,fixture=await seedIeltsTopicCurriculum(context);
+  const admin=await db.user.create({data:{email:`${randomUUID()}@test.local`,displayName:'Author',role:'CONTENT_ADMIN',passwordHash:'fixture'}});
+  const publisher=context.app.get(IeltsTopicAdminService);
+  const draft=await publisher.saveDraft(admin.id,null,{expectedRevision:null,idempotencyKey:randomUUID(),content:{schemaVersion:1,title:'Education',description:'Two-context disposable study fixture.',packs:[fixture.pack]}});
+  const version=await publisher.publish(admin.id,draft.id,{expectedRevision:draft.draftRevision,idempotencyKey:randomUUID()});
+  const learner=await registerPendingLearner(context.app,{displayName:'New IELTS learner',email:`${randomUUID()}@test.local`});
+  await learner.agent.post('/api/v1/me/onboarding/self-placement').send({clientConfirmationId:randomUUID(),selectedLevelCode:'FOUNDATION_1'}).expect(200);
+  const before=await db.learnerProfile.findUniqueOrThrow({where:{userId:learner.user.id}});
+  expect((await learner.agent.get('/api/v1/me/ielts-overview').expect(200)).body).toMatchObject({flowVersion:'v3',introduction:{available:false},study:{available:true},mock:{available:false}});
+  const catalog=await learner.agent.get('/api/v1/learning-programs').expect(200);
+  expect(catalog.body.programs.find((p:{slug:string})=>p.slug==='ielts')).toMatchObject({isSelectable:true,destination:'/ielts',publishedPathCount:1,publishedLevelCount:1});
+  const ids:string[]=[];
+  for(const durationMinutes of [90,120,150]) {const response=await learner.agent.post('/api/v1/me/ielts-study/sessions').send({clientSessionId:randomUUID(),topicVersionId:version.topicVersionId,packSlug:fixture.pack.slug,durationMinutes}).expect(201);ids.push(response.body.id);}
+  const one=await learner.agent.get('/api/v1/me/ielts-history?limit=1').expect(200);
+  expect(one.body.items).toHaveLength(1);expect(one.body.nextCursor).toBeTruthy();
+  const next=await learner.agent.get('/api/v1/me/ielts-history').query({limit:1,cursor:one.body.nextCursor}).expect(200);
+  expect(next.body.items[0].id).not.toBe(one.body.items[0].id);
+  const overview=(await learner.agent.get('/api/v1/me/ielts-overview').expect(200)).body;
+  expect(overview.study.resumeHref).toBe(`/sessions/${ids.at(-1)}`);
+  const foreign=await registerPendingLearner(context.app,{displayName:'Other learner',email:`${randomUUID()}@test.local`});
+  expect((await foreign.agent.get('/api/v1/me/ielts-history').expect(200)).body.items).toEqual([]);
+  await foreign.agent.get(`/api/v1/learning-sessions/${ids[0]}`).expect(404);
+  await learner.agent.get('/api/v1/me/ielts-history?limit=51').expect(400);
+  await learner.agent.get('/api/v1/me/ielts-history?cursor=invalid').expect(400);
+  expect(await db.orientationProgress.count({where:{learnerId:learner.user.id}})).toBe(0);
+  expect(await db.ieltsBridgeProgress.count({where:{learnerId:learner.user.id}})).toBe(0);
+  expect((await db.learnerProfile.findUniqueOrThrow({where:{userId:learner.user.id}})).activeProgramId).toBe(before.activeProgramId);
+});

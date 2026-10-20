@@ -47,7 +47,7 @@ export function PronunciationFocusPanel(props: {
         <LessonAudioPlayer
           audioUrl={apiClient.getActivityAudioUrl(props.sessionId, props.activity.id)}
           preferBrowserSpeech
-          text={sampleAnswer}
+          text={props.activity.audioText ?? sampleAnswer}
         />
       </div>
     </section>
