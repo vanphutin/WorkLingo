@@ -84,6 +84,47 @@ describe('leased PostgreSQL job worker', () => {
     await expect(firstDatabase.jobAttempt.count({ where: { jobId: job.id } })).resolves.toBe(1);
   });
 
+  it('does not claim before availableAt and claims at its inclusive boundary', async () => {
+    const job = await enqueue(`eligibility-${randomUUID()}`);
+    const early = new Date(availableAt.getTime() - 1);
+    await expect(first.claimNext('worker-early', early, 30_000)).resolves.toBeNull();
+    await expect(firstDatabase.job.findUnique({ where: { id: job.id } })).resolves.toMatchObject({
+      status: 'PENDING', attemptCount: 0, leaseOwner: null,
+    });
+    await expect(firstDatabase.jobAttempt.count({ where: { jobId: job.id } })).resolves.toBe(0);
+    const observation = await inspectJobClaim(firstDatabase, early);
+    console.info(JSON.stringify({ event: 'controlled-future-eligibility', capturedNow: early.toISOString(), observation }));
+    await expect(first.claimNext('worker-due', availableAt, 30_000)).resolves.toMatchObject({ id: job.id, attemptNumber: 1 });
+  });
+
+  it('cannot see an uncommitted enqueue and claims it after the commit barrier', async () => {
+    let release!: () => void;
+    let ready!: (id: string) => void;
+    let failed!: (cause: unknown) => void;
+    const held = new Promise<void>(resolve => { release = resolve; });
+    const enqueued = new Promise<string>((resolve, reject) => { ready = resolve; failed = reject; });
+    const transaction = secondDatabase.$transaction(async tx => {
+      const job = await second.enqueue({ createdById: actorId, idempotencyKey: randomUUID(), payload: {}, type: 'TEST_JOB' }, tx);
+      await tx.job.update({ where: { id: job.id }, data: { availableAt } });
+      ready(job.id);
+      await held;
+      return job.id;
+    }, { timeout: 10_000 });
+    // Attach a rejection handler immediately; still propagate through the awaited transaction.
+    void transaction.catch(failed);
+    try {
+      const id = await enqueued;
+      await expect(first.claimNext('worker-before-commit', availableAt, 30_000)).resolves.toBeNull();
+      await expect(firstDatabase.job.count({ where: { id } })).resolves.toBe(0);
+      console.info(JSON.stringify({ event: 'controlled-uncommitted-enqueue', id, visible: false }));
+    } finally {
+      release();
+      await transaction;
+    }
+    const id = await transaction;
+    await expect(first.claimNext('worker-after-commit', availableAt, 30_000)).resolves.toMatchObject({ id });
+  });
+
   it('observes a granted competing lock when SKIP LOCKED returns no eligible row', async () => {
     const job = await enqueue(`held-lock-${randomUUID()}`);
     const now = new Date('2026-10-08T01:00:00.000Z');
