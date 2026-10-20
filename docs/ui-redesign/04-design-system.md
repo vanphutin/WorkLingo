@@ -1,6 +1,6 @@
-# WorkLingo Liquid Glass — Design Foundation (Phase 1)
+# WorkLingo Liquid Glass — Design Foundation and Core Presentation
 
-Implemented on `codex/worklingo-liquid-glass-redesign` in `D:/Projects/WorkLingo-Liquid-Glass`. Scope: foundations and appearance preference only; no route is certified as fully redesigned. Existing V2 structure is extended in place.
+Implemented on `codex/worklingo-liquid-glass-redesign` in `D:/Projects/WorkLingo-Liquid-Glass`. Foundations/preferences and Phase 2 core presentation extend the existing V2 structure in place; no route is certified as fully redesigned.
 
 ## Source ownership
 
@@ -64,7 +64,7 @@ Glass uses `--glass-bg`, `--glass-bg-clear`, `--glass-bg-tinted`, border/highlig
 
 Reduced-transparency attribute, supported OS reduced-transparency, increased contrast or forced-colors media queries force opaque material with a stronger border. Accidental nested GlassSurfaces become solid. No SVG displacement, WebGL, will-change, infinite animation or per-row/card blur is added. Clear is not a general content card: its use must be checked with its actual text/control colors, not the primary label sample alone.
 
-Settings adopts the solid variant. Navigation/overlays and feature consumers are deferred to Phase 2–4; do not apply this primitive everywhere simply because it exists.
+Settings adopts the solid variant. Navigation and feature consumers remain for later approved shell/route phases; an overlay requires its own approved interaction contract. Do not apply this primitive everywhere simply because it exists.
 
 ## Appearance preferences and hydration
 
@@ -87,3 +87,25 @@ Spacing is 4px units (1/2/3/4/5/6/8/10/12/16), page max75rem/reader70ch. Radius 
 See [Phase 1 QA](phase1-qa.md) and [browser evidence](evidence/phase1/browser-results.json). Chromium measured80 semantic pairs: normal-text minimum4.875:1, applicable UI boundary/focus minimum3.290:1;48 actual screenshot-pixel glass composites had primary-label minimum8.249:1. These validate defined pairs and sampled surfaces, not every legacy descendant, screen reader or full product accessibility.
 
 Three required sizes are tested in both themes; actual settings integration uses the real Next route with a network fixture for `/me`. Fixture tests are explicitly not real backend/IELTS journeys. Cross-engine browser qualification and complete 34-route migration remain pending future authorization.
+
+## Phase 2 — adopted native presentation contracts
+
+The original owners stay canonical: `workspace.css` for shared native patterns, `globals.css` for learning/status/action presentation, `learning.css` for learning overrides, and scoped `auth.module.css` for auth. No new stylesheet import order, component library or production route was introduced.
+
+| Existing consumer | Presentation / state contract |
+| --- | --- |
+| `.primary-button`, `.primary-action-button` | Semantic fill/on-fill,44px minimum, named hover/active, wrapped labels, disabled neutral presentation; native button/anchor semantics retained |
+| `.secondary-button` | Solid secondary, bordered; no blur |
+| `.secondary-action-button` | Tinted secondary, native retry/pause/resume callbacks unchanged |
+| `.theme-control` | Existing named icon/plain control,44px; System/Light/Dark cycle unchanged |
+| `.recording-delete-button` | Destructive tint/border/text, explicit label retained; disabled+aria-busy follow owner props |
+| `.recording-stop-button`, `.retry-button` | Danger fill uses `--color-on-danger` independently of primary |
+| `.field-group`, writing/speaking inputs | Native fields/select with control border,16px text, token radius, placeholder/error/readonly/disabled states; field label/help/error association stays in existing JSX |
+| `.option-label`, `.recording-consent`, `.audio-source-option` | Native radio/checkbox, semantic accent and visible group focus; no custom selection state |
+| `.teacher-feedback` | Solid named inline section; no focus trap, Escape close, opener or modal side effects; long mobile headings reflow; errors and retained-audio callbacks unchanged |
+| `.status-badge` and existing status banners | Text+semantic color, solid backgrounds; statuses remain readable without color alone |
+| Existing admin table base | Opaque primary surface, tabular numerals; no row blur or table data/layout refactor |
+
+No production glass-button consumer exists in this baseline. GlassSurface continues to wrap actual Settings appearance controls as solid; the test-only toolbar exercises regular glass composition and reduced-transparency fallback. This does not migrate shell/navigation or invent a product overlay. Feature-specific legacy overrides require later route-owner checks; inheriting these shared rules is not route acceptance.
+
+Feedback stays inline because the committed SessionShell renders it directly and provides no open/close contract. Phase 2 adds no new effects, event listeners, portal, state owner, storage key or prop. New busy semantics reflect existing pending props. Unit/browser tests protect asynchronous draft/focus continuity and one retry while disabled. See [Phase 2 QA](phase2-qa.md) for test evidence and limits.

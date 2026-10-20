@@ -130,15 +130,15 @@ Dependency: Phase 0 approval → task 1 foundation → task 2 core controls/over
 - [x] Verify computed palette and glass fallback in Chromium test fixtures for both themes, system-dark without JS, `@supports` failure, reduced transparency, increased contrast/forced colors; measure composite labels and focus boundaries. Run `pnpm --filter @worklingo/web exec vitest run src/components/theme-control.test.tsx src/components/transparency-control.test.tsx src/components/glass-surface.test.tsx` → all pass; then web lint/typecheck. Interim lint gate means no new diagnostics relative to the recorded baseline; an unchanged `pIndent` failure remains a reported blocker to a green full gate. It does not authorize editing unrelated dirty code. If the approved curriculum slice already touches that scope, resolve the unused variable there as a scoped cleanup; otherwise retain the blocker or obtain owner resolution.
 - [x] Record foundation evidence and exact token map in `04-design-system.md`; establish baseline format/lint issue ownership before proceeding. Do not claim route migration complete yet.
 
-### Task 2 / Phase 2 — shared presentation and feedback overlay
+### Task 2 / Phase 2 — shared presentation and feedback accessibility
 
 **Modify:** `src/styles/workspace.css`, `src/styles/learning.css`, `src/app/globals.css`, `src/features/auth/auth.module.css`, `src/features/learning-session/evaluation-feedback.tsx` and its existing test.
 **Create:** `src/styles/primitives.css` only for adopted shared styles.
 **Interfaces:** consumes semantic tokens and GlassSurface; produces consistent existing native button/input/card/status patterns. EvaluationFeedbackProps and all business callbacks remain compatible.
 
-- [ ] Add failing feedback tests: open topup moves focus inside; Tab/Shift+Tab stay inside; Escape closes; return focus to opener; inline variant never traps; async evaluated transition preserves mounted input and one retry call. Keep existing feedback/retry/deletion assertions.
-- [ ] Implement focus-only behavior and common presentation; verify disabled/loading/error/success/empty/selected states. Keep reader/editor/table rows solid; apply glass only to transient chrome actually used.
-- [ ] Run `pnpm --filter @worklingo/web exec vitest run src/features/learning-session/evaluation-feedback.test.tsx src/features/learning-session/session-shell.test.tsx src/features/auth` → pass; keyboard browser check + screenshots and composite contrast. Review changes against business boundary before marking complete.
+- [x] Inspect actual interaction contract before changing semantics. The Phase2 execution directive supersedes the older modal assumption: committed EvaluationFeedback is inline, with no opener/close/variant or aria-modal. Preserve inline Tab/Shift+Tab/Escape and async draft/focus continuity; no invented modal. Add RED→GREEN busy-action tests and retain retry/deletion assertions. Any future overlay requires its own approved contract.
+- [x] Implement existing native presentation patterns and scoped field/action states; keep feedback/forms/tables solid. No unused primitives or glass-button API. Disabled/loading/error/success/empty/selected states checked within the adopted controls; full route-specific states remain later work.
+- [x] Run `pnpm --filter @worklingo/web exec vitest run src/features/learning-session/evaluation-feedback.test.tsx src/features/learning-session/session-shell.test.tsx src/features/auth` →35 pass; full web84files/383tests,12 core Chromium checks,16 foundation regressions,2 production smoke checks. Scoped hover regression RED→GREEN, controlled async completion and outline geometry after explicit scrolling. See `phase2-qa.md` for evidence, review and limits. Phase3 remains unapproved.
 
 ### Task 3 / Phase 3 — application shells
 

@@ -4,7 +4,21 @@ Updated: 2026-10-20 (Asia/Saigon).
 
 ## Current status
 
-**Phase 1 — Design Foundation: implemented and technically verified; awaiting human acceptance.** No Phase 2–6 execution or merge is approved. **0/34 routes fully redesigned.** Appearance integration in Settings and inherited token colors do not count as full route migration.
+**Phase 1: ACCEPTED WITH LIMITATIONS (technical acceptance, 2026-10-20). Phase 2: implemented, reviewed and verified; ready for human acceptance.** The attached user directive authorizes Phase 2 after the technical gate; Phase 3–6 and merge remain unapproved. **0/34 routes fully redesigned.** Appearance integration and inherited shared styles do not count as route migration.
+
+Phase 1 acceptance reviewed both commits `0ef6204a8fbf76e7b00d30ec93113c3552320935` and `8ad9ba8759c604521d87a6c9f9103b2a917d94bc`, actual source contracts, [QA](phase1-qa.md), machine measurements and fresh original-checkout preservation. Its recorded checks remain evidence from Phase 1, not newly rerun tests. Limitations: Chromium only, no real API/IELTS E2E, screen-reader or performance certification; legacy route migration remains pending. No critical foundation blocker found. See [Phase 2 QA](phase2-qa.md) for the new verification and scope rulings.
+
+## Phase 2 handoff — 2026-10-20
+
+- `41825150e3ff17bf36508fa85a6e57fc7482ea3f` — `feat(ui): standardize core controls and inline feedback` (6 existing source/test owners).
+- `12de4a484c3cdd4057145bb8d4842934fb54cc82` — `test(ui): cover core controls and feedback accessibility` (5 isolated browser harness files).
+- Documentation/evidence commit follows with message `docs(ui): record phase two acceptance and QA`; its self-hash is resolved with `git log -1 -- docs/ui-redesign/phase2-qa.md`.
+
+Final evidence: **84 files/383 web tests**,35 targeted tests,**16 foundation regression checks**,**12 core Chromium checks**,**2 optimized Login smoke checks**; lint, typecheck, i18n, production build and whitespace pass.72 rendered text samples minimum4.875:1;12 input-boundary samples minimum3.672:1;6 actual glass-composite samples minimum15.626:1. [QA summary and changed files](evidence/phase2/final-qa.json), [full report](phase2-qa.md).
+
+One independent reviewer found three follow-ups; regraded required because they affected adopted hover behavior or acceptance evidence. Scoped hover regression reproduced RED→GREEN; async completion now releases after processing+draft focus; zoom checks include outline/label/clipping/occlusion **after explicit scrolling**. Post-fix full suite383/383 and12/12 browser checks pass; no unresolved Critical/Important. No second reviewer. No native zoom/automatic-scroll or screen-reader certification is claimed.
+
+Actual feedback remains inline, with unchanged props/callback/state ownership. No modal contract exists in this branch; older modal plan steps were superseded by the user's contract-first directive. No unused glass-button abstraction or parallel frontend was added. Main/status/1,295 original files and Phase1 commits/evidence are preserved.0/34 route rows migrated; no Phase3 shell work, merge, push or deployment. The Phase1 details below are retained as historical phase records.
 
 Branch: `codex/worklingo-liquid-glass-redesign`.
 Worktree: `D:/Projects/WorkLingo-Liquid-Glass`.
@@ -80,9 +94,9 @@ Rollback, if separately authorized: revert the known Phase 1 code commit on this
 - HEAD foundations are used without dirty source transfer; later work must reconcile the original user's UI deliberately.
 - Broad mandate evidence is historical on this branch; only direct Phase 1 scope is approved.
 - Later feature/IELTS, feedback, fixed-shell/Admin, cross-engine/performance certification remains unverified and outside Phase 1; it cannot be inferred from these foundation results.
-- Keep branch/worktree and scoped ledger for continuation. **Await Phase 1 acceptance and explicit Phase 2 authorization.** Merge requires its own clear approval, green gates, no conflicts and preservation of dirty main; it does not authorize push/deploy or later-phase merges.
+- Keep branch/worktree and scoped ledger for continuation. **Await Phase 2 human acceptance and explicit Phase 3 authorization.** Phase1 technical acceptance and Phase2 execution are recorded above. Merge requires its own clear approval, green gates, no conflicts and preservation of dirty main; it does not authorize push/deploy or later-phase merges.
 
-## SKILL AUDIT
+## SKILL AUDIT — Phase 1 record
 
 Used: using-superpowers → routing; ui-ux-pro-max → UI/contrast guidance; codex-quota-optimizer → scoped discovery and targeted checks; using-git-worktrees / git-workflow-and-versioning → isolation and atomic own-file commits; executing-plans / test-driven-development → inline Phase 1 and RED/GREEN; vercel-react-best-practices → storage/hydration boundaries; systematic-debugging / receiving-code-review → evidence-based fixes; requesting-code-review / code-review-and-quality → one independent review and mutation check; verification-before-completion → fresh final evidence; finishing-a-development-branch → keep branch per explicit user policy. Mandate-steward governs preserved historical proposal boundaries; no broader implementation approval was invented.
 
