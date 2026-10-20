@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "67df2afa226f0d53c7b4f6c1bf206ca35beaac02",
+  "timestamp": "2026-10-20T18:39:36.969Z",
+  "command": "node apps/web/e2e/fixtures/run-phase6-live.cjs",
+  "fixtureOnly": false,
+  "providers": "existing fake evaluation/STT/TTS; not live commercial providers",
+  "projects": [],
+  "container": "worklingo-liquid-glass-phase6-b4ed06aed3",
+  "result": "PASS",
+  "cleanup": true,
+  "image": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 13838,
+    "database": "worklingo_phase6",
+    "schema": "worklingo_e2e_b4ed06aed3914329a8f74f522b78869b",
+    "disposable": true,
+    "storage": "container tmpfs only"
+  },
+  "operation": "full backend suite on owned disposable PostgreSQL",
+  "invocation": {
+    "evidenceRoot": "docs/integration/evidence/gate-recovery",
+    "run": "queue-immediate-before",
+    "apiSuite": true,
+    "v3": false,
+    "arguments": [
+      "test/integration/placement-isolation.integration.spec.ts",
+      "-t",
+      "diagnoses immediate"
+    ]
+  },
+  "testArguments": [
+    "test/integration/placement-isolation.integration.spec.ts",
+    "-t",
+    "diagnoses immediate"
+  ],
+  "optimizedWeb": false,
+  "playwrightCommand": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts -t diagnoses immediate",
+  "harnessSHA256": "a32bd796dde160a32f4e1a0e01fd11b1166f6dfb481b1ff573a74867157d0971",
+  "e2eDiffSHA256": "8c06c6212df398965bfd5544485e399ed3df01a13ed59a80790e9803e68e9069",
+  "exitCode": 0,
+  "finished": "2026-10-20T18:40:28.224Z"
+}

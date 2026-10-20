@@ -1,0 +1,39 @@
+[WebServer] (node:23760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:23504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:22904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ok 1 [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:56:5 › published objective evidence completes one pinned revision and unlocks its dependent unit (17.4s)
+  ok 2 [curriculum-foundation-desktop] › e2e\curriculum-foundation.spec.ts:127:5 › real curriculum API retains an unsaved Foundation objective through collapse and filtering (4.4s)
+  ok 3 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (7.4s)
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+[WebServer] ⨯ Error: The destination stream closed early.
+[WebServer]     at ignore-listed frames {
+[WebServer]   digest: '1644015502'
+[WebServer] }
+  ok 4 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:35:5 › real mock API saves the writing snapshot and locks editing until delayed exit completes (5.4s)
+
+  4 passed (2.2m)

@@ -1,0 +1,19 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+stdout | test/integration/jobs-worker.integration.spec.ts > leased PostgreSQL job worker > observes a granted competing lock when SKIP LOCKED returns no eligible row
+{"event":"controlled-skip-locked","jobId":"3fdae54a-08be-47c6-8710-e79850bb6167","capturedNow":"2026-10-08T01:00:00.000Z","holderPid":91,"snapshot":{"jobs":[{"id":"3fdae54a-08be-47c6-8710-e79850bb6167","type":"TEST_JOB","status":"PENDING","attemptCount":0,"maxAttempts":3,"availableAt":"2026-10-08 00:00:00.000000","databaseNow":"2026-10-20 19:00:03.815490","dueAtCapturedNow":true,"leaseOwner":null,"leaseExpiresAt":null,"waitingLocks":0}],"locks":[{"pid":91,"locktype":"relation","mode":"RowShareLock","granted":true,"virtualtransaction":"4/3","transactionId":null,"relation":"\"Job\"","state":"idle in transaction","waitEventType":"Client","waitEvent":"ClientRead","transactionStartedAt":"2026-10-20 19:00:03.771924+00","backendTransactionId":"908","observedAt":"2026-10-20 19:00:03.835793+00"},{"pid":91,"locktype":"transactionid","mode":"ExclusiveLock","granted":true,"virtualtransaction":"4/3","transactionId":"908","relation":null,"state":"idle in transaction","waitEventType":"Client","waitEvent":"ClientRead","transactionStartedAt":"2026-10-20 19:00:03.771924+00","backendTransactionId":"908","observedAt":"2026-10-20 19:00:03.835817+00"},{"pid":91,"locktype":"virtualxid","mode":"ExclusiveLock","granted":true,"virtualtransaction":"4/3","transactionId":null,"relation":null,"state":"idle in transaction","waitEventType":"Client","waitEvent":"ClientRead","transactionStartedAt":"2026-10-20 19:00:03.771924+00","backendTransactionId":"908","observedAt":"2026-10-20 19:00:03.835819+00"}]}}
+
+ ✓ test/integration/jobs-worker.integration.spec.ts (10 tests) 11578ms
+ ✓ test/integration/placement-isolation.integration.spec.ts (2 tests) 17090ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 0)  2896ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  1628ms
+[Nest] 5240  - 02:01:00 21/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code PROVIDER_TIMEOUT.
+[Nest] 5240  - 02:01:00 21/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code STORAGE_CLEANUP_FAILED.
+ ✓ src/jobs/application/job-runner.service.spec.ts (15 tests) 35ms
+ ✓ src/jobs/application/jobs.service.spec.ts (3 tests) 12ms
+
+ Test Files  4 passed (4)
+      Tests  30 passed (30)
+   Start at  01:59:51
+   Duration  70.01s (transform 18.32s, setup 0ms, collect 38.07s, tests 28.71s, environment 4ms, prepare 1.12s)

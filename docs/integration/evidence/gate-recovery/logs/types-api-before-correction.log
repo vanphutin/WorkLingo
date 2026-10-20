@@ -1,0 +1,11 @@
+
+> @worklingo/api@0.0.0 typecheck D:\Projects\WorkLingo-Integration\apps\api
+> tsc --noEmit
+
+test/integration/placement-isolation.integration.spec.ts(44,52): error TS2345: Argument of type '(workerId: string, now: Date, leaseMs: number) => Promise<ClaimedJob | null | undefined>' is not assignable to parameter of type 'NormalizedProcedure<(workerId: string, now: Date, leaseMs: number) => Promise<ClaimedJob | null>>'.
+  Type 'Promise<ClaimedJob | null | undefined>' is not assignable to type 'Promise<ClaimedJob | null>'.
+    Type 'ClaimedJob | null | undefined' is not assignable to type 'ClaimedJob | null'.
+      Type 'undefined' is not assignable to type 'ClaimedJob | null'.
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/api@0.0.0 typecheck: `tsc --noEmit`
+Exit status 2

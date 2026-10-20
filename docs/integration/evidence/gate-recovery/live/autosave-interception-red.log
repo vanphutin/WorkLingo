@@ -1,0 +1,76 @@
+[WebServer] (node:9228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:24044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] Loaded Prisma config from prisma.config.ts.
+[WebServer]
+[WebServer] Prisma config detected, skipping environment variable loading.
+[WebServer] (node:18628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ok 1 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:27:5 › learner starts and resumes the pinned full mock version (6.5s)
+  x  2 [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:35:5 › real mock API saves the writing snapshot and locks editing until delayed exit completes (8.6s)
+
+
+  1) [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:35:5 › real mock API saves the writing snapshot and locks editing until delayed exit completes
+
+    TimeoutError: locator.click: Timeout 1500ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Save and exit', exact: true })
+        - locator resolved to <button disabled type="button">Save and exit</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      72 |     await writing.fill(text);
+      73 |     if (process.env.WORKLINGO_RECOVERY_AUTOSAVE_PROBE === 'true') await pending;
+    > 74 |     await page.getByRole('button', { name: 'Save and exit', exact: true }).click({ timeout: 1500 });
+         |                                                                            ^
+      75 |     try {
+      76 |       await pending;
+      77 |       await expect(writing).toBeDisabled();
+        at D:\Projects\WorkLingo-Integration\apps\web\e2e\ielts-full-mock.spec.ts:74:76
+
+    Error Context: ..\..\docs\integration\evidence\gate-recovery\live\autosave-interception-red\test-results\ielts-full-mock-real-mock--ef2f0-ntil-delayed-exit-completes-ielts-full-mock-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\docs\integration\evidence\gate-recovery\live\autosave-interception-red\test-results\ielts-full-mock-real-mock--ef2f0-ntil-delayed-exit-completes-ielts-full-mock-desktop\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\docs\integration\evidence\gate-recovery\live\autosave-interception-red\test-results\ielts-full-mock-real-mock--ef2f0-ntil-delayed-exit-completes-ielts-full-mock-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [ielts-full-mock-desktop] › e2e\ielts-full-mock.spec.ts:35:5 › real mock API saves the writing snapshot and locks editing until delayed exit completes
+  1 passed (1.4m)
+undefined
+D:\Projects\WorkLingo-Integration\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase6-live.config.ts --no-deps --project=ielts-full-mock-desktop

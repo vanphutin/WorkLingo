@@ -1,0 +1,53 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ❯ test/integration/jobs-worker.integration.spec.ts (10 tests | 1 failed | 9 skipped) 9860ms
+   ↓ leased PostgreSQL job worker > allows only one concurrent runner to claim a row
+   × leased PostgreSQL job worker > observes a granted competing lock when SKIP LOCKED returns no eligible row 232ms
+     → expected [] to deeply equal ArrayContaining{…}
+   ↓ leased PostgreSQL job worker > replays an enqueue inside a transaction without aborting its other writes
+   ↓ leased PostgreSQL job worker > does not replay another actor's job when the idempotency key collides
+   ↓ leased PostgreSQL job worker > deduplicates concurrent transactional enqueues while committing both callers
+   ↓ leased PostgreSQL job worker > protects a live lease and reclaims an expired lease without accepting stale completion
+   ↓ leased PostgreSQL job worker > keeps the same job identity while waiting for retry
+   ↓ leased PostgreSQL job worker > allows an admin retry to preserve identity and grant one explicit attempt
+   ↓ leased PostgreSQL job worker > accepts only one concurrent manual retry without replacing a live worker lease
+   ↓ leased PostgreSQL job worker > keeps existing fake-audio job records readable
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration/jobs-worker.integration.spec.ts > leased PostgreSQL job worker > observes a granted competing lock when SKIP LOCKED returns no eligible row
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     "granted": true,
+-     "locktype": "relation",
+-     "mode": "RowShareLock",
+-     "pid": 93,
+-   },
+- ]
++ []
+
+ ❯ test/integration/jobs-worker.integration.spec.ts:108:30
+    106|         id: job.id, status: 'PENDING', dueAtCapturedNow: true, waiting…
+    107|       })]);
+    108|       expect(snapshot.locks).toEqual(expect.arrayContaining([expect.ob…
+       |                              ^
+    109|         pid: holderPid, locktype: 'relation', mode: 'RowShareLock', gr…
+    110|       })]));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  01:55:12
+   Duration  13.15s (transform 967ms, setup 0ms, collect 2.08s, tests 9.86s, environment 0ms, prepare 452ms)
+
+undefined
+D:\Projects\WorkLingo-Integration\apps\api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run test/integration/jobs-worker.integration.spec.ts -t observes a granted

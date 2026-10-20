@@ -1,3 +1,13 @@
+# Current qualification — Gate Recovery (2026-10-21)
+
+Readiness **RED**, retained unexplained placement blocker GR-PLACEMENT-001. Final source ef27185: **Test Files  220 passed | 1 skipped (221); Tests  1176 passed | 1 skipped (1177); Duration  911.55s (transform 19.86s, setup 0ms, collect 256.14s, tests 589.15s, environment 51ms, prepare 27.07s)**; legacy 12/12; V3runtime-equivalent8/8; web 798/798; owner 107/107; cross/native 25/25; contracts 125/content 135; fresh lint/types/i18n/build pass. Final preservation1295original/2978backup and582historical artifacts pass. Full backend uses loaded120000ms backup timeout; all safety/data assertions retained.
+
+Correction to the historical backup explanation below: observed restore status0 then missing restored sample file. Continuation/incomplete fixture causality is inferred; an absent whole backup artifact was not established. Passing full replacement does not explain the historical placement false claim. See [11-point recovery handoff](gate-recovery-report.md), [investigation](gate-recovery-investigation.md) and [independent review/remediation](gate-recovery-review.md).
+
+---
+
+## Historical integration qualification (superseded by current section)
+
 # Candidate qualification
 
 Qualification is independent of historical Phase0–6 acceptance. Selected base/main7a5e383, approved audio1a53d21, beta b4933bb, LGcc09a75. Runtime checkpoint1c91938,test checkpoint168b377; final product hashes are in evidence/candidate-source.json. Qualification closed2026-10-21 Asia/Saigon as **RED**, with the exact open backend gate below. No final release acceptance is claimed.

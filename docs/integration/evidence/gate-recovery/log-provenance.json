@@ -1,0 +1,220 @@
+{
+  "normalization": "Line endings, trailing whitespace and extra blank EOF lines only; raw originals retained outside Git",
+  "files": {
+    "backend-superseded.txt": {
+      "rawSHA256": "db4d359ada6b635ed0df3babf874566df92534d6011da2293773877c8b0ad078",
+      "archivedSHA256": "5cbe17656f9cbc57bbe2e8526f50b9cab88e4a359a2c47c4a94d242f0ff2b012",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/backend-superseded.txt"
+    },
+    "live/autosave-interception-green.log": {
+      "rawSHA256": "cf4b66322ab99737abdb614ab436aafe977e2aed956254949d55818c0bcdc278",
+      "archivedSHA256": "cf4b66322ab99737abdb614ab436aafe977e2aed956254949d55818c0bcdc278",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/autosave-interception-green.log"
+    },
+    "live/autosave-interception-red.log": {
+      "rawSHA256": "ec9b01ee3c8427393eb6d08c2152cebc9806c600bdebc5b1b3119fdf7de5093a",
+      "archivedSHA256": "ec9b01ee3c8427393eb6d08c2152cebc9806c600bdebc5b1b3119fdf7de5093a",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/autosave-interception-red.log"
+    },
+    "live/backend-final.log": {
+      "rawSHA256": "03338d51065062b16d02df6c4635e3122c2cae352f88512995cb8eebe767d240",
+      "archivedSHA256": "03338d51065062b16d02df6c4635e3122c2cae352f88512995cb8eebe767d240",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/backend-final.log"
+    },
+    "live/backend-focused-current.log": {
+      "rawSHA256": "3f2883a739f726a1cce4157a196949bb8adc1cebc30cd9f35c5307050f39ebb4",
+      "archivedSHA256": "c2de67467e1308a86fe69fdbfce5707538bc1cea5f90c3d6c0df85b5697479ae",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/backend-focused-current.log"
+    },
+    "live/backend-qualified-final-source.log": {
+      "rawSHA256": "dcba96f155bfd309e85ff4bd6c92bf9d757f0409998f496d6ac13b2063ebc114",
+      "archivedSHA256": "4e6161a5c2c0ae718a3dd8b05adc691a1466549e407c796104bc1aeb161ea9b9",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/backend-qualified-final-source.log"
+    },
+    "live/lock-diagnostics-final.log": {
+      "rawSHA256": "997017ed4324df772e5330461282e3fb19121dd150387ff75a6c4e8985fdacf5",
+      "archivedSHA256": "82c0011d1d6e5698765bbf2925e0e6f7d74065bc5da9ba288b7400852cd35b9e",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/lock-diagnostics-final.log"
+    },
+    "live/lock-diagnostics-green.log": {
+      "rawSHA256": "02d6fc2ef478e1e070cdd71d995d3939f047bb5c7daf66592d7415dc2b3cf652",
+      "archivedSHA256": "b390266076f5eaf4e2563c731d7fa037432719198b70b0ad57f63dc35160cf31",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/lock-diagnostics-green.log"
+    },
+    "live/lock-diagnostics-red-valid.log": {
+      "rawSHA256": "e5f7aee98687cd07dd78d78bb5556ee28be9e08281d18a0c2cba9fae4e24a1b7",
+      "archivedSHA256": "e5f7aee98687cd07dd78d78bb5556ee28be9e08281d18a0c2cba9fae4e24a1b7",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/lock-diagnostics-red-valid.log"
+    },
+    "live/lock-diagnostics-red.log": {
+      "rawSHA256": "fd6fe5d187b54cc7c714f1318441ef3350a114fe04eaf01f624daab0dcff54ee",
+      "archivedSHA256": "fd6fe5d187b54cc7c714f1318441ef3350a114fe04eaf01f624daab0dcff54ee",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/lock-diagnostics-red.log"
+    },
+    "live/placement-diagnostics-before.log": {
+      "rawSHA256": "4ff8d05a3f8a7a83147e8c0ca4fe965c7a7bf0fbbdb8d3d75718ee6ca97087ec",
+      "archivedSHA256": "5c5e6c7d4e60b37ed1d51098fa718d9d0acf5d17ba575111b4493690d3faf908",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/placement-diagnostics-before.log"
+    },
+    "live/placement-diagnostics-stress-before.log": {
+      "rawSHA256": "06942e48510a5a1da092a7985d0cc23a2758a616a5073843572e7f96047ab183",
+      "archivedSHA256": "870c36544672fbbbfa204eb4fe40f097596d1691fab4e4e528495d0f695f0914",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/placement-diagnostics-stress-before.log"
+    },
+    "live/placement-hotpath-before.log": {
+      "rawSHA256": "82c23b43ff153be9a52285e5b009a2de459992e2f82e832d5ae0713aea772191",
+      "archivedSHA256": "a673ead4a32e3680571c21b8c554906d2c6ef158a6d219b938b567a02d9c52b5",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/placement-hotpath-before.log"
+    },
+    "live/queue-immediate-before.log": {
+      "rawSHA256": "d183dcc2170c65f9a3105ad658a8e5a9f5114dd68f4f31dc1046f9bb99613efc",
+      "archivedSHA256": "450226ea39f68dd5d56549a71dbc70d163496cbb753e517f432ceb523566fd07",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/queue-immediate-before.log"
+    },
+    "live/real-legacy-after-review.log": {
+      "rawSHA256": "2cc02b1c7365ee9885e1bd2331dfac42f44388ca8ce42649b59985db8c752dbb",
+      "archivedSHA256": "2cc02b1c7365ee9885e1bd2331dfac42f44388ca8ce42649b59985db8c752dbb",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/real-legacy-after-review.log"
+    },
+    "live/real-legacy-final-ui.log": {
+      "rawSHA256": "f40d1e7c82b86be36b5fcb9b6e616bd617aea0a8bb592116a95a69aa09d689dc",
+      "archivedSHA256": "f40d1e7c82b86be36b5fcb9b6e616bd617aea0a8bb592116a95a69aa09d689dc",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/real-legacy-final-ui.log"
+    },
+    "live/real-legacy-final.log": {
+      "rawSHA256": "fb74172b9f665d730b660df0ca2ffe175fcd212882d63664660ae5e11afc5222",
+      "archivedSHA256": "fb74172b9f665d730b660df0ca2ffe175fcd212882d63664660ae5e11afc5222",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/real-legacy-final.log"
+    },
+    "live/real-legacy-tabs.log": {
+      "rawSHA256": "84c6f742e9b3d60132e569ae7804b933224ce7c09d085f570e35fd764079ec29",
+      "archivedSHA256": "84c6f742e9b3d60132e569ae7804b933224ce7c09d085f570e35fd764079ec29",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/real-legacy-tabs.log"
+    },
+    "live/real-v3-final.log": {
+      "rawSHA256": "dd07b899a9f9e178c263aa2dfe88ff96d559a8a9dd26ac73d610dafb5a5661c6",
+      "archivedSHA256": "dd07b899a9f9e178c263aa2dfe88ff96d559a8a9dd26ac73d610dafb5a5661c6",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/live/real-v3-final.log"
+    },
+    "logs/build-e2e.log": {
+      "rawSHA256": "3876caae23cdefe159655c9c3ccc18d12ea0087b7c823a24eb35853038371ef9",
+      "archivedSHA256": "e0ac8deadb62dc0b723de44207a0351f4a8d76001d9419210f5d7e91157fe5d5",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/build-e2e.log"
+    },
+    "logs/build.log": {
+      "rawSHA256": "6b963b676e3969f5b3b2210523d6e26981f3217cfaa3cc851187bc1d5fdb69cb",
+      "archivedSHA256": "13079da2859f99ffbc1b02107aab0eed6d97163845ee842f81119e0f2c7da8d8",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/build.log"
+    },
+    "logs/content-format-final.log": {
+      "rawSHA256": "cd532c819363e556b77fbe9bbd25ba061d2305b99024cc04932c59d70a087fff",
+      "archivedSHA256": "ae43a5eb367804b939753165725d66f4f842c46a0296aa9526eae4ed098ae4d2",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/content-format-final.log"
+    },
+    "logs/content-format.log": {
+      "rawSHA256": "acd6d49bdadaa31cd7c381b56725259ef96caee1a351c2d59e047acc98fab1cc",
+      "archivedSHA256": "3623077163df06ee0c627f2d40da2aee2fa2d009339ef88fcc8654bf766d6d03",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/content-format.log"
+    },
+    "logs/contracts-final.log": {
+      "rawSHA256": "b589d9ac86ff62ccdbd748bbc99c2f4ff52193daea589eb2df12aa715f040be0",
+      "archivedSHA256": "dc34613f0f3f81a18fcc9b632d6f267efa4f2d882ab0ee67a8467f7f731fde00",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/contracts-final.log"
+    },
+    "logs/contracts.log": {
+      "rawSHA256": "4c8fa22208764bcdba73071eaa788dd67e721e1f8a153ad1ce54a7a6696bddc7",
+      "archivedSHA256": "8d41fa3b5ec0f23eb0c178d44dbfd988c3b51cadcb5916edc7973c251f2d1ca3",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/contracts.log"
+    },
+    "logs/cross.log": {
+      "rawSHA256": "da05103c86e106658509ca442370207f67dc08cbaa335cc36e8985348789c227",
+      "archivedSHA256": "15a6c0e2ca1449cc6d68211e6399bcc65b2b8f8a901757f3144a6d70e0c0267c",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/cross.log"
+    },
+    "logs/i18n.log": {
+      "rawSHA256": "78b11fd7ad357de335bf073a7871ee3b5224994868d404186648bcdef9298453",
+      "archivedSHA256": "c1aac822e4ae280250d8f37664a116b430c7237aa6cb7e87a04d40065b2ef310",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/i18n.log"
+    },
+    "logs/lint-after-review.log": {
+      "rawSHA256": "11d02fd3a8b6a5ad0220f13b5b0a56f548c0cb2a303624616ca4a804f6abe1c2",
+      "archivedSHA256": "355e0632b38c274f9c6897c42f35d5a1f1374ae5c35afb21008e475f18cc869e",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/lint-after-review.log"
+    },
+    "logs/lint.log": {
+      "rawSHA256": "7123f12d6a86f8d989819359c8bb712328814e51ab310c003243f1b0b7f450c6",
+      "archivedSHA256": "d219e6baa9a227e94b3f3fb08a8d60fecdb545ffd62df31019b3b2dcae698e3a",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/lint.log"
+    },
+    "logs/owner.log": {
+      "rawSHA256": "ba5d27e1d36d87d38e5db46a135293d35061852ad40e26380759b0af40b814ef",
+      "archivedSHA256": "7f147f6e2cfee6d5ed21a3d9f8d26d7e3401a46cab820c467008e67b3a17ecd8",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/owner.log"
+    },
+    "logs/preview.log": {
+      "rawSHA256": "e2d1bfa3378f1cdcf8c975766d18e72b32b078854126d0c13d769f21ba7e6631",
+      "archivedSHA256": "ddcd67a6284412b8d91cf1ce3c040a8ebf03e381e1a8dbad73e5410e1711f89a",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/preview.log"
+    },
+    "logs/typecheck-after-review.log": {
+      "rawSHA256": "4b7e2569435200a4c22d2924a1bc64566f3fb068d85629298cb08a8c76b59bdd",
+      "archivedSHA256": "ab61219a03db8d3a0a85651eb806c736dd42ffe4e486de09521c783b5a0939f9",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/typecheck-after-review.log"
+    },
+    "logs/types-api-before-correction.log": {
+      "rawSHA256": "c1542878c6c5888fd29ef448fd503b1583a25cab79b66a53ff4c55e111092683",
+      "archivedSHA256": "a8b55a3327d8ace424b78fb05fd82224f77ae2810323f46109bba0633b5ec456",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/types-api-before-correction.log"
+    },
+    "logs/types-api-corrected.log": {
+      "rawSHA256": "099df50cdeade4717f1aa804691cf13ec3dc89b76b0e3add410d84bf804157e9",
+      "archivedSHA256": "75baeb7c2862e81b2bdf63cd6cbb08c04f43755de27c3be381017d885e65ace0",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/types-api-corrected.log"
+    },
+    "logs/types-review.log": {
+      "rawSHA256": "4b7e2569435200a4c22d2924a1bc64566f3fb068d85629298cb08a8c76b59bdd",
+      "archivedSHA256": "ab61219a03db8d3a0a85651eb806c736dd42ffe4e486de09521c783b5a0939f9",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/types-review.log"
+    },
+    "logs/types.log": {
+      "rawSHA256": "4b7e2569435200a4c22d2924a1bc64566f3fb068d85629298cb08a8c76b59bdd",
+      "archivedSHA256": "ab61219a03db8d3a0a85651eb806c736dd42ffe4e486de09521c783b5a0939f9",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/types.log"
+    },
+    "logs/web-before-review.log": {
+      "rawSHA256": "ee6d1a4bcade0e0b19eaff59358f45feeeca0ff788e4f9fe1c46a65bce924fa4",
+      "archivedSHA256": "19061a881eeb24d0ed5e8c6a754c17f91c7d51cd4d8375a5985046785cb4bcbb",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/web-before-review.log"
+    },
+    "logs/web-final.log": {
+      "rawSHA256": "49acc6227dcc1e9fdc205726fce8948d036ef1580655c421604c79757e20ae7f",
+      "archivedSHA256": "31092cdc590161ac8d69c4da7e181fe440666d642a35b66d576f8d7196762f6a",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/logs/web-final.log"
+    },
+    "preview-probe-before.txt": {
+      "rawSHA256": "e8b5c934625310e796cb0b64c72415893ad4ffa7a93a1b907d2c3240bc4769e4",
+      "archivedSHA256": "fcac9ce16c16936da08d7aeea887dc3e0f0e9ae5ddb38fdeffc84b2c3a958314",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/preview-probe-before.txt"
+    },
+    "reproductions/autosave-error-context.md": {
+      "rawSHA256": "13378e2a5b8d352f283e5ff74f53897be0d51b7b0650e9b1335d681f58174c1d",
+      "archivedSHA256": "89ff6fa080a7389dd595d88df580748b93e0371ad07485dd101f22642b216d50",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/reproductions/autosave-error-context.md"
+    },
+    "reproductions/autosave-red-source.ts.txt": {
+      "rawSHA256": "59882e8a05844aa783fd8b24a356f80a06805b8b6d145a794632fffe73194e9d",
+      "archivedSHA256": "ae4c718ec327122d17a1bc4ad09f0692c37c4658089faf9d13cc20ccc8edfd9e",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/reproductions/autosave-red-source.ts.txt"
+    },
+    "reproductions/curriculum-tab-error-context.md": {
+      "rawSHA256": "ad7ed3df078f8e38ffaef1df21a433ff6401f5bb058d2afb12726f6fd919f1bb",
+      "archivedSHA256": "8772737d6cc07efdb288d86c4468eb095780c41ff28642c29196fa35010d7ce9",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/reproductions/curriculum-tab-error-context.md"
+    },
+    "reproductions/placement-probe-source.ts.txt": {
+      "rawSHA256": "30dac0f8d79aaa1949ae5978504251ca44ed7a93dcb3ce630baf72c35196af82",
+      "archivedSHA256": "423ae26446b8a8af15d233869ce99a48f7587c86ff35dcee2a882d8b3a9c9b08",
+      "rawCopy": ".superpowers/sdd/gate-recovery-plan/raw-gate-artifacts/reproductions/placement-probe-source.ts.txt"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "ef271852d9243b5ac3594b2eab7564d5325e5569",
+  "startingCommit": "67df2afa226f0d53c7b4f6c1bf206ca35beaac02",
+  "readiness": "RED",
+  "reason": "Historical placement false claim remains unexplained; passing repetitions are not a root-cause fix",
+  "backend": "Test Files  220 passed | 1 skipped (221); Tests  1176 passed | 1 skipped (1177); Duration  911.55s (transform 19.86s, setup 0ms, collect 256.14s, tests 589.15s, environment 51ms, prepare 27.07s)",
+  "web": "Test Files  128 passed (128); Tests  798 passed (798); Duration  209.11s (transform 5.08s, setup 0ms, collect 91.39s, tests 124.00s, environment 152.44s, prepare 20.20s)",
+  "contracts": "Test Files  25 passed (25); Tests  125 passed (125); Duration  8.59s (transform 631ms, setup 0ms, collect 6.91s, tests 495ms, environment 7ms, prepare 4.06s)",
+  "contentFormat": "Test Files  11 passed (11); Tests  135 passed (135); Duration  3.21s (transform 432ms, setup 0ms, collect 1.59s, tests 310ms, environment 3ms, prepare 1.64s)",
+  "ownerTests": 107,
+  "crossNativeTests": 25,
+  "realLegacyAfterReview": 12,
+  "realV3": 8,
+  "v3Checkpoint": "077ee67e29d1adbb98a1376fff4102d7caa76a37",
+  "v3RuntimeAndRelevantTestBytesUnchanged": true,
+  "productionSourceChanges": false,
+  "historicalArtifacts": 582,
+  "originalProtectedFiles": 1295,
+  "backupFiles": 2978,
+  "remainingPlacementBlocker": "GR-PLACEMENT-001",
+  "fullBackendCleanup": true
+}

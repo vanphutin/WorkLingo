@@ -1,0 +1,16 @@
+[
+  {
+    "finished": "2026-10-20T19:07:42.1313233Z",
+    "command": "pnpm lint",
+    "exitCode": 0,
+    "name": "lint",
+    "sourceCommit": "ef271852d9243b5ac3594b2eab7564d5325e5569"
+  },
+  {
+    "finished": "2026-10-20T19:08:47.7974112Z",
+    "command": "pnpm typecheck",
+    "exitCode": 0,
+    "name": "typecheck",
+    "sourceCommit": "ef271852d9243b5ac3594b2eab7564d5325e5569"
+  }
+]

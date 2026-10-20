@@ -1,0 +1,17 @@
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Integration/apps/api
+
+ ✓ test/integration/jobs-worker.integration.spec.ts (10 tests) 14296ms
+   ✓ leased PostgreSQL job worker > protects a live lease and reclaims an expired lease without accepting stale completion  341ms
+ ✓ test/integration/placement-isolation.integration.spec.ts (2 tests) 10730ms
+   ✓ placement evidence isolation > completes and recommends from all four placement skills without learning side effects (run 0)  1652ms
+   ✓ placement evidence isolation > preserves ordinary learning evidence and progress side effects  955ms
+[Nest] 3720  - 01:57:30 21/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code PROVIDER_TIMEOUT.
+[Nest] 3720  - 01:57:30 21/10/2026    WARN [JobRunnerService2] Job 6bbcd9d9-06e2-4d98-991d-aa3d3546834c failed with safe code STORAGE_CLEANUP_FAILED.
+ ✓ src/jobs/application/job-runner.service.spec.ts (15 tests) 34ms
+ ✓ src/jobs/application/jobs.service.spec.ts (3 tests) 29ms
+
+ Test Files  4 passed (4)
+      Tests  30 passed (30)
+   Start at  01:56:10
+   Duration  81.49s (transform 27.25s, setup 0ms, collect 52.14s, tests 25.09s, environment 1ms, prepare 1.92s)

@@ -1,0 +1,23 @@
+[
+  {
+    "sourceCommit": "ef271852d9243b5ac3594b2eab7564d5325e5569",
+    "command": "pnpm --filter @worklingo/web exec vitest run --maxWorkers=2",
+    "exitCode": 0,
+    "finished": "2026-10-20T19:13:55.0489280Z",
+    "name": "web-final"
+  },
+  {
+    "sourceCommit": "ef271852d9243b5ac3594b2eab7564d5325e5569",
+    "command": "pnpm --filter @worklingo/contracts exec vitest run --maxWorkers=2",
+    "exitCode": 0,
+    "finished": "2026-10-20T19:14:05.1650005Z",
+    "name": "contracts-final"
+  },
+  {
+    "sourceCommit": "ef271852d9243b5ac3594b2eab7564d5325e5569",
+    "command": "pnpm --filter @worklingo/content-format exec vitest run --maxWorkers=2",
+    "exitCode": 0,
+    "finished": "2026-10-20T19:14:09.9158970Z",
+    "name": "content-format-final"
+  }
+]

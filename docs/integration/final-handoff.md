@@ -1,3 +1,15 @@
+# Current handoff — Gate Recovery: RED
+
+Starting 67df2af → final tested source ef27185, recovery commits 077ee67 / ef27185. Test Files  220 passed | 1 skipped (221); Tests  1176 passed | 1 skipped (1177); Duration  911.55s (transform 19.86s, setup 0ms, collect 256.14s, tests 589.15s, environment 51ms, prepare 27.07s). Actual final-source legacy 12/12, V3equivalent runtime8/8, web 798/798, owner 107/107, cross/native 25/25 and shared/quality gates pass. Original/backup/main/LG/historical evidence preservation passes.
+
+**Stop before merge.** GR-PLACEMENT-001 remains unexplained; a passing rerun does not close it. The backup and final-runtime E2E gaps have measured replacements. [Complete 11-point Gate Recovery report](gate-recovery-report.md) supersedes the previous status and backup-causality description below. Final metadata HEAD/source/artifact counts are printed by the post-commit recovery verifier; no product/test changes followef27185.
+
+Preview http://127.0.0.1:33300 remains open in Codex with a separate disposable DB/fake-provider API. All completed qualification DBs cleaned up. No original credentials/data loaded, merge/push/deploy/non-test migration performed. Await further human direction.
+
+---
+
+## Previous integration handoff (historical)
+
 # Final integration handoff
 
 **Current readiness: RED — no main merge recommended.** Candidate integration and draft-safety remediation are committed; broader backend qualification has an unresolved intermittent placement-job failure. Exact closing results are in integration-qa.md. This report never grants merge, push, production migration or deployment authority.

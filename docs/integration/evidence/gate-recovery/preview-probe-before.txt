@@ -1,0 +1,1 @@
+Initial preview capture: API health200 and heading visible; English Log in locator absent in a fresh browser context whose default locale was Vietnamese. Missing English locale fixture, not established product failure. Added explicit en cookie only to the disposable QA browser context. No change to user's browser preferences or product.

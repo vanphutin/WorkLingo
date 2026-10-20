@@ -1,0 +1,12 @@
+{
+  "mode": "production",
+  "title": "reading answer persists through appearance changes and advances actual checkpoint",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "answerRetained": true,
+      "realCheckpointAdvance": true
+    }
+  ]
+}
