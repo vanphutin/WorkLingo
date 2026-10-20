@@ -1,4 +1,4 @@
 .language-control { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .5rem; max-width: 100%; }
-.language-control select { min-height: 44px; width: 9.25rem; max-width: 100%; padding: .5rem .75rem; border: 1px solid var(--border); border-radius: var(--radius-sm, .5rem); background: var(--surface); color: var(--foreground); font: inherit; font-size: .875rem; cursor: pointer; }
+.language-control select { min-height: 44px; width: 9.25rem; max-width: 100%; padding: .5rem .75rem; border: 1px solid var(--control-border); border-radius: var(--radius-sm, .5rem); background: var(--surface); color: var(--foreground); font: inherit; font-size: .875rem; cursor: pointer; }
 .language-control select:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 .language-error { max-width: 28rem; color: var(--danger, var(--foreground)); font-size: .875rem; }
