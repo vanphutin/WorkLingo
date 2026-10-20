@@ -13,6 +13,7 @@ import type { OrientationContent, OrientationSlide } from '@worklingo/contracts'
 import { adminIeltsOrientationClient } from '../../lib/api/admin-ielts-orientation-client';
 import { ApiError } from '../../lib/api/api-client';
 import './orientation-authoring.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsOrientationMessages['en']; values?: MessageValues };
 
@@ -98,7 +99,7 @@ export function OrientationAuthoringWorkspace() {
     });
   };
 
-  return <section className="orientation-admin">
+  return <section className="orientation-admin authoring-experience">
     <header className="orientation-admin__header">
       <div><p className="orientation-admin__kicker">{t('pathway')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
       <div className="orientation-admin__status"><strong>{statusLabel(status)}</strong><span>{t('draftRevision', { revision })}</span></div>

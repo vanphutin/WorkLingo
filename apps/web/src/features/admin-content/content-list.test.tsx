@@ -66,6 +66,8 @@ describe('ContentList', () => {
 
   it('renders list of imports with status, revision, and links to edit or view', () => {
     render(<ContentList imports={sampleImports} />);
+    expect(screen.getByRole('table').parentElement).toHaveAttribute('tabindex', '0');
+    expect(screen.getByRole('table').parentElement).toHaveAccessibleName();
 
     expect(screen.getByText('Draft')).toBeInTheDocument();
     expect(screen.getByText('Published')).toBeInTheDocument();

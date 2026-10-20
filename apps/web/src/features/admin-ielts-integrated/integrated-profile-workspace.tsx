@@ -8,6 +8,7 @@ import { localizedError } from '../../i18n/errors';
 import type { MessageValues } from '../../i18n/translator';
 import { adminIeltsIntegratedClient } from '../../lib/api/admin-ielts-integrated-client';
 import '../ielts-bridge/ielts-bridge.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsIntegratedMessages['en']; values?: MessageValues };
 type Issue = { path: string; message: string };
@@ -48,7 +49,7 @@ export function IntegratedProfileWorkspace() {
     return t('invalidField');
   };
 
-  return <main className="bridge-shell">
+  return <main className="bridge-shell authoring-experience">
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
     {error ? <p className="bridge-error" role="alert">{localizedError(error, locale)}</p> : null}
     {message ? <p className="bridge-feedback" role="status">{t(message.key, message.values)}</p> : null}

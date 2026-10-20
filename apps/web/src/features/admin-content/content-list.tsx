@@ -6,6 +6,7 @@ import { useAdminContent } from './i18n';
 import React from 'react';
 
 import type { ContentImportDto } from '@worklingo/contracts';
+import './authoring-experience.css';
 
 interface ContentListProps {
   readonly imports: readonly ContentImportDto[];
@@ -23,7 +24,7 @@ export function ContentList({ imports }: ContentListProps) {
   const { t, date, label } = useAdminContent();
   if (imports.length === 0) {
     return (
-      <div className="content-list-empty" role="region" aria-label={t('importsRegion')}>
+      <div className="content-list-empty authoring-experience" role="region" aria-label={t('importsRegion')}>
         <div className="empty-card">
           <h2>{t('importsEmpty')}</h2>
           <p>{t('importsEmptyHelp')}</p>
@@ -34,7 +35,7 @@ export function ContentList({ imports }: ContentListProps) {
   }
 
   return (
-    <div className="content-list-container" role="region" aria-label={t('importsRegion')}>
+    <div className="content-list-container authoring-experience" role="region" aria-label={t('importsRegion')}>
       <div className="content-list-header">
         <div>
           <h2>{t('allImports', { count: imports.length })}</h2>
@@ -43,7 +44,7 @@ export function ContentList({ imports }: ContentListProps) {
         <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
       </div>
 
-      <div className="content-table-wrapper">
+      <div className="content-table-wrapper" tabIndex={0} role="region" aria-label={t('importsRegion')}>
         <table className="content-table">
           <thead>
             <tr>

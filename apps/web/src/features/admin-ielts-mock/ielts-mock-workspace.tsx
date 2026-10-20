@@ -10,6 +10,7 @@ import type { MessageValues } from '../../i18n/translator';
 import { useEffect, useState } from 'react';
 import { adminIeltsMockClient } from '../../lib/api/admin-ielts-mock-client';
 import '../ielts-bridge/ielts-bridge.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsMockMessages['en']; values?: MessageValues };
 
@@ -103,8 +104,8 @@ export function IeltsMockWorkspace() {
     }).catch(setError).finally(() => setBusy(false));
   };
 
-  if (loading) return <main className="bridge-shell" aria-busy="true"><p role="status">{t('loading')}</p></main>;
-  return <main className="bridge-shell">
+  if (loading) return <main className="bridge-shell authoring-experience" aria-busy="true"><p role="status">{t('loading')}</p></main>;
+  return <main className="bridge-shell authoring-experience">
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
     {error ? <p role="alert" className="bridge-error">{error instanceof SyntaxError ? t('invalidJson') : localizedError(error, locale)}</p> : null}
     {message ? <p role="status" className="bridge-feedback">{t(message.key, message.values)}</p> : null}

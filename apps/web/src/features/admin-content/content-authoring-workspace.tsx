@@ -18,6 +18,7 @@ import { PublishPanel } from './publish-panel';
 import { SourceEditor, type SourceEditorHandle } from './source-editor';
 import { offsetForPosition } from './source-position';
 import { ValidationPanel } from './validation-panel';
+import './authoring-experience.css';
 
 export type WorkspaceTab = 'source' | 'validation' | 'preview' | 'publish';
 
@@ -242,7 +243,7 @@ export function ContentAuthoringWorkspace({
   const highlightedLines = issues.map((i) => i.range.start.line);
 
   return (
-    <div className="content-authoring-workspace">
+    <div className="content-authoring-workspace authoring-experience">
       <div className="workspace-header">
         <div className="workspace-title-row">
           <h1>{t('authoringTitle')}</h1>

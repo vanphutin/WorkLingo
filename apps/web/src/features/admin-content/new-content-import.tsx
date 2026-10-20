@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { foundationCategories, getFoundationTemplate, type FoundationCategory } from '@worklingo/content-format';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
+import './authoring-experience.css';
 
 const DEFAULT_TEMPLATE = `FORMAT: WorkLingoLesson/1.0
 
@@ -84,7 +85,7 @@ export function NewContentImport() {
   }
 
   return (
-    <div className="new-import-container">
+    <div className="new-import-container authoring-experience">
       <div className="new-import-header">
         <h1>{t('newImportTitle')}</h1>
         <p>{t('newImportHelp')}</p>

@@ -20,6 +20,7 @@ import {
 import { adminIeltsBridgeClient } from '../../lib/api/admin-ielts-bridge-client';
 import { ApiError } from '../../lib/api/api-client';
 import './ielts-bridge-authoring.css';
+import '../admin-content/authoring-experience.css';
 
 type Notice = { key: keyof typeof adminIeltsBridgeMessages['en']; values?: MessageValues };
 
@@ -150,7 +151,7 @@ export function IeltsBridgeAuthoringWorkspace() {
 
   if (loading) return <section className="bridge-admin-loading" aria-busy="true">{t('loading')}</section>;
 
-  return <section className="bridge-admin">
+  return <section className="bridge-admin authoring-experience">
     <header className="bridge-admin__header">
       <div><p className="bridge-admin__kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
       {selected ? <div className="bridge-admin__status"><strong>{statusLabel(selected.status)}</strong><span>{t('draftRevision', { revision: selected.draftRevision })}</span></div> : null}
