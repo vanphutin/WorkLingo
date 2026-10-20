@@ -2,7 +2,7 @@
 .preferences-experience { min-width: 0; max-width: 100%; color: var(--foreground); overflow-wrap: anywhere; }
 .preferences-experience *, .preferences-experience *::before, .preferences-experience *::after { box-sizing: border-box; }
 .preferences-experience :is(div,section,header,footer,fieldset,label,nav,form,span) { min-width: 0; }
-.preferences-experience h1 { font-size: clamp(1.6rem,3vw,2.35rem); letter-spacing: -.035em; line-height: 1.2; }
+.preferences-experience :is(h1,.admin-ai-title) { font-size: clamp(1.6rem,3vw,2.35rem); letter-spacing: -.035em; line-height: 1.2; }
 .preferences-experience :is(h1,h2,p) { text-wrap: pretty; }
 .preferences-experience :is(button,a,select,input,summary) { scroll-margin-block: 1.5rem; }
 .preferences-experience :is(button,select) { min-height: 2.75rem; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }

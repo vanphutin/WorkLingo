@@ -63,7 +63,7 @@ export default function AdminAiSettingsPage() {
       {/* Panels for System & Account */}
       <div className="admin-ai-panels-container">
         <AiSettingsPanel admin />
-        <AiSettingsPanel />
+        <AiSettingsPanel headingLevel={2} />
       </div>
     </div>
   );

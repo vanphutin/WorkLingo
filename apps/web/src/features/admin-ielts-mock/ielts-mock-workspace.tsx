@@ -104,8 +104,8 @@ export function IeltsMockWorkspace() {
     }).catch(setError).finally(() => setBusy(false));
   };
 
-  if (loading) return <main className="bridge-shell authoring-experience" aria-busy="true"><p role="status">{t('loading')}</p></main>;
-  return <main className="bridge-shell authoring-experience">
+  if (loading) return <section className="bridge-shell authoring-experience" aria-busy="true"><p role="status">{t('loading')}</p></section>;
+  return <section className="bridge-shell authoring-experience">
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
     {error ? <p role="alert" className="bridge-error">{error instanceof SyntaxError ? t('invalidJson') : localizedError(error, locale)}</p> : null}
     {message ? <p role="status" className="bridge-feedback">{t(message.key, message.values)}</p> : null}
@@ -125,5 +125,5 @@ export function IeltsMockWorkspace() {
       {pending.length === 0 ? <p>{t('noReviews')}</p> : pending.map((attempt) => <ReviewForm key={attempt.id} attempt={attempt} busy={busy} review={(input) => run(() => adminIeltsMockClient.review(attempt.id, input), 'reviewed')} />)}
       {nextReviewCursor !== null ? <button disabled={busy} onClick={loadMoreReviews}>{t('moreReviews')}</button> : null}
     </section>
-  </main>;
+  </section>;
 }

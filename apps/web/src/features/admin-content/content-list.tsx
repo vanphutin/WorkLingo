@@ -26,7 +26,7 @@ export function ContentList({ imports }: ContentListProps) {
     return (
       <div className="content-list-empty authoring-experience" role="region" aria-label={t('importsRegion')}>
         <div className="empty-card">
-          <h2>{t('importsEmpty')}</h2>
+          <h1>{t('importsEmpty')}</h1>
           <p>{t('importsEmptyHelp')}</p>
           <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>
         </div>
@@ -38,7 +38,7 @@ export function ContentList({ imports }: ContentListProps) {
     <div className="content-list-container authoring-experience" role="region" aria-label={t('importsRegion')}>
       <div className="content-list-header">
         <div>
-          <h2>{t('allImports', { count: imports.length })}</h2>
+          <h1>{t('allImports', { count: imports.length })}</h1>
           <p className="subtitle">{t('importsHelp')}</p>
         </div>
         <Link href="/admin/content/new" className="btn btn-primary">{t('newImport')}</Link>

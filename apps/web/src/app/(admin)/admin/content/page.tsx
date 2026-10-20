@@ -55,7 +55,7 @@ export default function AdminContentPage() {
   if (error) {
     return (
       <div className="status-card error-card" role="alert">
-        <h2>{t('lessonError')}</h2>
+        <h1>{t('lessonError')}</h1>
         <p>{localizedError(error, locale)}</p>
       </div>
     );

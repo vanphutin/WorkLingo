@@ -2,8 +2,8 @@ import { AudioSettingsPanel } from '../../../../features/audio/audio-settings-pa
 
 export default function LearnerAudioSettingsPage() {
   return (
-    <div className="audio-settings-page">
+    <main className="audio-settings-page">
       <AudioSettingsPanel />
-    </div>
+    </main>
   );
 }

@@ -74,8 +74,8 @@ export function BandCurriculumWorkspace() {
     return t('invalidField');
   };
 
-  if (!workspace && !error) return <main className="bridge-shell authoring-experience bridge-state"><p role="status">{t('loading')}</p></main>;
-  return <main className="bridge-shell authoring-experience">
+  if (!workspace && !error) return <section className="bridge-shell authoring-experience bridge-state"><p role="status">{t('loading')}</p></section>;
+  return <section className="bridge-shell authoring-experience">
     <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
     {error ? <p className="bridge-error" role="alert">{errorMessage()}</p> : null}
     {message ? <p className="bridge-feedback" role="status">{t(message.key, message.values)}</p> : null}
@@ -104,5 +104,5 @@ export function BandCurriculumWorkspace() {
         </div>
       </section>
     </> : null}
-  </main>;
+  </section>;
 }
