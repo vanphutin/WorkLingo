@@ -5,7 +5,7 @@ import { installOrientationBridgeFixtures, moduleId } from './fixtures/phase4-or
 import { opaqueTextContrast } from './fixtures/phase4-a11y';
 const baseline = process.env.WORKLINGO_PHASE4_BASELINE === 'true';
 const mode = baseline ? 'before-production' : process.env.WORKLINGO_FOUNDATION_PRODUCTION === 'true' ? 'production' : 'development';
-const evidence = path.resolve(__dirname, '../../../docs/ui-redesign/evidence/phase4/slice-4');
+const evidence = path.resolve(__dirname, process.env.WORKLINGO_PHASE4_EVIDENCE_ROOT ?? '../../../docs/ui-redesign/evidence/phase4', 'slice-4');
 const observations: object[] = [];
 test.afterEach(({}, info) => { const directory = path.join(evidence, `${mode}-${process.env.WORKLINGO_PHASE4_RUN ?? 'matrix'}-tests`); mkdirSync(directory, { recursive: true }); writeFileSync(path.join(directory, info.title.replace(/[^a-z0-9]+/giu, '-') + '.json'), JSON.stringify({ title: info.title, status: info.status, mode, fixtures: true, observations: observations.splice(0) }, null, 2) + '\n'); });
 for (const theme of ['light', 'dark']) for (const [width, height] of [[390, 844], [768, 1024], [1440, 900]]) test(`bridge matrix ${theme} ${width}`, async ({ page }) => {

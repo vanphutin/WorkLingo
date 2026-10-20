@@ -5,7 +5,7 @@ import { installSettingsFixtures } from './fixtures/phase4-settings-contracts';
 import { opaqueTextContrast } from './fixtures/phase4-a11y';
 const baseline = process.env.WORKLINGO_PHASE4_BASELINE === 'true';
 const mode = baseline ? 'before-production' : process.env.WORKLINGO_FOUNDATION_PRODUCTION === 'true' ? 'production' : 'development';
-const evidence = path.resolve(__dirname, '../../../docs/ui-redesign/evidence/phase4/slice-7'); const observations: object[] = [];
+const evidence = path.resolve(__dirname, process.env.WORKLINGO_PHASE4_EVIDENCE_ROOT ?? '../../../docs/ui-redesign/evidence/phase4', 'slice-7'); const observations: object[] = [];
 test.afterEach(({}, info) => { const dir = path.join(evidence, `${mode}-${process.env.WORKLINGO_PHASE4_RUN ?? 'matrix'}-tests`); mkdirSync(dir, { recursive: true }); writeFileSync(path.join(dir, info.title.replace(/[^a-z0-9]+/giu, '-') + '.json'), JSON.stringify({ title: info.title, status: info.status, fixtures: true, observations: observations.splice(0) }, null, 2) + '\n'); });
 const cases = [
   ['settings', '/settings', '.settings-grid'], ['audio', '/settings/audio', '.audio-source-list'], ['ai', '/settings/ai', '.admin-ai-fieldset'], ['adminAudio', '/admin/settings/audio', '.admin-provider-card'], ['adminAi', '/admin/settings/ai', '.admin-ai-fieldset'],

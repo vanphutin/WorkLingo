@@ -8,7 +8,7 @@ import { opaqueTextContrast } from './fixtures/phase4-a11y';
 
 const baseline = process.env.WORKLINGO_PHASE4_BASELINE === 'true';
 const mode = baseline ? process.env.WORKLINGO_FOUNDATION_PRODUCTION === 'true' ? 'before-production' : 'before' : process.env.WORKLINGO_FOUNDATION_PRODUCTION === 'true' ? 'production' : 'after';
-const evidence = path.resolve(__dirname, '../../../docs/ui-redesign/evidence/phase4/slice-2');
+const evidence = path.resolve(__dirname, process.env.WORKLINGO_PHASE4_EVIDENCE_ROOT ?? '../../../docs/ui-redesign/evidence/phase4', 'slice-2');
 const observations: object[] = [];
 test.afterEach(({}, info) => {
   const directory = path.join(evidence, `${mode}-${process.env.WORKLINGO_PHASE4_RUN ?? 'matrix'}-tests`);

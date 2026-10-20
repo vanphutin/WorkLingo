@@ -13,11 +13,15 @@ describe('shared localized error states', () => {
     expect(screen.getByRole('link', { name: 'Về WorkLingo' })).toHaveAttribute('href', '/');
   });
   it('provides localized retry without exposing internal error details', () => {
+    const reset = vi.fn();
     const retry = vi.fn();
-    render(<LocaleProvider initialLocale="vi"><ErrorPage error={new Error('private database credentials')} retry={retry} /></LocaleProvider>);
+    // Installed Next16 supplies both reset and retry; retry is the existing owner contract.
+    const props = { error: new Error('private database credentials'), reset, retry };
+    render(<LocaleProvider initialLocale="vi"><ErrorPage {...props} /></LocaleProvider>);
     expect(screen.getByRole('alert')).toHaveTextContent('Đã có lỗi xảy ra. Vui lòng thử lại.');
     expect(screen.queryByText(/private database/)).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Thử lại' }));
     expect(retry).toHaveBeenCalledOnce();
+    expect(reset).not.toHaveBeenCalled();
   });
 });

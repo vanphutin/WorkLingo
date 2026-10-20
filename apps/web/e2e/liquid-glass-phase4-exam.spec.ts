@@ -5,7 +5,7 @@ import { installExamFixtures, sessionId, attemptId } from './fixtures/phase4-exa
 import { opaqueTextContrast } from './fixtures/phase4-a11y';
 const baseline = process.env.WORKLINGO_PHASE4_BASELINE === 'true';
 const mode = baseline ? 'before-production' : process.env.WORKLINGO_FOUNDATION_PRODUCTION === 'true' ? 'production' : 'development';
-const evidence = path.resolve(__dirname, '../../../docs/ui-redesign/evidence/phase4/slice-5'); const observations: object[] = [];
+const evidence = path.resolve(__dirname, process.env.WORKLINGO_PHASE4_EVIDENCE_ROOT ?? '../../../docs/ui-redesign/evidence/phase4', 'slice-5'); const observations: object[] = [];
 async function assertTimer(page: import('@playwright/test').Page, deadline: string) {
   const text = await page.getByRole('timer').innerText(); const match = text.match(/(\d+):(\d+)/u); expect(match).not.toBeNull();
   const shown = Number(match![1]) * 60 + Number(match![2]); const expected = (new Date(deadline).getTime() - Date.now()) / 1000;
