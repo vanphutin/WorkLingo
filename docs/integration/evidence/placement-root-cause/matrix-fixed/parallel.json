@@ -1,0 +1,47 @@
+{
+  "name": "parallel",
+  "workers": 2,
+  "load": false,
+  "started": {
+    "wall": "2026-10-20T19:43:57.466Z",
+    "monotonicNs": "6114407958800"
+  },
+  "finished": {
+    "wall": "2026-10-20T19:44:32.943Z",
+    "monotonicNs": "6149882079300"
+  },
+  "children": [
+    {
+      "role": "placement0",
+      "started": {
+        "wall": "2026-10-20T19:43:57.466Z",
+        "monotonicNs": "6114407984700"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:44:32.364Z",
+        "monotonicNs": "6149302633500"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "boundary",
+      "log": "parallel-placement0.log"
+    },
+    {
+      "role": "placement1",
+      "started": {
+        "wall": "2026-10-20T19:43:57.477Z",
+        "monotonicNs": "6114418802300"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:44:32.943Z",
+        "monotonicNs": "6149882060800"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "parallel-placement1.log"
+    }
+  ]
+}

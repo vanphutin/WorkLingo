@@ -1,0 +1,33 @@
+{
+  "name": "single",
+  "workers": 1,
+  "load": false,
+  "started": {
+    "wall": "2026-10-20T19:52:21.203Z",
+    "monotonicNs": "6618142017500"
+  },
+  "finished": {
+    "wall": "2026-10-20T19:52:55.026Z",
+    "monotonicNs": "6651964493100"
+  },
+  "children": [
+    {
+      "role": "placement0",
+      "started": {
+        "wall": "2026-10-20T19:52:21.204Z",
+        "monotonicNs": "6618142267700"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:52:55.026Z",
+        "monotonicNs": "6651964461900"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "closed": true,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "boundary",
+      "log": "single-placement0.log"
+    }
+  ]
+}

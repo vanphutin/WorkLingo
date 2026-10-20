@@ -1,3 +1,13 @@
+# Current qualification — GR-PLACEMENT-001: GREEN (2026-10-21)
+
+Natural parallel reproduction demonstrated19 ineligible first-speaking claims (18 gaps of1ms, one of2ms). The evidence-isolation harness now uses persisted eligibility time; production scheduler behavior is unchanged. Deterministic clock RED→GREEN, two fixed matrices360 journeys/1080 business claims plus124 load tests, and final backend1179pass/1 inherited skip at4577379 (650.80s, exit0, owned DB cleanuptrue). API lint/types and launcher preservation/deadline tests pass. Full frontend/contracts/real API E2E were not rerun because all relevant bytes equal ef27185; their existing results retain their original provenance.
+
+See [12-point investigation report](placement-root-cause-report.md), [causal evidence](placement-root-cause-investigation.md), [review](placement-investigation-review.md) and the new evidence seal. Exact historical DB state remains unavailable; current reproduced harness cause is demonstrated and resolved. No merge/push/deploy; original/main/Liquid Glass/backup and old evidence remain protected.
+
+---
+
+Historical qualification text retained verbatim below; its RED decision predates the demonstrated reproduction and current policy.
+
 # Final Integration Gate Recovery — RED
 
 Assessment finished; the retained release blocker is **GR-PLACEMENT-001**. Technical passing results below do not establish its historical root cause. No merge/push/deploy is authorized or performed.

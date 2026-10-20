@@ -1,0 +1,51 @@
+{
+  "name": "parallel",
+  "workers": 2,
+  "load": false,
+  "started": {
+    "wall": "2026-10-20T19:52:55.027Z",
+    "monotonicNs": "6651965691700"
+  },
+  "finished": {
+    "wall": "2026-10-20T19:53:36.363Z",
+    "monotonicNs": "6693302490200"
+  },
+  "children": [
+    {
+      "role": "placement0",
+      "started": {
+        "wall": "2026-10-20T19:52:55.027Z",
+        "monotonicNs": "6651965712400"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:53:35.450Z",
+        "monotonicNs": "6692388837100"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "closed": true,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "boundary",
+      "log": "parallel-placement0.log"
+    },
+    {
+      "role": "placement1",
+      "started": {
+        "wall": "2026-10-20T19:52:55.037Z",
+        "monotonicNs": "6651975639600"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:53:36.363Z",
+        "monotonicNs": "6693302457000"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "closed": true,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "parallel-placement1.log"
+    }
+  ]
+}

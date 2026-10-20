@@ -1,0 +1,69 @@
+{
+  "name": "parallel-load",
+  "workers": 2,
+  "load": true,
+  "started": {
+    "wall": "2026-10-20T19:54:41.469Z",
+    "monotonicNs": "6758407891400"
+  },
+  "finished": {
+    "wall": "2026-10-20T19:55:53.345Z",
+    "monotonicNs": "6830290452700"
+  },
+  "children": [
+    {
+      "role": "placement0",
+      "started": {
+        "wall": "2026-10-20T19:54:41.469Z",
+        "monotonicNs": "6758407907500"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:55:28.804Z",
+        "monotonicNs": "6805743149000"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "closed": true,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "boundary",
+      "log": "parallel-load-placement0.log"
+    },
+    {
+      "role": "placement1",
+      "started": {
+        "wall": "2026-10-20T19:54:41.479Z",
+        "monotonicNs": "6758417440000"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:55:29.435Z",
+        "monotonicNs": "6806373906100"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "closed": true,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/placement-isolation.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "parallel-load-placement1.log"
+    },
+    {
+      "role": "load",
+      "started": {
+        "wall": "2026-10-20T19:54:41.490Z",
+        "monotonicNs": "6758428452000"
+      },
+      "finished": {
+        "wall": "2026-10-20T19:55:53.345Z",
+        "monotonicNs": "6830290438000"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "closed": true,
+      "command": "pnpm --filter @worklingo/api exec vitest run test/integration/jobs-worker.integration.spec.ts test/integration/placement-attempt.integration.spec.ts test/integration/placement-confirmation.integration.spec.ts test/integration/onboarding-self-placement.integration.spec.ts test/integration/ielts-mock-workflow.integration.spec.ts test/integration/ielts-study-session.integration.spec.ts",
+      "diagnostics": "failure",
+      "log": "parallel-load-load.log"
+    }
+  ]
+}
