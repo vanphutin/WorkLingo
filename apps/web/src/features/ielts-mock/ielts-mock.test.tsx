@@ -11,7 +11,8 @@ function SwitchLocale() {
 }
 
 vi.mock('../../lib/api/ielts-mock-client', () => ({ ieltsMockClient: { catalog: vi.fn(), start: vi.fn(), get: vi.fn(), save: vi.fn(), submit: vi.fn(), report: vi.fn(), pause: vi.fn(), resume: vi.fn(), review: vi.fn(), recordings: vi.fn(), playback: vi.fn(), currentPlayback: vi.fn(), uploadRecording: vi.fn() } }));
-vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
+const { push } = vi.hoisted(() => ({ push: vi.fn() }));
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
 afterEach(cleanup);
 
 describe('IeltsMockDashboardCard', () => {
@@ -162,4 +163,26 @@ it('recovers a committed save with a lost response while retaining newer local w
   expect(field).toHaveValue('newer local writing');
   fireEvent.click(screen.getByRole('button',{name:'Save progress'}));
   await waitFor(()=>expect(ieltsMockClient.save).toHaveBeenLastCalledWith(attempt.id,{expectedRevision:2,responses:{'writing-1':'newer local writing'}}));
+});
+
+it.each([false, true])('locks writing during save-and-exit and protects navigation on failure=%s', async (failure) => {
+  push.mockClear();
+  const attempt = { id: crypto.randomUUID(), mockTestVersionId: crypto.randomUUID(), mockTestVersion: 1, policyVersion: 'v2' as const, elapsedMs: 0, pausedAt: null, title: 'Writing practice', mode: 'PRACTICE' as const, status: 'IN_PROGRESS' as const, currentSection: 'WRITING' as const, revision: 1, responses: {}, submittedSections: ['LISTENING','READING'], sectionStartedAt: new Date().toISOString(), sectionDeadlineAt: new Date().toISOString(), startedAt: new Date().toISOString(), submittedAt: null, sectionContent: { listening: [], reading: [], writing: [{ task: 1 as const, title: 'Report', prompt: 'Write your report.', minimumWords: 150 }], speaking: [] } };
+  vi.mocked(ieltsMockClient.get).mockResolvedValue(attempt);
+  let finish!: () => void;
+  vi.mocked(ieltsMockClient.save).mockReset().mockImplementation((_id, input) => new Promise((resolve, reject) => {
+    finish = () => failure ? reject(new Error('Offline')) : resolve({ ...attempt, revision: 2, responses: input.responses });
+  }));
+  render(<IeltsMockPlayer attemptId={attempt.id} />);
+  const field = await screen.findByRole('textbox');
+  fireEvent.change(field, { target: { value: 'Final writing to preserve' } });
+  fireEvent.click(screen.getByRole('button', { name: /Save and exit/i }));
+  expect(field).toBeDisabled();
+  expect(push).not.toHaveBeenCalled();
+  finish();
+  if (failure) {
+    await waitFor(() => expect(field).toBeEnabled());
+    expect(field).toHaveValue('Final writing to preserve');
+    expect(push).not.toHaveBeenCalled();
+  } else await waitFor(() => expect(push).toHaveBeenCalledWith('/dashboard'));
 });

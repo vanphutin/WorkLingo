@@ -76,6 +76,7 @@ export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
   const [error, setError] = useState<unknown>(null);
   const [busy, setBusy] = useState(false);
   const [clock, setClock] = useState(Date.now());
+  const [exiting, setExiting] = useState(false);
   const synchronizedAt = useRef(Date.now());
   const expiryRetryAt = useRef(0);
   const pendingClock = useRef<{ key: string; id: string } | null>(null);
@@ -87,7 +88,7 @@ export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
   const practice = attempt?.policyVersion === 'v2' && attempt.mode === 'PRACTICE';
   const remaining = attempt ? new Date(attempt.sectionDeadlineAt).getTime() - clock : 0;
   const paused = !!attempt?.pausedAt;
-  const canWork = !paused && (practice || remaining > 0);
+  const canWork = !exiting && !paused && (practice || remaining > 0);
   const fields = useMemo<Array<{ id: string; label: string; options: string[]; order?: number; minimumWords?: number }>>(() => {
     if (!attempt) return [];
     if (attempt.currentSection === 'LISTENING') return attempt.sectionContent.listening.flatMap(part => part.questions.map(item => ({ id: item.id, label: item.prompt, order: item.order, options: item.options })));
@@ -133,7 +134,7 @@ export function IeltsMockPlayer({ attemptId }: { readonly attemptId: string }) {
       if (value.currentSection === 'COMPLETE') setReport(await ieltsMockClient.report(attemptId));
     } catch (cause) { await recover(cause); } finally { setBusy(false); }
   };
-  return <main className="bridge-shell exam-surface mock-page bridge-player"><header className="bridge-heading"><div><Link href="/ielts/mock-tests">{t('back')}</Link><p className="bridge-kicker">{t('attemptMeta',{version:formatNumber(locale,attempt.mockTestVersion),mode:t(attempt.mode)})}</p><h1 lang="en">{attempt.title}</h1></div><button type="button" disabled={busy || !canWork} onClick={() => { setBusy(true); void save().then(() => router.push('/dashboard')).catch(setError).finally(() => setBusy(false)); }}>{t('exit')}</button></header><GlassSurface className="exam-progress-surface" variant="solid"><nav className="bridge-stage-nav" aria-label={t('sections')}>{(['LISTENING', 'READING', 'WRITING', 'SPEAKING'] as const).map((section, index) => <span key={section} aria-current={section === attempt.currentSection ? 'step' : undefined} className={attempt.submittedSections.includes(section) ? 'done' : ''}>{formatNumber(locale, index + 1)}<span className="sr-only"> {t(section)}</span></span>)}</nav></GlassSurface><article className="bridge-stage-card">
+  return <main className="bridge-shell exam-surface mock-page bridge-player"><header className="bridge-heading"><div><Link href="/ielts/mock-tests">{t('back')}</Link><p className="bridge-kicker">{t('attemptMeta',{version:formatNumber(locale,attempt.mockTestVersion),mode:t(attempt.mode)})}</p><h1 lang="en">{attempt.title}</h1></div><button type="button" disabled={busy || !canWork} onClick={() => { setExiting(true); setBusy(true); void save().then(() => router.push('/dashboard')).catch(cause => { setError(cause); setExiting(false); }).finally(() => setBusy(false)); }}>{t('exit')}</button></header><GlassSurface className="exam-progress-surface" variant="solid"><nav className="bridge-stage-nav" aria-label={t('sections')}>{(['LISTENING', 'READING', 'WRITING', 'SPEAKING'] as const).map((section, index) => <span key={section} aria-current={section === attempt.currentSection ? 'step' : undefined} className={attempt.submittedSections.includes(section) ? 'done' : ''}>{formatNumber(locale, index + 1)}<span className="sr-only"> {t(section)}</span></span>)}</nav></GlassSurface><article className="bridge-stage-card">
     <p className="bridge-kicker">{t(attempt.currentSection)}</p><h2>{t('sectionTitle', { skill: t(attempt.currentSection) })}</h2>
     <p role="timer" className="bridge-timer">{practice ? t('elapsedTime', { time: formatTime(attempt.elapsedMs + (paused ? 0 : Math.max(0, clock - synchronizedAt.current))) }) : remaining > 0 ? t('remainingTime', { time: formatTime(remaining) }) : t('expired')}</p>
     {practice ? <><button type="button" disabled={busy} onClick={() => void togglePause()}>{t(paused ? 'resumePractice' : 'pausePractice')}</button>{paused ? <p role="status">{t('paused')}</p> : null}<div>{attempt.submittedSections.filter(section => section === 'LISTENING' || section === 'READING').map(section => <button key={section} type="button" disabled={busy} onClick={() => void showReview(section)}>{t('reviewSection', { section: t(section as 'LISTENING' | 'READING') })}</button>)}</div></> : null}

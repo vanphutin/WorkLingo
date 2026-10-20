@@ -566,6 +566,10 @@ export function CurriculumWorkspace() {
     return true;
   });
 
+  // Filtering/collapsing the tree must not own the lifetime of an open draft.
+  const activeFoundationMission = tree?.paths.flatMap(path => path.levels.flatMap(level => level.missions))
+    .find(mission => mission.id === activeFoundationMissionId);
+
   if (isLoading && !tree) {
     return (
       <div className="curriculum-container authoring-experience" role="status">
@@ -831,7 +835,6 @@ export function CurriculumWorkspace() {
                 return tree.paths.map((path, pIdx) => {
                   const isLastPath = pIdx === tree.paths.length - 1;
                   const pBranch = isLastPath ? '└── ' : '├── ';
-                  const pIndent = isLastPath ? '    ' : '│   ';
 
                   return (
                     <React.Fragment key={path.id}>
@@ -983,6 +986,14 @@ export function CurriculumWorkspace() {
           </div>
         </section>
       )}
+
+      {activeFoundationMission ? <FoundationDefinitionEditor
+        key={activeFoundationMission.id}
+        missionId={activeFoundationMission.id}
+        missionTitle={activeFoundationMission.title}
+        prerequisiteOptions={prerequisiteOptions}
+        onClose={() => setActiveFoundationMissionId(null)}
+      /> : null}
 
       {filteredPaths.length === 0 && (
         <div className="curriculum-empty-hint" role="status">
@@ -1377,15 +1388,6 @@ export function CurriculumWorkspace() {
                                         )}
                                       </div>
                                     </div>
-
-                                    {activeFoundationMissionId === mission.id ? (
-                                      <FoundationDefinitionEditor
-                                        missionId={mission.id}
-                                        missionTitle={mission.title}
-                                        prerequisiteOptions={prerequisiteOptions}
-                                        onClose={() => setActiveFoundationMissionId(null)}
-                                      />
-                                    ) : null}
 
                                     {!isCompactView && mission.lessons.length > 0 && (
                                       <ul className="lessons-list">
