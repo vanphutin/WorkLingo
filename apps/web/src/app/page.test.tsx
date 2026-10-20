@@ -27,11 +27,11 @@ describe('HomePage', () => {
     expect(within(nav).getByRole('combobox', { name: 'Interface language' })).toBeVisible();
     expect(within(nav).getByRole('button', { name: /Color theme:/ })).toBeVisible();
   });
-  it('introduces WorkLingo as the primary page heading', () => {
+  it('introduces the learning purpose as the primary heading and keeps the brand link in navigation', () => {
     render(<HomePage />);
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'WorkLingo' }),
+      screen.getByRole('heading', { level: 1, name: 'English for your working life.' }),
     ).toBeInTheDocument();
   });
 
