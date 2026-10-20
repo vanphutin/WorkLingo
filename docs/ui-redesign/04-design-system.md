@@ -135,3 +135,9 @@ Slice4: Orientation header uses one regularGlassSurface; its solid slides retain
 Slice5: solid exam reading/editor/report, semantic timer badge and visible answered text derived from drafts. Target band separate from measured evidence. Disjoint progress uses GlassSurface solid; existing handlers/deadlines retained.
 
 Slice6: existing authoring roots adopt authoring-experience.css for solid headers/forms/preview, bounded native source scrolling and named keyboard-scrollable table. Tree/list/editor tracks use minmax(0,1fr); source focus ring is inset to survive existing clipping wrappers. Publication/status/revision remain domain-owned.
+
+Slice7: preference hub owns minmax(0,1fr) tracks and two-child language grouping; stacked mobile language/audio controls retain keyboard bounds. Existing AI/audio owners share scoped solid provider/readiness forms; simulation/unavailable use warning tokens. Operations/analytics retain complete data columns inside named native keyboard-scrollable table regions, while audit metadata uses fluid tracks. Shell safe-area and navigation remain unchanged.
+
+## Phase4 adoption complete — pending human acceptance
+
+All34 route owners now have real presentation adoption and scoped tests,105 final optimized Chromium checks and403 web tests. Shared shell/token adoption was never counted alone. See phase4-completion.md and per-route coverage for precise fixture-only acceptance and retained limitations; Phase5/6 audits remain unapproved.

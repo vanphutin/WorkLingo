@@ -1,0 +1,19 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/app/(learner)/layout.test.tsx" "src/components/workspace-navigation.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+stderr | src/components/workspace-navigation.test.tsx
+Not implemented: navigation to another Document
+
+ ✓ src/components/workspace-navigation.test.tsx (9 tests) 641ms
+   ✓ WorkspaceNavigation > retains all destinations and marks only the real active route segment  319ms
+ ✓ src/app/(learner)/layout.test.tsx (14 tests) 1230ms
+   ✓ LearnerLayout > reduces shell chrome on /sessions/session-id without changing the destination  353ms
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  14:05:16
+   Duration  3.50s (transform 391ms, setup 0ms, collect 1.68s, tests 1.87s, environment 1.57s, prepare 246ms)

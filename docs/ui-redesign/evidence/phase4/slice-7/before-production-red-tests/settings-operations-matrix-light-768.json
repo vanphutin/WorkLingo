@@ -1,0 +1,63 @@
+{
+  "title": "settings operations matrix light 768",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/settings",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/settings/audio",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/admin/settings/audio",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/admin/settings/ai",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/admin/audit",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    },
+    {
+      "url": "/admin/analytics",
+      "theme": "light",
+      "width": 768,
+      "client": 768,
+      "scroll": 768
+    }
+  ]
+}

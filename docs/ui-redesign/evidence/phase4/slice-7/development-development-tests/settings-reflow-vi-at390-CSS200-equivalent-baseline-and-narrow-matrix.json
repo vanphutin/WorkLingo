@@ -1,0 +1,311 @@
+{
+  "title": "settings reflow vi at390 CSS200 equivalent baseline and narrow matrix",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "locale": "vi",
+      "width": 320,
+      "CSSZoom": 1,
+      "client": 320,
+      "scroll": 320,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 16,
+          "right": 304,
+          "minWidth": "0px",
+          "columns": "234.594px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 16,
+          "right": 304,
+          "minWidth": "0px",
+          "columns": "28px 193px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 16,
+          "right": 304,
+          "minWidth": "0px",
+          "columns": "262px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 16,
+          "right": 304,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "288px"
+    },
+    {
+      "locale": "vi",
+      "width": 320,
+      "CSSZoom": 2,
+      "client": 320,
+      "scroll": 320,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 32,
+          "right": 288,
+          "minWidth": "0px",
+          "columns": "74.6016px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 32,
+          "right": 288,
+          "minWidth": "0px",
+          "columns": "28px 33.0078px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 32,
+          "right": 288,
+          "minWidth": "0px",
+          "columns": "102px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 32,
+          "right": 288,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "128px"
+    },
+    {
+      "locale": "vi",
+      "width": 360,
+      "CSSZoom": 1,
+      "client": 360,
+      "scroll": 360,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 16,
+          "right": 344,
+          "minWidth": "0px",
+          "columns": "274.594px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 16,
+          "right": 344,
+          "minWidth": "0px",
+          "columns": "28px 233px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 16,
+          "right": 344,
+          "minWidth": "0px",
+          "columns": "302px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 16,
+          "right": 344,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "328px"
+    },
+    {
+      "locale": "vi",
+      "width": 360,
+      "CSSZoom": 2,
+      "client": 360,
+      "scroll": 360,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 32,
+          "right": 328,
+          "minWidth": "0px",
+          "columns": "94.6016px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 32,
+          "right": 328,
+          "minWidth": "0px",
+          "columns": "28px 53.0078px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 32,
+          "right": 328,
+          "minWidth": "0px",
+          "columns": "122px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 32,
+          "right": 328,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "148px"
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "CSSZoom": 1,
+      "client": 390,
+      "scroll": 390,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 16,
+          "right": 374,
+          "minWidth": "0px",
+          "columns": "304.594px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 16,
+          "right": 374,
+          "minWidth": "0px",
+          "columns": "28px 263px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 16,
+          "right": 374,
+          "minWidth": "0px",
+          "columns": "332px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 16,
+          "right": 374,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "358px"
+    },
+    {
+      "locale": "vi",
+      "width": 390,
+      "CSSZoom": 2,
+      "client": 390,
+      "scroll": 390,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 32,
+          "right": 358,
+          "minWidth": "0px",
+          "columns": "109.602px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 32,
+          "right": 358,
+          "minWidth": "0px",
+          "columns": "28px 68.0078px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 32,
+          "right": 358,
+          "minWidth": "0px",
+          "columns": "137px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 32,
+          "right": 358,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "163px"
+    },
+    {
+      "locale": "vi",
+      "width": 768,
+      "CSSZoom": 1,
+      "client": 768,
+      "scroll": 768,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 16,
+          "right": 376,
+          "minWidth": "0px",
+          "columns": "299.875px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 392,
+          "right": 752,
+          "minWidth": "0px",
+          "columns": "28px 258.281px 13.8125px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 16,
+          "right": 376,
+          "minWidth": "0px",
+          "columns": "165.688px 148px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 392,
+          "right": 752,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "736px"
+    },
+    {
+      "locale": "vi",
+      "width": 768,
+      "CSSZoom": 2,
+      "client": 768,
+      "scroll": 768,
+      "cards": [
+        {
+          "class": "settings-card settings-navigation-card",
+          "left": 32,
+          "right": 368,
+          "minWidth": "0px",
+          "columns": "107.883px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-navigation-card settings-audio-card",
+          "left": 400,
+          "right": 736,
+          "minWidth": "0px",
+          "columns": "28px 66.2891px 13.8047px"
+        },
+        {
+          "class": "settings-card settings-language-card",
+          "left": 32,
+          "right": 368,
+          "minWidth": "0px",
+          "columns": "0px 121.688px"
+        },
+        {
+          "class": "glass-surface settings-card appearance-preferences",
+          "left": 400,
+          "right": 736,
+          "minWidth": "0px",
+          "columns": "auto 1fr auto"
+        }
+      ],
+      "mainColumns": "352px"
+    }
+  ]
+}

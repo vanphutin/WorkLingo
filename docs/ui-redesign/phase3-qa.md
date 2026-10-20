@@ -113,3 +113,7 @@ Used: ui-ux-pro-max → shell hierarchy/keyboard/composite contrast; codex-quota
 Verification:402 full web tests,45 targeted,13 optimized shell browser checks,2 post-review development regression checks; lint/types/i18n/build/whitespace and1,295 original hashes verified. Historical development13 checks retained separately. Unit current-link click emits a jsdom document-navigation diagnostic; it is not a failed test and real Chromium Enter behavior is independently RED→GREEN tested.
 
 Not used: extra implementation/review fanout, duplicate frontend frameworks/skills, backend/database/Sites/imagegen or a new mandate lifecycle. Existing approved direction/plan governs routine design decisions; no additional skill approval flow or installation was introduced. Keep this plan ledger for later authorized phases rather than deleting ongoing-work context.
+
+## Phase4 closure reference — 2026-10-20
+
+P4-SETTINGS-REFLOW-001 resolved in bcef16b at the Settings feature owner. Equivalent390CSS200 VI564→390;EN615→390;32 locale/width/zoom cells and native focus/long text pass. Historical Phase3 shell measurements above remain unchanged. [Phase4 proof](evidence/phase4/slice-7/README.md).

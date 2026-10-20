@@ -1,0 +1,63 @@
+{
+  "title": "settings operations matrix dark 1440",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "url": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/settings/audio",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/settings/ai",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/settings/audio",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/settings/ai",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/audit",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/operations",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "url": "/admin/analytics",
+      "theme": "dark",
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    }
+  ]
+}

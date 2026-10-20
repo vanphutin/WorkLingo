@@ -1,0 +1,266 @@
+[WebServer] (node:20788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-phase4-settings.spec.ts:29:5 › all settings and operations owners reflow at320 CSS200 (6.2s)
+  x  2 e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text (1.4s)
+  ok 3 e2e\liquid-glass-phase4-settings.spec.ts:47:5 › learner audio actual source save resume and failed save remain available (1.4s)
+  ok 4 e2e\liquid-glass-phase4-settings.spec.ts:51:51 › ai provider availability draft fallback save reload (1.5s)
+  ok 5 e2e\liquid-glass-phase4-settings.spec.ts:51:51 › adminAi provider availability draft fallback save reload (1.6s)
+  x  6 e2e\liquid-glass-phase4-settings.spec.ts:54:5 › system audio unavailable provider and no-change save retain gates (5.8s)
+  x  7 e2e\liquid-glass-phase4-settings.spec.ts:57:5 › content admin cannot edit system AI while account settings remain usable (5.7s)
+  ok 8 e2e\liquid-glass-phase4-settings.spec.ts:60:5 › audit filter cursor details operations filter page and analytics range preserve queries (2.5s)
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/me/ai-settings Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/audio-settings Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/audio-settings Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/audit-events?limit=25 Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/audit-events?limit=25 Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/operations/summary Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/operations/jobs?page=1&pageSize=20 Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/operations/summary Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:9/api/v1/admin/operations/jobs?page=1&pageSize=20 Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+[WebServer] Error: connect ECONNREFUSED 127.0.0.1:9
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:9) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 9
+[WebServer] }
+  ok 9 e2e\liquid-glass-phase4-settings.spec.ts:67:5 › settings errors retry and honest operations empty states (5.9s)
+
+
+  1) e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0
+    Received:    -317.109375
+
+      39 |     const controls = page.locator('.settings-page :is(a,button,select,input)'); await controls.first().focus();
+      40 |     for (let index = 0; index < await controls.count(); index++) {
+    > 41 |       await expect(controls.nth(index)).toBeFocused(); const b = await controls.nth(index).evaluate((el) => { const r = el.getBoundingClientRect(), s = getComputedStyle(el), n = 2 * (parseFloat(s.outlineWidth)+parseFloat(s.outlineOffset)); return { left:r.left-n,right:r.right+n,top:r.top-n,bottom:r.bottom+n,outline:parseFloat(s.outlineWidth) }; }); expect(b.outline).toBeGreaterThanOrEqual(2); expect(b.left).toBeGreaterThanOrEqual(0); expect(b.right).toBeLessThanOrEqual(width); expect(b.top).toBeGreaterThanOrEqual(0); expect(b.bottom).toBeLessThanOrEqual(844); observations.push({ width, CSSZoom:2, nativeTab:index, focus:b }); if(index+1<await controls.count()) await page.keyboard.press('Tab');
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+      42 |     }
+      43 |     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      44 |   }
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-settings.spec.ts:41:497
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-f32a1-tive-narrow-focus-long-text\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-f32a1-tive-narrow-focus-long-text\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-f32a1-tive-narrow-focus-long-text\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase4-settings.spec.ts:54:5 › system audio unavailable provider and no-change save retain gates
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator:  locator('.admin-save-btn')
+    Expected: disabled
+    Received: enabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeDisabled" locator('.admin-save-btn') with timeout 5000ms
+      - waiting for locator('.admin-save-btn')
+        14 × locator resolved to <button type="button" class="admin-save-btn">…</button>
+           - unexpected value "enabled"
+
+
+      53 | });
+      54 | test('system audio unavailable provider and no-change save retain gates',async({page})=>{
+    > 55 |   test.skip(baseline); await installSettingsFixtures(page,{kind:'adminAudio',locale:'en'}); await page.context().addCookies([{name:'worklingo_locale',value:'en',domain:'127.0.0.1',path:'/'}]); await page.goto('http://127.0.0.1:33300/admin/settings/audio'); await expect(page.locator('input[value=azure-speech]')).toBeDisabled(); await expect(page.locator('input[value=fake-tts]')).toBeChecked(); await expect(page.locator('.admin-save-btn')).toBeDisabled(); await page.locator('.theme-control').click(); await expect(page.locator('input[value=fake-tts]')).toBeChecked(); observations.push({unavailableProviderDisabled:true,unchangedSaveDisabled:true,simulationHonest:true});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^
+      56 | });
+      57 | test('content admin cannot edit system AI while account settings remain usable',async({page})=>{
+      58 |   test.skip(baseline); await installSettingsFixtures(page,{kind:'adminAi',role:'CONTENT_ADMIN'}); await page.goto('http://127.0.0.1:33300/admin/settings/ai'); await expect(page.locator('.admin-ai-fieldset').first()).toBeDisabled(); await expect(page.locator('.admin-ai-fieldset').nth(1)).toBeEnabled(); observations.push({existingReadOnlyUI:true,backendAuthorization:'not simulated'});
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-settings.spec.ts:55:443
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-a604d-no-change-save-retain-gates\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-a604d-no-change-save-retain-gates\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-a604d-no-change-save-retain-gates\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e\liquid-glass-phase4-settings.spec.ts:57:5 › content admin cannot edit system AI while account settings remain usable
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator:  locator('.admin-ai-fieldset').first()
+    Expected: disabled
+    Received: enabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeDisabled" locator('.admin-ai-fieldset').first() with timeout 5000ms
+      - waiting for locator('.admin-ai-fieldset').first()
+        12 × locator resolved to <fieldset disabled class="admin-ai-fieldset">…</fieldset>
+           - unexpected value "enabled"
+
+
+      56 | });
+      57 | test('content admin cannot edit system AI while account settings remain usable',async({page})=>{
+    > 58 |   test.skip(baseline); await installSettingsFixtures(page,{kind:'adminAi',role:'CONTENT_ADMIN'}); await page.goto('http://127.0.0.1:33300/admin/settings/ai'); await expect(page.locator('.admin-ai-fieldset').first()).toBeDisabled(); await expect(page.locator('.admin-ai-fieldset').nth(1)).toBeEnabled(); observations.push({existingReadOnlyUI:true,backendAuthorization:'not simulated'});
+         |                                                                                                                                                                                                                         ^
+      59 | });
+      60 | test('audit filter cursor details operations filter page and analytics range preserve queries',async({page})=>{
+      61 |   test.skip(baseline); await page.context().addCookies([{name:'worklingo_locale',value:'en',domain:'127.0.0.1',path:'/'}]); const audit=await installSettingsFixtures(page,{kind:'audit',locale:'en'}); await page.goto('http://127.0.0.1:33300/admin/audit'); await expect(page.locator('.audit-events-list article')).toHaveCount(25); await page.locator('.audit-pagination button').click(); await expect(page.locator('.audit-events-list article')).toHaveCount(2); expect(audit.requests.some(r=>new URL(r.url).searchParams.has('cursor'))).toBe(true); await page.locator('.audit-diff-details summary').first().click(); await expect(page.locator('.audit-diff-details pre').first()).toBeVisible();
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-settings.spec.ts:58:217
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-8a636-ount-settings-remain-usable\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-8a636-ount-settings-remain-usable\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-8a636-ount-settings-remain-usable\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    e2e\liquid-glass-phase4-settings.spec.ts:35:5 › settings real locale theme transparency persistence and native narrow focus long text
+    e2e\liquid-glass-phase4-settings.spec.ts:54:5 › system audio unavailable provider and no-change save retain gates
+    e2e\liquid-glass-phase4-settings.spec.ts:57:5 › content admin cannot edit system AI while account settings remain usable
+  6 passed (39.6s)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts liquid-glass-phase4-settings.spec.ts --grep all settings|settings real|learner audio|provider availability|system audio|content admin|audit filter|settings errors

@@ -1,0 +1,70 @@
+
+> @worklingo/web@0.0.0 test D:\Projects\WorkLingo-Liquid-Glass\apps\web
+> vitest run "src/features/admin-observability/observability-workspaces.test.tsx"
+
+
+ RUN  v3.2.6 D:/Projects/WorkLingo-Liquid-Glass/apps/web
+
+ ❯ src/features/admin-observability/observability-workspaces.test.tsx (4 tests | 2 failed) 386ms
+   ✓ admin observability workspaces > localizes operations filters while retaining API status values 285ms
+   ✓ admin observability workspaces > localizes aggregate metrics and definitions without translating machine event codes 25ms
+   × admin observability workspaces > renders queue health and an honest empty state 49ms
+     → expect(element).toHaveAttribute("tabindex", "0") // element.getAttribute("tabindex") === "0"
+
+Expected the element to have attribute:
+  tabindex="0"
+Received:
+  null
+   × admin observability workspaces > renders aggregate retention and event totals without learner identifiers 26ms
+     → expect(element).toHaveAttribute("tabindex", "0") // element.getAttribute("tabindex") === "0"
+
+Expected the element to have attribute:
+  tabindex="0"
+Received:
+  null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/admin-observability/observability-workspaces.test.tsx > admin observability workspaces > renders queue health and an honest empty state
+Error: expect(element).toHaveAttribute("tabindex", "0") // element.getAttribute("tabindex") === "0"
+
+Expected the element to have attribute:
+  tabindex="0"
+Received:
+  null
+ ❯ src/features/admin-observability/observability-workspaces.test.tsx:54:62
+     52|   it('renders queue health and an honest empty state', async () => {
+     53|     render(<OperationsWorkspace />);
+     54|     expect((await screen.findByRole('table')).parentElement).toHaveAtt…
+       |                                                              ^
+     55|     expect(await screen.findByText('Queue depth')).toBeInTheDocument();
+     56|     expect(screen.getByText('No jobs match these filters.')).toBeInThe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/admin-observability/observability-workspaces.test.tsx > admin observability workspaces > renders aggregate retention and event totals without learner identifiers
+Error: expect(element).toHaveAttribute("tabindex", "0") // element.getAttribute("tabindex") === "0"
+
+Expected the element to have attribute:
+  tabindex="0"
+Received:
+  null
+ ❯ src/features/admin-observability/observability-workspaces.test.tsx:61:62
+     59|   it('renders aggregate retention and event totals without learner ide…
+     60|     render(<AnalyticsWorkspace />);
+     61|     expect((await screen.findByRole('table')).parentElement).toHaveAtt…
+       |                                                              ^
+     62|     expect(await screen.findByText('60%')).toBeInTheDocument();
+     63|     expect(screen.getByText('40%')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  13:53:34
+   Duration  3.71s (transform 311ms, setup 0ms, collect 1.25s, tests 386ms, environment 1.37s, prepare 160ms)
+
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @worklingo/web@0.0.0 test: `vitest run "src/features/admin-observability/observability-workspaces.test.tsx"`
+Exit status 1

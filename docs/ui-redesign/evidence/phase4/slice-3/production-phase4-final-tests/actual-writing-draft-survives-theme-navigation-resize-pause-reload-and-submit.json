@@ -1,0 +1,16 @@
+{
+  "mode": "production",
+  "title": "actual writing draft survives theme navigation resize pause reload and submit",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "stableEditor": true,
+      "autosave": true,
+      "reloadResume": true,
+      "pauseResume": true,
+      "actualSubmission": true,
+      "inlinePendingEvaluation": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Phase 4 QA — route migration
 
-Status: IN PROGRESS. Approval: human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b; dedicated branch/worktree retained. No merge/push/deploy or Phase5/6 approval.
+Status: IMPLEMENTED AND VERIFIED — READY FOR HUMAN ACCEPTANCE. Approval: human master attachment e5a41d65-254b-4b8e-9246-71c3e78f82f2. Baseline2d9ba797f92daf2583210c66ab2141769dcfd95b; dedicated branch/worktree retained. No merge/push/deploy or Phase5/6 approval.
 
 ## Phase 3 technical acceptance
 
@@ -18,9 +18,9 @@ Fresh entry checks: isolated branch/path/HEAD clean, main7a5e383 unchanged, no u
 | 4 IELTS orientation/bridge | 3 | Verified (Chromium fixtures) | bb9a63b + touch follow-up; [evidence](evidence/phase4/slice-4/README.md) |
 | 5 IELTS integrated/pathway/mock | 5 | Verified (Chromium fixtures) | 41d05ba; [evidence](evidence/phase4/slice-5/README.md) |
 | 6 Admin authoring | 9 | Verified (Chromium fixtures) | 57d33f3; [evidence](evidence/phase4/slice-6/README.md) |
-| 7 Operations/settings | 8 | Discovered | Pending |
+| 7 Operations/settings | 8 | Verified (Chromium fixtures) | bcef16b; [evidence](evidence/phase4/slice-7/README.md) |
 
-Coverage now:34 total,26 implemented,26 verified,0 blocked,8 remaining. Error/not-found boundaries are additional owners, not routes.
+Coverage now:34 total,34 implemented,34 verified,0 blocked,0 remaining. Error/not-found boundaries are additional owners, not routes.
 
 ## Slice 1 — Public/Auth
 
@@ -65,3 +65,11 @@ Code 41d05ba09b2a6b220218074f3c53123d42a52e1c;17/34 verified,17 remain.15 optimi
 ## Slice6 checkpoint
 
 Code 57d33f32fb59d497235af06d31727127168bff0b;26/34 verified,8 remain.18 optimized Chromium/78 targeted; lint/types/build pass. Review evidence gaps and real clipped source focus fixed; no product business changes. [Evidence](evidence/phase4/slice-6/README.md). P4-AUTHORING-CONFLICT-001 records pre-existing Orientation409 reload. Next Slice7; no Phase5/merge/push/deploy.
+
+## Slice7 checkpoint
+
+Code bcef16b7b4714ab2cf13faf05d8b692872006187;34/34 actual owners fixture-verified, no blocked route.18 optimized Chromium/14 targeted. Settings inherited reflow564(VI)/615(EN) to390 at390CSS200; shell unchanged. [Evidence](evidence/phase4/slice-7/README.md). Final whole-phase Chromium105/105 and web403/403 passed; ready for human acceptance.
+
+## Final integration gate
+
+All105 optimized Chromium checks pass at bcef16b;403 web tests/85files, lint/types/i18n/build/whitespace pass.3144 opaque text samples min4.87497:1. Independent final review: no Critical/Important/Minor. [Complete results, failure analysis, Git preservation and limits](phase4-completion.md). Task4 technically complete pending human acceptance; no Phase5/6/merge/push/deploy.

@@ -1,0 +1,76 @@
+[WebServer] (node:2628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+  ok 1 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 390 (2.9s)
+  ok 2 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 768 (2.9s)
+  ok 3 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix light 1440 (3.4s)
+  ok 4 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 390 (2.7s)
+  ok 5 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 768 (3.1s)
+  ok 6 e2e\liquid-glass-phase4-settings.spec.ts:14:114 › settings operations matrix dark 1440 (3.6s)
+  x  7 e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow vi at390 CSS200 equivalent baseline and narrow matrix (457ms)
+  x  8 e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow en at390 CSS200 equivalent baseline and narrow matrix (577ms)
+  -  9 e2e\liquid-glass-phase4-settings.spec.ts:29:5 › all settings and operations owners reflow at320 CSS200
+
+
+  1) e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow vi at390 CSS200 equivalent baseline and narrow matrix
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    564
+
+      24 |   for (const width of baseline ? [390] : [320,360,390,768]) for (const zoom of baseline ? [2] : [1,2]) {
+      25 |     await page.setViewportSize({ width, height: 844 }); await page.unrouteAll(); await installSettingsFixtures(page, { kind: 'settings', locale }); await page.context().addCookies([{ name: 'worklingo_locale', value: locale, domain: '127.0.0.1', path: '/' }]); await page.goto('http://127.0.0.1:33300/settings'); await expect(page.locator('.settings-grid')).toBeVisible(); await page.evaluate((value) => { document.documentElement.style.zoom = String(value); }, zoom);
+    > 26 |     const bounds = await page.evaluate(() => ({ client: innerWidth, scroll: document.documentElement.scrollWidth, cards: [...document.querySelectorAll('.settings-card')].map((el) => ({ class: el.className, left: el.getBoundingClientRect().left, right: el.getBoundingClientRect().right, minWidth: getComputedStyle(el).minWidth, columns: getComputedStyle(el).gridTemplateColumns })), mainColumns: getComputedStyle(document.querySelector('.settings-page')!).gridTemplateColumns })); observations.push({ locale, width, CSSZoom: zoom, ...bounds }); expect(bounds.scroll).toBeLessThanOrEqual(bounds.client);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^
+      27 |   }
+      28 | });
+      29 | test('all settings and operations owners reflow at320 CSS200', async ({ page }) => {
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-settings.spec.ts:26:567
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-87c14--baseline-and-narrow-matrix\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-87c14--baseline-and-narrow-matrix\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-87c14--baseline-and-narrow-matrix\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow en at390 CSS200 equivalent baseline and narrow matrix
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    615
+
+      24 |   for (const width of baseline ? [390] : [320,360,390,768]) for (const zoom of baseline ? [2] : [1,2]) {
+      25 |     await page.setViewportSize({ width, height: 844 }); await page.unrouteAll(); await installSettingsFixtures(page, { kind: 'settings', locale }); await page.context().addCookies([{ name: 'worklingo_locale', value: locale, domain: '127.0.0.1', path: '/' }]); await page.goto('http://127.0.0.1:33300/settings'); await expect(page.locator('.settings-grid')).toBeVisible(); await page.evaluate((value) => { document.documentElement.style.zoom = String(value); }, zoom);
+    > 26 |     const bounds = await page.evaluate(() => ({ client: innerWidth, scroll: document.documentElement.scrollWidth, cards: [...document.querySelectorAll('.settings-card')].map((el) => ({ class: el.className, left: el.getBoundingClientRect().left, right: el.getBoundingClientRect().right, minWidth: getComputedStyle(el).minWidth, columns: getComputedStyle(el).gridTemplateColumns })), mainColumns: getComputedStyle(document.querySelector('.settings-page')!).gridTemplateColumns })); observations.push({ locale, width, CSSZoom: zoom, ...bounds }); expect(bounds.scroll).toBeLessThanOrEqual(bounds.client);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^
+      27 |   }
+      28 | });
+      29 | test('all settings and operations owners reflow at320 CSS200', async ({ page }) => {
+        at D:\Projects\WorkLingo-Liquid-Glass\apps\web\e2e\liquid-glass-phase4-settings.spec.ts:26:567
+
+    Error Context: ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-d58c9--baseline-and-narrow-matrix\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-d58c9--baseline-and-narrow-matrix\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\.superpowers\sdd\02-redesign-plan\phase4-browser-results\liquid-glass-phase4-settin-d58c9--baseline-and-narrow-matrix\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow vi at390 CSS200 equivalent baseline and narrow matrix
+    e2e\liquid-glass-phase4-settings.spec.ts:22:49 › settings reflow en at390 CSS200 equivalent baseline and narrow matrix
+  1 skipped
+  6 passed (24.8s)
+undefined
+D:\Projects\WorkLingo-Liquid-Glass\apps\web:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: playwright test -c playwright.phase4.config.ts liquid-glass-phase4-settings.spec.ts

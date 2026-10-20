@@ -1,0 +1,11 @@
+{
+  "title": "content admin cannot edit system AI while account settings remain usable",
+  "status": "passed",
+  "fixtures": true,
+  "observations": [
+    {
+      "existingReadOnlyUI": true,
+      "backendAuthorization": "not simulated"
+    }
+  ]
+}
