@@ -20,14 +20,17 @@ for (const theme of ['light', 'dark']) test(`all routes expose reachable visible
     await prepareAuditRoute(page, route);
     await page.goto('http://127.0.0.1:33300' + route[1]);
     await expect(page.locator(route[2]).first()).toBeVisible();
-    await page.keyboard.press('Tab');
     const control = page.locator('main').locator('a[href]:visible,button:enabled:visible,input:enabled:visible,select:enabled:visible,textarea:enabled:visible,[tabindex="0"]:visible').first();
-    await control.focus();
+    let tabs = 0;
+    while (tabs < 60 && !await control.evaluate(el => el === document.activeElement)) {
+      await page.keyboard.press('Tab'); tabs++;
+    }
+    await expect(control, route[1] + ' reachable with Tab').toBeFocused();
     const focus = await control.evaluate(el => {
       const s = getComputedStyle(el), r = el.getBoundingClientRect();
       return { tag: el.tagName, outline: s.outlineStyle, width: parseFloat(s.outlineWidth), offset: s.outlineOffset, focusVisible: el.matches(':focus-visible'), top: r.top, bottom: r.bottom, left: r.left, right: r.right, viewport: [innerWidth, innerHeight] };
     });
-    observations.push({ route: route[1], theme, focus });
+    observations.push({ route: route[1], theme, nativeTabCount: tabs, focus });
     expect.soft(focus.focusVisible, route[1]).toBe(true);
     expect.soft(focus.width, route[1]).toBeGreaterThanOrEqual(2);
     expect.soft(focus.outline, route[1]).not.toBe('none');
@@ -80,10 +83,37 @@ test('system appearance media fallback and safe area declarations remain usable'
   const light = await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor);
   expect(light).not.toBe(dark);
   await page.locator('.settings-page .transparency-control input').check();
-  for (const media of [{ reducedMotion: 'reduce', contrast: 'more' }, { forcedColors: 'active' }] as const) {
+  for (const surface of await page.locator('.glass-surface').all()) await expect(surface).toHaveCSS('backdrop-filter', 'none');
+  await page.locator('.settings-page .transparency-control input').uncheck();
+  await expect(page.locator('.shell-header-surface')).not.toHaveCSS('backdrop-filter', 'none');
+  const independentCases = [];
+  for (const media of [{ reducedMotion: 'reduce', contrast: 'more', forcedColors: 'none' }, { reducedMotion: 'no-preference', contrast: 'no-preference', forcedColors: 'active' }] as const) {
     await page.emulateMedia(media);
+    await expect(page.locator('html')).not.toHaveAttribute('data-reduce-transparency', 'true');
     for (const surface of await page.locator('.glass-surface').all()) await expect(surface).toHaveCSS('backdrop-filter', 'none');
     await expect(page.locator('.settings-language-card select')).toBeEnabled();
+    independentCases.push(media);
   }
-  observations.push({ systemLightDark: [light, dark], reducedTransparency: true, increasedContrast: true, forcedColors: true, physicalNotch: 'not available; env safe-area declarations reused and no shell insets changed' });
+  observations.push({ systemLightDark: [light, dark], reducedTransparency: true, independentCases, physicalNotch: 'not available; env safe-area declarations reused and no shell insets changed' });
+});
+
+test('actual not-found boundary reflows with named return link in both themes', async ({ page }) => {
+  await page.context().addCookies([{ name: 'worklingo_locale', value: 'vi', domain: '127.0.0.1', path: '/' }]);
+  for (const theme of ['light', 'dark']) {
+    await page.addInitScript(t => localStorage.setItem('worklingo:theme:v1', t), theme);
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('http://127.0.0.1:33300/phase5-intentionally-missing-page');
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      const link = page.getByRole('link', { name: 'Về WorkLingo' });
+      await expect(link).toHaveAttribute('href', '/');
+      for (const zoom of [1, 2]) {
+        await page.evaluate(value => { document.documentElement.style.zoom = String(value); }, zoom);
+        const scroll = await page.evaluate(() => document.documentElement.scrollWidth);
+        expect(scroll).toBeLessThanOrEqual(width);
+        observations.push({ boundary: 'not-found', width, CSSZoom: zoom, theme, scroll, liveTransport: false });
+      }
+    }
+  }
 });

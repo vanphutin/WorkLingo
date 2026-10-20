@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { auditRoutes, prepareAuditRoute } from './fixtures/phase5-routes';
+import { contrastRatio as ratio, measureGlassText } from './fixtures/phase5-contrast';
 const evidence=path.resolve(__dirname,'../../../docs/ui-redesign/evidence/phase5');
 const run=process.env.WORKLINGO_PHASE5_RUN??'before';const records:object[]=[];
 test.afterEach(({},info)=>{const dir=path.join(evidence,run);mkdirSync(dir,{recursive:true});writeFileSync(path.join(dir,info.title.replace(/[^a-z0-9]+/giu,'-')+'.json'),JSON.stringify({title:info.title,status:info.status,observations:records.splice(0),fixtures:true},null,2)+'\n');});
@@ -44,14 +45,20 @@ test('remediation screenshots preserve equivalent route theme and viewport condi
     }
   }
 });
-const luminance=(a:number[])=>a.slice(0,3).map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4;}).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i]!,0);
-const ratio=(a:number[],b:number[])=>{const x=luminance(a),y=luminance(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+test('contrast sampler rejects a favorable corner and accounts for foreground alpha', async ({ page }) => {
+  await page.setContent('<div class="glass-surface" style="width:800px;height:120px;background:linear-gradient(to right,#000 50%,#fff 50%);position:relative"><p style="position:absolute;left:20px;top:20px;color:rgb(17,17,17)">Low contrast text</p></div>');
+  const local = await measureGlassText(page, page.locator('.glass-surface'));
+  expect(local.ratio).toBeLessThan(2); expect(ratio([17,17,17],[255,255,255])).toBeGreaterThan(10);
+  await page.locator('p').evaluate(el => { el.style.color = 'rgba(255,255,255,.5)'; });
+  const alpha = await measureGlassText(page, page.locator('.glass-surface'));
+  expect(alpha.samples[0]!.effectiveForeground[0]).toBeCloseTo(127.5);
+  expect(alpha.ratio).toBeCloseTo(ratio([127.5,127.5,127.5],[0,0,0]));
+  records.push({ negativeControl: true, rejectedCornerRatio: ratio([17,17,17],[255,255,255]), actualTextRatio: local.ratio, alphaRatio: alpha.ratio });
+});
 for(const theme of ['light','dark']) test(`actual glass composite text and native control contrast ${theme}`,async({page})=>{
   for(const url of ['/','/login','/dashboard','/mastery','/ielts/orientation','/settings','/admin/content']){
     await open(page,url,theme);for(const surface of await page.locator('.glass-surface:visible').all()){
-      const probe=await surface.evaluateHandle(el=>{const p=document.createElement('span');p.dataset.phase5Probe='true';p.setAttribute('aria-hidden','true');p.style.cssText='position:absolute;right:8px;bottom:8px;width:8px;height:8px;pointer-events:none;background:transparent';el.append(p);return p;});
-      const png=await page.locator('[data-phase5-probe]').screenshot();const background=await page.evaluate(async(data)=>{const img=new Image();img.src='data:image/png;base64,'+data;await img.decode();const c=document.createElement('canvas');c.width=img.width;c.height=img.height;const ctx=c.getContext('2d')!;ctx.drawImage(img,0,0);return[...ctx.getImageData(4,4,1,1).data].slice(0,3);},png.toString('base64'));
-      const colors=await surface.evaluate(el=>{const target=el.querySelector('.workspace-nav-group-label,.brand-logo,.public-brand-link,p,small')??el;return{class:el.className,variant:el.getAttribute('data-glass-variant'),foreground:getComputedStyle(target).color.match(/[\d.]+/g)!.map(Number),filter:getComputedStyle(el).backdropFilter};});const measured=ratio(colors.foreground,background);records.push({url,theme,kind:'screenshot-composite',...colors,background,ratio:measured});expect.soft(measured,url+' glass').toBeGreaterThanOrEqual(4.5);await probe.evaluate(el=>el.remove());await probe.dispose();
+      const measured = await measureGlassText(page, surface); records.push({url,theme,kind:'text-position-composite',...measured});expect.soft(measured.ratio,url+' glass behind text').toBeGreaterThanOrEqual(4.5);
     }
     const fields=page.locator('select:visible,input:not([type=checkbox]):not([type=radio]):visible,textarea:visible');for(const field of await fields.all()){
       if(await field.isDisabled())continue;const colors=await field.evaluate(el=>{const s=getComputedStyle(el),rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);return{class:el.className,background:rgb(s.backgroundColor),border:rgb(s.borderTopColor),foreground:rgb(s.color)};});if((colors.background[3]??1)!==1)continue;const boundary=ratio(colors.border,colors.background);records.push({url,kind:'control-boundary',...colors,ratio:boundary});expect.soft(boundary,url+' boundary').toBeGreaterThanOrEqual(3);
