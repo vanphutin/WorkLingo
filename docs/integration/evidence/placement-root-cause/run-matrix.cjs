@@ -4,14 +4,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const assert = require('node:assert/strict');
+const { runBounded } = require('./bounded-process.cjs');
 const root = path.resolve(__dirname, '../../../..');
 const owner = crypto.randomUUID().replaceAll('-', '');
 const container = `worklingo-placement-${owner.slice(0, 12)}`;
 const password = crypto.randomBytes(24).toString('hex');
 const secret = crypto.randomBytes(32).toString('hex');
 const dockerEnv = { ...process.env, POSTGRES_PASSWORD: password };
-const docker = (...args) => cp.execFileSync('docker', args, { cwd: root, env: dockerEnv, windowsHide: true, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
-const git = (...args) => cp.execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+const docker = (...args) => cp.execFileSync('docker', args, { cwd: root, env: dockerEnv, windowsHide: true, timeout: 30_000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+const git = (...args) => cp.execFileSync('git', args, { cwd: root, encoding: 'utf8', timeout: 10_000, windowsHide: true }).trim();
 const digest = file => crypto.createHash('sha256').update(fs.readFileSync(path.join(root, file))).digest('hex');
 const stamp = () => ({ wall: new Date().toISOString(), monotonicNs: process.hrtime.bigint().toString() });
 const redact = text => [password, secret].reduce((value, item) => value.replaceAll(item, '[REDACTED]'), text)
@@ -20,22 +21,25 @@ const redact = text => [password, secret].reduce((value, item) => value.replaceA
 const directory = process.argv[2] || 'matrix';
 assert.match(directory, /^matrix(?:-[a-z]+)?$/u, 'Evidence directory must be a local matrix namespace');
 const evidence = path.join(__dirname, directory);
-fs.mkdirSync(evidence, { recursive: true });
 const record = { owner, container, sourceCommit: git('rev-parse', 'HEAD'), started: stamp(), result: 'BLOCKED', cleanup: false, cells: [] };
 const source = git('ls-files', '--', 'apps', 'packages').split('\n').filter(Boolean);
 record.sourceSHA256 = Object.fromEntries(source.map(file => [file, digest(file)]));
 record.launcherSHA256 = digest(path.relative(root, __filename));
 let created = false;
+let reserved = false;
 
 (async () => {
   try {
     assert.equal(root.replaceAll('\\', '/'), 'D:/Projects/WorkLingo-Integration');
     assert.equal(git('branch', '--show-current'), 'integration/worklingo-release-candidate');
     assert.ok(!fs.existsSync(path.join(root, '.env')), 'Refuse workspace .env');
-    assert.ok(!fs.existsSync(path.join(evidence, 'result.json')), 'Refuse overwriting matrix evidence');
+    fs.mkdirSync(evidence); // Atomic exclusive namespace reservation, no overwrite.
+    reserved = true;
     record.environment = { node: process.version, platform: process.platform, image: docker('image', 'inspect', 'postgres:17-alpine', '--format', '{{.Id}}'), docker: docker('version', '--format', '{{.Server.Version}}'), providers: 'fake', backgroundWorker: false };
-    docker('run', '--rm', '--detach', '--name', container, '--label', `worklingo.placement.owner=${owner}`, '--publish', '127.0.0.1::5432', '--tmpfs', '/var/lib/postgresql/data:rw', '--env', 'POSTGRES_PASSWORD', '--env', 'POSTGRES_USER=placement', '--env', 'POSTGRES_DB=placement_diagnostics', 'postgres:17-alpine');
     created = true;
+    // If docker run times out after creating the container, still attempt only
+    // owner-verified cleanup of this exact name.
+    docker('run', '--rm', '--detach', '--name', container, '--label', `worklingo.placement.owner=${owner}`, '--publish', '127.0.0.1::5432', '--tmpfs', '/var/lib/postgresql/data:rw', '--env', 'POSTGRES_PASSWORD', '--env', 'POSTGRES_USER=placement', '--env', 'POSTGRES_DB=placement_diagnostics', 'postgres:17-alpine');
     const binding = docker('port', container, '5432/tcp');
     assert.match(binding, /^127\.0\.0\.1:\d+$/u);
     let ready = false;
@@ -52,19 +56,21 @@ let created = false;
     // samples characterize this run, not the destroyed historical database.
     const { createRequire } = require('node:module');
     const { PrismaClient } = createRequire(path.join(root, 'apps/api/package.json'))('@prisma/client');
-    const clock = new PrismaClient({ datasourceUrl: databaseUrl });
+    const clock = new PrismaClient({ datasourceUrl: `${databaseUrl}?connect_timeout=10&pool_timeout=10` });
     record.clockSamples = [];
     try {
       await clock.$connect();
+      await clock.$transaction(async transaction => {
       for (let index = 0; index < 64; index++) {
         const beforeMs = Date.now();
         const mono = process.hrtime.bigint();
-        const [sample] = await clock.$queryRaw`SELECT (extract(epoch FROM clock_timestamp()) * 1000)::text AS "databaseEpochMs", current_setting('transaction_isolation') AS isolation`;
+        const [sample] = await transaction.$queryRaw`SELECT (extract(epoch FROM clock_timestamp()) * 1000)::text AS "databaseEpochMs", current_setting('transaction_isolation') AS isolation`;
         const afterMs = Date.now();
         record.clockSamples.push({ beforeMs, afterMs, durationNs: (process.hrtime.bigint() - mono).toString(), ...sample });
       }
+      }, { maxWait: 10_000, timeout: 15_000 });
     } finally { await clock.$disconnect(); }
-    const execute = (cell, role, files, diagnostics) => new Promise(resolve => {
+    const execute = async (cell, role, files, diagnostics) => {
       const started = stamp();
       const logName = `${cell}-${role}.log`;
       const stream = fs.createWriteStream(path.join(evidence, logName), { flags: 'wx' });
@@ -73,20 +79,17 @@ let created = false;
       const env = { ...process.env, DATABASE_URL: databaseUrl, TEST_DATABASE_URL: databaseUrl, SESSION_SECRET: secret, WORKLINGO_DATA_DIR: scratch,
         WORKLINGO_PLACEMENT_REPEATS: '30', WORKLINGO_PLACEMENT_DIAGNOSTICS: diagnostics, JOB_WORKER_ENABLED: 'false' };
       const args = ['--filter', '@worklingo/api', 'exec', 'vitest', 'run', ...files];
-      const child = cp.spawn(process.execPath, [pnpm, ...args], { cwd: root, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
       const forward = input => {
         let pending = '';
         input.on('data', chunk => { pending += chunk; const lines = pending.split('\n'); pending = lines.pop(); for (const line of lines) stream.write(redact(line).trimEnd() + '\n'); });
         input.on('end', () => { if (pending) stream.write(redact(pending).trimEnd() + '\n'); });
       };
-      forward(child.stdout); forward(child.stderr);
-      let error;
-      child.on('error', cause => { error = redact(String(cause)); });
-      child.on('close', async (exitCode, signal) => {
-        await new Promise(done => stream.end(done));
-        resolve({ role, started, finished: stamp(), exitCode, signal, error, command: `pnpm ${args.join(' ')}`, diagnostics, log: logName });
-      });
-    });
+      const outcome = await runBounded(process.execPath, [pnpm, ...args], { cwd: root, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], timeoutMs: 180_000,
+        onSpawn: child => { forward(child.stdout); forward(child.stderr); } });
+      await new Promise(done => stream.end(done));
+      return { role, started, finished: stamp(), ...outcome, error: outcome.error ? redact(outcome.error) : undefined,
+        command: `pnpm ${args.join(' ')}`, diagnostics, log: logName };
+    };
     const placement = ['test/integration/placement-isolation.integration.spec.ts'];
     const load = ['test/integration/jobs-worker.integration.spec.ts', 'test/integration/placement-attempt.integration.spec.ts', 'test/integration/placement-confirmation.integration.spec.ts', 'test/integration/onboarding-self-placement.integration.spec.ts', 'test/integration/ielts-mock-workflow.integration.spec.ts', 'test/integration/ielts-study-session.integration.spec.ts'];
     for (const cell of [{ name: 'single', workers: 1, load: false }, { name: 'parallel', workers: 2, load: false }, { name: 'single-load', workers: 1, load: true }, { name: 'parallel-load', workers: 2, load: true }]) {
@@ -101,7 +104,7 @@ let created = false;
       // Continue finite cells after a failure to preserve the comparative evidence.
     }
     assert.ok(source.every(file => digest(file) === record.sourceSHA256[file]), 'Source mutated during matrix');
-    record.result = record.cells.every(cell => cell.children.every(child => child.exitCode === 0)) ? 'PASS' : 'FAIL';
+    record.result = record.cells.every(cell => cell.children.every(child => child.exitCode === 0 && child.closed && !child.timedOut && !child.error)) ? 'PASS' : 'FAIL';
   } catch (error) { record.error = redact(String(error.message)); }
   finally {
     if (created) {
@@ -109,7 +112,7 @@ let created = false;
       catch (error) { record.cleanupError = redact(String(error.message)); }
     }
     record.finished = stamp();
-    fs.writeFileSync(path.join(evidence, 'result.json'), JSON.stringify(record, null, 2) + '\n');
+    if (reserved) fs.writeFileSync(path.join(evidence, 'result.json'), JSON.stringify(record, null, 2) + '\n', { flag: 'wx' });
     console.log(JSON.stringify({ result: record.result, cleanup: record.cleanup, error: record.error }));
     if (record.result !== 'PASS' || !record.cleanup) process.exitCode = 1;
   }
