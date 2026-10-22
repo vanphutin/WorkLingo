@@ -22,7 +22,7 @@ export function TopicLessonOutline({ prefix, draft, hasReview, canSave }: {
     { key: 'listening', label: t('outlineListening', { count: draft.listeningQuestions.length }), questions: draft.listeningQuestions, skill: 'listening' as const },
     { key: 'speaking', label: ta('speaking') }, { key: 'writing', label: ta('writing') },
     ...(canSave ? [{ key: 'save', label: t('outlineSave') }] : []),
-    ...(hasReview ? [{ key: 'review', label: t('reviewTitle') }, { key: 'lifecycle', label: ta('lifecycle') }] : []),
+    ...(hasReview ? [{ key: 'review', label: t('reviewTitle') }, { key: 'lifecycle', label: t('publicationTitle') }] : []),
   ];
   const targets = items.flatMap(item => [id(item.key), ...(item.questions?.map((_, index) => id(`${item.skill}-question-${index + 1}`)) ?? [])]).join('|');
   useEffect(() => {

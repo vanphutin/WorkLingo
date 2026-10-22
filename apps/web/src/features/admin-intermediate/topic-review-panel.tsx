@@ -9,11 +9,12 @@ import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client
 import { AdminLink, useAdminNavigationGuard } from '../admin-dashboard/admin-navigation-guard';
 
 type RecordInfo = { id: string; sourceHash: string; draftRevision: number; status: string };
-type Props = { record: RecordInfo; dirty: boolean; onDirtyChange?: ((dirty: boolean) => void) | undefined };
-export function TopicReviewPanel({ record, dirty, onDirtyChange }: Props) {
-  return <ReviewSession key={`${record.id}:${record.draftRevision}:${record.sourceHash}`} record={record} dirty={dirty} onDirtyChange={onDirtyChange} />;
+type Props = { record: RecordInfo; dirty: boolean; disabled?: boolean; publicationHref?: string; onApprovalChange?: ((approved: boolean) => void) | undefined; onDirtyChange?: ((dirty: boolean) => void) | undefined };
+export function TopicReviewPanel(props: Props) {
+  const { record } = props;
+  return <ReviewSession key={`${record.id}:${record.draftRevision}:${record.sourceHash}`} {...props} />;
 }
-function ReviewSession({ record, dirty, onDirtyChange }: Props) {
+function ReviewSession({ record, dirty, disabled = false, publicationHref, onApprovalChange, onDirtyChange }: Props) {
   const t = useT('intermediateTopics', intermediateTopicsMessages);
   const [review, setReview] = useState<TopicReview | null>(null);
   const [plan, setPlan] = useState<TopicPlan>(() => defaultTopicPlan(60));
@@ -27,7 +28,9 @@ function ReviewSession({ record, dirty, onDirtyChange }: Props) {
   const readOnly = record.status === 'PUBLISHED' || record.status === 'ARCHIVED';
   const valid = topicPlanSchema.safeParse(plan).success;
   const approved = review?.status === 'approved' && review.approval !== null && !planDirty && !dirty;
-  const blocked = busy || readOnly || dirty || error === 'conflict';
+  const blocked = busy || disabled || readOnly || dirty || error === 'conflict';
+  useEffect(() => { onApprovalChange?.(approved); }, [approved, onApprovalChange]);
+  useEffect(() => () => onApprovalChange?.(false), [onApprovalChange]);
   useAdminNavigationGuard(!onDirtyChange && planDirty, t('leave'));
   useEffect(() => { onDirtyChange?.(planDirty); }, [onDirtyChange, planDirty]);
   useEffect(() => () => { onDirtyChange?.(false); }, [onDirtyChange]);
@@ -51,7 +54,7 @@ function ReviewSession({ record, dirty, onDirtyChange }: Props) {
     setReview(value); setPlan(next); setBaseline(JSON.stringify(next)); setError(null);
   }
   async function act(action: 'propose' | 'approve') {
-    if (!review || dirty || readOnly || inFlight.current || error === 'conflict' || (action === 'approve' && !valid)) return;
+    if (!review || disabled || dirty || readOnly || inFlight.current || error === 'conflict' || (action === 'approve' && !valid)) return;
     if (action === 'propose' && planDirty && !window.confirm(t('leave'))) return;
     inFlight.current = true; setBusy(true); setError(null);
     const command = { expectedDraftRevision: record.draftRevision, expectedSourceHash: record.sourceHash, expectedReviewRevision: review.revision };
@@ -85,7 +88,8 @@ function ReviewSession({ record, dirty, onDirtyChange }: Props) {
           <button type="button" disabled={blocked || review.status === 'approved'} onClick={() => void act('propose')}>{t(busy ? 'busy' : 'propose')}</button>
           <button type="button" className="intermediate-save" disabled={blocked || !valid || approved} onClick={() => void act('approve')}>{t(busy ? 'busy' : approved ? 'approvalComplete' : 'approve')}</button>
         </div>
-        {approved && !readOnly ? <AdminLink className="intermediate-review-next" href={`/admin/content/${record.id}`}>{t('continuePublication')}</AdminLink> : null}
+        {approved && !readOnly ? publicationHref ? <a className="intermediate-review-next" href={publicationHref} onClick={() => document.getElementById(publicationHref.slice(1))?.focus()}>{t('continuePublication')}</a>
+          : <AdminLink className="intermediate-review-next" href={`/admin/content/${record.id}`}>{t('continuePublication')}</AdminLink> : null}
       </div>
     </>}
   </section>;

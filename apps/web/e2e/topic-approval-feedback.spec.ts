@@ -1,5 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { defaultTopicPlan, type TopicReview } from '@worklingo/contracts';
+import { defaultTopicPlan, publishContentImportSchema, validateContentImportSchema, type TopicReview } from '@worklingo/contracts';
+import { analyzeLessonSource } from '@worklingo/content-format';
+import { createTopicJsonTemplate, topicJsonToDraft } from '../src/features/admin-intermediate/topic-json';
+import { serializeIntermediateTopicLesson } from '../src/features/admin-intermediate/topic-lesson-model';
+import { authoringFixtures } from './fixtures/phase4-authoring-data';
 import { installSidebarAdminFixtures, sidebarImportId } from './fixtures/admin-sidebar-contracts';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
@@ -14,6 +18,28 @@ for (const [width, locale, theme] of [[1440, 'en', 'light'], [390, 'vi', 'dark']
     await installSidebarAdminFixtures(page, locale, route);
     let review: TopicReview = { importId: sidebarImportId, revision: 0, status: 'none', proposal: null, approval: null };
     let writes = 0;
+    let publications = 0;
+    const content = { ...authoringFixtures.content, rawSource: serializeIntermediateTopicLesson(topicJsonToDraft(createTopicJsonTemplate())) };
+    const analysis = analyzeLessonSource(content.rawSource);
+    expect(analysis.canPublish).toBe(true);
+    await page.route(`**/api/v1/admin/content-imports/${sidebarImportId}`, handler => handler.fulfill({ json: content }));
+    await page.route('**/api/v1/admin/content-imports/*/validate', async handler => {
+      expect(validateContentImportSchema.parse(handler.request().postDataJSON())).toEqual({ expectedDraftRevision: 1 });
+      content.status = 'VALIDATED';
+      await handler.fulfill({ json: { importId: content.id, draftRevision: 1, sourceHash: content.sourceHash, status: content.status, canPublish: true, issues: [], issuesTruncated: false } });
+    });
+    await page.route('**/api/v1/admin/content-imports/*/preview', handler => handler.fulfill({ json: { importId: content.id, draftRevision: 1, sourceHash: content.sourceHash, status: content.status, canPublish: true, normalizedDraft: analysis.normalizedDraft, issues: [] } }));
+    await page.route('**/api/v1/admin/content-imports/*/vocabulary-review', handler => handler.fulfill({ json: { importId: content.id, draftRevision: 1, sourceHash: content.sourceHash, reviewHash: 'vocab-1', topic: null, entries: [] } }));
+    await page.route('**/api/v1/admin/audio-settings', handler => handler.fulfill({ json: { providerId: 'fake-tts', defaultVoiceId: 'fake-neutral', providers: [{ id: 'fake-tts', displayName: 'Simulation', defaultVoiceId: 'fake-neutral', available: true, simulation: true, supportedLocales: ['en-US'] }] } }));
+    await page.route('**/api/v1/admin/content-imports/*/audio', handler => handler.fulfill({ json: [{ id: content.id, contentImportId: content.id, audioScriptSlug: 'workplace-audio', scriptHash: 'script', adapterName: 'fake-tts', voiceConfig: {}, mimeType: 'audio/wav', byteSize: 1024, checksum: 'sum', storageKey: 'fixture', status: 'READY', failureSummary: null, simulationLabel: 'Simulation', createdAt: content.createdAt, updatedAt: content.updatedAt }] }));
+    await page.route('**/api/v1/admin/content-imports/*/publish', async handler => {
+      const command = publishContentImportSchema.parse(handler.request().postDataJSON());
+      expect(command.expectedSourceHash).toBe(content.sourceHash);
+      expect(command.selectedAudioArtifacts).toEqual({ 'workplace-audio': content.id });
+      expect(command.vocabularyReview).toEqual({ reviewHash: 'vocab-1', choices: [] });
+      publications++; content.status = 'PUBLISHED'; content.lessonId = content.id; content.lessonVersionId = content.id;
+      await handler.fulfill({ json: { importId: content.id, lessonId: content.id, lessonVersionId: content.id, version: 1, status: 'PUBLISHED', publishedAt: '2026-10-22T06:00:00Z' } });
+    });
     await page.route('**/api/v1/admin/intermediate-topics/*/review', handler => handler.fulfill({ json: review }));
     await page.route('**/api/v1/admin/intermediate-topics/*/approve', async handler => {
       writes++; const command = handler.request().postDataJSON();
@@ -29,7 +55,7 @@ for (const [width, locale, theme] of [[1440, 'en', 'light'], [390, 'vi', 'dark']
     await expect(group.getByRole('button', { name: savedName, exact: true })).toBeDisabled();
     expect(writes).toBe(1);
     await expect(group.getByRole('status')).toContainText(locale === 'vi' ? '60 phút' : '60-minute');
-    await expect(group.getByRole('link')).toHaveAttribute('href', `/admin/content/${sidebarImportId}`);
+    await expect(group.getByRole('link')).toHaveAttribute('href', /^#.*-lifecycle$/);
     await group.scrollIntoViewIfNeeded();
     const statusBox = await group.getByRole('status').boundingBox();
     expect(statusBox!.y).toBeGreaterThanOrEqual(0); expect(statusBox!.y + statusBox!.height).toBeLessThanOrEqual(844);
@@ -40,5 +66,27 @@ for (const [width, locale, theme] of [[1440, 'en', 'light'], [390, 'vi', 'dark']
     await expect(group.getByRole('button', { name: approveName })).toBeEnabled();
     await expect(group.getByRole('link')).toHaveCount(0);
     expect(review.approval?.plan).toEqual(defaultTopicPlan(60));
+    await page.getByRole('combobox', { name: locale === 'vi' ? 'Thời lượng phiên học được duyệt' : 'Approved session duration', exact: true }).selectOption('60');
+    const next = group.getByRole('link');
+    await next.focus(); await page.keyboard.press('Enter');
+    const publication = page.getByRole('region', { name: locale === 'vi' ? '4. Xuất bản bài học' : '4. Publish lesson', exact: true });
+    await expect(publication).toBeVisible();
+    await publication.getByRole('button', { name: locale === 'vi' ? 'Kiểm tra bản nháp' : 'Validate Draft', exact: true }).click();
+    const publish = publication.getByRole('button', { name: locale === 'vi' ? 'Xuất bản bài học' : 'Publish Lesson', exact: true });
+    await expect(publish).toBeDisabled();
+    await publication.getByRole('radio').check();
+    await expect(publish).toBeEnabled();
+    await publish.scrollIntoViewIfNeeded();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await page.screenshot({ path: path.join(evidence, `ready-${width}-${locale}.png`) });
+    await publish.focus(); await page.keyboard.press('Enter');
+    await expect(publication.getByRole('status')).toContainText(locale === 'vi' ? 'Bài học đã được xuất bản' : 'Lesson published');
+    expect(publications).toBe(1);
+    expect(new URL(page.url()).pathname).toBe(route);
+    await page.screenshot({ path: path.join(evidence, `published-${width}-${locale}.png`) });
+    await page.reload();
+    await expect(page.getByRole('region', { name: locale === 'vi' ? 'Thông tin xuất bản' : 'Publish details', exact: true })).toBeVisible();
+    await expect(page.getByRole('textbox', { name: locale === 'vi' ? 'Bài đọc gốc' : 'Source passage', exact: true })).toBeDisabled();
+    expect(publications).toBe(1);
   });
 }

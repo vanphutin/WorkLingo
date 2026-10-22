@@ -82,3 +82,12 @@
 .intermediate-review-feedback[data-approved='true'] { border-color: var(--success); background: var(--success-soft); }
 .intermediate-review-actions .intermediate-actions { margin-top: .75rem; }
 .intermediate-review-next { display: inline-flex; align-items: center; min-height: 44px; margin-top: .5rem; font-weight: 600; }
+.intermediate-publication { min-width: 0; }
+.intermediate-publication > fieldset { display: grid; gap: 1.25rem; }
+.intermediate-publication :is(.publish-card,.audio-preview-container,.validation-panel) { min-width: 0; max-width: 100%; }
+.intermediate-publication :is(.validation-panel-header,.publish-action-row,.audio-item-header) { flex-wrap: wrap; gap: .75rem; }
+.intermediate-publication .audio-scripts-grid { grid-template-columns: minmax(0,1fr); }
+.intermediate-publication :is(.audio-slug,.publish-revision-info,.issue-message,.published-details) { overflow-wrap: anywhere; }
+.intermediate-publication .publish-card { padding: clamp(.75rem,2vw,1.5rem); }
+.intermediate-publication .btn-publish { background: var(--primary-fill); color: var(--on-primary); border-color: var(--primary-fill); font-weight: 600; }
+.intermediate-publication-result { padding: .75rem; border: 1px solid var(--success); border-radius: .5rem; background: var(--success-soft); }
