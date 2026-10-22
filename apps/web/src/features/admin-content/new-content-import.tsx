@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { useRouter } from 'next/navigation';
 import { useAdminContent } from './i18n';
@@ -60,9 +62,15 @@ export function NewContentImport() {
   const [errorMessage, setErrorMessage] = useState<unknown>(null);
   const [selectedTemplate, setSelectedTemplate] = useState('legacy');
 
+  const [templateSource, setTemplateSource] = useState(DEFAULT_TEMPLATE);
+  const [created, setCreated] = useState(false);
+  const edited = rawSource !== templateSource;
+  const canLeave = useAdminDraftGuard(!created && (edited || selectedTemplate !== 'legacy'));
+
   function handleTemplateChange(value: string) {
-    setSelectedTemplate(value);
-    if (value !== 'legacy') setRawSource(getFoundationTemplate(value as FoundationCategory).source);
+    if (edited && !canLeave()) return;
+    const source = value === 'legacy' ? DEFAULT_TEMPLATE : getFoundationTemplate(value as FoundationCategory).source;
+    setSelectedTemplate(value); setTemplateSource(source); setRawSource(source);
   }
 
   async function handleSubmit(event: React.FormEvent) {
@@ -73,6 +81,7 @@ export function NewContentImport() {
       setIsSubmitting(true);
       setErrorMessage(null);
       const created = await apiClient.createContentImport(rawSource);
+      setCreated(true);
       router.push(`/admin/content/${created.id}`);
     } catch (error) {
       setIsSubmitting(false);
@@ -86,10 +95,7 @@ export function NewContentImport() {
 
   return (
     <div className="new-import-container authoring-experience">
-      <div className="new-import-header">
-        <h1>{t('newImportTitle')}</h1>
-        <p>{t('newImportHelp')}</p>
-      </div>
+      <AdminPageHeader title={t('newImportTitle')} description={t('newImportHelp')} />
 
       {Boolean(errorMessage) && (
         <div className="status-card error-card" role="alert">

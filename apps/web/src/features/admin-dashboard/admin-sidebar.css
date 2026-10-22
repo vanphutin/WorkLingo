@@ -2,7 +2,7 @@
 .admin-sidebar-group { min-width: 0; }
 .admin-sidebar-trigger { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
   width: 100%; min-height: 44px; border: 0; border-radius: var(--radius-control); padding: var(--space-3);
-  background: transparent; color: var(--text-primary); text-align: start; font-size: var(--text-callout); font-weight: 600; cursor: pointer; }
+  background: transparent; color: var(--text-primary); text-align: start; font-size: .875rem; font-weight: 600; cursor: pointer; }
 .admin-sidebar-trigger > span { min-width: 0; overflow-wrap: anywhere; }
 .admin-sidebar-trigger:hover { background: var(--surface-primary); }
 .admin-sidebar-trigger[aria-expanded='true'] { background: var(--primary-soft); color: var(--primary); }

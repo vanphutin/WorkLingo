@@ -38,6 +38,19 @@ describe('NewContentImport', () => {
     expect((screen.getByLabelText(/lesson source/i) as HTMLTextAreaElement).value).toContain('category: grammar');
     expect(screen.getByText(/draft scaffold/i)).toBeInTheDocument();
   });
+  it('preserves edited source when template replacement is cancelled', () => {
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<NewContentImport />);
+    const source = screen.getByRole('textbox', { name: /lesson source/i });
+    fireEvent.change(source, { target: { value: 'My unsaved authored source' } });
+    fireEvent.change(screen.getByLabelText(/lesson template/i), { target: { value: 'grammar' } });
+    expect(confirm).toHaveBeenCalledTimes(1); expect(source).toHaveValue('My unsaved authored source');
+    confirm.mockReturnValue(true);
+    fireEvent.change(screen.getByLabelText(/lesson template/i), { target: { value: 'grammar' } });
+    expect((source as HTMLTextAreaElement).value).toContain('category: grammar');
+    confirm.mockRestore();
+  });
+
   it('submits rawSource and navigates to the created import id', async () => {
     vi.mocked(apiClient.createContentImport).mockResolvedValueOnce({
       id: '99999999-9999-4999-8999-999999999999',
@@ -68,6 +81,8 @@ describe('NewContentImport', () => {
       );
       expect(push).toHaveBeenCalledWith('/admin/content/99999999-9999-4999-8999-999999999999');
     });
+    const exit = new Event('beforeunload', { cancelable: true });
+    window.dispatchEvent(exit); expect(exit.defaultPrevented).toBe(false);
   });
 
   it('displays error when creation fails', async () => {

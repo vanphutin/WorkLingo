@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader, AdminStatusBadge } from '../admin-experience/admin-patterns';
 import { parseLessonSource } from '@worklingo/content-format';
 
 import { useAdminContent } from './i18n';
@@ -35,7 +37,7 @@ export function ContentAuthoringWorkspace({
 }: ContentAuthoringWorkspaceProps) {
   const { t, label, message } = useAdminContent();
   const [localSource, setLocalSource] = useState(initialImport.rawSource);
-  const [_lastSavedSource, setLastSavedSource] = useState(initialImport.rawSource);
+  const [lastSavedSource, setLastSavedSource] = useState(initialImport.rawSource);
   const [currentDraftRevision, setCurrentDraftRevision] = useState(initialImport.draftRevision);
   const [sourceHash, setSourceHash] = useState(initialImport.sourceHash);
   const [status, setStatus] = useState(initialImport.status);
@@ -69,6 +71,7 @@ export function ContentAuthoringWorkspace({
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef(true);
 
+  useAdminDraftGuard(localSource !== lastSavedSource);
   const isReadOnly = status === 'PUBLISHED' || status === 'ARCHIVED';
   const previewAudioScripts = preview?.normalizedDraft?.audioScripts ?? [];
   const isAudioReady = preview !== null && (
@@ -249,15 +252,12 @@ export function ContentAuthoringWorkspace({
   return (
     <div className="content-authoring-workspace authoring-experience">
       <div className="workspace-header">
-        <div className="workspace-title-row">
-          <h1>{t('authoringTitle')}</h1>
-          <div className="workspace-badges">
-            <span className={`status-pill pill-${status.toLowerCase()}`}>{label(status)}</span>
-            <span className="revision-badge">{t('revision', { count: currentDraftRevision })}</span>
-            {savingState === 'saving' && <span className="save-status saving">{t('saving')}</span>}
-            {savingState === 'saved' && <span className="save-status saved">{t('saved')}</span>}
-          </div>
-        </div>
+        <AdminPageHeader title={t('authoringTitle')} actions={<>
+          <AdminStatusBadge>{label(status)}</AdminStatusBadge>
+          <AdminStatusBadge>{t('revision', { count: currentDraftRevision })}</AdminStatusBadge>
+          {savingState === 'saving' ? <span role="status">{t('saving')}</span> : null}
+          {savingState === 'saved' ? <span role="status">{t('saved')}</span> : null}
+        </>} />
 
         {savingState === 'conflict' && errorMessage != null && (
           <div className="status-card error-card conflict-alert" role="alert">
