@@ -31,8 +31,10 @@ and packages/contracts/src/vocabulary-library.contracts.ts for input schemas.
    pnpm --filter @worklingo/api exec tsx src/vocabulary-operations/cli.ts parse-layout path/to/layout.json path/to/manifest.json
    ```
 
-   Exit 2 preserves the manifest and reports exceptions/incompleteness; it does not
-   authorize staging. Inspect the exception locations and reconcile the source.
+   Exit 2 preserves the manifest and reports exceptions/incompleteness. Inspect
+   exception locations and reconcile the source. A uniquely located UNKNOWN_POS
+   row may reach staging for evidenced human correction; structural, page and
+   unmatched exceptions still block completion and cannot be waived by that review.
 4. Validate/dry-run the manifest CLI. Retain per-page inventory and all unresolved
    fragments. Compare geometry enumeration to parsed rows; inspect high-risk
    rendered pages and manually reconcile all legitimate rows.
@@ -44,6 +46,11 @@ and packages/contracts/src/vocabulary-library.contracts.ts for input schemas.
 7. GET the paginated batch rows. Explicitly review every occurrence to an eligible
    existing sense or create an appropriate entry/sense. Rejections require a
    documented non-vocabulary reason; uncertain legitimate entries stay unresolved.
+   A reviewer can resolve an uncertain interpretation using an explicit
+   hash-bound correction and evidence, without rewriting the source occurrence.
+   Original exception code/location, source hash and the review reason are stored
+   as immutable resolution evidence. Page/layout exceptions still require a
+   corrected verified inventory; the original inventory is never edited in place.
 8. Publish only after every page/key reconciles, exceptions are resolved, rights
    remain approved, and human review is complete. Publication atomically freezes
    ordered membership. No automatic program assignment occurs.
