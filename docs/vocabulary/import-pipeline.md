@@ -11,6 +11,19 @@ and packages/contracts/src/vocabulary-library.contracts.ts for input schemas.
 3. Use scripts/vocabulary/extract_pdf.py with its authorization arguments to obtain
    native geometry. Feed geometry through parseVocabularyLayout. OCR-only or
    unknown pages remain explicit exceptions requiring independent inspection.
+   Run the native adapter only after a real document-bound grant is recorded:
+
+   ```powershell
+   python scripts/vocabulary/extract_pdf.py --input path/to/authorized.pdf --authorization path/to/authorization.json --level A1 --output path/to/layout.json
+   ```
+
+   Authorization JSON must contain rightsStatus APPROVED, a permissionReference,
+   the exact documentSha256, allowedUses EXTRACT/STORE, and allowedFields FORM,
+   PRONUNCIATION and DEFINITION. The raw geometry adapter cannot expose an entire
+   page under a forms-only grant; it therefore refuses partial field scopes.
+   These local grant files reference independently verified authorization; they
+   are not issued or legally authenticated by the extraction script. Never
+   commit grants, raw PDFs or bulk extracted content.
    Convert an authorized native-geometry file into a new manifest (never overwrites
    an existing output file):
 
