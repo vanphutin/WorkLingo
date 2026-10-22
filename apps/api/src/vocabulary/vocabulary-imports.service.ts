@@ -118,8 +118,11 @@ export class VocabularyImportsService {
     const input = vocabularyPublishSchema.parse(raw);
     return this.db.$transaction(async tx => {
       const { batch, source, inventory } = await this.locked(tx, id); checkSourceRights(source);
-      const existing = await tx.vocabularyCollectionVersion.findUnique({ where: { batchId: id }, include: { members: { orderBy: { position: 'asc' } } } });
-      if (existing && batch.status === 'PUBLISHED') { await requireVocabularySenses(tx, existing.members.map(member => member.senseId)); return existing; }
+      const existing = await tx.vocabularyCollectionVersion.findUnique({ where: { batchId: id }, include: { _count: { select: { members: true, bindings: true } } } });
+      if (existing && batch.status === 'PUBLISHED') {
+        const members = await tx.vocabularyCollectionMember.findMany({ where: { collectionVersionId: existing.id }, select: { senseId: true } });
+        await requireVocabularySenses(tx, members.map(member => member.senseId)); return existing;
+      }
       this.mutable(batch, input.revision);
       const rows = await tx.vocabularyBatchRow.findMany({ where: { batchId: id }, include: { sourceEntry: { include: { resolution: true } } }, orderBy: [{ sourceEntry: { topicSequence: 'asc' } }, { sourceEntry: { rowOrdinal: 'asc' } }] });
       const expected = validateInventory(inventory, batch.document.pageCount);
@@ -146,7 +149,7 @@ export class VocabularyImportsService {
       await tx.vocabularyCollectionMember.createMany({ data: [...unique.values()].map((resolution, position) => ({ collectionVersionId: version.id, lexicalEntryId: resolution.lexicalEntryId, senseId: resolution.senseId, position })) });
       await tx.vocabularyCollectionVersion.update({ where: { id: version.id }, data: { status: 'PUBLISHED', publishedAt: new Date() } });
       await tx.vocabularyBatch.update({ where: { id }, data: { status: 'PUBLISHED', publishedAt: new Date(), reviewedBy: actorId, revision: { increment: 1 } } });
-      return tx.vocabularyCollectionVersion.findUniqueOrThrow({ where: { id: version.id }, include: { members: { orderBy: { position: 'asc' } } } });
+      return tx.vocabularyCollectionVersion.findUniqueOrThrow({ where: { id: version.id }, include: { _count: { select: { members: true, bindings: true } } } });
     }, { timeout: 20000 });
   }
   async rollback(id: string, raw: { revision: number; reason: string }) {

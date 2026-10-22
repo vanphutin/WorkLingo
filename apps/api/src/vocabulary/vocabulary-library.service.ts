@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { vocabularyQuerySchema, vocabularyCollectionInputSchema, vocabularyCollectionMembersSchema, vocabularyProgramInputSchema, vocabularyBindingInputSchema, vocabularyLegacyInputSchema, type VocabularyQuery, type VocabularyProgramInput } from '@worklingo/contracts';
+import { Prisma, type VocabularySource } from '@prisma/client';
+import { vocabularyCefrSchema, vocabularyQuerySchema, vocabularyCollectionInputSchema, vocabularyCollectionMembersSchema, vocabularyProgramInputSchema, vocabularyBindingInputSchema, vocabularyLegacyInputSchema, type VocabularyQuery, type VocabularyProgramInput } from '@worklingo/contracts';
 import type { z } from 'zod';
 import { PrismaService } from '../common/database/prisma.service.js';
 import { checkSourceRights, normalizeLexicalForm, vocabularyError } from './domain/import-policy.js';
@@ -22,29 +22,72 @@ const entryWhere: Prisma.LexicalEntryWhereInput = {
   pronunciations: { every: { source: sourceWhere(['FORM', 'PRONUNCIATION']) } },
 };
 const entryInclude = {
-  senses: true, pronunciations: true, topics: { include: { topic: true } }, cefrAssociations: true,
-  resolutions: { include: { sourceEntry: { include: { document: { include: { source: true } } } } } },
+  senses: true, pronunciations: true, topics: { include: { topic: true } },
 } satisfies Prisma.LexicalEntryInclude;
 const versionInclude = { members: { orderBy: { position: 'asc' }, include: { sense: true, entry: true, assignments: true } }, bindings: true } satisfies Prisma.VocabularyCollectionVersionInclude;
+const versionSummaryInclude = { _count: { select: { members: true, bindings: true } } } satisfies Prisma.VocabularyCollectionVersionInclude;
+const readableMember: Prisma.VocabularyCollectionMemberWhereInput = { sense: { AND: [senseWhere, { editorialStatus: 'REVIEWED', rightsBasis: { not: '' } }] }, entry: { AND: [entryWhere, { editorialStatus: 'REVIEWED' }] } };
+
+/** A database predicate checks the whole snapshot without hydrating its members. */
+async function requireReadableVersions(tx: Prisma.TransactionClient, ids: string[]) {
+  if (!ids.length) return;
+  if (await tx.vocabularyCollectionMember.findFirst({ where: { collectionVersionId: { in: ids }, NOT: readableMember }, select: { id: true } })) vocabularyError('BLOCKED_BY_RIGHTS', 'One or more snapshot fields lack current authorization.');
+}
+
+async function requireReadableVersion(tx: Prisma.TransactionClient, id: string) {
+  if (!await tx.vocabularyCollectionVersion.findUnique({ where: { id }, select: { id: true } })) throw new NotFoundException('Vocabulary collection version not found');
+  await requireReadableVersions(tx, [id]);
+}
+
+async function withCefrSummaries<T extends { id: string }>(tx: Prisma.TransactionClient, entries: T[]) {
+  const groups = entries.length ? await tx.lexicalCefrAssociation.groupBy({
+    by: ['lexicalEntryId', 'cefrLevel'],
+    where: { lexicalEntryId: { in: entries.map(entry => entry.id) }, cefrLevel: { in: vocabularyCefrSchema.options } },
+    orderBy: [{ lexicalEntryId: 'asc' }, { cefrLevel: 'asc' }],
+  }) : [];
+  const byEntry = new Map<string, { cefrLevel: string }[]>();
+  for (const group of groups) {
+    const levels = byEntry.get(group.lexicalEntryId) ?? [];
+    levels.push({ cefrLevel: group.cefrLevel });
+    byEntry.set(group.lexicalEntryId, levels);
+  }
+  return entries.map(entry => ({ ...entry, cefrAssociations: byEntry.get(entry.id) ?? [] }));
+}
 
 /** Recheck every contributing source, keeping rights locked through commit. */
 export async function requireVocabularySenses(tx: Prisma.TransactionClient, ids: string[]) {
-  for (const id of [...new Set(ids)].sort()) await tx.$queryRaw`SELECT s.id FROM "LexicalSense" s JOIN "LexicalEntry" e ON e.id=s."lexicalEntryId" WHERE s.id=${id}::uuid FOR SHARE OF s,e`;
-  const senses = await tx.lexicalSense.findMany({ where: { id: { in: ids } }, include: { entry: true, resolutions: { include: { sourceEntry: { include: { document: true } } } } } });
-  if (senses.length !== new Set(ids).size) throw new NotFoundException('Vocabulary sense not found');
-  const sourceIds = [...new Set(senses.flatMap(sense => [sense.sourceId, ...sense.resolutions.map(row => row.sourceEntry.document.sourceId)]).filter((id): id is string => id !== null))].sort();
-  const sources = new Map<string, Awaited<ReturnType<typeof tx.vocabularySource.findUniqueOrThrow>>>();
-  for (const id of sourceIds) {
-    await tx.$queryRaw`SELECT id FROM "VocabularySource" WHERE id=${id}::uuid FOR SHARE`;
-    sources.set(id, await tx.vocabularySource.findUniqueOrThrow({ where: { id } }));
+  const uniqueIds = [...new Set(ids)].sort();
+  if (!uniqueIds.length) return [];
+  // Arrays use one bind parameter even for a complete imported snapshot. Acquire
+  // senses, then entries, then sources in ID order, with no per-ID round trips.
+  await tx.$queryRaw`SELECT id FROM "LexicalSense" WHERE id = ANY(${uniqueIds}::uuid[]) ORDER BY id FOR SHARE`;
+  await tx.$queryRaw`SELECT e.id FROM "LexicalEntry" e WHERE e.id IN (SELECT "lexicalEntryId" FROM "LexicalSense" WHERE id = ANY(${uniqueIds}::uuid[])) ORDER BY e.id FOR SHARE`;
+  const sources = await tx.$queryRaw<VocabularySource[]>`
+    WITH entries AS (SELECT "lexicalEntryId" AS id FROM "LexicalSense" WHERE id = ANY(${uniqueIds}::uuid[])),
+    contributors AS (
+      SELECT s."sourceId" AS id FROM "LexicalSense" s WHERE s."lexicalEntryId" IN (SELECT id FROM entries)
+      UNION SELECT p."sourceId" FROM "LexicalPronunciation" p WHERE p."lexicalEntryId" IN (SELECT id FROM entries)
+      UNION SELECT d."sourceId" FROM "VocabularyEntryResolution" r
+        JOIN "VocabularySourceEntry" o ON o.id = r."sourceEntryId"
+        JOIN "VocabularyDocument" d ON d.id = o."documentId"
+        WHERE r."lexicalEntryId" IN (SELECT id FROM entries)
+    ) SELECT s.* FROM "VocabularySource" s WHERE s.id IN (SELECT id FROM contributors) ORDER BY s.id FOR SHARE`;
+  const senses: Prisma.LexicalSenseGetPayload<{ include: { entry: true } }>[] = [];
+  // Bound ORM bind parameters without dropping any part of a large import.
+  // Locks above cover the entire set before validation starts, across chunks.
+  for (let offset = 0; offset < uniqueIds.length; offset += 1000) {
+    const chunk = uniqueIds.slice(offset, offset + 1000);
+    const batch = await tx.lexicalSense.findMany({ where: { id: { in: chunk } }, include: { entry: true } });
+    if (batch.length !== chunk.length) throw new NotFoundException('Vocabulary sense not found');
+    senses.push(...batch);
+    // Check definitions, translations, pronunciations and raw occurrences in
+    // SQL; do not copy the provenance inventory into application memory.
+    if (await tx.lexicalSense.findFirst({ where: { id: { in: chunk }, NOT: { AND: [senseWhere, { entry: entryWhere }] } }, select: { id: true } })) vocabularyError('BLOCKED_BY_RIGHTS', 'One or more source fields lack current authorization.');
   }
+  for (const source of sources) checkSourceRights(source, ['FORM']);
   for (const sense of senses) {
     if (sense.editorialStatus !== 'REVIEWED' || sense.entry.editorialStatus !== 'REVIEWED') vocabularyError('VOCABULARY_SENSE_UNREVIEWED', 'Only reviewed lexical senses can be used.');
-    const source = sense.sourceId ? sources.get(sense.sourceId) : undefined;
-    if (!source || !sense.rightsBasis.trim()) vocabularyError('BLOCKED_BY_RIGHTS', 'The sense lacks a current source authorization.');
-    checkSourceRights(source, ['FORM', ...(sense.definition !== null ? ['DEFINITION'] : [])]);
-    if (sense.translation !== null && !source.allowedUses.includes('TRANSLATE')) vocabularyError('BLOCKED_BY_RIGHTS', 'Translation permission is required.');
-    for (const { sourceEntry: row } of sense.resolutions) checkSourceRights(sources.get(row.document.sourceId)!, ['FORM', ...(row.permittedDefinition !== null ? ['DEFINITION'] : []), ...(row.pronunciation !== null ? ['PRONUNCIATION'] : [])]);
+    if (!sense.sourceId || !sense.rightsBasis.trim()) vocabularyError('BLOCKED_BY_RIGHTS', 'The sense lacks a current source authorization.');
   }
   return senses;
 }
@@ -65,7 +108,7 @@ export class VocabularyLibraryService {
     return this.db.$transaction(async tx => {
       const total = await tx.lexicalEntry.count({ where });
       const items = await tx.lexicalEntry.findMany({ where, skip: (page - 1) * limit, take: limit, orderBy: [{ normalizedForm: 'asc' }, { id: 'asc' }], include: entryInclude });
-      return { items, total, page, limit };
+      return { items: await withCefrSummaries(tx, items), total, page, limit };
     }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
   }
   async detail(id: string) {
@@ -73,7 +116,17 @@ export class VocabularyLibraryService {
       const entry = await tx.lexicalEntry.findUnique({ where: { id }, include: entryInclude });
       if (!entry) throw new NotFoundException('Vocabulary entry not found');
       if (!await tx.lexicalEntry.count({ where: { id, AND: [entryWhere] } })) vocabularyError('BLOCKED_BY_RIGHTS', 'One or more source fields lack current authorization.');
-      return entry;
+      return (await withCefrSummaries(tx, [entry]))[0]!;
+    }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
+  }
+  async provenance(id: string, page = 1, limit = 25) {
+    ({ page, limit } = pagination.parse({ page, limit }));
+    return this.db.$transaction(async tx => {
+      if (!await tx.lexicalEntry.findUnique({ where: { id }, select: { id: true } })) throw new NotFoundException('Vocabulary entry not found');
+      if (!await tx.lexicalEntry.count({ where: { id, AND: [entryWhere] } })) vocabularyError('BLOCKED_BY_RIGHTS', 'One or more source fields lack current authorization.');
+      const where = { lexicalEntryId: id };
+      const items = await tx.vocabularyEntryResolution.findMany({ where, skip: (page - 1) * limit, take: limit, orderBy: { sourceEntryId: 'asc' }, include: { sourceEntry: { include: { document: { include: { source: true } } } } } });
+      return { items, total: await tx.vocabularyEntryResolution.count({ where }), page, limit };
     }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
   }
   async collections(page = 1, limit = 25) {
@@ -98,22 +151,50 @@ export class VocabularyLibraryService {
     ({ page, limit } = pagination.parse({ page, limit }));
     return this.db.$transaction(async tx => {
       if (!await tx.vocabularyCollection.findUnique({ where: { id: collectionId } })) throw new NotFoundException('Vocabulary collection not found');
-      const items = await tx.vocabularyCollectionVersion.findMany({ where: { collectionId }, skip: (page - 1) * limit, take: limit, orderBy: { version: 'desc' }, include: versionInclude });
-      await requireVocabularySenses(tx, items.flatMap(item => item.members.map(member => member.senseId)));
+      const items = await tx.vocabularyCollectionVersion.findMany({ where: { collectionId }, skip: (page - 1) * limit, take: limit, orderBy: { version: 'desc' }, include: versionSummaryInclude });
+      await requireReadableVersions(tx, items.map(item => item.id));
       return { items, total: await tx.vocabularyCollectionVersion.count({ where: { collectionId } }), page, limit };
-    }, { timeout: 20000 });
+    }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead, timeout: 20000 });
+  }
+  async members(id: string, page = 1, limit = 25) {
+    ({ page, limit } = pagination.parse({ page, limit }));
+    return this.db.$transaction(async tx => {
+      await requireReadableVersion(tx, id);
+      const where = { collectionVersionId: id };
+      const items = await tx.vocabularyCollectionMember.findMany({ where, skip: (page - 1) * limit, take: limit, orderBy: [{ position: 'asc' }, { id: 'asc' }], include: { sense: true, entry: { select: { canonicalForm: true } } } });
+      return { items, total: await tx.vocabularyCollectionMember.count({ where }), page, limit };
+    }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
+  }
+  async assignments(id: string, page = 1, limit = 25) {
+    ({ page, limit } = pagination.parse({ page, limit }));
+    return this.db.$transaction(async tx => {
+      await requireReadableVersion(tx, id);
+      const where = { member: { collectionVersionId: id } };
+      const items = await tx.vocabularyProgramAssignment.findMany({ where, skip: (page - 1) * limit, take: limit, orderBy: [{ member: { position: 'asc' } }, { id: 'asc' }] });
+      return { items, total: await tx.vocabularyProgramAssignment.count({ where }), page, limit };
+    }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
+  }
+  async bindings(id: string, page = 1, limit = 25) {
+    ({ page, limit } = pagination.parse({ page, limit }));
+    return this.db.$transaction(async tx => {
+      await requireReadableVersion(tx, id);
+      const where = { collectionVersionId: id };
+      const items = await tx.vocabularyCurriculumBinding.findMany({ where, skip: (page - 1) * limit, take: limit, orderBy: { id: 'asc' } });
+      return { items, total: await tx.vocabularyCurriculumBinding.count({ where }), page, limit };
+    }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
   }
   async publishVersion(id: string) {
     return this.db.$transaction(async tx => {
       await tx.$queryRaw`SELECT id FROM "VocabularyCollectionVersion" WHERE id=${id}::uuid FOR UPDATE`;
-      const version = await tx.vocabularyCollectionVersion.findUnique({ where: { id }, include: versionInclude });
+      const version = await tx.vocabularyCollectionVersion.findUnique({ where: { id }, include: versionSummaryInclude });
       if (!version) throw new NotFoundException('Vocabulary collection version not found');
       if (version.status === 'ARCHIVED') vocabularyError('VOCABULARY_VERSION_ARCHIVED', 'An archived snapshot cannot be republished.');
-      if (!version.members.length) vocabularyError('VOCABULARY_INCOMPLETE', 'A published snapshot needs reviewed members.');
-      await requireVocabularySenses(tx, version.members.map(member => member.senseId));
+      if (!version._count.members) vocabularyError('VOCABULARY_INCOMPLETE', 'A published snapshot needs reviewed members.');
+      const members = await tx.vocabularyCollectionMember.findMany({ where: { collectionVersionId: id }, select: { senseId: true } });
+      await requireVocabularySenses(tx, members.map(member => member.senseId));
       if (version.status === 'PUBLISHED') return version;
       if (version.batchId) vocabularyError('VOCABULARY_INCOMPLETE', 'Batch snapshots must publish through the reconciled import workflow.');
-      return tx.vocabularyCollectionVersion.update({ where: { id }, data: { status: 'PUBLISHED', publishedAt: new Date() }, include: versionInclude });
+      return tx.vocabularyCollectionVersion.update({ where: { id }, data: { status: 'PUBLISHED', publishedAt: new Date() }, include: versionSummaryInclude });
     }, { timeout: 20000 });
   }
   async assign(actorId: string, raw: VocabularyProgramInput) {

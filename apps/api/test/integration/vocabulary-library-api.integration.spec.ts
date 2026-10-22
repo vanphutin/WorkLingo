@@ -51,7 +51,8 @@ describe('Rights-gated master vocabulary workflow', () => {
     expect((await db.vocabularyBatch.findUniqueOrThrow({ where: { id: batch.id } })).inventory).toEqual(manifest.inventory);
     const structural = await imports.start({ documentId: f.document.id, parserVersion: 'synthetic/structural-exception', inventory: { pages: [{ ...manifest.inventory.pages[0]!, exceptions: [...manifest.inventory.pages[0]!.exceptions, { code: 'UNRESOLVED_FRAGMENT', message: 'Independent unparsed content remains.' }] }] } });
     const retry = await imports.stage(structural.id, { revision: structural.revision, rows: manifest.rows });
-    const reviewedAgain = await imports.review(structural.id, actor, { revision: retry.revision, sourceEntryId: occurrence.id, decision: 'REUSE_SENSE', senseId: published.members[0]!.senseId, entryType: 'WORD', topicGroupIds: [], correction: { parsedWord: 'fixture', normalizedPos: 'NOUN', sourceContentHash: occurrence.sourceContentHash, reason: 'Verified the same independently authored source geometry again.' } });
+    const member = await db.vocabularyCollectionMember.findFirstOrThrow({ where: { collectionVersionId: published.id } });
+    const reviewedAgain = await imports.review(structural.id, actor, { revision: retry.revision, sourceEntryId: occurrence.id, decision: 'REUSE_SENSE', senseId: member.senseId, entryType: 'WORD', topicGroupIds: [], correction: { parsedWord: 'fixture', normalizedPos: 'NOUN', sourceContentHash: occurrence.sourceContentHash, reason: 'Verified the same independently authored source geometry again.' } });
     await expect(imports.publish(structural.id, actor, { revision: reviewedAgain.revision, collectionName: 'Structural exception remains blocked' })).rejects.toMatchObject({ response: { code: 'VOCABULARY_INCOMPLETE' } });
   });
   const row = (ordinal: number, pos: 'NOUN' | 'VERB' = 'NOUN'): VocabularySourceRow => ({ sourceEntryKey: `topic-1:${ordinal}`, topicInstanceKey: 'topic-1', originalTopic: 'Synthetic records', topicSequence: 1, rowOrdinal: ordinal, pageIndex: 0, printedPageNumber: null, locations: [{ pageIndex: 0, bbox: [10, ordinal * 20, 500, ordinal * 20 + 15] }], rawWord: 'record', parsedWord: 'record', rawPos: pos.toLowerCase(), normalizedPos: pos, cefrLevel: 'A1', pronunciation: '/ˈrek.ərd/', permittedDefinition: pos === 'NOUN' ? 'An independently authored stored account of an event.' : 'To preserve information for later use.', extractionConfidence: 1, warnings: [] });
@@ -97,7 +98,10 @@ describe('Rights-gated master vocabulary workflow', () => {
     expect(resolutions.map(item => item.entry.partOfSpeech).sort()).toEqual(['NOUN', 'VERB']);
     const result = await imports.publish(f.batch.id, actor, { revision: f.batch.revision, collectionName: 'Synthetic reviewed vocabulary' });
     const retry = await imports.publish(f.batch.id, actor, { revision: f.batch.revision, collectionName: 'Synthetic reviewed vocabulary' });
-    expect(retry.id).toBe(result.id); expect(result.members).toHaveLength(2);
+    expect(retry.id).toBe(result.id);
+    expect(result).not.toHaveProperty('members');
+    expect(retry).not.toHaveProperty('members');
+    expect(result).toMatchObject({ _count: { members: 2, bindings: 0 } });
     await expect(db.vocabularyCollectionMember.deleteMany({ where: { collectionVersionId: result.id } })).rejects.toThrow();
     await expect(db.vocabularyCollectionVersion.update({ where: { id: result.id }, data: { version: 99 } })).rejects.toThrow();
     const rolledBack = await imports.rollback(f.batch.id, { revision: (await db.vocabularyBatch.findUniqueOrThrow({ where: { id: f.batch.id } })).revision, reason: 'Synthetic acceptance rollback' });
@@ -169,13 +173,14 @@ describe('Rights-gated master vocabulary workflow', () => {
     await expect(library.bind(versions[0]!.id, { programId: program.id })).rejects.toMatchObject({ response: { code: 'VOCABULARY_VERSION_NOT_PUBLISHED' } });
     const published = await library.publishVersion(versions[0]!.id);
     expect(published.status).toBe('PUBLISHED');
+    const publishedMembers = await library.members(published.id);
     expect((await library.publishVersion(published.id)).id).toBe(published.id);
-    const assignment = await library.assign(actor, { memberId: published.members[0]!.id, programId: program.id, priority: 1, learningGoal: 'BOTH', skills: ['READING'], inclusionReason: 'Independently curated for this test program.' });
+    const assignment = await library.assign(actor, { memberId: publishedMembers.items[0]!.id, programId: program.id, priority: 1, learningGoal: 'BOTH', skills: ['READING'], inclusionReason: 'Independently curated for this test program.' });
     expect(assignment.approvedBy).toBe(actor);
     expect((await library.bind(published.id, { programId: program.id })).programId).toBe(program.id);
     expect((await library.versions(collection.id, 1, 1)).items).toHaveLength(1);
-    await expect(db.lexicalSense.update({ where: { id: published.members[0]!.senseId }, data: { definition: 'Mutates the published meaning' } })).rejects.toThrow(/immutable/u);
-    await expect(db.lexicalEntry.update({ where: { id: published.members[0]!.lexicalEntryId }, data: { canonicalForm: 'Mutates the published form' } })).rejects.toThrow(/immutable/u);
+    await expect(db.lexicalSense.update({ where: { id: publishedMembers.items[0]!.senseId }, data: { definition: 'Mutates the published meaning' } })).rejects.toThrow(/immutable/u);
+    await expect(db.lexicalEntry.update({ where: { id: publishedMembers.items[0]!.lexicalEntryId }, data: { canonicalForm: 'Mutates the published form' } })).rejects.toThrow(/immutable/u);
     await sources.rights(f.source.id, { revision: 2, rightsStatus: 'REVOKED', permissionReference: null, allowedUses: [], allowedFields: [] });
     await expect(library.versions(collection.id)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
     await expect(library.publishVersion(versions[1]!.id)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
@@ -307,7 +312,7 @@ describe('Rights-gated master vocabulary workflow', () => {
     const resolution = await db.vocabularyEntryResolution.findUniqueOrThrow({ where: { sourceEntryId: original.id }, include: { entry: true } });
     expect(resolution.entry).toMatchObject({ canonicalForm: 'record', partOfSpeech: 'NOUN' });
     const version = await imports.publish(f.batch.id, actor, { revision: approved.revision, collectionName: 'Corrected without losing the source occurrence' });
-    expect(version.members).toHaveLength(1);
+    expect(version._count.members).toBe(1);
     expect(await db.vocabularyDocument.count({ where: { sourceId: f.source.id } })).toBe(1);
   });
 });

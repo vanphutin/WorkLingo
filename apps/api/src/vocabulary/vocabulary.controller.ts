@@ -22,6 +22,8 @@ export class VocabularyController {
   search(@Query(new dto.VocabularyInputPipe(dto.queryDto)) query: dto.QueryDto) { return this.library.search(query); }
   @Get('entries/:id') @ApiOperation({ summary: 'Read entry meanings and immutable provenance' })
   detail(@Param('id', ParseUUIDPipe) id: string) { return this.library.detail(id); }
+  @Get('entries/:id/provenance') @ApiOperation({ summary: 'Read ordered, bounded immutable entry provenance' })
+  provenance(@Param('id', ParseUUIDPipe) id: string, @Query(new dto.VocabularyInputPipe(dto.pageDto)) query: dto.PageDto) { return this.library.provenance(id, query.page, query.limit); }
   @Get('sources') @ApiOperation({ summary: 'List source metadata and authorization states' })
   listSources(@Query(new dto.VocabularyInputPipe(dto.pageDto)) query: dto.PageDto) { return this.sources.list(query.page, query.limit); }
   @Post('sources') @ApiOperation({ summary: 'Register source metadata without approving reuse' })
@@ -50,6 +52,12 @@ export class VocabularyController {
   collection(@Body(new dto.VocabularyInputPipe(dto.collectionDto)) input: dto.CollectionDto) { return this.library.createCollection(input); }
   @Get('collections/:id/versions') @ApiOperation({ summary: 'Read rights-authorized ordered collection versions' })
   versions(@Param('id', ParseUUIDPipe) id: string, @Query(new dto.VocabularyInputPipe(dto.pageDto)) query: dto.PageDto) { return this.library.versions(id, query.page, query.limit); }
+  @Get('versions/:id/members') @ApiOperation({ summary: 'Read ordered, bounded snapshot members' })
+  members(@Param('id', ParseUUIDPipe) id: string, @Query(new dto.VocabularyInputPipe(dto.pageDto)) query: dto.PageDto) { return this.library.members(id, query.page, query.limit); }
+  @Get('versions/:id/assignments') @ApiOperation({ summary: 'Read ordered, bounded snapshot program assignments' })
+  assignments(@Param('id', ParseUUIDPipe) id: string, @Query(new dto.VocabularyInputPipe(dto.pageDto)) query: dto.PageDto) { return this.library.assignments(id, query.page, query.limit); }
+  @Get('versions/:id/bindings') @ApiOperation({ summary: 'Read ordered, bounded snapshot curriculum bindings' })
+  bindings(@Param('id', ParseUUIDPipe) id: string, @Query(new dto.VocabularyInputPipe(dto.pageDto)) query: dto.PageDto) { return this.library.bindings(id, query.page, query.limit); }
   @Post('collections/:id/versions') @ApiOperation({ summary: 'Create a draft version from explicit reviewed senses' })
   createVersion(@Param('id', ParseUUIDPipe) id: string, @Body(new dto.VocabularyInputPipe(dto.membersDto)) input: dto.MembersDto) { return this.library.createVersion(id, input); }
   @Post('versions/:id/publish') @HttpCode(200) @ApiOperation({ summary: 'Publish a hand-curated immutable version' })
