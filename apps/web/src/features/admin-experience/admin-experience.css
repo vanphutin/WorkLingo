@@ -12,10 +12,10 @@
 .admin-page-heading { min-width: 0; flex: 1 1 20rem; }
 .admin-shell .admin-page-header h1 { margin: 0; font-size: clamp(1.4rem,2.2vw,1.85rem); line-height: 1.25; letter-spacing: -.035em; }
 .admin-page-header p { max-width: 80ch; margin: .35rem 0 0; font-size: .875rem; color: var(--text-secondary); }
-.admin-toolbar, .admin-section-header { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
-.admin-section-header { justify-content: space-between; margin-block-end: .75rem; }
-.admin-section-header h2 { margin: 0; font-size: 1.0625rem; }
-.admin-status-badge { display: inline-flex; align-items: center; padding: .2rem .55rem; border: 1px solid var(--border-default); border-radius: var(--radius-control); background: var(--surface-secondary); font-size: .75rem; }
+.admin-toolbar, .admin-context-section { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
+.admin-context-section { justify-content: space-between; margin-block-end: .75rem; }
+.admin-context-section h2 { margin: 0; font-size: 1.0625rem; }
+.admin-context-status { display: inline-flex; align-items: center; padding: .2rem .55rem; border: 1px solid var(--border-default); border-radius: var(--radius-control); background: var(--surface-secondary); font-size: .75rem; }
 .admin-filter-bar { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; padding: .875rem; border: 1px solid var(--border-default); border-radius: var(--radius-panel); background: var(--surface-primary); margin-block-end: 1rem; }
 .admin-filter-bar label { display: grid; gap: .35rem; min-width: 0; flex: 1 1 12rem; font-size: .8125rem; }
 .admin-filter-bar :is(input,select) { width: 100%; min-width: 0; min-height: 44px; padding: .5rem .75rem; border: 1px solid var(--control-border); border-radius: var(--radius-control); }
@@ -72,7 +72,7 @@
 .admin-shell .curriculum-container :is(.curriculum-tabs-bar,.curriculum-nav-toolbar) { margin-bottom: .875rem; }
 .admin-shell .curriculum-container :is(.path-header,.level-header,.mission-header) { padding: .75rem; }
 .admin-shell .curriculum-container :is(.program-group,.path-card,.level-card) { margin-bottom: 1rem; }
-.admin-shell .curriculum-container .search-input { padding-inline-start: 2.25rem; }
+.admin-shell .authoring-experience.curriculum-container .search-input { padding-inline-start: 2.25rem; }
 .admin-shell .preferences-experience { padding: 0; }
 .admin-shell .preferences-experience :is(.admin-ai-header,.admin-settings-header,.audio-settings-header) { padding: 0 0 .875rem; margin-bottom: 1rem; border: 0; background: transparent; }
 .admin-shell .preferences-experience :is(.admin-ai-header,.admin-settings-header,.audio-settings-header) h1 { font-size: clamp(1.4rem,2.2vw,1.85rem); }

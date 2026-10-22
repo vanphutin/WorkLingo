@@ -1,4 +1,5 @@
 'use client';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { useAdminAudit } from './i18n';
 
@@ -75,12 +76,7 @@ export function AuditWorkspace() {
 
   return (
     <div className="audit-container operations-experience">
-      <header className="audit-header">
-        <div>
-          <h1>{t('title')}</h1>
-          <p className="node-meta">{t('help')}</p>
-        </div>
-      </header>
+      <AdminPageHeader title={t('title')} description={t('help')} />
 
       {Boolean(errorMessage) && (
         <div className="curriculum-alert curriculum-alert-error" role="alert">

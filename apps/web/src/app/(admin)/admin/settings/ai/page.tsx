@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { AdminLink as Link } from '../../../../../features/admin-dashboard/admin-navigation-guard';
 import { AiSettingsPanel } from '../../../../../features/ai/ai-settings-panel';
 import { useT } from '../../../../../i18n/provider';
 import { audioMessages } from '../../../../../i18n/messages/audio';

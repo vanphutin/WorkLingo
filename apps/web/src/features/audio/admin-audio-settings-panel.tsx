@@ -1,6 +1,7 @@
 'use client';
+import { useAdminDraftGuard, AdminLink as Link } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import type { AdminAudioSettings } from '@worklingo/contracts';
 
@@ -244,6 +245,12 @@ export function AdminAudioSettingsPanel() {
 
   useEffect(() => { void load(); }, [load]);
 
+  const hasChanges = initialSettings !== null && (
+    settings?.providerId !== initialSettings.providerId ||
+    settings?.defaultVoiceId !== initialSettings.defaultVoiceId
+  );
+  useAdminDraftGuard(hasChanges);
+
   if (loadError) {
     return (
       <section className="audio-settings-state admin-state-container preferences-experience" aria-labelledby="admin-audio-settings-title">
@@ -270,10 +277,7 @@ export function AdminAudioSettingsPanel() {
   }
 
   const selected = settings.providers.find((provider) => provider.id === settings.providerId);
-  const hasChanges = initialSettings !== null && (
-    settings.providerId !== initialSettings.providerId ||
-    settings.defaultVoiceId !== initialSettings.defaultVoiceId
-  );
+
 
   const save = async () => {
     setSaving(true);
@@ -311,14 +315,7 @@ export function AdminAudioSettingsPanel() {
       {/* Main Settings Card */}
       <section className="audio-settings-panel admin-audio-settings-card" aria-labelledby="admin-audio-settings-title">
         {/* Header */}
-        <header className="admin-audio-header">
-          <div className="eyebrow-badge" style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', gap: '0.4rem', width: 'fit-content' }}>
-            <AudioWaveIcon size={14} />
-            <span>{t('generation')}</span>
-          </div>
-          <h1 id="admin-audio-settings-title">{t('generationSettings')}</h1>
-          <p>{t('generationDescription')}</p>
-        </header>
+        <AdminPageHeader title={t('generationSettings')} description={t('generationDescription')} titleId="admin-audio-settings-title" />
 
         {/* Section 1: TTS Provider Selection */}
         <section className="admin-audio-section">

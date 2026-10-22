@@ -39,3 +39,11 @@
 .operations-experience :is(button,input,select,summary,[tabindex]):focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; scroll-margin-block: 1.5rem; }
 .operations-experience .observability-actions { align-items: center; justify-content: space-between; }
 @media (max-width: 620px) { .operations-experience .observability-filters { grid-template-columns: minmax(0,1fr); } }
+
+.operations-workspace.has-details { grid-template-columns: minmax(0,1.8fr) minmax(17rem,1fr); align-items: start; }
+.operations-job-list { display: grid; min-width: 0; gap: .875rem; }
+.operations-detail { min-width: 0; position: sticky; top: 1rem; }
+.operations-detail h2 { margin: 0 0 .75rem; }
+.operations-detail summary { min-height: 44px; cursor: pointer; }
+.operations-workspace .admin-data-table table { min-width: 40rem; }
+@media (max-width: 1199px) { .operations-workspace.has-details { grid-template-columns: minmax(0,1fr); } .operations-detail { position: static; grid-row: 1; } }

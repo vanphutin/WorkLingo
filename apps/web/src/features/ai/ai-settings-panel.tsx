@@ -1,4 +1,5 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
 
 import { useCallback, useEffect, useId, useState } from 'react';
 import type { AiSettings } from '@worklingo/contracts';
@@ -220,6 +221,8 @@ export function AiSettingsPanel({ admin = false, headingLevel = 1 }: { readonly 
   const { locale } = useLocalePreference();
   const id = useId();
   const [settings, setSettings] = useState<AiSettings | null>(null);
+  const [savedSource, setSavedSource] = useState('');
+  useAdminDraftGuard(settings !== null && JSON.stringify([settings.preferredProvider, settings.fallbackEnabled]) !== savedSource, true);
   const [error, setError] = useState<{ cause: unknown } | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -231,7 +234,7 @@ export function AiSettingsPanel({ admin = false, headingLevel = 1 }: { readonly 
     void aiSettingsClient
       .get(admin)
       .then((value) => {
-        if (active) setSettings(value);
+        if (active) { setSettings(value); setSavedSource(JSON.stringify([value.preferredProvider, value.fallbackEnabled])); }
       })
       .catch((cause) => {
         if (active) setError({ cause });
@@ -247,16 +250,10 @@ export function AiSettingsPanel({ admin = false, headingLevel = 1 }: { readonly 
     setError(null);
     setSaved(false);
     try {
-      setSettings(
-        await aiSettingsClient.update(
-          admin,
-          {
-            preferredProvider: settings.preferredProvider,
-            fallbackEnabled: settings.fallbackEnabled,
-          },
-          settings.accountId,
-        ),
-      );
+      const updated = await aiSettingsClient.update(admin, {
+        preferredProvider: settings.preferredProvider, fallbackEnabled: settings.fallbackEnabled,
+      }, settings.accountId);
+      setSettings(updated); setSavedSource(JSON.stringify([updated.preferredProvider, updated.fallbackEnabled]));
       setSaved(true);
     } catch (cause) {
       setError({ cause });

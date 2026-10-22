@@ -1,8 +1,11 @@
 'use client';
 
+import { AdminPageHeader, AdminWorkspaceLayout, AdminDataTable } from '../admin-experience/admin-patterns';
+import { useT } from '../../i18n/provider';
+import { adminExperienceMessages } from '../../i18n/messages/adminExperience';
 import { useAdminObservability } from './i18n';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { AdminJobDetailDto, AdminJobPageDto, AdminJobStatus, AdminOperationsSummaryDto } from '@worklingo/contracts';
 
 import { adminOperationsClient } from '../../lib/api/admin-operations-client';
@@ -12,6 +15,11 @@ const statuses = ['', 'PENDING', 'RUNNING', 'RETRY_WAIT', 'COMPLETED', 'FAILED']
 
 export function OperationsWorkspace() {
   const { t, number, date, label, message: displayMessage } = useAdminObservability();
+  const tx = useT('adminExperience', adminExperienceMessages);
+  const detailHeading = useRef<HTMLHeadingElement>(null);
+  const detailTrigger = useRef<HTMLButtonElement | null>(null);
+  const workspace = useRef<HTMLDivElement>(null);
+  const inspection = useRef(0);
   const [summary, setSummary] = useState<AdminOperationsSummaryDto | null>(null);
   const [jobs, setJobs] = useState<AdminJobPageDto | null>(null);
   const [detail, setDetail] = useState<AdminJobDetailDto | null>(null);
@@ -20,6 +28,14 @@ export function OperationsWorkspace() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
+
+  useEffect(() => { if (detail) detailHeading.current?.focus(); }, [detail]);
+  useEffect(() => () => { inspection.current++; }, []);
+  function closeDetails() {
+    inspection.current++; setDetail(null);
+    if (detailTrigger.current?.isConnected) detailTrigger.current.focus();
+    else workspace.current?.querySelector<HTMLElement>('[role=region]')?.focus();
+  }
 
   const load = useCallback(async (requestedPage = page) => {
     setLoading(true);
@@ -47,7 +63,7 @@ export function OperationsWorkspace() {
   useEffect(() => { void load(1); }, []);
 
   return <section className="observability-shell operations-experience">
-    <header className="observability-header"><div><h1>{t('operationsTitle')}</h1><p>{t('operationsHelp')}</p></div><button className="observability-button secondary" type="button" onClick={() => void load(page)} disabled={loading}>{t('refresh')}</button></header>
+    <AdminPageHeader title={t('operationsTitle')} description={t('operationsHelp')} actions={<button className="observability-button secondary" type="button" onClick={() => void load(page)} disabled={loading}>{t('refresh')}</button>} />
     {Boolean(error) && <div className="observability-alert" role="alert">{displayMessage(error)}</div>}
     <div className="observability-grid" aria-label={t('summary')} aria-busy={loading}>
       <article className="observability-card"><span>{t('queueDepth')}</span><strong className="metric-value">{summary ? number(summary.queueDepth) : '—'}</strong></article>
@@ -60,12 +76,23 @@ export function OperationsWorkspace() {
       <div className="observability-field"><label htmlFor="job-type">{t('jobType')}</label><input id="job-type" value={type} onChange={(event) => setType(event.target.value)} placeholder={t('jobTypePlaceholder')} /></div>
       <button className="observability-button" type="submit" disabled={loading}>{t('applyFilters')}</button>
     </form>
+    <div ref={workspace}><AdminWorkspaceLayout className={detail ? 'operations-workspace has-details' : 'operations-workspace'}>
+    <div className="operations-job-list">
     {loading && !jobs ? <p role="status">{t('loadingOperations')}</p> : jobs && <>
-      <div className="observability-table-wrap" tabIndex={0} role="region" aria-label={t('backgroundJobs')}><table className="observability-table"><caption className="sr-only">{t('backgroundJobs')}</caption><thead><tr><th>{t('job')}</th><th>{t('status')}</th><th>{t('created')}</th><th>{t('attempts')}</th><th>{t('details')}</th></tr></thead><tbody>
-        {jobs.items.length === 0 ? <tr><td colSpan={5}>{t('emptyJobs')}</td></tr> : jobs.items.map((job) => <tr key={job.id}><td><strong>{job.type}</strong><br /><small>{job.id}</small></td><td><span className="observability-status">{label(job.status)}</span></td><td>{date(job.createdAt)}</td><td>{number(job.attemptCount)}/{number(job.maxAttempts)}</td><td><button className="observability-button secondary" type="button" onClick={async () => { setError(null); try { setDetail(await adminOperationsClient.getJob(job.id)); } catch (reason) { setError(reason); } }}>{t('inspect')}</button></td></tr>)}
-      </tbody></table></div>
+      <AdminDataTable label={t('backgroundJobs')}><table className="observability-table"><caption className="sr-only">{t('backgroundJobs')}</caption><thead><tr><th>{t('job')}</th><th>{t('status')}</th><th>{t('created')}</th><th>{t('attempts')}</th><th>{t('details')}</th></tr></thead><tbody>
+        {jobs.items.length === 0 ? <tr><td colSpan={5}>{t('emptyJobs')}</td></tr> : jobs.items.map((job) => <tr key={job.id}><td><strong>{job.type}</strong><br /><small>{job.id}</small></td><td><span className="observability-status">{label(job.status)}</span></td><td>{date(job.createdAt)}</td><td>{number(job.attemptCount)}/{number(job.maxAttempts)}</td><td><button className="observability-button secondary" type="button" onClick={async event => { const ticket = ++inspection.current; detailTrigger.current = event.currentTarget; setError(null); try { const next = await adminOperationsClient.getJob(job.id); if (ticket === inspection.current) setDetail(next); } catch (reason) { if (ticket === inspection.current) setError(reason); } }}>{t('inspect')}</button></td></tr>)}
+      </tbody></table></AdminDataTable>
       <div className="observability-actions"><button className="observability-button secondary" type="button" disabled={loading || page <= 1} onClick={() => void load(page - 1)}>{t('previous')}</button><span>{t('page', { page: number(jobs.page), total: number(Math.max(1, jobs.totalPages)) })}</span><button className="observability-button secondary" type="button" disabled={loading || page >= jobs.totalPages} onClick={() => void load(page + 1)}>{t('next')}</button></div>
     </>}
-    {detail && <article className="observability-card" aria-live="polite"><h2>{t('jobDetail')}</h2><p><strong>{detail.type}</strong> · {label(detail.status)}</p>{detail.errorSummary && <p>{detail.errorSummary}</p>}<details><summary>{t('safePayload')}</summary><pre className="job-detail">{JSON.stringify({ attempts: detail.attempts, payloadSummary: detail.payloadSummary }, null, 2)}</pre></details></article>}
+    </div>
+    {detail ? <aside className="observability-card operations-detail" aria-labelledby="job-detail-heading" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); closeDetails(); } }}>
+      <h2 id="job-detail-heading" ref={detailHeading} tabIndex={-1}>{t('jobDetail')}</h2>
+      <button type="button" className="observability-button secondary" onClick={closeDetails}>{tx('closeDetails')}</button>
+      <p><strong>{detail.type}</strong> · {label(detail.status)}</p>
+      <p className="job-detail">{detail.id}</p>
+      {detail.errorSummary ? <p>{detail.errorSummary}</p> : null}
+      <details><summary>{t('safePayload')}</summary><pre className="job-detail">{JSON.stringify({ attempts: detail.attempts, payloadSummary: detail.payloadSummary }, null, 2)}</pre></details>
+    </aside> : null}
+    </AdminWorkspaceLayout></div>
   </section>;
 }

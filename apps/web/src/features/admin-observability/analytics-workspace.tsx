@@ -1,4 +1,5 @@
 'use client';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { useAdminObservability } from './i18n';
 
@@ -39,7 +40,7 @@ export function AnalyticsWorkspace() {
   for (const metric of data?.metrics ?? []) eventTotals.set(metric.eventType, (eventTotals.get(metric.eventType) ?? 0) + metric.count);
 
   return <section className="observability-shell operations-experience">
-    <header className="observability-header"><div><h1>{t('analyticsTitle')}</h1><p>{t('analyticsHelp')}</p></div></header>
+    <AdminPageHeader title={t('analyticsTitle')} description={t('analyticsHelp')} />
     {Boolean(error) && <div className="observability-alert" role="alert">{displayMessage(error)}</div>}
     <form className="observability-card observability-filters" onSubmit={(event) => { event.preventDefault(); void load(); }}>
       <div className="observability-field"><label htmlFor="analytics-from">{t('from')}</label><input id="analytics-from" type="date" value={from} max={to} onChange={(event) => setFrom(event.target.value)} /></div>
