@@ -28,6 +28,14 @@ def word(text="cafe\u0301", x0=10, top=20):
 
 
 class GeometryExtractionTests(unittest.TestCase):
+    def test_native_table_rules_are_preserved_and_invalid_rules_rejected(self):
+        page = SyntheticPage([word()])
+        page.rects = [dict(x0=10, x1=200, top=40, bottom=40.5), dict(x0=10, x1=200, top=50, bottom=70), dict(x0=1, x1=page.width+2, top=90, bottom=180)]
+        result = extract_pages([page], "a" * 64, "B2")
+        self.assertEqual(result['pages'][0].get('horizontalRules'), [dict(x0=10, x1=200, y=40.25)])
+        page.rects = [dict(x0=-1, x1=200, top=40, bottom=40.5)]
+        with self.assertRaises(ValueError):
+            extract_pages([page], "a" * 64, "B2")
     def test_deterministic_geometry_preserves_raw_unicode_and_page_count(self):
         words = [word("second", 90), word()]
         result = extract_pages([SyntheticPage(words), SyntheticPage([])], "a" * 64, "C1")

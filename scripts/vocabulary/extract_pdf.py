@@ -72,7 +72,23 @@ def extract_pages(pages, document_sha256, cefr_level):
             words.append(dict(text=text, x0=x0, x1=x1, top=top, bottom=bottom))
             total_words += 1
         words.sort(key=lambda word: (word["top"], word["x0"], word["bottom"], word["x1"], word["text"]))
-        extracted.append(dict(pageIndex=page_index, width=width, height=height, words=words))
+        decoded = dict(pageIndex=page_index, width=width, height=height, words=words)
+        if hasattr(page, "rects"):
+            rules = []
+            for rect in page.rects:
+                # Decorative filled areas may bleed beyond the media box.
+                # Only thin, horizontal rectangles are table-rule candidates.
+                if rect["bottom"] - rect["top"] > 1:
+                    continue
+                x0, x1, top, bottom = (_coordinate(rect[key]) for key in ("x0", "x1", "top", "bottom"))
+                if x1 < x0 or bottom < top or x1 > width or bottom > height:
+                    raise ValueError("Invalid native rule geometry")
+                if 0 < bottom - top <= 1 and x1 - x0 >= 10:
+                    rules.append(dict(x0=x0, x1=x1, y=(top + bottom) / 2))
+                if len(rules) > 20000:
+                    raise ValueError("Native rule limit exceeded")
+            decoded["horizontalRules"] = sorted(rules, key=lambda rule: (rule["y"], rule["x0"], rule["x1"]))
+        extracted.append(decoded)
     if not extracted:
         raise ValueError("Document must contain at least one page")
     return dict(documentSha256=document_sha256, pageCount=len(extracted), cefrLevel=cefr_level, pages=extracted)

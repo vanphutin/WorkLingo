@@ -3,12 +3,14 @@ import path from 'node:path';
 import { PrismaClient } from '@prisma/client';
 import { assertIsolatedTarget, reconcileManifest, sourceRegistry } from './operations.js';
 import { parseVocabularyLayout } from '../vocabulary/domain/layout-parser.js';
+import { parseLanGeekLayout } from '../vocabulary/domain/langeek-layout-parser.js';
 
 async function main() {
   const [command, argument, output] = process.argv.slice(2);
-  if (command === 'parse-layout') {
+  if (command === 'parse-layout' || command === 'parse-langeek-layout') {
     if (!argument || !output || statSync(argument).size > 64 * 1024 * 1024) throw new Error('Provide layout and new output paths; input limit is 64 MiB.');
-    const manifest = parseVocabularyLayout(JSON.parse(readFileSync(argument, 'utf8')));
+    const parse = command === 'parse-langeek-layout' ? parseLanGeekLayout : parseVocabularyLayout;
+    const manifest = parse(JSON.parse(readFileSync(argument, 'utf8')));
     const result = reconcileManifest(manifest);
     writeFileSync(output, JSON.stringify(manifest), { flag: 'wx' });
     process.stdout.write(`${JSON.stringify({ ...result, mode: command, databaseWrites: 0 })}\n`);

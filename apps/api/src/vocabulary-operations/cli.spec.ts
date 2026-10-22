@@ -9,6 +9,19 @@ const require = createRequire(path.resolve('package.json'));
 const runner = require.resolve('tsx/cli');
 const cli = path.resolve('src/vocabulary-operations/cli.ts');
 describe('Vocabulary CLI executable boundaries', () => {
+  it('exposes the explicit LanGeek adapter and retains unresolved pages', () => {
+    const directory = mkdtempSync(path.join(tmpdir(), 'vocabulary-cli-'));
+    try {
+      const file = path.join(directory, 'layout.json'); const output = path.join(directory, 'manifest.json');
+      writeFileSync(file, JSON.stringify({ documentSha256: 'b'.repeat(64), pageCount: 1, cefrLevel: 'B2', pages: [{ pageIndex: 0, width: 612, height: 792, words: [], horizontalRules: [] }] }));
+      const result = spawnSync(process.execPath, [runner, cli, 'parse-langeek-layout', file, output], { encoding: 'utf8', timeout: 15000 });
+      expect(result.status).toBe(2);
+      expect(JSON.parse(result.stdout)).toMatchObject({ status: 'INCOMPLETE', parserVersion: 'langeek-ruled/1', databaseWrites: 0 });
+    } finally {
+      const resolved = path.resolve(directory);
+      if (resolved.startsWith(path.resolve(tmpdir()) + path.sep) && path.basename(resolved).startsWith('vocabulary-cli-')) rmSync(resolved, { recursive: true });
+    }
+  }, 20000);
   it('reports unknown layout content without claiming a complete extraction', () => {
     const directory = mkdtempSync(path.join(tmpdir(), 'vocabulary-cli-'));
     try {
