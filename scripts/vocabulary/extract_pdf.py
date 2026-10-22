@@ -4,12 +4,16 @@ extract_pages accepts already-decoded synthetic/native page objects; callers own
 that boundary. extract_pdf is the rights-gated file entry point. Its supplied
 authorization must be issued by the owning rights workflow, not by this adapter.
 """
+import argparse
+from contextlib import redirect_stderr, redirect_stdout
 import hashlib
 import io
 import json
 import math
+import os
 from pathlib import Path
 import re
+import sys
 
 
 LEVELS = frozenset(("A1", "A2", "B1", "B2", "C1"))
@@ -74,7 +78,7 @@ def extract_pages(pages, document_sha256, cefr_level):
     return dict(documentSha256=document_sha256, pageCount=len(extracted), cefrLevel=cefr_level, pages=extracted)
 
 
-def _authorization(authorization_path):
+def _authorization(authorization_path, *, require_storage_permission=False):
     if authorization_path is None:
         raise PermissionError("BLOCKED_BY_RIGHTS: authorization is required")
     try:
@@ -93,15 +97,16 @@ def _authorization(authorization_path):
     if (grant.get("rightsStatus") != "APPROVED"
             or not isinstance(reference, str) or not reference.strip() or len(reference) > 500
             or not isinstance(uses, list) or "EXTRACT" not in uses
+            or require_storage_permission and "STORE" not in uses
             or not isinstance(fields, list) or any(field not in fields for field in ("FORM", "PRONUNCIATION", "DEFINITION"))
             or not isinstance(digest, str) or not HASH.fullmatch(digest)):
         raise PermissionError("BLOCKED_BY_RIGHTS: extraction and all raw content fields require approval")
     return digest
 
 
-def extract_pdf(input_path, authorization_path, cefr_level):
+def extract_pdf(input_path, authorization_path, cefr_level, *, require_storage_permission=False):
     """Check rights before source reads, and bind the decoder to hashed bytes."""
-    expected_hash = _authorization(authorization_path)
+    expected_hash = _authorization(authorization_path, require_storage_permission=require_storage_permission)
     _metadata(expected_hash, cefr_level)
     with Path(input_path).open("rb") as stream:
         content = stream.read(MAX_SOURCE_BYTES + 1)
@@ -115,3 +120,40 @@ def extract_pdf(input_path, authorization_path, cefr_level):
 
     with pdfplumber.open(io.BytesIO(content)) as pdf:
         return extract_pages(pdf.pages, digest, cefr_level)
+
+
+class _CliParser(argparse.ArgumentParser):
+    def error(self, message):
+        # argparse normally echoes invalid argument values, which may be content.
+        self.exit(2, "Invalid extraction arguments; use --help.\n")
+
+
+def main(argv=None):
+    """Write geometry exclusively to an explicitly named, new UTF-8 file."""
+    parser = _CliParser(description="Extract authorized native PDF geometry to a new JSON file.", allow_abbrev=False)
+    parser.add_argument("--input", required=True, type=Path, help="Local authorized source file")
+    parser.add_argument("--authorization", required=True, type=Path, help="Document-bound rights JSON file")
+    parser.add_argument("--level", required=True, choices=sorted(LEVELS), help="Source CEFR level")
+    parser.add_argument("--output", required=True, type=Path, help="New geometry JSON file; existing files are refused")
+    args = parser.parse_args(argv)
+    if str(args.output) == "-":
+        parser.error("An explicit output file is required")
+    try:
+        if not args.output.parent.is_dir() or args.output.exists() or args.output.is_symlink() or args.output.resolve() in {args.input.resolve(), args.authorization.resolve()}:
+            parser.error("Output must be a new, separate file")
+        # Suppress decoder diagnostics as well as exception text. No source text
+        # goes to a terminal or an incidental diagnostic file, even on failure.
+        with open(os.devnull, "w", encoding="utf-8") as discard, redirect_stdout(discard), redirect_stderr(discard):
+            geometry = extract_pdf(args.input, args.authorization, args.level, require_storage_permission=True)
+            encoded = json.dumps(geometry, ensure_ascii=False, allow_nan=False, sort_keys=True)
+        # Exclusive creation also guards against an output-path race after checks.
+        with args.output.open("x", encoding="utf-8", newline="\n") as destination:
+            destination.write(encoded + "\n")
+    except Exception:
+        print("Extraction blocked or failed.", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

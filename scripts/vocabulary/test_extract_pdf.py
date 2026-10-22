@@ -1,7 +1,10 @@
 """Synthetic page objects only: never read or generate a PDF in these tests."""
 import hashlib
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -115,6 +118,131 @@ class GeometryExtractionTests(unittest.TestCase):
                 result = extract_pages([SyntheticPage([word("/kæ.feɪ/")])], "a" * 64, level)
                 self.assertEqual(result["cefrLevel"], level)
                 self.assertEqual(result["pages"][0]["words"][0]["text"], "/kæ.feɪ/")
+
+
+class ExtractionCliTests(unittest.TestCase):
+    """Execute the real script; replace only the native decoder dependency."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.folder = Path(temporary.name)
+        self.source = self.folder / "synthetic.bin"
+        self.source.write_bytes(b"synthetic non-PDF bytes")
+        self.authorization = self.folder / "rights.json"
+        self.grant = dict(rightsStatus="APPROVED", permissionReference="synthetic-test-only", allowedUses=["EXTRACT", "STORE"], allowedFields=["FORM", "PRONUNCIATION", "DEFINITION"], documentSha256=hashlib.sha256(self.source.read_bytes()).hexdigest())
+        self.authorization.write_text(json.dumps(self.grant), encoding="utf-8")
+        self.output = self.folder / "geometry.json"
+        self.decoder_marker = self.folder / "decoder.loaded"
+        (self.folder / "pdfplumber.py").write_text('''
+from pathlib import Path
+import os
+import sys
+Path(__file__).with_name("decoder.loaded").write_text("loaded")
+class Page:
+    width = 600
+    height = 800
+    def extract_words(self, **kwargs):
+        return [dict(text="cafe\\u0301 /kæ.feɪ/", x0=10, x1=90, top=20, bottom=30)]
+class Document:
+    pages = [Page()]
+    def __enter__(self):
+        return self
+    def __exit__(self, *args):
+        pass
+def open(stream):
+    print("THIRD_PARTY_CONTENT_MARKER")
+    print("THIRD_PARTY_CONTENT_MARKER", file=sys.stderr)
+    if os.environ.get("SYNTHETIC_DECODER_FAIL"):
+        raise ValueError("THIRD_PARTY_CONTENT_MARKER")
+    return Document()
+''', encoding="utf-8")
+
+    def arguments(self):
+        return ["--input", str(self.source), "--authorization", str(self.authorization), "--level", "A1", "--output", str(self.output)]
+
+    def run_cli(self, arguments, **environment):
+        return subprocess.run([sys.executable, str(Path(__file__).with_name("extract_pdf.py").resolve()), *arguments], cwd=self.folder, env={**os.environ, "PYTHONPATH": str(self.folder), "PYTHONDONTWRITEBYTECODE": "1", **environment}, capture_output=True, text=True, encoding="utf-8", timeout=15, check=False)
+
+    def test_cli_requires_every_explicit_flag_before_decoder_or_output(self):
+        for index in range(0, 8, 2):
+            arguments = self.arguments()
+            del arguments[index:index + 2]
+            with self.subTest(missing=index):
+                result = self.run_cli(arguments)
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stdout, "")
+                self.assertFalse(self.decoder_marker.exists())
+                self.assertFalse(self.output.exists())
+
+    def test_cli_rejects_invalid_level_unknown_flags_and_stdout_output_generically(self):
+        for arguments in [self.arguments() + ["--THIRD_PARTY_CONTENT_MARKER"], [*self.arguments()[:5], "THIRD_PARTY_CONTENT_MARKER", *self.arguments()[6:]], [*self.arguments()[:-1], "-"]]:
+            with self.subTest(arguments=arguments):
+                result = self.run_cli(arguments)
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stdout, "")
+                self.assertNotIn("THIRD_PARTY_CONTENT_MARKER", result.stderr)
+                self.assertFalse(self.decoder_marker.exists())
+                self.assertFalse(self.output.exists())
+
+    def test_cli_denies_rights_before_decoder_and_never_creates_output(self):
+        for change in [dict(rightsStatus="REVOKED"), dict(allowedFields=["FORM"]), dict(allowedUses=[]), dict(allowedUses=["EXTRACT"]), dict(allowedUses=["STORE"])]:
+            self.decoder_marker.unlink(missing_ok=True)
+            self.output.unlink(missing_ok=True)
+            self.authorization.write_text(json.dumps({**self.grant, **change}), encoding="utf-8")
+            with self.subTest(change=change):
+                result = self.run_cli(self.arguments())
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(result.stdout, "")
+                self.assertFalse(self.decoder_marker.exists())
+                self.assertFalse(self.output.exists())
+
+    def test_cli_checks_hash_before_loading_decoder(self):
+        self.authorization.write_text(json.dumps({**self.grant, "documentSha256": "a" * 64}), encoding="utf-8")
+        result = self.run_cli(self.arguments())
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.stdout, "")
+        self.assertFalse(self.decoder_marker.exists())
+        self.assertFalse(self.output.exists())
+
+    def test_cli_writes_geometry_only_to_explicit_utf8_file(self):
+        result = self.run_cli(self.arguments())
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(self.decoder_marker.exists())
+        self.assertTrue(self.output.exists())
+        geometry = json.loads(self.output.read_text(encoding="utf-8"))
+        self.assertEqual(geometry["documentSha256"], self.grant["documentSha256"])
+        self.assertEqual(geometry["pages"][0]["words"][0]["text"], "cafe\u0301 /kæ.feɪ/")
+        self.assertEqual(result.stdout, "")
+        self.assertEqual(result.stderr, "")
+
+    def test_cli_decoder_errors_are_generic_and_leave_no_output(self):
+        result = self.run_cli(self.arguments(), SYNTHETIC_DECODER_FAIL="1")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(self.decoder_marker.exists())
+        self.assertFalse(self.output.exists())
+        self.assertEqual(result.stdout, "")
+        self.assertNotIn("THIRD_PARTY_CONTENT_MARKER", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+
+    def test_cli_refuses_to_overwrite_output_source_or_authorization(self):
+        self.output.write_bytes(b"existing output")
+        for target in [self.output, self.source, self.authorization]:
+            before = target.read_bytes()
+            with self.subTest(target=target.name):
+                result = self.run_cli([*self.arguments()[:-1], str(target)])
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(target.read_bytes(), before)
+                self.assertFalse(self.decoder_marker.exists())
+                self.assertEqual(result.stdout, "")
+
+    def test_cli_validates_output_parent_before_loading_decoder(self):
+        self.output = self.folder / "absent-folder" / "geometry.json"
+        result = self.run_cli(self.arguments())
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse(self.decoder_marker.exists())
+        self.assertFalse(self.output.exists())
+        self.assertEqual(result.stdout, "")
 
 
 if __name__ == "__main__":
