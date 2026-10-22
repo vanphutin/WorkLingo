@@ -39,6 +39,7 @@ import { IeltsStudyModule } from './ielts-study/ielts-study.module.js';
 import { AdminContentLifecycleModule } from './admin-content-lifecycle/admin-content-lifecycle.module.js';
 import { IntermediateTopicsModule } from './intermediate-topics/intermediate-topics.module.js';
 import { DashboardOverviewModule } from './dashboard-overview/dashboard-overview.module.js';
+import { VocabularyModule } from './vocabulary/vocabulary.module.js';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { DashboardOverviewModule } from './dashboard-overview/dashboard-overview
     AdminContentLifecycleModule,
     IntermediateTopicsModule,
     DashboardOverviewModule,
+    VocabularyModule,
     JobsModule,
     LearningSessionsModule,
     MasteryModule,
