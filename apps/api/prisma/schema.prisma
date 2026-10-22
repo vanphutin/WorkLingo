@@ -808,6 +808,9 @@ model ContentImport {
 }
 
 model IntermediateTopicGroup {
+  parentId       String?                  @db.Uuid
+  parent         IntermediateTopicGroup?  @relation("TopicHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children       IntermediateTopicGroup[] @relation("TopicHierarchy")
   lexicalEntries LexicalEntryTopic[]
   sourceTopicMappings VocabularyTopicMapping[]
   id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -824,6 +827,8 @@ model IntermediateTopicGroup {
   lessons        Lesson[]
   contentImports ContentImport[]
   vocabularyUsages LessonVocabularyUsage[]
+
+  @@index([parentId])
 }
 
 model IntermediateTopicGroupName {
@@ -1654,6 +1659,7 @@ model PilotMetricReceipt {
 
 // Additive master catalog: legacy identities and snapshots remain authoritative.
 model VocabularySource {
+  pronunciationDialect    String                 @default("und")
   id                      String                 @id @default(uuid()) @db.Uuid
   providerName            String
   title                   String
@@ -1748,6 +1754,9 @@ model VocabularySourceEntry {
 }
 
 model VocabularyBatchRow {
+  reviewCorrection Json?
+  reviewedBy      String?
+  reviewedAt      DateTime?
   batchId         String                @db.Uuid
   sourceEntryId   String                @db.Uuid
   validationState String                @default("REVIEW_REQUIRED")
