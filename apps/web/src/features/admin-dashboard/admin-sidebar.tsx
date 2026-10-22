@@ -53,15 +53,17 @@ export function AdminNavigation() {
         </button>
         <div id={`${id}-${group.id}`} className="admin-sidebar-panel" hidden={choice.group !== group.id}>
           {group.programs ? <>
-            <div className="admin-program-picker" role="group" aria-label={t('chooseProgram')}>
-              {(['foundation', 'basic', 'intermediate', 'toeic', 'ielts'] as const).map(program => {
-                const available = group.programs?.find(item => item.id === program);
-                return available ? <button type="button" key={program} className="admin-program-choice"
-                  aria-pressed={choice.program === program} aria-controls={`${id}-tools-${program}`}
-                  onClick={() => setChoice({ ...choice, program: available.id })}>{available.label}</button>
-                  : <div className="admin-program-proposed" key={program}><span>{t(program)}</span><small>{t('proposed')}</small></div>;
-              })}
-            </div>
+            <label className="admin-program-picker">
+              <span>{t('chooseProgram')}</span>
+              <select value={choice.program} onChange={event => {
+                const program = group.programs?.find(item => item.id === event.target.value);
+                if (program) setChoice({ ...choice, program: program.id });
+              }}>
+                <option disabled value="foundation">{t('foundation')} / {t('basic')} · pre-A1–A2 · {t('proposed')}</option>
+                {group.programs.map(program => <option value={program.id} key={program.id}>{program.label}</option>)}
+                <option disabled value="toeic">{t('toeic')} · {t('proposed')}</option>
+              </select>
+            </label>
             <p className="admin-sidebar-note">{t('proposedHelp')}</p>
             {group.programs.map(program => <div id={`${id}-tools-${program.id}`} hidden={choice.program !== program.id} key={program.id}>
               <p className="workspace-nav-group-label">{program.label}</p>

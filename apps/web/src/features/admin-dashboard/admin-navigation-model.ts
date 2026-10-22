@@ -33,9 +33,9 @@ export const adminIeltsDestinations = [
 
 export const adminSharedDestinations = [
   { href: '/admin/content', label: 'content' }, { href: '/admin/curriculum', label: 'curriculum' },
-  { href: '/admin/analytics', label: 'analytics' },
 ] as const;
 export const adminSystemDestinations = [
+  { href: '/admin/analytics', label: 'analytics' },
   { href: '/admin/audit', label: 'audit' }, { href: '/admin/operations', label: 'operations' },
   { href: '/admin/settings/audio', label: 'audioSettings' }, { href: '/admin/settings/ai', label: 'aiSettings' },
   { href: '/dashboard', label: 'learnerView' },

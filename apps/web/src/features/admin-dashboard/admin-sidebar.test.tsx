@@ -20,7 +20,7 @@ describe('Contextual admin sidebar', () => {
     const mobileToggle = screen.getByRole('button', { name: 'Admin workspace' });
     fireEvent.click(mobileToggle);
     if (state === 'collapsed group') fireEvent.click(group('Shared management'));
-    else fireEvent.click(within(nav()).getByRole('button', { name: 'IELTS' }));
+    else fireEvent.change(within(nav()).getByRole('combobox', { name: 'Choose a program' }), { target: { value: 'ielts' } });
     mobileToggle.focus(); act(() => changed({ matches: true }));
     expect(within(nav()).getByRole('link', { name: 'Overview' })).toHaveFocus();
     expect(document.activeElement?.closest('[hidden]')).toBeNull();
@@ -34,7 +34,7 @@ describe('Contextual admin sidebar', () => {
   it('opens one group at a time and exposes existing IELTS tools only after selecting IELTS', () => {
     render(<AdminNavigation />);
     fireEvent.click(group('Training programs'));
-    fireEvent.click(within(nav()).getByRole('button', { name: 'IELTS' }));
+    fireEvent.change(within(nav()).getByRole('combobox', { name: 'Choose a program' }), { target: { value: 'ielts' } });
     expect(within(nav()).getByRole('link', { name: 'IELTS orientation' })).toBeVisible();
     expect(within(nav()).queryByRole('link', { name: 'Grammar' })).not.toBeInTheDocument();
     fireEvent.click(group('System'));
@@ -43,14 +43,15 @@ describe('Contextual admin sidebar', () => {
     expect(within(nav()).queryByRole('link', { name: 'IELTS orientation' })).not.toBeInTheDocument();
   });
 
-  it('shows missing programs as proposed IA without dead links', () => {
+  it('shows deferred catalog entries truthfully without invented routes', () => {
     render(<AdminNavigation />); fireEvent.click(group('Training programs'));
-    for (const name of ['Foundation', 'Basic', 'TOEIC']) {
-      expect(within(nav()).queryByRole('link', { name })).not.toBeInTheDocument();
-      expect(within(nav()).getByText(name, { exact: true }).parentElement).toHaveTextContent('Proposed IA');
-    }
+    const picker = within(nav()).getByRole('combobox', { name: 'Choose a program' });
+    expect(within(picker).getByRole('option', { name: /Foundation.*Basic/ })).toBeDisabled();
+    expect(within(picker).getByRole('option', { name: /TOEIC/ })).toBeDisabled();
     expect(nav().querySelector('a[href="/admin/programs/beginner"]')).toBeNull();
     expect(nav().querySelector('a[href="/admin/programs/toeic"]')).toBeNull();
+    fireEvent.click(group('System'));
+    expect(within(nav()).getByRole('link', { name: 'Analytics' })).toBeVisible();
   });
 
   it.each([
@@ -115,9 +116,8 @@ describe('Contextual admin sidebar', () => {
     render(<LocaleProvider initialLocale="vi"><AdminNavigation /></LocaleProvider>);
     const navigation = screen.getByRole('navigation', { name: 'Không gian quản trị' });
     fireEvent.click(within(navigation).getByRole('button', { name: 'Chương trình đào tạo' }));
-    expect(within(navigation).getByText('Mất gốc', { exact: true })).toBeVisible();
-    expect(within(navigation).getByText('Cơ bản', { exact: true })).toBeVisible();
-    expect(within(navigation).getByRole('button', { name: 'Trung cấp' })).toBeVisible();
+    expect(within(navigation).getByRole('option', { name: /Mất gốc.*Cơ bản/ })).toBeDisabled();
+    expect(within(navigation).getByRole('combobox', { name: 'Chọn chương trình' })).toHaveValue('intermediate');
     expect(within(navigation).getByRole('button', { name: 'Hệ thống' })).toBeVisible();
   });
 });

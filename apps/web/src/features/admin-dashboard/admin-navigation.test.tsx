@@ -17,6 +17,11 @@ describe('Admin breadcrumbs', () => {
     expect(crumbs).not.toHaveTextContent('opaque-id');
   });
 
+  it('includes the IELTS parent for standalone tools', () => {
+    location.pathname = '/admin/ielts-orientation'; render(<AdminBreadcrumbs />);
+    expect(screen.getByRole('link', { name: 'IELTS' })).toHaveAttribute('href', '/admin/programs/ielts');
+  });
+
   it('does not invent a category breadcrumb for invalid slugs', () => {
     location.pathname = '/admin/programs/intermediate/not-a-category/new';
     render(<AdminBreadcrumbs />);
