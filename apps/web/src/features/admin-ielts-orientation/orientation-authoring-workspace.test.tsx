@@ -94,12 +94,28 @@ describe('OrientationAuthoringWorkspace', () => {
     await waitFor(() => expect(adminIeltsOrientationClient.publish).toHaveBeenCalledWith(expect.objectContaining({ expectedRevision: 1 })));
   });
 
-  it('reloads the latest draft after a stale revision conflict', async () => {
+  it('preserves edits after a stale revision conflict until explicit reload is confirmed', async () => {
     vi.mocked(adminIeltsOrientationClient.updateDraft).mockRejectedValue(new ApiError({ code: 'ORIENTATION_REVISION_STALE', message: 'Stale.', status: 409 }));
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
     render(<OrientationAuthoringWorkspace />);
-    fireEvent.click(await screen.findByRole('button', { name: 'Save draft' }));
-    expect(await screen.findByText('The draft changed elsewhere. Latest revision loaded; review before retrying.')).not.toBeNull();
-    expect(adminIeltsOrientationClient.get).toHaveBeenCalledTimes(2);
+    const title = await screen.findByLabelText('Slide title');
+    fireEvent.change(title, { target: { value: 'Keep local changes' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save draft' }));
+    expect(await screen.findByText('The draft changed elsewhere. Your local changes are preserved. Reload the server draft when ready.')).not.toBeNull();
+    expect(adminIeltsOrientationClient.get).toHaveBeenCalledTimes(1);
+    expect((title as HTMLInputElement).value).toBe('Keep local changes');
+    fireEvent.click(screen.getByRole('button', { name: 'Reload server draft' }));
+    expect(confirm).toHaveBeenCalledTimes(1); expect(adminIeltsOrientationClient.get).toHaveBeenCalledTimes(1);
+    confirm.mockReturnValue(true); fireEvent.click(screen.getByRole('button', { name: 'Reload server draft' }));
+    await waitFor(() => expect((title as HTMLInputElement).value).toBe('Welcome'));
+  });
+
+  it('requires saving visible changes before validating or publishing the saved revision', async () => {
+    render(<OrientationAuthoringWorkspace />);
+    fireEvent.change(await screen.findByLabelText('Slide title'), { target: { value: 'Unsaved' } });
+    expect(screen.getByRole('button', { name: 'Validate draft' }).hasAttribute('disabled')).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Validate draft' }));
+    expect(adminIeltsOrientationClient.validate).not.toHaveBeenCalled();
   });
 
   it('requires confirmation before deleting a slide or archiving a release', async () => {

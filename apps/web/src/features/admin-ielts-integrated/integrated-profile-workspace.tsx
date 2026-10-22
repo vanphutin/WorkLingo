@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard, AdminLink } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import type { AdminIeltsIntegratedProfileDto } from '@worklingo/contracts';
 import { useEffect, useRef, useState } from 'react';
@@ -25,6 +27,7 @@ export function IntegratedProfileWorkspace() {
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
   const dirtyIds = useRef(new Set<string>());
+  useAdminDraftGuard(dirtyIds.current.size > 0);
 
   const load = async () => {
     const values = await adminIeltsIntegratedClient.list();
@@ -52,8 +55,8 @@ export function IntegratedProfileWorkspace() {
   };
 
   return <section className="bridge-shell authoring-experience">
-    <header className="bridge-heading"><div><p className="bridge-kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
-    <p>{t('configuration')} <a href="/admin/content">{t('authorLessons')}</a></p>
+    <AdminPageHeader title={t('title')} description={t('description')} />
+    <p>{t('configuration')} <AdminLink href="/admin/content">{t('authorLessons')}</AdminLink></p>
     {error ? <p className="bridge-error" role="alert">{localizedError(error, locale)}</p> : null}
     {message ? <p className="bridge-feedback" role="status">{t(message.key, message.values)}</p> : null}
     <div className="bridge-stage-nav" aria-label={t('profiles')}>
