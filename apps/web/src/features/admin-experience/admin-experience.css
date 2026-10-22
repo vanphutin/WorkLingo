@@ -1,0 +1,85 @@
+/* Admin chrome and presentation. No form state or learner selectors live here. */
+.application-shell.admin-shell { width: min(100%, 112rem); gap: 1rem 1.25rem; grid-template-columns: 16rem minmax(0,1fr); padding-block-start: 1rem; }
+.application-shell.admin-shell .admin-top-nav { grid-column: 2; }
+.admin-shell > .workspace-navigation-admin { grid-row: 1 / span 2; top: 1rem; max-block-size: calc(100dvh - 2rem); }
+.admin-shell .admin-top-nav .nav-left { display: none; }
+.admin-shell .shell-header-surface { padding: .5rem .875rem; }
+.application-shell.admin-shell .nav-user-meta { width: 100%; gap: .75rem; }
+.admin-shell .user-greeting { margin-inline-end: auto; max-width: 28rem; font-size: .8125rem; }
+.application-shell.admin-shell .admin-main-content { grid-column: 2; padding: 0; max-width: none; }
+.admin-shell .ad-breadcrumbs { margin: 0 0 .75rem; font-size: .8125rem; }
+.admin-page-header { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: .75rem 1rem; margin-block-end: 1rem; }
+.admin-page-heading { min-width: 0; flex: 1 1 20rem; }
+.admin-shell .admin-page-header h1 { margin: 0; font-size: clamp(1.4rem,2.2vw,1.85rem); line-height: 1.25; letter-spacing: -.035em; }
+.admin-page-header p { max-width: 80ch; margin: .35rem 0 0; font-size: .875rem; color: var(--text-secondary); }
+.admin-toolbar, .admin-context-section { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
+.admin-context-section { justify-content: space-between; margin-block-end: .75rem; }
+.admin-context-section h2 { margin: 0; font-size: 1.0625rem; }
+.admin-context-status { display: inline-flex; align-items: center; padding: .2rem .55rem; border: 1px solid var(--border-default); border-radius: var(--radius-control); background: var(--surface-secondary); font-size: .75rem; }
+.admin-filter-bar { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; padding: .875rem; border: 1px solid var(--border-default); border-radius: var(--radius-panel); background: var(--surface-primary); margin-block-end: 1rem; }
+.admin-filter-bar label { display: grid; gap: .35rem; min-width: 0; flex: 1 1 12rem; font-size: .8125rem; }
+.admin-filter-bar :is(input,select) { width: 100%; min-width: 0; min-height: 44px; padding: .5rem .75rem; border: 1px solid var(--control-border); border-radius: var(--radius-control); }
+.admin-filter-bar p { flex-basis: 100%; margin: 0; color: var(--text-secondary); font-size: .75rem; }
+.admin-data-table { min-width: 0; max-width: 100%; overflow-x: auto; border: 1px solid var(--border-default); border-radius: var(--radius-panel); background: var(--surface-primary); }
+.admin-workspace-layout { display: grid; gap: 1rem; min-width: 0; }
+.admin-empty-state { padding: 1.5rem; color: var(--text-secondary); text-align: center; }
+.admin-empty-state h2 { margin: 0 0 .5rem; font-size: 1rem; color: var(--text-primary); }
+.admin-error-state { padding: .875rem; border: 1px solid var(--danger-border); border-radius: var(--radius-control); background: var(--danger-soft); }
+.admin-shell .ad-dashboard { gap: 1rem; }
+.admin-shell :is(.ad-panel,.ad-metric) { padding: 1rem; }
+.admin-shell .ad-metric { gap: .35rem; }
+.admin-shell .ad-metric strong { font-size: clamp(1.5rem,2.5vw,2rem); }
+.admin-shell .ad-metrics { gap: .75rem; }
+.admin-shell .ad-dashboard-columns { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 1rem; align-items: start; }
+.admin-shell .ad-dashboard-columns > * { min-width: 0; }
+.admin-shell .admin-workflow-list { display: grid; margin: .75rem 0 0; padding: 0; list-style: none; }
+.admin-workflow-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; border-top: 1px solid var(--border-default); padding-block: .75rem; }
+.admin-workflow-list a { min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
+.admin-workflow-list p { max-width: 55ch; margin: 0; color: var(--text-secondary); font-size: .875rem; }
+.admin-shell .authoring-experience { gap: 1rem; }
+.admin-shell .authoring-experience :is(.workspace-header,.new-import-header,.content-list-header,.curriculum-header,.orientation-admin__header,.bridge-admin__header,.bridge-heading) { padding: 0; border: 0; border-radius: 0; background: transparent; margin-bottom: 1rem; }
+.admin-shell .authoring-experience :is(.workspace-pane,.workspace-view,.curriculum-form-card,.orientation-slide-list,.orientation-editor,.orientation-preview,.bridge-module-list,.bridge-stage-list,.bridge-editor,.bridge-preview) { padding: 1rem; }
+.admin-shell .authoring-experience .workspace-tabs { margin-bottom: 0; }
+.admin-shell .authoring-experience .workspace-tabs .tab-btn { flex: 1 1 auto; }
+.admin-shell .authoring-experience :is(.orientation-admin__grid,.bridge-admin__grid) { gap: .875rem; }
+.admin-shell .operations-experience.observability-shell { gap: 1rem; }
+.admin-shell .operations-experience .observability-card { padding: 1rem; }
+.admin-shell .operations-experience .observability-header { border: 0; background: transparent; border-radius: 0; padding: 0; }
+@media (min-width: 1600px) { .admin-shell .authoring-experience .orientation-admin__grid { grid-template-columns: minmax(12rem,.7fr) minmax(0,1.5fr) minmax(0,1fr); } }
+@media (max-width: 1200px) { .admin-shell .ad-dashboard-columns { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 999px) {
+  .application-shell.admin-shell { grid-template-columns: minmax(0,1fr); gap: .75rem; padding: .75rem max(.75rem,env(safe-area-inset-right)) 1.5rem max(.75rem,env(safe-area-inset-left)); }
+  .application-shell.admin-shell .admin-top-nav { grid-column: 1; grid-row: 1; }
+  .admin-shell > .workspace-navigation-admin { grid-row: 2; top: auto; max-block-size: none; }
+  .application-shell.admin-shell .admin-main-content { grid-column: 1; grid-row: 3; padding: 0; }
+  .admin-shell .admin-top-nav .nav-left { display: flex; }
+  .admin-shell .user-greeting { display: none; }
+  .admin-shell .shell-header-surface { padding: .5rem .75rem; }
+  .admin-shell .brand-logo { font-size: 1.1rem; }
+  .admin-shell .admin-badge { display: none; }
+  .admin-shell .workspace-navigation { padding: .5rem; }
+  .admin-shell .ad-breadcrumbs { margin-bottom: .5rem; }
+}
+@media (max-width: 560px) {
+  .application-shell.admin-shell .nav-container { gap: .5rem; }
+  .application-shell.admin-shell .nav-user-meta { gap: .5rem; }
+  .admin-shell .authoring-experience .workspace-tabs { gap: .35rem; padding: .35rem; }
+  .admin-shell .authoring-experience .workspace-tabs .tab-btn { flex-basis: calc(50% - .35rem); padding: .5rem; font-size: .8125rem; }
+  .admin-page-heading { flex-basis: 100%; }
+  .admin-shell .authoring-experience :is(.workspace-view,.workspace-pane) { padding: .75rem; }
+}
+
+.admin-shell .curriculum-container :is(.curriculum-tabs-bar,.curriculum-nav-toolbar) { margin-bottom: .875rem; }
+.admin-shell .curriculum-container :is(.path-header,.level-header,.mission-header) { padding: .75rem; }
+.admin-shell .curriculum-container :is(.program-group,.path-card,.level-card) { margin-bottom: 1rem; }
+.admin-shell .authoring-experience.curriculum-container .search-input { padding-inline-start: 2.25rem; }
+.admin-shell .preferences-experience { padding: 0; }
+.admin-shell .preferences-experience :is(.admin-ai-header,.admin-settings-header,.audio-settings-header) { padding: 0 0 .875rem; margin-bottom: 1rem; border: 0; background: transparent; }
+.admin-shell .preferences-experience :is(.admin-ai-header,.admin-settings-header,.audio-settings-header) h1 { font-size: clamp(1.4rem,2.2vw,1.85rem); }
+.admin-shell .preferences-experience :is(.admin-ai-panel,.admin-provider-section,.audio-settings-card,.admin-voice-config-card) { padding: 1rem; }
+.admin-shell .ielts-topic-editor { max-width: none; width: 100%; margin: 0; padding: 0; }
+
+.admin-shell .preferences-experience .admin-audio-settings-card,
+.admin-shell .admin-ai-card.preferences-experience { padding: 1rem; gap: 1rem; }
+.admin-shell .preferences-experience .admin-audio-section { padding: 1rem; }
+.admin-shell .preferences-experience .admin-ai-panels-container { gap: 1rem; }

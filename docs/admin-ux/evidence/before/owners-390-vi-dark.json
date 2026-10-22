@@ -1,0 +1,362 @@
+[
+  {
+    "owner": "dashboard",
+    "url": "/admin",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1560.3125,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 1884.6875,
+      "left": 16
+    },
+    "headings": [
+      "Tổng quan"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "intermediate",
+    "url": "/admin/programs/intermediate",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1622.859375,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 1947.234375,
+      "left": 16
+    },
+    "headings": [
+      "Trung cấp"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "ielts",
+    "url": "/admin/programs/ielts",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1907.65625,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 2232.03125,
+      "left": 16
+    },
+    "headings": [
+      "IELTS"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "content",
+    "url": "/admin/content",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 550.328125,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 874.703125,
+      "left": 16
+    },
+    "headings": [
+      "Tất cả bản nhập (1)"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "editor",
+    "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1324.359375,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 1648.734375,
+      "left": 16
+    },
+    "headings": [
+      "Biên soạn bài học"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "import",
+    "url": "/admin/content/new",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1192.0625,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 1516.4375,
+      "left": 16
+    },
+    "headings": [
+      "Nhập nội dung mới"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "curriculum",
+    "url": "/admin/curriculum",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 2936.265625,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 3260.640625,
+      "left": 16
+    },
+    "headings": [
+      "Quản lý chương trình học"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "orientation",
+    "url": "/admin/ielts-orientation",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 2643.84375,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 2968.21875,
+      "left": 16
+    },
+    "headings": [
+      "Biên soạn phần định hướng"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "bridge",
+    "url": "/admin/ielts-bridge",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 3009.71875,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 3334.09375,
+      "left": 16
+    },
+    "headings": [
+      "Biên soạn Bridge"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "integrated",
+    "url": "/admin/ielts-integrated",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1327.578125,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 1651.953125,
+      "left": 16
+    },
+    "headings": [
+      "Cấu hình luyện tập tổng hợp"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "mock",
+    "url": "/admin/ielts-mocks",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 3984.453125,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 4308.828125,
+      "left": 16
+    },
+    "headings": [
+      "Không gian bài thi thử IELTS toàn phần"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "band",
+    "url": "/admin/ielts-band-curriculum",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 7348.390625,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 7672.765625,
+      "left": 16
+    },
+    "headings": [
+      "Chương trình theo band"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "topics",
+    "url": "/admin/ielts-topics",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 482.109375,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 806.484375,
+      "left": 16
+    },
+    "headings": [
+      "Nội dung chủ đề IELTS"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "operations",
+    "url": "/admin/operations",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 3177.09375,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 3501.46875,
+      "left": 16
+    },
+    "headings": [
+      "Vận hành"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "audit",
+    "url": "/admin/audit",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 7217.65625,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 7542.03125,
+      "left": 16
+    },
+    "headings": [
+      "Nhật ký kiểm toán"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "analytics",
+    "url": "/admin/analytics",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 1120.65625,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 1445.03125,
+      "left": 16
+    },
+    "headings": [
+      "Phân tích thí điểm"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "adminAudio",
+    "url": "/admin/settings/audio",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 3283.6875,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 3608.0625,
+      "left": 16
+    },
+    "headings": [
+      "Cài đặt tạo âm thanh"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "adminAi",
+    "url": "/admin/settings/ai",
+    "width": 390,
+    "scroll": 390,
+    "main": {
+      "x": 16,
+      "y": 324.375,
+      "width": 358,
+      "height": 2532.109375,
+      "top": 324.375,
+      "right": 374,
+      "bottom": 2856.484375,
+      "left": 16
+    },
+    "headings": [
+      "Cài đặt AI hệ thống"
+    ],
+    "alerts": []
+  }
+]

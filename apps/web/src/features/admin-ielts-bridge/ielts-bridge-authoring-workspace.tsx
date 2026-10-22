@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader, AdminStatusBadge } from '../admin-experience/admin-patterns';
 
 import { useT, useLocalePreference } from '../../i18n/provider';
 import { adminIeltsBridgeMessages } from '../../i18n/messages/adminIeltsBridge';
@@ -100,6 +102,7 @@ export function IeltsBridgeAuthoringWorkspace() {
   const [message, setMessage] = useState<Notice | null>(null);
   const [error, setError] = useState<unknown>(null);
   const dirtyIds = useRef(new Set<string>());
+  useAdminDraftGuard(dirtyIds.current.size > 0);
   const removalReceipts = useRef(new Map<string, { signature: string; idempotencyKey: string }>());
 
   const selected = useMemo(() => modules.find((module) => module.id === selectedId) ?? null, [modules, selectedId]);
@@ -156,10 +159,7 @@ export function IeltsBridgeAuthoringWorkspace() {
   if (loading) return <section className="bridge-admin-loading" aria-busy="true">{t('loading')}</section>;
 
   return <section className="bridge-admin authoring-experience">
-    <header className="bridge-admin__header">
-      <div><p className="bridge-admin__kicker">{t('curriculum')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
-      {selected ? <div className="bridge-admin__status"><strong>{statusLabel(selected.status)}</strong><span>{t('draftRevision', { revision: selected.draftRevision })}</span></div> : null}
-    </header>
+    <AdminPageHeader title={t('title')} description={t('description')} actions={selected ? <><AdminStatusBadge>{statusLabel(selected.status)}</AdminStatusBadge><AdminStatusBadge>{t('draftRevision', { revision: selected.draftRevision })}</AdminStatusBadge></> : undefined} />
     {error ? <p className="bridge-notice bridge-notice--error" role="alert">{error === 'revisionConflict' ? t('revisionConflict') : localizedError(error, locale)}</p> : null}
     {message ? <p className="bridge-notice" role="status">{t(message.key, message.values)}</p> : null}
     <div className="bridge-create">

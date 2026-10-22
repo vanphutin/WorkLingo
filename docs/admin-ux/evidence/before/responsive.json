@@ -1,0 +1,104 @@
+[
+  {
+    "owner": "dashboard",
+    "width": 320,
+    "height": 740,
+    "scroll": 320
+  },
+  {
+    "owner": "editor",
+    "width": 320,
+    "height": 740,
+    "scroll": 320
+  },
+  {
+    "owner": "curriculum",
+    "width": 320,
+    "height": 740,
+    "scroll": 320
+  },
+  {
+    "owner": "operations",
+    "width": 320,
+    "height": 740,
+    "scroll": 320
+  },
+  {
+    "owner": "dashboard",
+    "width": 768,
+    "height": 1024,
+    "scroll": 768
+  },
+  {
+    "owner": "editor",
+    "width": 768,
+    "height": 1024,
+    "scroll": 768
+  },
+  {
+    "owner": "curriculum",
+    "width": 768,
+    "height": 1024,
+    "scroll": 768
+  },
+  {
+    "owner": "operations",
+    "width": 768,
+    "height": 1024,
+    "scroll": 768
+  },
+  {
+    "owner": "dashboard",
+    "width": 1280,
+    "height": 800,
+    "scroll": 1280
+  },
+  {
+    "owner": "editor",
+    "width": 1280,
+    "height": 800,
+    "scroll": 1280
+  },
+  {
+    "owner": "curriculum",
+    "width": 1280,
+    "height": 800,
+    "scroll": 1280
+  },
+  {
+    "owner": "operations",
+    "width": 1280,
+    "height": 800,
+    "scroll": 1280
+  },
+  {
+    "owner": "dashboard",
+    "width": 1920,
+    "height": 1080,
+    "scroll": 1920
+  },
+  {
+    "owner": "editor",
+    "width": 1920,
+    "height": 1080,
+    "scroll": 1920
+  },
+  {
+    "owner": "curriculum",
+    "width": 1920,
+    "height": 1080,
+    "scroll": 1920
+  },
+  {
+    "owner": "operations",
+    "width": 1920,
+    "height": 1080,
+    "scroll": 1920
+  },
+  {
+    "owner": "intermediate-editor",
+    "zoom": 2,
+    "width": 320,
+    "scroll": 325
+  }
+]

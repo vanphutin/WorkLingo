@@ -1,6 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import { AdminLink as Link } from './admin-navigation-guard';
+import { AdminPageHeader, AdminSectionHeader, AdminStatusBadge, AdminErrorState } from '../admin-experience/admin-patterns';
+import { adminExperienceMessages } from '../../i18n/messages/adminExperience';
 import { useEffect, useId, useState } from 'react';
 import type { AdminDashboardOverview } from '@worklingo/contracts';
 import { useLocalePreference, useT } from '../../i18n/provider';
@@ -8,7 +10,7 @@ import { formatDate, formatNumber } from '../../i18n/translator';
 import { adminDashboardMessages } from '../../i18n/messages/adminDashboard';
 import { commonMessages } from '../../i18n/messages/common';
 import { adminDashboardClient } from '../../lib/api/admin-dashboard-client';
-import { adminIeltsDestinations, adminProgramDestinations, isAdminProgramDeferred } from './admin-navigation';
+import { adminProgramDestinations, isAdminProgramDeferred } from './admin-navigation';
 import { IntermediateAuthoringHub } from '../admin-intermediate/intermediate-authoring-hub';
 
 type Program = AdminDashboardOverview['programs'][number];
@@ -31,20 +33,19 @@ export function AdminDashboard({ programSlug }: { readonly programSlug?: string 
   }, [attempt]);
 
   if (state.status === 'loading') return <div className="ad-panel" role="status">{t('loading')}</div>;
-  if (state.status === 'error') return <div className="ad-panel ad-error" role="alert">
+  if (state.status === 'error') return <AdminErrorState>
     <h1>{t('loadError')}</h1><p>{t('connection')}</p>
     <button className="secondary-button" type="button" onClick={() => { setState({ status: 'loading' }); setAttempt((value) => value + 1); }}>{t('retry')}</button>
-  </div>;
+  </AdminErrorState>;
 
   const program = state.data.programs.find((item) => item.slug === programSlug);
   if (programSlug && !program) return <div className="ad-panel"><h1>{t('unavailableProgram')}</h1><p>{t('unavailableDescription')}</p><Link href="/admin">{t('overview')}</Link></div>;
   if (program) return <ProgramWorkspace program={program} />;
   return <div className="ad-dashboard">
-    <header className="ad-page-header"><h1>{t('overview')}</h1><p>{t('description')}</p></header>
+    <AdminPageHeader title={t('overview')} description={t('description')} />
     <OverviewMetrics data={state.data} />
-    <ActivityChart activity={state.data.activity} />
     <ProgramTable programs={state.data.programs} />
-    <RecentActivity activity={state.data.recentActivity} />
+    <div className="ad-dashboard-columns"><ActivityChart activity={state.data.activity} /><RecentActivity activity={state.data.recentActivity} /></div>
     <section className="ad-panel"><h2>{t('users')}</h2><p className="ad-muted">{t('usersUnavailable')}</p></section>
   </div>;
 }
@@ -153,6 +154,7 @@ function RecentActivity({ activity }: { readonly activity: AdminDashboardOvervie
 function ProgramWorkspace({ program }: { readonly program: Program }) {
   const t = useT('adminDashboard', adminDashboardMessages);
   const tc = useT('common', commonMessages);
+  const tx = useT('adminExperience', adminExperienceMessages);
   const { locale } = useLocalePreference();
   const name = adminProgramDestinations.find(({ slug }) => slug === program.slug);
   const metrics = [
@@ -171,17 +173,22 @@ function ProgramWorkspace({ program }: { readonly program: Program }) {
     <p>{t('deferredDescription')}</p><Link href="/admin">{t('overview')}</Link>
   </section>;
   return <div className="ad-dashboard">
-    <header className="ad-page-header"><p className="ad-eyebrow">{t('learningPrograms')}</p><h1>{name ? t(name.label) : program.name}</h1>
-      <span className="ad-availability">{t(availabilityKeys[program.availabilityStatus])}</span><p>{t('workspaceDescription')}</p></header>
-    {program.slug === 'intermediate' ? <IntermediateAuthoringHub /> : null}
+    <AdminPageHeader title={name ? t(name.label) : program.name} description={t('workspaceDescription')}
+      actions={<AdminStatusBadge>{t(availabilityKeys[program.availabilityStatus])}</AdminStatusBadge>} />
     {program.availabilityStatus !== 'AVAILABLE' ? <p className="ad-notice">{t('notReady')}</p> : null}
+    {program.slug === 'intermediate' ? <IntermediateAuthoringHub /> : null}
     <ul className="ad-metrics" aria-label={t('programMetrics')}>{metrics.map((metric) => <li className="ad-metric" key={metric.label}><span>{metric.label}</span><strong>{metric.value}</strong></li>)}</ul>
     <p className="ad-muted ad-footnote">{program.totalSessions === 0 ? t('noSessions') : t('completionDefinition')}</p>
-    <section className="ad-panel"><h2>{t('tools')}</h2><p className="ad-muted">{t('sharedTools')}</p>
-      <div className="ad-tool-grid">{tools.map((tool) => <article className="ad-tool" key={tool.href}><h3><Link href={tool.href}>{tool.label}</Link></h3><p>{tool.description}</p></article>)}</div>
+    {program.slug === 'ielts' ? <section className="ad-panel"><AdminSectionHeader title={tx('workflow')} /><p className="ad-muted">{tx('workflowHelp')}</p>
+      <ul className="admin-workflow-list">{[
+        { href: '/admin/ielts-orientation', label: tc('ieltsOrientation'), help: tx('orientationTask') },
+        { href: '/admin/ielts-mocks', label: tc('mocks'), help: tx('mockTask') },
+        { href: '/admin/ielts-band-curriculum', label: tc('bandCurriculum'), help: tx('bandTask') },
+      ].map(task => <li key={task.href}><Link href={task.href}>{task.label}</Link><p>{task.help}</p></li>)}</ul>
+    </section> : null}
+    <section className="ad-panel"><AdminSectionHeader title={tx('globalTools')} /><p className="ad-muted">{t('sharedTools')}</p>
+      <ul className="admin-workflow-list">{tools.map(tool => <li key={tool.href}><Link href={tool.href}>{tool.label}</Link><p>{tool.description}</p></li>)}</ul>
     </section>
-    {program.slug === 'ielts' ? <section className="ad-panel"><h2>{t('ieltsTools')}</h2><ul className="ad-tool-links">{adminIeltsDestinations.map(({ href, label }) => <li key={href}><Link href={href}>{tc(label)}</Link></li>)}</ul></section> : null}
-    <div className="ad-tool-grid"><section className="ad-panel"><h2>{t('assessment')}</h2><p className="ad-muted">{t('assessmentUnavailable')}</p></section>
-      <section className="ad-panel"><h2>{t('learnerProgress')}</h2><p className="ad-muted">{t('progressUnavailable')}</p></section></div>
+    <p className="ad-muted">{t('assessmentUnavailable')} {t('progressUnavailable')}</p>
   </div>;
 }

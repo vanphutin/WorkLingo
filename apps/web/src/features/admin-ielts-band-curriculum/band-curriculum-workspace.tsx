@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard, AdminLink } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { INITIAL_IELTS_BAND_CURRICULUM, ieltsBandCurriculumContentSchema, type AdminIeltsBandCurriculumDto, type IeltsBandStage } from '@worklingo/contracts';
 import { useEffect, useState } from 'react';
@@ -21,6 +23,7 @@ export function BandCurriculumWorkspace() {
   const t = useT('adminIeltsBand', adminIeltsBandMessages);
   const { locale } = useLocalePreference();
   const [workspace, setWorkspace] = useState<AdminIeltsBandCurriculumDto | null>(null);
+  const [savedSource, setSavedSource] = useState('');
   const [selected, setSelected] = useState(0);
   const [validatedRevision, setValidatedRevision] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
@@ -30,8 +33,9 @@ export function BandCurriculumWorkspace() {
   const [importDirty, setImportDirty] = useState(false);
 
   useEffect(() => {
-    void adminIeltsBandClient.get().then(setWorkspace).catch(setError);
+    void adminIeltsBandClient.get().then(data => { setWorkspace(data); setSavedSource(JSON.stringify(data.draft)); }).catch(setError);
   }, []);
+  useAdminDraftGuard(importDirty || (workspace !== null && JSON.stringify(workspace.draft) !== savedSource));
   const selectStage = (index: number) => {
     if (!workspace) return;
     setSelected(index);
@@ -64,7 +68,7 @@ export function BandCurriculumWorkspace() {
     if (!workspace || importDirty) return null;
     const content = ieltsBandCurriculumContentSchema.parse(workspace.draft);
     const saved = await adminIeltsBandClient.save({ expectedRevision: workspace.draftRevision, idempotencyKey: crypto.randomUUID(), content });
-    setWorkspace(saved); setValidatedRevision(null);
+    setWorkspace(saved); setSavedSource(JSON.stringify(saved.draft)); setValidatedRevision(null);
     return saved;
   };
   const errorMessage = () => {
@@ -87,7 +91,7 @@ export function BandCurriculumWorkspace() {
 
   if (!workspace && !error) return <section className="bridge-shell authoring-experience bridge-state"><p role="status">{t('loading')}</p></section>;
   return <section className="bridge-shell authoring-experience band-config">
-    <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p><a href="/admin/content">{t('authorLessons')}</a></div></header>
+    <AdminPageHeader title={t('title')} description={t('description')} actions={<AdminLink href="/admin/content">{t('authorLessons')}</AdminLink>} />
     {error ? <p className="bridge-error" role="alert">{errorMessage()}</p> : null}
     {message ? <p className="bridge-feedback" role="status">{t(message.key, message.values)}</p> : null}
     {workspace ? <>

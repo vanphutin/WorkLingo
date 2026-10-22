@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { useT, useLocalePreference } from '../../i18n/provider';
 import { adminIeltsMockMessages } from '../../i18n/messages/adminIeltsMock';
@@ -69,6 +71,7 @@ export function IeltsMockWorkspace() {
   const epoch = useRef(0);
   const receipt = useRef<{ signature: string; id: string } | null>(null);
   const dirty = content !== null && (JSON.stringify(content) !== savedSource || importDirty);
+  useAdminDraftGuard(dirty);
   const history = !!mock && (mock.versions.length > 0 || mock.currentPublishedVersion !== null || mock.status === 'PUBLISHED' || mock.status === 'ARCHIVED');
   const version = content && typeof content === 'object' && 'schemaVersion' in content ? content.schemaVersion : 1;
 
@@ -190,7 +193,7 @@ export function IeltsMockWorkspace() {
 
   if (loading) return <section className="bridge-shell authoring-experience" aria-busy="true"><p role="status">{t('loading')}</p></section>;
   return <section className="bridge-shell authoring-experience" aria-busy={busy}>
-    <header className="bridge-heading"><div><p className="bridge-kicker">{t('admin')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div></header>
+    <AdminPageHeader title={t('title')} description={t('description')} />
     {error ? <div role="alert" className="bridge-error"><p>{error instanceof Error && error.name === 'ZodError' ? error.message : localizedError(error, locale)}</p><button disabled={busy} onClick={retry}>{t('retry')}</button></div> : null}
     {message ? <p role="status" className="bridge-feedback">{t(message.key, message.values)}</p> : null}
     <section className="bridge-stage-card">

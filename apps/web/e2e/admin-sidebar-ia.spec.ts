@@ -4,7 +4,7 @@ import path from 'node:path';
 import { auditRoutes, prepareAuditRoute } from './fixtures/phase5-routes';
 import { installSidebarAdminFixtures, installSidebarLearnerFixtures, openSidebar, sidebarImportId, sidebarUser } from './fixtures/admin-sidebar-contracts';
 
-const evidence = path.resolve(__dirname, '../../../docs/admin-sidebar-ia/evidence');
+const evidence = path.resolve(__dirname, '../../../docs/admin-ux/evidence/navigation');
 test.beforeAll(() => mkdirSync(evidence, { recursive: true }));
 const existingHrefs = ['/admin', '/admin/programs/intermediate', '/admin/programs/ielts',
   '/admin/programs/intermediate/topic-groups', '/admin/programs/intermediate/topics',
@@ -104,7 +104,7 @@ test('native keyboard, disclosure focus, draft retention and system/reduced-moti
   await nav.getByRole('link', { name: 'Reading', exact: true }).focus(); await page.keyboard.press('Escape');
   await expect(programs).toBeFocused(); await expect(programs).toHaveAttribute('aria-expanded', 'false');
   await page.keyboard.press('Space'); await expect(programs).toHaveAttribute('aria-expanded', 'true');
-  const ielts = nav.getByRole('button', { name: 'IELTS', exact: true }); await ielts.focus(); await page.keyboard.press('Enter');
+  const picker = nav.getByRole('combobox', { name: 'Choose a program' }); await picker.focus(); await page.keyboard.press('ArrowDown'); await expect(picker).toHaveValue('ielts'); await page.keyboard.press('Tab');
   await expect(nav.getByRole('link', { name: 'IELTS orientation' })).toBeVisible();
   await expect(draft).toHaveValue('Keep unsaved sidebar draft');
   await page.keyboard.press('Escape'); await page.keyboard.press('Escape');
@@ -115,8 +115,7 @@ test('native keyboard, disclosure focus, draft retention and system/reduced-moti
   await nav.getByRole('button', { name: 'System', exact: true }).click();
   await nav.locator('a[href="/dashboard"]').focus();
   await page.screenshot({ path: path.join(evidence, 'sidebar-320-zoom200-reduced.png') });
-  // Navigation fits even at 160 effective CSS pixels. The existing editor's
-  // Pronunciation / IPA label has a separate 5px page overflow at this extreme.
+  // Navigation and owner fields reflow at 160 effective CSS pixels.
   const navBounds = await nav.boundingBox();
   expect(navBounds!.x).toBeGreaterThanOrEqual(0);
   expect(navBounds!.x + navBounds!.width).toBeLessThanOrEqual(320);
@@ -141,7 +140,7 @@ test('breakpoint focus skips hidden active links in collapsed groups and other p
     await page.setViewportSize({ width: 390, height: 844 }); await page.goto(url!);
     const nav = await openSidebar(page);
     if (state === 'collapsed') await nav.getByRole('button', { name: 'Shared management', exact: true }).click();
-    else await nav.getByRole('button', { name: 'IELTS', exact: true }).click();
+    else await nav.getByRole('combobox', { name: 'Choose a program' }).selectOption('ielts');
     await page.locator('.workspace-navigation-toggle').focus();
     await page.setViewportSize({ width: 1440, height: 900 });
     await expect(nav.getByRole('link', { name: 'Overview', exact: true })).toBeFocused();

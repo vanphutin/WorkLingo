@@ -1,0 +1,46 @@
+import { expect, test } from '@playwright/test';
+import { openSidebar } from './fixtures/admin-sidebar-contracts';
+import { loginAsContentAdmin, createValidLessonSource } from './helpers/content-admin';
+
+test('Admin import, autosave, validation, simulation audio, publication and conflict preserve authoring state', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  await loginAsContentAdmin(page);
+  await openSidebar(page);
+  await page.getByRole('link', { name: 'Import content', exact: true }).click();
+  const source = createValidLessonSource(`ux-v2-${Date.now()}-${testInfo.project.name}`, 'Admin UX live publication');
+  await page.getByLabel('Lesson source', { exact: true }).fill(source);
+  await page.getByRole('button', { name: /^import draft$/iu }).click();
+  await expect(page).toHaveURL(/\/admin\/content\/[0-9a-f-]+$/u);
+  const editor = page.getByRole('textbox', { name: 'Lesson source editor' });
+  await expect(editor).toHaveValue(source);
+  const id = new URL(page.url()).pathname.split('/').at(-1)!;
+  const edited = source.replace('Admin UX live publication', 'Admin UX autosaved publication');
+  await editor.fill(edited);
+  await expect(page.getByText('Saved', { exact: true })).toBeVisible();
+  await page.getByRole('tab', { name: /^validation/iu }).click();
+  await page.getByRole('button', { name: /^validate draft$/iu }).click();
+  await expect(page.getByText(/No issues detected/u)).toBeVisible();
+  await page.getByRole('tab', { name: /^preview/iu }).click();
+  await expect(page.getByRole('heading', { name: 'Admin UX autosaved publication' })).toBeVisible();
+  await page.getByRole('button', { name: /generate audio/iu }).first().click();
+  await expect(page.locator('.audio-status-pill.status-ready')).toHaveText('Ready', { timeout: 20000 });
+  await page.getByRole('radio', { name: /fake-tts.*fake-neutral/iu }).check();
+  await page.getByRole('tab', { name: /^publish/iu }).click();
+  const publish = page.getByRole('button', { name: /publish lesson/iu }); await expect(publish).toBeEnabled(); await publish.click();
+  await expect(page.getByText(/Published Version:/u)).toBeVisible();
+  const first = await page.request.get(`/api/v1/admin/content-imports/${id}`); expect(first.ok()).toBe(true);
+  const published = await first.json(); expect(published.status).toBe('PUBLISHED');
+  // A second draft exercises the original editor's 409 contract against the real API.
+  await openSidebar(page);
+  await page.getByRole('link', { name: 'Import content', exact: true }).click();
+  await page.getByLabel('Lesson source', { exact: true }).fill(createValidLessonSource(`ux-conflict-${Date.now()}`, 'Conflict draft'));
+  await page.getByRole('button', { name: /^import draft$/iu }).click();
+  await expect(page.getByRole('textbox', { name: 'Lesson source editor' })).toBeVisible();
+  const draftId = new URL(page.url()).pathname.split('/').at(-1)!;
+  const response = await page.request.get(`/api/v1/admin/content-imports/${draftId}`); const draft = await response.json();
+  const changed = await page.request.patch(`/api/v1/admin/content-imports/${draftId}/source`, { data: { rawSource: draft.rawSource + '\n# another session', expectedDraftRevision: draft.draftRevision } }); expect(changed.ok()).toBe(true);
+  const local = draft.rawSource + '\n# keep local conflict';
+  await page.getByRole('textbox', { name: 'Lesson source editor' }).fill(local);
+  await expect(page.locator('#admin-main-content').getByRole('alert')).toContainText(/local changes.*preserved/iu);
+  await expect(page.getByRole('textbox', { name: 'Lesson source editor' })).toHaveValue(local);
+});

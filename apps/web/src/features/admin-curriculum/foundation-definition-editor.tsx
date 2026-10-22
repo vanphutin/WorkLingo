@@ -1,4 +1,5 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
 
 import { useAdminCurriculum, type SystemMessage } from './i18n';
 
@@ -46,6 +47,8 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
   const [hasConflict, setHasConflict] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+
+  const canLeave = useAdminDraftGuard(isDirty);
 
   const loadDraft = useCallback(async () => {
     setState('loading'); setError(null); setHasConflict(false); setLoadFailed(false);
@@ -126,7 +129,7 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
     <section className="foundation-editor" aria-label={t('foundationRegion', { name: missionTitle })}>
       <div className="foundation-editor-header">
         <div><h4>{t('foundationTitle')}</h4><p>{t('foundationSummary', { name: missionTitle, status: label(serverDraft?.status ?? 'NEW'), revision: serverDraft?.revision != null ? number(serverDraft.revision) : t('newRevision') })}</p></div>
-        <button type="button" className="action-button action-button-secondary" aria-label={t('closeEditor')} onClick={onClose}>{t('close')}</button>
+        <button type="button" className="action-button action-button-secondary" aria-label={t('closeEditor')} onClick={() => { if (canLeave()) onClose?.(); }}>{t('close')}</button>
       </div>
       {error ? <div role="alert" className="status-card error-card">{displayMessage(error)}</div> : null}
       {loadFailed ? <button type="button" className="action-button action-button-secondary" onClick={() => void loadDraft()}>{t('retryLoading')}</button> : null}

@@ -6,6 +6,7 @@ import type { AdminCurriculumTreeDto } from '@worklingo/contracts';
 import { ApiError } from '../../lib/api/api-client';
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
 import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
+import { AdminNavigationGuardProvider } from '../admin-dashboard/admin-navigation-guard';
 import { CurriculumWorkspace } from './curriculum-workspace';
 import { LocaleProvider } from '../../i18n/provider';
 
@@ -110,6 +111,30 @@ const mockTree: AdminCurriculumTreeDto = {
 };
 
 describe('CurriculumWorkspace', () => {
+  it('protects the active Foundation draft from the tree mission toggle', async () => {
+    const missionId = mockTree.paths[0]!.levels[0]!.missions[0]!.id;
+    vi.spyOn(curriculumFoundationClient, 'getDraft').mockResolvedValue({ missionId, revision: 2, status: 'DRAFT', publishedRevisions: [], definition: null });
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    render(<AdminNavigationGuardProvider><CurriculumWorkspace /></AdminNavigationGuardProvider>);
+    const toggle = await screen.findByRole('button', { name: /Edit Foundation.*Greetings Mission/i });
+    fireEvent.click(toggle);
+    const statement = await screen.findByLabelText('Objective statement');
+    fireEvent.change(statement, { target: { value: 'Keep this objective' } });
+    fireEvent.click(toggle);
+    expect(confirm).toHaveBeenCalledTimes(1); expect(statement).toHaveValue('Keep this objective'); expect(statement).toBeInTheDocument();
+    const first = mockTree.paths[0]!.levels[0]!.missions[0]!;
+    vi.mocked(adminCurriculumClient.getTree).mockResolvedValue({ ...mockTree, paths: [{ ...mockTree.paths[0]!, levels: [{ ...mockTree.paths[0]!.levels[0]!, missions: [first, { ...first, id: '77777777-7777-4777-8777-777777777777', title: 'Another mission', slug: 'another-mission' }] }] }] });
+    fireEvent.click(screen.getByRole('button', { name: 'Refresh Tree' }));
+    const other = await screen.findByRole('button', { name: /Edit Foundation.*Another mission/i });
+    expect(screen.getByLabelText('Objective statement')).toBe(statement);
+    fireEvent.click(other); expect(confirm).toHaveBeenCalledTimes(2);
+    expect(screen.getByLabelText('Objective statement')).toBe(statement);
+    confirm.mockReturnValue(true); fireEvent.click(other);
+    await waitFor(() => expect(screen.getByLabelText('Objective statement')).not.toBe(statement));
+    fireEvent.click(other); expect(screen.queryByLabelText('Objective statement')).not.toBeInTheDocument();
+    confirm.mockRestore();
+  });
+
   it('retains an unsaved Foundation objective through collapse and all curriculum filters', async () => {
     const missionId = mockTree.paths[0]!.levels[0]!.missions[0]!.id;
     const getDraft = vi.spyOn(curriculumFoundationClient, 'getDraft').mockResolvedValue({

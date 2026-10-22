@@ -1,4 +1,6 @@
 'use client';
+import { useAdminDraftGuard, useAdminCanNavigate } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { useAdminCurriculum } from './i18n';
 
@@ -18,6 +20,7 @@ import '../admin-content/authoring-experience.css';
 
 export function CurriculumWorkspace() {
   const { t, locale, number, label, message: displayMessage } = useAdminCurriculum();
+  const canNavigate = useAdminCanNavigate();
   const [tree, setTree] = useState<AdminCurriculumTreeDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<unknown>(null);
@@ -41,6 +44,8 @@ export function CurriculumWorkspace() {
   const [activeFoundationMissionId, setActiveFoundationMissionId] = useState<string | null>(null);
   const [prerequisiteOptions, setPrerequisiteOptions] = useState<PrerequisiteOption[]>([]);
   const [isOpeningFoundation, setIsOpeningFoundation] = useState(false);
+
+  useAdminDraftGuard(Boolean(pathName || pathSlug || levelCode || levelName || levelCefr || missionTitle || missionSlug || missionObjective));
 
   // Scalability & Navigation state
   const [collapsedPaths, setCollapsedPaths] = useState<Set<string>>(new Set());
@@ -251,6 +256,7 @@ export function CurriculumWorkspace() {
   };
 
   const handleOpenFoundation = async (mission: AdminMissionItemDto) => {
+    if (activeFoundationMissionId && !canNavigate()) return;
     if (activeFoundationMissionId === mission.id) { setActiveFoundationMissionId(null); return; }
     setIsOpeningFoundation(true); setErrorMessage(null);
     try {
@@ -580,11 +586,7 @@ export function CurriculumWorkspace() {
 
   return (
     <div className="curriculum-container authoring-experience">
-      <header className="curriculum-header">
-        <div className="curriculum-header-text">
-          <h1>{t('title')}</h1>
-          <p>{t('help')}</p>
-        </div>
+      <AdminPageHeader title={t('title')} description={t('help')} actions={
         <div className="curriculum-actions">
           <button
             type="button"
@@ -599,7 +601,7 @@ export function CurriculumWorkspace() {
             {isCreatingPath ? t('cancelNewPath') : t('newPath')}
           </button>
         </div>
-      </header>
+      } />
 
       {Boolean(errorMessage) && (
         <div className="curriculum-alert curriculum-alert-error" role="alert">
@@ -1332,7 +1334,7 @@ export function CurriculumWorkspace() {
                                       <div className="curriculum-actions">
                                         <button
                                           type="button"
-                                          className="action-button action-button-secondary"
+                                          className="action-button action-button-secondary foundation-editor-toggle"
                                           disabled={isOpeningFoundation}
                                           onClick={() => void handleOpenFoundation(mission)}
                                           aria-label={t('editFoundation', { name: mission.title })}

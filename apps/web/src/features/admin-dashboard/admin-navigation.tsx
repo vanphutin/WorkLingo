@@ -60,10 +60,11 @@ export function AdminBreadcrumbs() {
   const program = adminProgramDestinations.find(({ slug }) => pathname === `/admin/programs/${slug}`);
   const destination = [...sharedDestinations, ...adminIeltsDestinations].find(({ href }) => isCurrent(pathname, href));
   const nested = destination && pathname !== destination.href;
+  const isIelts = adminIeltsDestinations.some(item => item.href === destination?.href);
   return <nav className="ad-breadcrumbs" aria-label={t('breadcrumbs')}><ol>
     <li>{pathname === '/admin' ? <span>{tc('admin')}</span> : <Link href="/admin">{tc('admin')}</Link>}</li>
     {program ? <><li><span>{t('learningPrograms')}</span></li><li><span aria-current="page">{t(program.label)}</span></li></>
-      : destination ? <><li>{nested ? <Link href={destination.href}>{tc(destination.label)}</Link> : <span aria-current="page">{tc(destination.label)}</span>}</li>
+      : destination ? <>{isIelts ? <><li>{t('learningPrograms')}</li><li><Link href="/admin/programs/ielts">{t('ielts')}</Link></li></> : null}<li>{nested ? <Link href={destination.href}>{tc(destination.label)}</Link> : <span aria-current="page">{tc(destination.label)}</span>}</li>
         {nested ? <li><span aria-current="page">{pathname.endsWith('/new') ? t('newContent') : t('details')}</span></li> : null}</>
         : <li><span aria-current="page">{pathname === '/admin' ? t('overview') : t('details')}</span></li>}
   </ol></nav>;

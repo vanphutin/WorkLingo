@@ -82,6 +82,13 @@ describe('Admin dashboard', () => {
     expect(await screen.findByRole('table', { name: 'Program performance' })).toBeInTheDocument();
   });
 
+  it('prioritizes program management before historical charts', async () => {
+    render(<AdminDashboard />);
+    const programs = await screen.findByRole('heading', { name: 'Program performance' });
+    const activity = screen.getByRole('heading', { name: 'Learning activity' });
+    expect(programs.compareDocumentPosition(activity) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it('scopes program metrics and explains unsupported management features', async () => {
     render(<AdminDashboard programSlug="intermediate" />);
     expect(await screen.findByRole('heading', { name: 'Intermediate' })).toBeInTheDocument();

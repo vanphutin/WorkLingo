@@ -11,8 +11,7 @@
   padding: 0.75rem 1.5rem;
 }
 
-.admin-top-nav .nav-left,
-.admin-nav-links {
+.admin-top-nav .nav-left {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -38,35 +37,6 @@
   margin-left: 0.5rem;
   vertical-align: middle;
   letter-spacing: 0.05em;
-}
-
-.admin-main-nav {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.admin-nav-link {
-  color: var(--muted);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.25rem 0;
-  border-bottom: 2px solid transparent;
-}
-
-.admin-nav-link:hover,
-.admin-nav-link.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-}
-
-.admin-main {
-  flex: 1;
-  max-width: 80rem;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
 }
 
 /* Status Pills */
@@ -159,12 +129,6 @@
   .admin-top-nav .nav-left {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .admin-top-nav .admin-nav-links {
-    flex-wrap: wrap;
-    gap: 0.25rem 0.75rem;
-    width: 100%;
   }
 
   .admin-top-nav .nav-link {

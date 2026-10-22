@@ -1,6 +1,8 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader } from '../admin-experience/admin-patterns';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import { AdminLink as Link } from '../admin-dashboard/admin-navigation-guard';
 import { ieltsTopicContentSchema, type AdminIeltsTopicDto, type IeltsContentQualificationResult } from '@worklingo/contracts';
 import { useLocalePreference, useT } from '../../i18n/provider';
 import { localizedError } from '../../i18n/errors';
@@ -32,6 +34,7 @@ export function TopicEditor() {
   const loadGeneration = useRef(0);
   const pending = useRef<{ signature: string; id: string } | null>(null);
   const dirty = content !== null && (JSON.stringify(content) !== savedSource || importDirty);
+  useAdminDraftGuard(dirty);
   const history = !!topic && (topic.versions.length > 0 || topic.currentPublishedVersionId !== null || topic.status === 'PUBLISHED' || topic.status === 'ARCHIVED');
   const load = useCallback(async () => {
     const generation = ++loadGeneration.current;
@@ -110,7 +113,7 @@ export function TopicEditor() {
     } catch (cause) { if (resultTicket === epoch.current) setError(cause); }
     finally { setBusy(false); }
   };
-  return <main className="ielts-intro ielts-topic-editor" aria-busy={busy}><h1>{t('title')}</h1><p>{t('description')}</p><Link href="/admin/content">{t('lessons')}</Link>
+  return <main className="ielts-intro ielts-topic-editor" aria-busy={busy}><AdminPageHeader title={t('title')} description={t('description')} actions={<Link href="/admin/content">{t('lessons')}</Link>} />
     {error ? <div role="alert"><p>{error instanceof Error && error.name === 'ZodError' ? error.message : localizedError(error, locale)}</p><button onClick={() => void retry()} disabled={busy}>{t('retry')}</button></div> : null}
     <div className="ielts-intro__layout"><nav><button type="button" disabled={busy} onClick={() => requestSelection(null)}>{t('new')}</button><ul>{topics.map(item => <li key={item.id}><button type="button" aria-current={topic?.id === item.id ? 'true' : undefined} disabled={busy} onClick={() => requestSelection(item)}>{item.draft.title}</button></li>)}</ul></nav>
       <section>

@@ -1,0 +1,248 @@
+{
+  "width": 390,
+  "locale": "vi",
+  "theme": "dark",
+  "coverage": [
+    {
+      "requested": "/",
+      "final": "/",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/login",
+      "final": "/login",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/register",
+      "final": "/register",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/dashboard",
+      "final": "/dashboard",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/programs",
+      "final": "/programs",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/mastery",
+      "final": "/mastery",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/onboarding",
+      "final": "/onboarding",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/onboarding/placement/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "final": "/onboarding/placement/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "final": "/sessions/a1b2c3d4-e5f6-4a8b-9c0d-1e2f3a4b5c6d",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/orientation",
+      "final": "/ielts/orientation",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/bridge",
+      "final": "/ielts/bridge",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "final": "/ielts/bridge/11111111-1111-4111-8111-111111111111",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/practice",
+      "final": "/ielts/practice",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/practice/44444444-4444-4444-8444-444444444444",
+      "final": "/ielts/practice/44444444-4444-4444-8444-444444444444",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/pathway",
+      "final": "/ielts/pathway",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/mock-tests",
+      "final": "/ielts/mock-tests",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "final": "/ielts/mock-tests/11111111-1111-4111-8111-111111111111",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/content",
+      "final": "/admin/content",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/content/new",
+      "final": "/admin/content/new",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "final": "/admin/content/11111111-1111-4111-8111-111111111111",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/curriculum",
+      "final": "/admin/curriculum",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/ielts-orientation",
+      "final": "/admin/ielts-orientation",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/ielts-bridge",
+      "final": "/admin/ielts-bridge",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/ielts-integrated",
+      "final": "/admin/ielts-integrated",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/ielts-band-curriculum",
+      "final": "/admin/ielts-band-curriculum",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/ielts-mocks",
+      "final": "/admin/ielts-mocks",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/settings",
+      "final": "/settings",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/settings/audio",
+      "final": "/settings/audio",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/settings/ai",
+      "final": "/settings/ai",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/settings/audio",
+      "final": "/admin/settings/audio",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/settings/ai",
+      "final": "/admin/settings/ai",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/audit",
+      "final": "/admin/audit",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/operations",
+      "final": "/admin/operations",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/analytics",
+      "final": "/admin/analytics",
+      "cohort": "Liquid Glass 34"
+    },
+    {
+      "requested": "/admin/ielts-topics",
+      "final": "/admin/ielts-topics",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin",
+      "final": "/admin",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/[slug]",
+      "final": "/admin/programs/intermediate",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/[category]/[importId]",
+      "final": "/admin/programs/intermediate/grammar/11111111-1111-4111-8111-111111111111",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/[category]/new",
+      "final": "/admin/programs/intermediate/grammar/new",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/[category]",
+      "final": "/admin/programs/intermediate/grammar",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/topic-groups",
+      "final": "/admin/programs/intermediate/topic-groups",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/topics/[importId]",
+      "final": "/admin/programs/intermediate/topics/11111111-1111-4111-8111-111111111111",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/topics/new",
+      "final": "/admin/programs/intermediate/topics/new",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/admin/programs/intermediate/topics",
+      "final": "/admin/programs/intermediate/topic-groups",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/ielts/history",
+      "final": "/ielts/history",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/ielts/introduction",
+      "final": "/ielts/introduction",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/ielts/learn",
+      "final": "/ielts/learn",
+      "cohort": "Additional 14"
+    },
+    {
+      "requested": "/ielts",
+      "final": "/ielts",
+      "cohort": "Additional 14"
+    }
+  ],
+  "errors": []
+}

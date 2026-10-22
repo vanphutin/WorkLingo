@@ -1,4 +1,7 @@
 'use client';
+import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader, AdminStatusBadge, AdminToolbar } from '../admin-experience/admin-patterns';
+import { adminExperienceMessages } from '../../i18n/messages/adminExperience';
 
 import { useT, useLocalePreference } from '../../i18n/provider';
 import { adminIeltsOrientationMessages } from '../../i18n/messages/adminIeltsOrientation';
@@ -23,6 +26,8 @@ export function OrientationAuthoringWorkspace() {
   const t = useT('adminIeltsOrientation', adminIeltsOrientationMessages);
   const { locale } = useLocalePreference();
   const statusLabel = (value: string) => ['DRAFT', 'VALIDATED', 'PUBLISHED', 'ARCHIVED'].includes(value) ? t(value as 'DRAFT' | 'VALIDATED' | 'PUBLISHED' | 'ARCHIVED') : value;
+  const tx = useT('adminExperience', adminExperienceMessages);
+  const [savedSource, setSavedSource] = useState('');
   const [draft, setDraft] = useState<OrientationContent | null>(null);
   const [revision, setRevision] = useState(0);
   const [status, setStatus] = useState('DRAFT');
@@ -34,6 +39,8 @@ export function OrientationAuthoringWorkspace() {
   const [error, setError] = useState<unknown>(null);
   const [busy, setBusy] = useState(false);
   const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({});
+  const dirty = draft !== null && JSON.stringify(draft) !== savedSource;
+  const canLeave = useAdminDraftGuard(dirty);
   const validationMessage = (issue: { code?: string; message: string }) => {
     if (locale === 'en') return issue.message;
     if (issue.code === 'TRANSCRIPT_REQUIRED' || issue.message === 'Transcript is required.') return t('transcriptRequired');
@@ -46,7 +53,7 @@ export function OrientationAuthoringWorkspace() {
 
   const load = useCallback(async () => {
     const data = await adminIeltsOrientationClient.get();
-    setDraft(data.draft); setRevision(data.draftRevision); setStatus(data.status); setVersions(data.versions);
+    setSavedSource(JSON.stringify(data.draft)); setDraft(data.draft); setRevision(data.draftRevision); setStatus(data.status); setVersions(data.versions);
     setSelectedIndex((current) => Math.min(current, data.draft.slides.length - 1));
     setValidatedRevision(data.status === 'VALIDATED' ? data.draftRevision : null);
   }, []);
@@ -58,7 +65,7 @@ export function OrientationAuthoringWorkspace() {
     try { await work(); }
     catch (cause) {
       if (cause instanceof ApiError && cause.status === 409) {
-        await load(); setError('revisionConflict');
+        setValidatedRevision(null); setError('revisionConflict');
       } else setError(cause);
     } finally { setBusy(false); }
   };
@@ -100,19 +107,18 @@ export function OrientationAuthoringWorkspace() {
   };
 
   return <section className="orientation-admin authoring-experience">
-    <header className="orientation-admin__header">
-      <div><p className="orientation-admin__kicker">{t('pathway')}</p><h1>{t('title')}</h1><p>{t('description')}</p></div>
-      <div className="orientation-admin__status"><strong>{statusLabel(status)}</strong><span>{t('draftRevision', { revision })}</span></div>
-    </header>
+    <AdminPageHeader title={t('title')} description={t('description')} actions={<><AdminStatusBadge>{statusLabel(status)}</AdminStatusBadge><AdminStatusBadge>{t('draftRevision', { revision })}</AdminStatusBadge></>} />
     <p>{t('draftBoundary')}</p>
     {error ? <p className="orientation-notice orientation-notice--error" role="alert">{error === 'revisionConflict' ? t('revisionConflict') : localizedError(error, locale)}</p> : null}
     {message ? <p className="orientation-notice" role="status">{t(message.key, message.values)}</p> : null}
-    <div className="orientation-admin__toolbar">
-      <button type="button" onClick={() => void run(async () => { const saved = await adminIeltsOrientationClient.updateDraft({ expectedRevision: revision, content: draft }); setRevision(saved.draftRevision); setStatus(saved.status); setValidatedRevision(null); setMessage({ key: 'draftSaved' }); })} disabled={busy}>{t('saveDraft')}</button>
-      <button type="button" onClick={() => void run(async () => { const result = await adminIeltsOrientationClient.validate({ expectedRevision: revision }); setIssues(result.issues); setStatus(result.status); setValidatedRevision(result.canPublish ? revision : null); setMessage({ key: result.canPublish ? 'readyToPublish' : 'resolveIssues' }); })} disabled={busy}>{t('validateDraft')}</button>
-      <button type="button" className="primary" onClick={() => void run(async () => { const result = await adminIeltsOrientationClient.publish({ expectedRevision: revision, idempotencyKey: crypto.randomUUID() }); setMessage({ key: 'publishedVersion', values: { version: result.version } }); await load(); })} disabled={busy || validatedRevision !== revision}>{t('publishVersion')}</button>
-      <button type="button" onClick={() => { if (window.confirm(t('archiveConfirm'))) void run(async () => { await adminIeltsOrientationClient.archive(); setMessage({ key: 'archived' }); await load(); }); }} disabled={busy || versions.length === 0}>{t('archiveRelease')}</button>
-    </div>
+    {dirty ? <p className="orientation-notice">{tx('unsaved')}</p> : null}
+    {error === 'revisionConflict' ? <button type="button" disabled={busy} onClick={() => { if (canLeave()) void run(load); }}>{tx('reload')}</button> : null}
+    <AdminToolbar className="orientation-admin__toolbar">
+      <button type="button" onClick={() => void run(async () => { const saved = await adminIeltsOrientationClient.updateDraft({ expectedRevision: revision, content: draft }); setSavedSource(JSON.stringify(draft)); setRevision(saved.draftRevision); setStatus(saved.status); setValidatedRevision(null); setMessage({ key: 'draftSaved' }); })} disabled={busy}>{t('saveDraft')}</button>
+      <button type="button" onClick={() => void run(async () => { const result = await adminIeltsOrientationClient.validate({ expectedRevision: revision }); setIssues(result.issues); setStatus(result.status); setValidatedRevision(result.canPublish ? revision : null); setMessage({ key: result.canPublish ? 'readyToPublish' : 'resolveIssues' }); })} disabled={busy || dirty}>{t('validateDraft')}</button>
+      <button type="button" className="primary" onClick={() => void run(async () => { const result = await adminIeltsOrientationClient.publish({ expectedRevision: revision, idempotencyKey: crypto.randomUUID() }); setMessage({ key: 'publishedVersion', values: { version: result.version } }); await load(); })} disabled={busy || dirty || validatedRevision !== revision}>{t('publishVersion')}</button>
+      <button type="button" onClick={() => { if (window.confirm(t('archiveConfirm'))) void run(async () => { await adminIeltsOrientationClient.archive(); setMessage({ key: 'archived' }); await load(); }); }} disabled={busy || dirty || versions.length === 0}>{t('archiveRelease')}</button>
+    </AdminToolbar>
     {issues.length > 0 ? <section className="orientation-issues" aria-label={t('validationIssues')}><h2>{t('validationIssues')}</h2><ul>{issues.map((issue) => <li key={`${issue.path}-${issue.message}`}><code>{issue.path}</code> {validationMessage(issue)}</li>)}</ul></section> : null}
     <div className="orientation-admin__grid">
       <aside className="orientation-slide-list" aria-label={t('orientationSlides')}>

@@ -1,6 +1,9 @@
 'use client';
 
-import Link from 'next/link';
+import { AdminLink as Link } from '../admin-dashboard/admin-navigation-guard';
+import { AdminPageHeader, AdminFilterBar, AdminEmptyState, AdminDataTable } from '../admin-experience/admin-patterns';
+import { useT } from '../../i18n/provider';
+import { adminExperienceMessages } from '../../i18n/messages/adminExperience';
 import { useAdminContent } from './i18n';
 
 import React, { useRef, useState } from 'react';
@@ -28,6 +31,10 @@ function extractLessonInfo(rawSource: string): { title: string; slug: string } {
 
 export function ContentList({ imports, onRemoved, onReload, newImportHref = '/admin/content/new', newImportLabel, getItemHref }: ContentListProps) {
   const { t, date, label, message } = useAdminContent();
+  const tx = useT('adminExperience', adminExperienceMessages);
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState('');
+  const filtered = imports.filter(item => (!status || item.status === status) && `${extractLessonInfo(item.rawSource).title} ${extractLessonInfo(item.rawSource).slug}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<unknown>(null);
   const mutationInFlight = useRef(false);
@@ -84,15 +91,16 @@ export function ContentList({ imports, onRemoved, onReload, newImportHref = '/ad
 
   return (
     <div className="content-list-container authoring-experience">
-      <div className="content-list-header">
-        <div>
-          <h1>{t('allImports', { count: imports.length })}</h1>
-          <p className="subtitle">{t('importsHelp')}</p>
-        </div>
-        <Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>
-      </div>
-
-      <div className="content-table-wrapper" tabIndex={0} role="region" aria-label={t('importsRegion')}>
+      <AdminPageHeader title={t('allImports', { count: imports.length })} description={t('importsHelp')}
+        actions={<Link href={newImportHref} className="btn btn-primary">{newImportLabel ?? t('newImport')}</Link>} />
+      <AdminFilterBar label={t('importsRegion')}>
+        <label>{tx('searchContent')}<input type="search" value={query} onChange={event => setQuery(event.target.value)} /></label>
+        <label>{tx('status')}<select value={status} onChange={event => setStatus(event.target.value)}><option value="">{tx('allStatuses')}</option>{['DRAFT','VALIDATED','PUBLISHED','ARCHIVED'].map(value => <option key={value} value={value}>{label(value)}</option>)}</select></label>
+        <button type="button" className="btn btn-secondary" onClick={() => { setQuery(''); setStatus(''); }}>{tx('clearFilters')}</button>
+        <p>{tx('loadedOnly')}</p>
+      </AdminFilterBar>
+      {filtered.length === 0 ? <AdminEmptyState title={tx('noMatches')} /> : null}
+      <AdminDataTable label={t('importsRegion')}>
         {error ? <div className="error-card" role="alert"><p>{message(error)}</p>
           {onReload ? <button type="button" disabled={busyId !== null} onClick={() => { void reload(); }}>{t('reloadImports')}</button> : null}
         </div> : null}
@@ -107,7 +115,7 @@ export function ContentList({ imports, onRemoved, onReload, newImportHref = '/ad
             </tr>
           </thead>
           <tbody>
-            {imports.map((item) => {
+            {filtered.map((item) => {
               const { title, slug } = extractLessonInfo(item.rawSource);
               const formattedDate = date(item.updatedAt);
               const actionLabel = item.status === 'PUBLISHED' || item.status === 'ARCHIVED' ? t('view') : t('openDraft');
@@ -152,7 +160,7 @@ export function ContentList({ imports, onRemoved, onReload, newImportHref = '/ad
             })}
           </tbody>
         </table>
-      </div>
+      </AdminDataTable>
     </div>
   );
 }

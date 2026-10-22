@@ -2,17 +2,17 @@
 
 import '../../features/admin-content/admin.css';
 import '../../features/admin-dashboard/admin-dashboard.css';
+import '../../features/admin-experience/admin-experience.css';
 
 import { AdminLink as Link, AdminNavigationGuardProvider } from '../../features/admin-dashboard/admin-navigation-guard';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { ThemeControl } from '../../components/theme-control';
-import { AdminBreadcrumbs, AdminNavigation, useAdminNavigationItems } from '../../features/admin-dashboard/admin-navigation';
-import { isNavigationItemActive } from '../../components/workspace-navigation';
+import { AdminBreadcrumbs, AdminNavigation } from '../../features/admin-dashboard/admin-navigation';
 import { GlassSurface } from '../../components/glass-surface';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { useLocalePreference, useT } from '../../i18n/provider';
@@ -28,9 +28,6 @@ export default function AdminLayout({
   const router = useRouter();
   const t = useT('common', commonMessages);
   const { synchronizeUser, clearUser } = useLocalePreference();
-  const destinations = useAdminNavigationItems();
-  const pathname = usePathname();
-  const context = [...destinations].sort((a, b) => b.href.length - a.href.length).find((item) => isNavigationItemActive(pathname, item.href))?.label ?? t('adminWorkspace');
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(false);
@@ -114,7 +111,7 @@ export default function AdminLayout({
                 <span translate="no">WorkLingo</span> <span className="admin-badge">{t('admin')}</span>
               </Link>
             </div>
-            <p className="shell-context"><span>{t('adminWorkspace')}</span><strong>{context}</strong></p>
+
 
             <div className="nav-user-meta">
               <ThemeControl />

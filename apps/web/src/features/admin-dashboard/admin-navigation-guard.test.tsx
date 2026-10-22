@@ -4,6 +4,8 @@ import type { ComponentProps } from 'react';
 import type NextLink from 'next/link';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ContentImportDto } from '@worklingo/contracts';
+import { ContentAuthoringWorkspace } from '../admin-content/content-authoring-workspace';
+import { AdminNavigationGuardProvider, AdminLink, useAdminDraftGuard } from './admin-navigation-guard';
 import AdminLayout from '../../app/(admin)/layout';
 import { apiClient } from '../../lib/api/api-client';
 import { IntermediateLessonEditor } from '../admin-intermediate/intermediate-lesson-editor';
@@ -157,4 +159,25 @@ describe('Admin navigation guard with the real layout and Intermediate editor', 
     expect(window.confirm).not.toHaveBeenCalled();
     expect(navigate).not.toHaveBeenCalled();
   });
+});
+
+ it('retains pending content autosave when dirty shell navigation is cancelled', async () => {
+   const initial = record();
+   render(<AdminLayout><ContentAuthoringWorkspace initialImport={initial} debounceMs={60000} /></AdminLayout>);
+   const editor = await screen.findByRole('textbox', { name: 'Lesson source editor' });
+   fireEvent.change(editor, { target: { value: initial.rawSource + '\n# pending local edit' } });
+   fireEvent.click(screen.getByRole('link', { name: 'WorkLingo Admin' }));
+   expect(window.confirm).toHaveBeenCalledTimes(1);
+   expect(navigate).not.toHaveBeenCalled();
+   expect(editor).toHaveValue(initial.rawSource + '\n# pending local edit');
+   const event = new Event('beforeunload', { cancelable: true });
+   window.dispatchEvent(event); expect(event.defaultPrevented).toBe(true);
+ });
+
+function DirtyRegistration() { useAdminDraftGuard(true); return null; }
+it('asks once when multiple curriculum forms share the same discard message', () => {
+  vi.mocked(window.confirm).mockReturnValue(true);
+  render(<AdminNavigationGuardProvider><DirtyRegistration /><DirtyRegistration /><AdminLink href="/admin">Leave all drafts</AdminLink></AdminNavigationGuardProvider>);
+  fireEvent.click(screen.getByRole('link', { name: 'Leave all drafts' }));
+  expect(window.confirm).toHaveBeenCalledTimes(1); expect(navigate).toHaveBeenCalledExactlyOnceWith('/admin');
 });

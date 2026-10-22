@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { settingsFixtures } from '../../../e2e/fixtures/phase4-settings-data';
 import { adminAnalyticsClient } from '../../lib/api/admin-analytics-client';
 import { adminOperationsClient } from '../../lib/api/admin-operations-client';
 import { AnalyticsWorkspace } from './analytics-workspace';
@@ -42,6 +43,22 @@ describe('admin observability workspaces', () => {
     expect(grid?.querySelectorAll('.metric-value')).toHaveLength(4);
     expect(grid).not.toHaveTextContent('0');
     expect(screen.getByRole('status')).toHaveTextContent('Loading operations');
+  });
+
+  it('opens contextual job details, returns focus on Escape and keeps pagination usable', async () => {
+    const job = settingsFixtures.jobs[0]!;
+    vi.mocked(adminOperationsClient.listJobs).mockResolvedValue({ items: [job], page: 1, pageSize: 20, total: 21, totalPages: 2 });
+    vi.spyOn(adminOperationsClient, 'getJob').mockResolvedValue(job);
+    render(<OperationsWorkspace />);
+    const inspect = await screen.findByRole('button', { name: 'Inspect' });
+    fireEvent.click(inspect);
+    const close = await screen.findByRole('button', { name: 'Close job details' });
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Job detail' })).toHaveFocus());
+    fireEvent.keyDown(close, { key: 'Escape' });
+    expect(screen.queryByRole('button', { name: 'Close job details' })).not.toBeInTheDocument();
+    expect(inspect).toHaveFocus();
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    await waitFor(() => expect(adminOperationsClient.listJobs).toHaveBeenLastCalledWith({ page: 2, pageSize: 20 }));
   });
 
   it('localizes operations filters while retaining API status values', async () => {

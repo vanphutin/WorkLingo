@@ -52,6 +52,18 @@ describe('ContentList', () => {
     },
   ];
 
+  it('combines search and status filters on loaded imports without another API call', () => {
+    render(<ContentList imports={sampleImports} />);
+    fireEvent.change(screen.getByRole('searchbox', { name: 'Search loaded content' }), { target: { value: 'lesson-two' } });
+    expect(screen.queryByText('Lesson One')).not.toBeInTheDocument();
+    expect(screen.getByText('Lesson Two')).toBeInTheDocument();
+    fireEvent.change(screen.getByRole('combobox', { name: 'Content status' }), { target: { value: 'DRAFT' } });
+    expect(screen.getByText('No loaded content matches these filters')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
+    expect(screen.getByText('Lesson One')).toBeInTheDocument();
+    expect(screen.getByText('Lesson Two')).toBeInTheDocument();
+  });
+
   function EditableList() {
     const [imports, setImports] = useState(sampleImports);
     return <ContentList imports={imports} onRemoved={({ id, action }) => setImports((items) => action === 'deleted'
@@ -151,8 +163,8 @@ describe('ContentList', () => {
 
   it('localizes import statuses and dates while preserving lesson source titles and links', () => {
     render(<LocaleProvider initialLocale="vi"><ContentList imports={sampleImports} /></LocaleProvider>);
-    expect(screen.getByText('Bản nháp')).toBeInTheDocument();
-    expect(screen.getByText('Đã xuất bản')).toBeInTheDocument();
+    expect(within(screen.getByRole('table')).getByText('Bản nháp')).toBeInTheDocument();
+    expect(within(screen.getByRole('table')).getByText('Đã xuất bản')).toBeInTheDocument();
     expect(screen.getByText('Lesson One')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Mở bản nháp' })).toHaveAttribute('href', '/admin/content/11111111-1111-4111-8111-111111111111');
     expect(screen.getByText(new Date(sampleImports[0]!.updatedAt).toLocaleString('vi-VN'))).toHaveAttribute('dateTime', sampleImports[0]!.updatedAt);
@@ -165,8 +177,8 @@ describe('ContentList', () => {
     expect(screen.getByRole('table').parentElement).toHaveAttribute('tabindex', '0');
     expect(screen.getByRole('table').parentElement).toHaveAccessibleName();
 
-    expect(screen.getByText('Draft')).toBeInTheDocument();
-    expect(screen.getByText('Published')).toBeInTheDocument();
+    expect(within(screen.getByRole('table')).getByText('Draft')).toBeInTheDocument();
+    expect(within(screen.getByRole('table')).getByText('Published')).toBeInTheDocument();
     expect(screen.getByText(/lesson-one/)).toBeInTheDocument();
     expect(screen.getByText(/lesson-two/)).toBeInTheDocument();
     expect(screen.getByText(/Rev 1/)).toBeInTheDocument();
