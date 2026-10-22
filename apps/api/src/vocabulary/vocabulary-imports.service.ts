@@ -4,6 +4,7 @@ import type { Prisma, VocabularyBatch } from '@prisma/client';
 import {
   vocabularyBatchInputSchema, vocabularyStageSchema, vocabularyReviewSchema, vocabularyPublishSchema, vocabularyRollbackSchema, vocabularyInventorySchema,
   vocabularyQuerySchema,
+  reviewableVocabularyExceptionKey, vocabularyExceptionResolutionSchema, vocabularyExceptionRowResolver,
   type VocabularyBatchInput, type VocabularyStageInput, type VocabularyReviewInput, type VocabularyPublishInput,
 } from '@worklingo/contracts';
 import { PrismaService } from '../common/database/prisma.service.js';
@@ -78,17 +79,18 @@ export class VocabularyImportsService {
   async review(id: string, actorId: string, raw: VocabularyReviewInput) {
     const input = vocabularyReviewSchema.parse(raw);
     return this.db.$transaction(async tx => {
-      const { batch, source } = await this.locked(tx, id); checkSourceRights(source); this.mutable(batch, input.revision);
+      const { batch, source, inventory } = await this.locked(tx, id); checkSourceRights(source); this.mutable(batch, input.revision);
       const row = await tx.vocabularyBatchRow.findUnique({ where: { batchId_sourceEntryId: { batchId: id, sourceEntryId: input.sourceEntryId } }, include: { sourceEntry: true } });
       if (!row) throw new NotFoundException('Source row does not belong to this batch');
       if (row.validationState !== 'REVIEW_REQUIRED') throw new ConflictException({ code: 'VOCABULARY_ALREADY_REVIEWED', message: 'This source occurrence already has a review decision.' });
       const originalEntry = row.sourceEntry;
+      const resolvedExceptions = input.correction || input.decision === 'REJECT' ? inventory.pages.flatMap(page => page.exceptions.filter(exception => reviewableVocabularyExceptionKey(exception, [originalEntry]) === originalEntry.sourceEntryKey).map(exception => ({ ...exception, sourceContentHash: originalEntry.sourceContentHash, reason: input.correction?.reason ?? input.rejectionReason! }))) : [];
       if (input.correction && input.correction.sourceContentHash !== originalEntry.sourceContentHash) throw new ConflictException({ code: 'VOCABULARY_STALE', message: 'The correction does not match the immutable source occurrence.' });
       if (input.correction && input.decision === 'REJECT') vocabularyError('VOCABULARY_MATCH_INVALID', 'A correction belongs to an accepted vocabulary occurrence.');
       const sourceEntry = input.correction ? { ...originalEntry, parsedWord: input.correction.parsedWord, normalizedPos: input.correction.normalizedPos, warnings: [], extractionConfidence: 1 } : originalEntry;
       if (input.decision === 'REJECT') {
         if (await tx.vocabularyEntryResolution.findUnique({ where: { sourceEntryId: sourceEntry.id } })) throw new ConflictException({ code: 'VOCABULARY_RESOLUTION_CONFLICT', message: 'A reviewed vocabulary occurrence cannot become a non-vocabulary rejection.' });
-        await tx.vocabularyBatchRow.update({ where: { batchId_sourceEntryId: { batchId: id, sourceEntryId: input.sourceEntryId } }, data: { validationState: 'REJECTED', rejectionReason: input.rejectionReason!, reviewedBy: actorId, reviewedAt: new Date() } });
+        await tx.vocabularyBatchRow.update({ where: { batchId_sourceEntryId: { batchId: id, sourceEntryId: input.sourceEntryId } }, data: { validationState: 'REJECTED', rejectionReason: input.rejectionReason!, reviewedBy: actorId, reviewedAt: new Date(), resolvedExceptions: resolvedExceptions as Prisma.InputJsonValue } });
       } else {
         if (sourceEntry.warnings.length || sourceEntry.normalizedPos === 'UNKNOWN' || sourceEntry.extractionConfidence < 1) vocabularyError('VOCABULARY_SOURCE_UNRESOLVED', 'Resolve extraction warnings in a new verified parser version before approving this row.');
         checkSourceRights(source, ['FORM', ...(sourceEntry.permittedDefinition !== null ? ['DEFINITION'] : []), ...(sourceEntry.pronunciation !== null ? ['PRONUNCIATION'] : [])]);
@@ -106,7 +108,7 @@ export class VocabularyImportsService {
         await tx.lexicalCefrAssociation.upsert({ where: { sourceEntryId_cefrLevel: { sourceEntryId: sourceEntry.id, cefrLevel: sourceEntry.cefrLevel } }, create: { sourceEntryId: sourceEntry.id, lexicalEntryId: entry.id, senseId: sense.id, cefrLevel: sourceEntry.cefrLevel }, update: {} });
         if (input.topicGroupIds.length) await tx.lexicalEntryTopic.createMany({ data: input.topicGroupIds.map(topicGroupId => ({ lexicalEntryId: entry!.id, topicGroupId })), skipDuplicates: true });
         await tx.vocabularyTopicMapping.upsert({ where: { documentId_topicInstanceKey: { documentId: batch.documentId, topicInstanceKey: sourceEntry.topicInstanceKey } }, create: { documentId: batch.documentId, topicInstanceKey: sourceEntry.topicInstanceKey, originalTopic: sourceEntry.originalTopic, topicGroupId: input.topicGroupIds[0] ?? null }, update: {} });
-        await tx.vocabularyBatchRow.update({ where: { batchId_sourceEntryId: { batchId: id, sourceEntryId: sourceEntry.id } }, data: { validationState: 'VALIDATED', reviewedBy: actorId, reviewedAt: new Date(), ...(input.correction ? { reviewCorrection: input.correction } : {}) } });
+        await tx.vocabularyBatchRow.update({ where: { batchId_sourceEntryId: { batchId: id, sourceEntryId: sourceEntry.id } }, data: { validationState: 'VALIDATED', reviewedBy: actorId, reviewedAt: new Date(), resolvedExceptions: resolvedExceptions as Prisma.InputJsonValue, ...(input.correction ? { reviewCorrection: input.correction } : {}) } });
       }
       const unresolved = await tx.vocabularyBatchRow.count({ where: { batchId: id, validationState: 'REVIEW_REQUIRED' } });
       return tx.vocabularyBatch.update({ where: { id }, data: { status: unresolved || batch.checkpoint !== batch.detectedRows ? 'REVIEW_REQUIRED' : 'REVIEWED', revision: { increment: 1 }, reviewedBy: actorId, reviewedAt: new Date() } });
@@ -121,7 +123,16 @@ export class VocabularyImportsService {
       this.mutable(batch, input.revision);
       const rows = await tx.vocabularyBatchRow.findMany({ where: { batchId: id }, include: { sourceEntry: { include: { resolution: true } } }, orderBy: [{ sourceEntry: { topicSequence: 'asc' } }, { sourceEntry: { rowOrdinal: 'asc' } }] });
       const expected = validateInventory(inventory, batch.document.pageCount);
-      if (inventory.pages.some(page => page.exceptions.length) || rows.length !== expected.length || rows.some(row => !expected.includes(row.sourceEntry.sourceEntryKey) || row.validationState === 'REVIEW_REQUIRED' || row.validationState === 'VALIDATED' && !row.sourceEntry.resolution)) vocabularyError('VOCABULARY_INCOMPLETE', 'Every independently detected source row must be reconciled and all extraction exceptions resolved.');
+      const expectedKeys = new Set(expected);
+      const rowsByKey = new Map(rows.map(row => [row.sourceEntry.sourceEntryKey, row]));
+      const exceptionRowKey = vocabularyExceptionRowResolver(rows.map(row => row.sourceEntry));
+      const unresolvedExceptions = inventory.pages.some(page => page.exceptions.some(exception => {
+        const key = exceptionRowKey(exception);
+        const row = key ? rowsByKey.get(key) : undefined;
+        const resolutions = vocabularyExceptionResolutionSchema.array().safeParse(row?.resolvedExceptions);
+        return !row || row.validationState === 'REVIEW_REQUIRED' || !row.reviewedBy || !row.reviewedAt || !resolutions.success || !resolutions.data.some(resolution => resolution.sourceContentHash === row.sourceEntry.sourceContentHash && resolution.code === exception.code && JSON.stringify(resolution.location) === JSON.stringify(exception.location));
+      }));
+      if (unresolvedExceptions || rows.length !== expected.length || rows.some(row => !expectedKeys.has(row.sourceEntry.sourceEntryKey) || row.validationState === 'REVIEW_REQUIRED' || row.validationState === 'VALIDATED' && !row.sourceEntry.resolution)) vocabularyError('VOCABULARY_INCOMPLETE', 'Every independently detected source row must be reconciled and all extraction exceptions resolved.');
       const accepted = rows.filter(row => row.validationState === 'VALIDATED');
       if (!accepted.length) vocabularyError('VOCABULARY_INCOMPLETE', 'An empty vocabulary snapshot cannot be published.');
       await requireVocabularySenses(tx, accepted.map(row => row.sourceEntry.resolution!.senseId));

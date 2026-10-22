@@ -7,6 +7,7 @@ import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { VocabularySourcesService } from '../../src/vocabulary/vocabulary-sources.service.js';
 import { VocabularyImportsService } from '../../src/vocabulary/vocabulary-imports.service.js';
 import { VocabularyLibraryService } from '../../src/vocabulary/vocabulary-library.service.js';
+import { parseVocabularyLayout } from '../../src/vocabulary/domain/layout-parser.js';
 
 describe('Rights-gated master vocabulary workflow', () => {
   const url = process.env.TEST_DATABASE_URL!;
@@ -19,6 +20,40 @@ describe('Rights-gated master vocabulary workflow', () => {
     sources = module.get(VocabularySourcesService); imports = module.get(VocabularyImportsService); library = module.get(VocabularyLibraryService);
   });
   afterAll(() => db.$disconnect());
+  it('rejects NULL permission arrays at the direct database boundary', async () => {
+    const f = await fixture();
+    await expect(db.$executeRaw`UPDATE "VocabularySource" SET "allowedUses"=NULL WHERE id=${f.source.id}::uuid`).rejects.toThrow();
+    await expect(db.$executeRaw`UPDATE "VocabularySource" SET "allowedFields"=NULL WHERE id=${f.source.id}::uuid`).rejects.toThrow();
+  });
+  it('makes retirement terminal even for direct SQL reactivation', async () => {
+    const f = await reviewed();
+    const version = await imports.publish(f.batch.id, actor, { revision: f.batch.revision, collectionName: 'Terminal synthetic snapshot' });
+    const current = await db.vocabularyBatch.findUniqueOrThrow({ where: { id: f.batch.id } });
+    await imports.rollback(current.id, { revision: current.revision, reason: 'Synthetic terminal retirement verification.' });
+    await expect(db.$executeRaw`UPDATE "VocabularyCollectionVersion" SET status='PUBLISHED' WHERE id=${version.id}::uuid`).rejects.toThrow(/archived|retired|immutable/iu);
+    expect(await db.vocabularyCollectionMember.count({ where: { collectionVersionId: version.id } })).toBe(2);
+  });
+  it('resolves an actual parser UNKNOWN_POS exception through an evidenced immutable review', async () => {
+    const f = await fixture(true, 1);
+    const word = (text: string, x0: number, top: number, width = 40) => ({ text, x0, x1: x0 + width, top, bottom: top + 10 });
+    const manifest = parseVocabularyLayout({ documentSha256: f.document.sha256, pageCount: 1, cefrLevel: 'A1', pages: [{ pageIndex: 0, width: 600, height: 800, words: [word('Topic: Synthetic', 10, 20, 180), ...['Number', 'Word', 'POS', 'IPA', 'Definition'].map((text, i) => word(text, [10, 70, 220, 310, 410][i]!, 45)), word('1', 10, 70, 10), word('fixture', 70, 70, 100), word('alien', 220, 70), word('/test/', 310, 70, 60), word('synthetic meaning', 410, 70, 120)] }] });
+    expect(manifest.inventory.pages[0]?.exceptions.map(item => item.code)).toEqual(['UNKNOWN_POS']);
+    const batch = await imports.start({ documentId: f.document.id, parserVersion: manifest.parserVersion, inventory: manifest.inventory });
+    const staged = await imports.stage(batch.id, { revision: batch.revision, rows: manifest.rows });
+    const occurrence = await db.vocabularySourceEntry.findFirstOrThrow({ where: { documentId: f.document.id } });
+    const accepted = await imports.review(batch.id, actor, { revision: staged.revision, sourceEntryId: occurrence.id, decision: 'NEW_ENTRY', entryType: 'WORD', topicGroupIds: [], correction: { parsedWord: 'fixture', normalizedPos: 'NOUN', sourceContentHash: occurrence.sourceContentHash, reason: 'Verified the independently authored source geometry and intended noun.' } });
+    const published = await imports.publish(batch.id, actor, { revision: accepted.revision, collectionName: 'Corrected parser fixture' });
+    expect(published.status).toBe('PUBLISHED');
+    const audited = await db.vocabularyBatchRow.findUniqueOrThrow({ where: { batchId_sourceEntryId: { batchId: batch.id, sourceEntryId: occurrence.id } } });
+    expect(audited.resolvedExceptions).toEqual([expect.objectContaining({ code: 'UNKNOWN_POS', location: manifest.inventory.pages[0]!.exceptions[0]!.location, sourceContentHash: occurrence.sourceContentHash, reason: expect.any(String) })]);
+    await expect(db.vocabularyBatchRow.update({ where: { batchId_sourceEntryId: { batchId: batch.id, sourceEntryId: occurrence.id } }, data: { resolvedExceptions: [] } })).rejects.toThrow(/immutable/iu);
+    expect((await db.vocabularySourceEntry.findUniqueOrThrow({ where: { id: occurrence.id } })).normalizedPos).toBe('UNKNOWN');
+    expect((await db.vocabularyBatch.findUniqueOrThrow({ where: { id: batch.id } })).inventory).toEqual(manifest.inventory);
+    const structural = await imports.start({ documentId: f.document.id, parserVersion: 'synthetic/structural-exception', inventory: { pages: [{ ...manifest.inventory.pages[0]!, exceptions: [...manifest.inventory.pages[0]!.exceptions, { code: 'UNRESOLVED_FRAGMENT', message: 'Independent unparsed content remains.' }] }] } });
+    const retry = await imports.stage(structural.id, { revision: structural.revision, rows: manifest.rows });
+    const reviewedAgain = await imports.review(structural.id, actor, { revision: retry.revision, sourceEntryId: occurrence.id, decision: 'REUSE_SENSE', senseId: published.members[0]!.senseId, entryType: 'WORD', topicGroupIds: [], correction: { parsedWord: 'fixture', normalizedPos: 'NOUN', sourceContentHash: occurrence.sourceContentHash, reason: 'Verified the same independently authored source geometry again.' } });
+    await expect(imports.publish(structural.id, actor, { revision: reviewedAgain.revision, collectionName: 'Structural exception remains blocked' })).rejects.toMatchObject({ response: { code: 'VOCABULARY_INCOMPLETE' } });
+  });
   const row = (ordinal: number, pos: 'NOUN' | 'VERB' = 'NOUN'): VocabularySourceRow => ({ sourceEntryKey: `topic-1:${ordinal}`, topicInstanceKey: 'topic-1', originalTopic: 'Synthetic records', topicSequence: 1, rowOrdinal: ordinal, pageIndex: 0, printedPageNumber: null, locations: [{ pageIndex: 0, bbox: [10, ordinal * 20, 500, ordinal * 20 + 15] }], rawWord: 'record', parsedWord: 'record', rawPos: pos.toLowerCase(), normalizedPos: pos, cefrLevel: 'A1', pronunciation: '/ˈrek.ərd/', permittedDefinition: pos === 'NOUN' ? 'An independently authored stored account of an event.' : 'To preserve information for later use.', extractionConfidence: 1, warnings: [] });
   async function fixture(approved = true, count = 2, pronunciationDialect: 'en-US' | 'en-GB' | 'und' = 'und') {
     const source = await sources.register({ providerName: 'Synthetic', title: 'Independently authored test', sourceUrl: `https://example.test/${randomUUID()}`, languageCode: 'en', pronunciationDialect, attributionRequirements: '' });

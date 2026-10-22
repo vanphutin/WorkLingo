@@ -1755,6 +1755,7 @@ model VocabularySourceEntry {
 
 model VocabularyBatchRow {
   reviewCorrection Json?
+  resolvedExceptions Json @default("[]")
   reviewedBy      String?
   reviewedAt      DateTime?
   batchId         String                @db.Uuid
