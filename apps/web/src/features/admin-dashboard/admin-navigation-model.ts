@@ -33,6 +33,7 @@ export const adminIeltsDestinations = [
 
 export const adminSharedDestinations = [
   { href: '/admin/content', label: 'content' }, { href: '/admin/curriculum', label: 'curriculum' },
+  { href: '/admin/vocabulary', label: 'vocabularyLibrary' },
 ] as const;
 export const adminSystemDestinations = [
   { href: '/admin/analytics', label: 'analytics' },
