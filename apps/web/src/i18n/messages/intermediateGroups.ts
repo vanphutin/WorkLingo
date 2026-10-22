@@ -25,7 +25,7 @@ export const intermediateGroupsMessages = {
     workflowTitle: 'Lesson authoring flow', draftStep: 'Save draft', flowHelp: 'Choose topic → enter form or JSON → save draft → validate content and audio → approve duration → publish.',
     fixedTopic: 'This lesson belongs to the selected topic. To create it under a different topic, return to topic selection.', changeTopic: 'Back to topic selection',
     ungroupedHelp: 'Assign these earlier lessons to a topic before continuing their normal authoring flow.',
-    savedFlowHelp: 'Review the saved content, validate it and prepare audio in the advanced tools, approve its duration, then publish. AI only proposes duration; an administrator approves.',
+    savedFlowHelp: 'Review the saved lesson and approve its duration, then validate content, select audio and publish in step 4 on this page. AI only proposes duration; an administrator approves.',
   },
   vi: {
     title: 'Chủ đề & bài học', help: 'Chọn chủ đề trước, sau đó quản lý các bài trong chủ đề. Mỗi bài có bài đọc, câu hỏi và thời lượng được duyệt riêng.',
@@ -53,6 +53,6 @@ export const intermediateGroupsMessages = {
     workflowTitle: 'Quy trình soạn bài', draftStep: 'Lưu nháp', flowHelp: 'Chọn chủ đề → nhập biểu mẫu hoặc JSON → lưu nháp → kiểm tra nội dung và âm thanh → duyệt thời lượng → xuất bản.',
     fixedTopic: 'Bài này thuộc chủ đề đã chọn. Muốn tạo ở chủ đề khác, quay lại bước chọn chủ đề.', changeTopic: 'Về bước chọn chủ đề',
     ungroupedHelp: 'Đưa các bài cũ này vào một chủ đề trước khi tiếp tục quy trình soạn bài.',
-    savedFlowHelp: 'Review nội dung đã lưu, kiểm tra nội dung và chuẩn bị âm thanh trong công cụ nâng cao, duyệt thời lượng rồi xuất bản. AI chỉ đề xuất thời lượng; admin quyết định duyệt.',
+    savedFlowHelp: 'Kiểm tra bài đã lưu và duyệt thời lượng, rồi kiểm tra nội dung, chọn âm thanh và xuất bản tại bước 4 ngay trên trang này. AI chỉ đề xuất thời lượng; admin quyết định duyệt.',
   },
 } as const;

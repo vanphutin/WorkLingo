@@ -1,6 +1,6 @@
 import { useAdminContent } from './i18n';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 
 import type { ContentStatus, PublishContentImportResult, VocabularyPublicationSelection } from '@worklingo/contracts';
 import { VocabularyReview } from './vocabulary-review';
@@ -8,6 +8,7 @@ import { VocabularyReview } from './vocabulary-review';
 import { ApiError, apiClient } from '../../lib/api/api-client';
 
 export interface PublishPanelProps {
+  readonly onBusyChange?: (busy: boolean) => void;
   readonly vocabularyReviewRequired?: boolean;
   readonly importId: string;
   readonly draftRevision: number;
@@ -37,6 +38,7 @@ export function PublishPanel({
   publishedLessonVersionId,
   onPublished,
   onArchive,
+  onBusyChange,
 }: PublishPanelProps) {
   const { t, number, label, message } = useAdminContent();
   const [isPublishing, setIsPublishing] = useState(false);
@@ -50,6 +52,8 @@ export function PublishPanel({
 
   const [isArchiving, setIsArchiving] = useState(false);
   const [archiveError, setArchiveError] = useState<unknown>(null);
+  useEffect(() => { onBusyChange?.(isPublishing || isArchiving); }, [isPublishing, isArchiving, onBusyChange]);
+  useEffect(() => () => onBusyChange?.(false), [onBusyChange]);
 
   const handlePublish = async () => {
     if (isPublishing || !canPublish || !isAudioReady || (vocabularyReviewRequired && !vocabularySelection)) return;
