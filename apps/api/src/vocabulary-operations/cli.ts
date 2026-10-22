@@ -1,10 +1,20 @@
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { PrismaClient } from '@prisma/client';
 import { assertIsolatedTarget, reconcileManifest, sourceRegistry } from './operations.js';
+import { parseVocabularyLayout } from '../vocabulary/domain/layout-parser.js';
 
 async function main() {
-  const [command, argument] = process.argv.slice(2);
+  const [command, argument, output] = process.argv.slice(2);
+  if (command === 'parse-layout') {
+    if (!argument || !output || statSync(argument).size > 64 * 1024 * 1024) throw new Error('Provide layout and new output paths; input limit is 64 MiB.');
+    const manifest = parseVocabularyLayout(JSON.parse(readFileSync(argument, 'utf8')));
+    const result = reconcileManifest(manifest);
+    writeFileSync(output, JSON.stringify(manifest), { flag: 'wx' });
+    process.stdout.write(`${JSON.stringify({ ...result, mode: command, databaseWrites: 0 })}\n`);
+    if (result.status === 'INCOMPLETE') process.exitCode = 2;
+    return;
+  }
   if (command === 'validate' || command === 'dry-run') {
     if (!argument || statSync(argument).size > 64 * 1024 * 1024) throw new Error('Provide a manifest file smaller than 64 MiB.');
     const result = reconcileManifest(JSON.parse(readFileSync(argument, 'utf8')));

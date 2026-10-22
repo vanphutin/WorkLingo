@@ -11,6 +11,15 @@ and packages/contracts/src/vocabulary-library.contracts.ts for input schemas.
 3. Use scripts/vocabulary/extract_pdf.py with its authorization arguments to obtain
    native geometry. Feed geometry through parseVocabularyLayout. OCR-only or
    unknown pages remain explicit exceptions requiring independent inspection.
+   Convert an authorized native-geometry file into a new manifest (never overwrites
+   an existing output file):
+
+   ```powershell
+   pnpm --filter @worklingo/api exec tsx src/vocabulary-operations/cli.ts parse-layout path/to/layout.json path/to/manifest.json
+   ```
+
+   Exit 2 preserves the manifest and reports exceptions/incompleteness; it does not
+   authorize staging. Inspect the exception locations and reconcile the source.
 4. Validate/dry-run the manifest CLI. Retain per-page inventory and all unresolved
    fragments. Compare geometry enumeration to parsed rows; inspect high-risk
    rendered pages and manually reconcile all legitimate rows.
