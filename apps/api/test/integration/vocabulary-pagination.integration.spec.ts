@@ -1,0 +1,147 @@
+import { randomUUID } from 'node:crypto';
+import { Test } from '@nestjs/testing';
+import { PrismaClient } from '@prisma/client';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { PrismaService } from '../../src/common/database/prisma.service.js';
+import { VocabularyLibraryService, requireVocabularySenses } from '../../src/vocabulary/vocabulary-library.service.js';
+
+describe('Bounded vocabulary reads and rights queries (finding 4)', () => {
+  const url = process.env.TEST_DATABASE_URL;
+  if (!url || new URL(url).port !== '55439' || !new URL(url).pathname.endsWith('_test')) throw new Error('Use isolated port 55439 and an *_test database');
+  const db = new PrismaClient({ datasourceUrl: url, log: [{ emit: 'event', level: 'query' }] });
+  const queries: string[] = [];
+  const queryParameters: string[] = [];
+  db.$on('query', event => { queries.push(event.query); queryParameters.push(event.params); });
+  let library: VocabularyLibraryService;
+  const sourceId = randomUUID(); const collectionId = randomUUID(); const versionId = randomUUID(); const documentId = randomUUID();
+  const sourceIds = [sourceId, ...Array.from({ length: 124 }, () => randomUUID())];
+  const entryIds = Array.from({ length: 125 }, () => randomUUID());
+  const senseIds = Array.from({ length: 125 }, () => randomUUID());
+  const occurrenceIds = Array.from({ length: 125 }, () => randomUUID());
+  beforeAll(async () => {
+    const module = await Test.createTestingModule({ providers: [VocabularyLibraryService, { provide: PrismaService, useValue: db }] }).compile();
+    library = module.get(VocabularyLibraryService);
+    await db.vocabularySource.createMany({ data: sourceIds.map(id => ({ id, providerName: 'Synthetic pagination', title: 'Authored pagination fixture', sourceUrl: `https://example.test/pagination/${id}`, rightsStatus: 'APPROVED', permissionReference: 'owned-test', allowedUses: ['EXTRACT', 'STORE'], allowedFields: ['FORM', 'DEFINITION', 'PRONUNCIATION'] })) });
+    await db.vocabularyDocument.create({ data: { id: documentId, sourceId, originalFilename: 'synthetic-pagination.json', sha256: randomUUID().replaceAll('-', '').repeat(2), cefrLevel: 'A1', pageCount: 1 } });
+    await db.lexicalEntry.createMany({ data: entryIds.map((id, i) => ({ id, canonicalForm: `fixture ${i}`, normalizedForm: `fixture ${String(i).padStart(3, '0')}`, partOfSpeech: 'NOUN', editorialStatus: 'REVIEWED' })) });
+    await db.lexicalSense.createMany({ data: senseIds.map((id, i) => ({ id, lexicalEntryId: entryIds[i]!, senseKey: 'authored', definition: 'An independently authored test meaning.', sourceId: sourceIds[i]!, rightsBasis: 'owned-test', editorialStatus: 'REVIEWED' })) });
+    await db.vocabularySourceEntry.createMany({ data: occurrenceIds.map((id, i) => ({ id, documentId, sourceEntryKey: `t1:${i + 1}`, topicInstanceKey: 't1', originalTopic: 'Synthetic topic', topicSequence: 1, rowOrdinal: i + 1, pageIndex: 0, locations: [{ pageIndex: 0, bbox: [0, i, 10, i + 1] }], rawWord: `raw fixture ${i}`, parsedWord: 'fixture 0', rawPos: 'n.', normalizedPos: 'NOUN', cefrLevel: 'A1', sourceContentHash: 'a'.repeat(64) })) });
+    await db.vocabularyEntryResolution.createMany({ data: occurrenceIds.map(sourceEntryId => ({ sourceEntryId, lexicalEntryId: entryIds[0]!, senseId: senseIds[0]!, decision: 'REUSE_SENSE', reviewedBy: 'pagination-test' })) });
+    await db.lexicalCefrAssociation.createMany({ data: occurrenceIds.map(sourceEntryId => ({ sourceEntryId, lexicalEntryId: entryIds[0]!, senseId: senseIds[0]!, cefrLevel: 'A1' })) });
+    await db.vocabularyCollection.create({ data: { id: collectionId, name: 'Synthetic pagination', type: 'TOPIC', ownerReference: 'pagination-test' } });
+    await db.vocabularyCollectionVersion.create({ data: { id: versionId, collectionId, version: 1 } });
+    await db.vocabularyCollectionMember.createMany({ data: senseIds.map((senseId, position) => ({ collectionVersionId: versionId, lexicalEntryId: entryIds[position]!, senseId, position })) });
+  }, 20000);
+  afterAll(() => db.$disconnect());
+
+  it('lists version counts without serializing members, bindings or raw provenance', async () => {
+    queries.length = 0;
+    const result = await library.versions(collectionId, 1, 1);
+    expect(result).toMatchObject({ total: 1, page: 1, limit: 1, items: [{ id: versionId, _count: { members: 125, bindings: 0 } }] });
+    expect(result.items[0]).not.toHaveProperty('members');
+    expect(result.items[0]).not.toHaveProperty('bindings');
+    expect(queries.length).toBeLessThan(15);
+    expect(queries.some(query => query.includes('FOR SHARE'))).toBe(false);
+  });
+  it('keeps raw occurrence resolutions out of entry lists and detail', async () => {
+    const result = await library.search({ page: 1, limit: 1, sourceId });
+    expect(result.total).toBe(1); expect(result.items[0]?.id).toBe(entryIds[0]);
+    expect(result.items[0]).not.toHaveProperty('resolutions');
+    expect(await library.detail(entryIds[0]!)).not.toHaveProperty('resolutions');
+  });
+  it('groups repeated occurrence CEFR evidence in SQL before returning search or detail', async () => {
+    queries.length = 0;
+    const result = await library.search({ page: 1, limit: 1, sourceId });
+    expect(result.items[0]?.cefrAssociations).toEqual([{ cefrLevel: 'A1' }]);
+    expect((await library.detail(entryIds[0]!)).cefrAssociations).toEqual([{ cefrLevel: 'A1' }]);
+    expect(queries.filter(query => query.includes('LexicalCefrAssociation') && query.includes('GROUP BY'))).toHaveLength(2);
+    expect(await db.lexicalCefrAssociation.count({ where: { lexicalEntryId: entryIds[0]! } })).toBe(125);
+  });
+  it('pages every ordered member exactly once and enforces the cap', async () => {
+    const first = await library.members(versionId, 1, 100);
+    const second = await library.members(versionId, 2, 100);
+    expect(first).toMatchObject({ total: 125, page: 1, limit: 100 });
+    expect(first.items.map(member => member.position)).toEqual(Array.from({ length: 100 }, (_, i) => i));
+    expect(second.items.map(member => member.position)).toEqual(Array.from({ length: 25 }, (_, i) => i + 100));
+    expect(new Set([...first.items, ...second.items].map(member => member.id)).size).toBe(125);
+    expect(first.items[0]).toMatchObject({ senseId: senseIds[0], entry: { canonicalForm: 'fixture 0' } });
+    expect(first.items[0]).not.toHaveProperty('assignments');
+    await expect(library.members(versionId, 1, 101)).rejects.toThrow();
+    await expect(library.members(randomUUID())).rejects.toMatchObject({ status: 404 });
+  });
+  it('makes all immutable raw provenance available through ordered pages', async () => {
+    const first = await library.provenance(entryIds[0]!, 1, 100);
+    const second = await library.provenance(entryIds[0]!, 2, 100);
+    expect(first).toMatchObject({ total: 125, page: 1, limit: 100 });
+    expect(first.items).toHaveLength(100); expect(second.items).toHaveLength(25);
+    const rows = [...first.items, ...second.items];
+    expect(rows.map(row => row.sourceEntryId)).toEqual([...occurrenceIds].sort());
+    expect(rows.find(row => row.sourceEntryId === occurrenceIds[124])?.sourceEntry).toMatchObject({ rawWord: 'raw fixture 124', sourceContentHash: 'a'.repeat(64), locations: [{ pageIndex: 0, bbox: [0, 124, 10, 125] }], document: { id: documentId, source: { id: sourceId } } });
+    await expect(library.provenance(entryIds[0]!, 1, 101)).rejects.toThrow();
+    await expect(library.provenance(randomUUID())).rejects.toMatchObject({ status: 404 });
+  });
+  it('pages assignments and bindings without embedding them in the member payload', async () => {
+    const program = await db.learningProgram.findFirstOrThrow();
+    const published = await library.publishVersion(versionId);
+    expect(published).toMatchObject({ id: versionId, status: 'PUBLISHED', _count: { members: 125, bindings: 0 } });
+    expect(published).not.toHaveProperty('members');
+    expect(await library.publishVersion(versionId)).not.toHaveProperty('members');
+    const members = await db.vocabularyCollectionMember.findMany({ where: { collectionVersionId: versionId }, orderBy: { position: 'asc' }, take: 3 });
+    for (const member of members) await library.assign('pagination-test', { memberId: member.id, programId: program.id, priority: 0, learningGoal: 'RECEPTIVE', skills: ['READING'], inclusionReason: 'Synthetic independent pagination curation.' });
+    await library.bind(versionId, { programId: program.id });
+    const first = await library.assignments(versionId, 1, 2); const second = await library.assignments(versionId, 2, 2);
+    expect(first).toMatchObject({ total: 3, page: 1, limit: 2 }); expect(first.items).toHaveLength(2); expect(second.items).toHaveLength(1);
+    expect(new Set([...first.items, ...second.items].map(item => item.id)).size).toBe(3);
+    expect(await library.bindings(versionId, 1, 1)).toMatchObject({ total: 1, items: [{ programId: program.id }] });
+    await expect(library.assignments(versionId, 1, 101)).rejects.toThrow();
+    await expect(library.bindings(versionId, 0)).rejects.toThrow();
+  });
+  it('uses constant ordered batch locking queries for 125 senses and 125 contributing sources', async () => {
+    queries.length = 0;
+    const result = await db.$transaction(tx => requireVocabularySenses(tx, [...senseIds].reverse().concat(senseIds[0]!)), { timeout: 20000 });
+    expect(result).toHaveLength(125);
+    expect(queries.length).toBeLessThan(20);
+    const locks = queries.filter(query => query.includes('FOR SHARE'));
+    expect(locks).toHaveLength(3);
+    expect(locks.every(query => /ORDER BY/u.test(query))).toBe(true);
+    console.info(`finding4 rights validation: ${queries.length} total queries, ${locks.length} ordered lock queries, 125 senses / 125 sources`);
+    await expect(db.$transaction(tx => requireVocabularySenses(tx, [senseIds[0]!, randomUUID()]))).rejects.toMatchObject({ status: 404 });
+  });
+  it('still validates member 1001 and its revoked source when publishing an import-sized snapshot', async () => {
+    const other = await db.vocabularySource.create({ data: { providerName: 'Synthetic', title: 'Late rights source', sourceUrl: `https://example.test/late/${sourceId}`, rightsStatus: 'APPROVED', permissionReference: 'owned-test', allowedUses: ['EXTRACT', 'STORE'], allowedFields: ['FORM'] } });
+    const entry = await db.lexicalEntry.create({ data: { canonicalForm: 'last fixture', normalizedForm: 'last fixture', partOfSpeech: 'NOUN', editorialStatus: 'REVIEWED' } });
+    const sense = await db.lexicalSense.create({ data: { lexicalEntryId: entry.id, senseKey: 'late', sourceId: other.id, rightsBasis: 'owned-test', editorialStatus: 'REVIEWED' } });
+    const extraEntryIds = Array.from({ length: 875 }, () => randomUUID());
+    const extraSenseIds = Array.from({ length: 875 }, () => randomUUID());
+    await db.lexicalEntry.createMany({ data: extraEntryIds.map(id => ({ id, canonicalForm: 'synthetic extra', normalizedForm: 'synthetic extra', partOfSpeech: 'NOUN', editorialStatus: 'REVIEWED' })) });
+    await db.lexicalSense.createMany({ data: extraSenseIds.map((id, i) => ({ id, lexicalEntryId: extraEntryIds[i]!, senseKey: 'authored', sourceId, rightsBasis: 'owned-test', editorialStatus: 'REVIEWED' })) });
+    const draft = await db.vocabularyCollectionVersion.create({ data: { collectionId, version: 2 } });
+    const allSenses = [...senseIds, ...extraSenseIds, sense.id];
+    const allEntries = [...entryIds, ...extraEntryIds, entry.id];
+    await db.vocabularyCollectionMember.createMany({ data: allSenses.map((senseId, position) => ({ collectionVersionId: draft.id, senseId, lexicalEntryId: allEntries[position]!, position })) });
+    queryParameters.length = 0;
+    expect(await db.$transaction(tx => requireVocabularySenses(tx, allSenses), { timeout: 20000 })).toHaveLength(1001);
+    const knownIds = new Set(allSenses);
+    const largestIdFilter = Math.max(...queryParameters.map(params => (JSON.parse(params) as unknown[]).filter(value => typeof value === 'string' && knownIds.has(value)).length));
+    expect(largestIdFilter).toBeLessThanOrEqual(1000);
+    const published = await library.publishVersion(draft.id);
+    expect(published).toMatchObject({ id: draft.id, status: 'PUBLISHED', _count: { members: 1001, bindings: 0 } });
+    expect(published).not.toHaveProperty('members');
+    const retry = await library.publishVersion(draft.id);
+    expect(retry).toMatchObject({ id: draft.id, _count: { members: 1001, bindings: 0 } });
+    expect(retry).not.toHaveProperty('members');
+    const blockedDraft = await db.vocabularyCollectionVersion.create({ data: { collectionId, version: 3 } });
+    await db.vocabularyCollectionMember.createMany({ data: allSenses.map((senseId, position) => ({ collectionVersionId: blockedDraft.id, senseId, lexicalEntryId: allEntries[position]!, position })) });
+    await db.vocabularySource.update({ where: { id: other.id }, data: { rightsStatus: 'REVOKED' } });
+    await expect(library.publishVersion(blockedDraft.id)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
+    expect((await db.vocabularyCollectionVersion.findUniqueOrThrow({ where: { id: blockedDraft.id } })).status).toBe('DRAFT');
+    await expect(library.publishVersion(draft.id)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
+    await expect(library.members(draft.id, 1, 1)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
+    await expect(library.versions(collectionId)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
+  });
+  it('rechecks current provenance rights after source revocation', async () => {
+    await db.vocabularySource.update({ where: { id: sourceId }, data: { rightsStatus: 'REVOKED' } });
+    await expect(library.provenance(entryIds[0]!)).rejects.toMatchObject({ response: { code: 'BLOCKED_BY_RIGHTS' } });
+    expect((await library.search({ page: 1, limit: 1, sourceId })).items).toEqual([]);
+  });
+});

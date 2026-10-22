@@ -1,0 +1,38 @@
+.vocab-workspace { min-width: 0; display: grid; gap: 1rem; color: var(--text-primary); }
+.vocab-workspace .admin-page-header { margin: 0; }
+.vocab-workspace .vocab-views { display: flex; flex-wrap: wrap; gap: .5rem; padding-block-end: .75rem; border-bottom: 1px solid var(--border-default); }
+.vocab-workspace button { min-height: 44px; cursor: pointer; border: 1px solid var(--control-border); border-radius: var(--radius-control); padding: .5rem .875rem; background: var(--surface-primary); color: var(--text-primary); font: inherit; }
+.vocab-workspace button:hover:not(:disabled) { background: var(--surface-secondary); }
+.vocab-workspace button[aria-current="page"], .vocab-workspace button[aria-pressed="true"] { background: var(--surface-secondary); border-color: var(--text-primary); font-weight: 650; }
+.vocab-workspace button:disabled { opacity: .55; cursor: not-allowed; }
+.vocab-workspace :is(button,input,textarea,select,summary):focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.vocab-workspace :is(input,textarea,select) { font: inherit; color: var(--text-primary); background: var(--surface-primary); border: 1px solid var(--control-border); border-radius: var(--radius-control); min-height: 44px; padding: .5rem .75rem; min-width: 0; max-width: 100%; }
+.vocab-workspace textarea { resize: vertical; width: 100%; }
+.vocab-workspace input[type="checkbox"] { min-height: 20px; width: 20px; height: 20px; margin: .5rem; flex-shrink: 0; }
+.vocab-workspace table { border-collapse: collapse; width: 100%; font-size: .875rem; text-align: left; }
+.vocab-workspace :is(td,th) { padding: .75rem; border-bottom: 1px solid var(--border-default); vertical-align: top; }
+.vocab-workspace th { background: var(--surface-secondary); font-weight: 600; }
+.vocab-workspace tbody tr:last-child td { border-bottom: 0; }
+.vocab-workspace td { max-width: 28rem; overflow-wrap: anywhere; }
+.vocab-workspace .vocab-word { font-weight: 650; text-align: left; }
+.vocab-workspace p { line-height: 1.6; max-width: 80ch; }
+.vocab-workspace code { font-size: .8125rem; overflow-wrap: anywhere; white-space: normal; }
+.vocab-surface { margin-block: 1rem; padding: 1rem; border: 1px solid var(--border-default); border-radius: var(--radius-panel); background: var(--surface-primary); min-width: 0; }
+.vocab-surface :is(h2,h3,h4) { margin-block: .5rem .75rem; }
+.vocab-form { display: grid; gap: .875rem; margin-block: 1rem; max-width: 65rem; }
+.vocab-form > button { justify-self: start; }
+.vocab-form button:not([type="button"]) { background: var(--color-primary-fill); border-color: var(--color-primary-fill); color: var(--color-on-primary); }
+.vocab-form button:not([type="button"]):hover:not(:disabled) { background: var(--color-primary-hover); }
+.vocab-field { display: grid; gap: .35rem; font-size: .875rem; min-width: 0; }
+.vocab-field > label { font-weight: 550; }
+.vocab-workspace .admin-filter-bar > .vocab-field { flex: 1 1 12rem; }
+.vocab-check { display: inline-flex; align-items: center; min-height: 44px; padding-inline-end: .75rem; gap: .25rem; }
+.vocab-workspace fieldset { border: 1px solid var(--border-default); border-radius: var(--radius-control); min-width: 0; }
+.vocab-workspace legend { padding-inline: .5rem; }
+.vocab-reference { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,12rem),1fr)); gap: .75rem; flex: 1 1 100%; }
+.vocab-reference small { align-self: center; }
+.vocab-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-block: .875rem; }
+.vocab-provenance { border-top: 1px solid var(--border-default); padding-block: 1rem; }
+.vocab-version-list { list-style: none; display: flex; flex-wrap: wrap; gap: .75rem; padding: 0; }
+.vocab-rights-note { padding: .875rem; border-inline-start: 3px solid var(--text-primary); background: var(--surface-secondary); }
+@media (max-width: 560px) { .vocab-surface { padding: .75rem; } .vocab-views button { flex: 1 1 45%; } .vocab-pager span { order: -1; flex-basis: 100%; text-align: center; } }

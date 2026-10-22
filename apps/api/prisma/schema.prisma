@@ -155,6 +155,8 @@ enum ProgramAvailabilityStatus {
 }
 
 model LearningProgram {
+  vocabularyBindings VocabularyCurriculumBinding[]
+  vocabularyAssignments VocabularyProgramAssignment[]
   id                 String                     @id @default(uuid()) @db.Uuid
   slug               String                     @unique
   name               String
@@ -190,6 +192,7 @@ model LearnerProgramEnrollment {
 }
 
 model LearningPath {
+  vocabularyBindings VocabularyCurriculumBinding[]
   id        String          @id @default(uuid()) @db.Uuid
   programId String          @default("10000000-0000-4000-8000-000000000002") @db.Uuid
   slug      String          @unique
@@ -205,6 +208,7 @@ model LearningPath {
 }
 
 model Level {
+  vocabularyBindings VocabularyCurriculumBinding[]
   id            String                     @id @default(uuid()) @db.Uuid
   pathId        String                     @db.Uuid
   code          String                     @unique
@@ -224,6 +228,7 @@ model Level {
 }
 
 model Mission {
+  vocabularyBindings VocabularyCurriculumBinding[]
   id                   String                @id @default(uuid()) @db.Uuid
   levelId              String                @db.Uuid
   slug                 String                @unique
@@ -275,6 +280,7 @@ model MissionLesson {
 }
 
 model LessonVersion {
+  vocabularyBindings VocabularyCurriculumBinding[]
   id                String                       @id @default(uuid()) @db.Uuid
   lessonId          String                       @db.Uuid
   version           Int
@@ -357,6 +363,7 @@ model WordBank {
 }
 
 model WordBankVersion {
+  vocabularyBindings VocabularyCurriculumBinding[]
   id             String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   wordBankId     String                  @db.Uuid
   name           String
@@ -406,6 +413,7 @@ model LessonVersionWordBank {
 }
 
 model LanguageBlock {
+  lexicalLinks VocabularyLegacyLink[]
   id               String           @id @default(uuid()) @db.Uuid
   wordBankId       String           @db.Uuid
   slug             String           @unique
@@ -800,6 +808,11 @@ model ContentImport {
 }
 
 model IntermediateTopicGroup {
+  parentId       String?                  @db.Uuid
+  parent         IntermediateTopicGroup?  @relation("TopicHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children       IntermediateTopicGroup[] @relation("TopicHierarchy")
+  lexicalEntries LexicalEntryTopic[]
+  sourceTopicMappings VocabularyTopicMapping[]
   id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name           String
   normalizedName String          @unique
@@ -814,6 +827,8 @@ model IntermediateTopicGroup {
   lessons        Lesson[]
   contentImports ContentImport[]
   vocabularyUsages LessonVocabularyUsage[]
+
+  @@index([parentId])
 }
 
 model IntermediateTopicGroupName {
@@ -1639,4 +1654,335 @@ model PilotMetricReceipt {
   createdAt  DateTime             @default(now())
 
   @@index([createdAt])
+}
+
+
+// Additive master catalog: legacy identities and snapshots remain authoritative.
+model VocabularySource {
+  pronunciationDialect    String                 @default("und")
+  id                      String                 @id @default(uuid()) @db.Uuid
+  providerName            String
+  title                   String
+  sourceUrl               String
+  languageCode            String                 @default("en")
+  rightsStatus            String                 @default("PENDING")
+  permissionReference     String?
+  allowedUses             String[]               @default([])
+  allowedFields           String[]               @default([])
+  attributionRequirements String                 @default("")
+  revision                Int                    @default(1)
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  documents               VocabularyDocument[]
+  pronunciations          LexicalPronunciation[]
+  senses                  LexicalSense[]
+
+  @@unique([providerName, sourceUrl])
+}
+
+model VocabularyDocument {
+  id               String                   @id @default(uuid()) @db.Uuid
+  sourceId         String                   @db.Uuid
+  cefrLevel        String
+  originalFilename String
+  sourceUrl        String?
+  sha256           String
+  pageCount        Int
+  edition          String                   @default("")
+  acquiredAt       DateTime                 @default(now())
+  source           VocabularySource         @relation(fields: [sourceId], references: [id], onDelete: Restrict)
+  batches          VocabularyBatch[]
+  entries          VocabularySourceEntry[]
+  topics           VocabularyTopicMapping[]
+
+  @@unique([sourceId, sha256, cefrLevel])
+  @@index([sourceId])
+}
+
+model VocabularyBatch {
+  id                 String                        @id @default(uuid()) @db.Uuid
+  documentId         String                        @db.Uuid
+  parserVersion      String
+  status             String                        @default("REGISTERED")
+  inventory          Json
+  inventoryHash      String
+  detectedRows       Int
+  checkpoint         Int                           @default(0)
+  revision           Int                           @default(1)
+  reviewedBy         String?
+  reviewedAt         DateTime?
+  publishedAt        DateTime?
+  rollbackReason     String?
+  createdAt          DateTime                      @default(now())
+  document           VocabularyDocument            @relation(fields: [documentId], references: [id], onDelete: Restrict)
+  rows               VocabularyBatchRow[]
+  collectionVersions VocabularyCollectionVersion[]
+
+  @@unique([documentId, parserVersion])
+  @@index([status, createdAt])
+}
+
+model VocabularySourceEntry {
+  id                   String                     @id @default(uuid()) @db.Uuid
+  documentId           String                     @db.Uuid
+  sourceEntryKey       String
+  topicInstanceKey     String
+  originalTopic        String
+  topicSequence        Int
+  rowOrdinal           Int
+  pageIndex            Int
+  printedPageNumber    String?
+  locations            Json
+  rawWord              String
+  parsedWord           String
+  rawPos               String
+  normalizedPos        String
+  cefrLevel            String
+  pronunciation        String?
+  permittedDefinition  String?
+  extractionConfidence Float                      @default(1)
+  warnings             String[]                   @default([])
+  sourceContentHash    String
+  createdAt            DateTime                   @default(now())
+  document             VocabularyDocument         @relation(fields: [documentId], references: [id], onDelete: Restrict)
+  batches              VocabularyBatchRow[]
+  resolution           VocabularyEntryResolution?
+  cefrAssociations     LexicalCefrAssociation[]
+
+  @@unique([documentId, sourceEntryKey])
+  @@index([documentId, pageIndex])
+}
+
+model VocabularyBatchRow {
+  reviewCorrection Json?
+  resolvedExceptions Json @default("[]")
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  batchId         String                @db.Uuid
+  sourceEntryId   String                @db.Uuid
+  validationState String                @default("REVIEW_REQUIRED")
+  rejectionReason String?
+  batch           VocabularyBatch       @relation(fields: [batchId], references: [id], onDelete: Restrict)
+  sourceEntry     VocabularySourceEntry @relation(fields: [sourceEntryId], references: [id], onDelete: Restrict)
+
+  @@id([batchId, sourceEntryId])
+  @@index([sourceEntryId])
+}
+
+model LexicalEntry {
+  id               String                       @id @default(uuid()) @db.Uuid
+  language         String                       @default("en")
+  canonicalForm    String
+  normalizedForm   String
+  lemma            String?
+  entryType        String                       @default("WORD")
+  partOfSpeech     String
+  editorialStatus  String                       @default("DRAFT")
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+  senses           LexicalSense[]
+  pronunciations   LexicalPronunciation[]
+  topics           LexicalEntryTopic[]
+  cefrAssociations LexicalCefrAssociation[]
+  resolutions      VocabularyEntryResolution[]
+  members          VocabularyCollectionMember[]
+
+  @@index([language, normalizedForm, partOfSpeech])
+  @@index([editorialStatus, id])
+}
+
+model LexicalSense {
+  id                 String                       @id @default(uuid()) @db.Uuid
+  lexicalEntryId     String                       @db.Uuid
+  senseKey           String
+  definition         String?
+  definitionLanguage String                       @default("en")
+  translation        String?
+  usageDomain        String?
+  register           String?
+  rightsBasis        String
+  sourceId           String?                      @db.Uuid
+  editorialStatus    String                       @default("DRAFT")
+  createdAt          DateTime                     @default(now())
+  entry              LexicalEntry                 @relation(fields: [lexicalEntryId], references: [id], onDelete: Restrict)
+  source             VocabularySource?            @relation(fields: [sourceId], references: [id], onDelete: Restrict)
+  resolutions        VocabularyEntryResolution[]
+  cefrAssociations   LexicalCefrAssociation[]
+  members            VocabularyCollectionMember[]
+  legacyLinks        VocabularyLegacyLink[]
+
+  @@unique([lexicalEntryId, senseKey])
+  @@unique([id, lexicalEntryId])
+  @@index([sourceId])
+}
+
+model VocabularyEntryResolution {
+  sourceEntryId  String                @id @db.Uuid
+  lexicalEntryId String                @db.Uuid
+  senseId        String                @db.Uuid
+  decision       String
+  reviewedBy     String
+  reviewedAt     DateTime              @default(now())
+  sourceEntry    VocabularySourceEntry @relation(fields: [sourceEntryId], references: [id], onDelete: Restrict)
+  entry          LexicalEntry          @relation(fields: [lexicalEntryId], references: [id], onDelete: Restrict)
+  sense          LexicalSense          @relation(fields: [senseId, lexicalEntryId], references: [id, lexicalEntryId], onDelete: Restrict)
+
+  @@index([lexicalEntryId])
+  @@index([senseId, lexicalEntryId])
+}
+
+model LexicalPronunciation {
+  id                  String            @id @default(uuid()) @db.Uuid
+  lexicalEntryId      String            @db.Uuid
+  dialect             String
+  ipa                 String
+  sourceId            String?           @db.Uuid
+  rightsBasis         String
+  reviewStatus        String            @default("REVIEW_REQUIRED")
+  audioAssetReference String?
+  entry               LexicalEntry      @relation(fields: [lexicalEntryId], references: [id], onDelete: Restrict)
+  source              VocabularySource? @relation(fields: [sourceId], references: [id], onDelete: Restrict)
+
+  @@index([lexicalEntryId])
+  @@index([sourceId])
+}
+
+model LexicalCefrAssociation {
+  id             String                @id @default(uuid()) @db.Uuid
+  lexicalEntryId String                @db.Uuid
+  senseId        String?               @db.Uuid
+  sourceEntryId  String                @db.Uuid
+  cefrLevel      String
+  confidence     Float                 @default(1)
+  reviewStatus   String                @default("REVIEWED")
+  entry          LexicalEntry          @relation(fields: [lexicalEntryId], references: [id], onDelete: Restrict)
+  sense          LexicalSense?         @relation(fields: [senseId, lexicalEntryId], references: [id, lexicalEntryId], onDelete: Restrict)
+  sourceEntry    VocabularySourceEntry @relation(fields: [sourceEntryId], references: [id], onDelete: Restrict)
+
+  @@unique([sourceEntryId, cefrLevel])
+  @@index([lexicalEntryId, cefrLevel])
+  @@index([senseId, lexicalEntryId])
+  @@index([cefrLevel])
+}
+
+model LexicalEntryTopic {
+  lexicalEntryId String                 @db.Uuid
+  topicGroupId   String                 @db.Uuid
+  entry          LexicalEntry           @relation(fields: [lexicalEntryId], references: [id], onDelete: Restrict)
+  topic          IntermediateTopicGroup @relation(fields: [topicGroupId], references: [id], onDelete: Restrict)
+
+  @@id([lexicalEntryId, topicGroupId])
+  @@index([topicGroupId])
+}
+
+model VocabularyTopicMapping {
+  documentId       String                  @db.Uuid
+  topicInstanceKey String
+  originalTopic    String
+  topicGroupId     String?                 @db.Uuid
+  document         VocabularyDocument      @relation(fields: [documentId], references: [id], onDelete: Restrict)
+  topic            IntermediateTopicGroup? @relation(fields: [topicGroupId], references: [id], onDelete: Restrict)
+
+  @@id([documentId, topicInstanceKey])
+  @@index([topicGroupId])
+}
+
+model VocabularyCollection {
+  id             String                        @id @default(uuid()) @db.Uuid
+  name           String
+  type           String
+  ownerReference String
+  createdAt      DateTime                      @default(now())
+  versions       VocabularyCollectionVersion[]
+}
+
+model VocabularyCollectionVersion {
+  id           String                        @id @default(uuid()) @db.Uuid
+  collectionId String                        @db.Uuid
+  version      Int
+  status       String                        @default("DRAFT")
+  batchId      String?                       @db.Uuid
+  publishedAt  DateTime?
+  createdAt    DateTime                      @default(now())
+  collection   VocabularyCollection          @relation(fields: [collectionId], references: [id], onDelete: Restrict)
+  batch        VocabularyBatch?              @relation(fields: [batchId], references: [id], onDelete: Restrict)
+  members      VocabularyCollectionMember[]
+  bindings     VocabularyCurriculumBinding[]
+
+  @@unique([collectionId, version])
+  @@unique([batchId])
+  @@index([status, id])
+}
+
+model VocabularyCollectionMember {
+  id                  String                        @id @default(uuid()) @db.Uuid
+  collectionVersionId String                        @db.Uuid
+  lexicalEntryId      String                        @db.Uuid
+  senseId             String                        @db.Uuid
+  position            Int
+  version             VocabularyCollectionVersion   @relation(fields: [collectionVersionId], references: [id], onDelete: Restrict)
+  entry               LexicalEntry                  @relation(fields: [lexicalEntryId], references: [id], onDelete: Restrict)
+  sense               LexicalSense                  @relation(fields: [senseId, lexicalEntryId], references: [id, lexicalEntryId], onDelete: Restrict)
+  assignments         VocabularyProgramAssignment[]
+
+  @@unique([collectionVersionId, position])
+  @@unique([collectionVersionId, senseId])
+  @@index([lexicalEntryId])
+  @@index([senseId, lexicalEntryId])
+}
+
+model VocabularyProgramAssignment {
+  id              String                     @id @default(uuid()) @db.Uuid
+  memberId        String                     @db.Uuid
+  programId       String                     @db.Uuid
+  targetLevel     String?
+  priority        Int                        @default(0)
+  learningGoal    String
+  skills          String[]                   @default([])
+  inclusionReason String
+  curationStatus  String                     @default("REVIEW_REQUIRED")
+  approvedBy      String?
+  member          VocabularyCollectionMember @relation(fields: [memberId], references: [id], onDelete: Restrict)
+  program         LearningProgram            @relation(fields: [programId], references: [id], onDelete: Restrict)
+
+  @@unique([memberId, programId])
+  @@index([programId])
+}
+
+model VocabularyCurriculumBinding {
+  id                  String                      @id @default(uuid()) @db.Uuid
+  collectionVersionId String                      @db.Uuid
+  programId           String?                     @db.Uuid
+  pathId              String?                     @db.Uuid
+  levelId             String?                     @db.Uuid
+  missionId           String?                     @db.Uuid
+  lessonVersionId     String?                     @db.Uuid
+  wordBankVersionId   String?                     @db.Uuid
+  version             VocabularyCollectionVersion @relation(fields: [collectionVersionId], references: [id], onDelete: Restrict)
+  program             LearningProgram?            @relation(fields: [programId], references: [id], onDelete: Restrict)
+  path                LearningPath?               @relation(fields: [pathId], references: [id], onDelete: Restrict)
+  level               Level?                      @relation(fields: [levelId], references: [id], onDelete: Restrict)
+  mission             Mission?                    @relation(fields: [missionId], references: [id], onDelete: Restrict)
+  lessonVersion       LessonVersion?              @relation(fields: [lessonVersionId], references: [id], onDelete: Restrict)
+  wordBankVersion     WordBankVersion?            @relation(fields: [wordBankVersionId], references: [id], onDelete: Restrict)
+
+  @@index([collectionVersionId])
+  @@index([programId])
+  @@index([pathId])
+  @@index([levelId])
+  @@index([missionId])
+  @@index([lessonVersionId])
+  @@index([wordBankVersionId])
+}
+
+model VocabularyLegacyLink {
+  id              String        @id @default(uuid()) @db.Uuid
+  senseId         String        @db.Uuid
+  languageBlockId String        @unique @db.Uuid
+  reviewedBy      String
+  reviewedAt      DateTime      @default(now())
+  sense           LexicalSense  @relation(fields: [senseId], references: [id], onDelete: Restrict)
+  languageBlock   LanguageBlock @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
+
+  @@index([senseId])
 }

@@ -46,11 +46,11 @@ describe('AdminLayout', () => {
       '/admin/programs/intermediate/topic-groups', '/admin/programs/intermediate/topics',
       ...['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'].map(category => `/admin/programs/intermediate/${category}`),
       '/admin/ielts-topics',
-      '/admin/content', '/admin/curriculum', '/admin/ielts-orientation', '/admin/ielts-bridge',
+      '/admin/content', '/admin/curriculum', '/admin/vocabulary', '/admin/ielts-orientation', '/admin/ielts-bridge',
       '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum', '/admin/audit',
       '/admin/operations', '/admin/analytics', '/admin/settings/audio', '/admin/settings/ai', '/dashboard',
     ]));
-    expect(destinations).toHaveLength(27);
+    expect(destinations).toHaveLength(28);
     expect(screen.getByRole('link', { name: 'Skip to administrative content' })).toHaveAttribute('href', '#admin-main-content');
     expect(replace).not.toHaveBeenCalled();
   });
