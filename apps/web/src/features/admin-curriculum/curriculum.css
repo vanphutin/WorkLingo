@@ -896,7 +896,7 @@
   font-weight: 700;
   color: var(--foreground);
 }
-.curriculum-container .mission-header .action-button:has-text("Foundation"), .curriculum-container .mission-header button[aria-label*="Foundation"] {
+.curriculum-container .mission-header .foundation-editor-toggle {
   border-color: var(--control-border);
   color: var(--foreground);
   background: var(--surface-soft);

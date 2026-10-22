@@ -64,7 +64,7 @@ test('client navigation audio AI curriculum retains owner styles and preference 
   await expect(panel.locator('.admin-ai-toggle-card')).toHaveCSS('transition-duration', '0s');
   await page.locator('.workspace-navigation-toggle').click();
   await page.locator('a[href="/admin/curriculum"]').click();
-  await expect(page.locator('.curriculum-header')).toBeVisible();
+  await expect(page.locator('.admin-page-header')).toBeVisible();
   await expect(page.locator('.action-button').first()).toHaveCSS('transition-duration', '0s');
   expect(await page.evaluate(() => (window as Window & { phase5Marker?: string }).phase5Marker)).toBe('same-document');
   observations.push({ nextClientNavigation: ['audio', 'ai', 'curriculum'], sameDocument: true, unsavedAiInputsRetainedAcrossPreferences: true, reducedMotionOwnerStyles: true, persistenceAcrossRouteUnmount: 'not asserted or changed' });

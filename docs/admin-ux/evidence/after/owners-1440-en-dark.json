@@ -1,0 +1,362 @@
+[
+  {
+    "owner": "dashboard",
+    "url": "/admin",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 905.421875,
+      "top": 94,
+      "right": 1424,
+      "bottom": 999.421875,
+      "left": 292
+    },
+    "headings": [
+      "Overview"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "intermediate",
+    "url": "/admin/programs/intermediate",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 867.46875,
+      "top": 94,
+      "right": 1424,
+      "bottom": 961.46875,
+      "left": 292
+    },
+    "headings": [
+      "Intermediate"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "ielts",
+    "url": "/admin/programs/ielts",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1093.65625,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1187.65625,
+      "left": 292
+    },
+    "headings": [
+      "IELTS"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "content",
+    "url": "/admin/content",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 99.96875,
+      "width": 1132,
+      "height": 408.359375,
+      "top": 99.96875,
+      "right": 1424,
+      "bottom": 508.328125,
+      "left": 292
+    },
+    "headings": [
+      "All Imports (1)"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "editor",
+    "url": "/admin/content/11111111-1111-4111-8111-111111111111",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1016.984375,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1110.984375,
+      "left": 292
+    },
+    "headings": [
+      "Lesson Authoring"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "import",
+    "url": "/admin/content/new",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 994.125,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1088.125,
+      "left": 292
+    },
+    "headings": [
+      "New Content Import"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "curriculum",
+    "url": "/admin/curriculum",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1486.234375,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1580.234375,
+      "left": 292
+    },
+    "headings": [
+      "Curriculum Management"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "orientation",
+    "url": "/admin/ielts-orientation",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1444.390625,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1538.390625,
+      "left": 292
+    },
+    "headings": [
+      "Orientation authoring"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "bridge",
+    "url": "/admin/ielts-bridge",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1442.15625,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1536.15625,
+      "left": 292
+    },
+    "headings": [
+      "Bridge authoring"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "integrated",
+    "url": "/admin/ielts-integrated",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1003.953125,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1097.953125,
+      "left": 292
+    },
+    "headings": [
+      "Integrated Practice profiles"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "mock",
+    "url": "/admin/ielts-mocks",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 3861.15625,
+      "top": 94,
+      "right": 1424,
+      "bottom": 3955.15625,
+      "left": 292
+    },
+    "headings": [
+      "IELTS Full Mock Workspace"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "band",
+    "url": "/admin/ielts-band-curriculum",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 6258.34375,
+      "top": 94,
+      "right": 1424,
+      "bottom": 6352.34375,
+      "left": 292
+    },
+    "headings": [
+      "Band Curriculum"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "topics",
+    "url": "/admin/ielts-topics",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 362.90625,
+      "width": 1132,
+      "height": 491.875,
+      "top": 362.90625,
+      "right": 1424,
+      "bottom": 854.78125,
+      "left": 292
+    },
+    "headings": [
+      "IELTS topic content"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "operations",
+    "url": "/admin/operations",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 2015.890625,
+      "top": 94,
+      "right": 1424,
+      "bottom": 2109.890625,
+      "left": 292
+    },
+    "headings": [
+      "Operations"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "audit",
+    "url": "/admin/audit",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 5441.4375,
+      "top": 94,
+      "right": 1424,
+      "bottom": 5535.4375,
+      "left": 292
+    },
+    "headings": [
+      "Audit Event Browser"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "analytics",
+    "url": "/admin/analytics",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 120.1875,
+      "width": 1132,
+      "height": 536.921875,
+      "top": 120.1875,
+      "right": 1424,
+      "bottom": 657.109375,
+      "left": 292
+    },
+    "headings": [
+      "Pilot Analytics"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "adminAudio",
+    "url": "/admin/settings/audio",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1788.96875,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1882.96875,
+      "left": 292
+    },
+    "headings": [
+      "Audio generation settings"
+    ],
+    "alerts": []
+  },
+  {
+    "owner": "adminAi",
+    "url": "/admin/settings/ai",
+    "width": 1440,
+    "scroll": 1440,
+    "main": {
+      "x": 292,
+      "y": 94,
+      "width": 1132,
+      "height": 1786.671875,
+      "top": 94,
+      "right": 1424,
+      "bottom": 1880.671875,
+      "left": 292
+    },
+    "headings": [
+      "System AI settings"
+    ],
+    "alerts": []
+  }
+]

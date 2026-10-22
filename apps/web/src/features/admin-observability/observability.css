@@ -45,5 +45,8 @@
 .operations-detail { min-width: 0; position: sticky; top: 1rem; }
 .operations-detail h2 { margin: 0 0 .75rem; }
 .operations-detail summary { min-height: 44px; cursor: pointer; }
-.operations-workspace .admin-data-table table { min-width: 40rem; }
+.operations-workspace .admin-data-table table { min-width: 48rem; }
+.operations-workspace .observability-table th { white-space: nowrap; }
+.operations-workspace .observability-table td:last-child { min-width: 7rem; }
+.operations-workspace .observability-table button { min-width: 5.5rem; }
 @media (max-width: 1199px) { .operations-workspace.has-details { grid-template-columns: minmax(0,1fr); } .operations-detail { position: static; grid-row: 1; } }

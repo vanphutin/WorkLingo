@@ -29,7 +29,7 @@ async function fixtures(page: Page, owner: string, locale: 'vi' | 'en') {
   }
 }
 
-for (const [width, height, locale, theme] of [[1440, 900, 'vi', 'light'], [390, 844, 'vi', 'dark']] as const) {
+for (const [width, height, locale, theme] of [[1440, 900, 'vi', 'light'], [390, 844, 'vi', 'dark'], [1440, 900, 'en', 'dark'], [390, 844, 'en', 'light']] as const) {
   test(`all admin owners ${width} ${locale} ${theme}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await page.context().addCookies([{ name: 'worklingo_locale', value: locale, domain: '127.0.0.1', path: '/' }]);
@@ -73,4 +73,70 @@ test('responsive owner geometry, motion, transparency and zoom audit', async ({ 
   if (phase === 'after') expect.soft(zoom.scroll, 'intermediate-editor/320/CSS200').toBeLessThanOrEqual(320);
   await page.screenshot({ path: path.join(evidence, 'intermediate-320-en-zoom200.png') });
   writeFileSync(path.join(evidence, 'responsive.json'), JSON.stringify(measurements, null, 2) + '\n');
+});
+
+for (const [owner, url, selector] of [
+  ['orientation', '/admin/ielts-orientation', 'input[name=courseTitle]'],
+  ['bridge', '/admin/ielts-bridge', '.bridge-editor__module input'],
+  ['integrated', '/admin/ielts-integrated', '.bridge-stage-card input'],
+  ['band', '/admin/ielts-band-curriculum', '.band-editor input'],
+  ['mock', '/admin/ielts-mocks', '.authoring-fields input'],
+] as const) test(`dirty ${owner} survives shell, appearance and resize`, async ({ page }) => {
+  test.skip(phase === 'before');
+  await fixtures(page, owner, 'en'); await page.goto(url);
+  const field = page.locator(selector).first(); await expect(field).toBeVisible();
+  const original = await field.inputValue();
+  const changed = owner === 'integrated' ? String(Number(original) + 1) : `${original} — preserved local draft`;
+  await field.fill(changed); await field.evaluate(el => el.setAttribute('data-draft-identity', 'original'));
+  let prompts = 0; page.on('dialog', async dialog => { prompts++; await dialog.dismiss(); });
+  await page.locator('.ad-breadcrumbs a').first().click();
+  await expect(page).toHaveURL(new RegExp(url + '$')); expect(prompts).toBe(1);
+  await expect(field).toHaveValue(changed);
+  await page.locator('.theme-control').click(); await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('.workspace-navigation-toggle').click();
+  await page.locator('.workspace-nav-admin').getByRole('button', { name: 'System', exact: true }).click();
+  await page.locator('.workspace-nav-admin').getByRole('link', { name: 'Analytics', exact: true }).click();
+  expect(prompts).toBe(2); await expect(field).toHaveValue(changed);
+  await expect(field).toHaveAttribute('data-draft-identity', 'original');
+});
+
+test('new import keeps edits when template or shell navigation is cancelled', async ({ page }) => {
+  test.skip(phase === 'before'); await fixtures(page, 'import', 'en'); await page.goto('/admin/content/new');
+  const source = page.locator('#raw-source-input'); await source.fill('Keep my new imported lesson');
+  let prompts = 0; page.on('dialog', async dialog => { prompts++; await dialog.dismiss(); });
+  await page.getByLabel('Lesson template', { exact: true }).selectOption('grammar');
+  await expect(source).toHaveValue('Keep my new imported lesson');
+  await page.locator('.ad-breadcrumbs a').first().click();
+  await expect(page).toHaveURL(/\/admin\/content\/new$/u); expect(prompts).toBe(2);
+  await expect(source).toHaveValue('Keep my new imported lesson');
+});
+
+test('operations contextual details preserve pagination, focus and mobile access', async ({ page }) => {
+  test.skip(phase === 'before'); await fixtures(page, 'operations', 'en'); await page.goto('/admin/operations');
+  const inspect = page.getByRole('button', { name: 'Inspect', exact: true }).first(); await inspect.click();
+  await expect(page.locator('#job-detail-heading')).toBeFocused();
+  await page.screenshot({ path: path.join(evidence, 'operations-detail-1440-en.png') });
+  await page.keyboard.press('Escape'); await expect(inspect).toBeFocused();
+  await page.getByRole('button', { name: 'Next', exact: true }).click();
+  await expect(page.getByText('Page 2 of 2', { exact: true })).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole('button', { name: 'Inspect', exact: true }).first().click();
+  await expect(page.locator('#job-detail-heading')).toBeFocused();
+  await page.screenshot({ path: path.join(evidence, 'operations-detail-390-en.png') });
+  await page.getByRole('button', { name: 'Close job details' }).click();
+  await expect(page.getByText('Page 2 of 2', { exact: true })).toBeVisible();
+});
+
+test('system appearance and reduced transparency retain a mounted draft', async ({ page, context }) => {
+  test.skip(phase === 'before'); await fixtures(page, 'orientation', 'en');
+  await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' }); await page.goto('/admin/ielts-orientation');
+  const title = page.locator('input[name=courseTitle]'); await title.fill('Accessible draft remains mounted');
+  await title.evaluate(el => el.setAttribute('data-identity', 'accessible-draft'));
+  const cdp = await context.newCDPSession(page);
+  await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }, { name: 'prefers-reduced-transparency', value: 'reduce' }, { name: 'prefers-color-scheme', value: 'dark' }] });
+  await expect(page.locator('.workspace-navigation-admin')).toHaveCSS('backdrop-filter', 'none');
+  await expect(page.locator('.admin-sidebar-trigger').first()).toHaveCSS('transition-duration', '0s');
+  await page.screenshot({ path: path.join(evidence, 'orientation-system-dark-reduced-transparency.png') });
+  await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
+  await expect(title).toHaveValue('Accessible draft remains mounted'); await expect(title).toHaveAttribute('data-identity', 'accessible-draft');
 });

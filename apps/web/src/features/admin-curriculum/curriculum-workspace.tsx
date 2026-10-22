@@ -1334,7 +1334,7 @@ export function CurriculumWorkspace() {
                                       <div className="curriculum-actions">
                                         <button
                                           type="button"
-                                          className="action-button action-button-secondary"
+                                          className="action-button action-button-secondary foundation-editor-toggle"
                                           disabled={isOpeningFoundation}
                                           onClick={() => void handleOpenFoundation(mission)}
                                           aria-label={t('editFoundation', { name: mission.title })}

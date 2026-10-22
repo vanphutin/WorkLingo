@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 
+import { openSidebar } from './fixtures/admin-sidebar-contracts';
 import { loginAsContentAdmin } from './helpers/content-admin';
 
 test('admin can inspect safe operations and aggregate analytics', async ({ page }) => {
@@ -13,6 +14,7 @@ test('admin can inspect safe operations and aggregate analytics', async ({ page 
   await expect(page.getByText('Queue depth')).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/authorization|cookie|transcript|rawResponse/iu);
 
+  await openSidebar(page);
   await page.getByRole('link', { name: 'Analytics' }).click();
   await expect(page.getByRole('heading', { name: 'Pilot Analytics' })).toBeVisible();
   await expect(page.getByText('Week 1 retention')).toBeVisible();

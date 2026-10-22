@@ -78,3 +78,8 @@
 .admin-shell .preferences-experience :is(.admin-ai-header,.admin-settings-header,.audio-settings-header) h1 { font-size: clamp(1.4rem,2.2vw,1.85rem); }
 .admin-shell .preferences-experience :is(.admin-ai-panel,.admin-provider-section,.audio-settings-card,.admin-voice-config-card) { padding: 1rem; }
 .admin-shell .ielts-topic-editor { max-width: none; width: 100%; margin: 0; padding: 0; }
+
+.admin-shell .preferences-experience .admin-audio-settings-card,
+.admin-shell .admin-ai-card.preferences-experience { padding: 1rem; gap: 1rem; }
+.admin-shell .preferences-experience .admin-audio-section { padding: 1rem; }
+.admin-shell .preferences-experience .admin-ai-panels-container { gap: 1rem; }
