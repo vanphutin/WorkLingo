@@ -11,8 +11,8 @@ import type { AuthUser } from '@worklingo/contracts';
 
 import { ApiError, apiClient } from '../../lib/api/api-client';
 import { ThemeControl } from '../../components/theme-control';
-import { AdminBreadcrumbs, useAdminNavigationItems } from '../../features/admin-dashboard/admin-navigation';
-import { WorkspaceNavigation, isNavigationItemActive } from '../../components/workspace-navigation';
+import { AdminBreadcrumbs, AdminNavigation, useAdminNavigationItems } from '../../features/admin-dashboard/admin-navigation';
+import { isNavigationItemActive } from '../../components/workspace-navigation';
 import { GlassSurface } from '../../components/glass-surface';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { useLocalePreference, useT } from '../../i18n/provider';
@@ -143,7 +143,7 @@ export default function AdminLayout({
           </div>
         </GlassSurface>
       </header>
-      <WorkspaceNavigation items={destinations} label={t('adminWorkspace')} variant="admin" linkComponent={Link} />
+      <AdminNavigation />
       <main id="admin-main-content" tabIndex={-1} className="admin-main-content">
         <AdminBreadcrumbs />
         {children}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useId, useRef, useState, type ComponentType, type ComponentProps } from 'react';
+import { useEffect, useId, useRef, useState, type ComponentType, type ComponentProps, type ReactNode } from 'react';
 import { useT } from '../i18n/provider';
 import { commonMessages } from '../i18n/messages/common';
 import { GlassSurface } from './glass-surface';
@@ -25,12 +25,13 @@ function NavigationIcon({ href }: { readonly href: string }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24"><path d={drawing} /></svg>;
 }
 
-export function WorkspaceNavigation({ items, label, variant = 'learner', compact = false, linkComponent: NavigationLink = Link }: {
+export function WorkspaceNavigation({ items, label, variant = 'learner', compact = false, linkComponent: NavigationLink = Link, children }: {
   readonly items: readonly NavigationItem[];
   readonly label: string;
   readonly variant?: 'learner' | 'admin';
   readonly compact?: boolean;
   readonly linkComponent?: ComponentType<ComponentProps<typeof Link>>;
+  readonly children?: ReactNode;
 }) {
   const pathname = usePathname();
   const t = useT('common', commonMessages);
@@ -63,8 +64,9 @@ export function WorkspaceNavigation({ items, label, variant = 'learner', compact
       const focused = document.activeElement === document.body ? lastFocused.current : document.activeElement;
       if (event.matches && !compact) {
         if (focused === trigger.current) {
-          (panel.current?.querySelector<HTMLElement>('[aria-current="page"]')
-            ?? panel.current?.querySelector<HTMLElement>('a'))?.focus();
+          const visible = [...(panel.current?.querySelectorAll<HTMLElement>('a, button') ?? [])]
+            .filter(control => !control.closest('[hidden]'));
+          (visible.find(control => control.getAttribute('aria-current') === 'page') ?? visible[0])?.focus();
         }
       } else if (focused && panel.current?.contains(focused)) trigger.current?.focus();
     };
@@ -111,7 +113,7 @@ export function WorkspaceNavigation({ items, label, variant = 'learner', compact
           setOpen(false);
         }
       }}>
-      {groups.map((group) => <div className="workspace-nav-group" key={group}>
+      {children ?? groups.map((group) => <div className="workspace-nav-group" key={group}>
         <p className="workspace-nav-group-label">{t(group)}</p>
         {items.filter((item) => groupFor(item.href) === group).map(({ href, label: text }) => <NavigationLink
           className="workspace-nav-link" key={href} href={href} aria-current={active?.href === href ? 'page' : undefined}>

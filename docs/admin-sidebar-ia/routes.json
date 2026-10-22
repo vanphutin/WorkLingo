@@ -1,0 +1,290 @@
+[
+  {
+    "route": "/admin/analytics",
+    "source": "apps/web/src/app/(admin)/admin/analytics/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/audit",
+    "source": "apps/web/src/app/(admin)/admin/audit/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/content/[importId]",
+    "source": "apps/web/src/app/(admin)/admin/content/[importId]/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/content/new",
+    "source": "apps/web/src/app/(admin)/admin/content/new/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/content",
+    "source": "apps/web/src/app/(admin)/admin/content/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/curriculum",
+    "source": "apps/web/src/app/(admin)/admin/curriculum/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/ielts-band-curriculum",
+    "source": "apps/web/src/app/(admin)/admin/ielts-band-curriculum/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/ielts-bridge",
+    "source": "apps/web/src/app/(admin)/admin/ielts-bridge/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/ielts-integrated",
+    "source": "apps/web/src/app/(admin)/admin/ielts-integrated/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/ielts-mocks",
+    "source": "apps/web/src/app/(admin)/admin/ielts-mocks/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/ielts-orientation",
+    "source": "apps/web/src/app/(admin)/admin/ielts-orientation/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/ielts-topics",
+    "source": "apps/web/src/app/(admin)/admin/ielts-topics/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/operations",
+    "source": "apps/web/src/app/(admin)/admin/operations/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin",
+    "source": "apps/web/src/app/(admin)/admin/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/[slug]",
+    "source": "apps/web/src/app/(admin)/admin/programs/[slug]/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/[category]/[importId]",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/[category]/[importId]/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/[category]/new",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/[category]/new/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/[category]",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/[category]/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/topic-groups",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/topic-groups/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/topics/[importId]",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/topics/[importId]/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/topics/new",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/topics/new/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/programs/intermediate/topics",
+    "source": "apps/web/src/app/(admin)/admin/programs/intermediate/topics/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/settings/ai",
+    "source": "apps/web/src/app/(admin)/admin/settings/ai/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/admin/settings/audio",
+    "source": "apps/web/src/app/(admin)/admin/settings/audio/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "CONTENT_ADMIN or SYSTEM_ADMIN"
+  },
+  {
+    "route": "/login",
+    "source": "apps/web/src/app/(auth)/login/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Public"
+  },
+  {
+    "route": "/register",
+    "source": "apps/web/src/app/(auth)/register/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Public"
+  },
+  {
+    "route": "/dashboard",
+    "source": "apps/web/src/app/(learner)/dashboard/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/bridge/[moduleId]",
+    "source": "apps/web/src/app/(learner)/ielts/bridge/[moduleId]/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/bridge",
+    "source": "apps/web/src/app/(learner)/ielts/bridge/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/history",
+    "source": "apps/web/src/app/(learner)/ielts/history/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/introduction",
+    "source": "apps/web/src/app/(learner)/ielts/introduction/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/learn",
+    "source": "apps/web/src/app/(learner)/ielts/learn/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/mock-tests/[attemptId]",
+    "source": "apps/web/src/app/(learner)/ielts/mock-tests/[attemptId]/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/mock-tests",
+    "source": "apps/web/src/app/(learner)/ielts/mock-tests/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/orientation",
+    "source": "apps/web/src/app/(learner)/ielts/orientation/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts",
+    "source": "apps/web/src/app/(learner)/ielts/page.tsx",
+    "cohort": "Additional 14",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/pathway",
+    "source": "apps/web/src/app/(learner)/ielts/pathway/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/practice/[sessionId]",
+    "source": "apps/web/src/app/(learner)/ielts/practice/[sessionId]/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/ielts/practice",
+    "source": "apps/web/src/app/(learner)/ielts/practice/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/mastery",
+    "source": "apps/web/src/app/(learner)/mastery/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/onboarding",
+    "source": "apps/web/src/app/(learner)/onboarding/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/onboarding/placement/[sessionId]",
+    "source": "apps/web/src/app/(learner)/onboarding/placement/[sessionId]/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/programs",
+    "source": "apps/web/src/app/(learner)/programs/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/sessions/[sessionId]",
+    "source": "apps/web/src/app/(learner)/sessions/[sessionId]/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/settings/ai",
+    "source": "apps/web/src/app/(learner)/settings/ai/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/settings/audio",
+    "source": "apps/web/src/app/(learner)/settings/audio/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/settings",
+    "source": "apps/web/src/app/(learner)/settings/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Learner layout"
+  },
+  {
+    "route": "/",
+    "source": "apps/web/src/app/page.tsx",
+    "cohort": "Liquid Glass 34",
+    "guard": "Public"
+  }
+]
