@@ -9,15 +9,22 @@ const resolutionSchema = z.object({ senseId: id, lexicalEntryId: id, decision: z
 const occurrenceSchema = vocabularySourceRowSchema.extend({ id, documentId: id, sourceContentHash: z.string().regex(/^[a-f0-9]{64}$/u).optional(), resolution: resolutionSchema.nullable() }).strip();
 const senseSchema = z.object({ id, definition: z.string().nullable(), definitionLanguage: z.string(), translation: z.string().nullable(), editorialStatus: z.string(), rightsBasis: z.string(), sourceId: id.nullable() });
 export const entrySchema = z.object({ id, canonicalForm: z.string(), language: z.string(), partOfSpeech: vocabularyPosSchema, entryType: z.string(), editorialStatus: z.string(), senses: z.array(senseSchema), pronunciations: z.array(z.object({ id, ipa: z.string(), dialect: z.string(), sourceId: id.nullable(), rightsBasis: z.string() })), topics: z.array(z.object({ topicGroupId: id, topic: z.object({ id, name: z.string() }) })), cefrAssociations: z.array(z.object({ cefrLevel: vocabularyCefrSchema })) });
-export const entryDetailSchema = entrySchema.extend({ resolutions: z.array(resolutionSchema.extend({ sourceEntry: occurrenceSchema.omit({ resolution: true }).extend({ document: z.object({ id, originalFilename: z.string(), sha256: z.string(), source: sourceSchema }) }) })) });
+export const entryDetailSchema = entrySchema;
+export const provenanceSchema = resolutionSchema.extend({ sourceEntry: occurrenceSchema.omit({ resolution: true }).extend({ document: z.object({ id, originalFilename: z.string(), sha256: z.string(), source: sourceSchema }) }) });
 export const batchDetailSchema = z.object({ batch: batchSchema.extend({ document: z.object({ source: sourceSchema, originalFilename: z.string() }) }), rows: z.array(z.object({ sourceEntryId: id, validationState: z.enum(['REVIEW_REQUIRED', 'VALIDATED', 'REJECTED']), rejectionReason: z.string().nullable(), sourceEntry: occurrenceSchema })), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().positive(), reconciliation: z.object({ detected: z.number(), stored: z.number(), validated: z.number(), unresolved: z.number(), rejected: z.number() }) });
 export const collectionSchema = z.object({ id, name: z.string(), type: z.string(), ownerReference: z.string() });
 export const versionSchema = z.object({ id, collectionId: id, version: z.number().int().positive(), status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']), members: z.array(z.object({ id, senseId: id, lexicalEntryId: id, position: z.number().int(), sense: senseSchema.optional(), entry: z.object({ canonicalForm: z.string() }).optional(), assignments: z.array(z.object({ id, programId: id, inclusionReason: z.string(), learningGoal: z.string() })).optional() })), bindings: z.array(z.object({ id, programId: id.nullable(), pathId: id.nullable(), levelId: id.nullable(), missionId: id.nullable(), lessonVersionId: id.nullable(), wordBankVersionId: id.nullable() })).optional() });
+export const versionSummarySchema = versionSchema.omit({ members: true, bindings: true }).extend({ _count: z.object({ members: z.number().int().nonnegative(), bindings: z.number().int().nonnegative() }) });
+export const memberSchema = versionSchema.shape.members.element.omit({ assignments: true });
+export const assignmentSchema = z.object({ id, memberId: id, programId: id, inclusionReason: z.string(), learningGoal: z.string() });
+export const bindingSchema = versionSchema.shape.bindings.unwrap().element;
 export const optionsSchema = z.object({ programs: z.array(z.object({ id, name: z.string() })), topics: z.array(z.object({ id, name: z.string() })), page: z.number().int().positive(), limit: z.number().int().positive() });
-export function paginated<T extends z.ZodType>(item: T) { return z.object({ items: z.array(item), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().positive() }); }
+export function paginated<T extends z.ZodType>(item: T) { return z.object({ items: z.array(item).max(100), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().positive().max(100) }); }
 export type VocabularySource = z.infer<typeof sourceSchema>;
 export type VocabularyEntry = z.infer<typeof entrySchema>;
 export type VocabularyEntryDetail = z.infer<typeof entryDetailSchema>;
 export type VocabularyBatch = z.infer<typeof batchSchema>;
 export type VocabularyBatchDetail = z.infer<typeof batchDetailSchema>;
 export type VocabularyVersion = z.infer<typeof versionSchema>;
+export type VocabularyVersionSummary = z.infer<typeof versionSummarySchema>;
+export type VocabularyMember = z.infer<typeof memberSchema>;

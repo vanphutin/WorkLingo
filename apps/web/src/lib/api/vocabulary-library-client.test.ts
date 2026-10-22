@@ -12,6 +12,13 @@ const batch = { id: batchId, documentId, parserVersion: 'fixture-v1', status: 'R
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
 afterEach(() => vi.unstubAllGlobals());
 describe('vocabulary library client', () => {
+  it('allows a precisely located unknown POS exception to reach human review but blocks structural exceptions', () => {
+    const input = manifest();
+    const raw = { ...input, inventory: { pages: [{ ...input.inventory.pages[0], exceptions: [{ code: 'UNKNOWN_POS', message: 'Unknown POS', location: input.rows[0]!.locations[0] }] }] }, rows: [{ ...input.rows[0], normalizedPos: 'UNKNOWN', warnings: ['UNKNOWN_POS'], extractionConfidence: 0.5 }] };
+    expect(dryRunManifest(raw, source)).toMatchObject({ rowCount: 1, reviewRequired: 1 });
+    expect(() => dryRunManifest({ ...raw, inventory: { pages: [{ ...raw.inventory.pages[0], exceptions: [{ ...raw.inventory.pages[0]!.exceptions[0], code: 'UNRESOLVED_FRAGMENT' }] }] } }, source)).toThrow('VOCABULARY_INCOMPLETE');
+    expect(() => dryRunManifest({ ...raw, inventory: { pages: [{ ...raw.inventory.pages[0], exceptions: [{ code: 'UNKNOWN_POS', message: 'Missing location' }] }] } }, source)).toThrow('VOCABULARY_INCOMPLETE');
+  });
   it('sends bounded encoded filters and authenticates requests', async () => {
     const fetcher = vi.fn().mockResolvedValue(json({ items: [], total: 0, page: 2, limit: 25 })); vi.stubGlobal('fetch', fetcher);
     await new VocabularyLibraryClient().entries({ page: 2, limit: 25, search: 'take & give', cefr: 'B1', pos: 'VERB', topicId: sourceId, programId: documentId, sourceId, reviewStatus: 'REVIEWED' });

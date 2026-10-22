@@ -40,6 +40,14 @@ function EntryDetail({ id, close }: { id: string; close: () => void }) {
   return <section className="vocab-surface" aria-label={t('details')}><div className="admin-context-section"><h2>{t('details')}</h2><button type="button" onClick={close}>{t('close')}</button></div><LoadFeedback state={state} />{state.data ? <>
     <h3 lang={state.data.language}>{state.data.canonicalForm}</h3><h4>{t('senses')}</h4><ol>{state.data.senses.map(sense => <li key={sense.id}><p lang={sense.definitionLanguage}>{sense.definition ?? t('definitionMissing')}</p>{sense.translation ? <p>{sense.translation}</p> : null}<small>{t('rightsBasis')}: {sense.rightsBasis}</small><div><code>{sense.id}</code></div></li>)}</ol>
     <h4>{t('pronunciation')}</h4>{state.data.pronunciations.map(value => <p key={value.id}><span>{value.ipa}</span> <span>{value.dialect}</span> <small>{t('rightsBasis')}: {value.rightsBasis}</small></p>)}
-    <h4>{t('provenance')}</h4>{state.data.resolutions.map(value => <article className="vocab-provenance" key={value.sourceEntry.id}><strong>{value.sourceEntry.document.source.title}</strong><p>{value.sourceEntry.document.originalFilename}</p><p>{value.sourceEntry.originalTopic} · {t('pageNumber', { page: value.sourceEntry.pageIndex + 1 })}</p><p>{t('raw')}: <span lang="en">{value.sourceEntry.rawWord}</span></p><code>{value.sourceEntry.document.sha256}</code><p><code>{value.sourceEntry.sourceEntryKey}</code></p>{value.sourceEntry.locations.map((location, index) => <code key={index}>{location.pageIndex + 1}: [{location.bbox.join(', ')}] </code>)}<p>{t('rightsBasis')}: {value.sourceEntry.document.source.permissionReference}</p></article>)}
+    <EntryProvenance id={id} />
+  </> : null}</section>;
+}
+function EntryProvenance({ id }: { id: string }) {
+  const t = useVocabularyT(); const [page, setPage] = useState(1);
+  const state = useLoad(useCallback(() => api.provenance(id, { page }), [id, page]));
+  return <section aria-label={t('provenance')}><h4>{t('provenance')}</h4><LoadFeedback state={state} />{state.data ? <>
+    {state.data.items.map(value => <article className="vocab-provenance" key={value.sourceEntry.id}><strong>{value.sourceEntry.document.source.title}</strong><p>{value.sourceEntry.document.originalFilename}</p><p>{value.sourceEntry.originalTopic} · {t('pageNumber', { page: value.sourceEntry.pageIndex + 1 })}</p><p>{t('raw')}: <span lang="en">{value.sourceEntry.rawWord}</span></p><code>{value.sourceEntry.document.sha256}</code><p><code>{value.sourceEntry.sourceEntryKey}</code></p>{value.sourceEntry.locations.map((location, index) => <code key={index}>{location.pageIndex + 1}: [{location.bbox.join(', ')}] </code>)}<p>{t('rightsBasis')}: {value.sourceEntry.document.source.permissionReference}</p></article>)}
+    <Pager page={page} total={state.data.total} limit={state.data.limit} change={setPage} />
   </> : null}</section>;
 }

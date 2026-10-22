@@ -2,7 +2,8 @@ import { z } from 'zod';
 import { vocabularyQuerySchema, vocabularySourceInputSchema, vocabularyRightsInputSchema, vocabularyManifestSchema, vocabularyDocumentInputSchema, vocabularyBatchInputSchema, vocabularyStageSchema, vocabularyReviewSchema, vocabularyPublishSchema, vocabularyRollbackSchema, vocabularyCollectionInputSchema, vocabularyCollectionMembersSchema, vocabularyProgramInputSchema, vocabularyBindingInputSchema } from '@worklingo/contracts';
 import { ieltsRequest } from './ielts-request';
 import { ApiError } from './api-client';
-import { sourceSchema, entrySchema, entryDetailSchema, batchSchema, batchListSchema, batchDetailSchema, collectionSchema, versionSchema, paginated, optionsSchema } from '../../features/admin-vocabulary/response-schemas';
+import { vocabularyExceptionRowResolver } from '@worklingo/contracts';
+import { sourceSchema, entrySchema, entryDetailSchema, provenanceSchema, batchSchema, batchListSchema, batchDetailSchema, collectionSchema, versionSchema, versionSummarySchema, memberSchema, assignmentSchema, bindingSchema, paginated, optionsSchema } from '../../features/admin-vocabulary/response-schemas';
 
 const root = '/admin/vocabulary';
 const identity = z.object({ id: z.uuid() });
@@ -20,7 +21,8 @@ export function dryRunManifest(raw: unknown, rawSource: unknown) {
   const manifest = vocabularyManifestSchema.parse(raw);
   const pages = manifest.inventory.pages;
   const keys = pages.flatMap(page => page.detectedKeys);
-  if (!manifest.rows.length || pages.length !== manifest.pageCount || new Set(pages.map(page => page.pageIndex)).size !== pages.length || pages.some(page => page.pageIndex >= manifest.pageCount || page.exceptions.length) || new Set(keys).size !== keys.length || keys.length !== manifest.rows.length || new Set(manifest.rows.map(row => row.sourceEntryKey)).size !== keys.length) throw new Error('VOCABULARY_INCOMPLETE');
+  const exceptionRowKey = vocabularyExceptionRowResolver(manifest.rows);
+  if (!manifest.rows.length || pages.length !== manifest.pageCount || new Set(pages.map(page => page.pageIndex)).size !== pages.length || pages.some(page => page.pageIndex >= manifest.pageCount || page.exceptions.some(exception => !exceptionRowKey(exception))) || new Set(keys).size !== keys.length || keys.length !== manifest.rows.length || new Set(manifest.rows.map(row => row.sourceEntryKey)).size !== keys.length) throw new Error('VOCABULARY_INCOMPLETE');
   const expected = new Set(keys);
   for (const row of manifest.rows) {
     if (row.sourceEntryKey !== `${row.topicInstanceKey}:${row.rowOrdinal}` || !expected.has(row.sourceEntryKey) || !pages.find(page => page.pageIndex === row.pageIndex)?.detectedKeys.includes(row.sourceEntryKey) || row.cefrLevel !== manifest.cefrLevel || !row.locations.some(location => location.pageIndex === row.pageIndex) || row.locations.some(location => location.pageIndex >= manifest.pageCount)) throw new Error('VOCABULARY_INCOMPLETE');
@@ -32,21 +34,25 @@ export function dryRunManifest(raw: unknown, rawSource: unknown) {
 export class VocabularyLibraryClient {
   async entries(input: unknown = {}) { return ieltsRequest(`${root}/entries?${query(input)}`, paginated(entrySchema)); }
   entry(id: string) { return ieltsRequest(`${root}/entries/${pathId(id)}`, entryDetailSchema); }
+  async provenance(id: string, input: unknown = {}) { return ieltsRequest(`${root}/entries/${pathId(id)}/provenance?${query(input)}`, paginated(provenanceSchema)); }
   sources(input: unknown = {}) { return ieltsRequest(`${root}/sources?${query(input)}`, paginated(sourceSchema)); }
   batches(input: unknown = {}) { return ieltsRequest(`${root}/batches?${query(input)}`, paginated(batchListSchema)); }
   batch(id: string, input: unknown = {}) { return ieltsRequest(`${root}/batches/${pathId(id)}?${query(input)}`, batchDetailSchema); }
   collections(input: unknown = {}) { return ieltsRequest(`${root}/collections?${query(input)}`, paginated(collectionSchema)); }
-  versions(id: string, input: unknown = {}) { return ieltsRequest(`${root}/collections/${pathId(id)}/versions?${query(input)}`, paginated(versionSchema)); }
+  versions(id: string, input: unknown = {}) { return ieltsRequest(`${root}/collections/${pathId(id)}/versions?${query(input)}`, paginated(versionSummarySchema)); }
+  async members(id: string, input: unknown = {}) { return ieltsRequest(`${root}/versions/${pathId(id)}/members?${query(input)}`, paginated(memberSchema)); }
+  async assignments(id: string, input: unknown = {}) { return ieltsRequest(`${root}/versions/${pathId(id)}/assignments?${query(input)}`, paginated(assignmentSchema)); }
+  async bindings(id: string, input: unknown = {}) { return ieltsRequest(`${root}/versions/${pathId(id)}/bindings?${query(input)}`, paginated(bindingSchema)); }
   options(input: unknown = {}) { return ieltsRequest(`${root}/options?${query(input)}`, optionsSchema); }
   private post<T>(path: string, schema: z.ZodType<T>, body: unknown) { return ieltsRequest(`${root}${path}`, schema, { method: 'POST', body: JSON.stringify(body) }); }
   registerSource(input: unknown) { return this.post('/sources', sourceSchema, vocabularySourceInputSchema.parse(input)); }
   rights(id: string, input: unknown) { return ieltsRequest(`${root}/sources/${pathId(id)}/rights`, sourceSchema, { method: 'PATCH', body: JSON.stringify(vocabularyRightsInputSchema.parse(input)) }); }
   async review(id: string, input: unknown) { return this.post(`/batches/${pathId(id)}/review`, batchSchema, vocabularyReviewSchema.parse(input)); }
-  publishBatch(id: string, input: unknown) { return this.post(`/batches/${pathId(id)}/publish`, versionSchema, vocabularyPublishSchema.parse(input)); }
+  publishBatch(id: string, input: unknown) { return this.post(`/batches/${pathId(id)}/publish`, versionSummarySchema, vocabularyPublishSchema.parse(input)); }
   rollback(id: string, input: unknown) { return this.post(`/batches/${pathId(id)}/rollback`, batchSchema, vocabularyRollbackSchema.parse(input)); }
   createCollection(input: unknown) { return this.post('/collections', collectionSchema, vocabularyCollectionInputSchema.parse(input)); }
   createVersion(id: string, input: unknown) { return this.post(`/collections/${pathId(id)}/versions`, versionSchema, vocabularyCollectionMembersSchema.parse(input)); }
-  publishVersion(id: string) { return this.post(`/versions/${pathId(id)}/publish`, versionSchema, {}); }
+  publishVersion(id: string) { return this.post(`/versions/${pathId(id)}/publish`, versionSummarySchema, {}); }
   assign(input: unknown) { return this.post('/assignments', identity, vocabularyProgramInputSchema.parse(input)); }
   bind(id: string, input: unknown) { return this.post(`/versions/${pathId(id)}/bindings`, identity, vocabularyBindingInputSchema.parse(input)); }
   async importManifest(rawSource: unknown, filename: string, raw: unknown, onProgress?: (batch: z.infer<typeof batchSchema>) => void) {

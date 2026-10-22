@@ -27,13 +27,16 @@ function network(custom?: Handler) {
     const list = (items: unknown[], total = items.length) => json({ items, total, page, limit: 25 });
     if (url.pathname.endsWith('/options')) return json({ programs: [{ id: sourceId, name: 'Existing program' }], topics: [{ id: entryId, name: 'Existing topic' }], page: 1, limit: 25 });
     if (url.pathname.endsWith('/entries')) return list([{ ...entry, canonicalForm: page === 1 ? 'fixture word' : 'second page word' }], 26);
-    if (url.pathname.endsWith(`/entries/${entryId}`)) return json({ ...entry, resolutions: [{ lexicalEntryId: entryId, senseId, decision: 'NEW_ENTRY', sourceEntry: { ...row, document: { id: sourceId, originalFilename: 'fixture.json', sha256: 'a'.repeat(64), source: approved } } }] });
+    if (url.pathname.endsWith(`/entries/${entryId}`)) return json(entry);
+    if (url.pathname.endsWith(`/entries/${entryId}/provenance`)) return list([{ lexicalEntryId: entryId, senseId, decision: 'NEW_ENTRY', sourceEntry: { ...row, document: { id: sourceId, originalFilename: 'fixture.json', sha256: 'a'.repeat(64), source: approved } } }]);
     if (url.pathname.endsWith('/sources')) return list([source]);
     if (url.pathname.endsWith('/batches')) return list([batch]);
     if (url.pathname.endsWith(`/batches/${batchId}`)) return json({ batch, rows: [{ sourceEntryId: sourceId, validationState: 'REVIEW_REQUIRED', rejectionReason: null, sourceEntry: { ...row, parsedWord: page === 1 ? 'fixture word' : 'next review row' } }], total: 26, page, limit: 25, reconciliation: { detected: 26, stored: 26, validated: 0, unresolved: 26, rejected: 0 } });
     if (url.pathname.endsWith('/review')) return json({ ...batch, revision: 2 });
     if (url.pathname.endsWith('/collections')) return list([collection]);
-    if (url.pathname.endsWith('/versions')) return list([version]);
+    if (url.pathname.endsWith('/versions')) return list([{ id: version.id, collectionId: version.collectionId, version: version.version, status: version.status, _count: { members: 1, bindings: 0 } }]);
+    if (url.pathname.endsWith(`/versions/${batchId}/members`)) return list(version.members);
+    if (init.method !== 'POST' && (url.pathname.endsWith(`/versions/${batchId}/assignments`) || url.pathname.endsWith(`/versions/${batchId}/bindings`))) return list([]);
     if (url.pathname.endsWith('/assignments') || url.pathname.endsWith('/bindings')) return json({ id: sourceId });
     return json({ code: 'NOT_FOUND' }, 404);
   }));
@@ -71,7 +74,7 @@ describe('vocabulary workspace', () => {
     network(); render(<VocabularyWorkspace />);
     fireEvent.click(await screen.findByRole('button', { name: 'fixture word' }));
     const detail = await screen.findByRole('region', { name: 'Entry details' });
-    expect(await within(detail).findByText('/test/')).toBeInTheDocument(); expect(within(detail).getByText('A synthetic sense')).toBeInTheDocument(); expect(within(detail).getByText('fixture.json')).toBeInTheDocument(); expect(detail).toHaveTextContent('Fixture topic');
+    expect(await within(detail).findByText('/test/')).toBeInTheDocument(); expect(within(detail).getByText('A synthetic sense')).toBeInTheDocument(); expect(await within(detail).findByText('fixture.json')).toBeInTheDocument(); expect(detail).toHaveTextContent('Fixture topic');
   });
   it('recovers a failed list through retry', async () => {
     let fail = true; network(url => url.pathname.endsWith('/entries') && fail ? json({ code: 'NETWORK_ERROR' }, 503) : undefined); render(<VocabularyWorkspace />);
@@ -125,14 +128,14 @@ describe('vocabulary workspace', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'Fixture collection' }));
     const versions = await screen.findByRole('region', { name: 'Collection versions' });
     fireEvent.click(within(versions).getByRole('button', { name: 'Version 1' }));
-    fireEvent.change(screen.getByLabelText('Member'), { target: { value: sourceId } });
+    fireEvent.change(await screen.findByRole('combobox', { name: 'Member' }), { target: { value: sourceId } });
     await screen.findByRole('option', { name: 'Existing program' });
     fireEvent.change(screen.getByLabelText('Assignment program'), { target: { value: sourceId } });
     fireEvent.change(screen.getByLabelText('Inclusion reason'), { target: { value: 'Needed for workplace introductions' } });
     fireEvent.click(screen.getByRole('button', { name: 'Save program assignment' }));
-    await waitFor(() => expect(requests.find(item => item.url.pathname.endsWith('/assignments'))?.body).toMatchObject({ memberId: sourceId, programId: sourceId, inclusionReason: 'Needed for workplace introductions' }));
+    await waitFor(() => expect(requests.find(item => item.method === 'POST' && item.url.pathname.endsWith('/assignments'))?.body).toMatchObject({ memberId: sourceId, programId: sourceId, inclusionReason: 'Needed for workplace introductions' }));
     fireEvent.change(await screen.findByLabelText('Curriculum target ID'), { target: { value: sourceId } }); fireEvent.click(screen.getByRole('button', { name: 'Bind published version' }));
-    await waitFor(() => expect(requests.find(item => item.url.pathname.endsWith('/bindings'))?.body).toEqual({ programId: sourceId }));
+    await waitFor(() => expect(requests.find(item => item.method === 'POST' && item.url.pathname.endsWith('/bindings'))?.body).toEqual({ programId: sourceId }));
   });
   it('requires dry-run again after edits and shows revoked rights without a false import success', async () => {
     const input = { documentSha256: 'a'.repeat(64), pageCount: 1, cefrLevel: 'A1', parserVersion: 'v1', inventory: { pages: [{ pageIndex: 0, detectedKeys: ['t1:1'], exceptions: [] }] }, rows: [{ sourceEntryKey: 't1:1', topicInstanceKey: 't1', originalTopic: 'Fixture topic', topicSequence: 1, rowOrdinal: 1, pageIndex: 0, locations: [{ pageIndex: 0, bbox: [0, 0, 10, 10] }], rawWord: 'fixture word', parsedWord: 'fixture word', rawPos: 'n.', normalizedPos: 'NOUN', cefrLevel: 'A1' }] };
