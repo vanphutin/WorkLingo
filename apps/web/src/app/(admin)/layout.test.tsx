@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type * as ApiClientModule from '../../lib/api/api-client';
@@ -50,7 +50,7 @@ describe('AdminLayout', () => {
       '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum', '/admin/audit',
       '/admin/operations', '/admin/analytics', '/admin/settings/audio', '/admin/settings/ai', '/dashboard',
     ]));
-    expect(destinations).toHaveLength(26);
+    expect(destinations).toHaveLength(27);
     expect(screen.getByRole('link', { name: 'Skip to administrative content' })).toHaveAttribute('href', '#admin-main-content');
     expect(replace).not.toHaveBeenCalled();
   });
@@ -94,34 +94,14 @@ describe('AdminLayout', () => {
     expect(await screen.findByText('Admin Content')).toBeInTheDocument();
     expect(screen.getByText(/Admin User/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '/admin');
-    expect(screen.getByRole('navigation', { name: 'Admin workspace' })).toHaveTextContent('Content & curriculum');
-    expect(screen.getByRole('navigation', { name: 'Admin workspace' })).toHaveTextContent('Workspace operations');
-    expect(screen.queryByRole('link', { name: 'Foundation' })).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Intermediate' })).toHaveAttribute('href', '/admin/programs/intermediate');
+    const navigation = screen.getByRole('navigation', { name: 'Admin workspace' });
+    expect(within(navigation).getByRole('button', { name: 'Training programs' })).toHaveAttribute('aria-expanded', 'false');
+    expect(within(navigation).getByRole('button', { name: 'Shared management' })).toHaveAttribute('aria-expanded', 'true');
     expect(screen.getByRole('navigation', { name: 'Breadcrumbs' })).toHaveTextContent('Content');
-    expect(screen.getByRole('link', { name: 'Content' })).toHaveAttribute(
-      'href',
-      '/admin/content',
-    );
-    expect(screen.getByRole('link', { name: 'Content' })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('link', { name: 'Curriculum' })).toHaveAttribute(
-      'href',
-      '/admin/curriculum',
-    );
-    expect(screen.getByRole('link', { name: 'Audit log' })).toHaveAttribute(
-      'href',
-      '/admin/audit',
-    );
-    expect(screen.getByRole('link', { name: 'Operations' })).toHaveAttribute(
-      'href',
-      '/admin/operations',
-    );
-    expect(screen.getByRole('link', { name: 'Analytics' })).toHaveAttribute(
-      'href',
-      '/admin/analytics',
-    );
-    expect(screen.getByRole('link', { name: 'Audio settings' }))
-      .toHaveAttribute('href', '/admin/settings/audio');
+    expect(within(navigation).getByRole('link', { name: 'Content' })).toHaveAttribute('aria-current', 'page');
+    for (const href of ['/admin/programs/intermediate', '/admin/curriculum', '/admin/audit', '/admin/operations', '/admin/analytics', '/admin/settings/audio']) {
+      expect(navigation.querySelector(`a[href="${href}"]`)).not.toBeNull();
+    }
     expect(replace).not.toHaveBeenCalled();
   });
 
