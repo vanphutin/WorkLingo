@@ -75,3 +75,10 @@
   .intermediate-option button { align-self: start; }
   .intermediate-actions .intermediate-save { width: 100%; }
 }
+
+.intermediate-review-actions { margin-top: 1rem; min-width: 0; }
+.intermediate-review-feedback { padding: .75rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--surface-soft); color: var(--text-primary); overflow-wrap: anywhere; }
+.intermediate-review-feedback p { margin: .35rem 0 0; font-size: .875rem; }
+.intermediate-review-feedback[data-approved='true'] { border-color: var(--success); background: var(--success-soft); }
+.intermediate-review-actions .intermediate-actions { margin-top: .75rem; }
+.intermediate-review-next { display: inline-flex; align-items: center; min-height: 44px; margin-top: .5rem; font-weight: 600; }
