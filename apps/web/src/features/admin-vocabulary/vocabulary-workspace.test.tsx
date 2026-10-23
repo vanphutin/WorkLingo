@@ -44,6 +44,51 @@ function network(custom?: Handler) {
 }
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe('vocabulary workspace', () => {
+  it.each([
+    { locale: 'en' as const, label: 'Source lines 101–104', provenance: 'Source provenance' },
+    { locale: 'vi' as const, label: 'Dòng nguồn 101–104', provenance: 'Thông tin nguồn gốc' },
+  ])('shows truthful TXT entry provenance and attribution in $locale', async ({ locale, label, provenance }) => {
+    network(url => url.pathname.endsWith(`/entries/${entryId}/provenance`) ? json({ items: [{ lexicalEntryId: entryId, senseId, decision: 'NEW_ENTRY', sourceEntry: { ...row, pageIndex: 7, sourceLineStart: 101, sourceLineEnd: 104, locations: [{ pageIndex: 7, bbox: [0, 101, 1, 105] }], document: { id: sourceId, sourceFormat: 'TXT', originalFilename: 'fixture.txt', sha256: 'a'.repeat(64), source: { ...approved, attributionRequirements: 'Vocabulary content from fixture publisher' } } } }], total: 1, page: 1, limit: 25 }) : undefined);
+    render(<LocaleProvider initialLocale={locale}><VocabularyWorkspace /></LocaleProvider>);
+    fireEvent.click(await screen.findByRole('button', { name: 'fixture word' }));
+    const region = await screen.findByRole('region', { name: provenance });
+    expect(await within(region).findByText(label, { exact: false })).toBeInTheDocument();
+    expect(region).toHaveTextContent('Vocabulary content from fixture publisher');
+    expect(region).not.toHaveTextContent(/Source page 8|Trang nguồn 8|8: \[/);
+  });
+
+  it.each([
+    { locale: 'en' as const, label: 'Source lines 101–104', batches: 'Import batches', review: 'Batch review' },
+    { locale: 'vi' as const, label: 'Dòng nguồn 101–104', batches: 'Đợt nhập', review: 'Duyệt đợt nhập' },
+  ])('shows TXT batch line spans in $locale without labeling a logical topic as a PDF page', async ({ locale, label, batches, review }) => {
+    network(url => url.pathname.endsWith(`/batches/${batchId}`) ? json({ batch, rows: [{ sourceEntryId: sourceId, validationState: 'REVIEW_REQUIRED', rejectionReason: null, sourceEntry: { ...row, pageIndex: 7, sourceLineStart: 101, sourceLineEnd: 104, locations: [{ pageIndex: 7, bbox: [0, 101, 1, 105] }] } }], total: 1, page: 1, limit: 25, reconciliation: { detected: 1, stored: 1, validated: 0, unresolved: 1, rejected: 0 } }) : undefined);
+    render(<LocaleProvider initialLocale={locale}><VocabularyWorkspace /></LocaleProvider>);
+    fireEvent.click(screen.getByRole('button', { name: batches }));
+    fireEvent.click(await screen.findByRole('button', { name: 'fixture.json' }));
+    const region = await screen.findByRole('region', { name: review });
+    expect(await within(region).findByText(label)).toBeInTheDocument();
+    expect(region).not.toHaveTextContent(/Source page 8|Trang nguồn 8|8: \[/);
+  });
+
+  it('keeps PDF provenance readable when database TXT line fields are null', async () => {
+    const pdfRow = { ...row, sourceLineStart: null, sourceLineEnd: null };
+    network(url => {
+      if (url.pathname.endsWith(`/entries/${entryId}/provenance`)) return json({ items: [{ lexicalEntryId: entryId, senseId, decision: 'NEW_ENTRY', sourceEntry: { ...pdfRow, document: { id: sourceId, sourceFormat: 'PDF', originalFilename: 'fixture.pdf', sha256: 'a'.repeat(64), source: approved } } }], total: 1, page: 1, limit: 25 });
+      if (url.pathname.endsWith(`/batches/${batchId}`)) return json({ batch, rows: [{ sourceEntryId: sourceId, validationState: 'REVIEW_REQUIRED', rejectionReason: null, sourceEntry: pdfRow }], total: 1, page: 1, limit: 25, reconciliation: { detected: 1, stored: 1, validated: 0, unresolved: 1, rejected: 0 } });
+      return undefined;
+    });
+    render(<VocabularyWorkspace />);
+    fireEvent.click(await screen.findByRole('button', { name: 'fixture word' }));
+    const provenance = await screen.findByRole('region', { name: 'Source provenance' });
+    expect(await within(provenance).findByText(/Source page 1/)).toBeInTheDocument();
+    expect(provenance).toHaveTextContent('1: [0, 0, 10, 10]');
+    fireEvent.click(screen.getByRole('button', { name: 'Import batches' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'fixture.json' }));
+    const review = await screen.findByRole('region', { name: 'Batch review' });
+    expect(await within(review).findByText('Source page 1')).toBeInTheDocument();
+    expect(review).toHaveTextContent('1: [0, 0, 10, 10]');
+  });
+
   it('sends a source-hash-bound correction for one uncertain occurrence without changing raw provenance', async () => {
     const requests = network((url, init) => url.pathname.endsWith('/batches/'+batchId) && init.method !== 'POST' ? json({ batch, rows: [{ sourceEntryId: sourceId, validationState: 'REVIEW_REQUIRED', rejectionReason: null, sourceEntry: { ...row, sourceContentHash: 'b'.repeat(64), normalizedPos: 'UNKNOWN', warnings: ['Ambiguous extraction'] } }], total: 1, page: 1, limit: 25, reconciliation: { detected: 1, stored: 1, validated: 0, unresolved: 1, rejected: 0 } }) : undefined);
     render(<VocabularyWorkspace />); fireEvent.click(screen.getByRole('button', { name: 'Import batches' }));

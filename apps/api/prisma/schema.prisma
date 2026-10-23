@@ -1685,6 +1685,7 @@ model VocabularyDocument {
   sourceId         String                   @db.Uuid
   cefrLevel        String
   originalFilename String
+  sourceFormat     String                   @default("PDF")
   sourceUrl        String?
   sha256           String
   pageCount        Int
@@ -1732,6 +1733,8 @@ model VocabularySourceEntry {
   rowOrdinal           Int
   pageIndex            Int
   printedPageNumber    String?
+  sourceLineStart      Int?
+  sourceLineEnd        Int?
   locations            Json
   rawWord              String
   parsedWord           String

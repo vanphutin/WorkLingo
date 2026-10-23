@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { vocabularyInventorySchema, vocabularyQuerySchema, vocabularySourceInputSchema, vocabularyStageSchema } from './vocabulary-library.contracts.ts';
+import { vocabularyDocumentInputSchema, vocabularyInventorySchema, vocabularyQuerySchema, vocabularySourceInputSchema, vocabularyStageSchema, vocabularySourceRowSchema } from './vocabulary-library.contracts.ts';
 
 describe('Master vocabulary boundary contracts', () => {
+  it('retains TXT line provenance without confusing logical sections with PDF pages', () => {
+    const document = { sourceId: '00000000-0000-4000-8000-000000000001', cefrLevel: 'A1', originalFilename: 'fixture.txt', sha256: 'a'.repeat(64), pageCount: 1, sourceFormat: 'TXT' };
+    expect(vocabularyDocumentInputSchema.parse(document).sourceFormat).toBe('TXT');
+    const row = { sourceEntryKey: 'topic-1:1', topicInstanceKey: 'topic-1', originalTopic: 'Fixture', topicSequence: 1, rowOrdinal: 1, pageIndex: 0, locations: [{ pageIndex: 0, bbox: [0, 10, 1, 13] }], rawWord: 'fixture', parsedWord: 'fixture', rawPos: '(n.)', normalizedPos: 'NOUN', cefrLevel: 'A1', sourceLineStart: 10, sourceLineEnd: 12 };
+    expect(vocabularySourceRowSchema.parse(row)).toMatchObject({ sourceLineStart: 10, sourceLineEnd: 12 });
+    expect(vocabularySourceRowSchema.safeParse({ ...row, sourceLineEnd: 9 }).success).toBe(false);
+    expect(vocabularySourceRowSchema.safeParse({ ...row, sourceLineEnd: undefined }).success).toBe(false);
+    expect(vocabularySourceRowSchema.safeParse({ ...row, sourceLineStart: null, sourceLineEnd: null }).success).toBe(true);
+  });
   it('bounds pagination and rejects unknown query parameters', () => {
     expect(vocabularyQuerySchema.parse({ page: '2', limit: '25' })).toMatchObject({ page: 2, limit: 25 });
     expect(vocabularyQuerySchema.safeParse({ limit: '101' }).success).toBe(false);

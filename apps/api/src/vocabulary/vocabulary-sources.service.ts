@@ -30,7 +30,7 @@ export class VocabularySourcesService {
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`vocabulary-document:${input.sourceId}:${input.sha256}:${input.cefrLevel}`}))`;
       const existing = await tx.vocabularyDocument.findUnique({ where: { sourceId_sha256_cefrLevel: { sourceId: input.sourceId, sha256: input.sha256, cefrLevel: input.cefrLevel } } });
       if (existing) {
-        if (existing.pageCount !== input.pageCount || existing.originalFilename !== input.originalFilename || existing.edition !== input.edition || existing.sourceUrl !== (input.sourceUrl ?? null)) throw new ConflictException({ code: 'SOURCE_DOCUMENT_CONFLICT', message: 'The same document hash has different source metadata.' });
+        if (existing.pageCount !== input.pageCount || existing.originalFilename !== input.originalFilename || existing.sourceFormat !== input.sourceFormat || existing.edition !== input.edition || existing.sourceUrl !== (input.sourceUrl ?? null)) throw new ConflictException({ code: 'SOURCE_DOCUMENT_CONFLICT', message: 'The same document hash has different source metadata.' });
         return existing;
       }
       return tx.vocabularyDocument.create({ data: input as Prisma.VocabularyDocumentUncheckedCreateInput });

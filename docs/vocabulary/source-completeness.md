@@ -1,31 +1,33 @@
 # Source completeness
 
-No real LanGeek PDF was extracted or imported. Pages are reference values,
-not verified measurements and never vocabulary counts.
+The authorized TXT import finished in the isolated `worklingo_vocabulary_test`
+database on 2026-10-23. The latest instruction makes TXT the sole extraction
+source. No PDF was reopened for this TXT execution.
 
-| Level | Pages (reference) | Topics | Source rows | Validated | DB source rows | Unresolved | Status |
-| --- | ---: | --- | --- | --- | --- | --- | --- |
-| A1 | 31 | NOT RUN | NOT RUN | NOT RUN | 0 imported | NOT RUN | BLOCKED_BY_RIGHTS |
-| A2 | 74 | NOT RUN | NOT RUN | NOT RUN | 0 imported | NOT RUN | BLOCKED_BY_RIGHTS |
-| B1 | 85 | NOT RUN | NOT RUN | NOT RUN | 0 imported | NOT RUN | BLOCKED_BY_RIGHTS |
-| B2 | 102 | NOT RUN | NOT RUN | NOT RUN | 0 imported | NOT RUN | BLOCKED_BY_RIGHTS |
-| C1 | 113 | NOT RUN | NOT RUN | NOT RUN | 0 imported | NOT RUN | BLOCKED_BY_RIGHTS |
+| Level | TXT topics | TXT occurrences | DB occurrences | Missing | Source reviews pending |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| A1 | 32 | 608 | 608 | 0 | 0 |
+| A2 | 50 | 1,581 | 1,581 | 0 | 1 |
+| B1 | 58 | 1,850 | 1,850 | 0 | 0 |
+| B2 | 64 | 2,224 | 2,224 | 0 | 1 |
+| C1 | 67 | 2,481 | 2,481 | 0 | 0 |
+| Total | 271 | 8,744 | 8,744 | 0 | 2 |
 
-The invariant is detected source rows = validated + unresolved + explicitly
-rejected rows, with an independent inventory and a documented non-vocabulary
-reason for every rejection. Canonical deduplication never subtracts occurrences.
-Source keys include topic instance plus ordinal; page inventory must cover the
-whole document exactly once. Duplicate keys, extra/missing rows, page gaps,
-unknown layout, OCR-only pages and low-confidence parsing block completion.
+Independent TXT enumeration matched every source anchor and assigned all 23,408
+content lines exactly once. Raw-sidecar, field and ownership comparisons had
+zero mismatches. Direct SQL confirmed distinct occurrence IDs and source keys
+equal the counts above. Replaying every staging chunk created no occurrences.
 
-Validate/dry-run a local manifest without database writes:
+Status: **IMPORTED_REVIEW_REQUIRED**. Two unknown parts of speech and one
+malformed source IPA remain queued; no replacement information was fabricated.
+The IPA warning is an additional pronunciation review, not a missing occurrence.
 
-```powershell
-pnpm --filter @worklingo/api exec tsx src/vocabulary-operations/cli.ts validate path/to/manifest.json
-pnpm --filter @worklingo/api exec tsx src/vocabulary-operations/cli.ts dry-run path/to/manifest.json
-```
+All official totals are **EXPECTED_UNKNOWN**: TXT contains no published count
+statement. This establishes completeness against independently enumerated TXT,
+not **100% PDF VERIFIED**. TXT `pageIndex` and `pageCount` are logical topic
+sections; persisted source lines are not physical PDF page numbers/coordinates.
 
-Reports contain identifiers/counts and return exit 2 for incomplete data; exit 1
-means invocation/schema failure. They do not disclose source definitions.
-VALIDATED_NOT_REVIEWED means structural reconciliation only: it is not a rights
-approval, human sense review, database import or publication result.
+See [the execution report](authorized-txt-import-2026-10-22.md) for counts,
+hashes, review locations, authorization basis and verification scope, and
+[read-only SQL](verify-txt-import.sql) for DB checks. No production write,
+curriculum publication, program assignment, merge, push or deployment occurred.

@@ -1,9 +1,18 @@
 # Licensing and provenance
 
-The user confirmed no clear LanGeek reuse permission on 2026-10-22. Full extraction
-and ingestion are blocked; attribution or availability of a PDF is not accepted
-as authorization. Only metadata and independently authored synthetic fixtures are
-used for development.
+The initial implementation was blocked pending permission. Later on 2026-10-22,
+the user supplied and reaffirmed a received complimentary licensing email image
+for the five A1–C1 books, then supplied their own TXT transcription. The isolated
+TXT import records that user-attested evidence and exact scope; it does not claim
+independent mailbox authentication. The image, grant and extracted content stay
+outside Git. See authorized-txt-import-2026-10-22.md for the measured execution.
+
+The grant is scoped to those five books within WorkLingo: extraction, storage,
+adaptation, translation and commercial educational use; form, definitions and
+pronunciations. Separate redistribution of raw data/PDFs is not approved.
+Attribution: “Vocabulary content from LanGeek (https://langeek.co)”. The imported
+TXT source identities are bound to its SHA-256 and keep the evidence reference.
+Other sources remain subject to their own approval; free access is not approval.
 
 LanGeek's [copyright guidelines](https://help.langeek.co/legal/copyright-guidelines/)
 were inspected on 2026-10-22. The page restricts reproduction/modification/public
