@@ -16,6 +16,13 @@ export class CreateTopicSessionDto {
   @ApiPropertyOptional({ enum: supportedSessionDurations, description: 'Filter by the approved lesson duration; does not override it.' })
   @IsOptional() @IsIn(supportedSessionDurations) durationMinutes?: SessionDuration;
 }
+export class GenerateIntermediateTopicDto {
+  @ApiProperty({ format: 'uuid' }) @IsUUID() topicGroupId!: string;
+  @ApiProperty({ enum: supportedSessionDurations }) @IsIn(supportedSessionDurations) durationMinutes!: SessionDuration;
+  @ApiPropertyOptional({ enum: ['easy', 'medium', 'hard'], default: 'medium' }) @IsOptional() @IsIn(['easy', 'medium', 'hard']) difficulty: 'easy' | 'medium' | 'hard' = 'medium';
+  @ApiProperty({ enum: ['discovery', 'openai'] }) @IsIn(['discovery', 'openai']) provider!: 'discovery' | 'openai';
+  @ApiPropertyOptional({ enum: ['B1', 'B2'], default: 'B1' }) @IsOptional() @IsIn(['B1', 'B2']) level: 'B1' | 'B2' = 'B1';
+}
 export class RepairTopicJsonDto {
   @ApiProperty({ maxLength: 200000 }) @IsString() @IsNotEmpty() @MaxLength(200000) source!: string;
 }

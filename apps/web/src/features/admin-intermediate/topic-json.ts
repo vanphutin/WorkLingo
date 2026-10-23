@@ -1,8 +1,8 @@
-import { intermediateTopicJsonSchema, type IntermediateTopicJson } from '@worklingo/contracts';
+import { intermediateTopicJsonSchema, sessionDurationSchema, type IntermediateTopicJson } from '@worklingo/contracts';
 import type { IntermediateLessonDraft } from './lesson-model';
 type TopicJson = IntermediateTopicJson;
 function toDraft(value: TopicJson): IntermediateLessonDraft {
-  return { ...value, dialogue: value.readingText, durationMinutes: 60 };
+  return { ...value, dialogue: value.readingText, durationMinutes: value.durationMinutes ?? 60 };
 }
 export const topicJsonSchema = intermediateTopicJsonSchema;
 export function topicJsonToDraft(value: unknown): IntermediateLessonDraft {
@@ -11,6 +11,8 @@ export function topicJsonToDraft(value: unknown): IntermediateLessonDraft {
 export function topicDraftToJson(draft: IntermediateLessonDraft): TopicJson {
   return {
     format: 'WorkLingoIntermediateTopic/1.0', slug: draft.slug, title: draft.title, level: draft.level,
+    ...(draft.vocabulary ? { vocabulary: draft.vocabulary } : {}),
+    ...(draft.durationMinutes !== 60 ? { durationMinutes: sessionDurationSchema.parse(draft.durationMinutes) } : {}),
     objective: draft.objective, readingText: draft.readingText, speaker: draft.speaker, activatePrompt: draft.activatePrompt,
     ...(draft.spokenText !== undefined ? { spokenText: draft.spokenText } : {}),
     ...(draft.speechReview !== undefined ? { speechReview: draft.speechReview } : {}),

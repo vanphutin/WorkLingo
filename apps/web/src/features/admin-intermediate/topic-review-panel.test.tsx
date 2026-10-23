@@ -12,6 +12,10 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 beforeEach(() => { vi.spyOn(intermediateTopicClient, 'review').mockResolvedValue(empty); });
 
 describe('Human approval of topic time', () => {
+  it('preserves a generated lesson duration instead of resetting it to 60', async () => {
+    render(<TopicReviewPanel record={record} dirty={false} initialDurationMinutes={90} />);
+    expect(await screen.findByLabelText('Approved session duration')).toHaveValue('90');
+  });
   it('loads without asking AI or approving, and dirty source disables both actions', async () => {
     const propose = vi.spyOn(intermediateTopicClient, 'propose'); const approve = vi.spyOn(intermediateTopicClient, 'approve');
     render(<TopicReviewPanel record={record} dirty />);

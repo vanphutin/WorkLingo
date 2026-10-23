@@ -9,16 +9,16 @@ import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client
 import { AdminLink, useAdminNavigationGuard } from '../admin-dashboard/admin-navigation-guard';
 
 type RecordInfo = { id: string; sourceHash: string; draftRevision: number; status: string };
-type Props = { record: RecordInfo; dirty: boolean; disabled?: boolean; publicationHref?: string; onApprovalChange?: ((approved: boolean) => void) | undefined; onDirtyChange?: ((dirty: boolean) => void) | undefined };
+type Props = { record: RecordInfo; dirty: boolean; initialDurationMinutes?: SessionDuration | undefined; disabled?: boolean; publicationHref?: string; onApprovalChange?: ((approved: boolean) => void) | undefined; onDirtyChange?: ((dirty: boolean) => void) | undefined };
 export function TopicReviewPanel(props: Props) {
   const { record } = props;
   return <ReviewSession key={`${record.id}:${record.draftRevision}:${record.sourceHash}`} {...props} />;
 }
-function ReviewSession({ record, dirty, disabled = false, publicationHref, onApprovalChange, onDirtyChange }: Props) {
+function ReviewSession({ record, dirty, disabled = false, initialDurationMinutes = 60, publicationHref, onApprovalChange, onDirtyChange }: Props) {
   const t = useT('intermediateTopics', intermediateTopicsMessages);
   const [review, setReview] = useState<TopicReview | null>(null);
-  const [plan, setPlan] = useState<TopicPlan>(() => defaultTopicPlan(60));
-  const [baseline, setBaseline] = useState(() => JSON.stringify(defaultTopicPlan(60)));
+  const [plan, setPlan] = useState<TopicPlan>(() => defaultTopicPlan(initialDurationMinutes));
+  const [baseline, setBaseline] = useState(() => JSON.stringify(defaultTopicPlan(initialDurationMinutes)));
   const [error, setError] = useState<'loadError' | 'requestError' | 'conflict' | null>(null);
   const [busy, setBusy] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -50,7 +50,7 @@ function ReviewSession({ record, dirty, disabled = false, publicationHref, onApp
     return () => { cancelled = true; live.current = false; };
   }, [record.id, attempt]);
   function accept(value: TopicReview) {
-    const next = value.status === 'stale' ? defaultTopicPlan(60) : value.approval?.plan ?? value.proposal?.plan ?? defaultTopicPlan(60);
+    const next = value.status === 'stale' ? defaultTopicPlan(initialDurationMinutes) : value.approval?.plan ?? value.proposal?.plan ?? defaultTopicPlan(initialDurationMinutes);
     setReview(value); setPlan(next); setBaseline(JSON.stringify(next)); setError(null);
   }
   async function act(action: 'propose' | 'approve') {

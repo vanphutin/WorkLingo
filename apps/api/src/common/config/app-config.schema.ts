@@ -13,6 +13,7 @@ export interface AppConfig {
       readonly discovery: { readonly apiKey?: string; readonly baseUrl: string; readonly model: string };
       readonly openai: { readonly apiKey?: string; readonly baseUrl?: string; readonly model?: string };
     };
+    readonly topicGenerationMaxOutputTokens?: number;
     readonly draftRetentionDays: number;
     readonly fakeEvaluationRateLimitFailures: number;
     readonly languageEvaluation:
@@ -77,6 +78,7 @@ const environmentSchema = z.object({
   AI_DEFAULT_PROVIDER: z.enum(['discovery', 'openai']).optional(),
   AI_FALLBACK_ENABLED: z.enum(['true', 'false']).default('true'),
   AI_MAX_OUTPUT_TOKENS: z.coerce.number().int().min(256).max(4096).default(2048),
+  AI_LESSON_MAX_OUTPUT_TOKENS: z.coerce.number().int().min(4096).max(32768).default(12000),
   DISCOVERY_API_KEY: optionalNonBlankString,
   DISCOVERY_BASE_URL: z.preprocess(blankAsUndefined, z.url().default('https://discovery-api.intern-ai.org.cn/v1')),
   DISCOVERY_MODEL: z.preprocess(blankAsUndefined, z.string().min(1).default('qwen3.8-27b')),
@@ -239,6 +241,7 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
           ...(result.data.OPENAI_MODEL ? { model: result.data.OPENAI_MODEL } : {}),
         },
       },
+      topicGenerationMaxOutputTokens: result.data.AI_LESSON_MAX_OUTPUT_TOKENS,
       draftRetentionDays: result.data.WRITING_DRAFT_RETENTION_DAYS,
       fakeEvaluationRateLimitFailures: result.data.WORKLINGO_TEST_FAKE_EVALUATION_FAILURES,
       languageEvaluation,
