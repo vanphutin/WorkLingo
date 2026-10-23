@@ -6,6 +6,7 @@ import { aiSettingsClient } from '../../lib/api/ai-settings-client';
 import { intermediateTopicClient } from '../../lib/api/intermediate-topic-client';
 import { createTopicJsonTemplate } from './topic-json';
 import { TopicAiGenerator } from './topic-ai-generator';
+import { ApiError } from '../../lib/api/api-client';
 const id = '00000000-0000-4000-8000-000000000001';
 const settings: AiSettings = { accountId: id, canManageSystem: false, preferredProvider: 'discovery', effectiveProvider: 'discovery', fallbackEnabled: true, effectiveFallbackEnabled: true, systemFallbackEnabled: true, simulation: false, routingEnabled: true, maxOutputTokens: 2048,
   providers: [{ id: 'discovery', available: true, model: 'd' }, { id: 'openai', available: true, model: 'o' }] };
@@ -66,6 +67,15 @@ describe('Admin generates a topic then explicitly applies it to the editor', () 
     fireEvent.click(screen.getByRole('button', { name: 'Generate lesson' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Your draft is unchanged');
     expect(apply).not.toHaveBeenCalled();
+  });
+  it.each([
+    ['TOPIC_GENERATION_TIMEOUT', /timed out/i],
+    ['TOPIC_GENERATION_AUTH_FAILED', /credentials/i],
+    ['TOPIC_GENERATION_RATE_LIMITED', /rate limit/i],
+  ])('explains %s and keeps the JSON buffer untouched', async (code, message) => {
+    vi.spyOn(intermediateTopicClient, 'generate').mockRejectedValue(new ApiError({ code, message: 'safe error', status: 503 }));
+    const apply = await open();fireEvent.click(screen.getByRole('button', { name: 'Generate lesson' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent(message);expect(apply).not.toHaveBeenCalled();
   });
   it('shows both providers but disables generation when real AI is not configured', async () => {
     vi.mocked(aiSettingsClient.get).mockResolvedValue({ ...settings, simulation: true, providers: settings.providers.map(p => ({ ...p, available: false })) });

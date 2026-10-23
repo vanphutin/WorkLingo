@@ -1,5 +1,10 @@
 export const topicGenerationMessages = {
   en: {
+    timeoutError: 'The selected AI timed out. Your draft is unchanged. Try a shorter lesson or retry later.',
+    authError: 'The selected AI rejected the server credentials. Check the provider configuration; your draft is unchanged.',
+    rateLimitError: 'The selected AI rate limit was reached. Wait before trying again; your draft is unchanged.',
+    upstreamError: 'The AI service could not complete the request. Your draft is unchanged.',
+    invalidLesson: 'The AI response did not pass JSON, vocabulary or evidence checks. Your draft is unchanged.',
     vocabularyUnavailable: 'The library has no reviewed vocabulary at the selected difficulty. Import or review vocabulary first, or choose another difficulty.',
     difficulty: 'Vocabulary difficulty', easy: 'Easy · A1', medium: 'Medium · A1–A2', hard: 'Hard · A1–B1',
     title: 'Create an Intermediate lesson', method: 'Entry method', manual: 'Manual entry / JSON', ai: 'Create with AI',
@@ -14,6 +19,11 @@ export const topicGenerationMessages = {
     selectTopic: 'Select a topic before generating a lesson.', provenance: 'Created with {provider} · {model}',
   },
   vi: {
+    timeoutError: 'AI đã chọn phản hồi quá thời gian chờ. Bản nháp được giữ nguyên. Hãy chọn bài ngắn hơn hoặc thử lại sau.',
+    authError: 'AI đã chọn từ chối khóa truy cập trên máy chủ. Cần kiểm tra cấu hình nhà cung cấp; bản nháp được giữ nguyên.',
+    rateLimitError: 'AI đã chọn đang giới hạn lượt gọi. Hãy chờ rồi thử lại; bản nháp được giữ nguyên.',
+    upstreamError: 'Dịch vụ AI chưa xử lý được yêu cầu. Bản nháp được giữ nguyên.',
+    invalidLesson: 'Kết quả AI chưa đạt kiểm tra JSON, từ vựng hoặc dẫn chứng. Bản nháp được giữ nguyên.',
     vocabularyUnavailable: 'Kho chưa có từ đã duyệt ở mức độ này. Hãy nhập hoặc duyệt từ trước, hoặc chọn độ khó khác.',
     difficulty: 'Độ khó từ vựng', easy: 'Dễ · A1', medium: 'Trung bình · A1–A2', hard: 'Khó · A1–B1',
     title: 'Tạo bài học Trung cấp', method: 'Cách nhập bài', manual: 'Nhập thủ công / JSON', ai: 'Tạo bằng AI',

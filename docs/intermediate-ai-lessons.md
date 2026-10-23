@@ -41,8 +41,8 @@ lưu bằng chứng lần tạo, giữ bản JSON xuất tại bước nhập tr
 Nghĩa tiếng Việt, ví dụ và nội dung mới do AI soạn, cần admin duyệt; source gốc
 trong Vocabulary Master không bị sửa.
 
-Hai AI dùng cấu hình server hiện có. Bản test hiện dùng fake và chưa có khóa,
-nên lựa chọn hiển thị chưa cấu hình, không tạo bài giả để báo thành công.
+Hai AI dùng cấu hình server hiện có. Môi trường chưa có khóa hiển thị chưa
+cấu hình; môi trường local có khóa hợp lệ cho phép chọn từng nhà cung cấp.
 Discovery: DISCOVERY_API_KEY / DISCOVERY_BASE_URL / DISCOVERY_MODEL.
 OpenAI: OPENAI_API_KEY / OPENAI_BASE_URL / OPENAI_MODEL.
 Bật AI_ROUTING_ENABLED=true và dùng WORKLINGO_LANGUAGE_EVALUATION_PROVIDER
@@ -52,7 +52,10 @@ không cấp khóa nhà cung cấp.
 
 AI_LESSON_MAX_OUTPUT_TOKENS mặc định 12000, phạm vi 4096–32768, dành riêng
 cho tạo bài; ngân sách đánh giá nói/viết giữ nguyên. Mỗi lượt gọi đúng AI đã
-chọn một lần, không tự retry hoặc chuyển AI. Admin chủ động thử lại/đổi AI.
+chọn; không tự chuyển AI. Kết quả JSON hoàn chỉnh nhưng chưa hợp lệ được
+sửa tối đa một lần với cùng AI, dùng chung ngân sách 120 giây. Lỗi mạng,
+xác thực, hạn mức hoặc kết quả bị cắt không tự gọi lại. Proxy Web chờ tối đa
+150 giây. Với Qwen, tắt thinking và yêu cầu JSON để dành token cho bài học.
 Kết quả bị cắt ngắn, thiếu trường, sai chỉ số đáp án/dẫn chứng hoặc từ mục tiêu
 ngoài bộ được chọn sẽ không được áp dụng.
 
@@ -60,26 +63,39 @@ POST /api/v1/admin/intermediate-topics/generate yêu cầu CONTENT_ADMIN hoặc
 SYSTEM_ADMIN, tối đa 3 lượt/phút/tài khoản. Input: topicGroupId, durationMinutes,
 provider, level, difficulty. Output: topicGroupId, topic, plan, provider, model.
 
-Triển khai không đổi schema DB, không ghi production, không tự publish/merge/push.
-Kiểm thử trả lời AI dùng mock; chưa gọi AI trả phí do chưa cấu hình khóa.
+Không đổi schema DB và không tự lưu/xuất bản bài. Lỗi timeout, khóa, hạn mức
+và nội dung không hợp lệ có thông báo riêng; bản nháp được giữ nguyên.
+
+Structured Outputs chọn từ mục tiêu trước bài đọc và giới hạn expression bằng
+enum từ đã duyệt. Khi sửa bài, candidate được truyền như dữ liệu không tin cậy
+(tối đa 200.000 ký tự); schema ràng buộc từ còn thiếu và server kiểm tra lại
+toàn bộ JSON, từ mục tiêu, đáp án và chỉ số dẫn chứng trước khi trả kết quả.
+Nếu chỉ thiếu cách dùng từ chính xác, AI tạo câu kết phù hợp cho từng từ còn
+thiếu. Server nối các câu này vào cuối bài đọc, giữ nguyên các dòng cũ, câu hỏi
+và evidenceLine. Câu sửa phải có đúng từ, nằm trên một dòng, không chứa trường
+ngoài schema. Nếu lỗi thuộc loại khác, AI được sửa toàn bộ JSON một lần.
 
 ## Bằng chứng kiểm chứng (2026-10-23)
 
-- API Trung cấp/cấu hình: 157 tests, 18 files, pass.
-- Web Trung cấp: 148 tests, 18 files, pass.
-- Contracts: 138 tests, 27 files, pass.
-- Lint toàn workspace, typecheck các package, build API/Web và i18n: pass.
-  Lỗi type ở fixture test API đã sửa và chạy lại API typecheck thành công.
-- Browser: đăng nhập thật và kiểm tra trạng thái chưa cấu hình; mô phỏng phản
-  hồi AI OpenAI, chọn 90 phút/Khó, điền JSON rồi áp dụng tường minh; 0 page errors.
-- DB test chỉ đọc: chọn 40 từ A1 cho Dễ, 39 từ A1/A2 cho Trung bình, 37 từ
-  A1/A2/B1 cho Khó; tất cả qua điều kiện quyền nguồn, duyệt và cấp độ.
-- Full Web 868 tests và content-format 135 tests đã pass trước các thay đổi
-  giới hạn độ khó cuối; các suite liên quan ở trên kiểm tra diff cuối.
-- Lượt pnpm test toàn workspace bị gián đoạn do host/session restart, chưa có
-  kết quả hoàn tất. Không coi đây là toàn bộ release qualification.
-- Chưa gọi AI thật do môi trường không có khóa. Các lượt sinh bài kiểm thử
-  dùng mock được ghi rõ, không được coi là bằng chứng chất lượng AI thực tế.
+- Kiểm thử hồi quy service: 37 tests pass; Web toàn bộ: 873 tests pass.
+- API source tests và integration chủ đề: 950 tests/148 files pass trên DB test
+  cách ly sau thay đổi runtime cuối. Lượt full API trước đó có 1.309 tests pass,
+  2 lỗi service trong lúc code đang được sửa, 1 skipped; hai ca đó đã được chạy
+  lại thành công trong suite cuối. Không ghi nhận lượt full API đó là pass.
+- Typecheck, lint, i18n và build API/Web được chạy; xem log vận hành cho kết quả.
+- Gọi AI thật đã được người dùng cho phép; chỉ gửi chủ đề, thời lượng và tối
+  đa 40 từ đã duyệt, không gửi tài khoản hoặc toàn bộ DB.
+- Browser thật qua Web proxy local: Discovery qwen3.8-27b HTTP 200 trong
+  12,2 giây (5 từ mục tiêu), OpenAI gpt-4o-mini HTTP 200 trong 14,8 giây
+  (7 từ mục tiêu), cấu hình 45 phút/Trung bình/B1. Cả hai điền JSON và áp dụng
+  vào biểu mẫu tường minh; 0 page errors. Không lưu hay xuất bản bài thử.
+  Đây là mẫu kiểm chứng, không bảo đảm mọi lần tạo/cấu hình đều thành công.
+  Nội dung, nghĩa và tính phù hợp sư phạm vẫn cần admin duyệt.
+- Kiểm thử tự động dùng mock và DB test cách ly 55439; các lượt gọi thật chỉ
+  đọc bộ từ ở DB local. Không lưu bài sinh thử.
 
-Log vận hành nằm trong .superpowers/ (ignored), không chứa khóa AI và không
-được commit cùng mã nguồn.
+Tham khảo: [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
+và [Qwen vLLM deployment](https://qwen.readthedocs.io/en/stable/deployment/vllm.html).
+
+Log và phản hồi AI phục vụ kiểm chứng nằm trong .superpowers/ (ignored),
+không được commit cùng mã nguồn. Không ghi khóa vào log.

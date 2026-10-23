@@ -19,7 +19,7 @@ function GeneratorSession({ topicGroupId, dirty, disabled, onApply, onBusyChange
   const [difficulty, setDifficulty] = useState<TopicVocabularyDifficulty>('medium');
   const [level, setLevel] = useState<'B1' | 'B2'>('B1');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<'settingsError' | 'requestError' | 'vocabularyUnavailable' | null>(null);
+  const [error, setError] = useState<'settingsError' | 'requestError' | 'vocabularyUnavailable' | 'timeoutError' | 'authError' | 'rateLimitError' | 'upstreamError' | 'invalidLesson' | null>(null);
   const [candidate, setCandidate] = useState<GeneratedIntermediateTopic | null>(null);
   const [applied, setApplied] = useState(false);
   const live = useRef(false);
@@ -47,7 +47,12 @@ function GeneratorSession({ topicGroupId, dirty, disabled, onApply, onBusyChange
       const result = generatedIntermediateTopicSchema.parse(await intermediateTopicClient.generate({ topicGroupId, durationMinutes: duration, provider, level, difficulty }));
       if (result.topicGroupId !== topicGroupId || result.plan.durationMinutes !== duration || result.provider !== provider || result.topic.level !== level) throw new Error('Mismatched generation result');
       if (live.current) setCandidate(result);
-    } catch (cause) { if (live.current) setError(cause instanceof ApiError && cause.code === 'TOPIC_VOCABULARY_UNAVAILABLE' ? 'vocabularyUnavailable' : 'requestError'); }
+    } catch (cause) {
+      if (live.current) {
+        const codes = { TOPIC_VOCABULARY_UNAVAILABLE: 'vocabularyUnavailable', TOPIC_GENERATION_TIMEOUT: 'timeoutError', TOPIC_GENERATION_AUTH_FAILED: 'authError', TOPIC_GENERATION_RATE_LIMITED: 'rateLimitError', TOPIC_GENERATION_UPSTREAM: 'upstreamError', TOPIC_GENERATION_UNAVAILABLE: 'invalidLesson' } as const;
+        setError(cause instanceof ApiError && Object.hasOwn(codes, cause.code) ? codes[cause.code as keyof typeof codes] : 'requestError');
+      }
+    }
     finally { if (live.current) { inFlight.current = false; setBusy(false); } }
   }
   return <section className="intermediate-card" aria-label={t('title')}>
