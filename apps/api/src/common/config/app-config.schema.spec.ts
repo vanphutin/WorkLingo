@@ -85,6 +85,7 @@ describe('parseAppConfig', () => {
     const config = parseAppConfig(validEnvironment);
 
     expect(config.ai).toEqual({
+      topicGenerationMaxOutputTokens: 12000,
       routing: { enabled: true, defaultProvider: 'discovery', fallbackEnabled: true, maxOutputTokens: 2048, discovery: { baseUrl: 'https://discovery-api.intern-ai.org.cn/v1', model: 'qwen3.8-27b' }, openai: {} },
       draftRetentionDays: 30,
       fakeEvaluationRateLimitFailures: 0,

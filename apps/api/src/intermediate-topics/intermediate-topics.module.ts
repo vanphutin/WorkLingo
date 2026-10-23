@@ -12,9 +12,12 @@ import { TopicProposalService } from './topic-proposal.service.js';
 import { TopicJsonRepairService } from './topic-json-repair.service.js';
 import { TopicGroupsController } from './topic-groups.controller.js';
 import { TopicGroupsService } from './topic-groups.service.js';
+import { TopicVocabularyService } from './topic-vocabulary.service.js';
+import { TopicGenerationService } from './topic-generation.service.js';
+import { TopicGenerationController } from './topic-generation.controller.js';
 
 @Module({ imports: [DatabaseModule, CurriculumModule, CurriculumFoundationModule, LearningProgramsModule, LearningSessionsModule],
   exports: [IntermediateTopicsService],
-  controllers: [IntermediateTopicsController, IntermediateTopicReviewController, TopicGroupsController],
-  providers: [IntermediateTopicsService, TopicReviewService, TopicProposalService, TopicJsonRepairService, AiSettingsService, TopicGroupsService] })
+  controllers: [IntermediateTopicsController, IntermediateTopicReviewController, TopicGroupsController, TopicGenerationController],
+  providers: [IntermediateTopicsService, TopicReviewService, TopicProposalService, TopicJsonRepairService, AiSettingsService, TopicGroupsService, TopicGenerationService, TopicVocabularyService] })
 export class IntermediateTopicsModule {}

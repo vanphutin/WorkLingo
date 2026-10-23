@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { sessionDurationSchema } from './learning-session.contracts.ts';
 
 const text = z.string().max(100_000);
 const scalar = text.refine(value => !/[\r\n\u2028\u2029\0]/u.test(value), 'Use a single line; replace line breaks with spaces.');
@@ -12,6 +13,11 @@ const question = z.strictObject({ slug, prompt: block(false), options: z.array(s
   answerIndex: z.number().int().nonnegative(), explanation: block(false), evidenceLine: z.number().int().positive() });
 export const intermediateTopicJsonSchema = z.strictObject({
   format: z.literal('WorkLingoIntermediateTopic/1.0'), slug, title: scalar.trim().min(1), level: scalar, objective: scalar,
+  durationMinutes: sessionDurationSchema.optional(),
+  vocabulary: z.strictObject({ difficulty: z.enum(['easy', 'medium', 'hard']), entries: z.array(z.strictObject({
+    sourceEntryId: z.uuid(), lexicalEntryId: z.uuid(), senseId: z.uuid(), expression: scalar.trim().min(1),
+    cefrLevel: z.enum(['A1', 'A2', 'B1']), attribution: text,
+  })).min(1).max(40) }).optional(),
   readingText: block(true).trim().min(1), speaker: scalar, activatePrompt: block(false),
   spokenText: block(true).trim().min(1).optional(), speechReview: z.string().regex(/^[a-f0-9]{64}$/u).optional(),
   speakingPrompt: block(false), speakingModel: scalar, writingPrompt: block(false), writingModel: scalar,
