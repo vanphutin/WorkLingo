@@ -14,15 +14,16 @@ export const vocabularySourceInputSchema = z.object({ providerName: text, title:
 export const vocabularyRightsInputSchema = z.object({ revision, rightsStatus: vocabularyRightsStatusSchema, permissionReference: z.string().trim().max(500).nullable(), allowedUses: z.array(vocabularyUseSchema).max(6), allowedFields: z.array(vocabularyFieldSchema).max(3) }).strict().superRefine((value, ctx) => {
   if (value.rightsStatus === 'APPROVED' && (!value.permissionReference || !value.allowedUses.includes('EXTRACT') || !value.allowedUses.includes('STORE') || !value.allowedFields.includes('FORM'))) ctx.addIssue({ code: 'custom', message: 'Approval needs authorization evidence, EXTRACT/STORE scope and FORM permission' });
 });
-export const vocabularyDocumentInputSchema = z.object({ sourceId: z.uuid(), cefrLevel: vocabularyCefrSchema, originalFilename: text, sha256: hash, pageCount: z.number().int().min(1).max(2000), edition: z.string().max(200).default(''), sourceUrl: z.url().max(2000).optional() }).strict();
+export const vocabularyDocumentInputSchema = z.object({ sourceId: z.uuid(), cefrLevel: vocabularyCefrSchema, originalFilename: text, sha256: hash, pageCount: z.number().int().min(1).max(2000), sourceFormat: z.enum(['PDF', 'TXT']).default('PDF'), edition: z.string().max(200).default(''), sourceUrl: z.url().max(2000).optional() }).strict();
 export const vocabularyLocationSchema = z.object({ pageIndex: z.number().int().nonnegative(), bbox: z.tuple([z.number().finite().nonnegative(), z.number().finite().nonnegative(), z.number().finite().nonnegative(), z.number().finite().nonnegative()]) }).strict().refine(value => value.bbox[2] > value.bbox[0] && value.bbox[3] > value.bbox[1], 'Bounding box must have positive area');
 export const vocabularyExceptionSchema = z.object({ code: text, message: z.string().max(1000), location: vocabularyLocationSchema.optional() }).strict();
 export const vocabularyInventorySchema = z.object({ pages: z.array(z.object({ pageIndex: z.number().int().nonnegative(), detectedKeys: z.array(text).max(1000), exceptions: z.array(vocabularyExceptionSchema).max(1000) }).strict()).min(1).max(2000) }).strict();
 export const vocabularySourceRowSchema = z.object({
   sourceEntryKey: text, topicInstanceKey: text, originalTopic: text, topicSequence: z.number().int().positive(), rowOrdinal: z.number().int().positive(), pageIndex: z.number().int().nonnegative(), printedPageNumber: z.string().max(40).nullable().default(null),
+  sourceLineStart: z.number().int().positive().nullable().optional(), sourceLineEnd: z.number().int().positive().nullable().optional(),
   locations: z.array(vocabularyLocationSchema).min(1).max(50), rawWord: z.string().min(1).max(500), parsedWord: text, rawPos: z.string().max(100), normalizedPos: vocabularyPosSchema, cefrLevel: vocabularyCefrSchema,
   pronunciation: z.string().max(500).nullable().default(null), permittedDefinition: z.string().max(10000).nullable().default(null), extractionConfidence: z.number().min(0).max(1).default(1), warnings: z.array(z.string().max(500)).max(50).default([]),
-}).strict();
+}).strict().refine(value => (value.sourceLineStart ?? null) === null && (value.sourceLineEnd ?? null) === null || typeof value.sourceLineStart === 'number' && typeof value.sourceLineEnd === 'number' && value.sourceLineEnd >= value.sourceLineStart, 'TXT line span must be paired and ordered');
 export const vocabularyManifestSchema = z.object({ documentSha256: hash, pageCount: z.number().int().min(1).max(2000), cefrLevel: vocabularyCefrSchema, parserVersion: text, inventory: vocabularyInventorySchema, rows: z.array(vocabularySourceRowSchema).max(100000) }).strict();
 export const vocabularyBatchInputSchema = z.object({ documentId: z.uuid(), parserVersion: text, inventory: vocabularyInventorySchema }).strict();
 export const vocabularyStageSchema = z.object({ revision, rows: z.array(vocabularySourceRowSchema).min(1).max(250) }).strict();
@@ -43,7 +44,7 @@ export type VocabularyManifest = z.infer<typeof vocabularyManifestSchema>;
 export type VocabularyQuery = z.infer<typeof vocabularyQuerySchema>;
 export type VocabularySourceInput = z.input<typeof vocabularySourceInputSchema>;
 export type VocabularyRightsInput = z.infer<typeof vocabularyRightsInputSchema>;
-export type VocabularyDocumentInput = z.infer<typeof vocabularyDocumentInputSchema>;
+export type VocabularyDocumentInput = z.input<typeof vocabularyDocumentInputSchema>;
 export type VocabularyBatchInput = z.infer<typeof vocabularyBatchInputSchema>;
 export type VocabularyStageInput = z.infer<typeof vocabularyStageSchema>;
 export type VocabularyReviewInput = z.infer<typeof vocabularyReviewSchema>;

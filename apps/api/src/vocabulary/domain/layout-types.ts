@@ -15,6 +15,7 @@ export interface LayoutPage {
   width: number;
   height: number;
   words: readonly LayoutWord[];
+  horizontalRules?: readonly { x0: number; x1: number; y: number }[];
 }
 
 /**

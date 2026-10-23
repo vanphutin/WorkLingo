@@ -47,7 +47,13 @@ function EntryProvenance({ id }: { id: string }) {
   const t = useVocabularyT(); const [page, setPage] = useState(1);
   const state = useLoad(useCallback(() => api.provenance(id, { page }), [id, page]));
   return <section aria-label={t('provenance')}><h4>{t('provenance')}</h4><LoadFeedback state={state} />{state.data ? <>
-    {state.data.items.map(value => <article className="vocab-provenance" key={value.sourceEntry.id}><strong>{value.sourceEntry.document.source.title}</strong><p>{value.sourceEntry.document.originalFilename}</p><p>{value.sourceEntry.originalTopic} · {t('pageNumber', { page: value.sourceEntry.pageIndex + 1 })}</p><p>{t('raw')}: <span lang="en">{value.sourceEntry.rawWord}</span></p><code>{value.sourceEntry.document.sha256}</code><p><code>{value.sourceEntry.sourceEntryKey}</code></p>{value.sourceEntry.locations.map((location, index) => <code key={index}>{location.pageIndex + 1}: [{location.bbox.join(', ')}] </code>)}<p>{t('rightsBasis')}: {value.sourceEntry.document.source.permissionReference}</p></article>)}
+    {state.data.items.map(value => {
+      const occurrence = value.sourceEntry;
+      const source = occurrence.document.source;
+      const location = typeof occurrence.sourceLineStart === 'number' && typeof occurrence.sourceLineEnd === 'number'
+        ? t('sourceLines', { start: occurrence.sourceLineStart, end: occurrence.sourceLineEnd }) : null;
+      return <article className="vocab-provenance" key={occurrence.id}><strong>{source.title}</strong><p>{occurrence.document.originalFilename}</p><p>{occurrence.originalTopic} · {location ?? t('pageNumber', { page: occurrence.pageIndex + 1 })}</p><p>{t('raw')}: <span lang="en">{occurrence.rawWord}</span></p><code>{occurrence.document.sha256}</code><p><code>{occurrence.sourceEntryKey}</code></p>{location === null ? occurrence.locations.map((coordinates, index) => <code key={index}>{coordinates.pageIndex + 1}: [{coordinates.bbox.join(', ')}] </code>) : null}<p>{t('rightsBasis')}: {source.permissionReference}</p>{source.attributionRequirements ? <p>{t('attribution')}: {source.attributionRequirements}</p> : null}</article>;
+    })}
     <Pager page={page} total={state.data.total} limit={state.data.limit} change={setPage} />
   </> : null}</section>;
 }

@@ -24,7 +24,7 @@ const posAliases: Record<string, VocabularySourceRow['normalizedPos']> = {
 };
 const compareWords = (a: LayoutWord, b: LayoutWord) => a.top - b.top || a.x0 - b.x0 || a.bottom - b.bottom || a.x1 - b.x1 || (a.text < b.text ? -1 : a.text > b.text ? 1 : 0);
 
-function validate(document: LayoutDocument, columns: LayoutColumns): void {
+export function validateLayoutDocument(document: LayoutDocument, columns: LayoutColumns = document.columns ?? defaultColumns): void {
   if (!/^[a-f0-9]{64}$/u.test(document.documentSha256) || !['A1', 'A2', 'B1', 'B2', 'C1'].includes(document.cefrLevel)) throw new Error('Unsupported document metadata');
   if (!Number.isInteger(document.pageCount) || document.pageCount < 1 || document.pageCount > 2000 || document.pages.length > document.pageCount) throw new Error('Invalid page count or limit');
   if (document.lineTolerance !== undefined && (!Number.isFinite(document.lineTolerance) || document.lineTolerance < 0 || document.lineTolerance > 5)) throw new Error('Invalid line tolerance');
@@ -140,7 +140,7 @@ function splitColumns(line: Line, page: LayoutPage, columns: LayoutColumns): { f
 
 export function parseVocabularyLayout(document: LayoutDocument): VocabularyManifest {
   const columns = document.columns ?? defaultColumns;
-  validate(document, columns);
+  validateLayoutDocument(document, columns);
   const scans = scan(document, columns);
   const rows: VocabularySourceRow[] = [];
   const ordinals = new Map<string, Set<number>>();

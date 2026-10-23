@@ -1,5 +1,6 @@
 export const adminVocabularyMessages = {
   en: {
+    sourceLines: 'Source lines {start}–{end}',
     entryKind: 'Entry kind', WORD: 'Word', MULTIWORD_EXPRESSION: 'Multiword expression', PHRASAL_VERB: 'Phrasal verb', IDIOM: 'Idiom',
     NOUN: 'Noun', VERB: 'Verb', ADJECTIVE: 'Adjective', ADVERB: 'Adverb', PRONOUN: 'Pronoun', PREPOSITION: 'Preposition', CONJUNCTION: 'Conjunction', DETERMINER: 'Determiner', INTERJECTION: 'Interjection', NUMBER: 'Number', PHRASE: 'Phrase', UNKNOWN: 'Unresolved part of speech',
     sourceFilename: 'Source document filename', reconciliationTitle: 'Reconciliation', optionsPrevious: 'Previous options', optionsNext: 'Next options',
@@ -16,6 +17,7 @@ export const adminVocabularyMessages = {
     programId: 'Program', pathId: 'Learning path', levelId: 'Level', missionId: 'Mission', lessonVersionId: 'Lesson version', wordBankVersionId: 'Word bank version', CEFR: 'CEFR', TOPIC: 'Topic', PROGRAM: 'Program', EXAM: 'Exam', LESSON: 'Lesson', PERSONAL: 'Personal',
   },
   vi: {
+    sourceLines: 'Dòng nguồn {start}–{end}',
     entryKind: 'Loại mục từ', WORD: 'Từ đơn', MULTIWORD_EXPRESSION: 'Cụm từ', PHRASAL_VERB: 'Cụm động từ', IDIOM: 'Thành ngữ',
     NOUN: 'Danh từ', VERB: 'Động từ', ADJECTIVE: 'Tính từ', ADVERB: 'Trạng từ', PRONOUN: 'Đại từ', PREPOSITION: 'Giới từ', CONJUNCTION: 'Liên từ', DETERMINER: 'Từ hạn định', INTERJECTION: 'Thán từ', NUMBER: 'Số từ', PHRASE: 'Cụm từ', UNKNOWN: 'Chưa xác định từ loại',
     sourceFilename: 'Tên tệp tài liệu nguồn', reconciliationTitle: 'Đối soát', optionsPrevious: 'Lựa chọn trước', optionsNext: 'Lựa chọn tiếp',

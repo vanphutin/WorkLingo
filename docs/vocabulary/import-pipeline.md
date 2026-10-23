@@ -4,6 +4,28 @@ Acquire → validate source → parse layout → detect topics → extract rows 
 normalize → reconcile → review → publish. See api-boundary.md for exact endpoints
 and packages/contracts/src/vocabulary-library.contracts.ts for input schemas.
 
+For the supplied TXT transcription, use the TXT adapter rather than opening PDFs:
+
+```powershell
+python scripts/vocabulary/extract_txt.py --input "path/to/full 5 files pdf.txt" --output-dir .superpowers/new-private-txt-run
+pnpm --filter @worklingo/api exec tsx src/vocabulary-operations/cli.ts dry-run ../../.superpowers/new-private-txt-run/A1-txt-manifest.json
+```
+
+It writes per-level manifests, an exact source-line JSONL sidecar and a bounded
+summary. The input SHA-256 identifies the entire TXT for every CEFR document.
+Register these documents with sourceFormat=TXT. Their pageCount/pageIndex fields
+represent logical topic sections, and bbox values represent line intervals;
+sourceLineStart/sourceLineEnd are the explicit, one-based provenance. They must
+never be described as measured PDF pages or layout. Existing PDF inputs retain
+their original semantics. Source occurrence keys remain topic instance + ordinal.
+
+Only explicit total-entry statements in the TXT establish expected counts. An
+absent total is EXPECTED_UNKNOWN, not a PDF completeness claim. An explicit
+mismatch blocks reconciliation. Missing source fields stay in review; the adapter
+does not call AI, generate words, translations or examples, or write a database.
+Use the existing rights-gated staging/review services for batches of at most 250.
+Keep reviewed operational scripts/evidence outside Git with the private run.
+
 1. Keep the source PENDING until explicit permission scope/reference is recorded.
    Document authorization separately from synthetic development fixture rights.
 2. Acquire an authorized file outside Git. Compute its SHA-256 and measured page

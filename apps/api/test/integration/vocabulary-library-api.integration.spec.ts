@@ -20,6 +20,32 @@ describe('Rights-gated master vocabulary workflow', () => {
     sources = module.get(VocabularySourcesService); imports = module.get(VocabularyImportsService); library = module.get(VocabularyLibraryService);
   });
   afterAll(() => db.$disconnect());
+  it('replays legacy PDF occurrences with omitted or null TXT line fields', async () => {
+    const f = await fixture(true, 1);
+    const original = row(1);
+    const batch = await imports.stage(f.batch.id, { revision: f.batch.revision, rows: [original] });
+    const before = await db.vocabularySourceEntry.findFirstOrThrow({ where: { documentId: f.document.id } });
+    const replay = await imports.stage(batch.id, { revision: batch.revision, rows: [{ ...original, sourceLineStart: null, sourceLineEnd: null }] });
+    expect(replay.checkpoint).toBe(1);
+    expect(await db.vocabularySourceEntry.count({ where: { documentId: f.document.id } })).toBe(1);
+    expect((await db.vocabularySourceEntry.findUniqueOrThrow({ where: { id: before.id } })).sourceContentHash).toBe(before.sourceContentHash);
+  });
+  it('stages TXT line spans, resumes and replays without losing immutable occurrences', async () => {
+    const f = await fixture(true, 2);
+    const document = await sources.document({ sourceId: f.source.id, cefrLevel: 'A1', originalFilename: 'synthetic.txt', sourceFormat: 'TXT', sha256: 'c'.repeat(64), pageCount: 1 });
+    const inventory = { pages: [{ pageIndex: 0, detectedKeys: ['topic-1:1', 'topic-1:2'], exceptions: [] }] };
+    let batch = await imports.start({ documentId: document.id, parserVersion: 'synthetic-txt/1', inventory });
+    const first = { ...row(1), sourceLineStart: 10, sourceLineEnd: 12 };
+    const second = { ...row(2), sourceLineStart: 13, sourceLineEnd: 16 };
+    batch = await imports.stage(batch.id, { revision: batch.revision, rows: [first] });
+    const resumed = await imports.start({ documentId: document.id, parserVersion: 'synthetic-txt/1', inventory });
+    expect(resumed.checkpoint).toBe(1);
+    batch = await imports.stage(batch.id, { revision: resumed.revision, rows: [second] });
+    const replay = await imports.stage(batch.id, { revision: 1, rows: [first, second] });
+    expect(replay.checkpoint).toBe(2);
+    expect((await db.vocabularySourceEntry.findMany({ where: { documentId: document.id }, orderBy: { rowOrdinal: 'asc' } })).map(r => [r.sourceLineStart, r.sourceLineEnd])).toEqual([[10, 12], [13, 16]]);
+    await expect(sources.document({ sourceId: f.source.id, cefrLevel: 'A1', originalFilename: 'synthetic.txt', sourceFormat: 'PDF', sha256: 'c'.repeat(64), pageCount: 1 })).rejects.toMatchObject({ response: { code: 'SOURCE_DOCUMENT_CONFLICT' } });
+  });
   it('rejects NULL permission arrays at the direct database boundary', async () => {
     const f = await fixture();
     await expect(db.$executeRaw`UPDATE "VocabularySource" SET "allowedUses"=NULL WHERE id=${f.source.id}::uuid`).rejects.toThrow();
@@ -156,7 +182,7 @@ describe('Rights-gated master vocabulary workflow', () => {
 
   it('enforces rights fields on direct SQL content inserts and derived senses', async () => {
     const f = await fixture(false, 1);
-    await expect(db.vocabularySourceEntry.create({ data: { ...row(1), documentId: f.document.id, sourceContentHash: 'b'.repeat(64) } })).rejects.toThrow(/BLOCKED_BY_RIGHTS/u);
+    await expect(db.vocabularySourceEntry.create({ data: { ...row(1), sourceLineStart: null, sourceLineEnd: null, documentId: f.document.id, sourceContentHash: 'b'.repeat(64) } })).rejects.toThrow(/BLOCKED_BY_RIGHTS/u);
     const entry = await db.lexicalEntry.create({ data: { canonicalForm: 'record', normalizedForm: 'record', partOfSpeech: 'NOUN' } });
     await expect(db.lexicalSense.create({ data: { lexicalEntryId: entry.id, senseKey: randomUUID(), definition: 'Synthetic definition', sourceId: f.source.id, rightsBasis: 'bypass' } })).rejects.toThrow(/BLOCKED_BY_RIGHTS/u);
   });

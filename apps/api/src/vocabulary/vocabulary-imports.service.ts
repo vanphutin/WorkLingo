@@ -60,7 +60,10 @@ export class VocabularyImportsService {
       const prepared = input.rows.map(row => {
         validateSourceRow(row, inventory, batch.document.pageCount, batch.document.cefrLevel);
         checkSourceRights(source, ['FORM', ...(row.permittedDefinition !== null ? ['DEFINITION'] : []), ...(row.pronunciation !== null ? ['PRONUNCIATION'] : [])]);
-        return { ...row, documentId: batch.documentId, sourceContentHash: contentHash(row) };
+        // Nullable DB fields and omitted legacy PDF fields carry the same provenance.
+        // Preserve key order and existing TXT hashes while omitting nullish line fields.
+        const hashInput = { ...row, sourceLineStart: row.sourceLineStart ?? undefined, sourceLineEnd: row.sourceLineEnd ?? undefined };
+        return { ...row, documentId: batch.documentId, sourceContentHash: contentHash(hashInput) };
       });
       if (new Set(prepared.map(row => row.sourceEntryKey)).size !== prepared.length) vocabularyError('VOCABULARY_ROW_INVALID', 'A staging chunk contains duplicate row identities.');
       const existing = await tx.vocabularySourceEntry.findMany({ where: { documentId: batch.documentId, sourceEntryKey: { in: prepared.map(row => row.sourceEntryKey) } } });
@@ -68,7 +71,7 @@ export class VocabularyImportsService {
       const alreadyLinked = await tx.vocabularyBatchRow.count({ where: { batchId: id, sourceEntryId: { in: existing.map(entry => entry.id) } } });
       if (existing.length === prepared.length && alreadyLinked === prepared.length) return batch;
       this.mutable(batch, input.revision);
-      await tx.vocabularySourceEntry.createMany({ data: prepared.filter(row => !existing.some(entry => entry.sourceEntryKey === row.sourceEntryKey)).map(row => ({ ...row, locations: row.locations as Prisma.InputJsonValue })), skipDuplicates: true });
+      await tx.vocabularySourceEntry.createMany({ data: prepared.filter(row => !existing.some(entry => entry.sourceEntryKey === row.sourceEntryKey)).map(row => ({ ...row, sourceLineStart: row.sourceLineStart ?? null, sourceLineEnd: row.sourceLineEnd ?? null, locations: row.locations as Prisma.InputJsonValue })), skipDuplicates: true });
       const persisted = await tx.vocabularySourceEntry.findMany({ where: { documentId: batch.documentId, sourceEntryKey: { in: prepared.map(row => row.sourceEntryKey) } } });
       if (persisted.length !== prepared.length || persisted.some(entry => prepared.find(row => row.sourceEntryKey === entry.sourceEntryKey)?.sourceContentHash !== entry.sourceContentHash)) throw new ConflictException({ code: 'SOURCE_ENTRY_CONFLICT', message: 'Concurrent staging produced conflicting provenance.' });
       await tx.vocabularyBatchRow.createMany({ data: persisted.map(entry => ({ batchId: id, sourceEntryId: entry.id })), skipDuplicates: true });
