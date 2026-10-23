@@ -1,3 +1,4 @@
+import type { IntermediateTopicJson } from '@worklingo/contracts';
 import { isIntermediateCategory, parseLessonSource, type ActivityNode, type IntermediateCategory } from '@worklingo/content-format';
 
 export interface IntermediateLanguageBlock {
@@ -10,6 +11,7 @@ export interface IntermediateQuestion {
 export interface IntermediateLessonDraft {
   slug: string; title: string; level: string; objective: string; durationMinutes: number;
   readingText: string; speaker: string; dialogue: string; activatePrompt: string;
+  vocabulary?: IntermediateTopicJson['vocabulary'] | undefined;
   spokenText?: string | undefined; speechReview?: string | undefined;
   speakingPrompt: string; speakingModel: string; writingPrompt: string; writingModel: string;
   languageBlocks: IntermediateLanguageBlock[]; readingQuestions: IntermediateQuestion[]; listeningQuestions: IntermediateQuestion[];

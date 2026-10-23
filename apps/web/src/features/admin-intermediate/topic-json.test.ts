@@ -8,6 +8,14 @@ it('preserves an imported narration for review instead of silently dropping it',
 });
 
 describe('Intermediate topic JSON', () => {
+  it('preserves AI-selected minutes through JSON, source save/reload and export', () => {
+    const json = { ...createTopicJsonTemplate(), durationMinutes: 90 };
+    const draft = topicJsonToDraft(json);
+    expect(draft.durationMinutes).toBe(90);
+    const reloaded = readIntermediateTopicLesson(serializeIntermediateTopicLesson(draft))!;
+    expect(reloaded.durationMinutes).toBe(90);
+    expect(topicDraftToJson(reloaded).durationMinutes).toBe(90);
+  });
   it('roundtrips a topic through JSON and the source format with one passage for audio', () => {
     const json = createTopicJsonTemplate();
     const draft = topicJsonToDraft(JSON.parse(JSON.stringify(json)));
@@ -15,7 +23,7 @@ describe('Intermediate topic JSON', () => {
     expect(topicDraftToJson(readIntermediateTopicLesson(serializeIntermediateTopicLesson(draft))!)).toEqual(json);
   });
   it.each([
-    { format: 'unknown' }, { approval: { approvedById: 'admin' } }, { durationMinutes: 150 },
+    { format: 'unknown' }, { approval: { approvedById: 'admin' } }, { durationMinutes: 75 },
     { dialogue: 'Another passage' }, { title: 12 }, { readingText: 'Text\n[LESSON]' },
   ])('rejects unsupported or unsafe fields: %j', patch => {
     expect(() => topicJsonToDraft({ ...createTopicJsonTemplate(), ...patch })).toThrow();

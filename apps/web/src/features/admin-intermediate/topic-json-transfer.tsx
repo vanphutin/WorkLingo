@@ -9,9 +9,9 @@ import { topicJsonDiagnostics } from './topic-json-diagnostics';
 import { TopicJsonRepair } from './topic-json-repair';
 
 const MAX_BYTES = 1_000_000;
-export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChange, anchorId, reviewHref }: {
+export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChange, anchorId, reviewHref, incoming }: {
   draft: IntermediateLessonDraft; dirty: boolean; disabled: boolean;
-  anchorId?: string; reviewHref?: string;
+  anchorId?: string; reviewHref?: string; incoming?: { id: string; source: string } | undefined;
   onApply: (draft: IntermediateLessonDraft) => void; onDirtyChange: (dirty: boolean) => void;
 }) {
   const t = useT('intermediateTopics', intermediateTopicsMessages);
@@ -24,6 +24,9 @@ export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChan
   const [errorOffset, setErrorOffset] = useState<number | null>(null);
   const input = useRef<HTMLTextAreaElement>(null);
   const pending = useRef(false);
+  const manualApply = useRef(false);
+  const lastIncoming = useRef<string | null>(null);
+  const container = useRef<HTMLDetailsElement>(null);
   const generation = useRef(0);
   const lastApplied = useRef<IntermediateLessonDraft | null>(null);
   // A file read may finish after the administrator has edited the form.
@@ -31,7 +34,17 @@ export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChan
   latest.current = { draft, dirty, disabled, onApply, onDirtyChange };
   const matchesApplied = applied && draft === lastApplied.current;
   useEffect(() => () => { generation.current += 1; }, []);
+  useEffect(() => {
+    if (!incoming || lastIncoming.current === incoming.id) return;
+    lastIncoming.current = incoming.id;
+    generation.current += 1; pending.current = true; manualApply.current = true;
+    setSource(incoming.source); setError(''); setErrorOffset(null); setApplied(false); setLoading(false);
+    latest.current.onDirtyChange(true);
+    if (container.current) container.current.open = true;
+    input.current?.focus({ preventScroll: true }); input.current?.scrollIntoView?.({ block: 'center' });
+  }, [incoming]);
   function accept(next: IntermediateLessonDraft) {
+    manualApply.current = false;
     lastApplied.current = next; latest.current.onApply(next);
     pending.current = false; latest.current.onDirtyChange(false); setError(''); setErrorOffset(null); setApplied(true);
   }
@@ -47,7 +60,7 @@ export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChan
     try {
       const next = topicJsonToDraft(JSON.parse(value) as unknown);
       const current = latest.current;
-      if (!current.disabled && (!current.dirty || current.draft === lastApplied.current)) accept(next);
+      if (!manualApply.current && !current.disabled && (!current.dirty || current.draft === lastApplied.current)) accept(next);
     } catch (cause) { invalid(cause, value); }
   };
   const replaceBuffer = () => !pending.current || window.confirm(t('jsonDiscard'));
@@ -68,7 +81,7 @@ export function TopicJsonTransfer({ draft, dirty, disabled, onApply, onDirtyChan
     link.href = url; link.download = 'intermediate-topic.json'; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 0);
   };
-  return <details id={anchorId} tabIndex={-1} className="intermediate-card intermediate-json">
+  return <details ref={container} id={anchorId} tabIndex={-1} className="intermediate-card intermediate-json">
     <summary>{t('jsonTitle')}</summary>
     <p className="intermediate-help" id={`${id}-help`}>{t('jsonHelp')}</p>
     <fieldset disabled={disabled || loading || repairing} className="intermediate-form-fields">

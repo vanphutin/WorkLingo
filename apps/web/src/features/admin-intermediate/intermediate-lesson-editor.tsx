@@ -4,7 +4,9 @@ import { AdminLink as Link, useAdminNavigationGuard } from '../admin-dashboard/a
 import { useRouter } from 'next/navigation';
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import type { IntermediateCategory } from '@worklingo/content-format';
-import type { ContentImportDto } from '@worklingo/contracts';
+import { sessionDurationSchema, type ContentImportDto } from '@worklingo/contracts';
+import { TopicAiGenerator } from './topic-ai-generator';
+
 import { useT } from '../../i18n/provider';
 import { adminIntermediateMessages } from '../../i18n/messages/adminIntermediate';
 import { intermediateTopicsMessages } from '../../i18n/messages/intermediateTopics';
@@ -174,6 +176,8 @@ function DraftForm({ category, topic, initialRecord, initialDraft, initialTopicG
   const [approved, setApproved] = useState(false);
   const [publicationBusy, setPublicationBusy] = useState(false);
   const [jsonDirty, setJsonDirty] = useState(false);
+  const [generationBusy, setGenerationBusy] = useState(false);
+  const [generatedJson, setGeneratedJson] = useState<{ id: string; source: string }>();
   const [error, setError] = useState<'conflict' | 'saveFailed' | 'invalidDraft' | null>(null);
   const mounted = useRef(false);
   const inFlight = useRef(false);
@@ -198,7 +202,7 @@ function DraftForm({ category, topic, initialRecord, initialDraft, initialTopicG
   }
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (readOnly || publicationBusy || inFlight.current || groupBusy || error === 'conflict' || jsonDirty) return;
+    if (readOnly || publicationBusy || inFlight.current || groupBusy || generationBusy || error === 'conflict' || jsonDirty) return;
     if (topic && planDirty && !window.confirm(tt('replacePlan'))) return;
     let source: string;
     try { source = topic ? serializeIntermediateTopicLesson(draft) : serializeIntermediateLesson(category, draft); }
@@ -253,15 +257,17 @@ function DraftForm({ category, topic, initialRecord, initialDraft, initialTopicG
       {record ? <span className="intermediate-revision">{t('revision', { count: record.draftRevision })}</span> : null}
     </header>
     {topic ? <><TopicAuthoringSteps step={record ? (readOnly || (approved && !anyDirty) ? 4 : 3) : 2} /><p className="intermediate-help">{tg(record ? 'savedFlowHelp' : 'flowHelp')}</p></> : null}
-    {topic ? <TopicGroupField key={record?.id ?? 'new'} value={topicGroupId} onChange={setTopicGroupId} disabled={saving || publicationBusy} onBusyChange={setGroupBusy} fixed={Boolean(initialTopicGroupId && !record)}
+    {topic ? <TopicGroupField key={record?.id ?? 'new'} value={topicGroupId} onChange={setTopicGroupId} disabled={saving || publicationBusy || generationBusy} onBusyChange={setGroupBusy} fixed={Boolean(initialTopicGroupId && !record)}
       {...(record ? { importId: record.id } : {})} /> : null}
+    {topic ? <TopicAiGenerator topicGroupId={topicGroupId} dirty={jsonDirty} disabled={saving || publicationBusy || readOnly || groupBusy || error === 'conflict'} onBusyChange={setGenerationBusy}
+      onApply={candidate => { setGeneratedJson({ id: crypto.randomUUID(), source: JSON.stringify({ ...candidate.topic, durationMinutes: candidate.plan.durationMinutes }, null, 2) }); }} /> : null}
     {readOnly ? <p className="intermediate-notice">{t('readOnly')}</p> : null}
     {error ? <p role="alert" className="intermediate-notice intermediate-error">{t(error)}</p> : null}
-    {topic ? <TopicJsonTransfer anchorId={`${headingId}-json`} reviewHref={`#${headingId}-basics`} draft={draft} dirty={dirty} disabled={saving || publicationBusy || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
+    {topic ? <TopicJsonTransfer incoming={generatedJson} anchorId={`${headingId}-json`} reviewHref={`#${headingId}-basics`} draft={draft} dirty={dirty} disabled={saving || publicationBusy || generationBusy || readOnly || error === 'conflict'} onDirtyChange={setJsonDirty}
       onApply={next => { setDraft(next); setSaved(false); }} /> : null}
     {jsonDirty ? <p role="status" className="intermediate-help">{tt('jsonPending')}</p> : null}
     <form onSubmit={(event) => void save(event)}>
-      <fieldset className="intermediate-form-fields" disabled={saving || publicationBusy || readOnly}>
+      <fieldset className="intermediate-form-fields" disabled={saving || publicationBusy || generationBusy || readOnly}>
         <legend className="intermediate-sr-only">{t('editTitle', { category: t(category) })}</legend>
         <section className="intermediate-card" {...target('basics')}>
           <h2 id={topic ? 'topic-publication-edit-target' : undefined} tabIndex={topic ? -1 : undefined}>{t('basics')}</h2>
@@ -295,14 +301,14 @@ function DraftForm({ category, topic, initialRecord, initialDraft, initialTopicG
         </details>}
       </fieldset>
       {!readOnly ? <div className="intermediate-actions" {...target('save')}>
-        <button className="intermediate-save" type="submit" disabled={saving || publicationBusy || groupBusy || jsonDirty || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
+        <button className="intermediate-save" type="submit" disabled={saving || publicationBusy || generationBusy || groupBusy || jsonDirty || error === 'conflict' || (Boolean(record) && !dirty)}>{t(saving ? 'saving' : record ? 'save' : 'create')}</button>
         <span role="status" aria-live="polite">{saved ? t('saved') : dirty ? t('dirty') : ''}</span>
       </div> : null}
     </form>
     {topic && record ? <>
-      <div {...target('review')}><TopicReviewPanel record={record} dirty={dirty || jsonDirty} disabled={publicationBusy || saving || groupBusy} onDirtyChange={setPlanDirty}
+      <div {...target('review')}><TopicReviewPanel record={record} initialDurationMinutes={sessionDurationSchema.safeParse(savedDraft.durationMinutes).data ?? 60} dirty={dirty || jsonDirty} disabled={publicationBusy || saving || groupBusy || generationBusy} onDirtyChange={setPlanDirty}
         onApprovalChange={setApproved} publicationHref={`#${headingId}-lifecycle`} /></div>
-      <div {...target('lifecycle')}><TopicPublicationPanel record={record} approved={approved} blocked={anyDirty || saving || groupBusy || error === 'conflict'} onRecordChange={setRecord} onBusyChange={setPublicationBusy} /></div>
+      <div {...target('lifecycle')}><TopicPublicationPanel record={record} approved={approved} blocked={anyDirty || saving || groupBusy || generationBusy || error === 'conflict'} onRecordChange={setRecord} onBusyChange={setPublicationBusy} /></div>
     </> : null}
     {record && !topic ? <aside className="intermediate-card intermediate-lifecycle" {...target('lifecycle')}>
       <Link href={`/admin/content/${record.id}`}>{t('lifecycle')}</Link>
