@@ -73,3 +73,7 @@ Phân tầng sư phạm đề xuất, chưa phải chuẩn đã hiệu chuẩn: 
 - MND-20261024-001: captured, owner chưa được chỉ định, không có approval triển khai.
 - CLI mandate validate: valid=true, count=3.
 - Phạm vi thay đổi dữ liệu tương lai được đánh dấu risk high; lần khảo sát này chỉ đọc DB và ghi tài liệu.
+
+## Bổ sung phân tích curriculum/video (2026-10-24)
+
+Xem [thiết kế mở rộng](../../docs/superpowers/specs/2026-10-24-beginner-curriculum-resources-design.md). Phát hiện mới: Unit có thể ánh xạ Mission; storage hiện đọc Buffer nên chưa đủ cho video lớn; roadmap/prerequisite dùng latest/exact revision nên cần policy cohort khi bổ sung video; progression cùng Path chưa tự chuyển Mất gốc sang Cơ bản. MND-20261024-001 được mở rộng ở trạng thái captured, không có approval triển khai. Snapshot PR18 ở phần đầu là lịch sử; PR18 đã merge tại 752c19c và không bị thay đổi.
