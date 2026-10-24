@@ -451,3 +451,18 @@ describe('ContentImportsService', () => {
     });
   });
 });
+
+describe('R1.1 runtime authoring stays closed',()=>{
+  it.each(['FORMAT: WorkLingoLesson/1.2','\uFEFFFORMAT: WorkLingoLesson/1.2\r\n','FORMAT: WorkLingoLesson / 1.2','format: worklingolesson/1.2'])('denies create before any database mutation: %s', async(rawSource)=>{
+    const writes:unknown[]=[];const create=vi.fn(async()=>{writes.push(rawSource);return {}});
+    const database={contentImport:{create},$transaction:vi.fn()} as unknown as PrismaService;
+    await expect(new ContentImportsService(database).create('actor',rawSource)).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+    expect(writes).toEqual([]);expect(create).not.toHaveBeenCalled();
+  });
+  it.each(['update','validate'] as const)('blocks existing 1.2 import %s and downgrade bypass',async(action)=>{
+    const updateMany=vi.fn();const record={id:'import',rawSource:'FORMAT: WorkLingoLesson/1.2',status:'DRAFT',draftRevision:1,sourceHash:'hash'};
+    const service=new ContentImportsService({contentImport:{findUnique:async()=>record,updateMany}} as unknown as PrismaService);
+    await expect(action==='update'?service.updateSource('import','actor',{rawSource:canonicalLessonSource,expectedDraftRevision:1}):service.validate('import','actor',1)).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+    expect(updateMany).not.toHaveBeenCalled();
+  });
+});

@@ -1,3 +1,4 @@
+import { assertBeginnerAuthoringDisabled } from '@worklingo/content-format';
 import { createHash, randomUUID } from 'node:crypto';
 import {
   ConflictException,
@@ -28,6 +29,12 @@ import { approvedTopicForPublication, isTopicSource } from '../../intermediate-t
 import { ensureTopicMission } from '../../intermediate-topics/topic-mission.js';
 import { buildVocabularyPublicationReview, normalizeVocabularyExpression, validateVocabularyPublicationSelection } from './publication-vocabulary.js';
 import { analyzeReviewedSource as analyzeLessonSource, assertNarrationReviewed } from './audio-narration.js';
+
+function assertRuntimeEnabled(source:string):void {
+  try { assertBeginnerAuthoringDisabled(source); } catch {
+    throw new UnprocessableEntityException({code:'BEGINNER_AUTHORING_DISABLED',message:'Beginner authoring is disabled in R1.1',statusCode:422});
+  }
+}
 
 @Injectable()
 export class ContentPublisherService {
@@ -89,6 +96,7 @@ export class ContentPublisherService {
       });
     }
 
+    assertRuntimeEnabled(contentImport.rawSource);
     if (contentImport.status === 'PUBLISHED') {
       throw new ConflictException({
         code: ContentAuthoringErrorCode.VERSION_ALREADY_PUBLISHED,
@@ -272,6 +280,7 @@ export class ContentPublisherService {
           statusCode: 409,
         });
       }
+      assertRuntimeEnabled(lockedImport.rawSource);
       if (lockedImport.sourceHash !== input.expectedSourceHash) {
         throw new ConflictException({
           code: ContentAuthoringErrorCode.SOURCE_HASH_MISMATCH,

@@ -9,6 +9,7 @@ import { parseLessonSource } from './parser.ts';
 import type { NormalizedLessonDraft } from './normalizer.ts';
 import { normalizeLessonDocument } from './normalizer.ts';
 import { validateFoundation } from './foundation-metadata.ts';
+import { validateBeginner } from './beginner-format.ts';
 import { parseDialogue } from './dialogue.ts';
 import { validateIntermediateAuthoring } from './intermediate-authoring.ts';
 
@@ -41,7 +42,7 @@ export function validateLessonDocument(
   document: LessonDocumentNode,
   options?: { maxIssues?: number },
 ): ValidationResult {
-  const issues: ContentIssue[] = [...validateFoundation(document), ...validateIntermediateAuthoring(document)];
+  const issues: ContentIssue[] = [...validateFoundation(document), ...validateBeginner(document), ...validateIntermediateAuthoring(document)];
   const maxIssues = options?.maxIssues ?? 100;
 
   function addIssue(
@@ -236,7 +237,7 @@ export function validateLessonDocument(
         `activities.${act.slug}.activity_type`,
       );
     }
-    if (!VALID_RESPONSE_TYPES.has(act.responseType)) {
+    if (!VALID_RESPONSE_TYPES.has(act.responseType) && !(document.formatVersion === 'WorkLingoLesson/1.2' && act.activityType === 'speaking' && act.responseType === 'guided_response')) {
       addIssue(
         'VAL_INVALID_ENUM',
         `Invalid response_type '${act.responseType}'. Supported: ${[...VALID_RESPONSE_TYPES].join(', ')}`,
@@ -410,7 +411,7 @@ export function validateLessonDocument(
     // Evidence checks
     for (const ev of act.evidence) {
       // Format 1.1 validates exact activity-bound content/audio lines in validateFoundation.
-      if (document.formatVersion === 'WorkLingoLesson/1.1') continue;
+      if (['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(document.formatVersion)) continue;
       const parts = ev.split(':');
       const cSlug = parts[0]!;
       const lineNumStr = parts[1];

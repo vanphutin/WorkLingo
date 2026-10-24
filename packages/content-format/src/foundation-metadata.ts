@@ -17,7 +17,7 @@ const skills = new Set(['reading', 'listening', 'speaking', 'writing']);
 const filled = (value: string | undefined): boolean => Boolean(value?.trim()) && !/\bTODO\b|\bTBD\b|\{\{/iu.test(value!);
 
 export function validateFoundation(document: LessonDocumentNode): ContentIssue[] {
-  if (document.formatVersion !== 'WorkLingoLesson/1.1') return [];
+  if (!['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(document.formatVersion)) return [];
   const issues: ContentIssue[] = [];
   const fail = (code: string, message: string, range: LessonDocumentNode['range'], path: string) => {
     issues.push({ code, message, range, path, severity: 'error' });
@@ -63,7 +63,7 @@ export function validateFoundation(document: LessonDocumentNode): ContentIssue[]
     }
     const comprehension = ['reading', 'listening'].includes(activity.activityType);
     const validResponse = comprehension ? activity.responseType === 'multiple_choice'
-      : activity.responseType === (activity.activityType === 'speaking' ? 'shadowing' : 'short_text');
+      : activity.responseType === (activity.activityType === 'speaking' ? (document.formatVersion === 'WorkLingoLesson/1.2' ? 'guided_response' : 'shadowing') : 'short_text');
     if (!validResponse || !filled(activity.question) || !activity.contentRefs.length || !activity.languageBlockRefs.length ||
       (comprehension ? !filled(activity.explanation) || !activity.evidence.length || activity.options.some((o) => !filled(o.text))
         : !filled(activity.prompt) || !filled(activity.rubric))) {
@@ -90,7 +90,7 @@ export function validateFoundation(document: LessonDocumentNode): ContentIssue[]
 }
 
 export function normalizeFoundation(document: LessonDocumentNode): FoundationMetadata | undefined {
-  if (document.formatVersion !== 'WorkLingoLesson/1.1' || !document.foundation) return undefined;
+  if (!['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(document.formatVersion) || !document.foundation) return undefined;
   return {
     category: document.foundation.category as FoundationCategory,
     templateId: document.foundation.templateId, templateVersion: 1,

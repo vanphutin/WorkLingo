@@ -31,3 +31,5 @@ export * from './intermediate-topic-groups.contracts.ts';
 export * from './intermediate-topic-json.contracts.ts';
 export * from './intermediate-topic-generation.contracts.ts';
 export * from './dashboard-overview.contracts.ts';
+
+export * from './beginner.contracts.ts';

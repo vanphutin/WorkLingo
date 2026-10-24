@@ -267,3 +267,9 @@ describe('ContentPublisherService', () => {
     });
   });
 });
+
+it('denies synthetic pre-existing validated 1.2 import before mutation/provider work',async()=>{
+  const transaction=vi.fn();const database={mutationReceipt:{findUnique:async()=>null},contentImport:{findUnique:async()=>({rawSource:'FORMAT: WorkLingoLesson/1.2',status:'VALIDATED',draftRevision:1,sourceHash:'hash'})},$transaction:transaction} as unknown as PrismaService;
+  await expect(new ContentPublisherService(database).publish('import','actor',{expectedDraftRevision:1,expectedSourceHash:'hash',idempotencyKey:'key'})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+  expect(transaction).not.toHaveBeenCalled();
+});

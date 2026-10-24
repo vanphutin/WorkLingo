@@ -9,6 +9,7 @@ import {
   type WordBankNode,
   type FoundationNode,
   type ObjectiveNode,
+  type InstructionNode,
 } from './ast.ts';
 import type { ContentIssue } from './issues.ts';
 import { createSourceLocator, type SourceRange } from './source-location.ts';
@@ -31,6 +32,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
   let lesson: LessonNode | undefined;
   let foundation: FoundationNode | undefined;
   const objectives: ObjectiveNode[] = [];
+  const instructions: InstructionNode[] = [];
 
   // Split into lines while tracking line offsets in source
   // We can scan line by line
@@ -112,7 +114,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
     if (cleanText.startsWith('FORMAT:')) {
       const parts = cleanText.split(':');
       const val = parts.slice(1).join(':').trim();
-      if (val === 'WorkLingoLesson/1.0' || val === 'WorkLingoLesson/1.1') {
+      if (['WorkLingoLesson/1.0', 'WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(val)) {
         formatFound = true;
         formatVersion = val;
       } else {
@@ -203,7 +205,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
       lineIdx++;
 
       if (sectionType === 'FOUNDATION' || sectionType === 'OBJECTIVE') {
-        if (formatVersion !== 'WorkLingoLesson/1.1') {
+        if (!['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(formatVersion)) {
           addIssue('PARSE_UNSUPPORTED_SECTION', 'Foundation metadata requires Format 1.1', line.startOffset, line.endOffset);
         }
         const fields = parseScalarSection(sectionType === 'FOUNDATION'
@@ -216,6 +218,10 @@ export function parseLessonSource(source: string): ParseLessonResult {
         } else {
           objectives.push({ range, slug: sectionSlug ?? '', statement: fields['statement']?.value ?? '', skills: (fields['skills']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean), required: fields['required']?.value ?? '' });
         }
+      } else if (sectionType === 'INSTRUCTION') {
+        if (formatVersion !== 'WorkLingoLesson/1.2') addIssue('PARSE_UNSUPPORTED_SECTION', 'Instructions require Format 1.2', line.startOffset, line.endOffset);
+        const fields = parseScalarSection(['phase', 'order', 'text'], sectionType, true);
+        instructions.push({ slug: sectionSlug ?? '', phase: fields['phase']?.value ?? '', order: Number(fields['order']?.value ?? NaN), text: fields['text']?.value ?? '', range: locator.range(sectionStartOffset, lines[lineIdx - 1]!.fullEndOffset) });
       } else if (sectionType === 'LESSON') {
         const fields = parseScalarSection(['slug', 'title', 'level', 'duration_minutes', 'objective', 'program', 'category', 'authoring_template']);
         const endOffset = lineIdx > 0 ? lines[lineIdx - 1]!.fullEndOffset : sectionStartOffset;
@@ -584,7 +590,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
           'rubric',
           'prompt',
           'answer',
-          ...(formatVersion === 'WorkLingoLesson/1.1' ? ['objective_refs'] : []),
+          ...(formatVersion === 'WorkLingoLesson/1.2' ? ['sample_answer', 'min_words', 'rubric_id', 'rubric_version'] : []),
+          ...(['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(formatVersion) ? ['objective_refs'] : []),
         ]);
 
         while (lineIdx < lines.length) {
@@ -772,7 +779,7 @@ export function parseLessonSource(source: string): ParseLessonResult {
           skills,
           contentRefs,
           languageBlockRefs,
-          ...(formatVersion === 'WorkLingoLesson/1.1' ? { objectiveRefs: (scalarFields['objective_refs']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean) } : {}),
+          ...(['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(formatVersion) ? { objectiveRefs: (scalarFields['objective_refs']?.value ?? '').split('|').map((s) => s.trim()).filter(Boolean) } : {}),
           audioRef: scalarFields['audio_ref']?.value,
           question: questionText,
           options,
@@ -781,6 +788,12 @@ export function parseLessonSource(source: string): ParseLessonResult {
           evidence: evidenceList,
           rubric: scalarFields['rubric']?.value,
           prompt: scalarFields['prompt']?.value,
+          ...(formatVersion === 'WorkLingoLesson/1.2' ? {
+            sampleAnswer: scalarFields['sample_answer']?.value,
+            minWords: Number(scalarFields['min_words']?.value ?? NaN),
+            rubricId: scalarFields['rubric_id']?.value,
+            rubricVersion: scalarFields['rubric_version']?.value,
+          } : {}),
         });
       } else {
         addIssue('PARSE_UNKNOWN_SECTION', `Unknown section type '[${sectionType}]'`, line.startOffset, line.endOffset);
@@ -850,7 +863,8 @@ export function parseLessonSource(source: string): ParseLessonResult {
     kind: 'document',
     range: locator.range(0, len),
     formatVersion,
-    ...(formatVersion === 'WorkLingoLesson/1.1' ? { foundation, objectives } : {}),
+    ...(formatVersion === 'WorkLingoLesson/1.2' ? { instructions } : {}),
+    ...(['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(formatVersion) ? { foundation, objectives } : {}),
     lesson,
     wordBanks,
     contents,

@@ -71,7 +71,7 @@ export interface ActivityOptionNode extends AstNode {
 
 export type LearningBlockType = 'activate' | 'read_decode' | 'listen_reason' | 'respond';
 export type ActivityType = 'reading' | 'listening' | 'speaking' | 'writing';
-export type ResponseType = 'multiple_choice' | 'short_text' | 'shadowing';
+export type ResponseType = 'multiple_choice' | 'short_text' | 'shadowing' | 'guided_response';
 
 export interface ActivityNode extends AstNode {
   readonly kind: 'activity';
@@ -91,9 +91,21 @@ export interface ActivityNode extends AstNode {
   readonly evidence: readonly string[];
   readonly rubric?: string | undefined;
   readonly prompt?: string | undefined;
+  readonly sampleAnswer?: string | undefined;
+  readonly minWords?: number | undefined;
+  readonly rubricId?: string | undefined;
+  readonly rubricVersion?: string | undefined;
+}
+
+export interface InstructionNode extends AstNode {
+  readonly slug: string;
+  readonly phase: string;
+  readonly order: number;
+  readonly text: string;
 }
 
 export interface LessonDocumentNode extends AstNode {
+  readonly instructions?: readonly InstructionNode[] | undefined;
   readonly kind: 'document';
   readonly formatVersion: string;
   readonly foundation?: FoundationNode | undefined;

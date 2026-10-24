@@ -56,7 +56,9 @@ export interface NormalizedResponsePayload {
   readonly sampleAnswer: string;
   readonly requiredPhrases: readonly string[];
   readonly minWords: number;
-  readonly mode?: 'shadowing' | undefined;
+  readonly mode?: 'shadowing' | 'guided_response' | undefined;
+  readonly rubricId?: string | undefined;
+  readonly rubricVersion?: string | undefined;
 }
 
 export interface NormalizedActivity {
@@ -80,6 +82,8 @@ export interface NormalizedAudioScript {
 }
 
 export interface NormalizedLessonDraft {
+  readonly formatVersion?: 'WorkLingoLesson/1.2';
+  readonly instructions?: readonly { slug: string; phase: 'readDecode' | 'listenReason' | 'respond'; order: number; text: string }[];
   readonly foundation?: FoundationMetadata | undefined;
   readonly slug: string;
   readonly title: string;
@@ -230,6 +234,12 @@ export function normalizeLessonDocument(
       };
     }
 
+    if (document.formatVersion === 'WorkLingoLesson/1.2' && (activityType === 'speaking' || activityType === 'writing')) {
+      payload = { prompt: act.question || act.prompt!, sampleAnswer: act.sampleAnswer!, requiredPhrases: [], minWords: act.minWords!,
+        rubricId: act.rubricId!, rubricVersion: act.rubricVersion!,
+        ...(activityType === 'speaking' ? { mode: 'guided_response' as const } : {}),
+      };
+    }
     return {
       slug: act.slug,
       order: index,
@@ -243,6 +253,10 @@ export function normalizeLessonDocument(
   });
 
   return {
+    ...(document.formatVersion === 'WorkLingoLesson/1.2' ? {
+      formatVersion: 'WorkLingoLesson/1.2' as const,
+      instructions: (document.instructions ?? []).map(({slug, phase, order, text}) => ({slug, phase: phase as 'readDecode'|'listenReason'|'respond', order, text})),
+    } : {}),
     slug: lesson.slug,
     ...(document.foundation ? { foundation: normalizeFoundation(document) } : {}),
     title: lesson.title,

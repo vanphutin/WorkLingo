@@ -1,3 +1,4 @@
+import { assertBeginnerAuthoringDisabled } from '@worklingo/content-format';
 import { createHash } from 'node:crypto';
 import {
   BadRequestException,
@@ -6,6 +7,7 @@ import {
   Injectable,
   NotFoundException,
   Optional,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import {
@@ -31,6 +33,12 @@ import { analyzeReviewedSource as analyzeLessonSource } from './audio-narration.
 import { lockTopicGroups } from '../../intermediate-topics/topic-group-lock.js';
 import { buildVocabularyPublicationReview } from './publication-vocabulary.js';
 
+function assertRuntimeEnabled(source:string):void {
+  try { assertBeginnerAuthoringDisabled(source); } catch {
+    throw new UnprocessableEntityException({code:'BEGINNER_AUTHORING_DISABLED',message:'Beginner authoring is disabled in R1.1',statusCode:422});
+  }
+}
+
 @Injectable()
 export class ContentImportsService {
   async getVocabularyReview(id: string) {
@@ -44,6 +52,7 @@ export class ContentImportsService {
   ) {}
 
   async create(actorId: string, rawSource: string, topicGroupId?: string): Promise<ContentImportDto> {
+    assertRuntimeEnabled(rawSource);
     if (!createContentImportSchema.safeParse({ rawSource, topicGroupId }).success) throw new BadRequestException('Invalid content import request');
     if (topicGroupId === undefined && isTopicSource(rawSource)) {
       throw new BadRequestException({
@@ -106,6 +115,7 @@ export class ContentImportsService {
     actorId: string,
     input: UpdateContentSourceInput,
   ): Promise<ContentImportDto> {
+    assertRuntimeEnabled(input.rawSource);
     const existing = await this.database.contentImport.findUnique({
       where: { id },
     });
@@ -118,6 +128,7 @@ export class ContentImportsService {
       });
     }
 
+    assertRuntimeEnabled(existing.rawSource);
     if (existing.status === 'PUBLISHED' || existing.status === 'ARCHIVED') {
       throw new ConflictException({
         code: ContentAuthoringErrorCode.VERSION_ALREADY_PUBLISHED,
@@ -193,6 +204,7 @@ export class ContentImportsService {
       });
     }
 
+    assertRuntimeEnabled(existing.rawSource);
     if (existing.status === 'PUBLISHED' || existing.status === 'ARCHIVED') {
       throw new ConflictException({
         code: ContentAuthoringErrorCode.VERSION_ALREADY_PUBLISHED,
