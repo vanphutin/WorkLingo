@@ -4,7 +4,7 @@
   "id": "MND-20261024-001",
   "status": "captured",
   "created": "2026-10-24",
-  "updated": "2026-10-24T08:12:23.171Z",
+  "updated": "2026-10-24T08:37:33.766Z",
   "title": "Enable Beginner admin authoring and learner enrollment for Foundation and Basic pathways",
   "type": "feature",
   "owner": null,
@@ -53,10 +53,15 @@
       "kind": "document",
       "reference": "docs/superpowers/specs/2026-10-24-beginner-final-refinement.md:1",
       "observation": "Human requested final design refinement only: complete Lesson knowledge map and editorial production plan, compare pilots, minimize Video MVP and separate readiness states; no implementation approval."
+    },
+    {
+      "kind": "document",
+      "reference": "docs/superpowers/plans/2026-10-24-beginner-implementation.md:1",
+      "observation": "On 2026-10-24 the human accepted product direction (one Beginner/two Paths/five Stages/Unit=Mission, editorial 20 Unit/80 Lesson, MG01-MG02 and optional video) and explicitly requested implementation planning/review only. Resource update policy, format/planner/rubric changes, content calibration and all execution permissions remain unapproved."
     }
   ],
   "acceptance": [
-    "Confirm one Beginner program with two paths versus two separate programs before implementation.",
+    "Preserve recorded directional agreement while requiring scoped human approval before code, migrations, content publication, cohort access or production changes.",
     "Admin authored Foundation/Basic lessons bind to the intended program/path and pass Foundation content validation.",
     "A new learner can enter reviewed Beginner content with a valid program enrollment and resume a version-pinned four-skill session.",
     "Unavailable/unpublished/foreign-program content remains blocked and legacy progress remains unchanged.",
@@ -65,7 +70,8 @@
     "Pin approved resource versions, captions and transcript to lesson versions with access control, archival/revocation and historical-session behavior.",
     "Main Learning Lessons retain four-skill/evaluated evidence requirements; supplementary videos do not require four skills or create completion/mastery. MVP has no viewing telemetry/percentage.",
     "Describe curriculum revision/cohort compatibility, cross-path transitions and separate Intermediate admission without migrating legacy data.",
-    "Recommend sequential MG01+MG02 pilot, keep stage transition disabled, and isolate direct-entry Basic assessment/exemption in R5 without fake completion. Define R0-R6 dependencies/acceptance/rollback and remaining product decisions."
+    "Use the linked R1-R4 execution proposal for MG01-MG02, with exact-Lesson session selection, real four-skill tasks, compatibility policy, tests, migration safety and rollback; direct-entry Basic/stage transition/analytics are outside this plan and cannot create fake completion.",
+    "Compatible supplementary releases may reach currently enrolled learners only under an approved policy that preserves attempts/evaluation/mastery/completion and historical session pins including NONE. Assessment changes require new lesson/curriculum approval; all eight pilot lessons need real source/audio/rubric and timing review before learner acceptance."
   ],
   "risk": {
     "level": "high",
@@ -75,7 +81,7 @@
     "rollback": "Disable new Beginner admission/selection while preserving published versions, existing enrollments and resumable sessions. Do not delete or rewrite history."
   },
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
-  "plan_reference": null,
+  "plan_reference": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
   "sprint_reference": null,
   "approval": null,
   "verification": [],
@@ -106,15 +112,30 @@
       "reason": "Proposal revised; prior approval revoked; requires new triage.",
       "event": "update",
       "reference": null
+    },
+    {
+      "at": "2026-10-24T08:37:33.766Z",
+      "actor": "mandate-steward",
+      "from": "captured",
+      "to": "captured",
+      "reason": "Proposal revised; prior approval revoked; requires new triage.",
+      "event": "update",
+      "reference": null
     }
   ]
 }
 ---
 
-## Current refinement (proposed)
+## Current planning proposal (not execution approval)
 
-Use docs/superpowers/specs/2026-10-24-beginner-final-refinement.md as the current pilot/MVP/dependency proposal, with its linked 80-Lesson Knowledge Map and planned Video Production Plan. It refines the original design and reuses the same mandate/backlog. Recommend MG01+MG02 for learning progression; one Beginner/two Paths/five Stages/Unit=Mission remain unapproved options. Supplementary Resource is not a Learning Lesson and does not produce competence evidence. Video Library MVP has four resource concepts, exact version access/history and reviewed captions/transcript; ResourceEngagement/coverage/analytics are deferred to R6.
+Use [docs/superpowers/plans/2026-10-24-beginner-implementation.md](../../docs/superpowers/plans/2026-10-24-beginner-implementation.md) as the proposed R1-R4 implementation plan, linked to the existing refinement, Knowledge Map and production plan. The human directionally accepted one Beginner Program, two Paths, five Stages, Unit=Mission, 20 Unit/80 Lesson editorial framework, MG01-to-MG02 and optional video. This records the actual 2026-10-24 planning request; it does not authorize execution or change status to approved.
 
-## Remaining authority and scope
+New source-backed gaps: current curriculum revision lookup selects the first Lesson; current Foundation authoring supports shadowing and a fixed minimum word floor; activity count checks do not prove a 45-minute lesson. The plan proposes explicit Lesson targeting, additive Beginner format/planner/rubrics and eight real source/audio task packages. All eight remain PLANNED until authored, reviewed and timed.
 
-Product choices in refinement section8 remain awaiting approval. Direct-entry Basic assessment/admission is required before R5, not before initial F0 pilot. Lesson readiness, Unit mastery and Stage transition readiness are separate; pilot completion is not CEFR certification. No code, paid AI, media production, migrations, seed, publication, legacy conversion or public access was performed or approved. Intermediate/IELTS/Foundation legacy/PR18 remain untouched.
+The proposed compatible supplementary release layer is a deliberate exception to the earlier all-binding-changes-require-new-curriculum policy. A fifth release concept, immutable asset versions and session pin/NONE preserve historical sessions and assessment evidence while offering new reviewed supplementary material to the same base LessonVersion. This policy is awaiting human approval; assessment changes still require new LessonVersion/CurriculumRevision/manifest approval.
+
+## Authority, dependencies and rollback
+
+Mandate remains captured with approval=null. Implementation, migrations, test-data import, publication, learner cohort, merge/push/deploy/public access need their own matching authorization. R1 core authoring/content precedes R2 closed-cohort progression; R3 library can be separate; R4 binding/player depends on R1/R3 and R2 for learner acceptance. Basic direct-entry, full-stage checkpoints/transitions, Intermediate admission and analytics are outside R1-R4.
+
+Rollback disables new admission/writes/player and retains history, immutable content/files and readers/evaluators for active sessions. Do not downgrade to readers that cannot parse new Beginner payloads. Do not drop referenced data or reset progress. Intermediate/IELTS/Foundation legacy/PR18 implementation and databases are untouched by this planning task.
