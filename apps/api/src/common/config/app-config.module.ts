@@ -9,6 +9,7 @@ import { parseAppConfig } from './app-config.schema';
   imports: [
     ConfigModule.forRoot({
       cache: true,
+      ignoreEnvFile: shouldIgnoreBeginnerEnvFiles(process.env),
       envFilePath: ['.env', '../../.env'],
       isGlobal: true,
       validate: parseAppConfig,
@@ -16,3 +17,5 @@ import { parseAppConfig } from './app-config.schema';
   ],
 })
 export class AppConfigModule {}
+
+export function shouldIgnoreBeginnerEnvFiles(env:Record<string,string|undefined>):boolean{return env.NODE_ENV==='test'&&env.WORKLINGO_BEGINNER_ISOLATED_TEST==='1';}
