@@ -77,3 +77,7 @@ Phân tầng sư phạm đề xuất, chưa phải chuẩn đã hiệu chuẩn: 
 ## Bổ sung phân tích curriculum/video (2026-10-24)
 
 Xem [thiết kế mở rộng](../../docs/superpowers/specs/2026-10-24-beginner-curriculum-resources-design.md). Phát hiện mới: Unit có thể ánh xạ Mission; storage hiện đọc Buffer nên chưa đủ cho video lớn; roadmap/prerequisite dùng latest/exact revision nên cần policy cohort khi bổ sung video; progression cùng Path chưa tự chuyển Mất gốc sang Cơ bản. MND-20261024-001 được mở rộng ở trạng thái captured, không có approval triển khai. Snapshot PR18 ở phần đầu là lịch sử; PR18 đã merge tại 752c19c và không bị thay đổi.
+
+## Refinement cuối trước approval (2026-10-24)
+
+Xem [refinement hiện hành](../../docs/superpowers/specs/2026-10-24-beginner-final-refinement.md), Knowledge Map 20 Unit/80 Lesson và Video Production Plan liên kết. Pilot đề xuất đổi từ MG01+CB01 sang MG01+MG02; Basic direct-entry chuyển đợt sau với assessment/admission thật. Video Library MVP còn bốn khái niệm, không viewing analytics/% xem; Supplementary Resource không thành Learning Lesson hoặc mastery. Mọi cấu trúc/roadmap vẫn PROPOSED; không triển khai hoặc đo lại DB.
