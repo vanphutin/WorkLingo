@@ -1,0 +1,551 @@
+{
+  "schemaVersion": 1,
+  "scope": "Beginner R1.2a preapproval; not execution authority",
+  "date": "2026-10-24",
+  "groups": {
+    "contracts": {
+      "modify": [
+        "packages/contracts/src/index.ts"
+      ],
+      "create": [
+        "packages/contracts/src/beginner-authoring.contracts.ts",
+        "packages/contracts/src/beginner-authoring.contracts.spec.ts",
+        "packages/contracts/src/beginner-editorial-plan.ts",
+        "packages/contracts/src/beginner-editorial-plan.spec.ts"
+      ]
+    },
+    "policy": {
+      "modify": [],
+      "create": [
+        "apps/api/src/beginner/domain/beginner-authoring-policy.ts",
+        "apps/api/src/beginner/domain/beginner-authoring-policy.spec.ts",
+        "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+        "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+        "apps/api/src/beginner/domain/beginner-publication-policy.ts",
+        "apps/api/src/beginner/domain/beginner-publication-policy.spec.ts"
+      ]
+    },
+    "authoring": {
+      "modify": [
+        "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "apps/api/src/content-authoring/application/content-imports.service.spec.ts",
+        "apps/api/src/content-authoring/application/content-publisher.service.spec.ts",
+        "apps/api/src/content-authoring/application/audio-generation.service.spec.ts",
+        "apps/api/src/app.module.ts"
+      ],
+      "create": [
+        "apps/api/src/beginner/application/beginner-authoring.service.ts",
+        "apps/api/src/beginner/application/beginner-authoring.service.spec.ts",
+        "apps/api/src/beginner/beginner-admin.controller.ts",
+        "apps/api/src/beginner/beginner-admin.controller.spec.ts",
+        "apps/api/src/beginner/dto/beginner-authoring.dto.ts",
+        "apps/api/src/beginner/beginner.module.ts"
+      ]
+    },
+    "curriculum": {
+      "modify": [
+        "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts",
+        "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+        "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.spec.ts",
+        "apps/web/src/features/admin-curriculum/foundation-definition-editor.tsx",
+        "apps/web/src/features/admin-curriculum/foundation-definition-editor.test.tsx"
+      ],
+      "create": [
+        "apps/api/src/curriculum-foundation/application/foundation-validation.spec.ts",
+        "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.spec.ts"
+      ]
+    },
+    "preview": {
+      "modify": [
+        "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "apps/web/src/features/learning-session/activity-renderer.tsx"
+      ],
+      "create": [
+        "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "apps/api/src/learning-sessions/domain/learner-activity-projection.spec.ts",
+        "apps/web/src/features/learning-session/activity-renderer.test.tsx"
+      ]
+    },
+    "web": {
+      "modify": [
+        "apps/web/src/features/admin-dashboard/admin-navigation-model.ts",
+        "apps/web/src/features/admin-dashboard/admin-navigation-config.ts",
+        "apps/web/src/features/admin-dashboard/admin-sidebar.tsx",
+        "apps/web/src/features/admin-dashboard/admin-sidebar.test.tsx",
+        "apps/web/src/features/admin-dashboard/admin-navigation.test.tsx",
+        "apps/web/src/features/admin-dashboard/admin-navigation-inventory.test.tsx"
+      ],
+      "create": [
+        "apps/web/src/app/(admin)/admin/programs/beginner/page.tsx",
+        "apps/web/src/features/admin-beginner/beginner-workspace.tsx",
+        "apps/web/src/features/admin-beginner/beginner-workspace.test.tsx",
+        "apps/web/src/features/admin-beginner/beginner-lesson-editor.tsx",
+        "apps/web/src/features/admin-beginner/beginner-lesson-editor.test.tsx",
+        "apps/web/src/features/admin-beginner/beginner-learner-preview.tsx",
+        "apps/web/src/features/admin-beginner/beginner-learner-preview.test.tsx",
+        "apps/web/src/features/admin-beginner/beginner.css",
+        "apps/web/src/i18n/messages/adminBeginner.ts",
+        "apps/web/src/lib/api/beginner-admin-client.ts",
+        "apps/web/src/lib/api/beginner-admin-client.test.ts"
+      ]
+    },
+    "registry": {
+      "modify": [],
+      "create": [
+        "apps/api/src/beginner/application/beginner-release.service.ts",
+        "apps/api/src/beginner/application/beginner-release.service.spec.ts"
+      ]
+    },
+    "harness": {
+      "modify": [
+        "apps/api/src/common/config/app-config.module.ts"
+      ],
+      "create": [
+        "apps/api/vitest.beginner.config.ts",
+        "apps/api/vitest.beginner.integration.config.ts",
+        "apps/api/test/integration/beginner-test-harness.ts",
+        "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+        "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+        "apps/api/test/fixtures/beginner/authoring/fixture-factory.ts",
+        "apps/api/src/common/config/app-config.module.spec.ts"
+      ]
+    },
+    "e2e": {
+      "modify": [],
+      "create": [
+        "apps/web/playwright.beginner-admin.config.ts",
+        "apps/web/e2e/beginner-admin.spec.ts",
+        "apps/web/e2e/beginner-admin-history.spec.ts"
+      ]
+    },
+    "governance": {
+      "modify": [],
+      "create": [
+        "mandate/reports/2026-10-24-beginner-r12a-human-approval.md",
+        "mandate/reports/2026-10-24-beginner-r12a-verification.md"
+      ]
+    }
+  },
+  "allowlist": {
+    "modify": [
+      "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.spec.ts",
+      "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+      "apps/api/src/app.module.ts",
+      "apps/api/src/common/config/app-config.module.ts",
+      "apps/api/src/content-authoring/application/audio-generation.service.spec.ts",
+      "apps/api/src/content-authoring/application/audio-generation.service.ts",
+      "apps/api/src/content-authoring/application/content-imports.service.spec.ts",
+      "apps/api/src/content-authoring/application/content-imports.service.ts",
+      "apps/api/src/content-authoring/application/content-publisher.service.spec.ts",
+      "apps/api/src/content-authoring/application/content-publisher.service.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+      "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+      "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+      "apps/web/src/features/admin-curriculum/foundation-definition-editor.test.tsx",
+      "apps/web/src/features/admin-curriculum/foundation-definition-editor.tsx",
+      "apps/web/src/features/admin-dashboard/admin-navigation-config.ts",
+      "apps/web/src/features/admin-dashboard/admin-navigation-inventory.test.tsx",
+      "apps/web/src/features/admin-dashboard/admin-navigation-model.ts",
+      "apps/web/src/features/admin-dashboard/admin-navigation.test.tsx",
+      "apps/web/src/features/admin-dashboard/admin-sidebar.test.tsx",
+      "apps/web/src/features/admin-dashboard/admin-sidebar.tsx",
+      "apps/web/src/features/learning-session/activity-renderer.tsx",
+      "packages/contracts/src/index.ts"
+    ],
+    "create": [
+      "apps/api/src/beginner/application/beginner-authoring.service.spec.ts",
+      "apps/api/src/beginner/application/beginner-authoring.service.ts",
+      "apps/api/src/beginner/application/beginner-release.service.spec.ts",
+      "apps/api/src/beginner/application/beginner-release.service.ts",
+      "apps/api/src/beginner/beginner-admin.controller.spec.ts",
+      "apps/api/src/beginner/beginner-admin.controller.ts",
+      "apps/api/src/beginner/beginner.module.ts",
+      "apps/api/src/beginner/domain/beginner-authoring-policy.spec.ts",
+      "apps/api/src/beginner/domain/beginner-authoring-policy.ts",
+      "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+      "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+      "apps/api/src/beginner/domain/beginner-publication-policy.spec.ts",
+      "apps/api/src/beginner/domain/beginner-publication-policy.ts",
+      "apps/api/src/beginner/dto/beginner-authoring.dto.ts",
+      "apps/api/src/common/config/app-config.module.spec.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.spec.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-validation.spec.ts",
+      "apps/api/src/learning-sessions/domain/learner-activity-projection.spec.ts",
+      "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+      "apps/api/test/fixtures/beginner/authoring/fixture-factory.ts",
+      "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+      "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+      "apps/api/test/integration/beginner-test-harness.ts",
+      "apps/api/vitest.beginner.config.ts",
+      "apps/api/vitest.beginner.integration.config.ts",
+      "apps/web/e2e/beginner-admin-history.spec.ts",
+      "apps/web/e2e/beginner-admin.spec.ts",
+      "apps/web/playwright.beginner-admin.config.ts",
+      "apps/web/src/app/(admin)/admin/programs/beginner/page.tsx",
+      "apps/web/src/features/admin-beginner/beginner-learner-preview.test.tsx",
+      "apps/web/src/features/admin-beginner/beginner-learner-preview.tsx",
+      "apps/web/src/features/admin-beginner/beginner-lesson-editor.test.tsx",
+      "apps/web/src/features/admin-beginner/beginner-lesson-editor.tsx",
+      "apps/web/src/features/admin-beginner/beginner-workspace.test.tsx",
+      "apps/web/src/features/admin-beginner/beginner-workspace.tsx",
+      "apps/web/src/features/admin-beginner/beginner.css",
+      "apps/web/src/features/learning-session/activity-renderer.test.tsx",
+      "apps/web/src/i18n/messages/adminBeginner.ts",
+      "apps/web/src/lib/api/beginner-admin-client.test.ts",
+      "apps/web/src/lib/api/beginner-admin-client.ts",
+      "mandate/reports/2026-10-24-beginner-r12a-human-approval.md",
+      "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+      "packages/contracts/src/beginner-authoring.contracts.spec.ts",
+      "packages/contracts/src/beginner-authoring.contracts.ts",
+      "packages/contracts/src/beginner-editorial-plan.spec.ts",
+      "packages/contracts/src/beginner-editorial-plan.ts"
+    ]
+  },
+  "baseline": {
+    "head": "5963dbf7ed5b448b77c8a8b3b48f476a90694caf",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "initialTrackedAndUntrackedChanges": [],
+    "sourceFiles": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "769f60e1fa72cdb3af474c1fc4fb4e0ba2539de061b8f5c5a4d9517ab45456e3"
+      },
+      {
+        "path": "apps/api/package.json",
+        "sha256": "1b541ab64de77e5ccaeae934af0aacb7d341077b2a208eb808d5ad40329c13f7"
+      },
+      {
+        "path": "apps/api/prisma/schema.prisma",
+        "sha256": "62cf277eb66200feb757f145d38534d1d67f8a7f12c3f6e3880cbfbf8e9ffd95"
+      },
+      {
+        "path": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.spec.ts",
+        "sha256": "306581779747062b78264f027d287aad58dc3b85540f058cef2788e14de8a79a"
+      },
+      {
+        "path": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+        "sha256": "a305bb234af70518817a5162d89d8c5c594f1020ff2e0b82fad2de5ad13901fe"
+      },
+      {
+        "path": "apps/api/src/app.module.ts",
+        "sha256": "6de0ded8ea83ffe28b23ad75f1cb057d3e82cdedcc0ae7727f00b4cf6db0e81e"
+      },
+      {
+        "path": "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.ts",
+        "sha256": "d749d356fa4143a555c1249b36e8e9f2385c0caae2a89fc6d6bc6bbaf8399da4"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.schema.ts",
+        "sha256": "753b4b7f21331a1e4de2494bc10850318cbaf5a798c5b3b27a262c7017689106"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.service.spec.ts",
+        "sha256": "72248937f4a96bf0012c319a52ec908f846386fdb30770c0af5ae06f1c1f8b84"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "sha256": "89993af7301b2f66e51c0f73d825d19e717c89c6dca4c3419fadd67c609683d0"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-imports.service.spec.ts",
+        "sha256": "357c0bfa41c0d924b3b707f64dba4861719ab5e4559fb65afe0ec307f393af61"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "sha256": "d94bc93094daefdce41c8ce7699a59a1cd544d967fb1f1ecb24cb3ec6ed2cc42"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.spec.ts",
+        "sha256": "d0fbdbb13b71add3404d8f24cabe537acdea31c8fa4f9ece223e086e9b85e4de"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "f75f5c5e60ff1d42de4f11dbdb632d5a38e41d216409249303fcf45cae3a6fba"
+      },
+      {
+        "path": "apps/api/src/content-authoring/audio.controller.ts",
+        "sha256": "fdc658239f1fe3c8f0b15de9eef7a660c0c3d047a8b33b6e6fa36cc7f7849d2e"
+      },
+      {
+        "path": "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "sha256": "21a0c0e07e83d8516a00e8ed241b0e5eb4b5f9a187c513e0c5fd50c8184ccb1f"
+      },
+      {
+        "path": "apps/api/src/content-authoring/content-authoring.module.ts",
+        "sha256": "88eec03c3e4cbd1b1754ec30875bae866d50815e78719b649e3d5afd92766be2"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+        "sha256": "8d52310a2f6837a7c3f6c507e83404af94e1b6f5f2aa4091996ac8f89c8dc12c"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts",
+        "sha256": "c70ab1119c2232590c59af44e3af4dfe6c86b2fe9c26a7c0e960cab98a6a8bec"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "9330c96ddf94f722f01132938d508e8a18c37994d768c952ad35fd9914cf075e"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/curriculum-foundation.module.ts",
+        "sha256": "2b413337bd70a799d48aa3e187a102c807ca737305e3e838ef505a202c48f30b"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "sha256": "8503a069b0c2e9a437ee5f2f716ed3a177ede93ffcb7d827aa8fa0f633a8f154"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "sha256": "d031c47167ab41eb97c53cfd7598fb203750ab64756c960253585ce991e022c2"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+        "sha256": "99b5a2afb8e8824f37ce723735d1cd5505611559eb0c54a839d639e044b4c4dc"
+      },
+      {
+        "path": "apps/api/src/storage/domain/object-storage.port.ts",
+        "sha256": "3b702f4dd9709ed10d41055fc8352a62a40eb86f3192eaaa26184c08944cddf9"
+      },
+      {
+        "path": "apps/api/test/integration/learning-session-test-harness.ts",
+        "sha256": "b5b615db8295c60c8b51df33a22c961909a57952225ead7beade1660dab525bb"
+      },
+      {
+        "path": "apps/api/vitest.config.ts",
+        "sha256": "c0857a1d341d15c4a15b264ee174db678abebfbe2c642f4c00ee7084f9ad68a4"
+      },
+      {
+        "path": "apps/web/package.json",
+        "sha256": "8aabe1962174153308d76a5fc8b0b199b53addeacd89f09f618d339b9235c446"
+      },
+      {
+        "path": "apps/web/playwright.config.ts",
+        "sha256": "a347cffb361cebb5e9e3a036145110caf9c48d1b3da07f8ae4f649065792ca01"
+      },
+      {
+        "path": "apps/web/src/app/(admin)/layout.tsx",
+        "sha256": "a4f879fe1073f5884503af0ffd0bd3ada8c7a25594adb6f0f8502b47b91e07f8"
+      },
+      {
+        "path": "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx",
+        "sha256": "247d3484f6cfe8f745b4b7dc184f2f60752553632675e8fc650cfd601eca6404"
+      },
+      {
+        "path": "apps/web/src/features/admin-curriculum/foundation-definition-editor.test.tsx",
+        "sha256": "e06a42027fbfe105dd67c5adc40956d47954060a2fe6a8c9059c56d7feeaf212"
+      },
+      {
+        "path": "apps/web/src/features/admin-curriculum/foundation-definition-editor.tsx",
+        "sha256": "48e390079aa39e0e6410ff22334877d6b91e6ec0a4788ba05c54f06295b67569"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation-config.ts",
+        "sha256": "16d3ffc77d56795618098bc28cbb8aa8124c17575f1fe81ba2615bd61fdd67e9"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation-inventory.test.tsx",
+        "sha256": "b7fce2f878d7021cb348b6464e465fc3e2b4747ccce394651baad06ac714a42a"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation-model.ts",
+        "sha256": "3cf52e29bd639ca0c7daba49ddc0aac33206d6ea664796d5aaba65b27aa90445"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation.test.tsx",
+        "sha256": "d0c49fd1c1029c5c7eef450083515a4ef3a6aa57ba8563ae6173175b19a78bd1"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-sidebar.test.tsx",
+        "sha256": "fbaa9fe2febfa1d1986ee7dcff58b0bd1a9d7b58037c9e7becf34d77e8544ee2"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-sidebar.tsx",
+        "sha256": "7ae3339ff9e3d246508dd0c3334931be5bcbee14b7e1328e20c7da1ba8f8ceda"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-renderer.tsx",
+        "sha256": "55f680723de756bee55f2a7e69adbb994d9874721f77e02d90ec513fc338662f"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-renderers/speaking-activity.tsx",
+        "sha256": "98dac5ef0eb290357268c06fb0e2bedf0938ad48c84d17529dc11d577ed7b0ae"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-workspace.tsx",
+        "sha256": "46ce62044bae7688669ac501d72b95ab0fec20fe928998b18c5ab73fd02d2766"
+      },
+      {
+        "path": "docs/IMPLEMENTATION_ROADMAP.md",
+        "sha256": "376a01de2b368c1e33190ca1d4ec8a253da5aaa2157efaf369f94e1dfb3c27f2"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-curriculum-resources-design.md",
+        "sha256": "4d6e44ac1cb814cb5f27f6a25905787e02d3d3fe8a0a75ac1d696f8682ba5def"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-final-refinement.md",
+        "sha256": "131fee5e82c77c20e540a121817cf4808ccd96c19bacf56b4af9915219acb051"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-video-production-plan.md",
+        "sha256": "25d34657d54410b2c8ae96c6f60fd6767d44a2783f58356b7bd94b2578c053db"
+      },
+      {
+        "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+        "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+      },
+      {
+        "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+        "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r11-verification.md",
+        "sha256": "0507d280c2733ff09aff26a660fe614f1bb0c449d96796c3b0f8b030dab18995"
+      },
+      {
+        "path": "packages/content-format/src/beginner-format.ts",
+        "sha256": "a633c4acc718adf65c860ce838b0b9fbfbd1cf2911882457320d6a7256bc2dc2"
+      },
+      {
+        "path": "packages/contracts/src/beginner.contracts.ts",
+        "sha256": "8d4cec9e90e8bcc6f1c2dc927a616a892e09b8268fde12c13435ed75512205c0"
+      },
+      {
+        "path": "packages/contracts/src/index.ts",
+        "sha256": "4eea4deb0a50e0584bf28198070137180f6b2296c71cdbb84a340080a84542cb"
+      }
+    ],
+    "implementationCreatePathsAbsent": [
+      "apps/api/src/beginner/application/beginner-authoring.service.spec.ts",
+      "apps/api/src/beginner/application/beginner-authoring.service.ts",
+      "apps/api/src/beginner/application/beginner-release.service.spec.ts",
+      "apps/api/src/beginner/application/beginner-release.service.ts",
+      "apps/api/src/beginner/beginner-admin.controller.spec.ts",
+      "apps/api/src/beginner/beginner-admin.controller.ts",
+      "apps/api/src/beginner/beginner.module.ts",
+      "apps/api/src/beginner/domain/beginner-authoring-policy.spec.ts",
+      "apps/api/src/beginner/domain/beginner-authoring-policy.ts",
+      "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+      "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+      "apps/api/src/beginner/domain/beginner-publication-policy.spec.ts",
+      "apps/api/src/beginner/domain/beginner-publication-policy.ts",
+      "apps/api/src/beginner/dto/beginner-authoring.dto.ts",
+      "apps/api/src/common/config/app-config.module.spec.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.spec.ts",
+      "apps/api/src/curriculum-foundation/application/foundation-validation.spec.ts",
+      "apps/api/src/learning-sessions/domain/learner-activity-projection.spec.ts",
+      "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+      "apps/api/test/fixtures/beginner/authoring/fixture-factory.ts",
+      "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+      "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+      "apps/api/test/integration/beginner-test-harness.ts",
+      "apps/api/vitest.beginner.config.ts",
+      "apps/api/vitest.beginner.integration.config.ts",
+      "apps/web/e2e/beginner-admin-history.spec.ts",
+      "apps/web/e2e/beginner-admin.spec.ts",
+      "apps/web/playwright.beginner-admin.config.ts",
+      "apps/web/src/app/(admin)/admin/programs/beginner/page.tsx",
+      "apps/web/src/features/admin-beginner/beginner-learner-preview.test.tsx",
+      "apps/web/src/features/admin-beginner/beginner-learner-preview.tsx",
+      "apps/web/src/features/admin-beginner/beginner-lesson-editor.test.tsx",
+      "apps/web/src/features/admin-beginner/beginner-lesson-editor.tsx",
+      "apps/web/src/features/admin-beginner/beginner-workspace.test.tsx",
+      "apps/web/src/features/admin-beginner/beginner-workspace.tsx",
+      "apps/web/src/features/admin-beginner/beginner.css",
+      "apps/web/src/features/learning-session/activity-renderer.test.tsx",
+      "apps/web/src/i18n/messages/adminBeginner.ts",
+      "apps/web/src/lib/api/beginner-admin-client.test.ts",
+      "apps/web/src/lib/api/beginner-admin-client.ts",
+      "packages/contracts/src/beginner-authoring.contracts.spec.ts",
+      "packages/contracts/src/beginner-authoring.contracts.ts",
+      "packages/contracts/src/beginner-editorial-plan.spec.ts",
+      "packages/contracts/src/beginner-editorial-plan.ts"
+    ]
+  },
+  "readOnlyBaseline": [
+    "AGENTS.md",
+    "apps/api/package.json",
+    "apps/api/prisma/schema.prisma",
+    "apps/api/src/auth/infrastructure/roles.guard.ts",
+    "apps/api/src/common/config/app-config.schema.ts",
+    "apps/api/src/content-authoring/audio.controller.ts",
+    "apps/api/src/content-authoring/content-authoring.controller.ts",
+    "apps/api/src/content-authoring/content-authoring.module.ts",
+    "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+    "apps/api/src/curriculum-foundation/curriculum-foundation.module.ts",
+    "apps/api/src/curriculum/domain/curriculum.types.ts",
+    "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+    "apps/api/src/storage/domain/object-storage.port.ts",
+    "apps/api/test/integration/learning-session-test-harness.ts",
+    "apps/api/vitest.config.ts",
+    "apps/web/package.json",
+    "apps/web/playwright.config.ts",
+    "apps/web/src/app/(admin)/layout.tsx",
+    "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx",
+    "apps/web/src/features/learning-session/activity-renderers/speaking-activity.tsx",
+    "apps/web/src/features/learning-session/activity-workspace.tsx",
+    "docs/IMPLEMENTATION_ROADMAP.md",
+    "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+    "docs/superpowers/specs/2026-10-24-beginner-curriculum-resources-design.md",
+    "docs/superpowers/specs/2026-10-24-beginner-final-refinement.md",
+    "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+    "docs/superpowers/specs/2026-10-24-beginner-video-production-plan.md",
+    "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+    "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+    "mandate/reports/2026-10-24-beginner-r11-verification.md",
+    "packages/content-format/src/beginner-format.ts",
+    "packages/contracts/src/beginner.contracts.ts"
+  ],
+  "hashAlgorithm": {
+    "files": "SHA-256 raw file bytes for baseline; plan/review UTF-8 with CRLF normalized to LF",
+    "fingerprints": "SHA-256 UTF-8 JSON; recursively sorted object keys; arrays retain stored sorted path order"
+  },
+  "fingerprints": {
+    "allowlist": "5c976d313378bd6fb5cb1831cf03ec0af9ed24cbfdafc842fb08d826a5538259",
+    "baseline": "ec1bea8b364bb983af76cf595b35a2ab347bc713571ba9fe59eebecf04c1dd13"
+  },
+  "permissions": {
+    "current": "Documents and mandate capture/review only",
+    "softwareExecutionApproved": false,
+    "testEnvironmentApproved": false,
+    "fixtureImportApproved": false,
+    "fixtureAudioAttachmentApproved": false,
+    "testPublicationApproved": false,
+    "actualReleaseApproval": false,
+    "productionApproved": false,
+    "proposedEnvironment": "Dedicated disposable loopback database/role and owned temp storage/registry; exact target requires separate permission envelope"
+  },
+  "governance": {
+    "mutableOnlyAfterHumanApproval": [
+      "new child mandate via CLI",
+      "mandate/INDEX.md generated by CLI",
+      "mandate/reports/2026-10-24-beginner-r12a-human-approval.md",
+      "mandate/reports/2026-10-24-beginner-r12a-verification.md"
+    ],
+    "parentAndPredecessor": "Frozen; never covered by this allowlist",
+    "generatedTestArtifacts": "Only below separately approved disposable environment roots; no source-path expansion"
+  },
+  "planReference": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md"
+}
