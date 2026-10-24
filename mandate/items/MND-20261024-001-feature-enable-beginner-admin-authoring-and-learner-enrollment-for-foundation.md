@@ -4,7 +4,7 @@
   "id": "MND-20261024-001",
   "status": "captured",
   "created": "2026-10-24",
-  "updated": "2026-10-24T08:37:33.766Z",
+  "updated": "2026-10-24T08:53:00.263Z",
   "title": "Enable Beginner admin authoring and learner enrollment for Foundation and Basic pathways",
   "type": "feature",
   "owner": null,
@@ -71,7 +71,9 @@
     "Main Learning Lessons retain four-skill/evaluated evidence requirements; supplementary videos do not require four skills or create completion/mastery. MVP has no viewing telemetry/percentage.",
     "Describe curriculum revision/cohort compatibility, cross-path transitions and separate Intermediate admission without migrating legacy data.",
     "Use the linked R1-R4 execution proposal for MG01-MG02, with exact-Lesson session selection, real four-skill tasks, compatibility policy, tests, migration safety and rollback; direct-entry Basic/stage transition/analytics are outside this plan and cannot create fake completion.",
-    "Compatible supplementary releases may reach currently enrolled learners only under an approved policy that preserves attempts/evaluation/mastery/completion and historical session pins including NONE. Assessment changes require new lesson/curriculum approval; all eight pilot lessons need real source/audio/rubric and timing review before learner acceptance."
+    "Compatible supplementary releases may reach currently enrolled learners only under an approved policy that preserves attempts/evaluation/mastery/completion and historical session pins including NONE. Assessment changes require new lesson/curriculum approval; all eight pilot lessons need real source/audio/rubric and timing review before learner acceptance.",
+    "Separate R1.2a software/isolated test fixtures from R1.2b real source/audio/reviewer/timed rehearsal; environment-bound release registry must derive IDs/hashes from authorized publication. R1.1 software scope can be approved independently without data writes or learner access.",
+    "Regression coverage must prove old pinned Beginner enrollment can start/resume/evaluate and resolve correct supplements after a newer curriculum revision/published pointer, retaining valid superseded versions without latest fallback or global ARCHIVED bypass."
   ],
   "risk": {
     "level": "high",
@@ -121,6 +123,15 @@
       "reason": "Proposal revised; prior approval revoked; requires new triage.",
       "event": "update",
       "reference": null
+    },
+    {
+      "at": "2026-10-24T08:53:00.263Z",
+      "actor": "mandate-steward",
+      "from": "captured",
+      "to": "captured",
+      "reason": "Proposal revised; prior approval revoked; requires new triage.",
+      "event": "update",
+      "reference": null
     }
   ]
 }
@@ -139,3 +150,11 @@ The proposed compatible supplementary release layer is a deliberate exception to
 Mandate remains captured with approval=null. Implementation, migrations, test-data import, publication, learner cohort, merge/push/deploy/public access need their own matching authorization. R1 core authoring/content precedes R2 closed-cohort progression; R3 library can be separate; R4 binding/player depends on R1/R3 and R2 for learner acceptance. Basic direct-entry, full-stage checkpoints/transitions, Intermediate admission and analytics are outside R1-R4.
 
 Rollback disables new admission/writes/player and retains history, immutable content/files and readers/evaluators for active sessions. Do not downgrade to readers that cannot parse new Beginner payloads. Do not drop referenced data or reset progress. Intermediate/IELTS/Foundation legacy/PR18 implementation and databases are untouched by this planning task.
+
+## Review delta before implementation approval (2026-10-24)
+
+Human requested four bounded plan corrections only: split R1.2a software/fixtures from R1.2b real content/audio/pedagogy; clarify environment-bound registry lifecycle and actual published IDs/hashes; test old pinned enrollment start/resume/evaluation/supplements after newer revision/pointer; retain contract45 with human timed rehearsal. The linked plan now records these as proposed acceptance and independent R1.1 software-only approval scope, not authorization to execute.
+
+Targeted source review found content-publisher.service.ts automatically archives the previous published version, while curriculum eligibility requires PUBLISHED bindings. The proposed Beginner-only supersession policy preserves valid old versions; current Intermediate/IELTS archive behavior remains unchanged. No implementation or DB change was made to fix it in this review.
+
+R2 software tests can use approved isolated fixtures after R1.1/R1.2a; real-cohort release still requires R1.2b CONTENT_READY, target publication/registry and explicit cohort permission. R1.1 alone excludes migrations, publication/data import, live providers, real content/media and learner opening. Mandate stays captured/approval=null.
