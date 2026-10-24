@@ -82,7 +82,7 @@ ngoài schema. Nếu lỗi thuộc loại khác, AI được sửa toàn bộ JS
   cách ly sau thay đổi runtime cuối. Lượt full API trước đó có 1.309 tests pass,
   2 lỗi service trong lúc code đang được sửa, 1 skipped; hai ca đó đã được chạy
   lại thành công trong suite cuối. Không ghi nhận lượt full API đó là pass.
-- Typecheck, lint, i18n và build API/Web được chạy; xem log vận hành cho kết quả.
+- Typecheck, lint, i18n và build API/Web: pass.
 - Gọi AI thật đã được người dùng cho phép; chỉ gửi chủ đề, thời lượng và tối
   đa 40 từ đã duyệt, không gửi tài khoản hoặc toàn bộ DB.
 - Browser thật qua Web proxy local: Discovery qwen3.8-27b HTTP 200 trong
@@ -91,6 +91,11 @@ ngoài schema. Nếu lỗi thuộc loại khác, AI được sửa toàn bộ JS
   vào biểu mẫu tường minh; 0 page errors. Không lưu hay xuất bản bài thử.
   Đây là mẫu kiểm chứng, không bảo đảm mọi lần tạo/cấu hình đều thành công.
   Nội dung, nghĩa và tính phù hợp sư phạm vẫn cần admin duyệt.
+- Kiểm chứng bổ sung (2026-10-24), được người dùng cho phép riêng: lấy bài
+  OpenAI đã sinh, cố ý bỏ một từ mục tiêu để ép nhánh sửa. Lượt đầu được mô
+  phỏng có kiểm soát; lượt sửa gọi OpenAI thật (HTTP 200/completed, 21 output
+  tokens, khoảng 2,1 giây). Kết quả qua toàn bộ validation, giữ đủ 7 từ mục tiêu.
+  Đây là bằng chứng sửa câu có kiểm soát, không tính là hai lượt gọi thật.
 - Kiểm thử tự động dùng mock và DB test cách ly 55439; các lượt gọi thật chỉ
   đọc bộ từ ở DB local. Không lưu bài sinh thử.
 
