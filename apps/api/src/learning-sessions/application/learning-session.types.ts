@@ -17,6 +17,7 @@ export interface ActivityAttemptDto {
 }
 
 export interface LearnerActivityDto {
+  readonly instructions?: ReadonlyArray<{readonly slug:string;readonly phase:'readDecode'|'listenReason'|'respond';readonly order:number;readonly text:string}>;
   readonly audioText?: string;
   readonly id: string;
   readonly slug: string;

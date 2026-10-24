@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { foundationMissionFixture } from '@worklingo/test-fixtures';
 
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
@@ -237,4 +238,45 @@ describe('EvaluationService', () => {
 
     expect(mastery.recordAttemptEvaluation).not.toHaveBeenCalled();
   });
+});
+
+function beginnerAttempt(skill:'speaking'|'writing'='writing') {
+  const base=foundationMissionFixture.lesson;
+  const rubricId=skill==='speaking'?'beginner-guided-speaking':'beginner-short-writing';
+  const activity={...writingAttempt.activity,activityType:skill,skills:[skill],payload:{...writingAttempt.activity.payload,prompt:String(writingAttempt.activity.payload.prompt),requiredPhrases:[],sampleAnswer:'Hidden model answer',rubricId,rubricVersion:'1',...(skill==='speaking'?{mode:'guided_response'}:{})}};
+  const snapshot={...base,formatVersion:'WorkLingoLesson/1.2',foundation:{category:'grammar',templateId:'pilot',templateVersion:1,objectives:[{slug:'task',statement:'Respond',skills:[skill],required:true}],activityObjectives:{[activity.slug]:['task']} as Record<string,string[]>,responseRubrics:{}},activities:[activity],contentBlocks:[{id:writingAttempt.id,slug:'email-1',type:'email',text:'Context'}],wordBanks:base.wordBanks.map(b=>({...b,id:writingAttempt.id,languageBlocks:b.languageBlocks.map(l=>({...l,id:writingAttempt.id,slug:'follow-up'}))}))};
+  return {...writingAttempt,activity,recording:skill==='speaking'?{id:'recording',transcript:'I am Binh.',speechMetrics:null}:null,session:{...writingAttempt.session,lessonVersion:{id:writingAttempt.session.lessonVersionId,parsedContent:snapshot},mission:{level:{code:'MG_F0',path:{program:{slug:'beginner'}}},purpose:'LEARNING'}}};
+}
+describe('Beginner exact rubric dispatch',()=>{
+  it.each(['writing','speaking'] as const)('uses pinned1.2 rubric for %s and does not require shadowing metrics',async(skill)=>{
+    const attempt=beginnerAttempt(skill);let stored:Record<string,unknown>|undefined;
+    const transaction={evaluationResult:{findUnique:async()=>null,create:async({data}:{data:Record<string,unknown>})=>{stored=data;return {id:'result',score:data.score};}},activityAttempt:{update:async()=>({})},recording:{update:async()=>({})}};
+    const database={activityAttempt:{findUnique:async()=>attempt},$transaction:async(fn:(tx:unknown)=>unknown)=>fn(transaction)} as unknown as PrismaService;
+    const evaluate=vi.fn(async()=>languageResult);const language={evaluate} as unknown as LanguageEvaluationPort;
+    await new EvaluationService(database,language,{recordAttemptEvaluation:async()=>[]} as unknown as MasteryService,{recordingRetentionDays:7},progress).evaluateAttempt(attempt.id);
+    expect(stored).toMatchObject({rubricId:skill==='speaking'?'beginner-guided-speaking':'beginner-short-writing',rubricVersion:'1',lessonVersionId:attempt.session.lessonVersionId,score:expect.closeTo(.82),scores:{pronunciationOrFluency:null}});
+    expect(evaluate).toHaveBeenCalledWith(expect.objectContaining({requiredPhrases:[],referenceText:''}));
+  });
+  it.each(['unknown-version','wrong-program','missing-snapshot','changed-activity','conflicting-result','duplicate-id','unmapped-objective'] as const)('rejects %s before provider and mutation',async(kind)=>{
+    const attempt=beginnerAttempt();
+    if(kind==='unknown-version') attempt.activity.payload.rubricVersion='2';
+    if(kind==='duplicate-id') attempt.session.lessonVersion.parsedContent.activities.push({...attempt.activity,payload:{...attempt.activity.payload,prompt:'Conflicting duplicate'}});
+    if(kind==='unmapped-objective') attempt.session.lessonVersion.parsedContent.foundation.activityObjectives={};
+    if(kind==='wrong-program') attempt.session.mission.level.path.program.slug='intermediate';
+    if(kind==='missing-snapshot') attempt.session.lessonVersion.parsedContent.formatVersion='';
+    if(kind==='changed-activity') attempt.activity={...attempt.activity,payload:{...attempt.activity.payload,prompt:'Changed task'}};
+    const existing=kind==='conflicting-result'?[{id:'old',rubricId:'foundation-workplace-writing',rubricVersion:'1',inputHash:'old',score:1}]:[];
+    const evaluate=vi.fn();const mutate=vi.fn();
+    const database={activityAttempt:{findUnique:async()=>({...attempt,evaluationResults:existing})},$transaction:mutate} as unknown as PrismaService;
+    await expect(new EvaluationService(database,{evaluate} as unknown as LanguageEvaluationPort,{} as MasteryService,{recordingRetentionDays:7},progress).evaluateAttempt(attempt.id)).rejects.toThrow();
+    expect(evaluate).not.toHaveBeenCalled();expect(mutate).not.toHaveBeenCalled();
+  });
+});
+
+it('keeps unsupported exact Beginner rubric version error before any provider or writes',async()=>{
+  const attempt=beginnerAttempt();attempt.activity.payload.rubricVersion='2';
+  const evaluate=vi.fn(),mutate=vi.fn();
+  const db={activityAttempt:{findUnique:async()=>attempt},$transaction:mutate} as unknown as PrismaService;
+  await expect(new EvaluationService(db,{evaluate} as unknown as LanguageEvaluationPort,{} as MasteryService,{recordingRetentionDays:7},progress).evaluateAttempt(attempt.id)).rejects.toThrow('RUBRIC_VERSION_UNSUPPORTED');
+  expect(evaluate).not.toHaveBeenCalled();expect(mutate).not.toHaveBeenCalled();
 });

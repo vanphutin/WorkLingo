@@ -1,3 +1,5 @@
+import { isDeepStrictEqual } from 'node:util';
+import { aggregateBeginnerEvaluation, resolveBeginnerRubric } from '../domain/beginner-rubrics.js';
 import { createHash } from 'node:crypto';
 
 import {
@@ -15,7 +17,7 @@ import { evaluationDtoSchema, evaluationStatusSchema, type EvaluationDto } from 
 import { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
-import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
+import { lessonSnapshotSchema, activitySchema } from '../../curriculum/domain/curriculum.types.js';
 import { JobsService } from '../../jobs/application/jobs.service.js';
 import { MasteryService } from '../../mastery/application/mastery.service.js';
 import { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
@@ -157,7 +159,7 @@ export class EvaluationService {
         activity: true,
         evaluationResults: { orderBy: { createdAt: 'desc' } },
         recording: true,
-        session: { include: { mission: { include: { level: true } } } },
+        session: { include: { lessonVersion: true, mission: { include: { level: { include: { path: { include: { program: true } } } } } } } },
       },
     });
     if (!attempt) throw new NotFoundException(`Attempt ${attemptId} was not found`);
@@ -177,9 +179,19 @@ export class EvaluationService {
       throw new UnprocessableEntityException('Only speaking and writing attempts use Teacher AI');
     }
 
-    const rubric = activity.activityType === 'speaking'
-      ? resolveFoundationRubric({ activityType: 'speaking', mode: activity.payload.mode })
-      : resolveFoundationRubric({ activityType: 'writing' });
+    const rawSnapshot=attempt.session.lessonVersion?.parsedContent;
+    const isBeginnerSnapshot=Boolean(rawSnapshot && typeof rawSnapshot==='object' && !Array.isArray(rawSnapshot) && rawSnapshot['formatVersion']==='WorkLingoLesson/1.2');
+    const beginnerResponse=isBeginnerSnapshot || activity.payload.rubricId!==undefined || activity.payload.rubricVersion!==undefined || (activity.activityType==='speaking' && activity.payload.mode==='guided_response');
+    const beginnerRubric=beginnerResponse ? resolveBeginnerRubric(activity.payload.rubricId ?? '',activity.payload.rubricVersion ?? '',activity.activityType) : null;
+    if(beginnerResponse){
+      if(!isBeginnerSnapshot || attempt.session.lessonVersion?.id!==attempt.session.lessonVersionId || attempt.session.mission.level.path?.program.slug!=='beginner') throw new UnprocessableEntityException('INVALID_BEGINNER_EVALUATION_CONTEXT');
+      const snapshot=lessonSnapshotSchema.parse(rawSnapshot);
+      const bound=snapshot.activities.find(candidate=>candidate.id===activity.id);
+      if(!bound || !isDeepStrictEqual(activity,bound)) throw new ConflictException('BEGINNER_ACTIVITY_SNAPSHOT_MISMATCH');
+    }
+    const legacyRubric=beginnerRubric ? null : activity.activityType==='speaking'
+      ? resolveFoundationRubric({activityType:'speaking',mode:'shadowing'}) : resolveFoundationRubric({activityType:'writing'});
+    const rubric=beginnerRubric ?? legacyRubric!;
     const response = attempt.rawResponse as Record<string, unknown>;
     const learnerResponse = activity.activityType === 'speaking'
       ? attempt.recording?.transcript
@@ -200,6 +212,7 @@ export class EvaluationService {
       (candidate) => candidate.rubricVersion === rubric.version,
     );
     if (existing) {
+      if (beginnerRubric && existing.rubricId !== rubric.id) throw new ConflictException('RUBRIC_RESULT_CONFLICT');
       if (existing.inputHash !== inputHash) {
         throw new ConflictException('Completed evaluation input no longer matches the attempt');
       }
@@ -213,8 +226,8 @@ export class EvaluationService {
       learnerResponse: learnerResponse.trim(),
       levelCode: attempt.session.mission.level.code,
       prompt: activity.payload.prompt,
-      referenceText: activity.payload.sampleAnswer,
-      requiredPhrases: activity.payload.requiredPhrases,
+      referenceText: beginnerRubric ? '' : activity.payload.sampleAnswer,
+      requiredPhrases: beginnerRubric ? [] : activity.payload.requiredPhrases,
       rubricId: rubric.id,
       rubricVersion: rubric.version,
     };
@@ -222,8 +235,8 @@ export class EvaluationService {
       ? await this.language.evaluateWithProvenance(evaluationInput)
       : { evaluation: await this.language.evaluate(evaluationInput), provenance: null };
     const providerEvaluation = routed.evaluation;
-    const aggregated = aggregateEvaluation(
-      rubric,
+    const aggregated = beginnerRubric ? aggregateBeginnerEvaluation(beginnerRubric,providerEvaluation) : aggregateEvaluation(
+      legacyRubric!,
       providerEvaluation,
       activity.activityType === 'speaking'
         ? attempt.recording?.speechMetrics as Parameters<typeof aggregateEvaluation>[2]
@@ -234,7 +247,10 @@ export class EvaluationService {
         const duplicate = await transaction.evaluationResult.findUnique({
           where: { attemptId_rubricVersion: { attemptId, rubricVersion: rubric.version } },
         });
-        if (duplicate) return { id: duplicate.id, score: duplicate.score };
+        if (duplicate) {
+          if (beginnerRubric && (duplicate.rubricId!==rubric.id || duplicate.inputHash!==inputHash)) throw new ConflictException('RUBRIC_RESULT_CONFLICT');
+          return { id: duplicate.id, score: duplicate.score };
+        }
 
         const completedAt = new Date();
         const result = await transaction.evaluationResult.create({

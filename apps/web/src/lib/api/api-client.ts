@@ -104,6 +104,7 @@ export const activityAttemptDtoSchema = z.object({
 });
 
 export const learnerActivityDtoSchema = z.object({
+  instructions: z.array(z.object({slug:z.string().min(1),phase:z.enum(['readDecode','listenReason','respond']),order:z.number().int().nonnegative(),text:z.string().min(1)})).optional(),
   audioText: z.string().min(1).optional(),
   id: z.string(),
   slug: z.string(),

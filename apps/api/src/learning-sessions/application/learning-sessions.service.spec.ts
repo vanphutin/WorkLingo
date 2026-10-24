@@ -188,3 +188,16 @@ describe('LearningSessionsService state transitions', () => {
     expect(getReviewQueue).toHaveBeenCalledWith(learnerId,{programId:'10000000-0000-4000-8000-000000000002'});
   });
 });
+
+it('returns only phase instructions and redacts hidden Beginner assessment data',async()=>{
+  const id=(n:number)=>'00000000-0000-4000-8000-'+String(n).padStart(12,'0');
+  const base=foundationMissionFixture.lesson;
+  const snapshot={...base,formatVersion:'WorkLingoLesson/1.2',instructions:[{slug:'guide',phase:'respond',order:0,text:'Hãy tự trả lời.'}],foundation:{category:'grammar',templateId:'pilot',templateVersion:1,objectives:[{slug:'task',statement:'Respond',skills:['speaking'],required:true}],activityObjectives:{speak:['task']},responseRubrics:{}},contentBlocks:[{id:id(2),slug:'context',type:'email',text:'Read the context.'}],wordBanks:base.wordBanks.map(b=>({...b,id:id(3),languageBlocks:b.languageBlocks.map(l=>({...l,id:id(4)}))})),activities:[{id:id(5),slug:'speak',activityType:'speaking',learningBlock:'respond',order:0,skills:['speaking'],contentReferences:['context'],languageBlockReferences:[base.wordBanks[0]!.languageBlocks[0]!.slug],payload:{prompt:'Introduce yourself.',sampleAnswer:'SECRET_SAMPLE',audioText:'SECRET_AUDIO_TRANSCRIPT',requiredPhrases:['SECRET_SAMPLE'],minWords:1,mode:'guided_response',rubricId:'beginner-guided-speaking',rubricVersion:'1'}}]};
+  const plan={durationMinutes:45,missionId:id(1),lessonVersionId:id(6),blocks:[{type:'readDecode',order:1,targetMinutes:15,activityIds:[id(7)],skills:['reading']},{type:'listenReason',order:2,targetMinutes:15,activityIds:[id(8)],skills:['listening']},{type:'respond',order:3,targetMinutes:15,activityIds:[id(5)],skills:['speaking','writing']}]};
+  const db={learningSession:{findFirst:async()=>({id:id(9),learnerId:id(10),planSnapshot:plan,lessonVersionId:id(6)})},lessonVersion:{findUnique:async()=>({parsedContent:snapshot})}} as unknown as PrismaService;
+  const service=new LearningSessionsService(db,{} as CurriculumService,{} as MasteryService,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress,{} as JobDispatcher);
+  const dto=await service.getActivity(id(10),id(9),id(5));
+  expect(dto).toHaveProperty('instructions',[{slug:'guide',phase:'respond',order:0,text:'Hãy tự trả lời.'}]);
+  expect(JSON.stringify(dto)).not.toMatch(/SECRET_|sampleAnswer|rubricId|rubricVersion|answerIndex|explanation/);
+  expect(dto.payload).toMatchObject({prompt:'Introduce yourself.',mode:'guided_response',minWords:1});
+});

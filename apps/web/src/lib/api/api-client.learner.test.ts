@@ -120,3 +120,10 @@ describe('Teacher AI learner API', () => {
     );
   });
 });
+
+it('retains typed Beginner instructions without admitting invalid phases',async()=>{
+  const {learnerActivityDtoSchema}=await import('./api-client');
+  const input={id:'activity',slug:'task',activityType:'writing',learningBlock:'respond',skills:['writing'],content:[],languageBlocks:[],payload:{prompt:'Write your name.'},instructions:[{slug:'guide',phase:'respond',order:0,text:'Viết câu của bạn.'}]};
+  expect(learnerActivityDtoSchema.parse(input)).toHaveProperty('instructions',input.instructions);
+  expect(learnerActivityDtoSchema.safeParse({...input,instructions:[{...input.instructions[0],phase:'unknown'}]}).success).toBe(false);
+});

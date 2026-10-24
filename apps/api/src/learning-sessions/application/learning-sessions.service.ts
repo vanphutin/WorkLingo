@@ -202,6 +202,7 @@ export class LearningSessionsService {
     const languageBlocks = snapshot.wordBanks
       .flatMap((bank) => bank.languageBlocks)
       .filter((block) => activity.languageBlockReferences.includes(block.slug));
+    const beginner=snapshot.formatVersion==='WorkLingoLesson/1.2';
     const recall = snapshot.foundation?.category === 'vocabulary' && activity.activityType === 'writing' && activity.learningBlock === 'respond';
     const payload = activity.activityType === 'reading' || activity.activityType === 'listening'
       ? {
@@ -210,7 +211,7 @@ export class LearningSessionsService {
         }
       : {
           prompt: activity.payload.prompt,
-          ...(recall ? {requiredPhraseCount:activity.payload.requiredPhrases.length} : {requiredPhrases: activity.payload.requiredPhrases}),
+          ...(beginner ? {} : recall ? {requiredPhraseCount:activity.payload.requiredPhrases.length} : {requiredPhrases: activity.payload.requiredPhrases}),
           minWords: activity.payload.minWords,
           ...(activity.activityType === 'speaking'
             ? {
@@ -223,7 +224,8 @@ export class LearningSessionsService {
         };
     return {
       activityType: activity.activityType,
-      ...(activity.payload.audioText ? { audioText: activity.payload.audioText } : {}),
+      ...(beginner ? {instructions:(snapshot.instructions ?? []).filter(i=>i.phase===activity.learningBlock)} : {}),
+      ...(!beginner && activity.payload.audioText ? { audioText: activity.payload.audioText } : {}),
       content,
       foundationCategory: snapshot.foundation?.category ?? null,
       id: activity.id,

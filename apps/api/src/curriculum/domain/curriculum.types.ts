@@ -13,7 +13,8 @@ const questionSchema = z.object({
 const comprehensionPayload = z.object({ prompt: text, questions: z.array(questionSchema).min(1), audioText: text.optional() });
 const responsePayload = z.object({
   audioText: text.optional(),
-  prompt: text, sampleAnswer: text, requiredPhrases: z.array(text).min(1), minWords: z.number().int().positive(),
+  rubricId: text.optional(), rubricVersion: text.optional(),
+  prompt: text, sampleAnswer: text, requiredPhrases: z.array(text), minWords: z.number().int().positive(),
 });
 const activityBase = {
   id: z.uuid(), slug, order: z.number().int().nonnegative(),
@@ -24,10 +25,15 @@ const activityBase = {
 export const activitySchema = z.discriminatedUnion('activityType', [
   z.object({ ...activityBase, activityType: z.literal('reading'), payload: comprehensionPayload }),
   z.object({ ...activityBase, activityType: z.literal('listening'), payload: comprehensionPayload }),
-  z.object({ ...activityBase, activityType: z.literal('speaking'), payload: responsePayload.extend({ mode: z.literal('shadowing') }) }),
+  z.object({ ...activityBase, activityType: z.literal('speaking'), payload: responsePayload.extend({ mode: z.enum(['shadowing', 'guided_response']) }) }),
   z.object({ ...activityBase, activityType: z.literal('writing'), payload: responsePayload }),
-]);
+]).superRefine((activity, context) => {
+  if (activity.activityType !== 'speaking' && activity.activityType !== 'writing') return;
+  if (activity.payload.rubricId === undefined && activity.payload.requiredPhrases.length === 0) context.addIssue({code:'custom',message:'Legacy responses require target phrases'});
+});
 export const lessonSnapshotSchema = z.object({
+  formatVersion: z.literal('WorkLingoLesson/1.2').optional(),
+  instructions: z.array(z.object({slug, phase:z.enum(['readDecode','listenReason','respond']), order:z.number().int().nonnegative(), text})).optional(),
   intermediateTopic: approvedTopicSnapshotSchema.optional(),
   foundation: z.object({
     category: z.enum(foundationCategories), templateId: slug, templateVersion: z.literal(1),
@@ -50,6 +56,31 @@ export const lessonSnapshotSchema = z.object({
   })).min(1),
   activities: z.array(activitySchema).min(1),
 }).superRefine((lesson, context) => {
+  const beginner = lesson.formatVersion === 'WorkLingoLesson/1.2';
+  if (beginner && !lesson.foundation) context.addIssue({code:'custom',message:'Beginner requires Foundation metadata'});
+  if (beginner && lesson.foundation) {
+    const foundation=lesson.foundation;
+    const objectiveMap=new Map(foundation.objectives.map(o=>[o.slug,o]));
+    const activityIds=new Set(lesson.activities.map(a=>a.id));
+    const activitySlugs=new Set(lesson.activities.map(a=>a.slug));
+    if (activityIds.size!==lesson.activities.length || activitySlugs.size!==lesson.activities.length || objectiveMap.size!==foundation.objectives.length || !foundation.objectives.some(o=>o.required)) context.addIssue({code:'custom',message:'Ambiguous Beginner identity/evidence'});
+    if (Object.keys(foundation.activityObjectives).some(slug=>!activitySlugs.has(slug))) context.addIssue({code:'custom',message:'Unknown Beginner activity mapping'});
+    for (const activity of lesson.activities) {
+      const refs=foundation.activityObjectives[activity.slug];
+      if (!refs?.length || new Set(refs).size!==refs.length || refs.some(ref=>!objectiveMap.has(ref)) || !refs.some(ref=>objectiveMap.get(ref)?.skills.includes(activity.activityType))) context.addIssue({code:'custom',message:'Missing or invalid Beginner objective mapping'});
+    }
+    for (const objective of foundation.objectives.filter(o=>o.required)) for (const skill of objective.skills) {
+      if (!lesson.activities.some(a=>a.activityType===skill && foundation.activityObjectives[a.slug]?.includes(objective.slug))) context.addIssue({code:'custom',message:'Unassessed Beginner objective skill'});
+    }
+  }
+  if (!beginner && lesson.instructions !== undefined) context.addIssue({code:'custom',message:'Instructions require Beginner format'});
+  for (const activity of lesson.activities) {
+    if (activity.activityType !== 'speaking' && activity.activityType !== 'writing') continue;
+    if (beginner) {
+      const expected = activity.activityType === 'speaking' ? 'beginner-guided-speaking' : 'beginner-short-writing';
+      if (activity.payload.rubricId !== expected || activity.payload.rubricVersion !== '1' || (activity.activityType === 'speaking' && activity.payload.mode !== 'guided_response')) context.addIssue({code:'custom',message:'Unsupported Beginner response rubric/mode'});
+    } else if (activity.payload.rubricId !== undefined || activity.payload.rubricVersion !== undefined || (activity.activityType === 'speaking' && activity.payload.mode !== 'shadowing')) context.addIssue({code:'custom',message:'Beginner response requires versioned snapshot'});
+  }
   const contents = new Set(lesson.contentBlocks.map((block) => block.slug));
   const languages = new Set(lesson.wordBanks.flatMap((bank) => bank.languageBlocks.map((block) => block.slug)));
   for (const [index, activity] of lesson.activities.entries()) {

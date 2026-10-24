@@ -33,6 +33,7 @@ export function ActivityWorkspace({ activity, children, tools, source }: Props) 
     <div className="activity-response-pane">
       <section className="activity-response-card" aria-label={t('questionsAndResponse')} id={`${id}-response`}>
         {hasSource ? <a className="activity-pane-jump" href={`#${id}-source`}>{t('backToSource')}</a> : null}
+        {activity.instructions?.filter(instruction=>instruction.phase===activity.learningBlock).slice().sort((a,b)=>a.order-b.order).map(instruction=><p key={instruction.slug}>{instruction.text}</p>)}
         {children}
         {tools?.actions}
       </section>
