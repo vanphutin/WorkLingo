@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261024-002",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-24",
-  "updated": "2026-10-24T09:19:23.956Z",
+  "updated": "2026-10-24T09:56:20.456Z",
   "title": "Implement provider-free Beginner R1.1 format and exact-version planner",
   "type": "feature",
   "owner": "Codex",
@@ -77,7 +77,43 @@
     "at": "2026-10-24T09:19:23.807Z",
     "proposal_hash": "571187f39dc43213dd39f19c37f3b4cc76ab374faa55082e64229c13add5df82"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "pnpm --filter @worklingo/content-format test",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    },
+    {
+      "command": "pnpm --filter @worklingo/contracts test",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    },
+    {
+      "command": "Targeted eight API unit suites listed in verification report:100 tests",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    },
+    {
+      "command": "Targeted four Web unit/component suites listed in verification report:38 tests",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    },
+    {
+      "command": "pnpm --filter <content-format|contracts|api|web> lint",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    },
+    {
+      "command": "pnpm --filter <content-format|contracts|api|web> typecheck",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    },
+    {
+      "command": "pnpm --filter @worklingo/api build; pnpm --filter @worklingo/web build",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-24T09:08:37.526Z",
@@ -114,6 +150,15 @@
       "reason": "All approved hashes/baselines reverified; execute only provider-free R1.1 allowlist.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-24-beginner-r11-human-approval.md:1"
+    },
+    {
+      "at": "2026-10-24T09:56:20.456Z",
+      "actor": "Codex",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "R1.1 accepted scope completed through TDD, fresh independent review findings reproduced/fixed,426 tests0 skipped, scoped lint/typecheck/build passed. No next increment or data/provider/publication authority implied.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-24-beginner-r11-verification.md:1"
     }
   ]
 }
