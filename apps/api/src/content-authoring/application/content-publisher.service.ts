@@ -1,3 +1,8 @@
+import {assertBeginnerContext,beginnerContextDescriptor,lockBeginnerContext,denyUnscopedBeginnerMutation,type BeginnerAuthoringContext} from '../../beginner/domain/beginner-authoring-policy.js';
+import {preserveBeginnerPriorVersion,assertBeginnerPublishedReview,verifyBeginnerAudioSelection} from '../../beginner/domain/beginner-publication-policy.js';
+import {hashBeginnerRecord} from '../../beginner/domain/beginner-environment-preflight.js';
+import {buildBeginnerDraftSnapshot} from '../../curriculum-foundation/application/foundation-validation.js';
+import {ObjectStorage} from '../../storage/domain/object-storage.port.js';
 import { assertBeginnerAuthoringDisabled } from '@worklingo/content-format';
 import { createHash, randomUUID } from 'node:crypto';
 import {
@@ -41,16 +46,21 @@ export class ContentPublisherService {
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
+    @Optional() @Inject(ObjectStorage) private readonly storage?:ObjectStorage,
   ) {}
 
   async publish(
     importId: string,
     actorId: string,
     input: PublishContentImportInput,
+    beginner?:{context:BeginnerAuthoringContext;reviewHash:string},
   ): Promise<PublishContentImportResult> {
+    const target=beginner?await assertBeginnerContext(beginner.context,actorId,'publish',this.database,{importId}):null;
+    const operation=beginner?'beginner:publish':'publish';
     const requestHash = createHash('sha256')
       .update(
         JSON.stringify({
+          ...(beginner?{importId,scope:beginnerContextDescriptor(beginner.context),reviewHash:beginner.reviewHash}:{}),
           expectedDraftRevision: input.expectedDraftRevision,
           expectedSourceHash: input.expectedSourceHash,
           idempotencyKey: input.idempotencyKey,
@@ -65,7 +75,7 @@ export class ContentPublisherService {
       where: {
         actorId_operation_idempotencyKey: {
           actorId,
-          operation: 'publish',
+          operation,
           idempotencyKey: input.idempotencyKey,
         },
       },
@@ -96,7 +106,8 @@ export class ContentPublisherService {
       });
     }
 
-    assertRuntimeEnabled(contentImport.rawSource);
+    if(!beginner)assertRuntimeEnabled(contentImport.rawSource);
+    if(!beginner&&contentImport.lessonId)await denyUnscopedBeginnerMutation(this.database,{lessonId:contentImport.lessonId});
     if (contentImport.status === 'PUBLISHED') {
       throw new ConflictException({
         code: ContentAuthoringErrorCode.VERSION_ALREADY_PUBLISHED,
@@ -155,6 +166,7 @@ export class ContentPublisherService {
     }
 
     const normalizedDraft = analysis.normalizedDraft;
+    if(beginner)buildBeginnerDraftSnapshot(normalizedDraft);
 
     // 3. Audio readiness check
     const parseRes = parseLessonSource(contentImport.rawSource);
@@ -228,6 +240,7 @@ export class ContentPublisherService {
 
     // 4. Execute publication transaction with PostgreSQL advisory lock
     const published = await this.database.$transaction(async (tx) => {
+      if(beginner)await lockBeginnerContext(tx,beginner.context,actorId,'publish');
       if (isTopicSource(contentImport.rawSource)) await lockTopicGroups(tx);
       // Advisory transaction lock scoped to lesson slug
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${normalizedDraft.slug}))`;
@@ -239,7 +252,7 @@ export class ContentPublisherService {
         where: {
           actorId_operation_idempotencyKey: {
             actorId,
-            operation: 'publish',
+            operation,
             idempotencyKey: input.idempotencyKey,
           },
         },
@@ -280,7 +293,8 @@ export class ContentPublisherService {
           statusCode: 409,
         });
       }
-      assertRuntimeEnabled(lockedImport.rawSource);
+      if(beginner)await assertBeginnerContext(beginner.context,actorId,'publish',tx,{importId,...(lockedImport.lessonId?{lessonId:lockedImport.lessonId}:{})});
+      else {assertRuntimeEnabled(lockedImport.rawSource);if(lockedImport.lessonId)await denyUnscopedBeginnerMutation(tx,{lessonId:lockedImport.lessonId});}
       if (lockedImport.sourceHash !== input.expectedSourceHash) {
         throw new ConflictException({
           code: ContentAuthoringErrorCode.SOURCE_HASH_MISMATCH,
@@ -325,11 +339,19 @@ export class ContentPublisherService {
       }
 
       // Find or create logical lesson
-      const lesson = await tx.lesson.upsert({
-        where: { slug: normalizedDraft.slug },
-        update: {},
-        create: { slug: normalizedDraft.slug },
-      });
+      if(beginner){
+        const audit=await tx.auditLog.findFirst({where:{contentImportId:importId,action:'beginner.review'},orderBy:{createdAt:'desc'}});
+        const sourceEdit=await tx.auditLog.findFirst({where:{contentImportId:importId,action:'beginner.source'},orderBy:{createdAt:'desc'}});
+        if(!audit||!sourceEdit||!this.storage)throw new ConflictException('BEGINNER_REVIEW_REQUIRED');
+        const metadata=audit.metadata as Record<string,unknown>|null;
+        if(!metadata||metadata.actorId!==audit.actorId||metadata.editorId!==sourceEdit.actorId)throw new ConflictException('BEGINNER_SOURCE_PROVENANCE_REQUIRED');
+        assertBeginnerPublishedReview(metadata,{environmentId:beginnerContextDescriptor(beginner.context).environmentId,target:target!,draftRevision:lockedImport.draftRevision,sourceHash:lockedImport.sourceHash,validationHash:lockedImport.validationHash!,normalizedSnapshotHash:hashBeginnerRecord(normalizedDraft),audioSelectionHash:hashBeginnerRecord(selectedAudioArtifacts),selectedAudioArtifacts,reviewHash:beginner.reviewHash});
+        await verifyBeginnerAudioSelection(tx,importId,lockedImport.rawSource,selectedAudioArtifacts,this.storage);
+      }
+      const lesson=beginner
+        ? await tx.lesson.findUniqueOrThrow({where:{id:target!.lessonId!}})
+        : await tx.lesson.upsert({where:{slug:normalizedDraft.slug},update:{},create:{slug:normalizedDraft.slug}});
+      if(beginner&&lesson.slug!==normalizedDraft.slug)throw new ConflictException('BEGINNER_LESSON_SLUG_MISMATCH');
       // Revision zero means this new import has never been assigned or cleared.
       // Preserve the logical lesson's group until an administrator makes an
       // explicit draft assignment; null with a positive revision means clear.
@@ -462,6 +484,7 @@ export class ContentPublisherService {
 
       // Build UUID-backed snapshot conforming to lessonSnapshotSchema
       const snapshot = {
+        ...(beginner?{formatVersion:'WorkLingoLesson/1.2',instructions:normalizedDraft.instructions??[]}:{}),
         ...(intermediateTopic ? { intermediateTopic } : {}),
         ...(normalizedDraft.foundation ? { foundation: normalizedDraft.foundation } : {}),
         title: normalizedDraft.title,
@@ -607,7 +630,11 @@ export class ContentPublisherService {
       }
 
       // Archive prior current published version atomically
-      if (lesson.currentPublishedVersionId) {
+      if(beginner&&lesson.currentPublishedVersionId){
+        const prior=await tx.lessonVersion.findUniqueOrThrow({where:{id:lesson.currentPublishedVersionId}});
+        preserveBeginnerPriorVersion({programSlugs:['beginner'],priorStatus:prior.status,topicGroupId:lesson.topicGroupId});
+      }
+      if (lesson.currentPublishedVersionId && !beginner) {
         await tx.lessonVersion.update({
           where: { id: lesson.currentPublishedVersionId },
           data: { status: 'ARCHIVED' },
@@ -682,7 +709,7 @@ export class ContentPublisherService {
       await tx.mutationReceipt.create({
         data: {
           actorId,
-          operation: 'publish',
+          operation,
           idempotencyKey: input.idempotencyKey,
           requestHash,
           responseStatus: 200,
@@ -725,7 +752,10 @@ export class ContentPublisherService {
       });
     }
 
+    if(version.parsedContent&&typeof version.parsedContent==='object'&&!Array.isArray(version.parsedContent)&&version.parsedContent.formatVersion==='WorkLingoLesson/1.2')assertRuntimeEnabled('WorkLingoLesson/1.2');
+    if(version.lessonId)await denyUnscopedBeginnerMutation(this.database,{lessonId:version.lessonId});
     return this.database.$transaction(async (tx) => {
+      if(version.lessonId)await denyUnscopedBeginnerMutation(tx,{lessonId:version.lessonId});
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${version.lesson.slug}))`;
       const lockedVersion = await tx.lessonVersion.findUnique({ where: { id: versionId } });
       if (!lockedVersion) {

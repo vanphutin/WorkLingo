@@ -1,3 +1,4 @@
+import { assertBeginnerContext,verifyBeginnerTarget,beginnerContextDescriptor,lockBeginnerContext,type BeginnerAuthoringContext,denyUnscopedBeginnerMutation } from '../../beginner/domain/beginner-authoring-policy.js';
 import { createHash } from 'node:crypto';
 import {
   ConflictException,
@@ -52,8 +53,8 @@ const PROGRAM_OPTION_SELECT = {
 export class AdminCurriculumCommandService {
   constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
 
-  computeRequestHash(payload: unknown): string {
-    return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
+  computeRequestHash(payload: unknown,context?:BeginnerAuthoringContext): string {
+    return createHash('sha256').update(JSON.stringify(context?{payload,scope:beginnerContextDescriptor(context)}:payload)).digest('hex');
   }
 
   private async checkReceipt<T>(
@@ -131,23 +132,29 @@ export class AdminCurriculumCommandService {
   async createPath(
     actorId: string,
     input: CreateLearningPathInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLearningPathItemDto> {
+    const operation=context?'beginner:createPath':'createPath';
+    await this.checkBeginnerCommand(this.database,actorId,{programId:input.programId??INTERMEDIATE_PROGRAM_ID},input,context,'author');
     const programId = input.programId ?? INTERMEDIATE_PROGRAM_ID;
+    await denyUnscopedBeginnerMutation(this.database,{programId});
     const requestHash = this.computeRequestHash({
       name: input.name,
       programId,
       slug: input.slug,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLearningPathItemDto>(
       actorId,
-      'createPath',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{programId:input.programId??INTERMEDIATE_PROGRAM_ID},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const program = await tx.learningProgram.findUnique({
         select: PROGRAM_OPTION_SELECT,
         where: { id: programId },
@@ -196,7 +203,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'createPath',
+        operation,
         input.idempotencyKey,
         requestHash,
         'CREATE_PATH',
@@ -217,22 +224,27 @@ export class AdminCurriculumCommandService {
     pathId: string,
     actorId: string,
     input: UpdateLearningPathInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLearningPathItemDto> {
+    const operation=context?'beginner:updatePath':'updatePath';
+    await this.checkBeginnerCommand(this.database,actorId,{pathId},input,context,'author');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       name: input.name,
       pathId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLearningPathItemDto>(
       actorId,
-      'updatePath',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{pathId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const current = await tx.learningPath.findUnique({
         include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
@@ -297,7 +309,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'updatePath',
+        operation,
         input.idempotencyKey,
         requestHash,
         'UPDATE_PATH',
@@ -318,21 +330,26 @@ export class AdminCurriculumCommandService {
     pathId: string,
     actorId: string,
     input: PublishLearningPathInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLearningPathItemDto> {
+    const operation=context?'beginner:publishPath':'publishPath';
+    await this.checkBeginnerCommand(this.database,actorId,{pathId},input,context,'publish');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       pathId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLearningPathItemDto>(
       actorId,
-      'publishPath',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{pathId},input,context,'publish');
+      if(context)await lockBeginnerContext(tx,context,actorId,'publish');
       const current = await tx.learningPath.findUnique({
         include: { program: { select: PROGRAM_OPTION_SELECT } },
         where: { id: pathId },
@@ -376,7 +393,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'publishPath',
+        operation,
         input.idempotencyKey,
         requestHash,
         'PUBLISH_PATH',
@@ -397,21 +414,26 @@ export class AdminCurriculumCommandService {
     pathId: string,
     actorId: string,
     input: ArchiveLearningPathInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLearningPathItemDto> {
+    const operation=context?'beginner:archivePath':'archivePath';
+    await this.checkBeginnerCommand(this.database,actorId,{pathId},input,context,'author');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       pathId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLearningPathItemDto>(
       actorId,
-      'archivePath',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{pathId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const current = await tx.learningPath.findUnique({
         include: {
           levels: { where: { status: 'PUBLISHED' } },
@@ -473,7 +495,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'archivePath',
+        operation,
         input.idempotencyKey,
         requestHash,
         'ARCHIVE_PATH',
@@ -495,24 +517,29 @@ export class AdminCurriculumCommandService {
   async createLevel(
     actorId: string,
     input: CreateLevelInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLevelItemDto> {
+    const operation=context?'beginner:createLevel':'createLevel';
+    await this.checkBeginnerCommand(this.database,actorId,{pathId:input.pathId},input,context,'author');
     const requestHash = this.computeRequestHash({
       cefrReference: input.cefrReference,
       code: input.code,
       name: input.name,
       order: input.order,
       pathId: input.pathId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLevelItemDto>(
       actorId,
-      'createLevel',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{pathId:input.pathId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const path = await tx.learningPath.findUnique({
         where: { id: input.pathId },
       });
@@ -574,7 +601,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'createLevel',
+        operation,
         input.idempotencyKey,
         requestHash,
         'CREATE_LEVEL',
@@ -595,23 +622,28 @@ export class AdminCurriculumCommandService {
     levelId: string,
     actorId: string,
     input: UpdateLevelInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLevelItemDto> {
+    const operation=context?'beginner:updateLevel':'updateLevel';
+    await this.checkBeginnerCommand(this.database,actorId,{levelId},input,context,'author');
     const requestHash = this.computeRequestHash({
       cefrReference: input.cefrReference,
       expectedRevision: input.expectedRevision,
       levelId,
       name: input.name,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLevelItemDto>(
       actorId,
-      'updateLevel',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{levelId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const current = await tx.level.findUnique({
         where: { id: levelId },
       });
@@ -679,7 +711,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'updateLevel',
+        operation,
         input.idempotencyKey,
         requestHash,
         'UPDATE_LEVEL',
@@ -700,21 +732,26 @@ export class AdminCurriculumCommandService {
     levelId: string,
     actorId: string,
     input: PublishLevelInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLevelItemDto> {
+    const operation=context?'beginner:publishLevel':'publishLevel';
+    await this.checkBeginnerCommand(this.database,actorId,{levelId},input,context,'publish');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       levelId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLevelItemDto>(
       actorId,
-      'publishLevel',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{levelId},input,context,'publish');
+      if(context)await lockBeginnerContext(tx,context,actorId,'publish');
       const current = await tx.level.findUnique({
         where: { id: levelId },
       });
@@ -760,7 +797,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'publishLevel',
+        operation,
         input.idempotencyKey,
         requestHash,
         'PUBLISH_LEVEL',
@@ -781,21 +818,26 @@ export class AdminCurriculumCommandService {
     levelId: string,
     actorId: string,
     input: ArchiveLevelInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLevelItemDto> {
+    const operation=context?'beginner:archiveLevel':'archiveLevel';
+    await this.checkBeginnerCommand(this.database,actorId,{levelId},input,context,'author');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       levelId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLevelItemDto>(
       actorId,
-      'archiveLevel',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{levelId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const current = await tx.level.findUnique({
         include: {
           missions: { where: { status: 'PUBLISHED' } },
@@ -859,7 +901,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'archiveLevel',
+        operation,
         input.idempotencyKey,
         requestHash,
         'ARCHIVE_LEVEL',
@@ -880,21 +922,26 @@ export class AdminCurriculumCommandService {
     pathId: string,
     actorId: string,
     input: ReorderCurriculumInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminLevelItemDto[]> {
+    const operation=context?'beginner:reorderLevels':'reorderLevels';
+    await this.checkBeginnerCommand(this.database,actorId,{pathId},input,context,'author');
     const requestHash = this.computeRequestHash({
       orderedIds: input.orderedIds,
       pathId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminLevelItemDto[]>(
       actorId,
-      'reorderLevels',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{pathId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const levels = await tx.level.findMany({
         where: { pathId },
       });
@@ -954,7 +1001,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'reorderLevels',
+        operation,
         input.idempotencyKey,
         requestHash,
         'REORDER_LEVELS',
@@ -976,7 +1023,10 @@ export class AdminCurriculumCommandService {
   async createMission(
     actorId: string,
     input: CreateMissionInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminMissionItemDto> {
+    const operation=context?'beginner:createMission':'createMission';
+    await this.checkBeginnerCommand(this.database,actorId,{levelId:input.levelId},input,context,'author');
     const requestHash = this.computeRequestHash({
       levelId: input.levelId,
       objective: input.objective,
@@ -984,17 +1034,19 @@ export class AdminCurriculumCommandService {
       purpose: input.purpose ?? 'LEARNING',
       slug: input.slug,
       title: input.title,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminMissionItemDto>(
       actorId,
-      'createMission',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{levelId:input.levelId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const level = await tx.level.findUnique({
         where: { id: input.levelId },
       });
@@ -1058,7 +1110,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'createMission',
+        operation,
         input.idempotencyKey,
         requestHash,
         'CREATE_MISSION',
@@ -1079,23 +1131,28 @@ export class AdminCurriculumCommandService {
     missionId: string,
     actorId: string,
     input: UpdateMissionInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminMissionItemDto> {
+    const operation=context?'beginner:updateMission':'updateMission';
+    await this.checkBeginnerCommand(this.database,actorId,{missionId},input,context,'author');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       missionId,
       objective: input.objective,
       title: input.title,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminMissionItemDto>(
       actorId,
-      'updateMission',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{missionId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const current = await tx.mission.findUnique({
         where: { id: missionId },
       });
@@ -1165,7 +1222,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'updateMission',
+        operation,
         input.idempotencyKey,
         requestHash,
         'UPDATE_MISSION',
@@ -1186,21 +1243,26 @@ export class AdminCurriculumCommandService {
     missionId: string,
     actorId: string,
     input: PublishMissionInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminMissionItemDto> {
+    const operation=context?'beginner:publishMission':'publishMission';
+    await this.checkBeginnerCommand(this.database,actorId,{missionId},input,context,'publish');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       missionId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminMissionItemDto>(
       actorId,
-      'publishMission',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{missionId},input,context,'publish');
+      if(context)await lockBeginnerContext(tx,context,actorId,'publish');
       const current = await tx.mission.findUnique({
         include: {
           lessons: {
@@ -1300,7 +1362,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'publishMission',
+        operation,
         input.idempotencyKey,
         requestHash,
         'PUBLISH_MISSION',
@@ -1321,21 +1383,26 @@ export class AdminCurriculumCommandService {
     missionId: string,
     actorId: string,
     input: ArchiveMissionInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminMissionItemDto> {
+    const operation=context?'beginner:archiveMission':'archiveMission';
+    await this.checkBeginnerCommand(this.database,actorId,{missionId},input,context,'author');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       missionId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminMissionItemDto>(
       actorId,
-      'archiveMission',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{missionId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const current = await tx.mission.findUnique({
         where: { id: missionId },
       });
@@ -1397,7 +1464,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'archiveMission',
+        operation,
         input.idempotencyKey,
         requestHash,
         'ARCHIVE_MISSION',
@@ -1418,21 +1485,26 @@ export class AdminCurriculumCommandService {
     levelId: string,
     actorId: string,
     input: ReorderCurriculumInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminMissionItemDto[]> {
+    const operation=context?'beginner:reorderMissions':'reorderMissions';
+    await this.checkBeginnerCommand(this.database,actorId,{levelId},input,context,'author');
     const requestHash = this.computeRequestHash({
       levelId,
       orderedIds: input.orderedIds,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminMissionItemDto[]>(
       actorId,
-      'reorderMissions',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{levelId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const missions = await tx.mission.findMany({
         where: { levelId },
       });
@@ -1493,7 +1565,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'reorderMissions',
+        operation,
         input.idempotencyKey,
         requestHash,
         'REORDER_MISSIONS',
@@ -1514,22 +1586,27 @@ export class AdminCurriculumCommandService {
     missionId: string,
     actorId: string,
     input: ReplaceMissionLessonsInput,
+  context?:BeginnerAuthoringContext,
   ): Promise<AdminMissionItemDto> {
+    const operation=context?'beginner:replaceMissionLessons':'replaceMissionLessons';
+    await this.checkBeginnerCommand(this.database,actorId,{missionId},input,context,'author');
     const requestHash = this.computeRequestHash({
       expectedRevision: input.expectedRevision,
       lessonIds: input.lessonIds,
       missionId,
-    });
+    },context);
 
     const cached = await this.checkReceipt<AdminMissionItemDto>(
       actorId,
-      'replaceMissionLessons',
+      operation,
       input.idempotencyKey,
       requestHash,
     );
     if (cached) return cached;
 
     return this.database.$transaction(async (tx) => {
+      await this.checkBeginnerCommand(tx,actorId,{missionId},input,context,'author');
+      if(context)await lockBeginnerContext(tx,context,actorId,'author');
       const mission = await tx.mission.findUnique({
         where: { id: missionId },
       });
@@ -1661,7 +1738,7 @@ export class AdminCurriculumCommandService {
       await this.recordReceiptAndAudit(
         tx,
         actorId,
-        'replaceMissionLessons',
+        operation,
         input.idempotencyKey,
         requestHash,
         'REPLACE_MISSION_LESSONS',
@@ -1677,4 +1754,20 @@ export class AdminCurriculumCommandService {
       return response;
     });
   }
+  private async checkBeginnerCommand(tx:Prisma.TransactionClient,actorId:string,selection:{programId?:string;pathId?:string;levelId?:string;missionId?:string},input:unknown,context:BeginnerAuthoringContext|undefined,action:'author'|'publish'):Promise<void>{
+    if(context)await assertBeginnerContext(context,actorId,action,tx,selection);
+    else await denyUnscopedBeginnerMutation(tx,selection);
+    const body=input as Record<string,unknown>;
+    for(const key of ['programId','pathId','levelId'] as const)if(typeof body[key]==='string'){
+      if(context)await assertBeginnerContext(context,actorId,action,tx,{[key]:body[key]});
+      else await denyUnscopedBeginnerMutation(tx,{[key]:body[key]});
+    }
+    if(context&&Array.isArray(body.lessonIds)){
+      const target=await assertBeginnerContext(context,actorId,action,tx);
+      for(const lessonId of body.lessonIds){if(typeof lessonId!=='string')throw new UnprocessableEntityException('Invalid lesson');
+       await verifyBeginnerTarget(tx,{...target,lessonId});
+      }
+    }
+  }
+
 }

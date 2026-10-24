@@ -466,3 +466,11 @@ describe('R1.1 runtime authoring stays closed',()=>{
     expect(updateMany).not.toHaveBeenCalled();
   });
 });
+
+it('blocks legacy-format source edits bound to Beginner before any write',async()=>{
+ const write=vi.fn().mockResolvedValue({count:1}),id=randomUUID(),lessonId=randomUUID();
+ const db={contentImport:{findUnique:vi.fn().mockResolvedValue({id,lessonId,status:'DRAFT',draftRevision:1,rawSource:canonicalLessonSource}),updateMany:write,findUniqueOrThrow:vi.fn().mockResolvedValue({id,lessonId,rawSource:canonicalLessonSource,status:'DRAFT',draftRevision:2,sourceHash:'a'.repeat(64),createdAt:new Date(),updatedAt:new Date()})},
+ missionLesson:{findMany:vi.fn().mockResolvedValue([{mission:{level:{path:{program:{slug:'beginner'}}}}}])}};
+ await expect(new ContentImportsService(db as unknown as PrismaService).updateSource(id,randomUUID(),{rawSource:canonicalLessonSource,expectedDraftRevision:1})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+ expect(write).not.toHaveBeenCalled();
+});

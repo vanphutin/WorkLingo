@@ -1,3 +1,6 @@
+import { denyUnscopedBeginnerMutation } from '../../beginner/domain/beginner-authoring-policy.js';
+import { assertBeginnerAuthoringDisabled } from '@worklingo/content-format';
+import { UnprocessableEntityException } from '@nestjs/common';
 import { createHash, randomUUID } from 'node:crypto';
 import {
   ConflictException,
@@ -66,6 +69,11 @@ export class AudioGenerationService implements OnApplicationShutdown {
     actorId: string,
     input: GenerateAudioInput,
   ): Promise<GenerateAudioResult> {
+    const beginnerCheck=await this.database.contentImport.findUnique({where:{id:contentImportId}});
+    if(beginnerCheck){
+      try{assertBeginnerAuthoringDisabled(beginnerCheck.rawSource);}catch{throw new UnprocessableEntityException({code:'BEGINNER_AUTHORING_DISABLED',message:'Beginner audio generation is not permitted'});}
+      if(beginnerCheck.lessonId)await denyUnscopedBeginnerMutation(this.database,{lessonId:beginnerCheck.lessonId});
+    }
     const providerId = input.providerId ?? this.tts.providerName;
     const descriptor = this.ttsProviders.list().find((candidate) => candidate.id === providerId);
     const voiceId = input.voiceId ?? descriptor?.defaultVoiceId ?? '';

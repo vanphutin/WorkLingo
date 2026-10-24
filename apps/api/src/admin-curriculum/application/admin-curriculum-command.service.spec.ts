@@ -338,3 +338,10 @@ describe('AdminCurriculumCommandService Unit Tests', () => {
     });
   });
 });
+
+it('denies generic creation in Beginner even if actor has an Admin role',async()=>{
+ const tx={learningProgram:{findUnique:vi.fn().mockResolvedValue({id:'10000000-0000-4000-8000-000000000001',slug:'beginner',availabilityStatus:'COMING_SOON'})},learningPath:{findUnique:vi.fn().mockResolvedValue(null),create:vi.fn().mockResolvedValue({id:'path',name:'Mất gốc',slug:'mat-goc',status:'DRAFT',revision:1,createdAt:new Date(),updatedAt:new Date()})},mutationReceipt:{create:vi.fn()},auditLog:{create:vi.fn()}};
+ const db={...tx,mutationReceipt:{findUnique:vi.fn().mockResolvedValue(null)},$transaction:vi.fn(async(fn:(arg:unknown)=>unknown)=>fn(tx))};
+ await expect(new AdminCurriculumCommandService(db as unknown as PrismaService).createPath('actor',{programId:'10000000-0000-4000-8000-000000000001',name:'Mất gốc',slug:'mat-goc',idempotencyKey:'generic-denied'})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+ expect(tx.learningPath.create).not.toHaveBeenCalled();
+});

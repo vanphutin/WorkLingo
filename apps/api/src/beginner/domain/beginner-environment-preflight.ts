@@ -1,3 +1,4 @@
+import type {Prisma} from '@prisma/client';
 import { createHash } from 'node:crypto';
 import { accessSync,constants,lstatSync,readFileSync,realpathSync } from 'node:fs';
 import path from 'node:path';
@@ -54,4 +55,16 @@ export async function readApprovedBeginnerPermission():Promise<BeginnerPermissio
  const p=validateBeginnerPermission(JSON.parse(readFileSync(file,'utf8')));
  if(p.approvalId!==id||checkedRealPath(p.approvalRoot)!==real)throw new Error('BEGINNER_PERMISSION_REQUIRED');
  return p;
+}
+
+/** No connection is opened here. The supplied transaction must already be authorized. */
+export async function verifyBeginnerDatabaseIdentity(tx:Prisma.TransactionClient,permission:BeginnerPermission):Promise<void>{
+ if(process.env.NODE_ENV!=='test'||process.env.WORKLINGO_BEGINNER_ISOLATED_TEST!=='1')throw new Error('BEGINNER_ISOLATED_TEST_REQUIRED');
+ const url=process.env.TEST_DATABASE_URL;
+ if(!url||process.env.DATABASE_URL!==url)throw new Error('BEGINNER_ENVIRONMENT_MISMATCH');
+ preflightBeginnerEnvironment(permission,url);
+ if(path.normalize(process.env.WORKLINGO_DATA_DIR??'')!==path.normalize(permission.storageRoot))throw new Error('BEGINNER_STORAGE_MISMATCH');
+ const rows=await tx.$queryRaw<Array<{database:string;role:string;serverIdentity:string;superuser:boolean;createDb:boolean;createRole:boolean}>>`SELECT current_database() AS "database",current_user AS "role",current_setting('cluster_name') AS "serverIdentity",r.rolsuper AS "superuser",r.rolcreatedb AS "createDb",r.rolcreaterole AS "createRole" FROM pg_roles r WHERE r.rolname=current_user`;
+ const actual=rows[0];
+ if(!actual||actual.database!==permission.database.name||actual.role!==permission.database.role||actual.serverIdentity!==permission.database.serverIdentity||actual.superuser||actual.createDb||actual.createRole)throw new Error('BEGINNER_DATABASE_IDENTITY_MISMATCH');
 }

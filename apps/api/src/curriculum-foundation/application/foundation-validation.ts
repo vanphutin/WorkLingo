@@ -1,3 +1,7 @@
+import { randomUUID } from 'node:crypto';
+import type { NormalizedLessonDraft } from '@worklingo/content-format';
+import { lessonSnapshotSchema,type LessonSnapshot } from '../../curriculum/domain/curriculum.types.js';
+import { planBeginnerSession } from '../../learning-sessions/domain/beginner-session-planner.js';
 import { UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import type { CurriculumDefinitionInput } from '@worklingo/contracts';
@@ -47,4 +51,16 @@ export async function validateFoundationDefinition(tx: Prisma.TransactionClient,
   if (!definition.objectives.some((objective) => objective.required)) issues.push({ code: 'REQUIRED_OBJECTIVE_MISSING', path: 'objectives', message: 'At least one objective must be required' });
   if (issues.length) invalid(issues);
   return versionIds;
+}
+
+export function buildBeginnerDraftSnapshot(draft:NormalizedLessonDraft):LessonSnapshot {
+ if(draft.activities.length!==8)throw new Error('INVALID_BEGINNER_INVENTORY');
+ if(draft.formatVersion!=='WorkLingoLesson/1.2'||draft.durationMinutes!==45)throw new Error('INVALID_BEGINNER_PLAN');
+ const snapshot=lessonSnapshotSchema.parse({...draft,
+ contentBlocks:draft.contentBlocks.map(b=>({...b,id:b.id??randomUUID()})),
+ wordBanks:draft.wordBanks.map(b=>({...b,id:b.id??randomUUID(),languageBlocks:b.languageBlocks.map(l=>({...l,id:l.id??randomUUID()}))})),
+ activities:draft.activities.map(a=>({...a,id:a.id??randomUUID()}))});
+ const id=randomUUID();
+ planBeginnerSession({mission:{id:randomUUID(),slug:draft.slug,title:draft.title,objective:draft.objective,levelCode:'MG-F0',purpose:'learning',lessonVersion:{...snapshot,id,version:1}},expectedLessonVersionId:id,durationMinutes:45});
+ return snapshot;
 }

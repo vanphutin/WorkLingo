@@ -1,3 +1,4 @@
+import {BeginnerModule} from './beginner/beginner.module.js';
 import { type MiddlewareConsumer, Module, type NestModule } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 
@@ -44,6 +45,7 @@ import { VocabularyModule } from './vocabulary/vocabulary.module.js';
 @Module({
   imports: [
     AppConfigModule,
+    BeginnerModule,
     RequestContextModule,
     AiGatewayModule,
     DatabaseModule,

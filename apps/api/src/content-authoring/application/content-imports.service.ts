@@ -1,3 +1,5 @@
+import { buildBeginnerDraftSnapshot } from '../../curriculum-foundation/application/foundation-validation.js';
+import { assertBeginnerContext,type BeginnerAuthoringContext,denyUnscopedBeginnerMutation } from '../../beginner/domain/beginner-authoring-policy.js';
 import { assertBeginnerAuthoringDisabled } from '@worklingo/content-format';
 import { createHash } from 'node:crypto';
 import {
@@ -51,8 +53,12 @@ export class ContentImportsService {
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
   ) {}
 
-  async create(actorId: string, rawSource: string, topicGroupId?: string): Promise<ContentImportDto> {
-    assertRuntimeEnabled(rawSource);
+  async create(actorId: string, rawSource: string, topicGroupId?: string,context?:BeginnerAuthoringContext,transaction?:Prisma.TransactionClient): Promise<ContentImportDto> {
+    const database=transaction??this.database;
+    const target=context?await assertBeginnerContext(context,actorId,'author',database):null;
+    if(context&&!transaction)throw new UnprocessableEntityException('BEGINNER_TRANSACTION_REQUIRED');
+    if(context&&(!target?.lessonId||parseLessonSource(rawSource).document.formatVersion!=='WorkLingoLesson/1.2'))throw new UnprocessableEntityException('BEGINNER_TARGET_FORMAT_REQUIRED');
+    if(!context)assertRuntimeEnabled(rawSource);
     if (!createContentImportSchema.safeParse({ rawSource, topicGroupId }).success) throw new BadRequestException('Invalid content import request');
     if (topicGroupId === undefined && isTopicSource(rawSource)) {
       throw new BadRequestException({
@@ -66,6 +72,7 @@ export class ContentImportsService {
 
     const data = {
       rawSource,
+      ...(target?.lessonId?{lessonId:target.lessonId}:{}),
       sourceHash,
       status: 'DRAFT' as const,
       draftRevision: 1,
@@ -76,7 +83,7 @@ export class ContentImportsService {
       topicGroupRevision: topicGroupId ? 1 : 0,
     };
     const created = topicGroupId === undefined
-      ? await this.database.contentImport.create({ data })
+      ? await database.contentImport.create({ data })
       : await this.database.$transaction(async tx => {
         await lockTopicGroups(tx);
         if (!await tx.intermediateTopicGroup.findUnique({ where: { id: topicGroupId } })) throw new NotFoundException('Topic group not found');
@@ -114,9 +121,12 @@ export class ContentImportsService {
     id: string,
     actorId: string,
     input: UpdateContentSourceInput,
+    context?:BeginnerAuthoringContext,transaction?:Prisma.TransactionClient,
   ): Promise<ContentImportDto> {
-    assertRuntimeEnabled(input.rawSource);
-    const existing = await this.database.contentImport.findUnique({
+    const database=transaction??this.database;
+    if(context&&!transaction)throw new UnprocessableEntityException('BEGINNER_TRANSACTION_REQUIRED');
+    if(!context)assertRuntimeEnabled(input.rawSource);
+    const existing = await database.contentImport.findUnique({
       where: { id },
     });
 
@@ -128,7 +138,11 @@ export class ContentImportsService {
       });
     }
 
-    assertRuntimeEnabled(existing.rawSource);
+    if(context){
+      await assertBeginnerContext(context,actorId,'author',database,{importId:id,...(existing.lessonId?{lessonId:existing.lessonId}:{})});
+      if(parseLessonSource(input.rawSource).document.formatVersion!=='WorkLingoLesson/1.2')throw new UnprocessableEntityException('BEGINNER_TARGET_FORMAT_REQUIRED');
+    }else assertRuntimeEnabled(existing.rawSource);
+    if(!context&&existing.lessonId) await denyUnscopedBeginnerMutation(database,{lessonId:existing.lessonId});
     if (existing.status === 'PUBLISHED' || existing.status === 'ARCHIVED') {
       throw new ConflictException({
         code: ContentAuthoringErrorCode.VERSION_ALREADY_PUBLISHED,
@@ -155,7 +169,7 @@ export class ContentImportsService {
     const nextRevision = existing.draftRevision + 1;
     const newHash = createHash('sha256').update(input.rawSource).digest('hex');
 
-    const updateResult = await this.database.contentImport.updateMany({
+    const updateResult = await database.contentImport.updateMany({
       where: {
         id,
         draftRevision: input.expectedDraftRevision,
@@ -180,7 +194,7 @@ export class ContentImportsService {
       });
     }
 
-    const updated = await this.database.contentImport.findUniqueOrThrow({
+    const updated = await database.contentImport.findUniqueOrThrow({
       where: { id },
     });
 
@@ -191,8 +205,11 @@ export class ContentImportsService {
     id: string,
     actorId: string,
     expectedDraftRevision: number,
+    context?:BeginnerAuthoringContext,transaction?:Prisma.TransactionClient,
   ): Promise<ValidateContentImportResult> {
-    const existing = await this.database.contentImport.findUnique({
+    const database=transaction??this.database;
+    if(context&&!transaction)throw new UnprocessableEntityException('BEGINNER_TRANSACTION_REQUIRED');
+    const existing = await database.contentImport.findUnique({
       where: { id },
     });
 
@@ -204,7 +221,11 @@ export class ContentImportsService {
       });
     }
 
-    assertRuntimeEnabled(existing.rawSource);
+    if(context){
+      await assertBeginnerContext(context,actorId,'validate',database,{importId:id,...(existing.lessonId?{lessonId:existing.lessonId}:{})});
+      if(parseLessonSource(existing.rawSource).document.formatVersion!=='WorkLingoLesson/1.2')throw new UnprocessableEntityException('BEGINNER_TARGET_FORMAT_REQUIRED');
+    }else assertRuntimeEnabled(existing.rawSource);
+    if(!context&&existing.lessonId) await denyUnscopedBeginnerMutation(database,{lessonId:existing.lessonId});
     if (existing.status === 'PUBLISHED' || existing.status === 'ARCHIVED') {
       throw new ConflictException({
         code: ContentAuthoringErrorCode.VERSION_ALREADY_PUBLISHED,
@@ -224,13 +245,18 @@ export class ContentImportsService {
 
     const rawSource = existing.rawSource;
     const sourceHash = existing.sourceHash;
-    const analysis = analyzeLessonSource(rawSource);
+    const baseAnalysis=analyzeLessonSource(rawSource);
+    const readinessIssues:ContentIssueDto[]=[];
+    if(context&&baseAnalysis.normalizedDraft)try{buildBeginnerDraftSnapshot(baseAnalysis.normalizedDraft);}catch{
+      readinessIssues.push({code:'BEGINNER_NOT_READY',message:'Beginner requires the exact 45-minute inventory and complete R/L/S/W evidence',severity:'error',range:parseLessonSource(rawSource).document.range});
+    }
+    const analysis={...baseAnalysis,canPublish:baseAnalysis.canPublish&&readinessIssues.length===0,issues:[...baseAnalysis.issues,...readinessIssues]};
     const parseRes = parseLessonSource(rawSource);
 
     const newStatus = analysis.canPublish ? 'VALIDATED' : 'DRAFT';
     const newValidationHash = analysis.canPublish ? sourceHash : null;
 
-    const updateResult = await this.database.contentImport.updateMany({
+    const updateResult = await database.contentImport.updateMany({
       where: {
         id,
         draftRevision: expectedDraftRevision,

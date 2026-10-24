@@ -14,7 +14,7 @@ export const beginnerPermissionSchema=z.object({
  schemaVersion:z.literal(1),approvalId:z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/u),
  mandateId:z.literal('MND-20261024-003'),proposalHash:z.literal('1170d5b91963b53ca848e87d0fcca85683f7a68746467531b06dcf12f3b13e49'),
  environmentId:z.string().min(1).max(100),runId:z.string().regex(/^[a-f0-9]{12}$/u),programId:id,
- database:z.object({host:z.enum(['127.0.0.1','::1']),port:z.number().int().min(1).max(65535),name:z.string().min(1),role:z.string().min(1)}).strict(),
+ database:z.object({host:z.enum(['127.0.0.1','::1']),port:z.number().int().min(1).max(65535),name:z.string().min(1),role:z.string().min(1),serverIdentity:z.string().min(1)}).strict(),
  storageRoot:z.string().min(1),registryRoot:z.string().min(1),approvalRoot:z.string().min(1),ownedTempRoot:z.string().min(1),
  actions:z.array(beginnerActionSchema).min(1),expiresAt:z.iso.datetime(),revoked:z.literal(false),
  approvedBy:z.string().min(1),authorizationSource:z.string().min(1),recordHash:hash
@@ -35,7 +35,7 @@ export const beginnerReleaseEnvelopeSchema=z.object({
 });
 export type BeginnerReleaseEnvelope=z.infer<typeof beginnerReleaseEnvelopeSchema>;
 export const beginnerWriteSchema=z.object({
- target:beginnerTargetSchema,expectedRevision:z.number().int().positive().nullable(),
+ target:beginnerTargetSchema,editorialCode:z.string().regex(/^(?:MG|CB)\d{2}-L[1-4]$/u).optional(),expectedRevision:z.number().int().positive().nullable(),
  rawSource:z.string().min(1).max(500000).optional(),idempotencyKey:z.string().min(1).max(100),
  expectedSourceHash:hash.optional(),reviewHash:hash.optional(),
  selectedAudioArtifacts:z.record(z.string(),id).default({})

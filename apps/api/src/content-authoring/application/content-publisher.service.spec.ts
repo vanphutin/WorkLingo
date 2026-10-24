@@ -273,3 +273,26 @@ it('denies synthetic pre-existing validated 1.2 import before mutation/provider 
   await expect(new ContentPublisherService(database).publish('import','actor',{expectedDraftRevision:1,expectedSourceHash:'hash',idempotencyKey:'key'})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
   expect(transaction).not.toHaveBeenCalled();
 });
+
+import {BeginnerAuthoringPolicy} from '../../beginner/domain/beginner-authoring-policy.js';
+import {fixtureActor,fixtureTarget,fixturePermission} from '../../../test/fixtures/beginner/authoring/fixture-factory.js';
+import type {Prisma} from '@prisma/client';
+it('rejects a wrong scoped import before replaying a publish receipt',async()=>{
+ const target={...fixtureTarget,lessonId:randomUUID(),importId:randomUUID()};
+ const policy=new BeginnerAuthoringPolicy({readPermission:async()=>fixturePermission(),verifyTarget:vi.fn(),verifyEnvironment:vi.fn()});
+ const context=await policy.authorize(fixtureActor,'publish',target,{} as Prisma.TransactionClient);
+ const input={expectedDraftRevision:1,expectedSourceHash:'a'.repeat(64),idempotencyKey:'scoped-publish'};
+ const requestHash=createHash('sha256').update(JSON.stringify(input)).digest('hex');
+ const lookup=vi.fn().mockResolvedValue({requestHash,responseBody:{lessonVersionId:'wrong-receipt'}});
+ const service=new ContentPublisherService({mutationReceipt:{findUnique:lookup}} as unknown as PrismaService);
+ await expect(service.publish(randomUUID(),fixtureActor.id,input,{context,reviewHash:'b'.repeat(64)})).rejects.toMatchObject({response:{code:'BEGINNER_SCOPE_MISMATCH'}});
+ expect(lookup).not.toHaveBeenCalled();
+});
+
+it('denies generic withdrawal of a Beginner version before any history write',async()=>{
+ const version={id:randomUUID(),lessonId:randomUUID(),status:'PUBLISHED',parsedContent:{formatVersion:'WorkLingoLesson/1.2'},lesson:{slug:'beginner-fixture'}};
+ const update=vi.fn(),tx={$executeRaw:vi.fn(),lessonVersion:{findUnique:vi.fn().mockResolvedValue(version),update},lesson:{updateMany:vi.fn()},auditLog:{create:vi.fn()}};
+ const db={...tx,$transaction:async(fn:(tx:unknown)=>unknown)=>fn(tx)};
+ await expect(new ContentPublisherService(db as unknown as PrismaService).archiveLessonVersion(version.id,fixtureActor.id)).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+ expect(update).not.toHaveBeenCalled();
+});

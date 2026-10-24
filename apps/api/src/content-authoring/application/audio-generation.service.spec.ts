@@ -223,6 +223,7 @@ ${scriptA}
     };
 
     const database = {
+      contentImport: { findUnique: vi.fn().mockResolvedValue({ rawSource: lessonSourceWithScriptA }) },
       mutationReceipt: {
         findUnique: vi.fn().mockResolvedValue(existingReceipt),
       },
@@ -258,6 +259,7 @@ ${scriptA}
 
   it('does not replay an Azure receipt made before dialogue configuration versioning', async () => {
     const database = {
+      contentImport: { findUnique: vi.fn().mockResolvedValue({ rawSource: lessonSourceWithScriptA }) },
       mutationReceipt: { findUnique: vi.fn().mockResolvedValue({
         requestHash: createHash('sha256').update(JSON.stringify({
           audioScriptSlug, contentImportId: importId, idempotencyKey: 'old-azure', providerId: 'azure-speech',
@@ -493,4 +495,12 @@ ${scriptB}
     await shutdown;
     expect(shutdownComplete).toBe(true);
   });
+});
+
+it('denies Beginner audio generation before a receipt, job or provider selection',async()=>{
+ const provider={providerName:'fake-tts'},registry=registryFor(provider as TextToSpeechPort);
+ const db={contentImport:{findUnique:vi.fn().mockResolvedValue({id:randomUUID(),rawSource:'FORMAT: WorkLingoLesson/1.2'})},mutationReceipt:{findUnique:vi.fn().mockResolvedValue({requestHash:'unrelated'})}};
+ const service=new AudioGenerationService(db as unknown as PrismaService,{} as ObjectStorage,provider as TextToSpeechPort,registry,{} as JobDispatcher,{} as JobRunnerService);
+ await expect(service.generateAudio(randomUUID(),randomUUID(),{idempotencyKey:'deny-beginner'})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+ expect(registry.list).not.toHaveBeenCalled();expect(db.mutationReceipt.findUnique).not.toHaveBeenCalled();
 });
