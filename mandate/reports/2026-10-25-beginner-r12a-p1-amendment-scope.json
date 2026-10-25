@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "scope": "Linked P1 follow-up to003; capture only",
+  "parentMandate": "MND-20261024-003",
+  "allowlist": {
+    "modify": [
+      "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.spec.ts",
+      "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.ts"
+    ],
+    "create": []
+  },
+  "baseline": {
+    "head": "47dab4efb54d33b207455762446185a3f516f1e5",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "initialTrackedAndUntrackedChanges": [],
+    "sourceFiles": [
+      {
+        "path": ".agents/skills/mandate-steward/references/governance.md",
+        "sha256": "5249cfb338abfebe03d4f51f3d1b9bfc456dcc0ad756951fc1ead4147d125db2"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "769f60e1fa72cdb3af474c1fc4fb4e0ba2539de061b8f5c5a4d9517ab45456e3"
+      },
+      {
+        "path": "apps/api/package.json",
+        "sha256": "1b541ab64de77e5ccaeae934af0aacb7d341077b2a208eb808d5ad40329c13f7"
+      },
+      {
+        "path": "apps/api/prisma/schema.prisma",
+        "sha256": "62cf277eb66200feb757f145d38534d1d67f8a7f12c3f6e3880cbfbf8e9ffd95"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.controller.spec.ts",
+        "sha256": "6d1f8fb12a841da31b14ed160f53e0b4d38b68c5dee56b97063e48890d338ed0"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.controller.ts",
+        "sha256": "74afd6a019255b9538d6da03f7e861cca6c50cf60d7743762621b06508dbc618"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.spec.ts",
+        "sha256": "733ecdc1d5d85db71ae176bafb6216746a3b825194f4364081aef8e926ca521a"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.ts",
+        "sha256": "08be0f78d1d8425caf5e49370f88fd8bb1a8667a7dd3c28dddf7802976140ec4"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/dto/remove-admin-content.dto.ts",
+        "sha256": "cf4e649ac2ba8e6bf98a25021e48585b8fb91824ba5a4cece308b23a2a361da6"
+      },
+      {
+        "path": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.spec.ts",
+        "sha256": "222dea7f91cc9ad63cdf74523408cb37f00d18462a94100f8645fe9d59fdf11a"
+      },
+      {
+        "path": "apps/api/src/admin-curriculum/application/admin-curriculum-command.service.ts",
+        "sha256": "8356c3d1e4cc880af5fb964d9838d84eecbf490a5d2eee6a425d29f9a3caed49"
+      },
+      {
+        "path": "apps/api/src/app.module.ts",
+        "sha256": "217dac506d3c16fb6935ab7ce0913ae7bcd119aacdd74bfa1ec7dcacefe60bb3"
+      },
+      {
+        "path": "apps/api/src/auth/infrastructure/roles.guard.ts",
+        "sha256": "465a2ef8ed17e33d32cf953318e9f9fa434d54eadc3da1bb970c0332a11d00fa"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-authoring.service.spec.ts",
+        "sha256": "8dc2ca3c87fc029304ffa29e09ae74429cf637d26ac8aab36aac8294b88dee5d"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-authoring.service.ts",
+        "sha256": "d667110c108f5743f6c914d9e92863a8c274bec835d0e108589deb3b141c145e"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-release.service.spec.ts",
+        "sha256": "b1d0a65910a13d9d87e280c6393561b5a70829a12ec002cc357bc0d0558a52ae"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-release.service.ts",
+        "sha256": "5781b1ca330b588559f70b16a476d35e56585e44e9ba48d59c4da557be3a8bdc"
+      },
+      {
+        "path": "apps/api/src/beginner/beginner-admin.controller.spec.ts",
+        "sha256": "af8fe3b1622b9d8323dc77a49735a49d6aae506dc02c697ee166eb222673da74"
+      },
+      {
+        "path": "apps/api/src/beginner/beginner-admin.controller.ts",
+        "sha256": "cf5933ba6b3cab8ad24186d2389e3a27251fa2598edc699788c3336e88bad9bf"
+      },
+      {
+        "path": "apps/api/src/beginner/beginner.module.ts",
+        "sha256": "355fd38d660804b29c3b4f89d470902bae792328879a8e95c1542e02d95268a0"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-authoring-policy.spec.ts",
+        "sha256": "3c367154dbe3c8f7e2df8e3eead9bf161f81c243c3033907f7fc0e5fc0a88bf7"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-authoring-policy.ts",
+        "sha256": "424179c685b79d43f3533d29bc006b58869543053442f5c564b72ccea40a23bc"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+        "sha256": "7f95c8908e517ac242be4439dab7adaa1fab3e2f099f0ab362724a5ae7959690"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+        "sha256": "203183c6fe7a924ff755ccf207ad409cb87ab4cf9efe2b31d9203b22f1dca175"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-publication-policy.spec.ts",
+        "sha256": "89100b533b1fcb1e344518448b316870eaba00001b3c57d172479928a2a1d004"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-publication-policy.ts",
+        "sha256": "78b55a8463c8187268c8103a6a11f19d9bf5d401e1f263249b0ebe8d2e5a9cd2"
+      },
+      {
+        "path": "apps/api/src/beginner/dto/beginner-authoring.dto.ts",
+        "sha256": "d752fd15bc152c03303fc0c525bd76c6b662b0f60a76377ecc8f1cf23948b741"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.spec.ts",
+        "sha256": "2619ebfa54611e9ce8928d1d039455ca2ed67e742a749623e704325358cd5f41"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.ts",
+        "sha256": "f24cbf0d87746c280986c9da64bdaac39250c0dcf9a4ca9d202a2e8390618bd9"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.schema.ts",
+        "sha256": "753b4b7f21331a1e4de2494bc10850318cbaf5a798c5b3b27a262c7017689106"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.service.spec.ts",
+        "sha256": "530d8f8efb219614742f8b55ba84bc342d77cc187ba181460e05171e9a8b6c03"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.service.ts",
+        "sha256": "cf722fdc3ed03b969438481b10c9ca27a8637f0355e5a98c6582c038cb807334"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-imports.service.spec.ts",
+        "sha256": "e5e04bd878dca84b6d22e159128bf6fabd72f2d425b2881cd8389070720ce50d"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "sha256": "ae5c98727eb9e32707f0ea08ea8c1a8c8fd8f42d368f0e7a27dd48d3e9c2500d"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.spec.ts",
+        "sha256": "8c658c9522d1c69851912ed85c4bdee8b41abbaca1a4b46dcd320e658df0bc5e"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/content-authoring/audio.controller.ts",
+        "sha256": "fdc658239f1fe3c8f0b15de9eef7a660c0c3d047a8b33b6e6fa36cc7f7849d2e"
+      },
+      {
+        "path": "apps/api/src/content-authoring/content-authoring.controller.ts",
+        "sha256": "21a0c0e07e83d8516a00e8ed241b0e5eb4b5f9a187c513e0c5fd50c8184ccb1f"
+      },
+      {
+        "path": "apps/api/src/content-authoring/content-authoring.module.ts",
+        "sha256": "88eec03c3e4cbd1b1754ec30875bae866d50815e78719b649e3d5afd92766be2"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/curriculum-eligibility.service.ts",
+        "sha256": "8d52310a2f6837a7c3f6c507e83404af94e1b6f5f2aa4091996ac8f89c8dc12c"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.spec.ts",
+        "sha256": "55dc97a216e9bac91b17bc2727bcd5fefa5f727b95da22308e10cf683379ae60"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-curriculum.service.ts",
+        "sha256": "da5ebaf4103e8e8da835f542763b0c3dce0beabce351c7804215f0ee64fe9e03"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.spec.ts",
+        "sha256": "11e464ee37fc1f5dc00635cfa8b717c9a092be088e0f610ac1b4276ae36a1290"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/curriculum-foundation.module.ts",
+        "sha256": "2b413337bd70a799d48aa3e187a102c807ca737305e3e838ef505a202c48f30b"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts",
+        "sha256": "f926ed78b325ed01882f020149baeacc1f0840ad3a37758dc2ac0003b651e755"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/application/learning-sessions.service.ts",
+        "sha256": "9f9bd8c1f9307fab423c7b2ea9889d27f54e3349a42eb68a40b92d085bb9c6d9"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+        "sha256": "99b5a2afb8e8824f37ce723735d1cd5505611559eb0c54a839d639e044b4c4dc"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.spec.ts",
+        "sha256": "4fbb291efb21ecdf0068512d3dde50b406eb42a36cd210688287771791af8bd3"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/storage/domain/object-storage.port.ts",
+        "sha256": "3b702f4dd9709ed10d41055fc8352a62a40eb86f3192eaaa26184c08944cddf9"
+      },
+      {
+        "path": "apps/api/test/fixtures/beginner/authoring/fixture-factory.ts",
+        "sha256": "3b23a1d4262bf7d5c13619b93c46ee62bb788b2b44918331a31f73fa09f1a589"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+        "sha256": "fabcb22657d69ba34bad5dfa815e62aa040db9985bc4cfe01644d2355e6fcb55"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+        "sha256": "f566dc54be4d4445943c870111480293e6afb409a26c9d518361551b5c6a6c7c"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-test-harness.ts",
+        "sha256": "a3b069b27faddc95659424600217f91a2940dc87e88c3aa7b2535f8d71719000"
+      },
+      {
+        "path": "apps/api/test/integration/learning-session-test-harness.ts",
+        "sha256": "b5b615db8295c60c8b51df33a22c961909a57952225ead7beade1660dab525bb"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.beginner.integration.config.ts",
+        "sha256": "28d39e92bdd252f49b8100ffac383941188aeb40fbdb3d6ae76f9c1d298d7179"
+      },
+      {
+        "path": "apps/api/vitest.config.ts",
+        "sha256": "c0857a1d341d15c4a15b264ee174db678abebfbe2c642f4c00ee7084f9ad68a4"
+      },
+      {
+        "path": "apps/web/e2e/beginner-admin-history.spec.ts",
+        "sha256": "1a58eae6659b695de97f75c536cf2b957be4d59ea3f5e1181a828da003eaced1"
+      },
+      {
+        "path": "apps/web/e2e/beginner-admin.spec.ts",
+        "sha256": "d70669f2e3b6094fff08442b518494c6377e73d5b9b2c6065df353ab8d700378"
+      },
+      {
+        "path": "apps/web/package.json",
+        "sha256": "8aabe1962174153308d76a5fc8b0b199b53addeacd89f09f618d339b9235c446"
+      },
+      {
+        "path": "apps/web/playwright.beginner-admin.config.ts",
+        "sha256": "05dbd615b43324fb32d5059e4fda41f99384aac3a8d51958747df82dad258e20"
+      },
+      {
+        "path": "apps/web/playwright.config.ts",
+        "sha256": "a347cffb361cebb5e9e3a036145110caf9c48d1b3da07f8ae4f649065792ca01"
+      },
+      {
+        "path": "apps/web/src/app/(admin)/admin/programs/beginner/page.tsx",
+        "sha256": "fb7500f2ccd83bce6946bd6be2cae08af5e2d73d5b633cba57cf97ed2072d811"
+      },
+      {
+        "path": "apps/web/src/app/(admin)/layout.tsx",
+        "sha256": "a4f879fe1073f5884503af0ffd0bd3ada8c7a25594adb6f0f8502b47b91e07f8"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner-learner-preview.test.tsx",
+        "sha256": "1bb9d8d6b835daba8ffc95abbd3694cfcd4c35e4a1b0d6c6f3f2c2f95ab22469"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner-learner-preview.tsx",
+        "sha256": "148f786d75dec81636860cc2ab7b0c5eaab8a11704b1c0dec4ddde224c1ce7b0"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner-lesson-editor.test.tsx",
+        "sha256": "ac63ebaaf40097a3ff1ba78f757baeab352b55857a9d95c7e901282a88e1b967"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner-lesson-editor.tsx",
+        "sha256": "3c80ee997c93139a7dfce764a950735310dfa97bac81922ce657fe9e5d4a55b5"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner-workspace.test.tsx",
+        "sha256": "08a02822ddebb72dbc17d3b15e7df50772a932ab71918f5c4f457796cfbb3346"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner-workspace.tsx",
+        "sha256": "2c83f306c1558d1afb18a0b8d48faf48071308095a061442099f2ffdd42e892b"
+      },
+      {
+        "path": "apps/web/src/features/admin-beginner/beginner.css",
+        "sha256": "3c8d9a11f4910bbe313511955a100800866c59102602fd98f5a45874398bdd2e"
+      },
+      {
+        "path": "apps/web/src/features/admin-curriculum/curriculum-workspace.tsx",
+        "sha256": "247d3484f6cfe8f745b4b7dc184f2f60752553632675e8fc650cfd601eca6404"
+      },
+      {
+        "path": "apps/web/src/features/admin-curriculum/foundation-definition-editor.test.tsx",
+        "sha256": "4bcfbc147c67254c14f6c952f0ffc6257dcbf50428ed86151866622b90c39c1d"
+      },
+      {
+        "path": "apps/web/src/features/admin-curriculum/foundation-definition-editor.tsx",
+        "sha256": "37adb1746a23e045fc6b86c4e9eb7ca6e8085b009da75b8d7d33b7893144ba39"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation-config.ts",
+        "sha256": "5925e15dee5f4d6e9c2db09c67c47d2bef031de062787fe3702fbbf2aea15705"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation-inventory.test.tsx",
+        "sha256": "55aa5a1af5142b20b0ffd764906b407307600faa64d8ebf9d7f30d9d4dd49935"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation-model.ts",
+        "sha256": "a0499366fcbef9b5d1b9663817cf26a75ab30152cdb176c8e5b1302e12ba775d"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-navigation.test.tsx",
+        "sha256": "d0c49fd1c1029c5c7eef450083515a4ef3a6aa57ba8563ae6173175b19a78bd1"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-sidebar.test.tsx",
+        "sha256": "5dd15b477b34a8781c7c100fdf89381a2fb16aee390add3b65c096693fccc6c0"
+      },
+      {
+        "path": "apps/web/src/features/admin-dashboard/admin-sidebar.tsx",
+        "sha256": "7ae7028fab08a68e09798ebbd96e31b08646a76ba65798cca1c0b0f16cfff827"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-renderer.test.tsx",
+        "sha256": "1645a6443ca9ba6a8c135eb91dbd5dc33523c486650ff0ec8880e7e6b753c1d1"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-renderer.tsx",
+        "sha256": "9cfc70fb76032a5786c2a49ef9bca37fa2fdd29356e5be09aef68d3ce10b0577"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-renderers/speaking-activity.tsx",
+        "sha256": "98dac5ef0eb290357268c06fb0e2bedf0938ad48c84d17529dc11d577ed7b0ae"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-workspace.tsx",
+        "sha256": "46ce62044bae7688669ac501d72b95ab0fec20fe928998b18c5ab73fd02d2766"
+      },
+      {
+        "path": "apps/web/src/i18n/messages/adminBeginner.ts",
+        "sha256": "553d8cf819da109d52bc1cc6411ff98a444400388228c179a23979f2d8ea99f6"
+      },
+      {
+        "path": "apps/web/src/lib/api/beginner-admin-client.test.ts",
+        "sha256": "fe4b27f5143dd593b0d8700dda1ac473cb16b772aea49d19308e280396a30f8b"
+      },
+      {
+        "path": "apps/web/src/lib/api/beginner-admin-client.ts",
+        "sha256": "40ed74144292882c2c4c874e35ce31bc9a2cc57993ff4ad5133515cdd3a5fce4"
+      },
+      {
+        "path": "docs/IMPLEMENTATION_ROADMAP.md",
+        "sha256": "376a01de2b368c1e33190ca1d4ec8a253da5aaa2157efaf369f94e1dfb3c27f2"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md",
+        "sha256": "60ff2caff21f5d5352cf84c89fbbc6ddca27e1644bff452007f7875cd2a031e6"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-curriculum-resources-design.md",
+        "sha256": "4d6e44ac1cb814cb5f27f6a25905787e02d3d3fe8a0a75ac1d696f8682ba5def"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-final-refinement.md",
+        "sha256": "131fee5e82c77c20e540a121817cf4808ccd96c19bacf56b4af9915219acb051"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-video-production-plan.md",
+        "sha256": "25d34657d54410b2c8ae96c6f60fd6767d44a2783f58356b7bd94b2578c053db"
+      },
+      {
+        "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+        "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+      },
+      {
+        "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+        "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+      },
+      {
+        "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+        "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r11-verification.md",
+        "sha256": "0507d280c2733ff09aff26a660fe614f1bb0c449d96796c3b0f8b030dab18995"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-human-approval.md",
+        "sha256": "bf70620c343c2668a85dbe3b4184a6838a2b048de88bff9a493d2064cfcb5c17"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-preapproval-review.md",
+        "sha256": "ab66a7196bf5e9488265f786238202f7c5ccab46d0301cfaa305f95936679336"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+        "sha256": "5851a4ce7d377d2c8b5732d20ed4ffc048b32ed0b1ffa4d50447b760b3ba6acd"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+        "sha256": "6271e353fc5f43514499e619d9c02df89dec894d13d5a833e4621ceb76a3061c"
+      },
+      {
+        "path": "packages/content-format/src/beginner-format.ts",
+        "sha256": "a633c4acc718adf65c860ce838b0b9fbfbd1cf2911882457320d6a7256bc2dc2"
+      },
+      {
+        "path": "packages/contracts/src/beginner-authoring.contracts.spec.ts",
+        "sha256": "da1538329ad10b44e196046ebe8de06e853d00939300f45d43ae8bf6cddcb7d3"
+      },
+      {
+        "path": "packages/contracts/src/beginner-authoring.contracts.ts",
+        "sha256": "16da5e9c691a307673498835bfd6f8d2a3d56cddb84261acea80d16ac39bc2cf"
+      },
+      {
+        "path": "packages/contracts/src/beginner-editorial-plan.spec.ts",
+        "sha256": "4dd0bf5e27784d2a3f90c5112aaa69483d18bdba198ffde2e54f343e91c25e32"
+      },
+      {
+        "path": "packages/contracts/src/beginner-editorial-plan.ts",
+        "sha256": "e6587e37fe7357abf02c3b691d06843ebaf54711a8ddcb3f0a032f6249211d27"
+      },
+      {
+        "path": "packages/contracts/src/beginner.contracts.ts",
+        "sha256": "8d4cec9e90e8bcc6f1c2dc927a616a892e09b8268fde12c13435ed75512205c0"
+      },
+      {
+        "path": "packages/contracts/src/index.ts",
+        "sha256": "0fbcdd39c145f7a7def7ae4a30d27585ef9bb68516786ed289bf3fd2df7dd665"
+      }
+    ]
+  },
+  "frozenArtifacts": [
+    {
+      "path": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md",
+      "sha256": "60ff2caff21f5d5352cf84c89fbbc6ddca27e1644bff452007f7875cd2a031e6"
+    },
+    {
+      "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+      "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+    },
+    {
+      "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+      "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+    },
+    {
+      "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+      "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-preapproval-review.md",
+      "sha256": "ab66a7196bf5e9488265f786238202f7c5ccab46d0301cfaa305f95936679336"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+      "sha256": "5851a4ce7d377d2c8b5732d20ed4ffc048b32ed0b1ffa4d50447b760b3ba6acd"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+      "sha256": "6271e353fc5f43514499e619d9c02df89dec894d13d5a833e4621ceb76a3061c"
+    }
+  ],
+  "original": {
+    "scopePath": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+    "allowlistFingerprint": "5c976d313378bd6fb5cb1831cf03ec0af9ed24cbfdafc842fb08d826a5538259",
+    "baselineFingerprint": "ec1bea8b364bb983af76cf595b35a2ab347bc713571ba9fe59eebecf04c1dd13"
+  },
+  "hashAlgorithm": {
+    "files": "SHA-256 raw bytes; null locks absence",
+    "documents": "SHA-256 UTF-8 with CRLF normalized to LF",
+    "fingerprints": "SHA-256 UTF-8 JSON recursively sorted object keys; arrays retain sorted path order",
+    "proposal": "Mandate CLI model.proposalHash over proposal fields and trimmed body, excluding lifecycle bookkeeping"
+  },
+  "references": {
+    "plan": "docs/superpowers/plans/2026-10-25-beginner-r12a-p1-lifecycle-amendment.md",
+    "scopeReview": "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-review.md"
+  },
+  "hashes": {
+    "plan": "8faaff111aeab7b985a7640e284776a4bf39d40fbc05a057224f44ec35711793",
+    "scopeReview": "ca7fbd38d6def2eb1bd2a043457ea5662ac6433cc7e6645b70bb969958dfa6df",
+    "allowlist": "b876ec6106b4f59473060d375778e55171c90d9d08bbdeaa051ab25b88a07076",
+    "baseline": "ddfbabf5baadd66532c9c02b63f9b22ac09b7e956b9f4540de4650860404c655"
+  },
+  "permissions": {
+    "current": "Documents/register capture and triage only",
+    "productExecution": false,
+    "database": false,
+    "integrationE2E": false,
+    "publication": false,
+    "providers": false,
+    "mergePushDeploy": false
+  },
+  "governance": {
+    "capture": [
+      "docs/superpowers/plans/2026-10-25-beginner-r12a-p1-lifecycle-amendment.md",
+      "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-review.md",
+      "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-scope.json",
+      "new linked item via CLI",
+      "mandate/INDEX.md"
+    ],
+    "futureAfterMatchingApproval": [
+      "follow-up lifecycle via CLI",
+      "mandate/reports/2026-10-25-beginner-r12a-p1-human-approval.md",
+      "mandate/reports/2026-10-25-beginner-r12a-p1-verification.md"
+    ],
+    "runtimeArtifacts": ".superpowers/sdd/2026-10-25-beginner-r12a-p1-lifecycle-amendment only; synthetic runner/ledger/logs, no DB/storage provisioning",
+    "originalRecords": "Frozen, excluded from all amendments"
+  },
+  "verification": "Recompute five locks and inspect exact Git changes before approval/execution. No product tests run in capture."
+}
