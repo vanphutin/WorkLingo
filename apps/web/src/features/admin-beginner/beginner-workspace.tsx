@@ -18,6 +18,7 @@ export function BeginnerWorkspace(){
  const [preview,setPreview]=useState<BeginnerPreviewData|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState<string|null>(null),[unitEditor,setUnitEditor]=useState<BeginnerTarget|null>(null);
  const request=useRef(0),dirty=source!==(item?.draft.rawSource??'');
  const canLeave=useAdminDraftGuard(dirty);
+ const immutable=item?.draft.status==='PUBLISHED'||item?.draft.status==='ARCHIVED';
  const foundationClient=useMemo(()=>unitEditor?api.foundation(unitEditor):undefined,[unitEditor]);
  const load=async()=>{setError(null);try{setWorkspace(await api.workspace());}catch(e){setError(e instanceof Error?e.message:String(e));}};
  useEffect(()=>{let active=true;void api.workspace().then(value=>{if(active)setWorkspace(value);}).catch(e=>{if(active)setError(e instanceof Error?e.message:String(e));});return()=>{active=false;request.current++;};},[]);
@@ -35,7 +36,7 @@ export function BeginnerWorkspace(){
  };
  const reload=async()=>{if(!target?.importId)return;const data=await api.getImport(target);setItem(data);setSource(data.draft.rawSource);setReviewHash(data.reviewHash);setAudio(data.selectedAudioArtifacts);};
  const save=()=>run(async()=>{
-  if(!target||!code)return;
+  if(!target||!code||immutable)return;
   if(item){const draft=await api.updateSource({...command(),rawSource:source});setItem({...item,draft,reviewHash:null});}
   else {const created=await api.createDraft({...command(),rawSource:source,editorialCode:code});setTarget(created.target);setItem({draft:created.draft,reviewHash:null,reviewKind:null,selectedAudioArtifacts:{},audioArtifacts:[]});}
   setReviewHash(null);await load();
@@ -58,7 +59,7 @@ export function BeginnerWorkspace(){
       {stage.units.map((unit,index)=>{
        const mission=level?.missions.find(m=>m.slug===unit.code.toLowerCase());
        const levelTarget=pathTarget&&level?{...pathTarget,levelId:level.id}:null,unitTarget=levelTarget&&mission?{...levelTarget,missionId:mission.id}:null;
-       return <details key={unit.code}><summary>{unit.code} · {unit.title}</summary><p>{t('objective')}: {unit.canDo}</p><p>{t('prerequisite')}: {unit.hardPrerequisite}</p>
+       return <details key={unit.code}><summary>{unit.code} · {unit.title}</summary><p>{t('objective')}: {unit.canDo}</p><p>{t('prerequisite')}: {unit.hardPrerequisite}</p><p>{t('recommended')}: {unit.lessons.map(l=>l.code).join(' → ')}</p>
         {!mission&&levelTarget&&allowed('author')?<button type="button" disabled={busy} onClick={()=>void createNode('create-unit',levelTarget,{levelId:level!.id,slug:unit.code.toLowerCase(),title:unit.title,objective:unit.canDo,order:index+1,purpose:'LEARNING'})}>{t('createUnit')}</button>:null}
         {unitTarget&&allowed('read')?<button type="button" disabled={busy} onClick={()=>{if(canLeave())setUnitEditor(unitTarget);}}>{t('unitEvidence')}</button>:null}
         <ol>{unit.lessons.map(lesson=><li key={lesson.code}><button type="button" aria-current={code===lesson.code?'true':undefined} disabled={busy} onClick={()=>void choose(lesson.code,unitTarget)}>{lesson.code} · {lesson.title}</button><small>{workspace.bindings.find(b=>b.editorialCode===lesson.code)?.status??t('planned')}</small></li>)}</ol>
@@ -69,9 +70,12 @@ export function BeginnerWorkspace(){
    </nav><section className="beginner-detail" aria-label={t('inventory')}>
     {planned?<><h2>{planned.code} · {planned.title}</h2><p><strong>{t('objective')}</strong>: {planned.objective}</p><p><strong>{t('prerequisite')}</strong>: {planned.prerequisite}</p>
      <dl>{(['grammar','pronunciation','vocabulary','reading','listening','speaking','writing'] as const).map(skill=><React.Fragment key={skill}><dt>{t(skill)}</dt><dd>{planned[skill]}</dd></React.Fragment>)}</dl>
-     <details><summary>{t('resources')}</summary>{workspace.plan.videoSlots.filter(v=>v.lessonCodes.includes(planned.code)).map(v=><article key={v.code}><h3>{v.code} · {v.purpose}</h3><p>{t('notStarted')} · {v.slot}</p><p>{v.outline}</p><p>{v.languageAndCaption}</p><p>{v.reuse}</p></article>)}</details>
-     <BeginnerLessonEditor source={source} onSourceChange={value=>{setSource(value);setReviewHash(null);setPreview(null);}} status={item?.draft.status??'PLANNED'} persisted={!!item} dirty={dirty} busy={busy} readOnly={!target||!allowed('author')} reviewHash={reviewHash} audioArtifacts={item?.audioArtifacts??[]} selectedAudioArtifacts={audio} onAudioSelection={value=>{setAudio(value);setReviewHash(null);setPreview(null);}} actions={{
-      ...(allowed('author')&&target?{save:()=>void save()}:{}),
+     <details><summary>{t('resources')}</summary>{workspace.plan.videoSlots.filter(v=>v.lessonCodes.includes(planned.code)).map(v=><article key={v.code}><h3>{v.code} · {v.purpose}</h3><p>{t('notStarted')} · {v.slot}</p><p>{v.type} · {v.lessonCodes.join(', ')}</p><p>{v.outline}</p><p>{v.exercises}</p><p>{v.languageAndCaption}</p><p>{v.reuse}</p></article>)}{!workspace.plan.videoSlots.some(v=>v.lessonCodes.includes(planned.code))?<p>{t('noResources')}</p>:null}</details>
+     {item?.draft.status==='PUBLISHED'&&target&&allowed('author')?<button type="button" disabled={busy} onClick={()=>{
+      if(!canLeave())return;const next={...target};delete next.importId;setTarget(next);setItem(null);setReviewHash(null);setAudio({});setPreview(null);setVersion('');
+     }}>{t('newDraft')}</button>:null}
+     <BeginnerLessonEditor source={source} onSourceChange={value=>{setSource(value);setReviewHash(null);setPreview(null);}} status={item?.draft.status??'PLANNED'} persisted={!!item} dirty={dirty} busy={busy} readOnly={immutable||!target||!allowed('author')} reviewHash={reviewHash} audioArtifacts={item?.audioArtifacts??[]} selectedAudioArtifacts={audio} onAudioSelection={value=>{setAudio(value);setReviewHash(null);setPreview(null);}} actions={{
+      ...(allowed('author')&&target&&!immutable?{save:()=>void save()}:{}),
       ...(allowed('validate')?{validate:()=>void run(async()=>{await api.validate(command());await reload();})}:{}),
       ...(allowed('read')?{preview:()=>void run(async()=>{if(target)setPreview(await api.preview(target,version||undefined,audio));})}:{}),
       ...(allowed('review')?{review:()=>void run(async()=>{const reviewed=await api.review(command());setReviewHash(reviewed.reviewHash);})}:{}),
@@ -80,7 +84,7 @@ export function BeginnerWorkspace(){
      {binding?<label>{t('version')}<select value={version} disabled={busy} onChange={e=>{setVersion(e.target.value);setPreview(null);}}><option value="">{t('draftPreview')}</option>{binding.lessonVersions.filter(v=>v.status==='PUBLISHED').map(v=><option value={v.id} key={v.id}>V{v.version} · {v.id}</option>)}</select></label>:null}
      {preview&&target?<BeginnerLearnerPreview key={preview.lessonVersionId} data={preview} target={target} onClose={()=>setPreview(null)}/>:null}
     </>:<p>{t('selectLesson')}</p>}
-    {unitEditor&&foundationClient?<FoundationDefinitionEditor missionId={unitEditor.missionId!} missionTitle={unitEditor.missionId!} prerequisiteOptions={[]} client={foundationClient} capabilities={{save:allowed('author'),validate:allowed('validate'),review:allowed('review'),publish:allowed('publish')}} onClose={()=>setUnitEditor(null)}/>:null}
+    {unitEditor&&foundationClient?<FoundationDefinitionEditor missionId={unitEditor.missionId!} missionTitle={unitEditor.missionId!} prerequisiteOptions={workspace.paths.flatMap(p=>p.levels.flatMap(l=>l.missions.filter(m=>m.id!==unitEditor.missionId).flatMap(m=>m.curriculumRevisions.filter(r=>r.status==='PUBLISHED').map(r=>({id:r.id,label:m.title+' · V'+r.revision,title:m.title,revision:r.revision})))))} client={foundationClient} capabilities={{save:allowed('author'),validate:allowed('validate'),review:allowed('review'),publish:allowed('publish')}} onClose={()=>setUnitEditor(null)}/>:null}
    </section></div>
   </>}
  </main>;

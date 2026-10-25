@@ -31,7 +31,7 @@ export function projectLearnerActivity(snapshot:LessonSnapshot,activityId:string
       activityType: activity.activityType,
       ...(beginner ? {instructions:(snapshot.instructions ?? []).filter(i=>i.phase===activity.learningBlock)} : {}),
       ...(!beginner && activity.payload.audioText ? { audioText: activity.payload.audioText } : {}),
-      content,
+      content:beginner&&activity.activityType==='listening'?[]:content,
       foundationCategory: snapshot.foundation?.category ?? null,
       id: activity.id,
       languageBlocks: recall ? [] : languageBlocks,

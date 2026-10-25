@@ -47,7 +47,7 @@ export class BeginnerAuthoringService {
   const permission=await this.policy.permission();
   if(!permission)return {plan:beginnerEditorialPlan,paths:[],bindings:[] as BeginnerBinding[],writesEnabled:false,actions:[] as BeginnerAction[],environmentId:null};
   await this.policy.authorize(actor,'read',{programId:permission.programId},this.database);
-  const paths=await this.database.learningPath.findMany({where:{programId:permission.programId},take:3,orderBy:{createdAt:'asc'},include:{levels:{orderBy:{order:'asc'},include:{missions:{orderBy:{order:'asc'},include:{lessons:{include:{lesson:{include:{versions:{select:{id:true,version:true,status:true},orderBy:{version:'desc'}},contentImports:{select:{id:true,sourceHash:true,draftRevision:true,status:true},orderBy:{createdAt:'desc'},take:10}}}}}}}}}}});
+  const paths=await this.database.learningPath.findMany({where:{programId:permission.programId},take:3,orderBy:{createdAt:'asc'},include:{levels:{orderBy:{order:'asc'},include:{missions:{orderBy:{order:'asc'},include:{curriculumRevisions:{select:{id:true,revision:true,status:true},orderBy:{revision:'desc'}},lessons:{include:{lesson:{include:{versions:{select:{id:true,version:true,status:true},orderBy:{version:'desc'}},contentImports:{select:{id:true,sourceHash:true,draftRevision:true,status:true},orderBy:{createdAt:'desc'},take:10}}}}}}}}}}});
   if(paths.length>2||paths.flatMap(p=>p.levels).length>5)throw new ConflictException('BEGINNER_CURRICULUM_REVIEW_REQUIRED');
   const audits=await this.database.auditLog.findMany({where:{action:'beginner.bind'},orderBy:{createdAt:'desc'},take:1000});
   const bindings:BeginnerBinding[]=[],seen=new Set<string>();

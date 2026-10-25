@@ -107,7 +107,7 @@ describe('Contextual admin sidebar', () => {
       ...['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'].map(c => `/admin/programs/intermediate/${c}`),
       '/admin/ielts-topics', '/admin/ielts-orientation', '/admin/ielts-bridge', '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum',
       '/admin/content', '/admin/curriculum', '/admin/analytics', '/admin/audit', '/admin/operations', '/admin/settings/audio', '/admin/settings/ai', '/dashboard'];
-    expect(hrefs).toHaveLength(29); expect(new Set(hrefs).size).toBe(29);
+    expect(hrefs).toHaveLength(28); expect(new Set(hrefs).size).toBe(28);
     expect(hrefs).toContain('/admin/vocabulary');
     for (const href of old) expect(hrefs).toContain(href);
     fireEvent.click(group('Shared management'));

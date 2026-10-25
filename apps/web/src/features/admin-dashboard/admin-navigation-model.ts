@@ -20,7 +20,8 @@ export const adminProgramDestinations = [
   { slug: 'toeic', label: 'toeic' }, { slug: 'ielts', label: 'ielts' },
 ] as const;
 export function isAdminProgramDeferred(slug: string) {
-  return slug === 'toeic';
+  // The legacy dashboard stays deferred; the dedicated Beginner workspace has its own route.
+  return slug === 'beginner' || slug === 'toeic';
 }
 export const adminIeltsDestinations = [
   { href: '/admin/ielts-orientation', label: 'ieltsOrientation' },

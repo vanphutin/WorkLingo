@@ -66,7 +66,7 @@ export function AdminNavigation() {
             <p className="admin-sidebar-note">{t('proposedHelp')}</p>
             {group.programs.map(program => <div id={`${id}-tools-${program.id}`} hidden={choice.program !== program.id} key={program.id}>
               <p className="workspace-nav-group-label">{program.label}</p>
-              {program.items.map(link)}
+              {program.id==='beginner'&&choice.program!=='beginner'?null:program.items.map(link)}
             </div>)}
           </> : group.items.map(link)}
         </div>

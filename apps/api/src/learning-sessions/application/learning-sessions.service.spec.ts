@@ -201,3 +201,15 @@ it('returns only phase instructions and redacts hidden Beginner assessment data'
   expect(JSON.stringify(dto)).not.toMatch(/SECRET_|sampleAnswer|rubricId|rubricVersion|answerIndex|explanation/);
   expect(dto.payload).toMatchObject({prompt:'Introduce yourself.',mode:'guided_response',minWords:1});
 });
+
+it.each(['PLANNED','PAUSED'] as const)('keeps exact V1/C1 during %s after current pointers and supplementary metadata change',async(status)=>{
+ const id=(n:number)=>'30000000-0000-4000-8000-'+String(n).padStart(12,'0');
+ const plan={durationMinutes:45,missionId:id(1),lessonVersionId:id(2),blocks:[{type:'readDecode',order:1,targetMinutes:15,activityIds:[id(3)],skills:['reading']},{type:'listenReason',order:2,targetMinutes:15,activityIds:[id(4)],skills:['listening']},{type:'respond',order:3,targetMinutes:15,activityIds:[id(5)],skills:['speaking','writing']}]};
+ const row={id:id(6),learnerId:id(7),clientSessionId:id(8),lessonVersionId:id(2),curriculumRevisionId:id(9),durationMinutes:45,currentCheckpoint:1,planSnapshot:plan,status,attempts:[],blocks:[],updatedAt:new Date(),startedAt:new Date(),mission:{id:id(1),title:'Old Unit',purpose:'LEARNING',slug:'mg01',level:{code:'MG_F0'},currentPublishedRevisionId:id(10),currentPublishedVersionId:id(11),supplementaryReleaseId:'new-metadata-only'}};
+ const findFirst=vi.fn(async()=>row),updateMany=vi.fn(async()=>{Object.assign(row,{status:'IN_PROGRESS'});return {count:1};});
+ const database={learningSession:{findFirst,updateMany}} as unknown as PrismaService;
+ const latest=vi.fn(()=>{throw Error('Unexpected latest resolver');});
+ const service=new LearningSessionsService(database,{getPublishedMission:latest} as unknown as CurriculumService,{} as MasteryService,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress);
+ const result=status==='PLANNED'?await service.startSession(id(7),id(6)):await service.resumeSession(id(7),id(6));
+ expect(result.lessonVersionId).toBe(id(2));expect(result.curriculumRevisionId).toBe(id(9));expect(result.plan).toEqual(plan);expect(latest).not.toHaveBeenCalled();
+});

@@ -5,7 +5,7 @@ const id=z.uuid(),text=z.string();
 const lesson=z.object({code:text,title:text,status:z.literal('PLANNED'),grammar:text,pronunciation:text,vocabulary:text,reading:text,listening:text,speaking:text,writing:text,objective:text,prerequisite:text});
 const unit=z.object({code:text,title:text,canDo:text,hardPrerequisite:text,lessons:z.array(lesson).length(4)});
 const plan=z.object({version:z.literal(1),stages:z.array(z.object({code:text,path:text,units:z.array(unit).length(4)})).length(5),videoSlots:z.array(z.object({code:text,purpose:text,type:text,lessonCodes:z.array(text),slot:text,outline:text,exercises:text,languageAndCaption:text,production:z.literal('NOT_STARTED'),priority:text,reuse:text})).length(55)});
-const mission=z.object({id,slug:text,title:text,objective:text,order:z.number(),revision:z.number(),status:text});
+const mission=z.object({id,slug:text,title:text,objective:text,order:z.number(),revision:z.number(),status:text,curriculumRevisions:z.array(z.object({id,revision:z.number(),status:text})).default([])});
 const level=z.object({id,code:text,name:text,pathId:id,status:text,revision:z.number(),missions:z.array(mission)});
 const path=z.object({id,programId:id,slug:text,name:text,status:text,revision:z.number(),levels:z.array(level)});
 const binding=z.object({editorialCode:text,target:beginnerTargetSchema,status:text,draftRevision:z.number(),sourceHash:text,reviewHash:text.nullable(),lessonVersions:z.array(z.object({id,version:z.number(),status:text}))});

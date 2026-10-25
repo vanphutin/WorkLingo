@@ -25,3 +25,10 @@ describe('one canonical learner-safe projection',()=>{
   expect(projectLearnerActivity(s,a.id).payload?.sampleAnswer).toBe(a.payload.sampleAnswer);
  });
 });
+
+it('removes referenced listening transcripts from Beginner DTO content, not only the DOM',()=>{
+ const s=buildBeginnerDraftSnapshot(analyzeLessonSource(syntheticBeginnerSource()).normalizedDraft!);
+ const a=s.activities.find(a=>a.activityType==='listening')!;
+ a.contentReferences=[s.contentBlocks[0]!.slug];s.contentBlocks[0]!.text='SECRET_LISTENING_TRANSCRIPT';
+ expect(JSON.stringify(projectLearnerActivity(s,a.id))).not.toContain('SECRET_LISTENING_TRANSCRIPT');
+});
