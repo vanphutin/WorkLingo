@@ -137,7 +137,6 @@ export class AdminCurriculumCommandService {
     const operation=context?'beginner:createPath':'createPath';
     await this.checkBeginnerCommand(this.database,actorId,{programId:input.programId??INTERMEDIATE_PROGRAM_ID},input,context,'author');
     const programId = input.programId ?? INTERMEDIATE_PROGRAM_ID;
-    await denyUnscopedBeginnerMutation(this.database,{programId});
     const requestHash = this.computeRequestHash({
       name: input.name,
       programId,
@@ -1762,10 +1761,11 @@ export class AdminCurriculumCommandService {
       if(context)await assertBeginnerContext(context,actorId,action,tx,{[key]:body[key]});
       else await denyUnscopedBeginnerMutation(tx,{[key]:body[key]});
     }
-    if(context&&Array.isArray(body.lessonIds)){
-      const target=await assertBeginnerContext(context,actorId,action,tx);
+    if(Array.isArray(body.lessonIds)){
+      const target=context?await assertBeginnerContext(context,actorId,action,tx):null;
       for(const lessonId of body.lessonIds){if(typeof lessonId!=='string')throw new UnprocessableEntityException('Invalid lesson');
-       await verifyBeginnerTarget(tx,{...target,lessonId});
+       if(target)await verifyBeginnerTarget(tx,{...target,lessonId});
+       else await denyUnscopedBeginnerMutation(tx,{lessonId});
       }
     }
   }

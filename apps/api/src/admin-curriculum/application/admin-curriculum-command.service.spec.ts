@@ -345,3 +345,23 @@ it('denies generic creation in Beginner even if actor has an Admin role',async()
  await expect(new AdminCurriculumCommandService(db as unknown as PrismaService).createPath('actor',{programId:'10000000-0000-4000-8000-000000000001',name:'Mất gốc',slug:'mat-goc',idempotencyKey:'generic-denied'})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
  expect(tx.learningPath.create).not.toHaveBeenCalled();
 });
+
+import {BeginnerAuthoringPolicy} from '../../beginner/domain/beginner-authoring-policy.js';
+import {fixtureActor,fixtureTarget,fixturePermission} from '../../../test/fixtures/beginner/authoring/fixture-factory.js';
+import type {Prisma} from '@prisma/client';
+it('rejects a Beginner lesson in an unscoped legacy mission replacement before receipts or writes',async()=>{
+ const receipt=vi.fn().mockRejectedValue(new Error('UNSCOPED_BINDING_REACHED'));
+ const db={mission:{findUnique:vi.fn().mockResolvedValue({id:'legacy',level:{path:{program:{slug:'intermediate'}}}})},missionLesson:{findMany:vi.fn().mockResolvedValue([{mission:{level:{path:{program:{slug:'beginner'}}}}}])},mutationReceipt:{findUnique:receipt}};
+ await expect(new AdminCurriculumCommandService(db as unknown as PrismaService).replaceMissionLessons('legacy',fixtureActor.id,{expectedRevision:1,idempotencyKey:'foreign-beginner',lessonIds:['beginner-lesson']})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+ expect(receipt).not.toHaveBeenCalled();
+});
+it('creates a selected Beginner path with an authentic author capability',async()=>{
+ const program={id:fixtureTarget.programId,slug:'beginner',name:'Beginner',availabilityStatus:'COMING_SOON'};
+ const created={id:'new-path',name:'Mất gốc',slug:'mat-goc',program,revision:1,status:'DRAFT'};
+ const tx={$queryRaw:vi.fn(),learningProgram:{findUnique:vi.fn().mockResolvedValue(program)},learningPath:{findUnique:vi.fn().mockResolvedValue(null),create:vi.fn().mockResolvedValue(created)},mutationReceipt:{findUnique:vi.fn().mockResolvedValue(null),create:vi.fn()},auditLog:{create:vi.fn()}};
+ const db={...tx,$transaction:async(fn:(t:unknown)=>unknown)=>fn(tx)};
+ const policy=new BeginnerAuthoringPolicy({readPermission:async()=>fixturePermission(),verifyTarget:vi.fn(),verifyEnvironment:vi.fn()});
+ const context=await policy.authorize(fixtureActor,'author',{programId:program.id},db as unknown as Prisma.TransactionClient);
+ const result=await new AdminCurriculumCommandService(db as unknown as PrismaService).createPath(fixtureActor.id,{programId:program.id,name:'Mất gốc',slug:'mat-goc',idempotencyKey:'authorized-path'},context);
+ expect(result).toMatchObject({id:'new-path',program:{slug:'beginner'},status:'DRAFT',revision:1});
+});

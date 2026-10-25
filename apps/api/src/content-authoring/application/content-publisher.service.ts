@@ -348,9 +348,15 @@ export class ContentPublisherService {
         assertBeginnerPublishedReview(metadata,{environmentId:beginnerContextDescriptor(beginner.context).environmentId,target:target!,draftRevision:lockedImport.draftRevision,sourceHash:lockedImport.sourceHash,validationHash:lockedImport.validationHash!,normalizedSnapshotHash:hashBeginnerRecord(normalizedDraft),audioSelectionHash:hashBeginnerRecord(selectedAudioArtifacts),selectedAudioArtifacts,reviewHash:beginner.reviewHash});
         await verifyBeginnerAudioSelection(tx,importId,lockedImport.rawSource,selectedAudioArtifacts,this.storage);
       }
+      if(!beginner){
+        // An unbound legacy import may still resolve an existing Beginner slug.
+        const existing=await tx.lesson.findUnique({where:{slug:normalizedDraft.slug},select:{id:true}});
+        if(existing)await denyUnscopedBeginnerMutation(tx,{lessonId:existing.id});
+      }
       const lesson=beginner
         ? await tx.lesson.findUniqueOrThrow({where:{id:target!.lessonId!}})
         : await tx.lesson.upsert({where:{slug:normalizedDraft.slug},update:{},create:{slug:normalizedDraft.slug}});
+      if(!beginner)await denyUnscopedBeginnerMutation(tx,{lessonId:lesson.id});
       if(beginner&&lesson.slug!==normalizedDraft.slug)throw new ConflictException('BEGINNER_LESSON_SLUG_MISMATCH');
       // Revision zero means this new import has never been assigned or cleared.
       // Preserve the logical lesson's group until an administrator makes an
@@ -691,7 +697,7 @@ export class ContentPublisherService {
           metadata: {
             lessonSlug: normalizedDraft.slug,
             importId,
-            ...(beginner?{kind:'BEGINNER_PUBLICATION_V1',environmentId:beginnerContextDescriptor(beginner.context).environmentId,target:target!,rawSource:lockedImport.rawSource,sourceHash:lockedImport.sourceHash,validationHash:lockedImport.validationHash,snapshotHash:hashBeginnerRecord(validatedSnapshot),reviewHash:beginner.reviewHash,selectedAudioArtifacts}:{}),
+            ...(beginner?{kind:'BEGINNER_PUBLICATION_V1',environmentId:beginnerContextDescriptor(beginner.context).environmentId,target:target!,rawSource:lockedImport.rawSource,draftRevision:lockedImport.draftRevision,sourceHash:lockedImport.sourceHash,validationHash:lockedImport.validationHash,snapshotHash:hashBeginnerRecord(validatedSnapshot),reviewHash:beginner.reviewHash,selectedAudioArtifacts}:{}),
           },
           contentImportId: importId,
         },

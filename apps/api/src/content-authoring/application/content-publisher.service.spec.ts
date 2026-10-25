@@ -296,3 +296,41 @@ it('denies generic withdrawal of a Beginner version before any history write',as
  await expect(new ContentPublisherService(db as unknown as PrismaService).archiveLessonVersion(version.id,fixtureActor.id)).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
  expect(update).not.toHaveBeenCalled();
 });
+
+import {parseLessonSource,audioScriptFingerprintText} from '@worklingo/content-format';
+it('rejects unbound legacy import whose slug resolves to a Beginner lesson before publication writes',async()=>{
+ const source=canonicalLessonSource,sourceHash=createHash('sha256').update(source).digest('hex'),parsed=parseLessonSource(source);
+ const importId=randomUUID(),lessonId=randomUUID();
+ const artifacts=parsed.document.audioScripts.map(script=>({id:randomUUID(),contentImportId:importId,audioScriptSlug:script.slug,status:'READY',scriptHash:createHash('sha256').update(audioScriptFingerprintText(script)).digest('hex')}));
+ const record={id:importId,lessonId:null,rawSource:source,sourceHash,draftRevision:1,status:'VALIDATED',validationHash:sourceHash,validationReport:{issues:[]},audioArtifacts:artifacts};
+ const write=vi.fn().mockRejectedValue(new Error('UNAUTHORIZED_PUBLICATION_REACHED'));
+ const tx={$executeRaw:vi.fn(),$queryRaw:vi.fn(),mutationReceipt:{findUnique:vi.fn().mockResolvedValue(null)},contentImport:{findUnique:vi.fn().mockResolvedValue(record)},audioArtifact:{findMany:vi.fn().mockResolvedValue(artifacts)},lesson:{findUnique:vi.fn().mockResolvedValue({id:lessonId,slug:parsed.document.lesson!.slug}),upsert:write},missionLesson:{findMany:vi.fn().mockResolvedValue([{mission:{level:{path:{program:{slug:'beginner'}}}}}])}};
+ const db={...tx,$transaction:async(fn:(t:unknown)=>unknown)=>fn(tx)};
+ const listeningRefs=new Set(parsed.document.activities.filter(a=>a.activityType==='listening').map(a=>a.audioRef));
+ const selection=Object.fromEntries(artifacts.filter(a=>listeningRefs.has(a.audioScriptSlug)).map(a=>[a.audioScriptSlug,a.id]));
+ await expect(new ContentPublisherService(db as unknown as PrismaService).publish(importId,fixtureActor.id,{expectedDraftRevision:1,expectedSourceHash:sourceHash,idempotencyKey:'unbound-slug',selectedAudioArtifacts:selection})).rejects.toMatchObject({response:{code:'BEGINNER_AUTHORING_DISABLED'}});
+ expect(write).not.toHaveBeenCalled();
+});
+
+import {syntheticBeginnerSource} from '../../../test/fixtures/beginner/authoring/fixture-factory.js';
+import {createBeginnerReview} from '../../beginner/domain/beginner-publication-policy.js';
+import {hashBeginnerRecord} from '../../beginner/domain/beginner-environment-preflight.js';
+import type {ObjectStorage} from '../../storage/domain/object-storage.port.js';
+it('freezes the actual published draft revision with source and snapshot for release evidence',async()=>{
+ const source=syntheticBeginnerSource(),sourceHash=createHash('sha256').update(source).digest('hex');
+ const importId=randomUUID(),lessonId=randomUUID(),target={...fixtureTarget,lessonId,importId};
+ const parsed=parseLessonSource(source),bytes=Buffer.from('synthetic audio bytes');
+ const artifacts=parsed.document.audioScripts.map(script=>({id:randomUUID(),contentImportId:importId,audioScriptSlug:script.slug,status:'READY',scriptHash:createHash('sha256').update(audioScriptFingerprintText(script)).digest('hex'),storageKey:'unit/audio.wav',byteSize:bytes.length,checksum:createHash('sha256').update(bytes).digest('hex')}));
+ const selection=Object.fromEntries(artifacts.map(a=>[a.audioScriptSlug,a.id]));
+ const review=createBeginnerReview({environmentId:fixturePermission().environmentId,target,actorId:randomUUID(),editorId:fixtureActor.id,draftRevision:7,sourceHash,validationHash:sourceHash,normalizedSnapshotHash:hashBeginnerRecord(analyzeLessonSource(source).normalizedDraft),audioSelectionHash:hashBeginnerRecord(selection),selectedAudioArtifacts:selection});
+ const record={id:importId,lessonId,rawSource:source,sourceHash,draftRevision:7,status:'VALIDATED',validationHash:sourceHash,validationReport:{issues:[]},audioArtifacts:artifacts,topicGroupRevision:0};
+ const create=vi.fn(async({data}:{data:Record<string,unknown>})=>({id:randomUUID(),...data}));
+ const audits:Record<string,unknown>[]=[];
+ const tx={$executeRaw:vi.fn(),$queryRaw:vi.fn(),mutationReceipt:{findUnique:vi.fn().mockResolvedValue(null),create},contentImport:{findUnique:vi.fn().mockResolvedValue(record),update:create},audioArtifact:{findMany:vi.fn().mockResolvedValue(artifacts)},lesson:{findUniqueOrThrow:vi.fn().mockResolvedValue({id:lessonId,slug:parsed.document.lesson!.slug,currentPublishedVersionId:null,topicGroupId:null}),update:create},lessonVersion:{aggregate:vi.fn().mockResolvedValue({_max:{version:null}}),create,update:create},wordBank:{upsert:vi.fn(async({create:c}:{create:Record<string,unknown>})=>({id:randomUUID(),...c}))},languageBlock:{findUnique:vi.fn().mockResolvedValue(null),upsert:vi.fn(async({create:c}:{create:Record<string,unknown>})=>({id:randomUUID(),...c}))},wordBankVersion:{findFirst:vi.fn().mockResolvedValue(null),aggregate:vi.fn().mockResolvedValue({_max:{version:null}}),create},languageBlockVersion:{create},contentBlock:{create},lessonVersionWordBank:{create},activity:{create},lessonVersionAudioArtifact:{create},auditLog:{findFirst:vi.fn(async({where}:{where:{action:string}})=>where.action==='beginner.review'?{actorId:review.actorId,metadata:review}:{actorId:fixtureActor.id,metadata:{sourceHash}}),create:vi.fn(async({data}:{data:Record<string,unknown>})=>{audits.push(data);return {id:randomUUID(),...data};})}};
+ const db={...tx,$transaction:async(fn:(t:unknown)=>unknown)=>fn(tx)};
+ const policy=new BeginnerAuthoringPolicy({readPermission:async()=>fixturePermission(),verifyTarget:vi.fn(),verifyEnvironment:vi.fn()});
+ const context=await policy.authorize(fixtureActor,'publish',target,db as unknown as Prisma.TransactionClient);
+ const result=await new ContentPublisherService(db as unknown as PrismaService,undefined,{read:async()=>bytes} as unknown as ObjectStorage).publish(importId,fixtureActor.id,{expectedDraftRevision:7,expectedSourceHash:sourceHash,idempotencyKey:'publication-evidence',selectedAudioArtifacts:selection},{context,reviewHash:review.reviewHash});
+ expect(result.status).toBe('PUBLISHED');
+ expect(audits.find(a=>a.action==='PUBLISH_LESSON')?.metadata).toMatchObject({kind:'BEGINNER_PUBLICATION_V1',draftRevision:7,rawSource:source,sourceHash,validationHash:sourceHash,reviewHash:review.reviewHash});
+});
