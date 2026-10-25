@@ -59,7 +59,6 @@ export function AdminNavigation() {
                 const program = group.programs?.find(item => item.id === event.target.value);
                 if (program) setChoice({ ...choice, program: program.id });
               }}>
-                <option disabled value="foundation">{t('foundation')} / {t('basic')} · pre-A1–A2 · {t('proposed')}</option>
                 {group.programs.map(program => <option value={program.id} key={program.id}>{program.label}</option>)}
                 <option disabled value="toeic">{t('toeic')} · {t('proposed')}</option>
               </select>

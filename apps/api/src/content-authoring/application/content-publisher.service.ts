@@ -691,6 +691,7 @@ export class ContentPublisherService {
           metadata: {
             lessonSlug: normalizedDraft.slug,
             importId,
+            ...(beginner?{kind:'BEGINNER_PUBLICATION_V1',environmentId:beginnerContextDescriptor(beginner.context).environmentId,target:target!,rawSource:lockedImport.rawSource,sourceHash:lockedImport.sourceHash,validationHash:lockedImport.validationHash,snapshotHash:hashBeginnerRecord(validatedSnapshot),reviewHash:beginner.reviewHash,selectedAudioArtifacts}:{}),
           },
           contentImportId: importId,
         },

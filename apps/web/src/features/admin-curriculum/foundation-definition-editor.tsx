@@ -1,4 +1,6 @@
 'use client';
+import {useT} from '../../i18n/provider';
+import {adminBeginnerMessages} from '../../i18n/messages/adminBeginner';
 import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
 
 import { useAdminCurriculum, type SystemMessage } from './i18n';
@@ -21,7 +23,12 @@ export interface PrerequisiteOption {
   readonly revision?: number;
 }
 
+export type FoundationEditorClient=Pick<typeof curriculumFoundationClient,'getDraft'|'saveDraft'|'validateDraft'|'publishDraft'>&{
+ reviewDraft?:(missionId:string,command:{expectedRevision:number;idempotencyKey:string})=>Promise<{reviewHash:string;reviewKind:string}>;
+};
 interface Props {
+ readonly client?:FoundationEditorClient;
+ readonly capabilities?:Partial<Record<'save'|'validate'|'review'|'publish',boolean>>;
   readonly missionId: string;
   readonly missionTitle: string;
   readonly prerequisiteOptions: readonly PrerequisiteOption[];
@@ -37,7 +44,10 @@ const emptyDefinition: CurriculumDefinitionInput = {
 const skills = ['reading', 'listening', 'speaking', 'writing'] as const;
 type Objective = CurriculumDefinitionInput['objectives'][number];
 
-export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisiteOptions, onClose }: Props) {
+export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisiteOptions, onClose, client=curriculumFoundationClient, capabilities }: Props) {
+  const tb=useT('adminBeginner',adminBeginnerMessages);
+  const [reviewedRevision,setReviewedRevision]=useState<number|null>(null);
+  const permit=(action:'save'|'validate'|'review'|'publish')=>capabilities?.[action]??true;
   const { t, number, label, message: displayMessage } = useAdminCurriculum();
   const [serverDraft, setServerDraft] = useState<CurriculumDraftDto | null>(null);
   const [definition, setDefinition] = useState<CurriculumDefinitionInput>(emptyDefinition);
@@ -53,20 +63,20 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
   const loadDraft = useCallback(async () => {
     setState('loading'); setError(null); setHasConflict(false); setLoadFailed(false);
     try {
-      const loaded = await curriculumFoundationClient.getDraft(missionId);
-      setServerDraft(loaded);
+      const loaded = await client.getDraft(missionId);
+      setServerDraft(loaded);setReviewedRevision((loaded as CurriculumDraftDto&{reviewedRevision?:number|null}).reviewedRevision??null);
       setDefinition(loaded.definition ?? emptyDefinition);
       setIsDirty(false);
     } catch (cause) {
       setLoadFailed(true);
       setError(cause);
     } finally { setState('idle'); }
-  }, [missionId]);
+  }, [missionId,client]);
 
   useEffect(() => { void loadDraft(); }, [loadDraft]);
 
   const editDefinition = (update: (current: CurriculumDefinitionInput) => CurriculumDefinitionInput) => {
-    setDefinition(update); setIsDirty(true); setMessage(null);
+    setDefinition(update); setIsDirty(true);setReviewedRevision(null); setMessage(null);
   };
   const updateObjective = (index: number, patch: Partial<Objective>) => editDefinition((current) => ({
     ...current, objectives: current.objectives.map((objective, objectiveIndex) => objectiveIndex === index ? { ...objective, ...patch } : objective),
@@ -92,26 +102,28 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
     return null;
   }
 
-  async function run(action: 'save' | 'validate' | 'publish') {
-    if (state !== 'idle') return;
+  async function run(action: 'save' | 'validate' | 'review' | 'publish') {
+    if (state !== 'idle'||!permit(action)) return;
     const validationError = localError();
     if (validationError) { setError(validationError); return; }
     setState(action === 'save' ? 'saving' : action === 'validate' ? 'validating' : 'publishing');
     setError(null); setMessage(null); setHasConflict(false);
     try {
       if (action === 'save') {
-        const saved = await curriculumFoundationClient.saveDraft(missionId, {
+        const saved = await client.saveDraft(missionId, {
           definition, expectedRevision: serverDraft?.revision ?? null, idempotencyKey: crypto.randomUUID(),
         });
-        setServerDraft(saved); setIsDirty(false); setMessage('Foundation draft saved.');
+        setServerDraft(saved); setReviewedRevision(null);setIsDirty(false); setMessage('Foundation draft saved.');
       } else {
         if (!serverDraft?.revision) throw new Error('Save the Foundation draft before validation or publication.');
         const command = { expectedRevision: serverDraft.revision, idempotencyKey: crypto.randomUUID() };
         if (action === 'validate') {
-          const validated = await curriculumFoundationClient.validateDraft(missionId, command);
+          const validated = await client.validateDraft(missionId, command);
           setServerDraft(validated); setIsDirty(false); setMessage('Foundation draft validated.');
+        } else if(action==='review'&&client.reviewDraft){
+          await client.reviewDraft(missionId,command);setReviewedRevision(serverDraft.revision);setMessage(tb('reviewed'));
         } else {
-          const published = await curriculumFoundationClient.publishDraft(missionId, command);
+          const published = await client.publishDraft(missionId, command);
           setServerDraft((current) => current ? { ...current, status: 'PUBLISHED', publishedRevisions: [published, ...current.publishedRevisions] } : current);
           setMessage('Foundation revision published successfully.');
         }
@@ -172,9 +184,10 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
       </fieldset>
 
       <div className="curriculum-actions">
-        <button type="button" className="action-button action-button-primary" disabled={state !== 'idle'} onClick={() => void run('save')}>{state === 'saving' ? t('saving') : t('saveFoundation')}</button>
-        <button type="button" className="action-button action-button-secondary" disabled={state !== 'idle' || isDirty || !serverDraft?.revision} onClick={() => void run('validate')}>{state === 'validating' ? t('validating') : t('validateFoundation')}</button>
-        <button type="button" className="action-button action-button-primary" disabled={state !== 'idle' || isDirty || serverDraft?.status !== 'VALIDATED'} onClick={() => void run('publish')}>{state === 'publishing' ? t('publishing') : t('publishFoundation')}</button>
+        <button type="button" className="action-button action-button-primary" disabled={!permit('save')||state !== 'idle'} onClick={() => void run('save')}>{state === 'saving' ? t('saving') : t('saveFoundation')}</button>
+        <button type="button" className="action-button action-button-secondary" disabled={!permit('validate') || state !== 'idle' || isDirty || !serverDraft?.revision} onClick={() => void run('validate')}>{state === 'validating' ? t('validating') : t('validateFoundation')}</button>
+        {client.reviewDraft?<button type="button" className="action-button action-button-secondary" disabled={!permit('review')||state!=='idle'||isDirty||serverDraft?.status!=='VALIDATED'} onClick={()=>void run('review')}>{tb('reviewUnit')}</button>:null}
+        <button type="button" className="action-button action-button-primary" disabled={!permit('publish') || (!!client.reviewDraft&&reviewedRevision!==serverDraft?.revision) || state !== 'idle' || isDirty || serverDraft?.status !== 'VALIDATED'} onClick={() => void run('publish')}>{state === 'publishing' ? t('publishing') : t('publishFoundation')}</button>
       </div>
       {serverDraft?.publishedRevisions.length ? <div><h5>{t('publishedRevisions')}</h5><ul>{serverDraft.publishedRevisions.map((revision: CurriculumRevisionDto) => <li key={revision.id}>{t('revision', { count: revision.revision })} · {label(revision.status)}</li>)}</ul></div> : null}
     </section>

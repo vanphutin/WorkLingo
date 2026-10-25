@@ -10,6 +10,7 @@ import { ListeningActivity, type ListeningResponseValue } from './activity-rende
 import { ReadingActivity, type ReadingResponseValue } from './activity-renderers/reading-activity';
 import { SpeakingActivity } from './activity-renderers/speaking-activity';
 import { WritingActivity } from './activity-renderers/writing-activity';
+import {adminBeginnerMessages} from '../../i18n/messages/adminBeginner';
 import { ActivityWorkspace, type ActivityWorkspaceTools } from './activity-workspace';
 
 export type ActivityResponseState =
@@ -17,15 +18,28 @@ export type ActivityResponseState =
   | ListeningResponseValue
   | string;
 
-interface ActivityRendererProps {
+interface ActivityRendererBase {
   readonly activity: LearnerActivityDto;
   readonly value: unknown;
   readonly onChange: (value: unknown) => void;
   readonly savedResponse?: unknown;
   readonly disabled?: boolean;
-  readonly sessionId: string;
   readonly tools?: ActivityWorkspaceTools;
-  readonly onSubmitRecording?: (input: SubmitRecordingInput) => Promise<RecordingSubmissionResult>;
+}
+
+type ActivityRendererProps=ActivityRendererBase&(
+ {readonly mode?:'learner';readonly sessionId:string;readonly onSubmitRecording?:(input:SubmitRecordingInput)=>Promise<RecordingSubmissionResult>}
+ |{readonly mode:'admin-preview';readonly audioUrl?:string;readonly sessionId?:never;readonly onSubmitRecording?:never}
+);
+function AdminPreviewActivity(props:ActivityRendererBase&{audioUrl?:string}){
+ const t=useT('adminBeginner',adminBeginnerMessages),a=props.activity;
+ const comprehension=a.activityType==='reading'||a.activityType==='listening';
+ const value=comprehension&&props.value&&typeof props.value==='object'&&'answerIndexes' in props.value?props.value as ReadingResponseValue:{answerIndexes:[]};
+ const response=comprehension
+ ? <ReadingActivity activity={a} value={value} onChange={props.onChange} disabled={props.disabled??false}/>
+ : <label>{String(a.payload.prompt??t('localResponse'))}<textarea aria-label={String(a.payload.prompt??t('localResponse'))} value={typeof props.value==='string'?props.value:''} disabled={props.disabled??false} onChange={e=>props.onChange(e.target.value)}/></label>;
+ const source=a.activityType==='listening'?{label:t('audio'),content:props.audioUrl?<audio aria-label={t('audio')} controls preload="metadata" src={props.audioUrl}/>:<p role="status">{t('missingAudio')}</p>}:undefined;
+ return <ActivityWorkspace activity={a} {...(source?{source}:{})}><p>{t('localOnly')}</p>{response}</ActivityWorkspace>;
 }
 
 export function isActivityComplete(activity: LearnerActivityDto, value: unknown): boolean {
@@ -81,16 +95,10 @@ export function isActivityComplete(activity: LearnerActivityDto, value: unknown)
   }
 }
 
-export function ActivityRenderer({
-  activity,
-  value,
-  onChange,
-  disabled = false,
-  sessionId,
-  onSubmitRecording,
-  tools,
-}: ActivityRendererProps) {
-  const t = useT('learningSession', learningSessionMessages);
+export function ActivityRenderer(props:ActivityRendererProps) {
+ const t = useT('learningSession', learningSessionMessages);
+ if(props.mode==='admin-preview')return <AdminPreviewActivity {...props}/>;
+ const {activity,value,onChange,disabled=false,sessionId,onSubmitRecording,tools}=props;
   let response: React.ReactNode;
   switch (activity.activityType) {
     case 'reading': {

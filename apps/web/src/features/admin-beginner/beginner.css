@@ -1,0 +1,25 @@
+.beginner-workspace { color:var(--foreground); max-width:1500px; margin:auto; padding:clamp(1rem,3vw,2rem); line-height:1.6; }
+.beginner-workspace *, .beginner-workspace *::before, .beginner-workspace *::after { box-sizing:border-box; }
+.beginner-layout { display:grid; grid-template-columns:minmax(250px,1fr) minmax(0,2.2fr); gap:1.5rem; align-items:start; }
+.beginner-layout nav,.beginner-detail,.beginner-preview { min-width:0; border:1px solid var(--border); border-radius:12px; padding:1rem; }
+.beginner-workspace button,.beginner-workspace select,.beginner-workspace input { min-height:44px; max-width:100%; font:inherit; }
+.beginner-workspace button { cursor:pointer; padding:.5rem .75rem; border:1px solid var(--border); border-radius:6px; background:var(--background); color:var(--foreground); text-align:start; }
+.beginner-workspace button:disabled { cursor:not-allowed; opacity:.6; }
+.beginner-workspace button[aria-pressed=true],.beginner-workspace button[aria-current=true] { font-weight:700; outline:2px solid currentColor; outline-offset:2px; }
+.beginner-workspace :focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+.beginner-workspace summary { min-height:44px; cursor:pointer; padding:.5rem; }
+.beginner-workspace label { display:block; margin-block:1rem; }
+.beginner-workspace textarea,.beginner-workspace input:not([type=checkbox]),.beginner-workspace select { display:block; width:100%; padding:.6rem; border:1px solid var(--border); border-radius:6px; color:var(--foreground); background:var(--background); }
+.beginner-workspace textarea { font:inherit; resize:vertical; }
+.beginner-editor>label>textarea { font-family:monospace; font-size:.9rem; }
+.beginner-workspace fieldset { min-width:0; margin-block:1rem; border:1px solid var(--border); }
+.beginner-workspace dt { font-weight:700; }
+.beginner-workspace dd { margin:0 0 .8rem; }
+.beginner-workspace p,.beginner-workspace dd,.beginner-workspace small,.beginner-workspace button { overflow-wrap:anywhere; }
+.beginner-actions { display:flex; flex-wrap:wrap; gap:.6rem; margin-block:1rem; }
+.beginner-note { padding:1rem; border-inline-start:3px solid currentColor; }
+.beginner-workspace [role=alert] { border:2px solid currentColor; padding:1rem; }
+.beginner-workspace small { display:block; }
+.beginner-preview { margin-block:1rem; }
+.beginner-workspace audio { max-width:100%; }
+@media(max-width:760px) { .beginner-layout { grid-template-columns:minmax(0,1fr); } }

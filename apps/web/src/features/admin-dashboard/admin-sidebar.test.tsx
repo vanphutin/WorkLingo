@@ -46,9 +46,10 @@ describe('Contextual admin sidebar', () => {
   it('shows deferred catalog entries truthfully without invented routes', () => {
     render(<AdminNavigation />); fireEvent.click(group('Training programs'));
     const picker = within(nav()).getByRole('combobox', { name: 'Choose a program' });
-    expect(within(picker).getByRole('option', { name: /Foundation.*Basic/ })).toBeDisabled();
+    expect(within(picker).getByRole('option', { name: /Foundation.*Basic/ })).toBeEnabled();
+    fireEvent.change(picker,{target:{value:'beginner'}});
     expect(within(picker).getByRole('option', { name: /TOEIC/ })).toBeDisabled();
-    expect(nav().querySelector('a[href="/admin/programs/beginner"]')).toBeNull();
+    expect(nav().querySelector('a[href="/admin/programs/beginner"]')).toBeVisible();
     expect(nav().querySelector('a[href="/admin/programs/toeic"]')).toBeNull();
     fireEvent.click(group('System'));
     expect(within(nav()).getByRole('link', { name: 'Analytics' })).toBeVisible();
@@ -106,7 +107,7 @@ describe('Contextual admin sidebar', () => {
       ...['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'].map(c => `/admin/programs/intermediate/${c}`),
       '/admin/ielts-topics', '/admin/ielts-orientation', '/admin/ielts-bridge', '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum',
       '/admin/content', '/admin/curriculum', '/admin/analytics', '/admin/audit', '/admin/operations', '/admin/settings/audio', '/admin/settings/ai', '/dashboard'];
-    expect(hrefs).toHaveLength(28); expect(new Set(hrefs).size).toBe(28);
+    expect(hrefs).toHaveLength(29); expect(new Set(hrefs).size).toBe(29);
     expect(hrefs).toContain('/admin/vocabulary');
     for (const href of old) expect(hrefs).toContain(href);
     fireEvent.click(group('Shared management'));
@@ -117,7 +118,7 @@ describe('Contextual admin sidebar', () => {
     render(<LocaleProvider initialLocale="vi"><AdminNavigation /></LocaleProvider>);
     const navigation = screen.getByRole('navigation', { name: 'Không gian quản trị' });
     fireEvent.click(within(navigation).getByRole('button', { name: 'Chương trình đào tạo' }));
-    expect(within(navigation).getByRole('option', { name: /Mất gốc.*Cơ bản/ })).toBeDisabled();
+    expect(within(navigation).getByRole('option', { name: /Mất gốc.*Cơ bản/ })).toBeEnabled();
     expect(within(navigation).getByRole('combobox', { name: 'Chọn chương trình' })).toHaveValue('intermediate');
     expect(within(navigation).getByRole('button', { name: 'Hệ thống' })).toBeVisible();
   });

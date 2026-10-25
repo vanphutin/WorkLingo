@@ -1,4 +1,6 @@
-import {BadRequestException,Body,Controller,Get,Inject,Param,ParseUUIDPipe,Patch,Post,Query,Req} from '@nestjs/common';
+import type {Response} from 'express';
+import {sendAudioStream} from '../media/application/audio-stream-response.js';
+import {BadRequestException,Body,Controller,Get,Inject,Param,ParseUUIDPipe,Patch,Post,Query,Req,Res} from '@nestjs/common';
 import {ApiOperation,ApiTags} from '@nestjs/swagger';
 import {beginnerTargetSchema} from '@worklingo/contracts';
 import type {AuthenticatedRequest} from '../auth/authenticated-request.js';
@@ -23,6 +25,17 @@ export class BeginnerAdminController{
  create(@Req()req:AuthenticatedRequest,@Body()input:BeginnerCommandDto){return this.authoring.createDraft(req.authUser,input);}
  @Get('imports/:id') @ApiOperation({summary:'Read one exact scoped draft for Admin editing'})
  get(@Req()req:AuthenticatedRequest,@Param('id',ParseUUIDPipe)id:string,@Query('target')target:string){return this.authoring.getImport(req.authUser,this.target(target,id,'importId'));}
+
+ @Get('imports/:id/learner-preview') @ApiOperation({summary:'Learner-mode preview of the explicitly selected draft or published version; no learner writes'})
+ preview(@Req()req:AuthenticatedRequest,@Param('id',ParseUUIDPipe)id:string,@Query('target')target:string,@Query('lessonVersionId')versionId?:string,@Query('audio')audio?:string){
+  let selection:Record<string,string>={};if(audio)try{selection=JSON.parse(audio) as Record<string,string>;}catch{throw new BadRequestException('Invalid audio selection');}
+  return this.authoring.learnerPreview(req.authUser,this.target(target,id,'importId'),versionId,selection);
+ }
+ @Get('imports/:id/audio/:artifactId') @ApiOperation({summary:'Scoped Admin preview stream; independent of learner session APIs'})
+ async audio(@Req()req:AuthenticatedRequest,@Param('id',ParseUUIDPipe)id:string,@Param('artifactId',ParseUUIDPipe)artifactId:string,@Query('target')target:string,@Res()response:Response,@Query('lessonVersionId')versionId?:string){
+  const audio=await this.authoring.previewAudio(req.authUser,this.target(target,id,'importId'),artifactId,versionId);
+  sendAudioStream(response,{body:audio.audioBytes,mimeType:audio.mimeType},req.headers.range);
+ }
  @Patch('imports/:id/source') @ApiOperation({summary:'Save raw source with optimistic concurrency'})
  update(@Req()req:AuthenticatedRequest,@Param('id',ParseUUIDPipe)id:string,@Body()input:BeginnerCommandDto){return this.authoring.updateSource(req.authUser,this.command(input,id));}
  @Post('imports/:id/validate') @ApiOperation({summary:'Validate technical readiness without publication'})

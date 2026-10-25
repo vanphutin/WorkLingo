@@ -1,7 +1,7 @@
 import type { NavigationItem } from '../../components/workspace-navigation';
 
 export type AdminGroupId = 'programs' | 'shared' | 'system';
-export type AdminProgramId = 'intermediate' | 'ielts';
+export type AdminProgramId = 'intermediate' | 'ielts' | 'beginner';
 export interface AdminProgramNavigation {
   readonly id: AdminProgramId;
   readonly label: string;
@@ -20,7 +20,7 @@ export const adminProgramDestinations = [
   { slug: 'toeic', label: 'toeic' }, { slug: 'ielts', label: 'ielts' },
 ] as const;
 export function isAdminProgramDeferred(slug: string) {
-  return slug === 'beginner' || slug === 'toeic';
+  return slug === 'toeic';
 }
 export const adminIeltsDestinations = [
   { href: '/admin/ielts-orientation', label: 'ieltsOrientation' },

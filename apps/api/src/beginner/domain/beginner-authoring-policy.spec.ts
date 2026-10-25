@@ -22,3 +22,12 @@ describe('scoped Beginner authority',()=>{
   permission=null;await expect(assertBeginnerContext(context,fixtureActor.id,'author',tx)).rejects.toThrow('BEGINNER_PERMISSION_REQUIRED');
  });
 });
+
+it('returns HTTP 403 for absent permission and invalidates a changed grant',async()=>{
+ let permission:ReturnType<typeof fixturePermission>|null=null;
+ const policy=new BeginnerAuthoringPolicy({readPermission:async()=>permission,verifyTarget:vi.fn(),verifyEnvironment:vi.fn()});
+ await expect(policy.authorize(fixtureActor,'read',fixtureTarget,tx)).rejects.toMatchObject({status:403});
+ permission=fixturePermission();const context=await policy.authorize(fixtureActor,'read',fixtureTarget,tx);
+ permission={...permission,recordHash:'0'.repeat(64)};
+ await expect(assertBeginnerContext(context,fixtureActor.id,'read',tx)).rejects.toMatchObject({status:403});
+});

@@ -22,6 +22,7 @@ export function useAdminNavigationGroups(): readonly AdminNavigationGroup[] {
   const tg = useT('intermediateGroups', intermediateGroupsMessages);
   return [
     { id: 'programs', label: t('programs'), items: [], programs: [
+      { id:'beginner',label:t('foundation')+' / '+t('basic'),items:[{href:'/admin/programs/beginner',label:t('programOverview')}] },
       { id: 'intermediate', label: t('intermediate'), items: [
         { href: '/admin/programs/intermediate', label: t('programOverview') },
         { href: '/admin/programs/intermediate/topic-groups', label: tg('title') },

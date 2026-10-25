@@ -12,16 +12,18 @@ export interface BeginnerAuthorizationPort {
 export interface BeginnerAuthoringContext {readonly kind?:never}
 interface State {actorId:string;action:BeginnerAction;target:BeginnerTarget;permission:BeginnerPermission;port:BeginnerAuthorizationPort}
 const contexts=new WeakMap<object,State>();
+async function checkedPermission(port:BeginnerAuthorizationPort):Promise<BeginnerPermission>{try{return validateBeginnerPermission(await port.readPermission());}catch(error){denied(error instanceof Error&&/^BEGINNER_[A-Z_]+$/.test(error.message)?error.message:'BEGINNER_PERMISSION_REQUIRED');}}
+async function checkedEnvironment(port:BeginnerAuthorizationPort,tx:Prisma.TransactionClient,permission:BeginnerPermission){try{await port.verifyEnvironment(tx,permission);}catch{denied('BEGINNER_ENVIRONMENT_MISMATCH');}}
 function denied(code:string):never{throw new ForbiddenException({code,message:code});}
 export class BeginnerAuthoringPolicy {
  constructor(private readonly port:BeginnerAuthorizationPort){}
  async permission():Promise<BeginnerPermission|null>{const p=await this.port.readPermission();return p?validateBeginnerPermission(p):null;}
  async authorize(actor:BeginnerActor,action:BeginnerAction,input:BeginnerTarget,tx:Prisma.TransactionClient):Promise<BeginnerAuthoringContext>{
   if(!actor.roles.some(r=>r==='CONTENT_ADMIN'||r==='SYSTEM_ADMIN'))denied('BEGINNER_FORBIDDEN');
-  const permission=validateBeginnerPermission(await this.port.readPermission());
+  const permission=await checkedPermission(this.port);
   const target=beginnerTargetSchema.parse(input);
   if(permission.programId!==target.programId||!permission.actions.includes(action))denied('BEGINNER_SCOPE_MISMATCH');
-  await this.port.verifyEnvironment(tx,permission);await this.port.verifyTarget(tx,target);
+  await checkedEnvironment(this.port,tx,permission);await this.port.verifyTarget(tx,target);
   const context=Object.freeze({});contexts.set(context,{actorId:actor.id,action,target:Object.freeze({...target}),permission,port:this.port});return context;
  }
 }
@@ -29,9 +31,9 @@ export async function assertBeginnerContext(context:unknown,actorId:string,actio
  const state=context&&typeof context==='object'?contexts.get(context):undefined;
  if(!state)throw new UnprocessableEntityException({code:'BEGINNER_AUTHORING_DISABLED',message:'BEGINNER_AUTHORING_DISABLED'});
  if(state.actorId!==actorId||state.action!==action||Object.entries(selection).some(([k,v])=>v!==undefined&&state.target[k as keyof BeginnerTarget]!==v))denied('BEGINNER_SCOPE_MISMATCH');
- const permission=validateBeginnerPermission(await state.port.readPermission());
+ const permission=await checkedPermission(state.port);
  if(permission.recordHash!==state.permission.recordHash||permission.environmentId!==state.permission.environmentId||!permission.actions.includes(action))denied('BEGINNER_SCOPE_MISMATCH');
- await state.port.verifyEnvironment(tx,permission);await state.port.verifyTarget(tx,state.target);
+ await checkedEnvironment(state.port,tx,permission);await state.port.verifyTarget(tx,state.target);
  return state.target;
 }
 export function hasBeginnerContext(context:unknown):context is BeginnerAuthoringContext{return !!context&&typeof context==='object'&&contexts.has(context);}

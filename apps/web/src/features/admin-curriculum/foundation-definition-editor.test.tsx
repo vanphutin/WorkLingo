@@ -22,6 +22,17 @@ const draft = {
 };
 
 describe('FoundationDefinitionEditor', () => {
+  it('uses a scoped transport and requires separate review before publishing',async()=>{
+    const client={getDraft:vi.fn().mockResolvedValue(draft),saveDraft:vi.fn(),validateDraft:vi.fn(),publishDraft:vi.fn(),reviewDraft:vi.fn().mockResolvedValue({reviewHash:'review',reviewKind:'FIXTURE_TECHNICAL_REVIEW'})};
+    render(<FoundationDefinitionEditor missionId={missionId} missionTitle="Unit" prerequisiteOptions={[]} client={client}/>);
+    expect(await screen.findByRole('button',{name:/publish foundation revision/i})).toBeDisabled();
+    fireEvent.click(screen.getByRole('button',{name:'Review Unit definition'}));
+    await waitFor(()=>expect(client.reviewDraft).toHaveBeenCalled());
+    await waitFor(()=>expect(screen.getByRole('button',{name:/publish foundation revision/i})).toBeEnabled());
+    expect(curriculumFoundationClient.getDraft).not.toHaveBeenCalled();
+    fireEvent.change(screen.getByLabelText('Objective statement'),{target:{value:'Changed'}});
+    expect(screen.getByRole('button',{name:/publish foundation revision/i})).toBeDisabled();
+  });
   beforeEach(() => { vi.restoreAllMocks(); vi.spyOn(curriculumFoundationClient, 'getDraft').mockResolvedValue(draft); });
   afterEach(cleanup);
 
