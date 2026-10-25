@@ -1,14 +1,17 @@
 import { createHash } from 'node:crypto';
 import { ConflictException, ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { parseLessonSource } from '@worklingo/content-format';
+import { assertBeginnerAuthoringDisabled, parseLessonSource } from '@worklingo/content-format';
+import { denyUnscopedBeginnerMutation } from '../beginner/domain/beginner-authoring-policy.js';
 import { PrismaService } from '../common/database/prisma.service.js';
 import type { AdminContentKind, RemoveAdminContentDto, RemoveAdminContentResultDto } from './dto/remove-admin-content.dto.js';
 
 const operation = 'remove-admin-content';
 const includeHistory = { versions: { select: { id: true }, take: 1 } } as const;
-const includeLesson = { select: { id: true, slug: true, currentPublishedVersionId: true, ...includeHistory } } as const;
-const includeImport = { lesson: includeLesson, publishedVersion: { select: { lesson: includeLesson } } } as const;
+const snapshotSelection = { id: true, lessonId: true, parsedContent: true } as const;
+const includeLesson = { select: { id: true, slug: true, currentPublishedVersionId: true, currentPublishedVersion: { select: snapshotSelection }, ...includeHistory } } as const;
+const includeImport = { lesson: includeLesson, publishedVersion: { select: { ...snapshotSelection, lesson: includeLesson } } } as const;
+type LifecycleImport = Prisma.ContentImportGetPayload<{ include: typeof includeImport }>;
 const lockPrefixes = { topic: 'ielts-topic:', bridge: 'worklingo:ielts-bridge:', mock: 'ielts-mock:' } as const;
 
 interface VersionedRecord {
@@ -33,12 +36,13 @@ export class AdminContentLifecycleService {
     const requestHash = createHash('sha256').update(JSON.stringify({ kind, id, expectedRevision: input.expectedRevision, expectedAction: input.expectedAction })).digest('hex');
     try {
       return await this.database.$transaction(async tx => {
-        const actor = await tx.user.findUnique({ where: { id: actorId }, select: { role: true, status: true } });
-        if (!actor || actor.status !== 'ACTIVE' || !['CONTENT_ADMIN', 'SYSTEM_ADMIN'].includes(actor.role)) {
-          throw new ForbiddenException('Active content administrator required.');
-        }
+        await this.assertActiveActor(tx, actorId);
         // Serialize this receipt across targets as well as serializing each resource mutation.
         await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${operation + ':' + actorId + ':' + input.idempotencyKey}))`;
+        if (kind === 'lesson') {
+          const target = await tx.contentImport.findUnique({ where: { id }, include: includeImport });
+          if (target) await this.assertGenericLessonRemoval(tx, target);
+        }
         const receipt = await tx.mutationReceipt.findUnique({ where: { actorId_operation_idempotencyKey: { actorId, operation, idempotencyKey: input.idempotencyKey } } });
         if (receipt) {
           if (receipt.requestHash !== requestHash) throw new ConflictException({ code: 'IDEMPOTENCY_CONFLICT', message: 'Idempotency key reused.' });
@@ -123,6 +127,8 @@ export class AdminContentLifecycleService {
     await tx.$queryRaw`SELECT "id" FROM "ContentImport" WHERE "id" = ${id}::uuid FOR UPDATE`;
     const record = await tx.contentImport.findUnique({ where: { id }, include: includeImport });
     this.requireRevision(record, revision);
+    await this.assertActiveActor(tx, actorId);
+    await this.assertGenericLessonRemoval(tx, record);
     if (this.importSlug(record) !== slug) throw new ConflictException({ code: 'CONTENT_REVISION_STALE', message: 'Content changed during removal.' });
     const lesson = record.lesson ?? record.publishedVersion?.lesson;
     const hasHistory = record.lessonVersionId !== null || !!lesson?.versions.length || !!lesson?.currentPublishedVersionId || ['PUBLISHED', 'ARCHIVED'].includes(record.status);
@@ -140,7 +146,48 @@ export class AdminContentLifecycleService {
     return { action: 'archived' as const, resourceType: 'ContentImport' };
   }
 
-  private importSlug(record: Prisma.ContentImportGetPayload<{ include: typeof includeImport }>): string {
+  private async assertActiveActor(tx: Prisma.TransactionClient, actorId: string): Promise<void> {
+    const actor = await tx.user.findUnique({ where: { id: actorId }, select: { role: true, status: true } });
+    if (!actor || actor.status !== 'ACTIVE' || !['CONTENT_ADMIN', 'SYSTEM_ADMIN'].includes(actor.role)) {
+      throw new ForbiddenException('Active content administrator required.');
+    }
+  }
+
+  private async assertGenericLessonRemoval(tx: Prisma.TransactionClient, record: LifecycleImport): Promise<void> {
+    this.assertLegacySource(record.rawSource);
+    const published = record.publishedVersion;
+    const mismatch = () => { throw new ConflictException({ code: 'CONTENT_LIFECYCLE_TARGET_MISMATCH', message: 'Content references changed. Refresh before removal.' }); };
+    if ((record.lessonId && record.lesson?.id !== record.lessonId)
+      || (record.lesson && record.lesson.id !== record.lessonId)
+      || (record.lessonVersionId && published?.id !== record.lessonVersionId)
+      || (published && (published.id !== record.lessonVersionId || published.lesson?.id !== published.lessonId))) mismatch();
+
+    // Both relations are authoritative: the import's Lesson must not hide a
+    // different published Lesson. Never resolve an unbound draft by slug.
+    const lessons = [record.lesson, published?.lesson].filter(lesson => lesson != null);
+    for (const lesson of lessons) {
+      await denyUnscopedBeginnerMutation(tx, { lessonId: lesson.id });
+      const current = lesson.currentPublishedVersion;
+      if ((lesson.currentPublishedVersionId && current?.id !== lesson.currentPublishedVersionId)
+        || (current && (current.id !== lesson.currentPublishedVersionId || current.lessonId !== lesson.id))) mismatch();
+      if (current) this.assertLegacySnapshot(current.parsedContent);
+    }
+    if (record.lessonId && published && record.lessonId !== published.lessonId) mismatch();
+    if (published) this.assertLegacySnapshot(published.parsedContent);
+  }
+
+  private assertLegacySnapshot(snapshot: Prisma.JsonValue): void {
+    if (snapshot && typeof snapshot === 'object' && !Array.isArray(snapshot) && typeof snapshot.formatVersion === 'string') {
+      this.assertLegacySource(snapshot.formatVersion);
+    }
+  }
+
+  private assertLegacySource(source: string): void {
+    try { assertBeginnerAuthoringDisabled(source); }
+    catch { throw new ForbiddenException({ code: 'BEGINNER_AUTHORING_DISABLED', message: 'Generic Beginner content removal is disabled.' }); }
+  }
+
+  private importSlug(record: LifecycleImport): string {
     return record.lesson?.slug ?? record.publishedVersion?.lesson.slug ?? parseLessonSource(record.rawSource).document.lesson?.slug ?? 'content-import:' + record.id;
   }
 
