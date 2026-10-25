@@ -24,11 +24,14 @@ export const beginnerReleaseEnvelopeSchema=z.object({
  schemaVersion:z.literal(1),state:z.enum(['TEST_PUBLISHED','APPROVED_RELEASE']),
  environmentId:z.string().min(1).max(100),releaseId:z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/u),
  fixtureOnly:z.literal(true),contentReadiness:z.literal('FIXTURE_ONLY'),manifest:beginnerManifestSchema,
+ curriculumSnapshots:z.array(z.object({curriculumRevisionId:id,snapshotHash:hash}).strict()).min(1),
  snapshots:z.array(z.object({lessonVersionId:id,sourceHash:hash,snapshotHash:hash}).strict()).min(1),
  assets:z.array(z.object({id:id,key:z.string().min(1),sha256:hash,scriptHash:hash}).strict()).min(1),
  receipts:z.array(z.object({id:id,operation:z.string().min(1),requestHash:hash}).strict()).min(1),
  reviewReferences:z.array(id).min(1),approvalRef:z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/u).nullable(),candidateHash:hash
 }).strict().superRefine((v,c)=>{
+ const revisions=v.manifest.stages.flatMap(s=>s.units.map(u=>u.curriculumRevisionId));
+ if(new Set(v.curriculumSnapshots.map(s=>s.curriculumRevisionId)).size!==v.curriculumSnapshots.length||revisions.length!==v.curriculumSnapshots.length||revisions.some(id=>!v.curriculumSnapshots.some(s=>s.curriculumRevisionId===id)))c.addIssue({code:'custom',message:'Curriculum snapshot membership mismatch'});
  const ids=v.manifest.stages.flatMap(s=>s.units.flatMap(u=>u.lessons.map(l=>l.lessonVersionId)));
  if(v.releaseId!==v.manifest.releaseId||new Set(v.snapshots.map(s=>s.lessonVersionId)).size!==v.snapshots.length||ids.length!==v.snapshots.length||ids.some(id=>!v.snapshots.some(s=>s.lessonVersionId===id)))c.addIssue({code:'custom',message:'Release membership mismatch'});
  if(v.state==='APPROVED_RELEASE'&&!v.approvalRef)c.addIssue({code:'custom',message:'Explicit candidate approval required'});

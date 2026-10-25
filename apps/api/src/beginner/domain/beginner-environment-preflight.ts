@@ -1,3 +1,4 @@
+import {Socket} from 'node:net';
 import type {Prisma} from '@prisma/client';
 import { createHash } from 'node:crypto';
 import { accessSync,constants,lstatSync,readFileSync,realpathSync } from 'node:fs';
@@ -45,7 +46,7 @@ export function preflightBeginnerEnvironment(input:unknown,databaseUrl:string):B
  return p;
 }
 /** Operator-owned read-only records only. No endpoint writes this store. */
-export async function readApprovedBeginnerPermission():Promise<BeginnerPermission|null>{
+export function readApprovedBeginnerPermissionSync():BeginnerPermission|null{
  const root=process.env.WORKLINGO_BEGINNER_APPROVAL_ROOT,id=process.env.WORKLINGO_BEGINNER_PERMISSION_ID;
  if(!root||!id)return null;
  if(!/^[a-zA-Z0-9_-]{1,100}$/u.test(id))throw new Error('BEGINNER_PERMISSION_REQUIRED');
@@ -57,6 +58,8 @@ export async function readApprovedBeginnerPermission():Promise<BeginnerPermissio
  return p;
 }
 
+export async function readApprovedBeginnerPermission():Promise<BeginnerPermission|null>{return readApprovedBeginnerPermissionSync();}
+
 /** No connection is opened here. The supplied transaction must already be authorized. */
 export async function verifyBeginnerDatabaseIdentity(tx:Prisma.TransactionClient,permission:BeginnerPermission):Promise<void>{
  if(process.env.NODE_ENV!=='test'||process.env.WORKLINGO_BEGINNER_ISOLATED_TEST!=='1')throw new Error('BEGINNER_ISOLATED_TEST_REQUIRED');
@@ -67,4 +70,21 @@ export async function verifyBeginnerDatabaseIdentity(tx:Prisma.TransactionClient
  const rows=await tx.$queryRaw<Array<{database:string;role:string;serverIdentity:string;superuser:boolean;createDb:boolean;createRole:boolean}>>`SELECT current_database() AS "database",current_user AS "role",current_setting('cluster_name') AS "serverIdentity",r.rolsuper AS "superuser",r.rolcreatedb AS "createDb",r.rolcreaterole AS "createRole" FROM pg_roles r WHERE r.rolname=current_user`;
  const actual=rows[0];
  if(!actual||actual.database!==permission.database.name||actual.role!==permission.database.role||actual.serverIdentity!==permission.database.serverIdentity||actual.superuser||actual.createDb||actual.createRole)throw new Error('BEGINNER_DATABASE_IDENTITY_MISMATCH');
+}
+
+/** Explicit test harness guard. No application runtime or provider is started. */
+export function installBeginnerNetworkGuard():()=>void{
+ const originalFetch=globalThis.fetch,originalConnect=Socket.prototype.connect;
+ const loopback=(host:string)=>['127.0.0.1','::1','[::1]','localhost'].includes(host);
+ globalThis.fetch=async(input,init)=>{const url=new URL(typeof input==='string'?input:input instanceof URL?input:input.url);if(!loopback(url.hostname))throw Error('BEGINNER_EXTERNAL_EGRESS_DENIED');return originalFetch(input,init);};
+ Socket.prototype.connect=function(this:Socket,...args:unknown[]){
+  const values=Array.isArray(args[0])?args[0] as unknown[]:args;
+  const options=values[0];let host:string;
+  if(options&&typeof options==='object'&&'port'in options)host=String('host'in options?options.host:'127.0.0.1');
+  else if(typeof options==='number')host=typeof values[1]==='string'?values[1]:'127.0.0.1';
+  else throw Error('BEGINNER_EXTERNAL_EGRESS_DENIED');
+  if(!loopback(host))throw Error('BEGINNER_EXTERNAL_EGRESS_DENIED');
+  return originalConnect.apply(this,args as Parameters<typeof originalConnect>);
+ } as typeof originalConnect;
+ return ()=>{globalThis.fetch=originalFetch;Socket.prototype.connect=originalConnect;};
 }
