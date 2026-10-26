@@ -10,6 +10,7 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261024-002](items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md) | Implement provider-free Beginner R1.1 format and exact-version planner | feature | verified | P1 | Codex |
 | [MND-20261024-003](items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md) | Implement isolated Beginner R1.2a admin authoring and test release registry | feature | implementing | P1 | Codex |
 | [MND-20261025-001](items/MND-20261025-001-bug-close-generic-beginner-content-lifecycle-removal-bypass-within-r1-2a.md) | Close generic Beginner content lifecycle removal bypass within R1.2a | bug | verified | P1 | Codex |
+| [MND-20261025-002](items/MND-20261025-002-infrastructure-qualify-beginner-r1-2a-on-one-isolated-postgresql-and-desktop-mobile-e.md) | Qualify Beginner R1.2a on one isolated PostgreSQL and Desktop Mobile E2E run | infrastructure | implementing | P1 | Codex |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 
-Total: 6; active: 6; archived: 0.
+Total: 7; active: 7; archived: 0.

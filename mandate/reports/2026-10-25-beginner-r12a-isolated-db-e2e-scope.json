@@ -1,0 +1,826 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "status": "PREAPPROVAL_ONLY",
+  "parentMandate": "MND-20261024-003",
+  "environment": {
+    "status": "PROPOSED_NOT_PROVISIONED",
+    "runId": "202610250002",
+    "environmentId": "beginner-r12a-db-e2e-20261025-002",
+    "expectedProgramId": "10000000-0000-4000-8000-000000000001",
+    "expectedProgramPolicy": "Verify migration-provided beginner catalog row; retain COMING_SOON; no duplicate/upsert or enrollment",
+    "docker": {
+      "context": "desktop-linux",
+      "endpoint": "npipe:////./pipe/dockerDesktopLinuxEngine",
+      "image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "architecture": "linux/amd64",
+      "container": "worklingo-beginner-r12a-202610250002",
+      "volume": "worklingo-beginner-r12a-202610250002-pgdata",
+      "labels": {
+        "worklingo.environment": "beginner-r12a-db-e2e-20261025-002",
+        "worklingo.run": "202610250002"
+      },
+      "pullAllowed": false,
+      "sharedComposeAllowed": false
+    },
+    "database": {
+      "host": "127.0.0.1",
+      "port": 55432,
+      "containerPort": 5432,
+      "schema": "public",
+      "name": "worklingo_beginner_r12a_202610250002",
+      "role": "wl_beginner_202610250002",
+      "serverIdentity": "wl-beginner-r12a-202610250002",
+      "ownerRole": "wl_beginner_owner_202610250002",
+      "bootstrapRole": "postgres",
+      "bootstrapScope": "Only new labelled container/postgres catalog for this run",
+      "connectionEnv": "TEST_DATABASE_URL",
+      "runtimeDatabaseUrlPolicy": "DATABASE_URL explicit validated equality to TEST_DATABASE_URL; no fallback",
+      "setupConnectionEnv": "WORKLINGO_BEGINNER_SETUP_DATABASE_URL",
+      "credentialPolicy": "Fresh random protected runtime memory/files only; no literal DSN/password/token in Git/logs",
+      "runtimeRole": {
+        "login": true,
+        "inherit": false,
+        "superuser": false,
+        "createDb": false,
+        "createRole": false,
+        "replication": false,
+        "bypassRls": false,
+        "memberships": [],
+        "ownsDatabaseSchemaOrTables": false,
+        "grants": [
+          "CONNECT target database",
+          "USAGE public schema",
+          "SELECT/INSERT/UPDATE/DELETE repository application tables",
+          "necessary sequence USAGE",
+          "SELECT _prisma_migrations"
+        ],
+        "forbidden": [
+          "GRANT ALL",
+          "CREATE",
+          "TEMP",
+          "TRUNCATE",
+          "schema DDL",
+          "postgres/template access"
+        ],
+        "poolLimit": 4,
+        "connectionLimit": 8,
+        "statementTimeoutMs": 30000,
+        "lockTimeoutMs": 5000
+      },
+      "ownerRolePolicy": "Own only target DB/schema; non-superuser/no cluster privileges, temporary LOGIN for migration then NOLOGIN",
+      "schemaPolicy": "Unchanged48 migration files including embedded catalog/data/backfill steps and pgcrypto; verify four Program catalog rows and no initial users/enrollment; no extra migration/schema files/db push/reset/application seed"
+    },
+    "filesystem": {
+      "ownedTempRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-beginner-r12a",
+      "runRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-beginner-r12a/202610250002",
+      "storageRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-beginner-r12a/202610250002/storage",
+      "registryRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-beginner-r12a/202610250002/registry",
+      "runtimeRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-beginner-r12a/202610250002/runtime",
+      "artifactRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-beginner-r12a/202610250002/artifacts",
+      "approvalRoot": "C:/ProgramData/WorkLingo/BeginnerTestApprovals/202610250002",
+      "permissionId": "beginner-r12a-isolated-202610250002",
+      "aclPolicy": "Operator-owned new root only; non-elevated API/tests read-only by real OS effective-access proof; no OS account/service/global ACL change"
+    },
+    "servers": {
+      "apiOrigin": "http://127.0.0.1:47771",
+      "webOrigin": "http://127.0.0.1:47772",
+      "apiNodeEnv": "test",
+      "webNodeEnv": "production (isolated Next build/start only)",
+      "reuseExistingServer": false,
+      "workers": 1,
+      "retries": 0,
+      "webMode": "Clean owned source mirror, installed dependencies only, webpack build/start; no repository .env/shared .next",
+      "publicApiBase": "/api/v1",
+      "serverApiOrigin": "http://127.0.0.1:47771",
+      "providers": "fake only, empty keys/endpoints, AI routing/worker off, exact endpoint egress allowlist"
+    },
+    "excludedRoots": [
+      "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+      "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/.superpowers/sdd/2026-10-22-vocabulary-master-library/data",
+      "D:/Projects/WorkLingo",
+      "D:/Projects/WorkLingo/apps/api/data",
+      "D:/Projects/WorkLingo/data"
+    ],
+    "requestedRuntimeActions": [
+      "read",
+      "author",
+      "validate",
+      "review",
+      "publish",
+      "export",
+      "fixture-audio"
+    ],
+    "requestedOperatorActions": [
+      "create-exact-container-volume-db-roles",
+      "schema-setup-unchanged-migrations",
+      "create-new-approval-root-acls",
+      "provision-synthetic-fixtures",
+      "start-owned-api-web",
+      "real-synthetic-auth-state",
+      "backup-exact-test-db",
+      "identity-proven-cleanup-exact-run"
+    ],
+    "forbidden": [
+      "approve-release",
+      "content-ready",
+      "learner-admission",
+      "production-access",
+      "real-providers",
+      "next-increments",
+      "merge-push-deploy"
+    ],
+    "activationTtlHours": 24,
+    "resetPolicy": "At most one retry after proven cleanup; same exact identity with new attempt nonce; no in-place reset",
+    "cleanupPolicy": "Prove IDs/labels/exclusive mount/DB comment/roles/run paths/refs; stop owned PID+starttime only; unlink inventoried dependency junctions, never follow; delete only exact run/container/volume/private records and verify absence. Unknown ownership/residue quarantines.",
+    "backupPolicy": "Run-only private dumps/ownership ledger; no Git contents. Delete with successful cleanup; failed cleanup quarantines. No production/shared restore.",
+    "observations": {
+      "docker": "Context/image metadata only inspected, no container started",
+      "ports": "No listeners observed on55432/47771/47772; must recheck",
+      "roots": "Run and approval roots absent at review, no reuse if unexpected existing resources",
+      "database": "Not connected/provisioned; role/cluster/ACL/cleanup proofs pending"
+    }
+  },
+  "allowlist": {
+    "modify": [
+      "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+      "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+      "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+      "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+      "apps/api/test/integration/beginner-test-harness.ts",
+      "apps/web/e2e/beginner-admin-history.spec.ts",
+      "apps/web/e2e/beginner-admin.spec.ts",
+      "apps/web/playwright.beginner-admin.config.ts"
+    ],
+    "create": [
+      "apps/api/prisma.beginner-test.config.ts",
+      "apps/api/test/beginner-isolated/egress-guard.cjs",
+      "apps/api/test/beginner-isolated/environment.spec.ts",
+      "apps/api/test/beginner-isolated/environment.ts",
+      "apps/api/test/beginner-isolated/fixtures.ts",
+      "apps/api/test/beginner-isolated/run.spec.ts",
+      "apps/api/test/beginner-isolated/run.ts",
+      "apps/api/vitest.beginner-isolated-tools.config.ts"
+    ]
+  },
+  "baseline": {
+    "head": "520acdca8b7d63deaeb3a2a8b8dd721a6bd4186b",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "initialChanges": [],
+    "captureDocumentsExcluded": [
+      "docs/superpowers/plans/2026-10-25-beginner-r12a-isolated-db-e2e-preapproval.md",
+      "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-review.md"
+    ],
+    "sourceFiles": [
+      {
+        "path": ".agents/skills/mandate-steward/references/governance.md",
+        "sha256": "5249cfb338abfebe03d4f51f3d1b9bfc456dcc0ad756951fc1ead4147d125db2"
+      },
+      {
+        "path": ".agents/skills/mandate-steward/scripts/model.mjs",
+        "sha256": "4173f8717291b00f11a1b26b1dd1a866c9667e2268052522247dabe7e8fa430f"
+      },
+      {
+        "path": ".agents/skills/mandate-steward/scripts/store.mjs",
+        "sha256": "338c12ca131b43d5df25794b9e9fbd2e6e8ff6325eab0b1d0f7946367c61e4f4"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "769f60e1fa72cdb3af474c1fc4fb4e0ba2539de061b8f5c5a4d9517ab45456e3"
+      },
+      {
+        "path": "apps/api/package.json",
+        "sha256": "1b541ab64de77e5ccaeae934af0aacb7d341077b2a208eb808d5ad40329c13f7"
+      },
+      {
+        "path": "apps/api/prisma.beginner-test.config.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/prisma.config.ts",
+        "sha256": "209bc7e3ad5e8591ffc415e1b82ae132b90ce6fc75ba3c5e8ccb757f8fcba502"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000100_foundation/migration.sql",
+        "sha256": "147c1193f78441d318235d29085380be81c1972a04fb0d0f5bb72de6052b8c6e"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000200_auth/migration.sql",
+        "sha256": "cfca493f977785701f047a658b97526196094388ecbe82f5ba0aa5302eacf44b"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000300_curriculum/migration.sql",
+        "sha256": "1845fa0859f28d1401f36f7f912d9e3c29ea6ff37a1a40d9d4ef82112c90334b"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000400_preserve_auth_uuid_defaults/migration.sql",
+        "sha256": "03abd317a787f0aff83ae4ce7c7208e9914f6ae59494b2a7648ba0019f9fa363"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000500_learning_sessions/migration.sql",
+        "sha256": "37546175234a86e4fe0acebddf2be73d3ac2d280f01fe543661e3c8f9dcd02ff"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000600_content_authoring/migration.sql",
+        "sha256": "82fcf1f0a5e27231bb5202dfbb3364f4cf5098c01088390294ec0e03c0b9d564"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000100_mastery_events_and_records/migration.sql",
+        "sha256": "220235f5966b02927fee24654a934d8d51a71d70f0606260fc8907d1c45181d3"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000200_mastery_event_integrity/migration.sql",
+        "sha256": "915aff7ec675421834cc19f5caa40ac932e278a17ef2099fe4270b7e95ccb4ca"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000300_mastery_canonical_backfill/migration.sql",
+        "sha256": "8d20285ccb0a670319bfdaafc3dcaa9915299acbd01dcd9d0ba6bb29d34188b7"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000400_error_bank/migration.sql",
+        "sha256": "8893707e3ab70dade5c91d1984b7c8fda8e11de702f03662777ec3de172390cb"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000500_multi_duration_sessions/migration.sql",
+        "sha256": "87846dafb391da3bc5852dab13b27d7307d5278c252afd4609c87a2f61b486e2"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261007000100_checkpoint_progression/migration.sql",
+        "sha256": "84223b5085300763aed847ba6a118e34f05b0a607b215c8681bcaa2a1882a537"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261007120000_add_teacher_ai_pipeline/migration.sql",
+        "sha256": "23f80ffa212dcf43f80df9f219647544d4294b861ba21403134dd2cc919c306d"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261009000100_system_seeded_audio/migration.sql",
+        "sha256": "4c07725d595c47fe3db8921286579100a72e15f2fef3967f063be2e7a716edf7"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261009000200_increment_5a1_onboarding_placement/migration.sql",
+        "sha256": "84993172c114bd6b7bcbef1ea12b988296ad804378ddc1708e9c90f568bd3819"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261010000100_audio_tts_settings/migration.sql",
+        "sha256": "4cef5bca505d1e8808fceedcb97e5f1bb932c04e960ebee00175b61cb61e8f4f"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261010000200_increment_5a2_engagement/migration.sql",
+        "sha256": "20b124d7a85d699f9f5e028a78eb73f2cc143c7de8669fcceed812c1f7cddb7f"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261011000100_increment_5b_curriculum_admin/migration.sql",
+        "sha256": "adb425a0fbe9a62f7f695797194e255f68ff36dc166aa8133349f4833cce65a1"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261011000200_increment_5c_rate_limits/migration.sql",
+        "sha256": "e2c3f31a133ce6be721e5b2de1b7ba0fc0579153873e25b8155704038cc61a9f"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261011000300_increment_5c_pilot_analytics/migration.sql",
+        "sha256": "27a9f7050f1af450d6c39588c427393cbd219f2f99ba5d7ed7b789b80361ea09"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261012000100_learning_programs/migration.sql",
+        "sha256": "0d7f6ec6d592c3558b56c994c42b151ff3752a240919aeea50ab95572d15f18a"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261012000200_learner_program_enrollment/migration.sql",
+        "sha256": "7aee8f2f96accec6a6657ec8d19c57f41d10355ea9274755c0e1bb60c529c4bd"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000100_curriculum_foundation/migration.sql",
+        "sha256": "7b3ffa9da98746d60701d40c15191a08bdd5eca46f9e9e6ba4693cb950326aac"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000200_ielts_orientation/migration.sql",
+        "sha256": "e2701734add201f41799a4a64521360ffc63a25cf0b5ea42dc6c002defe649a8"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000300_ielts_bridge/migration.sql",
+        "sha256": "c63fb23dfed687b35b35ce34c0b927cf9de4a7873a4989fa8c0005a50d5fc7c5"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000400_ielts_integrated_practice/migration.sql",
+        "sha256": "d2c51f0ca70cb93ac772b1a78048b48ee4787ede249b930014c71aa7a0f068d3"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000500_ielts_integrated_block_timer/migration.sql",
+        "sha256": "74d58e5a4046c0b96f445a0afef05f84f68f497e2cc26905a93b082ca161a064"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014000100_ielts_band_curriculum/migration.sql",
+        "sha256": "f422bb73e4db01eec218616db865e121fff0b64f65e60ba73f8ce0d7516e5e32"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014000200_ielts_full_mock/migration.sql",
+        "sha256": "ec07fd9246087134fde01aad93c5f5cc7037f3c2300b6ac6d761c531078647d8"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014000300_ielts_mock_audio_events/migration.sql",
+        "sha256": "eece5eadde257d1fa5d870371d6f3c4c82d6d5bf9543acdc16073d9efb393897"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014163000_ai_routing_settings/migration.sql",
+        "sha256": "7cc997340fd82fbc0a48195a19d06179c21748bade61fc05f71a1ec62c42ed47"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000100_ielts_early_access/migration.sql",
+        "sha256": "cf28cf6ff2adc06c31029389c00becb018c53c4bd5b27bef407a28898e222052"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000200_ielts_flow_v3/migration.sql",
+        "sha256": "580e1c9a09ca28fd3e40e883b67b8cefad3341f903f88a7b69d2080d57024fbe"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000300_ielts_mock_media/migration.sql",
+        "sha256": "0d14e291c43b324b7490ea801b13e86a520afa06971fee2180a3d1659b3273be"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000400_ielts_playback_activation/migration.sql",
+        "sha256": "cf52381989e591c47689d72f07393b6f32dcc4110c49474975b761e50a275879"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019090000_intermediate_topic_reviews/migration.sql",
+        "sha256": "2e0eafae14c89f704c50fe1b85fd241f3b65e6cb308edd4b97790f8a4b238c97"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019100000_intermediate_topic_groups/migration.sql",
+        "sha256": "04e769999b0146cc5334577c405d4cf152415cccd364c9f8623a5c0f5f77fa21"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019110000_intermediate_topic_catalog/migration.sql",
+        "sha256": "31fecee311af81932aea44d1f90301103e50dd3b466ce8a42a180a41ee797a25"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019120000_vocabulary_publication_review/migration.sql",
+        "sha256": "86426021eb331d933849097c85b9c4ef58b616060e93d9eae1d1386cda409c03"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019130000_flexible_session_block_minutes/migration.sql",
+        "sha256": "5f07db48b4c68d7ec452ba97925ffd3ab8629d4903a6876954717135cb6050f8"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000100_vocabulary_master_library/migration.sql",
+        "sha256": "2377791f8ee0a9b2897d332f256ec38f8d430cc529b8773b590ac662bd0ced3e"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000200_vocabulary_integrity/migration.sql",
+        "sha256": "5ae9faf30b609a757507a1c7af802b8287ffdef6efb9d0f2e8e1f3e155ead798"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000300_vocabulary_review_corrections/migration.sql",
+        "sha256": "0d6c873c6e6535a7959b60842d269c9a8fe20ebabf8dbc83300d5e86bc377c27"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000400_vocabulary_nonnull_grants/migration.sql",
+        "sha256": "26464088549fd2a92aaa1cc93ed447d363dc9b8b2ca2440ac2234880cdc227a4"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000500_vocabulary_terminal_retirement/migration.sql",
+        "sha256": "599264cb9a19d7bee5c0cdc00894aac469df8e9bb21bb5bb79cbf3c61bf92228"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000600_vocabulary_exception_resolutions/migration.sql",
+        "sha256": "8766f3a731eed088cb7fe047bfcc8a65f1af0e6b62d1920cea604b9644623599"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000700_vocabulary_txt_provenance/migration.sql",
+        "sha256": "243eb75743b949fa89f7ef959c4734b65f367b5c5bccdac6aed6486a2c5ed3da"
+      },
+      {
+        "path": "apps/api/prisma/migrations/migration_lock.toml",
+        "sha256": "e0f301404b533bea819cafbc56ca2a9d9bcc2cf97d6350473e3a008f0637cc12"
+      },
+      {
+        "path": "apps/api/prisma/schema.prisma",
+        "sha256": "62cf277eb66200feb757f145d38534d1d67f8a7f12c3f6e3880cbfbf8e9ffd95"
+      },
+      {
+        "path": "apps/api/scripts/run-api.mjs",
+        "sha256": "6c5cd39a4de6dec118e27fe3e4143631cfbb35e71f56961c8e6b043e2e875b16"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.spec.ts",
+        "sha256": "943a391ccb716c8147e793feed1b3daa7061cfe421f34ef97aa83bf972a87f13"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.ts",
+        "sha256": "ea9832149075bb7bc6d05a42f125779a166dfa3ab95646bc7f13dc5d372ae417"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-authoring.service.ts",
+        "sha256": "d667110c108f5743f6c914d9e92863a8c274bec835d0e108589deb3b141c145e"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-release.service.ts",
+        "sha256": "5781b1ca330b588559f70b16a476d35e56585e44e9ba48d59c4da557be3a8bdc"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-authoring-policy.ts",
+        "sha256": "424179c685b79d43f3533d29bc006b58869543053442f5c564b72ccea40a23bc"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+        "sha256": "7f95c8908e517ac242be4439dab7adaa1fab3e2f099f0ab362724a5ae7959690"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+        "sha256": "203183c6fe7a924ff755ccf207ad409cb87ab4cf9efe2b31d9203b22f1dca175"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-publication-policy.ts",
+        "sha256": "78b55a8463c8187268c8103a6a11f19d9bf5d401e1f263249b0ebe8d2e5a9cd2"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.spec.ts",
+        "sha256": "2619ebfa54611e9ce8928d1d039455ca2ed67e742a749623e704325358cd5f41"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.ts",
+        "sha256": "f24cbf0d87746c280986c9da64bdaac39250c0dcf9a4ca9d202a2e8390618bd9"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.schema.ts",
+        "sha256": "753b4b7f21331a1e4de2494bc10850318cbaf5a798c5b3b27a262c7017689106"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "sha256": "ae5c98727eb9e32707f0ea08ea8c1a8c8fd8f42d368f0e7a27dd48d3e9c2500d"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/main.ts",
+        "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/egress-guard.cjs",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/environment.spec.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/environment.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/fixtures.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/run.spec.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/run.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/fixtures/beginner/authoring/fixture-factory.ts",
+        "sha256": "3b23a1d4262bf7d5c13619b93c46ee62bb788b2b44918331a31f73fa09f1a589"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+        "sha256": "fabcb22657d69ba34bad5dfa815e62aa040db9985bc4cfe01644d2355e6fcb55"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+        "sha256": "f566dc54be4d4445943c870111480293e6afb409a26c9d518361551b5c6a6c7c"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-test-harness.ts",
+        "sha256": "a3b069b27faddc95659424600217f91a2940dc87e88c3aa7b2535f8d71719000"
+      },
+      {
+        "path": "apps/api/tsconfig.build.json",
+        "sha256": "25ac468ad957a0d9b7c19d8b9d8a11e1eba7c16a5323a1c670c1408c357ee7b8"
+      },
+      {
+        "path": "apps/api/tsconfig.json",
+        "sha256": "b7b6e10232025ac128b967f455de006395d783d990d695e173a4f31aea90a6d1"
+      },
+      {
+        "path": "apps/api/vitest.beginner-isolated-tools.config.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.beginner.integration.config.ts",
+        "sha256": "28d39e92bdd252f49b8100ffac383941188aeb40fbdb3d6ae76f9c1d298d7179"
+      },
+      {
+        "path": "apps/web/e2e/beginner-admin-history.spec.ts",
+        "sha256": "1a58eae6659b695de97f75c536cf2b957be4d59ea3f5e1181a828da003eaced1"
+      },
+      {
+        "path": "apps/web/e2e/beginner-admin.spec.ts",
+        "sha256": "d70669f2e3b6094fff08442b518494c6377e73d5b9b2c6065df353ab8d700378"
+      },
+      {
+        "path": "apps/web/next.config.ts",
+        "sha256": "6398bf01879e939e64795a2a742baa6f345d973d8bb0cc9d6ff749c71bd59157"
+      },
+      {
+        "path": "apps/web/package.json",
+        "sha256": "8aabe1962174153308d76a5fc8b0b199b53addeacd89f09f618d339b9235c446"
+      },
+      {
+        "path": "apps/web/playwright.beginner-admin.config.ts",
+        "sha256": "05dbd615b43324fb32d5059e4fda41f99384aac3a8d51958747df82dad258e20"
+      },
+      {
+        "path": "apps/web/scripts/run-next.mjs",
+        "sha256": "1bdd9aea281eec6f14f23df6e33ce753e312002f842376204880701334bdb484"
+      },
+      {
+        "path": "docs/IMPLEMENTATION_ROADMAP.md",
+        "sha256": "376a01de2b368c1e33190ca1d4ec8a253da5aaa2157efaf369f94e1dfb3c27f2"
+      },
+      {
+        "path": "docs/RELEASE_CHECKLIST.md",
+        "sha256": "64ed0e498405b5c3b248edb991d34a87473386c55cec124e45124a1efc67f0a0"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md",
+        "sha256": "60ff2caff21f5d5352cf84c89fbbc6ddca27e1644bff452007f7875cd2a031e6"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-beginner-r12a-p1-lifecycle-amendment.md",
+        "sha256": "8faaff111aeab7b985a7640e284776a4bf39d40fbc05a057224f44ec35711793"
+      },
+      {
+        "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+        "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+      },
+      {
+        "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+        "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+      },
+      {
+        "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+        "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+      },
+      {
+        "path": "mandate/items/MND-20261025-001-bug-close-generic-beginner-content-lifecycle-removal-bypass-within-r1-2a.md",
+        "sha256": "930a3a245563e87d1e9dac045c66f38a081e074669e51f1fa88760d2f8734810"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+        "sha256": "5851a4ce7d377d2c8b5732d20ed4ffc048b32ed0b1ffa4d50447b760b3ba6acd"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+        "sha256": "6271e353fc5f43514499e619d9c02df89dec894d13d5a833e4621ceb76a3061c"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-scope.json",
+        "sha256": "9b36e0a1bd3ffbd2b6707e62e389f9803f0364b9f3fd02a5d63c390a6825b1f8"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-p1-verification.md",
+        "sha256": "04c54651465c43199b17cbdda24f911c05a64ed27a20b36094e5048f200d5567"
+      },
+      {
+        "path": "package.json",
+        "sha256": "0b0593b7d714161d2e3d0c3bf177b08503ed8438f2bd5a90e26a9b53a3412313"
+      },
+      {
+        "path": "packages/contracts/src/beginner-authoring.contracts.ts",
+        "sha256": "16da5e9c691a307673498835bfd6f8d2a3d56cddb84261acea80d16ac39bc2cf"
+      },
+      {
+        "path": "packages/contracts/src/beginner-editorial-plan.ts",
+        "sha256": "e6587e37fe7357abf02c3b691d06843ebaf54711a8ddcb3f0a032f6249211d27"
+      },
+      {
+        "path": "packages/contracts/src/beginner.contracts.ts",
+        "sha256": "8d4cec9e90e8bcc6f1c2dc927a616a892e09b8268fde12c13435ed75512205c0"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "dbc65ef8365b88c6c298c42f18a6b9cbc4a8da93431e359f46a4c75b37e4a755"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "sha256": "dde89ea6e17b446b945b8a8f1410f15b9afd7f7e14b92ec737e198471b9bad77"
+      },
+      {
+        "path": "tsconfig.base.json",
+        "sha256": "4cd6868319fdd47cfdbb5f1dd803be299ca7aca2b507b33779a3448bee681eaf"
+      }
+    ],
+    "trees": {
+      "apps/api/src": "5743b336e9472fdf8f8ce52fe7d55d066459e557",
+      "apps/web/src": "3e8f05726c9f8546e4e512ea0269fe2b930d1cc2",
+      "apps/web/public": null,
+      "packages/contracts": "d00d1eaa5586d88cf6722973fe12bd561f3f9355",
+      "packages/content-format": "8ca0f7ec7d232b9007458de87356b7dd3eaa0b4d",
+      "apps/api/prisma/migrations": "a82df8a8e27e28f024c41a292e1b84d7cd6fdab8"
+    }
+  },
+  "frozenArtifacts": [
+    {
+      "path": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md",
+      "sha256": "60ff2caff21f5d5352cf84c89fbbc6ddca27e1644bff452007f7875cd2a031e6"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-25-beginner-r12a-p1-lifecycle-amendment.md",
+      "sha256": "8faaff111aeab7b985a7640e284776a4bf39d40fbc05a057224f44ec35711793"
+    },
+    {
+      "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+      "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+    },
+    {
+      "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+      "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+    },
+    {
+      "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+      "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+    },
+    {
+      "path": "mandate/items/MND-20261025-001-bug-close-generic-beginner-content-lifecycle-removal-bypass-within-r1-2a.md",
+      "sha256": "930a3a245563e87d1e9dac045c66f38a081e074669e51f1fa88760d2f8734810"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+      "sha256": "5851a4ce7d377d2c8b5732d20ed4ffc048b32ed0b1ffa4d50447b760b3ba6acd"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+      "sha256": "6271e353fc5f43514499e619d9c02df89dec894d13d5a833e4621ceb76a3061c"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-scope.json",
+      "sha256": "9b36e0a1bd3ffbd2b6707e62e389f9803f0364b9f3fd02a5d63c390a6825b1f8"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-p1-verification.md",
+      "sha256": "04c54651465c43199b17cbdda24f911c05a64ed27a20b36094e5048f200d5567"
+    }
+  ],
+  "commands": {
+    "unitTools": "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner-isolated-tools.config.ts",
+    "unitRegression": "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner.config.ts",
+    "httpDiagnostic": "pnpm --filter @worklingo/api exec vitest run src/beginner/beginner-admin.controller.spec.ts --config vitest.beginner.config.ts --reporter=verbose",
+    "actions": {
+      "preflight": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action preflight",
+      "provision": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action provision",
+      "schema-setup": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action schema-setup",
+      "fixtures": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action fixtures",
+      "build-api": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action build-api",
+      "build-web": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action build-web",
+      "servers": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action servers",
+      "auth": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action auth",
+      "integration": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action integration",
+      "e2e": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action e2e",
+      "verify": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action verify",
+      "cleanup": "pnpm --filter @worklingo/api exec tsx test/beginner-isolated/run.ts --scope C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json --action cleanup"
+    },
+    "migrationChild": "pnpm --filter @worklingo/api exec prisma migrate deploy --config prisma.beginner-test.config.ts",
+    "integrationChild": "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner.integration.config.ts",
+    "e2eChild": "pnpm --filter @worklingo/web exec playwright test --config playwright.beginner-admin.config.ts",
+    "apiLint": "pnpm --filter @worklingo/api lint",
+    "apiTypecheck": "pnpm --filter @worklingo/api typecheck",
+    "apiBuild": "pnpm --filter @worklingo/api build",
+    "webLint": "pnpm --filter @worklingo/web lint",
+    "webTypecheck": "pnpm --filter @worklingo/web typecheck",
+    "webBuildChild": "node <checked installed Next CLI> build <owned clean mirror/apps/web> --webpack",
+    "apiServerChild": "node --require <checked egress-guard.cjs> <tested apps/api/dist/main.js>",
+    "webServerChild": "node --require <checked egress-guard.cjs> <checked installed Next CLI> start <owned clean mirror/apps/web> -H 127.0.0.1 -p 47772",
+    "restriction": "DB/setup/server/test children only through approved runner after phase preflight, exact binary resolution and sanitized env; no arbitrary placeholder/shell execution"
+  },
+  "testMatrix": [
+    {
+      "id": "M01",
+      "area": "Admin/ownership",
+      "evidence": "Actual roles, right/wrong/shared ancestry, both Lesson relations and generic lifecycle denial; zero rejected-path content/audit/receipt writes.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M02",
+      "area": "Foundation1.2",
+      "evidence": "Source round-trip/invalid input, rubric/min_words/audio hashes; stale or invalid content cannot publish; legacy1.0/1.1 retained.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M03",
+      "area": "Preview",
+      "evidence": "Before/after run-owned session/attempt/progress/mastery/evaluation counts+hashes, exact version, redaction/no recorder/provider. Explicit AuthSession login writes are separate.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M04",
+      "area": "Review/publication",
+      "evidence": "Distinct technical editor/reviewer; self/missing/stale review denied; exact audio bytes; no partial pointers/children/receipts after failure.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M05",
+      "area": "Environment/API bypass",
+      "evidence": "Missing/expired/tampered grant, wrong role/cluster/storage/target rejected before DML. Never probe an actual production/shared address.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M06",
+      "area": "Concurrency/idempotency",
+      "evidence": "Independent PG connections, same/different key requests, one publication/receipt, stable replay, changed request conflict and fresh auth on replay.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M07",
+      "area": "Locks/rollback",
+      "evidence": "Hold actual advisory/import-row locks on A, block B, observe owned pg_locks/pg_blocking_pids then release. Exercise conflicting ownership/revision/role and transaction failure after writes; inspect DB/storage rollback. Sleeps/Promise.all alone are not proof.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M08",
+      "area": "V1/V2 and C1/C2",
+      "evidence": "Actual old pinned session stays on valid PUBLISHED V1/C1 after V2/C2; exact snapshot/activity/audio/rubric hashes and existing read/resume/fake-evaluation services. No R2 resolver/admission implementation.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M09",
+      "area": "Registry",
+      "evidence": "Actual publication/review/receipt/file IDs and hashes -> TEST_PUBLISHED candidate; wrong env/path/member/hash/file rejected; no manufactured positive release approval.",
+      "location": "beginner-release-registry.integration.spec.ts"
+    },
+    {
+      "id": "M10",
+      "area": "Readiness",
+      "evidence": "FIXTURE_ONLY, transitionEnabled=false, approvalRef=null, Beginner catalog remains COMING_SOON, no learner enrollment; no CONTENT_READY/APPROVED_RELEASE/learner-ready flag.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M11",
+      "area": "Legacy",
+      "evidence": "Run-owned Foundation1.0/1.1, Intermediate and IELTS topic/bridge/mock DB regressions; legacy replacement archives prior, Beginner retains V1, old import leaves new pointer.",
+      "location": "beginner-authoring.integration.spec.ts; selected registry/E2E overlap per plan"
+    },
+    {
+      "id": "M12",
+      "area": "Desktop/Mobile",
+      "evidence": "Both existing E2E projects: real fixture login, two Paths, editor/invalid validation/review confirmation, exact V1 preview, keyboard/layout and unauthorized direct URL without learner writes.",
+      "location": "both E2E files"
+    }
+  ],
+  "hashes": {
+    "plan": "1f0fc2a7f7b70687e9013f40c8679ef8965b3c6fe750407911aa283cafda1997",
+    "scopeReview": "56347e1578f713f41b16c96935a7d868e7d6e969e8a32c4e269be242245e6e54",
+    "allowlist": "5b8bad074edf290429bd8acf6c18b40833c6422806d88f91650089583106b5c7",
+    "sourceBaseline": "98b81779ce35fe4965aed9ade158e038286caaab7c228b17a6b70f464ef86562",
+    "environment": "29094d2c951a49f8b33d639b3aa97738c3c374895d80651beb81f454e92f4290",
+    "migrations": "6e4cadaf6f0f16001c014edcee0d271a43bdbef211d6efc7decc6693bb33b1cb"
+  },
+  "hashAlgorithm": {
+    "files": "SHA-256 raw bytes; null locks absence",
+    "documents": "SHA-256 UTF-8 CRLF normalized to LF",
+    "fingerprints": "SHA-256 UTF-8 JSON recursively sorted object keys; arrays retain declared order",
+    "trees": "Git subtree object IDs for source inputs, with clean approved baseline/candidate diff requirement",
+    "proposal": "Mandate CLI model.proposalHash excluding lifecycle bookkeeping"
+  },
+  "references": {
+    "plan": "docs/superpowers/plans/2026-10-25-beginner-r12a-isolated-db-e2e-preapproval.md",
+    "scopeReview": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-review.md"
+  },
+  "permissions": {
+    "current": "Documents/capture/triage only",
+    "sourceExecution": false,
+    "databaseConnection": false,
+    "provisioning": false,
+    "schemaSetup": false,
+    "fixturePublication": false,
+    "e2e": false,
+    "cleanup": false,
+    "actualRelease": false,
+    "production": false
+  },
+  "governance": {
+    "capture": [
+      "docs/superpowers/plans/2026-10-25-beginner-r12a-isolated-db-e2e-preapproval.md",
+      "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-review.md",
+      "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json",
+      "new linked mandate via CLI",
+      "mandate/INDEX.md"
+    ],
+    "futureAfterMatchingApproval": [
+      "child lifecycle only via CLI",
+      "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-human-approval.md",
+      "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-verification.md"
+    ],
+    "ignoredEvidenceRoot": ".superpowers/sdd/2026-10-25-beginner-r12a-isolated-db-e2e",
+    "originalRecords": "Frozen; no state/byte changes",
+    "runtimeResources": "Only exact proposed new run/approval/container/volume; no shared-root cleanup"
+  },
+  "remainingGates": "All runtime proofs and tests NOT RUN/BLOCKED. Matching human execution/data approval required before source edits or connection/setup."
+}
