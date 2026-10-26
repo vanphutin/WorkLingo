@@ -155,3 +155,51 @@ Private/ignored bookkeeping logs are in the approved scratch root; only non-secr
 
 Used: mandate-steward for actual conditional approval/CLI/frozen records; executing-plans/TDD for bounded partial Gate A and ledger; systematic-debugging for observed kernel blocker and review reproductions; Git/worktree skills for isolated explicit atomic commits; Node/Nest/Postgres guidance for guard and least-privilege validators; requesting-code-review and reviewer code-review-and-quality for fresh read-only review; verification-before-completion for actual exits and precise BLOCKED claims; quota optimizer for scoped reads/suites.
 Not used: DB/integration/E2E/provider/production workflows, live fixture setup, extra implementers/reviewers or broad scans. Not allowed until qualified safety gates; no blocked/skipped tests counted PASS.
+
+## Worker/environment recheck — 2026-10-26 06:15 UTC
+
+Authority: the product owner's subsequent RESOLVE R1.2a ENVIRONMENT BLOCKER request authorizes existing-worker inspection and source work only inside the existing scope, explicitly prohibits Gate B, and requires stopping if no suitable worker is found. This recheck does not renew the original activation timestamp, change scope/hash, or approve OS configuration changes.
+
+Baseline before this recheck: clean worktree, branch codex/foundation-basic-readiness, HEAD 2b5eb0f. Prior source commits e7332c2/ab13782 are unchanged. Only this existing governance report is changed by this recheck; diagnostics remain in the existing ignored evidence directory.
+
+### Fresh observed evidence
+
+- Read-only process inventory used OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION), OpenProcessToken(TOKEN_QUERY), and GetTokenInformation for TokenElevation, TokenElevationType, TokenIntegrityLevel, TokenIsAppContainer and TokenUser. No impersonation, token assignment, debug privilege enablement, borrowed token, process launch under another identity, or account/security/ACL modification was attempted.
+- At 06:15:26 UTC, 290 process records were enumerated; 288 token queries completed. Idle PID0 returned error87; System PID4 denied token query with error5. These two unknown tokens were not classified as safe. No command lines, credentials, browser content or production data were read.
+- Current shell, Explorer and existing Node/Node_REPL/Bun/Codex execution processes: elevated=true, integrity SID S-1-16-12288. Current linked-token query still returned error1312.
+- There are 54 observed non-elevated tokens, so a claim that the machine has no non-elevated processes would be false. Of these, 41 are current-user interactive application processes at Untrusted (32) or Low (9) integrity. The others are service/virtual identities. None of the inspected current-user interactive tokens is non-elevated, non-AppContainer, and Medium integrity (8192 through below12288). No suitable existing execution worker or supported worker launch channel was established. Non-elevated service/application tokens are not authority to borrow them for tests.
+- Session inventory: one active console session; services disconnected and RDP listener only. Local enabled account names were inspected as metadata only; an enabled account is not evidence of a usable running worker. No login or credential request was attempted.
+- Repository path exists and its ACL metadata was read. Exact run/storage/registry/runtime/artifact roots and approval root do not exist. Their nearest existing ancestors are the user's Temp directory and C:/ProgramData respectively; ACL/SDDL metadata was captured read-only. No target root or file was created. Parent ACL metadata is not effective-access proof for a qualified worker on the actual planned roots; that acceptance remains BLOCKED.
+- An initial diagnostic probe used the wrong fixed native buffer length and returned error24. Its output was rejected as invalid evidence. The corrected probe obtains the native buffer size first; only its completed queries supply the counts above. This was a diagnostic correction, not a product source or environment change.
+
+### Gate A criteria for this recheck
+
+| Criterion | Fresh result / limitation |
+| --- | --- |
+| Captured approval, source baseline, allowlist and scope hashes | PASS through readCapturedScope/verifyCapturedAuthority; candidate hash 7d59f79b70c711c5cb4810424c703a674aedcbd3c9a975ad51b4e732f75f6ae6 unchanged |
+| 48 locked migration files / 10 frozen artifacts | PASS: raw hashes match; zero migrations applied |
+| Current execution context safe for worker | FAIL: actual token is elevated/high integrity |
+| Suitable existing non-elevated worker and repository/run-root access | BLOCKED: no qualified worker established; no execution/access test under another token |
+| Actual NTFS ACL/effective access for run/storage/approval roots | BLOCKED: roots absent and worker unavailable; only existing repository/ancestor ACLs were read |
+| Pure preflight/environment validator regressions | PASS: 52 passed, 0 failed, 0 skipped/pending; command below |
+| Operational runner fallback, cleanup and PostgreSQL lock/rollback/idempotency/V1/V2 coverage | BLOCKED: remaining harness work not performed after the explicit Step1 stop condition; validator tests do not qualify an unimplemented runner |
+| Lint/typecheck/build | NOT RERUN: no source changes; previous results above are historical, not new executions |
+| Gate A overall | BLOCKED; ENV-001 remains open |
+| Gate B | NOT RUN and explicitly prohibited in this task |
+
+Fresh commands: pnpm --filter @worklingo/api exec vitest run --config vitest.beginner-isolated-tools.config.ts --reporter=json --outputFile=../../.superpowers/sdd/2026-10-25-beginner-r12a-isolated-db-e2e/worker-recheck-tests.json; readCapturedScope/verifyCapturedAuthority through tsx; node .agents/skills/mandate-steward/scripts/mandate.mjs validate. All exited0. Mandate validation returned valid=true, count7. No DB connection/provisioning/migration/fixtures/publication/release/server/provider/cleanup operations were executed.
+
+### Owner choices / unchanged gates
+
+1. Supply access to an existing standard-user interactive worker/session capable of the required repository/run-root access, using its supported execution channel. Verify the actual token and effective access again; keep the captured identity/paths. Merely restarting under the elevated Explorer or pointing at a browser sandbox does not prove this.
+2. If no such existing context is available, separately decide a narrowly scoped OS/test-worker setup or another environment. Any new account, policy/ACL change outside the captured roots, or changed environment/identity requires a separately captured matching approval before action. This recheck does not perform that setup or choose it on the owner's behalf.
+
+Until then, do not implement the remaining harness under a falsely passing worker preflight. Both MND-20261025-002 and MND-20261024-003 remain implementing; original parent001 remains captured/approval=null. No source changes, new production/learner state, next increment, merge, push or deploy.
+
+| New ignored evidence | SHA-256 raw bytes |
+| --- | --- |
+| worker-token-recheck.json | ea5a47ac4a671afae1cc1f82a8268114d259e91860e2ead8dd2d78d91ecb75d2 |
+| worker-acl-recheck.json | d33b1420c897d56f570fff5e01f7adf65951268f6bd00bce84ac0c6b1b8967c5 |
+| worker-recheck-tests.json | 46a6a81b4197eaac6cd16498876529e3f5530bba9762d888f6b64384bd2d9586 |
+
+Skill audit for this recheck: mandate-steward -> unchanged authority/state and evidence report; systematic-debugging -> native token/ACL diagnosis and corrected diagnostic measurement; quota optimizer -> existing report plus one focused suite, no redundant build/repo scan/subagent; verification-before-completion -> fresh command exits/counts and explicit BLOCKED criteria; git-workflow-and-versioning -> one explicit documentation commit. TDD/implementation/DB/E2E workflows were not entered because the user's Step1 stop condition was met.
