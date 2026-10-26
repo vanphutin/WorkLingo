@@ -1,0 +1,736 @@
+{
+  "schemaVersion": 1,
+  "status": "PREAPPROVAL_ONLY",
+  "mandateId": "MND-20261026-001",
+  "parentMandate": "MND-20261025-002",
+  "r12aMandate": "MND-20261024-003",
+  "selection": "B_PROPOSED_NOT_APPROVED",
+  "authority": "Future matching OS-only approval; no source/data/Gate B authority",
+  "plan": {
+    "path": "docs/superpowers/plans/2026-10-26-beginner-windows-worker-preapproval.md",
+    "sha256": "9019768c4a47775a6eaa5e2aff2a19ef72c48f1c60c600c1f90d8a2da41fec77"
+  },
+  "baseline": {
+    "head": "9d50bc23ff596232c9693bc058d7fb434edda211",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "sourceFiles": [
+      {
+        "path": ".agents/skills/mandate-steward/references/governance.md",
+        "sha256": "5249cfb338abfebe03d4f51f3d1b9bfc456dcc0ad756951fc1ead4147d125db2"
+      },
+      {
+        "path": ".agents/skills/mandate-steward/scripts/model.mjs",
+        "sha256": "4173f8717291b00f11a1b26b1dd1a866c9667e2268052522247dabe7e8fa430f"
+      },
+      {
+        "path": ".agents/skills/mandate-steward/scripts/store.mjs",
+        "sha256": "338c12ca131b43d5df25794b9e9fbd2e6e8ff6325eab0b1d0f7946367c61e4f4"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "769f60e1fa72cdb3af474c1fc4fb4e0ba2539de061b8f5c5a4d9517ab45456e3"
+      },
+      {
+        "path": "apps/api/package.json",
+        "sha256": "1b541ab64de77e5ccaeae934af0aacb7d341077b2a208eb808d5ad40329c13f7"
+      },
+      {
+        "path": "apps/api/prisma.beginner-test.config.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/prisma.config.ts",
+        "sha256": "209bc7e3ad5e8591ffc415e1b82ae132b90ce6fc75ba3c5e8ccb757f8fcba502"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000100_foundation/migration.sql",
+        "sha256": "147c1193f78441d318235d29085380be81c1972a04fb0d0f5bb72de6052b8c6e"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000200_auth/migration.sql",
+        "sha256": "cfca493f977785701f047a658b97526196094388ecbe82f5ba0aa5302eacf44b"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000300_curriculum/migration.sql",
+        "sha256": "1845fa0859f28d1401f36f7f912d9e3c29ea6ff37a1a40d9d4ef82112c90334b"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000400_preserve_auth_uuid_defaults/migration.sql",
+        "sha256": "03abd317a787f0aff83ae4ce7c7208e9914f6ae59494b2a7648ba0019f9fa363"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000500_learning_sessions/migration.sql",
+        "sha256": "37546175234a86e4fe0acebddf2be73d3ac2d280f01fe543661e3c8f9dcd02ff"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261004000600_content_authoring/migration.sql",
+        "sha256": "82fcf1f0a5e27231bb5202dfbb3364f4cf5098c01088390294ec0e03c0b9d564"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000100_mastery_events_and_records/migration.sql",
+        "sha256": "220235f5966b02927fee24654a934d8d51a71d70f0606260fc8907d1c45181d3"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000200_mastery_event_integrity/migration.sql",
+        "sha256": "915aff7ec675421834cc19f5caa40ac932e278a17ef2099fe4270b7e95ccb4ca"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000300_mastery_canonical_backfill/migration.sql",
+        "sha256": "8d20285ccb0a670319bfdaafc3dcaa9915299acbd01dcd9d0ba6bb29d34188b7"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000400_error_bank/migration.sql",
+        "sha256": "8893707e3ab70dade5c91d1984b7c8fda8e11de702f03662777ec3de172390cb"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261006000500_multi_duration_sessions/migration.sql",
+        "sha256": "87846dafb391da3bc5852dab13b27d7307d5278c252afd4609c87a2f61b486e2"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261007000100_checkpoint_progression/migration.sql",
+        "sha256": "84223b5085300763aed847ba6a118e34f05b0a607b215c8681bcaa2a1882a537"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261007120000_add_teacher_ai_pipeline/migration.sql",
+        "sha256": "23f80ffa212dcf43f80df9f219647544d4294b861ba21403134dd2cc919c306d"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261009000100_system_seeded_audio/migration.sql",
+        "sha256": "4c07725d595c47fe3db8921286579100a72e15f2fef3967f063be2e7a716edf7"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261009000200_increment_5a1_onboarding_placement/migration.sql",
+        "sha256": "84993172c114bd6b7bcbef1ea12b988296ad804378ddc1708e9c90f568bd3819"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261010000100_audio_tts_settings/migration.sql",
+        "sha256": "4cef5bca505d1e8808fceedcb97e5f1bb932c04e960ebee00175b61cb61e8f4f"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261010000200_increment_5a2_engagement/migration.sql",
+        "sha256": "20b124d7a85d699f9f5e028a78eb73f2cc143c7de8669fcceed812c1f7cddb7f"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261011000100_increment_5b_curriculum_admin/migration.sql",
+        "sha256": "adb425a0fbe9a62f7f695797194e255f68ff36dc166aa8133349f4833cce65a1"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261011000200_increment_5c_rate_limits/migration.sql",
+        "sha256": "e2c3f31a133ce6be721e5b2de1b7ba0fc0579153873e25b8155704038cc61a9f"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261011000300_increment_5c_pilot_analytics/migration.sql",
+        "sha256": "27a9f7050f1af450d6c39588c427393cbd219f2f99ba5d7ed7b789b80361ea09"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261012000100_learning_programs/migration.sql",
+        "sha256": "0d7f6ec6d592c3558b56c994c42b151ff3752a240919aeea50ab95572d15f18a"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261012000200_learner_program_enrollment/migration.sql",
+        "sha256": "7aee8f2f96accec6a6657ec8d19c57f41d10355ea9274755c0e1bb60c529c4bd"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000100_curriculum_foundation/migration.sql",
+        "sha256": "7b3ffa9da98746d60701d40c15191a08bdd5eca46f9e9e6ba4693cb950326aac"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000200_ielts_orientation/migration.sql",
+        "sha256": "e2701734add201f41799a4a64521360ffc63a25cf0b5ea42dc6c002defe649a8"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000300_ielts_bridge/migration.sql",
+        "sha256": "c63fb23dfed687b35b35ce34c0b927cf9de4a7873a4989fa8c0005a50d5fc7c5"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000400_ielts_integrated_practice/migration.sql",
+        "sha256": "d2c51f0ca70cb93ac772b1a78048b48ee4787ede249b930014c71aa7a0f068d3"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261013000500_ielts_integrated_block_timer/migration.sql",
+        "sha256": "74d58e5a4046c0b96f445a0afef05f84f68f497e2cc26905a93b082ca161a064"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014000100_ielts_band_curriculum/migration.sql",
+        "sha256": "f422bb73e4db01eec218616db865e121fff0b64f65e60ba73f8ce0d7516e5e32"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014000200_ielts_full_mock/migration.sql",
+        "sha256": "ec07fd9246087134fde01aad93c5f5cc7037f3c2300b6ac6d761c531078647d8"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014000300_ielts_mock_audio_events/migration.sql",
+        "sha256": "eece5eadde257d1fa5d870371d6f3c4c82d6d5bf9543acdc16073d9efb393897"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261014163000_ai_routing_settings/migration.sql",
+        "sha256": "7cc997340fd82fbc0a48195a19d06179c21748bade61fc05f71a1ec62c42ed47"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000100_ielts_early_access/migration.sql",
+        "sha256": "cf28cf6ff2adc06c31029389c00becb018c53c4bd5b27bef407a28898e222052"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000200_ielts_flow_v3/migration.sql",
+        "sha256": "580e1c9a09ca28fd3e40e883b67b8cefad3341f903f88a7b69d2080d57024fbe"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000300_ielts_mock_media/migration.sql",
+        "sha256": "0d14e291c43b324b7490ea801b13e86a520afa06971fee2180a3d1659b3273be"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261015000400_ielts_playback_activation/migration.sql",
+        "sha256": "cf52381989e591c47689d72f07393b6f32dcc4110c49474975b761e50a275879"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019090000_intermediate_topic_reviews/migration.sql",
+        "sha256": "2e0eafae14c89f704c50fe1b85fd241f3b65e6cb308edd4b97790f8a4b238c97"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019100000_intermediate_topic_groups/migration.sql",
+        "sha256": "04e769999b0146cc5334577c405d4cf152415cccd364c9f8623a5c0f5f77fa21"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019110000_intermediate_topic_catalog/migration.sql",
+        "sha256": "31fecee311af81932aea44d1f90301103e50dd3b466ce8a42a180a41ee797a25"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019120000_vocabulary_publication_review/migration.sql",
+        "sha256": "86426021eb331d933849097c85b9c4ef58b616060e93d9eae1d1386cda409c03"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261019130000_flexible_session_block_minutes/migration.sql",
+        "sha256": "5f07db48b4c68d7ec452ba97925ffd3ab8629d4903a6876954717135cb6050f8"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000100_vocabulary_master_library/migration.sql",
+        "sha256": "2377791f8ee0a9b2897d332f256ec38f8d430cc529b8773b590ac662bd0ced3e"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000200_vocabulary_integrity/migration.sql",
+        "sha256": "5ae9faf30b609a757507a1c7af802b8287ffdef6efb9d0f2e8e1f3e155ead798"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000300_vocabulary_review_corrections/migration.sql",
+        "sha256": "0d6c873c6e6535a7959b60842d269c9a8fe20ebabf8dbc83300d5e86bc377c27"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000400_vocabulary_nonnull_grants/migration.sql",
+        "sha256": "26464088549fd2a92aaa1cc93ed447d363dc9b8b2ca2440ac2234880cdc227a4"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000500_vocabulary_terminal_retirement/migration.sql",
+        "sha256": "599264cb9a19d7bee5c0cdc00894aac469df8e9bb21bb5bb79cbf3c61bf92228"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000600_vocabulary_exception_resolutions/migration.sql",
+        "sha256": "8766f3a731eed088cb7fe047bfcc8a65f1af0e6b62d1920cea604b9644623599"
+      },
+      {
+        "path": "apps/api/prisma/migrations/20261022000700_vocabulary_txt_provenance/migration.sql",
+        "sha256": "243eb75743b949fa89f7ef959c4734b65f367b5c5bccdac6aed6486a2c5ed3da"
+      },
+      {
+        "path": "apps/api/prisma/migrations/migration_lock.toml",
+        "sha256": "e0f301404b533bea819cafbc56ca2a9d9bcc2cf97d6350473e3a008f0637cc12"
+      },
+      {
+        "path": "apps/api/prisma/schema.prisma",
+        "sha256": "62cf277eb66200feb757f145d38534d1d67f8a7f12c3f6e3880cbfbf8e9ffd95"
+      },
+      {
+        "path": "apps/api/scripts/run-api.mjs",
+        "sha256": "6c5cd39a4de6dec118e27fe3e4143631cfbb35e71f56961c8e6b043e2e875b16"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.spec.ts",
+        "sha256": "943a391ccb716c8147e793feed1b3daa7061cfe421f34ef97aa83bf972a87f13"
+      },
+      {
+        "path": "apps/api/src/admin-content-lifecycle/admin-content-lifecycle.service.ts",
+        "sha256": "ea9832149075bb7bc6d05a42f125779a166dfa3ab95646bc7f13dc5d372ae417"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-authoring.service.ts",
+        "sha256": "d667110c108f5743f6c914d9e92863a8c274bec835d0e108589deb3b141c145e"
+      },
+      {
+        "path": "apps/api/src/beginner/application/beginner-release.service.ts",
+        "sha256": "5781b1ca330b588559f70b16a476d35e56585e44e9ba48d59c4da557be3a8bdc"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-authoring-policy.ts",
+        "sha256": "424179c685b79d43f3533d29bc006b58869543053442f5c564b72ccea40a23bc"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-environment-preflight.spec.ts",
+        "sha256": "c34ec82bfd1354d3f3a729ca908f0741cdddc69a3612e8bed1648d9536790ffa"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-environment-preflight.ts",
+        "sha256": "db7470c3c5f82b0307f70ec4e0429a1467f40556c3e2eee39976bc025f8e435c"
+      },
+      {
+        "path": "apps/api/src/beginner/domain/beginner-publication-policy.ts",
+        "sha256": "78b55a8463c8187268c8103a6a11f19d9bf5d401e1f263249b0ebe8d2e5a9cd2"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.spec.ts",
+        "sha256": "2619ebfa54611e9ce8928d1d039455ca2ed67e742a749623e704325358cd5f41"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.module.ts",
+        "sha256": "f24cbf0d87746c280986c9da64bdaac39250c0dcf9a4ca9d202a2e8390618bd9"
+      },
+      {
+        "path": "apps/api/src/common/config/app-config.schema.ts",
+        "sha256": "753b4b7f21331a1e4de2494bc10850318cbaf5a798c5b3b27a262c7017689106"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-imports.service.ts",
+        "sha256": "ae5c98727eb9e32707f0ea08ea8c1a8c8fd8f42d368f0e7a27dd48d3e9c2500d"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/main.ts",
+        "sha256": "016cefc87839edbdbcb7e027b430db2af4e87685d1449f36f1a956c3fa8451dd"
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/egress-guard.cjs",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/environment.spec.ts",
+        "sha256": "6a9f1401e7511e3eff4c1fd2a5116c24c9f2df48731e1cf944d4cdbe6ba0d7d1"
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/environment.ts",
+        "sha256": "8c5cc00bf911c65f54019bd42343044e6b8d98b92a31a12313d51f45fa4a59af"
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/fixtures.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/run.spec.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-isolated/run.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/fixtures/beginner/authoring/fixture-factory.ts",
+        "sha256": "3b23a1d4262bf7d5c13619b93c46ee62bb788b2b44918331a31f73fa09f1a589"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-authoring.integration.spec.ts",
+        "sha256": "fabcb22657d69ba34bad5dfa815e62aa040db9985bc4cfe01644d2355e6fcb55"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-release-registry.integration.spec.ts",
+        "sha256": "f566dc54be4d4445943c870111480293e6afb409a26c9d518361551b5c6a6c7c"
+      },
+      {
+        "path": "apps/api/test/integration/beginner-test-harness.ts",
+        "sha256": "a3b069b27faddc95659424600217f91a2940dc87e88c3aa7b2535f8d71719000"
+      },
+      {
+        "path": "apps/api/tsconfig.build.json",
+        "sha256": "25ac468ad957a0d9b7c19d8b9d8a11e1eba7c16a5323a1c670c1408c357ee7b8"
+      },
+      {
+        "path": "apps/api/tsconfig.json",
+        "sha256": "b7b6e10232025ac128b967f455de006395d783d990d695e173a4f31aea90a6d1"
+      },
+      {
+        "path": "apps/api/vitest.beginner-isolated-tools.config.ts",
+        "sha256": "9eca1ad0927ba0dfe6e7e5fb06f8e1f76d7d706201480350ba082438820db39f"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.beginner.integration.config.ts",
+        "sha256": "28d39e92bdd252f49b8100ffac383941188aeb40fbdb3d6ae76f9c1d298d7179"
+      },
+      {
+        "path": "apps/web/e2e/beginner-admin-history.spec.ts",
+        "sha256": "1a58eae6659b695de97f75c536cf2b957be4d59ea3f5e1181a828da003eaced1"
+      },
+      {
+        "path": "apps/web/e2e/beginner-admin.spec.ts",
+        "sha256": "d70669f2e3b6094fff08442b518494c6377e73d5b9b2c6065df353ab8d700378"
+      },
+      {
+        "path": "apps/web/next.config.ts",
+        "sha256": "6398bf01879e939e64795a2a742baa6f345d973d8bb0cc9d6ff749c71bd59157"
+      },
+      {
+        "path": "apps/web/package.json",
+        "sha256": "8aabe1962174153308d76a5fc8b0b199b53addeacd89f09f618d339b9235c446"
+      },
+      {
+        "path": "apps/web/playwright.beginner-admin.config.ts",
+        "sha256": "05dbd615b43324fb32d5059e4fda41f99384aac3a8d51958747df82dad258e20"
+      },
+      {
+        "path": "apps/web/scripts/run-next.mjs",
+        "sha256": "1bdd9aea281eec6f14f23df6e33ce753e312002f842376204880701334bdb484"
+      },
+      {
+        "path": "docs/IMPLEMENTATION_ROADMAP.md",
+        "sha256": "376a01de2b368c1e33190ca1d4ec8a253da5aaa2157efaf369f94e1dfb3c27f2"
+      },
+      {
+        "path": "docs/RELEASE_CHECKLIST.md",
+        "sha256": "64ed0e498405b5c3b248edb991d34a87473386c55cec124e45124a1efc67f0a0"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md",
+        "sha256": "60ff2caff21f5d5352cf84c89fbbc6ddca27e1644bff452007f7875cd2a031e6"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-beginner-r12a-isolated-db-e2e-preapproval.md",
+        "sha256": "1f0fc2a7f7b70687e9013f40c8679ef8965b3c6fe750407911aa283cafda1997"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-beginner-r12a-p1-lifecycle-amendment.md",
+        "sha256": "8faaff111aeab7b985a7640e284776a4bf39d40fbc05a057224f44ec35711793"
+      },
+      {
+        "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+        "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+      },
+      {
+        "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+        "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+      },
+      {
+        "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+        "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+      },
+      {
+        "path": "mandate/items/MND-20261025-001-bug-close-generic-beginner-content-lifecycle-removal-bypass-within-r1-2a.md",
+        "sha256": "930a3a245563e87d1e9dac045c66f38a081e074669e51f1fa88760d2f8734810"
+      },
+      {
+        "path": "mandate/items/MND-20261025-002-infrastructure-qualify-beginner-r1-2a-on-one-isolated-postgresql-and-desktop-mobile-e.md",
+        "sha256": "b43b4b14c40341d9d16201b25ae67b229814ae85994a7785f8ce854671d77b4c"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+        "sha256": "5851a4ce7d377d2c8b5732d20ed4ffc048b32ed0b1ffa4d50447b760b3ba6acd"
+      },
+      {
+        "path": "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+        "sha256": "6271e353fc5f43514499e619d9c02df89dec894d13d5a833e4621ceb76a3061c"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-human-approval.md",
+        "sha256": "cff196653fd71a5bb5452944bb5ea481543b695fec822070558537b6a0e9273c"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-review.md",
+        "sha256": "56347e1578f713f41b16c96935a7d868e7d6e969e8a32c4e269be242245e6e54"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json",
+        "sha256": "aa8f989a0a8c3cc149d8cc75a3e131cdde92cec59645135def8547b5f3d935ca"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-verification.md",
+        "sha256": "e6019ca60cac9df426dff639a05eec006acecc58a957b25fd42365934148af9a"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-scope.json",
+        "sha256": "9b36e0a1bd3ffbd2b6707e62e389f9803f0364b9f3fd02a5d63c390a6825b1f8"
+      },
+      {
+        "path": "mandate/reports/2026-10-25-beginner-r12a-p1-verification.md",
+        "sha256": "04c54651465c43199b17cbdda24f911c05a64ed27a20b36094e5048f200d5567"
+      },
+      {
+        "path": "package.json",
+        "sha256": "0b0593b7d714161d2e3d0c3bf177b08503ed8438f2bd5a90e26a9b53a3412313"
+      },
+      {
+        "path": "packages/contracts/src/beginner-authoring.contracts.ts",
+        "sha256": "16da5e9c691a307673498835bfd6f8d2a3d56cddb84261acea80d16ac39bc2cf"
+      },
+      {
+        "path": "packages/contracts/src/beginner-editorial-plan.ts",
+        "sha256": "e6587e37fe7357abf02c3b691d06843ebaf54711a8ddcb3f0a032f6249211d27"
+      },
+      {
+        "path": "packages/contracts/src/beginner.contracts.ts",
+        "sha256": "8d4cec9e90e8bcc6f1c2dc927a616a892e09b8268fde12c13435ed75512205c0"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "dbc65ef8365b88c6c298c42f18a6b9cbc4a8da93431e359f46a4c75b37e4a755"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "sha256": "dde89ea6e17b446b945b8a8f1410f15b9afd7f7e14b92ec737e198471b9bad77"
+      },
+      {
+        "path": "tsconfig.base.json",
+        "sha256": "4cd6868319fdd47cfdbb5f1dd803be299ca7aca2b507b33779a3448bee681eaf"
+      }
+    ],
+    "fingerprint": "b34b0be1f1fb44872fbabd6b63f1dac25055a1a2c90f7b40d982840c5cfc271e",
+    "headPolicy": "Baseline HEAD or a descendant containing only exact capture/lifecycle/evidence documents below; verify every locked source/frozen file and reject any other repository diff. Metadata commit is not product execution permission."
+  },
+  "frozenArtifacts": [
+    {
+      "path": "docs/superpowers/plans/2026-10-24-beginner-r12a-implementation.md",
+      "sha256": "60ff2caff21f5d5352cf84c89fbbc6ddca27e1644bff452007f7875cd2a031e6"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-25-beginner-r12a-isolated-db-e2e-preapproval.md",
+      "sha256": "1f0fc2a7f7b70687e9013f40c8679ef8965b3c6fe750407911aa283cafda1997"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-25-beginner-r12a-p1-lifecycle-amendment.md",
+      "sha256": "8faaff111aeab7b985a7640e284776a4bf39d40fbc05a057224f44ec35711793"
+    },
+    {
+      "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+      "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+    },
+    {
+      "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+      "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+    },
+    {
+      "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+      "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+    },
+    {
+      "path": "mandate/items/MND-20261025-001-bug-close-generic-beginner-content-lifecycle-removal-bypass-within-r1-2a.md",
+      "sha256": "930a3a245563e87d1e9dac045c66f38a081e074669e51f1fa88760d2f8734810"
+    },
+    {
+      "path": "mandate/items/MND-20261025-002-infrastructure-qualify-beginner-r1-2a-on-one-isolated-postgresql-and-desktop-mobile-e.md",
+      "sha256": "b43b4b14c40341d9d16201b25ae67b229814ae85994a7785f8ce854671d77b4c"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-scope.json",
+      "sha256": "5851a4ce7d377d2c8b5732d20ed4ffc048b32ed0b1ffa4d50447b760b3ba6acd"
+    },
+    {
+      "path": "mandate/reports/2026-10-24-beginner-r12a-verification.md",
+      "sha256": "6271e353fc5f43514499e619d9c02df89dec894d13d5a833e4621ceb76a3061c"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-human-approval.md",
+      "sha256": "cff196653fd71a5bb5452944bb5ea481543b695fec822070558537b6a0e9273c"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-review.md",
+      "sha256": "56347e1578f713f41b16c96935a7d868e7d6e969e8a32c4e269be242245e6e54"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json",
+      "sha256": "aa8f989a0a8c3cc149d8cc75a3e131cdde92cec59645135def8547b5f3d935ca"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-verification.md",
+      "sha256": "e6019ca60cac9df426dff639a05eec006acecc58a957b25fd42365934148af9a"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-p1-amendment-scope.json",
+      "sha256": "9b36e0a1bd3ffbd2b6707e62e389f9803f0364b9f3fd02a5d63c390a6825b1f8"
+    },
+    {
+      "path": "mandate/reports/2026-10-25-beginner-r12a-p1-verification.md",
+      "sha256": "04c54651465c43199b17cbdda24f911c05a64ed27a20b36094e5048f200d5567"
+    }
+  ],
+  "sourceAllowlist": {
+    "create": [],
+    "modify": []
+  },
+  "sourceAllowlistFingerprint": "ae2d4c270e612768a2d82ce0a3bdd1244ab88422bbf0b1cb39992da92a09da4b",
+  "host": {
+    "name": "VAN-PHU-TIN",
+    "operatorAccount": "ASUS",
+    "operatorSid": "S-1-5-21-3809754005-2092998575-1059868825-1001",
+    "workerAccount": "wl_beginner_r12a",
+    "workerSid": "MUST_BE_NEW_AND_RECORDED_AFTER_APPROVED_CREATION",
+    "initialAbsenceRequired": true,
+    "groupSids": [
+      "S-1-5-32-545"
+    ],
+    "token": {
+      "elevated": false,
+      "integrityRid": 8192,
+      "appContainer": false,
+      "queryRealChild": true
+    }
+  },
+  "filesystem": {
+    "profile": "C:/Users/wl_beginner_r12a",
+    "temp": "C:/Users/wl_beginner_r12a/AppData/Local/Temp",
+    "ownedTempRoot": "C:/Users/wl_beginner_r12a/AppData/Local/Temp/worklingo-beginner-r12a",
+    "runRoot": "C:/Users/wl_beginner_r12a/AppData/Local/Temp/worklingo-beginner-r12a/202610250002",
+    "writableRunChildren": [
+      "storage",
+      "registry",
+      "runtime",
+      "artifacts"
+    ],
+    "approvalRoot": "C:/ProgramData/WorkLingo/BeginnerTestApprovals/202610250002",
+    "snapshotRoot": "C:/ProgramData/WorkLingo/BeginnerTestWorkers/202610250002/repository",
+    "newAncestorAclOnly": [
+      "C:/ProgramData/WorkLingo",
+      "C:/ProgramData/WorkLingo/BeginnerTestApprovals",
+      "C:/ProgramData/WorkLingo/BeginnerTestWorkers",
+      "C:/ProgramData/WorkLingo/BeginnerTestWorkers/202610250002"
+    ],
+    "excludedRoots": [
+      "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+      "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/.superpowers/sdd/2026-10-22-vocabulary-master-library/data",
+      "D:/Projects/WorkLingo",
+      "D:/Projects/WorkLingo/apps/api/data",
+      "D:/Projects/WorkLingo/data"
+    ],
+    "workerOriginalCheckoutAccess": "NO_NEW_ACL_GRANT; snapshot only; protected paths must fail actual access checks",
+    "cleanup": "Only newly created SID/profile and ledger-owned run/snapshot/approval objects; no shared ancestors, unknown/pre-existing resources or DB cleanup",
+    "diagnosticManifestRoot": "C:/ProgramData/WorkLingo/BeginnerTestApprovals/202610250002/worker-setup"
+  },
+  "databaseReferenceOnly": {
+    "source": "mandate/reports/2026-10-25-beginner-r12a-isolated-db-e2e-scope.json",
+    "host": "127.0.0.1",
+    "port": 55432,
+    "name": "worklingo_beginner_r12a_202610250002",
+    "runtimeRole": "wl_beginner_202610250002",
+    "ownerRole": "wl_beginner_owner_202610250002",
+    "serverIdentity": "wl-beginner-r12a-202610250002",
+    "docker": {
+      "context": "desktop-linux",
+      "endpoint": "npipe:////./pipe/dockerDesktopLinuxEngine",
+      "image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "architecture": "linux/amd64",
+      "container": "worklingo-beginner-r12a-202610250002",
+      "volume": "worklingo-beginner-r12a-202610250002-pgdata",
+      "labels": {
+        "worklingo.environment": "beginner-r12a-db-e2e-20261025-002",
+        "worklingo.run": "202610250002"
+      },
+      "pullAllowed": false,
+      "sharedComposeAllowed": false
+    },
+    "servers": {
+      "apiOrigin": "http://127.0.0.1:47771",
+      "webOrigin": "http://127.0.0.1:47772",
+      "apiNodeEnv": "test",
+      "webNodeEnv": "production (isolated Next build/start only)",
+      "reuseExistingServer": false,
+      "workers": 1,
+      "retries": 0,
+      "webMode": "Clean owned source mirror, installed dependencies only, webpack build/start; no repository .env/shared .next",
+      "publicApiBase": "/api/v1",
+      "serverApiOrigin": "http://127.0.0.1:47771",
+      "providers": "fake only, empty keys/endpoints, AI routing/worker off, exact endpoint egress allowlist"
+    },
+    "setupPermission": false,
+    "connectionPermission": false
+  },
+  "hashes": {
+    "migrations": "6e4cadaf6f0f16001c014edcee0d271a43bdbef211d6efc7decc6693bb33b1cb",
+    "frozenArtifacts": "fc637058ae3a68826d7d067760b11e4e5fdac87ebcfb140d3110adc32e7e75c4"
+  },
+  "osOperationsAfterMatchingApproval": [
+    "Create exact absent local standard account with secure OS input and Users-only membership",
+    "Owner interactive first logon initializes exact new profile",
+    "Create/protect ACLs only on named new owned paths; no pre-existing ancestor ACL change",
+    "Stage curated secret-free sealed source/dependency snapshot and manifest; no downloads/install",
+    "Read-only actual token/effective-access/engine-denial probes and controlled run/runtime scratch only",
+    "SID/ledger-bound rollback of newly created resources on failure or explicit teardown request"
+  ],
+  "prohibited": [
+    "Existing account/group membership edits",
+    "UAC/security/firewall/global ACL/Docker pipe changes",
+    "Services/scheduled tasks/software installation",
+    "New repository product/test/script source files; diagnostic command data bounded by plan only",
+    "Borrowed application/service tokens or elevation workaround",
+    "Production content access or production DB connection",
+    "Any DB provisioning/reset/migration/fixture/publication/release",
+    "API/Web/server/integration/E2E/provider/Gate B",
+    "Reuse frozen 0293fe approval for changed filesystem identity",
+    "Merge/push/deploy"
+  ],
+  "followup": "New captured harness/environment qualification scope must bind actual worker SID/profile/snapshot/new run-root and explicit DB setup/proof ordering; this child cannot activate old runtime/data authority",
+  "hashAlgorithm": {
+    "files": "SHA-256 raw bytes, null locks absence",
+    "documents": "SHA-256 UTF-8 CRLF normalized to LF",
+    "records": "SHA-256 UTF-8 JSON recursively sorted keys, array order retained",
+    "proposal": "Mandate CLI proposalHash, lifecycle excluded"
+  },
+  "review": {
+    "path": "mandate/reports/2026-10-26-beginner-windows-worker-review.md",
+    "sha256": "c85c29459abf67c999e72bfa29493b3e528fdefb8b14ad6fd294002f15aa61e5"
+  },
+  "diagnostics": {
+    "workingDirectory": "C:/Users/wl_beginner_r12a/AppData/Local/Temp/worklingo-beginner-r12a/202610250002/runtime",
+    "environmentKeys": [
+      "SystemRoot",
+      "WINDIR",
+      "COMSPEC",
+      "PATH",
+      "USERPROFILE",
+      "HOME",
+      "APPDATA",
+      "LOCALAPPDATA",
+      "USERNAME",
+      "USERDOMAIN",
+      "TEMP",
+      "TMP",
+      "PSModulePath",
+      "WORKLINGO_APPROVAL_PROBE_PATH"
+    ],
+    "profileLoading": false,
+    "arbitraryCommandPassthrough": false,
+    "contract": "Exact diagnostic launch contract in locked plan; native/file metadata/pipe handle-denial only; no pipe payload or DB connection; controlled scratch only under run/runtime",
+    "nodeDestination": "C:/ProgramData/WorkLingo/BeginnerTestWorkers/202610250002/repository/tools/node.exe",
+    "tools": [
+      {
+        "source": "C:/Users/ASUS/AppData/Local/nvm/v20.20.1/node.exe",
+        "sha256": "c0e91d79c5541a733999101578f2febbc2c4ca48bb9727cad3c5ed874805d84a",
+        "action": "Operator copy-only, worker --version only"
+      },
+      {
+        "source": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "sha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f",
+        "action": "-NoProfile -NonInteractive; bounded diagnostics only"
+      },
+      {
+        "source": "C:/Windows/System32/whoami.exe",
+        "sha256": "23240ef9f8b0a9a324110b1c2331de31dc1b0e08f5359cb707e51a939af56cd3",
+        "action": "/user /groups /priv CSV"
+      }
+    ]
+  },
+  "governance": {
+    "captureDocuments": [
+      "docs/superpowers/plans/2026-10-26-beginner-windows-worker-preapproval.md",
+      "mandate/reports/2026-10-26-beginner-windows-worker-review.md",
+      "mandate/reports/2026-10-26-beginner-windows-worker-scope.json",
+      "mandate/items/MND-20261026-001-infrastructure-establish-one-least-privilege-windows-worker-for-beginner-r1-2a-withou.md",
+      "mandate/INDEX.md"
+    ],
+    "futureExecutionDocuments": [
+      "mandate/reports/2026-10-26-beginner-windows-worker-human-approval.md",
+      "mandate/reports/2026-10-26-beginner-windows-worker-verification.md"
+    ],
+    "itemLifecycle": "CLI only; no approval note until actual matching human OS authorization",
+    "ignoredEvidenceRoot": ".superpowers/sdd/2026-10-25-beginner-r12a-isolated-db-e2e"
+  }
+}
