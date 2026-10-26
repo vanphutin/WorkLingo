@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-26T11:17:47.612Z",
+  "snapshotAtUtc": "2026-10-26T07:25:24.775Z",
+  "currentSql": "BLOCKED_OFFLINE",
+  "method": "All local Git file revisions for each of3 paths; raw/LF/CRLF/newline variants, primary checkout and bounded in-memory deletion/CHECK reconstruction; no match; migration files unchanged",
+  "entries": [
+    {
+      "name": "20261006000100_mastery_events_and_records",
+      "expected": "386c9966a4729cfed6abc92951e3f076f90c52ee061e9343e99d38f97967ac74",
+      "sourceRaw": "220235f5966b02927fee24654a934d8d51a71d70f0606260fc8907d1c45181d3",
+      "revisions": 1,
+      "uniqueRaw": 1,
+      "matches": []
+    },
+    {
+      "name": "20261011000100_increment_5b_curriculum_admin",
+      "expected": "b09c91a91ac92ed8b7b93e980894080b1cd902b8c631facc8cb64b526fe28b3f",
+      "sourceRaw": "adb425a0fbe9a62f7f695797194e255f68ff36dc166aa8133349f4833cce65a1",
+      "revisions": 1,
+      "uniqueRaw": 1,
+      "matches": []
+    },
+    {
+      "name": "20261015000200_ielts_flow_v3",
+      "expected": "f735345a40a3ad2f44b9a8bb89e4df1c65b523bbe42a4a2f8d35dbabb070dbbf",
+      "sourceRaw": "580e1c9a09ca28fd3e40e883b67b8cefad3341f903f88a7b69d2080d57024fbe",
+      "revisions": 1,
+      "uniqueRaw": 1,
+      "matches": []
+    }
+  ],
+  "cause": "UNKNOWN; no local historical SQL matching the stored checksums. This is not proof of DB schema corruption or of equivalence."
+}
