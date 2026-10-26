@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261026-001",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-26",
-  "updated": "2026-10-26T06:41:28.755Z",
+  "updated": "2026-10-26T06:51:16.628Z",
   "title": "Establish one least-privilege Windows worker for Beginner R1.2a without database authority",
   "type": "infrastructure",
   "owner": "Codex",
@@ -64,7 +64,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-26-beginner-windows-worker-preapproval.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner (human user)",
+    "reference": "mandate/reports/2026-10-26-beginner-windows-worker-human-approval.md",
+    "at": "2026-10-26T06:51:16.457Z",
+    "proposal_hash": "4c772bb0e7ee9820e64742cf56b92a94d2f6bec231a776eea5591af103238c34"
+  },
   "verification": [],
   "history": [
     {
@@ -93,6 +98,24 @@
       "reason": "OS-only A/B/C proposal and exact resources reviewed; builder questions refined. Ready for human selection and matching OS-scope approval only; no execution or data authority.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-26-beginner-windows-worker-review.md"
+    },
+    {
+      "at": "2026-10-26T06:51:16.457Z",
+      "actor": "WorkLingo product owner (human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Direct human approval of matching proposal 4c772bb0... OS-only; secure input/owner logon and all data/source/Gate B prohibitions retained.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-beginner-windows-worker-human-approval.md"
+    },
+    {
+      "at": "2026-10-26T06:51:16.628Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Matching OS-only human approval and frozen hashes verified; begin exact plan. No worker/account/profile/ACL/data mutation before this lifecycle transition.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-beginner-windows-worker-human-approval.md"
     }
   ]
 }
