@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261026-002",
-  "status": "triaged",
+  "status": "verified",
   "created": "2026-10-26",
-  "updated": "2026-10-26T10:15:51.412Z",
+  "updated": "2026-10-26T10:38:32.729Z",
   "title": "Retire only the owned temporary Beginner worker and preserve main database data",
   "type": "infrastructure",
   "owner": "Codex",
@@ -56,8 +56,39 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-26-main-db-audit-worker-retirement-preapproval.md",
   "sprint_reference": null,
-  "approval": null,
-  "verification": [],
+  "approval": {
+    "actor": "WorkLingo product owner (human user)",
+    "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-human-approval.md",
+    "at": "2026-10-26T10:29:43.287Z",
+    "proposal_hash": "881f83f394419ba50e3e3194426ab606c235a524f27403ed443371e45313ad73"
+  },
+  "verification": [
+    {
+      "command": "Verify matching Mandate CLI proposal/plan/review/scope hashes;117 source records;20 frozen artifacts; empty source allowlist",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-verification.md"
+    },
+    {
+      "command": "Native WTS/CIM full-SID and no-worker-session/process/profile-use preflight; Remove-LocalUser exact SID; fresh SAM name/SID absence",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-verification.md"
+    },
+    {
+      "command": "Fresh owner/SDDL/non-reparse/empty checks and Directory.Delete(false) for exact14 paths; fresh profile/parent TEMP/ACL and other-account comparison",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-verification.md"
+    },
+    {
+      "command": "Mandate CLI validate; unchanged parent states/Gate A BLOCKED/Gate B NOT RUN; no product/database/provider/global-policy operations",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-verification.md"
+    },
+    {
+      "command": "One fresh independent Task R receipt/governance review; Critical0/Important0/Minor0, no blocking conformance finding",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-verification.md"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-26T10:15:05.512Z",
@@ -85,6 +116,33 @@
       "reason": "Read-only audit and exact retirement-only scope reviewed; main-DB writes remain unready/unapproved. New matching OS human approval required; no execution.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-26-main-db-worker-preapproval-review.md"
+    },
+    {
+      "at": "2026-10-26T10:29:43.287Z",
+      "actor": "WorkLingo product owner (human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Direct matching human approval of proposal881f83f3... authorizes exact SID retirement and14 proven-empty directories only; profile retained, no DB/source/Gate B authority.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-human-approval.md"
+    },
+    {
+      "at": "2026-10-26T10:30:22.104Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Matching proposal,117 source locks,20 frozen artifacts and full SID/Users-only/session/process/profile/14-root preflight verified before OS mutation; execute Task R only.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-human-approval.md"
+    },
+    {
+      "at": "2026-10-26T10:38:32.729Z",
+      "actor": "Codex",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Exact OS retirement and14 nonrecursive empty-directory removals verified with profile/other accounts preserved; no data/source/Gate B authority exercised.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-main-db-worker-retirement-verification.md"
     }
   ]
 }
