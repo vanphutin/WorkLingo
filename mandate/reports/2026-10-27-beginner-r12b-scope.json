@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "increment": "R1.2b",
+  "parentMandate": "MND-20261024-001",
+  "executionApproval": null,
+  "mode": "OFFLINE_TEXT_AUTHORING_ONLY",
+  "baseline": {
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "branch": "codex/foundation-basic-readiness",
+    "head": "613fcec48a2b40b3a3e720c6a57fc5b0534562b4",
+    "files": [
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+        "sha256": "99b5a2afb8e8824f37ce723735d1cd5505611559eb0c54a839d639e044b4c4dc"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/tsconfig.json",
+        "sha256": "b7b6e10232025ac128b967f455de006395d783d990d695e173a4f31aea90a6d1"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": null
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-content-review.md",
+        "sha256": null
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-curriculum-resources-design.md",
+        "sha256": "4d6e44ac1cb814cb5f27f6a25905787e02d3d3fe8a0a75ac1d696f8682ba5def"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-final-refinement.md",
+        "sha256": "131fee5e82c77c20e540a121817cf4808ccd96c19bacf56b4af9915219acb051"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-video-production-plan.md",
+        "sha256": "25d34657d54410b2c8ae96c6f60fd6767d44a2783f58356b7bd94b2578c053db"
+      },
+      {
+        "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+        "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+      },
+      {
+        "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+        "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+      },
+      {
+        "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+        "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+      },
+      {
+        "path": "mandate/items/MND-20261026-003-infrastructure-qualify-beginner-r1-2a-on-the-existing-main-database-with-fixture-only.md",
+        "sha256": "6b724b83b82e41f299edb3b24bb7caec566c5a1363d8ed4607cfb9c7348edbc3"
+      },
+      {
+        "path": "packages/content-format/src/beginner-format.ts",
+        "sha256": "a633c4acc718adf65c860ce838b0b9fbfbd1cf2911882457320d6a7256bc2dc2"
+      },
+      {
+        "path": "packages/content-format/src/foundation-metadata.ts",
+        "sha256": "99a2ead9efb07478948d75e37ee3df3c57f61559a8ef7d6f102f34de7bffb9ff"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      },
+      {
+        "path": "packages/content-format/src/parser.ts",
+        "sha256": "5ed2f15da45fc233f6bca51cf3c16d5a698c0fe0c38372ac68fa2a4babf6bec2"
+      },
+      {
+        "path": "packages/content-format/src/validator.ts",
+        "sha256": "7fbcd74d05c0371c6d9bb05cf09799b12aaea4e51c890c447be54f6727b8f9a5"
+      },
+      {
+        "path": "packages/contracts/src/beginner-editorial-plan.ts",
+        "sha256": "e6587e37fe7357abf02c3b691d06843ebaf54711a8ddcb3f0a032f6249211d27"
+      }
+    ],
+    "fingerprint": "4166536f1822a405e3f8a03e0ea6f3652f5f5bae8c7643cdca221001e3d31285"
+  },
+  "plan": {
+    "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",
+    "sha256LF": "fd1a0372b68e4f1c53f385702353435fe988e217443c7a8e7ce185c381a79dc7"
+  },
+  "review": {
+    "path": "mandate/reports/2026-10-27-beginner-r12b-preapproval-review.md",
+    "sha256LF": "81f9cedbde1d2ecc98e164152fb1aa0780b74ed26f6145519f8d7c067fca6d86"
+  },
+  "sourceAllowlist": {
+    "modify": [],
+    "create": [
+      "content/beginner/pilot/mg01-l1.lesson.txt",
+      "content/beginner/pilot/mg01-l2.lesson.txt",
+      "content/beginner/pilot/mg01-l3.lesson.txt",
+      "content/beginner/pilot/mg01-l4.lesson.txt",
+      "content/beginner/pilot/mg02-l1.lesson.txt",
+      "content/beginner/pilot/mg02-l2.lesson.txt",
+      "content/beginner/pilot/mg02-l3.lesson.txt",
+      "content/beginner/pilot/mg02-l4.lesson.txt",
+      "docs/qualification/beginner-pilot-content-review.md",
+      "apps/api/test/beginner-pilot/qualify-content.ts",
+      "apps/api/test/beginner-pilot/qualify-content.test.ts"
+    ],
+    "fingerprint": "04bf2fa42b7bb9b6eab47256161adbdd7771f47ecab6026ff023d96ef6c1df86"
+  },
+  "targets": {
+    "lessonCodes": [
+      "MG01-L1",
+      "MG01-L2",
+      "MG01-L3",
+      "MG01-L4",
+      "MG02-L1",
+      "MG02-L2",
+      "MG02-L3",
+      "MG02-L4"
+    ],
+    "lessons": 8,
+    "activitiesPerLesson": {
+      "reading": 3,
+      "listening": 3,
+      "speaking": 1,
+      "writing": 1
+    },
+    "activitiesTotal": 64,
+    "requiredSingleSkillObjectivesPerLesson": 4,
+    "requiredObjectivesPerUnit": 16,
+    "requiredObjectivesTotal": 32,
+    "listeningScriptBindings": 24,
+    "durationMinutes": 45,
+    "observedTiming": null,
+    "humanTimingTolerance": null,
+    "contentReadiness": "NOT_READY"
+  },
+  "editorial": {
+    "coreSource": "Knowledge Map MG01/MG02 only",
+    "supplementalLexicon": "Any support outside listed candidates is explicit proposal/reviewer-required; an eraser is not assumed approved.",
+    "language": "VI explanation, EN tasks",
+    "narrationVariety": "AmE proposed, human confirmation pending",
+    "reviewer": null,
+    "syntheticFixtures": "Checker tests only; never pilot lesson content or readiness evidence",
+    "videoSlots": [
+      "VP-MG01-G",
+      "VP-P-ALPHABET",
+      "VP-MG01-X",
+      "VP-MG02-G",
+      "VP-P-ENDINGS-S",
+      "VP-MG02-X"
+    ],
+    "videoState": "PLANNED / NOT_STARTED"
+  },
+  "authority": {
+    "lessonText": true,
+    "offlinePureChecks": true,
+    "localCommitsAfterChecks": true,
+    "mediaCreation": false,
+    "providerCalls": false,
+    "databaseRead": false,
+    "databaseWrite": false,
+    "liveAdminPreview": false,
+    "publication": false,
+    "learnerAccess": false,
+    "productSourceChanges": false,
+    "osChanges": false,
+    "mergePushDeploy": false
+  },
+  "commands": [
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/qualify-content.ts --lesson mg01-l1",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/qualify-content.ts --all",
+    "pnpm --filter @worklingo/content-format exec vitest run src/beginner-format.spec.ts src/foundation-format.spec.ts",
+    "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner.config.ts src/learning-sessions/domain/beginner-session-planner.spec.ts src/learning-sessions/domain/learner-activity-projection.spec.ts src/teacher-ai/domain/beginner-rubrics.spec.ts",
+    "pnpm --filter @worklingo/api typecheck",
+    "pnpm exec eslint apps/api/test/beginner-pilot/qualify-content.ts apps/api/test/beginner-pilot/qualify-content.test.ts",
+    "node .agents/skills/mandate-steward/scripts/mandate.mjs validate"
+  ],
+  "gates": {
+    "beforeImplementation": "Exact current human scope/hash approval recorded by Mandate CLI; verify baseline/frozen files/allowlist first",
+    "sourceMilestone": "Eight genuinely authored complete reviewable sources,64 activities,32 objectives,offline checks and truthful dossier",
+    "fullR12bCompletion": "All8 actual audio, human pedagogical/rubric review and observed timing with approved criterion; no verified/CONTENT_READY while absent",
+    "audio": "NEEDS_AUDIO; runtime AUDIO_NOT_READY, no fake IDs/checksums/media",
+    "timing": "TIMING_NOT_VERIFIED;45 is the planner contract, not measured elapsed time",
+    "r12a": "Remains implementing; does not block offline text authoring or grant live actions"
+  },
+  "governance": {
+    "captureDocuments": [
+      "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",
+      "mandate/reports/2026-10-27-beginner-r12b-preapproval-review.md",
+      "mandate/reports/2026-10-27-beginner-r12b-scope.json",
+      "mandate/reports/2026-10-27-beginner-r12b-proposal.json",
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261027-001-learning-content-author-real-mg01-mg02-beginner-pilot-sources-with-offline-qualificatio.md"
+    ],
+    "futureExecutionDocuments": [
+      "mandate/reports/2026-10-27-beginner-r12b-human-approval.md",
+      "mandate/reports/2026-10-27-beginner-r12b-verification.md"
+    ],
+    "ignoredEvidenceRoot": ".superpowers/sdd/2026-10-27-beginner-r12b-content",
+    "itemLifecycle": "CLI only, allocated child record only; do not alter parent or other mandate states",
+    "approval": null
+  },
+  "rollback": "Revert only unpublished owned authoring/checker/report changes or retain NOT_READY drafts; preserve review history, never alter DB/media/learner history or referenced versions.",
+  "mandateId": "MND-20261027-001"
+}

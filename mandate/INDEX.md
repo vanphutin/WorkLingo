@@ -13,7 +13,8 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261025-002](items/MND-20261025-002-infrastructure-qualify-beginner-r1-2a-on-one-isolated-postgresql-and-desktop-mobile-e.md) | Qualify Beginner R1.2a on one isolated PostgreSQL and Desktop Mobile E2E run | infrastructure | implementing | P1 | Codex |
 | [MND-20261026-001](items/MND-20261026-001-infrastructure-establish-one-least-privilege-windows-worker-for-beginner-r1-2a-withou.md) | Establish one least-privilege Windows worker for Beginner R1.2a without database authority | infrastructure | implementing | P1 | Codex |
 | [MND-20261026-003](items/MND-20261026-003-infrastructure-qualify-beginner-r1-2a-on-the-existing-main-database-with-fixture-only.md) | Qualify Beginner R1.2a on the existing main database with fixture-only writes and protected cleanup | infrastructure | implementing | P1 | Codex |
+| [MND-20261027-001](items/MND-20261027-001-learning-content-author-real-mg01-mg02-beginner-pilot-sources-with-offline-qualificatio.md) | Author real MG01 MG02 Beginner pilot sources with offline qualification and honest readiness gates | learning-content | triaged | P1 | Codex |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 
-Total: 10; active: 10; archived: 0.
+Total: 11; active: 11; archived: 0.
