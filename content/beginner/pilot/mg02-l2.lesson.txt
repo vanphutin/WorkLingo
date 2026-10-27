@@ -1,0 +1,352 @@
+FORMAT: WorkLingoLesson/1.2
+
+[FOUNDATION]
+category: pronunciation
+template_id: beginner-mg02
+template_version: 1
+[/FOUNDATION]
+
+[LESSON]
+slug: mg02-l2
+title: Nghe âm cuối — giữ đúng một và nhiều
+level: foundation
+duration_minutes: 45
+objective: Giữ nghĩa đồ vật/số lượng khi nghe và nói âm cuối pen/book/bag cùng dạng số nhiều, dùng lại mẫu Unit mà không thêm ngữ pháp.
+
+[OBJECTIVE mg02-l2-reading]
+statement: Đọc nhãn số lượng và lời nhắn để phân biệt dạng số ít/số nhiều và thông tin vật dụng.
+skills: reading
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg02-l2-listening]
+statement: Nghe ba yêu cầu để nhận đúng vật/số lượng qua từ có âm cuối và đuôi số nhiều, được tự chọn nghe lại.
+skills: listening
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg02-l2-speaking]
+statement: Nói lời yêu cầu theo thẻ với âm cuối đủ rõ để phân biệt một/nhiều; không chấm như bắt chước bản ngữ.
+skills: speaking
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg02-l2-writing]
+statement: Viết lời nhắn về số lượng vật dụng từ thẻ, giữ đuôi số nhiều và số đếm, không thêm a trước số lượng lớn hơn một.
+skills: writing
+required: true
+[/OBJECTIVE]
+
+[INSTRUCTION mg02-l2-guide-0]
+phase: readDecode
+order: 0
+text: Dùng lại a/an, this/that và số nhiều. Một bút là a pen, hai bút là two pens. Trong chữ viết, s giúp nhận ra dạng số nhiều; trong lời nói, phải nghe cả số đếm và âm cuối. Đọc nhãn Quantity (số lượng) và kiểm tra danh từ đi kèm. Không thêm từ mới chỉ để luyện mọi âm đuôi; bài này tập /s/ trong books và /z/ trong pens/bags.
+[/INSTRUCTION]
+
+[INSTRUCTION mg02-l2-guide-1]
+phase: listenReason
+order: 0
+text: Tự luyện book rồi books: giữ /k/ và kết thúc bằng /s/, không đọc thành một âm tiết mới. Với pen/pens và bag/bags, đuôi số nhiều là /z/. Không cần kéo dài hoặc bật âm quá mạnh; mục tiêu là người nghe nhận đúng vật và số lượng. Tự luyện trước bằng cụm khác, rồi nghe ba bản riêng. Không nhìn transcript trước khi nộp; nghe lại tùy nhu cầu hiểu.
+[/INSTRUCTION]
+
+[INSTRUCTION mg02-l2-guide-2]
+phase: respond
+order: 0
+text: Phần nói yêu cầu ba cụm đồ vật khác nhau, không phải đọc một danh sách âm vô nghĩa. Nói đủ thông tin và giữ tương phản một/nhiều. Phần viết kiểm tra dạng từ theo số lượng; chữ s không thay cho việc nêu đúng số. Không tăng số câu hoặc replay để chứng minh45 phút.
+[/INSTRUCTION]
+
+[WORD_BANK mg02-l2-bank]
+title: Đồ vật, vị trí và số lượng
+[[LANGUAGE_BLOCK mg02-l2-pen]]
+expression: a pen
+meaning_vi: một chiếc bút; pens là dạng số nhiều của pen
+pronunciation: /ə pɛn/
+collocations: Two pens, please.
+grammar_pattern: a pen; số đếm lớn hơn một + pens
+example: Two pens, please.
+common_error: Không dùng two pen; âm cuối pens là /z/, giữ ý số nhiều.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l2-book]]
+expression: a book
+meaning_vi: một quyển sách; books là dạng số nhiều của book
+pronunciation: /ə bʊk/
+collocations: A book, please.
+grammar_pattern: a book; số đếm lớn hơn một + books
+example: A book, please.
+common_error: Không bỏ âm /k/ của book; books có đuôi /s/ sau âm /k/.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l2-bag]]
+expression: a bag
+meaning_vi: một chiếc túi; bags là dạng số nhiều của bag
+pronunciation: /ə bæɡ/
+collocations: Three bags, please.
+grammar_pattern: a bag; số đếm lớn hơn một + bags
+example: Three bags, please.
+common_error: Bag là một túi trong mẫu a bag; bags có âm cuối /z/, không thêm một âm tiết sau đuôi.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l2-this]]
+expression: this
+meaning_vi: đây/cái này; dùng cho đồ vật gần người nói trong tình huống chỉ một vật
+pronunciation: /ðɪs/
+collocations: This is a pen.
+grammar_pattern: This is + a/an + danh từ số ít
+example: This is a pen.
+common_error: Trong mẫu số ít này không dùng This are hoặc This is two pens.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l2-that]]
+expression: that
+meaning_vi: kia/cái kia; dùng cho đồ vật xa người nói trong tình huống chỉ một vật
+pronunciation: /ðæt/
+collocations: That is a book.
+grammar_pattern: That is + a/an + danh từ số ít
+example: That is a book.
+common_error: Chọn theo vị trí so với người nói, không chọn this/that theo tên đồ vật.
+[[/LANGUAGE_BLOCK]]
+[/WORD_BANK]
+
+[CONTENT mg02-l2-card-1]
+type: email
+text:
+<<<
+Quantity: two
+Item: books
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l2-card-2]
+type: email
+text:
+<<<
+A bag, please.
+Three pens, please.
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l2-card-3]
+type: email
+text:
+<<<
+Near: a book
+Far: a bag
+Request: two pens
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l2-speaking-card]
+type: email
+text:
+<<<
+Request card
+One pen
+Two books
+One bag
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l2-writing-card]
+type: email
+text:
+<<<
+Packing request
+Two pens
+One book
+One bag
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT mg02-l2-audio-1]
+speaker: one-speaker
+script:
+<<<
+Hello, Mia. A pen, please. Two bags, please.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg02-l2-audio-2]
+speaker: one-speaker
+script:
+<<<
+Hello, An. Three books, please. A bag, please.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg02-l2-audio-3]
+speaker: one-speaker
+script:
+<<<
+Hello, Eva. Two pens, please. A book, please.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY mg02-l2-r1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg02-l2-reading
+content_refs: mg02-l2-card-1
+language_block_refs: mg02-l2-book
+QUESTION:
+Which label preserves the quantity?
+OPTIONS:
+A. Two book
+B. A book
+C. Two books
+ANSWER:
+C
+EXPLANATION:
+Two cần dạng số nhiều books; a book đổi nghĩa thành một.
+EVIDENCE:
+mg02-l2-card-1:1
+mg02-l2-card-1:2
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-r2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg02-l2-reading
+content_refs: mg02-l2-card-2
+language_block_refs: mg02-l2-bag | mg02-l2-pen
+QUESTION:
+Which item is singular in the message?
+OPTIONS:
+A. A bag
+B. Three pens
+C. Three bags
+ANSWER:
+A
+EXPLANATION:
+A bag là một túi; three pens là ba bút, không phải ba túi.
+EVIDENCE:
+mg02-l2-card-2:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-r3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg02-l2-reading
+content_refs: mg02-l2-card-3
+language_block_refs: mg02-l2-pen
+QUESTION:
+Which request keeps the plural form correct?
+OPTIONS:
+A. A pen, please.
+B. Two pens, please.
+C. Two pen, please.
+ANSWER:
+B
+EXPLANATION:
+Yêu cầu là two pens. B giữ số hai và dạng pens; C thiếu đuôi, A đổi số lượng.
+EVIDENCE:
+mg02-l2-card-3:3
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-l1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg02-l2-listening
+content_refs: mg02-l2-card-1
+audio_ref: mg02-l2-audio-1
+language_block_refs: mg02-l2-pen | mg02-l2-bag
+QUESTION:
+Which item is requested in the plural?
+OPTIONS:
+A. A pen
+B. Two books
+C. Two bags
+ANSWER:
+C
+EXPLANATION:
+Two bags là nhiều túi; a pen là một bút. Không có yêu cầu books.
+EVIDENCE:
+mg02-l2-audio-1:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-l2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg02-l2-listening
+content_refs: mg02-l2-card-2
+audio_ref: mg02-l2-audio-2
+language_block_refs: mg02-l2-book
+QUESTION:
+How many books are requested?
+OPTIONS:
+A. Three
+B. One
+C. Two
+ANSWER:
+A
+EXPLANATION:
+Nghe three books: ba sách. A bag là mục riêng số ít.
+EVIDENCE:
+mg02-l2-audio-2:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-l3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg02-l2-listening
+content_refs: mg02-l2-card-3
+audio_ref: mg02-l2-audio-3
+language_block_refs: mg02-l2-pen | mg02-l2-book
+QUESTION:
+Which item is requested as one?
+OPTIONS:
+A. Pens
+B. A book
+C. Bags
+ANSWER:
+B
+EXPLANATION:
+A book là một sách; two pens là hai bút và bags không được yêu cầu.
+EVIDENCE:
+mg02-l2-audio-3:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-s1]
+learning_block: respond
+activity_type: speaking
+response_type: guided_response
+skills: speaking
+objective_refs: mg02-l2-speaking
+content_refs: mg02-l2-speaking-card
+language_block_refs: mg02-l2-pen | mg02-l2-book | mg02-l2-bag | mg02-l2-this | mg02-l2-that
+min_words: 8
+sample_answer: A pen, please. Two books, please. A bag, please.
+rubric_id: beginner-guided-speaking
+rubric_version: 1
+prompt: Use the request card. Say the items and quantities clearly. Make a polite request in your own recording.
+rubric: Cần một pen, hai books và một bag; cho phép one pen thay a pen nếu đúng nghĩa. Âm cuối /n,k,ɡ/ và đuôi /s/ phải giúp hiểu thông tin, không chấm theo một giọng mẫu. Không coi việc đọc âm rời hoặc shadow là toàn bộ response. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Request all three items with clear endings.
+[/ACTIVITY]
+
+[ACTIVITY mg02-l2-w1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: mg02-l2-writing
+content_refs: mg02-l2-writing-card
+language_block_refs: mg02-l2-pen | mg02-l2-book | mg02-l2-bag | mg02-l2-this | mg02-l2-that
+min_words: 8
+sample_answer: Two pens, please. A book, please. A bag, please.
+rubric_id: beginner-short-writing
+rubric_version: 1
+prompt: Write a short request using the packing card. Keep the quantity and noun form for every item.
+rubric: Giữ hai pens, một book, một bag và dạng số nhiều sau two. Chấp nhận cụm yêu cầu ngắn và one thay a; không bắt thêm câu thừa. Lỗi nghĩa/số lượng khác với một dấu phẩy thiếu. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Write the requested items as a short note.
+[/ACTIVITY]
+

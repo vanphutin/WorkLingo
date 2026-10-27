@@ -1,0 +1,360 @@
+FORMAT: WorkLingoLesson/1.2
+
+[FOUNDATION]
+category: grammar
+template_id: beginner-mg02
+template_version: 1
+[/FOUNDATION]
+
+[LESSON]
+slug: mg02-l1
+title: Lấy đúng đồ vật — một hay nhiều
+level: foundation
+duration_minutes: 45
+objective: Dùng a/an, this/that và dạng số nhiều để xác định, chỉ và yêu cầu đúng đồ vật/số lượng với hỗ trợ thẻ; eraser là từ bổ trợ đề xuất.
+
+[OBJECTIVE mg02-l1-reading]
+statement: Đọc nhãn và danh sách vật dụng để chọn a/an, vị trí this/that và số lượng đúng với hỗ trợ giải thích.
+skills: reading
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg02-l1-listening]
+statement: Nghe ba yêu cầu ngắn để xác định đúng đồ vật/số lượng và phân biệt vật được chỉ với vật được yêu cầu.
+skills: listening
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg02-l1-speaking]
+statement: Dựa trên thẻ, chỉ một vật gần/một vật xa và yêu cầu số lượng đúng bằng mẫu câu ngắn.
+skills: speaking
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg02-l1-writing]
+statement: Viết lời nhắn nêu đồ vật và yêu cầu số lượng từ thẻ riêng, dùng đúng dạng số ít/số nhiều.
+skills: writing
+required: true
+[/OBJECTIVE]
+
+[INSTRUCTION mg02-l1-guide-0]
+phase: readDecode
+order: 0
+text: A pen, a book, a bag chỉ một đồ vật. Với hai hoặc ba, dùng two pens, three books, two bags; không thêm a trước two/three. An đi trước âm nguyên âm: an eraser. Eraser là ví dụ bổ trợ đang đề xuất, cần giáo viên duyệt; không mở thêm một nhóm từ mới. This is a pen chỉ vật gần người nói; That is a book chỉ vật xa. Nhãn Near nghĩa là gần, Far nghĩa là xa trong thẻ dữ kiện. Đọc nhãn vị trí và số lượng, không đoán từ tên đồ vật.
+[/INSTRUCTION]
+
+[INSTRUCTION mg02-l1-guide-1]
+phase: listenReason
+order: 0
+text: Tập tự nói a pen rồi two pens để nghe khác số lượng. Pen có âm cuối /n/, book /k/, bag /ɡ/; giữ âm cuối vừa rõ, không thêm tiếng ơ sau từ. Pens/bags có đuôi /z/, books có đuôi /s/. Please là lời lịch sự trong cụm yêu cầu, đang được đề xuất làm hỗ trợ tác vụ: Two pens, please. Trong bài nghe, chọn thông tin thật sự được yêu cầu, không mặc định vật được chỉ cũng là vật cần lấy.
+[/INSTRUCTION]
+
+[INSTRUCTION mg02-l1-guide-2]
+phase: respond
+order: 0
+text: Tự thử chỉ đồ vật trong tưởng tượng trước khi ghi âm; không cần camera hoặc ảnh. Thẻ Near/Far lấy vị trí theo người nói. Dùng mẫu this/that cho một vật, dùng cụm số đếm + danh từ số nhiều khi yêu cầu nhiều. Thẻ viết khác thẻ nói. Đọc lại số lượng để không viết a trước two hoặc bỏ đuôi s; không cần kéo dài câu để đủ thời gian.
+[/INSTRUCTION]
+
+[WORD_BANK mg02-l1-bank]
+title: Đồ vật, vị trí và số lượng
+[[LANGUAGE_BLOCK mg02-l1-pen]]
+expression: a pen
+meaning_vi: một chiếc bút; pens là dạng số nhiều của pen
+pronunciation: /ə pɛn/
+collocations: Two pens, please.
+grammar_pattern: a pen; số đếm lớn hơn một + pens
+example: Two pens, please.
+common_error: Không dùng two pen; âm cuối pens là /z/, giữ ý số nhiều.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l1-book]]
+expression: a book
+meaning_vi: một quyển sách; books là dạng số nhiều của book
+pronunciation: /ə bʊk/
+collocations: A book, please.
+grammar_pattern: a book; số đếm lớn hơn một + books
+example: A book, please.
+common_error: Không bỏ âm /k/ của book; books có đuôi /s/ sau âm /k/.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l1-bag]]
+expression: a bag
+meaning_vi: một chiếc túi; bags là dạng số nhiều của bag
+pronunciation: /ə bæɡ/
+collocations: Three bags, please.
+grammar_pattern: a bag; số đếm lớn hơn một + bags
+example: Three bags, please.
+common_error: Bag là một túi trong mẫu a bag; bags có âm cuối /z/, không thêm một âm tiết sau đuôi.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l1-this]]
+expression: this
+meaning_vi: đây/cái này; dùng cho đồ vật gần người nói trong tình huống chỉ một vật
+pronunciation: /ðɪs/
+collocations: This is a pen.
+grammar_pattern: This is + a/an + danh từ số ít
+example: This is a pen.
+common_error: Trong mẫu số ít này không dùng This are hoặc This is two pens.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l1-that]]
+expression: that
+meaning_vi: kia/cái kia; dùng cho đồ vật xa người nói trong tình huống chỉ một vật
+pronunciation: /ðæt/
+collocations: That is a book.
+grammar_pattern: That is + a/an + danh từ số ít
+example: That is a book.
+common_error: Chọn theo vị trí so với người nói, không chọn this/that theo tên đồ vật.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg02-l1-eraser]]
+expression: an eraser
+meaning_vi: một cục tẩy; eraser là từ hỗ trợ đề xuất cần giáo viên duyệt
+pronunciation: /ən ɪˈreɪsər/
+collocations: This is an eraser.
+grammar_pattern: an + danh từ số ít bắt đầu bằng âm nguyên âm
+example: This is an eraser.
+common_error: An theo âm đầu, không theo độ dài từ. Không dùng a eraser trong cách phát âm minh họa này.
+[[/LANGUAGE_BLOCK]]
+[/WORD_BANK]
+
+[CONTENT mg02-l1-card-1]
+type: email
+text:
+<<<
+Item: eraser
+Quantity: one
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l1-card-2]
+type: email
+text:
+<<<
+Near: a pen
+Far: a book
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l1-card-3]
+type: email
+text:
+<<<
+A bag.
+Two pens.
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l1-speaking-card]
+type: email
+text:
+<<<
+Object card
+Near: a bag
+Far: a book
+Request: two pens
+>>>
+[/CONTENT]
+
+[CONTENT mg02-l1-writing-card]
+type: email
+text:
+<<<
+Message card
+Near: a pen
+Request: a book; two bags
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT mg02-l1-audio-1]
+speaker: one-speaker
+script:
+<<<
+Hello, Ben. Two books, please. A bag, please.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg02-l1-audio-2]
+speaker: one-speaker
+script:
+<<<
+Hello, Kim. A pen, please. Two bags, please.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg02-l1-audio-3]
+speaker: one-speaker
+script:
+<<<
+Hello, Jo. This is an eraser. A book, please.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY mg02-l1-r1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg02-l1-reading
+content_refs: mg02-l1-card-1
+language_block_refs: mg02-l1-eraser
+QUESTION:
+Which label names one item correctly?
+OPTIONS:
+A. a eraser
+B. an eraser
+C. two erasers
+ANSWER:
+B
+EXPLANATION:
+Thẻ có một eraser; cách phát âm bắt đầu bằng âm nguyên âm nên dùng an eraser. Two đổi số lượng thành hai.
+EVIDENCE:
+mg02-l1-card-1:1
+mg02-l1-card-1:2
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-r2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg02-l1-reading
+content_refs: mg02-l1-card-2
+language_block_refs: mg02-l1-this | mg02-l1-that | mg02-l1-book
+QUESTION:
+Which sentence points to the far item?
+OPTIONS:
+A. This is a book.
+B. That is a pen.
+C. That is a book.
+ANSWER:
+C
+EXPLANATION:
+Far là vật xa người nói và thẻ ghi a book, nên That is a book. Không chỉ dựa vào từ book mà quên vị trí.
+EVIDENCE:
+mg02-l1-card-2:2
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-r3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg02-l1-reading
+content_refs: mg02-l1-card-3
+language_block_refs: mg02-l1-bag | mg02-l1-pen
+QUESTION:
+Which set matches the list?
+OPTIONS:
+A. One bag and two pens.
+B. Two bags and one pen.
+C. One bag and one pen.
+ANSWER:
+A
+EXPLANATION:
+A bag là một túi; two pens là hai bút. A giữ đúng cả hai mục.
+EVIDENCE:
+mg02-l1-card-3:1
+mg02-l1-card-3:2
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-l1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg02-l1-listening
+content_refs: mg02-l1-card-1
+audio_ref: mg02-l1-audio-1
+language_block_refs: mg02-l1-book
+QUESTION:
+How many books are requested?
+OPTIONS:
+A. One
+B. Two
+C. Three
+ANSWER:
+B
+EXPLANATION:
+Two books yêu cầu hai sách; a bag là mục khác, không phải số lượng sách.
+EVIDENCE:
+mg02-l1-audio-1:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-l2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg02-l1-listening
+content_refs: mg02-l1-card-2
+audio_ref: mg02-l1-audio-2
+language_block_refs: mg02-l1-pen | mg02-l1-bag
+QUESTION:
+Which item is requested as one?
+OPTIONS:
+A. Books
+B. Bags
+C. A pen
+ANSWER:
+C
+EXPLANATION:
+A pen chỉ một bút; two bags là nhiều túi. Books không được yêu cầu.
+EVIDENCE:
+mg02-l1-audio-2:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-l3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg02-l1-listening
+content_refs: mg02-l1-card-3
+audio_ref: mg02-l1-audio-3
+language_block_refs: mg02-l1-eraser | mg02-l1-book | mg02-l1-this
+QUESTION:
+What does the speaker request?
+OPTIONS:
+A. A book
+B. An eraser
+C. Two pens
+ANSWER:
+A
+EXPLANATION:
+This is an eraser chỉ vật hiện có; A book, please mới là yêu cầu lấy đồ.
+EVIDENCE:
+mg02-l1-audio-3:1
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-s1]
+learning_block: respond
+activity_type: speaking
+response_type: guided_response
+skills: speaking
+objective_refs: mg02-l1-speaking
+content_refs: mg02-l1-speaking-card
+language_block_refs: mg02-l1-pen | mg02-l1-book | mg02-l1-bag | mg02-l1-this | mg02-l1-that
+min_words: 10
+sample_answer: This is a bag. That is a book. Two pens, please.
+rubric_id: beginner-guided-speaking
+rubric_version: 1
+prompt: Use the object card. Identify the near item and the far item, then make the request. Record a clear response.
+rubric: Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Point to the two objects and request the pens.
+[/ACTIVITY]
+
+[ACTIVITY mg02-l1-w1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: mg02-l1-writing
+content_refs: mg02-l1-writing-card
+language_block_refs: mg02-l1-pen | mg02-l1-book | mg02-l1-bag | mg02-l1-this | mg02-l1-that
+min_words: 9
+sample_answer: This is a pen. A book, please. Two bags, please.
+rubric_id: beginner-short-writing
+rubric_version: 1
+prompt: Identify the near object. Then write a request for both items and quantities on the message card.
+rubric: Nêu this/pen, yêu cầu một sách và hai túi. Không lấy thẻ nói làm nguồn; không dùng a two bags. Dấu câu có thể khác nhưng các ý phải rõ. Please là hỗ trợ được đề xuất, không bù cho sai đồ vật/số lượng. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Write a short message about the card.
+[/ACTIVITY]
+

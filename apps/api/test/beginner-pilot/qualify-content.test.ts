@@ -63,6 +63,6 @@ test('qualifies the real pilot once all8 sources exist; never substitutes checke
  const codes=['MG01-L1','MG01-L2','MG01-L3','MG01-L4','MG02-L1','MG02-L2','MG02-L3','MG02-L4'];
  const sources=codes.flatMap(code=>{const file=path.join(root,'content/beginner/pilot',code.toLowerCase()+'.lesson.txt');return existsSync(file)?[{code,rawSource:readFileSync(file,'utf8')}]:[];});
  const q=qualifyPilotSources(sources);assert.equal(q.counts.lessons,sources.length);
- if(sources.length===8){assert.equal(q.offlineStatus,'PASS',JSON.stringify(q.lessons.map(l=>({code:l.code,issues:l.issues}))));assert.deepEqual(q.counts,{lessons:8,activities:64,objectives:32,listeningScripts:24});assert.equal(q.contentReadiness,'NOT_READY');}
- else{assert.equal(q.offlineStatus,'FAIL');assert.ok(q.missingLessonCodes.length>0);}
+ assert.equal(sources.length,8,'Real source files are required; fixtures do not fill missing lessons');
+ assert.equal(q.offlineStatus,'PASS',JSON.stringify(q.lessons.map(l=>({code:l.code,issues:l.issues}))));assert.deepEqual(q.counts,{lessons:8,activities:64,objectives:32,listeningScripts:24});assert.equal(q.contentReadiness,'NOT_READY');
 });
