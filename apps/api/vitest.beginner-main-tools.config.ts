@@ -1,0 +1,3 @@
+import {defineConfig} from 'vitest/config';
+import base from './vitest.beginner.config';
+export default defineConfig({plugins:base.plugins,test:{environment:'node',fileParallelism:false,include:['test/beginner-main/*.spec.ts','src/common/config/app-config.module.spec.ts','src/admin-content-lifecycle/admin-content-lifecycle.service.spec.ts'],env:{NODE_ENV:'test',DATABASE_URL:'',TEST_DATABASE_URL:'',WORKLINGO_BEGINNER_MAIN_TEST:'0',WORKLINGO_BEGINNER_ISOLATED_TEST:'0',JOB_WORKER_ENABLED:'false',OPENAI_API_KEY:'',DISCOVERY_API_KEY:'',MICROSOFT_SPEECH_KEY:'',WORKLINGO_LANGUAGE_EVALUATION_PROVIDER:'fake',WORKLINGO_STT_PROVIDER:'fake',WORKLINGO_TTS_PROVIDER:'fake-tts'}}});

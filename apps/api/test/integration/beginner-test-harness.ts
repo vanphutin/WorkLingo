@@ -14,22 +14,25 @@ import {FoundationCurriculumService} from '../../src/curriculum-foundation/appli
 import {AdminCurriculumCommandService} from '../../src/admin-curriculum/application/admin-curriculum-command.service.js';
 import {BeginnerAuthoringService} from '../../src/beginner/application/beginner-authoring.service.js';
 import {BeginnerReleaseService} from '../../src/beginner/application/beginner-release.service.js';
+import {readMainScope,mainChildEnvironment,type RunWindow} from '../beginner-main/environment.js';
+import {guardedFixtureClient,fileLedgerStore,MainFixtureStorage} from '../beginner-main/fixtures.js';
 
 /** No .env, fallback database, provisioning, migrations, seed or automatic cleanup. */
 export function requireBeginnerTestEnvironment():BeginnerPermission{
  const p=readApprovedBeginnerPermissionSync();
  if(!p||!p.actions.includes('read'))throw Error('BLOCKED: separate Beginner environment authorization required');
  const url=process.env.TEST_DATABASE_URL;
- if(!url||process.env.DATABASE_URL!==url||process.env.NODE_ENV!=='test'||process.env.WORKLINGO_BEGINNER_ISOLATED_TEST!=='1')throw Error('BLOCKED: explicit isolated test configuration required');
+ if(!url||process.env.DATABASE_URL!==url||process.env.NODE_ENV!=='test'||(p.schemaVersion===1?process.env.WORKLINGO_BEGINNER_ISOLATED_TEST!=='1':process.env.WORKLINGO_BEGINNER_MAIN_TEST!=='1'||process.env.WORKLINGO_BEGINNER_ISOLATED_TEST==='1'))throw Error('BLOCKED: explicit test configuration required');
  return preflightBeginnerEnvironment(p,url);
 }
 export function sanitizedBeginnerChildEnvironment(p:BeginnerPermission,url:string):Record<string,string>{
  preflightBeginnerEnvironment(p,url);
+ if(p.schemaVersion===2)return mainChildEnvironment(readMainScope(),url,p.approvalId,process.env.SESSION_SECRET??'');
  const result:Record<string,string>={NODE_ENV:'test',DATABASE_URL:url,TEST_DATABASE_URL:url,WORKLINGO_BEGINNER_ISOLATED_TEST:'1',WORKLINGO_BEGINNER_APPROVAL_ROOT:p.approvalRoot,WORKLINGO_BEGINNER_PERMISSION_ID:p.approvalId,WORKLINGO_DATA_DIR:p.storageRoot,JOB_WORKER_ENABLED:'false',WORKLINGO_LANGUAGE_EVALUATION_PROVIDER:'fake',WORKLINGO_STT_PROVIDER:'fake',WORKLINGO_TTS_PROVIDER:'fake-tts',OPENAI_API_KEY:'',OPENAI_BASE_URL:'',MICROSOFT_SPEECH_KEY:'',MICROSOFT_SPEECH_REGION:'',DISCOVERY_API_KEY:''};
  for(const name of ['SystemRoot','WINDIR','PATH','Path','TEMP','TMP'])if(process.env[name])result[name]=process.env[name]!;
  return result;
 }
-const fixtureSchema=z.object({target:beginnerTargetSchema,editorId:z.uuid(),reviewerId:z.uuid(),manifest:z.unknown(),historicalSessionId:z.uuid().optional(),learnerId:z.uuid().optional(),historicalVersionId:z.uuid().optional()}).strict();
+const fixtureSchema=z.object({target:beginnerTargetSchema,editorId:z.uuid(),reviewerId:z.uuid(),manifest:z.unknown(),historicalHashes:z.object({version:z.string().regex(/^[a-f0-9]{64}$/u),curriculum:z.string().regex(/^[a-f0-9]{64}$/u),snapshot:z.string().regex(/^[a-f0-9]{64}$/u)}).strict().optional(),historicalSessionId:z.uuid().optional(),learnerId:z.uuid().optional(),historicalVersionId:z.uuid().optional(),historicalLessonId:z.uuid().optional(),historicalImportId:z.uuid().optional(),historicalCurriculumId:z.uuid().optional(),currentVersionId:z.uuid().optional()}).strict();
 export function readBeginnerFixtureDescriptor(p:BeginnerPermission){
  const root=path.join(p.ownedTempRoot,p.runId),file=path.join(root,'fixture-descriptor.json');
  if(lstatSync(file).isSymbolicLink()||realpathSync(file)!==file)throw Error('BLOCKED: unsafe fixture descriptor');
@@ -39,16 +42,19 @@ export function readBeginnerFixtureDescriptor(p:BeginnerPermission){
 export async function openBeginnerHarness(){
  const permission=requireBeginnerTestEnvironment(),fixture=readBeginnerFixtureDescriptor(permission);
  const restoreNetwork=installBeginnerNetworkGuard();
- const db=new PrismaService({datasourceUrl:process.env.TEST_DATABASE_URL!});
+ const base=new PrismaService({datasourceUrl:process.env.TEST_DATABASE_URL!});
+ const main=permission.schemaVersion===2?readMainScope():null;
+ const store=main?fileLedgerStore(main,JSON.parse(readFileSync(path.join(main.environment.filesystem.runRoot,'run.json'),'utf8')) as RunWindow):null;
+ const db=main&&store?guardedFixtureClient(main,base,store):base;
  // The first live statement is read-only identity validation, before any test write.
  try{await verifyBeginnerDatabaseIdentity(db,permission);}catch(error){await db.$disconnect();restoreNetwork();throw error;}
  const policy=new BeginnerAuthoringPolicy({readPermission:async()=>readApprovedBeginnerPermissionSync(),verifyEnvironment:verifyBeginnerDatabaseIdentity,verifyTarget:verifyBeginnerTarget});
- const storage=new LocalObjectStorageAdapter(permission.storageRoot),imports=new ContentImportsService(db),foundation=new FoundationCurriculumService(db),publisher=new ContentPublisherService(db,undefined,storage),curriculum=new AdminCurriculumCommandService(db);
+ const storage=main&&store?new MainFixtureStorage(main,store):new LocalObjectStorageAdapter(permission.storageRoot),imports=new ContentImportsService(db),foundation=new FoundationCurriculumService(db),publisher=new ContentPublisherService(db,undefined,storage),curriculum=new AdminCurriculumCommandService(db);
  const authoring=new BeginnerAuthoringService(db,policy,imports,publisher,foundation,curriculum,storage),registry=new BeginnerReleaseService(db,policy,storage);
  const editor:BeginnerActor={id:fixture.editorId,roles:['CONTENT_ADMIN']},reviewer:BeginnerActor={id:fixture.reviewerId,roles:['CONTENT_ADMIN']};
  for(const actor of [editor,reviewer]){const row=await db.user.findUnique({where:{id:actor.id}});if(!row||row.status!=='ACTIVE'||!['SYSTEM_ADMIN','CONTENT_ADMIN'].includes(row.role)){await db.$disconnect();throw Error('BLOCKED: owner-provisioned synthetic Admin missing');}}
  await policy.authorize(editor,'read',fixture.target,db);
- return {permission,fixture,db,policy,storage,imports,foundation,authoring,registry,editor,reviewer,close:async()=>{try{await db.$disconnect();}finally{restoreNetwork();}}};
+ return {permission,fixture,db,policy,storage,imports,foundation,publisher,authoring,registry,editor,reviewer,close:async()=>{try{await db.$disconnect();}finally{restoreNetwork();}}};
 }
 /** Future authorized fixture attachment only. Real PCM bytes/checksums, never a provider. */
 export async function attachBeginnerFixtureAudio(h:Awaited<ReturnType<typeof openBeginnerHarness>>,actor:BeginnerActor,target:BeginnerTarget,rawSource:string){
