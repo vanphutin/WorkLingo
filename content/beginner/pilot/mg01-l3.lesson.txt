@@ -1,0 +1,358 @@
+FORMAT: WorkLingoLesson/1.2
+
+[FOUNDATION]
+category: vocabulary
+template_id: beginner-mg01
+template_version: 1
+[/FOUNDATION]
+
+[LESSON]
+slug: mg01-l3
+title: Gặp bạn mới — giữ thông tin khi đổi vai
+level: foundation
+duration_minutes: 45
+objective: Tích hợp hello/name/I/you/from trong tình huống gặp bạn mới; xác nhận ai đến từ đâu với ít hỗ trợ hơn.
+
+[OBJECTIVE mg01-l3-reading]
+statement: Đọc thẻ/tin nhắn mới để chọn lời giới thiệu đúng người và nơi đến, không ghép lẫn hai thẻ.
+skills: reading
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg01-l3-listening]
+statement: Nghe lời giới thiệu mới để phân biệt người nói, người được gọi và nơi đến.
+skills: listening
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg01-l3-speaking]
+statement: Giới thiệu vai mới và xác nhận bạn bằng lời của mình; có dữ kiện nhưng không có câu điền sẵn.
+skills: speaking
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg01-l3-writing]
+statement: Viết lời nhắn cho người nhận mới, nêu đúng tên/nơi đến và giữ vai I/you.
+skills: writing
+required: true
+[/OBJECTIVE]
+
+[INSTRUCTION mg01-l3-guide-0]
+phase: readDecode
+order: 0
+text: Tình huống đổi nhưng mẫu không đổi: I am nói về người nói, You are về người đối diện, I am from nêu nơi đến. Ví dụ luyện: I am Alex. You are Emma. Đừng lấy tên trong lời chào làm tên người viết. Đọc theo ba câu hỏi trong đầu: ai viết, gọi ai, từ đâu? Thẻ có thể chỉ ghi Name/From thay vì câu đầy đủ.
+[/INSTRUCTION]
+
+[INSTRUCTION mg01-l3-guide-1]
+phase: listenReason
+order: 0
+text: Đọc câu hỏi để biết cần tên người nói, người nhận hay địa danh. Hai tên trong cùng bản nghe không phải một người. Tập chào bằng tên hư cấu, rồi nghe tác vụ độc lập. Dữ kiện bản sau không tiếp tục mặc định bản trước. Tự chọn nghe lại để hiểu, không nghe lặp để đủ phút; transcript chỉ cho biên tập.
+[/INSTRUCTION]
+
+[INSTRUCTION mg01-l3-guide-2]
+phase: respond
+order: 0
+text: Bài này dùng thẻ dữ kiện thay cho khung điền câu. Tự chọn thứ tự lời chào và xác nhận nhưng giữ vai nhất quán. Tự kiểm mình là ai, từ đâu, you chỉ ai. Phần nói và phần viết có người khác nhau. Không thêm cấu trúc mới để làm dài; chấp nhận I am hoặc I'm.
+[/INSTRUCTION]
+
+[WORD_BANK mg01-l3-bank]
+title: Chào, tên và nơi đến
+[[LANGUAGE_BLOCK mg01-l3-hello]]
+expression: hello
+meaning_vi: xin chào; lời mở đầu khi gặp hoặc bắt đầu nói chuyện
+pronunciation: /həˈloʊ/
+collocations: Hello, Alex.
+grammar_pattern: Hello + tên người được chào (tên có thể bỏ)
+example: Hello, Alex.
+common_error: Hello không thay cho câu nêu tên; nói thêm I am nếu muốn giới thiệu.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l3-name]]
+expression: name
+meaning_vi: tên của một người
+pronunciation: /neɪm/
+collocations: Name: Emma
+grammar_pattern: Nhãn Name: + tên riêng trên thẻ thông tin
+example: Name: Emma
+common_error: Name là từ nghĩa là tên, không phải tên thật của nhân vật.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l3-i-am]]
+expression: I am
+meaning_vi: tôi là; dùng trước tên để tự giới thiệu
+pronunciation: /aɪ æm/
+collocations: I am Alex. | I'm Alex.
+grammar_pattern: I am + tên; I'm là dạng rút gọn của I am
+example: I am Alex.
+common_error: Không dùng I are; I đi với am trong mẫu này.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l3-you-are]]
+expression: you are
+meaning_vi: bạn là; dùng để xác nhận tên người đang nói chuyện
+pronunciation: /ju ɑr/
+collocations: You are Emma.
+grammar_pattern: You are + tên người đối diện
+example: You are Emma.
+common_error: Không dùng You am; phân biệt người nói I và người nhận you.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l3-from]]
+expression: from
+meaning_vi: từ; dùng với địa danh để nói mình đến từ đâu
+pronunciation: /frəm/
+collocations: I am from Osaka.
+grammar_pattern: I am from + địa danh
+example: I am from Osaka.
+common_error: Không bỏ am trong I am from; địa danh là dữ kiện, không phải tên người nói.
+[[/LANGUAGE_BLOCK]]
+[/WORD_BANK]
+
+[CONTENT mg01-l3-card-1]
+type: email
+text:
+<<<
+Name: Kim
+From: Hue
+Name: Jo
+From: Da Nang
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l3-card-2]
+type: email
+text:
+<<<
+Hello, Nam.
+I am Eva.
+You are from Hue.
+I am from Da Nang.
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l3-card-3]
+type: email
+text:
+<<<
+Hello, Mia.
+I am Leo.
+You are Mia.
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l3-speaking-card]
+type: email
+text:
+<<<
+Meeting card — fictional information
+Your role: Sam
+Your place: Ha Noi
+Person you meet: Kim
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l3-writing-card]
+type: email
+text:
+<<<
+Message card — fictional information
+Writer: Eva
+Place: Hue
+Reader: Nam
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT mg01-l3-audio-1]
+speaker: one-speaker
+script:
+<<<
+Hello, An. I am Sam. I am from Hue. You are An.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg01-l3-audio-2]
+speaker: one-speaker
+script:
+<<<
+Hello. I am May. I am from Can Tho.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg01-l3-audio-3]
+speaker: one-speaker
+script:
+<<<
+Hello, Jo. I am Ben. You are from Da Nang. I am from Ha Noi.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY mg01-l3-r1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg01-l3-reading
+content_refs: mg01-l3-card-1
+language_block_refs: mg01-l3-name | mg01-l3-from
+QUESTION:
+Which introduction matches Jo's card?
+OPTIONS:
+A. I am Jo. I am from Hue.
+B. I am Jo. I am from Da Nang.
+C. I am Kim. I am from Da Nang.
+ANSWER:
+B
+EXPLANATION:
+Thẻ Jo ở hai dòng cuối: Jo/Da Nang. Hai phương án khác ghép lẫn dữ kiện.
+EVIDENCE:
+mg01-l3-card-1:3
+mg01-l3-card-1:4
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-r2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg01-l3-reading
+content_refs: mg01-l3-card-2
+language_block_refs: mg01-l3-i-am | mg01-l3-you-are | mg01-l3-from
+QUESTION:
+Which place belongs to Eva?
+OPTIONS:
+A. Da Nang
+B. Hue
+C. Ha Noi
+ANSWER:
+A
+EXPLANATION:
+Eva là người viết, nên I am from Da Nang nói về Eva; Hue thuộc Nam.
+EVIDENCE:
+mg01-l3-card-2:2
+mg01-l3-card-2:4
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-r3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg01-l3-reading
+content_refs: mg01-l3-card-3
+language_block_refs: mg01-l3-you-are | mg01-l3-i-am
+QUESTION:
+Mia replies. Which sentence confirms the other person's name?
+OPTIONS:
+A. I am Leo.
+B. You are Mia.
+C. You are Leo.
+ANSWER:
+C
+EXPLANATION:
+Mia đang trả lời Leo nên xác nhận You are Leo; I am Leo đổi sai tên mình.
+EVIDENCE:
+mg01-l3-card-3:2
+mg01-l3-card-3:3
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-l1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg01-l3-listening
+content_refs: mg01-l3-card-1
+audio_ref: mg01-l3-audio-1
+language_block_refs: mg01-l3-hello | mg01-l3-you-are
+QUESTION:
+Who is the speaker greeting?
+OPTIONS:
+A. Sam
+B. An
+C. Kim
+ANSWER:
+B
+EXPLANATION:
+Hello, An và You are An chỉ người nhận; Sam là người nói.
+EVIDENCE:
+mg01-l3-audio-1:1
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-l2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg01-l3-listening
+content_refs: mg01-l3-card-2
+audio_ref: mg01-l3-audio-2
+language_block_refs: mg01-l3-i-am | mg01-l3-from
+QUESTION:
+Which pair matches the speaker?
+OPTIONS:
+A. May — Can Tho
+B. May — Hue
+C. Mia — Can Tho
+ANSWER:
+A
+EXPLANATION:
+Người nói là May, từ Can Tho; giữ đúng cả cặp.
+EVIDENCE:
+mg01-l3-audio-2:1
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-l3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg01-l3-listening
+content_refs: mg01-l3-card-3
+audio_ref: mg01-l3-audio-3
+language_block_refs: mg01-l3-i-am | mg01-l3-you-are | mg01-l3-from
+QUESTION:
+Where is Ben from?
+OPTIONS:
+A. Da Nang
+B. Hue
+C. Ha Noi
+ANSWER:
+C
+EXPLANATION:
+I am Ben/I am from Ha Noi cùng chỉ Ben. Da Nang là thông tin của Jo.
+EVIDENCE:
+mg01-l3-audio-3:1
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-s1]
+learning_block: respond
+activity_type: speaking
+response_type: guided_response
+skills: speaking
+objective_refs: mg01-l3-speaking
+content_refs: mg01-l3-speaking-card
+language_block_refs: mg01-l3-hello | mg01-l3-name | mg01-l3-i-am | mg01-l3-you-are | mg01-l3-from
+min_words: 12
+sample_answer: Hello, Kim. I am Sam. I am from Ha Noi. You are Kim.
+rubric_id: beginner-guided-speaking
+rubric_version: 1
+prompt: You meet the person on the card for the first time. Greet the person, introduce yourself and your place, and confirm the other name. Do not read a prepared script.
+rubric: Mở lời với Kim, tự giới thiệu Sam/Ha Noi và xác nhận Kim. Cho phép đổi thứ tự và rút gọn I'm; không bắt nguyên văn mẫu. Đánh giá truyền đạt dữ kiện mới, không thuộc ví dụ luyện. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Open the conversation and confirm the other name.
+[/ACTIVITY]
+
+[ACTIVITY mg01-l3-w1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: mg01-l3-writing
+content_refs: mg01-l3-writing-card
+language_block_refs: mg01-l3-hello | mg01-l3-name | mg01-l3-i-am | mg01-l3-you-are | mg01-l3-from
+min_words: 11
+sample_answer: Hello, Nam. I am Eva. I am from Hue. You are Nam.
+rubric_id: beginner-short-writing
+rubric_version: 1
+prompt: Write to the reader on the card. Greet the reader and introduce the writer and place. Add one sentence confirming the reader name.
+rubric: Gọi đúng Nam, nêu Eva/Hue và dùng you chỉ Nam. Không cần đúng nguyên mẫu; lỗi đổi vai khác với dấu phẩy nhỏ. I am/I'm đều đúng. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Write a first message to the new classmate.
+[/ACTIVITY]
+

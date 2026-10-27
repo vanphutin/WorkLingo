@@ -1,0 +1,357 @@
+FORMAT: WorkLingoLesson/1.2
+
+[FOUNDATION]
+category: pronunciation
+template_id: beginner-mg01
+template_version: 1
+[/FOUNDATION]
+
+[LESSON]
+slug: mg01-l2
+title: Tên trong lời nói — nghe chữ và nói rõ
+level: foundation
+duration_minutes: 45
+objective: Nghe nhận đúng tên/nơi đến và dùng lại I/you + be để tự nói rõ; phân biệt tên chữ với âm trong tên, không chấm giống giọng bản ngữ.
+
+[OBJECTIVE mg01-l2-reading]
+statement: Đọc tên được đánh vần và thẻ giới thiệu để ghép đúng tên/chữ và nơi đến.
+skills: reading
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg01-l2-listening]
+statement: Nghe ba lời giới thiệu để nhận đúng tên được đánh vần, vai người nói và nơi đến; không xem transcript.
+skills: listening
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg01-l2-speaking]
+statement: Nói lời giới thiệu và đánh vần tên trên thẻ, giữ nghĩa và độ rõ với hỗ trợ dữ kiện.
+skills: speaking
+required: true
+[/OBJECTIVE]
+
+[OBJECTIVE mg01-l2-writing]
+statement: Viết tên/nơi đến và cách đánh vần từ thẻ mới, dùng đúng I am/from.
+skills: writing
+required: true
+[/OBJECTIVE]
+
+[INSTRUCTION mg01-l2-guide-0]
+phase: readDecode
+order: 0
+text: Dùng lại I am, You are và I am from, không thêm cấu trúc. Name nghĩa là tên; A/B/C là chữ cái. Tên chữ A /eɪ/, E /iː/, J /dʒeɪ/, M /ɛm/, O /oʊ/ giúp kiểm tra cách viết, nhưng đọc tên chữ khác với nói tên người. Tập tên Jo rồi đọc J, O; không ghép tên chữ để đoán mọi âm trong tên. Khi đọc, nhìn đúng chữ và đúng nơi đến.
+[/INSTRUCTION]
+
+[INSTRUCTION mg01-l2-guide-1]
+phase: listenReason
+order: 0
+text: Tập với tên Emma: âm đầu thường nổi bật EM-ma; không hét hoặc nhấn tất cả âm tiết. Nói tên Jo liền một từ, rồi đọc J, O khi đánh vần. Tên Việt cần cách đọc đáng tin cậy do giáo viên xác nhận, không ép theo trọng âm tên Anh. Khi nghe, xác định I/you trước; tự nghe lại nếu cần, không mở transcript.
+[/INSTRUCTION]
+
+[INSTRUCTION mg01-l2-guide-2]
+phase: respond
+order: 0
+text: Thử một tên hư cấu khác để luyện trước, rồi dùng thẻ giao để ghi âm. Ngắt nhẹ sau lời chào và tên; không thêm âm vào cuối tên cho dài. Phần viết có dữ kiện riêng. Shadowing tự luyện không thay cho câu trả lời độc lập; mẫu hoàn chỉnh không mở trước nộp.
+[/INSTRUCTION]
+
+[WORD_BANK mg01-l2-bank]
+title: Chào, tên và nơi đến
+[[LANGUAGE_BLOCK mg01-l2-hello]]
+expression: hello
+meaning_vi: xin chào; lời mở đầu khi gặp hoặc bắt đầu nói chuyện
+pronunciation: /həˈloʊ/
+collocations: Hello, Alex.
+grammar_pattern: Hello + tên người được chào (tên có thể bỏ)
+example: Hello, Alex.
+common_error: Hello không thay cho câu nêu tên; nói thêm I am nếu muốn giới thiệu.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l2-name]]
+expression: name
+meaning_vi: tên của một người
+pronunciation: /neɪm/
+collocations: Name: Emma
+grammar_pattern: Nhãn Name: + tên riêng trên thẻ thông tin
+example: Name: Emma
+common_error: Name là từ nghĩa là tên, không phải tên thật của nhân vật.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l2-i-am]]
+expression: I am
+meaning_vi: tôi là; dùng trước tên để tự giới thiệu
+pronunciation: /aɪ æm/
+collocations: I am Alex. | I'm Alex.
+grammar_pattern: I am + tên; I'm là dạng rút gọn của I am
+example: I am Alex.
+common_error: Không dùng I are; I đi với am trong mẫu này.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l2-you-are]]
+expression: you are
+meaning_vi: bạn là; dùng để xác nhận tên người đang nói chuyện
+pronunciation: /ju ɑr/
+collocations: You are Emma.
+grammar_pattern: You are + tên người đối diện
+example: You are Emma.
+common_error: Không dùng You am; phân biệt người nói I và người nhận you.
+[[/LANGUAGE_BLOCK]]
+[[LANGUAGE_BLOCK mg01-l2-from]]
+expression: from
+meaning_vi: từ; dùng với địa danh để nói mình đến từ đâu
+pronunciation: /frəm/
+collocations: I am from Osaka.
+grammar_pattern: I am from + địa danh
+example: I am from Osaka.
+common_error: Không bỏ am trong I am from; địa danh là dữ kiện, không phải tên người nói.
+[[/LANGUAGE_BLOCK]]
+[/WORD_BANK]
+
+[CONTENT mg01-l2-card-1]
+type: email
+text:
+<<<
+Hello.
+I am Jo.
+Name: J-O.
+I am from Hue.
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l2-card-2]
+type: email
+text:
+<<<
+Hello, Emma.
+I am Kim.
+You are Emma.
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l2-card-3]
+type: email
+text:
+<<<
+Hello.
+I am Ben.
+Name: B-E-N.
+I am from Da Nang.
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l2-speaking-card]
+type: email
+text:
+<<<
+Role card — fictional information
+Name: Emma
+Letters: E-M-M-A
+From: Hue
+>>>
+[/CONTENT]
+
+[CONTENT mg01-l2-writing-card]
+type: email
+text:
+<<<
+Role card — fictional information
+Name: Mia
+Letters: M-I-A
+From: Da Nang
+>>>
+[/CONTENT]
+
+[AUDIO_SCRIPT mg01-l2-audio-1]
+speaker: one-speaker
+script:
+<<<
+Hello. I am Bo. B, O. I am from Can Tho.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg01-l2-audio-2]
+speaker: one-speaker
+script:
+<<<
+Hello, Tim. I am Kim. You are Tim.
+>>>
+[/AUDIO_SCRIPT]
+
+[AUDIO_SCRIPT mg01-l2-audio-3]
+speaker: one-speaker
+script:
+<<<
+Hello. I am Emma. I am from Ha Noi.
+>>>
+[/AUDIO_SCRIPT]
+
+[ACTIVITY mg01-l2-r1]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg01-l2-reading
+content_refs: mg01-l2-card-1
+language_block_refs: mg01-l2-name | mg01-l2-i-am
+QUESTION:
+Which written name matches J-O?
+OPTIONS:
+A. Bo
+B. Jo
+C. Joe
+ANSWER:
+B
+EXPLANATION:
+J-O chỉ có J và O nên là Jo; Bo đổi chữ đầu, Joe thêm E.
+EVIDENCE:
+mg01-l2-card-1:3
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-r2]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg01-l2-reading
+content_refs: mg01-l2-card-2
+language_block_refs: mg01-l2-i-am | mg01-l2-you-are
+QUESTION:
+Who is writing to Emma?
+OPTIONS:
+A. Kim
+B. Emma
+C. Jo
+ANSWER:
+A
+EXPLANATION:
+I am Kim nêu người viết. Emma là người nhận lời chào.
+EVIDENCE:
+mg01-l2-card-2:2
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-r3]
+learning_block: read_decode
+activity_type: reading
+response_type: multiple_choice
+skills: reading
+objective_refs: mg01-l2-reading
+content_refs: mg01-l2-card-3
+language_block_refs: mg01-l2-name | mg01-l2-from
+QUESTION:
+Which card keeps both the name and place correct?
+OPTIONS:
+A. Ben — Hue
+B. Bo — Da Nang
+C. Ben — Da Nang
+ANSWER:
+C
+EXPLANATION:
+Tên Ben ở dòng2, cách viết dòng3 và nơi đến Da Nang dòng4. C giữ cả hai dữ kiện.
+EVIDENCE:
+mg01-l2-card-3:2
+mg01-l2-card-3:3
+mg01-l2-card-3:4
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-l1]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg01-l2-listening
+content_refs: mg01-l2-card-1
+audio_ref: mg01-l2-audio-1
+language_block_refs: mg01-l2-name | mg01-l2-i-am
+QUESTION:
+Which name is spelled in the recording?
+OPTIONS:
+A. Jo
+B. Bo
+C. Ben
+ANSWER:
+B
+EXPLANATION:
+B, O đánh vần Bo; khác J, O và ba chữ của Ben.
+EVIDENCE:
+mg01-l2-audio-1:1
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-l2]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg01-l2-listening
+content_refs: mg01-l2-card-2
+audio_ref: mg01-l2-audio-2
+language_block_refs: mg01-l2-i-am | mg01-l2-you-are
+QUESTION:
+Who is speaking?
+OPTIONS:
+A. Kim
+B. Tim
+C. Ben
+ANSWER:
+A
+EXPLANATION:
+I am Kim là tên người nói; Tim là người được gọi.
+EVIDENCE:
+mg01-l2-audio-2:1
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-l3]
+learning_block: listen_reason
+activity_type: listening
+response_type: multiple_choice
+skills: listening
+objective_refs: mg01-l2-listening
+content_refs: mg01-l2-card-3
+audio_ref: mg01-l2-audio-3
+language_block_refs: mg01-l2-from
+QUESTION:
+Where is Emma from?
+OPTIONS:
+A. Can Tho
+B. Hue
+C. Ha Noi
+ANSWER:
+C
+EXPLANATION:
+I am from Ha Noi nêu nơi đến; không lấy địa danh của bản nghe trước.
+EVIDENCE:
+mg01-l2-audio-3:1
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-s1]
+learning_block: respond
+activity_type: speaking
+response_type: guided_response
+skills: speaking
+objective_refs: mg01-l2-speaking
+content_refs: mg01-l2-speaking-card
+language_block_refs: mg01-l2-hello | mg01-l2-name | mg01-l2-i-am | mg01-l2-you-are | mg01-l2-from
+min_words: 11
+sample_answer: Hello. I am Emma. I am from Hue. E, M, M, A.
+rubric_id: beginner-guided-speaking
+rubric_version: 1
+prompt: Use the speaking card. Say hello, introduce the name and place, then spell the name. Speak clearly at your own pace.
+rubric: Cần lời chào, Emma/Hue và bốn tên chữ E/M/M/A. Nói tên Emma liền hai âm tiết với âm đầu nổi bật đủ để nhận tên, khác với đọc từng tên chữ; không bắt giống giọng bản ngữ. Cho phép đổi thứ tự ý nhưng giữ nghĩa, không đòi tốc độ cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Introduce the name and place. Spell the name once.
+[/ACTIVITY]
+
+[ACTIVITY mg01-l2-w1]
+learning_block: respond
+activity_type: writing
+response_type: short_text
+skills: writing
+objective_refs: mg01-l2-writing
+content_refs: mg01-l2-writing-card
+language_block_refs: mg01-l2-hello | mg01-l2-name | mg01-l2-i-am | mg01-l2-you-are | mg01-l2-from
+min_words: 9
+sample_answer: Hello. I am Mia. I am from Da Nang. M-I-A.
+rubric_id: beginner-short-writing
+rubric_version: 1
+prompt: Use only the writing card. Introduce the name and place, then write the letters separately.
+rubric: Cần Mia/Da Nang và M-I-A. Chấp nhận dấu nối hoặc phẩy giữa chữ; không lấy Jo/Hue từ thẻ nói. Chấm ý đúng, I am/from và độ dễ đọc; dấu nối nhỏ không xóa toàn bộ điểm. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+QUESTION:
+Write an introduction and the letters of the name.
+[/ACTIVITY]
+
