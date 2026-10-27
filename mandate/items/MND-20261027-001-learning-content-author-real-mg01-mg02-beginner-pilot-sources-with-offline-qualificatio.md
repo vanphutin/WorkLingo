@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261027-001",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-27",
-  "updated": "2026-10-27T11:06:04.467Z",
+  "updated": "2026-10-27T11:10:46.134Z",
   "title": "Author real MG01 MG02 Beginner pilot sources with offline qualification and honest readiness gates",
   "type": "learning-content",
   "owner": "Codex",
@@ -65,7 +65,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner (human user)",
+    "reference": "mandate/reports/2026-10-27-beginner-r12b-human-approval.md",
+    "at": "2026-10-27T11:10:45.925Z",
+    "proposal_hash": "9f2501fa949171c990ac6ec90fdf4b3d243336b8aba66a8c619a977337a8a71a"
+  },
   "verification": [],
   "history": [
     {
@@ -112,6 +117,24 @@
       "reason": "R1.2b offline source scope reconciled with actual1.2 planner/map,11 exact future files and explicit audio/human/timing gates. Ready for human scope/hash review only; no execution approval.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-27-beginner-r12b-preapproval-review.md:1"
+    },
+    {
+      "at": "2026-10-27T11:10:45.925Z",
+      "actor": "WorkLingo product owner (human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Direct human approval of exact R1.2b offline authoring proposal9f2501fa...; all33 baseline paths, frozen hashes, ancestry and11-path allowlist verified before edits.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-human-approval.md"
+    },
+    {
+      "at": "2026-10-27T11:10:46.134Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Matching approval recorded; execute3 offline tasks with TDD, source-only authoring and local commits. No DB/media/provider/runtime publication rights.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-human-approval.md"
     }
   ]
 }

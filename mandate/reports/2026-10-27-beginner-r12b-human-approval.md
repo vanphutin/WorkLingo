@@ -1,0 +1,11 @@
+# Human approval — MND-20261027-001
+
+Received directly from the WorkLingo product owner in this conversation on2026-10-27. Human message heading: “HUMAN APPROVAL — WORKLINGO R1.2b OFFLINE CONTENT AUTHORING”. It explicitly approves mandate MND-20261027-001 and proposal hash `9f2501fa949171c990ac6ec90fdf4b3d243336b8aba66a8c619a977337a8a71a`, bound to the exact plan and scope JSON.
+
+Allowed: the11 captured new source paths only (eight real1.2 pilot lessons, requested review dossier, pure checker and its tests), three planned tasks, offline checks/regressions, and local commits after checks. Start MG01-L1, then the other seven once technically qualified; no per-Lesson reapproval is required. Genuine8/64/32/24 counts and private answer/transcript redaction are mandatory. Additional lexical support is explicitly proposed/teacher-review-required, never silently approved.
+
+No database read/write/reset/migration, live Admin/API, import/publication/release, audio/video production/upload, external AI/TTS/STT, OS/security changes, product/schema/config edits, learner access, merge/push/deploy. R1.2a lifecycle is independent.
+
+The human permits `OFFLINE_AUTHORING_COMPLETE` only when the offline deliverable is actually complete. It never implies R1.2b verified, CONTENT_READY, AUDIO_READY, HUMAN_REVIEW_PASSED or TIMING_VERIFIED. Keep NOT_READY without real audio, human pedagogical review and observed rehearsal. Record approval through Mandate CLI and stop on any hash/baseline/allowlist mismatch.
+
+Pre-edit verification passed: proposal hash above; plan LF hash `fd1a0372b68e4f1c53f385702353435fe988e217443c7a8e7ce185c381a79dc7`; review LF hash `81f9cedbde1d2ecc98e164152fb1aa0780b74ed26f6145519f8d7c067fca6d86`; scope LF hash `7bfa7e6acde2dd27aa4b01d3b47ad1759b27016bfb0786d3e9faa7a3b4809fe5`; allowlist fingerprint `04bf2fa42b7bb9b6eab47256161adbdd7771f47ecab6026ff023d96ef6c1df86`; baseline fingerprint `4166536f1822a405e3f8a03e0ea6f3652f5f5bae8c7643cdca221001e3d31285`. All33 baseline paths matched,11 new paths absent, clean linked worktree on `codex/foundation-basic-readiness`, HEAD `76c5279463da021c50d53b684e0084f33c54e5b8` is a governance-only descendant of recorded baseline `613fcec48a2b40b3a3e720c6a57fc5b0534562b4`.
