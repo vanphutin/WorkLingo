@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261026-003",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-26",
-  "updated": "2026-10-26T11:38:10.871Z",
+  "updated": "2026-10-26T11:54:16.909Z",
   "title": "Qualify Beginner R1.2a on the existing main database with fixture-only writes and protected cleanup",
   "type": "infrastructure",
   "owner": "Codex",
@@ -58,7 +58,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-26-beginner-main-db-qualification.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner (human user)",
+    "reference": "mandate/reports/2026-10-26-beginner-main-db-human-approval.md",
+    "at": "2026-10-26T11:54:16.690Z",
+    "proposal_hash": "280ea7a31e34e1649584bfdcf0f26fd6ead3f6dfdc7d4932434519071f761f17"
+  },
   "verification": [],
   "history": [
     {
@@ -78,6 +83,24 @@
       "reason": "Single main-DB qualification scope prepared from existing R1.2a evidence; exact safety gates and residual risks reviewed; no execution approval, source or DB mutation.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-26-beginner-main-db-review.md"
+    },
+    {
+      "at": "2026-10-26T11:54:16.690Z",
+      "actor": "WorkLingo product owner (human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Direct contextual human reply duyệt approves the immediately requested main-DB scope and proposal280ea7a3...; exact rights and ordered gates retained.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-beginner-main-db-human-approval.md"
+    },
+    {
+      "at": "2026-10-26T11:54:16.909Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Matching proposal/plan/scope/source baseline133/frozen24/26-file allowlist verified; start Task1 pure safety TDD before any main-DB action.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-26-beginner-main-db-human-approval.md"
     }
   ]
 }
