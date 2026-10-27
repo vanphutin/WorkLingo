@@ -6,8 +6,8 @@
   "confidence": "high",
   "effort": "m",
   "impact": 4,
-  "problem": "Twenty-four final listening bindings have scripts but zero verified real audio; DB-backed generation and product storage cannot be reused within offline authority.",
-  "value": "Create rights-cleared, immutable, checksum-verified audio candidates with a reviewed MG01-L1 pilot and explicit cost limits.",
+  "problem": "Twenty-four listening bindings lack actual audio. Current Portal evidence shows an existing Free/F0 SpeechServices resource in East Asia under owner-reported Azure for Students, conflicting with the initial paid/eastus proposal.",
+  "value": "Prepare version-bound educational audio qualification using the existing Free resource with USD0 spend and no resource or subscription changes.",
   "scope": [
     "Separate gate A child under frozen implementing MND-20261027-001; no authority inherited from A/B/C or R1.2a",
     "Exact files, protected baseline, provider/budget/storage/actor limits in mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json",
@@ -29,14 +29,19 @@
       "kind": "document",
       "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json:1",
       "observation": "Exact allowlist, protected baseline, environment and budget boundaries captured before approval."
+    },
+    {
+      "kind": "document",
+      "reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-gate-a-resource-alignment.md:1",
+      "observation": "Owner-provided screenshot shows Free SpeechServices and eastasia endpoint; owner reports student educational use and requests document alignment only."
     }
   ],
   "acceptance": [
-    "Correct authority/hash/root/endpoint/rate preflight before each live request; no fallback, secrets or DB access.",
+    "Correct new A approval/hash/root/F0 resource/eastasia endpoint/quota/educational-use preflight before requests; no fallback, secrets or DB access.",
     "MG01-L1 three actual candidate files pass automated and real human audio QA before expanding.",
-    "All24 selected WAVs valid PCM16 mono24000Hz, actual byte checksums/fingerprints/rights, listening QA100%, no missing/stale/duplicate mapping.",
-    "Costs and failed/retried calls stay within pilot/inclusive caps; no hidden retry, fake provider or readiness inferred from scripts.",
-    "Audio quality findings resolved or rejected; offline media is not a DB Artifact/approved release; B/C remain independently gated."
+    "All24 selected WAVs valid PCM16 mono24000Hz, actual byte checksums/fingerprints/applicable educational-use basis, listening QA100%, no missing/stale/duplicate mapping.",
+    "USD0 spend, frozen request/character/take caps and sequential rate limits hold; quota/429 stops without automatic retry, upgrade or paid student-credit fallback.",
+    "Offline educational media does not grant commercial production, redistribution, DB artifact/publication, B/C approval or readiness; Azure subscription/resource unchanged."
   ],
   "risk": {
     "level": "high",
@@ -46,7 +51,7 @@
     "rollback": "Stop provider calls; mark rejected/superseded manifest selections, retain actual audit and prior selected bytes. No app storage/DB/bound version mutation. Cleanup only verified run-owned unselected files, explicit owner cleanup decision after references checked."
   },
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
-  "plan_reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-gate-a-resource-alignment.md",
   "sprint_reference": null,
-  "body": "## Independent qualification gate A\n\nFollow docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md and mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json. This is preapproval only: no implementation, provider/audio/human experiment or sign-off is executed or approved. Existing authoring and R1.2a mandates retain states.\n\n## Frozen approval bindings\n\nPlan SHA-256(LF): 9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289\nInventory SHA-256(LF): 03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1\nReview SHA-256(LF): dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594\nScope SHA-256(LF): 90fe9d8bf3316ca729d43b5bb0308c2d51ae5d47c84dbf9117e25a967e4288de\nBaseline fingerprint: 1b36c35df657dc26ced7d00c77013728883c5b86faa5950a0d78e4d70d8d3022\nExact allowlist fingerprint: de6baff5ca281ee61f07555ca8701542bdd570d1b9a22b9d892f86012bfd62f0\n\n## Authority and unknowns\n\nOnly gate A rights in scope; no DB/env/live API/publication/learner/product/OS/merge/push/deploy. A paid voice/rate/rights and human QA, B qualified human and actual diffs, C actual consent/target fit/offline-method/timing approval remain evidence gates. Source corrections are never preapproved. Do not create fabricated actors, media IDs, timings or readiness.\n\n## Rollback\n\nStop provider calls; mark rejected/superseded manifest selections, retain actual audit and prior selected bytes. No app storage/DB/bound version mutation. Cleanup only verified run-owned unselected files, explicit owner cleanup decision after references checked.\n"
+  "body": "## Gate A resource alignment only\n\nChild of MND-20261027-001. Follow docs/superpowers/plans/2026-10-27-beginner-r12b-gate-a-resource-alignment.md and mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json first. Original shared master remains frozen historical baseline for B/C. Only Gate A paid/eastus/positive-spend assumptions are superseded. No execution or Azure/account/provider operation is authorized by this document revision.\n\n## Frozen approval bindings\n\nPlan SHA-256(LF): dac1a92495150ac1036eeeff5e56452b390ed545230d49f0362ae6f660ea96d2\nOriginal master SHA-256(LF): 9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289\nInventory SHA-256(LF): 03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1\nReview SHA-256(LF): dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594\nScope SHA-256(LF): 5332cc7d5fe2b991842562194c6eb68841be095d8c7d2655222a47fb43c91224\nBaseline fingerprint: e7c1b382b302dc73f30ad25766d06e8b9ba6b0bca0b907ddc9c54418cc369909\nExact allowlist fingerprint: de6baff5ca281ee61f07555ca8701542bdd570d1b9a22b9d892f86012bfd62f0\n\n## Authority and remaining evidence\n\nExisting Free/F0 SpeechServices, eastasia real-time endpoint, owner-reported student learning purpose, USD0 only. No Azure tier/subscription change, paid/S0/student-credit fallback, DB/env/live Admin API, import/publication/learner/product/OS/merge/push/deploy. Key association, remaining free quota, East Asia voice availability, applicable educational-use basis and actual pronunciation/audio QA still need preflight/evidence after separate matching execution approval. No commercial-output rights are inferred. Existing 26 protected hashes and future allowlist unchanged; no source correction right. B/C unchanged.\n\n## Rollback\n\nStop provider calls; mark rejected/superseded manifest selections, retain actual audit and prior selected bytes. No app storage/DB/bound version mutation. Cleanup only verified run-owned unselected files, explicit owner cleanup decision after references checked.\n"
 }
