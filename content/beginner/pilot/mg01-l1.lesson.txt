@@ -305,14 +305,14 @@ skills: speaking
 objective_refs: mg01-l1-speaking
 content_refs: mg01-l1-speaking-card
 language_block_refs: mg01-l1-hello | mg01-l1-i-am | mg01-l1-from | mg01-l1-you-are
-min_words: 12
+min_words: 10
 sample_answer: Hello. I am Mai. I am from Da Nang. You are Leo.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
 prompt: Use the role card. Say hello, your name, where you are from, and your partner's name. Record your own response.
 rubric: Hoàn thành đủ bốn ý theo thẻ Mai/Da Nang/Leo. Chấp nhận I am hoặc I'm, cách ngắt câu tự nhiên và tên riêng phát âm dễ hiểu; không chấm giống giọng bản ngữ. Dùng đúng I am/You are/from; không đạt đủ nội dung nếu chỉ lặp lời chào. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1 với trọng số 0.35/0.25/0.20/0.20; không tự suy ra mastery hoặc CEFR.
 QUESTION:
-Introduce yourself and confirm your partner's name.
+Use the role card. Say hello, your name, where you are from, and your partner's name. Record your own response.
 [/ACTIVITY]
 [ACTIVITY mg01-l1-w1]
 learning_block: respond
@@ -322,12 +322,12 @@ skills: writing
 objective_refs: mg01-l1-writing
 content_refs: mg01-l1-writing-card
 language_block_refs: mg01-l1-hello | mg01-l1-i-am | mg01-l1-from
-min_words: 8
+min_words: 6
 sample_answer: Hello. I am An. I am from Hue.
 rubric_id: beginner-short-writing
 rubric_version: 1
 prompt: Greet a new classmate. Introduce the name and place on the writing card. Use your own sentences.
 rubric: Nội dung cần lời chào, tên An và nơi đến Hue, không lấy dữ kiện thẻ nói. Chấp nhận Hello/hi nếu đúng chức năng, I am/I'm; kiểm tra I viết hoa, am và from giữ nghĩa, câu có thể đọc hiểu. Lỗi dấu câu nhỏ không xóa điểm ý đúng; không thưởng chép mẫu sai vai. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo version1, trọng số 0.35/0.25/0.20/0.20; không tự cấp mastery.
 QUESTION:
-Write a short introduction for the role card.
+Greet a new classmate. Introduce the name and place on the writing card. Use your own sentences.
 [/ACTIVITY]

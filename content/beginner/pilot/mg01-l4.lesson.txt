@@ -327,14 +327,14 @@ skills: speaking
 objective_refs: mg01-l4-speaking
 content_refs: mg01-l4-speaking-card
 language_block_refs: mg01-l4-hello | mg01-l4-name | mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
-min_words: 11
+min_words: 9
 sample_answer: Hello, Jo. I am Mia. I am from Hue. You are Jo.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
 prompt: Make your own short introduction using the meeting card. Include a greeting and a sentence confirming who your new partner is. Record without reading a full model.
 rubric: Cần Mia/Hue và gọi/xác nhận Jo, giữ vai nhất quán. Không bắt thứ tự/giọng giống mẫu; câu ngắn đúng nghĩa được chấp nhận. Không dùng L4 để giả evidence bài trước. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Introduce your role at the new meeting point.
+Make your own short introduction using the meeting card. Include a greeting and a sentence confirming who your new partner is. Record without reading a full model.
 [/ACTIVITY]
 
 [ACTIVITY mg01-l4-w1]
@@ -345,13 +345,12 @@ skills: writing
 objective_refs: mg01-l4-writing
 content_refs: mg01-l4-writing-card
 language_block_refs: mg01-l4-hello | mg01-l4-name | mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
-min_words: 12
+min_words: 10
 sample_answer: Hello, Mai. I am Ben. I am from Ha Noi. You are Mai.
 rubric_id: beginner-short-writing
 rubric_version: 1
 prompt: Use the writing card to greet the reader, introduce the writer and place, and confirm the reader name. Write independently and check the names.
 rubric: Truyền đạt Ben/Ha Noi/Mai với I am/from/you. Chấp nhận rút gọn và ngắt câu dễ đọc; đổi tên là lỗi nghĩa, khác dấu câu nhỏ. Chỉ đánh giá nhiệm vụ của bài này. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Write a short message for the new group.
+Use the writing card to greet the reader, introduce the writer and place, and confirm the reader name. Write independently and check the names.
 [/ACTIVITY]
-

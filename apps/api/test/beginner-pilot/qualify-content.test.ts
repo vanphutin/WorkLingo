@@ -4,6 +4,10 @@ import {readFileSync,existsSync} from 'node:fs';
 import path from 'node:path';
 import {qualifyPilotSources} from './qualify-content.js';
 import {syntheticBeginnerSource} from '../fixtures/beginner/authoring/fixture-factory.js';
+import {analyzeLessonSource,parseLessonSource} from '@worklingo/content-format';
+import {buildBeginnerDraftSnapshot} from '../../src/curriculum-foundation/application/foundation-validation.js';
+import {projectLearnerActivity} from '../../src/learning-sessions/domain/learner-activity-projection.js';
+const source=(code:string)=>readFileSync(path.resolve(__dirname,'../../../../content/beginner/pilot',code+'.lesson.txt'),'utf8');
 
 // Test fixtures exercise the checker; none is an authored pilot deliverable.
 function checkerFixture():string{
@@ -57,6 +61,63 @@ test('rejects a listening transcript exposed through an earlier reading instruct
  const s=checkerFixture(),script=s.match(/\[AUDIO_SCRIPT test-call-1\][\s\S]*?<<<\n([\s\S]*?)\n>>>/u)![1]!;
  const altered=s+'\n[INSTRUCTION leaked-listening]\nphase: readDecode\norder: 9\ntext: '+script+'\n[/INSTRUCTION]';
  assert.equal(one(altered).lessons[0]!.checks.redaction,'FAIL');
+});
+test('case changes do not hide a complete transcript from the leakage check',()=>{
+ const s=checkerFixture(),script=s.match(/\[AUDIO_SCRIPT test-call-1\][\s\S]*?<<<\n([\s\S]*?)\n>>>/u)![1]!;
+ const changed=s+'\n[INSTRUCTION leaked-case]\nphase: readDecode\norder: 9\ntext: '+script.toUpperCase()+'\n[/INSTRUCTION]';
+ assert.equal(one(changed).lessons[0]!.checks.redaction,'FAIL');
+});
+test('three references cannot qualify one cloned listening script body',()=>{
+ const s=checkerFixture(),body='Hello. I am the same synthetic voice in every recording.';
+ const changed=s.replace(/(\[AUDIO_SCRIPT [^\]]+\][\s\S]*?<<<\n)[\s\S]*?(\n>>>)/gu,(_m,start,end)=>start+body+end);
+ assert.equal(one(changed).lessons[0]!.checks.listeningBindings,'FAIL');
+});
+test('all16 learner response prompts preserve the complete authored task instructions',()=>{
+ for(const unit of ['mg01','mg02'])for(const n of [1,2,3,4]){
+  const raw=source(unit+'-l'+n),doc=parseLessonSource(raw).document,analysis=analyzeLessonSource(raw);assert.ok(analysis.normalizedDraft);
+  const snapshot=buildBeginnerDraftSnapshot(analysis.normalizedDraft);
+  for(const a of doc.activities.filter(a=>a.activityType==='speaking'||a.activityType==='writing')){
+   const normalized=snapshot.activities.find(s=>s.slug===a.slug)!;
+   assert.equal(projectLearnerActivity(snapshot,normalized.id).payload?.prompt,a.prompt,a.slug+' loses requirements during normalization');
+  }
+ }
+});
+test('singular listening items cannot be solved by choosing the only singular option',()=>{
+ for(const [code,slug]of [['mg02-l1','mg02-l1-l2'],['mg02-l2','mg02-l2-l3']]){
+  const a=parseLessonSource(source(code!)).document.activities.find(a=>a.slug===slug)!;
+  assert.ok(a.options.filter(o=>/^an?\s/iu.test(o.text)).length>1,a.slug+' reveals the answer before audio');
+ }
+});
+test('accepted contractions and short meaningful requests are not forced to pad output',()=>{
+ const alternatives:Record<string,string>={
+  'mg01-l1-s1':"Hello. I'm Mai. I'm from Da Nang. You are Leo.",'mg01-l1-w1':"Hello. I'm An. I'm from Hue.",
+  'mg01-l2-s1':"Hello. I'm Emma. I'm from Hue. E-M-M-A.",'mg01-l2-w1':"I'm Mia. I'm from Da Nang. M-I-A.",
+  'mg01-l3-s1':"Hello. I'm Sam. I'm from Ha Noi. You are Kim.",'mg01-l3-w1':"Hello. I'm Eva. I'm from Hue. You are Nam.",
+  'mg01-l4-s1':"Hello. I'm Mia. I'm from Hue. You are Jo.",'mg01-l4-w1':"Hello. I'm Ben. I'm from Ha Noi. You are Mai.",
+  'mg02-l2-s1':'A pen. Two books. A bag.','mg02-l2-w1':'Two pens. A book. A bag.',
+  'mg02-l3-w1':'This is a book. A bag. Two pens.','mg02-l4-w1':'This is a bag. Three pens. A book.'};
+ for(const [slug,answer]of Object.entries(alternatives)){
+  const a=parseLessonSource(source(slug.slice(0,7))).document.activities.find(a=>a.slug===slug)!;
+  assert.ok(a.minWords!<=answer.split(/\s+/u).length,slug+' rejects a complete accepted alternative');
+ }
+});
+test('MG02-L3 transfer needs its own card and no verbatim correct answer in attached glossary examples',()=>{
+ const doc=parseLessonSource(source('mg02-l3')).document,a=doc.activities.find(a=>a.slug==='mg02-l3-r2')!;
+ const answer=a.options.find(o=>o.label===a.answer)!.text;
+ const blocks=doc.wordBanks.flatMap(b=>b.languageBlocks).filter(b=>a.languageBlockRefs.includes(b.slug));
+ assert.ok(!blocks.flatMap(b=>b.examples).includes(answer));
+ const prior=parseLessonSource(source('mg02-l1')).document.activities.find(a=>a.slug==='mg02-l1-r2')!;
+ assert.notEqual(answer,prior.options.find(o=>o.label===prior.answer)!.text);
+});
+test('MG02-L3 assesses the claimed near/far distinction in a listening task',()=>{
+ const doc=parseLessonSource(source('mg02-l3')).document;
+ assert.ok(doc.activities.some(a=>a.activityType==='listening'&&/\bnear\b|\bfar\b/iu.test(a.question??'')));
+});
+test('MG01-L2 writing rubric names the current speaking card when warning against copying it',()=>{
+ const doc=parseLessonSource(source('mg01-l2')).document;
+ const card=doc.contents.find(c=>c.slug==='mg01-l2-speaking-card')!.text;
+ const name=card.match(/^Name: (.+)$/mu)![1]!;
+ assert.ok(doc.activities.find(a=>a.slug==='mg01-l2-w1')!.rubric!.includes(name+'/Hue'));
 });
 test('qualifies the real pilot once all8 sources exist; never substitutes checker fixtures for missing lessons',()=>{
  const root=path.resolve(__dirname,'../../../..');

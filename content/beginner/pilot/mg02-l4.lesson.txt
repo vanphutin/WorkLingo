@@ -97,9 +97,9 @@ common_error: Trong mẫu số ít này không dùng This are hoặc This is two
 expression: that
 meaning_vi: kia/cái kia; dùng cho đồ vật xa người nói trong tình huống chỉ một vật
 pronunciation: /ðæt/
-collocations: That is a book.
+collocations: That is a bag.
 grammar_pattern: That is + a/an + danh từ số ít
-example: That is a book.
+example: That is a bag.
 common_error: Chọn theo vị trí so với người nói, không chọn this/that theo tên đồ vật.
 [[/LANGUAGE_BLOCK]]
 [/WORD_BANK]
@@ -331,7 +331,7 @@ rubric_version: 1
 prompt: Use the new counter card. Identify the near and far items and request the needed quantity. Record independently without a full model.
 rubric: Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Speak to the partner at the new counter.
+Use the new counter card. Identify the near and far items and request the needed quantity. Record independently without a full model.
 [/ACTIVITY]
 
 [ACTIVITY mg02-l4-w1]
@@ -342,13 +342,12 @@ skills: writing
 objective_refs: mg02-l4-writing
 content_refs: mg02-l4-writing-card
 language_block_refs: mg02-l4-pen | mg02-l4-book | mg02-l4-bag | mg02-l4-this | mg02-l4-that
-min_words: 9
+min_words: 8
 sample_answer: This is a bag. Three pens, please. A book, please.
 rubric_id: beginner-short-writing
 rubric_version: 1
 prompt: Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.
 rubric: Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Write a new request note.
+Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.
 [/ACTIVITY]
-

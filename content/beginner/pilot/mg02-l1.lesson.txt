@@ -97,9 +97,9 @@ common_error: Trong mẫu số ít này không dùng This are hoặc This is two
 expression: that
 meaning_vi: kia/cái kia; dùng cho đồ vật xa người nói trong tình huống chỉ một vật
 pronunciation: /ðæt/
-collocations: That is a book.
+collocations: That is a bag.
 grammar_pattern: That is + a/an + danh từ số ít
-example: That is a book.
+example: That is a bag.
 common_error: Chọn theo vị trí so với người nói, không chọn this/that theo tên đồ vật.
 [[/LANGUAGE_BLOCK]]
 [[LANGUAGE_BLOCK mg02-l1-eraser]]
@@ -288,13 +288,13 @@ language_block_refs: mg02-l1-pen | mg02-l1-bag
 QUESTION:
 Which item is requested as one?
 OPTIONS:
-A. Books
-B. Bags
+A. A book
+B. A bag
 C. A pen
 ANSWER:
 C
 EXPLANATION:
-A pen chỉ một bút; two bags là nhiều túi. Books không được yêu cầu.
+Bản nghe yêu cầu một bút (a pen) và hai túi (two bags), không phải một túi; không yêu cầu book.
 EVIDENCE:
 mg02-l1-audio-2:1
 [/ACTIVITY]
@@ -337,7 +337,7 @@ rubric_version: 1
 prompt: Use the object card. Identify the near item and the far item, then make the request. Record a clear response.
 rubric: Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Point to the two objects and request the pens.
+Use the object card. Identify the near item and the far item, then make the request. Record a clear response.
 [/ACTIVITY]
 
 [ACTIVITY mg02-l1-w1]
@@ -355,6 +355,5 @@ rubric_version: 1
 prompt: Identify the near object. Then write a request for both items and quantities on the message card.
 rubric: Nêu this/pen, yêu cầu một sách và hai túi. Không lấy thẻ nói làm nguồn; không dùng a two bags. Dấu câu có thể khác nhưng các ý phải rõ. Please là hỗ trợ được đề xuất, không bù cho sai đồ vật/số lượng. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Write a short message about the card.
+Identify the near object. Then write a request for both items and quantities on the message card.
 [/ACTIVITY]
-

@@ -27,7 +27,7 @@ function visibleStrings(value:unknown):string[]{
  if(typeof value==='string')return [value];
  return value&&typeof value==='object'?Object.values(value).flatMap(visibleStrings):[];
 }
-const normalized=(s:string)=>s.normalize('NFKC').replace(/\s+/gu,' ').trim();
+const normalized=(s:string)=>s.normalize('NFKC').toLocaleLowerCase('en-US').replace(/\s+/gu,' ').trim();
 export function qualifyPilotSources(sources:readonly {code:string;rawSource:string}[]):PilotQualification{
  const seen=new Set<string>(),inputIssues:string[]=[];
  const lessons=sources.map(({code,rawSource}):LessonQualification=>{
@@ -43,7 +43,7 @@ export function qualifyPilotSources(sources:readonly {code:string;rawSource:stri
   const objectives=parsed.objectives??[];
   row.checks.objectives=objectives.length===4&&skills.every(skill=>objectives.filter(o=>o.skills.length===1&&o.skills[0]===skill&&o.required==='true').length===1)&&parsed.activities.every(a=>a.objectiveRefs?.length===1&&objectives.some(o=>o.slug===a.objectiveRefs![0]&&o.skills.length===1&&o.skills[0]===a.activityType))?'PASS':'FAIL';
   const listening=parsed.activities.filter(a=>a.activityType==='listening');
-  row.checks.listeningBindings=parsed.audioScripts.length===3&&listening.length===3&&new Set(listening.map(a=>a.audioRef)).size===3&&listening.every(a=>{
+  row.checks.listeningBindings=parsed.audioScripts.length===3&&new Set(parsed.audioScripts.map(s=>normalized(s.script))).size===3&&listening.length===3&&new Set(listening.map(a=>a.audioRef)).size===3&&listening.every(a=>{
    const script=parsed.audioScripts.find(s=>s.slug===a.audioRef);
    return script&&a.evidence.length>0&&a.evidence.every(e=>{const match=/^([^:]+):([1-9]\d*)$/u.exec(e);return match?.[1]===script.slug&&Boolean(script.script.split('\n')[Number(match?.[2])-1]?.trim());});
   })?'PASS':'FAIL';
