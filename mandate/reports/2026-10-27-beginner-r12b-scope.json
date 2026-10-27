@@ -142,7 +142,8 @@
         "sha256": "e6587e37fe7357abf02c3b691d06843ebaf54711a8ddcb3f0a032f6249211d27"
       }
     ],
-    "fingerprint": "4166536f1822a405e3f8a03e0ea6f3652f5f5bae8c7643cdca221001e3d31285"
+    "fingerprint": "4166536f1822a405e3f8a03e0ea6f3652f5f5bae8c7643cdca221001e3d31285",
+    "headPolicy": "The recorded HEAD or a descendant containing only this scope capture/future governance documents is valid before implementation. Verify ancestry and exact changed-path set, not HEAD equality after capture commits. After matching human approval, only the11 source allowlist paths and named governance documents may additionally differ; baseline source/frozen artifact hashes remain mandatory."
   },
   "plan": {
     "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",

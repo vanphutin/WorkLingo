@@ -4,7 +4,7 @@
   "id": "MND-20261027-001",
   "status": "triaged",
   "created": "2026-10-27",
-  "updated": "2026-10-27T11:04:15.776Z",
+  "updated": "2026-10-27T11:06:04.467Z",
   "title": "Author real MG01 MG02 Beginner pilot sources with offline qualification and honest readiness gates",
   "type": "learning-content",
   "owner": "Codex",
@@ -94,6 +94,24 @@
       "reason": "R1.2b offline source scope reconciled with actual1.2 planner/map,11 exact future files and explicit audio/human/timing gates. Ready for human scope/hash review only; no execution approval.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-27-beginner-r12b-preapproval-review.md:1"
+    },
+    {
+      "at": "2026-10-27T11:06:04.198Z",
+      "actor": "mandate-steward",
+      "from": "triaged",
+      "to": "captured",
+      "reason": "Proposal revised; prior approval revoked; requires new triage.",
+      "event": "update",
+      "reference": null
+    },
+    {
+      "at": "2026-10-27T11:06:04.467Z",
+      "actor": "Codex",
+      "from": "captured",
+      "to": "triaged",
+      "reason": "R1.2b offline source scope reconciled with actual1.2 planner/map,11 exact future files and explicit audio/human/timing gates. Ready for human scope/hash review only; no execution approval.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-preapproval-review.md:1"
     }
   ]
 }
@@ -109,7 +127,7 @@ Plan SHA-256(LF): fd1a0372b68e4f1c53f385702353435fe988e217443c7a8e7ce185c381a79d
 Review SHA-256(LF): 81f9cedbde1d2ecc98e164152fb1aa0780b74ed26f6145519f8d7c067fca6d86
 Allowlist fingerprint: 04bf2fa42b7bb9b6eab47256161adbdd7771f47ecab6026ff023d96ef6c1df86
 Baseline fingerprint: 4166536f1822a405e3f8a03e0ea6f3652f5f5bae8c7643cdca221001e3d31285
-Scope SHA-256(LF): 886e57a2a18a1bce5887be162bebba55122eeac5a676a22a58f7ca7fd43e6653
+Scope SHA-256(LF): 7bfa7e6acde2dd27aa4b01d3b47ad1759b27016bfb0786d3e9faa7a3b4809fe5
 
 ## Proposed execution
 
