@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261027-002",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-27",
-  "updated": "2026-10-27T12:39:08.081Z",
+  "updated": "2026-10-27T15:46:36.657Z",
   "title": "Produce and human-check offline MG01 MG02 audio within capped provider and storage authority",
   "type": "learning-content",
   "owner": "Codex",
@@ -59,7 +59,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-gate-a-resource-alignment.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner (direct human user)",
+    "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-a-human-approval.md",
+    "at": "2026-10-27T15:46:36.429Z",
+    "proposal_hash": "0d1907e1de7161848f4fadeaedaf88cb656dff086c4fd1119c4edbc4bc376638"
+  },
   "verification": [],
   "history": [
     {
@@ -97,6 +102,24 @@
       "reason": "Bounded read-only preapproval reviewed with independent gate rights, protected source hashes and exact allowlists. High-risk external/human-data scope needs matching human approval; no execution authorization recorded.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md"
+    },
+    {
+      "at": "2026-10-27T15:46:36.429Z",
+      "actor": "WorkLingo product owner (direct human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Matching Gate A F0 approval received in this conversation; direct supplemental private env/account inspection and exact resource-key association confirmed. No paid fallback or B/C/product/database authority.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-a-human-approval.md"
+    },
+    {
+      "at": "2026-10-27T15:46:36.657Z",
+      "actor": "WorkLingo product owner (direct human user)",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Matching Gate A F0 approval received in this conversation; direct supplemental private env/account inspection and exact resource-key association confirmed. No paid fallback or B/C/product/database authority.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-a-human-approval.md"
     }
   ]
 }
