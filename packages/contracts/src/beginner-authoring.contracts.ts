@@ -10,7 +10,7 @@ export const beginnerTargetSchema=z.object({
 export type BeginnerTarget=z.infer<typeof beginnerTargetSchema>;
 export const beginnerActionSchema=z.enum(['read','author','validate','review','publish','export','approve-release','schema-setup','fixture-audio','cleanup']);
 export type BeginnerAction=z.infer<typeof beginnerActionSchema>;
-export const beginnerPermissionSchema=z.object({
+const beginnerPermissionV1Schema=z.object({
  schemaVersion:z.literal(1),approvalId:z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/u),
  mandateId:z.literal('MND-20261024-003'),proposalHash:z.literal('1170d5b91963b53ca848e87d0fcca85683f7a68746467531b06dcf12f3b13e49'),
  environmentId:z.string().min(1).max(100),runId:z.string().regex(/^[a-f0-9]{12}$/u),programId:id,
@@ -19,6 +19,20 @@ export const beginnerPermissionSchema=z.object({
  actions:z.array(beginnerActionSchema).min(1),expiresAt:z.iso.datetime(),revoked:z.literal(false),
  approvedBy:z.string().min(1),authorizationSource:z.string().min(1),recordHash:hash
 }).strict();
+export const beginnerMainBinding={
+ mandateId:'MND-20261026-003',
+ proposalHash:'280ea7a31e34e1649584bfdcf0f26fd6ead3f6dfdc7d4932434519071f761f17',
+ scopeHash:'23353b08775352448f175b24c261cf043969ee49b1b0f4a25b730611c8867b2b',
+ runId:'261026a00003',role:'wl_r12a_main_202610260003',systemIdentifier:'7692646346822291490',
+} as const;
+const beginnerPermissionV2Schema=beginnerPermissionV1Schema.extend({
+ schemaVersion:z.literal(2),mode:z.literal('CONTROLLED_MAIN_DB'),runId:z.literal(beginnerMainBinding.runId),issuedAt:z.iso.datetime(),
+ database:beginnerPermissionV1Schema.shape.database.extend({host:z.literal('127.0.0.1'),port:z.literal(55432),name:z.literal('worklingo'),role:z.literal(beginnerMainBinding.role),serverIdentity:z.literal(beginnerMainBinding.systemIdentifier),databaseOid:z.literal('16384'),roleOid:z.string().regex(/^[1-9]\d*$/u),clusterName:z.literal('')}),
+ execution:z.object({mandateId:z.literal(beginnerMainBinding.mandateId),proposalHash:z.literal(beginnerMainBinding.proposalHash),scopeHash:z.literal(beginnerMainBinding.scopeHash),manifestPath:z.string().min(1),manifestHash:hash}).strict(),
+}).strict().superRefine((v,c)=>{
+ if(v.actions.some(a=>a==='approve-release'||a==='schema-setup'))c.addIssue({code:'custom',message:'Controlled main tests cannot grant release/schema authority'});
+});
+export const beginnerPermissionSchema=z.union([beginnerPermissionV1Schema,beginnerPermissionV2Schema]);
 export type BeginnerPermission=z.infer<typeof beginnerPermissionSchema>;
 export const beginnerReleaseEnvelopeSchema=z.object({
  schemaVersion:z.literal(1),state:z.enum(['TEST_PUBLISHED','APPROVED_RELEASE']),
