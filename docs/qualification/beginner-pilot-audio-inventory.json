@@ -1,0 +1,700 @@
+{
+  "schemaVersion": 1,
+  "kind": "PLANNING_INVENTORY_NOT_ASSET_MANIFEST",
+  "parentMandate": "MND-20261027-001",
+  "baselineCommit": "1673f2ca28266f001e7d1d14514976df8b91d628",
+  "status": "PREAPPROVAL_ONLY",
+  "audioReady": false,
+  "totals": {
+    "lessons": 8,
+    "scripts": 24,
+    "distinctScriptTexts": 24,
+    "characters": 1019,
+    "words": 223,
+    "intendedDeliveryFiles": 24,
+    "existingVerifiedAudio": 0,
+    "maxTakesPerScript": 3,
+    "maxCandidateFiles": 72
+  },
+  "dependencies": [
+    "Human confirmation of names/place pronunciations",
+    "Approved source hashes and support lexicon",
+    "Paid-tier provider rights and exact regional rate before calls",
+    "Teacher-approved demonstration reference for name/letter/stress practice; not supplied by24 assessment scripts"
+  ],
+  "plannedStorageRoot": "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027",
+  "lessons": [
+    {
+      "code": "MG01-L1",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg01-l1-audio-a",
+          "text": "Hello. I am Linh. I am from Ha Noi.",
+          "scriptSha256": "83ce7aae5c603f0ffb78155bb5c59c8a539b969d8395eb6ac2b3f64265789141",
+          "characters": 35,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l1-l1",
+              "contentRefs": [
+                "mg01-l1-card-a"
+              ],
+              "evidence": [
+                "mg01-l1-audio-a:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l1-audio-b",
+          "text": "Hello. I am Bao. I am from Hue.",
+          "scriptSha256": "db2c6c0be27afd6b13561cfa5f75a99b7b2c5c44e28b316f14924c669a2d9ad6",
+          "characters": 31,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l1-l2",
+              "contentRefs": [
+                "mg01-l1-card-b"
+              ],
+              "evidence": [
+                "mg01-l1-audio-b:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l1-audio-c",
+          "text": "Hello, Sam. I am Nam. You are Sam.",
+          "scriptSha256": "e276efb212bb8b3b067413c97dc6041c965c41b4e499c2e73608ae60d36b9333",
+          "characters": 34,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l1-l3",
+              "contentRefs": [
+                "mg01-l1-card-c"
+              ],
+              "evidence": [
+                "mg01-l1-audio-c:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG01-L2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "dff4b426703439690a7fec60ec5fde58cca7bae0e86080dca758eba76b84a438",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg01-l2-audio-1",
+          "text": "Hello. I am Bo. B, O. I am from Can Tho.",
+          "scriptSha256": "2e4af389e15aa5d55b56297d070a40a2c4a0357de8754f13139955f6ab012e4c",
+          "characters": 40,
+          "words": 11,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l2-l1",
+              "contentRefs": [
+                "mg01-l2-card-1"
+              ],
+              "evidence": [
+                "mg01-l2-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l2-audio-2",
+          "text": "Hello, Tim. I am Kim. You are Tim.",
+          "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046",
+          "characters": 34,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l2-l2",
+              "contentRefs": [
+                "mg01-l2-card-2"
+              ],
+              "evidence": [
+                "mg01-l2-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l2-audio-3",
+          "text": "Hello. I am Emma. I am from Ha Noi.",
+          "scriptSha256": "874d301bd6f9f46dbf3e0d30eaae207e2bd756d8530e2ba9d7877a0f54bfc3cb",
+          "characters": 35,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l2-l3",
+              "contentRefs": [
+                "mg01-l2-card-3"
+              ],
+              "evidence": [
+                "mg01-l2-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG01-L3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "43506aaedff2fdff10619563e06b14d7550879b66caa69b0e0ac08689f2b9984",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg01-l3-audio-1",
+          "text": "Hello, An. I am Sam. I am from Hue. You are An.",
+          "scriptSha256": "f2e78e02428746e78704a57a61797c1a9786c7c34944ea968b0ebac379c07160",
+          "characters": 47,
+          "words": 12,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l3-l1",
+              "contentRefs": [
+                "mg01-l3-card-1"
+              ],
+              "evidence": [
+                "mg01-l3-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l3-audio-2",
+          "text": "Hello. I am May. I am from Can Tho.",
+          "scriptSha256": "eef4fd20397c7eaebf8ddc5e971115d18de14f93e37fa4e290a14923ceb1520f",
+          "characters": 35,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l3-l2",
+              "contentRefs": [
+                "mg01-l3-card-2"
+              ],
+              "evidence": [
+                "mg01-l3-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l3-audio-3",
+          "text": "Hello, Jo. I am Ben. You are from Da Nang. I am from Ha Noi.",
+          "scriptSha256": "ca95459cf83b8999b379893267f0c1892723e0113cc55be8b10b026a789e4e77",
+          "characters": 60,
+          "words": 15,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l3-l3",
+              "contentRefs": [
+                "mg01-l3-card-3"
+              ],
+              "evidence": [
+                "mg01-l3-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG01-L4",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "733819d647b67d5d3775522f874ddba6225f123fc6a458bd63bd163b7e5e74aa",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg01-l4-audio-1",
+          "text": "Hello, Kim. I am Leo. I am from Da Nang.",
+          "scriptSha256": "821dd2d4c6e570ed6f42dfef7c9467174791d812720cc4b5bb207bfe628a3928",
+          "characters": 40,
+          "words": 10,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l4-l1",
+              "contentRefs": [
+                "mg01-l4-card-1"
+              ],
+              "evidence": [
+                "mg01-l4-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l4-audio-2",
+          "text": "Hello. I am An. I am from Can Tho.",
+          "scriptSha256": "336357852be8223506b48673b8b6a6000fb92733238e5ab7f5079b48d29d93a3",
+          "characters": 34,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l4-l2",
+              "contentRefs": [
+                "mg01-l4-card-2"
+              ],
+              "evidence": [
+                "mg01-l4-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg01-l4-audio-3",
+          "text": "Hello, Eva. I am Nam. You are from Hue. I am from Da Nang.",
+          "scriptSha256": "25c98eb41de2f9b53894a16df28fa5e154d1d16de8ca7eac2b02560ebf6bd66b",
+          "characters": 58,
+          "words": 14,
+          "listeningActivities": [
+            {
+              "slug": "mg01-l4-l3",
+              "contentRefs": [
+                "mg01-l4-card-3"
+              ],
+              "evidence": [
+                "mg01-l4-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG02-L1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg02-l1-audio-1",
+          "text": "Hello, Ben. Two books, please. A bag, please.",
+          "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea",
+          "characters": 45,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l1-l1",
+              "contentRefs": [
+                "mg02-l1-card-1"
+              ],
+              "evidence": [
+                "mg02-l1-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l1-audio-2",
+          "text": "Hello, Kim. A pen, please. Two bags, please.",
+          "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af",
+          "characters": 44,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l1-l2",
+              "contentRefs": [
+                "mg02-l1-card-2"
+              ],
+              "evidence": [
+                "mg02-l1-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l1-audio-3",
+          "text": "Hello, Jo. This is an eraser. A book, please.",
+          "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d",
+          "characters": 45,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l1-l3",
+              "contentRefs": [
+                "mg02-l1-card-3"
+              ],
+              "evidence": [
+                "mg02-l1-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG02-L2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "7f476823541e99125266ba6862a32d6cab474ac1859e1612209fc0c9c293b509",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg02-l2-audio-1",
+          "text": "Hello, Mia. A pen, please. Two bags, please.",
+          "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b",
+          "characters": 44,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l2-l1",
+              "contentRefs": [
+                "mg02-l2-card-1"
+              ],
+              "evidence": [
+                "mg02-l2-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l2-audio-2",
+          "text": "Hello, An. Three books, please. A bag, please.",
+          "scriptSha256": "7f65e76b59280aa4b5e7e35970c68320dd246bb2c28408d5cd01f6266e61f8ff",
+          "characters": 46,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l2-l2",
+              "contentRefs": [
+                "mg02-l2-card-2"
+              ],
+              "evidence": [
+                "mg02-l2-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l2-audio-3",
+          "text": "Hello, Eva. Two pens, please. A book, please.",
+          "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5",
+          "characters": 45,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l2-l3",
+              "contentRefs": [
+                "mg02-l2-card-3"
+              ],
+              "evidence": [
+                "mg02-l2-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG02-L3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d3c15edc872d382f97425788e52fe071493b53ffd5cb9766b219783763cd1fe9",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg02-l3-audio-1",
+          "text": "Hello, Mia. This is a bag. Two pens, please.",
+          "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79",
+          "characters": 44,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l3-l1",
+              "contentRefs": [
+                "mg02-l3-card-1"
+              ],
+              "evidence": [
+                "mg02-l3-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l3-audio-2",
+          "text": "Hello, Jo. That is a book. A pen, please.",
+          "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65",
+          "characters": 41,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l3-l2",
+              "contentRefs": [
+                "mg02-l3-card-2"
+              ],
+              "evidence": [
+                "mg02-l3-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l3-audio-3",
+          "text": "Hello, An. Three bags, please. Two books, please.",
+          "scriptSha256": "959fcdde96fd44d3d944a6da27b7cc836194b2a7001ad7ad4da596bd55bf4226",
+          "characters": 49,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l3-l3",
+              "contentRefs": [
+                "mg02-l3-card-3"
+              ],
+              "evidence": [
+                "mg02-l3-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    },
+    {
+      "code": "MG02-L4",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "4dd347b6d6f7533d7dbad73da5454b55a103835ec96b412b09840dc58cb04e78",
+      "assessedActivities": 8,
+      "objectives": 4,
+      "scripts": [
+        {
+          "slug": "mg02-l4-audio-1",
+          "text": "Hello, Sam. This is a pen. Three books, please.",
+          "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0",
+          "characters": 47,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l4-l1",
+              "contentRefs": [
+                "mg02-l4-card-1"
+              ],
+              "evidence": [
+                "mg02-l4-audio-1:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l4-audio-2",
+          "text": "Hello, Kim. That is a bag. A book, please.",
+          "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78",
+          "characters": 42,
+          "words": 9,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l4-l2",
+              "contentRefs": [
+                "mg02-l4-card-2"
+              ],
+              "evidence": [
+                "mg02-l4-audio-2:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        },
+        {
+          "slug": "mg02-l4-audio-3",
+          "text": "Hello, May. Two bags, please. A pen, please.",
+          "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d",
+          "characters": 44,
+          "words": 8,
+          "listeningActivities": [
+            {
+              "slug": "mg02-l4-l3",
+              "contentRefs": [
+                "mg02-l4-card-3"
+              ],
+              "evidence": [
+                "mg02-l4-audio-3:1"
+              ]
+            }
+          ],
+          "narrationOverride": false,
+          "spokenText": null,
+          "speechReview": null,
+          "role": "single narrator, fictional quoted greeting; not a multi-speaker dialogue",
+          "intendedDeliveryFiles": 1,
+          "asset": null,
+          "productionStatus": "NOT_STARTED"
+        }
+      ]
+    }
+  ]
+}

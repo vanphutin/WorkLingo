@@ -1,0 +1,6 @@
+{
+  "actor": "Codex",
+  "owner": "Codex",
+  "reason": "Bounded read-only preapproval reviewed with independent gate rights, protected source hashes and exact allowlists. High-risk external/human-data scope needs matching human approval; no execution authorization recorded.",
+  "reference": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md"
+}

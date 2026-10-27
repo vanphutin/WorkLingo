@@ -1,0 +1,101 @@
+---
+{
+  "schema_version": 1,
+  "id": "MND-20261027-002",
+  "status": "triaged",
+  "created": "2026-10-27",
+  "updated": "2026-10-27T12:08:19.180Z",
+  "title": "Produce and human-check offline MG01 MG02 audio within capped provider and storage authority",
+  "type": "learning-content",
+  "owner": "Codex",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "m",
+  "impact": 4,
+  "problem": "Twenty-four final listening bindings have scripts but zero verified real audio; DB-backed generation and product storage cannot be reused within offline authority.",
+  "value": "Create rights-cleared, immutable, checksum-verified audio candidates with a reviewed MG01-L1 pilot and explicit cost limits.",
+  "scope": [
+    "Separate gate A child under frozen implementing MND-20261027-001; no authority inherited from A/B/C or R1.2a",
+    "Exact files, protected baseline, provider/budget/storage/actor limits in mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json",
+    "Gate-specific tasks, budget, acceptance and rollback are frozen in the linked plan and scope; no other gate execution rights."
+  ],
+  "dedupe_key": "beginner:r12b:qualification:gate-a:offline-20261027",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md:1",
+      "observation": "Read-only audit verifies missing media/human/timing evidence and applicable product boundaries."
+    },
+    {
+      "kind": "document",
+      "reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md:1",
+      "observation": "Gate-specific tasks, concrete acceptance, limits, dependencies, rollback and owner decisions are proposed."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json:1",
+      "observation": "Exact allowlist, protected baseline, environment and budget boundaries captured before approval."
+    }
+  ],
+  "acceptance": [
+    "Correct authority/hash/root/endpoint/rate preflight before each live request; no fallback, secrets or DB access.",
+    "MG01-L1 three actual candidate files pass automated and real human audio QA before expanding.",
+    "All24 selected WAVs valid PCM16 mono24000Hz, actual byte checksums/fingerprints/rights, listening QA100%, no missing/stale/duplicate mapping.",
+    "Costs and failed/retried calls stay within pilot/inclusive caps; no hidden retry, fake provider or readiness inferred from scripts.",
+    "Audio quality findings resolved or rejected; offline media is not a DB Artifact/approved release; B/C remain independently gated."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": true,
+    "rollback": "Stop provider calls; mark rejected/superseded manifest selections, retain actual audit and prior selected bytes. No app storage/DB/bound version mutation. Cleanup only verified run-owned unselected files, explicit owner cleanup decision after references checked."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+  "sprint_reference": null,
+  "approval": null,
+  "verification": [],
+  "history": [
+    {
+      "at": "2026-10-27T12:08:09.269Z",
+      "actor": "mandate-steward",
+      "from": null,
+      "to": "captured",
+      "reason": "Evidence-backed proposal captured; no implementation approval.",
+      "event": "capture",
+      "reference": null
+    },
+    {
+      "at": "2026-10-27T12:08:19.180Z",
+      "actor": "Codex",
+      "from": "captured",
+      "to": "triaged",
+      "reason": "Bounded read-only preapproval reviewed with independent gate rights, protected source hashes and exact allowlists. High-risk external/human-data scope needs matching human approval; no execution authorization recorded.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md"
+    }
+  ]
+}
+---
+
+## Independent qualification gate A
+
+Follow docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md and mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json. This is preapproval only: no implementation, provider/audio/human experiment or sign-off is executed or approved. Existing authoring and R1.2a mandates retain states.
+
+## Frozen approval bindings
+
+Plan SHA-256(LF): 9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289
+Inventory SHA-256(LF): 03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1
+Review SHA-256(LF): dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594
+Scope SHA-256(LF): 90fe9d8bf3316ca729d43b5bb0308c2d51ae5d47c84dbf9117e25a967e4288de
+Baseline fingerprint: 1b36c35df657dc26ced7d00c77013728883c5b86faa5950a0d78e4d70d8d3022
+Exact allowlist fingerprint: de6baff5ca281ee61f07555ca8701542bdd570d1b9a22b9d892f86012bfd62f0
+
+## Authority and unknowns
+
+Only gate A rights in scope; no DB/env/live API/publication/learner/product/OS/merge/push/deploy. A paid voice/rate/rights and human QA, B qualified human and actual diffs, C actual consent/target fit/offline-method/timing approval remain evidence gates. Source corrections are never preapproved. Do not create fabricated actors, media IDs, timings or readiness.
+
+## Rollback
+
+Stop provider calls; mark rejected/superseded manifest selections, retain actual audit and prior selected bytes. No app storage/DB/bound version mutation. Cleanup only verified run-owned unselected files, explicit owner cleanup decision after references checked.

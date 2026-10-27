@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "gate": "C",
+  "parentMandate": "MND-20261027-001",
+  "parentProgramMandate": "MND-20261024-001",
+  "status": "PREAPPROVAL_ONLY",
+  "approval": null,
+  "baseline": {
+    "head": "1673f2ca28266f001e7d1d14514976df8b91d628",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "files": [
+      {
+        "path": "apps/api/src/ai-gateway/domain/text-to-speech.port.ts",
+        "sha256": "60e2bda27c1792c341ed32063fe951e409ab218f07035782d9e8cdc319320df0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/azure-dialogue-ssml.ts",
+        "sha256": "6f1b38b59e989fb049b48ab07a19ec6985f6a1121951910e788233d91be055c2"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts",
+        "sha256": "cc958d0193034ba2bfdef296a8fbf655930937031917aed82098ab8ccdd6fb5a"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "sha256": "d34e9a33563ba9aca580300be00170d6f555ca1111eb8078f02c7e06a92b5f78"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+        "sha256": "99b5a2afb8e8824f37ce723735d1cd5505611559eb0c54a839d639e044b4c4dc"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts",
+        "sha256": "4aa47178a69aa0f61ab8c6ccb94812c411fa4caf90a413d2a0abf085c933c9c3"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+        "sha256": "85adba57e56a01a4345e2f8ff185fec292a84ab1f9d2e08b70e57c0ef573d0c4"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.ts",
+        "sha256": "8cfb76bb82e0994725ba40d87050515128f24c7136153ad8303d825d09d40c77"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/rehearsal-pack.test.ts",
+        "sha256": null
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/rehearsal-pack.ts",
+        "sha256": null
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "dff4b426703439690a7fec60ec5fde58cca7bae0e86080dca758eba76b84a438"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "43506aaedff2fdff10619563e06b14d7550879b66caa69b0e0ac08689f2b9984"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "733819d647b67d5d3775522f874ddba6225f123fc6a458bd63bd163b7e5e74aa"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "7f476823541e99125266ba6862a32d6cab474ac1859e1612209fc0c9c293b509"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "d3c15edc872d382f97425788e52fe071493b53ffd5cb9766b219783763cd1fe9"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "4dd347b6d6f7533d7dbad73da5454b55a103835ec96b412b09840dc58cb04e78"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-content-review.md",
+        "sha256": "e3cd0821f8e8856f9a58fed9940722e70130e141c428e9b6996a748a4586be45"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-rehearsal-summary.md",
+        "sha256": null
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",
+        "sha256": "fd1a0372b68e4f1c53f385702353435fe988e217443c7a8e7ce185c381a79dc7"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-verification.md",
+        "sha256": "23b0d3bd4896f0b3aa4a0e3d584d3f6fb122079eff587c87360f6f45047d7e86"
+      },
+      {
+        "path": "packages/content-format/src/audio-narration.ts",
+        "sha256": "f6ce4585154be2237026de05bbf0fcf395bbba0f010f32d6b9460da22a334cd1"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      }
+    ],
+    "policy": "Exact protected bytes plus ancestor baseline; only these planning/governance files may be added by descendants. Changed source requires amendment; authorized new files must be absent before execution.",
+    "fingerprint": "c94ac48bfa38a775d62b0921053a01eaa78bbad333f2e1995cf856048f0f77df"
+  },
+  "frozenArtifacts": [
+    {
+      "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+      "sha256LF": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+    },
+    {
+      "path": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md",
+      "sha256LF": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594"
+    },
+    {
+      "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+      "sha256LF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1"
+    }
+  ],
+  "allowlist": {
+    "repositoryCreate": [
+      "apps/api/test/beginner-pilot/rehearsal-pack.test.ts",
+      "apps/api/test/beginner-pilot/rehearsal-pack.ts",
+      "docs/qualification/beginner-pilot-rehearsal-summary.md"
+    ],
+    "repositoryModify": [],
+    "externalCreate": [
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/consent-register.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/consent-register.json.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l1.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l1.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l2.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l2.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l3.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l3.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l4.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l4.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l1.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l1.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l2.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l2.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l3.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l3.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l4.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l4.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observations.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observations.json.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observer-signoff.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observer-signoff.json.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/pack-manifest.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/pack-manifest.json.tmp"
+    ],
+    "externalModifyOwnedOnly": [
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/consent-register.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/consent-register.json.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l1.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l1.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l2.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l2.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l3.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l3.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l4.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg01-l4.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l1.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l1.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l2.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l2.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l3.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l3.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l4.html",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/mg02-l4.html.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observations.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observations.json.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observer-signoff.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/observer-signoff.json.tmp",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/pack-manifest.json",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C/pack-manifest.json.tmp"
+    ],
+    "createDirectories": [
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027",
+      "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C"
+    ],
+    "fingerprint": "d10bf79d40210c9ca949784c1a510473d5cedc7e3c67fa783086bb7c885c626f"
+  },
+  "authority": {
+    "databaseRead": false,
+    "databaseWrite": false,
+    "envFileRead": false,
+    "liveAdminApi": false,
+    "importPublishRelease": false,
+    "learnerEnrollment": false,
+    "productionStorage": false,
+    "productSchemaConfigModify": false,
+    "sourceLessonModify": false,
+    "providerSTTOrAI": false,
+    "osAclPolicyModify": false,
+    "mergePushDeploy": false,
+    "offlineHumanRehearsal": true,
+    "pseudonymousObserverNotes": true,
+    "participantVoiceOrVideoRecording": false,
+    "participantRawAnswersPersist": false,
+    "audioProduction": false,
+    "humanPedagogyApproval": false
+  },
+  "budget": {
+    "paidEngagementUSD": 0,
+    "maxParticipants": 3,
+    "expectedContactHours": 18,
+    "planningOverheadHours": [
+      4,
+      6
+    ],
+    "maxFirstExposureObservations": 24
+  },
+  "method": {
+    "mode": "OFFLINE_CONTENT_TIMING_ONLY",
+    "requiresExplicitOwnerMethodDeviationApproval": true,
+    "canonicalLiveAdminPreviewNotQualified": true,
+    "participantCodes": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "adultsOnly": true,
+    "actualConsentRequired": true,
+    "rawPersonalDataInGit": false,
+    "retentionPrivateDaysAfterDecision": 30,
+    "retentionPrivateDaysAfterCancellation": 30,
+    "maxRetentionDaysAfterLastObservation": 90,
+    "withdrawalRemovalDays": 7,
+    "gitSummary": "Lesson aggregates only; no participant codes or individual timings",
+    "targetedOwnedJsonCleanupAfterActualTrigger": true,
+    "cleanupAutomatic": false
+  },
+  "timing": {
+    "plannerMinutes": 45,
+    "proposedActiveMedianMin": 35,
+    "proposedActiveMedianMax": 50,
+    "requiredInRangePerLesson": 2,
+    "requiredObservationsPerLesson": 3,
+    "lessonCount": 8,
+    "phaseTargetsNotObserved": true,
+    "stopSessionActiveMinutes": 60,
+    "forcedReplay": false,
+    "answerSupplyingAssistancePassing": false,
+    "conceptTeachingPassing": false,
+    "teacherAddedTimeQualifies": false,
+    "maxPronunciationDemonstrationSeconds": 60,
+    "maxClarificationSeconds": 120,
+    "requiresFrozenSupportOutline": true,
+    "ownerTimingPolicyApproval": null
+  },
+  "storage": {
+    "root": "C:/Users/ASUS/AppData/Local/WorkLingo/qualification/r12b-20261027/C",
+    "productionStorageAllowed": false,
+    "initialState": "ABSENT; verify again before execution",
+    "scopeOwned": true,
+    "noSymlinkOrReparse": true,
+    "noAclChanges": true,
+    "parentOwnedByQualificationRunOnly": true,
+    "cleanup": "No recursive cleanup. Only exact run-owned allowlisted files, ownership/checksum/reference checks and owner cleanup decision. Never delete shared parent or historical bound files."
+  },
+  "futureGovernanceCreate": [
+    "mandate/reports/2026-10-27-beginner-r12b-gate-c-human-approval.md",
+    "mandate/reports/2026-10-27-beginner-r12b-gate-c-verification.md"
+  ],
+  "itemLifecycle": "Allocated child CLI only; existing parent/R1.2a/offline-authoring lifecycle frozen independently",
+  "allowedCommands": [
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/rehearsal-pack.test.ts",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/rehearsal-pack.ts --build"
+  ],
+  "acceptance": [
+    "Actual A/B PASS on final hashes and explicit owner acceptance of offline method/timing policy before any session.",
+    "Owner coordinates3 consenting adult F0 participants; no fabricated entry/mastery, real MG01 evidence before MG02; shortages/withdrawal stay incomplete.",
+    "MG01-L1 P01 first, observer suitability verdict before expansion; hold on privacy/audio/instruction/under-duration failure.",
+    "Twenty-four complete first-exposure observations on final source/rubric/audio hashes; all8 lessons meet proposed timing/support/evidence policy, or honestly remain NOT_READY.",
+    "Record active/assisted/replay/wall/phase time separately with no technical waits or forced replay; no learner data/recordings/account/API/DB writes.",
+    "Pure pack tests prove canonical content/redaction/no network; offline content timing never claims runtime recorder/E2E equivalence or CEFR."
+  ],
+  "rollback": "Stop sessions on safety/quality issue; retain pseudonymous observations with superseded/withdrawn status. No progress/DB cleanup; private cleanup only separate owner decision within exact owned C files."
+}
