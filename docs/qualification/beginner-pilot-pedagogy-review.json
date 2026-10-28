@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "mandate": "MND-20261027-003",
-  "state": "PREAPPROVAL_TEMPLATE_NOT_HUMAN_REVIEW",
+  "state": "AUTHORIZED_PREPARATION_PENDING_ACTUAL_HUMAN_REVIEW",
   "revision": "international-v2",
   "bindingAlgorithm": "SHA-256 raw source bytes; stable sorted JSON bundle of source/rubric/audio hashes",
   "baselineHead": "02aaea9ff0a1635f1c18637cd1a14cc1e5ef9126",
@@ -10,21 +10,117 @@
     "REVISE",
     "REJECT"
   ],
-  "reviewer": null,
+  "reviewer": "ENG-REVIEWER-001",
   "appointment": {
-    "reviewerId": null,
-    "ownerConfirmedIdentity": false,
-    "professionalRoleSummary": null,
+    "reviewerId": "ENG-REVIEWER-001",
+    "ownerConfirmedIdentity": true,
+    "professionalRoleSummary": "Lead Pedagogical Reviewer; qualification details held by product owner under ASc123, not copied into repository.",
     "adultVietnameseBeginnerExperience": null,
-    "pronunciationIpaReviewCompetence": null,
-    "identityAndQualificationEvidenceReference": null,
-    "ownerAppointmentReference": null,
-    "reviewerConsentReference": null,
-    "originalEvidenceCustodian": "Product owner; external identity/signature originals are not copied into Git"
+    "pronunciationIpaReviewCompetence": "Owner-reported competence; owner-confirmed original evidence reference ASc123. Codex has not inspected originals.",
+    "identityAndQualificationEvidenceReference": "ASc123",
+    "ownerAppointmentReference": "VN_da-aa12",
+    "reviewerConsentReference": "Jonh_c23ED",
+    "originalEvidenceCustodian": "Product owner; external identity/signature originals are not copied into Git",
+    "appointmentDate": "2026-10-27",
+    "recordedOn": "2026-10-28",
+    "status": "APPOINTMENT_AND_CONSENT_OWNER_CONFIRMED",
+    "originalVerification": {
+      "status": "OWNER_ATTESTED_ORIGINALS_CHECKED",
+      "checkerRole": "Product owner",
+      "actualCheckedOn": "2026-10-27",
+      "recordedOn": "2026-10-28",
+      "source": "Explicit human confirmation in current conversation; raw identity/signatures retained by owner.",
+      "items": [
+        {
+          "reference": "ASc123",
+          "ownerVerdict": "PASS"
+        },
+        {
+          "reference": "VN_da-aa12",
+          "ownerVerdict": "PASS"
+        },
+        {
+          "reference": "Jonh_c23ED",
+          "ownerVerdict": "PASS"
+        }
+      ],
+      "agentInspectedOriginals": false,
+      "independentAuthenticationPerformed": false
+    },
+    "scopeAcceptance": {
+      "status": "OWNER_REPORTED_ACCEPTANCE_PENDING_RECEIPT_EVIDENCE",
+      "reviewerAcceptsAdultVietnameseBeginnerScope": null,
+      "reviewerAcknowledgementReference": null,
+      "acknowledgedOn": null,
+      "ownerReportedReviewerAcceptance": true,
+      "scope": "English learning materials for adult Vietnamese beginners",
+      "recordedOn": "2026-10-28"
+    },
+    "noPedagogicalVerdictImplied": true
   },
   "overallVerdict": null,
   "qualifiedHumanSignoffEvidenceReference": null,
-  "reviewHistory": [],
+  "reviewHistory": [
+    {
+      "eventId": "B-APPOINTMENT-001",
+      "eventType": "OWNER_APPOINTMENT_AND_ORIGINAL_EVIDENCE_ATTESTATION_RECORDED",
+      "recordedOn": "2026-10-28",
+      "effectiveAppointmentOn": "2026-10-27",
+      "reviewerId": "ENG-REVIEWER-001",
+      "sourceActorRole": "Product owner",
+      "approvalReference": "mandate/reports/2026-10-27-beginner-r12b-gate-b-human-approval.md",
+      "evidenceReferences": [
+        "ASc123",
+        "VN_da-aa12",
+        "Jonh_c23ED"
+      ],
+      "ownerActualOriginalCheckDate": "2026-10-27",
+      "agentInspectedOriginals": false,
+      "pedagogicalDecision": false,
+      "note": "Owner explicitly confirms all three original evidence references PASS. Professional personal details and originals are retained by owner. Exact bundle acknowledgement and all human pedagogical verdicts remain pending."
+    },
+    {
+      "eventId": "B-HANDOFF-CLAIM-001",
+      "eventType": "OWNER_REPORTED_HANDOFF_PENDING_EXACT_EVIDENCE",
+      "recordedOn": "2026-10-28",
+      "reviewerId": "ENG-REVIEWER-001",
+      "lessonCode": "MG01-L1",
+      "sourceActorRole": "Product owner",
+      "ownerReportedScopeAcceptance": true,
+      "claimedBundleSha256": "9a0d433685060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+      "expectedBundleSha256": "9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+      "actualReviewerReceiptDate": null,
+      "receiptEvidenceReference": null,
+      "acknowledgementVerified": false,
+      "pedagogicalDecision": false,
+      "note": "Owner reports reviewer receipt and task acceptance. Supplied bundle hash has62 characters; actual receipt date and reference remain placeholders. Do not silently repair hash, infer date/reference, acknowledge exact bundle, start human review or promote any verdict. Await real corrected evidence; source/audio remain frozen."
+    },
+    {
+      "eventId": "B-HANDOFF-DRAFT-001",
+      "eventType": "OWNER_PROVIDED_REQUEST_WORDING_NOT_RECEIPT_PROOF",
+      "recordedOn": "2026-10-28",
+      "sourceActorRole": "Product owner",
+      "reviewerId": "ENG-REVIEWER-001",
+      "lessonCode": "MG01-L1",
+      "actualReceiptDate": null,
+      "receiptEvidenceReference": null,
+      "pedagogicalDecision": false,
+      "note": "Latest owner text asks reviewer to confirm receipt and repeats the same62-character hash; it is a request draft, not an actual reviewer acknowledgement. Prepared a corrected outgoing template using frozen expected hash only; no message sent and no actual-evidence value repaired."
+    },
+    {
+      "eventId": "B-RECEIPT-DATE-001",
+      "eventType": "OWNER_CONFIRMED_ACTUAL_RECEIPT_DATE",
+      "recordedOn": "2026-10-28",
+      "reviewerId": "ENG-REVIEWER-001",
+      "lessonCode": "MG01-L1",
+      "sourceActorRole": "Product owner",
+      "actualReviewerReceiptDate": "2026-10-27",
+      "receiptEvidenceReference": null,
+      "exactBundleAcknowledgementVerified": false,
+      "pedagogicalDecision": false,
+      "note": "Owner subsequently supplied actual receipt date27/10/2026. This resolves only the date; malformed claimed hash and missing receipt evidence reference remain open. Earlier events retained unchanged."
+    }
+  ],
   "gateA": {
     "mandate": "MND-20261027-002",
     "status": "verified",
@@ -1846,8 +1942,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -3640,8 +3737,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -5444,8 +5542,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -7246,8 +7345,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -9087,8 +9187,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -10872,8 +10973,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -12679,8 +12781,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -14485,8 +14588,9 @@
       "clarificationWording": null,
       "blockers": [
         {
-          "id": "REVIEWER_NOT_APPOINTED",
-          "status": "OPEN"
+          "id": "REVIEWER_REQUIRED",
+          "status": "OPEN",
+          "reason": "Appointment/original-evidence attestation recorded; reviewer must accept pilot scope and acknowledge exact source/audio bundle before expert sign-off."
         },
         {
           "id": "LESSON_TEACHER_REVIEW_NOT_RUN",
@@ -14566,5 +14670,58 @@
       "rationale": null,
       "reviewId": null
     }
-  ]
+  ],
+  "execution": {
+    "approvalReference": "mandate/reports/2026-10-27-beginner-r12b-gate-b-human-approval.md",
+    "approvedProposalHash": "ff91852c45965d82933524b58f4d10539bbbce3c2c61c764261525af7dc93976",
+    "status": "REVIEWER_REQUIRED",
+    "blocker": "Owner confirms reviewer receipt date2026-10-27 and reports task acceptance; supplied handoff hash remains62 characters, mismatching frozen64-character bundle, and actual receipt evidence reference remains missing. No pedagogical verdict.",
+    "nextLesson": "MG01-L1",
+    "reviewOrder": [
+      "MG01-L1",
+      "MG01-L2",
+      "MG01-L3",
+      "MG01-L4",
+      "MG02-L1",
+      "MG02-L2",
+      "MG02-L3",
+      "MG02-L4"
+    ],
+    "ownerCoordinatesDistribution": true,
+    "agentContactedReviewer": false,
+    "reviewerAcknowledgedPacketAt": null,
+    "reviewerAcknowledgedPacketReference": null,
+    "humanReviewStartedAt": null,
+    "nextLessonBundleSha256": "9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+    "nextLessonSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+    "nextLessonSelectedAudioHashes": [
+      "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+      "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+      "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3"
+    ],
+    "receiptClaim": {
+      "status": "PENDING_EXACT_BUNDLE_AND_EVIDENCE_REFERENCE",
+      "reportedByRole": "Product owner",
+      "recordedOn": "2026-10-28",
+      "reviewerId": "ENG-REVIEWER-001",
+      "lessonCode": "MG01-L1",
+      "ownerReportedReceivedCurrentLessonChecklistAnswersRubricAndThreeTake2Audio": true,
+      "claimedBundleSha256": "9a0d433685060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+      "claimedHashLength": 62,
+      "expectedBundleSha256": "9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+      "exactBundleHashMatches": false,
+      "actualReviewerReceiptDate": "2026-10-27",
+      "receiptEvidenceReference": null,
+      "agentVerifiedReviewerReceipt": false,
+      "missing": [
+        "CORRECT_EXACT_BUNDLE_ACKNOWLEDGEMENT",
+        "ACTUAL_RECEIPT_EVIDENCE_REFERENCE"
+      ],
+      "pedagogicalVerdict": null,
+      "latestOwnerMessageKind": "DRAFT_REQUEST_TO_REVIEWER_NOT_A_REVIEWER_REPLY",
+      "latestMessageSuppliesActualReceiptEvidence": false,
+      "correctedOutgoingTemplateAvailable": true,
+      "dateSource": "Explicit subsequent owner confirmation in current conversation"
+    }
+  }
 }

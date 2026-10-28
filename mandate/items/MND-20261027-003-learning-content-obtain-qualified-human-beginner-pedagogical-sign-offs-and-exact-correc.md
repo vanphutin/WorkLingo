@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261027-003",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-27",
-  "updated": "2026-10-28T05:34:15.942Z",
+  "updated": "2026-10-28T05:49:28.882Z",
   "title": "Obtain qualified human Beginner pedagogical sign-offs and exact correction requests",
   "type": "learning-content",
   "owner": "Codex",
@@ -55,7 +55,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-28-beginner-gate-b-review.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner — explicit human authorization transcribed by Codex",
+    "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-b-human-approval.md",
+    "at": "2026-10-28T05:49:28.494Z",
+    "proposal_hash": "ff91852c45965d82933524b58f4d10539bbbce3c2c61c764261525af7dc93976"
+  },
   "verification": [],
   "history": [
     {
@@ -129,6 +134,24 @@
       "reason": "Reuse existing B after exact current source/audio baseline and privacy/storage amendment. Preapproval only; no qualified reviewer or execution approval recorded.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-28-beginner-gate-b-preapproval.md"
+    },
+    {
+      "at": "2026-10-28T05:49:28.494Z",
+      "actor": "WorkLingo product owner — explicit human authorization transcribed by Codex",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Human approval received in this conversation on 2026-10-28 (Asia/Saigon), titled HUMAN APPROVAL — WORKLINGO GATE B, explicitly authorizes MND-20261027-003 under proposal hash ff91852c45965d82933524b58f4d10539bbbce3c2c61c764261525af7dc93976 and the captured plan, baseline, source/audio snapshot and exact allowlist. Codex may record this approval through Mandate CLI, complete owner-reported appointment for ENG-REVIEWER-001, prepare all eight current Lesson review packets starting with MG01-L1, support actual human per-item review and transcribe genuine decisions/correction requests. Owner supplies qualification, appointment and consent references ASc123, VN_da-aa12 and Jonh_c23ED and holds originals separately. Professional claims and appointment are owner-reported; no original document has been inspected by Codex. This record authenticates neither qualifications nor consent documents and contains no human pedagogical verdict. Retain REVIEWER_REQUIRED until mandatory evidence is sufficient. AI cannot sign, invent results/dates or act as the human teacher. Only the two approved result forms, one eventual summary and the explicit B governance evidence paths may change; protected source extracts remain immutable. No source/audio/rubric edit, Azure/provider, .env, DB, OS, publication, Gate C, merge, push, deploy or CONTENT_READY is authorized. Permission is for scoped execution, not verified completion.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-b-human-approval.md"
+    },
+    {
+      "at": "2026-10-28T05:49:28.882Z",
+      "actor": "WorkLingo product owner — explicit human authorization transcribed by Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Human approval received in this conversation on 2026-10-28 (Asia/Saigon), titled HUMAN APPROVAL — WORKLINGO GATE B, explicitly authorizes MND-20261027-003 under proposal hash ff91852c45965d82933524b58f4d10539bbbce3c2c61c764261525af7dc93976 and the captured plan, baseline, source/audio snapshot and exact allowlist. Codex may record this approval through Mandate CLI, complete owner-reported appointment for ENG-REVIEWER-001, prepare all eight current Lesson review packets starting with MG01-L1, support actual human per-item review and transcribe genuine decisions/correction requests. Owner supplies qualification, appointment and consent references ASc123, VN_da-aa12 and Jonh_c23ED and holds originals separately. Professional claims and appointment are owner-reported; no original document has been inspected by Codex. This record authenticates neither qualifications nor consent documents and contains no human pedagogical verdict. Retain REVIEWER_REQUIRED until mandatory evidence is sufficient. AI cannot sign, invent results/dates or act as the human teacher. Only the two approved result forms, one eventual summary and the explicit B governance evidence paths may change; protected source extracts remain immutable. No source/audio/rubric edit, Azure/provider, .env, DB, OS, publication, Gate C, merge, push, deploy or CONTENT_READY is authorized. Permission is for scoped execution, not verified completion.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-b-human-approval.md"
     }
   ]
 }
