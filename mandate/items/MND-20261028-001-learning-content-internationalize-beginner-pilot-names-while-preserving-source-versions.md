@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261028-001",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-28",
-  "updated": "2026-10-28T01:26:15.123Z",
+  "updated": "2026-10-28T01:28:23.499Z",
   "title": "Internationalize Beginner pilot names while preserving source versions and shared audio budgets",
   "type": "learning-content",
   "owner": "Codex",
@@ -60,7 +60,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-28-beginner-international-names.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner (direct human user)",
+    "reference": "mandate/reports/2026-10-28-beginner-international-names-human-approval.md",
+    "at": "2026-10-28T01:28:23.279Z",
+    "proposal_hash": "da36a4df8ba9a5c41c33327d9758e8be3ec164019b0f30d06db70be7ae714244"
+  },
   "verification": [],
   "history": [
     {
@@ -80,6 +85,24 @@
       "reason": "Evidence-backed exact content mapping and in-memory qualification reviewed; version-aware old/new audio safeguards and unchanged shared limits specified. Matching final human execution approval remains pending.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-28-beginner-international-names-review.md"
+    },
+    {
+      "at": "2026-10-28T01:28:23.279Z",
+      "actor": "WorkLingo product owner (direct human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Actual matching human approval received for exact MND-20261028-001 scope/hash; all frozen/baseline/allowlist/history checks passed before edits.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-human-approval.md"
+    },
+    {
+      "at": "2026-10-28T01:28:23.499Z",
+      "actor": "WorkLingo product owner (direct human user)",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Actual matching human approval received for exact MND-20261028-001 scope/hash; all frozen/baseline/allowlist/history checks passed before edits.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-human-approval.md"
     }
   ]
 }

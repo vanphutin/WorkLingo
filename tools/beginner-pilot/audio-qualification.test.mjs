@@ -208,6 +208,7 @@ test('review7 generic pilot PASS lacks required pronunciation/pace disposition o
 const childHash = '96a4ca63b69ec052a0bf203b81773d1dc1d6256d2d1fd291deeafb007b1e45a1';
 const originalScope = JSON.parse(fs.readFileSync(new URL('../../mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json', import.meta.url)));
 const storageScope = JSON.parse(fs.readFileSync(new URL('../../mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json', import.meta.url)));
+const contentScope = JSON.parse(fs.readFileSync(new URL('../../mandate/reports/2026-10-28-beginner-international-names-scope.json', import.meta.url)));
 const feature = (name, ...args) => { assert.equal(typeof qualifier[name], 'function', `${name} must implement the approved storage boundary`); return qualifier[name](...args); };
 const auth = status => ({ original: setup().approval, child: { status, proposal_hash: childHash } });
 
@@ -295,11 +296,12 @@ function nativeEqual(a,b) { return path.resolve(a) === path.resolve(b); }
 
 function authorityFixture() {
   const repository = path.resolve(fileURLToPath(new URL('../..', import.meta.url)));
-  const files = new Map(), names = fs.readdirSync(path.join(repository,'mandate/items')).filter(n => /^MND-20261027-00[25]-/u.test(n));
-  const paths = ['mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json','mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json',...originalScope.frozenArtifacts.map(f=>f.path),...storageScope.frozenArtifacts.map(f=>f.path),...storageScope.baseline.protectedFiles.map(f=>f.path),...names.map(n=>'mandate/items/'+n)];
+  const files = new Map(), names = fs.readdirSync(path.join(repository,'mandate/items')).filter(n => /^(?:MND-20261027-00[25]|MND-20261028-001)-/u.test(n));
+  const paths = ['mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json','mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json','mandate/reports/2026-10-28-beginner-international-names-scope.json',contentScope.archive.path,...contentScope.frozenArtifacts.map(f=>f.path),...originalScope.frozenArtifacts.map(f=>f.path),...storageScope.frozenArtifacts.map(f=>f.path),...storageScope.baseline.protectedFiles.map(f=>f.path),...names.map(n=>'mandate/items/'+n)];
   for (const p of paths) files.set(path.resolve(repository,p), fs.readFileSync(path.resolve(repository,p)));
   const editItem = (prefix, alter) => { const p=path.join(repository,'mandate/items',names.find(n=>n.startsWith(prefix))),raw=files.get(p).toString(),m=raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u),item=JSON.parse(m[1]); alter(item); files.set(p,Buffer.from('---\n'+JSON.stringify(item)+'\n---\n'+m[2])); };
   editItem('MND-20261027-005',item=>{item.status='verified';});
+  editItem('MND-20261028-001',item=>{item.status='verified';});
   const io={readFile:async(p,encoding)=>{const bytes=files.get(path.resolve(p)); if(!bytes)throw Error('MISSING_FIXTURE');return encoding?bytes.toString():bytes;},readdir:async()=>names};
   const runGit=args=>({status:0,stdout:args[0]==='branch'?'codex/foundation-basic-readiness\n':''});
   return {repository,files,editItem,io,runGit,effective:feature('bindStorageScope',originalScope,storageScope)};
@@ -317,7 +319,7 @@ test('runtime refuses revoked approvals, changed frozen/protected bytes, ancestr
     if(type==='source')f.files.set(path.join(f.repository,'content/beginner/pilot/mg01-l1.lesson.txt'),Buffer.from('changed'));
     if(type==='ancestry')f.runGit=()=>({status:1,stdout:''});
     if(type==='effective')f.effective.budget.maxCalls=73;
-    await assert.rejects(feature('readAuthority',f.repository,f.effective,'produce',{io:f.io,runGit:f.runGit}),/AUTHORITY|FROZEN|PROTECTED|ANCESTRY|SCOPE/u);
+    await assert.rejects(feature('readAuthority',f.repository,f.effective,'produce',{io:f.io,runGit:f.runGit}),/AUTHORITY|FROZEN|PROTECTED|ANCESTRY|SCOPE|CONTENT/u);
   }
 });
 test('concurrent content or authority revocation halts setup without writing private metadata', async () => {
@@ -365,4 +367,76 @@ test('Windows helper isolates native 5.1 module lookup from inherited Core modul
   const spawn=(_binary,_args,options)=>({status:options.env?.PSModulePath==='C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules'?0:1,stdout:'ACL_OK',stderr:''});
   assert.equal(feature('powershell','read-only synthetic ACL probe',{spawn,env}),'ACL_OK');
   assert.equal(env.PSModulePath,'C:\\Core7\\Modules');assert.equal(env.PATH,'synthetic-path');
+});
+
+function revisedFixture(){
+ const f=setup();return f.runner().run({lesson:'MG01-L1'}).then(()=>{
+  approvePilot(f);f.args.legacyInventory=structuredClone(f.inventory);f.args.legacyInventory.revision='original-v1';
+  f.args.inventory=structuredClone(f.inventory);f.args.inventory.revision='international-v2';
+  const lesson=f.args.inventory.lessons[0];lesson.sourceSha256='new-source-0';
+  for(const s of lesson.scripts){s.text=s.text.replace('Alpha','Lily').replace('Bravo','Jack').replace('Charlie','Noah');s.scriptSha256=hash(s.text);s.words=s.text.split(' ').length;}
+  return f;
+ });
+}
+function auditHash(value){const sort=v=>Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;return hash(JSON.stringify(sort(value)));}
+function retainFixtureHistory(f){f.args.contentScope={history:{retainedReceiptCount:3,retainedReceiptsPrefixFingerprint:auditHash(f.writes.get('requests.json')),retainedHumanReviewCount:3,retainedHumanReviewsPrefixFingerprint:auditHash(f.writes.get('audio-qa.json').reviews),immutableCandidates:f.writes.get('asset-manifest.json').candidates.map(c=>({path:c.path,sha256:c.checksum,sourceSha256:c.sourceSha256,scriptSha256:c.scriptSha256,requestSha256:c.requestSha256,take:c.take}))}};}
+test('revision registry validates accepted historical audio without selecting it for current source',async()=>{
+ const f=await revisedFixture();const result=await f.runner().run({all:true,verifyOnly:true});
+ assert.equal(result.selected,0);assert.equal(result.historicalCandidates,3);assert.equal(f.calls.length,3);
+ await assert.rejects(f.runner().run({all:true}),/PILOT_QA/u);assert.equal(f.calls.length,3);
+});
+test('revised pilot uses take2 and shared receipt budget, retaining old bytes and idempotency',async()=>{
+ const f=await revisedFixture();retainFixtureHistory(f);const oldReceipts=structuredClone(f.writes.get('requests.json')),oldBytes=Buffer.from(f.writes.get('takes/mg01-l1-audio-1/take-1.wav'));
+ const result=await f.runner().run({lesson:'MG01-L1'});assert.equal(result.calls,6);assert.equal(result.currentCandidates,3);
+ assert.deepEqual(f.writes.get('requests.json').slice(0,3),oldReceipts);assert.deepEqual(f.writes.get('takes/mg01-l1-audio-1/take-1.wav'),oldBytes);
+ assert.ok(f.writes.has('takes/mg01-l1-audio-1/take-2.wav'));await f.runner().run({lesson:'MG01-L1'});assert.equal(f.calls.length,6);
+});
+test('an exhausted shared budget cannot be reset by new source revision',async()=>{
+ const f=await revisedFixture();f.scope.budget.maxCalls=3;
+ await assert.rejects(f.runner().run({lesson:'MG01-L1'}),/BUDGET/u);assert.equal(f.calls.length,3);
+});
+test('missing archive or unknown/swapped historical fingerprint never qualifies cached state',async()=>{
+ for(const kind of ['archive','unknown','swapped']){
+  const f=await revisedFixture();
+  if(kind==='archive')delete f.args.legacyInventory;
+  if(kind==='unknown')f.writes.get('asset-manifest.json').candidates[0].sourceSha256='unregistered';
+  if(kind==='swapped'){await f.runner().run({lesson:'MG01-L1'});const r=f.writes.get('requests.json');for(const field of ['sourceSha256','scriptSha256','requestSha256','countedCharacters'])r[3][field]=r[0][field];}
+  await assert.rejects(f.runner().run({all:true,verifyOnly:true}),/FINGERPRINT|STATE|REGISTRY/u);
+ }
+});
+test('retained original receipt and actual-human-review prefixes cannot disappear or be rewritten',async()=>{
+ for(const kind of ['both-ledgers','receipt','human']){
+  const f=await revisedFixture();retainFixtureHistory(f);
+  if(kind==='both-ledgers'){f.writes.delete('requests.json');f.writes.delete('asset-manifest.json');}
+  if(kind==='receipt')f.writes.get('requests.json')[0].requestId='rewritten';
+  if(kind==='human')f.writes.get('audio-qa.json').reviews=[];
+  await assert.rejects(f.runner().run({lesson:'MG01-L1'}),/HISTORY/u);assert.equal(f.calls.length,3);
+ }
+});
+test('exact approved content digest transitions never waive another path or accept old bytes in production',()=>{
+ const pair=contentScope.baseline.exactDataTransitions[0];
+ assert.doesNotThrow(()=>feature('approvedContentDigest',contentScope,pair.path,pair.before,pair.after));
+ assert.doesNotThrow(()=>feature('approvedContentDigest',contentScope,pair.path,pair.before,pair.before,{allowBefore:true}));
+ for(const [p,expected,actual]of [[pair.path,pair.before,pair.before],[pair.path,pair.before,'unknown'],['outside-allowlist.txt',pair.before,pair.after]])assert.throws(()=>feature('approvedContentDigest',contentScope,p,expected,actual),/CONTENT|PROTECTED/u);
+});
+test('content approval, exact source after hashes and immutable original inventory are mandatory for production',async()=>{
+ for(const kind of ['content-approval','content-hash','archive','data-output']){
+  const f=authorityFixture();
+  if(kind==='content-approval')f.editItem('MND-20261028-001',item=>{item.status='implementing';});
+  if(kind==='content-hash')f.editItem('MND-20261028-001',item=>{item.approval.proposal_hash='old';});
+  if(kind==='archive')f.files.set(path.join(f.repository,contentScope.archive.path),Buffer.from('changed'));
+  if(kind==='data-output')f.files.set(path.join(f.repository,contentScope.baseline.exactDataTransitions[0].path),Buffer.from('unapproved'));
+  await assert.rejects(feature('readAuthority',f.repository,f.effective,'produce',{io:f.io,runGit:f.runGit}),/CONTENT|ARCHIVE|AUTHORITY|FROZEN|PROTECTED/u);
+ }
+});
+test('new exact-source human pilot QA unlocks expansion while old PASS remains historical and counted',async()=>{
+ const f=await revisedFixture();retainFixtureHistory(f);await f.runner().run({lesson:'MG01-L1'});
+ const m=f.writes.get('asset-manifest.json'),source=f.args.inventory.lessons[0].sourceSha256;
+ const current=m.candidates.filter(c=>c.sourceSha256===source),oldReviews=structuredClone(f.writes.get('audio-qa.json').reviews);
+ const reviews=current.map(c=>({path:c.path,fileSha256:c.checksum,sourceSha256:c.sourceSha256,scriptSha256:c.scriptSha256,requestSha256:c.requestSha256,reviewer:'Human test reviewer',reviewedAt:new Date(now).toISOString(),verdict:'PASS',acceptedWarnings:c.warnings,warningReasons:Object.fromEntries(c.warnings.map(w=>[w,'Synthetic audition reason']))}));
+ f.writes.set('audio-qa.json',{reviews:[...oldReviews,...reviews]});
+ f.writes.set('pronunciation-decisions.json',{verdict:'PASS',reviewer:'Human test reviewer',reviewedAt:new Date(now).toISOString(),pronunciationApproved:true,paceApproved:true,reason:'Synthetic exact-current audition',pilot:reviews});
+ const result=await f.runner().run({all:true});assert.equal(result.calls,9);assert.equal(result.selected,3);assert.equal(result.historicalCandidates,3);
+ assert.ok(f.writes.get('asset-manifest.json').candidates.filter(c=>c.selected).every(c=>c.sourceSha256===source));
+ assert.deepEqual(f.writes.get('audio-qa.json').reviews.slice(0,3),oldReviews);
 });

@@ -1,0 +1,25 @@
+# International names execution ledger
+
+MND-20261028-001, matching approval `da36a4df8ba9a5c41c33327d9758e8be3ec164019b0f30d06db70be7ae714244`, BASE `bbd8a70086933c776df83e2c3af4d78483e49500`. CLI approved→implementing recorded from actual direct owner answer.10 frozen,18 unchanged protected,12 initial mutable target bytes/fingerprints and old3 WAV/receipt/QA retention PASS before edits.
+
+Task1 content TDD pending. Task2 revision guard TDD pending. Task3 actual revised pilot NOT_RUN. Historical actual calls3/characters451, original-v1 human PASS retained, production held for international-v2. No DB/OS/Azure setting/publication operation.
+
+Ruling: use this exact allowlisted report as task ledger and temporary CLI decision input staging — no extra execution workspace — cost: manual audit bookkeeping. Scope excludes full app/DB tests; run the named pure checks and targeted typecheck/lint, report limitations explicitly.
+
+Task1 TDD: new international-content suite RED3/4 (three actual source/spelling/archive failures, one existing structural case PASS) →GREEN4/4. Seven TXT + checker expectation + current inventory outputs match all nine approved after hashes, immutable inventory-v1 archive copied exactly first, MG02-L1 untouched. New+original checker20/20 PASS. Exact counts8/64/32/24 and all per-Lesson structural qualification PASS.
+
+Task2 revision TDD: source change first invalidated original fixed-baseline positive test as expected; new registry/history/transition tests reproduced failures. Registry supports exactly current+archived inventory, deduplicates identical unchanged versions and rejects unregistered/swapped bindings. Only current source/hash may be reused, selected or unlock pilot. Shared starts/characters/per-slug takes include old receipts. Old WAV/receipt/actual-human-review prefixes explicitly retained. Fingerprint mismatch error remains fail-closed; one old assertion now accepts the more-specific CONTENT transition rejection. Current audio-tool52/52 PASS,0 skipped, including genuine-current QA positive unlock and old-QA negative gate.
+
+Actual technical reconciliation in implementing content-check mode verified historical3 WAVs against immutable v1 inventory and classified current0/historical3/selected0, preserving the request ledger bytes (3 calls/451 chars). Only derived current/selection metadata normalized; no waveform/receipt/review rewrite. Network transport was hard-disabled for this technical verify; actual CLI produce command correctly rejected with CONTENT_AUTHORITY_REQUIRED before verification. No new provider call.
+
+Current checks:20 content/checker +52 audio-tool +25 Foundation-format +11 exact-version/projection/rubric =108 tests PASS,0 FAIL/skipped. API typecheck, focused ESLint and both Node syntax checks PASS; actual source qualification --all PASS. Mutation removing the current-version human-pilot predicate was detected; exact bytes restored before the green suite. No product/parser/planner/evaluator/schema/config modification or DB access. Independent scoped review remains pending before technical verification/provider execution.
+
+## Independent final review
+
+Boole (`01a18026-1635-75a3-9159-76443d954633`) reviewed the scoped code/content diff against BASE, independently ran52 audio-tool +20 content/checker tests (72 PASS/0 FAIL/skipped), checked all nine after hashes, exact v1 archive and unchanged MG02-L1. No Critical/Important/Minor findings; no correction pass or re-review needed. Reviewer confirmed Ed/E,D/answers/evidence, current-only eligibility, historical provenance, shared budgets/take2/idempotency and three-mandate exact source authorization. QA dossier was updated by implementer during review; it was outside the reviewer's code/content judgement, and is checked against actual evidence by implementer.
+
+Final: Ruling: review does not certify real private WAV/history/owner QA or actual blocked CLI — coordinator's permitted technical media reconciliation, original prefix/byte checks and real produce denial supply that evidence — cost: one operator for live/private checks.
+Final: Ruling: no pronunciation/pedagogy/timing/quota judgement from code review — require recent F0/use evidence, actual provider outcome and real current-source human listening; B/C remain open — cost: technical verification is not completion of Gate A/R1.2b.
+Final: Ruling: original-v1 source proof stays in byte-identical archive and Git history while current files move through exactly nine approved digest transitions — avoids any unbounded protected-source exemption — cost: both inventory versions must remain available for all future history reconciliation.
+
+No deferred minors. Frozen10/protected18/after9/archive bytes PASS; original3 WAV/receipt/human-review prefixes unchanged; all19 changed files within exact source/governance allowlist. Current-source dossier and QA metadata retain NOT_READY/human-review pending. Technical child acceptance achieved; eligible for CLI verified without implying new media approval. Actual new calls still0 at this checkpoint, historical3/451 retained.
