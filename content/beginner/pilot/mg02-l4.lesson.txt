@@ -127,7 +127,7 @@ Far: a pen
 type: email
 text:
 <<<
-Hello, Mai.
+Hello, Lucy.
 Two pens, please.
 A bag, please.
 >>>

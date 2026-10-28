@@ -27,15 +27,15 @@
     {
       "code": "MG01-L1",
       "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
-      "sourceSha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+      "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
         {
           "slug": "mg01-l1-audio-a",
-          "text": "Hello. I am Linh. I am from Ha Noi.",
-          "scriptSha256": "83ce7aae5c603f0ffb78155bb5c59c8a539b969d8395eb6ac2b3f64265789141",
-          "characters": 35,
+          "text": "Hello. I am Lily. I am from New York.",
+          "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1",
+          "characters": 37,
           "words": 9,
           "listeningActivities": [
             {
@@ -58,9 +58,9 @@
         },
         {
           "slug": "mg01-l1-audio-b",
-          "text": "Hello. I am Bao. I am from Hue.",
-          "scriptSha256": "db2c6c0be27afd6b13561cfa5f75a99b7b2c5c44e28b316f14924c669a2d9ad6",
-          "characters": 31,
+          "text": "Hello. I am Jack. I am from London.",
+          "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32",
+          "characters": 35,
           "words": 8,
           "listeningActivities": [
             {
@@ -83,9 +83,9 @@
         },
         {
           "slug": "mg01-l1-audio-c",
-          "text": "Hello, Sam. I am Nam. You are Sam.",
-          "scriptSha256": "e276efb212bb8b3b067413c97dc6041c965c41b4e499c2e73608ae60d36b9333",
-          "characters": 34,
+          "text": "Hello, Sam. I am Noah. You are Sam.",
+          "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9",
+          "characters": 35,
           "words": 8,
           "listeningActivities": [
             {
@@ -111,15 +111,15 @@
     {
       "code": "MG01-L2",
       "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
-      "sourceSha256": "dff4b426703439690a7fec60ec5fde58cca7bae0e86080dca758eba76b84a438",
+      "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
         {
           "slug": "mg01-l2-audio-1",
-          "text": "Hello. I am Bo. B, O. I am from Can Tho.",
-          "scriptSha256": "2e4af389e15aa5d55b56297d070a40a2c4a0357de8754f13139955f6ab012e4c",
-          "characters": 40,
+          "text": "Hello. I am Ed. E, D. I am from Hong Kong.",
+          "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574",
+          "characters": 42,
           "words": 11,
           "listeningActivities": [
             {
@@ -167,9 +167,9 @@
         },
         {
           "slug": "mg01-l2-audio-3",
-          "text": "Hello. I am Emma. I am from Ha Noi.",
-          "scriptSha256": "874d301bd6f9f46dbf3e0d30eaae207e2bd756d8530e2ba9d7877a0f54bfc3cb",
-          "characters": 35,
+          "text": "Hello. I am Emma. I am from New York.",
+          "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8",
+          "characters": 37,
           "words": 9,
           "listeningActivities": [
             {
@@ -195,15 +195,15 @@
     {
       "code": "MG01-L3",
       "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
-      "sourceSha256": "43506aaedff2fdff10619563e06b14d7550879b66caa69b0e0ac08689f2b9984",
+      "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
         {
           "slug": "mg01-l3-audio-1",
-          "text": "Hello, An. I am Sam. I am from Hue. You are An.",
-          "scriptSha256": "f2e78e02428746e78704a57a61797c1a9786c7c34944ea968b0ebac379c07160",
-          "characters": 47,
+          "text": "Hello, Adam. I am Sam. I am from London. You are Adam.",
+          "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df",
+          "characters": 54,
           "words": 12,
           "listeningActivities": [
             {
@@ -226,9 +226,9 @@
         },
         {
           "slug": "mg01-l3-audio-2",
-          "text": "Hello. I am May. I am from Can Tho.",
-          "scriptSha256": "eef4fd20397c7eaebf8ddc5e971115d18de14f93e37fa4e290a14923ceb1520f",
-          "characters": 35,
+          "text": "Hello. I am May. I am from Hong Kong.",
+          "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9",
+          "characters": 37,
           "words": 9,
           "listeningActivities": [
             {
@@ -251,9 +251,9 @@
         },
         {
           "slug": "mg01-l3-audio-3",
-          "text": "Hello, Jo. I am Ben. You are from Da Nang. I am from Ha Noi.",
-          "scriptSha256": "ca95459cf83b8999b379893267f0c1892723e0113cc55be8b10b026a789e4e77",
-          "characters": 60,
+          "text": "Hello, Jo. I am Ben. You are from Los Angeles. I am from New York.",
+          "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2",
+          "characters": 66,
           "words": 15,
           "listeningActivities": [
             {
@@ -279,15 +279,15 @@
     {
       "code": "MG01-L4",
       "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
-      "sourceSha256": "733819d647b67d5d3775522f874ddba6225f123fc6a458bd63bd163b7e5e74aa",
+      "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
         {
           "slug": "mg01-l4-audio-1",
-          "text": "Hello, Kim. I am Leo. I am from Da Nang.",
-          "scriptSha256": "821dd2d4c6e570ed6f42dfef7c9467174791d812720cc4b5bb207bfe628a3928",
-          "characters": 40,
+          "text": "Hello, Kim. I am Leo. I am from Los Angeles.",
+          "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de",
+          "characters": 44,
           "words": 10,
           "listeningActivities": [
             {
@@ -310,9 +310,9 @@
         },
         {
           "slug": "mg01-l4-audio-2",
-          "text": "Hello. I am An. I am from Can Tho.",
-          "scriptSha256": "336357852be8223506b48673b8b6a6000fb92733238e5ab7f5079b48d29d93a3",
-          "characters": 34,
+          "text": "Hello. I am Adam. I am from Hong Kong.",
+          "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c",
+          "characters": 38,
           "words": 9,
           "listeningActivities": [
             {
@@ -335,9 +335,9 @@
         },
         {
           "slug": "mg01-l4-audio-3",
-          "text": "Hello, Eva. I am Nam. You are from Hue. I am from Da Nang.",
-          "scriptSha256": "25c98eb41de2f9b53894a16df28fa5e154d1d16de8ca7eac2b02560ebf6bd66b",
-          "characters": 58,
+          "text": "Hello, Eva. I am Noah. You are from London. I am from Los Angeles.",
+          "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5",
+          "characters": 66,
           "words": 14,
           "listeningActivities": [
             {
@@ -447,7 +447,7 @@
     {
       "code": "MG02-L2",
       "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
-      "sourceSha256": "7f476823541e99125266ba6862a32d6cab474ac1859e1612209fc0c9c293b509",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
@@ -478,9 +478,9 @@
         },
         {
           "slug": "mg02-l2-audio-2",
-          "text": "Hello, An. Three books, please. A bag, please.",
-          "scriptSha256": "7f65e76b59280aa4b5e7e35970c68320dd246bb2c28408d5cd01f6266e61f8ff",
-          "characters": 46,
+          "text": "Hello, Adam. Three books, please. A bag, please.",
+          "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3",
+          "characters": 48,
           "words": 8,
           "listeningActivities": [
             {
@@ -531,7 +531,7 @@
     {
       "code": "MG02-L3",
       "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
-      "sourceSha256": "d3c15edc872d382f97425788e52fe071493b53ffd5cb9766b219783763cd1fe9",
+      "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
@@ -587,9 +587,9 @@
         },
         {
           "slug": "mg02-l3-audio-3",
-          "text": "Hello, An. Three bags, please. Two books, please.",
-          "scriptSha256": "959fcdde96fd44d3d944a6da27b7cc836194b2a7001ad7ad4da596bd55bf4226",
-          "characters": 49,
+          "text": "Hello, Adam. Three bags, please. Two books, please.",
+          "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5",
+          "characters": 51,
           "words": 8,
           "listeningActivities": [
             {
@@ -615,7 +615,7 @@
     {
       "code": "MG02-L4",
       "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
-      "sourceSha256": "4dd347b6d6f7533d7dbad73da5454b55a103835ec96b412b09840dc58cb04e78",
+      "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
       "assessedActivities": 8,
       "objectives": 4,
       "scripts": [
@@ -696,5 +696,6 @@
         }
       ]
     }
-  ]
+  ],
+  "revision": "international-v2"
 }

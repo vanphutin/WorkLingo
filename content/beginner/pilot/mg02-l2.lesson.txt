@@ -166,7 +166,7 @@ Hello, Mia. A pen, please. Two bags, please.
 speaker: one-speaker
 script:
 <<<
-Hello, An. Three books, please. A bag, please.
+Hello, Adam. Three books, please. A bag, please.
 >>>
 [/AUDIO_SCRIPT]
 

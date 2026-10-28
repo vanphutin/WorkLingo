@@ -111,7 +111,7 @@ text:
 Hello.
 I am Jo.
 Name: J-O.
-I am from Hue.
+I am from London.
 >>>
 [/CONTENT]
 
@@ -132,7 +132,7 @@ text:
 Hello.
 I am Ben.
 Name: B-E-N.
-I am from Da Nang.
+I am from Los Angeles.
 >>>
 [/CONTENT]
 
@@ -143,7 +143,7 @@ text:
 Role card — fictional information
 Name: Emma
 Letters: E-M-M-A
-From: Hue
+From: London
 >>>
 [/CONTENT]
 
@@ -154,7 +154,7 @@ text:
 Role card — fictional information
 Name: Mia
 Letters: M-I-A
-From: Da Nang
+From: Los Angeles
 >>>
 [/CONTENT]
 
@@ -162,7 +162,7 @@ From: Da Nang
 speaker: one-speaker
 script:
 <<<
-Hello. I am Bo. B, O. I am from Can Tho.
+Hello. I am Ed. E, D. I am from Hong Kong.
 >>>
 [/AUDIO_SCRIPT]
 
@@ -178,7 +178,7 @@ Hello, Tim. I am Kim. You are Tim.
 speaker: one-speaker
 script:
 <<<
-Hello. I am Emma. I am from Ha Noi.
+Hello. I am Emma. I am from New York.
 >>>
 [/AUDIO_SCRIPT]
 
@@ -193,13 +193,13 @@ language_block_refs: mg01-l2-name | mg01-l2-i-am
 QUESTION:
 Which written name matches J-O?
 OPTIONS:
-A. Bo
+A. Ed
 B. Jo
 C. Joe
 ANSWER:
 B
 EXPLANATION:
-J-O chỉ có J và O nên là Jo; Bo đổi chữ đầu, Joe thêm E.
+J-O chỉ có J và O nên là Jo; Ed đổi cả hai chữ, Joe thêm E.
 EVIDENCE:
 mg01-l2-card-1:3
 [/ACTIVITY]
@@ -237,13 +237,13 @@ language_block_refs: mg01-l2-name | mg01-l2-from
 QUESTION:
 Which card keeps both the name and place correct?
 OPTIONS:
-A. Ben — Hue
-B. Bo — Da Nang
-C. Ben — Da Nang
+A. Ben — London
+B. Ed — Los Angeles
+C. Ben — Los Angeles
 ANSWER:
 C
 EXPLANATION:
-Tên Ben ở dòng2, cách viết dòng3 và nơi đến Da Nang dòng4. C giữ cả hai dữ kiện.
+Tên Ben ở dòng2, cách viết dòng3 và nơi đến Los Angeles dòng4. C giữ cả hai dữ kiện.
 EVIDENCE:
 mg01-l2-card-3:2
 mg01-l2-card-3:3
@@ -263,12 +263,12 @@ QUESTION:
 Which name is spelled in the recording?
 OPTIONS:
 A. Jo
-B. Bo
+B. Ed
 C. Ben
 ANSWER:
 B
 EXPLANATION:
-B, O đánh vần Bo; khác J, O và ba chữ của Ben.
+E, D đánh vần Ed; khác J, O và ba chữ của Ben.
 EVIDENCE:
 mg01-l2-audio-1:1
 [/ACTIVITY]
@@ -308,13 +308,13 @@ language_block_refs: mg01-l2-from
 QUESTION:
 Where is Emma from?
 OPTIONS:
-A. Can Tho
-B. Hue
-C. Ha Noi
+A. Hong Kong
+B. London
+C. New York
 ANSWER:
 C
 EXPLANATION:
-I am from Ha Noi nêu nơi đến; không lấy địa danh của bản nghe trước.
+I am from New York nêu nơi đến; không lấy địa danh của bản nghe trước.
 EVIDENCE:
 mg01-l2-audio-3:1
 [/ACTIVITY]
@@ -328,11 +328,11 @@ objective_refs: mg01-l2-speaking
 content_refs: mg01-l2-speaking-card
 language_block_refs: mg01-l2-hello | mg01-l2-name | mg01-l2-i-am | mg01-l2-you-are | mg01-l2-from
 min_words: 7
-sample_answer: Hello. I am Emma. I am from Hue. E, M, M, A.
+sample_answer: Hello. I am Emma. I am from London. E, M, M, A.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
 prompt: Use the speaking card. Say hello, introduce the name and place, then spell the name. Speak clearly at your own pace.
-rubric: Cần lời chào, Emma/Hue và bốn tên chữ E/M/M/A. Nói tên Emma liền hai âm tiết với âm đầu nổi bật đủ để nhận tên, khác với đọc từng tên chữ; không bắt giống giọng bản ngữ. Cho phép đổi thứ tự ý nhưng giữ nghĩa, không đòi tốc độ cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không tự quy đổi CEFR hay cấp mastery.
+rubric: Cần lời chào, Emma/London và bốn tên chữ E/M/M/A. Nói tên Emma liền hai âm tiết với âm đầu nổi bật đủ để nhận tên, khác với đọc từng tên chữ; không bắt giống giọng bản ngữ. Cho phép đổi thứ tự ý nhưng giữ nghĩa, không đòi tốc độ cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
 Use the speaking card. Say hello, introduce the name and place, then spell the name. Speak clearly at your own pace.
 [/ACTIVITY]
@@ -346,11 +346,11 @@ objective_refs: mg01-l2-writing
 content_refs: mg01-l2-writing-card
 language_block_refs: mg01-l2-hello | mg01-l2-name | mg01-l2-i-am | mg01-l2-you-are | mg01-l2-from
 min_words: 7
-sample_answer: Hello. I am Mia. I am from Da Nang. M-I-A.
+sample_answer: Hello. I am Mia. I am from Los Angeles. M-I-A.
 rubric_id: beginner-short-writing
 rubric_version: 1
 prompt: Use only the writing card. Introduce the name and place, then write the letters separately.
-rubric: Cần Mia/Da Nang và M-I-A. Chấp nhận dấu nối hoặc phẩy giữa chữ; không lấy Emma/Hue từ thẻ nói. Chấm ý đúng, I am/from và độ dễ đọc; dấu nối nhỏ không xóa toàn bộ điểm. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+rubric: Cần Mia/Los Angeles và M-I-A. Chấp nhận dấu nối hoặc phẩy giữa chữ; không lấy Emma/London từ thẻ nói. Chấm ý đúng, I am/from và độ dễ đọc; dấu nối nhỏ không xóa toàn bộ điểm. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
 Use only the writing card. Introduce the name and place, then write the letters separately.
 [/ACTIVITY]

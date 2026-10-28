@@ -90,10 +90,10 @@ test('singular listening items cannot be solved by choosing the only singular op
 });
 test('accepted contractions and short meaningful requests are not forced to pad output',()=>{
  const alternatives:Record<string,string>={
-  'mg01-l1-s1':"Hello. I'm Mai. I'm from Da Nang. You are Leo.",'mg01-l1-w1':"Hello. I'm An. I'm from Hue.",
-  'mg01-l2-s1':"Hello. I'm Emma. I'm from Hue. E-M-M-A.",'mg01-l2-w1':"I'm Mia. I'm from Da Nang. M-I-A.",
-  'mg01-l3-s1':"Hello. I'm Sam. I'm from Ha Noi. You are Kim.",'mg01-l3-w1':"Hello. I'm Eva. I'm from Hue. You are Nam.",
-  'mg01-l4-s1':"Hello. I'm Mia. I'm from Hue. You are Jo.",'mg01-l4-w1':"Hello. I'm Ben. I'm from Ha Noi. You are Mai.",
+  'mg01-l1-s1':"Hello. I'm Lucy. I'm from Los Angeles. You are Leo.",'mg01-l1-w1':"Hello. I'm Adam. I'm from London.",
+  'mg01-l2-s1':"Hello. I'm Emma. I'm from London. E-M-M-A.",'mg01-l2-w1':"I'm Mia. I'm from Los Angeles. M-I-A.",
+  'mg01-l3-s1':"Hello. I'm Sam. I'm from New York. You are Kim.",'mg01-l3-w1':"Hello. I'm Eva. I'm from London. You are Noah.",
+  'mg01-l4-s1':"Hello. I'm Mia. I'm from London. You are Jo.",'mg01-l4-w1':"Hello. I'm Ben. I'm from New York. You are Lucy.",
   'mg02-l2-s1':'A pen. Two books. A bag.','mg02-l2-w1':'Two pens. A book. A bag.',
   'mg02-l3-w1':'This is a book. A bag. Two pens.','mg02-l4-w1':'This is a bag. Three pens. A book.'};
  for(const [slug,answer]of Object.entries(alternatives)){
@@ -117,7 +117,7 @@ test('MG01-L2 writing rubric names the current speaking card when warning agains
  const doc=parseLessonSource(source('mg01-l2')).document;
  const card=doc.contents.find(c=>c.slug==='mg01-l2-speaking-card')!.text;
  const name=card.match(/^Name: (.+)$/mu)![1]!;
- assert.ok(doc.activities.find(a=>a.slug==='mg01-l2-w1')!.rubric!.includes(name+'/Hue'));
+ assert.ok(doc.activities.find(a=>a.slug==='mg01-l2-w1')!.rubric!.includes(name+'/London'));
 });
 test('qualifies the real pilot once all8 sources exist; never substitutes checker fixtures for missing lessons',()=>{
  const root=path.resolve(__dirname,'../../../..');

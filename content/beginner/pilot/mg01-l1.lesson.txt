@@ -105,7 +105,7 @@ text:
 <<<
 Hello.
 I am Anna.
-I am from Hue.
+I am from London.
 >>>
 [/CONTENT]
 [CONTENT mg01-l1-card-b]
@@ -114,7 +114,7 @@ text:
 <<<
 Hello, Leo.
 I am Ben.
-I am from Da Nang.
+I am from Los Angeles.
 >>>
 [/CONTENT]
 [CONTENT mg01-l1-card-c]
@@ -131,8 +131,8 @@ type: email
 text:
 <<<
 Role card — fictional information
-Name: Mai
-From: Da Nang
+Name: Lucy
+From: Los Angeles
 Partner: Leo
 >>>
 [/CONTENT]
@@ -141,8 +141,8 @@ type: email
 text:
 <<<
 Role card — fictional information
-Name: An
-From: Hue
+Name: Adam
+From: London
 >>>
 [/CONTENT]
 
@@ -150,21 +150,21 @@ From: Hue
 speaker: one-speaker
 script:
 <<<
-Hello. I am Linh. I am from Ha Noi.
+Hello. I am Lily. I am from New York.
 >>>
 [/AUDIO_SCRIPT]
 [AUDIO_SCRIPT mg01-l1-audio-b]
 speaker: one-speaker
 script:
 <<<
-Hello. I am Bao. I am from Hue.
+Hello. I am Jack. I am from London.
 >>>
 [/AUDIO_SCRIPT]
 [AUDIO_SCRIPT mg01-l1-audio-c]
 speaker: one-speaker
 script:
 <<<
-Hello, Sam. I am Nam. You are Sam.
+Hello, Sam. I am Noah. You are Sam.
 >>>
 [/AUDIO_SCRIPT]
 
@@ -185,7 +185,7 @@ C. Mia
 ANSWER:
 A
 EXPLANATION:
-I am Anna nêu tên người viết. Hue là địa danh ở dòng tiếp theo; không phải tên người viết.
+I am Anna nêu tên người viết. London là địa danh ở dòng tiếp theo; không phải tên người viết.
 EVIDENCE:
 mg01-l1-card-a:2
 [/ACTIVITY]
@@ -200,13 +200,13 @@ language_block_refs: mg01-l1-from
 QUESTION:
 Where is Ben from?
 OPTIONS:
-A. Hue
-B. Da Nang
-C. Ha Noi
+A. London
+B. Los Angeles
+C. New York
 ANSWER:
 B
 EXPLANATION:
-Ben viết I am from Da Nang. Leo là người nhận lời chào, không phải nơi Ben đến từ.
+Ben viết I am from Los Angeles. Leo là người nhận lời chào, không phải nơi Ben đến từ.
 EVIDENCE:
 mg01-l1-card-b:3
 [/ACTIVITY]
@@ -243,13 +243,13 @@ language_block_refs: mg01-l1-hello | mg01-l1-i-am
 QUESTION:
 What is the speaker's name?
 OPTIONS:
-A. Linh
-B. An
+A. Lily
+B. Adam
 C. Minh
 ANSWER:
 A
 EXPLANATION:
-Người nói tự giới thiệu I am Linh; chọn tên đã nghe, không lấy tên trong bài đọc trước.
+Người nói tự giới thiệu I am Lily; chọn tên đã nghe, không lấy tên trong bài đọc trước.
 EVIDENCE:
 mg01-l1-audio-a:1
 [/ACTIVITY]
@@ -263,15 +263,15 @@ content_refs: mg01-l1-card-b
 audio_ref: mg01-l1-audio-b
 language_block_refs: mg01-l1-from
 QUESTION:
-Where is Bao from?
+Where is Jack from?
 OPTIONS:
-A. Da Nang
-B. Hue
-C. Ha Noi
+A. Los Angeles
+B. London
+C. New York
 ANSWER:
 B
 EXPLANATION:
-Bao nói I am from Hue. Đây là dữ kiện của bản nghe, không dùng địa danh trong tin nhắn của Ben.
+Jack nói I am from London. Đây là dữ kiện của bản nghe, không dùng địa danh trong tin nhắn của Ben.
 EVIDENCE:
 mg01-l1-audio-b:1
 [/ACTIVITY]
@@ -285,15 +285,15 @@ content_refs: mg01-l1-card-c
 audio_ref: mg01-l1-audio-c
 language_block_refs: mg01-l1-you-are
 QUESTION:
-Who is Nam talking to?
+Who is Noah talking to?
 OPTIONS:
-A. Nam
+A. Noah
 B. Leo
 C. Sam
 ANSWER:
 C
 EXPLANATION:
-Hello, Sam và You are Sam cùng chỉ người được gọi. I am Nam là tên người nói.
+Hello, Sam và You are Sam cùng chỉ người được gọi. I am Noah là tên người nói.
 EVIDENCE:
 mg01-l1-audio-c:1
 [/ACTIVITY]
@@ -306,11 +306,11 @@ objective_refs: mg01-l1-speaking
 content_refs: mg01-l1-speaking-card
 language_block_refs: mg01-l1-hello | mg01-l1-i-am | mg01-l1-from | mg01-l1-you-are
 min_words: 10
-sample_answer: Hello. I am Mai. I am from Da Nang. You are Leo.
+sample_answer: Hello. I am Lucy. I am from Los Angeles. You are Leo.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
 prompt: Use the role card. Say hello, your name, where you are from, and your partner's name. Record your own response.
-rubric: Hoàn thành đủ bốn ý theo thẻ Mai/Da Nang/Leo. Chấp nhận I am hoặc I'm, cách ngắt câu tự nhiên và tên riêng phát âm dễ hiểu; không chấm giống giọng bản ngữ. Dùng đúng I am/You are/from; không đạt đủ nội dung nếu chỉ lặp lời chào. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1 với trọng số 0.35/0.25/0.20/0.20; không tự suy ra mastery hoặc CEFR.
+rubric: Hoàn thành đủ bốn ý theo thẻ Lucy/Los Angeles/Leo. Chấp nhận I am hoặc I'm, cách ngắt câu tự nhiên và tên riêng phát âm dễ hiểu; không chấm giống giọng bản ngữ. Dùng đúng I am/You are/from; không đạt đủ nội dung nếu chỉ lặp lời chào. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1 với trọng số 0.35/0.25/0.20/0.20; không tự suy ra mastery hoặc CEFR.
 QUESTION:
 Use the role card. Say hello, your name, where you are from, and your partner's name. Record your own response.
 [/ACTIVITY]
@@ -323,11 +323,11 @@ objective_refs: mg01-l1-writing
 content_refs: mg01-l1-writing-card
 language_block_refs: mg01-l1-hello | mg01-l1-i-am | mg01-l1-from
 min_words: 6
-sample_answer: Hello. I am An. I am from Hue.
+sample_answer: Hello. I am Adam. I am from London.
 rubric_id: beginner-short-writing
 rubric_version: 1
 prompt: Greet a new classmate. Introduce the name and place on the writing card. Use your own sentences.
-rubric: Nội dung cần lời chào, tên An và nơi đến Hue, không lấy dữ kiện thẻ nói. Chấp nhận Hello/hi nếu đúng chức năng, I am/I'm; kiểm tra I viết hoa, am và from giữ nghĩa, câu có thể đọc hiểu. Lỗi dấu câu nhỏ không xóa điểm ý đúng; không thưởng chép mẫu sai vai. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo version1, trọng số 0.35/0.25/0.20/0.20; không tự cấp mastery.
+rubric: Nội dung cần lời chào, tên Adam và nơi đến London, không lấy dữ kiện thẻ nói. Chấp nhận Hello/hi nếu đúng chức năng, I am/I'm; kiểm tra I viết hoa, am và from giữ nghĩa, câu có thể đọc hiểu. Lỗi dấu câu nhỏ không xóa điểm ý đúng; không thưởng chép mẫu sai vai. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo version1, trọng số 0.35/0.25/0.20/0.20; không tự cấp mastery.
 QUESTION:
 Greet a new classmate. Introduce the name and place on the writing card. Use your own sentences.
 [/ACTIVITY]

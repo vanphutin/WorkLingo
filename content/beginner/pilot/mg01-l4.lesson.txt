@@ -110,7 +110,7 @@ text:
 <<<
 Hello, Ben.
 I am May.
-I am from Can Tho.
+I am from Hong Kong.
 You are Ben.
 >>>
 [/CONTENT]
@@ -119,10 +119,10 @@ You are Ben.
 type: email
 text:
 <<<
-Hello, Mai.
-I am An.
-You are Mai.
-I am from Hue.
+Hello, Lucy.
+I am Adam.
+You are Lucy.
+I am from London.
 >>>
 [/CONTENT]
 
@@ -130,8 +130,8 @@ I am from Hue.
 type: email
 text:
 <<<
-Name: Bo
-From: Ha Noi
+Name: Ed
+From: New York
 >>>
 [/CONTENT]
 
@@ -141,7 +141,7 @@ text:
 <<<
 Meeting point — fictional roles
 You: Mia
-Place: Hue
+Place: London
 New partner: Jo
 >>>
 [/CONTENT]
@@ -152,8 +152,8 @@ text:
 <<<
 New group message — fictional roles
 Writer: Ben
-Place: Ha Noi
-Reader: Mai
+Place: New York
+Reader: Lucy
 >>>
 [/CONTENT]
 
@@ -161,7 +161,7 @@ Reader: Mai
 speaker: one-speaker
 script:
 <<<
-Hello, Kim. I am Leo. I am from Da Nang.
+Hello, Kim. I am Leo. I am from Los Angeles.
 >>>
 [/AUDIO_SCRIPT]
 
@@ -169,7 +169,7 @@ Hello, Kim. I am Leo. I am from Da Nang.
 speaker: one-speaker
 script:
 <<<
-Hello. I am An. I am from Can Tho.
+Hello. I am Adam. I am from Hong Kong.
 >>>
 [/AUDIO_SCRIPT]
 
@@ -177,7 +177,7 @@ Hello. I am An. I am from Can Tho.
 speaker: one-speaker
 script:
 <<<
-Hello, Eva. I am Nam. You are from Hue. I am from Da Nang.
+Hello, Eva. I am Noah. You are from London. I am from Los Angeles.
 >>>
 [/AUDIO_SCRIPT]
 
@@ -192,13 +192,13 @@ language_block_refs: mg01-l4-i-am | mg01-l4-from
 QUESTION:
 Which pair identifies the writer correctly?
 OPTIONS:
-A. Ben — Can Tho
-B. May — Can Tho
-C. May — Hue
+A. Ben — Hong Kong
+B. May — Hong Kong
+C. May — London
 ANSWER:
 B
 EXPLANATION:
-Người viết May ở dòng2, nơi đến Can Tho dòng3. Ben là người nhận.
+Người viết May ở dòng2, nơi đến Hong Kong dòng3. Ben là người nhận.
 EVIDENCE:
 mg01-l4-card-1:2
 mg01-l4-card-1:3
@@ -215,13 +215,13 @@ language_block_refs: mg01-l4-hello | mg01-l4-you-are
 QUESTION:
 Which name belongs to the reader?
 OPTIONS:
-A. Mai
-B. An
+A. Lucy
+B. Adam
 C. May
 ANSWER:
 A
 EXPLANATION:
-You are Mai và lời chào chỉ người nhận Mai; An là người viết.
+You are Lucy và lời chào chỉ người nhận Lucy; Adam là người viết.
 EVIDENCE:
 mg01-l4-card-2:1
 mg01-l4-card-2:3
@@ -238,13 +238,13 @@ language_block_refs: mg01-l4-name | mg01-l4-from
 QUESTION:
 Choose an introduction that matches this new card.
 OPTIONS:
-A. Hello. I am Jo. I am from Ha Noi.
-B. Hello. I am Bo. I am from Hue.
-C. Hello. I am Bo. I am from Ha Noi.
+A. Hello. I am Jo. I am from New York.
+B. Hello. I am Ed. I am from London.
+C. Hello. I am Ed. I am from New York.
 ANSWER:
 C
 EXPLANATION:
-Thẻ Bo/Ha Noi; C giữ cả hai dữ kiện, hai phương án kia đổi một dữ kiện.
+Thẻ Ed/New York; C giữ cả hai dữ kiện, hai phương án kia đổi một dữ kiện.
 EVIDENCE:
 mg01-l4-card-3:1
 mg01-l4-card-3:2
@@ -264,7 +264,7 @@ Who is speaking?
 OPTIONS:
 A. Kim
 B. Leo
-C. Bo
+C. Ed
 ANSWER:
 B
 EXPLANATION:
@@ -283,15 +283,15 @@ content_refs: mg01-l4-card-2
 audio_ref: mg01-l4-audio-2
 language_block_refs: mg01-l4-from
 QUESTION:
-Where is An from?
+Where is Adam from?
 OPTIONS:
-A. Can Tho
-B. Ha Noi
-C. Hue
+A. Hong Kong
+B. New York
+C. London
 ANSWER:
 A
 EXPLANATION:
-I am from Can Tho nêu nơi đến của An, khác dữ kiện bài đọc.
+I am from Hong Kong nêu nơi đến của Adam, khác dữ kiện bài đọc.
 EVIDENCE:
 mg01-l4-audio-2:1
 [/ACTIVITY]
@@ -306,15 +306,15 @@ content_refs: mg01-l4-card-3
 audio_ref: mg01-l4-audio-3
 language_block_refs: mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
 QUESTION:
-Which pair describes Nam?
+Which pair describes Noah?
 OPTIONS:
-A. Nam — Hue
-B. Eva — Da Nang
-C. Nam — Da Nang
+A. Noah — London
+B. Eva — Los Angeles
+C. Noah — Los Angeles
 ANSWER:
 C
 EXPLANATION:
-I am Nam và I am from Da Nang cùng chỉ Nam; Hue thuộc Eva.
+I am Noah và I am from Los Angeles cùng chỉ Noah; London thuộc Eva.
 EVIDENCE:
 mg01-l4-audio-3:1
 [/ACTIVITY]
@@ -328,11 +328,11 @@ objective_refs: mg01-l4-speaking
 content_refs: mg01-l4-speaking-card
 language_block_refs: mg01-l4-hello | mg01-l4-name | mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
 min_words: 9
-sample_answer: Hello, Jo. I am Mia. I am from Hue. You are Jo.
+sample_answer: Hello, Jo. I am Mia. I am from London. You are Jo.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
 prompt: Make your own short introduction using the meeting card. Include a greeting and a sentence confirming who your new partner is. Record without reading a full model.
-rubric: Cần Mia/Hue và gọi/xác nhận Jo, giữ vai nhất quán. Không bắt thứ tự/giọng giống mẫu; câu ngắn đúng nghĩa được chấp nhận. Không dùng L4 để giả evidence bài trước. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+rubric: Cần Mia/London và gọi/xác nhận Jo, giữ vai nhất quán. Không bắt thứ tự/giọng giống mẫu; câu ngắn đúng nghĩa được chấp nhận. Không dùng L4 để giả evidence bài trước. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
 Make your own short introduction using the meeting card. Include a greeting and a sentence confirming who your new partner is. Record without reading a full model.
 [/ACTIVITY]
@@ -346,11 +346,11 @@ objective_refs: mg01-l4-writing
 content_refs: mg01-l4-writing-card
 language_block_refs: mg01-l4-hello | mg01-l4-name | mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
 min_words: 10
-sample_answer: Hello, Mai. I am Ben. I am from Ha Noi. You are Mai.
+sample_answer: Hello, Lucy. I am Ben. I am from New York. You are Lucy.
 rubric_id: beginner-short-writing
 rubric_version: 1
 prompt: Use the writing card to greet the reader, introduce the writer and place, and confirm the reader name. Write independently and check the names.
-rubric: Truyền đạt Ben/Ha Noi/Mai với I am/from/you. Chấp nhận rút gọn và ngắt câu dễ đọc; đổi tên là lỗi nghĩa, khác dấu câu nhỏ. Chỉ đánh giá nhiệm vụ của bài này. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+rubric: Truyền đạt Ben/New York/Lucy với I am/from/you. Chấp nhận rút gọn và ngắt câu dễ đọc; đổi tên là lỗi nghĩa, khác dấu câu nhỏ. Chỉ đánh giá nhiệm vụ của bài này. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
 Use the writing card to greet the reader, introduce the writer and place, and confirm the reader name. Write independently and check the names.
 [/ACTIVITY]

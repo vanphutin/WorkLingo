@@ -173,7 +173,7 @@ Hello, Jo. That is a book. A pen, please.
 speaker: one-speaker
 script:
 <<<
-Hello, An. Three bags, please. Two books, please.
+Hello, Adam. Three bags, please. Two books, please.
 >>>
 [/AUDIO_SCRIPT]
 
