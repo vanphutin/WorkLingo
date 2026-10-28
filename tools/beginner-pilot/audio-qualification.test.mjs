@@ -300,6 +300,9 @@ function authorityFixture() {
   const paths = ['mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json','mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json','mandate/reports/2026-10-28-beginner-international-names-scope.json',contentScope.archive.path,...contentScope.frozenArtifacts.map(f=>f.path),...originalScope.frozenArtifacts.map(f=>f.path),...storageScope.frozenArtifacts.map(f=>f.path),...storageScope.baseline.protectedFiles.map(f=>f.path),...names.map(n=>'mandate/items/'+n)];
   for (const p of paths) files.set(path.resolve(repository,p), fs.readFileSync(path.resolve(repository,p)));
   const editItem = (prefix, alter) => { const p=path.join(repository,'mandate/items',names.find(n=>n.startsWith(prefix))),raw=files.get(p).toString(),m=raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u),item=JSON.parse(m[1]); alter(item); files.set(p,Buffer.from('---\n'+JSON.stringify(item)+'\n---\n'+m[2])); };
+  // Model the active-execution scenario explicitly, independent of the live
+  // register's later completion; production must stay closed after verification.
+  editItem('MND-20261027-002',item=>{item.status='implementing';});
   editItem('MND-20261027-005',item=>{item.status='verified';});
   editItem('MND-20261028-001',item=>{item.status='verified';});
   const io={readFile:async(p,encoding)=>{const bytes=files.get(path.resolve(p)); if(!bytes)throw Error('MISSING_FIXTURE');return encoding?bytes.toString():bytes;},readdir:async()=>names};
