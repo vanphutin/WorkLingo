@@ -47,3 +47,9 @@ Storage amendment is now verified through Mandate CLI. Actual pilot:3 successful
 | mg01-l1-audio-c |`157d08d2d9069cb4500eef232b0cc8b776aae922a140bcc8683622f78ef25b02`|6.444s|~1.02s trailing silence;74.49 WPM incl. silence; Nam/Sam |
 
 Each path is `D:/WorkLingoQualification/r12b-20261027/A/takes/<script>/take-1.wav`. Actual checksum, RIFF signal/clipping checks, FFprobe format and FFmpeg decode PASS: PCM16 mono24kHz. These checks do not certify spoken fidelity, name pronunciation or suitability of pace/silence. Review the actual files against the source text and record a genuine verdict/reason for each warning. No automatic trim/rewritten bytes or new retake has been performed. All three accepted human pilot decisions are required before the other21 scripts.
+
+## Subsequent human verdict and content-change hold
+
+Owner actually reported: “Đã nghe: cả 3 đạt; tốc độ/khoảng nghỉ phù hợp người mới học”. This is accepted audio QA for the three exact original-v1 take-1 hashes above, including the silence/pace warnings; recorded in private audio-qa.json without inventing an exact audition time. It is not Gate B teacher approval.
+
+Before any expansion, owner requested foreign/international place names and people names. Original three WAV bytes, receipts and their human verdicts are retained. New-source audio must be re-qualified; pronunciation-decisions.json is REVIEW_REQUIRED with the explicit content-change hold, so the original all-mode expansion gate stays closed. No extra Azure requests or source Lesson edits have occurred: calls3,characters451. The earlier NOT_RUN human checkpoint is historical; original-v1 pilot QA is now reported PASS, while readiness for the requested revised content remains pending.
