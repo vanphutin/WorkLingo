@@ -1,0 +1,238 @@
+{
+  "status": "DRY_RUN_ONLY_NO_AUTHORED_FILE_EDITS",
+  "baseCommit": "180fbc71862f38f98322e9f2bfd35ed21d00ca4b",
+  "names": {
+    "Linh": "Lily",
+    "Bao": "Jack",
+    "Nam": "Noah",
+    "Mai": "Lucy",
+    "An": "Adam",
+    "Bo": "Ed"
+  },
+  "places": {
+    "Ha Noi": "New York",
+    "Hue": "London",
+    "Da Nang": "Los Angeles",
+    "Can Tho": "Hong Kong"
+  },
+  "preserve": [
+    "Osaka",
+    "Anna",
+    "Alex",
+    "Ben",
+    "Emma",
+    "Eva",
+    "Jo",
+    "Joe",
+    "Kim",
+    "Leo",
+    "May",
+    "Mia",
+    "Sam",
+    "Tim"
+  ],
+  "grammarException": "All three capitalized An article occurrences in MG02-L1 stay byte-identical; that entire Lesson is unchanged",
+  "spelling": {
+    "before": "Bo / B, O",
+    "after": "Ed / E, D",
+    "explanation": "Ed đổi chữ đầu -> Ed đổi cả hai chữ"
+  },
+  "sourceChanges": [
+    {
+      "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "before": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+      "after": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "before": "dff4b426703439690a7fec60ec5fde58cca7bae0e86080dca758eba76b84a438",
+      "after": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "before": "43506aaedff2fdff10619563e06b14d7550879b66caa69b0e0ac08689f2b9984",
+      "after": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "before": "733819d647b67d5d3775522f874ddba6225f123fc6a458bd63bd163b7e5e74aa",
+      "after": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "before": "7f476823541e99125266ba6862a32d6cab474ac1859e1612209fc0c9c293b509",
+      "after": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "before": "d3c15edc872d382f97425788e52fe071493b53ffd5cb9766b219783763cd1fe9",
+      "after": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "before": "4dd347b6d6f7533d7dbad73da5454b55a103835ec96b412b09840dc58cb04e78",
+      "after": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631"
+    }
+  ],
+  "unchangedSources": [
+    "content/beginner/pilot/mg02-l1.lesson.txt"
+  ],
+  "checkerExpectationChange": {
+    "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+    "before": "85adba57e56a01a4345e2f8ff185fec292a84ab1f9d2e08b70e57c0ef573d0c4",
+    "after": "5907f00fc66df5a086a5de7acda4ef92810aa981a6ec0e38261218e0d744ca3b"
+  },
+  "inventory": {
+    "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+    "before": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+    "beforeLF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+    "after": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56",
+    "archive": "docs/qualification/beginner-pilot-audio-inventory-v1.json",
+    "archiveSha256": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1"
+  },
+  "technicalDryRun": {
+    "status": "PASS",
+    "counts": {
+      "lessons": 8,
+      "activities": 64,
+      "objectives": 32,
+      "listeningScripts": 24
+    },
+    "rows": [
+      {
+        "code": "MG01-L1",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG01-L2",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG01-L3",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG01-L4",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG02-L1",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG02-L2",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG02-L3",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      },
+      {
+        "code": "MG02-L4",
+        "status": "PASS",
+        "checks": {
+          "parser": "PASS",
+          "planner": "PASS",
+          "objectives": "PASS",
+          "rubrics": "PASS",
+          "redaction": "PASS",
+          "listeningBindings": "PASS"
+        }
+      }
+    ]
+  },
+  "pilot": [
+    {
+      "slug": "mg01-l1-audio-a",
+      "text": "Hello. I am Lily. I am from New York.",
+      "countedCharacters": 154,
+      "requestSha256": "690f4075cf2058acc011670fad8e88b9677382af29e2c7ea01004b78bc8535c0"
+    },
+    {
+      "slug": "mg01-l1-audio-b",
+      "text": "Hello. I am Jack. I am from London.",
+      "countedCharacters": 152,
+      "requestSha256": "05997ca5434efd23db7c5b6cba91503fd1d83fb8ec6a9152f0123d2eeec1bfea"
+    },
+    {
+      "slug": "mg01-l1-audio-c",
+      "text": "Hello, Sam. I am Noah. You are Sam.",
+      "countedCharacters": 152,
+      "requestSha256": "cbd249d33a1d01c56a515a36b82692befb435d4d6e2b7efd9a93548d899f138b"
+    }
+  ],
+  "budget": {
+    "realCallsAlready": 3,
+    "realCharactersAlready": 451,
+    "newPilotCalls": 3,
+    "newPilotCharacters": 458,
+    "cumulativePilotCharacters": 909,
+    "newAll24Characters": 3873,
+    "cumulativeCallsIfNoRetakes": 27,
+    "cumulativeAllCharacters": 4324,
+    "limitsUnchanged": {
+      "pilotCalls": 9,
+      "pilotChars": 1000,
+      "totalCalls": 72,
+      "totalChars": 10000,
+      "takesPerSlug": 3
+    }
+  },
+  "warning": "Preview is structural only; no teacher/audio/timing readiness. No source, test or inventory bytes replaced."
+}
