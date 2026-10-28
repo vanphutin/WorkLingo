@@ -1,0 +1,121 @@
+---
+{
+  "schema_version": 1,
+  "id": "MND-20261028-002",
+  "status": "implementing",
+  "created": "2026-10-28",
+  "updated": "2026-10-28T12:17:01.507Z",
+  "title": "Correct bounded Beginner pilot tasks while preserving historical source and audio evidence",
+  "type": "learning-content",
+  "owner": "Codex",
+  "priority": "P2",
+  "confidence": "high",
+  "effort": "m",
+  "impact": 3,
+  "problem": "AI accepted CR-B-AI-02/03/04/05 identify cumulative transfer gap,ten over-tight minima,one naming-policy distractor and four pending learner fields on current exact bundles.",
+  "value": "Improve seven real Lessons without adding tasks,changing audio or fabricating review/provenance.",
+  "scope": [
+    "Beginner R1.2b MG01/MG02 only",
+    "content-corrections",
+    "Exact allowlist 0a91b1c41574e7bc6f869891baddd736f2dcffc540ee859d9b0f98c979b145b1"
+  ],
+  "dedupe_key": "beginner:r12b:post-ai-review:content-corrections:69b559e",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-28-beginner-successors-capture-authorization.md:1",
+      "observation": "Direct owner permits capture only;Option B selected for a separate future policy."
+    },
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-pilot-pedagogy-review.json:1",
+      "observation": "Exact current AI history has1 PASS7 REVISE,4 correction accepts2 defers;0 proven individual human version signoffs."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-28-beginner-successor-content-corrections-scope.json:1",
+      "observation": "Frozen baseline/exact allowlist/dependencies/acceptance captured;implementation has not run."
+    }
+  ],
+  "acceptance": [
+    "Only exact25 field edits in seven sources; MG02-L2 unchanged;64 Activities32 Objectives41 lexical blocks24 scripts/WAV retained.",
+    "MG02-L4 aligns objective/card/prompt/QUESTION/model/task rubric, retrieves I/you/from; assess instruction load for Pre-A1 without asserting measured suitability or45-minute timing. Overload evidence requires follow-up,not filler or extra Activities.",
+    "Ten short variants preserve all task facts; complete versus missing/wrong name/letters/item/quantity negative tests. Contractions/Unicode apostrophe/whitespace/punctuation tested in actual writing component. No blanket minimum lowering.",
+    "Replace only C.Minh distractor; correct answer/transcript unchanged. Four pending learner-facing fields only; eraser assessed-support,please pragmatic-support,instruction labels distinct; no fabricated master mapping/CEFR/teacher approval.",
+    "Recompute raw source,task-rubric,bundle hashes with canonical rule; task text versioned in new bundle. Aggregation registry/code stays v1 unless separately authorized engineering policy requires otherwise.",
+    "Recheck all24 script/WAV hashes and record explicit successor source-to-script-to-WAV reuse binding in new report; preserve old A inventory/receipts/history.",
+    "TDD red/green, parser/planner/rubric/DTO/count/content tests and component tests plus relevant lint/typecheck; no skipped tests labeled PASS. Old historical hash test remains meaningful rather than deleted.",
+    "Fresh exact-bundle AI analysis after corrections; do not reuse prior PASS. Formal sign-off only under effective approved policy or original qualified-human criteria; content technical PASS alone is not qualification."
+  ],
+  "risk": {
+    "level": "medium",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "Revert only successor content/test changes by explicit inverse commit;append report withdrawal and restore prior current projection;preserve all historical sources in Git,A artifacts and human/AI claims. No reset/deletion."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-28-beginner-successor-content-corrections.md",
+  "sprint_reference": null,
+  "approval": {
+    "actor": "WorkLingo product owner (direct human authorization)",
+    "reference": "mandate/reports/2026-10-28-beginner-successors-execution-approval.md:1",
+    "at": "2026-10-28T12:17:01.242Z",
+    "proposal_hash": "6d642fe594997b3f33be3c2b627b4627f14bc42166729013b80e76cf160c1796"
+  },
+  "verification": [],
+  "history": [
+    {
+      "at": "2026-10-28T11:43:02.667Z",
+      "actor": "mandate-steward",
+      "from": null,
+      "to": "captured",
+      "reason": "Evidence-backed proposal captured; no implementation approval.",
+      "event": "capture",
+      "reference": null
+    },
+    {
+      "at": "2026-10-28T12:17:00.991Z",
+      "actor": "Codex",
+      "from": "captured",
+      "to": "triaged",
+      "reason": "Review frozen scope and assign captured owner without scope changes",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-28-beginner-successors-execution-approval.md:1"
+    },
+    {
+      "at": "2026-10-28T12:17:01.242Z",
+      "actor": "WorkLingo product owner (direct human authorization)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Record exact unified human execution approval;no scope expansion",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-28-beginner-successors-execution-approval.md:1"
+    },
+    {
+      "at": "2026-10-28T12:17:01.507Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Begin only approved allowlist;enforce dependencies and safety gates",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-28-beginner-successors-execution-approval.md:1"
+    }
+  ]
+}
+---
+
+## Captured successor, not execution approval
+
+Parent MND-20261027-003 remains implementing with original acceptance. Capture authority: mandate/reports/2026-10-28-beginner-successors-capture-authorization.md.
+
+Frozen scope: mandate/reports/2026-10-28-beginner-successor-content-corrections-scope.json SHA-256 82af4e901aa5c4fe7d5bde5b09ad4ecf8efbc0ac6ac2b3981603e04d8c4fe1bd. Plan SHA-256 LF c1c362f744be21c6d34604b09dedc781d1b46520c15d026a970fa7e66c120aff. Baseline HEAD 69b559e9475d08c67cb4920b13c8e0f034eabaf3; baseline fingerprint 7b987f9303a45ecae83204fecff7bd3fb870e6052c7a76aa22ce651045dcd183; exact allowlist fingerprint 0a91b1c41574e7bc6f869891baddd736f2dcffc540ee859d9b0f98c979b145b1.
+
+## Dependencies and boundaries
+P1 engineering investigation must complete first; if unresolved,offline authoring can proceed only after owner acknowledges finding,real learner evaluation remains blocked.
+New-bundle analysis may be prepared after source correction; AI-led sign-off requires policy matching approval; do not depend on old verdicts.
+
+Only declared new successor result lifecycle may apply after matching approval;no retroactive human signoff. No provider/DB/OS/publication/Gate C. Matching execution approval required. Runtime tests NOT_RUN.
+
+## Facts and unknowns
+AI accepted CR-B-AI-02/03/04/05 identify cumulative transfer gap,ten over-tight minima,one naming-policy distractor and four pending learner fields on current exact bundles. No real learner timing or real-provider grading result inferred. See scope details and acceptance for evidence and escalation.

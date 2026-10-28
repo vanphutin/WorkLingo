@@ -1,0 +1,57 @@
+{
+  "title": "Establish prospective AI-led Beginner qualification without rewriting qualified-human Gate B history",
+  "type": "architecture",
+  "owner": "Codex",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "m",
+  "impact": 4,
+  "problem": "Owner requests Option B;current frozen Gate B acceptance requires qualified-human signoffs and cannot be retrospectively satisfied by eight AI recommendations.",
+  "value": "Enable independently auditable AI decisions with owner risk accountability and explicit limits while preserving original human claims.",
+  "scope": [
+    "Beginner R1.2b MG01/MG02 only",
+    "ai-led-policy",
+    "Exact allowlist 3d89269e53718d1a71cbb583143a0e460b6a390c2d10a96623c8f5fa01503980"
+  ],
+  "dedupe_key": "beginner:r12b:post-ai-review:ai-led-policy:69b559e",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-28-beginner-successors-capture-authorization.md:1",
+      "observation": "Direct owner permits capture only;Option B selected for a separate future policy."
+    },
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-pilot-pedagogy-review.json:1",
+      "observation": "Exact current AI history has1 PASS7 REVISE,4 correction accepts2 defers;0 proven individual human version signoffs."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-28-beginner-successor-ai-led-policy-scope.json:1",
+      "observation": "Frozen baseline/exact allowlist/dependencies/acceptance captured;implementation has not run."
+    }
+  ],
+  "acceptance": [
+    "Only new AI-led results under this successor may change after matching approval. Original MND-20261027-003 criteria,history,human identity/global PASS and all old decisions remain frozen.",
+    "All112 cells across14 categories and8 Lessons receive explicit AI verdict/status,evidence and limits; all64 Activities32 Objectives41 lexical/IPA24 audio dependencies and16 task rubrics covered individually. No inherited blanket PASS.",
+    "Each decision includes authorType AI,reviewerId WORKLINGO-AI-REVIEWER-001,decisionType AI_RECOMMENDATION,humanSigned false,actual model identity/version or model disclosure limitation,actual timestamp,exact source/rubric/audio/bundle,source citations,rationale,confidence,findings and correction IDs. Missing required identity/evidence blocks final qualification rather than inventing values.",
+    "Textual grammar/IPA consistency/keys/distractors/objective evidence/privacy/static prerequisites and planned outline analysis may be decided independently by AI; no John rationale or signature needed. Source provenance and master mapping cannot be invented.",
+    "Actual phonetic correctness of24 WAV is not established by text or silence/WPM metrics. Existing owner sound QA remains reported evidence; expert listening or suitable separately authorized phonetic evidence still required where pronunciation correctness is unverified. AI records PENDING,not fabricated independent hearing PASS.",
+    "REVISE for remediable substantiated issue,REJECT for unsuitable/invalid evidence or irreparable task,NEEDS_EVIDENCE for insufficient proof; P0/P1 prevents qualification. Unknown audio/learning difficulty/evaluator/learner calibration escalates to owner or appropriately scoped engineering/human review.",
+    "A Lesson may be AI_QUALIFIED only after all scoped items resolved/PASS with exact current bundle,required auditory/provenance evidence present,corrections re-reviewed and P1 closed. AI_QUALIFIED is not HUMAN_REVIEW_PASSED or teacher signature. Model/timestamp unavailable means qualification BLOCKED.",
+    "Source/task rubric/audio/code hash change invalidates affected current qualification; append superseding/withdrawn record and new exact-version review. Unchanged audio may be reused only with approved binding; old records never erased.",
+    "R1.2b readiness needs all8 current AI-qualified Lessons,valid Gate A/rebindings,engineering closure and separately approved real Gate C comprehension/difficulty/active-time evidence against owner-approved criteria; R1.2a runtime readiness assessed independently.45-minute contract is not observed timing or CEFR proof.",
+    "Owner alone retains release/risk approval. Policy approval/review result never auto advances CONTENT_READY,GateC,R1.2a,B old,learner access,release/publication. Program completion evidence must be reviewed under a separate authorized closeout; this scope does not change parent lifecycle."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "Prospectively suspend policy and append withdrawal/superseding result records with actual reason/time;never erase human/AI history or reactivate old signoffs on changed bundles;no old-mandate edits or publication."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-28-beginner-successor-ai-led-policy.md",
+  "sprint_reference": null,
+  "body": "## Captured successor, not execution approval\n\nParent MND-20261027-003 remains implementing with original acceptance. Capture authority: mandate/reports/2026-10-28-beginner-successors-capture-authorization.md.\n\nFrozen scope: mandate/reports/2026-10-28-beginner-successor-ai-led-policy-scope.json SHA-256 6659ba1caca509e46888f5a8b294b33810ae879d108c44b7056d6a1258d3a6b7. Plan SHA-256 LF 8a01702e47ecba5402c1d1171bc8ed29448d07eecd12b71490efbebdd2c8a768. Baseline HEAD 69b559e9475d08c67cb4920b13c8e0f034eabaf3; baseline fingerprint 7b987f9303a45ecae83204fecff7bd3fb870e6052c7a76aa22ce651045dcd183; exact allowlist fingerprint 3d89269e53718d1a71cbb583143a0e460b6a390c2d10a96623c8f5fa01503980.\n\n## Dependencies and boundaries\nPolicy drafting/approval is independent;activation needs own matching approval.\nFinal qualification uses new content/bundles,engineering closure and valid auditory evidence;Gate C runs last under separate renewed matching approval.\nNo cycle:investigation -> correction -> fresh analysis -> effective policy adjudication -> separately approved Gate C -> future closeout decision.\n\nOnly declared new successor result lifecycle may apply after matching approval;no retroactive human signoff. No provider/DB/OS/publication/Gate C. Matching execution approval required. Runtime tests NOT_RUN.\n\n## Facts and unknowns\nOwner requests Option B;current frozen Gate B acceptance requires qualified-human signoffs and cannot be retrospectively satisfied by eight AI recommendations. No real learner timing or real-provider grading result inferred. See scope details and acceptance for evidence and escalation.\n"
+}

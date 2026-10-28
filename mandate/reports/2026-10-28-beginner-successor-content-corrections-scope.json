@@ -1,0 +1,1225 @@
+{
+  "schemaVersion": 1,
+  "phase": "CAPTURED_PROPOSAL_NOT_EXECUTION_APPROVAL",
+  "parent": "MND-20261027-003",
+  "authoringParent": "MND-20261027-001",
+  "canonicalPlan": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+  "captureAuthorization": {
+    "path": "mandate/reports/2026-10-28-beginner-successors-capture-authorization.md",
+    "sha256": "44f6f92634788239dc414eed7f77db2925ccc1803b3c15e0060a86413d2f3f10"
+  },
+  "baseline": {
+    "head": "69b559e9475d08c67cb4920b13c8e0f034eabaf3",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "files": [
+      {
+        "path": "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+        "sha256": "1a79bfd5e4f602475943ab3766239f5cf3b30173132818d42ae5bec7efdac0a5"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/domain/text-to-speech.port.ts",
+        "sha256": "60e2bda27c1792c341ed32063fe951e409ab218f07035782d9e8cdc319320df0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/azure-dialogue-ssml.ts",
+        "sha256": "6f1b38b59e989fb049b48ab07a19ec6985f6a1121951910e788233d91be055c2"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/fake-language-evaluation.adapter.ts",
+        "sha256": "fc0dfbcec06c1305aaea6b8dc7f120a9bbb7fa0891b84c371961b52c5e8ad0f9"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts",
+        "sha256": "cc958d0193034ba2bfdef296a8fbf655930937031917aed82098ab8ccdd6fb5a"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "sha256": "d34e9a33563ba9aca580300be00170d6f555ca1111eb8078f02c7e06a92b5f78"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+        "sha256": "99b5a2afb8e8824f37ce723735d1cd5505611559eb0c54a839d639e044b4c4dc"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts",
+        "sha256": "4aa47178a69aa0f61ab8c6ccb94812c411fa4caf90a413d2a0abf085c933c9c3"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "sha256": "2f1221b81e8468f1f323ebd3493eea30875968191299f30f2fb94b15e1a97497"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "sha256": "96095316dd09ab4b747e612ec3c0671fbe17a981fefcf8d080bbcf1373ecc19f"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/international-content.test.ts",
+        "sha256": "ebde24569f26aab722d9247e8d7acfca8c95c625daa3b0476ce3793d9d575112"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+        "sha256": "5907f00fc66df5a086a5de7acda4ef92810aa981a6ec0e38261218e0d744ca3b"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.ts",
+        "sha256": "8cfb76bb82e0994725ba40d87050515128f24c7136153ad8303d825d09d40c77"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.config.ts",
+        "sha256": "c0857a1d341d15c4a15b264ee174db678abebfbe2c642f4c00ee7084f9ad68a4"
+      },
+      {
+        "path": "apps/web/src/features/learning-session/activity-renderers/writing-activity.tsx",
+        "sha256": "f5e38bf008046610819345eb4600dd8cc45663ab8857debd5f890219469c5c61"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-qa.md",
+        "sha256": "394888de8e626bde96c3d197a29bc2d0cf6bffa2d02a5cfa65374d70a3a6dcca"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-content-review.md",
+        "sha256": "e3cd0821f8e8856f9a58fed9940722e70130e141c428e9b6996a748a4586be45"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-correction-requests.md",
+        "sha256": "8f4c770301cec50ea6abbe3efedd2dc9bb2b2ee1e242c471dc43bae6899fd503"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-international-content-review.md",
+        "sha256": "5beb1596dd28f53656336456c952c05c85af73c54a78801a9909989a7af05ea9"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-pedagogy-review.json",
+        "sha256": "ff1e83d689e6b8e53efe9b3aed003f891a8de829446678ac14d451abdd94c907"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-pedagogy-summary.md",
+        "sha256": "ce5e0ad84f233db1df38de6813818aa523471fbf7d594170925d4e13f34a4fca"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",
+        "sha256": "fd1a0372b68e4f1c53f385702353435fe988e217443c7a8e7ce185c381a79dc7"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "mandate/items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md",
+        "sha256": "27c3e7f87182d5c6c2c53e1884c30d3ffffb7db95ea2e707c36073e7ef50a49c"
+      },
+      {
+        "path": "mandate/items/MND-20261015-001-architecture-redesign-intermediate-learning-session-workload-and-cross-skill-separa.md",
+        "sha256": "162f5d4676a2f21ac3accf8a66bd9aa33dce9064c8c03e3e37db4451770149d3"
+      },
+      {
+        "path": "mandate/items/MND-20261024-001-feature-enable-beginner-admin-authoring-and-learner-enrollment-for-foundation.md",
+        "sha256": "2353b631db72b0744f3c7235d27d5c3816fe0c6cbdf9e34e520423f06322890b"
+      },
+      {
+        "path": "mandate/items/MND-20261024-002-feature-implement-provider-free-beginner-r1-1-format-and-exact-version-planner.md",
+        "sha256": "d95e558db6615a97aff0eb5b6fcb1c4963b536f16d3f6169fcc08a8971820e40"
+      },
+      {
+        "path": "mandate/items/MND-20261024-003-feature-implement-isolated-beginner-r1-2a-admin-authoring-and-test-release-reg.md",
+        "sha256": "67e7557662351f1bc2b69c3f612834da9d97a9f0a3f3b744a2c6f970934703d2"
+      },
+      {
+        "path": "mandate/items/MND-20261025-001-bug-close-generic-beginner-content-lifecycle-removal-bypass-within-r1-2a.md",
+        "sha256": "930a3a245563e87d1e9dac045c66f38a081e074669e51f1fa88760d2f8734810"
+      },
+      {
+        "path": "mandate/items/MND-20261025-002-infrastructure-qualify-beginner-r1-2a-on-one-isolated-postgresql-and-desktop-mobile-e.md",
+        "sha256": "b43b4b14c40341d9d16201b25ae67b229814ae85994a7785f8ce854671d77b4c"
+      },
+      {
+        "path": "mandate/items/MND-20261026-001-infrastructure-establish-one-least-privilege-windows-worker-for-beginner-r1-2a-withou.md",
+        "sha256": "8c041a59b4383d19c110b586c1df1e9de9b6c2a7a590c92ca61775b74341684e"
+      },
+      {
+        "path": "mandate/items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md",
+        "sha256": "407709cac308f4e2a92ae2aba9c77b0ec80a3ee40cf9329a997eb6bbc8445e91"
+      },
+      {
+        "path": "mandate/items/MND-20261026-003-infrastructure-qualify-beginner-r1-2a-on-the-existing-main-database-with-fixture-only.md",
+        "sha256": "6b724b83b82e41f299edb3b24bb7caec566c5a1363d8ed4607cfb9c7348edbc3"
+      },
+      {
+        "path": "mandate/items/MND-20261027-001-learning-content-author-real-mg01-mg02-beginner-pilot-sources-with-offline-qualificatio.md",
+        "sha256": "9c019ad27e3723b6c2b0f8825490bf880607d7673dc9d64b2fe87e1823f82c84"
+      },
+      {
+        "path": "mandate/items/MND-20261027-002-learning-content-produce-and-human-check-offline-mg01-mg02-audio-within-capped-provider.md",
+        "sha256": "80f73512589a89e74d04ffa689d9981ad6ba092d452fd8ce1d161a4f3a8bb54c"
+      },
+      {
+        "path": "mandate/items/MND-20261027-003-learning-content-obtain-qualified-human-beginner-pedagogical-sign-offs-and-exact-correc.md",
+        "sha256": "4fa3a784bf2e85ead99095883bf2d9bbc1b094fd40ae639f590c3a2c93f79819"
+      },
+      {
+        "path": "mandate/items/MND-20261027-004-learning-content-observe-consented-offline-beginner-pilot-timing-without-fabricated-pro.md",
+        "sha256": "8a23be2b58cf1b6865eb7f1b0e8d0769a81f595661b835eab0d054679fad6287"
+      },
+      {
+        "path": "mandate/items/MND-20261027-005-infrastructure-correct-private-gate-a-storage-ownership-and-native-path-before-bounde.md",
+        "sha256": "33b38995085501f4a37c39ace154cfb53c22a8668542ed1e1297fa99350cbedb"
+      },
+      {
+        "path": "mandate/items/MND-20261028-001-learning-content-internationalize-beginner-pilot-names-while-preserving-source-versions.md",
+        "sha256": "984d087eaba0a34f3816381b02830a68ac1926b57b7068504e06a0dfc93dc9aa"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-verification.md",
+        "sha256": "23b0d3bd4896f0b3aa4a0e3d584d3f6fb122079eff587c87360f6f45047d7e86"
+      },
+      {
+        "path": "packages/content-format/src/audio-narration.ts",
+        "sha256": "f6ce4585154be2237026de05bbf0fcf395bbba0f010f32d6b9460da22a334cd1"
+      },
+      {
+        "path": "packages/content-format/src/foundation-metadata.ts",
+        "sha256": "99a2ead9efb07478948d75e37ee3df3c57f61559a8ef7d6f102f34de7bffb9ff"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      }
+    ],
+    "oldBaselineFingerprint": "985631341d38646d2db2dccf0a3c86593d433717c6c094e22af08ba9120cf958",
+    "oldFrozenArtifacts": [
+      {
+        "path": "docs/superpowers/plans/2026-10-28-beginner-gate-b-review.md",
+        "sha256LF": "27b904b3add90054d703b66d1923eb88a9cac4567222b5529569179f0742447e"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-preapproval.md",
+        "sha256LF": "812644d899349e5dba786dd169445e59aac0356b63962ba77a3d2fd458a9d3a2"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-gate-b-checklist.md",
+        "sha256LF": "5d64467eae924ba7ad8574bbe9a4e646f6c461b893ad60f29b273e939376ee6d"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+        "sha256LF": "c39d2efd94eec5e6ff6815773183dc465fb95ad5e0990fd2b6ac7ae66115972c"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+        "sha256LF": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md",
+        "sha256LF": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "sha256LF": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory-v1.json",
+        "sha256LF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-international-names-verification.md",
+        "sha256LF": "e9014dd779db52e5f138778a0c936a746a3d1733a961d45c1a32caf7a4590984"
+      }
+    ],
+    "selectedMedia": [
+      {
+        "lesson": "MG01-L1",
+        "slug": "mg01-l1-audio-a",
+        "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+        "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1",
+        "requestSha256": "690f4075cf2058acc011670fad8e88b9677382af29e2c7ea01004b78bc8535c0",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+        "fileSha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+        "take": 2,
+        "bytes": 293704,
+        "durationSeconds": 6.117916666666667,
+        "wpmIncludingPauses": 88.26534087039434,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L1",
+        "slug": "mg01-l1-audio-b",
+        "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+        "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32",
+        "requestSha256": "05997ca5434efd23db7c5b6cba91503fd1d83fb8ec6a9152f0123d2eeec1bfea",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+        "fileSha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+        "take": 2,
+        "bytes": 286644,
+        "durationSeconds": 5.970833333333333,
+        "wpmIncludingPauses": 80.39078855547801,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L1",
+        "slug": "mg01-l1-audio-c",
+        "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+        "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9",
+        "requestSha256": "cbd249d33a1d01c56a515a36b82692befb435d4d6e2b7efd9a93548d899f138b",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+        "fileSha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+        "take": 2,
+        "bytes": 310744,
+        "durationSeconds": 6.472916666666666,
+        "wpmIncludingPauses": 74.1551335693595,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L2",
+        "slug": "mg01-l2-audio-1",
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574",
+        "requestSha256": "6f16c088f049a5688389fd1708aa2767a0e87b41e1156f1493fc6885a357c9ee",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+        "fileSha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+        "take": 1,
+        "bytes": 338176,
+        "durationSeconds": 7.044416666666667,
+        "wpmIncludingPauses": 93.69122117989424,
+        "warnings": [
+          "EDGE_SILENCE"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L2",
+        "slug": "mg01-l2-audio-2",
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046",
+        "requestSha256": "e15aba8742fd57138f6a2157911ba091f4380f76301b0dd97f54b9821fdcb399",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+        "fileSha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+        "take": 1,
+        "bytes": 305800,
+        "durationSeconds": 6.369916666666667,
+        "wpmIncludingPauses": 75.35420400580855,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L2",
+        "slug": "mg01-l2-audio-3",
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8",
+        "requestSha256": "9669ca555350f866fb054d6dd05513292d235024a53bba52ea580d0138efceab",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+        "fileSha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+        "take": 1,
+        "bytes": 288154,
+        "durationSeconds": 6.002291666666666,
+        "wpmIncludingPauses": 89.96563812432753,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L3",
+        "slug": "mg01-l3-audio-1",
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df",
+        "requestSha256": "0dee8ecacecb0e7317aedd8e16e8f110a59b8a9acfe77121845a52285849e779",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+        "fileSha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+        "take": 1,
+        "bytes": 418138,
+        "durationSeconds": 8.710291666666667,
+        "wpmIncludingPauses": 82.66083703664725,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L3",
+        "slug": "mg01-l3-audio-2",
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9",
+        "requestSha256": "52ddf24aec332124f1f30377628feb50e5a42ce27b31aa752e073421153bdbd8",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+        "fileSha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+        "take": 1,
+        "bytes": 291586,
+        "durationSeconds": 6.073791666666667,
+        "wpmIncludingPauses": 88.90657263790466,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L3",
+        "slug": "mg01-l3-audio-3",
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2",
+        "requestSha256": "1a7506217b8bb33c7032b9ef584df02186267e12c8d6f0a0d8718f9209dc02e7",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+        "fileSha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+        "take": 1,
+        "bytes": 449710,
+        "durationSeconds": 9.368041666666667,
+        "wpmIncludingPauses": 96.07130625842292,
+        "warnings": [
+          "EDGE_SILENCE"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L4",
+        "slug": "mg01-l4-audio-1",
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de",
+        "requestSha256": "8b66dd33c68bc3aa3b6bcb4ece8130b7cfb612b0f771d35780cd307f3747e329",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+        "fileSha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+        "take": 1,
+        "bytes": 341704,
+        "durationSeconds": 7.117916666666667,
+        "wpmIncludingPauses": 84.29432769419891,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L4",
+        "slug": "mg01-l4-audio-2",
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c",
+        "requestSha256": "819b1bb5ab4cb936d3a1d66b3bbd6076ef85d86cf3340843de8b3c445215d44b",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+        "fileSha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+        "take": 1,
+        "bytes": 292998,
+        "durationSeconds": 6.103208333333333,
+        "wpmIncludingPauses": 88.47805457512102,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG01-L4",
+        "slug": "mg01-l4-audio-3",
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5",
+        "requestSha256": "92f0c7df755c01e5a18fb015a913a1c2f631828c803db3ef9b18622d8d6c9471",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+        "fileSha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+        "take": 1,
+        "bytes": 445470,
+        "durationSeconds": 9.279708333333334,
+        "wpmIncludingPauses": 90.52008638920942,
+        "warnings": [
+          "EDGE_SILENCE"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L1",
+        "slug": "mg02-l1-audio-1",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea",
+        "requestSha256": "a61919da649e9e30f9063c232e5a55fd2f04d63a6c6bae57c46dd814e9a422f9",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+        "fileSha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+        "take": 1,
+        "bytes": 361570,
+        "durationSeconds": 7.531791666666667,
+        "wpmIncludingPauses": 63.72985622057612,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L1",
+        "slug": "mg02-l1-audio-2",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af",
+        "requestSha256": "239614e2e9e05aa4e724c7d9464c94c31fe1702d8baecd7cea903bc41879fa81",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+        "fileSha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+        "take": 1,
+        "bytes": 366410,
+        "durationSeconds": 7.632625,
+        "wpmIncludingPauses": 62.887931740390755,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L1",
+        "slug": "mg02-l1-audio-3",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d",
+        "requestSha256": "b764b1b54392abf5e0fdedbba7debe07d9ade1e746e18013c6cc64f1a23b1acc",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+        "fileSha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+        "take": 1,
+        "bytes": 344628,
+        "durationSeconds": 7.178833333333333,
+        "wpmIncludingPauses": 75.22113621061918,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L2",
+        "slug": "mg02-l2-audio-1",
+        "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+        "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b",
+        "requestSha256": "0a0d7a580c16f5dec33fe19ebb9379767332acf54a80ee14d0f3d7f03d5ea219",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+        "fileSha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+        "take": 1,
+        "bytes": 365706,
+        "durationSeconds": 7.617958333333333,
+        "wpmIncludingPauses": 63.00900831915813,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L2",
+        "slug": "mg02-l2-audio-2",
+        "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+        "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3",
+        "requestSha256": "7a428f21774f6c2ab961bb5fca26250e56750822a3be3294f33f4b2e3d4a3272",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+        "fileSha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+        "take": 1,
+        "bytes": 364394,
+        "durationSeconds": 7.590625,
+        "wpmIncludingPauses": 63.235899547138736,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L2",
+        "slug": "mg02-l2-audio-3",
+        "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+        "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5",
+        "requestSha256": "daf0830b443ce1bbb9d110339e13ffa7fdff9e3830f6ee525fa0e68bc80f6b6e",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+        "fileSha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+        "take": 1,
+        "bytes": 363584,
+        "durationSeconds": 7.57375,
+        "wpmIncludingPauses": 63.37679485063542,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L3",
+        "slug": "mg02-l3-audio-1",
+        "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+        "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79",
+        "requestSha256": "6140404e0be1006912b2b94f49026889da2d040ce5b7a5387182ee7ed3b9fdf5",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+        "fileSha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+        "take": 1,
+        "bytes": 348058,
+        "durationSeconds": 7.250291666666667,
+        "wpmIncludingPauses": 74.47976230841289,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L3",
+        "slug": "mg02-l3-audio-2",
+        "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+        "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65",
+        "requestSha256": "f554398b53551c3ab20ff18ed7def5bf83abe4a0a3ec0cd99d021e52711f15c5",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+        "fileSha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+        "take": 1,
+        "bytes": 336158,
+        "durationSeconds": 7.002375,
+        "wpmIncludingPauses": 77.11669255074172,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L3",
+        "slug": "mg02-l3-audio-3",
+        "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+        "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5",
+        "requestSha256": "edc1eda02d0db67f308962b0005b6e23b1a79707e8856e46ca22e97246e3910d",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+        "fileSha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+        "take": 1,
+        "bytes": 376392,
+        "durationSeconds": 7.840583333333333,
+        "wpmIncludingPauses": 61.21993474125013,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L4",
+        "slug": "mg02-l4-audio-1",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0",
+        "requestSha256": "7598c715aa7c22f6b527e6778cd8b29e6340a4611774ddbdcf7fd2c64338b930",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+        "fileSha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+        "take": 1,
+        "bytes": 349568,
+        "durationSeconds": 7.28175,
+        "wpmIncludingPauses": 74.15799773406118,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L4",
+        "slug": "mg02-l4-audio-2",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78",
+        "requestSha256": "5c0d9ae3b01628a9ace0ff4d0e7b1df48c219092a56bf2da5869e50a2ad0861c",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+        "fileSha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+        "take": 1,
+        "bytes": 338272,
+        "durationSeconds": 7.0464166666666666,
+        "wpmIncludingPauses": 76.63469612214246,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      },
+      {
+        "lesson": "MG02-L4",
+        "slug": "mg02-l4-audio-3",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d",
+        "requestSha256": "9fe3971f22e5283308dee57afc006ee2405ab5eec726e04c5b05cd10d376a670",
+        "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+        "fileSha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+        "take": 1,
+        "bytes": 361470,
+        "durationSeconds": 7.529708333333334,
+        "wpmIncludingPauses": 63.74748911257076,
+        "warnings": [
+          "EDGE_SILENCE",
+          "PACE_REVIEW"
+        ],
+        "gateASoundVerdict": "PASS",
+        "gateASoundReviewerRole": "Product owner; not a qualified teacher appointment"
+      }
+    ],
+    "privateGateAEvidence": [
+      {
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/asset-manifest.json",
+        "sha256": "fbac88c543e1bb87426c0ee7b99a540380d016ee9f773743b33cc6673ae35968",
+        "readOnly": true
+      },
+      {
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/audio-qa.json",
+        "sha256": "1c6e700e80d92b9e39151543287b2d7a53708e306db94ba4be1765cfacc527b6",
+        "readOnly": true
+      },
+      {
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/pronunciation-decisions.json",
+        "sha256": "893a9d5a4a6f0371107b2782cd35e5b535db7374d6047ffd205a04cc4a8ee888",
+        "readOnly": true
+      }
+    ],
+    "fingerprint": "7b987f9303a45ecae83204fecff7bd3fb870e6052c7a76aa22ce651045dcd183"
+  },
+  "allowlist": {
+    "modify": [
+      "content/beginner/pilot/mg01-l1.lesson.txt",
+      "content/beginner/pilot/mg01-l2.lesson.txt",
+      "content/beginner/pilot/mg01-l3.lesson.txt",
+      "content/beginner/pilot/mg01-l4.lesson.txt",
+      "content/beginner/pilot/mg02-l1.lesson.txt",
+      "content/beginner/pilot/mg02-l3.lesson.txt",
+      "content/beginner/pilot/mg02-l4.lesson.txt",
+      "apps/api/test/beginner-pilot/qualify-content.test.ts",
+      "apps/api/test/beginner-pilot/international-content.test.ts",
+      "apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx"
+    ],
+    "create": [
+      "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+      "docs/qualification/beginner-pilot-ai-correction-review.md"
+    ],
+    "fingerprint": "0a91b1c41574e7bc6f869891baddd736f2dcffc540ee859d9b0f98c979b145b1"
+  },
+  "readOnlyPaths": [
+    "apps/api/src/teacher-ai/application/evaluation.service.ts",
+    "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+    "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+    "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+    "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+    "apps/api/src/ai-gateway/infrastructure/fake-language-evaluation.adapter.ts",
+    "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+    "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+    "packages/content-format/src/normalizer.ts",
+    "packages/content-format/src/foundation-metadata.ts",
+    "apps/api/src/curriculum/domain/curriculum.types.ts",
+    "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+    "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+    "apps/api/vitest.beginner.config.ts",
+    "apps/api/vitest.config.ts",
+    "apps/web/src/features/learning-session/activity-renderers/writing-activity.tsx",
+    "content/beginner/pilot/mg01-l1.lesson.txt",
+    "content/beginner/pilot/mg01-l2.lesson.txt",
+    "content/beginner/pilot/mg01-l3.lesson.txt",
+    "content/beginner/pilot/mg01-l4.lesson.txt",
+    "content/beginner/pilot/mg02-l1.lesson.txt",
+    "content/beginner/pilot/mg02-l2.lesson.txt",
+    "content/beginner/pilot/mg02-l3.lesson.txt",
+    "content/beginner/pilot/mg02-l4.lesson.txt",
+    "docs/qualification/beginner-pilot-pedagogy-review.json",
+    "docs/qualification/beginner-pilot-correction-requests.md",
+    "docs/qualification/beginner-pilot-pedagogy-summary.md"
+  ],
+  "futureDependencyPaths": [],
+  "constraints": [
+    "CAPTURE_ONLY now; execution requires future matching proposal approval and CLI lifecycle.",
+    "No DB/.env/provider/network/OS/publication/enrollment/Gate C/merge/push/deploy. No product or schema writes.",
+    "Do not modify any existing mandate, old human claims or A evidence; no old verdict transfer.",
+    "All existing B/authoring/R1.2a lifecycle states unchanged. Runtime/provider tests NOT_RUN in capture."
+  ],
+  "details": {
+    "exactFieldEdits": [
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4",
+        "line": 14,
+        "field": "objective",
+        "before": "Vận dụng độc lập cách chỉ/yêu cầu vật dụng và số lượng trong tình huống mới qua R/L/S/W; không tuyên bố đạt stage hay CEFR.",
+        "after": "Vận dụng cách chỉ/yêu cầu vật dụng và số lượng qua R/L/S/W; riêng Writing kết hợp tự giới thiệu, nơi đến và xác nhận tên người nhận từ MG01 trong tình huống mới; không tuyên bố đạt stage hay CEFR."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-writing",
+        "line": 35,
+        "field": "statement",
+        "before": "Tự viết lời nhắn mô tả/yêu cầu từ thẻ mới, dùng dạng số ít/số nhiều và giữ đúng dữ kiện.",
+        "after": "Tự viết lời nhắn từ thẻ mới: giới thiệu bản thân và nơi đến, xác nhận tên người nhận, rồi chỉ/yêu cầu đúng vật và số lượng; kết hợp I am/I am from/you are với số ít/số nhiều."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-writing-card",
+        "line": 151,
+        "field": "text",
+        "before": "New request card\nNear: a bag\nRequest: three pens; a book",
+        "after": "New request card\nWriter: Alex\nFrom: Osaka\nReader: Emma\nNear: a bag\nRequest: three pens; a book"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-w1",
+        "line": 349,
+        "field": "prompt",
+        "before": "Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.",
+        "after": "Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-w1",
+        "line": 352,
+        "field": "QUESTION",
+        "before": "Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.",
+        "after": "Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-w1",
+        "line": 346,
+        "field": "sample_answer",
+        "before": "This is a bag. Three pens, please. A book, please.",
+        "after": "Hello. I am Alex. I am from Osaka. You are Emma. This is a bag. Three pens, please. A book, please."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-w1",
+        "line": 350,
+        "field": "rubric-prefix",
+        "before": "Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion.",
+        "after": "Có lời chào, đúng người viết Alex, nơi đến Osaka và người nhận Emma; diễn đạt I am/I am from/you are hoặc dạng rút gọn tương đương. Nêu this/bag, yêu cầu three pens và a book. Chấp nhận kết hợp hoặc đổi thứ tự nếu giữ lời chào và đủ sáu dữ kiện; không chấp nhận sai người, nơi, vật hoặc số lượng chỉ vì đủ minimum. Phân biệt lỗi dữ kiện với dấu câu nhỏ; không tự cấp Unit/Stage completion."
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+        "slug": "mg01-l1-s1",
+        "line": 308,
+        "field": "min_words",
+        "before": "min_words: 10",
+        "after": "min_words: 9"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "slug": "mg01-l2-s1",
+        "line": 330,
+        "field": "min_words",
+        "before": "min_words: 7",
+        "after": "min_words: 6"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "slug": "mg01-l2-w1",
+        "line": 348,
+        "field": "min_words",
+        "before": "min_words: 7",
+        "after": "min_words: 6"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "slug": "mg01-l3-s1",
+        "line": 331,
+        "field": "min_words",
+        "before": "min_words: 10",
+        "after": "min_words: 9"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "slug": "mg01-l3-w1",
+        "line": 349,
+        "field": "min_words",
+        "before": "min_words: 9",
+        "after": "min_words: 8"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "slug": "mg01-l4-s1",
+        "line": 330,
+        "field": "min_words",
+        "before": "min_words: 9",
+        "after": "min_words: 8"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "slug": "mg01-l4-w1",
+        "line": 348,
+        "field": "min_words",
+        "before": "min_words: 10",
+        "after": "min_words: 9"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "slug": "mg02-l1-s1",
+        "line": 333,
+        "field": "min_words",
+        "before": "min_words: 10",
+        "after": "min_words: 9"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+        "slug": "mg02-l3-s1",
+        "line": 326,
+        "field": "min_words",
+        "before": "min_words: 10",
+        "after": "min_words: 9"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-s1",
+        "line": 327,
+        "field": "min_words",
+        "before": "min_words: 10",
+        "after": "min_words: 9"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "slug": "mg02-l1-s1",
+        "line": 338,
+        "field": "rubric",
+        "before": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+        "after": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+        "slug": "mg02-l3-s1",
+        "line": 331,
+        "field": "rubric",
+        "before": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+        "after": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "slug": "mg02-l4-s1",
+        "line": 332,
+        "field": "rubric",
+        "before": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+        "after": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum."
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+        "slug": "mg01-l1-l1",
+        "line": 248,
+        "field": "option-C",
+        "before": "C. Minh",
+        "after": "C. Alex"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "slug": "mg02-l1",
+        "line": 14,
+        "field": "objective-substring",
+        "before": "eraser là từ bổ trợ đề xuất",
+        "after": "eraser là từ bổ trợ để luyện an theo âm đầu, được kiểm tra ở mức nhận biết trong bài này"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "slug": "mg02-l1-guide-0",
+        "line": 43,
+        "field": "text-substring",
+        "before": "Eraser là ví dụ bổ trợ đang đề xuất, cần giáo viên duyệt; không mở thêm một nhóm từ mới.",
+        "after": "Eraser là từ bổ trợ cho an theo âm đầu; em cần nhận biết cụm an eraser trong bài đọc và bài nghe của bài này."
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "slug": "mg02-l1-guide-1",
+        "line": 49,
+        "field": "text-substring",
+        "before": "Please là lời lịch sự trong cụm yêu cầu, đang được đề xuất làm hỗ trợ tác vụ:",
+        "after": "Please làm lời yêu cầu lịch sự:"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "slug": "mg02-l1-eraser",
+        "line": 107,
+        "field": "meaning_vi",
+        "before": "một cục tẩy; eraser là từ hỗ trợ đề xuất cần giáo viên duyệt",
+        "after": "một cục tẩy; từ bổ trợ cho an theo âm đầu, cần nhận biết trong bài này"
+      }
+    ],
+    "acceptableVariants": [
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "line": 308,
+        "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+        "activitySlug": "mg01-l1-s1",
+        "field": "min_words",
+        "before": 10,
+        "after": 9,
+        "acceptedAiAlternative": "Hello. I'm Lucy from Los Angeles. You are Leo.",
+        "aiAlternativeWhitespaceTokens": 9,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "line": 330,
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "activitySlug": "mg01-l2-s1",
+        "field": "min_words",
+        "before": 7,
+        "after": 6,
+        "acceptedAiAlternative": "Hello. I'm Emma from London. E-M-M-A.",
+        "aiAlternativeWhitespaceTokens": 6,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "line": 348,
+        "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+        "activitySlug": "mg01-l2-w1",
+        "field": "min_words",
+        "before": 7,
+        "after": 6,
+        "acceptedAiAlternative": "I'm Mia from Los Angeles. M-I-A.",
+        "aiAlternativeWhitespaceTokens": 6,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "line": 331,
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "activitySlug": "mg01-l3-s1",
+        "field": "min_words",
+        "before": 10,
+        "after": 9,
+        "acceptedAiAlternative": "Hello. I'm Sam from New York. You are Kim.",
+        "aiAlternativeWhitespaceTokens": 9,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "line": 349,
+        "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+        "activitySlug": "mg01-l3-w1",
+        "field": "min_words",
+        "before": 9,
+        "after": 8,
+        "acceptedAiAlternative": "Hello. I'm Eva from London. You are Noah.",
+        "aiAlternativeWhitespaceTokens": 8,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "line": 330,
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "activitySlug": "mg01-l4-s1",
+        "field": "min_words",
+        "before": 9,
+        "after": 8,
+        "acceptedAiAlternative": "Hello. I'm Mia from London. You are Jo.",
+        "aiAlternativeWhitespaceTokens": 8,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "line": 348,
+        "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+        "activitySlug": "mg01-l4-w1",
+        "field": "min_words",
+        "before": 10,
+        "after": 9,
+        "acceptedAiAlternative": "Hello. I'm Ben from New York. You are Lucy.",
+        "aiAlternativeWhitespaceTokens": 9,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "line": 333,
+        "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+        "activitySlug": "mg02-l1-s1",
+        "field": "min_words",
+        "before": 10,
+        "after": 9,
+        "acceptedAiAlternative": "This is a bag. That's a book. Two pens.",
+        "aiAlternativeWhitespaceTokens": 9,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "line": 326,
+        "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+        "activitySlug": "mg02-l3-s1",
+        "field": "min_words",
+        "before": 10,
+        "after": 9,
+        "acceptedAiAlternative": "This is a book. That's a bag. Two pens.",
+        "aiAlternativeWhitespaceTokens": 9,
+        "executionAuthorized": false
+      },
+      {
+        "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "line": 327,
+        "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+        "activitySlug": "mg02-l4-s1",
+        "field": "min_words",
+        "before": 10,
+        "after": 9,
+        "acceptedAiAlternative": "This is a pen. That's a book. Two bags.",
+        "aiAlternativeWhitespaceTokens": 9,
+        "executionAuthorized": false
+      }
+    ],
+    "vocabularyClassification": {
+      "assessedSupport": "eraser in mg02-l1-r1 and listening-l3",
+      "pragmaticSupport": "please;explicit polite requests keep requirement",
+      "instructional": "Near/Far/Writer/Reader are task labels"
+    },
+    "unchangedControl": {
+      "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+    }
+  },
+  "dependencies": [
+    "P1 engineering investigation must complete first; if unresolved,offline authoring can proceed only after owner acknowledges finding,real learner evaluation remains blocked.",
+    "New-bundle analysis may be prepared after source correction; AI-led sign-off requires policy matching approval; do not depend on old verdicts."
+  ],
+  "acceptance": [
+    "Only exact25 field edits in seven sources; MG02-L2 unchanged;64 Activities32 Objectives41 lexical blocks24 scripts/WAV retained.",
+    "MG02-L4 aligns objective/card/prompt/QUESTION/model/task rubric, retrieves I/you/from; assess instruction load for Pre-A1 without asserting measured suitability or45-minute timing. Overload evidence requires follow-up,not filler or extra Activities.",
+    "Ten short variants preserve all task facts; complete versus missing/wrong name/letters/item/quantity negative tests. Contractions/Unicode apostrophe/whitespace/punctuation tested in actual writing component. No blanket minimum lowering.",
+    "Replace only C.Minh distractor; correct answer/transcript unchanged. Four pending learner-facing fields only; eraser assessed-support,please pragmatic-support,instruction labels distinct; no fabricated master mapping/CEFR/teacher approval.",
+    "Recompute raw source,task-rubric,bundle hashes with canonical rule; task text versioned in new bundle. Aggregation registry/code stays v1 unless separately authorized engineering policy requires otherwise.",
+    "Recheck all24 script/WAV hashes and record explicit successor source-to-script-to-WAV reuse binding in new report; preserve old A inventory/receipts/history.",
+    "TDD red/green, parser/planner/rubric/DTO/count/content tests and component tests plus relevant lint/typecheck; no skipped tests labeled PASS. Old historical hash test remains meaningful rather than deleted.",
+    "Fresh exact-bundle AI analysis after corrections; do not reuse prior PASS. Formal sign-off only under effective approved policy or original qualified-human criteria; content technical PASS alone is not qualification."
+  ],
+  "commandsAfterApproval": [
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/qualify-content.ts --all",
+    "pnpm --filter @worklingo/web exec vitest run src/features/learning-session/activity-renderers/writing-activity.test.tsx"
+  ],
+  "rollback": "Revert only successor content/test changes by explicit inverse commit;append report withdrawal and restore prior current projection;preserve all historical sources in Git,A artifacts and human/AI claims. No reset/deletion.",
+  "plan": {
+    "path": "docs/superpowers/plans/2026-10-28-beginner-successor-content-corrections.md",
+    "sha256LF": "c1c362f744be21c6d34604b09dedc781d1b46520c15d026a970fa7e66c120aff"
+  },
+  "captureSourceInput": "mandate/reports/2026-10-28-beginner-successor-content-corrections-proposal.json",
+  "freezeRule": "Plan and scope hashes bound by proposal body. Execution must recheck protected files and exact allowlist. Shared HEAD69b559e is source baseline;later planning-only changes allowed by ancestry plus hashes. Legitimate approved dependency changes must be attested with new exact output hashes and qualified bindings,not auto accepted. If inherited frozen dependency changes outside specified path/output roles,stop and renew scope."
+}
