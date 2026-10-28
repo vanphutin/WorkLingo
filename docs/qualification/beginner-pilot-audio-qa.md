@@ -36,4 +36,14 @@ Original C: root remains blocked: native fs.promises.realpath resolves it into t
 
 Storage follow-up MND-20261027-005 has matching human approval `96a4ca63b69ec052a0bf203b81773d1dc1d6256d2d1fd291deeafb007b1e45a1` for exact new root `D:/WorkLingoQualification/r12b-20261027/A`, ACL/owner changes only on newly created directories and deterministic dual-authority tool updates. [Storage ledger](../../mandate/reports/2026-10-27-beginner-gate-a-storage-verification.md) records actual acceptance and subsequent pilot evidence. Software44 tool tests +16 pure content regressions PASS. Actual setup/native root/ASUS SID/protected three-principal ACLs/28 directory identities/exclusive probe/readback/cleanup PASS, D: parent ACL and old C: metadata unchanged. Read-only resume PASS without marker rewrite. Source/request hashes for the three pilot scripts still match the table above.
 
-At this checkpoint: provider calls0, sent characters0, candidates0, selected0, incremental charges0;451 SSML characters remain a plan. Human listening NOT_RUN, expansion BLOCKED pending actual OS preflight then human pilot QA. Gate A implementing/not verified; R1.2b NOT_READY. No AUDIO_READY, HUMAN_REVIEW_PASSED, TIMING_VERIFIED or CONTENT_READY inferred from mock tests or request plans.
+Storage amendment is now verified through Mandate CLI. Actual pilot:3 successful calls,451 sent counted SSML characters,3 immutable candidates,0 selected,USD0 incremental F0 spend. Resume and all-mode local verification reused the candidates with request ledger unchanged. Remaining21 scripts NOT_RUN. Human listening NOT_RUN; expansion BLOCKED pending genuine pilot QA. Gate A implementing/not verified; R1.2b NOT_READY. No AUDIO_READY, HUMAN_REVIEW_PASSED, TIMING_VERIFIED or CONTENT_READY inferred.
+
+## Real pilot candidates (take-1, unselected)
+
+| Script | File SHA-256 | Duration | Human warning disposition needed |
+| --- | --- | ---: | --- |
+| mg01-l1-audio-a |`d94c3ac2ffa925b37d93cdcb63fdb1303c19d14fa0793f6eaad4a07567bf84fa`|5.885s|~0.99s trailing silence; proper names Linh/Ha Noi |
+| mg01-l1-audio-b |`967626e5257e01a4b291854cfaecc5069e20a9702a28ba5d0903e24d652a0b3f`|5.794s|~1.02s trailing silence;82.84 WPM incl. silence; Bao/Hue |
+| mg01-l1-audio-c |`157d08d2d9069cb4500eef232b0cc8b776aae922a140bcc8683622f78ef25b02`|6.444s|~1.02s trailing silence;74.49 WPM incl. silence; Nam/Sam |
+
+Each path is `D:/WorkLingoQualification/r12b-20261027/A/takes/<script>/take-1.wav`. Actual checksum, RIFF signal/clipping checks, FFprobe format and FFmpeg decode PASS: PCM16 mono24kHz. These checks do not certify spoken fidelity, name pronunciation or suitability of pace/silence. Review the actual files against the source text and record a genuine verdict/reason for each warning. No automatic trim/rewritten bytes or new retake has been performed. All three accepted human pilot decisions are required before the other21 scripts.

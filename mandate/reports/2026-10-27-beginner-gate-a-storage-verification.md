@@ -41,3 +41,23 @@ Task2 actual command `node tools/beginner-pilot/audio-qualification.mjs prepare 
 Actual full FileStore.assertSafe/native-path/SID/ACL/28 recorded directory identities PASS. Separate parent D: SDDL hash comparison against setup proof PASS (unchanged). Original C: four metadata names/hashes/native paths unchanged. Re-running prepare yielded READY/reused=true with marker bytes unchanged and no rewrite/ACL modification; probe absent. These are actual OS results, not mock inference. No shared ACL, account/UAC/policy, production, DB or Azure setting mutation.
 
 Task1 software acceptance complete; Task2 actual environment acceptance complete. Child eligible for verified (storage/software only). Task3 actual pilot and human listening still NOT_RUN; original A implementing, readiness NOT_READY. The following execution may resume original A under the combined matching approvals after CLI records child verified; caps and human gate unchanged.
+
+Child MND-20261027-005 transitioned through CLI to verified after the actual acceptance above; validate15 records PASS. Original A remains implementing. No child verification claims full A or R1.2b readiness.
+
+## Actual MG01-L1 pilot — human QA pending
+
+Actual approved pilot command completed3 real Azure requests, all COMPLETE/HTTP200. Counted full SSML152+148+151=451; provider spend USD0 under the confirmed F0 resource, not a fabricated account billing total. Actual start intervals12224ms and12155ms; one in flight,3 starts only, no retry/error/redirect or paid fallback. All3 immutable take-1 candidates are unselected. No remaining21 scripts requested.
+
+| Candidate | SHA-256 | Duration seconds | RMS / peak dB | WPM incl. silence | Warnings |
+| --- | --- | ---: | --- | ---: | --- |
+| mg01-l1-audio-a/take-1.wav | `d94c3ac2ffa925b37d93cdcb63fdb1303c19d14fa0793f6eaad4a07567bf84fa` |5.884625| -21.317 / -2.664 |91.76|EDGE_SILENCE|
+| mg01-l1-audio-b/take-1.wav | `967626e5257e01a4b291854cfaecc5069e20a9702a28ba5d0903e24d652a0b3f` |5.794375| -20.740 / -2.678 |82.84|EDGE_SILENCE,PACE_REVIEW|
+| mg01-l1-audio-c/take-1.wav | `157d08d2d9069cb4500eef232b0cc8b776aae922a140bcc8683622f78ef25b02` |6.443500| -21.786 / -2.912 |74.49|EDGE_SILENCE,PACE_REVIEW|
+
+Paths are under `D:/WorkLingoQualification/r12b-20261027/A/takes/`. Actual FFprobe and FFmpeg null-output decode PASS for each: PCM16 mono24000Hz, lengths/sizes match source manifest and SHA checks. WAV signal/clipping/format checks PASS. Measured leading silence0.187–0.201s, trailing0.994–1.018s at the qualifier's -40dB sample threshold explains EDGE_SILENCE warnings. WPM includes silence; B/C remain explicit human pace review warnings, not automated rejection or approval. Human must assess whole-script fidelity and proper-name pronunciation; no AI audition or teacher verdict invented.
+
+Actual pilot rerun reused the three candidates without another request. Actual `verify --gate A --all` verified current three bindings and reported HUMAN_QA_REQUIRED, not24 complete. Request ledger hash unchanged across both operations: calls3,characters451,selected0. Actual private-artifact exact-key leak scan PASS across six metadata files; process-only key loaded selectively from owner-authorized .env, no regular DB env forwarded. No key value/hash printed or stored. No environment secret file written.
+
+Current Gate A is INCOMPLETE / HUMAN_QA_REQUIRED. Three actual WAVs ready for owner listening; zero selected hashes until human decisions. Remaining21 NOT_RUN. Original A implementing; R1.2b NOT_READY. Gate B/C, publication, enrollment and DB untouched. No AUDIO_READY/CONTENT_READY/HUMAN_REVIEW_PASSED/TIMING_VERIFIED promotion. The next dependency is the appointed owner's real listening verdict on these exact hashes and the silence/pace warnings, not another storage approval.
+
+Final source checks after actual setup/pilot:44 tool +16 pure content tests PASS,0 FAIL/0 skipped; focused ESLint, both Node syntax checks and mandate validate15 PASS. No newly known P0/P1 software/environment blocker. Human audio-quality warnings remain open, not a defect waived by the tests. Product typecheck/build/full-app/DB/E2E NOT_RUN under the explicit offline scope; no skipped-as-PASS claim. Local commits so far0c82547,0613bd6,af2574a; this final evidence snapshot is saved in its own commit. No merge/push/deploy or DB access.

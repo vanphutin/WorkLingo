@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261027-005",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-27",
-  "updated": "2026-10-27T16:28:42.555Z",
+  "updated": "2026-10-28T01:08:40.545Z",
   "title": "Correct private Gate A storage ownership and native path before bounded Azure audio continuation",
   "type": "infrastructure",
   "owner": "Codex",
@@ -61,7 +61,28 @@
     "at": "2026-10-27T16:28:42.294Z",
     "proposal_hash": "96a4ca63b69ec052a0bf203b81773d1dc1d6256d2d1fd291deeafb007b1e45a1"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "node --test tools/beginner-pilot/audio-qualification.test.mjs",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-verification.md"
+    },
+    {
+      "command": "pnpm exec eslint tools/beginner-pilot/audio-qualification.mjs tools/beginner-pilot/audio-qualification.test.mjs; node --check on both files",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-verification.md"
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-verification.md"
+    },
+    {
+      "command": "node tools/beginner-pilot/audio-qualification.mjs prepare --gate A --storage-only; actual full tree/native/SID/ACL/probe/parent-ACL/old-history and read-only resume checks",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-verification.md"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-27T16:24:39.555Z",
@@ -98,6 +119,15 @@
       "reason": "Direct matching approval received for the exact MND-20261027-005 proposal and storage/audio continuation boundaries. All frozen hashes/baseline/allowlist passed before implementation.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-human-approval.md"
+    },
+    {
+      "at": "2026-10-28T01:08:40.545Z",
+      "actor": "Codex",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Matching child storage/software acceptance actually passed on the exact D: root after TDD and independent review corrections. No audio or full Gate A readiness inferred.",
+      "event": "transition",
+      "reference": null
     }
   ]
 }
