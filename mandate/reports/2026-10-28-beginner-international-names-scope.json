@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "mandate": "MND-20261028-001",
+  "status": "PREAPPROVAL_ONLY",
+  "approval": null,
+  "parents": {
+    "authoring": "MND-20261027-001",
+    "audio": "MND-20261027-002",
+    "storage": "MND-20261027-005"
+  },
+  "originalApprovals": {
+    "audio": "0d1907e1de7161848f4fadeaedaf88cb656dff086c4fd1119c4edbc4bc376638",
+    "storage": "96a4ca63b69ec052a0bf203b81773d1dc1d6256d2d1fd291deeafb007b1e45a1"
+  },
+  "baseline": {
+    "head": "180fbc71862f38f98322e9f2bfd35ed21d00ca4b",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "protectedUnchangedFiles": [
+      {
+        "path": "apps/api/src/ai-gateway/domain/text-to-speech.port.ts",
+        "sha256": "60e2bda27c1792c341ed32063fe951e409ab218f07035782d9e8cdc319320df0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/azure-dialogue-ssml.ts",
+        "sha256": "6f1b38b59e989fb049b48ab07a19ec6985f6a1121951910e788233d91be055c2"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/microsoft-tts.adapter.ts",
+        "sha256": "cc958d0193034ba2bfdef296a8fbf655930937031917aed82098ab8ccdd6fb5a"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/audio-generation.handler.ts",
+        "sha256": "d34e9a33563ba9aca580300be00170d6f555ca1111eb8078f02c7e06a92b5f78"
+      },
+      {
+        "path": "apps/api/src/content-authoring/application/content-publisher.service.ts",
+        "sha256": "62a03d7319964e4e04d8341d0f92d8dcdc4ca3681f7d1b37674afc6493d7818b"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts",
+        "sha256": "99b5a2afb8e8824f37ce723735d1cd5505611559eb0c54a839d639e044b4c4dc"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/storage/infrastructure/local-object-storage.adapter.ts",
+        "sha256": "4aa47178a69aa0f61ab8c6ccb94812c411fa4caf90a413d2a0abf085c933c9c3"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.ts",
+        "sha256": "8cfb76bb82e0994725ba40d87050515128f24c7136153ad8303d825d09d40c77"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-content-review.md",
+        "sha256": "e3cd0821f8e8856f9a58fed9940722e70130e141c428e9b6996a748a4586be45"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-content-authoring.md",
+        "sha256": "fd1a0372b68e4f1c53f385702353435fe988e217443c7a8e7ce185c381a79dc7"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-verification.md",
+        "sha256": "23b0d3bd4896f0b3aa4a0e3d584d3f6fb122079eff587c87360f6f45047d7e86"
+      },
+      {
+        "path": "packages/content-format/src/audio-narration.ts",
+        "sha256": "f6ce4585154be2237026de05bbf0fcf395bbba0f010f32d6b9460da22a334cd1"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      }
+    ],
+    "initialEditTargets": [
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "dff4b426703439690a7fec60ec5fde58cca7bae0e86080dca758eba76b84a438"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "43506aaedff2fdff10619563e06b14d7550879b66caa69b0e0ac08689f2b9984"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "733819d647b67d5d3775522f874ddba6225f123fc6a458bd63bd163b7e5e74aa"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "7f476823541e99125266ba6862a32d6cab474ac1859e1612209fc0c9c293b509"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "d3c15edc872d382f97425788e52fe071493b53ffd5cb9766b219783763cd1fe9"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "4dd347b6d6f7533d7dbad73da5454b55a103835ec96b412b09840dc58cb04e78"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+        "sha256": "85adba57e56a01a4345e2f8ff185fec292a84ab1f9d2e08b70e57c0ef573d0c4"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "sha256": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1"
+      },
+      {
+        "path": "tools/beginner-pilot/audio-qualification.mjs",
+        "sha256": "327a59efc0c60289b596b1c2e93d994a1bb678bff9add21d23a1686abd0c9cd2"
+      },
+      {
+        "path": "tools/beginner-pilot/audio-qualification.test.mjs",
+        "sha256": "2b91bf9d3894b79c9588416965d261e263b07852b18a91164420c58401fa0c0e"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-qa.md",
+        "sha256": "4b9ea6a700f33c0ac7f1a5fc4e6a4b74e0a57c7bfc1a7a78379a52ac2796c3cc"
+      }
+    ],
+    "exactDataTransitions": [
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "before": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+        "after": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "before": "dff4b426703439690a7fec60ec5fde58cca7bae0e86080dca758eba76b84a438",
+        "after": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "before": "43506aaedff2fdff10619563e06b14d7550879b66caa69b0e0ac08689f2b9984",
+        "after": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "before": "733819d647b67d5d3775522f874ddba6225f123fc6a458bd63bd163b7e5e74aa",
+        "after": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "before": "7f476823541e99125266ba6862a32d6cab474ac1859e1612209fc0c9c293b509",
+        "after": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "before": "d3c15edc872d382f97425788e52fe071493b53ffd5cb9766b219783763cd1fe9",
+        "after": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "before": "4dd347b6d6f7533d7dbad73da5454b55a103835ec96b412b09840dc58cb04e78",
+        "after": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+        "before": "85adba57e56a01a4345e2f8ff185fec292a84ab1f9d2e08b70e57c0ef573d0c4",
+        "after": "5907f00fc66df5a086a5de7acda4ef92810aa981a6ec0e38261218e0d744ca3b"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "before": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+        "after": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56",
+        "beforeLF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+        "afterLF": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      }
+    ],
+    "unchangedLesson": {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb"
+    },
+    "fingerprint": "a9849f981392ed54fbc44add1eeb9f222f1e0927285331da81214226d8951286"
+  },
+  "frozenArtifacts": [
+    {
+      "path": "docs/superpowers/plans/2026-10-28-beginner-international-names.md",
+      "sha256LF": "d888c220f0e1a495f0c116790ff790b49c0f713119dbed0bec794eadcb79a800"
+    },
+    {
+      "path": "mandate/reports/2026-10-28-beginner-international-names-review.md",
+      "sha256LF": "954c07312ee5fab69cd195537ae122fa5b103a62107c8805aa43b68d5e3f1336"
+    },
+    {
+      "path": "mandate/reports/2026-10-28-beginner-international-names-preview.json",
+      "sha256LF": "b44e4b1809fd395823889203ebcf95592cc2d87a359da290e56daf506636f220"
+    },
+    {
+      "path": "mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json",
+      "sha256LF": "5332cc7d5fe2b991842562194c6eb68841be095d8c7d2655222a47fb43c91224"
+    },
+    {
+      "path": "mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json",
+      "sha256LF": "2461ff53c3e3a7a905c156cac18d73c4be55764d6f9c5ef68df93cfbcb789813"
+    },
+    {
+      "path": "mandate/reports/2026-10-27-beginner-r12b-scope.json",
+      "sha256LF": "7bfa7e6acde2dd27aa4b01d3b47ad1759b27016bfb0786d3e9faa7a3b4809fe5"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+      "sha256LF": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+    },
+    {
+      "path": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md",
+      "sha256LF": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-gate-a-resource-alignment.md",
+      "sha256LF": "dac1a92495150ac1036eeeff5e56452b390ed545230d49f0362ae6f660ea96d2"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-27-beginner-gate-a-storage-amendment.md",
+      "sha256LF": "e31e0d5fd80e700e977870a66bc34284dc8fcff5f1071b5fe97fd75cb6b65233"
+    }
+  ],
+  "allowlist": {
+    "repositoryModify": [
+      "content/beginner/pilot/mg01-l1.lesson.txt",
+      "content/beginner/pilot/mg01-l2.lesson.txt",
+      "content/beginner/pilot/mg01-l3.lesson.txt",
+      "content/beginner/pilot/mg01-l4.lesson.txt",
+      "content/beginner/pilot/mg02-l2.lesson.txt",
+      "content/beginner/pilot/mg02-l3.lesson.txt",
+      "content/beginner/pilot/mg02-l4.lesson.txt",
+      "apps/api/test/beginner-pilot/qualify-content.test.ts",
+      "docs/qualification/beginner-pilot-audio-inventory.json",
+      "tools/beginner-pilot/audio-qualification.mjs",
+      "tools/beginner-pilot/audio-qualification.test.mjs",
+      "docs/qualification/beginner-pilot-audio-qa.md"
+    ],
+    "repositoryCreate": [
+      "apps/api/test/beginner-pilot/international-content.test.ts",
+      "docs/qualification/beginner-pilot-audio-inventory-v1.json",
+      "docs/qualification/beginner-pilot-international-content-review.md"
+    ],
+    "futureGovernanceCreate": [
+      "mandate/reports/2026-10-28-beginner-international-names-human-approval.md",
+      "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    ],
+    "externalModifyOrCreate": [
+      "D:/WorkLingoQualification/r12b-20261027/A/asset-manifest.json",
+      "D:/WorkLingoQualification/r12b-20261027/A/asset-manifest.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/audio-qa.json",
+      "D:/WorkLingoQualification/r12b-20261027/A/audio-qa.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/pronunciation-decisions.json",
+      "D:/WorkLingoQualification/r12b-20261027/A/pronunciation-decisions.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/requests.json",
+      "D:/WorkLingoQualification/r12b-20261027/A/requests.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/rights-and-tariff.json",
+      "D:/WorkLingoQualification/r12b-20261027/A/rights-and-tariff.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/run-ownership.json",
+      "D:/WorkLingoQualification/r12b-20261027/A/run-ownership.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-3.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-2.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-2.wav.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-3.wav",
+      "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-3.wav.tmp"
+    ],
+    "existingAclModify": [],
+    "createDirectories": [],
+    "externalDelete": [
+      "D:/WorkLingoQualification/r12b-20261027/A/asset-manifest.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/requests.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/audio-qa.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/pronunciation-decisions.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/rights-and-tariff.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261027/A/run-ownership.json.tmp"
+    ],
+    "fingerprint": "86d00084511fa881f71b3eb00dbeecca9ca1dab2680be26b1c321a4489a25213",
+    "cleanupPolicy": "Only exact own verified metadata .tmp/lock cleanup for atomic persistence; no actual WAV/source/history deletion."
+  },
+  "content": {
+    "revision": "international-v2",
+    "names": {
+      "Linh": "Lily",
+      "Bao": "Jack",
+      "Nam": "Noah",
+      "Mai": "Lucy",
+      "An": "Adam",
+      "Bo": "Ed"
+    },
+    "places": {
+      "Ha Noi": "New York",
+      "Hue": "London",
+      "Da Nang": "Los Angeles",
+      "Can Tho": "Hong Kong"
+    },
+    "preserve": [
+      "Osaka",
+      "Anna",
+      "Alex",
+      "Ben",
+      "Emma",
+      "Eva",
+      "Jo",
+      "Joe",
+      "Kim",
+      "Leo",
+      "May",
+      "Mia",
+      "Sam",
+      "Tim"
+    ],
+    "grammarException": "All three capitalized An article occurrences in MG02-L1 stay byte-identical; that entire Lesson is unchanged",
+    "spelling": {
+      "before": "Bo / B, O",
+      "after": "Ed / E, D",
+      "explanation": "Ed đổi chữ đầu -> Ed đổi cả hai chữ"
+    },
+    "counts": {
+      "lessons": 8,
+      "activities": 64,
+      "objectives": 32,
+      "listeningScripts": 24
+    },
+    "format": "WorkLingoLesson/1.2",
+    "plannerContractMinutes": 45,
+    "teacherReview": "NOT_RUN",
+    "contentReadiness": "NOT_READY",
+    "minimumHashPolicy": "Exact before/after data transitions only; all other existing protected bytes/frozen artifacts stay exact; all after hashes plus verified child required for production."
+  },
+  "archive": {
+    "path": "docs/qualification/beginner-pilot-audio-inventory-v1.json",
+    "sha256": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+    "sha256LF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+    "originalPath": "docs/qualification/beginner-pilot-audio-inventory.json",
+    "role": "Immutable original-v1 inventory; never current selection/pilot eligibility"
+  },
+  "history": {
+    "root": "D:/WorkLingoQualification/r12b-20261027/A",
+    "initialRequestFileSha256": "7d446ed4c3616c261493a882ee7c8658224dfe1b6a0bea4b1a02d0c9af4a3b92",
+    "retainedReceiptCount": 3,
+    "retainedReceiptsPrefixFingerprint": "424adfda33f50e3c9554654fbebf4da31bbc074f7b9897670fae9ca80753e172",
+    "retainedHumanReviewCount": 3,
+    "retainedHumanReviewsPrefixFingerprint": "c0da44f880831166cb0e88a8366195cc912f186b70f91fb9bbd55676165e108c",
+    "immutableCandidates": [
+      {
+        "path": "takes/mg01-l1-audio-a/take-1.wav",
+        "sha256": "d94c3ac2ffa925b37d93cdcb63fdb1303c19d14fa0793f6eaad4a07567bf84fa",
+        "sourceSha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+        "scriptSha256": "83ce7aae5c603f0ffb78155bb5c59c8a539b969d8395eb6ac2b3f64265789141",
+        "requestSha256": "b40e964e95f71a4b25867daa1ba92d692b0db43089d89889a8f891cb6e9ab75c",
+        "take": 1
+      },
+      {
+        "path": "takes/mg01-l1-audio-b/take-1.wav",
+        "sha256": "967626e5257e01a4b291854cfaecc5069e20a9702a28ba5d0903e24d652a0b3f",
+        "sourceSha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+        "scriptSha256": "db2c6c0be27afd6b13561cfa5f75a99b7b2c5c44e28b316f14924c669a2d9ad6",
+        "requestSha256": "4f9afcbf9cb3d9d4f3bc3756fb7c81ae14eab93bd6b9944606be5bd381e97cd2",
+        "take": 1
+      },
+      {
+        "path": "takes/mg01-l1-audio-c/take-1.wav",
+        "sha256": "157d08d2d9069cb4500eef232b0cc8b776aae922a140bcc8683622f78ef25b02",
+        "sourceSha256": "a2fed1964c916e59719f2f374c1ffbf8861842bd9c6b5eb34b63cdc266ea9fb9",
+        "scriptSha256": "e276efb212bb8b3b067413c97dc6041c965c41b4e499c2e73608ae60d36b9333",
+        "requestSha256": "fabeb9ce4c661fd17a1cb152395ff5b6326278777b8a5807ff11ef805a95e91c",
+        "take": 1
+      }
+    ],
+    "initialPronunciationHoldSha256": "9b2427a0e3e962a59c58327d1566dc0ec17787c517c19d03c171d37ec8257039",
+    "retention": "Preserve old WAV bytes/receipts/reviews without rewriting, deletion, renaming or budget reset. Selection/current-eligibility metadata may change; historical PASS never qualifies international-v2.",
+    "nextPilotTake": 2
+  },
+  "provider": {
+    "id": "azure-speech",
+    "voice": "en-US-JennyNeural",
+    "locale": "en-US",
+    "region": "eastasia",
+    "url": "https://eastasia.tts.speech.microsoft.com/cognitiveservices/v1",
+    "redirects": false,
+    "credentialProcessVariable": "WL_QUAL_AZURE_KEY",
+    "envFileFallback": false,
+    "allowedInput": "Frozen fictional scripts and human-reviewed pronunciation SSML only",
+    "resourceContext": {
+      "name": "video-sub-ai",
+      "kind": "SpeechServices",
+      "expectedPricingTier": "F0",
+      "displayedPricingTier": "Free",
+      "portalEndpoint": "https://eastasia.api.cognitive.microsoft.com/",
+      "subscriptionContext": "Azure for Students (owner reported)",
+      "purpose": "Private educational qualification; no commercial production or redistribution authority",
+      "credentialResourceAssociationVerified": false
+    },
+    "scheduling": {
+      "maxInFlight": 1,
+      "minRequestStartIntervalSeconds": 10,
+      "maxStartsPerRolling60Seconds": 6,
+      "automaticRetry": false,
+      "on429": "STOP_AND_REPORT",
+      "onQuotaExhausted": "STOP_AND_REPORT",
+      "paidProviderOrTierFallback": false
+    },
+    "regionVoiceAvailabilityVerified": false
+  },
+  "budget": {
+    "currency": "USD",
+    "pilotSpendCap": 0,
+    "inclusiveSpendCap": 0,
+    "maxCalls": 72,
+    "pilotMaxCalls": 9,
+    "maxCountedCharacters": 10000,
+    "pilotMaxCountedCharacters": 1000,
+    "maxTakesPerScript": 3,
+    "paidTierOrCreditFallback": false,
+    "requiresFreeTierQuotaAndEducationalUseEvidence": true,
+    "remainingMonthlyQuota": null,
+    "humanPaidEngagement": false
+  },
+  "forecast": {
+    "realCallsAlready": 3,
+    "realCharactersAlready": 451,
+    "newPilotCalls": 3,
+    "newPilotCharacters": 458,
+    "cumulativePilotCharacters": 909,
+    "newAll24Characters": 3873,
+    "cumulativeCallsIfNoRetakes": 27,
+    "cumulativeAllCharacters": 4324,
+    "limitsUnchanged": {
+      "pilotCalls": 9,
+      "pilotChars": 1000,
+      "totalCalls": 72,
+      "totalChars": 10000,
+      "takesPerSlug": 3
+    }
+  },
+  "storage": {
+    "root": "D:/WorkLingoQualification/r12b-20261027/A",
+    "nativePathMustMatch": true,
+    "verifiedStorageMandate": "MND-20261027-005",
+    "directoryIdentityAndPrivateAclPolicyUnchanged": true,
+    "noAclOrDirectorySetup": true
+  },
+  "authority": {
+    "sourceModifyOnlyExactAllowlist": true,
+    "explicitProtectedDataHashTransitions": true,
+    "processOnlyAzureKey": "WL_QUAL_AZURE_KEY",
+    "privateSelectiveEnvReadByOperator": true,
+    "originalF0ContinuationAfterChildVerified": true,
+    "scopeHashApprovalRequired": true,
+    "originalAudioApprovalRequired": true,
+    "verifiedStorageRequired": true,
+    "newPilotHumanQaRequired": true,
+    "allSelectedHumanAudioQaRequired": true,
+    "databaseRead": false,
+    "databaseWrite": false,
+    "productParserPlannerRubricEvaluatorApiSchemaConfigModify": false,
+    "osAccountPolicyAclModify": false,
+    "azureResourceBillingModify": false,
+    "paidFallback": false,
+    "humanPedagogySignoff": false,
+    "rehearsal": false,
+    "importPublishRelease": false,
+    "learnerEnrollment": false,
+    "mergePushDeploy": false
+  },
+  "commands": [
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/international-content.test.ts",
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/qualify-content.ts --all",
+    "node --test tools/beginner-pilot/audio-qualification.test.mjs",
+    "pnpm exec eslint apps/api/test/beginner-pilot/international-content.test.ts apps/api/test/beginner-pilot/qualify-content.test.ts tools/beginner-pilot/audio-qualification.mjs tools/beginner-pilot/audio-qualification.test.mjs",
+    "node --check tools/beginner-pilot/audio-qualification.mjs",
+    "node --check tools/beginner-pilot/audio-qualification.test.mjs",
+    "pnpm --filter @worklingo/api typecheck",
+    "pnpm --filter @worklingo/content-format exec vitest run src/beginner-format.spec.ts src/foundation-format.spec.ts",
+    "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner.config.ts src/learning-sessions/domain/beginner-session-planner.spec.ts src/learning-sessions/domain/learner-activity-projection.spec.ts src/teacher-ai/domain/beginner-rubrics.spec.ts",
+    "node tools/beginner-pilot/audio-qualification.mjs produce --gate A --lesson MG01-L1",
+    "node tools/beginner-pilot/audio-qualification.mjs produce --gate A --all",
+    "node tools/beginner-pilot/audio-qualification.mjs verify --gate A --all",
+    "node .agents/skills/mandate-steward/scripts/mandate.mjs validate"
+  ],
+  "acceptance": [
+    "Exact approved name/place/source/test/inventory hash changes only; MG02-L1 and An article unchanged; Ed spelling/evidence coherent.",
+    "Same8 Lessons/64 activities/32 objectives/24 scripts/format1.2/45-minute planner contract and answer/skill/evidence semantics; no teacher/timing readiness inferred.",
+    "Exact original-v1 inventory archive retained, old3 WAV/receipt/human-verdict prefixes unchanged, no budget reset or legacy-current confusion.",
+    "TDD negative/positive version registry/source-proof/current-eligibility/shared-budget/per-slug take/idempotency/revocation tests and relevant pure regressions/lint/typecheck pass with independent review.",
+    "Only after child technical acceptance verified may existing approved F0 audio resume with source after hashes, current real root/private ACL, recent genuine use evidence and no provider/tier/quota fallback. Actual new audio not prerequisite to child verification.",
+    "Original Gate A remains implementing until all24 current actual selected hashes and human QA pass, including renewed three-file current-source pilot. B/C/CONTENT_READY/learner/DB remain untouched."
+  ],
+  "rollback": "Stop provider, hold production. Preserve both inventory revisions, all real WAV bytes, original and appended receipts/QA with shared counters. Explicit reviewed source commit revert only; no silent latest fallback, history loss or quota reset. No DB, ACL, account, Azure billing, recursive cleanup or old-file deletion."
+}
