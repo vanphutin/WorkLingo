@@ -1,3 +1,4 @@
+if (process.env.WL_BEGINNER_EVALUATOR_CONTEXT_TEST !== '1') throw new Error('DEDICATED_CONTEXT_CONFIG_REQUIRED');
 import net from 'node:net';
 import http from 'node:http';
 import { readFileSync } from 'node:fs';
