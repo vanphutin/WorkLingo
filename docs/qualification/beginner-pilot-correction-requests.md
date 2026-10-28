@@ -212,3 +212,124 @@ Source is the reviewer statement relayed by owner in this conversation,not an in
 | mg01-l4-w1 | 10 | 9 | Hello. I'm Ben from New York. You are Lucy. |
 
 These demonstrate a content-minimum tension under candidate grammatical paraphrases. Teacher must decide admissibility. No hard-rejection behavior has been reproduced; no source threshold changed.
+
+## Autonomous AI disposition round B-AI-AUTONOMOUS-001
+
+| Correction ID | AI disposition | Evidence/confirmation | Required mandate | Risk |
+| --- | --- | --- | --- | --- |
+| CR-B-AI-01 | DEFER_PENDING_EVIDENCE | NON_MONOTONIC_MEASUREMENTS_CONFIRMED_PEDAGOGICAL_DEFECT_NOT_CONFIRMED | EXISTING-GATE-C-PROGRESSION-EVIDENCE-REVIEW — MND-20261027-004 (scope review;not authorized) | P2 |
+| CR-B-AI-02 | ACCEPT_FOR_CORRECTION | CONFIRMED_ALIGNMENT_GAP_WITH_REVIEWER_CROSS_UNIT_REUSE_REQUIREMENT | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-03 | ACCEPT_FOR_CORRECTION | CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-04 | ACCEPT_FOR_CORRECTION | CONFIRMED_OWNER_STYLE_DICTIONARY_MISMATCH_NOT_WRONG_KEY | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-05 | ACCEPT_FOR_CORRECTION | LEARNER_FACING_EDITORIAL_MARKERS_CONFIRMED_OTHER_COMPONENTS_DEFERRED | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-06 | DEFER_PENDING_EVIDENCE | STATIC_CONTEXT_OMISSION_OBSERVED_RUNTIME_GRADING_FAILURE_NOT_REPRODUCED | BEGINNER-EVALUATOR-CONTEXT-VERIFICATION (not captured) | P1 |
+
+All decisions below are AI_RECOMMENDATION by WORKLINGO-AI-REVIEWER-001,authorType=AI,humanSigned=false. They neither modify the earlier proposals nor create teacher acceptance/execution authority.
+
+### Current AI disposition CR-B-AI-01 — DEFER_PENDING_EVIDENCE
+
+Dữ liệu duration/tokens giảm đã xác nhận,nhưng độ khó không đồng nhất với độ dài âm thanh. L4 retrieval/new facts và L2 phonology focus có thể hợp lý dù ngắn hơn; chưa có calibration/task-comprehension evidence để chốt cần rewrite script nào. Không tự ép mọi Activity khó/dài hơn Activity trước.
+
+Confirmation: NON_MONOTONIC_MEASUREMENTS_CONFIRMED_PEDAGOGICAL_DEFECT_NOT_CONFIRMED. Impact: Chưa chứng minh đáp ứng yêu cầu tăng listening meaningful theo tiến bộ; cũng chưa chứng minh bản ngắn hơn là lỗi sư phạm. Không thay facts bằng silence/replay.
+
+Exact proposed changes (not applied):
+
+- None until required evidence is available. No source/audio change until a bounded progression criterion and evidence select specific tasks. Reject blanket monotonic-duration rewriting as a correction method.
+
+Gate A: No change; future changed scripts require separately approved new audio and QA. Gate B: Progression evidence remains limited,not a fabricated per-Lesson FAIL. Gate C: Actual timing/comprehension evidence only under future separately approved rehearsal.
+
+Required mandate: EXISTING-GATE-C-PROGRESSION-EVIDENCE-REVIEW;reuse MND-20261027-004 only after scope/baseline review and matching approval. Verification cases: Measure facts/role switches/scaffold demand separately from seconds. Allow shorter transfer items if evidence supports their learning purpose. Under separate authority,collect genuine learner comprehension/support/timing observations;do not invent them.
+
+### Current AI disposition CR-B-AI-02 — ACCEPT_FOR_CORRECTION
+
+MG02 chỉ reuse hello/tên; cuối Unit chưa vận dụng lại I/you/from. Một task cuối Unit kết hợp giới thiệu và yêu cầu là đủ đích correction; không buộc bốn tasks L3/L4 đều thêm intro.
+
+Confirmation: CONFIRMED_ALIGNMENT_GAP_WITH_REVIEWER_CROSS_UNIT_REUSE_REQUIREMENT. Impact: Tăng retrieval liên Unit có mục đích;không thêm cấu trúc mục tiêu nâng cao hoặc Activity mới.
+
+Exact proposed changes (not applied):
+
+- content/beginner/pilot/mg02-l4.lesson.txt:147 mg02-l4-writing-card field text; before "New request card\nNear: a bag\nRequest: three pens; a book"; after "New request card\nNear: a bag\nRequest: three pens; a book\nName: Alex\nFrom: Osaka".
+- content/beginner/pilot/mg02-l4.lesson.txt:337 mg02-l4-w1 field question_and_prompt; before "Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish."; after "Use only the writing card. Greet a new classmate and introduce the name and place. Identify the near object, then request the listed items and quantities. Check the note before you finish.".
+- content/beginner/pilot/mg02-l4.lesson.txt:337 mg02-l4-w1 field sample_answer; before "This is a bag. Three pens, please. A book, please."; after "Hello. I am Alex. I am from Osaka. This is a bag. Three pens, please. A book, please.".
+- content/beginner/pilot/mg02-l4.lesson.txt:337 mg02-l4-w1 field rubric; before "Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery."; after "Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Phần giới thiệu cần Alex/Osaka,cho phép I am hoặc I'm và ghép tên/nơi trong một câu rõ nghĩa; giữ đúng cả ba ý vật/số lượng của thẻ. Không thưởng thêm câu hoặc lặp mẫu vô ích.".
+
+Gate A: Existing WAVs retained;new source binding must be explicitly qualified. Gate B: Only source-corrected version may receive new bound dispositions;no human conclusion copied. Gate C: Rehearse corrected version later;45-minute contract unchanged,not timing evidence.
+
+Required mandate: BEGINNER-OFFLINE-CONTENT-CORRECTIONS;mandateId=null,not captured/not approved. Verification cases: Keep8/64/32/41/24 inventories and single-skill writing mapping. Positive sample/alternatives preserve Alex/Osaka plus near bag/three pens/one book. Negative cases swapping role/place or quantities do not meet criteria. No model/answer leakage to learner DTO.
+
+### Current AI disposition CR-B-AI-03 — ACCEPT_FOR_CORRECTION
+
+I am+name+from gộp câu và That's=That is giữ nghĩa của thẻ. Minimum hiện cao hơn10 variants hợp lệ ở cấp AI; learner không nên chèn filler. Không áp dụng bỏ please vào task yêu cầu polite và không tuyên bố hard rejection đã xảy ra.
+
+Confirmation: CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS. Impact: Căn chỉnh minimum guidance/rubric để không phạt giao tiếp ngắn đúng ý;đây là AI assessment recommendation,chưa có teacher signature.
+
+Exact proposed changes (not applied):
+
+- content/beginner/pilot/mg01-l1.lesson.txt:308 mg01-l1-s1 field min_words; before 10; after 9.
+- content/beginner/pilot/mg01-l2.lesson.txt:330 mg01-l2-s1 field min_words; before 7; after 6.
+- content/beginner/pilot/mg01-l2.lesson.txt:348 mg01-l2-w1 field min_words; before 7; after 6.
+- content/beginner/pilot/mg01-l3.lesson.txt:331 mg01-l3-s1 field min_words; before 10; after 9.
+- content/beginner/pilot/mg01-l3.lesson.txt:349 mg01-l3-w1 field min_words; before 9; after 8.
+- content/beginner/pilot/mg01-l4.lesson.txt:330 mg01-l4-s1 field min_words; before 9; after 8.
+- content/beginner/pilot/mg01-l4.lesson.txt:348 mg01-l4-w1 field min_words; before 10; after 9.
+- content/beginner/pilot/mg02-l1.lesson.txt:333 mg02-l1-s1 field min_words; before 10; after 9.
+- content/beginner/pilot/mg02-l3.lesson.txt:326 mg02-l3-s1 field min_words; before 10; after 9.
+- content/beginner/pilot/mg02-l4.lesson.txt:327 mg02-l4-s1 field min_words; before 10; after 9.
+- content/beginner/pilot/mg02-l1.lesson.txt:325 mg02-l1-s1 field rubric; before "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery."; after "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.".
+- content/beginner/pilot/mg02-l3.lesson.txt:318 mg02-l3-s1 field rubric; before "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery."; after "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.".
+- content/beginner/pilot/mg02-l4.lesson.txt:319 mg02-l4-s1 field rubric; before "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery."; after "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.".
+
+Gate A: Audio bytes/scripts unchanged;source hash rebinding requires explicit successor approval. Gate B: Re-qualify new minima/rubric text and source evidence;no human PASS inherited. Gate C: Use corrected sources in actual later rehearsal;do not infer observed time.
+
+Required mandate: BEGINNER-OFFLINE-CONTENT-CORRECTIONS;mandateId=null,not captured/not approved. Verification cases: All10 named variants satisfy corrected min_words and retain task facts. Wrong name/place/item/quantity remains incorrect despite high word count. Test That's=That is at correct far object;do not accept dropped near/far meaning. Keep polite-request requirements where explicitly required. Report UI minimum separately from any untested runtime rejection behavior.
+
+### Current AI disposition CR-B-AI-04 — ACCEPT_FOR_CORRECTION
+
+Minh còn ở distractor trái danh sách tên quốc tế đã chọn. Hai câu hướng dẫn về tên Việt không sai kiến thức;không cần xóa chỉ để biến mọi nhận xét biên tập thành lỗi.
+
+Confirmation: CONFIRMED_OWNER_STYLE_DICTIONARY_MISMATCH_NOT_WRONG_KEY. Impact: Đồng bộ style/name inventory;đáp án Lily và evidence/audio không thay đổi.
+
+Exact proposed changes (not applied):
+
+- content/beginner/pilot/mg01-l1.lesson.txt:248 mg01-l1-l1 field option_C; before "Minh"; after "Alex".
+
+Gate A: Preserve existing media/QA;explicitly qualify new source binding if correction implemented. Gate B: Validate current key/options/evidence remain unique and correctly bound. Gate C: No observed timing claim or replay change.
+
+Required mandate: BEGINNER-OFFLINE-CONTENT-CORRECTIONS;mandateId=null,not captured/not approved. Verification cases: Option C becomes Alex;A Lily stays unique correct answer. No unauthorized name/role/place substitution elsewhere. All actual WAV/script hashes unchanged.
+
+Narrowing/deferred components: Delete Vietnamese-name pronunciation guidance in MG01-L1/L2 => REJECT_WITH_REASON: Correct general guidance for Vietnamese learners;not a demonstrated content defect. Optional editorial trim may be considered later,not required by this correction.
+
+### Current AI disposition CR-B-AI-05 — ACCEPT_FOR_CORRECTION
+
+Câu cần giáo viên duyệt/đang đề xuất thuộc review metadata,không phải kiến thức learner. Không suy inline-authored block sai chỉ vì thiếu master ID,không ép gloss mọi từ khi chưa có comprehension evidence.
+
+Confirmation: LEARNER_FACING_EDITORIAL_MARKERS_CONFIRMED_OTHER_COMPONENTS_DEFERRED. Impact: Làm rõ học liệu,giữ trạng thái provenance/human approval trung thực trong dossier riêng. Eraser/please task-relevant ở cấp AI,không giả master/professional signature.
+
+Exact proposed changes (not applied):
+
+- content/beginner/pilot/mg02-l1.lesson.txt:14  field lesson_objective_substring; before "eraser là từ bổ trợ đề xuất"; after "eraser là ví dụ bổ trợ cho an theo âm đầu".
+- content/beginner/pilot/mg02-l1.lesson.txt:40 mg02-l1-guide-0 field instruction_text_substring; before "Eraser là ví dụ bổ trợ đang đề xuất, cần giáo viên duyệt; không mở thêm một nhóm từ mới."; after "Eraser là ví dụ bổ trợ để phân biệt a/an; chỉ cần dùng trong mẫu minh họa này.".
+- content/beginner/pilot/mg02-l1.lesson.txt:46 mg02-l1-guide-1 field instruction_text_substring; before "Please là lời lịch sự trong cụm yêu cầu, đang được đề xuất làm hỗ trợ tác vụ:"; after "Please làm lời yêu cầu lịch sự:".
+- content/beginner/pilot/mg02-l1.lesson.txt:105 mg02-l1-eraser field meaning_vi; before "một cục tẩy; eraser là từ hỗ trợ đề xuất cần giáo viên duyệt"; after "một cục tẩy; ví dụ bổ trợ cho cách dùng an theo âm đầu".
+
+Gate A: Unchanged scripts/WAVs;new source binding qualification still explicit. Gate B: Human fields remain pending;AI acceptance does not create teacher support dispositions. Gate C: Comprehension/load evidence only under separately approved actual rehearsal.
+
+Required mandate: BEGINNER-OFFLINE-CONTENT-CORRECTIONS;mandateId=null,not captured/not approved. Verification cases: Remove only named visible pending-editorial phrases while preserving a/an/eraser/please meaning. Preserve lexical count41 and no fabricated master ID/CEFR or teacher approval. No answer/transcript/model leakage caused by edits.
+
+Narrowing/deferred components: A1–C2 database/master entry mapping => DEFER_PENDING_EVIDENCE: DB access prohibited here;null externalMasterEntryId proves absence of recorded link,not wrong word or CEFR. Need separately authorized offline approved export/provenance evidence. Mandatory broad Vietnamese glossary for all English instructions => DEFER_PENDING_EVIDENCE: VI guides already exist;actual comprehension/support evidence needed to select terms and avoid inflating targets.
+
+### Current AI disposition CR-B-AI-06 — DEFER_PENDING_EVIDENCE
+
+Normalizer/snapshot/evaluationInput trace cho thấy prompt chung,referenceText rỗng,thiếu card facts/rubric text riêng. Đủ để mở verification riêng,chưa đủ để tự sửa evaluator hoặc tuyên bố provider chấm sai. P1 là risk trước runtime qualification,không phải incident production đã tái hiện.
+
+Confirmation: STATIC_CONTEXT_OMISSION_OBSERVED_RUNTIME_GRADING_FAILURE_NOT_REPRODUCED. Impact: Nguy cơ grading không phân biệt đúng facts thẻ nếu context thực sự thiếu;ảnh hưởng runtime tất cả Lesson nhưng không tự biến nguồn đúng thành8 REVISE.
+
+Exact proposed changes (not applied):
+
+- None until required evidence is available. No evaluator code change proposed for execution here;first implement only separately approved mock verification tests/report. A confirmed fix needs a distinct matching engineering-fix scope.
+
+Gate A: None. Gate B: Record shared pending engineering evidence;do not use AI recommendation as human Gate B acceptance. Gate C: Do not run rehearsal/runtime until its own approvals/gates permit.
+
+Required mandate: BEGINNER-EVALUATOR-CONTEXT-VERIFICATION;mandateId=null,not captured/not approved. Verification cases: Capture actual provider input via mock for two different role cards sharing generic prompt; determine whether card facts/criteria can be distinguished. Verify exact pinned LessonVersion and V1/V2 context preservation,not latest fallback. Test no learner DTO key/model/rubric leakage if private evaluator context is later added. Report evidence-supported risk confirmed/not confirmed without claiming real provider grading failure. If a code change is needed,prepare a distinct matching engineering-fix scope; do not silently expand this verification mandate.
+
+Technical AI decision digest: `22aae301943ee84f0670d4d20df74bd83e997a14b6bec83067e04156b8ce65bb`. This is not a human signature,evidenceReference or approved mandate proposal hash. Old AI matrix/human global statement/history are retained;future correction/evaluator verification requires separate captured scopes/approvals.

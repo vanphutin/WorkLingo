@@ -26476,7 +26476,2263 @@
         "independent teacher/phonetic qualification"
       ],
       "transportNote": "One oversized Windows command failed to start with OS206 before writing; completed via persistent Node without helper/source changes outside the three permitted result paths."
-    }
+    },
+    "autonomousReviewRounds": [
+      {
+        "roundId": "B-AI-AUTONOMOUS-001",
+        "authorType": "AI",
+        "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+        "decisionType": "AI_RECOMMENDATION",
+        "humanSigned": false,
+        "recordedOn": "2026-10-28",
+        "status": "FINALIZED_AI_RECOMMENDATIONS_NOT_GATE_ACCEPTANCE",
+        "baselineCommit": "1b1f87a33ca26a6eef39d6db2f624597e3aad9c0",
+        "mandateId": "MND-20261027-003",
+        "matchingApprovalHash": "ff91852c45965d82933524b58f4d10539bbbce3c2c61c764261525af7dc93976",
+        "priorAiEvidenceMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+        "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+        "independence": "Codex makes its own evidence-based recommendations,independent of human global PASS. This is the same AI reviewing evidence,not a second authenticated human/external expert.",
+        "humanGlobalStatementUsedAsDecisionProof": false,
+        "reviewStandard": {
+          "PASS": "No confirmed mandatory source correction under this bounded source/design review;explicit empirical/runtime/perceptual limits remain open.",
+          "REVISE": "At least one specifically evidenced source/constraint/alignment correction accepted at AI level;no source change executed.",
+          "REJECT": "Fundamentally invalid or unsalvageable material supported by evidence;none found here.",
+          "notFailureByDefault": [
+            "Missing human signature/version evidence does not automatically make AI source verdict REVISE.",
+            "Shorter audio alone does not prove lower learning value.",
+            "Inline authored vocabulary without master ID is not automatically an invalid word.",
+            "A shared unreproduced runtime risk is not eight confirmed source failures."
+          ]
+        },
+        "coverage": {
+          "lessons": 8,
+          "activities": 64,
+          "objectives": 32,
+          "lexicalIpaBlocks": 41,
+          "audioFiles": 24,
+          "checklistCells": 112,
+          "rubricTexts": 16,
+          "answerKeys": 48,
+          "options": 144,
+          "priorCoreItemAnalyses": 161,
+          "shortResponseCasesReviewed": 10
+        },
+        "lessonRecommendations": [
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG01-L1",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+            "bindings": {
+              "reviewedBundleSha256": "9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+              "rawSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg01-l1-s1",
+                  "sha256": "1ca2eade07b52848a9d46ac14b1ecd32024d6b46ac0a1584f2d46240c58caea5"
+                },
+                {
+                  "activitySlug": "mg01-l1-w1",
+                  "sha256": "6cd21bce4be35309e4ddeb16efc42b217e5952017ea97f440f8833293c7f4fbe"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg01-l1-audio-a",
+                  "sha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+                  "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1",
+                  "requestSha256": "690f4075cf2058acc011670fad8e88b9677382af29e2c7ea01004b78bc8535c0",
+                  "take": 2
+                },
+                {
+                  "slug": "mg01-l1-audio-b",
+                  "sha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+                  "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32",
+                  "requestSha256": "05997ca5434efd23db7c5b6cba91503fd1d83fb8ec6a9152f0123d2eeec1bfea",
+                  "take": 2
+                },
+                {
+                  "slug": "mg01-l1-audio-c",
+                  "sha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+                  "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9",
+                  "requestSha256": "cbd249d33a1d01c56a515a36b82692befb435d4d6e2b7efd9a93548d899f138b",
+                  "take": 2
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+                "line": 308,
+                "activitySlug": "mg01-l1-s1",
+                "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+                "currentMinimum": 10,
+                "aiAcceptedText": "Hello. I'm Lucy from Los Angeles. You are Leo.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+                "line": 248,
+                "activitySlug": "mg01-l1-l1",
+                "text": "C. Minh",
+                "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8"
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "minimum10 cao hơn candidate đủ ý9 từ;distractor Minh chưa đồng bộ tên đã chọn.",
+            "strengths": "I/you/from đúng nghĩa;ba key đọc và ba key nghe khớp evidence;hai thẻ S/W khác nhau tạo transfer.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              },
+              {
+                "correctionId": "CR-B-AI-04",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_OWNER_STYLE_DICTIONARY_MISMATCH_NOT_WRONG_KEY",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-03",
+              "CR-B-AI-04"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG01-L2",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "29def559327d00d41ba1b711cf214ca155c8f66c1fd5b9221a7c8653d3302503",
+            "bindings": {
+              "reviewedBundleSha256": "29def559327d00d41ba1b711cf214ca155c8f66c1fd5b9221a7c8653d3302503",
+              "rawSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg01-l2-s1",
+                  "sha256": "434f1ceb887ddc521400d8047ff84df8a31467cfe6f6c15c7c1bc896ad58244a"
+                },
+                {
+                  "activitySlug": "mg01-l2-w1",
+                  "sha256": "2420bbb624068e099efb9be9e246365b845fae1ef928a3adf1cdba59ad212a57"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg01-l2-audio-1",
+                  "sha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+                  "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574",
+                  "requestSha256": "6f16c088f049a5688389fd1708aa2767a0e87b41e1156f1493fc6885a357c9ee",
+                  "take": 1
+                },
+                {
+                  "slug": "mg01-l2-audio-2",
+                  "sha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+                  "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046",
+                  "requestSha256": "e15aba8742fd57138f6a2157911ba091f4380f76301b0dd97f54b9821fdcb399",
+                  "take": 1
+                },
+                {
+                  "slug": "mg01-l2-audio-3",
+                  "sha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+                  "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8",
+                  "requestSha256": "9669ca555350f866fb054d6dd05513292d235024a53bba52ea580d0138efceab",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+                "line": 330,
+                "activitySlug": "mg01-l2-s1",
+                "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+                "currentMinimum": 7,
+                "aiAcceptedText": "Hello. I'm Emma from London. E-M-M-A.",
+                "tokens": 6
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+                "line": 348,
+                "activitySlug": "mg01-l2-w1",
+                "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+                "currentMinimum": 7,
+                "aiAcceptedText": "I'm Mia from Los Angeles. M-I-A.",
+                "tokens": 6
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Hai task S/W minimum7 so với candidate đủ ý6 từ;không cần xóa hướng dẫn tên Việt đúng kiến thức.",
+            "strengths": "Phân biệt tên/tên chữ và đổi người/nơi có mục đích;Ed/E,D và Jo/J,O/Joe nhất quán;model giữ facts.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-03"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG01-L3",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "86709e22b96a4889d84edfaa282927c564843713b1b80d267f0b2e54a0da0183",
+            "bindings": {
+              "reviewedBundleSha256": "86709e22b96a4889d84edfaa282927c564843713b1b80d267f0b2e54a0da0183",
+              "rawSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg01-l3-s1",
+                  "sha256": "f19125c443d2b72037cb81b010f5d735c84775864335f1c79416d2b3cd0e1938"
+                },
+                {
+                  "activitySlug": "mg01-l3-w1",
+                  "sha256": "7bde8dbf3f9bfbc9def7f7eef33bdd1e6013dab1d2e32a9e8b724858a3f10c5b"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg01-l3-audio-1",
+                  "sha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+                  "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df",
+                  "requestSha256": "0dee8ecacecb0e7317aedd8e16e8f110a59b8a9acfe77121845a52285849e779",
+                  "take": 1
+                },
+                {
+                  "slug": "mg01-l3-audio-2",
+                  "sha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+                  "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9",
+                  "requestSha256": "52ddf24aec332124f1f30377628feb50e5a42ce27b31aa752e073421153bdbd8",
+                  "take": 1
+                },
+                {
+                  "slug": "mg01-l3-audio-3",
+                  "sha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+                  "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2",
+                  "requestSha256": "1a7506217b8bb33c7032b9ef584df02186267e12c8d6f0a0d8718f9209dc02e7",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+                "line": 331,
+                "activitySlug": "mg01-l3-s1",
+                "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+                "currentMinimum": 10,
+                "aiAcceptedText": "Hello. I'm Sam from New York. You are Kim.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+                "line": 349,
+                "activitySlug": "mg01-l3-w1",
+                "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+                "currentMinimum": 9,
+                "aiAcceptedText": "Hello. I'm Eva from London. You are Noah.",
+                "tokens": 8
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Hai response có thể giữ đủ vai/facts bằng9 và8 từ nhưng minimum10 và9;đề xuất sửa constraint,không sửa audio đã có căn cứ vai nghĩa.",
+            "strengths": "Có ghép thẻ,đảo vai và hai địa danh;thẻ sản xuất mới,đáp án/rubric đúng facts,không cần rewrite audio vì chỉ nhìn độ dài.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-03"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG01-L4",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "d7612fc457923abf24eda0cf84229e1cfecbad7701274291365a403f9c0c409e",
+            "bindings": {
+              "reviewedBundleSha256": "d7612fc457923abf24eda0cf84229e1cfecbad7701274291365a403f9c0c409e",
+              "rawSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg01-l4-s1",
+                  "sha256": "6c65246d2948b4ab8a31856a1fd84651fd18bc2a67ce77b47bde79b64e759d88"
+                },
+                {
+                  "activitySlug": "mg01-l4-w1",
+                  "sha256": "0a96fe2b552776c9b52b26c400e622645a6ce0f6a9da0b32359284f9f54fddc2"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg01-l4-audio-1",
+                  "sha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+                  "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de",
+                  "requestSha256": "8b66dd33c68bc3aa3b6bcb4ece8130b7cfb612b0f771d35780cd307f3747e329",
+                  "take": 1
+                },
+                {
+                  "slug": "mg01-l4-audio-2",
+                  "sha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+                  "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c",
+                  "requestSha256": "819b1bb5ab4cb936d3a1d66b3bbd6076ef85d86cf3340843de8b3c445215d44b",
+                  "take": 1
+                },
+                {
+                  "slug": "mg01-l4-audio-3",
+                  "sha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+                  "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5",
+                  "requestSha256": "92f0c7df755c01e5a18fb015a913a1c2f631828c803db3ef9b18622d8d6c9471",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+                "line": 330,
+                "activitySlug": "mg01-l4-s1",
+                "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+                "currentMinimum": 9,
+                "aiAcceptedText": "Hello. I'm Mia from London. You are Jo.",
+                "tokens": 8
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+                "line": 348,
+                "activitySlug": "mg01-l4-w1",
+                "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+                "currentMinimum": 10,
+                "aiAcceptedText": "Hello. I'm Ben from New York. You are Lucy.",
+                "tokens": 9
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Response S/W đủ ý có thể8 và9 từ thay minimum9 và10;không lấy audio ngắn hơn L3 làm bằng chứng bắt buộc rewrite.",
+            "strengths": "Unit check có role/card mới,không tự chứng nhận CEFR;keys và model đúng. Các mục một fact không tự là lỗi nếu phục vụ truy hồi.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-03"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG02-L1",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+            "bindings": {
+              "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+              "rawSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg02-l1-s1",
+                  "sha256": "01665a263a1368f57bcf3e53a258b3d198ac82dc4a71209f599543acd297a742"
+                },
+                {
+                  "activitySlug": "mg02-l1-w1",
+                  "sha256": "9c8e9121d4217e610d81094d324044b5833954072277dc9b628b3408372cf22b"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg02-l1-audio-1",
+                  "sha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+                  "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea",
+                  "requestSha256": "a61919da649e9e30f9063c232e5a55fd2f04d63a6c6bae57c46dd814e9a422f9",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l1-audio-2",
+                  "sha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+                  "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af",
+                  "requestSha256": "239614e2e9e05aa4e724c7d9464c94c31fe1702d8baecd7cea903bc41879fa81",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l1-audio-3",
+                  "sha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+                  "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d",
+                  "requestSha256": "b764b1b54392abf5e0fdedbba7debe07d9ade1e746e18013c6cc64f1a23b1acc",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 333,
+                "activitySlug": "mg02-l1-s1",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "currentMinimum": 10,
+                "aiAcceptedText": "This is a bag. That's a book. Two pens.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 14,
+                "text": "eraser là từ bổ trợ đề xuất",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb"
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 40,
+                "slug": "mg02-l1-guide-0",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714"
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 46,
+                "slug": "mg02-l1-guide-1",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714"
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 105,
+                "slug": "mg02-l1-eraser",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714"
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Minimum10 so với candidate That's đủ ý9 từ;objective/guide/meaning còn copy biên tập cần giáo viên duyệt/đang đề xuất trong phần learner-facing.",
+            "strengths": "A/an theo âm,near/far,plural và chỉ-với-yêu-cầu đều nhất quán;eraser/please phù hợp tác vụ ở cấp AI.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              },
+              {
+                "correctionId": "CR-B-AI-05",
+                "severity": "P2",
+                "confirmation": "LEARNER_FACING_EDITORIAL_MARKERS_CONFIRMED_OTHER_COMPONENTS_DEFERRED",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-03",
+              "CR-B-AI-05"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 6,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG02-L2",
+            "decidedOn": "2026-10-28",
+            "verdict": "PASS",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+            "bindings": {
+              "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+              "rawSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg02-l2-s1",
+                  "sha256": "3b973db62c63afdc046f5ad27005c3a6d00d877e02c63021face5d9a5f47b2f6"
+                },
+                {
+                  "activitySlug": "mg02-l2-w1",
+                  "sha256": "07d1618095826a0a043dfd4cb203f8013cfaf543f06d03f0a963c8a553d54b40"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg02-l2-audio-1",
+                  "sha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+                  "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b",
+                  "requestSha256": "0a0d7a580c16f5dec33fe19ebb9379767332acf54a80ee14d0f3d7f03d5ea219",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l2-audio-2",
+                  "sha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+                  "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3",
+                  "requestSha256": "7a428f21774f6c2ab961bb5fca26250e56750822a3be3294f33f4b2e3d4a3272",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l2-audio-3",
+                  "sha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+                  "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5",
+                  "requestSha256": "daf0830b443ce1bbb9d110339e13ffa7fdff9e3830f6ee525fa0e68bc80f6b6e",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 181,
+                "slug": "mg02-l2-r1",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 204,
+                "slug": "mg02-l2-r2",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 226,
+                "slug": "mg02-l2-r3",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 248,
+                "slug": "mg02-l2-l1",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 271,
+                "slug": "mg02-l2-l2",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 294,
+                "slug": "mg02-l2-l3",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 317,
+                "slug": "mg02-l2-s1",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "line": 335,
+                "slug": "mg02-l2-w1",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Không xác nhận source defect bắt buộc sửa. Option cue ở r2 hợp với formative grammar practice;không dùng riêng nó làm proof đọc độc lập. Thiếu master link/calibration và static evaluator risk được giữ là hạn chế riêng,không ép REVISE bài này.",
+            "strengths": "Bài phonology/formative rõ mục tiêu âm cuối-số lượng;48-case source matrix của toàn pilot không có sai key tại sáu task này. Response lịch sự7 từ đạt minimum6,thẻ viết riêng và rubric xét nghĩa. Không bắt bài này dài hơn chỉ để tăng số giây.",
+            "findings": [],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "No source change recommended in this round;retain limitations and separate engineering/human gates. PASS is not CONTENT_READY or Gate B verified.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG02-L3",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "3d24c725081ffb3de0bd11dac9973c37f17a2ac3fe5edf987a99005ad1b8d320",
+            "bindings": {
+              "reviewedBundleSha256": "3d24c725081ffb3de0bd11dac9973c37f17a2ac3fe5edf987a99005ad1b8d320",
+              "rawSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg02-l3-s1",
+                  "sha256": "5267469da7864dc64ab4749819adaff5cd01cfc6ee22c8ac1c8feb2f052533cc"
+                },
+                {
+                  "activitySlug": "mg02-l3-w1",
+                  "sha256": "376ff12babaff128e089598ac634430e9a089253c2032424bce26068ed1da30b"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg02-l3-audio-1",
+                  "sha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+                  "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79",
+                  "requestSha256": "6140404e0be1006912b2b94f49026889da2d040ce5b7a5387182ee7ed3b9fdf5",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l3-audio-2",
+                  "sha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+                  "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65",
+                  "requestSha256": "f554398b53551c3ab20ff18ed7def5bf83abe4a0a3ec0cd99d021e52711f15c5",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l3-audio-3",
+                  "sha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+                  "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5",
+                  "requestSha256": "edc1eda02d0db67f308962b0005b6e23b1a79707e8856e46ca22e97246e3910d",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+                "line": 326,
+                "activitySlug": "mg02-l3-s1",
+                "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+                "currentMinimum": 10,
+                "aiAcceptedText": "This is a book. That's a bag. Two pens.",
+                "tokens": 9
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Candidate This is a book.That's a bag.Two pens giữ đủ near/far/request với9 từ,dưới minimum10. Chỉ sửa constraint/rubric variant;không buộc rewrite nội dung tích hợp đang hợp lý.",
+            "strengths": "Ba-mục list,NOT requested,near/far và phân biệt vật chỉ/vật cần lấy tạo tích hợp có nghĩa;thẻ S/W riêng,keys đúng,không bắt buộc thêm intro vào mọi Lesson.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-03"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "lessonCode": "MG02-L4",
+            "decidedOn": "2026-10-28",
+            "verdict": "REVISE",
+            "verdictScope": "SOURCE_AND_INSTRUCTIONAL_DESIGN_RECOMMENDATION_NOT_GATE_ACCEPTANCE",
+            "exactReviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+            "bindings": {
+              "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+              "rawSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+              "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+              "rubricTextHashes": [
+                {
+                  "activitySlug": "mg02-l4-s1",
+                  "sha256": "4dd90d3d089f8703b6a52da86acb568a369069f7b473c63d5d25df067eb7faff"
+                },
+                {
+                  "activitySlug": "mg02-l4-w1",
+                  "sha256": "776eeb5f95d1f7fe025e83cbfdb18673f00576b2525d4e3d67074de3d4d1af48"
+                }
+              ],
+              "selectedAudioHashes": [
+                {
+                  "slug": "mg02-l4-audio-1",
+                  "sha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+                  "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0",
+                  "requestSha256": "7598c715aa7c22f6b527e6778cd8b29e6340a4611774ddbdcf7fd2c64338b930",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l4-audio-2",
+                  "sha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+                  "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78",
+                  "requestSha256": "5c0d9ae3b01628a9ace0ff4d0e7b1df48c219092a56bf2da5869e50a2ad0861c",
+                  "take": 1
+                },
+                {
+                  "slug": "mg02-l4-audio-3",
+                  "sha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+                  "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d",
+                  "requestSha256": "9fe3971f22e5283308dee57afc006ee2405ab5eec726e04c5b05cd10d376a670",
+                  "take": 1
+                }
+              ]
+            },
+            "bindingVerificationStatus": "MATCH_FROZEN_SOURCE_RUBRIC_AND_ACTUAL_WAV_HASHES",
+            "evidenceSourceReferences": [
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 337,
+                "slug": "mg02-l4-w1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2"
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 147,
+                "slug": "mg02-l4-writing-card",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2"
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "observation": "assessed tasks object/position/quantity;no I am/from production"
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 327,
+                "activitySlug": "mg02-l4-s1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "currentMinimum": 10,
+                "aiAcceptedText": "This is a pen. That's a book. Two bags.",
+                "tokens": 9
+              }
+            ],
+            "priorEvidenceMatrixReference": {
+              "analysisMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+              "sourceProjectionSha256": "b1fbd90c9c83c514380723456470bb51c0e599e637fff17ff0dbe7ed3fcb0e64",
+              "source": "Existing source-bound161-item analysis,checked against unchanged actual local artifacts;not human signature."
+            },
+            "rationale": "Candidate That's đủ ý9 từ dưới minimum10;writing checkpoint chưa tái dùng I/you/from theo yêu cầu cross-unit reuse,đề xuất chỉ sửa một writing task.",
+            "strengths": "Transfer quầy/thẻ mới giữ object/quantity/position;keys/model đúng. Điểm kết Unit thích hợp cho một task tích hợp lại kiến thức MG01.",
+            "findings": [
+              {
+                "correctionId": "CR-B-AI-02",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_ALIGNMENT_GAP_WITH_REVIEWER_CROSS_UNIT_REUSE_REQUIREMENT",
+                "requiredSourceCorrection": true
+              },
+              {
+                "correctionId": "CR-B-AI-03",
+                "severity": "P2",
+                "confirmation": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+                "requiredSourceCorrection": true
+              }
+            ],
+            "sharedEvidenceRisks": [
+              {
+                "correctionId": "CR-B-AI-01",
+                "severity": "P2",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonFailureInferred": false
+              },
+              {
+                "correctionId": "CR-B-AI-06",
+                "severity": "P1_STATIC_RUNTIME_RISK_NOT_REPRODUCED",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "perLessonSourceFailureInferred": false
+              }
+            ],
+            "confidence": {
+              "sourceFactsAndHashes": "HIGH",
+              "pedagogicalLearnerImpact": "MODERATE_NOT_EMPIRICALLY_CALIBRATED",
+              "newIndependentPhoneticAssurance": "NOT_ESTABLISHED"
+            },
+            "limitations": [
+              "WAV bytes/format/signal metrics and transcript/key mapping verified;no new independent phoneme recognition or expert listening claim. Existing A owner sound QA remains explicitly attributed.",
+              "No learner responses/comprehension/timed rehearsal observed;no45-minute or CEFR/mastery inference.",
+              "Master vocabulary/CEFR mapping unknown;no DB lookup or invented IDs.",
+              "Evaluator behavior not reproduced;shared static context risk needs separate mock engineering mandate."
+            ],
+            "correctionIds": [
+              "CR-B-AI-02",
+              "CR-B-AI-03"
+            ],
+            "coverage": {
+              "activities": 8,
+              "objectives": 4,
+              "lexicalIpaBlocks": 5,
+              "audioFiles": 3,
+              "checklistCells": 14,
+              "rubricTexts": 2
+            },
+            "requiredAction": "Capture and obtain separate matching implementation approval for the exact accepted source changes;current source/audio stay unchanged. Then qualify a new version/binding.",
+            "executionAuthorized": false
+          }
+        ],
+        "correctionDispositions": [
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "correctionId": "CR-B-AI-01",
+            "disposition": "DEFER_PENDING_EVIDENCE",
+            "problemConfirmationLevel": "NON_MONOTONIC_MEASUREMENTS_CONFIRMED_PEDAGOGICAL_DEFECT_NOT_CONFIRMED",
+            "priority": "P2",
+            "rationale": "Dữ liệu duration/tokens giảm đã xác nhận,nhưng độ khó không đồng nhất với độ dài âm thanh. L4 retrieval/new facts và L2 phonology focus có thể hợp lý dù ngắn hơn; chưa có calibration/task-comprehension evidence để chốt cần rewrite script nào. Không tự ép mọi Activity khó/dài hơn Activity trước.",
+            "sourceEvidence": [
+              {
+                "lessonCode": "MG01-L1",
+                "audioSlug": "mg01-l1-audio-a",
+                "fileSha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+                "durationSeconds": 6.117916666666667,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 4.88
+              },
+              {
+                "lessonCode": "MG01-L1",
+                "audioSlug": "mg01-l1-audio-b",
+                "fileSha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+                "durationSeconds": 5.970833333333333,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 4.78
+              },
+              {
+                "lessonCode": "MG01-L1",
+                "audioSlug": "mg01-l1-audio-c",
+                "fileSha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+                "durationSeconds": 6.472916666666666,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 5.26
+              },
+              {
+                "lessonCode": "MG01-L2",
+                "audioSlug": "mg01-l2-audio-1",
+                "fileSha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+                "durationSeconds": 7.044416666666667,
+                "scriptWhitespaceTokens": 11,
+                "trimmedSpan45": 5.86
+              },
+              {
+                "lessonCode": "MG01-L2",
+                "audioSlug": "mg01-l2-audio-2",
+                "fileSha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+                "durationSeconds": 6.369916666666667,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 5.16
+              },
+              {
+                "lessonCode": "MG01-L2",
+                "audioSlug": "mg01-l2-audio-3",
+                "fileSha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+                "durationSeconds": 6.002291666666666,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 4.66
+              },
+              {
+                "lessonCode": "MG01-L3",
+                "audioSlug": "mg01-l3-audio-1",
+                "fileSha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+                "durationSeconds": 8.710291666666667,
+                "scriptWhitespaceTokens": 12,
+                "trimmedSpan45": 7.5
+              },
+              {
+                "lessonCode": "MG01-L3",
+                "audioSlug": "mg01-l3-audio-2",
+                "fileSha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+                "durationSeconds": 6.073791666666667,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 4.9
+              },
+              {
+                "lessonCode": "MG01-L3",
+                "audioSlug": "mg01-l3-audio-3",
+                "fileSha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+                "durationSeconds": 9.368041666666667,
+                "scriptWhitespaceTokens": 15,
+                "trimmedSpan45": 7.999999999999999
+              },
+              {
+                "lessonCode": "MG01-L4",
+                "audioSlug": "mg01-l4-audio-1",
+                "fileSha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+                "durationSeconds": 7.117916666666667,
+                "scriptWhitespaceTokens": 10,
+                "trimmedSpan45": 5.88
+              },
+              {
+                "lessonCode": "MG01-L4",
+                "audioSlug": "mg01-l4-audio-2",
+                "fileSha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+                "durationSeconds": 6.103208333333333,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 4.92
+              },
+              {
+                "lessonCode": "MG01-L4",
+                "audioSlug": "mg01-l4-audio-3",
+                "fileSha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+                "durationSeconds": 9.279708333333334,
+                "scriptWhitespaceTokens": 14,
+                "trimmedSpan45": 8.06
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "audioSlug": "mg02-l1-audio-1",
+                "fileSha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+                "durationSeconds": 7.531791666666667,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.3
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "audioSlug": "mg02-l1-audio-2",
+                "fileSha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+                "durationSeconds": 7.632625,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.4
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "audioSlug": "mg02-l1-audio-3",
+                "fileSha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+                "durationSeconds": 7.178833333333333,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 5.96
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "audioSlug": "mg02-l2-audio-1",
+                "fileSha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+                "durationSeconds": 7.617958333333333,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.4
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "audioSlug": "mg02-l2-audio-2",
+                "fileSha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+                "durationSeconds": 7.590625,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.36
+              },
+              {
+                "lessonCode": "MG02-L2",
+                "audioSlug": "mg02-l2-audio-3",
+                "fileSha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+                "durationSeconds": 7.57375,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.34
+              },
+              {
+                "lessonCode": "MG02-L3",
+                "audioSlug": "mg02-l3-audio-1",
+                "fileSha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+                "durationSeconds": 7.250291666666667,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 6.02
+              },
+              {
+                "lessonCode": "MG02-L3",
+                "audioSlug": "mg02-l3-audio-2",
+                "fileSha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+                "durationSeconds": 7.002375,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 5.78
+              },
+              {
+                "lessonCode": "MG02-L3",
+                "audioSlug": "mg02-l3-audio-3",
+                "fileSha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+                "durationSeconds": 7.840583333333333,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.62
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "audioSlug": "mg02-l4-audio-1",
+                "fileSha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+                "durationSeconds": 7.28175,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 6.04
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "audioSlug": "mg02-l4-audio-2",
+                "fileSha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+                "durationSeconds": 7.0464166666666666,
+                "scriptWhitespaceTokens": 9,
+                "trimmedSpan45": 5.82
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "audioSlug": "mg02-l4-audio-3",
+                "fileSha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+                "durationSeconds": 7.529708333333334,
+                "scriptWhitespaceTokens": 8,
+                "trimmedSpan45": 6.3
+              }
+            ],
+            "pedagogicalOrTechnicalImpact": "Chưa chứng minh đáp ứng yêu cầu tăng listening meaningful theo tiến bộ; cũng chưa chứng minh bản ngắn hơn là lỗi sư phạm. Không thay facts bằng silence/replay.",
+            "proposedExactChanges": [],
+            "exactChangePolicy": "No source/audio change until a bounded progression criterion and evidence select specific tasks. Reject blanket monotonic-duration rewriting as a correction method.",
+            "affectedLessons": [
+              "MG01-L1",
+              "MG01-L2",
+              "MG01-L3",
+              "MG01-L4",
+              "MG02-L1",
+              "MG02-L2",
+              "MG02-L3",
+              "MG02-L4"
+            ],
+            "affectedAudio": "Only potential future script-specific changes if evidence supports them; none authorized now.",
+            "rubricImpact": "None now.",
+            "gateImpact": {
+              "A": "No change; future changed scripts require separately approved new audio and QA.",
+              "B": "Progression evidence remains limited,not a fabricated per-Lesson FAIL.",
+              "C": "Actual timing/comprehension evidence only under future separately approved rehearsal."
+            },
+            "requiredImplementationMandate": {
+              "proposalKey": "EXISTING-GATE-C-PROGRESSION-EVIDENCE-REVIEW",
+              "mandateId": "MND-20261027-004",
+              "status": "EXISTING_TRIAGED_SCOPE_REVIEW_REQUIRED_NOT_AUTHORIZED",
+              "reason": "Reuse the existing Gate C proposal for actual learner timing/comprehension evidence if its renewed scope covers the question. Recheck current baseline/dependencies and matching approval before any run;do not create a duplicate progression mandate or run Gate C here."
+            },
+            "verificationTests": [
+              "Measure facts/role switches/scaffold demand separately from seconds.",
+              "Allow shorter transfer items if evidence supports their learning purpose.",
+              "Under separate authority,collect genuine learner comprehension/support/timing observations;do not invent them."
+            ],
+            "confidence": "High for measurements;limited for causal pedagogy conclusion.",
+            "missingEvidence": [
+              "Operational progression criterion beyond monotonic seconds",
+              "Real target-learner comprehension/performance calibration"
+            ],
+            "runtimeFailureClaimed": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "correctionId": "CR-B-AI-02",
+            "disposition": "ACCEPT_FOR_CORRECTION",
+            "problemConfirmationLevel": "CONFIRMED_ALIGNMENT_GAP_WITH_REVIEWER_CROSS_UNIT_REUSE_REQUIREMENT",
+            "priority": "P2",
+            "scopeDecision": "NARROWED_TO_ONE_END_OF_UNIT_WRITING_TRANSFER",
+            "rationale": "MG02 chỉ reuse hello/tên; cuối Unit chưa vận dụng lại I/you/from. Một task cuối Unit kết hợp giới thiệu và yêu cầu là đủ đích correction; không buộc bốn tasks L3/L4 đều thêm intro.",
+            "sourceEvidence": [
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 337,
+                "slug": "mg02-l4-w1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2"
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 147,
+                "slug": "mg02-l4-writing-card",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2"
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "observation": "assessed tasks object/position/quantity;no I am/from production"
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+                "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+                "observation": "assessed tasks object/position/quantity;no I am/from production"
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+                "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+                "observation": "assessed tasks object/position/quantity;no I am/from production"
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "observation": "assessed tasks object/position/quantity;no I am/from production"
+              }
+            ],
+            "pedagogicalOrTechnicalImpact": "Tăng retrieval liên Unit có mục đích;không thêm cấu trúc mục tiêu nâng cao hoặc Activity mới.",
+            "proposedExactChanges": [
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 147,
+                "slug": "mg02-l4-writing-card",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+                "field": "text",
+                "before": "New request card\nNear: a bag\nRequest: three pens; a book",
+                "after": "New request card\nNear: a bag\nRequest: three pens; a book\nName: Alex\nFrom: Osaka",
+                "executionAuthorized": false
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 337,
+                "slug": "mg02-l4-w1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+                "field": "question_and_prompt",
+                "before": "Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.",
+                "after": "Use only the writing card. Greet a new classmate and introduce the name and place. Identify the near object, then request the listed items and quantities. Check the note before you finish.",
+                "executionAuthorized": false
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 337,
+                "slug": "mg02-l4-w1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+                "field": "sample_answer",
+                "before": "This is a bag. Three pens, please. A book, please.",
+                "after": "Hello. I am Alex. I am from Osaka. This is a bag. Three pens, please. A book, please.",
+                "executionAuthorized": false
+              },
+              {
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 337,
+                "slug": "mg02-l4-w1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+                "field": "rubric",
+                "before": "Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+                "after": "Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Phần giới thiệu cần Alex/Osaka,cho phép I am hoặc I'm và ghép tên/nơi trong một câu rõ nghĩa; giữ đúng cả ba ý vật/số lượng của thẻ. Không thưởng thêm câu hoặc lặp mẫu vô ích.",
+                "executionAuthorized": false
+              }
+            ],
+            "excludedOriginalTargets": [
+              "mg02-l3-s1",
+              "mg02-l3-w1",
+              "mg02-l4-s1"
+            ],
+            "affectedLessons": [
+              "MG02-L4"
+            ],
+            "affectedAudio": "No script/WAV edit proposed.",
+            "rubricImpact": "MG02-L4 writing rubric text/sample change requires new source/assessment-version approval;registry-weight version not silently changed.",
+            "gateImpact": {
+              "A": "Existing WAVs retained;new source binding must be explicitly qualified.",
+              "B": "Only source-corrected version may receive new bound dispositions;no human conclusion copied.",
+              "C": "Rehearse corrected version later;45-minute contract unchanged,not timing evidence."
+            },
+            "requiredImplementationMandate": {
+              "proposalKey": "BEGINNER-OFFLINE-CONTENT-CORRECTIONS",
+              "mandateId": null,
+              "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED"
+            },
+            "verificationTests": [
+              "Keep8/64/32/41/24 inventories and single-skill writing mapping.",
+              "Positive sample/alternatives preserve Alex/Osaka plus near bag/three pens/one book.",
+              "Negative cases swapping role/place or quantities do not meet criteria.",
+              "No model/answer leakage to learner DTO."
+            ],
+            "confidence": "High for source gap,moderate for future learner load until rehearsal.",
+            "missingEvidence": [
+              "Implementation approval and exact new-version qualification",
+              "Future real timing/load observations"
+            ],
+            "runtimeFailureClaimed": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "correctionId": "CR-B-AI-03",
+            "disposition": "ACCEPT_FOR_CORRECTION",
+            "problemConfirmationLevel": "CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS",
+            "priority": "P2",
+            "scopeDecision": "SEVEN_OLD_CASES_PLUS_THREE_NEW_THATS_CASES",
+            "rationale": "I am+name+from gộp câu và That's=That is giữ nghĩa của thẻ. Minimum hiện cao hơn10 variants hợp lệ ở cấp AI; learner không nên chèn filler. Không áp dụng bỏ please vào task yêu cầu polite và không tuyên bố hard rejection đã xảy ra.",
+            "sourceEvidence": [
+              {
+                "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+                "line": 308,
+                "activitySlug": "mg01-l1-s1",
+                "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+                "currentMinimum": 10,
+                "aiAcceptedText": "Hello. I'm Lucy from Los Angeles. You are Leo.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+                "line": 330,
+                "activitySlug": "mg01-l2-s1",
+                "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+                "currentMinimum": 7,
+                "aiAcceptedText": "Hello. I'm Emma from London. E-M-M-A.",
+                "tokens": 6
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+                "line": 348,
+                "activitySlug": "mg01-l2-w1",
+                "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+                "currentMinimum": 7,
+                "aiAcceptedText": "I'm Mia from Los Angeles. M-I-A.",
+                "tokens": 6
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+                "line": 331,
+                "activitySlug": "mg01-l3-s1",
+                "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+                "currentMinimum": 10,
+                "aiAcceptedText": "Hello. I'm Sam from New York. You are Kim.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+                "line": 349,
+                "activitySlug": "mg01-l3-w1",
+                "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+                "currentMinimum": 9,
+                "aiAcceptedText": "Hello. I'm Eva from London. You are Noah.",
+                "tokens": 8
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+                "line": 330,
+                "activitySlug": "mg01-l4-s1",
+                "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+                "currentMinimum": 9,
+                "aiAcceptedText": "Hello. I'm Mia from London. You are Jo.",
+                "tokens": 8
+              },
+              {
+                "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+                "line": 348,
+                "activitySlug": "mg01-l4-w1",
+                "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+                "currentMinimum": 10,
+                "aiAcceptedText": "Hello. I'm Ben from New York. You are Lucy.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 333,
+                "activitySlug": "mg02-l1-s1",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "currentMinimum": 10,
+                "aiAcceptedText": "This is a bag. That's a book. Two pens.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+                "line": 326,
+                "activitySlug": "mg02-l3-s1",
+                "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+                "currentMinimum": 10,
+                "aiAcceptedText": "This is a book. That's a bag. Two pens.",
+                "tokens": 9
+              },
+              {
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 327,
+                "activitySlug": "mg02-l4-s1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "currentMinimum": 10,
+                "aiAcceptedText": "This is a pen. That's a book. Two bags.",
+                "tokens": 9
+              }
+            ],
+            "pedagogicalOrTechnicalImpact": "Căn chỉnh minimum guidance/rubric để không phạt giao tiếp ngắn đúng ý;đây là AI assessment recommendation,chưa có teacher signature.",
+            "proposedExactChanges": [
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+                "line": 308,
+                "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+                "activitySlug": "mg01-l1-s1",
+                "field": "min_words",
+                "before": 10,
+                "after": 9,
+                "acceptedAiAlternative": "Hello. I'm Lucy from Los Angeles. You are Leo.",
+                "aiAlternativeWhitespaceTokens": 9,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+                "line": 330,
+                "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+                "activitySlug": "mg01-l2-s1",
+                "field": "min_words",
+                "before": 7,
+                "after": 6,
+                "acceptedAiAlternative": "Hello. I'm Emma from London. E-M-M-A.",
+                "aiAlternativeWhitespaceTokens": 6,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+                "line": 348,
+                "sourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+                "activitySlug": "mg01-l2-w1",
+                "field": "min_words",
+                "before": 7,
+                "after": 6,
+                "acceptedAiAlternative": "I'm Mia from Los Angeles. M-I-A.",
+                "aiAlternativeWhitespaceTokens": 6,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+                "line": 331,
+                "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+                "activitySlug": "mg01-l3-s1",
+                "field": "min_words",
+                "before": 10,
+                "after": 9,
+                "acceptedAiAlternative": "Hello. I'm Sam from New York. You are Kim.",
+                "aiAlternativeWhitespaceTokens": 9,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+                "line": 349,
+                "sourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+                "activitySlug": "mg01-l3-w1",
+                "field": "min_words",
+                "before": 9,
+                "after": 8,
+                "acceptedAiAlternative": "Hello. I'm Eva from London. You are Noah.",
+                "aiAlternativeWhitespaceTokens": 8,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+                "line": 330,
+                "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+                "activitySlug": "mg01-l4-s1",
+                "field": "min_words",
+                "before": 9,
+                "after": 8,
+                "acceptedAiAlternative": "Hello. I'm Mia from London. You are Jo.",
+                "aiAlternativeWhitespaceTokens": 8,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+                "line": 348,
+                "sourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+                "activitySlug": "mg01-l4-w1",
+                "field": "min_words",
+                "before": 10,
+                "after": 9,
+                "acceptedAiAlternative": "Hello. I'm Ben from New York. You are Lucy.",
+                "aiAlternativeWhitespaceTokens": 9,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 333,
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "activitySlug": "mg02-l1-s1",
+                "field": "min_words",
+                "before": 10,
+                "after": 9,
+                "acceptedAiAlternative": "This is a bag. That's a book. Two pens.",
+                "aiAlternativeWhitespaceTokens": 9,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+                "line": 326,
+                "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+                "activitySlug": "mg02-l3-s1",
+                "field": "min_words",
+                "before": 10,
+                "after": 9,
+                "acceptedAiAlternative": "This is a book. That's a bag. Two pens.",
+                "aiAlternativeWhitespaceTokens": 9,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 327,
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "activitySlug": "mg02-l4-s1",
+                "field": "min_words",
+                "before": 10,
+                "after": 9,
+                "acceptedAiAlternative": "This is a pen. That's a book. Two bags.",
+                "aiAlternativeWhitespaceTokens": 9,
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 325,
+                "slug": "mg02-l1-s1",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+                "field": "rubric",
+                "before": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+                "after": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.",
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "lessonCode": "MG02-L3",
+                "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+                "line": 318,
+                "slug": "mg02-l3-s1",
+                "sourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+                "reviewedBundleSha256": "3d24c725081ffb3de0bd11dac9973c37f17a2ac3fe5edf987a99005ad1b8d320",
+                "field": "rubric",
+                "before": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+                "after": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.",
+                "executionAuthorized": false
+              },
+              {
+                "kind": "FIELD_VALUE_REPLACEMENT_PROPOSAL",
+                "lessonCode": "MG02-L4",
+                "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+                "line": 319,
+                "slug": "mg02-l4-s1",
+                "sourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+                "reviewedBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+                "field": "rubric",
+                "before": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+                "after": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.",
+                "executionAuthorized": false
+              }
+            ],
+            "affectedLessons": [
+              "MG01-L1",
+              "MG01-L2",
+              "MG01-L3",
+              "MG01-L4",
+              "MG02-L1",
+              "MG02-L3",
+              "MG02-L4"
+            ],
+            "affectedAudio": "No script/WAV edit proposed.",
+            "rubricImpact": "Three MG02 speaking rubric texts explicitly allow That's/contextual short requests;new source/rubric-text hashes and version approval required. Registry behavior/version policy must be reviewed separately,not silently assumed unchanged.",
+            "gateImpact": {
+              "A": "Audio bytes/scripts unchanged;source hash rebinding requires explicit successor approval.",
+              "B": "Re-qualify new minima/rubric text and source evidence;no human PASS inherited.",
+              "C": "Use corrected sources in actual later rehearsal;do not infer observed time."
+            },
+            "requiredImplementationMandate": {
+              "proposalKey": "BEGINNER-OFFLINE-CONTENT-CORRECTIONS",
+              "mandateId": null,
+              "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED"
+            },
+            "verificationTests": [
+              "All10 named variants satisfy corrected min_words and retain task facts.",
+              "Wrong name/place/item/quantity remains incorrect despite high word count.",
+              "Test That's=That is at correct far object;do not accept dropped near/far meaning.",
+              "Keep polite-request requirements where explicitly required.",
+              "Report UI minimum separately from any untested runtime rejection behavior."
+            ],
+            "confidence": "High for token counts/source facts;AI linguistic acceptance,not independently signed human judgement.",
+            "missingEvidence": [
+              "Approved implementation/version checks",
+              "Runtime grading behavior if claimed requires separate mock engineering verification"
+            ],
+            "runtimeFailureClaimed": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "correctionId": "CR-B-AI-04",
+            "disposition": "ACCEPT_FOR_CORRECTION",
+            "problemConfirmationLevel": "CONFIRMED_OWNER_STYLE_DICTIONARY_MISMATCH_NOT_WRONG_KEY",
+            "priority": "P2",
+            "scopeDecision": "NARROWED_TO_RESIDUAL_DISTRACTOR_NAME_ONLY",
+            "rationale": "Minh còn ở distractor trái danh sách tên quốc tế đã chọn. Hai câu hướng dẫn về tên Việt không sai kiến thức;không cần xóa chỉ để biến mọi nhận xét biên tập thành lỗi.",
+            "sourceEvidence": [
+              {
+                "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+                "line": 248,
+                "activitySlug": "mg01-l1-l1",
+                "text": "C. Minh",
+                "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8"
+              }
+            ],
+            "pedagogicalOrTechnicalImpact": "Đồng bộ style/name inventory;đáp án Lily và evidence/audio không thay đổi.",
+            "proposedExactChanges": [
+              {
+                "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+                "line": 248,
+                "sourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+                "activitySlug": "mg01-l1-l1",
+                "field": "option_C",
+                "before": "Minh",
+                "after": "Alex",
+                "executionAuthorized": false
+              }
+            ],
+            "excludedOrDeferredComponents": [
+              {
+                "component": "Delete Vietnamese-name pronunciation guidance in MG01-L1/L2",
+                "disposition": "REJECT_WITH_REASON",
+                "reason": "Correct general guidance for Vietnamese learners;not a demonstrated content defect. Optional editorial trim may be considered later,not required by this correction."
+              }
+            ],
+            "affectedLessons": [
+              "MG01-L1"
+            ],
+            "affectedAudio": "No selected script or WAV contains the changed distractor;retain bytes/hashes.",
+            "rubricImpact": "None proposed.",
+            "gateImpact": {
+              "A": "Preserve existing media/QA;explicitly qualify new source binding if correction implemented.",
+              "B": "Validate current key/options/evidence remain unique and correctly bound.",
+              "C": "No observed timing claim or replay change."
+            },
+            "requiredImplementationMandate": {
+              "proposalKey": "BEGINNER-OFFLINE-CONTENT-CORRECTIONS",
+              "mandateId": null,
+              "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED"
+            },
+            "verificationTests": [
+              "Option C becomes Alex;A Lily stays unique correct answer.",
+              "No unauthorized name/role/place substitution elsewhere.",
+              "All actual WAV/script hashes unchanged."
+            ],
+            "confidence": "High for source observation/style requirement;not a claim about any real person's nationality.",
+            "missingEvidence": [
+              "Matching execution scope and future source binding"
+            ],
+            "runtimeFailureClaimed": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "correctionId": "CR-B-AI-05",
+            "disposition": "ACCEPT_FOR_CORRECTION",
+            "problemConfirmationLevel": "LEARNER_FACING_EDITORIAL_MARKERS_CONFIRMED_OTHER_COMPONENTS_DEFERRED",
+            "priority": "P2",
+            "scopeDecision": "NARROWED_TO_MG02_L1_VISIBLE_PENDING_EDITORIAL_COPY",
+            "rationale": "Câu cần giáo viên duyệt/đang đề xuất thuộc review metadata,không phải kiến thức learner. Không suy inline-authored block sai chỉ vì thiếu master ID,không ép gloss mọi từ khi chưa có comprehension evidence.",
+            "sourceEvidence": [
+              {
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 14,
+                "text": "eraser là từ bổ trợ đề xuất",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb"
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 40,
+                "slug": "mg02-l1-guide-0",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714"
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 46,
+                "slug": "mg02-l1-guide-1",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714"
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 105,
+                "slug": "mg02-l1-eraser",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714"
+              }
+            ],
+            "pedagogicalOrTechnicalImpact": "Làm rõ học liệu,giữ trạng thái provenance/human approval trung thực trong dossier riêng. Eraser/please task-relevant ở cấp AI,không giả master/professional signature.",
+            "proposedExactChanges": [
+              {
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 14,
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "field": "lesson_objective_substring",
+                "before": "eraser là từ bổ trợ đề xuất",
+                "after": "eraser là ví dụ bổ trợ cho an theo âm đầu",
+                "executionAuthorized": false
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 40,
+                "slug": "mg02-l1-guide-0",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+                "field": "instruction_text_substring",
+                "before": "Eraser là ví dụ bổ trợ đang đề xuất, cần giáo viên duyệt; không mở thêm một nhóm từ mới.",
+                "after": "Eraser là ví dụ bổ trợ để phân biệt a/an; chỉ cần dùng trong mẫu minh họa này.",
+                "executionAuthorized": false
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 46,
+                "slug": "mg02-l1-guide-1",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+                "field": "instruction_text_substring",
+                "before": "Please là lời lịch sự trong cụm yêu cầu, đang được đề xuất làm hỗ trợ tác vụ:",
+                "after": "Please làm lời yêu cầu lịch sự:",
+                "executionAuthorized": false
+              },
+              {
+                "lessonCode": "MG02-L1",
+                "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+                "line": 105,
+                "slug": "mg02-l1-eraser",
+                "sourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+                "reviewedBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+                "field": "meaning_vi",
+                "before": "một cục tẩy; eraser là từ hỗ trợ đề xuất cần giáo viên duyệt",
+                "after": "một cục tẩy; ví dụ bổ trợ cho cách dùng an theo âm đầu",
+                "executionAuthorized": false
+              }
+            ],
+            "excludedOrDeferredComponents": [
+              {
+                "component": "A1–C2 database/master entry mapping",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "reason": "DB access prohibited here;null externalMasterEntryId proves absence of recorded link,not wrong word or CEFR. Need separately authorized offline approved export/provenance evidence."
+              },
+              {
+                "component": "Mandatory broad Vietnamese glossary for all English instructions",
+                "disposition": "DEFER_PENDING_EVIDENCE",
+                "reason": "VI guides already exist;actual comprehension/support evidence needed to select terms and avoid inflating targets."
+              }
+            ],
+            "affectedLessons": [
+              "MG02-L1"
+            ],
+            "affectedAudio": "No script/WAV edit proposed.",
+            "rubricImpact": "Keep human/provenance statuses in review dossier;do not insert teacher-approved claims into sources. No scoring-registry edit.",
+            "gateImpact": {
+              "A": "Unchanged scripts/WAVs;new source binding qualification still explicit.",
+              "B": "Human fields remain pending;AI acceptance does not create teacher support dispositions.",
+              "C": "Comprehension/load evidence only under separately approved actual rehearsal."
+            },
+            "requiredImplementationMandate": {
+              "proposalKey": "BEGINNER-OFFLINE-CONTENT-CORRECTIONS",
+              "mandateId": null,
+              "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED"
+            },
+            "verificationTests": [
+              "Remove only named visible pending-editorial phrases while preserving a/an/eraser/please meaning.",
+              "Preserve lexical count41 and no fabricated master ID/CEFR or teacher approval.",
+              "No answer/transcript/model leakage caused by edits."
+            ],
+            "confidence": "High for learner-facing editorial copy;limited for broader master/comprehension claims.",
+            "missingEvidence": [
+              "Authoritative lexical provenance if master-backed usage is claimed",
+              "Actual comprehension data for broad glossary mandate"
+            ],
+            "runtimeFailureClaimed": false
+          },
+          {
+            "authorType": "AI",
+            "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+            "decisionType": "AI_RECOMMENDATION",
+            "humanSigned": false,
+            "correctionId": "CR-B-AI-06",
+            "disposition": "DEFER_PENDING_EVIDENCE",
+            "problemConfirmationLevel": "STATIC_CONTEXT_OMISSION_OBSERVED_RUNTIME_GRADING_FAILURE_NOT_REPRODUCED",
+            "priority": "P1",
+            "rationale": "Normalizer/snapshot/evaluationInput trace cho thấy prompt chung,referenceText rỗng,thiếu card facts/rubric text riêng. Đủ để mở verification riêng,chưa đủ để tự sửa evaluator hoặc tuyên bố provider chấm sai. P1 là risk trước runtime qualification,không phải incident production đã tái hiện.",
+            "sourceEvidence": [
+              {
+                "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+                "line": 223,
+                "sha256": "96095316dd09ab4b747e612ec3c0671fbe17a981fefcf8d080bbcf1373ecc19f",
+                "limitation": "Static input inspection only; no provider/runtime test."
+              },
+              {
+                "path": "apps/web/src/features/learning-session/activity-renderers/writing-activity.tsx",
+                "line": 37,
+                "sha256": "f5e38bf008046610819345eb4600dd8cc45663ab8857debd5f890219469c5c61",
+                "limitation": "Whitespace count/minimum display; hard rejection not demonstrated."
+              },
+              {
+                "path": "packages/content-format/src/normalizer.ts",
+                "line": 238,
+                "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835",
+                "limitation": "Readonly response payload normalization trace."
+              },
+              {
+                "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+                "line": 56,
+                "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b",
+                "limitation": "Readonly snapshot activity-copy trace; no DB function executed."
+              }
+            ],
+            "pedagogicalOrTechnicalImpact": "Nguy cơ grading không phân biệt đúng facts thẻ nếu context thực sự thiếu;ảnh hưởng runtime tất cả Lesson nhưng không tự biến nguồn đúng thành8 REVISE.",
+            "proposedExactChanges": [],
+            "exactChangePolicy": "No evaluator code change proposed for execution here;first implement only separately approved mock verification tests/report. A confirmed fix needs a distinct matching engineering-fix scope.",
+            "affectedLessons": [
+              "MG01-L1",
+              "MG01-L2",
+              "MG01-L3",
+              "MG01-L4",
+              "MG02-L1",
+              "MG02-L2",
+              "MG02-L3",
+              "MG02-L4"
+            ],
+            "affectedAudio": "No audio change.",
+            "rubricImpact": "Investigate input/registry/criteria version binding under engineering scope;do not change rubric here.",
+            "gateImpact": {
+              "A": "None.",
+              "B": "Record shared pending engineering evidence;do not use AI recommendation as human Gate B acceptance.",
+              "C": "Do not run rehearsal/runtime until its own approvals/gates permit."
+            },
+            "requiredImplementationMandate": {
+              "proposalKey": "BEGINNER-EVALUATOR-CONTEXT-VERIFICATION",
+              "mandateId": null,
+              "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED"
+            },
+            "verificationTests": [
+              "Capture actual provider input via mock for two different role cards sharing generic prompt; determine whether card facts/criteria can be distinguished.",
+              "Verify exact pinned LessonVersion and V1/V2 context preservation,not latest fallback.",
+              "Test no learner DTO key/model/rubric leakage if private evaluator context is later added.",
+              "Report evidence-supported risk confirmed/not confirmed without claiming real provider grading failure.",
+              "If a code change is needed,prepare a distinct matching engineering-fix scope; do not silently expand this verification mandate."
+            ],
+            "confidence": "High for static trace;no confidence claim for unobserved runtime/provider behavior.",
+            "missingEvidence": [
+              "Captured provider input from actual service under mocks with two distinct cards",
+              "Pinned-version regression and later fix evidence if a defect is confirmed"
+            ],
+            "runtimeFailureClaimed": false
+          }
+        ],
+        "requiredMandateProposals": [
+          {
+            "proposalKey": "BEGINNER-OFFLINE-CONTENT-CORRECTIONS",
+            "mandateId": null,
+            "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED",
+            "purpose": "Offline successor for accepted corrections02/03/04/05,not execution under current Gate B.",
+            "candidateFileAllowlist": [
+              "content/beginner/pilot/mg01-l1.lesson.txt",
+              "content/beginner/pilot/mg01-l2.lesson.txt",
+              "content/beginner/pilot/mg01-l3.lesson.txt",
+              "content/beginner/pilot/mg01-l4.lesson.txt",
+              "content/beginner/pilot/mg02-l1.lesson.txt",
+              "content/beginner/pilot/mg02-l3.lesson.txt",
+              "content/beginner/pilot/mg02-l4.lesson.txt",
+              "apps/api/test/beginner-pilot/qualify-content.test.ts",
+              "apps/api/test/beginner-pilot/international-content.test.ts",
+              "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+              "docs/qualification/beginner-pilot-ai-correction-review.md"
+            ],
+            "authorityNeeded": "Separate captured plan,baseline/exact allowlist/proposal hash and matching human execution approval. Current AI acceptance does not authorize source edits.",
+            "acceptance": [
+              "Exact field changes only;8 Lessons/64 Activities/32 objectives/41 lexical occurrences/24 current scripts retained unless separately approved.",
+              "Ten short variants accepted under explicit AI-recommended criteria; wrong roles/quantities still fail semantic requirements.",
+              "New raw source/rubric hashes and future version records bound explicitly; existing Gate A receipts/media/QA remain immutable historical evidence.",
+              "Scripts/WAV bytes unchanged for this proposed change set; source-to-audio requalification/rebinding requires explicit authority,not silent carryover.",
+              "Pure parser/planner/rubric/DTO/international/idempotency qualification appropriate to approved future scope; no DB/provider/publication."
+            ],
+            "rollback": "Retain current Git/source/audio evidence; a successor version may be withdrawn without editing learner history or deleting historical media.",
+            "prohibited": [
+              "DB/import/publish",
+              "Azure/provider/audio production",
+              "Gate C without separate approval",
+              "modification of historical A approvals or receipts",
+              "automatic merge/push/deploy"
+            ]
+          },
+          {
+            "proposalKey": "BEGINNER-EVALUATOR-CONTEXT-VERIFICATION",
+            "mandateId": null,
+            "status": "PROPOSED_NOT_CAPTURED_NOT_APPROVED",
+            "purpose": "Mock-only engineering verification of CR-B-AI-06 static risk; does not authorize evaluator fixes.",
+            "candidateFileAllowlist": [
+              "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+              "docs/qualification/beginner-evaluator-context-verification.md"
+            ],
+            "readOnlyCodeReferences": [
+              {
+                "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+                "line": 223,
+                "sha256": "96095316dd09ab4b747e612ec3c0671fbe17a981fefcf8d080bbcf1373ecc19f"
+              },
+              {
+                "path": "apps/web/src/features/learning-session/activity-renderers/writing-activity.tsx",
+                "line": 37,
+                "sha256": "f5e38bf008046610819345eb4600dd8cc45663ab8857debd5f890219469c5c61"
+              },
+              {
+                "path": "packages/content-format/src/normalizer.ts",
+                "line": 238,
+                "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+              },
+              {
+                "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+                "line": 56,
+                "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+              }
+            ],
+            "authorityNeeded": "Separate mandate capture and matching human approval for mock test implementation/execution; inspect setup to prove no live DB/providers/.env fallback.",
+            "acceptance": [
+              "Capture actual provider input via mock for two different role cards sharing generic prompt; determine whether card facts/criteria can be distinguished.",
+              "Verify exact pinned LessonVersion and V1/V2 context preservation,not latest fallback.",
+              "Test no learner DTO key/model/rubric leakage if private evaluator context is later added.",
+              "Report evidence-supported risk confirmed/not confirmed without claiming real provider grading failure.",
+              "If a code change is needed,prepare a distinct matching engineering-fix scope; do not silently expand this verification mandate."
+            ],
+            "candidateTestCommand": "pnpm --filter @worklingo/api exec vitest run src/teacher-ai/application/evaluation.service.spec.ts",
+            "commandNotRunHere": true,
+            "rollback": "Only revert approved test/report changes; production source and stored data remain untouched.",
+            "prohibited": [
+              "product evaluator modifications",
+              "real DB/provider/STT/AI calls",
+              "source/audio edits",
+              "Gate C/publish/enrollment",
+              "merge/push/deploy"
+            ]
+          }
+        ],
+        "counters": {
+          "aiLessonRecommendationsCompleted": 8,
+          "pass": 1,
+          "revise": 7,
+          "reject": 0,
+          "correctionDecisionsCompleted": 6,
+          "acceptForCorrection": 4,
+          "deferPendingEvidence": 2,
+          "rejectProposalWithReason": 0,
+          "extraDeferredComponentsWithinAcceptedCR05": 2,
+          "individualHumanVersionBoundDecisionsProven": 0,
+          "humanVersionBindingsStillPending": 8,
+          "newIndependentPhoneticJudgementsNotPerformed": 24
+        },
+        "governance": {
+          "humanReviewAcceptanceUnchanged": true,
+          "gateBStatus": "implementing",
+          "humanFinalDecisionModified": false,
+          "originalHumanClaimsModified": false,
+          "sourceAudioRubricCodeModified": false,
+          "criteriaSubstitutionProposed": false,
+          "amendmentNeededForTheseAiRecommendations": false,
+          "reason": "Only nonhuman AI-analysis recommendations are added within the three allowed result files. No qualified-human criterion replaced. A future proposal to substitute AI for human qualification needs a separate captured governance amendment and matching approval.",
+          "implementationAuthorityGranted": false,
+          "newMandateCaptured": false,
+          "dbOrProviderOrGateCExecuted": false
+        },
+        "verification": {
+          "status": "PASS_FOR_AI_RECOMMENDATION_RECORDS_NOT_HUMAN_ACCEPTANCE",
+          "existingPureTests": {
+            "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+            "passed": 20,
+            "failed": 0,
+            "skipped": 0
+          },
+          "hypotheticalProposalValidation": {
+            "command": "node --import tsx -e <inline pure parser/qualification simulation>",
+            "cwd": "apps/api",
+            "status": "PASS",
+            "mode": "IN_MEMORY_PROPOSAL_ONLY_NOT_APPLIED_OR_IMPORTED",
+            "proposedFieldChanges": 22,
+            "counts": {
+              "lessons": 8,
+              "activities": 64,
+              "objectives": 32,
+              "listeningScripts": 24,
+              "lexicalBlocks": 41
+            },
+            "shortVariantsChecked": 10,
+            "all24ScriptTextsUnchanged": true,
+            "all8SourceFilesOnDiskUnchanged": true,
+            "dbOrProviderCalls": 0,
+            "fileWrites": 0,
+            "notActualGateAOrBApproval": true
+          },
+          "discardedInvocation": {
+            "command": "pnpm exec tsx -e <multi-line command>",
+            "countedAsPass": false,
+            "reason": "Windows .cmd shim passed only first line,confirmed by two-line probe. Exit0 without result was not accepted;direct node execution produced required assertions/result."
+          },
+          "integrity": {
+            "status": "PASS",
+            "originalHumanAndAllPriorAiRecordsUnchanged": true,
+            "markdownAppendOnly": true,
+            "protectedFiles": 29,
+            "frozenArtifacts": 9,
+            "actualWavHashes": 24,
+            "privateAEvidenceHashes": 3,
+            "matchingMandateApproval": true,
+            "gateB": "implementing",
+            "onlyThreeAllowedFiles": true,
+            "privacy": "PASS",
+            "linksChecked": 9
+          },
+          "mandateValidate": {
+            "valid": true,
+            "count": 16
+          },
+          "notRun": [
+            "Real learner/runtime/provider grading",
+            "independent phonetic recognition/listening qualification",
+            "DB integration",
+            "Gate C",
+            "product typecheck/lint/build for unchanged source code"
+          ]
+        },
+        "immutableAfterFinalization": true,
+        "decisionDigestRule": "SHA-256 of UTF-8 JSON.stringify recursively sorted object keys,arrays preserved,no newline,of this round excluding verification,decisionDigest,decisionDigestRule. Technical AI record digest only,not human signature or execution approval.",
+        "decisionDigest": "22aae301943ee84f0670d4d20df74bd83e997a14b6bec83067e04156b8ce65bb"
+      }
+    ],
+    "autonomousReviewHistory": [
+      {
+        "eventId": "B-AI-AUTONOMOUS-001-FINALIZED",
+        "authorType": "AI",
+        "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+        "decisionType": "AI_RECOMMENDATION",
+        "humanSigned": false,
+        "recordedOn": "2026-10-28",
+        "roundId": "B-AI-AUTONOMOUS-001",
+        "decisionDigest": "22aae301943ee84f0670d4d20df74bd83e997a14b6bec83067e04156b8ce65bb",
+        "priorAiEvidenceMatrixSha256": "cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fcb59d5259b9e312b0",
+        "action": "APPEND_AI_RECOMMENDATIONS_WITHOUT_EDITING_HUMAN_OR_PRIOR_AI_RECORDS"
+      }
+    ]
   },
   "humanStatusSemantics": "Original NOT_REVIEWED means no accepted individual exact-version evidence in the formal fields; it does not assert reviewer never read the material. Global reported PASS is retained separately."
 }

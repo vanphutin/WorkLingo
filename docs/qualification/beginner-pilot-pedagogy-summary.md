@@ -129,3 +129,94 @@ AI matrix digest kỹ thuật: `cadae9db447cf140a931a0b1fad08461aa4bf6e8850f85fc
 PASS cho technical record integrity: counts/unique IDs,48 semantic keys,144 option analyses,7 alternative token bounds,112 checklist cells/16 rubric texts,source projection,29 protected files,9 frozen artifacts,24 actual WAV,3 A-evidence hashes,matching mandate hash/implementing lifecycle,three-file allowlist,9 local links và human/AI separation. Existing pure tests20 PASS,0 FAIL,0 skipped; mandate validate16 PASS. Original human fields và lịch sử cũ nguyên trạng; không có individual human PASS được tạo. Chỉ existing pure tests được chạy; không nhận typecheck/lint/build/runtime/DB PASS từ document work. Một oversized Windows command không khởi chạy (OS206); đã chuyển sang persistent Node,không tạo helper ngoài allowlist.
 
 AI còn soạn8 clarification texts và8 outline proposals từ kiến thức đã có,đặt riêng trong aiAnalysis,không ghi vào source hoặc field teacher-approved. Tất cả teacherApproval=null. Matrix digest đã bao gồm các đề xuất này; đây không phải học liệu đã publish hoặc thời lượng quan sát được.
+
+## 8. Autonomous AI reviewer supplement — current recommendations
+
+authorType=AI;reviewerId=WORKLINGO-AI-REVIEWER-001;decisionType=AI_RECOMMENDATION;humanSigned=false. Reviewer ENG-REVIEWER-001/global quote và mọi human finalDecision/history/date/reference giữ nguyên. Đây là judgement của AI,không phải chữ ký hay lời giải trình của reviewer.
+
+Tiêu chuẩn AI: chỉ REVISE khi có accepted exact source correction;PASS là source/design recommendation có giới hạn,không đóng Gate B. Không ép tám PASS theo global quote hoặc tám REVISE vì thiếu human evidence. Duration không đại diện toàn bộ độ khó;null master ID không tự là từ sai.
+
+| Lesson | Exact bundle | AI verdict | Evidence | Findings | Required action |
+| --- | --- | --- | --- | --- | --- |
+| MG01-L1 | `9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217` | REVISE | content/beginner/pilot/mg01-l1.lesson.txt:308; content/beginner/pilot/mg01-l1.lesson.txt:248 | CR-B-AI-03, CR-B-AI-04 | Separate approved content successor |
+| MG01-L2 | `29def559327d00d41ba1b711cf214ca155c8f66c1fd5b9221a7c8653d3302503` | REVISE | content/beginner/pilot/mg01-l2.lesson.txt:330; content/beginner/pilot/mg01-l2.lesson.txt:348 | CR-B-AI-03 | Separate approved content successor |
+| MG01-L3 | `86709e22b96a4889d84edfaa282927c564843713b1b80d267f0b2e54a0da0183` | REVISE | content/beginner/pilot/mg01-l3.lesson.txt:331; content/beginner/pilot/mg01-l3.lesson.txt:349 | CR-B-AI-03 | Separate approved content successor |
+| MG01-L4 | `d7612fc457923abf24eda0cf84229e1cfecbad7701274291365a403f9c0c409e` | REVISE | content/beginner/pilot/mg01-l4.lesson.txt:330; content/beginner/pilot/mg01-l4.lesson.txt:348 | CR-B-AI-03 | Separate approved content successor |
+| MG02-L1 | `9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714` | REVISE | content/beginner/pilot/mg02-l1.lesson.txt:333; content/beginner/pilot/mg02-l1.lesson.txt:14 | CR-B-AI-03, CR-B-AI-05 | Separate approved content successor |
+| MG02-L2 | `06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193` | PASS | content/beginner/pilot/mg02-l2.lesson.txt:181; content/beginner/pilot/mg02-l2.lesson.txt:204 | No confirmed mandatory source edit;shared risks deferred | Keep source;retain evidence limits |
+| MG02-L3 | `3d24c725081ffb3de0bd11dac9973c37f17a2ac3fe5edf987a99005ad1b8d320` | REVISE | content/beginner/pilot/mg02-l3.lesson.txt:326 | CR-B-AI-03 | Separate approved content successor |
+| MG02-L4 | `ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2` | REVISE | content/beginner/pilot/mg02-l4.lesson.txt:337; content/beginner/pilot/mg02-l4.lesson.txt:147 | CR-B-AI-02, CR-B-AI-03 | Separate approved content successor |
+
+| Correction ID | AI disposition | Evidence/confirmation | Required mandate | Risk |
+| --- | --- | --- | --- | --- |
+| CR-B-AI-01 | DEFER_PENDING_EVIDENCE | NON_MONOTONIC_MEASUREMENTS_CONFIRMED_PEDAGOGICAL_DEFECT_NOT_CONFIRMED | EXISTING-GATE-C-PROGRESSION-EVIDENCE-REVIEW — MND-20261027-004 (scope review;not authorized) | P2 |
+| CR-B-AI-02 | ACCEPT_FOR_CORRECTION | CONFIRMED_ALIGNMENT_GAP_WITH_REVIEWER_CROSS_UNIT_REUSE_REQUIREMENT | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-03 | ACCEPT_FOR_CORRECTION | CONFIRMED_MINIMUM_GUIDANCE_TENSION_WITH_AI_ACCEPTED_MEANING_PRESERVING_VARIANTS | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-04 | ACCEPT_FOR_CORRECTION | CONFIRMED_OWNER_STYLE_DICTIONARY_MISMATCH_NOT_WRONG_KEY | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-05 | ACCEPT_FOR_CORRECTION | LEARNER_FACING_EDITORIAL_MARKERS_CONFIRMED_OTHER_COMPONENTS_DEFERRED | BEGINNER-OFFLINE-CONTENT-CORRECTIONS (not captured) | P2 |
+| CR-B-AI-06 | DEFER_PENDING_EVIDENCE | STATIC_CONTEXT_OMISSION_OBSERVED_RUNTIME_GRADING_FAILURE_NOT_REPRODUCED | BEGINNER-EVALUATOR-CONTEXT-VERIFICATION (not captured) | P1 |
+
+**Kết quả AI: 1 PASS,7 REVISE,0 REJECT.** Dispositions:4 ACCEPT_FOR_CORRECTION,2 DEFER_PENDING_EVIDENCE. Có thêm hai phần master-provenance/gloss của CR05 deferred,không phải hai proposal độc lập. Tất cả8 recommendations có source/hash evidence;24 audio vẫn không có independent phonetic judgement mới,không tự biến waveform metrics thành pronunciation PASS.
+
+### AI recommendation MG01-L1 — REVISE
+
+minimum10 cao hơn candidate đủ ý9 từ;distractor Minh chưa đồng bộ tên đã chọn. I/you/from đúng nghĩa;ba key đọc và ba key nghe khớp evidence;hai thẻ S/W khác nhau tạo transfer.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG01-L2 — REVISE
+
+Hai task S/W minimum7 so với candidate đủ ý6 từ;không cần xóa hướng dẫn tên Việt đúng kiến thức. Phân biệt tên/tên chữ và đổi người/nơi có mục đích;Ed/E,D và Jo/J,O/Joe nhất quán;model giữ facts.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG01-L3 — REVISE
+
+Hai response có thể giữ đủ vai/facts bằng9 và8 từ nhưng minimum10 và9;đề xuất sửa constraint,không sửa audio đã có căn cứ vai nghĩa. Có ghép thẻ,đảo vai và hai địa danh;thẻ sản xuất mới,đáp án/rubric đúng facts,không cần rewrite audio vì chỉ nhìn độ dài.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG01-L4 — REVISE
+
+Response S/W đủ ý có thể8 và9 từ thay minimum9 và10;không lấy audio ngắn hơn L3 làm bằng chứng bắt buộc rewrite. Unit check có role/card mới,không tự chứng nhận CEFR;keys và model đúng. Các mục một fact không tự là lỗi nếu phục vụ truy hồi.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG02-L1 — REVISE
+
+Minimum10 so với candidate That's đủ ý9 từ;objective/guide/meaning còn copy biên tập cần giáo viên duyệt/đang đề xuất trong phần learner-facing. A/an theo âm,near/far,plural và chỉ-với-yêu-cầu đều nhất quán;eraser/please phù hợp tác vụ ở cấp AI.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG02-L2 — PASS
+
+Không xác nhận source defect bắt buộc sửa. Option cue ở r2 hợp với formative grammar practice;không dùng riêng nó làm proof đọc độc lập. Thiếu master link/calibration và static evaluator risk được giữ là hạn chế riêng,không ép REVISE bài này. Bài phonology/formative rõ mục tiêu âm cuối-số lượng;48-case source matrix của toàn pilot không có sai key tại sáu task này. Response lịch sự7 từ đạt minimum6,thẻ viết riêng và rubric xét nghĩa. Không bắt bài này dài hơn chỉ để tăng số giây.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG02-L3 — REVISE
+
+Candidate This is a book.That's a bag.Two pens giữ đủ near/far/request với9 từ,dưới minimum10. Chỉ sửa constraint/rubric variant;không buộc rewrite nội dung tích hợp đang hợp lý. Ba-mục list,NOT requested,near/far và phân biệt vật chỉ/vật cần lấy tạo tích hợp có nghĩa;thẻ S/W riêng,keys đúng,không bắt buộc thêm intro vào mọi Lesson.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### AI recommendation MG02-L4 — REVISE
+
+Candidate That's đủ ý9 từ dưới minimum10;writing checkpoint chưa tái dùng I/you/from theo yêu cầu cross-unit reuse,đề xuất chỉ sửa một writing task. Transfer quầy/thẻ mới giữ object/quantity/position;keys/model đúng. Điểm kết Unit thích hợp cho một task tích hợp lại kiến thức MG01.
+
+Confidence: source/hash HIGH,pedagogical learner impact MODERATE;no new independent phonetic assurance. Source/rubric/audio bindings,citations,coverage,findings/severity và limitations đầy đủ trong aiAnalysis.autonomousReviewRounds[0].lessonRecommendations.
+
+### Những scope được chấp nhận ở cấp AI
+
+- CR02: chỉ MG02-L4 writing checkpoint thêm reuse I am/from,không bắt mọi task MG02 sửa.
+- CR03:10 min_words replacements (bảy cũ+ba That's mới),ba MG02 speaking rubric-text clarifications. MG02-L2 không có defect minimum đã xác nhận.
+- CR04: chỉ Minh→Alex ở distractor;không bắt xóa hướng dẫn tên Việt đúng kiến thức.
+- CR05: chỉ bốn visible pending-editorial fields MG02-L1;provenance/master mapping và broad English glossary vẫn deferred.
+- CR01: measurements có thật,nhưng blanket rewrite theo monotonic duration chưa có đủ căn cứ.
+- CR06:P1 static risk,chưa runtime failure;verification mock-only riêng trước mọi evaluator fix.
+
+Hai required mandate proposals chỉ được mô tả trong result packet,mandateId=null;chưa tạo/duyệt record mới. Offline content-corrections successor dự kiến bảy source TXT,hai pure-test files và hai successor qualification artifacts;engineering verification dự kiến một mocked unit-test file và một report. Exact allowlist/baseline/hash sẽ phải capture và duyệt trước thi hành. Không sửa acceptance để thay qualified human bằng AI;Gate B giữ implementing,CONTENT_READY=false.
+
+AI verification PASS:20 existing pure tests,0 FAIL/skipped;one direct-node in-memory simulation PASS for22 hypothetical field changes,10 short variants and8/64/32/41/24 inventories;actual source/WAV files unchanged. Hash checks29 protected files/9 frozen artifacts/24 WAV/3 A-evidence files PASS;original human/all prior AI records unchanged,Markdown append-only,only3 allowed files,matching approval and mandate validate16 PASS. First pnpm-shim simulation without result was not counted;two-line probe proved multiline truncation,direct node run returned concrete assertions. No runtime/provider/DB/phonetic/Gate C claim.
+
+Technical AI decision digest: `22aae301943ee84f0670d4d20df74bd83e997a14b6bec83067e04156b8ce65bb`. This is not a human signature,evidenceReference or approved mandate proposal hash. Old AI matrix/human global statement/history are retained;future correction/evaluator verification requires separate captured scopes/approvals.
