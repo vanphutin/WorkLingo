@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261027-005",
-  "status": "triaged",
+  "status": "implementing",
   "created": "2026-10-27",
-  "updated": "2026-10-27T16:25:16.042Z",
+  "updated": "2026-10-27T16:28:42.555Z",
   "title": "Correct private Gate A storage ownership and native path before bounded Azure audio continuation",
   "type": "infrastructure",
   "owner": "Codex",
@@ -55,7 +55,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-27-beginner-gate-a-storage-amendment.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner (direct human user)",
+    "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-human-approval.md",
+    "at": "2026-10-27T16:28:42.294Z",
+    "proposal_hash": "96a4ca63b69ec052a0bf203b81773d1dc1d6256d2d1fd291deeafb007b1e45a1"
+  },
   "verification": [],
   "history": [
     {
@@ -75,6 +80,24 @@
       "reason": "Read-only evidence and bounded builder review support the dedicated private D: root and exact dual-authority scope. Preparation only; human matching execution approval is pending.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-review.md"
+    },
+    {
+      "at": "2026-10-27T16:28:42.294Z",
+      "actor": "WorkLingo product owner (direct human user)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Direct matching approval received for the exact MND-20261027-005 proposal and storage/audio continuation boundaries. All frozen hashes/baseline/allowlist passed before implementation.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-human-approval.md"
+    },
+    {
+      "at": "2026-10-27T16:28:42.555Z",
+      "actor": "WorkLingo product owner (direct human user)",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Direct matching approval received for the exact MND-20261027-005 proposal and storage/audio continuation boundaries. All frozen hashes/baseline/allowlist passed before implementation.",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-27-beginner-gate-a-storage-human-approval.md"
     }
   ]
 }
