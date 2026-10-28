@@ -29,3 +29,15 @@ Poincare (`01a17e37-2d03-7af0-a847-8cc55ea4c230`) reviewed the scoped diff/tests
 - Ruling: final correction tests are executed by implementer; no second independent dynamic pass — follow the single-review workflow — cost: no second operator confirmation.
 
 No deferred minors. No OS mutations or provider request before this review correction pass. Original pilot request hashes remain unchanged, exactly451 proposed counted characters/3 starts.
+
+## Actual execution (2026-10-28 Asia/Saigon)
+
+Approval record commit `0c82547`; reviewed source/ledger commit `0613bd6`. One post-client-refresh command initially defaulted to primary D: checkout because the JS session store had reset; its exact-path git add failed without staging or committing. Read-only status confirmed primary unrelated next-env.d.ts/backups work remained untouched. All subsequent commands explicitly name the linked worktree, with no implicit cwd/session-store dependency.
+
+First actual prepare command exited ROOT_ACL_UNVERIFIED before creating even the top-level D: directory. Root cause reproduced read-only: Windows PowerShell5.1 inherited Core7 PSModulePath, so Microsoft.PowerShell.Security type data collided and Get-Acl failed to autoload. A child-only native module path fixed the exact read-only query. No execution-policy/UAC/OS configuration change. Regression RED43 PASS/1 FAIL →GREEN44/44; focused lint and syntax PASS. This is a Task2 native-host compatibility correction, not a policy waiver or an additional review round. Actual provider calls still0.
+
+Task2 actual command `node tools/beginner-pilot/audio-qualification.mjs prepare --gate A --storage-only` PASS after the native module fix. Exactly28 new directories created atomically with protected ACL at creation under D:/WorkLingoQualification; native root `D:\WorkLingoQualification\r12b-20261027\A`. Current/creator/owner SID exactly `S-1-5-21-3809754005-2092998575-1059868825-1001`; each directory has exactly ASUS/SYSTEM/Administrators FullControl and no other allow ACE. Actual token may be elevated; no standard-user claim. Synthetic exclusive probe checksum/readback/exact-path cleanup PASS. Four new pending/evidence metadata files created without credentials; no receipt/manifest/WAV yet.
+
+Actual full FileStore.assertSafe/native-path/SID/ACL/28 recorded directory identities PASS. Separate parent D: SDDL hash comparison against setup proof PASS (unchanged). Original C: four metadata names/hashes/native paths unchanged. Re-running prepare yielded READY/reused=true with marker bytes unchanged and no rewrite/ACL modification; probe absent. These are actual OS results, not mock inference. No shared ACL, account/UAC/policy, production, DB or Azure setting mutation.
+
+Task1 software acceptance complete; Task2 actual environment acceptance complete. Child eligible for verified (storage/software only). Task3 actual pilot and human listening still NOT_RUN; original A implementing, readiness NOT_READY. The following execution may resume original A under the combined matching approvals after CLI records child verified; caps and human gate unchanged.

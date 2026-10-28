@@ -69,9 +69,13 @@ export async function verifyOldHistory(amendment, io = fs) {
   }
 }
 
-function powershell(script) {
+export function powershell(script, { spawn = spawnSync, env = process.env } = {}) {
   if (process.platform !== 'win32') fail('WINDOWS_ACL_REQUIRED');
-  const result = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', "$ErrorActionPreference='Stop'; " + script], { encoding: 'utf8', windowsHide: true });
+  if (!env.SystemRoot || !path.win32.isAbsolute(env.SystemRoot)) fail('WINDOWS_RUNTIME_UNVERIFIED');
+  // A Core host's inherited module path breaks Windows PowerShell5.1 type data.
+  // Scope the native module lookup to this child; never alter OS policy/settings.
+  const childEnv = { ...env, PSModulePath: path.win32.join(env.SystemRoot, 'System32', 'WindowsPowerShell', 'v1.0', 'Modules') };
+  const result = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', "$ErrorActionPreference='Stop'; " + script], { encoding: 'utf8', windowsHide: true, env: childEnv });
   if (result.status !== 0 || result.error) fail('WINDOWS_OPERATION_FAILED');
   return result.stdout.trim();
 }

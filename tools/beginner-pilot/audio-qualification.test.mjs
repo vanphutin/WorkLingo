@@ -360,3 +360,9 @@ test('review storage3 linked or replaced ownership marker never qualifies setup 
     await assert.rejects(feature('preparePrivateRoot',f.options),/STATE_FILE|MARKER|IDENTITY/u);
   }
 });
+test('Windows helper isolates native 5.1 module lookup from inherited Core module paths without changing parent env', () => {
+  const env={SystemRoot:'C:\\Windows',PSModulePath:'C:\\Core7\\Modules',PATH:'synthetic-path'};
+  const spawn=(_binary,_args,options)=>({status:options.env?.PSModulePath==='C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules'?0:1,stdout:'ACL_OK',stderr:''});
+  assert.equal(feature('powershell','read-only synthetic ACL probe',{spawn,env}),'ACL_OK');
+  assert.equal(env.PSModulePath,'C:\\Core7\\Modules');assert.equal(env.PATH,'synthetic-path');
+});
