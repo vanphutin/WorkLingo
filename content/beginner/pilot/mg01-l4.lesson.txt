@@ -327,7 +327,7 @@ skills: speaking
 objective_refs: mg01-l4-speaking
 content_refs: mg01-l4-speaking-card
 language_block_refs: mg01-l4-hello | mg01-l4-name | mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
-min_words: 9
+min_words: 8
 sample_answer: Hello, Jo. I am Mia. I am from London. You are Jo.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
@@ -345,7 +345,7 @@ skills: writing
 objective_refs: mg01-l4-writing
 content_refs: mg01-l4-writing-card
 language_block_refs: mg01-l4-hello | mg01-l4-name | mg01-l4-i-am | mg01-l4-you-are | mg01-l4-from
-min_words: 10
+min_words: 9
 sample_answer: Hello, Lucy. I am Ben. I am from New York. You are Lucy.
 rubric_id: beginner-short-writing
 rubric_version: 1

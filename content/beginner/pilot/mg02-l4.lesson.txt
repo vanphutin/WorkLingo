@@ -11,7 +11,7 @@ slug: mg02-l4
 title: Lấy đúng bộ đồ ở quầy mới — unit check
 level: foundation
 duration_minutes: 45
-objective: Vận dụng độc lập cách chỉ/yêu cầu vật dụng và số lượng trong tình huống mới qua R/L/S/W; không tuyên bố đạt stage hay CEFR.
+objective: Vận dụng cách chỉ/yêu cầu vật dụng và số lượng qua R/L/S/W; riêng Writing kết hợp tự giới thiệu, nơi đến và xác nhận tên người nhận từ MG01 trong tình huống mới; không tuyên bố đạt stage hay CEFR.
 
 [OBJECTIVE mg02-l4-reading]
 statement: Tự đọc danh sách và vị trí mới để chọn bộ đồ đúng và lời xác nhận khớp cả vật lẫn lượng.
@@ -32,7 +32,7 @@ required: true
 [/OBJECTIVE]
 
 [OBJECTIVE mg02-l4-writing]
-statement: Tự viết lời nhắn mô tả/yêu cầu từ thẻ mới, dùng dạng số ít/số nhiều và giữ đúng dữ kiện.
+statement: Tự viết lời nhắn từ thẻ mới: giới thiệu bản thân và nơi đến, xác nhận tên người nhận, rồi chỉ/yêu cầu đúng vật và số lượng; kết hợp I am/I am from/you are với số ít/số nhiều.
 skills: writing
 required: true
 [/OBJECTIVE]
@@ -149,6 +149,9 @@ type: email
 text:
 <<<
 New request card
+Writer: Alex
+From: Osaka
+Reader: Emma
 Near: a bag
 Request: three pens; a book
 >>>
@@ -324,12 +327,12 @@ skills: speaking
 objective_refs: mg02-l4-speaking
 content_refs: mg02-l4-speaking-card
 language_block_refs: mg02-l4-pen | mg02-l4-book | mg02-l4-bag | mg02-l4-this | mg02-l4-that
-min_words: 10
+min_words: 9
 sample_answer: This is a pen. That is a book. Two bags, please.
 rubric_id: beginner-guided-speaking
 rubric_version: 1
 prompt: Use the new counter card. Identify the near and far items and request the needed quantity. Record independently without a full model.
-rubric: Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+rubric: Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.
 QUESTION:
 Use the new counter card. Identify the near and far items and request the needed quantity. Record independently without a full model.
 [/ACTIVITY]
@@ -343,11 +346,11 @@ objective_refs: mg02-l4-writing
 content_refs: mg02-l4-writing-card
 language_block_refs: mg02-l4-pen | mg02-l4-book | mg02-l4-bag | mg02-l4-this | mg02-l4-that
 min_words: 8
-sample_answer: This is a bag. Three pens, please. A book, please.
+sample_answer: Hello. I am Alex. I am from Osaka. You are Emma. This is a bag. Three pens, please. A book, please.
 rubric_id: beginner-short-writing
 rubric_version: 1
-prompt: Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.
-rubric: Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
+prompt: Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note.
+rubric: Có lời chào, đúng người viết Alex, nơi đến Osaka và người nhận Emma; diễn đạt I am/I am from/you are hoặc dạng rút gọn tương đương. Nêu this/bag, yêu cầu three pens và a book. Chấp nhận kết hợp hoặc đổi thứ tự nếu giữ lời chào và đủ sáu dữ kiện; không chấp nhận sai người, nơi, vật hoặc số lượng chỉ vì đủ minimum. Phân biệt lỗi dữ kiện với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.
 QUESTION:
-Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.
+Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note.
 [/ACTIVITY]

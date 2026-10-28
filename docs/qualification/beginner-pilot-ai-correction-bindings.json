@@ -1,0 +1,2610 @@
+{
+  "schemaVersion": 1,
+  "mandate": "MND-20261028-002",
+  "proposalHash": "6d642fe594997b3f33be3c2b627b4627f14bc42166729013b80e76cf160c1796",
+  "revision": "content-corrections-v1",
+  "status": "OFFLINE_CONTENT_CORRECTIONS_TECHNICALLY_VERIFIED",
+  "qualificationStatus": "BLOCKED",
+  "readiness": "NOT_READY",
+  "humanSignoff": null,
+  "policyVerdict": null,
+  "hashRule": "Raw source/script/WAV/code: SHA-256 exact UTF-8 bytes (WAV binary). Task rubric: SHA-256 exact parsed rubric UTF-8 text. reviewedBundleSha256: SHA-256 UTF-8 JSON.stringify recursively sorted object keys (arrays preserved, no newline), per lesson excluding reviewedBundleSha256, previousSourceSha256 and previousBundleSha256. Includes versioned full parsed responseTasks and explicit audio reuse bindings. Historical hashes link immutable artifacts; no old verdict is inherited.",
+  "historical": {
+    "baselineHead": "69b559e9475d08c67cb4920b13c8e0f034eabaf3",
+    "snapshot": {
+      "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+      "sha256": "17286fdb1811935be80870933d11b8669b3fa1652867866fce37d220867c4c21"
+    },
+    "frozenArtifacts": [
+      {
+        "path": "docs/superpowers/plans/2026-10-28-beginner-gate-b-review.md",
+        "hash": "27b904b3add90054d703b66d1923eb88a9cac4567222b5529569179f0742447e",
+        "expected": "27b904b3add90054d703b66d1923eb88a9cac4567222b5529569179f0742447e"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-preapproval.md",
+        "hash": "812644d899349e5dba786dd169445e59aac0356b63962ba77a3d2fd458a9d3a2",
+        "expected": "812644d899349e5dba786dd169445e59aac0356b63962ba77a3d2fd458a9d3a2"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-gate-b-checklist.md",
+        "hash": "5d64467eae924ba7ad8574bbe9a4e646f6c461b893ad60f29b273e939376ee6d",
+        "expected": "5d64467eae924ba7ad8574bbe9a4e646f6c461b893ad60f29b273e939376ee6d"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+        "hash": "c39d2efd94eec5e6ff6815773183dc465fb95ad5e0990fd2b6ac7ae66115972c",
+        "expected": "c39d2efd94eec5e6ff6815773183dc465fb95ad5e0990fd2b6ac7ae66115972c"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+        "hash": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289",
+        "expected": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md",
+        "hash": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594",
+        "expected": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "hash": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56",
+        "expected": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory-v1.json",
+        "hash": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+        "expected": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-international-names-verification.md",
+        "hash": "e9014dd779db52e5f138778a0c936a746a3d1733a961d45c1a32caf7a4590984",
+        "expected": "e9014dd779db52e5f138778a0c936a746a3d1733a961d45c1a32caf7a4590984"
+      }
+    ]
+  },
+  "rubricCode": {
+    "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+    "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+    "ids": [
+      {
+        "id": "beginner-guided-speaking",
+        "version": "1"
+      },
+      {
+        "id": "beginner-short-writing",
+        "version": "1"
+      }
+    ],
+    "weights": {
+      "taskCompletion": 0.35,
+      "meaningAndLogic": 0.25,
+      "targetLanguage": 0.2,
+      "clarity": 0.2
+    }
+  },
+  "unchangedControl": {
+    "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+    "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+  },
+  "counts": {
+    "lessons": 8,
+    "changedLessons": 7,
+    "activities": 64,
+    "objectives": 32,
+    "lexicalBlocks": 41,
+    "audioScripts": 24,
+    "wavs": 24,
+    "fieldEdits": 25
+  },
+  "lessons": [
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG01-L1",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 5
+      },
+      "rubrics": [
+        {
+          "slug": "mg01-l1-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "1ca2eade07b52848a9d46ac14b1ecd32024d6b46ac0a1584f2d46240c58caea5"
+        },
+        {
+          "slug": "mg01-l1-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "6cd21bce4be35309e4ddeb16efc42b217e5952017ea97f440f8833293c7f4fbe"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 300,
+              "column": 1,
+              "offset": 8257
+            },
+            "end": {
+              "line": 317,
+              "column": 1,
+              "offset": 9308
+            }
+          },
+          "slug": "mg01-l1-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg01-l1-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l1-hello",
+            "mg01-l1-i-am",
+            "mg01-l1-from",
+            "mg01-l1-you-are"
+          ],
+          "objectiveRefs": [
+            "mg01-l1-speaking"
+          ],
+          "question": "Use the role card. Say hello, your name, where you are from, and your partner's name. Record your own response.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Hoàn thành đủ bốn ý theo thẻ Lucy/Los Angeles/Leo. Chấp nhận I am hoặc I'm, cách ngắt câu tự nhiên và tên riêng phát âm dễ hiểu; không chấm giống giọng bản ngữ. Dùng đúng I am/You are/from; không đạt đủ nội dung nếu chỉ lặp lời chào. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1 với trọng số 0.35/0.25/0.20/0.20; không tự suy ra mastery hoặc CEFR.",
+          "prompt": "Use the role card. Say hello, your name, where you are from, and your partner's name. Record your own response.",
+          "sampleAnswer": "Hello. I am Lucy. I am from Los Angeles. You are Leo.",
+          "minWords": 9,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 317,
+              "column": 1,
+              "offset": 9308
+            },
+            "end": {
+              "line": 334,
+              "column": 1,
+              "offset": 10286
+            }
+          },
+          "slug": "mg01-l1-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg01-l1-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l1-hello",
+            "mg01-l1-i-am",
+            "mg01-l1-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l1-writing"
+          ],
+          "question": "Greet a new classmate. Introduce the name and place on the writing card. Use your own sentences.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Nội dung cần lời chào, tên Adam và nơi đến London, không lấy dữ kiện thẻ nói. Chấp nhận Hello/hi nếu đúng chức năng, I am/I'm; kiểm tra I viết hoa, am và from giữ nghĩa, câu có thể đọc hiểu. Lỗi dấu câu nhỏ không xóa điểm ý đúng; không thưởng chép mẫu sai vai. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo version1, trọng số 0.35/0.25/0.20/0.20; không tự cấp mastery.",
+          "prompt": "Greet a new classmate. Introduce the name and place on the writing card. Use your own sentences.",
+          "sampleAnswer": "Hello. I am Adam. I am from London.",
+          "minWords": 6,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG01-L1",
+          "slug": "mg01-l1-audio-a",
+          "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+          "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+          "successorSourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+          "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1",
+          "requestSha256": "690f4075cf2058acc011670fad8e88b9677382af29e2c7ea01004b78bc8535c0",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+          "fileSha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+          "take": 2,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L1",
+          "slug": "mg01-l1-audio-b",
+          "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+          "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+          "successorSourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+          "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32",
+          "requestSha256": "05997ca5434efd23db7c5b6cba91503fd1d83fb8ec6a9152f0123d2eeec1bfea",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+          "fileSha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+          "take": 2,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L1",
+          "slug": "mg01-l1-audio-c",
+          "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+          "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+          "successorSourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+          "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9",
+          "requestSha256": "cbd249d33a1d01c56a515a36b82692befb435d4d6e2b7efd9a93548d899f138b",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+          "fileSha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+          "take": 2,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+      "previousBundleSha256": "9a0d43368585060fdc8832754453433e85e9d0fbc70c178533636fb48ad4b217",
+      "reviewedBundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115"
+    },
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG01-L2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 5
+      },
+      "rubrics": [
+        {
+          "slug": "mg01-l2-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "434f1ceb887ddc521400d8047ff84df8a31467cfe6f6c15c7c1bc896ad58244a"
+        },
+        {
+          "slug": "mg01-l2-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "2420bbb624068e099efb9be9e246365b845fae1ef928a3adf1cdba59ad212a57"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 322,
+              "column": 1,
+              "offset": 7571
+            },
+            "end": {
+              "line": 339,
+              "column": 1,
+              "offset": 8646
+            }
+          },
+          "slug": "mg01-l2-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg01-l2-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l2-hello",
+            "mg01-l2-name",
+            "mg01-l2-i-am",
+            "mg01-l2-you-are",
+            "mg01-l2-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l2-speaking"
+          ],
+          "question": "Use the speaking card. Say hello, introduce the name and place, then spell the name. Speak clearly at your own pace.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Cần lời chào, Emma/London và bốn tên chữ E/M/M/A. Nói tên Emma liền hai âm tiết với âm đầu nổi bật đủ để nhận tên, khác với đọc từng tên chữ; không bắt giống giọng bản ngữ. Cho phép đổi thứ tự ý nhưng giữ nghĩa, không đòi tốc độ cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Use the speaking card. Say hello, introduce the name and place, then spell the name. Speak clearly at your own pace.",
+          "sampleAnswer": "Hello. I am Emma. I am from London. E, M, M, A.",
+          "minWords": 6,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 340,
+              "column": 1,
+              "offset": 8647
+            },
+            "end": {
+              "line": 357,
+              "column": 1,
+              "offset": 9629
+            }
+          },
+          "slug": "mg01-l2-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg01-l2-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l2-hello",
+            "mg01-l2-name",
+            "mg01-l2-i-am",
+            "mg01-l2-you-are",
+            "mg01-l2-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l2-writing"
+          ],
+          "question": "Use only the writing card. Introduce the name and place, then write the letters separately.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Cần Mia/Los Angeles và M-I-A. Chấp nhận dấu nối hoặc phẩy giữa chữ; không lấy Emma/London từ thẻ nói. Chấm ý đúng, I am/from và độ dễ đọc; dấu nối nhỏ không xóa toàn bộ điểm. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Use only the writing card. Introduce the name and place, then write the letters separately.",
+          "sampleAnswer": "Hello. I am Mia. I am from Los Angeles. M-I-A.",
+          "minWords": 6,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG01-L2",
+          "slug": "mg01-l2-audio-1",
+          "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+          "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+          "successorSourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+          "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574",
+          "requestSha256": "6f16c088f049a5688389fd1708aa2767a0e87b41e1156f1493fc6885a357c9ee",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+          "fileSha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L2",
+          "slug": "mg01-l2-audio-2",
+          "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+          "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+          "successorSourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+          "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046",
+          "requestSha256": "e15aba8742fd57138f6a2157911ba091f4380f76301b0dd97f54b9821fdcb399",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+          "fileSha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L2",
+          "slug": "mg01-l2-audio-3",
+          "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+          "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+          "successorSourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+          "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8",
+          "requestSha256": "9669ca555350f866fb054d6dd05513292d235024a53bba52ea580d0138efceab",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+          "fileSha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+      "previousBundleSha256": "29def559327d00d41ba1b711cf214ca155c8f66c1fd5b9221a7c8653d3302503",
+      "reviewedBundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1"
+    },
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG01-L3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 5
+      },
+      "rubrics": [
+        {
+          "slug": "mg01-l3-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "f19125c443d2b72037cb81b010f5d735c84775864335f1c79416d2b3cd0e1938"
+        },
+        {
+          "slug": "mg01-l3-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "7bde8dbf3f9bfbc9def7f7eef33bdd1e6013dab1d2e32a9e8b724858a3f10c5b"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 323,
+              "column": 1,
+              "offset": 7869
+            },
+            "end": {
+              "line": 340,
+              "column": 1,
+              "offset": 9019
+            }
+          },
+          "slug": "mg01-l3-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg01-l3-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l3-hello",
+            "mg01-l3-name",
+            "mg01-l3-i-am",
+            "mg01-l3-you-are",
+            "mg01-l3-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l3-speaking"
+          ],
+          "question": "You meet the person on the card for the first time. Greet the person, introduce yourself and your place, and confirm the other name. Do not read a prepared script.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Mở lời với Kim, tự giới thiệu Sam/New York và xác nhận Kim. Cho phép đổi thứ tự và rút gọn I'm; không bắt nguyên văn mẫu. Đánh giá truyền đạt dữ kiện mới, không thuộc ví dụ luyện. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "You meet the person on the card for the first time. Greet the person, introduce yourself and your place, and confirm the other name. Do not read a prepared script.",
+          "sampleAnswer": "Hello, Kim. I am Sam. I am from New York. You are Kim.",
+          "minWords": 9,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 341,
+              "column": 1,
+              "offset": 9020
+            },
+            "end": {
+              "line": 358,
+              "column": 1,
+              "offset": 10046
+            }
+          },
+          "slug": "mg01-l3-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg01-l3-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l3-hello",
+            "mg01-l3-name",
+            "mg01-l3-i-am",
+            "mg01-l3-you-are",
+            "mg01-l3-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l3-writing"
+          ],
+          "question": "Write to the reader on the card. Greet the reader and introduce the writer and place. Add one sentence confirming the reader name.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Gọi đúng Noah, nêu Eva/London và dùng you chỉ Noah. Không cần đúng nguyên mẫu; lỗi đổi vai khác với dấu phẩy nhỏ. I am/I'm đều đúng. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Write to the reader on the card. Greet the reader and introduce the writer and place. Add one sentence confirming the reader name.",
+          "sampleAnswer": "Hello, Noah. I am Eva. I am from London. You are Noah.",
+          "minWords": 8,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG01-L3",
+          "slug": "mg01-l3-audio-1",
+          "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+          "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+          "successorSourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+          "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df",
+          "requestSha256": "0dee8ecacecb0e7317aedd8e16e8f110a59b8a9acfe77121845a52285849e779",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+          "fileSha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L3",
+          "slug": "mg01-l3-audio-2",
+          "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+          "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+          "successorSourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+          "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9",
+          "requestSha256": "52ddf24aec332124f1f30377628feb50e5a42ce27b31aa752e073421153bdbd8",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+          "fileSha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L3",
+          "slug": "mg01-l3-audio-3",
+          "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+          "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+          "successorSourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+          "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2",
+          "requestSha256": "1a7506217b8bb33c7032b9ef584df02186267e12c8d6f0a0d8718f9209dc02e7",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+          "fileSha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+      "previousBundleSha256": "86709e22b96a4889d84edfaa282927c564843713b1b80d267f0b2e54a0da0183",
+      "reviewedBundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a"
+    },
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG01-L4",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 5
+      },
+      "rubrics": [
+        {
+          "slug": "mg01-l4-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "6c65246d2948b4ab8a31856a1fd84651fd18bc2a67ce77b47bde79b64e759d88"
+        },
+        {
+          "slug": "mg01-l4-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "0a96fe2b552776c9b52b26c400e622645a6ce0f6a9da0b32359284f9f54fddc2"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 322,
+              "column": 1,
+              "offset": 7676
+            },
+            "end": {
+              "line": 339,
+              "column": 1,
+              "offset": 8807
+            }
+          },
+          "slug": "mg01-l4-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg01-l4-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l4-hello",
+            "mg01-l4-name",
+            "mg01-l4-i-am",
+            "mg01-l4-you-are",
+            "mg01-l4-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l4-speaking"
+          ],
+          "question": "Make your own short introduction using the meeting card. Include a greeting and a sentence confirming who your new partner is. Record without reading a full model.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Cần Mia/London và gọi/xác nhận Jo, giữ vai nhất quán. Không bắt thứ tự/giọng giống mẫu; câu ngắn đúng nghĩa được chấp nhận. Không dùng L4 để giả evidence bài trước. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Make your own short introduction using the meeting card. Include a greeting and a sentence confirming who your new partner is. Record without reading a full model.",
+          "sampleAnswer": "Hello, Jo. I am Mia. I am from London. You are Jo.",
+          "minWords": 8,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 340,
+              "column": 1,
+              "offset": 8808
+            },
+            "end": {
+              "line": 357,
+              "column": 1,
+              "offset": 9890
+            }
+          },
+          "slug": "mg01-l4-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg01-l4-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg01-l4-hello",
+            "mg01-l4-name",
+            "mg01-l4-i-am",
+            "mg01-l4-you-are",
+            "mg01-l4-from"
+          ],
+          "objectiveRefs": [
+            "mg01-l4-writing"
+          ],
+          "question": "Use the writing card to greet the reader, introduce the writer and place, and confirm the reader name. Write independently and check the names.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Truyền đạt Ben/New York/Lucy với I am/from/you. Chấp nhận rút gọn và ngắt câu dễ đọc; đổi tên là lỗi nghĩa, khác dấu câu nhỏ. Chỉ đánh giá nhiệm vụ của bài này. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Use the writing card to greet the reader, introduce the writer and place, and confirm the reader name. Write independently and check the names.",
+          "sampleAnswer": "Hello, Lucy. I am Ben. I am from New York. You are Lucy.",
+          "minWords": 9,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG01-L4",
+          "slug": "mg01-l4-audio-1",
+          "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+          "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+          "successorSourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+          "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de",
+          "requestSha256": "8b66dd33c68bc3aa3b6bcb4ece8130b7cfb612b0f771d35780cd307f3747e329",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+          "fileSha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L4",
+          "slug": "mg01-l4-audio-2",
+          "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+          "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+          "successorSourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+          "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c",
+          "requestSha256": "819b1bb5ab4cb936d3a1d66b3bbd6076ef85d86cf3340843de8b3c445215d44b",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+          "fileSha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG01-L4",
+          "slug": "mg01-l4-audio-3",
+          "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+          "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+          "successorSourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+          "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5",
+          "requestSha256": "92f0c7df755c01e5a18fb015a913a1c2f631828c803db3ef9b18622d8d6c9471",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+          "fileSha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+      "previousBundleSha256": "d7612fc457923abf24eda0cf84229e1cfecbad7701274291365a403f9c0c409e",
+      "reviewedBundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b"
+    },
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG02-L1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 6
+      },
+      "rubrics": [
+        {
+          "slug": "mg02-l1-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "72d5d0bd5125ce461dd70ab3f7b6e65faa677f5fdcc57fe7aaea1d3f2f0a49aa"
+        },
+        {
+          "slug": "mg02-l1-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "9c8e9121d4217e610d81094d324044b5833954072277dc9b628b3408372cf22b"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 325,
+              "column": 1,
+              "offset": 8593
+            },
+            "end": {
+              "line": 342,
+              "column": 1,
+              "offset": 9804
+            }
+          },
+          "slug": "mg02-l1-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg02-l1-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg02-l1-pen",
+            "mg02-l1-book",
+            "mg02-l1-bag",
+            "mg02-l1-this",
+            "mg02-l1-that"
+          ],
+          "objectiveRefs": [
+            "mg02-l1-speaking"
+          ],
+          "question": "Use the object card. Identify the near item and the far item, then make the request. Record a clear response.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.",
+          "prompt": "Use the object card. Identify the near item and the far item, then make the request. Record a clear response.",
+          "sampleAnswer": "This is a bag. That is a book. Two pens, please.",
+          "minWords": 9,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 343,
+              "column": 1,
+              "offset": 9805
+            },
+            "end": {
+              "line": 360,
+              "column": 1,
+              "offset": 10821
+            }
+          },
+          "slug": "mg02-l1-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg02-l1-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg02-l1-pen",
+            "mg02-l1-book",
+            "mg02-l1-bag",
+            "mg02-l1-this",
+            "mg02-l1-that"
+          ],
+          "objectiveRefs": [
+            "mg02-l1-writing"
+          ],
+          "question": "Identify the near object. Then write a request for both items and quantities on the message card.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Nêu this/pen, yêu cầu một sách và hai túi. Không lấy thẻ nói làm nguồn; không dùng a two bags. Dấu câu có thể khác nhưng các ý phải rõ. Please là hỗ trợ được đề xuất, không bù cho sai đồ vật/số lượng. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Identify the near object. Then write a request for both items and quantities on the message card.",
+          "sampleAnswer": "This is a pen. A book, please. Two bags, please.",
+          "minWords": 9,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG02-L1",
+          "slug": "mg02-l1-audio-1",
+          "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+          "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+          "successorSourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+          "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea",
+          "requestSha256": "a61919da649e9e30f9063c232e5a55fd2f04d63a6c6bae57c46dd814e9a422f9",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+          "fileSha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG02-L1",
+          "slug": "mg02-l1-audio-2",
+          "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+          "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+          "successorSourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+          "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af",
+          "requestSha256": "239614e2e9e05aa4e724c7d9464c94c31fe1702d8baecd7cea903bc41879fa81",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+          "fileSha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG02-L1",
+          "slug": "mg02-l1-audio-3",
+          "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+          "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+          "successorSourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+          "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d",
+          "requestSha256": "b764b1b54392abf5e0fdedbba7debe07d9ade1e746e18013c6cc64f1a23b1acc",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+          "fileSha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+      "previousBundleSha256": "9b8ee498c5a41a520d6abd43fe3b9b8bf159210b33f98e149d282e42dd583714",
+      "reviewedBundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9"
+    },
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG02-L3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 5
+      },
+      "rubrics": [
+        {
+          "slug": "mg02-l3-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "f213fecf8354f3cf21160eaf4d406bacc622afd7984bb8d242cfeff19be33ca2"
+        },
+        {
+          "slug": "mg02-l3-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "376ff12babaff128e089598ac634430e9a089253c2032424bce26068ed1da30b"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 318,
+              "column": 1,
+              "offset": 8092
+            },
+            "end": {
+              "line": 335,
+              "column": 1,
+              "offset": 9322
+            }
+          },
+          "slug": "mg02-l3-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg02-l3-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg02-l3-pen",
+            "mg02-l3-book",
+            "mg02-l3-bag",
+            "mg02-l3-this",
+            "mg02-l3-that"
+          ],
+          "objectiveRefs": [
+            "mg02-l3-speaking"
+          ],
+          "question": "Use the preparation card to tell a partner which items are near and far, then ask for the needed quantity. Make your own response.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.",
+          "prompt": "Use the preparation card to tell a partner which items are near and far, then ask for the needed quantity. Make your own response.",
+          "sampleAnswer": "This is a book. That is a bag. Two pens, please.",
+          "minWords": 9,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 336,
+              "column": 1,
+              "offset": 9323
+            },
+            "end": {
+              "line": 353,
+              "column": 1,
+              "offset": 10304
+            }
+          },
+          "slug": "mg02-l3-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg02-l3-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg02-l3-pen",
+            "mg02-l3-book",
+            "mg02-l3-bag",
+            "mg02-l3-this",
+            "mg02-l3-that"
+          ],
+          "objectiveRefs": [
+            "mg02-l3-writing"
+          ],
+          "question": "Use the writing card. Identify the near object, then request both listed items and quantities.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Nêu this/book và yêu cầu một bag/hai pens. Không lấy that/bag từ thẻ nói làm ý mô tả. Chấp nhận lời nhắn ngắn; số lượng và vai của từng mục quan trọng hơn thêm từ cho dài. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Use the writing card. Identify the near object, then request both listed items and quantities.",
+          "sampleAnswer": "This is a book. A bag, please. Two pens, please.",
+          "minWords": 8,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG02-L3",
+          "slug": "mg02-l3-audio-1",
+          "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+          "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+          "successorSourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+          "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79",
+          "requestSha256": "6140404e0be1006912b2b94f49026889da2d040ce5b7a5387182ee7ed3b9fdf5",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+          "fileSha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG02-L3",
+          "slug": "mg02-l3-audio-2",
+          "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+          "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+          "successorSourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+          "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65",
+          "requestSha256": "f554398b53551c3ab20ff18ed7def5bf83abe4a0a3ec0cd99d021e52711f15c5",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+          "fileSha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG02-L3",
+          "slug": "mg02-l3-audio-3",
+          "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+          "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+          "successorSourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+          "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5",
+          "requestSha256": "edc1eda02d0db67f308962b0005b6e23b1a79707e8856e46ca22e97246e3910d",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+          "fileSha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+      "previousBundleSha256": "3d24c725081ffb3de0bd11dac9973c37f17a2ac3fe5edf987a99005ad1b8d320",
+      "reviewedBundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2"
+    },
+    {
+      "revision": "content-corrections-v1",
+      "code": "MG02-L4",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "rubricCodeSha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c",
+      "counts": {
+        "activities": 8,
+        "objectives": 4,
+        "audio": 3,
+        "lexicalBlocks": 5
+      },
+      "rubrics": [
+        {
+          "slug": "mg02-l4-s1",
+          "id": "beginner-guided-speaking",
+          "version": "1",
+          "textSha256": "e2b6018c934546fd470a016c5ee73ca6bc7dab669915a594f7d8c5b75dc3ec2c"
+        },
+        {
+          "slug": "mg02-l4-w1",
+          "id": "beginner-short-writing",
+          "version": "1",
+          "textSha256": "526c8dbb6d33dd37da9293b332b90ed3378f3ffcca2b86ff3fc86068e784f035"
+        }
+      ],
+      "responseTasks": [
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 322,
+              "column": 1,
+              "offset": 8256
+            },
+            "end": {
+              "line": 339,
+              "column": 1,
+              "offset": 9522
+            }
+          },
+          "slug": "mg02-l4-s1",
+          "learningBlock": "respond",
+          "activityType": "speaking",
+          "responseType": "guided_response",
+          "skills": [
+            "speaking"
+          ],
+          "contentRefs": [
+            "mg02-l4-speaking-card"
+          ],
+          "languageBlockRefs": [
+            "mg02-l4-pen",
+            "mg02-l4-book",
+            "mg02-l4-bag",
+            "mg02-l4-this",
+            "mg02-l4-that"
+          ],
+          "objectiveRefs": [
+            "mg02-l4-speaking"
+          ],
+          "question": "Use the new counter card. Identify the near and far items and request the needed quantity. Record independently without a full model.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum.",
+          "prompt": "Use the new counter card. Identify the near and far items and request the needed quantity. Record independently without a full model.",
+          "sampleAnswer": "This is a pen. That is a book. Two bags, please.",
+          "minWords": 9,
+          "rubricId": "beginner-guided-speaking",
+          "rubricVersion": "1"
+        },
+        {
+          "kind": "activity",
+          "range": {
+            "start": {
+              "line": 340,
+              "column": 1,
+              "offset": 9523
+            },
+            "end": {
+              "line": 357,
+              "column": 1,
+              "offset": 11007
+            }
+          },
+          "slug": "mg02-l4-w1",
+          "learningBlock": "respond",
+          "activityType": "writing",
+          "responseType": "short_text",
+          "skills": [
+            "writing"
+          ],
+          "contentRefs": [
+            "mg02-l4-writing-card"
+          ],
+          "languageBlockRefs": [
+            "mg02-l4-pen",
+            "mg02-l4-book",
+            "mg02-l4-bag",
+            "mg02-l4-this",
+            "mg02-l4-that"
+          ],
+          "objectiveRefs": [
+            "mg02-l4-writing"
+          ],
+          "question": "Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note.",
+          "options": [],
+          "evidence": [],
+          "rubric": "Có lời chào, đúng người viết Alex, nơi đến Osaka và người nhận Emma; diễn đạt I am/I am from/you are hoặc dạng rút gọn tương đương. Nêu this/bag, yêu cầu three pens và a book. Chấp nhận kết hợp hoặc đổi thứ tự nếu giữ lời chào và đủ sáu dữ kiện; không chấp nhận sai người, nơi, vật hoặc số lượng chỉ vì đủ minimum. Phân biệt lỗi dữ kiện với dấu câu nhỏ; không tự cấp Unit/Stage completion. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+          "prompt": "Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note.",
+          "sampleAnswer": "Hello. I am Alex. I am from Osaka. You are Emma. This is a bag. Three pens, please. A book, please.",
+          "minWords": 8,
+          "rubricId": "beginner-short-writing",
+          "rubricVersion": "1"
+        }
+      ],
+      "audio": [
+        {
+          "lesson": "MG02-L4",
+          "slug": "mg02-l4-audio-1",
+          "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+          "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+          "successorSourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+          "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0",
+          "requestSha256": "7598c715aa7c22f6b527e6778cd8b29e6340a4611774ddbdcf7fd2c64338b930",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+          "fileSha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG02-L4",
+          "slug": "mg02-l4-audio-2",
+          "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+          "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+          "successorSourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+          "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78",
+          "requestSha256": "5c0d9ae3b01628a9ace0ff4d0e7b1df48c219092a56bf2da5869e50a2ad0861c",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+          "fileSha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        },
+        {
+          "lesson": "MG02-L4",
+          "slug": "mg02-l4-audio-3",
+          "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+          "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+          "successorSourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+          "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d",
+          "requestSha256": "9fe3971f22e5283308dee57afc006ee2405ab5eec726e04c5b05cd10d376a670",
+          "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+          "fileSha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+          "take": 1,
+          "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+        }
+      ],
+      "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+      "previousBundleSha256": "ff444130c663e250573d8c57b0cf4920f7c2f26611fec09894004c2771b79cf2",
+      "reviewedBundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba"
+    }
+  ],
+  "audioReuse": [
+    {
+      "lesson": "MG01-L1",
+      "slug": "mg01-l1-audio-a",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+      "successorSourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1",
+      "requestSha256": "690f4075cf2058acc011670fad8e88b9677382af29e2c7ea01004b78bc8535c0",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+      "fileSha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+      "take": 2,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L1",
+      "slug": "mg01-l1-audio-b",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+      "successorSourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32",
+      "requestSha256": "05997ca5434efd23db7c5b6cba91503fd1d83fb8ec6a9152f0123d2eeec1bfea",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+      "fileSha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+      "take": 2,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L1",
+      "slug": "mg01-l1-audio-c",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "previousSourceSha256": "9f68a1181b6b592316e899a1afc3a2621b56b5453332378b9c3021ce41a60af8",
+      "successorSourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9",
+      "requestSha256": "cbd249d33a1d01c56a515a36b82692befb435d4d6e2b7efd9a93548d899f138b",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+      "fileSha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+      "take": 2,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L2",
+      "slug": "mg01-l2-audio-1",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+      "successorSourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574",
+      "requestSha256": "6f16c088f049a5688389fd1708aa2767a0e87b41e1156f1493fc6885a357c9ee",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+      "fileSha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L2",
+      "slug": "mg01-l2-audio-2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+      "successorSourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046",
+      "requestSha256": "e15aba8742fd57138f6a2157911ba091f4380f76301b0dd97f54b9821fdcb399",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+      "fileSha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L2",
+      "slug": "mg01-l2-audio-3",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "previousSourceSha256": "f88c80a4edb3204ed56bdd12f961c36775b184c19e25104ed19a7e684d9a3f72",
+      "successorSourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8",
+      "requestSha256": "9669ca555350f866fb054d6dd05513292d235024a53bba52ea580d0138efceab",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+      "fileSha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L3",
+      "slug": "mg01-l3-audio-1",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+      "successorSourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df",
+      "requestSha256": "0dee8ecacecb0e7317aedd8e16e8f110a59b8a9acfe77121845a52285849e779",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+      "fileSha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L3",
+      "slug": "mg01-l3-audio-2",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+      "successorSourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9",
+      "requestSha256": "52ddf24aec332124f1f30377628feb50e5a42ce27b31aa752e073421153bdbd8",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+      "fileSha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L3",
+      "slug": "mg01-l3-audio-3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "previousSourceSha256": "44ab75cabd6f71fa56e84fd752bb5690c41085daa3f9adc7a8e4f0ce00a6f2cd",
+      "successorSourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2",
+      "requestSha256": "1a7506217b8bb33c7032b9ef584df02186267e12c8d6f0a0d8718f9209dc02e7",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+      "fileSha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L4",
+      "slug": "mg01-l4-audio-1",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+      "successorSourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de",
+      "requestSha256": "8b66dd33c68bc3aa3b6bcb4ece8130b7cfb612b0f771d35780cd307f3747e329",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+      "fileSha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L4",
+      "slug": "mg01-l4-audio-2",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+      "successorSourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c",
+      "requestSha256": "819b1bb5ab4cb936d3a1d66b3bbd6076ef85d86cf3340843de8b3c445215d44b",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+      "fileSha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG01-L4",
+      "slug": "mg01-l4-audio-3",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "previousSourceSha256": "6ca970412ddb5ddd0a6e71eec7eb61ed7af068f0fdf834c507c1bddea58108c6",
+      "successorSourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5",
+      "requestSha256": "92f0c7df755c01e5a18fb015a913a1c2f631828c803db3ef9b18622d8d6c9471",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+      "fileSha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L1",
+      "slug": "mg02-l1-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+      "successorSourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea",
+      "requestSha256": "a61919da649e9e30f9063c232e5a55fd2f04d63a6c6bae57c46dd814e9a422f9",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+      "fileSha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L1",
+      "slug": "mg02-l1-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+      "successorSourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af",
+      "requestSha256": "239614e2e9e05aa4e724c7d9464c94c31fe1702d8baecd7cea903bc41879fa81",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+      "fileSha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L1",
+      "slug": "mg02-l1-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "previousSourceSha256": "55838590b4dd367aee7608c81289cede1ae70f31cec8cc13906933a256c473bb",
+      "successorSourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d",
+      "requestSha256": "b764b1b54392abf5e0fdedbba7debe07d9ade1e746e18013c6cc64f1a23b1acc",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+      "fileSha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L2",
+      "slug": "mg02-l2-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "previousSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "successorSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b",
+      "requestSha256": "0a0d7a580c16f5dec33fe19ebb9379767332acf54a80ee14d0f3d7f03d5ea219",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+      "fileSha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L2",
+      "slug": "mg02-l2-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "previousSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "successorSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3",
+      "requestSha256": "7a428f21774f6c2ab961bb5fca26250e56750822a3be3294f33f4b2e3d4a3272",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+      "fileSha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L2",
+      "slug": "mg02-l2-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "previousSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "successorSourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5",
+      "requestSha256": "daf0830b443ce1bbb9d110339e13ffa7fdff9e3830f6ee525fa0e68bc80f6b6e",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+      "fileSha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L3",
+      "slug": "mg02-l3-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+      "successorSourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79",
+      "requestSha256": "6140404e0be1006912b2b94f49026889da2d040ce5b7a5387182ee7ed3b9fdf5",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+      "fileSha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L3",
+      "slug": "mg02-l3-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+      "successorSourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65",
+      "requestSha256": "f554398b53551c3ab20ff18ed7def5bf83abe4a0a3ec0cd99d021e52711f15c5",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+      "fileSha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L3",
+      "slug": "mg02-l3-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "previousSourceSha256": "ea938e80fcb4ded511222b0e92c8737781a02a16e6e4039630b2c1b8a8db5db7",
+      "successorSourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5",
+      "requestSha256": "edc1eda02d0db67f308962b0005b6e23b1a79707e8856e46ca22e97246e3910d",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+      "fileSha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L4",
+      "slug": "mg02-l4-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+      "successorSourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0",
+      "requestSha256": "7598c715aa7c22f6b527e6778cd8b29e6340a4611774ddbdcf7fd2c64338b930",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+      "fileSha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L4",
+      "slug": "mg02-l4-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+      "successorSourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78",
+      "requestSha256": "5c0d9ae3b01628a9ace0ff4d0e7b1df48c219092a56bf2da5869e50a2ad0861c",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+      "fileSha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    },
+    {
+      "lesson": "MG02-L4",
+      "slug": "mg02-l4-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "previousSourceSha256": "bdf4db905a41d86efcde87f1dfa39e71e8ce9829dccec8936aa100a7df3b4631",
+      "successorSourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d",
+      "requestSha256": "9fe3971f22e5283308dee57afc006ee2405ab5eec726e04c5b05cd10d376a670",
+      "filePath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+      "fileSha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+      "take": 1,
+      "reuseStatus": "BYTE_IDENTICAL_SCRIPT_AND_WAV"
+    }
+  ],
+  "fieldEditLedger": [
+    {
+      "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "slug": "mg01-l1-s1",
+      "field": "min_words",
+      "line": 308,
+      "before": "min_words: 10",
+      "after": "min_words: 9"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "slug": "mg01-l1-l1",
+      "field": "option-C",
+      "line": 248,
+      "before": "C. Minh",
+      "after": "C. Alex"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "slug": "mg01-l2-w1",
+      "field": "min_words",
+      "line": 348,
+      "before": "min_words: 7",
+      "after": "min_words: 6"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "slug": "mg01-l2-s1",
+      "field": "min_words",
+      "line": 330,
+      "before": "min_words: 7",
+      "after": "min_words: 6"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "slug": "mg01-l3-w1",
+      "field": "min_words",
+      "line": 349,
+      "before": "min_words: 9",
+      "after": "min_words: 8"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "slug": "mg01-l3-s1",
+      "field": "min_words",
+      "line": 331,
+      "before": "min_words: 10",
+      "after": "min_words: 9"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "slug": "mg01-l4-w1",
+      "field": "min_words",
+      "line": 348,
+      "before": "min_words: 10",
+      "after": "min_words: 9"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "slug": "mg01-l4-s1",
+      "field": "min_words",
+      "line": 330,
+      "before": "min_words: 9",
+      "after": "min_words: 8"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "slug": "mg02-l1-s1",
+      "field": "rubric",
+      "line": 338,
+      "before": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+      "after": "Cần this/bag gần, that/book xa và yêu cầu two pens. Câu chỉ vật dùng số ít; lời yêu cầu giữ hai bút. Có thể đổi thứ tự các ý; xét âm cuối có giúp giữ đúng số lượng, không yêu cầu một giọng cố định. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "slug": "mg02-l1-s1",
+      "field": "min_words",
+      "line": 333,
+      "before": "min_words: 10",
+      "after": "min_words: 9"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "slug": "mg02-l1-eraser",
+      "field": "meaning_vi",
+      "line": 107,
+      "before": "một cục tẩy; eraser là từ hỗ trợ đề xuất cần giáo viên duyệt",
+      "after": "một cục tẩy; từ bổ trợ cho an theo âm đầu, cần nhận biết trong bài này"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "slug": "mg02-l1-guide-1",
+      "field": "text-substring",
+      "line": 49,
+      "before": "Please là lời lịch sự trong cụm yêu cầu, đang được đề xuất làm hỗ trợ tác vụ:",
+      "after": "Please làm lời yêu cầu lịch sự:"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "slug": "mg02-l1-guide-0",
+      "field": "text-substring",
+      "line": 43,
+      "before": "Eraser là ví dụ bổ trợ đang đề xuất, cần giáo viên duyệt; không mở thêm một nhóm từ mới.",
+      "after": "Eraser là từ bổ trợ cho an theo âm đầu; em cần nhận biết cụm an eraser trong bài đọc và bài nghe của bài này."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "slug": "mg02-l1",
+      "field": "objective-substring",
+      "line": 14,
+      "before": "eraser là từ bổ trợ đề xuất",
+      "after": "eraser là từ bổ trợ để luyện an theo âm đầu, được kiểm tra ở mức nhận biết trong bài này"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "slug": "mg02-l3-s1",
+      "field": "rubric",
+      "line": 331,
+      "before": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+      "after": "Nêu this/book, that/bag và yêu cầu two pens. Đổi thứ tự được nếu ý rõ. Không chấp nhận đọc một danh sách tên đồ vật mà bỏ vị trí hoặc số lượng; dùng từ phục vụ đúng nhiệm vụ. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "slug": "mg02-l3-s1",
+      "field": "min_words",
+      "line": 326,
+      "before": "min_words: 10",
+      "after": "min_words: 9"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-w1",
+      "field": "QUESTION",
+      "line": 352,
+      "before": "Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.",
+      "after": "Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-w1",
+      "field": "rubric-prefix",
+      "line": 350,
+      "before": "Nêu this/bag, yêu cầu ba pens và một book. Lời nhắn ngắn được chấp nhận nếu đủ ý, không ép thêm câu. Phân biệt lỗi vật/số lượng với dấu câu nhỏ; không tự cấp Unit/Stage completion.",
+      "after": "Có lời chào, đúng người viết Alex, nơi đến Osaka và người nhận Emma; diễn đạt I am/I am from/you are hoặc dạng rút gọn tương đương. Nêu this/bag, yêu cầu three pens và a book. Chấp nhận kết hợp hoặc đổi thứ tự nếu giữ lời chào và đủ sáu dữ kiện; không chấp nhận sai người, nơi, vật hoặc số lượng chỉ vì đủ minimum. Phân biệt lỗi dữ kiện với dấu câu nhỏ; không tự cấp Unit/Stage completion."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-w1",
+      "field": "prompt",
+      "line": 349,
+      "before": "Use only the writing card. Identify the near object, then request the listed items and quantities. Check the note before you finish.",
+      "after": "Use only the writing card. Greet your partner, introduce yourself and where you are from, and confirm your partner's name. Identify the near object, then request the listed items and quantities. Check your note."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-w1",
+      "field": "sample_answer",
+      "line": 346,
+      "before": "This is a bag. Three pens, please. A book, please.",
+      "after": "Hello. I am Alex. I am from Osaka. You are Emma. This is a bag. Three pens, please. A book, please."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-s1",
+      "field": "rubric",
+      "line": 332,
+      "before": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery.",
+      "after": "Giữ this/pen, that/book và yêu cầu two bags; không đọc nhầm thẻ bài trước. Đánh giá truyền đạt ba ý và dạng từ/âm cuối giữ nghĩa. Không cần thứ tự hay giọng giống mẫu; đây chỉ là evidence của nhiệm vụ L4. Chấm taskCompletion/meaningAndLogic/targetLanguage/clarity theo rubric version1, trọng số 0.35/0.25/0.20/0.20. Không chấm giống giọng bản ngữ; không tự quy đổi CEFR hay cấp mastery. Chấp nhận That's = That is khi giữ đúng vật xa; lời yêu cầu ngắn theo ngữ cảnh thẻ được chấp nhận nếu rõ đúng vật và số lượng. Không ép thêm từ chỉ để đủ minimum."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-s1",
+      "field": "min_words",
+      "line": 327,
+      "before": "min_words: 10",
+      "after": "min_words: 9"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-writing-card",
+      "field": "text",
+      "line": 151,
+      "before": "New request card\nNear: a bag\nRequest: three pens; a book",
+      "after": "New request card\nWriter: Alex\nFrom: Osaka\nReader: Emma\nNear: a bag\nRequest: three pens; a book"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4-writing",
+      "field": "statement",
+      "line": 35,
+      "before": "Tự viết lời nhắn mô tả/yêu cầu từ thẻ mới, dùng dạng số ít/số nhiều và giữ đúng dữ kiện.",
+      "after": "Tự viết lời nhắn từ thẻ mới: giới thiệu bản thân và nơi đến, xác nhận tên người nhận, rồi chỉ/yêu cầu đúng vật và số lượng; kết hợp I am/I am from/you are với số ít/số nhiều."
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "slug": "mg02-l4",
+      "field": "objective",
+      "line": 14,
+      "before": "Vận dụng độc lập cách chỉ/yêu cầu vật dụng và số lượng trong tình huống mới qua R/L/S/W; không tuyên bố đạt stage hay CEFR.",
+      "after": "Vận dụng cách chỉ/yêu cầu vật dụng và số lượng qua R/L/S/W; riêng Writing kết hợp tự giới thiệu, nơi đến và xác nhận tên người nhận từ MG01 trong tình huống mới; không tuyên bố đạt stage hay CEFR."
+    }
+  ],
+  "blockers": [
+    "Evaluator P1 context omission confirmed; product unchanged. Real learner evaluation blocked.",
+    "Fresh exact-bundle policy analysis and any effective sign-off must be independently produced; no old verdict transfer.",
+    "Phonetic correctness and measured Pre-A1 workload/timing not established by these technical tests."
+  ],
+  "verification": [
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "BASELINE",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "86bbeac58466dfe5951d36aefe5ce3d0f025170114fa4bcb606a6e3ca2953b95",
+      "summary": "# tests 20; # pass 20; # fail 0; # skipped 0",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "RED content",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "05354948c06205b118a00ad5dfc66b63230bf912933dea2c81c43cbb77c0bce9",
+      "summary": "# tests 32; # pass 19; # fail 13; # skipped 0",
+      "failures": [
+        "not ok 16 - mg01-l1-s1 accepts the complete short alternative without padding",
+        "not ok 17 - mg01-l2-s1 accepts the complete short alternative without padding",
+        "not ok 18 - mg01-l2-w1 accepts the complete short alternative without padding",
+        "not ok 19 - mg01-l3-s1 accepts the complete short alternative without padding",
+        "not ok 20 - mg01-l3-w1 accepts the complete short alternative without padding",
+        "not ok 21 - mg01-l4-s1 accepts the complete short alternative without padding",
+        "not ok 22 - mg01-l4-w1 accepts the complete short alternative without padding",
+        "not ok 23 - mg02-l1-s1 accepts the complete short alternative without padding",
+        "not ok 24 - mg02-l3-s1 accepts the complete short alternative without padding",
+        "not ok 25 - mg02-l4-s1 accepts the complete short alternative without padding",
+        "not ok 26 - MG02-L4 transfers MG01 identity and all six card facts consistently to the learner",
+        "not ok 27 - assessed eraser and pragmatic please are explicit without pending teacher claims",
+        "not ok 28 - MG01-L1 distractor is international while answer and transcript retain their facts"
+      ]
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec vitest run src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+      "label": "RED component",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "32d495d824c022d999333a9e6c1e0d354d9c4fda6a601241f528c23e297f22db",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "RED content and binding gaps",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "0f045f50f6d6803b4eb7a98b497ad4ab7de7054fae0d3b0f6e1e73976a63e9ea",
+      "summary": "# tests 33; # pass 17; # fail 16; # skipped 0",
+      "failures": [
+        "not ok 1 - historical international revision matches approved committed bytes and successor retains international roles",
+        "not ok 3 - current inventory binds actual revised scripts while immutable original inventory stays auditable",
+        "not ok 5 - successor binds seven new sources and all24 immutable scripts and WAV bytes without old verdict transfer",
+        "not ok 17 - mg01-l1-s1 accepts the complete short alternative without padding",
+        "not ok 18 - mg01-l2-s1 accepts the complete short alternative without padding",
+        "not ok 19 - mg01-l2-w1 accepts the complete short alternative without padding",
+        "not ok 20 - mg01-l3-s1 accepts the complete short alternative without padding",
+        "not ok 21 - mg01-l3-w1 accepts the complete short alternative without padding",
+        "not ok 22 - mg01-l4-s1 accepts the complete short alternative without padding",
+        "not ok 23 - mg01-l4-w1 accepts the complete short alternative without padding",
+        "not ok 24 - mg02-l1-s1 accepts the complete short alternative without padding",
+        "not ok 25 - mg02-l3-s1 accepts the complete short alternative without padding",
+        "not ok 26 - mg02-l4-s1 accepts the complete short alternative without padding",
+        "not ok 27 - MG02-L4 transfers MG01 identity and all six card facts consistently to the learner",
+        "not ok 28 - assessed eraser and pragmatic please are explicit without pending teacher claims",
+        "not ok 29 - MG01-L1 distractor is international while answer and transcript retain their facts"
+      ]
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --eval \"const fs=require('node:fs'); const {parseLessonSource}=require('@worklingo/content-format'); const p='../../content/beginner/pilot/'; console.log(JSON.stringify(fs.readdirSync(p).filter(n=>n.endsWith('.lesson.txt')).map(n=>({sourcePath:'content/beginner/pilot/'+n,document:parseLessonSource(fs.readFileSync(p+n,'utf8')).document}))));\"",
+      "label": "Parser extraction attempt",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "0335068b0e4d4bb7968e7703853477b526028cb48fbf2d1a76f55bb3f8e14eab",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "node apps/api/node_modules/tsx/dist/cli.mjs --eval <real-parser extraction; cwd apps/api>",
+      "label": "Parser extraction for hash binding",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "873a22909d79940c77535b14c5304cf8e935c8c432b68f2a6a18c9cf9bc4390e",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "GREEN attempt after corrections/bindings",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "3c91aff351485f8e98300a9d2e9cfb499b9c859a91520e497cfec802a2b0b462",
+      "summary": "# tests 33; # pass 20; # fail 13; # skipped 0",
+      "failures": [
+        "not ok 17 - mg01-l1-s1 accepts the complete short alternative without padding",
+        "not ok 18 - mg01-l2-s1 accepts the complete short alternative without padding",
+        "not ok 19 - mg01-l2-w1 accepts the complete short alternative without padding",
+        "not ok 20 - mg01-l3-s1 accepts the complete short alternative without padding",
+        "not ok 21 - mg01-l3-w1 accepts the complete short alternative without padding",
+        "not ok 22 - mg01-l4-s1 accepts the complete short alternative without padding",
+        "not ok 23 - mg01-l4-w1 accepts the complete short alternative without padding",
+        "not ok 24 - mg02-l1-s1 accepts the complete short alternative without padding",
+        "not ok 25 - mg02-l3-s1 accepts the complete short alternative without padding",
+        "not ok 26 - mg02-l4-s1 accepts the complete short alternative without padding",
+        "not ok 27 - MG02-L4 transfers MG01 identity and all six card facts consistently to the learner",
+        "not ok 28 - assessed eraser and pragmatic please are explicit without pending teacher claims",
+        "not ok 29 - MG01-L1 distractor is international while answer and transcript retain their facts"
+      ]
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "GREEN content after fixture corrections",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "ee5b38fc19594e7712f242e4866cf331ca8148c394b392f69f14fb814d70cbe6",
+      "summary": "# tests 33; # pass 33; # fail 0; # skipped 0",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec vitest run src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+      "label": "GREEN component",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "3328d6bc444037cec969b79c09640dd33b5760e74110b9dcf790a48ba7162e6e",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/qualify-content.ts --all",
+      "label": "GREEN real qualify checker",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "ceb4449b9617cd0668955b535f0c8ef3735a0bb0d4d304f93bfe1fe083450429",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm exec eslint apps/api/test/beginner-pilot/qualify-content.test.ts apps/api/test/beginner-pilot/international-content.test.ts apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+      "label": "Focused lint",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "TypeScript compiler API: apps/api/tsconfig.json with rootNames apps/api/test/beginner-pilot/qualify-content.test.ts,apps/api/test/beginner-pilot/international-content.test.ts; noEmit:true,incremental:false",
+      "label": "Focused typecheck",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "2046762b3a8f146f7688d78ed90f5e8deab9436b51845fe7eee562f0c4c2fa3c",
+      "summary": "",
+      "failures": [
+        "error TS2688: Cannot find type definition file for 'node'.",
+        "error TS2688: Cannot find type definition file for 'vitest/globals'.",
+        "apps/api/src/curriculum-foundation/application/foundation-validation.ts:1:28 - error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:1:20 - error TS2307: Cannot find module 'node:test' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:2:20 - error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:3:40 - error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:4:28 - error TS2307: Cannot find module 'node:child_process' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:5:26 - error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:6:18 - error TS2307: Cannot find module 'node:path' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:10:25 - error TS2304: Cannot find name '__dirname'.",
+        "apps/api/test/beginner-pilot/international-content.test.ts:12:22 - error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:1:20 - error TS2307: Cannot find module 'node:test' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:2:20 - error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:3:39 - error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:4:18 - error TS2307: Cannot find module 'node:path' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:10:55 - error TS2304: Cannot find name '__dirname'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:78:45 - error TS2345: Argument of type 'NormalizedLessonDraft | null' is not assignable to parameter of type 'NormalizedLessonDraft'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:230:12 - error TS18048: 'doc.objectives' is possibly 'undefined'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:233:44 - error TS2345: Argument of type 'NormalizedLessonDraft | null' is not assignable to parameter of type 'NormalizedLessonDraft'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:252:12 - error TS18048: 'doc.instructions' is possibly 'undefined'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:253:12 - error TS18048: 'doc.instructions' is possibly 'undefined'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:254:48 - error TS18048: 'doc.instructions' is possibly 'undefined'.",
+        "apps/api/test/beginner-pilot/qualify-content.test.ts:283:26 - error TS2304: Cannot find name '__dirname'.",
+        "apps/api/test/beginner-pilot/qualify-content.ts:1:26 - error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.",
+        "apps/api/test/beginner-pilot/qualify-content.ts:2:28 - error TS2307: Cannot find module 'node:fs' or its corresponding type declarations."
+      ]
+    },
+    {
+      "command": "TypeScript compiler API: apps/web/tsconfig.json with rootNames apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx; noEmit:true,incremental:false",
+      "label": "Focused typecheck",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "a59a0d75c85e42a40b7b3abb7164f75052c0cfdd603c8892821f520e9e7e5bd9",
+      "summary": "",
+      "failures": [
+        "error TS2688: Cannot find type definition file for '@testing-library/jest-dom'.",
+        "error TS2688: Cannot find type definition file for 'vitest/globals'."
+      ]
+    },
+    {
+      "command": "TypeScript compiler API: read/parse apps/api/tsconfig.json with configFileName, host cwd C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/apps/api, rootNames apps/api/test/beginner-pilot/qualify-content.test.ts,apps/api/test/beginner-pilot/international-content.test.ts, noEmit:true, incremental:false",
+      "label": "Focused typecheck with package type resolution",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "TypeScript compiler API: read/parse apps/web/tsconfig.json with configFileName, host cwd C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo/apps/web, rootNames apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx, noEmit:true, incremental:false",
+      "label": "Focused typecheck with package type resolution",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/content-format exec vitest run src/beginner-format.spec.ts src/parser.spec.ts src/normalizer.spec.ts",
+      "label": "Pure content-format regression",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "10bd075cfed5f39f8caaaa78734455c16fd9e0d0c872fc8e9c2b030bf5b048d1",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner.config.ts src/teacher-ai/domain/beginner-rubrics.spec.ts src/curriculum-foundation/application/foundation-validation.spec.ts src/learning-sessions/domain/beginner-session-planner.spec.ts src/learning-sessions/domain/learner-activity-projection.spec.ts",
+      "label": "Pure API regression",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "707c8fbad25562391c9442988250539e603b81cb4ba27188b5d72296c2d37973",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsc --noEmit --incremental false",
+      "label": "Global API typecheck launched before coordination",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "e0aabf0675ccab0dc93d97ae883be6778cda6ff69d31d42c8a805ea828e8cb64",
+      "summary": "",
+      "failures": [
+        "src/teacher-ai/application/beginner-evaluator-context.spec.ts(38,589): error TS2322: Type '{ activityType: \"listening\"; skills: \"listening\"[]; learningBlock: \"listenReason\"; payload: { prompt: string; audioText: string; questions: { slug: string; prompt: string; options: { label: string; text: string; }[]; answer: string; explanation: string; }[]; }; ... 4 more ...; languageBlockReferences: string[]; } | ...' is not assignable to type '{ activityType: \"reading\"; payload: { prompt: string; questions: { slug: string; prompt: string; options: string[]; answerIndex: number; explanation: string; evidence: string; }[]; audioText?: string | undefined; }; ... 6 more ...; languageBlockReferences: string[]; } | { ...; } | { ...; } | { ...; }'.\r",
+        "test/beginner-pilot/qualify-content.test.ts(229,12): error TS18048: 'doc.objectives' is possibly 'undefined'.\r",
+        "test/beginner-pilot/qualify-content.test.ts(250,12): error TS18048: 'doc.instructions' is possibly 'undefined'.\r",
+        "test/beginner-pilot/qualify-content.test.ts(251,12): error TS18048: 'doc.instructions' is possibly 'undefined'.\r",
+        "test/beginner-pilot/qualify-content.test.ts(252,48): error TS18048: 'doc.instructions' is possibly 'undefined'.\r"
+      ]
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec tsc --noEmit --incremental false",
+      "label": "Global web typecheck launched before coordination",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "d2a9a2c2a61be65fcdf0859750a9037d07843c75186fef9857c0bdbbc4707aac",
+      "summary": "",
+      "failures": [
+        "src/features/learning-session/activity-renderers/writing-activity.test.tsx(251,169): error TS2322: Type 'string | undefined' is not assignable to type 'string'.\r"
+      ]
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Final content with semantic contract negatives",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "65f5cd148af742e4415798bad4961c37fa331463279a51cf3eff465c84b5c2ac",
+      "summary": "# tests 33; # pass 33; # fail 0; # skipped 0",
+      "failures": []
+    },
+    {
+      "command": "pnpm exec eslint apps/api/test/beginner-pilot/qualify-content.test.ts apps/api/test/beginner-pilot/international-content.test.ts apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+      "label": "Final focused lint",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Final content and exact25 reconstruction",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "79764b72428a02a8c5ed711971e2153ad8967ea366571e149c535bf62b5b3bef",
+      "summary": "# tests 34; # pass 34; # fail 0; # skipped 0",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsc --noEmit --incremental false --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --target ES2022 --module NodeNext --moduleResolution NodeNext --esModuleInterop --skipLibCheck --experimentalDecorators --emitDecoratorMetadata --resolveJsonModule --types node,vitest/globals test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Final focused API CLI typecheck",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "375ed5c513da964db62188fd98ffc0520d8f2fa6f2b6a9cdd0848d03b1e63174",
+      "summary": "",
+      "failures": [
+        "../../packages/content-format/src/audio-narration.ts(3,31): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/audio-narration.ts(4,35): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/foundation-templates.ts(1,63): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(1,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(2,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(3,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(4,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(5,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(6,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(7,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(8,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(9,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(10,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(11,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(12,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/index.ts(14,15): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/normalizer.ts(5,40): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/normalizer.ts(6,62): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/parser.ts(13,8): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/parser.ts(15,55): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/validator.ts(1,41): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/validator.ts(8,35): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/validator.ts(10,41): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/validator.ts(11,36): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r",
+        "../../packages/content-format/src/validator.ts(12,34): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\r"
+      ]
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsc --noEmit --incremental false --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --target ES2022 --module NodeNext --moduleResolution NodeNext --esModuleInterop --skipLibCheck --experimentalDecorators --emitDecoratorMetadata --resolveJsonModule --rewriteRelativeImportExtensions --types node,vitest/globals test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Final focused API CLI typecheck with existing base import option",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "git diff --check -- content/beginner/pilot/mg01-l1.lesson.txt content/beginner/pilot/mg01-l2.lesson.txt content/beginner/pilot/mg01-l3.lesson.txt content/beginner/pilot/mg01-l4.lesson.txt content/beginner/pilot/mg02-l1.lesson.txt content/beginner/pilot/mg02-l3.lesson.txt content/beginner/pilot/mg02-l4.lesson.txt apps/api/test/beginner-pilot/qualify-content.test.ts apps/api/test/beginner-pilot/international-content.test.ts apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx docs/qualification/beginner-pilot-ai-correction-bindings.json docs/qualification/beginner-pilot-ai-correction-review.md",
+      "label": "Final exact-allowlist whitespace check",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Review regression RED before audio manifest set/equality assertions",
+      "result": "FAIL",
+      "exitCode": 1,
+      "outputSha256": "2afa2d75e49aa7085944172e0e1f9337ce5110fbac9f400ce4ba896ba2ff0149",
+      "summary": "# tests 37; # pass 35; # fail 2; # skipped 0",
+      "failures": [
+        "not ok 7 - audio manifest rejects a duplicate replacing an omitted frozen asset",
+        "not ok 9 - audio manifest rejects a nested lesson binding differing from the top-level reuse binding"
+      ]
+    },
+    {
+      "command": "pnpm exec eslint apps/api/test/beginner-pilot/qualify-content.test.ts apps/api/test/beginner-pilot/international-content.test.ts apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+      "label": "Review fix final focused lint",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Review fix GREEN complete approved content suite",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e5f5dfd0abf76afa4ff13f5c2ec8575e71b07c53af9b00684eb32b98f816e20e",
+      "summary": "# tests 37; # pass 37; # fail 0; # skipped 0",
+      "failures": []
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsc --noEmit --incremental false --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --target ES2022 --module NodeNext --moduleResolution NodeNext --esModuleInterop --skipLibCheck --experimentalDecorators --emitDecoratorMetadata --resolveJsonModule --rewriteRelativeImportExtensions --types node,vitest/globals test/beginner-pilot/qualify-content.test.ts test/beginner-pilot/international-content.test.ts",
+      "label": "Review fix final focused API CLI typecheck",
+      "result": "PASS",
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "failures": []
+    }
+  ],
+  "proof": {
+    "exact25ByteReconstruction": [
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+        "reconstructedSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+        "byteExact": true,
+        "fieldEdits": 2
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+        "reconstructedSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+        "byteExact": true,
+        "fieldEdits": 2
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+        "reconstructedSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+        "byteExact": true,
+        "fieldEdits": 2
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+        "reconstructedSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+        "byteExact": true,
+        "fieldEdits": 2
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+        "reconstructedSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+        "byteExact": true,
+        "fieldEdits": 6
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+        "reconstructedSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+        "byteExact": true,
+        "fieldEdits": 2
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+        "reconstructedSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+        "byteExact": true,
+        "fieldEdits": 9
+      }
+    ],
+    "coordinatorIndependentProof": "Coordinator reported independent node reconstruction from git HEAD raw bytes using descending original-line anchors: all7 exact, zero extras. First inline SyntaxError had no effects; corrected check PASS. This statement is attributed to coordinator, separate from the actual34-test reconstruction PASS in this report.",
+    "protectedFrozenArtifacts": [
+      {
+        "path": "docs/superpowers/plans/2026-10-28-beginner-gate-b-review.md",
+        "expectedSha256LF": "27b904b3add90054d703b66d1923eb88a9cac4567222b5529569179f0742447e",
+        "actualSha256LF": "27b904b3add90054d703b66d1923eb88a9cac4567222b5529569179f0742447e"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-preapproval.md",
+        "expectedSha256LF": "812644d899349e5dba786dd169445e59aac0356b63962ba77a3d2fd458a9d3a2",
+        "actualSha256LF": "812644d899349e5dba786dd169445e59aac0356b63962ba77a3d2fd458a9d3a2"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-gate-b-checklist.md",
+        "expectedSha256LF": "5d64467eae924ba7ad8574bbe9a4e646f6c461b893ad60f29b273e939376ee6d",
+        "actualSha256LF": "5d64467eae924ba7ad8574bbe9a4e646f6c461b893ad60f29b273e939376ee6d"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+        "expectedSha256LF": "c39d2efd94eec5e6ff6815773183dc465fb95ad5e0990fd2b6ac7ae66115972c",
+        "actualSha256LF": "c39d2efd94eec5e6ff6815773183dc465fb95ad5e0990fd2b6ac7ae66115972c"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+        "expectedSha256LF": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289",
+        "actualSha256LF": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-qualification-preapproval-review.md",
+        "expectedSha256LF": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594",
+        "actualSha256LF": "dbe49e58f78c8c33b7195a924a2b46263b8e0fb0a1ee7b111d061a8f4844e594"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "expectedSha256LF": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56",
+        "actualSha256LF": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory-v1.json",
+        "expectedSha256LF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1",
+        "actualSha256LF": "03631d82ad429819e84a41f123955f49c0edf593a679cf3fd735d2f876defbe1"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-international-names-verification.md",
+        "expectedSha256LF": "e9014dd779db52e5f138778a0c936a746a3d1733a961d45c1a32caf7a4590984",
+        "actualSha256LF": "e9014dd779db52e5f138778a0c936a746a3d1733a961d45c1a32caf7a4590984"
+      }
+    ],
+    "rawAudioScriptBlocks": [
+      {
+        "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg01-l1-audio-a",
+            "sha256": "8efa83130fc04c0b7322e27563529f5c8577a878ff4834d2a27e32536a726b77"
+          },
+          {
+            "slug": "mg01-l1-audio-b",
+            "sha256": "519d64e1fd2b8dea7ce42ce70c692ead51851ba8504ec309de6278c098b1957d"
+          },
+          {
+            "slug": "mg01-l1-audio-c",
+            "sha256": "6cd0a9a2eac99e1c4fc7def3eae12427778f4f013d7204966f1fa280cc2f1268"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg01-l2-audio-1",
+            "sha256": "24e4754f68b86a930634225623f006c93c0a1cd91ae369a5453e0288fa18901c"
+          },
+          {
+            "slug": "mg01-l2-audio-2",
+            "sha256": "47153d860cf9549b4f0e6db9be6831052afc8a2e10c7bcdb69f6b888a17d839b"
+          },
+          {
+            "slug": "mg01-l2-audio-3",
+            "sha256": "de223d20d5c61cc79e31c0e1b133e7251f053ddad6af346848c2d1349c68c079"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg01-l3-audio-1",
+            "sha256": "e6027cffba58a287823837f9329f33ce851414fb849078dae56276d466ed596a"
+          },
+          {
+            "slug": "mg01-l3-audio-2",
+            "sha256": "c8e2a9fefd498360d3c688291c1ba96eb7003aa92335fcc7d26fb90108b691ac"
+          },
+          {
+            "slug": "mg01-l3-audio-3",
+            "sha256": "038febddd941f5db4b9526a3376995a772fd72529b2117d9f73fc9fd305a5e3b"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg01-l4-audio-1",
+            "sha256": "3d8a98a74230fc7062a2e0a98d01ca6ef9853f19dfde3c5df140b62d61300fb5"
+          },
+          {
+            "slug": "mg01-l4-audio-2",
+            "sha256": "ec8879f9000209bb0498a50b2bfe8da041def232501d676ce633087af36cc4ee"
+          },
+          {
+            "slug": "mg01-l4-audio-3",
+            "sha256": "05a8b970b245701ac4f62413755d5fee82773b23a593e1f0c10d53b83b9afb12"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg02-l1-audio-1",
+            "sha256": "dbd60bb04219abe880d860ac876049ea5d111ba22232c8c1c46100c9e46f35e3"
+          },
+          {
+            "slug": "mg02-l1-audio-2",
+            "sha256": "27f8aad5b5f8ac65d2f93c269618858ad8f21c8dee77cd61603257a2df1603aa"
+          },
+          {
+            "slug": "mg02-l1-audio-3",
+            "sha256": "5dd85de2f42cc5eb8befee99a56fb31c2727de6a15a82577b535bf0f65064149"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg02-l2-audio-1",
+            "sha256": "4d87854f16368682e9da14c0efce6adc42c1e8f1379ce050f1a8ccda4eee9773"
+          },
+          {
+            "slug": "mg02-l2-audio-2",
+            "sha256": "e4fe62f6a0223ac29a55e7cfee1247648db68422e01b776ddf614fe4ebda295c"
+          },
+          {
+            "slug": "mg02-l2-audio-3",
+            "sha256": "6e254b60bc633c99b4dc1e234070edaaa5564d84ff5f6c4dadda3d3128e424d4"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg02-l3-audio-1",
+            "sha256": "95ec28d84758a12dcbf389baf403b9cc5a4e6438d2ae4259afe02ceb5b8e42ae"
+          },
+          {
+            "slug": "mg02-l3-audio-2",
+            "sha256": "93183d6f667d7c9106301246ef7998dd777dd83232b5194729468fb9131bfe0c"
+          },
+          {
+            "slug": "mg02-l3-audio-3",
+            "sha256": "4d45b94672d44b4489c803c572963dbc43670f7bf509950449215529fe98fc20"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      },
+      {
+        "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "scripts": [
+          {
+            "slug": "mg02-l4-audio-1",
+            "sha256": "ce14bae779f9a46d06a5da92a460b4db2acc44ab60e09b051e225e394dbf45b9"
+          },
+          {
+            "slug": "mg02-l4-audio-2",
+            "sha256": "1df1d6d151d261fd549916aa7fd8ba4a688d24682e1c7f4b089265bbcb6bcdc0"
+          },
+          {
+            "slug": "mg02-l4-audio-3",
+            "sha256": "a5eed7b4441417f7208fe4a5f4fefa3ac43b93e3dcf60e13cc5967634249b16f"
+          }
+        ],
+        "status": "BYTE_IDENTICAL"
+      }
+    ],
+    "mg02l2Sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+  },
+  "staticPedagogicalEvidence": {
+    "kind": "STATIC_SOURCE_AND_TEXTUAL_CONTRACT_FIXTURES_ONLY",
+    "runtimeGraderRejection": "NOT_ESTABLISHED",
+    "desiredEvaluatorContract": "P1_UNRESOLVED_FAIL",
+    "variants": [
+      {
+        "slug": "mg01-l1-s1",
+        "answer": "Hello. I'm Lucy from Los Angeles. You are Leo.",
+        "minimum": 9,
+        "facts": [
+          "Lucy",
+          "Los Angeles",
+          "Leo"
+        ]
+      },
+      {
+        "slug": "mg01-l2-s1",
+        "answer": "Hello. I'm Emma from London. E-M-M-A.",
+        "minimum": 6,
+        "facts": [
+          "Emma",
+          "London",
+          "E-M-M-A"
+        ]
+      },
+      {
+        "slug": "mg01-l2-w1",
+        "answer": "I'm Mia from Los Angeles. M-I-A.",
+        "minimum": 6,
+        "facts": [
+          "Mia",
+          "Los Angeles",
+          "M-I-A"
+        ]
+      },
+      {
+        "slug": "mg01-l3-s1",
+        "answer": "Hello. I'm Sam from New York. You are Kim.",
+        "minimum": 9,
+        "facts": [
+          "Sam",
+          "New York",
+          "Kim"
+        ]
+      },
+      {
+        "slug": "mg01-l3-w1",
+        "answer": "Hello. I'm Eva from London. You are Noah.",
+        "minimum": 8,
+        "facts": [
+          "Eva",
+          "London",
+          "Noah"
+        ]
+      },
+      {
+        "slug": "mg01-l4-s1",
+        "answer": "Hello. I'm Mia from London. You are Jo.",
+        "minimum": 8,
+        "facts": [
+          "Mia",
+          "London",
+          "Jo"
+        ]
+      },
+      {
+        "slug": "mg01-l4-w1",
+        "answer": "Hello. I'm Ben from New York. You are Lucy.",
+        "minimum": 9,
+        "facts": [
+          "Ben",
+          "New York",
+          "Lucy"
+        ]
+      },
+      {
+        "slug": "mg02-l1-s1",
+        "answer": "This is a bag. That's a book. Two pens.",
+        "minimum": 9,
+        "facts": [
+          "this",
+          "bag",
+          "that",
+          "book",
+          "two pens"
+        ]
+      },
+      {
+        "slug": "mg02-l3-s1",
+        "answer": "This is a book. That's a bag. Two pens.",
+        "minimum": 9,
+        "facts": [
+          "this",
+          "book",
+          "that",
+          "bag",
+          "two pens"
+        ]
+      },
+      {
+        "slug": "mg02-l4-s1",
+        "answer": "This is a pen. That's a book. Two bags.",
+        "minimum": 9,
+        "facts": [
+          "this",
+          "pen",
+          "that",
+          "book",
+          "two bags"
+        ]
+      }
+    ],
+    "negativeCoverage": "Wrong/missing names, place, recipient, letters, items and quantities; role and near/far swaps. Static test-only cardContract oracle checks relations against authored cards. Negative examples may satisfy minimum word count; this is not live evaluation or runtime semantic rejection.",
+    "transfer": {
+      "lesson": "MG02-L4",
+      "activity": "mg02-l4-w1",
+      "facts": [
+        "Writer Alex",
+        "From Osaka",
+        "Reader Emma",
+        "Near a bag",
+        "Request three pens",
+        "Request a book"
+      ],
+      "greetingRequired": true,
+      "objectiveCardPromptQuestionModelRubric": "STATIC_CONSISTENCY_CHECKED",
+      "workload": "Increased English instruction load and combined retrieval may overload Pre-A1 learners. No measured suitability, timing or phonetic proof; follow up on observed overload, do not add filler."
+    }
+  },
+  "scopeWrites": [
+    "content/beginner/pilot/mg01-l1.lesson.txt",
+    "content/beginner/pilot/mg01-l2.lesson.txt",
+    "content/beginner/pilot/mg01-l3.lesson.txt",
+    "content/beginner/pilot/mg01-l4.lesson.txt",
+    "content/beginner/pilot/mg02-l1.lesson.txt",
+    "content/beginner/pilot/mg02-l3.lesson.txt",
+    "content/beginner/pilot/mg02-l4.lesson.txt",
+    "apps/api/test/beginner-pilot/qualify-content.test.ts",
+    "apps/api/test/beginner-pilot/international-content.test.ts",
+    "apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+    "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+    "docs/qualification/beginner-pilot-ai-correction-review.md"
+  ],
+  "sourceAndTestFileHashes": [
+    {
+      "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c"
+    },
+    {
+      "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d"
+    },
+    {
+      "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb"
+    },
+    {
+      "path": "apps/api/test/beginner-pilot/qualify-content.test.ts",
+      "sha256": "c3583fe62cdf0a17f4087ec7042d2c9ea6bb7adf8e88a1e1d739a40701a94d8c"
+    },
+    {
+      "path": "apps/api/test/beginner-pilot/international-content.test.ts",
+      "sha256": "70e654cd89824c0d5ae696aee42c44e6ceb35e50d8ea9170c97eb006d38d5c4c"
+    },
+    {
+      "path": "apps/web/src/features/learning-session/activity-renderers/writing-activity.test.tsx",
+      "sha256": "9fd8f5d831c5d0cf9559d18436f200867011a39c6d7c730b0a1a3ec3b3d1650f"
+    }
+  ],
+  "review": {
+    "type": "Author self-review; no subagent tool available",
+    "responsibilities": [
+      "correctness",
+      "readability",
+      "architecture",
+      "security",
+      "performance"
+    ],
+    "finding": "No further content-scope fix required. Static fixtures do not prove runtime grading; P1 remains blocked. Exact source reconstruction and immutable history tests verified.",
+    "deferredMinors": [],
+    "followup": {
+      "finding": "Important: count/per-row checks allowed a duplicate to replace a missing selected audio row and did not enforce equality with nested hashed lesson audio.",
+      "fix": "Shared assertAudioManifest enforces exact24 unique slugs equal frozen snapshot selection and deep equality between each successor lesson audio array and its top-level audioReuse subset.",
+      "regressions": [
+        "in-memory duplicate replacing an omitted selected asset",
+        "in-memory omitted selected asset",
+        "in-memory nested request binding different from top-level binding"
+      ],
+      "red": {
+        "tests": 37,
+        "pass": 35,
+        "fail": 2,
+        "note": "Duplicate and nested mismatch regressions FAIL with missing expected exception; omission already PASS under existing length contract."
+      },
+      "green": {
+        "tests": 37,
+        "pass": 37,
+        "fail": 0,
+        "skipped": 0
+      },
+      "actualWavMutation": false
+    }
+  },
+  "skipped": [
+    {
+      "command": "Broad API/default test configuration and full project test suite",
+      "result": "SKIP",
+      "reason": "User explicitly restricts .env/DB/provider/broad configurations; only approved pure tests run."
+    },
+    {
+      "command": "Real learner/provider evaluation; readiness; final policy qualification",
+      "result": "SKIP",
+      "reason": "P1 context omission unresolved; fresh policy/exact-bundle analysis belongs to coordinator/policy agent."
+    },
+    {
+      "command": "Measured learner rehearsal/timing and phonetic validation",
+      "result": "SKIP",
+      "reason": "No observations or phonetic evidence authorized/provided. No45-minute timing or audio correctness inferred."
+    },
+    {
+      "command": "Commit / mandate CLI / edits outside12 paths",
+      "result": "SKIP",
+      "reason": "Explicitly prohibited in this executor; coordinator owns later lifecycle/integration."
+    }
+  ]
+}

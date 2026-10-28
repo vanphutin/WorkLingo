@@ -88,18 +88,213 @@ test('singular listening items cannot be solved by choosing the only singular op
   assert.ok(a.options.filter(o=>/^an?\s/iu.test(o.text)).length>1,a.slug+' reveals the answer before audio');
  }
 });
-test('accepted contractions and short meaningful requests are not forced to pad output',()=>{
- const alternatives:Record<string,string>={
-  'mg01-l1-s1':"Hello. I'm Lucy. I'm from Los Angeles. You are Leo.",'mg01-l1-w1':"Hello. I'm Adam. I'm from London.",
-  'mg01-l2-s1':"Hello. I'm Emma. I'm from London. E-M-M-A.",'mg01-l2-w1':"I'm Mia. I'm from Los Angeles. M-I-A.",
-  'mg01-l3-s1':"Hello. I'm Sam. I'm from New York. You are Kim.",'mg01-l3-w1':"Hello. I'm Eva. I'm from London. You are Noah.",
-  'mg01-l4-s1':"Hello. I'm Mia. I'm from London. You are Jo.",'mg01-l4-w1':"Hello. I'm Ben. I'm from New York. You are Lucy.",
-  'mg02-l2-s1':'A pen. Two books. A bag.','mg02-l2-w1':'Two pens. A book. A bag.',
-  'mg02-l3-w1':'This is a book. A bag. Two pens.','mg02-l4-w1':'This is a bag. Three pens. A book.'};
- for(const [slug,answer]of Object.entries(alternatives)){
-  const a=parseLessonSource(source(slug.slice(0,7))).document.activities.find(a=>a.slug===slug)!;
-  assert.ok(a.minWords!<=answer.split(/\s+/u).length,slug+' rejects a complete accepted alternative');
+// Narrow textual contract oracle for authored examples, not a learner evaluator.
+// It checks role/location/quantity relations, so a word list or swapped roles cannot pass.
+function cardContract(card:string,response:string):string[]{
+ const normalized=response.toLowerCase().replaceAll('’',"'").replace(/\bi'm\b/gu,'i am').replace(/\bthat's\b/gu,'that is');
+ const missing:string[]=[];
+ for(const line of card.split('\n')){
+  const colon=line.indexOf(':');if(colon<0)continue;
+  const label=line.slice(0,colon).toLowerCase(),value=line.slice(colon+1).trim().toLowerCase();
+  let phrases:string[];
+  if(['name','writer','your role','you'].includes(label))phrases=['i am '+value];
+  else if(['from','place','your place'].includes(label))phrases=['from '+value];
+  else if(['partner','reader','person you meet','new partner'].includes(label))phrases=['you are '+value];
+  else if(label==='near')phrases=['this is '+value];
+  else if(label==='far')phrases=['that is '+value];
+  else if(label==='request')phrases=value.split(';').map(s=>s.trim());
+  else if(label==='letters'){
+   if(!normalized.replace(/[-,]/gu,' ').replace(/\s+/gu,' ').includes(value.replaceAll('-',' ')))missing.push(label);
+   continue;
+  }else continue;
+  if(phrases.some(p=>!normalized.includes(p)))missing.push(label);
  }
+ return missing;
+}
+// Frozen short alternatives: facts checked against each attached card, not an AI score.
+const shortVariants: readonly [string,string,number,readonly string[]][] = [
+ [
+  "mg01-l1-s1",
+  "Hello. I'm Lucy from Los Angeles. You are Leo.",
+  9,
+  [
+   "Lucy",
+   "Los Angeles",
+   "Leo"
+  ]
+ ],
+ [
+  "mg01-l2-s1",
+  "Hello. I'm Emma from London. E-M-M-A.",
+  6,
+  [
+   "Emma",
+   "London",
+   "E-M-M-A"
+  ]
+ ],
+ [
+  "mg01-l2-w1",
+  "I'm Mia from Los Angeles. M-I-A.",
+  6,
+  [
+   "Mia",
+   "Los Angeles",
+   "M-I-A"
+  ]
+ ],
+ [
+  "mg01-l3-s1",
+  "Hello. I'm Sam from New York. You are Kim.",
+  9,
+  [
+   "Sam",
+   "New York",
+   "Kim"
+  ]
+ ],
+ [
+  "mg01-l3-w1",
+  "Hello. I'm Eva from London. You are Noah.",
+  8,
+  [
+   "Eva",
+   "London",
+   "Noah"
+  ]
+ ],
+ [
+  "mg01-l4-s1",
+  "Hello. I'm Mia from London. You are Jo.",
+  8,
+  [
+   "Mia",
+   "London",
+   "Jo"
+  ]
+ ],
+ [
+  "mg01-l4-w1",
+  "Hello. I'm Ben from New York. You are Lucy.",
+  9,
+  [
+   "Ben",
+   "New York",
+   "Lucy"
+  ]
+ ],
+ [
+  "mg02-l1-s1",
+  "This is a bag. That's a book. Two pens.",
+  9,
+  [
+   "this",
+   "bag",
+   "that",
+   "book",
+   "two pens"
+  ]
+ ],
+ [
+  "mg02-l3-s1",
+  "This is a book. That's a bag. Two pens.",
+  9,
+  [
+   "this",
+   "book",
+   "that",
+   "bag",
+   "two pens"
+  ]
+ ],
+ [
+  "mg02-l4-s1",
+  "This is a pen. That's a book. Two bags.",
+  9,
+  [
+   "this",
+   "pen",
+   "that",
+   "book",
+   "two bags"
+  ]
+ ]
+];
+for(const [slug,answer,minimum,facts] of shortVariants) test(slug+' accepts the complete short alternative without padding',()=>{
+ const doc=parseLessonSource(source(slug.slice(0,7))).document;
+ const a=doc.activities.find(a=>a.slug===slug)!;
+ const card=doc.contents.filter(c=>a.contentRefs.includes(c.slug)).map(c=>c.text).join('\n');
+ const cards=card.toLowerCase();
+ assert.deepEqual(cardContract(card,answer),[]);
+ assert.deepEqual(cardContract(card,a.sampleAnswer!),[]);
+ assert.equal(a.minWords,minimum);
+ assert.equal(answer.trim().split(/\s+/u).length,minimum);
+ for(const fact of facts){
+  assert.ok(answer.toLowerCase().includes(fact.toLowerCase()),fact);
+  const cardFact=fact==='this'?'near':fact==='that'?'far':fact.includes('-')?fact.replaceAll('-','').toLowerCase():fact.toLowerCase();
+  assert.ok(cards.includes(cardFact),slug+' card lacks '+fact);
+ }
+ // Adversarial answers can clear the minimum and still disagree with the actual card.
+ for(const fact of facts.filter(f=>!['this','that'].includes(f))){
+  for(const replacement of ['', 'WRONG']){
+   let response=answer.replace(new RegExp(fact,'i'),replacement);
+   while(response.trim().split(/\s+/u).length<minimum)response+=' Hello';
+   assert.ok(response.trim().split(/\s+/u).length>=minimum);
+   assert.ok(cardContract(card,response).length>0,slug+' accepted wrong/missing '+fact);
+  }
+ }
+ if(slug.startsWith('mg02')){
+  const swapped=answer.replace('This','TEMP').replace("That's",'This is').replace('TEMP',"That's");
+  assert.ok(cardContract(card,swapped).includes('near'));
+  assert.ok(cardContract(card,swapped).includes('far'));
+ }
+ if(slug.startsWith('mg02'))assert.ok(a.rubric!.includes("That's = That is"));
+});
+test('MG02-L4 transfers MG01 identity and all six card facts consistently to the learner',()=>{
+ const raw=source('mg02-l4'),doc=parseLessonSource(raw).document;
+ assert.ok(doc.objectives,'transfer objectives required');
+ const a=doc.activities.find(a=>a.slug==='mg02-l4-w1')!;
+ const card=doc.contents.find(c=>c.slug==='mg02-l4-writing-card')!;
+ assert.equal(card.text,'New request card\nWriter: Alex\nFrom: Osaka\nReader: Emma\nNear: a bag\nRequest: three pens; a book');
+ const facts=['Alex','Osaka','Emma','bag','three pens','a book'];
+ assert.deepEqual(cardContract(card.text,a.sampleAnswer!),[]);
+ assert.ok(cardContract(card.text,'Hello. I am Emma. I am from Osaka. You are Alex. This is a bag. Three pens, please. A book, please.').includes('writer'));
+ for(const fact of facts){assert.ok(a.sampleAnswer!.toLowerCase().includes(fact.toLowerCase()),fact);assert.ok(a.rubric!.includes(fact),fact);}
+ for(const phrase of ['Greet','introduce yourself','where you are from',"partner's name",'near object','quantities'])assert.ok(a.prompt!.includes(phrase),phrase);
+ assert.equal(a.question,a.prompt);
+ assert.ok(doc.objectives.find(o=>o.slug==='mg02-l4-writing')!.statement.includes('I am/I am from/you are'));
+ assert.ok(doc.lesson!.objective.includes('MG01'));
+ const analysis=analyzeLessonSource(raw);assert.ok(analysis.normalizedDraft);
+ const snapshot=buildBeginnerDraftSnapshot(analysis.normalizedDraft);
+ const dto=projectLearnerActivity(snapshot,snapshot.activities.find(x=>x.slug===a.slug)!.id);
+ assert.equal(dto.payload?.prompt,a.prompt);
+ assert.ok(JSON.stringify(dto).includes('Writer: Alex'));
+ assert.ok(!JSON.stringify(dto).includes(a.sampleAnswer!));
+ assert.ok(!JSON.stringify(dto).includes(a.rubric!));
+ // One missing/wrong identity,place,recipient,item or quantity each; every wrong answer still clears minimum.
+ for(const fact of facts){
+  for(const replacement of ['', 'WRONG']){
+   const response=a.sampleAnswer!.replace(new RegExp(fact,'i'),replacement);
+   assert.ok(response.split(/\s+/u).length>=a.minWords!);
+   assert.ok(cardContract(card.text,response).length>0,'missing/wrong '+fact);
+  }
+ }
+});
+test('assessed eraser and pragmatic please are explicit without pending teacher claims',()=>{
+ const raw=source('mg02-l1'),doc=parseLessonSource(raw).document;
+ assert.ok(doc.instructions,'learner instructions required');
+ assert.ok(doc.lesson!.objective.includes('được kiểm tra ở mức nhận biết'));
+ assert.ok(doc.instructions.find(i=>i.slug==='mg02-l1-guide-0')!.text.includes('an eraser'));
+ assert.ok(doc.instructions.find(i=>i.slug==='mg02-l1-guide-1')!.text.includes('Please làm lời yêu cầu lịch sự:'));
+ const learnerFacing=[doc.lesson!.objective,...doc.instructions.map(i=>i.text),...doc.wordBanks.flatMap(b=>b.languageBlocks).map(b=>b.meaningVi)].join(' ');
+ assert.ok(!/đề xuất|cần giáo viên duyệt/u.test(learnerFacing));
+ assert.ok(doc.wordBanks.flatMap(b=>b.languageBlocks).find(b=>b.slug==='mg02-l1-eraser')!.meaningVi!.includes('cần nhận biết'));
+});
+test('MG01-L1 distractor is international while answer and transcript retain their facts',()=>{
+ const doc=parseLessonSource(source('mg01-l1')).document;
+ const a=doc.activities.find(a=>a.slug==='mg01-l1-l1')!;
+ assert.equal(a.options.find(o=>o.label==='C')!.text,'Alex');
+ assert.equal(a.answer,'A');assert.ok(doc.audioScripts.find(s=>s.slug===a.audioRef)!.script.includes('Lily'));
 });
 test('MG02-L3 transfer needs its own card and no verbatim correct answer in attached glossary examples',()=>{
  const doc=parseLessonSource(source('mg02-l3')).document,a=doc.activities.find(a=>a.slug==='mg02-l3-r2')!;
