@@ -59,3 +59,197 @@ Before any expansion, owner requested foreign/international place names and peop
 After matching MND-20261028-001 approval, seven source Lessons/checker expectations/current inventory were changed to the exact approved international values. MG02-L1 and article An are byte-identical; Ed spelling is E,D. Actual current source dossier is [international content review](beginner-pilot-international-content-review.md). [Original inventory](beginner-pilot-audio-inventory-v1.json) remains immutable; v1 source/QA evidence above is historical.
 
 Technical verification classifies existing3 WAVs as historical/current-ineligible, with0 current candidates and0 selected. Their byte hashes, original receipt prefix and actual human-review prefix remain unchanged. New code requires all matching current-source pilot decisions; original-v1 acceptance cannot unlock v2. Revised production remains gated until technical child verification, then genuine new-pilot listening. Actual calls3/characters451; forecast new pilot3 starts/458 chars yields cumulative909/1000, not actual new usage. Remaining21 still NOT_RUN. No content/teacher/rehearsal/publication readiness promoted.
+
+## Full international-v2 listening queue — actual files
+
+Actual production finished24/24 current audio files plus3 preserved historical. Total27 starts/4324 counted SSML characters/USD0; no failed request/retry. Actual source/script/request/file bindings, PCM16 mono24kHz, signal/clipping checks, FFprobe and FFmpeg decode PASS for all24. All24 current files now have actual owner sound-QA PASS; the following21 were heard after the three approved current pilots. No synthetic reviewer or inferred acceptance. Pending listening duration 155.15 seconds total (recordings only; not Lesson time). Warning counts across all24: {"EDGE_SILENCE":24,"PACE_REVIEW":21}. WPM includes pauses; EDGE_SILENCE and PACE_REVIEW require real listening/reason, not automatic trimming or approval. Full hashes below bind exactly the files to be heard.
+
+**MG01-L2 — 3 actual files, actual owner sound QA PASS**
+
+**mg01-l2-audio-1 / take-1** · 7.044s · 93.7 WPM · EDGE_SILENCE
+
+Script: Hello. I am Ed. E, D. I am from Hong Kong.
+
+![Listen mg01-l2-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav)
+
+SHA-256: `675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c`.
+
+**mg01-l2-audio-2 / take-1** · 6.370s · 75.4 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Tim. I am Kim. You are Tim.
+
+![Listen mg01-l2-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav)
+
+SHA-256: `f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9`.
+
+**mg01-l2-audio-3 / take-1** · 6.002s · 90.0 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello. I am Emma. I am from New York.
+
+![Listen mg01-l2-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav)
+
+SHA-256: `5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554`.
+
+**MG01-L3 — 3 actual files, actual owner sound QA PASS**
+
+**mg01-l3-audio-1 / take-1** · 8.710s · 82.7 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Adam. I am Sam. I am from London. You are Adam.
+
+![Listen mg01-l3-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav)
+
+SHA-256: `b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48`.
+
+**mg01-l3-audio-2 / take-1** · 6.074s · 88.9 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello. I am May. I am from Hong Kong.
+
+![Listen mg01-l3-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav)
+
+SHA-256: `7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba`.
+
+**mg01-l3-audio-3 / take-1** · 9.368s · 96.1 WPM · EDGE_SILENCE
+
+Script: Hello, Jo. I am Ben. You are from Los Angeles. I am from New York.
+
+![Listen mg01-l3-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav)
+
+SHA-256: `936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7`.
+
+**MG01-L4 — 3 actual files, actual owner sound QA PASS**
+
+**mg01-l4-audio-1 / take-1** · 7.118s · 84.3 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Kim. I am Leo. I am from Los Angeles.
+
+![Listen mg01-l4-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav)
+
+SHA-256: `6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95`.
+
+**mg01-l4-audio-2 / take-1** · 6.103s · 88.5 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello. I am Adam. I am from Hong Kong.
+
+![Listen mg01-l4-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav)
+
+SHA-256: `5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f`.
+
+**mg01-l4-audio-3 / take-1** · 9.280s · 90.5 WPM · EDGE_SILENCE
+
+Script: Hello, Eva. I am Noah. You are from London. I am from Los Angeles.
+
+![Listen mg01-l4-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav)
+
+SHA-256: `d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460`.
+
+**MG02-L1 — 3 actual files, actual owner sound QA PASS**
+
+**mg02-l1-audio-1 / take-1** · 7.532s · 63.7 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Ben. Two books, please. A bag, please.
+
+![Listen mg02-l1-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav)
+
+SHA-256: `58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b`.
+
+**mg02-l1-audio-2 / take-1** · 7.633s · 62.9 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Kim. A pen, please. Two bags, please.
+
+![Listen mg02-l1-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav)
+
+SHA-256: `807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a`.
+
+**mg02-l1-audio-3 / take-1** · 7.179s · 75.2 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Jo. This is an eraser. A book, please.
+
+![Listen mg02-l1-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav)
+
+SHA-256: `934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad`.
+
+**MG02-L2 — 3 actual files, actual owner sound QA PASS**
+
+**mg02-l2-audio-1 / take-1** · 7.618s · 63.0 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Mia. A pen, please. Two bags, please.
+
+![Listen mg02-l2-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav)
+
+SHA-256: `c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097`.
+
+**mg02-l2-audio-2 / take-1** · 7.591s · 63.2 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Adam. Three books, please. A bag, please.
+
+![Listen mg02-l2-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav)
+
+SHA-256: `2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed`.
+
+**mg02-l2-audio-3 / take-1** · 7.574s · 63.4 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Eva. Two pens, please. A book, please.
+
+![Listen mg02-l2-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav)
+
+SHA-256: `aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7`.
+
+**MG02-L3 — 3 actual files, actual owner sound QA PASS**
+
+**mg02-l3-audio-1 / take-1** · 7.250s · 74.5 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Mia. This is a bag. Two pens, please.
+
+![Listen mg02-l3-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav)
+
+SHA-256: `c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d`.
+
+**mg02-l3-audio-2 / take-1** · 7.002s · 77.1 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Jo. That is a book. A pen, please.
+
+![Listen mg02-l3-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav)
+
+SHA-256: `17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85`.
+
+**mg02-l3-audio-3 / take-1** · 7.841s · 61.2 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Adam. Three bags, please. Two books, please.
+
+![Listen mg02-l3-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav)
+
+SHA-256: `af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5`.
+
+**MG02-L4 — 3 actual files, actual owner sound QA PASS**
+
+**mg02-l4-audio-1 / take-1** · 7.282s · 74.2 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Sam. This is a pen. Three books, please.
+
+![Listen mg02-l4-audio-1](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav)
+
+SHA-256: `12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b`.
+
+**mg02-l4-audio-2 / take-1** · 7.046s · 76.6 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, Kim. That is a bag. A book, please.
+
+![Listen mg02-l4-audio-2](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav)
+
+SHA-256: `cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e`.
+
+**mg02-l4-audio-3 / take-1** · 7.530s · 63.7 WPM · EDGE_SILENCE, PACE_REVIEW
+
+Script: Hello, May. Two bags, please. A pen, please.
+
+![Listen mg02-l4-audio-3](D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav)
+
+SHA-256: `b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9`.
+
+## Final Gate A acceptance — all24 current files
+
+Owner reported actually hearing all21 remaining displayed files and answered: “Đã nghe đủ 21: tất cả đạt; tốc độ/khoảng nghỉ phù hợp người mới học”. The question explicitly covered script fidelity, pronunciation/names/spelling,61–96 WPM including pauses and EDGE_SILENCE/PACE_REVIEW. These21 exact file/source/script/request hash verdicts were appended with capture time and warning reasons, preserving all prior six reviews. Exact audition clock time was not supplied; no timing was invented. Combined with the3 current pilot verdicts, all24 current files have genuine reported human sound QA. Original3 v1 audio/verdicts remain historical and unselected.
+
+Actual final `verify --gate A --all`: AUDIO_QA_COMPLETE_OFFLINE_ONLY;24 selected/current +3 historical;27 cumulative calls/4324 counted SSML characters/USD0; contentReady=false. Full-corpus resume had no new request; final verification preserved the ledger. Actual all24 hashes/source/script/request bindings,PCM16 mono24kHz/signal/clipping/FFprobe/FFmpeg decode, private root/ACLs and original-history retention PASS. No automatic retry, paid fallback, DB, publication or learner access.
+
+Gate A (MND-20261027-002) is now verified through Mandate CLI on these actual results, with its scope/approval hash unchanged and verification evidence in the current international-names ledger. This closes sound production/QA only; Gate B qualified pedagogy and Gate C timed rehearsal remain NOT_RUN, R1.2b NOT_READY/CONTENT_READY=false. Current24 recordings total173.708s; this is not a45-minute lesson rehearsal. Production is intentionally default-denied after A closure; no additional request is authorized implicitly by a completed milestone.

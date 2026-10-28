@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261028-001",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-28",
-  "updated": "2026-10-28T01:28:23.499Z",
+  "updated": "2026-10-28T01:38:34.804Z",
   "title": "Internationalize Beginner pilot names while preserving source versions and shared audio budgets",
   "type": "learning-content",
   "owner": "Codex",
@@ -66,7 +66,33 @@
     "at": "2026-10-28T01:28:23.279Z",
     "proposal_hash": "da36a4df8ba9a5c41c33327d9758e8be3ec164019b0f30d06db70be7ae714244"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/international-content.test.ts test/beginner-pilot/qualify-content.test.ts",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "node --test tools/beginner-pilot/audio-qualification.test.mjs",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "Foundation format25 and exact-version/projection/rubric11 focused Vitest regressions",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "API typecheck; focused ESLint; Node syntax; exact after9/archive/frozen10/protected18/retained history verification",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "Independent scoped code/content review and actual content-check media reconciliation with live-production denial while implementing",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-28T01:26:14.886Z",
@@ -103,6 +129,15 @@
       "reason": "Actual matching human approval received for exact MND-20261028-001 scope/hash; all frozen/baseline/allowlist/history checks passed before edits.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-28-beginner-international-names-human-approval.md"
+    },
+    {
+      "at": "2026-10-28T01:38:34.804Z",
+      "actor": "Codex",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Approved technical source/history scope actually passes TDD/regression/exact hashes and independent review. Original WAV/receipts/human history preserved. No new human media acceptance inferred.",
+      "event": "transition",
+      "reference": null
     }
   ]
 }

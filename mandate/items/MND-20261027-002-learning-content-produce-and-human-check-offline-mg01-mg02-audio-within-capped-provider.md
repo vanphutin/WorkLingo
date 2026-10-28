@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261027-002",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-27",
-  "updated": "2026-10-27T15:46:36.657Z",
+  "updated": "2026-10-28T01:54:39.203Z",
   "title": "Produce and human-check offline MG01 MG02 audio within capped provider and storage authority",
   "type": "learning-content",
   "owner": "Codex",
@@ -65,7 +65,38 @@
     "at": "2026-10-27T15:46:36.429Z",
     "proposal_hash": "0d1907e1de7161848f4fadeaedaf88cb656dff086c4fd1119c4edbc4bc376638"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "node tools/beginner-pilot/audio-qualification.mjs verify --gate A --all",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "Actual24 current source/script/request/WAV hashes, PCM16mono24kHz signal/clipping and FFprobe/FFmpeg decode checks",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "Actual human sound QA:3 international-v2 pilot take2 and21 remaining current files, all exact bindings and warning reasons; original3 historical verdicts retained",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "Actual27 shared starts/4324 counted characters/USD0, pilot6starts909chars, min12155ms gap,max5starts/rolling60s,no failures/retries, full resume ledger unchanged",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "Matching original A and verified storage/content authority, exact protected/after/archive checks, actual native root/ACL/old history and credential leak checks",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    },
+    {
+      "command": "108 scoped tests,API typecheck,focused lint/syntax and independent code/content review",
+      "result": "passed",
+      "reference": "mandate/reports/2026-10-28-beginner-international-names-verification.md"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-27T12:08:09.269Z",
@@ -120,6 +151,15 @@
       "reason": "Matching Gate A F0 approval received in this conversation; direct supplemental private env/account inspection and exact resource-key association confirmed. No paid fallback or B/C/product/database authority.",
       "event": "transition",
       "reference": "mandate/reports/2026-10-27-beginner-r12b-gate-a-human-approval.md"
+    },
+    {
+      "at": "2026-10-28T01:54:39.203Z",
+      "actor": "Codex",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "All original Gate A acceptance actually achieved for exact approved international-v2 current audio under matching original/storage/content approvals. Twenty-four actual human sound decisions, real media and strict budgets verified. No pedagogy/rehearsal/CONTENT_READY/R1.2b/publication approval inferred.",
+      "event": "transition",
+      "reference": null
     }
   ]
 }
