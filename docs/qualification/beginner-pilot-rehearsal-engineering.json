@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "beginner-rehearsal-engineering/1",
+  "mandate": "MND-20261029-005",
+  "studyMandate": "MND-20261027-004",
+  "status": "PROTOCOL_PREPARED_NOT_APPROVED",
+  "realParticipants": 0,
+  "realObservations": 0,
+  "targetAdults": 3,
+  "targetFirstExposures": 24,
+  "sourceBundles": [
+    {
+      "lesson": "MG01-L1",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "reviewedBundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115"
+    },
+    {
+      "lesson": "MG01-L2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "reviewedBundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1"
+    },
+    {
+      "lesson": "MG01-L3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "reviewedBundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a"
+    },
+    {
+      "lesson": "MG01-L4",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "reviewedBundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b"
+    },
+    {
+      "lesson": "MG02-L1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "reviewedBundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9"
+    },
+    {
+      "lesson": "MG02-L2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+    },
+    {
+      "lesson": "MG02-L3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "reviewedBundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2"
+    },
+    {
+      "lesson": "MG02-L4",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "reviewedBundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba"
+    }
+  ],
+  "selectedAudio": [
+    {
+      "slug": "mg01-l1-audio-a",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+      "sha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+      "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1"
+    },
+    {
+      "slug": "mg01-l1-audio-b",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+      "sha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+      "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32"
+    },
+    {
+      "slug": "mg01-l1-audio-c",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+      "sha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+      "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9"
+    },
+    {
+      "slug": "mg01-l2-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+      "sha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+      "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574"
+    },
+    {
+      "slug": "mg01-l2-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+      "sha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+      "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046"
+    },
+    {
+      "slug": "mg01-l2-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+      "sha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+      "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8"
+    },
+    {
+      "slug": "mg01-l3-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+      "sha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+      "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df"
+    },
+    {
+      "slug": "mg01-l3-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+      "sha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+      "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9"
+    },
+    {
+      "slug": "mg01-l3-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+      "sha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+      "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2"
+    },
+    {
+      "slug": "mg01-l4-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+      "sha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+      "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de"
+    },
+    {
+      "slug": "mg01-l4-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+      "sha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+      "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c"
+    },
+    {
+      "slug": "mg01-l4-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+      "sha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+      "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5"
+    },
+    {
+      "slug": "mg02-l1-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+      "sha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+      "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea"
+    },
+    {
+      "slug": "mg02-l1-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+      "sha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+      "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af"
+    },
+    {
+      "slug": "mg02-l1-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+      "sha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+      "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d"
+    },
+    {
+      "slug": "mg02-l2-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+      "sha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+      "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b"
+    },
+    {
+      "slug": "mg02-l2-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+      "sha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+      "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3"
+    },
+    {
+      "slug": "mg02-l2-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+      "sha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+      "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5"
+    },
+    {
+      "slug": "mg02-l3-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+      "sha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+      "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79"
+    },
+    {
+      "slug": "mg02-l3-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+      "sha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+      "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65"
+    },
+    {
+      "slug": "mg02-l3-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+      "sha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+      "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5"
+    },
+    {
+      "slug": "mg02-l4-audio-1",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+      "sha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+      "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0"
+    },
+    {
+      "slug": "mg02-l4-audio-2",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+      "sha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+      "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78"
+    },
+    {
+      "slug": "mg02-l4-audio-3",
+      "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+      "sha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+      "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d"
+    }
+  ],
+  "protocolSha256": "bc00e1d44d5f11aafbe27728130fea7488dcf4ed03ca2dcec4626e5cbfa9014b",
+  "contractMinutes": 45,
+  "proposedCriteria": {
+    "observationsPerLesson": 3,
+    "minimumIndependentSuccesses": 2,
+    "minimumReadingSuccesses": 2,
+    "minimumListeningSuccesses": 2,
+    "activeMedianMinutes": [
+      35,
+      50
+    ],
+    "minimumInRange": 2,
+    "activeStopMinutes": 60,
+    "spacingHours": 24,
+    "medianLoadMaximum": 3,
+    "criticalDefects": 0
+  },
+  "readinessChanged": false,
+  "humanStudyApproval": null,
+  "consentEvidence": null
+}
