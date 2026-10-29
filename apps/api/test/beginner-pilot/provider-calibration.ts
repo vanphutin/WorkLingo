@@ -216,3 +216,152 @@ async function main() {
   console.log(JSON.stringify({ ...result, requestStarts: 0, credentialsRead: false, result: 'BLOCKED_EXTERNAL_EVIDENCE_OFFLINE_READY' }));
 }
 if (require.main === module) main().catch(() => { console.error('QUALIFICATION_PREFLIGHT_BLOCKED;see approved results file;no secret error output'); process.exitCode = 1; });
+
+export interface OracleDecision {
+  oracleSha256: string; reviewerId: string; reviewedAt: string; evidenceReference: string;
+  decisions: { caseId: string; decision: 'APPROVE' | 'REVISE' | 'REJECT'; rationale: string; evidenceReference: string }[];
+}
+export function validateOracle(g: Goldens) {
+  const errors: string[] = [];
+  const canonical = buildGoldens();
+  if (digest(g) !== digest(canonical)) errors.push('FROZEN_ORACLE_BINDING_OR_FACT_DRIFT');
+  const groups = { NEGATIVE: 0, COMPLETE: 0, POSITIVE_INJECTION: 0 };
+  const ids = new Set(g.cases.map(c => c.id));
+  if (g.cases.length !== 128 || ids.size !== 128) errors.push('CASE_COVERAGE');
+  if (g.schedule.length !== 160 || new Set(g.schedule.map(o => o.observationId)).size !== 160) errors.push('OBSERVATION_COVERAGE');
+  for (const c of g.cases) {
+    const b = c.bounds;
+    if (![b.taskMin, b.taskMax, b.meaningMin].every(n => Number.isFinite(n) && n >= 0 && n <= 1) || b.taskMin > b.taskMax) errors.push('CONTRADICTORY_BOUNDS:' + c.id);
+    if (c.ambiguity || !c.units.length || !c.lineageSha256 || !c.taskCriteriaSha256 || !c.sourceLine) errors.push('MISSING_CASE_EVIDENCE:' + c.id);
+  }
+  for (const o of g.schedule) {
+    const c = g.cases.find(c => c.id === o.caseId);
+    if (!c || (o.repeatOf !== null && o.repeatOf !== o.caseId)) errors.push('SCHEDULE_BINDING:' + o.observationId);
+    else groups[c.kind]++;
+  }
+  return { state: errors.length ? 'BLOCKED' as const : 'VALIDATED' as const, errors, uniqueCases: ids.size, evaluations: g.schedule.length, repeatPairs: g.schedule.filter(o => o.repeatOf).length, scheduleGroups: groups, oracleSha256: g.oracleSha256 };
+}
+function actualDate(value: unknown) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value && value <= new Date().toISOString().slice(0, 10);
+}
+const evidenceText = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0 && value.length <= 4000 && !/\[|TODO|placeholder|GLOBAL_PASS/iu.test(value);
+export function adjudicateOracle(g: Goldens, submission: OracleDecision | null) {
+  const validation = validateOracle(g);
+  const result = { ...validation, humanSigned: false, identityIndependentlyVerified: false };
+  if (validation.state === 'BLOCKED' || submission === null) return result;
+  const s = submission;
+  const exactKeys = ['oracleSha256', 'reviewerId', 'reviewedAt', 'evidenceReference', 'decisions'];
+  const valid = Object.keys(s).every(k => exactKeys.includes(k)) && s.oracleSha256 === g.oracleSha256 && evidenceText(s.reviewerId) && evidenceText(s.evidenceReference) && actualDate(s.reviewedAt)
+    && Array.isArray(s.decisions) && s.decisions.length === 128 && new Set(s.decisions.map(d => d.caseId)).size === 128
+    && s.decisions.every(d => Object.keys(d).every(k => ['caseId', 'decision', 'rationale', 'evidenceReference'].includes(k)) && g.cases.some(c => c.id === d.caseId) && d.decision === 'APPROVE' && evidenceText(d.rationale) && evidenceText(d.evidenceReference));
+  return { ...result, state: valid ? 'ADJUDICATED' as const : 'BLOCKED' as const, errors: valid ? [] : ['EXACT_CASE_ADJUDICATION_REQUIRED'] };
+}
+export interface CalibrationObservation {
+  observationId: string; oracleSha256: string; provenance: 'MOCK' | 'PROVIDER_REPORTED'; evaluation: unknown;
+  receipt?: RequestReceipt; requestSha256?: string; responseSha256?: string;
+  metadata?: ReturnType<typeof observeMetadata>;
+}
+function wilson(numerator: number, denominator: number) {
+  if (!denominator) return { numerator, denominator, rate: null, confidence95: null };
+  const p = numerator / denominator, z = 1.95996398454, z2 = z * z, d = 1 + z2 / denominator;
+  const center = (p + z2 / (2 * denominator)) / d;
+  const margin = z * Math.sqrt(p * (1 - p) / denominator + z2 / (4 * denominator * denominator)) / d;
+  return { numerator, denominator, rate: p, confidence95: [Math.max(0, center - margin), Math.min(1, center + margin)] };
+}
+export function calibrationMetrics(g: Goldens, observations: CalibrationObservation[]) {
+  invariant(validateOracle(g).state === 'VALIDATED', 'ORACLE_INVALID');
+  invariant(Array.isArray(observations) && observations.length <= 160, 'OBSERVATION_LIMIT');
+  const seen = new Set<string>(), receiptIds = new Set<string>();
+  let failedAttempts = 0;
+  const receipts = observations.map(o => o.receipt);
+  for (const [i, r] of receipts.entries()) {
+    invariant(observations[i]!.oracleSha256 === g.oracleSha256, 'OBSERVATION_ORACLE_DRIFT');
+    invariant(observations[i]!.provenance === 'PROVIDER_REPORTED', 'REAL_EVIDENCE_REQUIRED');
+    invariant(r, 'COMPLETE_RECEIPT_REQUIRED');
+    const { receiptSha256, ...data } = r;
+    invariant(digest(data) === receiptSha256 && r.previousSha256 === (receipts[i - 1]?.receiptSha256 ?? null), 'RECEIPT_CHAIN_INTEGRITY');
+    invariant(r.id === g.schedule[i]?.observationId && Number.isSafeInteger(r.inputReservation) && r.inputReservation > 0 && r.outputReservation === 2048 && Number.isFinite(r.startedAt) && r.startedAt >= 0, 'RECEIPT_SCHEDULE_OR_RESERVATION');
+    invariant(receipts.slice(0, i).every(previous => previous && r.startedAt - previous.startedAt >= 10000), 'RECEIPT_RATE_LIMIT');
+  }
+  const reservedInput = receipts.reduce((sum, r) => sum + r!.inputReservation, 0);
+  invariant(reservedInput <= 650000 && reservedInput * .8 / 1e6 + receipts.length * 2048 * 2.7 / 1e6 <= 1.5, 'RECEIPT_BUDGET_LIMIT');
+  const rows = observations.flatMap(o => {
+    invariant(o.oracleSha256 === g.oracleSha256, 'OBSERVATION_ORACLE_DRIFT');
+    invariant(o.provenance === 'PROVIDER_REPORTED', 'REAL_EVIDENCE_REQUIRED');
+    const scheduled = g.schedule.find(s => s.observationId === o.observationId);
+    invariant(scheduled && !seen.has(o.observationId), 'OBSERVATION_DUPLICATE_OR_UNKNOWN'); seen.add(o.observationId);
+    const receipt = o.receipt;
+    invariant(receipt && ['COMPLETE', 'ERROR'].includes(receipt.status) && receipt.id === o.observationId && receipt.caseId === scheduled.caseId && !receiptIds.has(receipt.id), 'COMPLETE_RECEIPT_REQUIRED');
+    const { receiptSha256, ...receiptData } = receipt;
+    invariant(digest(receiptData) === receiptSha256 && Number.isFinite(receipt.startedAt), 'RECEIPT_INTEGRITY'); receiptIds.add(receipt.id);
+    if (receipt.status === 'ERROR') { invariant(o.evaluation === null, 'FAILED_OBSERVATION_SCORED'); failedAttempts++; return []; }
+    invariant(/^[a-f0-9]{64}$/.test(o.requestSha256 ?? '') && /^[a-f0-9]{64}$/.test(o.responseSha256 ?? ''), 'HTTP_HASH_REQUIRED');
+    invariant(o.metadata?.model === MODEL && o.metadata.usage.inputTokens !== null && o.metadata.usage.outputTokens !== null, 'USAGE_OR_MODEL_EVIDENCE_REQUIRED');
+    const c = g.cases.find(c => c.id === scheduled.caseId)!;
+    return [{ ...scoreObservation(c, o.evaluation), c, o, scheduled, scores: languageEvaluationSchema.parse(o.evaluation).scores }];
+  });
+  const rates = (items: typeof rows, predicate: (row: typeof rows[number]) => boolean) => wilson(items.filter(predicate).length, items.length);
+  const negatives = rows.filter(r => r.c.kind === 'NEGATIVE'), complete = rows.filter(r => r.c.kind === 'COMPLETE');
+  const injection = rows.filter(r => r.c.caseClass.includes('INJECTION'));
+  const pairs = rows.filter(r => r.scheduled.repeatOf).flatMap(r => {
+    const first = rows.find(f => f.o.observationId === r.scheduled.repeatOf);
+    if (!first) return [];
+    const deltas = Object.keys(r.scores).map(k => Math.abs(r.scores[k as keyof typeof r.scores] - first.scores[k as keyof typeof r.scores]));
+    return [{ caseId: r.c.id, maxDimensionDifference: Math.max(...deltas), aggregateDifference: Math.abs(r.aggregate - first.aggregate), sameObservedIdentity: digest({model:r.o.metadata!.model,version:r.o.metadata!.version,fingerprint:r.o.metadata!.fingerprint}) === digest({model:first.o.metadata!.model,version:first.o.metadata!.version,fingerprint:first.o.metadata!.fingerprint}) }];
+  });
+  const pilot = rows.filter(r => r.scheduled.phase === 'pilot');
+  // No universal pass threshold or teacher feedback verdict has been approved. Complete runs still require interpretation.
+  return {
+    status: rows.length ? 'PROVIDER_REPORTED_MEASURED' : 'NOT_MEASURED',
+    evidenceAuthentication: 'SUPPLIED_RECEIPTS_NOT_INDEPENDENTLY_AUTHENTICATED',
+    pilotVerdict: observations.length && failedAttempts ? 'PILOT_INCONCLUSIVE' : !pilot.length ? 'PILOT_NOT_RUN' : pilot.some(r => r.falseAcceptance || r.ceilingViolation || r.floorViolation) ? 'PILOT_REVISE' : 'PILOT_INCONCLUSIVE',
+    pilotPassBlockedBy: ['OWNER_APPROVED_RATE_THRESHOLDS_AND_FEEDBACK_ADJUDICATION_REQUIRED'],
+    observations: rows.length, failedAttempts, requestStarts: observations.length, uniqueCases: new Set(rows.map(r => r.c.id)).size,
+    falseAcceptance: rates(negatives, r => r.falseAcceptance), falseRejection: rates(complete, r => r.falseRejection),
+    taskCompletionAgreement: rates(rows, r => r.scores.taskCompletion >= r.c.bounds.taskMin && r.scores.taskCompletion <= r.c.bounds.taskMax),
+    factualCreditBoundsAgreement: rates(rows, r => !r.ceilingViolation && !r.floorViolation),
+    rubricAdherence: { ...rates(rows, r => !r.ceilingViolation && !r.floorViolation), scope: 'FACTUAL_SCORE_BOUNDS_ONLY', fullRubricAdjudication: 'NEEDS_EVIDENCE' },
+    injectionResistance: { ...rates(injection, r => !r.ceilingViolation && !r.floorViolation), scope: 'SCORE_BOUNDS_ONLY_NOT_FEEDBACK_OR_SECRECY' },
+    factualAccuracy: { status: 'NOT_MEASURED', reason: 'Scalar scores do not identify factual propositions in feedback;independent response adjudication required' },
+    aggregateScoreDifference: { status: 'NOT_MEASURED', reason: 'No expected targetLanguage or clarity scalar ground truth;only factual credit bounds exist' },
+    anchorConsistency: { observedPairs: pairs.length, requiredPairs: 32, pairs },
+    perLesson: [...new Set(g.cases.map(c => c.lessonCode))].map(lessonCode => { const group = rows.filter(r => r.c.lessonCode === lessonCode); return { lessonCode, observations: group.length, falseAcceptance: rates(group.filter(r => r.c.kind === 'NEGATIVE'), r => r.falseAcceptance), falseRejection: rates(group.filter(r => r.c.kind === 'COMPLETE'), r => r.falseRejection) }; }),
+    feedbackAdjudication: 'NEEDS_EVIDENCE', readinessChanged: false,
+  };
+}
+
+// Injected transport only: no default network client, credential reader or live execution path.
+export async function boundedTransport(url: string, init: RequestInit, expectedBody: string, transport: typeof fetch, timeoutMs = 60000) {
+  checkRequest(url, init, expectedBody);
+  invariant(Buffer.byteLength(expectedBody) <= 65536, 'REQUEST_LIMIT');
+  invariant(Number.isSafeInteger(timeoutMs) && timeoutMs > 0 && timeoutMs <= 60000, 'TIMEOUT_LIMIT');
+  const controller = new AbortController(); let timer: ReturnType<typeof setTimeout> | undefined;
+  let readerToCancel: ReadableStreamDefaultReader<Uint8Array> | undefined;
+  let rejectAborted: ((error: Error) => void) | undefined;
+  const aborted = new Promise<never>((_, reject) => { rejectAborted = reject; });
+  const stopReader = () => { if (readerToCancel) void readerToCancel.cancel().catch(() => {}); };
+  controller.signal.addEventListener('abort', stopReader);
+  const abort = () => { controller.abort(); rejectAborted?.(new Error('ABORTED_STOP')); };
+  init.signal?.addEventListener('abort', abort, { once: true });
+  const timeout = new Promise<never>((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(new Error('TIMEOUT_STOP')); }, timeoutMs); });
+  const work = async () => {
+    invariant(!init.signal?.aborted, 'ABORTED_STOP');
+    let response: Response;
+    try { response = await transport(url, { ...init, signal: controller.signal, redirect: 'error' }); } catch { throw new Error('TRANSPORT_STOP'); }
+    invariant(!response.redirected && response.status === 200, 'HTTP_STOP');
+    const reader = response.body?.getReader(); invariant(reader, 'MISSING_RESPONSE'); readerToCancel = reader;
+    let bytes = 0; const chunks: Uint8Array[] = [];
+    try {
+      for (;;) { const part = await reader.read(); if (part.done) break; bytes += part.value.length; invariant(bytes <= 1048576, 'RESPONSE_LIMIT'); chunks.push(part.value); }
+      invariant(!controller.signal.aborted, 'ABORTED_STOP');
+    } finally { if (bytes > 1048576 || controller.signal.aborted) void reader.cancel().catch(() => {}); reader.releaseLock(); }
+    let raw: unknown; try { raw = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { throw new Error('MALFORMED_RESPONSE_STOP'); }
+    const metadata = observeMetadata(raw, response.headers.get('x-request-id'));
+    invariant(metadata.model === null || metadata.model === MODEL, 'MODEL_CHANGED_STOP');
+    invariant(metadata.usage.inputTokens !== null && metadata.usage.outputTokens !== null, 'USAGE_UNKNOWN_STOP');
+    invariant(metadata.model === MODEL, 'MODEL_UNKNOWN_STOP');
+    return { raw, metadata, responseSha256: sha(Buffer.concat(chunks)), requestSha256: sha(expectedBody), responseBytes: bytes };
+  };
+  try { return await Promise.race([work(), timeout, aborted]); }
+  finally { if (timer) clearTimeout(timer); init.signal?.removeEventListener('abort', abort); controller.abort(); controller.signal.removeEventListener('abort', stopReader); }
+}

@@ -47,3 +47,77 @@ for(const status of [401,403,429,500])test('actual adapter stops on mockedHTTP '
 for(const raw of [{choices:[]},{choices:[{finish_reason:'length',message:{content:'{}'}}]},{choices:[{finish_reason:'stop',message:{content:'not JSON'}}]}])test('actual adapter denies malformed/truncated mock response '+JSON.stringify(raw),async()=>{await assert.rejects(()=>offlineAdapterProbe(goldens.cases[0]!,{raw}));});
 test('mock network failure is never retried',async()=>{let starts=0;await assert.rejects(()=>offlineAdapterProbe(goldens.cases[0]!,{networkError:true,onStart:()=>starts++}));assert.equal(starts,1);});
 test('payload-byte estimate records complete160schedule without using provider token counts',async t=>{let bytes=0;for(const o of goldens.schedule){const p=await offlineAdapterProbe(goldens.cases.find(c=>c.id===o.caseId)!);bytes+=Buffer.byteLength(p.bodies[0]!) +512;}t.diagnostic('OFFLINE_INPUT_RESERVATION='+bytes+';APPROVED_CAP=650000');assert.ok(bytes>0);});
+
+// Mega-task TDD: oracle evidence must be independent of model output.
+test('oracle validator rejects recomputed-digest tampering against frozen authored facts',()=>{
+  const validate=calibration.validateOracle;const bad=structuredClone(goldens);bad.cases[0]!.units[0]!.label='invented';
+  const {oracleSha256:_old,...rest}=bad;bad.oracleSha256=calibration.digest(rest);
+  assert.equal(validate(goldens).state,'VALIDATED');assert.equal(validate(bad).state,'BLOCKED');
+});
+test('oracle adjudication requires all128 bound decisions and never infers human signature',()=>{
+  assert.equal(calibration.adjudicateOracle(goldens,null).state,'VALIDATED');
+  const review={oracleSha256:goldens.oracleSha256,reviewerId:'SYNTHETIC_REVIEWER',reviewedAt:'2026-10-29',evidenceReference:'SYNTHETIC_TEST_ONLY',decisions:goldens.cases.map(c=>({caseId:c.id,decision:'APPROVE' as const,rationale:'Synthetic test only',evidenceReference:'SYNTHETIC_TEST_ONLY'}))};
+  const result=calibration.adjudicateOracle(goldens,review);assert.equal(result.state,'ADJUDICATED');assert.equal(result.humanSigned,false);
+  review.decisions.pop();assert.equal(calibration.adjudicateOracle(goldens,review).state,'BLOCKED');
+});
+test('empty and mocked result sets cannot produce real calibration metrics or pilot pass',()=>{
+  const empty=calibration.calibrationMetrics(goldens,[]);assert.equal(empty.status,'NOT_MEASURED');assert.equal(empty.pilotVerdict,'PILOT_NOT_RUN');
+  const mocked={observationId:goldens.schedule[0]!.observationId,oracleSha256:goldens.oracleSha256,provenance:'MOCK' as const,evaluation:MOCK_EVALUATION};
+  assert.throws(()=>calibration.calibrationMetrics(goldens,[mocked]),/REAL_EVIDENCE_REQUIRED/);
+});
+test('metrics retain80negative64complete16injection denominators without counting unique cases as160',()=>{
+  const v=calibration.validateOracle(goldens);assert.equal(v.uniqueCases,128);assert.equal(v.evaluations,160);assert.equal(v.repeatPairs,32);assert.deepEqual(v.scheduleGroups,{NEGATIVE:80,COMPLETE:64,POSITIVE_INJECTION:16});
+});
+test('metrics reject unreceipted,duplicate and wrong-oracle observations',()=>{
+  const o={observationId:goldens.schedule[0]!.observationId,oracleSha256:goldens.oracleSha256,provenance:'PROVIDER_REPORTED' as const,evaluation:MOCK_EVALUATION};
+  assert.throws(()=>calibration.calibrationMetrics(goldens,[o]),/RECEIPT/);
+  assert.throws(()=>calibration.calibrationMetrics(goldens,[{...o,oracleSha256:'0'.repeat(64)}]),/ORACLE/);
+});
+test('bounded transport stops malformed and oversized replies without disclosing response body',async()=>{
+  const init={method:'POST',body,redirect:'error' as const};
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>new Response('SECRET_NOT_JSON')),e=>!String(e).includes('SECRET_NOT_JSON'));
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>new Response('x'.repeat(1024*1024+1))),/RESPONSE_LIMIT/);
+});
+test('bounded transport aborts a hung transport and never retries',async()=>{
+  let starts=0;await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,{method:'POST',body,redirect:'error'},body,async()=>{starts++;return new Promise<Response>(()=>{});},10),/TIMEOUT/);assert.equal(starts,1);
+});
+test('bounded transport rejects redirects,unknown usage and unapproved observed model',async()=>{
+  const init={method:'POST',body,redirect:'error' as const};
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>new Response('',{status:302})),/HTTP_STOP/);
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>Response.json({model:MODEL})),/USAGE_UNKNOWN/);
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>Response.json({model:'unapproved',usage:{prompt_tokens:1,completion_tokens:1}})),/MODEL_CHANGED/);
+});
+
+function syntheticObservation(index:number,evaluation:unknown=MOCK_EVALUATION,previous:RequestReceipt|null=null):calibration.CalibrationObservation{
+  const scheduled=goldens.schedule[index]!;
+  const data={id:scheduled.observationId,caseId:scheduled.caseId,startedAt:index*10000,inputReservation:100,outputReservation:2048,previousSha256:previous?.receiptSha256??null,status:'COMPLETE' as const};
+  return {observationId:scheduled.observationId,oracleSha256:goldens.oracleSha256,provenance:'PROVIDER_REPORTED',evaluation,receipt:{...data,receiptSha256:digest(data)},requestSha256:'1'.repeat(64),responseSha256:'2'.repeat(64),metadata:{model:MODEL,version:null,fingerprint:null,requestId:'synthetic-request-'+index,usage:{inputTokens:10,outputTokens:10}}};
+}
+test('metrics compute literal error denominators from receipts and do not authenticate synthetic fixtures',()=>{
+  let previous:RequestReceipt|null=null;const observations=goldens.schedule.map((_,i)=>{const o=syntheticObservation(i,{...MOCK_EVALUATION,scores:{taskCompletion:1,meaningAndLogic:1,targetLanguage:1,clarity:1}},previous);previous=o.receipt!;return o;});
+  const metrics=calibration.calibrationMetrics(goldens,observations);
+  assert.equal(metrics.falseAcceptance.denominator,80);assert.equal(metrics.falseAcceptance.numerator,80);assert.equal(metrics.falseRejection.denominator,64);assert.equal(metrics.falseRejection.numerator,0);assert.equal(metrics.anchorConsistency.observedPairs,32);assert.equal(metrics.pilotVerdict,'PILOT_REVISE');assert.equal(metrics.perLesson.length,8);
+  assert.equal(metrics.anchorConsistency.pairs.every(p=>p.sameObservedIdentity),true);
+});
+test('metrics reject a broken receipt chain and preserve unknown or failed attempts as inconclusive',()=>{
+  const a=syntheticObservation(0),b=syntheticObservation(1);assert.throws(()=>calibration.calibrationMetrics(goldens,[a,b]),/CHAIN/);
+  const failed=syntheticObservation(0,null);const {receiptSha256:_,...data}=failed.receipt!;const error={...data,status:'ERROR' as const};failed.receipt={...error,receiptSha256:digest(error)};delete failed.metadata;delete failed.responseSha256;
+  const result=calibration.calibrationMetrics(goldens,[failed]);assert.equal(result.failedAttempts,1);assert.equal(result.observations,0);assert.equal(result.pilotVerdict,'PILOT_INCONCLUSIVE');
+});
+test('truncated response and abort during body read stop offline transport without retry',async()=>{
+  const init={method:'POST',body,redirect:'error' as const};let calls=0;
+  const transport=async()=>{calls++;return new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('{'));c.close();}}));};
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,transport),/MALFORMED/);assert.equal(calls,1);
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('{'));}})),10),/TIMEOUT/);
+});
+
+test('transport timeout cancels a stalled response stream and external abort returns immediately',async()=>{
+  const init={method:'POST',body,redirect:'error' as const};let cancelled=false;
+  await assert.rejects(()=>calibration.boundedTransport(ENDPOINT,init,body,async()=>new Response(new ReadableStream({cancel(){cancelled=true;}})),10),/TIMEOUT/);assert.equal(cancelled,true);
+  const controller=new AbortController();const pending=calibration.boundedTransport(ENDPOINT,{...init,signal:controller.signal},body,async()=>new Promise<Response>(()=>{}),100);controller.abort();await assert.rejects(()=>pending,/ABORTED/);
+});
+
+test('oracle adjudication refuses invented signature or unknown authority fields',()=>{
+  const review={oracleSha256:goldens.oracleSha256,reviewerId:'SYNTHETIC_REVIEWER',reviewedAt:'2026-10-29',evidenceReference:'SYNTHETIC_ONLY',decisions:goldens.cases.map(c=>({caseId:c.id,decision:'APPROVE' as const,rationale:'Synthetic only',evidenceReference:'SYNTHETIC_ONLY'})),humanSigned:true};
+  assert.equal(calibration.adjudicateOracle(goldens,review).state,'BLOCKED');
+});
