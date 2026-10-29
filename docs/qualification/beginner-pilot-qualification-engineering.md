@@ -76,3 +76,18 @@ A --preflight actually executed:128cases/160scheduled;0starts,credentialsRead=fa
 - `docs/qualification/beginner-pilot-oracle-adjudication-template.json` SHA-256 `c8daf0bc748a75bc5a6709ffe3ae51f0367646fdc780c2413d558733b7628fd3`
 - `docs/qualification/beginner-pilot-rehearsal-engineering.json` SHA-256 `066f9e40366e3d9f608f06328fb7e5df6059c73c213dc6a7e3f4c4c9d1399155`
 - `docs/qualification/beginner-pilot-rehearsal-protocol.md` SHA-256 `f6aeaafc0073f013b10d46f6fc33368e2e23dfe719dd439e7de228be351503f0`
+
+## Local delivery commits
+- bc34c55: approved CLI lifecycle, private synthetic runtime, crash/budget tests and execution ledger.
+- a7f749c: source-bound durable oracle/review intake and128-case empty adjudication template.
+- f1b481b: synthetic rehearsal protocol, exact current/historical governance and isolated9-suite regression config.
+17 source/document files from exact20-file allowlist changed;2 additional CLI-managed register files. Original result JSONs and reviewer HTML unchanged. No unrelated modifications.
+
+## Severity / review disposition
+P0: no confirmed P0 found in local checks; independent review unavailable, so this is not an assurance of absence.
+P1 gates: independent review BLOCKED; power-loss safety proof absent and live runner default-denied; real calibration/oracle/privacy/quota evidence absent; independent phonetic/vocabulary dispositions absent; actual GateC consent/session/timing evidence absent. These gates prevent readiness/release; they are not silently waived.
+P2 limitations: proposed timing criteria not owner-approved study thresholds; n=3 usability pilot has limited generalization; supplied reviewer/provider evidence is reported,not independently authenticated by import tooling.
+
+## Skill audit
+Used:mandate-steward→matching approval/lifecycle/CLI validation;executing-plans→bounded task ledger;rulings override extra scratch files;test-driven-development→observedRED/GREEN;systematic-debugging→HTTP mock isolation,checkout-line-ending andstatic-guard failures;git-workflow-and-versioning→explicit atomic local commits;verification-before-completion→actual test/lint/typecheck/build/hash checks;code-review-and-quality→five-axis self-review and a rate-guard mutation caught by regression;requesting-code-review→independent reviewer attempted and unavailable.
+Not used:frontend/database/provider-production workflows because this finite scope changes none of those surfaces;new implementation subagents not needed for the sequential shared-runtime work. No self-review relabeled independent approval.
