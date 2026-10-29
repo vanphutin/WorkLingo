@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261029-005",
-  "status": "captured",
+  "status": "implementing",
   "created": "2026-10-29",
-  "updated": "2026-10-29T12:58:09.611Z",
+  "updated": "2026-10-29T13:13:08.833Z",
   "title": "Bound autonomous Beginner qualification engineering with durable accounting and evidence tooling",
   "type": "architecture",
   "owner": "Codex",
@@ -62,7 +62,12 @@
   "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
   "plan_reference": "docs/superpowers/plans/2026-10-29-beginner-qualification-engineering-umbrella.md",
   "sprint_reference": null,
-  "approval": null,
+  "approval": {
+    "actor": "WorkLingo product owner",
+    "reference": "docs/qualification/beginner-pilot-qualification-engineering.md",
+    "at": "2026-10-29T13:13:08.501Z",
+    "proposal_hash": "dd46620a1f1224803d138a16b7c7870124479c43a13de788e61c51b25fe9e1d8"
+  },
   "verification": [],
   "history": [
     {
@@ -73,6 +78,33 @@
       "reason": "Evidence-backed proposal captured; no implementation approval.",
       "event": "capture",
       "reference": null
+    },
+    {
+      "at": "2026-10-29T13:13:08.169Z",
+      "actor": "Codex",
+      "from": "captured",
+      "to": "triaged",
+      "reason": "Execute exact approved offline qualification plan.",
+      "event": "transition",
+      "reference": "docs/qualification/beginner-pilot-qualification-engineering.md"
+    },
+    {
+      "at": "2026-10-29T13:13:08.501Z",
+      "actor": "WorkLingo product owner",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Exact matching owner authorization; finite005 offline scope only.",
+      "event": "transition",
+      "reference": "docs/qualification/beginner-pilot-qualification-engineering.md"
+    },
+    {
+      "at": "2026-10-29T13:13:08.833Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Execute exact approved offline qualification plan.",
+      "event": "transition",
+      "reference": "docs/qualification/beginner-pilot-qualification-engineering.md"
     }
   ]
 }
