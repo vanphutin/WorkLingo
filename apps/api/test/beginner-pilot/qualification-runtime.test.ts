@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import { test } from 'node:test';
 import * as fs from 'node:fs';
 import { resolve } from 'node:path';
@@ -76,4 +77,108 @@ test('malformed high-water state cannot be replayed as valid accounting',async()
   }
  }finally{fs.writeFileSync(state,original);}
  assert.equal(r.recoverLedger().requests.length,1);
+});
+
+test('rehashed journal cannot replay invalid reservation semantics or fabricate completed usage',async()=>{
+ const r=runtime('corrupt-ledger');
+ await r.withAccountingLock(()=>{
+  r.reserveRequest(start('a'));
+  r.recordOutcome('a',{status:'COMPLETE',inputTokens:10,outputTokens:10,model:'fixed-v1'});
+ });
+ const journal=resolve(r.root,'journal.jsonl'),state=resolve(r.root,'state.json');
+ const originalJournal=fs.readFileSync(journal),originalState=fs.readFileSync(state);
+ const original=originalJournal.toString().trim().split('\n').map(line=>JSON.parse(line));
+ const mutations=[
+  (events:typeof original)=>{events[0].data.inputTokens=-100;},
+  (events:typeof original)=>{events[0].data.phase='remainder';},
+  (events:typeof original)=>{events[1].data.outcome.inputTokens=101;},
+  (events:typeof original)=>{delete events[1].data.outcome.model;},
+  (events:typeof original)=>{events[1].data.outcome.status='FORGED';},
+ ];
+ try{
+  for(const mutate of mutations){
+   const events=structuredClone(original);mutate(events);
+   for(let i=0;i<events.length;i++){
+    const {hash:_oldHash,...body}=events[i];void _oldHash;
+    body.previous=i?events[i-1].hash:'GENESIS';
+    events[i]={...body,hash:createHash('sha256').update(JSON.stringify(body)).digest('hex')};
+   }
+   fs.writeFileSync(journal,events.map(e=>JSON.stringify(e)).join('\n')+'\n');
+   fs.writeFileSync(state,JSON.stringify({sequence:events.length,hash:events.at(-1).hash}));
+   assert.throws(()=>r.recoverLedger(),/RESERVATION_BOUNDS|PILOT_NOT_COMPLETE|USAGE_EXCEEDS|MODEL_REQUIRED|OUTCOME_STATUS/);
+  }
+ }finally{fs.writeFileSync(journal,originalJournal);fs.writeFileSync(state,originalState);}
+ assert.equal(r.recoverLedger().requests[0]!.effectiveStatus,'COMPLETE');
+});
+
+test('reservation identifiers must be strings before anything is journaled',async()=>{
+ const r=runtime('restart');
+ await r.withAccountingLock(()=>{
+  for(const field of ['id','caseId'] as const){
+   for(const value of [undefined,null,1]){
+    assert.throws(()=>r.reserveRequest({...start('a'),[field]:value} as never),/REQUEST_ID/);
+    assert.equal(r.recoverLedger().requests.length,0);
+   }
+  }
+ });
+});
+
+test('outcome identifiers reject coercible values without consuming the receipt slot',async()=>{
+ const r=runtime('restart');
+ await r.withAccountingLock(()=>{
+  r.reserveRequest(start('a'));
+  for(const value of [undefined,null,1]){
+   assert.throws(()=>r.recordOutcome(value as never,{status:'ERROR'}),/REQUEST_ID/);
+  }
+  r.recordOutcome('a',{status:'ERROR'});
+ });
+ assert.equal(r.recoverLedger().requests[0]!.effectiveStatus,'ERROR');
+});
+
+test('rehashed journal rejects missing or numeric request and case identifiers',async()=>{
+ const r=runtime('corrupt-ledger');
+ await r.withAccountingLock(()=>r.reserveRequest(start('a')));
+ const journal=resolve(r.root,'journal.jsonl'),state=resolve(r.root,'state.json');
+ const originalJournal=fs.readFileSync(journal),originalState=fs.readFileSync(state);
+ try{
+  for(const field of ['id','caseId'] as const){
+   for(const value of [undefined,null,1]){
+    const event=JSON.parse(originalJournal.toString());event.data[field]=value;
+    const {hash:_oldHash,...body}=event;void _oldHash;
+    const hash=createHash('sha256').update(JSON.stringify(body)).digest('hex');
+    fs.writeFileSync(journal,JSON.stringify({...body,hash})+'\n');
+    fs.writeFileSync(state,JSON.stringify({sequence:1,hash}));
+    assert.throws(()=>r.recoverLedger(),/REQUEST_ID/);
+   }
+  }
+ }finally{fs.writeFileSync(journal,originalJournal);fs.writeFileSync(state,originalState);}
+ assert.equal(r.recoverLedger().requests[0]!.id,'a');
+});
+
+test('evidence identifiers reject coercion before append',async()=>{
+ const r=runtime('duplicate');
+ await r.withAccountingLock(()=>{
+  for(const id of [undefined,null,1]){
+   assert.throws(()=>r.appendEvidence('REVIEW',{id} as never),/EVIDENCE_ID/);
+   assert.equal(r.recoverLedger().evidence.length,0);
+  }
+ });
+});
+
+test('evidence replay rechecks identifier and privacy boundaries after hash validation',async()=>{
+ const r=runtime('corrupt-ledger');
+ await r.withAccountingLock(()=>r.appendEvidence('REVIEW',{id:'review1',provenance:'SYNTHETIC'}));
+ const journal=resolve(r.root,'journal.jsonl'),state=resolve(r.root,'state.json');
+ const originalJournal=fs.readFileSync(journal),originalState=fs.readFileSync(state);
+ try{
+  for(const data of [{id:1},{id:'review1',text:'Bearer synthetic-fixture'}]){
+   const event=JSON.parse(originalJournal.toString());event.data=data;
+   const {hash:_oldHash,...body}=event;void _oldHash;
+   const hash=createHash('sha256').update(JSON.stringify(body)).digest('hex');
+   fs.writeFileSync(journal,JSON.stringify({...body,hash})+'\n');
+   fs.writeFileSync(state,JSON.stringify({sequence:1,hash}));
+   assert.throws(()=>r.recoverLedger(),/EVIDENCE_ID|EVIDENCE_PRIVACY/);
+  }
+ }finally{fs.writeFileSync(journal,originalJournal);fs.writeFileSync(state,originalState);}
+ assert.equal(r.recoverLedger().evidence.length,1);
 });

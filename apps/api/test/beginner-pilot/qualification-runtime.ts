@@ -17,6 +17,32 @@ export type Outcome={status:'COMPLETE'|'ERROR'|'UNKNOWN';inputTokens?:number;out
 type Event={sequence:number;previous:string;kind:'RESERVE'|'OUTCOME'|'REVIEW'|'ORACLE';data:unknown;hash:string};
 type RequestState=Reservation&{outcome?:Outcome;effectiveStatus:string};
 export type Ledger={events:Event[];requests:RequestState[];evidence:Event[];inputReserved:number;outputReserved:number;runnerSafe:false;durability:'PROCESS_CRASH_ONLY_POWER_LOSS_NOT_PROVEN'};
+function validateReservation(r:Reservation,requests:RequestState[]){
+ need(!!r&&typeof r==='object'&&!Array.isArray(r),'RESERVATION_BOUNDS');
+ need(typeof r.id==='string'&&typeof r.caseId==='string'&&/^[\w:-]{1,128}$/u.test(r.id)&&/^[\w:-]{1,128}$/u.test(r.caseId),'REQUEST_ID');need(['pilot','remainder'].includes(r.phase),'PHASE');
+  need(!requests.some(x=>x.id===r.id),'DUPLICATE_REQUEST');need(requests.length<160,'LIFETIME_CAP');need(r.phase!=='pilot'||requests.filter(x=>x.phase==='pilot').length<20,'PILOT_CAP');
+  // Necessary accounting prerequisite only; this never grants live continuation approval.
+  need(r.phase!=='remainder'||requests.filter(x=>x.phase==='pilot'&&x.effectiveStatus==='COMPLETE').length===20,'PILOT_NOT_COMPLETE');
+  need(!requests.some(x=>x.effectiveStatus==='UNKNOWN'),'UNKNOWN_PENDING_REQUIRES_RECONCILIATION');
+  need([r.at,r.inputTokens,r.outputTokens].every(Number.isSafeInteger)&&r.at>=0&&r.inputTokens>0&&r.outputTokens>0&&r.outputTokens<=2048,'RESERVATION_BOUNDS');
+  need(!requests.length||r.at-requests.at(-1)!.at>=10000,'RATE_INTERVAL');need(requests.filter(x=>r.at-x.at<60000).length<6,'RATE_WINDOW');
+  need(requests.reduce((n,r)=>n+r.inputTokens,0)+r.inputTokens<=650000&&requests.reduce((n,r)=>n+r.outputTokens,0)+r.outputTokens<=327680,'TOKEN_CAP');need((requests.reduce((n,r)=>n+r.inputTokens,0)+r.inputTokens)*.8/1e6+(requests.reduce((n,r)=>n+r.outputTokens,0)+r.outputTokens)*2.7/1e6<=1.5,'CREDIT_CAP');
+
+}
+function validateOutcome(id:string,outcome:Outcome,requests:RequestState[]){
+ need(typeof id==='string'&&/^[\w:-]{1,128}$/u.test(id),'REQUEST_ID');
+ need(!!outcome&&typeof outcome==='object'&&!Array.isArray(outcome),'OUTCOME_STATUS');
+ const r=requests.find(x=>x.id===id);
+ need(r&&!r.outcome,'OUTCOME_REQUEST');need(['COMPLETE','ERROR','UNKNOWN'].includes(outcome.status),'OUTCOME_STATUS');
+  if(outcome.status==='COMPLETE'){need(Number.isSafeInteger(outcome.inputTokens)&&Number.isSafeInteger(outcome.outputTokens)&&outcome.inputTokens!>=0&&outcome.outputTokens!>=0,'USAGE_REQUIRED');need(outcome.inputTokens!<=r.inputTokens&&outcome.outputTokens!<=r.outputTokens,'USAGE_EXCEEDS_RESERVATION');need(typeof outcome.model==='string'&&/^[\w.-]{1,128}$/u.test(outcome.model),'MODEL_REQUIRED');const model=requests.find(x=>x.outcome?.status==='COMPLETE')?.outcome?.model;need(!model||model===outcome.model,'MODEL_CHANGED');}
+
+ return r;
+}
+function validateEvidence(data:{id:string;[k:string]:unknown},evidence:Event[]){
+ need(!!data&&typeof data==='object'&&!Array.isArray(data)&&typeof data.id==='string'&&/^[\w-]{1,128}$/u.test(data.id),'EVIDENCE_ID');
+ need(!evidence.some(e=>(e.data as {id:string}).id===data.id),'DUPLICATE_EVIDENCE');
+ const text=JSON.stringify(data);need(Buffer.byteLength(text)<=1048576&&!/Bearer\s+|api[_-]?key|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/iu.test(text),'EVIDENCE_PRIVACY');
+}
 export class QualificationRuntime {
  readonly root:string;private token:string|null=null;
  constructor(readonly scenario?:Scenario,private hooks:{beforeStateRename?:()=>void}={}){this.root=runtimePath(scenario);}
@@ -40,7 +66,16 @@ export class QualificationRuntime {
   for(const line of raw.split('\n').filter(Boolean)){let e:Event;try{e=JSON.parse(line);}catch{throw Error('JOURNAL_CORRUPT');}const {hash,...body}=e;need(e.sequence===events.length+1&&e.previous===(events.at(-1)?.hash??'GENESIS')&&sha(JSON.stringify(body))===hash,'JOURNAL_HASH_CHAIN');need(['RESERVE','OUTCOME','REVIEW','ORACLE'].includes(e.kind),'JOURNAL_KIND');events.push(e);}
   if(fs.existsSync(state)){const high=JSON.parse(fs.readFileSync(state,'utf8'));need(Number.isSafeInteger(high.sequence)&&high.sequence>0&&high.sequence<=events.length,'JOURNAL_ROLLBACK');need(typeof high.hash==='string'&&/^[a-f0-9]{64}$/u.test(high.hash)&&events[high.sequence-1]?.hash===high.hash,'JOURNAL_ROLLBACK');}
   const requests:RequestState[]=[], evidence:Event[]=[];
-  for(const e of events){if(e.kind==='RESERVE'){const r=e.data as Reservation;need(!requests.some(x=>x.id===r.id),'JOURNAL_DUPLICATE');requests.push({...r,effectiveStatus:'UNKNOWN'});}else if(e.kind==='OUTCOME'){const d=e.data as {id:string;outcome:Outcome};const r=requests.find(x=>x.id===d.id);need(r&&!r.outcome,'JOURNAL_OUTCOME');r.outcome=d.outcome;r.effectiveStatus=d.outcome.status;}else{const id=(e.data as {id:string}).id;need(id&&!evidence.some(x=>(x.data as {id:string}).id===id),'JOURNAL_DUPLICATE');evidence.push(e);}}
+  for(const e of events){
+   if(e.kind==='RESERVE'){
+    const r=e.data as Reservation;validateReservation(r,requests);requests.push({...r,effectiveStatus:'UNKNOWN'});
+   }else if(e.kind==='OUTCOME'){
+    const d=e.data as {id:string;outcome:Outcome};const r=validateOutcome(d.id,d.outcome,requests);
+    r.outcome=d.outcome;r.effectiveStatus=d.outcome.status;
+   }else{
+    validateEvidence(e.data as {id:string;[k:string]:unknown},evidence);evidence.push(e);
+   }
+  }
   return {events,requests,evidence,inputReserved:requests.reduce((n,r)=>n+r.inputTokens,0),outputReserved:requests.reduce((n,r)=>n+r.outputTokens,0),runnerSafe:false,durability:'PROCESS_CRASH_ONLY_POWER_LOSS_NOT_PROVEN'};
  }
  private append(kind:Event['kind'],data:unknown){
@@ -52,21 +87,14 @@ export class QualificationRuntime {
   this.syncWrite(this.file('state.pending'),JSON.stringify({sequence:event.sequence,hash:event.hash}),'w');this.hooks.beforeStateRename?.();fs.renameSync(this.file('state.pending'),this.file('state.json'));return event;
  }
  reserveRequest(r:Reservation){
-  this.assertOwned();const l=this.recoverLedger();need(/^[\w:-]{1,128}$/u.test(r.id)&&/^[\w:-]{1,128}$/u.test(r.caseId),'REQUEST_ID');need(['pilot','remainder'].includes(r.phase),'PHASE');
-  need(!l.requests.some(x=>x.id===r.id),'DUPLICATE_REQUEST');need(l.requests.length<160,'LIFETIME_CAP');need(r.phase!=='pilot'||l.requests.filter(x=>x.phase==='pilot').length<20,'PILOT_CAP');
-  // Necessary accounting prerequisite only; this never grants live continuation approval.
-  need(r.phase!=='remainder'||l.requests.filter(x=>x.phase==='pilot'&&x.effectiveStatus==='COMPLETE').length===20,'PILOT_NOT_COMPLETE');
-  need(!l.requests.some(x=>x.effectiveStatus==='UNKNOWN'),'UNKNOWN_PENDING_REQUIRES_RECONCILIATION');
-  need([r.at,r.inputTokens,r.outputTokens].every(Number.isSafeInteger)&&r.at>=0&&r.inputTokens>0&&r.outputTokens>0&&r.outputTokens<=2048,'RESERVATION_BOUNDS');
-  need(!l.requests.length||r.at-l.requests.at(-1)!.at>=10000,'RATE_INTERVAL');need(l.requests.filter(x=>r.at-x.at<60000).length<6,'RATE_WINDOW');
-  need(l.inputReserved+r.inputTokens<=650000&&l.outputReserved+r.outputTokens<=327680,'TOKEN_CAP');need((l.inputReserved+r.inputTokens)*.8/1e6+(l.outputReserved+r.outputTokens)*2.7/1e6<=1.5,'CREDIT_CAP');
+  this.assertOwned();validateReservation(r,this.recoverLedger().requests);
   this.append('RESERVE',r);return r;
  }
- recordOutcome(id:string,outcome:Outcome){this.assertOwned();const l=this.recoverLedger(),r=l.requests.find(x=>x.id===id);need(r&&!r.outcome,'OUTCOME_REQUEST');need(['COMPLETE','ERROR','UNKNOWN'].includes(outcome.status),'OUTCOME_STATUS');
-  if(outcome.status==='COMPLETE'){need(Number.isSafeInteger(outcome.inputTokens)&&Number.isSafeInteger(outcome.outputTokens)&&outcome.inputTokens!>=0&&outcome.outputTokens!>=0,'USAGE_REQUIRED');need(outcome.inputTokens!<=r.inputTokens&&outcome.outputTokens!<=r.outputTokens,'USAGE_EXCEEDS_RESERVATION');need(typeof outcome.model==='string'&&/^[\w.-]{1,128}$/u.test(outcome.model),'MODEL_REQUIRED');const model=l.requests.find(x=>x.outcome?.status==='COMPLETE')?.outcome?.model;need(!model||model===outcome.model,'MODEL_CHANGED');}
+ recordOutcome(id:string,outcome:Outcome){
+  this.assertOwned();validateOutcome(id,outcome,this.recoverLedger().requests);
   this.append('OUTCOME',{id,outcome});
  }
- appendEvidence(kind:'REVIEW'|'ORACLE',data:{id:string;[k:string]:unknown}){this.assertOwned();need(/^[\w-]{1,128}$/u.test(data.id),'EVIDENCE_ID');need(!this.recoverLedger().evidence.some(e=>(e.data as {id:string}).id===data.id),'DUPLICATE_EVIDENCE');const text=JSON.stringify(data);need(Buffer.byteLength(text)<=1048576&&!/Bearer\s+|api[_-]?key|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/iu.test(text),'EVIDENCE_PRIVACY');return this.append(kind,data);}
+ appendEvidence(kind:'REVIEW'|'ORACLE',data:{id:string;[k:string]:unknown}){this.assertOwned();validateEvidence(data,this.recoverLedger().evidence);return this.append(kind,data);}
  /** Derived views can be reconstructed from journal. A failed rename never erases source events. */
  atomicView(name:'results.pending'|'review.pending',target:string,value:unknown){this.assertOwned();need(!this.scenario,'SYNTHETIC_VIEW_CANNOT_PUBLISH');const allowed=['docs/qualification/beginner-pilot-provider-calibration-results.json','docs/qualification/beginner-pilot-independent-qa.json'];need(allowed.includes(target),'VIEW_PATH');const path=resolve(BASE,target);inspect(path);this.syncWrite(this.file(name),JSON.stringify(value,null,2)+'\n','w');fs.renameSync(this.file(name),path);}
 }
