@@ -91,3 +91,48 @@ P2 limitations: proposed timing criteria not owner-approved study thresholds; n=
 ## Skill audit
 Used:mandate-steward→matching approval/lifecycle/CLI validation;executing-plans→bounded task ledger;rulings override extra scratch files;test-driven-development→observedRED/GREEN;systematic-debugging→HTTP mock isolation,checkout-line-ending andstatic-guard failures;git-workflow-and-versioning→explicit atomic local commits;verification-before-completion→actual test/lint/typecheck/build/hash checks;code-review-and-quality→five-axis self-review and a rate-guard mutation caught by regression;requesting-code-review→independent reviewer attempted and unavailable.
 Not used:frontend/database/provider-production workflows because this finite scope changes none of those surfaces;new implementation subagents not needed for the sequential shared-runtime work. No self-review relabeled independent approval.
+
+
+## 2026-10-29 follow-up: next-gate audit and bounded accounting fixes
+
+Starting HEAD `708afda`, branch `codex/foundation-basic-readiness`, clean worktree. Current governance suite verified the exact proposal/plan/allowlist, protected baseline, CLI approval and24WAV before edits. Existing MND-20261029-005 approval is reused; no scope, frozen artifact, authority or other lifecycle was amended.
+
+Confirmed findings and TDD:
+- Phase prerequisite (pre-live P1): `reserveRequest` accepted a remainder reservation against an empty pilot ledger. Added regression observed19PASS/1FAIL (`Missing expected exception`), then required20 completed pilot receipts before any remainder reservation. Missing19th/20th completion or a failed pilot receipt denies without appending a reservation. Existing160-start happy-path/cap regression still passes. This accounting prerequisite is necessary only: it does not establish pilot quality thresholds or grant live continuation authority.
+- Corrupt checkpoint handling (P2): a zero-sequence high-water state with an invalid hash was accepted; a negative sequence with absent hash could also satisfy the previous comparisons. Added regression observed20PASS/1FAIL, then required a positive safe integer sequence within the journal and an exact64-hex matching event hash. This is metadata rejection, not evidence that the old code erased journaled requests. Valid interrupted-state recovery still passes.
+- Both defects were reproduced using approved synthetic directories only. No actual provider start or real accounting record was involved. No claims of an observed paid request, external leak or actual budget reset.
+
+Verification actually run in this follow-up:
+| Check | Command / scope | Result |
+|---|---|---|
+| Runtime | `pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualification-runtime.test.ts` |21PASS,0FAIL/skipped after both fixes|
+| Calibration | `pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/provider-calibration.test.ts` |57PASS,0FAIL/skipped|
+| Independent QA intake | `pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/independent-qa-pack.test.ts` |37PASS,0FAIL/skipped|
+| Synthetic rehearsal | `pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/rehearsal-protocol.test.ts` |15PASS,0FAIL/skipped; no real observations|
+| Current governance | `pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualification-governance.test.ts` |6PASS before edits; final validation recorded below|
+| Named legacy mocks | Same nine exact suites through `qualification-vitest.config.ts` listed in the initial execution record |105PASS in9 files,0FAIL/skipped|
+| Static/build | API `tsc --noEmit`; ESLint only the2 changed TS files; API `build` |PASS, each exit0|
+| Register/diff | Mandate CLI `validate`; `git diff --check` |24 valid mandates; PASS|
+
+241 distinct tests in the above suites; repeated RED/GREEN executions are not extra tests. Historical test counts are not relabeled as this run.
+
+Review: self-review checked correctness (pilot ordering/checkpoint validity), architecture (same finite runtime), privacy/security (no new inputs, transports or secrets), performance (bounded160 entries) and compatibility (legacy mocks). Manual intake inspection confirmed that oracle/reviewer imports retain reported-not-authenticated provenance and preserve conflicts; it is not an authenticated evidence review. Independent reviewer attempt `01a1880d-5ce6-7232-81c0-deb97c91d214` failed before producing a review: "The 'cx/gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account." Agent closed; independent review remains BLOCKED and no self-review is relabeled independent.
+
+Actual preflight:128 unique cases,160 scheduled starts,0 actual starts,credentialsRead=false. Result `BLOCKED_EXTERNAL_EVIDENCE_OFFLINE_READY`. Blocking evidence: granted balance/zero-spend, retention/logging/data handling, exact oracle adjudication, live single-writer accounting attestation and durable-runtime power-loss proof. Process-kill tests do not prove power-loss durability; `runnerSafe` remains false. Original provider result JSON and independent QA packet remain unchanged, with no actual model observations or82 real dispositions.
+
+Shortest remaining sequence (not newly executed authority):
+1. Finish independent engineering review and establish the runtime durability/live-accounting evidence in a separately valid scope if new files or actions are required; do not switch `runnerSafe` to true by assertion.
+2. Obtain source-bound adjudication of128 oracle cases using the existing null-decision template, plus actual Discovery quota and retention/logging/data-handling evidence. Existing conditional owner provider authorization is acknowledged, but preflight conditions are not satisfied. The present005 scope does not authorize enabling a real transport or reading credentials.
+3. Obtain82 actual independent QA dispositions against packet `0a2f28c1ad915a97f072a5985b68feaeea455af4b9e75359b69c5a5c865231df`; no global human PASS or synthetic fixture replaces these item-level records. Use the existing offline reviewer page; do not fabricate dates, rationale or sign-off.
+4. Only when real execution guards and matching scope permit, run20 pilot starts and apply predeclared quality/privacy/model/accounting thresholds before the remaining schedule. Do not treat the new20-completion prerequisite as pilot acceptance.
+5. Real GateC still requires effective protocol/governance, consenting actual participants and measured comprehension/time; no synthetic rehearsal or241 technical tests qualifies content.
+
+MND-20261029-005 remains implementing. Other mandates, GateA, frozen bundles, human history and R1.2b NOT_READY remain unchanged. Provider calls0; DB actions0; real GateC observations0; no merge/push/deploy. Rollback is a reviewed local revert of this follow-up's two source edits; retain journals, receipts and append-only audit history.
+
+Current raw source hashes (prior hash section remains historical):
+- `apps/api/test/beginner-pilot/qualification-runtime.ts` raw SHA-256 `98eb2fa47937f4543ebc958682ebf10fee3a6a87df1802fbb4e79260fde4723a`
+- `apps/api/test/beginner-pilot/qualification-runtime.test.ts` raw SHA-256 `9adb1c1470c1cced5604adb3fae4efa413a081931abd3687011293b118a71a43`
+
+Follow-up skill audit: mandate-steward for authority/hash/lifecycle boundaries; systematic-debugging and TDD for the two observed RED-to-GREEN fixes; code-review-and-quality for bounded self-review; requesting-code-review for the failed independent attempt; Git workflow and verification-before-completion for explicit-file local commit and actual checks. No provider, DB, frontend, content-authoring or GateC execution workflow used.
+
+Final follow-up validation after report update: current governance6/6PASS; CLI validate24/24valid; diff whitespacePASS. Exactly3 changed files: runtime, runtime tests and this append-only report.

@@ -48,3 +48,32 @@ test('rate violation,changed model and usage exceeding reservation cannot author
 test('secret/oversized evidence and synthetic derived-view publication are denied',async()=>{const r=runtime('duplicate');await r.withAccountingLock(()=>{assert.throws(()=>r.appendEvidence('REVIEW',{id:'secret',text:'Bearer fake-secret'}),/PRIVACY/);assert.throws(()=>r.appendEvidence('REVIEW',{id:'large',text:'x'.repeat(1048577)}),/PRIVACY/);assert.throws(()=>r.atomicView('review.pending','docs/qualification/beginner-pilot-independent-qa.json',{}),/SYNTHETIC_VIEW/);});});
 
 test('actual frozen candidate identifiers may include colon separators',async()=>{const r=runtime('restart');await r.withAccountingLock(()=>r.reserveRequest({...start('mg01-l1-s1:AUTHORED_CORRECT'),caseId:'mg01-l1-s1:AUTHORED_CORRECT'}));assert.equal(r.recoverLedger().requests.length,1);});
+
+test('remainder cannot bypass the pilot, including incomplete or failed pilot receipts',async()=>{
+ const r=runtime('budget-exhaustion');
+ await r.withAccountingLock(()=>{
+  const remainder=(at:number)=>({...start('remainder',at),phase:'remainder' as const});
+  assert.throws(()=>r.reserveRequest(remainder(100000)),/PILOT_NOT_COMPLETE/);
+  assert.equal(r.recoverLedger().requests.length,0);
+  for(let i=0;i<20;i++){
+   r.reserveRequest(start(String(i),100000+i*10000));
+   r.recordOutcome(String(i),i===19?{status:'ERROR'}:{status:'COMPLETE',inputTokens:10,outputTokens:10,model:'fixed-v1'});
+   if(i===18)assert.throws(()=>r.reserveRequest(remainder(290000)),/PILOT_NOT_COMPLETE/);
+  }
+  assert.throws(()=>r.reserveRequest(remainder(300000)),/PILOT_NOT_COMPLETE/);
+  assert.equal(r.recoverLedger().requests.length,20);
+ });
+});
+
+test('malformed high-water state cannot be replayed as valid accounting',async()=>{
+ const r=runtime('corrupt-ledger');
+ await r.withAccountingLock(()=>r.reserveRequest(start('a')));
+ const state=resolve(r.root,'state.json'), original=fs.readFileSync(state);
+ try{
+  for(const invalid of [{sequence:0,hash:'invalid'},{sequence:-1},{sequence:1}]){
+   fs.writeFileSync(state,JSON.stringify(invalid));
+   assert.throws(()=>r.recoverLedger(),/JOURNAL_ROLLBACK/);
+  }
+ }finally{fs.writeFileSync(state,original);}
+ assert.equal(r.recoverLedger().requests.length,1);
+});

@@ -38,7 +38,7 @@ export class QualificationRuntime {
   if(anchored){const a=JSON.parse(fs.readFileSync(anchor,'utf8'));need(a.identity==='beginner-r12b/1'&&a.synthetic===!!this.scenario,'ANCHOR_IDENTITY');}
   need(!raw||raw.endsWith('\n'),'JOURNAL_TRUNCATED');const events:Event[]=[];
   for(const line of raw.split('\n').filter(Boolean)){let e:Event;try{e=JSON.parse(line);}catch{throw Error('JOURNAL_CORRUPT');}const {hash,...body}=e;need(e.sequence===events.length+1&&e.previous===(events.at(-1)?.hash??'GENESIS')&&sha(JSON.stringify(body))===hash,'JOURNAL_HASH_CHAIN');need(['RESERVE','OUTCOME','REVIEW','ORACLE'].includes(e.kind),'JOURNAL_KIND');events.push(e);}
-  if(fs.existsSync(state)){const high=JSON.parse(fs.readFileSync(state,'utf8'));need(Number.isInteger(high.sequence)&&high.sequence<=events.length,'JOURNAL_ROLLBACK');if(high.sequence)need(events[high.sequence-1]?.hash===high.hash,'JOURNAL_ROLLBACK');}
+  if(fs.existsSync(state)){const high=JSON.parse(fs.readFileSync(state,'utf8'));need(Number.isSafeInteger(high.sequence)&&high.sequence>0&&high.sequence<=events.length,'JOURNAL_ROLLBACK');need(typeof high.hash==='string'&&/^[a-f0-9]{64}$/u.test(high.hash)&&events[high.sequence-1]?.hash===high.hash,'JOURNAL_ROLLBACK');}
   const requests:RequestState[]=[], evidence:Event[]=[];
   for(const e of events){if(e.kind==='RESERVE'){const r=e.data as Reservation;need(!requests.some(x=>x.id===r.id),'JOURNAL_DUPLICATE');requests.push({...r,effectiveStatus:'UNKNOWN'});}else if(e.kind==='OUTCOME'){const d=e.data as {id:string;outcome:Outcome};const r=requests.find(x=>x.id===d.id);need(r&&!r.outcome,'JOURNAL_OUTCOME');r.outcome=d.outcome;r.effectiveStatus=d.outcome.status;}else{const id=(e.data as {id:string}).id;need(id&&!evidence.some(x=>(x.data as {id:string}).id===id),'JOURNAL_DUPLICATE');evidence.push(e);}}
   return {events,requests,evidence,inputReserved:requests.reduce((n,r)=>n+r.inputTokens,0),outputReserved:requests.reduce((n,r)=>n+r.outputTokens,0),runnerSafe:false,durability:'PROCESS_CRASH_ONLY_POWER_LOSS_NOT_PROVEN'};
@@ -54,6 +54,8 @@ export class QualificationRuntime {
  reserveRequest(r:Reservation){
   this.assertOwned();const l=this.recoverLedger();need(/^[\w:-]{1,128}$/u.test(r.id)&&/^[\w:-]{1,128}$/u.test(r.caseId),'REQUEST_ID');need(['pilot','remainder'].includes(r.phase),'PHASE');
   need(!l.requests.some(x=>x.id===r.id),'DUPLICATE_REQUEST');need(l.requests.length<160,'LIFETIME_CAP');need(r.phase!=='pilot'||l.requests.filter(x=>x.phase==='pilot').length<20,'PILOT_CAP');
+  // Necessary accounting prerequisite only; this never grants live continuation approval.
+  need(r.phase!=='remainder'||l.requests.filter(x=>x.phase==='pilot'&&x.effectiveStatus==='COMPLETE').length===20,'PILOT_NOT_COMPLETE');
   need(!l.requests.some(x=>x.effectiveStatus==='UNKNOWN'),'UNKNOWN_PENDING_REQUIRES_RECONCILIATION');
   need([r.at,r.inputTokens,r.outputTokens].every(Number.isSafeInteger)&&r.at>=0&&r.inputTokens>0&&r.outputTokens>0&&r.outputTokens<=2048,'RESERVATION_BOUNDS');
   need(!l.requests.length||r.at-l.requests.at(-1)!.at>=10000,'RATE_INTERVAL');need(l.requests.filter(x=>r.at-x.at<60000).length<6,'RATE_WINDOW');
