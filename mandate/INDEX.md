@@ -25,8 +25,9 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261029-002](items/MND-20261029-002-architecture-rebind-beginner-qualification-after-verified-context-fix-with-exact-so.md) | Rebind Beginner qualification after verified context fix with exact-source offline probes | architecture | verified | P1 | Codex |
 | [MND-20261029-003](items/MND-20261029-003-architecture-measure-real-discovery-beginner-evaluator-calibration-with-bounded-fic.md) | Measure real Discovery Beginner evaluator calibration with bounded fictional task cases | architecture | implementing | P1 | Codex |
 | [MND-20261029-004](items/MND-20261029-004-learning-content-obtain-independent-exact-asset-phonetic-and-authored-vocabulary-qualif.md) | Obtain independent exact-asset phonetic and authored vocabulary qualification evidence | learning-content | implementing | P1 | Codex |
+| [MND-20261029-005](items/MND-20261029-005-architecture-bound-autonomous-beginner-qualification-engineering-with-durable-accou.md) | Bound autonomous Beginner qualification engineering with durable accounting and evidence tooling | architecture | captured | P1 | Codex |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 | [MND-20261028-002](items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md) | Correct bounded Beginner pilot tasks while preserving historical source and audio evidence | learning-content | implementing | P2 | Codex |
 
-Total: 23; active: 23; archived: 0.
+Total: 24; active: 24; archived: 0.

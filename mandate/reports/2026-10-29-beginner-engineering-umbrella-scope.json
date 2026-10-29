@@ -1,0 +1,1046 @@
+{
+  "schemaVersion": "beginner-qualification-engineering-umbrella/1",
+  "phase": "PREAPPROVAL_ONLY",
+  "parentMandates": [
+    "MND-20261029-003",
+    "MND-20261029-004"
+  ],
+  "existingGateC": "MND-20261027-004_UNCHANGED",
+  "approval": null,
+  "baseline": {
+    "head": "39b6e90688c38fa0ec9b04289d02e751e94639fd",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "files": [
+      {
+        "path": ".gitignore",
+        "sha256": "6967643ded7da174bced97c5327216d9373cf485c6612c482b4bd9f4c8cd4eab"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+        "sha256": "7d8cc715c3e7e92490276620f9930df13cbf7be3fe53eb92d93cdf87f0fc51a9"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "sha256": "327d81a176cd497813991e1fd0b38304ca655cb72a6df2761e04973c0025d5e7"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts",
+        "sha256": "dabf2ac4a05936ccf5f2c5584f0e62065be0d4e8e14c40161aadaa2f41edc78c"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "sha256": "e78f42d1673ee9a7c4e1453e817639193b39679321e9ab551ab4a514e5da47ab"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "sha256": "bdee7da0b52168c5e3e625b66ea55a7d1401c815dd3edcb0ec90b937c839f1b4"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/test/beginner-evaluator-context.setup.ts",
+        "sha256": "2bedd447bda5f24520cb29bd8ea8c157a2a8f211da47033a9fb51ad99f8627c4"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/independent-qa-pack.test.ts",
+        "sha256": "fe0a06b784591db171e37edd3c60b9e3d1e0be725052defc03fec3918c8cd4ac"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/independent-qa-pack.ts",
+        "sha256": "edd76f2802638816e4d2a165bd2a15457befe2b969fc4ad7cbfa002af38e0638"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/post-context-requalification.spec.ts",
+        "sha256": "9c0c16db2d347a6092277e51edb4168c99433d62b91acf788f486af1d0b51a1a"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/provider-calibration.test.ts",
+        "sha256": "39bf8f7af1dbc77d5d0e274f4fcf827037262cba42686d913fa8f1643247e9cd"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/provider-calibration.ts",
+        "sha256": "9ff8456a864efc73cff020fa36cbb4dd04d9fd5e3c4215c9037d45b4d154d47c"
+      },
+      {
+        "path": "apps/api/vitest.beginner-evaluator-context.config.ts",
+        "sha256": "bafb74e095c5e10fe19b06ec339b7352e24601d81162fbc6f0a95e9c1b636070"
+      },
+      {
+        "path": "apps/api/vitest.beginner-requalification.config.ts",
+        "sha256": "184831b7a9c2ec9ef15e316802199ded4615a0ed9b1299bc92cb4060f8b4620f"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.config.ts",
+        "sha256": "c0857a1d341d15c4a15b264ee174db678abebfbe2c642f4c00ee7084f9ad68a4"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-fix-verification.md",
+        "sha256": "f52228cb733ad7a5f30473c46028d476f741cb1375c8c78bdad836db271d6968"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-verification.md",
+        "sha256": "db97c8b3fcc6331e719df7059b21ebeeab3ff1ec0f1ce04e6183729fb9589aac"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+        "sha256": "0fd2efa857607ad213666a581473ce91a9f513d18f22ea45df6f7dbe448486fd"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-review.md",
+        "sha256": "5c98cf2b59261fb1e0938ebc742adf24c2761104ed64f4a48959544913839696"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-correction-requests.md",
+        "sha256": "1c9addb363a04ce931e3c21fc565e07bfdaf0f19c0770a2196ebe4a3edaa7328"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-review.json",
+        "sha256": "f6ba03b386aa8679e55e50f8dc7f21361b312d0947a3f3c98504dc3b157fb646"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-summary.md",
+        "sha256": "d48801896c827fa4a22fce54cf5dc6016e871472968069cbe7bc69480bfcfb3b"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "sha256": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-qa.md",
+        "sha256": "394888de8e626bde96c3d197a29bc2d0cf6bffa2d02a5cfa65374d70a3a6dcca"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-independent-qa.html",
+        "sha256": "093f2dd579abaacdac3b14411b385e35f4d7f9f41fcdfaa013b00d6349eb4da3"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-independent-qa.json",
+        "sha256": "95b6cda8e0eac8ac7c6875e298aace095d3041466a5bd7793068249d5c727a5f"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-independent-qa.md",
+        "sha256": "92b8b6fea4cf1c03bf6b1c339ce9a8e40b73bd9205a0535f21d07f66115ee057"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-pedagogy-review.json",
+        "sha256": "ff1e83d689e6b8e53efe9b3aed003f891a8de829446678ac14d451abdd94c907"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-post-context-requalification.json",
+        "sha256": "99086c6f1435f5e6423cdb7a6d5ed707434ddf80330f9b1dec73fab0ac75d103"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-post-context-requalification.md",
+        "sha256": "bb721334c0433a993f9303a1145ef4f27acce39a36223b896379c1f31a961488"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-provider-calibration-goldens.json",
+        "sha256": "b069d60a00ecdfa02d7249ffe39414fd820b54ffee8d1ca0f2364580a1c785ff"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-provider-calibration-results.json",
+        "sha256": "b133fe1706094f6cf6a56d075e435ab43b31f5ae353c3c60510810b790bebded"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-provider-calibration-results.md",
+        "sha256": "65295aeab2ad929c7ff929d3fb469af01ad4abef1ef051ea0edfa32167f4efa3"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+        "sha256": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-29-beginner-post-context-requalification.md",
+        "sha256": "ab6d169726dd80b68e6ddbd9b1c60e3b3400ffd69b3e7dd860309dbe7e11d119"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "mandate/items/MND-20261027-001-learning-content-author-real-mg01-mg02-beginner-pilot-sources-with-offline-qualificatio.md",
+        "sha256": "9c019ad27e3723b6c2b0f8825490bf880607d7673dc9d64b2fe87e1823f82c84"
+      },
+      {
+        "path": "mandate/items/MND-20261027-002-learning-content-produce-and-human-check-offline-mg01-mg02-audio-within-capped-provider.md",
+        "sha256": "80f73512589a89e74d04ffa689d9981ad6ba092d452fd8ce1d161a4f3a8bb54c"
+      },
+      {
+        "path": "mandate/items/MND-20261027-003-learning-content-obtain-qualified-human-beginner-pedagogical-sign-offs-and-exact-correc.md",
+        "sha256": "4fa3a784bf2e85ead99095883bf2d9bbc1b094fd40ae639f590c3a2c93f79819"
+      },
+      {
+        "path": "mandate/items/MND-20261027-004-learning-content-observe-consented-offline-beginner-pilot-timing-without-fabricated-pro.md",
+        "sha256": "8a23be2b58cf1b6865eb7f1b0e8d0769a81f595661b835eab0d054679fad6287"
+      },
+      {
+        "path": "mandate/items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md",
+        "sha256": "6cc7ad8a664e9edc37d55fb6871a46c2c53f8c92df374e6a153d89b03b91d172"
+      },
+      {
+        "path": "mandate/items/MND-20261028-003-architecture-verify-beginner-evaluator-task-context-loss-using-isolated-contract-te.md",
+        "sha256": "c28a30a939a282bc9aecef1b0019af1e9b512519191603a4de006c4441daf013"
+      },
+      {
+        "path": "mandate/items/MND-20261028-004-architecture-establish-prospective-ai-led-beginner-qualification-without-rewriting.md",
+        "sha256": "bd8060e5ade0305b4648293657ef11cc4e9a33e0ab8eb2b5fdaca70564060b6b"
+      },
+      {
+        "path": "mandate/items/MND-20261029-001-bug-fix-missing-pinned-beginner-evaluator-facts-and-private-task-criteria.md",
+        "sha256": "08af9a025bea8b923413ec7a444aba7a70b58314442f7b834b09763681a51c9f"
+      },
+      {
+        "path": "mandate/items/MND-20261029-002-architecture-rebind-beginner-qualification-after-verified-context-fix-with-exact-so.md",
+        "sha256": "1851865f1e3a7c8a12befd7a8ea09712f149dc89da93c2ad7e148e3c5419e00b"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-gate-c-scope.json",
+        "sha256": "77150cf402b43c02bb77caccc6d9e099744fcf7ce335366b773d48569d4a4234"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+        "sha256": "17286fdb1811935be80870933d11b8669b3fa1652867866fce37d220867c4c21"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-capture-authorization.md",
+        "sha256": "02e429a9918f15aaed58cf03a5054541e6d34e7c1358d4e06e14ee1336c217a0"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-proposal.json",
+        "sha256": "fab31e7cb94506fed3edb15fe1daba7d24a907fa907a7a4d809c3cbf3382d993"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-scope.json",
+        "sha256": "349229f93cbbad4fcf5ef5f44bf96dc0baf2eecababf48eca30e42e3a65d2d86"
+      },
+      {
+        "path": "packages/content-format/src/foundation-metadata.ts",
+        "sha256": "99a2ead9efb07478948d75e37ee3df3c57f61559a8ef7d6f102f34de7bffb9ff"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      }
+    ],
+    "selectedAudio": [
+      {
+        "slug": "mg01-l1-audio-a",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+        "sha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+        "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1"
+      },
+      {
+        "slug": "mg01-l1-audio-b",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+        "sha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+        "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32"
+      },
+      {
+        "slug": "mg01-l1-audio-c",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+        "sha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+        "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9"
+      },
+      {
+        "slug": "mg01-l2-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+        "sha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+        "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574"
+      },
+      {
+        "slug": "mg01-l2-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+        "sha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+        "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046"
+      },
+      {
+        "slug": "mg01-l2-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+        "sha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+        "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8"
+      },
+      {
+        "slug": "mg01-l3-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+        "sha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+        "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df"
+      },
+      {
+        "slug": "mg01-l3-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+        "sha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+        "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9"
+      },
+      {
+        "slug": "mg01-l3-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+        "sha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+        "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2"
+      },
+      {
+        "slug": "mg01-l4-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+        "sha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+        "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de"
+      },
+      {
+        "slug": "mg01-l4-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+        "sha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+        "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c"
+      },
+      {
+        "slug": "mg01-l4-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+        "sha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+        "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5"
+      },
+      {
+        "slug": "mg02-l1-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+        "sha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+        "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea"
+      },
+      {
+        "slug": "mg02-l1-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+        "sha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+        "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af"
+      },
+      {
+        "slug": "mg02-l1-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+        "sha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+        "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d"
+      },
+      {
+        "slug": "mg02-l2-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+        "sha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+        "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b"
+      },
+      {
+        "slug": "mg02-l2-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+        "sha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+        "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3"
+      },
+      {
+        "slug": "mg02-l2-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+        "sha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+        "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5"
+      },
+      {
+        "slug": "mg02-l3-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+        "sha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+        "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79"
+      },
+      {
+        "slug": "mg02-l3-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+        "sha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+        "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65"
+      },
+      {
+        "slug": "mg02-l3-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+        "sha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+        "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5"
+      },
+      {
+        "slug": "mg02-l4-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+        "sha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+        "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0"
+      },
+      {
+        "slug": "mg02-l4-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+        "sha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+        "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78"
+      },
+      {
+        "slug": "mg02-l4-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+        "sha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+        "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d"
+      }
+    ],
+    "fingerprint": "c5b5efbed70fea5ea8fff03c5cbdb307b84d133dc757012ba13ce4b11bd93c44"
+  },
+  "plan": {
+    "path": "docs/superpowers/plans/2026-10-29-beginner-qualification-engineering-umbrella.md",
+    "sha256LF": "76de9c7ac39bb7321f38931fafe7736e623773ec855b63fcddc32e68d9e0cc29"
+  },
+  "allowlist": {
+    "modify": [
+      ".gitignore",
+      "apps/api/test/beginner-pilot/independent-qa-pack.test.ts",
+      "apps/api/test/beginner-pilot/independent-qa-pack.ts",
+      "apps/api/test/beginner-pilot/provider-calibration.test.ts",
+      "apps/api/test/beginner-pilot/provider-calibration.ts",
+      "docs/qualification/beginner-pilot-independent-qa.html",
+      "docs/qualification/beginner-pilot-independent-qa.json",
+      "docs/qualification/beginner-pilot-independent-qa.md",
+      "docs/qualification/beginner-pilot-provider-calibration-results.json",
+      "docs/qualification/beginner-pilot-provider-calibration-results.md"
+    ],
+    "create": [
+      "apps/api/test/beginner-pilot/qualification-governance.test.ts",
+      "apps/api/test/beginner-pilot/qualification-runtime.test.ts",
+      "apps/api/test/beginner-pilot/qualification-runtime.ts",
+      "apps/api/test/beginner-pilot/qualification-vitest.config.ts",
+      "apps/api/test/beginner-pilot/rehearsal-protocol.test.ts",
+      "apps/api/test/beginner-pilot/rehearsal-protocol.ts",
+      "docs/qualification/beginner-pilot-oracle-adjudication-template.json",
+      "docs/qualification/beginner-pilot-qualification-engineering.md",
+      "docs/qualification/beginner-pilot-rehearsal-engineering.json",
+      "docs/qualification/beginner-pilot-rehearsal-protocol.md"
+    ],
+    "fingerprint": "42790ff07be71ec71a2d09759deedce4b5110783a3a41098d95c391f76fd445d"
+  },
+  "runtime": {
+    "root": ".qualification-runtime/beginner-r12b",
+    "exactPaths": [
+      ".qualification-runtime/beginner-r12b",
+      ".qualification-runtime/beginner-r12b/writer.lock",
+      ".qualification-runtime/beginner-r12b/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/state.json",
+      ".qualification-runtime/beginner-r12b/state.pending",
+      ".qualification-runtime/beginner-r12b/results.pending",
+      ".qualification-runtime/beginner-r12b/review.pending",
+      ".qualification-runtime/beginner-r12b/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/before-reservation/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-reservation/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/during-request/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/after-response/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/duplicate/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/concurrent/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/corrupt-ledger/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/missing-receipt/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/restart/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/stale-lock/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/path-reparse/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/rename-failure/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/budget-exhaustion/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/timeout/anchor.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/writer.lock",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/writer.lock/owner.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/journal.jsonl",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/state.json",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/state.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/results.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/review.pending",
+      ".qualification-runtime/beginner-r12b/fault-tests/unknown-usage/anchor.json",
+      ".qualification-runtime/beginner-r12b/empty-env"
+    ],
+    "neverGit": true,
+    "noCredentialsOrLearnerData": true,
+    "cleanup": "Resolved exact owned synthetic paths only;no recursive or shared-parent deletion;uncertain ownership means retain and report."
+  },
+  "derivedBuildOutputs": "apps/api/dist only;never source/product changes",
+  "protectedAssets": {
+    "originalAProtectedFiles": [
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-review.json",
+        "sha256": "f6ba03b386aa8679e55e50f8dc7f21361b312d0947a3f3c98504dc3b157fb646"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-summary.md",
+        "sha256": "d48801896c827fa4a22fce54cf5dc6016e871472968069cbe7bc69480bfcfb3b"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-correction-requests.md",
+        "sha256": "1c9addb363a04ce931e3c21fc565e07bfdaf0f19c0770a2196ebe4a3edaa7328"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+        "sha256": "0fd2efa857607ad213666a581473ce91a9f513d18f22ea45df6f7dbe448486fd"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-review.md",
+        "sha256": "5c98cf2b59261fb1e0938ebc742adf24c2761104ed64f4a48959544913839696"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-fix-verification.md",
+        "sha256": "f52228cb733ad7a5f30473c46028d476f741cb1375c8c78bdad836db271d6968"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-verification.md",
+        "sha256": "db97c8b3fcc6331e719df7059b21ebeeab3ff1ec0f1ce04e6183729fb9589aac"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-pedagogy-review.json",
+        "sha256": "ff1e83d689e6b8e53efe9b3aed003f891a8de829446678ac14d451abdd94c907"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-qa.md",
+        "sha256": "394888de8e626bde96c3d197a29bc2d0cf6bffa2d02a5cfa65374d70a3a6dcca"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "sha256": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+        "sha256": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "sha256": "bdee7da0b52168c5e3e625b66ea55a7d1401c815dd3edcb0ec90b937c839f1b4"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+        "sha256": "7d8cc715c3e7e92490276620f9930df13cbf7be3fe53eb92d93cdf87f0fc51a9"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "sha256": "327d81a176cd497813991e1fd0b38304ca655cb72a6df2761e04973c0025d5e7"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      },
+      {
+        "path": "packages/content-format/src/foundation-metadata.ts",
+        "sha256": "99a2ead9efb07478948d75e37ee3df3c57f61559a8ef7d6f102f34de7bffb9ff"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts",
+        "sha256": "dabf2ac4a05936ccf5f2c5584f0e62065be0d4e8e14c40161aadaa2f41edc78c"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "sha256": "e78f42d1673ee9a7c4e1453e817639193b39679321e9ab551ab4a514e5da47ab"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.beginner-evaluator-context.config.ts",
+        "sha256": "bafb74e095c5e10fe19b06ec339b7352e24601d81162fbc6f0a95e9c1b636070"
+      },
+      {
+        "path": "apps/api/test/beginner-evaluator-context.setup.ts",
+        "sha256": "2bedd447bda5f24520cb29bd8ea8c157a2a8f211da47033a9fb51ad99f8627c4"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-gate-c-scope.json",
+        "sha256": "77150cf402b43c02bb77caccc6d9e099744fcf7ce335366b773d48569d4a4234"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+        "sha256": "17286fdb1811935be80870933d11b8669b3fa1652867866fce37d220867c4c21"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb"
+      },
+      {
+        "path": "mandate/items/MND-20261027-001-learning-content-author-real-mg01-mg02-beginner-pilot-sources-with-offline-qualificatio.md",
+        "sha256": "9c019ad27e3723b6c2b0f8825490bf880607d7673dc9d64b2fe87e1823f82c84"
+      },
+      {
+        "path": "mandate/items/MND-20261027-002-learning-content-produce-and-human-check-offline-mg01-mg02-audio-within-capped-provider.md",
+        "sha256": "80f73512589a89e74d04ffa689d9981ad6ba092d452fd8ce1d161a4f3a8bb54c"
+      },
+      {
+        "path": "mandate/items/MND-20261027-003-learning-content-obtain-qualified-human-beginner-pedagogical-sign-offs-and-exact-correc.md",
+        "sha256": "4fa3a784bf2e85ead99095883bf2d9bbc1b094fd40ae639f590c3a2c93f79819"
+      },
+      {
+        "path": "mandate/items/MND-20261027-004-learning-content-observe-consented-offline-beginner-pilot-timing-without-fabricated-pro.md",
+        "sha256": "8a23be2b58cf1b6865eb7f1b0e8d0769a81f595661b835eab0d054679fad6287"
+      },
+      {
+        "path": "mandate/items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md",
+        "sha256": "6cc7ad8a664e9edc37d55fb6871a46c2c53f8c92df374e6a153d89b03b91d172"
+      },
+      {
+        "path": "mandate/items/MND-20261028-003-architecture-verify-beginner-evaluator-task-context-loss-using-isolated-contract-te.md",
+        "sha256": "c28a30a939a282bc9aecef1b0019af1e9b512519191603a4de006c4441daf013"
+      },
+      {
+        "path": "mandate/items/MND-20261028-004-architecture-establish-prospective-ai-led-beginner-qualification-without-rewriting.md",
+        "sha256": "bd8060e5ade0305b4648293657ef11cc4e9a33e0ab8eb2b5fdaca70564060b6b"
+      },
+      {
+        "path": "mandate/items/MND-20261029-001-bug-fix-missing-pinned-beginner-evaluator-facts-and-private-task-criteria.md",
+        "sha256": "08af9a025bea8b923413ec7a444aba7a70b58314442f7b834b09763681a51c9f"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/post-context-requalification.spec.ts",
+        "sha256": "9c0c16db2d347a6092277e51edb4168c99433d62b91acf788f486af1d0b51a1a"
+      },
+      {
+        "path": "apps/api/vitest.beginner-requalification.config.ts",
+        "sha256": "184831b7a9c2ec9ef15e316802199ded4615a0ed9b1299bc92cb4060f8b4620f"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-post-context-requalification.json",
+        "sha256": "99086c6f1435f5e6423cdb7a6d5ed707434ddf80330f9b1dec73fab0ac75d103"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-post-context-requalification.md",
+        "sha256": "bb721334c0433a993f9303a1145ef4f27acce39a36223b896379c1f31a961488"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-29-beginner-post-context-requalification.md",
+        "sha256": "ab6d169726dd80b68e6ddbd9b1c60e3b3400ffd69b3e7dd860309dbe7e11d119"
+      },
+      {
+        "path": "mandate/items/MND-20261029-002-architecture-rebind-beginner-qualification-after-verified-context-fix-with-exact-so.md",
+        "sha256": "1851865f1e3a7c8a12befd7a8ea09712f149dc89da93c2ad7e148e3c5419e00b"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-capture-authorization.md",
+        "sha256": "02e429a9918f15aaed58cf03a5054541e6d34e7c1358d4e06e14ee1336c217a0"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-proposal.json",
+        "sha256": "fab31e7cb94506fed3edb15fe1daba7d24a907fa907a7a4d809c3cbf3382d993"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-scope.json",
+        "sha256": "349229f93cbbad4fcf5ef5f44bf96dc0baf2eecababf48eca30e42e3a65d2d86"
+      }
+    ],
+    "selectedAudio": [
+      {
+        "slug": "mg01-l1-audio-a",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+        "sha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+        "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1"
+      },
+      {
+        "slug": "mg01-l1-audio-b",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+        "sha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+        "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32"
+      },
+      {
+        "slug": "mg01-l1-audio-c",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+        "sha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+        "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9"
+      },
+      {
+        "slug": "mg01-l2-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+        "sha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+        "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574"
+      },
+      {
+        "slug": "mg01-l2-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+        "sha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+        "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046"
+      },
+      {
+        "slug": "mg01-l2-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+        "sha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+        "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8"
+      },
+      {
+        "slug": "mg01-l3-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+        "sha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+        "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df"
+      },
+      {
+        "slug": "mg01-l3-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+        "sha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+        "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9"
+      },
+      {
+        "slug": "mg01-l3-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+        "sha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+        "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2"
+      },
+      {
+        "slug": "mg01-l4-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+        "sha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+        "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de"
+      },
+      {
+        "slug": "mg01-l4-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+        "sha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+        "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c"
+      },
+      {
+        "slug": "mg01-l4-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+        "sha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+        "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5"
+      },
+      {
+        "slug": "mg02-l1-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+        "sha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+        "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea"
+      },
+      {
+        "slug": "mg02-l1-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+        "sha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+        "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af"
+      },
+      {
+        "slug": "mg02-l1-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+        "sha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+        "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d"
+      },
+      {
+        "slug": "mg02-l2-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+        "sha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+        "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b"
+      },
+      {
+        "slug": "mg02-l2-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+        "sha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+        "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3"
+      },
+      {
+        "slug": "mg02-l2-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+        "sha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+        "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5"
+      },
+      {
+        "slug": "mg02-l3-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+        "sha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+        "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79"
+      },
+      {
+        "slug": "mg02-l3-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+        "sha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+        "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65"
+      },
+      {
+        "slug": "mg02-l3-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+        "sha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+        "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5"
+      },
+      {
+        "slug": "mg02-l4-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+        "sha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+        "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0"
+      },
+      {
+        "slug": "mg02-l4-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+        "sha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+        "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78"
+      },
+      {
+        "slug": "mg02-l4-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+        "sha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+        "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d"
+      }
+    ],
+    "oracleGoldensImmutable": "docs/qualification/beginner-pilot-provider-calibration-goldens.json",
+    "humanHistoryAnd297DecisionsImmutable": true
+  },
+  "authority": {
+    "offlineEngineering": true,
+    "matchingApprovalRequired": true,
+    "localCommit": true,
+    "newDependencies": false,
+    "realProviderCalls": false,
+    "credentialRead": false,
+    "database": false,
+    "sourceAudioEvaluatorRubricModify": false,
+    "gateCExecution": false,
+    "realLearnerData": false,
+    "OSorACL": false,
+    "readinessAdvance": false,
+    "mergePushDeployPublish": false,
+    "selfApproval": false,
+    "globalGovernanceModify": false
+  },
+  "allowedCommands": [
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/provider-calibration.test.ts",
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/independent-qa-pack.test.ts",
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualification-runtime.test.ts",
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/qualification-governance.test.ts",
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/rehearsal-protocol.test.ts",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/provider-calibration.ts --preflight",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/independent-qa-pack.ts --build",
+    "pnpm --filter @worklingo/api exec tsc --noEmit",
+    "pnpm --filter @worklingo/api build",
+    "node .agents/skills/mandate-steward/scripts/mandate.mjs validate",
+    "git diff --check",
+    "pnpm --filter @worklingo/api exec vitest run --config test/beginner-pilot/qualification-vitest.config.ts src/teacher-ai/application/evaluation.service.spec.ts src/teacher-ai/application/evaluation-processing.spec.ts src/teacher-ai/application/beginner-evaluator-context.spec.ts src/teacher-ai/domain/beginner-rubrics.spec.ts src/teacher-ai/domain/foundation-rubrics.spec.ts src/teacher-ai/evaluation-harness.spec.ts src/ai-gateway/infrastructure/routing-language-evaluation.adapter.spec.ts src/ai-gateway/infrastructure/openai-language-evaluation.adapter.spec.ts src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.spec.ts"
+  ],
+  "additionalCommandRules": {
+    "focusedEslint": "pnpm exec eslint followed only by allowlisted TypeScript paths",
+    "faultChildren": "Only the same approved runtime suite via Node child_process with fresh sanitized env,no .env loaders,DB/provider keys or inherited configuration",
+    "reviewImport": "Pure import/validation in tests;persist only actual explicitly supplied data within exact A/B output paths,no arbitrary input paths;bounded stdin may be used after validation",
+    "legacyRegression": "Exact9mock suites through approved standalone no-env config only;existing default Vitest config is forbidden."
+  },
+  "acceptance": [
+    "Windows cross-process crash/reservation/restart accounting verified or explicitly BLOCKED;never claim exactly-once remote execution.",
+    "All15named fault scenarios and specified privacy,version,budget,transport,import and governance boundaries have real offline assertions;no skipped tests called PASS.",
+    "128oracle cases and160schedule remain immutable;adjudication is independently supplied source-bound evidence,not a boolean.",
+    "82dispositions strictly validate and persist append-only with conflict reporting;no fake reviewer/identity/CEFR claims.",
+    "GateC tooling validates synthetic inputs but always reports0real observations until separate actual-study authority and evidence.",
+    "Historical baseline tests remain unchanged;new current-governance validator handles legitimate lifecycle separately.",
+    "Focused tests,lint,typecheck,safe API build,protected hashes,allowlist,CLI validate and independent review acceptance;unavailable review remains BLOCKED.",
+    "No real provider,DB,content/media/product change,GateC execution,release or readiness side effect."
+  ],
+  "rollback": "Stop;retain journal/receipts/history;review local reverts of this mandate source only;exact owned synthetic runtime cleanup,never broad deletion or accounting reset."
+}
