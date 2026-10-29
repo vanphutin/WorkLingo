@@ -21,8 +21,9 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261028-001](items/MND-20261028-001-learning-content-internationalize-beginner-pilot-names-while-preserving-source-versions.md) | Internationalize Beginner pilot names while preserving source versions and shared audio budgets | learning-content | verified | P1 | Codex |
 | [MND-20261028-003](items/MND-20261028-003-architecture-verify-beginner-evaluator-task-context-loss-using-isolated-contract-te.md) | Verify Beginner evaluator task context loss using isolated contract tests without product changes | architecture | implementing | P1 | Codex |
 | [MND-20261028-004](items/MND-20261028-004-architecture-establish-prospective-ai-led-beginner-qualification-without-rewriting.md) | Establish prospective AI-led Beginner qualification without rewriting qualified-human Gate B history | architecture | implementing | P1 | Codex |
+| [MND-20261029-001](items/MND-20261029-001-bug-fix-missing-pinned-beginner-evaluator-facts-and-private-task-criteria.md) | Fix missing pinned Beginner evaluator facts and private task criteria without learner leakage | bug | verified | P1 | Codex |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 | [MND-20261028-002](items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md) | Correct bounded Beginner pilot tasks while preserving historical source and audio evidence | learning-content | implementing | P2 | Codex |
 
-Total: 19; active: 19; archived: 0.
+Total: 20; active: 20; archived: 0.

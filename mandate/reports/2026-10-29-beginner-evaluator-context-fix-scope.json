@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "phase": "CAPTURE_ONLY_NO_EXECUTION_APPROVAL",
+  "businessDate": "2026-10-29",
+  "parentInvestigation": "MND-20261028-003",
+  "related": [
+    "MND-20261028-002",
+    "MND-20261028-004",
+    "MND-20261027-003"
+  ],
+  "baseline": {
+    "head": "cf24c8262fac9888be87cac2b5fbdae38256acba",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "files": [
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "sha256": "96095316dd09ab4b747e612ec3c0671fbe17a981fefcf8d080bbcf1373ecc19f"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+        "sha256": "1a79bfd5e4f602475943ab3766239f5cf3b30173132818d42ae5bec7efdac0a5"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "sha256": "aa8385790edcced3b0285631ff0dbb076a9f875283c35498b099b0f1942bd79b"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts",
+        "sha256": "edac0342a1ee2e91bf876fcfd23ff4837357fefdc1c5211560baa93f53394eec"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "sha256": "2f1221b81e8468f1f323ebd3493eea30875968191299f30f2fb94b15e1a97497"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/vitest.beginner-evaluator-context.config.ts",
+        "sha256": "bafb74e095c5e10fe19b06ec339b7352e24601d81162fbc6f0a95e9c1b636070"
+      },
+      {
+        "path": "apps/api/test/beginner-evaluator-context.setup.ts",
+        "sha256": "2bedd447bda5f24520cb29bd8ea8c157a2a8f211da47033a9fb51ad99f8627c4"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      },
+      {
+        "path": "packages/content-format/src/foundation-metadata.ts",
+        "sha256": "99a2ead9efb07478948d75e37ee3df3c57f61559a8ef7d6f102f34de7bffb9ff"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-verification.md",
+        "sha256": "db97c8b3fcc6331e719df7059b21ebeeab3ff1ec0f1ce04e6183729fb9589aac"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+        "sha256": "0fd2efa857607ad213666a581473ce91a9f513d18f22ea45df6f7dbe448486fd"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-review.json",
+        "sha256": "f6ba03b386aa8679e55e50f8dc7f21361b312d0947a3f3c98504dc3b157fb646"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb"
+      }
+    ],
+    "fingerprint": "9c2d790642e740230778969b2a3fd4aa363dd9140099864ed0ef211beb43eb6f"
+  },
+  "allowlist": {
+    "modify": [
+      "apps/api/src/teacher-ai/application/evaluation.service.ts",
+      "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+      "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+      "apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts",
+      "apps/api/src/teacher-ai/application/evaluation.service.spec.ts"
+    ],
+    "create": [
+      "docs/qualification/beginner-evaluator-context-fix-verification.md"
+    ],
+    "fingerprint": "098e07cd423cd172970b59c82310d15b55b02304b32bba81904200bebd806d81"
+  },
+  "readOnly": [
+    "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+    "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+    "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+    "apps/api/src/curriculum/domain/curriculum.types.ts",
+    "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+    "apps/api/vitest.beginner-evaluator-context.config.ts",
+    "apps/api/test/beginner-evaluator-context.setup.ts",
+    "packages/content-format/src/normalizer.ts",
+    "packages/content-format/src/foundation-metadata.ts",
+    "docs/qualification/beginner-evaluator-context-verification.md",
+    "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+    "docs/qualification/beginner-pilot-ai-led-review.json",
+    "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+    "content/beginner/pilot/mg01-l1.lesson.txt",
+    "content/beginner/pilot/mg01-l2.lesson.txt",
+    "content/beginner/pilot/mg01-l3.lesson.txt",
+    "content/beginner/pilot/mg01-l4.lesson.txt",
+    "content/beginner/pilot/mg02-l1.lesson.txt",
+    "content/beginner/pilot/mg02-l2.lesson.txt",
+    "content/beginner/pilot/mg02-l3.lesson.txt",
+    "content/beginner/pilot/mg02-l4.lesson.txt"
+  ],
+  "contract": {
+    "name": "BeginnerEvaluationContextV1",
+    "property": "beginnerContext",
+    "schemaVersion": "beginner-evaluation-context/1",
+    "fields": [
+      "schemaVersion",
+      "lessonVersionId",
+      "activityId",
+      "activitySlug",
+      "roleCards[{slug,text}]",
+      "taskCriteria"
+    ],
+    "alternatives": "Exact authored alternatives inside private taskCriteria;no invented alternative set. Reference model and required phrases remain empty for Beginner.",
+    "cache": "Beginner conditional context hash;legacy byte-compatible;old contextless results conflict,no automatic mutation."
+  },
+  "acceptance": [
+    "Two original desired-contract assertions become genuine PASS after a witnessed RED baseline;no skip/test.fails or weakening context distinction/acceptable-alternatives intent.",
+    "BeginnerEvaluationContextV1 contains schemaVersion beginner-evaluation-context/1,exact lessonVersionId,activityId,activitySlug,referenced roleCards [{slug,text}] and exact authored taskCriteria from snapshot.foundation.responseRubrics[activity.slug]. Authored acceptable alternatives travel inside taskCriteria;no regex guessing/generated alternatives or model-only matching.",
+    "EvaluationService resolves only its validated pinned snapshot and bound activity before cache replay/provider/transaction. Missing/blank criteria,missing/blank referenced cards,duplicate/ambiguous refs or mismatched snapshot identity fail closed;never first-Lesson/latest/global-card fallback.",
+    "Shared server-side serializer asserts mandatory valid Beginner context even on direct adapter bypass. OpenAI and Discovery receive exact same context through existing shared untrustedInput;existing routing preserves it without product routing changes. Entire context is untrusted lesson data,not privileged instructions.",
+    "Beginner cache input hash conditionally includes complete deterministic context/schema identity. Legacy hash/serialization remain byte-for-byte unchanged without context. Valid new V1 cache stays V1 after V2 pointer publish;old contextless or changed-context results fail conflict before replay/provider/mutation. Never delete,migrate,rescore or overwrite historical results automatically.",
+    "No model/private rubric/key/listening transcript added to learner DTO. Existing genuine projection/privacy and version/rubric guards remain. No sample-answer or requiredPhrases shortcut for Beginner.",
+    "Full dedicated isolated suite plus new missing/ambiguous/malformed/context injection tests,OpenAI/Discovery mocked-fetch,routing,cache/replay,V1/V2,legacy Foundation1.0/1.1 and Intermediate/IELTS service/projection regressions PASS. No real provider/HTTP/DB/env. All synthetic fixtures gain valid authored criteria rather than relaxing mandatory guard.",
+    "Focused lint,API typecheck and API build PASS;independent read-only review and diff/hash verification. No skipped/BLOCKED test counted PASS;full unsafe default suites remain excluded and limits explicit.",
+    "Only five modified source/test files and one new report;old verification/human/policy/content/audio records untouched. Report real engineering closure and limitations;do not automatically verify older mandates,release,GateC or R1.2b readiness."
+  ],
+  "commandsAfterApproval": [
+    "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner-evaluator-context.config.ts",
+    "pnpm exec eslint apps/api/src/teacher-ai/application/evaluation.service.ts apps/api/src/ai-gateway/domain/language-evaluation.port.ts apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+    "pnpm --filter @worklingo/api exec tsc --noEmit",
+    "pnpm --filter @worklingo/api build",
+    "node .agents/skills/mandate-steward/scripts/mandate.mjs validate"
+  ],
+  "rollback": "Revert only five product/test files via inverse local commit and append withdrawal to the new fix report. Preserve all source/audio/old reports/sessions/evaluations. Contextless historical caches are never overwritten or migrated. A rollback reopens P1 and blocks actual learner evaluation;no deployment or data reset.",
+  "plan": {
+    "path": "docs/superpowers/plans/2026-10-29-beginner-evaluator-context-fix.md",
+    "sha256LF": "67a44a36a6f33a738182a653fd53d3e49492dc00e79d2ff66acefe7d90b21806"
+  },
+  "prohibited": [
+    "Product edits before matching approval",
+    "DB/env/network/provider/HTTP/live grading",
+    "Schema/migration/content/audio/learner DTO edits",
+    "New runtime enrollment/publication orGateC",
+    "Old mandate/AI/human records modifications",
+    "merge/push/deploy/readiness upgrades"
+  ],
+  "captureAuthorization": "mandate/reports/2026-10-29-beginner-evaluator-context-fix-capture-authorization.md"
+}

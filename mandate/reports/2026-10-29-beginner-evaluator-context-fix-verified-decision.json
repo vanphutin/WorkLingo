@@ -1,0 +1,27 @@
+{
+  "actor": "Codex",
+  "reason": "All exact product-fix acceptance passes:60 isolated tests including original desired assertions,lint/typecheck/build,independent review andscope preservation;no live-grading or readiness inference",
+  "reference": "docs/qualification/beginner-evaluator-context-fix-verification.md:1",
+  "checks": [
+    {
+      "command": "pnpm --filter @worklingo/api exec vitest run --config vitest.beginner-evaluator-context.config.ts",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-evaluator-context-fix-verification.md:1"
+    },
+    {
+      "command": "pnpm exec eslint apps/api/src/teacher-ai/application/evaluation.service.ts apps/api/src/ai-gateway/domain/language-evaluation.port.ts apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-evaluator-context-fix-verification.md:1"
+    },
+    {
+      "command": "pnpm --filter @worklingo/api exec tsc --noEmit",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-evaluator-context-fix-verification.md:1"
+    },
+    {
+      "command": "pnpm --filter @worklingo/api build",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-evaluator-context-fix-verification.md:1"
+    }
+  ]
+}

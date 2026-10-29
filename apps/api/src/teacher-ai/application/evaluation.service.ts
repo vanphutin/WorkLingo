@@ -14,7 +14,7 @@ import {
 import { Prisma, type JobStatus } from '@prisma/client';
 import { evaluationDtoSchema, evaluationStatusSchema, type EvaluationDto } from '@worklingo/contracts';
 
-import { LanguageEvaluationPort } from '../../ai-gateway/domain/language-evaluation.port.js';
+import { LanguageEvaluationPort, assertBeginnerEvaluationContext, type BeginnerEvaluationContextV1 } from '../../ai-gateway/domain/language-evaluation.port.js';
 import { PilotMetricsService } from '../../analytics/application/pilot-metrics.service.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { lessonSnapshotSchema, activitySchema } from '../../curriculum/domain/curriculum.types.js';
@@ -183,11 +183,20 @@ export class EvaluationService {
     const isBeginnerSnapshot=Boolean(rawSnapshot && typeof rawSnapshot==='object' && !Array.isArray(rawSnapshot) && rawSnapshot['formatVersion']==='WorkLingoLesson/1.2');
     const beginnerResponse=isBeginnerSnapshot || activity.payload.rubricId!==undefined || activity.payload.rubricVersion!==undefined || (activity.activityType==='speaking' && activity.payload.mode==='guided_response');
     const beginnerRubric=beginnerResponse ? resolveBeginnerRubric(activity.payload.rubricId ?? '',activity.payload.rubricVersion ?? '',activity.activityType) : null;
+    let beginnerContext: BeginnerEvaluationContextV1 | undefined;
     if(beginnerResponse){
       if(!isBeginnerSnapshot || attempt.session.lessonVersion?.id!==attempt.session.lessonVersionId || attempt.session.mission.level.path?.program.slug!=='beginner') throw new UnprocessableEntityException('INVALID_BEGINNER_EVALUATION_CONTEXT');
       const snapshot=lessonSnapshotSchema.parse(rawSnapshot);
       const bound=snapshot.activities.find(candidate=>candidate.id===activity.id);
       if(!bound || !isDeepStrictEqual(activity,bound)) throw new ConflictException('BEGINNER_ACTIVITY_SNAPSHOT_MISMATCH');
+      if(new Set(activity.contentReferences).size!==activity.contentReferences.length) throw new UnprocessableEntityException('INVALID_BEGINNER_EVALUATION_CONTEXT');
+      const roleCards=activity.contentReferences.map(slug=>{
+        const matches=snapshot.contentBlocks.filter(card=>card.slug===slug);
+        if(matches.length!==1)throw new UnprocessableEntityException('INVALID_BEGINNER_EVALUATION_CONTEXT');
+        return {slug,text:matches[0]!.text};
+      });
+      beginnerContext={schemaVersion:'beginner-evaluation-context/1',lessonVersionId:attempt.session.lessonVersionId,activityId:activity.id,activitySlug:activity.slug,roleCards,taskCriteria:snapshot.foundation?.responseRubrics[activity.slug] ?? ''};
+      assertBeginnerEvaluationContext({activityType:activity.activityType,rubricId:beginnerRubric!.id,rubricVersion:beginnerRubric!.version,beginnerContext});
     }
     const legacyRubric=beginnerRubric ? null : activity.activityType==='speaking'
       ? resolveFoundationRubric({activityType:'speaking',mode:'shadowing'}) : resolveFoundationRubric({activityType:'writing'});
@@ -207,6 +216,7 @@ export class EvaluationService {
       rubricId: rubric.id,
       rubricVersion: rubric.version,
       speechMetrics: attempt.recording?.speechMetrics ?? null,
+      ...(beginnerContext ? {beginnerContext} : {}),
     });
     const existing = attempt.evaluationResults.find(
       (candidate) => candidate.rubricVersion === rubric.version,
@@ -221,6 +231,7 @@ export class EvaluationService {
     }
 
     const evaluationInput = {
+      ...(beginnerContext ? {beginnerContext} : {}),
       routing: { userId: attempt.learnerId },
       activityType: activity.activityType,
       learnerResponse: learnerResponse.trim(),

@@ -1,0 +1,61 @@
+{
+  "title": "Fix missing pinned Beginner evaluator facts and private task criteria without learner leakage",
+  "type": "bug",
+  "owner": "Codex",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "m",
+  "impact": 4,
+  "problem": "Confirmed isolated contracts show opposite role-card facts and task-specific acceptable-alternative criteria collapse to identical provider input. Investigation only approval forbids product repair;new bounded product fix required.",
+  "value": "Enable correct evidence context for Beginner evaluation while preserving exact LessonVersion,legacy behavior,cache isolation and learner privacy.",
+  "scope": [
+    "Beginner server-only evaluation context",
+    "Five exact product/test modifications and one verification report",
+    "No DB/provider/content/DTO/publication changes"
+  ],
+  "dedupe_key": "beginner:evaluator-context:product-fix:pinned-facts-private-criteria:cf24c82",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-evaluator-context-verification.md:1",
+      "observation": "Existing report confirms context omission with36tests34PASS2desiredFAIL and explicit fix handoff."
+    },
+    {
+      "kind": "code",
+      "reference": "apps/api/src/teacher-ai/application/evaluation.service.ts:223",
+      "observation": "Evaluation input omits role cards and snapshot private responseRubrics."
+    },
+    {
+      "kind": "code",
+      "reference": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts:71",
+      "observation": "Both adapters share serialization without required Beginner context."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-29-beginner-evaluator-context-fix-capture-authorization.md:1",
+      "observation": "Owner authorizes capture only;matching execution approval still required."
+    }
+  ],
+  "acceptance": [
+    "Two original desired-contract assertions become genuine PASS after a witnessed RED baseline;no skip/test.fails or weakening context distinction/acceptable-alternatives intent.",
+    "BeginnerEvaluationContextV1 contains schemaVersion beginner-evaluation-context/1,exact lessonVersionId,activityId,activitySlug,referenced roleCards [{slug,text}] and exact authored taskCriteria from snapshot.foundation.responseRubrics[activity.slug]. Authored acceptable alternatives travel inside taskCriteria;no regex guessing/generated alternatives or model-only matching.",
+    "EvaluationService resolves only its validated pinned snapshot and bound activity before cache replay/provider/transaction. Missing/blank criteria,missing/blank referenced cards,duplicate/ambiguous refs or mismatched snapshot identity fail closed;never first-Lesson/latest/global-card fallback.",
+    "Shared server-side serializer asserts mandatory valid Beginner context even on direct adapter bypass. OpenAI and Discovery receive exact same context through existing shared untrustedInput;existing routing preserves it without product routing changes. Entire context is untrusted lesson data,not privileged instructions.",
+    "Beginner cache input hash conditionally includes complete deterministic context/schema identity. Legacy hash/serialization remain byte-for-byte unchanged without context. Valid new V1 cache stays V1 after V2 pointer publish;old contextless or changed-context results fail conflict before replay/provider/mutation. Never delete,migrate,rescore or overwrite historical results automatically.",
+    "No model/private rubric/key/listening transcript added to learner DTO. Existing genuine projection/privacy and version/rubric guards remain. No sample-answer or requiredPhrases shortcut for Beginner.",
+    "Full dedicated isolated suite plus new missing/ambiguous/malformed/context injection tests,OpenAI/Discovery mocked-fetch,routing,cache/replay,V1/V2,legacy Foundation1.0/1.1 and Intermediate/IELTS service/projection regressions PASS. No real provider/HTTP/DB/env. All synthetic fixtures gain valid authored criteria rather than relaxing mandatory guard.",
+    "Focused lint,API typecheck and API build PASS;independent read-only review and diff/hash verification. No skipped/BLOCKED test counted PASS;full unsafe default suites remain excluded and limits explicit.",
+    "Only five modified source/test files and one new report;old verification/human/policy/content/audio records untouched. Report real engineering closure and limitations;do not automatically verify older mandates,release,GateC or R1.2b readiness."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "Revert only five product/test files via inverse local commit and append withdrawal to the new fix report. Preserve all source/audio/old reports/sessions/evaluations. Contextless historical caches are never overwritten or migrated. A rollback reopens P1 and blocks actual learner evaluation;no deployment or data reset."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-29-beginner-evaluator-context-fix.md",
+  "sprint_reference": null,
+  "body": "## Narrow P1 product successor\n\nInvestigation MND-20261028-003 is implementing and cannot repair product. Current owner authorizes capture only. Scope: mandate/reports/2026-10-29-beginner-evaluator-context-fix-scope.json SHA256 97c9d4ddbe28fa67425656e9db2c2a37de17bf62fe94ab34212ef0b4ad0c67c3. Plan LF SHA256 67a44a36a6f33a738182a653fd53d3e49492dc00e79d2ff66acefe7d90b21806. Source baseline cf24c8262fac9888be87cac2b5fbdae38256acba;baseline fingerprint 9c2d790642e740230778969b2a3fd4aa363dd9140099864ed0ef211beb43eb6f;allowlist fingerprint 098e07cd423cd172970b59c82310d15b55b02304b32bba81904200bebd806d81.\n\n## Execution boundary\nFive modify files,one new verification report only. Exact pinned context with authored alternatives/private criteria;shared serializer supports existing routing and Discovery without their product edits. Conditional Beginner cache-context key prevents replay of old contextless scores;legacy byte-compatible. No DTO/data/content/provider/publication or readiness changes.\n\n## Acceptance and rollback\nActual two desired tests must become PASS after RED;negative missing-context/cache/V1V2/privacy/legacy regressions and lint/typecheck/build required. Use dedicated isolated config only. Rollback via inverse local scoped commit with P1 reopened;never mutate historical data.\n\n## Limits\nContext delivery is testable offline;actual real-provider grading accuracy remains unmeasured. If additional files are required,stop and renew scope;do not expand allowlist. Matching new human proposal-hash approval required before product edits."
+}

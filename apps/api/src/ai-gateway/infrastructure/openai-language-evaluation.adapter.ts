@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import {
   LanguageEvaluationPort,
+  assertBeginnerEvaluationContext,
   type LanguageEvaluationInput,
 } from '../domain/language-evaluation.port.js';
 import {
@@ -68,9 +69,9 @@ export const languageEvaluationJsonSchema = {
 
 const joinUrl = (baseUrl: string): string => `${baseUrl.replace(/\/$/, '')}/responses`;
 
-export const untrustedInput = (input: LanguageEvaluationInput): string => [
-  '<worklingo_untrusted_data>',
-  JSON.stringify({
+export const untrustedInput = (input: LanguageEvaluationInput): string => {
+  assertBeginnerEvaluationContext(input);
+  const serialized=JSON.stringify({
     activityType: input.activityType,
     learnerResponse: input.learnerResponse,
     levelCode: input.levelCode,
@@ -79,9 +80,12 @@ export const untrustedInput = (input: LanguageEvaluationInput): string => [
     requiredPhrases: input.requiredPhrases,
     rubricId: input.rubricId,
     rubricVersion: input.rubricVersion,
-  }),
-  '</worklingo_untrusted_data>',
-].join('\n');
+    ...(input.beginnerContext ? {beginnerContext:input.beginnerContext} : {}),
+  });
+  // Preserve legacy bytes;new private context cannot inject closing boundary markers.
+  const safeData=input.beginnerContext ? serialized.replace(/[<>&]/gu,c=>({'<':'\\u003c','>':'\\u003e','&':'\\u0026'}[c]!)) : serialized;
+  return ['<worklingo_untrusted_data>',safeData,'</worklingo_untrusted_data>'].join('\n');
+};
 
 export class OpenAiLanguageEvaluationAdapter extends LanguageEvaluationPort {
   constructor(private readonly config: OpenAiLanguageEvaluationConfig) {

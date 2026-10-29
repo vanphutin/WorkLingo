@@ -1,0 +1,5 @@
+{
+  "actor": "Codex",
+  "reason": "Execute only frozen allowlist with isolated tests",
+  "reference": "mandate/reports/2026-10-29-beginner-evaluator-context-fix-execution-approval.md:1"
+}
