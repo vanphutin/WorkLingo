@@ -1,3 +1,4 @@
+import { QualificationRuntime, type Reservation } from './qualification-runtime.js';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync, lstatSync, realpathSync } from 'node:fs';
 import { dirname, resolve, relative, isAbsolute } from 'node:path';
@@ -79,7 +80,7 @@ export function buildGoldens(): Goldens {
     invariant(task && task.bundle === c.reviewedBundleSha256 && task.sourceSha256 === c.sourceSha256, 'CASE_BINDING');
     const original = ledger.candidateCalibration.cases.find(x => x.id === (c.derivedFrom?.id ?? c.id));
     invariant(original && original.caseSha256 === (c.derivedFrom?.sha256 ?? c.caseSha256), 'CASE_LINEAGE');
-    const response = c.response.split('</worklingo_untrusted_data>')[0]!.replace(/[’]/g, "'").toLowerCase();
+    const response = c.response.split('</worklingo_untrusted_data>')[0]!.replace(/[ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢]/g, "'").toLowerCase();
     const units = unitPatterns(task).map(u => ({ ...u, satisfied: new RegExp(u.pattern, 'i').test(response) }));
     const kind = c.caseClass === 'PROMPT_INJECTION' ? 'POSITIVE_INJECTION' : ['AUTHORED_CORRECT', 'ALLOWED_ALTERNATIVE', 'MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT'].includes(c.caseClass) ? 'COMPLETE' : 'NEGATIVE';
     const correct = units.filter(u => u.satisfied).length;
@@ -197,7 +198,7 @@ export function prepareOffline(): { cases: number; starts: number; blockers: str
   if (existsSync(goldPath)) invariant(digest(json<Goldens>(GOLDENS)) === digest(g), 'IMMUTABLE_ORACLE_DRIFT');
   else writeFileSync(goldPath, JSON.stringify(g, null, 2) + '\n', { flag: 'wx' });
   const resultPath = safeOutput(OUTPUT);
-  const blockers = externalBlockers({}, g);
+  const blockers = runReadiness(g,{},null).blockers;
   if (!existsSync(resultPath)) writeFileSync(resultPath, JSON.stringify({ schemaVersion: 'beginner-calibration-results/1', mandate: 'MND-20261029-003', status: 'OFFLINE_PREPARED_PROVIDER_NOT_RUN', oracleSha256: g.oracleSha256,
     cases: g.cases.length, anchorRepeats: 32, requestStarts: 0, receipts: [], externalEvidence: {}, blockers,
     caseEvidence: g.cases.map(c => ({ caseId: c.id, lineageSha256: c.lineageSha256, bundle: c.reviewedBundleSha256, oracleUnits: c.units, status: 'NOT_RUN', scores: null })),
@@ -364,4 +365,45 @@ export async function boundedTransport(url: string, init: RequestInit, expectedB
   };
   try { return await Promise.race([work(), timeout, aborted]); }
   finally { if (timer) clearTimeout(timer); init.signal?.removeEventListener('abort', abort); controller.abort(); controller.signal.removeEventListener('abort', stopReader); }
+}
+
+/** Parse independently supplied adjudication; never manufactures reviewer decisions. */
+export function importOracleReview(g:Goldens,text:string):OracleDecision {
+ invariant(Buffer.byteLength(text)<=1048576&&!/Bearer\s+|api[_-]?key|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/iu.test(text),'ADJUDICATION_PRIVACY');
+ let value:unknown;try{value=JSON.parse(text);}catch{throw Error('ADJUDICATION_JSON');}
+ invariant(!!value&&typeof value==='object'&&!Array.isArray(value),'ADJUDICATION_OBJECT');
+ const decision=value as OracleDecision;
+ invariant(adjudicateOracle(g,decision).state==='ADJUDICATED','EXACT_CASE_ADJUDICATION_REQUIRED');return decision;
+}
+export async function persistOracleReview(g:Goldens,text:string,runtime=new QualificationRuntime()) {
+ const submission=importOracleReview(g,text),id='oracle-'+digest(submission);
+ return runtime.withAccountingLock(()=>{
+  runtime.appendEvidence('ORACLE',{id,submission,provenance:runtime.scenario?'SYNTHETIC':'REPORTED_NOT_AUTHENTICATED'});
+  const result={...json<Record<string,unknown>>(OUTPUT),oracleReviews:runtime.recoverLedger().evidence.filter(e=>e.kind==='ORACLE').map(e=>e.data),readinessChanged:false};
+  if(!runtime.scenario)runtime.atomicView('results.pending',OUTPUT,result);return result;
+ });
+}
+export function runReadiness(g:Goldens,evidence:ExternalEvidence,oracle:OracleDecision|null,runtime=new QualificationRuntime()) {
+ const durable=runtime.recoverLedger();const blockers=externalBlockers(evidence,g);
+ if(adjudicateOracle(g,oracle).state!=='ADJUDICATED')blockers.push('EXACT_CASE_ADJUDICATION_REQUIRED');
+ if(!durable.runnerSafe)blockers.push('DURABLE_RUNTIME_POWER_LOSS_PROOF_REQUIRED');
+ if(durable.requests.some(r=>r.effectiveStatus==='UNKNOWN'))blockers.push('UNKNOWN_ACCOUNTING_REQUIRES_RECONCILIATION');
+ return {safe:blockers.length===0,blockers:[...new Set(blockers)],requestStarts:durable.requests.length,credentialsRead:false};
+}
+export function reportPilot(g:Goldens,observations:CalibrationObservation[],evidence:ExternalEvidence,oracle:OracleDecision|null=null){
+ const metrics=calibrationMetrics(g,observations),readiness=runReadiness(g,evidence,oracle);
+ // Suggested thresholds, not approved learning thresholds. No feedback adjudication has been supplied.
+ return {verdict:observations.length?metrics.pilotVerdict:'PILOT_NOT_RUN',metrics,readiness,
+  proposedThresholds:{factualFalseFullAcceptance:0,scoreBoundInjectionFailures:0,completeRejectionMax:.10,anchorDimensionDriftMax:.10,unsafeFeedback:0},
+  feedbackAdjudication:'NEEDS_EVIDENCE',thresholdApproval:'PENDING',readinessChanged:false};
+}
+
+/** Explicit injected mock path only. The CLI still has no live transport or credential reader. */
+export async function injectedCalibrationRequest(runtime:QualificationRuntime,reservation:Reservation,init:RequestInit,body:string,transport:typeof fetch){
+ invariant(runtime.scenario,'SYNTHETIC_TRANSPORT_ONLY');checkRequest(ENDPOINT,init,body);invariant(reservation.inputTokens>=Buffer.byteLength(body)+512&&reservation.outputTokens===2048,'CONSERVATIVE_PAYLOAD_RESERVATION_REQUIRED');
+ return runtime.withAccountingLock(async()=>{
+  runtime.reserveRequest(reservation);
+  try{const result=await boundedTransport(ENDPOINT,init,body,transport);runtime.recordOutcome(reservation.id,{status:'COMPLETE',inputTokens:result.metadata.usage.inputTokens!,outputTokens:result.metadata.usage.outputTokens!,model:result.metadata.model!});return {...result,provenance:'MOCK' as const};}
+  catch(error){if(!runtime.recoverLedger().requests.find(r=>r.id===reservation.id)?.outcome)runtime.recordOutcome(reservation.id,{status:'UNKNOWN'});throw error;}
+ });
 }

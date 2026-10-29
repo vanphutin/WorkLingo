@@ -82,3 +82,6 @@ Fault matrix: malformed/truncated replies,timeout,abort,unknown usage,unexpected
 - Self-review mutation experiment:temporarily remove receipt-chain/accounting integrity condition;existing tamper test fails(53 PASS/1 FAIL);restore original bytes and final suite54 PASS. This is a deliberately failing mutation run,not a product failure or independent review.
 - Build and broader regression:NOT_RUN because current frozen command allowlist does not include these commands. Proposed safe broadened checks are in the pending Umbrella scope;no skipped tests counted PASS.
 - Final integration invariants:128 unique cases/32 repeats/160 schedule;297 historical decisions preserved;no actual reviewer/provider data added;0/8AI_QUALIFIED;R1.2b NOT_READY.
+
+## MND-20261029-005 offline engineering successor
+A suite57PASS/0FAIL/0skipped. Durable journal reservation precedes injected mock transport;128-case intake stays source-bound and rejects duplicate evidence. Fresh CLI preflight includes runtime/oracle evidence gates. Actual provider starts=0; actual usage, latency, observed model/version and scoring metrics remain NOT_MEASURED. Oracle template is deliberately unfilled. Power-loss durability unproven; runnerSafe=false. See beginner-pilot-qualification-engineering.md. Existing golden/results JSON bytes and historical evidence unchanged.

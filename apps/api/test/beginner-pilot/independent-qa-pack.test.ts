@@ -63,3 +63,16 @@ test('strict review import rejects global boilerplate verdict rationale and cred
   s.rows[0]!.rationale='GLOBAL_PASS';assert.throws(()=>qa.importReview(packet,JSON.stringify(s)),/ITEM_EVIDENCE/);
   s.rows[0]!.rationale='Bearer secret-value-must-not-be-logged';assert.throws(()=>qa.importReview(packet,JSON.stringify(s)),/SENSITIVE/);
 });
+
+test('review evidence has durable intake/recovery without inventing actual reviewer rows',()=>{
+ assert.equal(typeof qa.persistReview,'function','MISSING_DURABLE_REVIEW_INTAKE');
+ assert.equal(typeof qa.recoverReviews,'function');
+});
+
+test('82 strict dispositions survive interrupted derived view and recover once without public synthetic writes',async()=>{
+ const {QualificationRuntime,runtimePath}=await import('./qualification-runtime.js');const fs=await import('node:fs');const {resolve}=await import('node:path');
+ const root=runtimePath('rename-failure');fs.mkdirSync(root,{recursive:true});assert.ok(!fs.existsSync(resolve(root,'writer.lock')));if(fs.existsSync(resolve(root,'anchor.json')))assert.equal(JSON.parse(fs.readFileSync(resolve(root,'anchor.json'),'utf8')).synthetic,true);
+ for(const name of ['journal.jsonl','state.json','state.pending','anchor.json'])if(fs.existsSync(resolve(root,name)))fs.unlinkSync(resolve(root,name));
+ const s=syntheticSubmission();Object.assign(s,{qualificationReference:'SYNTHETIC_ONLY'});for(const row of s.rows)Object.assign(row,{scopeOfClaim:'ITEM_ONLY_NOT_CEFR_OR_MASTERY'});
+ const r=new QualificationRuntime('rename-failure',{beforeStateRename:()=>{throw Error('SIMULATED_DERIVED_RENAME_FAILURE');}});await assert.rejects(qa.persistReview(packet,JSON.stringify(s),r),/RENAME_FAILURE/);const recovered=qa.recoverReviews(packet,new QualificationRuntime('rename-failure'));assert.equal(qa.aggregateEvidence(recovered).dispositionsCompleted,82);assert.equal(recovered.evidenceEvents.length,1);await assert.rejects(qa.persistReview(packet,JSON.stringify(s),r),/DUPLICATE/);assert.equal(packet.evidenceEvents.length,0);
+});

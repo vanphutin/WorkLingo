@@ -76,3 +76,6 @@ Independent review BLOCKED by tool model availability. No network,media copy,Azu
 - Self-review mutation experiment:temporarily remove per-row scope guard;qualification/scope contract test fails(34 PASS/1 FAIL);restore bytes and final suite35 PASS. This is intentional mutation evidence,not independent review.
 - Integration invariants:packet SHA-256 remains `0a2f28c1ad915a97f072a5985b68feaeea455af4b9e75359b69c5a5c865231df`;24/41/11/6 inventory unchanged;0/82 actual dispositions. Original JSON,teacher claims and GateA records retained.
 - Build/broader regression and persistent import command:NOT_RUN/not authorized by existing command allowlist. Proposed together in pending Umbrella scope.
+
+## MND-20261029-005 offline persistence successor
+B suite37PASS/0FAIL/0skipped.82-row strict import replays a fsynced journal after interrupted derived-state update, without duplicate/lost history or synthetic writes to public views. Actual submitted dispositions remain0/82.24WAV/41lexical/11IPA/6support bindings unchanged; no professional identity, pronunciation,CEFR or semantic/provenance approval inferred. See beginner-pilot-qualification-engineering.md.

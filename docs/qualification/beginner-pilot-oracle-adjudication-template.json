@@ -1,0 +1,776 @@
+{
+  "oracleSha256": "3695b964def6df9f199be0a9226cc51ac3e162267d189c3bde2def6be1f23724",
+  "reviewerId": null,
+  "reviewedAt": null,
+  "evidenceReference": null,
+  "decisions": [
+    {
+      "caseId": "mg01-l1-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:AUTHORED_CORRECT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:ALLOWED_ALTERNATIVE",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:WRONG_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:MISSING_FACT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:PROMPT_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l1-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l2-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l3-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg01-l4-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l1-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l2-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l3-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-s1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    },
+    {
+      "caseId": "mg02-l4-w1:WRONG_FACT_WITH_INJECTION",
+      "decision": null,
+      "rationale": null,
+      "evidenceReference": null
+    }
+  ]
+}

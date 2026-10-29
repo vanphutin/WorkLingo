@@ -121,3 +121,26 @@ test('oracle adjudication refuses invented signature or unknown authority fields
   const review={oracleSha256:goldens.oracleSha256,reviewerId:'SYNTHETIC_REVIEWER',reviewedAt:'2026-10-29',evidenceReference:'SYNTHETIC_ONLY',decisions:goldens.cases.map(c=>({caseId:c.id,decision:'APPROVE' as const,rationale:'Synthetic only',evidenceReference:'SYNTHETIC_ONLY'})),humanSigned:true};
   assert.equal(calibration.adjudicateOracle(goldens,review).state,'BLOCKED');
 });
+
+test('durable oracle intake refuses missing adjudication and runner readiness is not a caller boolean',async()=>{
+ assert.equal(typeof calibration.importOracleReview,'function','MISSING_DURABLE_ORACLE_INTAKE');
+ assert.throws(()=>calibration.importOracleReview(goldens,'{}'),/ADJUDICATION/);
+ assert.equal(calibration.reportPilot(goldens,[],{}).verdict,'PILOT_NOT_RUN');
+ assert.ok(calibration.runReadiness(goldens,{},null).blockers.includes('DURABLE_RUNTIME_POWER_LOSS_PROOF_REQUIRED'));
+});
+
+test('oracle journal persists exact reported decisions; replay cannot append duplicate or overwrite goldens',async()=>{
+ const {QualificationRuntime,runtimePath}=await import('./qualification-runtime.js');const fs=await import('node:fs');const {resolve}=await import('node:path');
+ const root=runtimePath('before-reservation');fs.mkdirSync(root,{recursive:true});assert.ok(!fs.existsSync(resolve(root,'writer.lock')));if(fs.existsSync(resolve(root,'anchor.json')))assert.equal(JSON.parse(fs.readFileSync(resolve(root,'anchor.json'),'utf8')).synthetic,true);
+ for(const name of ['journal.jsonl','state.json','state.pending','anchor.json'])if(fs.existsSync(resolve(root,name)))fs.unlinkSync(resolve(root,name));
+ const review={oracleSha256:goldens.oracleSha256,reviewerId:'SYNTHETIC_REVIEWER',reviewedAt:'2026-10-29',evidenceReference:'SYNTHETIC_TEST_ONLY',decisions:goldens.cases.map(c=>({caseId:c.id,decision:'APPROVE' as const,rationale:'Synthetic test only',evidenceReference:'SYNTHETIC_TEST_ONLY'}))};
+ const before=fs.readFileSync(resolve(calibration.ROOT,calibration.GOLDENS));const r=new QualificationRuntime('before-reservation');await calibration.persistOracleReview(goldens,JSON.stringify(review),r);assert.equal(new QualificationRuntime('before-reservation').recoverLedger().evidence.length,1);await assert.rejects(calibration.persistOracleReview(goldens,JSON.stringify(review),r),/DUPLICATE/);assert.deepEqual(fs.readFileSync(resolve(calibration.ROOT,calibration.GOLDENS)),before);
+});
+
+test('injected transport cannot start before durable reservation and failed request stays consumed',async()=>{
+ assert.equal(typeof calibration.injectedCalibrationRequest,'function','MISSING_DURABLE_TRANSPORT_BINDING');
+ const {QualificationRuntime,runtimePath}=await import('./qualification-runtime.js');const fs=await import('node:fs');const {resolve}=await import('node:path');const root=runtimePath('timeout');fs.mkdirSync(root,{recursive:true});assert.ok(!fs.existsSync(resolve(root,'writer.lock')));if(fs.existsSync(resolve(root,'anchor.json')))assert.equal(JSON.parse(fs.readFileSync(resolve(root,'anchor.json'),'utf8')).synthetic,true);for(const name of ['journal.jsonl','state.json','state.pending','anchor.json'])if(fs.existsSync(resolve(root,name)))fs.unlinkSync(resolve(root,name));
+ const r=new QualificationRuntime('timeout');let calls=0;
+ await assert.rejects(calibration.injectedCalibrationRequest(r,{id:'transport-test',caseId:'case',phase:'pilot',at:100000,inputTokens:1000,outputTokens:2048},{method:'POST',body,redirect:'error'},body,async()=>{calls++;assert.equal(r.recoverLedger().requests.length,1);return Response.json({model:MODEL});}),/USAGE_UNKNOWN/);
+ assert.equal(calls,1);assert.equal(r.recoverLedger().requests[0]!.effectiveStatus,'UNKNOWN');assert.equal(r.recoverLedger().inputReserved,1000);
+});
