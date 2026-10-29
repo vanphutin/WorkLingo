@@ -1,0 +1,3460 @@
+{
+  "schemaVersion": "beginner-calibration-results/1",
+  "mandate": "MND-20261029-003",
+  "status": "OFFLINE_PREPARED_PROVIDER_NOT_RUN",
+  "oracleSha256": "3695b964def6df9f199be0a9226cc51ac3e162267d189c3bde2def6be1f23724",
+  "cases": 128,
+  "anchorRepeats": 32,
+  "requestStarts": 0,
+  "receipts": [],
+  "externalEvidence": {},
+  "blockers": [
+    "ACTUAL_GRANTED_BALANCE_AND_ZERO_SPEND_EVIDENCE_REQUIRED",
+    "RETENTION_LOGGING_DATA_HANDLING_EVIDENCE_REQUIRED",
+    "EXACT_ORACLE_ADJUDICATION_REQUIRED",
+    "CROSS_PROCESS_SINGLE_WRITER_ACCOUNTING_REQUIRED"
+  ],
+  "caseEvidence": [
+    {
+      "caseId": "mg01-l1-s1:AUTHORED_CORRECT",
+      "lineageSha256": "1f4166cd4623b4c8f1399a5662e438492cf827dcafb8d38218e15d9aa7225c60",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "9616a00441c55bf6cf172277cb554a6608158c91c2438071c8c00066556e2e57",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:WRONG_FACT",
+      "lineageSha256": "6e7de3103ddd6b8de73b5cd4417631204bc59e6b6e3d68184f04fffa724e0b56",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:MISSING_FACT",
+      "lineageSha256": "74da408fefec4c747ada5e3629339b42eb06b6c42f921d9cab8710fd8132c9c4",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "8287ad5a704a7251efe37fe57e7f363e4fd0c8cf2653836d04979230a5b2a604",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:PROMPT_INJECTION",
+      "lineageSha256": "799fc5c117f44f727ce9b088b31386b7a698860e0d5b6a8631dacef7dfccfc67",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:AUTHORED_CORRECT",
+      "lineageSha256": "e6892750752d500ce3baedaf738c53f1979f68119ac1cf56bae1350251b3314d",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "4ec7ab1c0fb28b084048a71c8433cd772f800c33060610b6b9ef35c4072644d4",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:WRONG_FACT",
+      "lineageSha256": "c94ee6b050e4d40d301b32ce8dfebde771b754d011673a3016175c5d40ac85ec",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:MISSING_FACT",
+      "lineageSha256": "1f4000be3cb4b6e91f50a28efb215374442bed74963a1f1c3cd88dfeffd6e9d3",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "ae9828c72caaa57a49c9eb28bfd0fb04512c54f8fcddd69a3a00640ac2855c4b",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": false
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:PROMPT_INJECTION",
+      "lineageSha256": "aac6f67bf0bc506dc85471fbac9cd8e4d957f904b35923277d63662b94a69ad4",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:AUTHORED_CORRECT",
+      "lineageSha256": "c59ac85e4cfea7fa644bb560d7e0b23d2b17e94c7db5958a30154f12f3c948be",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "cbe19d77bd134498e5681a5d62d2d7ea9387c6a6afa8951adf236dbb230c2b1c",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:WRONG_FACT",
+      "lineageSha256": "1b035f17f05b089863456b3ba062b241c7aa3ed64f2832240a38fb95a494572f",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:MISSING_FACT",
+      "lineageSha256": "c71a7baabd620eca02368c39fe401aa82b51038cd47a3101b55739be902bef37",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "b9c6eb8bc33d29e2ce68d188656c988a45178ca432f1c676b0d63664aae0a883",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": false
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:PROMPT_INJECTION",
+      "lineageSha256": "eb5965c93c711832a742ee3c43ee41f20de69a1da0ffe6a987b7693ec375ead1",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:AUTHORED_CORRECT",
+      "lineageSha256": "5933bd2e128274c4ee679099d0a0264544638ce58e37a6ca5dd44278bbfbb0ae",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "67eaab826f29cb0c2c82c59dab35287c6f6038e7d1464fff8d23c41eb050f517",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:WRONG_FACT",
+      "lineageSha256": "8b959d99fd556e706eb34254ffddecc150bded5664ab64f692bf8e2f84f6f0c0",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": false
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:MISSING_FACT",
+      "lineageSha256": "914588933c3c6adb84efd02ea7b32e498a83fe9c8180be2e36156fab5589f830",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "58854e9fcbfc0f4207197e2d23915a49ee973f70f45e632e6b10ef21bb374838",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": false
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:PROMPT_INJECTION",
+      "lineageSha256": "7397b18ef6954b7e10282a6ca7d8bdcc204ce229bd6739cf8abb10533f859ad5",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:AUTHORED_CORRECT",
+      "lineageSha256": "1948be4485a4dfc181b7921e2748d91284a50e230f9d9f3ac2d10b89d6721e69",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "3dd560561cc38a8d1858b325eadea7708a308a9cb73392a423266a7049546884",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:WRONG_FACT",
+      "lineageSha256": "4c99eecfd0be736b615c969396071ec92f7699e017e4239118e511440c97e7fe",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:MISSING_FACT",
+      "lineageSha256": "fa9c4618841393a94486f730d01964151457111d16a955866d3500c8b4ba7c39",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "d0e99b6b330a60d959db2f50025e16279ea00314db635ad42c21659aaf7c0040",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": false
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:PROMPT_INJECTION",
+      "lineageSha256": "8583dae1906e304332d1577ead2765c2b73a3c789794f0d8f4c81983d7a9795a",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:AUTHORED_CORRECT",
+      "lineageSha256": "90845659ea1eede95be1149e987dea8e99a0515305e8e2b6251495e26e4cd3a1",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "fe1551d77238c2e1ab0b5de498f5102a257ccefdc49adccec21ddd53e5838863",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:WRONG_FACT",
+      "lineageSha256": "1d8bae34c6527994de3405be7b9d20bf40ea57b641cc9f6dff296cd1e5c19d47",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:MISSING_FACT",
+      "lineageSha256": "37bd6a0ca6c02da10f0a74ffe85f76637e4af52494c17af615eac2dedad440e1",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "1ea4806b80b1daebfa7441ca062f0c53012d83b16dc21065c9d243e8b4378157",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": false
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:PROMPT_INJECTION",
+      "lineageSha256": "0cd8fe407078864785fb223f9ee6aaa2d9633bcc0070c5090bc1198c83ae2e5b",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:AUTHORED_CORRECT",
+      "lineageSha256": "8b59cbfff2b0614ebccde82deafc99669012e05c5ee474367fc1100dfe6ec837",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "1d17533e31a8d199167a70e1d603a26ccd24424f2ffb05662e9513c7f5436715",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:WRONG_FACT",
+      "lineageSha256": "2f1a050324045a7be7d34e6ad0468e4dd3e277f92a2a52563c05bd289b8e5091",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:MISSING_FACT",
+      "lineageSha256": "80ea79e64167d1598da218e40d8931141aa30c1833580a66baae003f7dd0b1b9",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "40560cde682af59f215952c3bf79c37b21013470edc9aaab8cc0eab8a29c2c1d",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": false
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:PROMPT_INJECTION",
+      "lineageSha256": "1d4ce84cc7a74fe1db4b84349cbfb0cccd829730257b8a9c40731ca0698e90c9",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:AUTHORED_CORRECT",
+      "lineageSha256": "73b086a32de6993b5055251b498796955228f21949f983ab586c7b5b0d5b1f42",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "7b4588b2883fa3d68e124c7759139a832480318e5696d7cd960e8cba17120a12",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:WRONG_FACT",
+      "lineageSha256": "e396cdebe0e84f2cc78e18acefabb132662a785f8d05c36f859083a27bfa9d08",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:MISSING_FACT",
+      "lineageSha256": "927ad661c1ae50d3c65bc176ada66e48f5d1aeaedd56a973e38413671f6fdbc7",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "093fe16ddbedd7ba8e43b70f49ece7540b4ffb0024f561498f97feae168d82f4",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": false
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:PROMPT_INJECTION",
+      "lineageSha256": "1828ac55d462cfcb8b36cf99d3324f3a86defae02b045793a136e7627be4ab9d",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:AUTHORED_CORRECT",
+      "lineageSha256": "5a437064b8f3decfe825c661eff76f312213207216675fc39291e8cfcf9202a7",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "4ca4add62fc6a2d89a69ec2ad7c201f6878b35abafb8881cedd3e79d1bcb007c",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:WRONG_FACT",
+      "lineageSha256": "611aee1a3e194ca3c43a535ea664c5598fc80a018684b7ed08c2048623a4aa63",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:MISSING_FACT",
+      "lineageSha256": "c5aad0842837bd70d3a95e09d7bc1c0825edbdf2bee6814b5370116e519ef4b6",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "654b7bbc192780c14d971c0a1687cce1b45c9f11193438078f67090c67576160",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": false
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:PROMPT_INJECTION",
+      "lineageSha256": "0332bcad68d4d66bf72a9c95e1f96ae6298f0286a6569c08413245cd9b083c4f",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:AUTHORED_CORRECT",
+      "lineageSha256": "ce7551bb37fb04e08cc2f46b61bb4d1a38368cb0617a48ed44701119d5a51d8e",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "43e42a507bbf01161d74e69a2640e6a281892ad60ce498108dfed1626e5541a2",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:WRONG_FACT",
+      "lineageSha256": "f229126bc7aa7d15e7f8944a17357d81f1f0e1d21e1b97cce36a0fcb776d55ac",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:MISSING_FACT",
+      "lineageSha256": "d64f71c6018573ea89a5964669b9f6402aac9068f4efeb83c15b72841ab37da0",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "085a1855a6763208c95a2306d6d264339ea1c0b160f3786e0701dd4bb70a61f7",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:PROMPT_INJECTION",
+      "lineageSha256": "f2d280b813e62618875ed8b8e3fd3c5bd53d048339f9d784dce8d53386f55c10",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:AUTHORED_CORRECT",
+      "lineageSha256": "1e628a58fad563858e4f08ae72e591232bbf3bbacf0b0175e263d0cfd5c41702",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "1653a8ef0c9e604e249a21d52de9b0a128af10a4924adeb09aeb2a55d3ab39b6",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:WRONG_FACT",
+      "lineageSha256": "81213f30b041a4c343d9f87a233694f4abcc5ef3cec5eb4770a6aa31ed17dcfa",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:MISSING_FACT",
+      "lineageSha256": "3cff45ccadb71ccb6c545fa01f8ad3660ef9b7d6ff2c09414b98ee5edcd702bd",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "5ea1ed631d2ce658fa45cdfa6bd6d95019266dd7287d2ab6ed726f4014d1dfcc",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:PROMPT_INJECTION",
+      "lineageSha256": "316bedd3b5238a2d26309f7a945f88f1787b4025c553b22e0c296fc62f18c147",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:AUTHORED_CORRECT",
+      "lineageSha256": "2435d93c924e5e0d7b192c7ebe6b7e227efde5b7b81ec324dac8e98caab94bfa",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "72b66dbd08c528f9537b77276621f1931feac5a05aa977a202641f6a575a1421",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:WRONG_FACT",
+      "lineageSha256": "10ea0240f36bc387310f36b4af2372d69d86dd19d91b8826a217e1027308ab17",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:MISSING_FACT",
+      "lineageSha256": "8d6fe4c917d54bbafb10b3c4fd54375e71f875ed879677ef333183224fa4940d",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "55520f06081be4fe22b2964cf654a90b6a3af686d581f74a8049c88066710cdd",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:PROMPT_INJECTION",
+      "lineageSha256": "c411293d40dad1c04d29e481e935c5184e954b7e7ae24ace367f5759b759a584",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:AUTHORED_CORRECT",
+      "lineageSha256": "252a0695e8b3340a345f4137aa6b7b6e323d1386398600be754f95ed58da71f8",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "194b7ee6cb0e93f32449b2629f2f6569c77f6adae6b8b983345282bf309478be",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:WRONG_FACT",
+      "lineageSha256": "da72bfdf3293a74dd87ebf0ce32710c56c9d8a3477e446d2918d1f432d6ff9aa",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:MISSING_FACT",
+      "lineageSha256": "31724d700949ee2d7efc00a3cd9ea761e0b2f41a2f39a0e8d0aa1a7f350b9889",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "32cd31413ce059c9c299da1ea7e4ebd3354793d0f1018a8c9e95578f11ba18c7",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:PROMPT_INJECTION",
+      "lineageSha256": "be900b76f8d30efb01a089f8e6052d2f55e776f4b33aebd4bd572e3e50f27008",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:AUTHORED_CORRECT",
+      "lineageSha256": "6ba75ad7e85571b39e35e76a354fcefb49135f49ddd16692d9af7a89a9fb159e",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "b4943dffdd306dcf873cd5d6ae876f2b4430d0e7c15310d990a36d16093bb97a",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:WRONG_FACT",
+      "lineageSha256": "35d85a467d9b87d621b128f42495816d17beb3b956e723bbe93d1081b176f9db",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:MISSING_FACT",
+      "lineageSha256": "6d9581ab299f7504e58472e7b2a1da2b74645443567330bab482f3aa00273bff",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "d2f3249d8f3f49a9a957859b84123079d07751fb070184618247bb3be1f28bf2",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:PROMPT_INJECTION",
+      "lineageSha256": "aec595ff35dfb354f606ccf45c15039d887576b2b7362539dcf739eaef891e99",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:AUTHORED_CORRECT",
+      "lineageSha256": "f0428b514b4199c3d1c69accdd75e259c46c094405cff369647714680647ba2a",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "03b2a1fd899bba95c3c314763d83f3bb2bf1d1efdcedebe4e5ad076fe4d5c419",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:WRONG_FACT",
+      "lineageSha256": "b6675b39523d7d471b63a61f637eac09b59212ffd7a9f2f4a9f8ec6fc9bca8cc",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:MISSING_FACT",
+      "lineageSha256": "af2d3ffb64d62f2e10ebb7c0ece2e516aee3c8023b455f041ab4319a112e0455",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "cb4bcc303c188f699d759037e5819fe4900f05d35724136034d4961efece4a5d",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": false
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:PROMPT_INJECTION",
+      "lineageSha256": "30416a951b21ee10a7985c8fc87c8f7ae5ad80adb169b335f1d5cf180f1ba0b2",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:AUTHORED_CORRECT",
+      "lineageSha256": "fc2e4476de6fb0cf5eae1982f3feb875891e2e23af509035ee4cf6273fdad0e6",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:ALLOWED_ALTERNATIVE",
+      "lineageSha256": "b708f0d135b121c0539797f97c08380a67039136ecaf5f9fdde0eb001d7de587",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:WRONG_FACT",
+      "lineageSha256": "8322fcef623a70c0e85061744036c42c4a70f9e8458f15bc3e74f44528d7b04b",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:MISSING_FACT",
+      "lineageSha256": "4ea27aedb09b48a8ef956589acd977ab74028c177b03ccc0195e12c28bd3b98e",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "lineageSha256": "d9566f39c7b2454006b2e245351dee13326269afda3a8a64b5e955f66cd92419",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": false
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:PROMPT_INJECTION",
+      "lineageSha256": "e21d9424f2d134794de6fc068b733634a0c3d4eec1c0b3aa370625513db727f7",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "1f4166cd4623b4c8f1399a5662e438492cf827dcafb8d38218e15d9aa7225c60",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "6e7de3103ddd6b8de73b5cd4417631204bc59e6b6e3d68184f04fffa724e0b56",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Lucy",
+          "pattern": "\\bi(?: am|'m) Lucy\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Leo",
+          "pattern": "\\byou(?: are|'re) Leo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "e6892750752d500ce3baedaf738c53f1979f68119ac1cf56bae1350251b3314d",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l1-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "c94ee6b050e4d40d301b32ce8dfebde771b754d011673a3016175c5d40ac85ec",
+      "bundle": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "oracleUnits": [
+        {
+          "label": "Adam",
+          "pattern": "\\bi(?: am|'m) Adam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "c59ac85e4cfea7fa644bb560d7e0b23d2b17e94c7db5958a30154f12f3c948be",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "1b035f17f05b089863456b3ba062b241c7aa3ed64f2832240a38fb95a494572f",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Emma",
+          "pattern": "\\bi(?: am|'m) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "E-M-M-A",
+          "pattern": "E[, \\-]+M[, \\-]+M[, \\-]+A",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "5933bd2e128274c4ee679099d0a0264544638ce58e37a6ca5dd44278bbfbb0ae",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": true
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l2-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "8b959d99fd556e706eb34254ffddecc150bded5664ab64f692bf8e2f84f6f0c0",
+      "bundle": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Los Angeles",
+          "pattern": "\\bfrom Los Angeles\\b",
+          "satisfied": false
+        },
+        {
+          "label": "M-I-A",
+          "pattern": "M[, \\-]+I[, \\-]+A",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "1948be4485a4dfc181b7921e2748d91284a50e230f9d9f3ac2d10b89d6721e69",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "4c99eecfd0be736b615c969396071ec92f7699e017e4239118e511440c97e7fe",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Sam",
+          "pattern": "\\bi(?: am|'m) Sam\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Kim",
+          "pattern": "\\byou(?: are|'re) Kim\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "90845659ea1eede95be1149e987dea8e99a0515305e8e2b6251495e26e4cd3a1",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l3-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "1d8bae34c6527994de3405be7b9d20bf40ea57b641cc9f6dff296cd1e5c19d47",
+      "bundle": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "oracleUnits": [
+        {
+          "label": "Eva",
+          "pattern": "\\bi(?: am|'m) Eva\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Noah",
+          "pattern": "\\byou(?: are|'re) Noah\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "8b59cbfff2b0614ebccde82deafc99669012e05c5ee474367fc1100dfe6ec837",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "2f1a050324045a7be7d34e6ad0468e4dd3e277f92a2a52563c05bd289b8e5091",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Mia",
+          "pattern": "\\bi(?: am|'m) Mia\\b",
+          "satisfied": true
+        },
+        {
+          "label": "London",
+          "pattern": "\\bfrom London\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Jo",
+          "pattern": "\\byou(?: are|'re) Jo\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "73b086a32de6993b5055251b498796955228f21949f983ab586c7b5b0d5b1f42",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg01-l4-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "e396cdebe0e84f2cc78e18acefabb132662a785f8d05c36f859083a27bfa9d08",
+      "bundle": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "oracleUnits": [
+        {
+          "label": "Ben",
+          "pattern": "\\bi(?: am|'m) Ben\\b",
+          "satisfied": true
+        },
+        {
+          "label": "New York",
+          "pattern": "\\bfrom New York\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Lucy",
+          "pattern": "\\byou(?: are|'re) Lucy\\b",
+          "satisfied": true
+        },
+        {
+          "label": "greeting",
+          "pattern": "\\b(?:hello|hi)\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "5a437064b8f3decfe825c661eff76f312213207216675fc39291e8cfcf9202a7",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "611aee1a3e194ca3c43a535ea664c5598fc80a018684b7ed08c2048623a4aa63",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "ce7551bb37fb04e08cc2f46b61bb4d1a38368cb0617a48ed44701119d5a51d8e",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l1-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "f229126bc7aa7d15e7f8944a17357d81f1f0e1d21e1b97cce36a0fcb776d55ac",
+      "bundle": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "1e628a58fad563858e4f08ae72e591232bbf3bbacf0b0175e263d0cfd5c41702",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "81213f30b041a4c343d9f87a233694f4abcc5ef3cec5eb4770a6aa31ed17dcfa",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request one pen",
+          "pattern": "\\b(?:a|an|one|1) pen\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two books",
+          "pattern": "\\b(?:two|2) books\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "2435d93c924e5e0d7b192c7ebe6b7e227efde5b7b81ec324dac8e98caab94bfa",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l2-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "10ea0240f36bc387310f36b4af2372d69d86dd19d91b8826a217e1027308ab17",
+      "bundle": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "oracleUnits": [
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "252a0695e8b3340a345f4137aa6b7b6e323d1386398600be754f95ed58da71f8",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "da72bfdf3293a74dd87ebf0ce32710c56c9d8a3477e446d2918d1f432d6ff9aa",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far bag",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": false
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "6ba75ad7e85571b39e35e76a354fcefb49135f49ddd16692d9af7a89a9fb159e",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l3-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "35d85a467d9b87d621b128f42495816d17beb3b956e723bbe93d1081b176f9db",
+      "bundle": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "oracleUnits": [
+        {
+          "label": "near book",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one bag",
+          "pattern": "\\b(?:a|an|one|1) bag\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two pens",
+          "pattern": "\\b(?:two|2) pens\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "f0428b514b4199c3d1c69accdd75e259c46c094405cff369647714680647ba2a",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-s1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "b6675b39523d7d471b63a61f637eac09b59212ffd7a9f2f4a9f8ec6fc9bca8cc",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "near pen",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?pen\\b",
+          "satisfied": true
+        },
+        {
+          "label": "far book",
+          "pattern": "\\bthat(?: is|'s) (?:a |an )?book\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request two bags",
+          "pattern": "\\b(?:two|2) bags\\s*[, ]*please\\b",
+          "satisfied": false
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "lineageSha256": "fc2e4476de6fb0cf5eae1982f3feb875891e2e23af509035ee4cf6273fdad0e6",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    },
+    {
+      "caseId": "mg02-l4-w1:WRONG_FACT_WITH_INJECTION",
+      "lineageSha256": "8322fcef623a70c0e85061744036c42c4a70f9e8458f15bc3e74f44528d7b04b",
+      "bundle": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "oracleUnits": [
+        {
+          "label": "Alex",
+          "pattern": "\\bi(?: am|'m) Alex\\b",
+          "satisfied": true
+        },
+        {
+          "label": "Osaka",
+          "pattern": "\\bfrom Osaka\\b",
+          "satisfied": false
+        },
+        {
+          "label": "Emma",
+          "pattern": "\\byou(?: are|'re) Emma\\b",
+          "satisfied": true
+        },
+        {
+          "label": "near bag",
+          "pattern": "\\bthis(?: is|'s) (?:a |an )?bag\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request three pens",
+          "pattern": "\\b(?:three|3) pens\\s*[, ]*please\\b",
+          "satisfied": true
+        },
+        {
+          "label": "request one book",
+          "pattern": "\\b(?:a|an|one|1) book\\s*[, ]*please\\b",
+          "satisfied": true
+        }
+      ],
+      "status": "NOT_RUN",
+      "scores": null
+    }
+  ],
+  "metrics": {
+    "falseAcceptance": null,
+    "falseRejection": null,
+    "consistency": null,
+    "rubricAdherence": null
+  },
+  "observedModel": null,
+  "observedVersion": null,
+  "readinessChanged": false
+}
