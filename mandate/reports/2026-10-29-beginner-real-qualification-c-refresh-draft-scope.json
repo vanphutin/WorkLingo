@@ -1,0 +1,616 @@
+{
+  "schemaVersion": 1,
+  "phase": "DRAFT_REFRESH_NOT_CAPTURED_NOT_APPROVED",
+  "parent": "MND-20261027-001",
+  "verifiedIntake": "MND-20261029-002",
+  "baseline": {
+    "head": "a4211bfdf01eccf489c3f152aca683028c0de4cd",
+    "branch": "codex/foundation-basic-readiness",
+    "worktree": "C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo",
+    "files": [
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-review.json",
+        "sha256": "f6ba03b386aa8679e55e50f8dc7f21361b312d0947a3f3c98504dc3b157fb646"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-summary.md",
+        "sha256": "d48801896c827fa4a22fce54cf5dc6016e871472968069cbe7bc69480bfcfb3b"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-led-correction-requests.md",
+        "sha256": "1c9addb363a04ce931e3c21fc565e07bfdaf0f19c0770a2196ebe4a3edaa7328"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-bindings.json",
+        "sha256": "0fd2efa857607ad213666a581473ce91a9f513d18f22ea45df6f7dbe448486fd"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-ai-correction-review.md",
+        "sha256": "5c98cf2b59261fb1e0938ebc742adf24c2761104ed64f4a48959544913839696"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-fix-verification.md",
+        "sha256": "f52228cb733ad7a5f30473c46028d476f741cb1375c8c78bdad836db271d6968"
+      },
+      {
+        "path": "docs/qualification/beginner-evaluator-context-verification.md",
+        "sha256": "db97c8b3fcc6331e719df7059b21ebeeab3ff1ec0f1ce04e6183729fb9589aac"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-pedagogy-review.json",
+        "sha256": "ff1e83d689e6b8e53efe9b3aed003f891a8de829446678ac14d451abdd94c907"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-qa.md",
+        "sha256": "394888de8e626bde96c3d197a29bc2d0cf6bffa2d02a5cfa65374d70a3a6dcca"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-audio-inventory.json",
+        "sha256": "221dce11d7a336f4b84754ee7a3a35e0d82a89219aed43b2fbae9532c8461b56"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-beginner-implementation.md",
+        "sha256": "165fc3e8cbcf7ce1b2245974fa7cb40cc0c75b10cb31cf87fe2557f6a922c96b"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-beginner-r12b-qualification.md",
+        "sha256": "9436534b072f0c35eb774ced8cafdbfa52936c494bbe1a10eb8668c8d0457289"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-24-beginner-knowledge-map.md",
+        "sha256": "ffe0fff35b2ae416ec9adb819c02ffbf9d10297efe59dd23a8f8efcbff5998f5"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.ts",
+        "sha256": "bdee7da0b52168c5e3e625b66ea55a7d1401c815dd3edcb0ec90b937c839f1b4"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/domain/language-evaluation.port.ts",
+        "sha256": "7d8cc715c3e7e92490276620f9930df13cbf7be3fe53eb92d93cdf87f0fc51a9"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts",
+        "sha256": "327d81a176cd497813991e1fd0b38304ca655cb72a6df2761e04973c0025d5e7"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+        "sha256": "18e7ffdaff8e6616138db26ef3d55d695ca77415d75a4ab253fa78e3f6acc2a0"
+      },
+      {
+        "path": "apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts",
+        "sha256": "f50d919d930a3731b76100d32296bbb9287139bb8012abaf542f8252ed58f7a4"
+      },
+      {
+        "path": "apps/api/src/learning-sessions/domain/learner-activity-projection.ts",
+        "sha256": "9c5d97813be473294588b0493aefaea2ad93a049b88df4342a8a66af73984a97"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/domain/beginner-rubrics.ts",
+        "sha256": "2424159119b5e779a614dfec48106164ccfc9627ed0940d08c507d37697b126c"
+      },
+      {
+        "path": "apps/api/src/curriculum-foundation/application/foundation-validation.ts",
+        "sha256": "576b230883727d3f52875e5ebe80c8a9aed54735699f250f9dfb64ae62a50d5b"
+      },
+      {
+        "path": "apps/api/src/curriculum/domain/curriculum.types.ts",
+        "sha256": "814d543968018f4e92e91cfaa83628093357e8ebe5e67712ea768a3e49222bc1"
+      },
+      {
+        "path": "packages/content-format/src/normalizer.ts",
+        "sha256": "3655b3dab8f922cecd3794b734e3a1d350bf8bc4942e8f70b8c3ac7a4eb94835"
+      },
+      {
+        "path": "packages/content-format/src/foundation-metadata.ts",
+        "sha256": "99a2ead9efb07478948d75e37ee3df3c57f61559a8ef7d6f102f34de7bffb9ff"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/beginner-evaluator-context.spec.ts",
+        "sha256": "dabf2ac4a05936ccf5f2c5584f0e62065be0d4e8e14c40161aadaa2f41edc78c"
+      },
+      {
+        "path": "apps/api/src/teacher-ai/application/evaluation.service.spec.ts",
+        "sha256": "e78f42d1673ee9a7c4e1453e817639193b39679321e9ab551ab4a514e5da47ab"
+      },
+      {
+        "path": "apps/api/vitest.beginner.config.ts",
+        "sha256": "fa8576f06edadf0098c03ff468ef71179564f8f9330ae85461162625b7b4217d"
+      },
+      {
+        "path": "apps/api/vitest.beginner-evaluator-context.config.ts",
+        "sha256": "bafb74e095c5e10fe19b06ec339b7352e24601d81162fbc6f0a95e9c1b636070"
+      },
+      {
+        "path": "apps/api/test/beginner-evaluator-context.setup.ts",
+        "sha256": "2bedd447bda5f24520cb29bd8ea8c157a2a8f211da47033a9fb51ad99f8627c4"
+      },
+      {
+        "path": "mandate/reports/2026-10-27-beginner-r12b-gate-c-scope.json",
+        "sha256": "77150cf402b43c02bb77caccc6d9e099744fcf7ce335366b773d48569d4a4234"
+      },
+      {
+        "path": "mandate/reports/2026-10-28-beginner-gate-b-source-audio-snapshot.json",
+        "sha256": "17286fdb1811935be80870933d11b8669b3fa1652867866fce37d220867c4c21"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c"
+      },
+      {
+        "path": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d"
+      },
+      {
+        "path": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb"
+      },
+      {
+        "path": "mandate/items/MND-20261027-001-learning-content-author-real-mg01-mg02-beginner-pilot-sources-with-offline-qualificatio.md",
+        "sha256": "9c019ad27e3723b6c2b0f8825490bf880607d7673dc9d64b2fe87e1823f82c84"
+      },
+      {
+        "path": "mandate/items/MND-20261027-002-learning-content-produce-and-human-check-offline-mg01-mg02-audio-within-capped-provider.md",
+        "sha256": "80f73512589a89e74d04ffa689d9981ad6ba092d452fd8ce1d161a4f3a8bb54c"
+      },
+      {
+        "path": "mandate/items/MND-20261027-003-learning-content-obtain-qualified-human-beginner-pedagogical-sign-offs-and-exact-correc.md",
+        "sha256": "4fa3a784bf2e85ead99095883bf2d9bbc1b094fd40ae639f590c3a2c93f79819"
+      },
+      {
+        "path": "mandate/items/MND-20261027-004-learning-content-observe-consented-offline-beginner-pilot-timing-without-fabricated-pro.md",
+        "sha256": "8a23be2b58cf1b6865eb7f1b0e8d0769a81f595661b835eab0d054679fad6287"
+      },
+      {
+        "path": "mandate/items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md",
+        "sha256": "6cc7ad8a664e9edc37d55fb6871a46c2c53f8c92df374e6a153d89b03b91d172"
+      },
+      {
+        "path": "mandate/items/MND-20261028-003-architecture-verify-beginner-evaluator-task-context-loss-using-isolated-contract-te.md",
+        "sha256": "c28a30a939a282bc9aecef1b0019af1e9b512519191603a4de006c4441daf013"
+      },
+      {
+        "path": "mandate/items/MND-20261028-004-architecture-establish-prospective-ai-led-beginner-qualification-without-rewriting.md",
+        "sha256": "bd8060e5ade0305b4648293657ef11cc4e9a33e0ab8eb2b5fdaca70564060b6b"
+      },
+      {
+        "path": "mandate/items/MND-20261029-001-bug-fix-missing-pinned-beginner-evaluator-facts-and-private-task-criteria.md",
+        "sha256": "08af9a025bea8b923413ec7a444aba7a70b58314442f7b834b09763681a51c9f"
+      },
+      {
+        "path": "apps/api/test/beginner-pilot/post-context-requalification.spec.ts",
+        "sha256": "9c0c16db2d347a6092277e51edb4168c99433d62b91acf788f486af1d0b51a1a"
+      },
+      {
+        "path": "apps/api/vitest.beginner-requalification.config.ts",
+        "sha256": "184831b7a9c2ec9ef15e316802199ded4615a0ed9b1299bc92cb4060f8b4620f"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-post-context-requalification.json",
+        "sha256": "99086c6f1435f5e6423cdb7a6d5ed707434ddf80330f9b1dec73fab0ac75d103"
+      },
+      {
+        "path": "docs/qualification/beginner-pilot-post-context-requalification.md",
+        "sha256": "bb721334c0433a993f9303a1145ef4f27acce39a36223b896379c1f31a961488"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-29-beginner-post-context-requalification.md",
+        "sha256": "ab6d169726dd80b68e6ddbd9b1c60e3b3400ffd69b3e7dd860309dbe7e11d119"
+      },
+      {
+        "path": "mandate/items/MND-20261029-002-architecture-rebind-beginner-qualification-after-verified-context-fix-with-exact-so.md",
+        "sha256": "1851865f1e3a7c8a12befd7a8ea09712f149dc89da93c2ad7e148e3c5419e00b"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-capture-authorization.md",
+        "sha256": "02e429a9918f15aaed58cf03a5054541e6d34e7c1358d4e06e14ee1336c217a0"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-proposal.json",
+        "sha256": "fab31e7cb94506fed3edb15fe1daba7d24a907fa907a7a4d809c3cbf3382d993"
+      },
+      {
+        "path": "mandate/reports/2026-10-29-beginner-post-context-requalification-scope.json",
+        "sha256": "349229f93cbbad4fcf5ef5f44bf96dc0baf2eecababf48eca30e42e3a65d2d86"
+      }
+    ],
+    "sourceBundles": [
+      {
+        "lesson": "MG01-L1",
+        "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+        "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+        "reviewedBundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115"
+      },
+      {
+        "lesson": "MG01-L2",
+        "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+        "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+        "reviewedBundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1"
+      },
+      {
+        "lesson": "MG01-L3",
+        "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+        "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+        "reviewedBundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a"
+      },
+      {
+        "lesson": "MG01-L4",
+        "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+        "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+        "reviewedBundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b"
+      },
+      {
+        "lesson": "MG02-L1",
+        "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+        "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+        "reviewedBundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9"
+      },
+      {
+        "lesson": "MG02-L2",
+        "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+        "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+        "reviewedBundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193"
+      },
+      {
+        "lesson": "MG02-L3",
+        "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+        "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+        "reviewedBundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2"
+      },
+      {
+        "lesson": "MG02-L4",
+        "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+        "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+        "reviewedBundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba"
+      }
+    ],
+    "selectedAudio": [
+      {
+        "slug": "mg01-l1-audio-a",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+        "sha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+        "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1"
+      },
+      {
+        "slug": "mg01-l1-audio-b",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+        "sha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+        "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32"
+      },
+      {
+        "slug": "mg01-l1-audio-c",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+        "sha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+        "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9"
+      },
+      {
+        "slug": "mg01-l2-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+        "sha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+        "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574"
+      },
+      {
+        "slug": "mg01-l2-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+        "sha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+        "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046"
+      },
+      {
+        "slug": "mg01-l2-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+        "sha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+        "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8"
+      },
+      {
+        "slug": "mg01-l3-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+        "sha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+        "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df"
+      },
+      {
+        "slug": "mg01-l3-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+        "sha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+        "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9"
+      },
+      {
+        "slug": "mg01-l3-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+        "sha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+        "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2"
+      },
+      {
+        "slug": "mg01-l4-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+        "sha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+        "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de"
+      },
+      {
+        "slug": "mg01-l4-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+        "sha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+        "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c"
+      },
+      {
+        "slug": "mg01-l4-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+        "sha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+        "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5"
+      },
+      {
+        "slug": "mg02-l1-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+        "sha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+        "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea"
+      },
+      {
+        "slug": "mg02-l1-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+        "sha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+        "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af"
+      },
+      {
+        "slug": "mg02-l1-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+        "sha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+        "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d"
+      },
+      {
+        "slug": "mg02-l2-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+        "sha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+        "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b"
+      },
+      {
+        "slug": "mg02-l2-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+        "sha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+        "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3"
+      },
+      {
+        "slug": "mg02-l2-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+        "sha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+        "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5"
+      },
+      {
+        "slug": "mg02-l3-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+        "sha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+        "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79"
+      },
+      {
+        "slug": "mg02-l3-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+        "sha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+        "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65"
+      },
+      {
+        "slug": "mg02-l3-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+        "sha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+        "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5"
+      },
+      {
+        "slug": "mg02-l4-audio-1",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+        "sha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+        "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0"
+      },
+      {
+        "slug": "mg02-l4-audio-2",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+        "sha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+        "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78"
+      },
+      {
+        "slug": "mg02-l4-audio-3",
+        "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+        "sha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+        "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d"
+      }
+    ],
+    "fingerprint": "043f3ea5df4e872d6893500a9aff784ee92669aee0dc8616c8c2bfa44f9db5c2"
+  },
+  "plan": {
+    "path": "docs/superpowers/plans/2026-10-29-beginner-real-qualification.md",
+    "sha256LF": "8d89603759d72269360b04f6772b1d60a2d964cdfb4a6444ad7a4d9e00ce94a6"
+  },
+  "authority": {
+    "sourceLessonModify": false,
+    "audioModify": false,
+    "evaluatorModify": false,
+    "oldQualificationModify": false,
+    "database": false,
+    "migrate": false,
+    "publish": false,
+    "enableLearner": false,
+    "gateReadinessAdvance": false,
+    "mergePushDeploy": false,
+    "otherGateAuthority": false
+  },
+  "approval": null,
+  "governanceCheckpoint": "Proposal only now:exact six prior paths in audit JSON plus new preapproval artifacts;requires explicit owner local-commit authorization,no wildcard staging. A docs-only checkpoint may advance HEAD only when every frozen input remains identical;unrelated source changes require reapproval.",
+  "workstream": "C_GATE_C_REFRESH",
+  "existingMandate": "MND-20261027-004",
+  "existingStatus": "triaged",
+  "allowlist": {
+    "modify": [],
+    "create": [
+      "apps/api/test/beginner-pilot/rehearsal-pack.ts",
+      "apps/api/test/beginner-pilot/rehearsal-pack.test.ts",
+      "docs/qualification/beginner-pilot-rehearsal-summary.md"
+    ],
+    "externalCreate": [
+      "D:/WorkLingoQualification/r12b-20261029/C/consent-register.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/consent-register.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/observations.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/observations.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-signoff.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-signoff.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/pack-manifest.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/pack-manifest.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-answer-key.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-answer-key.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l1.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l1.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l2.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l2.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l3.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l3.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l4.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l4.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l1.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l1.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l2.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l2.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l3.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l3.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l4.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l4.html.tmp"
+    ],
+    "externalModifyOnlyOwnedRunFiles": [
+      "D:/WorkLingoQualification/r12b-20261029/C/consent-register.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/consent-register.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/observations.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/observations.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-signoff.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-signoff.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/pack-manifest.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/pack-manifest.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-answer-key.json",
+      "D:/WorkLingoQualification/r12b-20261029/C/observer-answer-key.json.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l1.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l1.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l2.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l2.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l3.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l3.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l4.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg01-l4.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l1.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l1.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l2.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l2.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l3.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l3.html.tmp",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l4.html",
+      "D:/WorkLingoQualification/r12b-20261029/C/mg02-l4.html.tmp"
+    ],
+    "fingerprint": "4861dd3ea63a83e5fd2bc97a46265b1914170185d90b932abb7e50f7a1ae7330"
+  },
+  "dependencies": [
+    "Current exact source/audio/rubric hashes",
+    "Adequate current A/B evidence and eligible AI-led Lesson review;not fabricated old human GateB verified",
+    "Owner acceptance of offline method,timing/support policy and real learner consent",
+    "Explicit current-governance baseline rebind before updating existing C mandate;old002 test/ledger not modified or called passing against new fingerprints"
+  ],
+  "budget": {
+    "cashUSD": 0,
+    "maxParticipants": 3,
+    "firstExposureObservations": 24,
+    "plannedParticipantHours": 18,
+    "observerPreparationHours": [
+      4,
+      6
+    ],
+    "proposedResearchOverheadMinutesMax": 105,
+    "plannedTotalParticipantHoursMax": 19.75
+  },
+  "protocol": {
+    "participantCodes": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "adultVietnameseF0": true,
+    "actualConsentRequired": true,
+    "ownerHoldsIdentityOriginals": true,
+    "sequence": [
+      "MG01-L1",
+      "MG01-L2",
+      "MG01-L3",
+      "MG01-L4",
+      "MG02-L1",
+      "MG02-L2",
+      "MG02-L3",
+      "MG02-L4"
+    ],
+    "pilot": "P01/MG01-L1 first,then suitability check",
+    "readingListeningIndependentMinEach": "2/3",
+    "speakingWriting": "Task-specific facts/functions,no critical role/item/quantity contradiction;minor language errors separate",
+    "perLessonIndependentSuccessMinParticipants": 2,
+    "requiredValidObservationsPerLesson": 3,
+    "mentalEffort": "Explained anchored1–5 after each phase;median<=3 proposed,not a validated psychometric instrument",
+    "progression": {
+      "observedTransitions": 7,
+      "proposedMinSpacingHours": 24,
+      "actualLagRequired": true,
+      "finalLessonDelayedRetention": "NOT_MEASURED_OUT_OF_PILOT",
+      "screeningMaxMinutesPerParticipant": 5,
+      "recallMaxMinutesPerTransition": 2,
+      "effortQuestionsMaxMinutesPerLesson": 2,
+      "coreTimerExcludesResearchProbes": true
+    },
+    "timing": {
+      "plannerMinutes": 45,
+      "proposedActiveMedian": [
+        35,
+        50
+      ],
+      "inRangeMinParticipants": 2,
+      "stopActiveMinutes": 60,
+      "demonstrationMaxSeconds": 60,
+      "clarificationMaxSeconds": 120,
+      "forcedReplay": false
+    },
+    "criteriaApproved": false
+  },
+  "privacy": {
+    "root": "D:/WorkLingoQualification/r12b-20261029/C",
+    "preflight": "Resolved exact run-owned paths,no reparse,existing parent ACL/ownership privacy proof before creation or intake;no ACL modification",
+    "voiceVideoRecording": false,
+    "rawAnswersPersist": false,
+    "git": "Lesson aggregates only,no participant codes/individual times",
+    "private": "Pseudonymous consent references,fact booleans,phase timing/support observations only",
+    "retentionAfterDecisionOrCancellationDays": 30,
+    "maximumDaysAfterLastObservation": 90,
+    "withdrawalRemovalDays": 7,
+    "cleanup": "Separate explicit owner decision,exact owned files only,no recursive/shared-parent deletion"
+  },
+  "allowedCommands": [
+    "pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/rehearsal-pack.test.ts",
+    "pnpm --filter @worklingo/api exec tsx test/beginner-pilot/rehearsal-pack.ts --build",
+    "pnpm exec eslint apps/api/test/beginner-pilot/rehearsal-pack.ts apps/api/test/beginner-pilot/rehearsal-pack.test.ts",
+    "pnpm --filter @worklingo/api exec tsc --noEmit"
+  ],
+  "acceptance": [
+    "Draft only now;do not update existing C or run observations;matching captured replacement approval and approved baseline handling required first.",
+    "3 real consenting adult F0 participants,24 valid first-exposure observations on final exact versions;missing/withdrawn data remains incomplete.",
+    "Each phase logs active/wait/replay/assistance/wall and real independent comprehension/task evidence;no raw answers/recordings/student DB state.",
+    "Proposed comprehension,load,progression,timing/support criteria owner-approved before observation;no post-hoc moving thresholds or padded45minutes.",
+    "Separate timing failure from content-quality failure;source/audio/product correction requires new scope,never silent edits.",
+    "Private storage/consent preflight PASS or stop;only Lesson aggregates in Git;withdrawal/retention handled with exact owner authorization.",
+    "No provider,DB,live Admin API,media production,learner/publication/readiness or OS authority."
+  ],
+  "rollback": "Stop rehearsal;retain truthful partial/superseded evidence privately;exact-file cleanup only under owner decision. No learner progress,DB or release state exists to roll back."
+}

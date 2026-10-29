@@ -1,0 +1,121 @@
+---
+{
+  "schema_version": 1,
+  "id": "MND-20261029-003",
+  "status": "implementing",
+  "created": "2026-10-29",
+  "updated": "2026-10-29T11:39:41.683Z",
+  "title": "Measure real Discovery Beginner evaluator calibration with bounded fictional task cases",
+  "type": "architecture",
+  "owner": "Codex",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "m",
+  "impact": 4,
+  "problem": "Verified context delivery and96 candidate responses do not establish real scoring quality;raw adapter metadata is discarded and no error/injected-wrong-answer calibration is measured.",
+  "value": "Measure factual false acceptance/rejection and anchor consistency before learner qualification using strict endpoint,credit,privacy and no-DB controls.",
+  "scope": [
+    "Standalone Discovery calibration harness and128-case oracle;160 request starts maximum including pilot/failures",
+    "Cash USD0;at most1.5 existing granted InkPoints;no purchase/fallback;conditional preflight",
+    "Independent scope only;no database,old artifacts,GateC or readiness authority"
+  ],
+  "dedupe_key": "beginner:r12b:real-discovery-calibration:128-cases-160-starts:a4211bf",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-pilot-post-context-requalification.md:1",
+      "observation": "Verified offline intake explicitly leaves real scoring,phonetic/provenance and model evidence missing."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-29-beginner-real-qualification-audit.md:1",
+      "observation": "Current owner authorizes preparation/conditional capture only;baseline and explicit evidence gaps verified."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-29-beginner-real-qualification-a-scope.json:1",
+      "observation": "Exact independent file allowlist,bounds,acceptance and rollback captured."
+    }
+  ],
+  "acceptance": [
+    "Matching scoped approval,exact input hashes and oracle frozen before calls;owner ambiguity resolution is factual,not provider self-adjudication.",
+    "96 base cases unchanged;32 supplementary derivatives and32 anchor repeats uniquely traceable:160starts max,20pilot included,failures counted,no retries.",
+    "Real EvaluationService/serializer/Discovery adapter with mock DB;no product edits;HTTP allowlist/redirect denial/credential and budget guards before network.",
+    "Metadata raw model/usage/version/request IDs observed through bounded tap;unknowns null;cannot substitute for the separate AI-reviewer model/version gate.",
+    "Cash0,only attested existing granted credits;reserve at most1.5InkPoints/current price ceilings;unprovable cost/retention acceptance/quota means BLOCKED.",
+    "Actual false acceptance/rejection,per-dimension bounds,feedback contradictions and32-pair consistency recorded,not converted to Lesson qualification or mastery.",
+    "Negative model-contract findings cause stop/REVISE with receipts;no selective replacement of failed outputs.",
+    "Tests cover lineage,oracles,minor variants,wrong-fact injection,rate/cost/auth/redirect/fallback,missing metadata,malformed responses,resume/receipt preservation,privacy.",
+    "No real raw student data,no DB/GateC/other provider/OS/billing change or readiness transition;rollback retains all receipts.",
+    "Exact proposed outcome policy:80 negative observations,no per-case ceiling violations;64 complete observations at most2 floor violations;16 positive-injection cases satisfy floors/delta bounds;critical feedback/instruction errors never tolerated. All160 valid replies needed for batchPASS;missing/error stays INCOMPLETE."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": true,
+    "rollback": "Stop new requests;append withdrawal/supersession to A outputs only;do not delete receipts,change source/product,claim refunds or discard failed observations."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-29-beginner-real-qualification.md",
+  "sprint_reference": null,
+  "approval": {
+    "actor": "WorkLingo product owner",
+    "reference": "docs/qualification/beginner-pilot-provider-calibration-results.md:1",
+    "at": "2026-10-29T11:39:41.270Z",
+    "proposal_hash": "2670694960fccb5eebf6f3ce26c39f6fc629f1e5de6d84e038f11706fb4187ae"
+  },
+  "verification": [],
+  "history": [
+    {
+      "at": "2026-10-29T07:12:54.232Z",
+      "actor": "mandate-steward",
+      "from": null,
+      "to": "captured",
+      "reason": "Evidence-backed proposal captured; no implementation approval.",
+      "event": "capture",
+      "reference": null
+    },
+    {
+      "at": "2026-10-29T11:39:40.905Z",
+      "actor": "Codex",
+      "from": "captured",
+      "to": "triaged",
+      "reason": "Frozen scope and baseline verified;offline-only work until all external evidence gates pass.",
+      "event": "transition",
+      "reference": "docs/qualification/beginner-pilot-provider-calibration-results.md:1"
+    },
+    {
+      "at": "2026-10-29T11:39:41.270Z",
+      "actor": "WorkLingo product owner",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Exact human execution approval verified from owner attachment f9c232643fd2aa891daa171b364c26b13090c17ad17499b3df84c6098d61c2af;proposal 2670694960fccb5eebf6f3ce26c39f6fc629f1e5de6d84e038f11706fb4187ae;live pilot conditional only,no remainder without decision.",
+      "event": "transition",
+      "reference": "docs/qualification/beginner-pilot-provider-calibration-results.md:1"
+    },
+    {
+      "at": "2026-10-29T11:39:41.683Z",
+      "actor": "Codex",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Frozen scope and baseline verified;offline-only work until all external evidence gates pass.",
+      "event": "transition",
+      "reference": "docs/qualification/beginner-pilot-provider-calibration-results.md:1"
+    }
+  ]
+}
+---
+
+## Independent real-evidence A proposal,not execution approval
+
+Read the shared plan and exact mandate/reports/2026-10-29-beginner-real-qualification-a-scope.json SHA-256 be37dd5e4ecf6e75314018513a6d7b730b0c207fa2c29735105dc8726df73c6a. Plan LF SHA-256 8d89603759d72269360b04f6772b1d60a2d964cdfb4a6444ad7a4d9e00ce94a6;baseline a4211bfdf01eccf489c3f152aca683028c0de4cd/fingerprint 043f3ea5df4e872d6893500a9aff784ee92669aee0dc8616c8c2bfa44f9db5c2;allowlist fingerprint 4424d10b5d5ad8ffec4d28af6d79c5cf82f05f739f5ea35b57c63a097c912caf.
+
+## Authority
+Current owner requests plan/capture only. Matching new human approval required before creating execution files,credential access,provider request or reviewer evidence intake. Shared governance checkpoint needs explicit owner local-commit authorization;no blanket staging. Nothing in this scope approves another workstream,old GateBverified,AI_QUALIFIED or CONTENT_READY.
+
+## Dependencies and acceptance
+Use the exact immutable intake/bundles;retain all297 original decisions and human history. 96 original candidates remain immutable;32 separate derivatives plus32 repeated anchors require128-case oracle frozen before160 maximum starts. Requested qwen3.8-27b,observed metadata nullable,USD0cash/no-topup and1.5InkPoint cap. Current balance/grant/retention evidence unknown;no call may proceed without required proof/owner acceptance.
+
+## Rollback
+Stop new requests;append withdrawal/supersession to A outputs only;do not delete receipts,change source/product,claim refunds or discard failed observations.
