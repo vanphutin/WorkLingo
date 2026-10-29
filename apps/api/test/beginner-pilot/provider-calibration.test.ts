@@ -19,7 +19,14 @@ test('all negatives have explicit missing/contradicted units and ceiling less th
   assert.equal(goldens.cases.filter(c=>c.kind==='NEGATIVE').length,64);
 });
 test('oracle is reproducible and owner adjudication is never invented',()=>{assert.equal(digest(buildGoldens()),digest(goldens));assert.equal(goldens.ownerCaseAdjudication,null);});
-test('no external evidence means network gate remains closed',()=>{assert.equal(externalBlockers({},goldens).length,4);});
+test('no external evidence means network gate remains closed',()=>{assert.equal(externalBlockers({},goldens).length,5);});
+test('live preflight requires current model pricing inside the frozen InkPoint ceilings',()=>{
+ const pricing={reference:'SYNTHETIC_TEST_ONLY',verifiedAt:new Date().toISOString(),model:MODEL,unit:'INKPOINTS_PER_MILLION_TOKENS',input:0.8,output:2.7};
+ const otherwiseValid={quota:{reference:'SYNTHETIC_TEST_ONLY',verifiedAt:'2026-10-29',grantedBalance:2,usdAdditional:0,noTopup:true},handling:{reference:'SYNTHETIC_TEST_ONLY',verifiedAt:'2026-10-29',retention:'test',logging:'test',dataHandling:'synthetic'},ownerOracleReference:'SYNTHETIC_TEST_ONLY',singletonAccountingVerified:true};
+ const invalid=[undefined,{...pricing,input:800,output:2700},{...pricing,unit:'USD_PER_MILLION_TOKENS'},{...pricing,model:'different'},{...pricing,input:-1},{...pricing,input:NaN},{...pricing,output:Infinity},{...pricing,reference:''},{...pricing,verifiedAt:''},{...pricing,verifiedAt:'not-a-date'},{...pricing,verifiedAt:'2000-01-01T00:00:00.000Z'},{...pricing,verifiedAt:'2999-12-31T00:00:00.000Z'},{...pricing,verifiedAt:new Date(Date.now()-24*60*60*1000-1000).toISOString()}];
+ for(const value of invalid)assert.ok(externalBlockers({...otherwiseValid,pricing:value} as never,goldens).includes('CURRENT_PRICING_WITHIN_FROZEN_CEILINGS_REQUIRED'));
+ assert.deepEqual(externalBlockers({...otherwiseValid,pricing} as never,goldens),[]);
+});
 for(const bad of [{quota:{reference:'x',verifiedAt:'x',grantedBalance:1,usdAdditional:0,noTopup:true}},{quota:{reference:'x',verifiedAt:'x',grantedBalance:2,usdAdditional:1,noTopup:true}},{quota:{reference:'x',verifiedAt:'x',grantedBalance:2,usdAdditional:0,noTopup:false}}])test('rejects inadequate or paid credit proof '+JSON.stringify(bad),()=>{assert.ok(externalBlockers(bad,goldens).includes('ACTUAL_GRANTED_BALANCE_AND_ZERO_SPEND_EVIDENCE_REQUIRED'));});
 function closed(r:RequestReceipt):RequestReceipt{const {receiptSha256:_,...data}=r;const next={...data,status:'ERROR' as const};return {...next,receiptSha256:digest(next)};}
 test('counts failures,keeps cap across resume and rejects receipt replay',()=>{const receipts:RequestReceipt[]=[];for(let i=0;i<160;i++)receipts.push(closed(reserveStart(receipts,String(i),'case',i*10000,100)));assert.throws(()=>reserveStart(receipts,'new','case',1600000,100),/CAP/);assert.throws(()=>reserveStart(receipts.slice(0,1),'0','case',20000,100),/REPLAY/);});

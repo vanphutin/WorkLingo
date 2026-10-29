@@ -141,10 +141,15 @@ export function reserveStart(receipts: RequestReceipt[], id: string, caseId: str
   const data = { id, caseId, startedAt: now, inputReservation, outputReservation: 2048, previousSha256: receipts.at(-1)?.receiptSha256 ?? null, status: 'STARTED' as const };
   return { ...data, receiptSha256: digest(data) };
 }
-export interface ExternalEvidence { quota?: { reference: string; verifiedAt: string; grantedBalance: number; usdAdditional: number; noTopup: boolean }; handling?: { reference: string; verifiedAt: string; retention: string; logging: string; dataHandling: string }; ownerOracleReference?: string; singletonAccountingVerified?: boolean; pilotContinuationReference?: string; }
+export interface ExternalEvidence { quota?: { reference: string; verifiedAt: string; grantedBalance: number; usdAdditional: number; noTopup: boolean }; pricing?: { reference:string; verifiedAt:string; model:string; unit:'INKPOINTS_PER_MILLION_TOKENS'; input:number; output:number }; handling?: { reference: string; verifiedAt: string; retention: string; logging: string; dataHandling: string }; ownerOracleReference?: string; singletonAccountingVerified?: boolean; pilotContinuationReference?: string; }
 export function externalBlockers(e: ExternalEvidence, g: Goldens): string[] {
   const result: string[] = [];
   if (!e.quota?.reference || !e.quota.verifiedAt || !(e.quota.grantedBalance >= 1.5) || e.quota.usdAdditional !== 0 || e.quota.noTopup !== true) result.push('ACTUAL_GRANTED_BALANCE_AND_ZERO_SPEND_EVIDENCE_REQUIRED');
+  const price=e.pricing;
+  const verifiedAt=typeof price?.verifiedAt==='string'?Date.parse(price.verifiedAt):NaN;
+  // Conservative maximum age for reported evidence; this does not authenticate a price claim.
+  const now=Date.now(),fresh=Number.isFinite(verifiedAt)&&verifiedAt<=now&&now-verifiedAt<=24*60*60*1000&&new Date(verifiedAt).toISOString()===price?.verifiedAt;
+  if (!price?.reference || !fresh || price.model!==MODEL || price.unit!=='INKPOINTS_PER_MILLION_TOKENS' || !Number.isFinite(price.input) || !Number.isFinite(price.output) || price.input<0 || price.output<0 || price.input>.8 || price.output>2.7) result.push('CURRENT_PRICING_WITHIN_FROZEN_CEILINGS_REQUIRED');
   if (!e.handling?.reference || !e.handling.verifiedAt || !e.handling.retention || !e.handling.logging || !e.handling.dataHandling) result.push('RETENTION_LOGGING_DATA_HANDLING_EVIDENCE_REQUIRED');
   if (!e.ownerOracleReference || g.cases.some(c => c.ambiguity)) result.push('EXACT_ORACLE_ADJUDICATION_REQUIRED');
   if (!e.singletonAccountingVerified) result.push('CROSS_PROCESS_SINGLE_WRITER_ACCOUNTING_REQUIRED');
