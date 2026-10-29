@@ -99,7 +99,7 @@ export function renderHtml(p: Packet): string {
   const lex = p.lexical.map(l => `<article><h3>${esc(l.id)}: ${esc(l.expression)} ${esc(l.ipa)}</h3><p>${esc(l.meaningVi)}</p><p>${esc(l.grammarPattern)}<br>${esc(l.example)}<br>${esc(l.commonError)}</p><p>${esc(l.sourcePath)}:${l.sourceLine}<br>Source ${l.sourceSha256}<br>Bundle ${l.reviewedBundleSha256}</p>${controls(l.id, l)}</article>`).join('');
   const pairs = p.ipaPairs.map(i => `<article><h3>${esc(i.id)}</h3><p>${esc(i.mappings.join(', '))}</p>${controls(i.id, i)}</article>`).join('');
   const supports = p.supports.map(s => `<article><h3>${esc(s.group)}</h3><p>${esc(s.relevantLessons.map(l => l.lessonCode).join(', '))}</p>${controls(s.id, s)}</article>`).join('');
-  return `<!doctype html><html lang="vi"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none';media-src file:;style-src 'unsafe-inline';script-src 'unsafe-inline';form-action 'none';connect-src 'none'"><title>WorkLingo independent QA</title><style>body{font:16px system-ui;max-width:960px;margin:2rem auto;padding:1rem}article{border:1px solid #aaa;padding:1rem;margin:1rem 0}pre,p{white-space:pre-wrap;overflow-wrap:anywhere}label{display:block;margin:.5rem 0}textarea{width:95%;min-height:4rem}input{width:90%}audio{width:100%}</style><h1>Independent reviewer packet</h1><p>REVIEWER ONLY — contains private scripts/criteria. Offline;no telemetry/upload. Packet ${p.packetSha256}</p><p>Technical PASS does not prove phonetic accuracy. Actual listening and expertise required. Old global PASS is not transferred. Report meaning/function and Pre-A1 suitability as expert opinion,not official CEFR/master vocabulary IDs.</p><label>Reviewer ID<input id="reviewer"></label><label>Appointment ref<input id="appointment"></label><label>Consent ref<input id="consent"></label><label>Exact packet received ref<input id="received"></label><label>Actual review date<input id="date" type="date"></label><h2>24 WAV</h2>${cards}<h2>41 lexical contexts</h2>${lex}<h2>11 expression/IPA pairs</h2>${pairs}<h2>6 support groups</h2>${supports}<button type="button" id="prepare">Prepare evidence JSON for owner review</button><textarea id="result" aria-label="Evidence JSON"></textarea><script>document.getElementById('prepare').onclick=()=>{const value=id=>document.getElementById(id).value;const rows=[...document.querySelectorAll('select[data-item]')].map(s=>({id:s.dataset.item,itemSha256:s.dataset.hash,verdict:s.value||null,rationale:[...document.querySelectorAll('textarea[data-rationale]')].find(t=>t.dataset.rationale===s.dataset.item).value,evidenceReference:[...document.querySelectorAll('input[data-evidence]')].find(t=>t.dataset.evidence===s.dataset.item).value}));document.getElementById('result').value=JSON.stringify({packetSha256:'${p.packetSha256}',reviewerId:value('reviewer'),appointmentReference:value('appointment'),consentReference:value('consent'),exactPacketReceivedReference:value('received'),reviewedAt:value('date'),authorType:'HUMAN_REPORTED',identityIndependentlyVerified:false,rows},null,2);};</script></html>`;
+  return `<!doctype html><html lang="vi"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none';media-src file:;style-src 'unsafe-inline';script-src 'unsafe-inline';form-action 'none';connect-src 'none'"><title>WorkLingo independent QA</title><style>body{font:16px system-ui;max-width:960px;margin:2rem auto;padding:1rem}article{border:1px solid #aaa;padding:1rem;margin:1rem 0}pre,p{white-space:pre-wrap;overflow-wrap:anywhere}label{display:block;margin:.5rem 0}textarea{width:95%;min-height:4rem}input{width:90%}audio{width:100%}</style><h1>Independent reviewer packet</h1><p>REVIEWER ONLY — contains private scripts/criteria. Offline;no telemetry/upload. Packet ${p.packetSha256}</p><p>Technical PASS does not prove phonetic accuracy. Actual listening and expertise required. Old global PASS is not transferred. Report meaning/function and Pre-A1 suitability as expert opinion,not official CEFR/master vocabulary IDs.</p><label>Reviewer ID<input id="reviewer"></label><label>Appointment ref<input id="appointment"></label><label>Qualification evidence ref<input id="qualification"></label><label>Consent ref<input id="consent"></label><label>Exact packet received ref<input id="received"></label><label>Actual review date<input id="date" type="date"></label><h2>24 WAV</h2>${cards}<h2>41 lexical contexts</h2>${lex}<h2>11 expression/IPA pairs</h2>${pairs}<h2>6 support groups</h2>${supports}<button type="button" id="prepare">Prepare evidence JSON for owner review</button><textarea id="result" aria-label="Evidence JSON"></textarea><script>document.getElementById('prepare').onclick=()=>{const value=id=>document.getElementById(id).value;const rows=[...document.querySelectorAll('select[data-item]')].map(s=>({id:s.dataset.item,itemSha256:s.dataset.hash,verdict:s.value||null,rationale:[...document.querySelectorAll('textarea[data-rationale]')].find(t=>t.dataset.rationale===s.dataset.item).value,evidenceReference:[...document.querySelectorAll('input[data-evidence]')].find(t=>t.dataset.evidence===s.dataset.item).value,scopeOfClaim:'ITEM_ONLY_NOT_CEFR_OR_MASTERY'}));document.getElementById('result').value=JSON.stringify({packetSha256:'${p.packetSha256}',reviewerId:value('reviewer'),appointmentReference:value('appointment'),qualificationReference:value('qualification'),consentReference:value('consent'),exactPacketReceivedReference:value('received'),reviewedAt:value('date'),authorType:'HUMAN_REPORTED',identityIndependentlyVerified:false,rows},null,2);};</script></html>`;
 }
 export function outputPath(p: string): string {
   const scope = json<Scope>('mandate/reports/2026-10-29-beginner-real-qualification-b-scope.json'); requireValue(scope.allowlist.create.includes(p), 'OUTPUT_NOT_ALLOWLISTED');
@@ -115,4 +115,63 @@ export function writePacket() {
 if (require.main === module) {
   try { requireValue(process.argv.length === 3 && process.argv[2] === '--build', 'BUILD_ONLY'); const p = writePacket(); console.log(JSON.stringify({ packetSha256: p.packetSha256, audio: p.audio.length, lexical: p.lexical.length, pairs: p.ipaPairs.length, technical: 'PASS', independent: 'NEEDS_EVIDENCE' })); }
   catch { console.error('INDEPENDENT_QA_BUILD_FAILED;inspect offline bindings;no personal data output'); process.exitCode = 1; }
+}
+
+/** This interface accepts reports; it does not authenticate or sign on behalf of a reviewer. */
+export function importReview(p: Packet, text: string): Packet {
+  requireValue(typeof text === 'string' && Buffer.byteLength(text) <= 1048576, 'REVIEW_IMPORT_SIZE');
+  requireValue(!/Bearer\s+\S+|api[_-]?key|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/iu.test(text), 'REVIEW_SENSITIVE_TEXT');
+  let value: unknown; try { value = JSON.parse(text); } catch { throw new Error('REVIEW_IMPORT_JSON'); }
+  const object = (x: unknown): x is Record<string, unknown> => !!x && typeof x === 'object' && !Array.isArray(x);
+  requireValue(object(value), 'REVIEW_IMPORT_OBJECT');
+  const topKeys = ['packetSha256', 'reviewerId', 'appointmentReference', 'qualificationReference', 'consentReference', 'exactPacketReceivedReference', 'reviewedAt', 'authorType', 'identityIndependentlyVerified', 'rows'];
+  requireValue(Object.keys(value).every(k => topKeys.includes(k)), 'REVIEW_UNKNOWN_FIELD');
+  const qualified = value.qualificationReference;
+  requireValue(typeof qualified === 'string' && qualified.trim().length > 0 && qualified.length <= 512 && !/TODO|placeholder|GLOBAL_PASS|\[/iu.test(qualified), 'QUALIFICATION_REFERENCE_REQUIRED');
+  requireValue(Array.isArray(value.rows) && value.rows.length === 82, 'REVIEW_COVERAGE');
+  for (const row of value.rows) {
+    requireValue(object(row) && Object.keys(row).every(k => ['id', 'itemSha256', 'verdict', 'rationale', 'evidenceReference', 'scopeOfClaim'].includes(k)), 'REVIEW_ROW_UNKNOWN_FIELD');
+    requireValue(row.scopeOfClaim === 'ITEM_ONLY_NOT_CEFR_OR_MASTERY', 'DISPOSITION_SCOPE_REQUIRED');
+    requireValue(typeof row.rationale === 'string' && typeof row.evidenceReference === 'string' && !/GLOBAL_PASS|TODO|placeholder|\[/iu.test(row.rationale + row.evidenceReference), 'ITEM_EVIDENCE_REQUIRED');
+    requireValue(['id', 'itemSha256', 'verdict', 'rationale', 'evidenceReference'].every(k => typeof row[k] === 'string' && (row[k] as string).length <= (k === 'rationale' ? 4000 : 512)), 'REVIEW_FIELD_LIMIT');
+  }
+  for (const [key, field] of Object.entries(value)) if (key !== 'rows' && typeof field === 'string') requireValue(field.length <= 512, 'REVIEW_FIELD_LIMIT');
+  return appendEvidence(p, value as unknown as EvidenceSubmission);
+}
+export function aggregateEvidence(p: Packet) {
+  verifyPacket(p);
+  const items = reviewItems(p);
+  const counts = { PASS: 0, REVISE: 0, REJECT: 0 };
+  const conflicts: string[] = [];
+  const rows = items.map(item => {
+    const reports = p.evidenceEvents.map(event => ({ reviewerId: event.reviewerId, reviewedAt: event.reviewedAt, row: event.rows.find(r => r.id === item.id)! }));
+    const verdicts = new Set(reports.map(r => r.row.verdict));
+    if (verdicts.size > 1) conflicts.push(item.id);
+    const verdict = verdicts.size === 1 ? reports[0]!.row.verdict : null;
+    if (verdict) counts[verdict]++;
+    return { ...item, reportedVerdict: verdict, reports: reports.length, conflict: verdicts.size > 1, professionalEvidenceVerified: false };
+  });
+  const completed = rows.filter(r => r.reports > 0).length;
+  return { packetSha256: p.packetSha256, status: conflicts.length ? 'ADJUDICATION_REQUIRED' : completed === 82 ? 'REPORTED_DISPOSITIONS_COMPLETE_NOT_AUTHENTICATED' : 'NEEDS_EVIDENCE',
+    required: 82, dispositionsCompleted: completed, pending: 82 - completed, counts, conflicts, rows,
+    independentlyAuthenticated: false, qualificationReferencesChecked: false, readinessChanged: false };
+}
+export function auditVocabulary(p: Packet) {
+  verifyImmutablePacket(p);
+  const errors: string[] = [], warnings: string[] = [];
+  const mappings = new Set<string>();
+  for (const pair of p.ipaPairs) {
+    const meanings = new Set<string>();
+    for (const id of pair.mappings) {
+      if (mappings.has(id)) errors.push('DUPLICATE_MAPPING:' + id); mappings.add(id);
+      const context = p.lexical.find(l => l.id === id);
+      if (!context) { errors.push('STALE_MAPPING:' + id); continue; }
+      if (!context.ipa.trim() || !context.meaningVi.trim() || !context.sourcePath || !context.sourceSha256 || !context.reviewedBundleSha256) errors.push('MISSING_CONTEXT_METADATA:' + id);
+      meanings.add(context.meaningVi.trim().toLocaleLowerCase());
+    }
+    if (meanings.size > 1) warnings.push('MEANING_VARIANT_REQUIRES_CONTEXT_REVIEW:' + pair.id);
+  }
+  for (const context of p.lexical) if (!mappings.has(context.id)) errors.push('UNMAPPED_CONTEXT:' + context.id);
+  return { contexts: p.lexical.length, pairs: p.ipaPairs.length, technicalErrors: errors, warnings, provenancePending: p.lexical.filter(l => l.authoredInlineProvenance === 'SOURCE_BOUND_AWAITING_ADJUDICATION').length,
+    semanticStatus: 'NEEDS_EVIDENCE', exampleContradictions: 'REQUIRES_LANGUAGE_REVIEW', cefrAssigned: false, masterIdsAssigned: false };
 }

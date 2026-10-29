@@ -23,3 +23,43 @@ for(const path of ['../escape.json','.env','content/beginner/pilot/mg01-l1.lesso
 test('HTML is reviewer-only,offline and leaves all dispositions empty',()=>{const html=renderHtml(packet);assert.equal((html.match(/<audio /g)||[]).length,24);assert.equal((html.match(/<select /g)||[]).length,82);assert.ok(html.includes("connect-src 'none'"));assert.ok(html.includes('REVIEWER ONLY'));assert.equal((html.match(/selected/g)||[]).length,0);assert.ok(!html.includes('fetch('));assert.ok(html.includes(packet.packetSha256));});
 test('HTML escapes untrusted script text',()=>{const p=structuredClone(packet);p.audio[0]!.script='<img src=x onerror=alert(1)>';const html=renderHtml(p);assert.ok(html.includes('&lt;img'));assert.ok(!html.includes('<img src=x'));});
 test('malformed RIFF header and truncated chunks fail',()=>{assert.throws(()=>pcmInfo(Buffer.alloc(44)),/WAV_HEADER/);const b=Buffer.alloc(44);b.write('RIFF');b.writeUInt32LE(100,4);b.write('WAVE',8);assert.throws(()=>pcmInfo(b),/RIFF_LENGTH/);});
+
+test('bounded review import rejects unknown fields,prototype keys and oversized content before append',()=>{
+  const s=syntheticSubmission();Object.assign(s,{qualificationReference:'SYNTHETIC_QUALIFICATION'});for(const r of s.rows)Object.assign(r,{scopeOfClaim:'ITEM_ONLY_NOT_CEFR_OR_MASTERY'});
+  const valid=qa.importReview(packet,JSON.stringify(s));assert.equal(valid.evidenceEvents.length,1);assert.equal(packet.evidenceEvents.length,0);
+  assert.throws(()=>qa.importReview(packet,JSON.stringify({...s,learnerEmail:'REDACTED_UNKNOWN_FIELD'})),/UNKNOWN/);
+  assert.throws(()=>qa.importReview(packet,'{"__proto__":{}}'),/UNSAFE|UNKNOWN/);
+  assert.throws(()=>qa.importReview(packet,'x'.repeat(1048577)),/SIZE/);
+});
+test('review import requires qualification evidence and explicit scope on every disposition',()=>{
+  const s=syntheticSubmission();assert.throws(()=>qa.importReview(packet,JSON.stringify(s)),/QUALIFICATION/);
+  Object.assign(s,{qualificationReference:'SYNTHETIC_ONLY'});assert.throws(()=>qa.importReview(packet,JSON.stringify(s)),/SCOPE/);
+});
+test('aggregation distinguishes82 supplied dispositions from independent verification and readiness',()=>{
+  const empty=qa.aggregateEvidence(packet);assert.equal(empty.dispositionsCompleted,0);assert.equal(empty.pending,82);assert.equal(empty.status,'NEEDS_EVIDENCE');
+  const s=syntheticSubmission();Object.assign(s,{qualificationReference:'SYNTHETIC_ONLY'});for(const r of s.rows)Object.assign(r,{scopeOfClaim:'ITEM_ONLY_NOT_CEFR_OR_MASTERY'});
+  const summary=qa.aggregateEvidence(qa.importReview(packet,JSON.stringify(s)));assert.equal(summary.dispositionsCompleted,82);assert.equal(summary.counts.REVISE,82);assert.equal(summary.independentlyAuthenticated,false);assert.equal(summary.readinessChanged,false);
+});
+test('conflicting review events require adjudication without silently replacing earlier decisions',()=>{
+  const first=syntheticSubmission();Object.assign(first,{qualificationReference:'SYNTHETIC_ONLY'});for(const r of first.rows)Object.assign(r,{scopeOfClaim:'ITEM_ONLY_NOT_CEFR_OR_MASTERY'});
+  const second=structuredClone(first);second.reviewerId='OTHER_SYNTHETIC_REVIEWER';second.rows[0]!.verdict='PASS';
+  const p1=qa.importReview(packet,JSON.stringify(first)),p2=qa.importReview(p1,JSON.stringify(second));const summary=qa.aggregateEvidence(p2);
+  assert.equal(p1.evidenceEvents.length,1);assert.equal(p2.evidenceEvents.length,2);assert.equal(summary.conflicts.length,1);assert.equal(summary.status,'ADJUDICATION_REQUIRED');
+});
+test('lexical audit reports technical consistency separately from semantic/provenance evidence',()=>{
+  const audit=qa.auditVocabulary(packet);assert.equal(audit.contexts,41);assert.equal(audit.pairs,11);assert.equal(audit.technicalErrors.length,0);assert.equal(audit.provenancePending,41);assert.equal(audit.semanticStatus,'NEEDS_EVIDENCE');
+});
+
+test('reviewer page exported JSON is consumable by strict importer without inventing dispositions',async()=>{
+  const {runInNewContext}=await import('node:vm');const html=renderHtml(packet),script=html.match(/<script>([\s\S]*)<\/script>/)![1]!;
+  const controls=reviewItems(packet).map(i=>({dataset:{item:i.id,hash:i.itemSha256},value:'REVISE'}));
+  const fields:Record<string,{value:string;onclick?:()=>void}>={prepare:{value:''},result:{value:''},reviewer:{value:'SYNTHETIC_REVIEWER'},appointment:{value:'SYNTHETIC_ONLY'},qualification:{value:'SYNTHETIC_ONLY'},consent:{value:'SYNTHETIC_ONLY'},received:{value:'SYNTHETIC_ONLY'},date:{value:'2026-10-29'}};
+  const document={getElementById:(id:string)=>fields[id],querySelectorAll:(selector:string)=>selector.startsWith('select')?controls:controls.map(c=>({dataset:selector.startsWith('textarea')?{rationale:c.dataset.item}:{evidence:c.dataset.item},value:'SYNTHETIC_TEST_ONLY'}))};
+  runInNewContext(script,{document});fields.prepare!.onclick!();assert.equal(qa.importReview(packet,fields.result!.value).evidenceEvents.length,1);
+});
+
+test('strict review import rejects global boilerplate verdict rationale and credential-like text',()=>{
+  const s=syntheticSubmission();Object.assign(s,{qualificationReference:'SYNTHETIC_ONLY'});for(const r of s.rows)Object.assign(r,{scopeOfClaim:'ITEM_ONLY_NOT_CEFR_OR_MASTERY'});
+  s.rows[0]!.rationale='GLOBAL_PASS';assert.throws(()=>qa.importReview(packet,JSON.stringify(s)),/ITEM_EVIDENCE/);
+  s.rows[0]!.rationale='Bearer secret-value-must-not-be-logged';assert.throws(()=>qa.importReview(packet,JSON.stringify(s)),/SENSITIVE/);
+});

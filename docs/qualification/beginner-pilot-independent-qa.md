@@ -49,3 +49,30 @@ Status remains IMPLEMENTING;no qualification/readiness transition.
 Final static verification: focused eslint (four new TS files) PASS; pnpm --filter @worklingo/api exec tsc --noEmit PASS. Mandate CLI/source/proposal hashes rechecked;both records remain implementing with exact matching approval. Independent review remains BLOCKED,not PASS.
 
 Git ruling: owner combined approval explicitly permits scoped local commits. Preserve exact18 pre-existing/new governance capture paths as a separate audit checkpoint,without editing frozen artifacts;then commit each five-file execution scope separately. This archives decision dependencies rather than expanding product/source scope. No merge,push or release.
+
+## 2026-10-29 autonomous engineering continuation
+
+Execution baseline747018a;matching B proposal `f53ccbc9a5a0645696ba91b99ca859011028b35268f876f2e93547c61c249d8d` rechecked;mandate remains implementing.
+
+Implemented within existing B files:bounded1MiB strict JSON import to a new in-memory packet,exact82 IDs/item hashes and immutable packet binding,qualification/appointment/consent/receipt references,actual-date validation,explicit item-only claim scope,unknown/prototype/signature/CEFR/master-ID rejection,placeholder and credential/email-pattern rejection,and append-only event history. These are report validation rules,not identity/document authentication.
+
+Aggregation counts actual supplied rows by item,reports PASS/REVISE/REJECT,leaves missing evidence visible,and flags conflicting historical reports for adjudication instead of silently selecting latest. No real submission exists:0/82 dispositions,82 pending. No inferred phonetic/teacher approval or readiness change.
+
+Vocabulary audit checks41 contextual mappings/11 IPA pairs for duplicates,missing/stale contexts and metadata;meaning variants are warnings requiring language review. All41 authored-inline provenance mappings remain pending. Contradictory usage examples are not automatically adjudicated.
+
+The reviewer HTML now collects qualification evidence reference and exports explicit item-only scope for every row. A VM test executes the actual inline export handler and passes the generated synthetic JSON through the actual strict importer. No synthetic review is persisted. Actual browser playback/usability has not been exercised this continuation.
+
+Observed TDD:28 existing PASS+5 new FAIL ->33 PASS;actual export/import contract FAIL ->34 PASS;boilerplate/secret intake FAIL ->35 PASS. A negative fixture was narrowed from an email string to REDACTED_UNKNOWN_FIELD to exercise unknown-field rejection independently from the separately tested sensitive-text guard. Assertions still require rejection.
+
+Technical claims retained:24/24 WAV integrity,41/41 contextual text consistency,11/11 IPA mapping consistency. These are not phonetic correctness or authoritative vocabulary provenance.
+
+Ruling:existing JSON and evidence history remain unchanged;pure import/aggregation is implemented and tested now. Durable import CLI/atomic persistence and stronger report provenance require the single Umbrella successor. Cost:reviewer evidence is not yet persistable through an approved import command. No fabricated qualification evidence fills the gap.
+
+Independent review BLOCKED by tool model availability. No network,media copy,Azure call,DB,source/audio/rubric mutation,GateC or readiness transition occurred.
+
+### Final executed verification for this continuation
+- `pnpm --filter @worklingo/api exec tsx --test test/beginner-pilot/independent-qa-pack.test.ts`:35 PASS,0 FAIL,0 skipped.
+- Focused four-file ESLint and API `tsc --noEmit`:PASS.
+- Self-review mutation experiment:temporarily remove per-row scope guard;qualification/scope contract test fails(34 PASS/1 FAIL);restore bytes and final suite35 PASS. This is intentional mutation evidence,not independent review.
+- Integration invariants:packet SHA-256 remains `0a2f28c1ad915a97f072a5985b68feaeea455af4b9e75359b69c5a5c865231df`;24/41/11/6 inventory unchanged;0/82 actual dispositions. Original JSON,teacher claims and GateA records retained.
+- Build/broader regression and persistent import command:NOT_RUN/not authorized by existing command allowlist. Proposed together in pending Umbrella scope.
