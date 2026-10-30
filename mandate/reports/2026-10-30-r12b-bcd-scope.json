@@ -1,0 +1,113 @@
+{
+  "mission": "WORKLINGO-R12B-BCD-20261030",
+  "baseline": {
+    "head": "b08e96c2e12079d07d58b13b691a70f6f1627636",
+    "branch": "codex/foundation-basic-readiness"
+  },
+  "authority": {
+    "ownerAttachmentSha256": "58e11ceb93510830b4b091fe422376729eadd39eee5c11437fad028d15c78af6",
+    "offlineASR": true,
+    "gateCEngineering": true,
+    "expertIntake": "STRUCTURE_AND_PROVENANCE_VALIDATION_ONLY_NO_FABRICATED_IDENTITY",
+    "localInference": "SEPARATE_PINNED_IDENTITY_SYNTHETIC_ONLY_ZERO_PAID",
+    "remoteInference": false,
+    "credentialsOrEnv": false,
+    "realParticipants": false,
+    "productionOrDatabase": false,
+    "localCommits": true,
+    "release": "ONLY_ALL_PREEXISTING_15_GATES_GENUINELY_PASS"
+  },
+  "budget": {
+    "inkPoints": "1.5",
+    "additionalUSD": "0",
+    "noTopUp": true,
+    "requestStartsMaximum": 160,
+    "pilotStarts": 20,
+    "caseCount": 128,
+    "anchorRepeats": 32
+  },
+  "allowlist": {
+    "modify": [
+      "apps/api/test/beginner-pilot/gate-c-session.ts"
+    ],
+    "create": [
+      "tools/qualification/beginner-r12b-offline-speech.ps1",
+      "tools/qualification/beginner-r12b-offline-speech.test.ps1",
+      "apps/api/test/beginner-pilot/bcd-cost-options.ts",
+      "apps/api/test/beginner-pilot/bcd-cost-options.test.ts",
+      "apps/api/test/beginner-pilot/bcd-local-calibration.ts",
+      "apps/api/test/beginner-pilot/bcd-local-calibration.test.ts",
+      "apps/api/test/beginner-pilot/gate-c-evidence-hardening.test.ts",
+      "apps/api/test/beginner-pilot/gate-c-session-kit.ts",
+      "apps/api/test/beginner-pilot/gate-c-session-kit.test.ts",
+      "apps/api/test/beginner-pilot/external-expert-intake.ts",
+      "apps/api/test/beginner-pilot/external-expert-intake.test.ts",
+      "apps/api/test/beginner-pilot/bcd-governance.test.ts",
+      "docs/qualification/beginner-r12b-bcd-offline-speech.json",
+      "docs/qualification/beginner-r12b-bcd-offline-speech.md",
+      "docs/qualification/beginner-r12b-provider-options.json",
+      "docs/qualification/beginner-r12b-provider-options.md",
+      "docs/qualification/beginner-r12b-local-calibration.json",
+      "docs/qualification/beginner-r12b-local-calibration.md",
+      "docs/qualification/beginner-r12b-gate-c-session-kit.json",
+      "docs/qualification/beginner-r12b-gate-c-session-kit.md",
+      "docs/qualification/beginner-r12b-external-review-template.json",
+      "docs/qualification/beginner-r12b-external-review-template.md",
+      "docs/qualification/beginner-r12b-bcd-final-report.md",
+      "docs/qualification/beginner-r12b-bcd-evidence-index.json",
+      "docs/qualification/beginner-r12b-bcd-commit-inventory.md",
+      "docs/qualification/beginner-r12b-bcd-release-readiness.md",
+      "docs/qualification/beginner-r12b-bcd-final-review.md",
+      "docs/superpowers/plans/2026-10-30-r12b-bcd.md",
+      "mandate/reports/2026-10-30-r12b-bcd-authorization.md",
+      "mandate/reports/2026-10-30-r12b-bcd-scope.json",
+      "mandate/reports/2026-10-30-r12b-bcd-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-005-architecture-complete-bcd-offline-speech-local-model-and-external-evidence-boundari.md"
+    ]
+  },
+  "runtime": {
+    "root": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030",
+    "subtrees": [
+      "logs",
+      "artifacts",
+      "asr",
+      "models",
+      "runtime"
+    ],
+    "audio": "Read-only exact24WAVs from latestQApacket; derivative16kfiles only inside asr; DictationGrammar without expected-script hints; bounded perfile child timeout",
+    "portableLocal": "Optional zero-cost portable official ggml-org/llama.cpp WindowsCPU release and official Qwen/Qwen3-0.6B-GGUF public model; public HTTPS GitHub/HuggingFace metadata/assets only, no tokens/authenticated private repos; pin release/revision and verify published binary/model SHA256 before execution; maximum2GiB totaldownload; no system installation/PATH/registry/service change; local singleinflight synthetic pilot20 then stop on failed/inconclusivepilot; never relabel Discovery results",
+    "network": "Read-only official public pricing/privacy/model metadata; no paid/authenticated provider request, messages, purchases or account creation",
+    "portableAssets": {
+      "runtime": {
+        "url": "https://github.com/ggml-org/llama.cpp/releases/download/b12000/llama-b12000-bin-win-cpu-x64.zip",
+        "release": "b12000",
+        "commit": "68d20b884c3878217de79eade0a249efde96ab38",
+        "bytes": 24548752,
+        "sha256": "6fb512a768e6b93c9ced1d01e1f84a3a96bc16b5f0a5948e38fb320d6e067220"
+      },
+      "model": {
+        "url": "https://huggingface.co/Qwen/Qwen3-0.6B-GGUF/resolve/23749fefcc72300e3a2ad315e1317431b06b590a/Qwen3-0.6B-Q8_0.gguf",
+        "revision": "23749fefcc72300e3a2ad315e1317431b06b590a",
+        "bytes": 639446688,
+        "sha256": "9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031",
+        "license": "Apache-2.0"
+      },
+      "server": {
+        "bind": "127.0.0.1",
+        "port": 33441,
+        "threads": 4,
+        "context": 8192,
+        "gpuLayers": 0,
+        "parallel": 1,
+        "offline": true,
+        "webUi": false
+      },
+      "maxPerStartSeconds": 120,
+      "pilotMaximum": 20
+    }
+  },
+  "preserve": "All baseline tracked files immutable except exactGateCsource and CLIbookkeeping; oldpolicies/scopes/content/audio/goldens/decisions/thresholds preserved. No change to historicalPASS or realparticipant/expertcounts. No study/consent/grants minted."
+}

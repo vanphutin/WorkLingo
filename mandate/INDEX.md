@@ -30,8 +30,9 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261030-002](items/MND-20261030-002-bug-repair-authentication-css-module-pure-selectors-blocking-the-r12b-prod.md) | Repair authentication CSS module pure selectors blocking the R12b production build | bug | verified | P1 | Codex |
 | [MND-20261030-003](items/MND-20261030-003-architecture-isolate-synthetic-browser-qualification-and-reduce-discovery-wire-cost.md) | Isolate synthetic browser qualification and reduce Discovery wire cost with human Gate C tooling | architecture | verified | P1 | Codex |
 | [MND-20261030-004](items/MND-20261030-004-architecture-close-r12b-external-evidence-using-ai-and-isolated-qualification.md) | Close R12b external evidence using AI and isolated qualification | architecture | verified | P1 | WorkLingo owner |
+| [MND-20261030-005](items/MND-20261030-005-architecture-complete-bcd-offline-speech-local-model-and-external-evidence-boundari.md) | Complete BCD offline speech local model and external evidence boundaries | architecture | implementing | P1 | WorkLingo owner |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 | [MND-20261028-002](items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md) | Correct bounded Beginner pilot tasks while preserving historical source and audio evidence | learning-content | implementing | P2 | Codex |
 
-Total: 28; active: 28; archived: 0.
+Total: 29; active: 29; archived: 0.
