@@ -1,0 +1,56 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const root=resolve(__dirname,'../../../..');
+const baseline='36bab100a4b6a15afd28e5329fc65af08d34f392';
+const read=(p:string)=>readFileSync(resolve(root,p));
+const sha=(x:string|Buffer)=>createHash('sha256').update(x).digest('hex');
+const git=(...args:string[])=>execFileSync('git',args,{cwd:root,maxBuffer:64*1024*1024});
+test('006 binds direct owner authority and finite new delta without rewriting005',async()=>{
+ const scopePath='mandate/reports/2026-10-30-r12b-finalization-scope.json';
+ assert.equal(sha(read(scopePath)),'66838c08b5380887e5d95e2f187b1d1429f95b25def52db69694b0dc72d6940c');
+ const scope=JSON.parse(read(scopePath).toString());assert.equal(scope.baseline.head,baseline);
+ const itemPath=scope.allowlist.cliBookkeeping.find((p:string)=>p.startsWith('mandate/items/'));
+ const match=read(itemPath).toString().match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u)!;
+ const item=JSON.parse(match[1]!);
+ const model=await import(pathToFileURL(resolve(root,'.agents/skills/mandate-steward/scripts/model.mjs')).href);
+ assert.equal(item.approval.proposal_hash,'c608d7c45e4730c272170bf50d62d1f56b963cdfccdaf856d1d46df3224d73f2');
+ assert.equal(model.proposalHash(item,match[2]),item.approval.proposal_hash);
+ assert.ok(['implementing','verified'].includes(item.status));
+ const fixScopePath='mandate/reports/2026-10-30-r12b-planner-fix-scope.json';
+ assert.equal(sha(read(fixScopePath)),'e257779abff0ef01675abccbeb42a940b620721f88fb0d7c31d4643aa5376cc8');
+ const fix=JSON.parse(read(fixScopePath).toString());
+ const fixMatch=read(fix.allowlist.cliBookkeeping.find((p:string)=>p.startsWith('mandate/items/'))).toString().match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u)!;
+ const fixItem=JSON.parse(fixMatch[1]!);
+ assert.equal(fixItem.approval.proposal_hash,'c02b4c2ad5190d7a7bdb8f9603d98f99b8febe889f8031c4ba4f7c0048bd2e5a');
+ assert.equal(model.proposalHash(fixItem,fixMatch[2]),fixItem.approval.proposal_hash);
+ const successors=[fix];
+ for(const [name,expected,proposal] of [['fake-feedback','2a8b0ce80416fc559ac71e9bca4944062c1440e6d1410e7adca26326f17f8181','1ec2b63547ae602a85cded14b7d94e0ca424f19a476973790598f567821894a2'],['publication-fixture','aba6585bf763a62473d8658b052f19c54a61fc36c39a116f5e670802d4e74322','026b5704f618aa199e1354dc65b5fdff6aa6e51fcc99abba6f2c915d7ce83e03']]){
+  const p='mandate/reports/2026-10-30-r12b-'+name+'-fix-scope.json';assert.equal(sha(read(p)),expected);
+  const successor=JSON.parse(read(p).toString());
+  const m=read(successor.allowlist.cliBookkeeping.find((f:string)=>f.startsWith('mandate/items/'))).toString().match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u)!;
+  const record=JSON.parse(m[1]!);assert.ok(['implementing','verified'].includes(record.status));assert.equal(record.approval.proposal_hash,proposal);assert.equal(model.proposalHash(record,m[2]),record.approval.proposal_hash);successors.push(successor);
+ }
+ const allowed=new Set([...scope.allowlist.modify,...scope.allowlist.create,...scope.allowlist.cliBookkeeping,...successors.flatMap(s=>[...s.allowlist.modify,...s.allowlist.create,...s.allowlist.cliBookkeeping])]);
+ const changed=[...git('diff','--name-only',baseline).toString().trim().split('\n'),...git('ls-files','--others','--exclude-standard').toString().trim().split('\n')].filter(Boolean);
+ for(const p of changed)assert.ok(allowed.has(p),'OUTSIDE_006:'+p);
+ const old=new Set(git('ls-tree','-r','--name-only',baseline).toString().trim().split('\n'));
+ for(const p of changed.filter(p=>old.has(p)&&!scope.allowlist.modify.includes(p)&&!scope.allowlist.cliBookkeeping.includes(p)&&!successors.some(s=>s.allowlist.modify.includes(p))))assert.equal(read(p).toString().replace(/\r\n/gu,'\n'),git('show',baseline+':'+p).toString().replace(/\r\n/gu,'\n'),'IMMUTABLE:'+p);
+ const audit='docs/qualification/beginner-r12b-final-commit-audit.md';
+ assert.ok(read(audit).toString().replace(/\r\n/gu,'\n').startsWith(git('show',baseline+':'+audit).toString().replace(/\r\n/gu,'\n')),'HISTORICAL_AUDIT_REWRITTEN');
+ assert.equal(scope.budget.additionalUSD,'0');assert.equal(scope.authority.realParticipants,false);
+});
+test('current inventory covers all exact lessons assets objectives and historical decisions',()=>{
+ const inv=JSON.parse(read('docs/qualification/beginner-r12b-finalization-evidence-inventory.json').toString());
+ assert.equal(inv.schemaVersion,'worklingo-finalization-inventory/1');
+ assert.deepEqual(inv.counts,{lessons:8,activities:64,objectives:32,lexical:41,audio:24,historicalDecisions:297,qaItems:82,oracleCases:128,anchorRepeats:32});
+ assert.equal(inv.humanExpertVerified,0);assert.equal(inv.realLearnerObservations,0);assert.equal(inv.releasePermitted,false);
+ for(const asset of inv.files)assert.equal(sha(read(asset.path)),asset.sha256,'EVIDENCE_DRIFT:'+asset.path);
+ for(const wav of inv.audio)assert.equal(sha(read(wav.path)),wav.sha256,'WAV_DRIFT:'+wav.id);
+ assert.equal(new Set(inv.historicalDecisions.map((x:{id:string})=>x.id)).size,297);
+ assert.equal(new Set(inv.qaItems.map((x:{id:string})=>x.id)).size,82);
+});
