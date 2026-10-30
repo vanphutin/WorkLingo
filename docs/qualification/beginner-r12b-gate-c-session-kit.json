@@ -1,0 +1,474 @@
+{
+  "schemaVersion": "beginner-gate-c-session-kit/1",
+  "status": "NEEDS_HUMAN_EVIDENCE",
+  "actualParticipants": 0,
+  "actualObservations": 0,
+  "requiredObservations": 24,
+  "readinessChanged": false,
+  "protocol": {
+    "path": "docs/qualification/beginner-pilot-rehearsal-protocol.md",
+    "sha256": "f6aeaafc0073f013b10d46f6fc33368e2e23dfe719dd439e7de228be351503f0"
+  },
+  "lessons": [
+    {
+      "lesson": "MG01-L1",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "bundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+          "sha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+          "sha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+          "sha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg01-l1-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l1-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l1-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l1-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l1-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l1-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l1-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg01-l1-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG01-L2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "bundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+          "sha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+          "sha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+          "sha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg01-l2-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l2-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l2-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l2-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l2-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l2-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l2-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg01-l2-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG01-L3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "bundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+          "sha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+          "sha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+          "sha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg01-l3-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l3-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l3-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l3-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l3-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l3-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l3-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg01-l3-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG01-L4",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "bundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+          "sha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+          "sha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+          "sha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg01-l4-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l4-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l4-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg01-l4-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l4-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l4-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg01-l4-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg01-l4-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG02-L1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "bundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+          "sha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+          "sha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+          "sha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg02-l1-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l1-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l1-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l1-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l1-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l1-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l1-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg02-l1-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG02-L2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "bundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+          "sha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+          "sha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+          "sha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg02-l2-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l2-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l2-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l2-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l2-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l2-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l2-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg02-l2-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG02-L3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "bundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+          "sha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+          "sha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+          "sha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg02-l3-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l3-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l3-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l3-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l3-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l3-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l3-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg02-l3-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    },
+    {
+      "lesson": "MG02-L4",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "bundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "audio": [
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+          "sha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+          "sha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e"
+        },
+        {
+          "path": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+          "sha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9"
+        }
+      ],
+      "activities": [
+        {
+          "slug": "mg02-l4-r1",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l4-r2",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l4-r3",
+          "activityType": "reading"
+        },
+        {
+          "slug": "mg02-l4-l1",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l4-l2",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l4-l3",
+          "activityType": "listening"
+        },
+        {
+          "slug": "mg02-l4-s1",
+          "activityType": "speaking"
+        },
+        {
+          "slug": "mg02-l4-w1",
+          "activityType": "writing"
+        }
+      ],
+      "applicationBinding": null
+    }
+  ],
+  "participantSlots": [
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "studyAuthority": null,
+  "privateStorageContract": null,
+  "consent": null,
+  "recordingConsent": null,
+  "applicationBindingStatus": "NOT_SUPPLIED",
+  "measurementStatus": "NOT_RUN",
+  "failureCategories": [
+    "CONTENT",
+    "UX",
+    "API",
+    "EVALUATOR",
+    "PARTICIPANT_SPECIFIC",
+    "UNKNOWN"
+  ],
+  "instructions": "See beginner-r12b-gate-c-session-kit.md; kit identities and structural validation do not approve a study or establish human evidence."
+}

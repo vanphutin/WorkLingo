@@ -14,6 +14,23 @@ export type Session={provenance:Authority['provenance'];slot:string;lesson:strin
 const lessons=['MG01-L1','MG01-L2','MG01-L3','MG01-L4','MG02-L1','MG02-L2','MG02-L3','MG02-L4'];
 const fail=(code:string):never=>{throw Error(code);};
 const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
+type FileBinding={path:string;sha256:string};
+export type StudyManifest={protocol:FileBinding;lessons:{lesson:string;sourcePath:string;sourceSha256:string;bundleSha256:string;audio:FileBinding[]}[]};
+/** Canonical reviewed identities, never a grant to collect participants. */
+export function canonicalStudyManifest():StudyManifest{
+ const repo=path.resolve(__dirname,'../../../..');
+ const bytes=readFileSync(path.join(repo,'docs/qualification/beginner-pilot-independent-qa.json'));
+ if(createHash('sha256').update(bytes).digest('hex')!=='95b6cda8e0eac8ac7c6875e298aace095d3041466a5bd7793068249d5c727a5f')fail('STUDY_REVIEWED_PACKET_DRIFT');
+ const packet=JSON.parse(bytes.toString('utf8')) as {sourceBundles:{lesson:string;sourcePath:string;sourceSha256:string;reviewedBundleSha256:string}[];audio:{path:string;sha256:string;sourcePath:string;sourceSha256:string;reviewedBundleSha256:string}[]};
+ const protocol='docs/qualification/beginner-pilot-rehearsal-protocol.md';
+ return {protocol:{path:protocol,sha256:createHash('sha256').update(readFileSync(path.join(repo,protocol))).digest('hex')},lessons:packet.sourceBundles.map(v=>({lesson:v.lesson,sourcePath:v.sourcePath,sourceSha256:v.sourceSha256,bundleSha256:v.reviewedBundleSha256,audio:packet.audio.filter(a=>a.sourcePath===v.sourcePath&&a.sourceSha256===v.sourceSha256&&a.reviewedBundleSha256===v.reviewedBundleSha256).map(a=>({path:a.path,sha256:a.sha256}))}))};
+}
+/** Pure correspondence check; a byte hash or array length alone cannot bind a lesson. */
+export function validateStudyManifest(input:unknown,expected:StudyManifest):void{
+ const x=input as {protocol:FileBinding;sourceFiles:FileBinding[];audioFiles:FileBinding[];gateCStudy:{versions:Authority['versions']}};
+ const files=(actual:FileBinding[],wanted:FileBinding[])=>Array.isArray(actual)&&actual.length===wanted.length&&new Set(actual.map(f=>f?.path)).size===wanted.length&&actual.every(f=>f&&Object.keys(f).sort().join(',')==='path,sha256'&&/^[a-f\d]{64}$/u.test(f.sha256)&&wanted.some(w=>w.path===f.path&&w.sha256===f.sha256));
+ if(!x||!same(x.protocol,expected.protocol)||expected.lessons.length!==8||!same(expected.lessons.map(v=>v.lesson),lessons)||expected.lessons.some(v=>v.audio.length!==3)||!files(x.sourceFiles,expected.lessons.map(v=>({path:v.sourcePath,sha256:v.sourceSha256})))||!files(x.audioFiles,expected.lessons.flatMap(v=>v.audio))||!same(x.gateCStudy?.versions,expected.lessons.map(v=>({lesson:v.lesson,bundleSha256:v.bundleSha256,audioSha256:v.audio.map(a=>a.sha256)}))))fail('STUDY_VERSION_REQUIRED');
+}
 // No study mandate currently authorizes participants. Engineering config and
 // facilitator booleans cannot mint study authority. A separately reviewed reader
 // for an exact approved study/storage/protocol scope is required before intake.
@@ -28,7 +45,7 @@ export async function readStudyAuthority(scopePath:string):Promise<Authority>{
  const item=JSON.parse(match[1]!),model=await import(path.join(repo,'.agents/skills/mandate-steward/scripts/model.mjs').replaceAll('\\','/').replace(/^([A-Za-z]):/, 'file:///$1:'));
  const hash=(s:string|Buffer)=>createHash('sha256').update(s).digest('hex');
  if(item.status!=='verified'||item.approval?.proposal_hash!==model.proposalHash(item,match[2])||!match[2]!.includes(hash(raw))||scope.authority?.realParticipants!==true||scope.authority.study!==true)fail('STUDY_AUTHORITY_REQUIRED');
- if(!scope.protocol||scope.sourceFiles?.length!==8||scope.audioFiles?.length!==24)fail('STUDY_VERSION_REQUIRED');
+ validateStudyManifest(scope,canonicalStudyManifest());
  for(const f of [scope.protocol,...scope.sourceFiles,...scope.audioFiles]){const p=path.resolve(repo,f.path);if(lstatSync(p).isSymbolicLink()||hash(readFileSync(p))!==f.sha256)fail('STUDY_VERSION_REQUIRED');}
  const a=scope.gateCStudy;if(!a||a.provenance!=='REAL_FACILITATOR_REPORTED'||a.versions.length!==8||!same(a.versions.map(v=>v.lesson),lessons))fail('STUDY_AUTHORITY_REQUIRED');approvedStudies.add(a);return a;
 }
@@ -37,7 +54,7 @@ export function createSession(a:Authority,x:Intake,history:History[],wall:number
  if(a.provenance==='REAL_FACILITATOR_REPORTED'&&(!approvedStudies.has(a)||!a.studyApproved||!a.storageApproved||!a.privateRoot||!a.approvalReference||!a.retentionApproved))fail('STUDY_AUTHORITY_REQUIRED');
  if(![x.adult,x.vietnamese,x.absoluteBeginner,x.consent,x.firstExposure].every(v=>v===true))fail('CONSENT_ELIGIBILITY_REQUIRED');
  if(!/^P0[1-3]$/u.test(x.slot)||Object.keys(x).some(k=>!['slot','lesson','adult','vietnamese','absoluteBeginner','consent','firstExposure','bundleSha256','audioSha256'].includes(k)))fail('PRIVATE_OR_UNKNOWN_FIELD');
- const v=a.versions.find(v=>v.lesson===x.lesson);if(!v||!same(v.audioSha256,x.audioSha256)||v.bundleSha256!==x.bundleSha256||!/^\w{64}$/u.test(v.bundleSha256)||!v.audioSha256.length||v.audioSha256.some(h=>!/^[a-f\d]{64}$/u.test(h)))throw Error('EXACT_VERSION_REQUIRED');
+ const v=a.versions.find(v=>v.lesson===x.lesson);if(!v||!same(v.audioSha256,x.audioSha256)||v.bundleSha256!==x.bundleSha256||!/^[a-f\d]{64}$/u.test(v.bundleSha256)||!v.audioSha256.length||v.audioSha256.some(h=>!/^[a-f\d]{64}$/u.test(h)))throw Error('EXACT_VERSION_REQUIRED');
  if(!Number.isSafeInteger(wall)||wall<0||!Number.isFinite(mono)||mono<0)fail('CLOCK');
  const prior=history.filter(r=>r.slot===x.slot).sort((a,b)=>a.startedAt-b.startedAt);
  if(prior.some(r=>r.lesson===x.lesson))fail('DUPLICATE_EXPOSURE');
@@ -53,7 +70,7 @@ export function transition(s:Session,command:'tick'|'pause'|'resume'|'stop'|'eve
  if(command==='pause'&&(s.status!=='RUNNING'||!['wait','support','research'].includes(code??'')))fail('SESSION_STATE');
  if(command==='resume'&&s.status!=='PAUSED')fail('SESSION_STATE');
  const delta=now-s.last;s.last=now;s.totals[s.kind]+=delta;
- if(s.totals.active>=3600000){s.totals.active=3600000;s.status='STOPPED';s.stopReason='ACTIVE_LIMIT';return s;}
+ if(s.totals.active>=3600000){s.totals.active=3600000;s.status='STOPPED';s.stopReason='ACTIVE_LIMIT';if(command==='event'&&['WITHDRAWAL','DISTRESS','CRITICAL_DEFECT'].includes(code!)){s.events.push({code:code!,at:now});s.stopReason=code!;}return s;}
  if(command==='pause'){s.status='PAUSED';s.kind=code as Kind;}
  if(command==='resume'){s.status='RUNNING';s.kind='active';}
  if(command==='stop'){s.status='STOPPED';s.stopReason='FACILITATOR_STOP';}
@@ -98,13 +115,16 @@ export function assertPrivatePath(target:string,a:Authority){
 export function importCompleted(a:Authority,rows:unknown[]):Session[]{
  if(a.provenance==='REAL_FACILITATOR_REPORTED'&&!approvedStudies.has(a))fail('STUDY_AUTHORITY_REQUIRED');
  if(!Array.isArray(rows)||rows.length>24)fail('OBSERVATION_CAP');
- const sorted=(rows as Session[]).sort((a,b)=>a.startedAt-b.startedAt),accepted:Session[]=[];
+ const sorted=[...rows as Session[]].sort((a,b)=>a.startedAt-b.startedAt),accepted:Session[]=[];
  for(const row of sorted){
   if(!row||Object.keys(row).sort().join(',')!=='attestations,audioSha256,bundleSha256,events,kind,last,lesson,outcome,provenance,reconciliationRequired,slot,startedAt,status,stopReason,totals'||row.provenance!==a.provenance||row.status!=='FINALIZED'||row.reconciliationRequired||!row.attestations)fail('HISTORY_SCHEMA_OR_RECONCILIATION');
   if(Object.keys(row.attestations).sort().join(',')!=='absoluteBeginner,adult,consent,firstExposure,vietnamese'||Object.values(row.attestations).some(v=>v!==true))fail('CONSENT_ELIGIBILITY_REQUIRED');
   const s=createSession(a,{slot:row.slot,lesson:row.lesson,...row.attestations,bundleSha256:row.bundleSha256,audioSha256:row.audioSha256},accepted,row.startedAt,0);
   if(!row.totals||Object.keys(row.totals).sort().join(',')!=='active,research,support,wait'||Object.values(row.totals).some(v=>!Number.isFinite(v)||v<0)||row.totals.active>3600000||!Array.isArray(row.events)||row.events.length>500||row.events.some(e=>Object.keys(e).sort().join(',')!=='at,code'||!Number.isFinite(e.at)||e.at<0||!['HINT','REPLAY','ASSISTANCE','TASK_ERROR','SYSTEM_ERROR','CRITICAL_DEFECT','WITHDRAWAL','DISTRESS'].includes(e.code))||!['FACILITATOR_STOP','ACTIVE_LIMIT','WITHDRAWAL','DISTRESS','CRITICAL_DEFECT'].includes(row.stopReason??''))fail('HISTORY_TIMING_OR_EVENT');
-  s.totals={...row.totals};s.events=row.events.map(e=>({...e}));s.stopReason=row.stopReason;s.status='STOPPED';finalize(s,row.outcome);accepted.push(s);
+  const terminal=row.events.filter(e=>['WITHDRAWAL','DISTRESS','CRITICAL_DEFECT'].includes(e.code));
+  const total=Object.values(row.totals).reduce((n,v)=>n+v,0);
+  if(!['active','wait','support','research'].includes(row.kind)||!Number.isFinite(row.last)||row.last<0||!Number.isFinite(total)||total>row.last+0.001||row.events.some((e,i)=>e.at>row.last||(i>0&&e.at<row.events[i-1]!.at))||terminal.length>1||(terminal.length===1&&(terminal[0]!==row.events[row.events.length-1]||terminal[0]!.code!==row.stopReason||terminal[0]!.at!==row.last))||(['WITHDRAWAL','DISTRESS','CRITICAL_DEFECT'].includes(row.stopReason!)&&terminal.length!==1)||(row.stopReason==='ACTIVE_LIMIT'?row.totals.active!==3600000:row.totals.active===3600000&&terminal.length!==1))fail('HISTORY_TIMING_OR_EVENT');
+  s.totals={...row.totals};s.last=row.last;s.kind=row.kind;s.events=row.events.map(e=>({...e}));s.stopReason=row.stopReason;s.status='STOPPED';finalize(s,row.outcome);accepted.push(s);
  }return accepted;
 }
 export function readHistory(a:Authority,prefix:string){
