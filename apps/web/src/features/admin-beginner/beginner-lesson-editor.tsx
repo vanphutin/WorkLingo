@@ -26,7 +26,7 @@ export function BeginnerLessonEditor({source,onSourceChange,status='PLANNED',per
  const patch=(section:Section,next:string)=>onSourceChange(source.slice(0,section.node.range.start.offset)+next+source.slice(section.node.range.end.offset));
  const field=(section:Section,key:string,value:string)=>{
   const block=source.slice(section.node.range.start.offset,section.node.range.end.offset),re=new RegExp('^'+key+':[^\\r\\n]*','m'),line=key+': '+value;
-  if(re.test(block))patch(section,block.replace(re,line));
+  if(re.test(block))patch(section,block.replace(re,()=>line));
   else {const at=block.indexOf('\n');if(at>=0)patch(section,block.slice(0,at+1)+line+(block.includes('\r\n')?'\r\n':'\n')+block.slice(at+1));}
  };
  const refs=[...new Set(doc.activities.filter(a=>a.activityType==='listening').map(a=>a.audioRef).filter((s):s is string=>!!s))];

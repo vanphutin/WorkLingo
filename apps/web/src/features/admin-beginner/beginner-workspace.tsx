@@ -4,7 +4,7 @@ import type {BeginnerTarget,BeginnerWriteInput} from '@worklingo/contracts';
 import {useT} from '../../i18n/provider';
 import {adminBeginnerMessages} from '../../i18n/messages/adminBeginner';
 import {beginnerAdminClient as api,type BeginnerWorkspaceData,type BeginnerImportData,type BeginnerPreviewData} from '../../lib/api/beginner-admin-client';
-import {useAdminDraftGuard} from '../admin-dashboard/admin-navigation-guard';
+import {useAdminDraftGuard,useAdminCanNavigate} from '../admin-dashboard/admin-navigation-guard';
 import {FoundationDefinitionEditor} from '../admin-curriculum/foundation-definition-editor';
 import {BeginnerLessonEditor} from './beginner-lesson-editor';
 import {BeginnerLearnerPreview} from './beginner-learner-preview';
@@ -17,7 +17,8 @@ export function BeginnerWorkspace(){
  const [audio,setAudio]=useState<Record<string,string>>({}),[reviewHash,setReviewHash]=useState<string|null>(null),[version,setVersion]=useState('');
  const [preview,setPreview]=useState<BeginnerPreviewData|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState<string|null>(null),[unitEditor,setUnitEditor]=useState<BeginnerTarget|null>(null);
  const request=useRef(0),dirty=source!==(item?.draft.rawSource??'');
- const canLeave=useAdminDraftGuard(dirty);
+ const canLeaveDraft=useAdminDraftGuard(dirty),canNavigate=useAdminCanNavigate(),sourceRevision=useRef(0);
+ const canLeave=()=>dirty?canLeaveDraft():canNavigate();
  const immutable=item?.draft.status==='PUBLISHED'||item?.draft.status==='ARCHIVED';
  const foundationClient=useMemo(()=>unitEditor?api.foundation(unitEditor):undefined,[unitEditor]);
  const load=async()=>{setError(null);try{setWorkspace(await api.workspace());}catch(e){setError(e instanceof Error?e.message:String(e));}};
@@ -34,7 +35,7 @@ export function BeginnerWorkspace(){
   if(!target)throw new Error('Select a bound test Unit');
   return {target,expectedRevision:item?.draft.draftRevision??null,idempotencyKey:crypto.randomUUID(),selectedAudioArtifacts:audio,...(item?{expectedSourceHash:item.draft.sourceHash}:{})};
  };
- const reload=async()=>{if(!target?.importId)return;const data=await api.getImport(target);setItem(data);setSource(data.draft.rawSource);setReviewHash(data.reviewHash);setAudio(data.selectedAudioArtifacts);};
+ const reload=async(expectedSourceRevision=sourceRevision.current)=>{if(!target?.importId)return;const data=await api.getImport(target);setItem(data);if(sourceRevision.current===expectedSourceRevision){setSource(data.draft.rawSource);setReviewHash(data.reviewHash);setAudio(data.selectedAudioArtifacts);}else setReviewHash(null);};
  const save=()=>run(async()=>{
   if(!target||!code||immutable)return;
   if(item){const draft=await api.updateSource({...command(),rawSource:source});setItem({...item,draft,reviewHash:null});}
@@ -74,9 +75,9 @@ export function BeginnerWorkspace(){
      {item?.draft.status==='PUBLISHED'&&target&&allowed('author')?<button type="button" disabled={busy} onClick={()=>{
       if(!canLeave())return;const next={...target};delete next.importId;setTarget(next);setItem(null);setReviewHash(null);setAudio({});setPreview(null);setVersion('');
      }}>{t('newDraft')}</button>:null}
-     <BeginnerLessonEditor source={source} onSourceChange={value=>{setSource(value);setReviewHash(null);setPreview(null);}} status={item?.draft.status??'PLANNED'} persisted={!!item} dirty={dirty} busy={busy} readOnly={immutable||!target||!allowed('author')} reviewHash={reviewHash} audioArtifacts={item?.audioArtifacts??[]} selectedAudioArtifacts={audio} onAudioSelection={value=>{setAudio(value);setReviewHash(null);setPreview(null);}} actions={{
+     <BeginnerLessonEditor source={source} onSourceChange={value=>{sourceRevision.current++;setSource(value);setReviewHash(null);setPreview(null);}} status={item?.draft.status??'PLANNED'} persisted={!!item} dirty={dirty} busy={busy} readOnly={immutable||!target||!allowed('author')} reviewHash={reviewHash} audioArtifacts={item?.audioArtifacts??[]} selectedAudioArtifacts={audio} onAudioSelection={value=>{setAudio(value);setReviewHash(null);setPreview(null);}} actions={{
       ...(allowed('author')&&target&&!immutable?{save:()=>void save()}:{}),
-      ...(allowed('validate')?{validate:()=>void run(async()=>{await api.validate(command());await reload();})}:{}),
+      ...(allowed('validate')?{validate:()=>void run(async()=>{const revision=sourceRevision.current;await api.validate(command());await reload(revision);})}:{}),
       ...(allowed('read')?{preview:()=>void run(async()=>{if(target)setPreview(await api.preview(target,version||undefined,audio));})}:{}),
       ...(allowed('review')?{review:()=>void run(async()=>{const reviewed=await api.review(command());setReviewHash(reviewed.reviewHash);})}:{}),
       ...(allowed('publish')?{publish:()=>void run(async()=>{await api.publish({...command(),reviewHash:reviewHash!});await reload();await load();})}:{}),

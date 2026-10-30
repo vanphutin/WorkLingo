@@ -18,3 +18,11 @@ describe('source-preserving Format1.2 editor',()=>{
   fireEvent.click(screen.getByRole('button',{name:'Validate'}));expect(validate).toHaveBeenCalledOnce();expect(publish).not.toHaveBeenCalled();
  });
 });
+
+it.each(['$&', '$`', "$'", '$$', '$1'])('preserves literal replacement text %s in structured fields', value=>{
+ const prefix='FORMAT: WorkLingoLesson/1.2\n[INSTRUCTION guide]\nphase: readDecode\norder: 0\n';
+ const suffix='\n[/INSTRUCTION]\n[UNRECOGNIZED custom]\nkeep every line\n[/UNRECOGNIZED]\n';
+ const change=vi.fn();render(<BeginnerLessonEditor source={prefix+'text: Original'+suffix} onSourceChange={change}/>);
+ fireEvent.change(screen.getByLabelText('Instruction guide · text'),{target:{value}});
+ expect(change).toHaveBeenCalledWith(prefix+'text: '+value+suffix);
+});
