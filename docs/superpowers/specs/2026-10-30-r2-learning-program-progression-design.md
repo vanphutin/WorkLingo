@@ -8,6 +8,8 @@ The owner directly ordered continuous autonomous implementation in the current m
 
 Deliver a real local Admin → Learner journey using the existing Program → Path → Level → Mission → Lesson hierarchy, immutable CurriculumRevision and LessonVersion, enrollment, sessions, attempts, roadmap and completion receipts. No duplicate curriculum system.
 
+Beginner vocabulary may use sourced A1 and A2 items: A1 is the default foundation and A2 is allowed when the lesson objective and learner context justify it. The stored CEFR from the vocabulary master remains authoritative; the slice never relabels A2 as Pre-A1 or creates a master record for an authored grammar phrase.
+
 ## Builder decisions
 
 Use the existing NestJS/Prisma/PostgreSQL backend and Next.js/React frontend. Add only additive database fields: LearningProgram.revision (1), progressionPolicy (MASTERY by default; ACTIVITY_COMPLETION for new R2 programs), curriculumRevisionIds (empty UUID array by default), and LearnerProgramEnrollment.curriculumRevisionIds (empty UUID array by default). Existing programs keep their current access and mastery behavior. No new dependencies.

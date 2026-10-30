@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "r2-progression-qualification/1",
+  "recordedDate": "2026-10-30",
+  "runtimeRoot": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030",
+  "browserReceipt": {
+    "provenance": "SYNTHETIC_ACTUAL_UI_API_POSTGRES",
+    "programId": "6ef7b725-c833-4a7c-bf3d-2947ebf4ae9a",
+    "revisionIds": [
+      "5a91168a-a74d-45fc-acf1-0292655938b6",
+      "32fd66af-504f-405f-a919-32e7cd975920"
+    ],
+    "sessionIds": [
+      "2abd2aa2-d15a-407c-aa60-9f01b53451a6",
+      "bf4d3fb9-6e79-490f-b592-d454915c36d7"
+    ],
+    "attempts": 4,
+    "roadmap": {
+      "programId": "6ef7b725-c833-4a7c-bf3d-2947ebf4ae9a",
+      "enrollmentId": "793254c3-e893-44a8-914f-b6b00597d4f0",
+      "targetedStartSupported": true,
+      "items": [
+        {
+          "missionId": "bedced99-0bb2-4ac0-9554-90b19f11f30a",
+          "revisionId": "5a91168a-a74d-45fc-acf1-0292655938b6",
+          "title": "Browser lesson one",
+          "state": "completed",
+          "unmetPrerequisites": [],
+          "reviewDue": false,
+          "activeSessionId": null,
+          "objectives": [
+            {
+              "slug": "complete-reading",
+              "statement": "Complete reading practice",
+              "skills": [
+                "reading"
+              ],
+              "required": true,
+              "completed": true
+            },
+            {
+              "slug": "complete-listening",
+              "statement": "Complete listening practice",
+              "skills": [
+                "listening"
+              ],
+              "required": true,
+              "completed": true
+            },
+            {
+              "slug": "complete-speaking",
+              "statement": "Complete speaking practice",
+              "skills": [
+                "speaking"
+              ],
+              "required": true,
+              "completed": true
+            },
+            {
+              "slug": "complete-writing",
+              "statement": "Complete writing practice",
+              "skills": [
+                "writing"
+              ],
+              "required": true,
+              "completed": true
+            }
+          ]
+        },
+        {
+          "missionId": "f760684c-3d91-4e4b-9884-ebba6d0fc63a",
+          "revisionId": "32fd66af-504f-405f-a919-32e7cd975920",
+          "title": "Browser lesson two",
+          "state": "in_progress",
+          "unmetPrerequisites": [],
+          "reviewDue": false,
+          "activeSessionId": "bf4d3fb9-6e79-490f-b592-d454915c36d7",
+          "objectives": [
+            {
+              "slug": "complete-reading",
+              "statement": "Complete reading practice",
+              "skills": [
+                "reading"
+              ],
+              "required": true,
+              "completed": false
+            },
+            {
+              "slug": "complete-listening",
+              "statement": "Complete listening practice",
+              "skills": [
+                "listening"
+              ],
+              "required": true,
+              "completed": false
+            },
+            {
+              "slug": "complete-speaking",
+              "statement": "Complete speaking practice",
+              "skills": [
+                "speaking"
+              ],
+              "required": true,
+              "completed": false
+            },
+            {
+              "slug": "complete-writing",
+              "statement": "Complete writing practice",
+              "skills": [
+                "writing"
+              ],
+              "required": true,
+              "completed": false
+            }
+          ]
+        }
+      ]
+    },
+    "humanParticipants": 0,
+    "providerCalls": 0
+  },
+  "files": [
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/api-all-final.log",
+      "bytes": 18908,
+      "sha256": "a77b5f0b4e3fd903e8e8d66d511a6a65e3c707611c92ac94dec5c84cf93ad6ec"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/shared-final.log",
+      "bytes": 3611,
+      "sha256": "b388fdc79b602d186b5fe1d4c0fd8338792de3e11aee9de625e3caa76032037b"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/root-regression.log",
+      "bytes": 7056,
+      "sha256": "ff2807f47559de0b9a4e3ce7da90eec5b814889cecbfc87bc0364cb898eee428"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/vertical-api-verified2.log",
+      "bytes": 521,
+      "sha256": "c227980b0c64935098c344bf6a383285551f69c6202912e8664dd9707a1fa525"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/r2-no-env-integration-final.log",
+      "bytes": 601,
+      "sha256": "80b2eebc38a1810d6362b579b12fd4ac53985ca36e34b5b5b2e27a5c3c54ef31"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/api-lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/api-typecheck-verified.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/api-build-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/shared-typecheck.log",
+      "bytes": 292,
+      "sha256": "4fe476509e6a3fe4249fc51f966a11b5bdff4ff37c45858cab45a73e28daed6e"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/shared-lint.log",
+      "bytes": 256,
+      "sha256": "bbb764b1250a34e3bef96f057dc71270797605b06192a758a67ba6ba9d969f23"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/browser-verified-final.log",
+      "bytes": 198,
+      "sha256": "61fc65e5f04472effc7a5a69c7e4e183b8787dc75e74dee7a82fabd696a290e3"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/capability-red.log",
+      "bytes": 4093,
+      "sha256": "589d56ad19630ab3f3e703c683a5ed9f48e36d30a4143c570a63ad208657742e"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/capability-green.log",
+      "bytes": 373,
+      "sha256": "3c9753aedd03c407ec180eba3e4f4355f92d8bb76d71760ee3c162b9f8c2a282"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/mutation-red.log",
+      "bytes": 2924,
+      "sha256": "d860165cc510a7262d6b561d13908954a671163a7e5ea5b6d2445714182d96fe"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/mutation-restored-green.log",
+      "bytes": 373,
+      "sha256": "7c24ee7ee72dc1ee48e2e51ebea2dbf13b8f305eee0bdeb470142619e15fd15f"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/admin-program.png",
+      "bytes": 147736,
+      "sha256": "4214397ec5ac104e8814add1773e4b634b2c742751879d916dbd4fd8b66ae11b"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/learner-roadmap.png",
+      "bytes": 151284,
+      "sha256": "7d6de49586aeb66c8409cce1c2640a6b49ed76aaa62c099b0de9580d67ec6189"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/learner-mobile.png",
+      "bytes": 124440,
+      "sha256": "5652c3be4e73fe623b8ce8f691195a24654ca582c393e15d4b78e3c47e9f4273"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/browser-receipt.json",
+      "bytes": 3256,
+      "sha256": "1fdfd0021eaf1206dfb48192ca92f8366c326ce2fd00e6873ae704f40f82818f"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/web-build-verified.log",
+      "bytes": 2229,
+      "sha256": "b66fa350363a04ac8b02d7d86dd036b4874307595fd8ae901151f94655e5213f"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/browser-api-final.log",
+      "bytes": 455,
+      "sha256": "f54e0f6744e6f00b1e30a557b41eb9050aab1945aff459189cf13bc94c52ecbb"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/harness-eslint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/api-typecheck-harness-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "review": {
+    "reviewer": "independent Codex agent /root/final_review",
+    "exactRuntimeModel": null,
+    "initialFindings": [
+      "P2 legacy targeted start offered for unsupported enrollment",
+      "P2 curriculum publication/archive race"
+    ],
+    "resolution": "Both independently re-reviewed; no unresolved Critical or Required findings.",
+    "mutation": "&& to || produced2failures; restored13pass"
+  },
+  "limitations": [
+    "Synthetic fixtures; human participants0; no language mastery claim",
+    "No primary DB write, paid provider call, deployment or physical power loss test",
+    "Default env-loading/sharedDB suites not run; explicit safe configurations used"
+  ],
+  "releaseReady": false,
+  "cleanup": {
+    "apiAndWebStopped": true,
+    "disposableDatabaseRemoval": "pending final audit",
+    "primaryDatabaseMutated": false
+  }
+}

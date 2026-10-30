@@ -1,0 +1,2098 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-30T12:12:16.354Z",
+  "provenance": "ACTUAL_PRIMARY_DATABASE_READ_ONLY_SNAPSHOT",
+  "rawSnapshotSha256": "6eba30ec6e56eebd4fe88231aa8ad824f127646f3957515c2e587d10a55c0695",
+  "databaseVersion": "PostgreSQL 17.11",
+  "counts": {
+    "VocabularySource": 5,
+    "VocabularyDocument": 5,
+    "VocabularySourceEntry": 8744,
+    "LexicalEntry": 8129,
+    "LexicalSense": 8742,
+    "LexicalPronunciation": 8542,
+    "LexicalCefrAssociation": 8742,
+    "VocabularyEntryResolution": 8742,
+    "VocabularyLegacyLink": 0,
+    "VocabularyCurriculumBinding": 0,
+    "VocabularyProgramAssignment": 0,
+    "LanguageBlock": 0,
+    "LanguageBlockVersion": 0,
+    "WordBank": 0,
+    "WordBankVersion": 0,
+    "LearningProgram": 0,
+    "LearningPath": 0,
+    "Level": 0,
+    "Mission": 0,
+    "MissionLesson": 0,
+    "Lesson": 0,
+    "LessonVersion": 0,
+    "LessonVersionWordBank": 0
+  },
+  "sources": [
+    {
+      "id": "3916ea4f-dd16-43ba-bc95-ae5e05fac24d",
+      "providerName": "LanGeek",
+      "title": "LanGeek B2 user-derived TXT",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-B2.pdf#worklingo-txt-sha256=a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "languageCode": "en",
+      "pronunciationDialect": "en-US",
+      "rightsStatus": "APPROVED",
+      "allowedUses": [
+        "EXTRACT",
+        "STORE",
+        "MODIFY",
+        "TRANSLATE",
+        "COMMERCIAL"
+      ],
+      "allowedFields": [
+        "FORM",
+        "DEFINITION",
+        "PRONUNCIATION"
+      ],
+      "revision": 2
+    },
+    {
+      "id": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "providerName": "LanGeek",
+      "title": "LanGeek A2 user-derived TXT",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-A2.pdf#worklingo-txt-sha256=a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "languageCode": "en",
+      "pronunciationDialect": "en-US",
+      "rightsStatus": "APPROVED",
+      "allowedUses": [
+        "EXTRACT",
+        "STORE",
+        "MODIFY",
+        "TRANSLATE",
+        "COMMERCIAL"
+      ],
+      "allowedFields": [
+        "FORM",
+        "DEFINITION",
+        "PRONUNCIATION"
+      ],
+      "revision": 2
+    },
+    {
+      "id": "6007b40a-2937-42e5-8b4a-6105d41a4815",
+      "providerName": "LanGeek",
+      "title": "LanGeek C1 user-derived TXT",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-C1.pdf#worklingo-txt-sha256=a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "languageCode": "en",
+      "pronunciationDialect": "en-US",
+      "rightsStatus": "APPROVED",
+      "allowedUses": [
+        "EXTRACT",
+        "STORE",
+        "MODIFY",
+        "TRANSLATE",
+        "COMMERCIAL"
+      ],
+      "allowedFields": [
+        "FORM",
+        "DEFINITION",
+        "PRONUNCIATION"
+      ],
+      "revision": 2
+    },
+    {
+      "id": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "providerName": "LanGeek",
+      "title": "LanGeek A1 user-derived TXT",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/04/English-wordlist-A1.pdf#worklingo-txt-sha256=a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "languageCode": "en",
+      "pronunciationDialect": "en-US",
+      "rightsStatus": "APPROVED",
+      "allowedUses": [
+        "EXTRACT",
+        "STORE",
+        "MODIFY",
+        "TRANSLATE",
+        "COMMERCIAL"
+      ],
+      "allowedFields": [
+        "FORM",
+        "DEFINITION",
+        "PRONUNCIATION"
+      ],
+      "revision": 2
+    },
+    {
+      "id": "9f2672aa-a9dd-4693-92e7-11f5357ead4a",
+      "providerName": "LanGeek",
+      "title": "LanGeek B1 user-derived TXT",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-B1.pdf#worklingo-txt-sha256=a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "languageCode": "en",
+      "pronunciationDialect": "en-US",
+      "rightsStatus": "APPROVED",
+      "allowedUses": [
+        "EXTRACT",
+        "STORE",
+        "MODIFY",
+        "TRANSLATE",
+        "COMMERCIAL"
+      ],
+      "allowedFields": [
+        "FORM",
+        "DEFINITION",
+        "PRONUNCIATION"
+      ],
+      "revision": 2
+    }
+  ],
+  "documents": [
+    {
+      "id": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "cefrLevel": "A1",
+      "sourceFormat": "TXT",
+      "sha256": "a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/04/English-wordlist-A1.pdf",
+      "edition": "TXT logical topic sections; locations are TXT line spans, not PDF geometry."
+    },
+    {
+      "id": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "cefrLevel": "A2",
+      "sourceFormat": "TXT",
+      "sha256": "a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-A2.pdf",
+      "edition": "TXT logical topic sections; locations are TXT line spans, not PDF geometry."
+    },
+    {
+      "id": "72967098-969d-4dba-a149-4377c048c15a",
+      "sourceId": "9f2672aa-a9dd-4693-92e7-11f5357ead4a",
+      "cefrLevel": "B1",
+      "sourceFormat": "TXT",
+      "sha256": "a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-B1.pdf",
+      "edition": "TXT logical topic sections; locations are TXT line spans, not PDF geometry."
+    },
+    {
+      "id": "9c22174d-abeb-461d-871f-78e0e30d3a89",
+      "sourceId": "3916ea4f-dd16-43ba-bc95-ae5e05fac24d",
+      "cefrLevel": "B2",
+      "sourceFormat": "TXT",
+      "sha256": "a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-B2.pdf",
+      "edition": "TXT logical topic sections; locations are TXT line spans, not PDF geometry."
+    },
+    {
+      "id": "963017e6-db30-49d4-989f-df4329717fd8",
+      "sourceId": "6007b40a-2937-42e5-8b4a-6105d41a4815",
+      "cefrLevel": "C1",
+      "sourceFormat": "TXT",
+      "sha256": "a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+      "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-C1.pdf",
+      "edition": "TXT logical topic sections; locations are TXT line spans, not PDF geometry."
+    }
+  ],
+  "entries": [
+    {
+      "id": "5aecc76b-8141-43a5-a061-f52324382333",
+      "language": "en",
+      "canonicalForm": "Bag",
+      "normalizedForm": "bag",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "NOUN",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "language": "en",
+      "canonicalForm": "Book",
+      "normalizedForm": "book",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "NOUN",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "bd7719cd-b16b-4187-9944-58022bb12c51",
+      "language": "en",
+      "canonicalForm": "Eraser",
+      "normalizedForm": "eraser",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "NOUN",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "language": "en",
+      "canonicalForm": "Hello",
+      "normalizedForm": "hello",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "INTERJECTION",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "language": "en",
+      "canonicalForm": "Name",
+      "normalizedForm": "name",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "NOUN",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "language": "en",
+      "canonicalForm": "Pen",
+      "normalizedForm": "pen",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "NOUN",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "language": "en",
+      "canonicalForm": "That",
+      "normalizedForm": "that",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "DETERMINER",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "language": "en",
+      "canonicalForm": "This",
+      "normalizedForm": "this",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "DETERMINER",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "9304005a-dd4a-4a8a-8e2e-a878d5c52578",
+      "language": "en",
+      "canonicalForm": "book",
+      "normalizedForm": "book",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "VERB",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "language": "en",
+      "canonicalForm": "from",
+      "normalizedForm": "from",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "PREPOSITION",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "language": "en",
+      "canonicalForm": "name",
+      "normalizedForm": "name",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "VERB",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "2286b88b-e1dc-4975-ba92-71f438767b10",
+      "language": "en",
+      "canonicalForm": "that",
+      "normalizedForm": "that",
+      "lemma": null,
+      "entryType": "WORD",
+      "partOfSpeech": "CONJUNCTION",
+      "editorialStatus": "REVIEWED"
+    }
+  ],
+  "senses": [
+    {
+      "id": "c3cc4c4d-9348-4279-9f89-4c13d4b5930b",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "senseKey": "294d2cdf-e645-4237-8fed-7776c044439c",
+      "definition": "A tool for writing with ink.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "082eb7b6-164f-4423-b8ac-39ba49cfd260",
+      "lexicalEntryId": "2286b88b-e1dc-4975-ba92-71f438767b10",
+      "senseKey": "68c1f6f8-63f6-4856-9270-54f083effbc2",
+      "definition": "Used to introduce a subordinate clause expressing a statement.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "3b54e42c-6efd-497c-8af6-3090f0c12611",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "senseKey": "d9fafde3-a0e3-4da0-89e7-3cd7ba26894d",
+      "definition": "A container used to carry things.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "016f2b38-5c0c-47c4-8035-164a2fb08e6c",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "senseKey": "d34300ae-df8f-4d89-ad51-1f85022f1abe",
+      "definition": "Referring to something close.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "869d6381-a61f-4b36-8609-752be281d00c",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "senseKey": "afa8b98f-d59f-4a1f-bf16-f0cbfae9e0ec",
+      "definition": "Referring to something far.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "7363923c-26fe-4c8c-9f60-42bf08dec8d9",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "senseKey": "1d2ccfef-3ef3-4fa7-afc5-15cb5bc3d46f",
+      "definition": "A word we say when greeting someone or starting a phone call.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "a2b6fc63-c8e3-44b2-b433-8a30ebf466e4",
+      "lexicalEntryId": "9304005a-dd4a-4a8a-8e2e-a878d5c52578",
+      "senseKey": "6c7e8d3d-5e9c-4576-9349-4e6b940bfbb5",
+      "definition": "Reserve a seat, ticket, or hotel room.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "b6210c15-6d8e-4fe8-a5ce-86135e5ec427",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "senseKey": "2f1f99c4-a421-43e4-b0d6-bf41e2db6c85",
+      "definition": "The word someone or something is called or known by.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "a94137e2-3942-4280-b3dc-71be4972b264",
+      "lexicalEntryId": "bd7719cd-b16b-4187-9944-58022bb12c51",
+      "senseKey": "06a84b00-a987-4dcf-a1f6-98f342665631",
+      "definition": "A tool for removing pencil marks.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "f07ea45f-15ef-47e4-a352-d62823ee4e3d",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "senseKey": "c627201d-d026-467b-b8a2-28c43fce07fd",
+      "definition": "Shows the place or time where something begins.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "679b3480-0384-4363-ab30-88feeead5e18",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "senseKey": "c57b0f36-fe1e-4dd9-a257-675b962415b3",
+      "definition": "Printed pages bound together for reading.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "61328446-f13b-44f5-abcd-edd5aa65a644",
+      "lexicalEntryId": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "senseKey": "8907fc03-6cb7-4296-b64e-0b13bde0bcb7",
+      "definition": "To give a person, place, or thing a specific title or designation.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "editorialStatus": "REVIEWED"
+    },
+    {
+      "id": "892e1a05-547e-4c80-b796-dfdabeec1fe1",
+      "lexicalEntryId": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "senseKey": "5992ca6f-6bb7-4786-817d-390eeb7b3b46",
+      "definition": "To state the name of someone or something clearly.",
+      "definitionLanguage": "en",
+      "translation": null,
+      "usageDomain": null,
+      "register": null,
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "sourceId": "3916ea4f-dd16-43ba-bc95-ae5e05fac24d",
+      "editorialStatus": "REVIEWED"
+    }
+  ],
+  "pronunciations": [
+    {
+      "id": "c1a28118-4ee5-4427-9520-50d44a8245b6",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "dialect": "en-US",
+      "ipa": "/pɛn/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "e205b247-45cf-4828-9f4f-2137f73e1e18",
+      "lexicalEntryId": "2286b88b-e1dc-4975-ba92-71f438767b10",
+      "dialect": "en-US",
+      "ipa": "/ðæt/",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "8708c729-3cee-481d-bf5d-37827a398274",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "dialect": "en-US",
+      "ipa": "/bæɡ/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "d29a8db5-120f-4495-a19a-b04a00be7ce7",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "dialect": "en-US",
+      "ipa": "/ðɪs/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "38923316-6d0b-47eb-90e5-3853b6d9d08e",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "dialect": "en-US",
+      "ipa": "/ðæt/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "838ae3d1-d51d-4d97-8c57-38e42ab5a509",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "dialect": "en-US",
+      "ipa": "/hɛˈloʊ/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "d331a7bf-468e-4a99-b4a5-3f5f4961d7b3",
+      "lexicalEntryId": "9304005a-dd4a-4a8a-8e2e-a878d5c52578",
+      "dialect": "en-US",
+      "ipa": "/bʊk/",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "fbdd4c6f-6335-4763-9c9e-b3789c78c354",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "dialect": "en-US",
+      "ipa": "/neɪm/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "94178f32-e6b0-43da-8c5b-befd5369fd79",
+      "lexicalEntryId": "bd7719cd-b16b-4187-9944-58022bb12c51",
+      "dialect": "en-US",
+      "ipa": "/ɪˈreɪ.sɚ/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "a23e5577-72b1-47d8-86a9-822186aa19d8",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "dialect": "en-US",
+      "ipa": "/frʌm/",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "ec4256bd-8d7e-4bd0-9b59-eef9e41fabf8",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "dialect": "en-US",
+      "ipa": "/bʊk/",
+      "sourceId": "747ba5e8-2b59-4636-8739-4986a34c13db",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "bb78e47d-62b6-4f89-93d2-37d4e7b32b5a",
+      "lexicalEntryId": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "dialect": "en-US",
+      "ipa": "/neɪm/",
+      "sourceId": "3916ea4f-dd16-43ba-bc95-ae5e05fac24d",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "c645ed2a-d1e8-4f4c-889c-6380841cabeb",
+      "lexicalEntryId": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "dialect": "en-US",
+      "ipa": "/neɪm/",
+      "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+      "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+      "reviewStatus": "REVIEWED"
+    }
+  ],
+  "cefr": [
+    {
+      "id": "6b27af0b-f682-46a8-b2bb-44ceb9804f89",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "senseId": "c3cc4c4d-9348-4279-9f89-4c13d4b5930b",
+      "sourceEntryId": "e458cd1c-d6b0-410e-8eb3-193561f09602",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "6b14027a-712e-44b1-a02d-672c8d3c9f67",
+      "lexicalEntryId": "2286b88b-e1dc-4975-ba92-71f438767b10",
+      "senseId": "082eb7b6-164f-4423-b8ac-39ba49cfd260",
+      "sourceEntryId": "72fe8200-e132-4484-adc3-857b400bc265",
+      "cefrLevel": "A2",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "ce5a332d-e44d-4fdc-9bb4-35753fb378a0",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "senseId": "3b54e42c-6efd-497c-8af6-3090f0c12611",
+      "sourceEntryId": "8fd14d29-3b87-4782-871b-bb507a85d072",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "52daef1c-5afa-471d-b0c2-02e5bf9adcdb",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "senseId": "016f2b38-5c0c-47c4-8035-164a2fb08e6c",
+      "sourceEntryId": "6ebe08dc-f001-4f89-a560-a32ae309f760",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "0e69c764-ec22-461a-9bcf-77ea67d85ac3",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "senseId": "869d6381-a61f-4b36-8609-752be281d00c",
+      "sourceEntryId": "1422ea67-85ea-461b-9b7b-3323f7c7f2be",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "05a09b00-359c-4798-bd49-ddc363f88964",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "senseId": "7363923c-26fe-4c8c-9f60-42bf08dec8d9",
+      "sourceEntryId": "36245c72-449d-4a12-9522-52fe11b0cf8a",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "acf333f0-463b-4e7a-8752-c4432bab0033",
+      "lexicalEntryId": "9304005a-dd4a-4a8a-8e2e-a878d5c52578",
+      "senseId": "a2b6fc63-c8e3-44b2-b433-8a30ebf466e4",
+      "sourceEntryId": "1f2b5312-d9a2-49d4-bf9d-9a6e2349d73b",
+      "cefrLevel": "A2",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "7a2529e8-0824-41af-bf27-b1b604163bfa",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "senseId": "b6210c15-6d8e-4fe8-a5ce-86135e5ec427",
+      "sourceEntryId": "9eeaa76b-07dd-4f10-8694-7e380659e7ea",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "c20cbb1b-6cc6-45cc-8a58-68e42d942f16",
+      "lexicalEntryId": "bd7719cd-b16b-4187-9944-58022bb12c51",
+      "senseId": "a94137e2-3942-4280-b3dc-71be4972b264",
+      "sourceEntryId": "3fe41561-b46f-4cd5-b2f9-2b3748312d07",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "47a96d39-7043-480f-bf99-52cd59c5d235",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "senseId": "f07ea45f-15ef-47e4-a352-d62823ee4e3d",
+      "sourceEntryId": "f10282ae-4527-4578-922b-e342a7301002",
+      "cefrLevel": "A2",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "a49bed82-c61e-4ef9-8b86-612c290907ba",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "senseId": "679b3480-0384-4363-ab30-88feeead5e18",
+      "sourceEntryId": "f3a59efd-d120-42c5-b5f5-a8c25e078b25",
+      "cefrLevel": "A1",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "34c45047-68ba-45ca-8c66-00784c232597",
+      "lexicalEntryId": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "senseId": "892e1a05-547e-4c80-b796-dfdabeec1fe1",
+      "sourceEntryId": "719e1a92-7e19-4995-87e0-465e1e7d9ae6",
+      "cefrLevel": "B2",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    },
+    {
+      "id": "78514b23-1360-4dce-b4bf-b6de0cf6ed32",
+      "lexicalEntryId": "ffb51d8e-c028-48c6-a054-b6e70d085f56",
+      "senseId": "61328446-f13b-44f5-abcd-edd5aa65a644",
+      "sourceEntryId": "0fa324cf-9488-4bbe-8c37-2feede081f3b",
+      "cefrLevel": "A2",
+      "confidence": 1,
+      "reviewStatus": "REVIEWED"
+    }
+  ],
+  "occurrences": [
+    {
+      "id": "72fe8200-e132-4484-adc3-857b400bc265",
+      "documentId": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+      "sourceEntryKey": "topic-9:15",
+      "topicInstanceKey": "topic-9",
+      "originalTopic": "Conjunctions and Prepositions",
+      "rowOrdinal": 15,
+      "pageIndex": 8,
+      "sourceLineStart": 2087,
+      "sourceLineEnd": 2087,
+      "parsedWord": "that",
+      "normalizedPos": "CONJUNCTION",
+      "cefrLevel": "A2",
+      "pronunciation": "/ðæt/",
+      "permittedDefinition": "Used to introduce a subordinate clause expressing a statement.",
+      "sourceContentHash": "b76c06dd738a4d9b001e224ddae411d44e021bbfd3a254e1a33a45f7b12763cd"
+    },
+    {
+      "id": "1f2b5312-d9a2-49d4-bf9d-9a6e2349d73b",
+      "documentId": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+      "sourceEntryKey": "topic-24:23",
+      "topicInstanceKey": "topic-24",
+      "originalTopic": "Tourism",
+      "rowOrdinal": 23,
+      "pageIndex": 23,
+      "sourceLineStart": 3633,
+      "sourceLineEnd": 3636,
+      "parsedWord": "book",
+      "normalizedPos": "VERB",
+      "cefrLevel": "A2",
+      "pronunciation": "/bʊk/",
+      "permittedDefinition": "Reserve a seat, ticket, or hotel room.",
+      "sourceContentHash": "d265e29d43d38f3ddc7f7d5e78b249e7957e2f78a78415c94c405314150c0fca"
+    },
+    {
+      "id": "f10282ae-4527-4578-922b-e342a7301002",
+      "documentId": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+      "sourceEntryKey": "topic-9:24",
+      "topicInstanceKey": "topic-9",
+      "originalTopic": "Conjunctions and Prepositions",
+      "rowOrdinal": 24,
+      "pageIndex": 8,
+      "sourceLineStart": 2097,
+      "sourceLineEnd": 2097,
+      "parsedWord": "from",
+      "normalizedPos": "PREPOSITION",
+      "cefrLevel": "A2",
+      "pronunciation": "/frʌm/",
+      "permittedDefinition": "Shows the place or time where something begins.",
+      "sourceContentHash": "6f3d32524b6c4f4922cb36a1bea2d056f2bffb9e8053a42df13b5ccfcc6b75f1"
+    },
+    {
+      "id": "0fa324cf-9488-4bbe-8c37-2feede081f3b",
+      "documentId": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+      "sourceEntryKey": "topic-47:32",
+      "topicInstanceKey": "topic-47",
+      "originalTopic": "Necessary Verbs",
+      "rowOrdinal": 32,
+      "pageIndex": 46,
+      "sourceLineStart": 5803,
+      "sourceLineEnd": 5806,
+      "parsedWord": "name",
+      "normalizedPos": "VERB",
+      "cefrLevel": "A2",
+      "pronunciation": "/neɪm/",
+      "permittedDefinition": "To give a person, place, or thing a specific title or designation.",
+      "sourceContentHash": "fcda62a923eeb972299c42a0017972245e9e8b37c8821449741ebed1f0583388"
+    },
+    {
+      "id": "36245c72-449d-4a12-9522-52fe11b0cf8a",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-1:1",
+      "topicInstanceKey": "topic-1",
+      "originalTopic": "Hello and Goodbye",
+      "rowOrdinal": 1,
+      "pageIndex": 0,
+      "sourceLineStart": 49,
+      "sourceLineEnd": 49,
+      "parsedWord": "Hello",
+      "normalizedPos": "INTERJECTION",
+      "cefrLevel": "A1",
+      "pronunciation": "/hɛˈloʊ/",
+      "permittedDefinition": "A word we say when greeting someone or starting a phone call.",
+      "sourceContentHash": "97c5973827db56e802fbf40940c9b707dd085e6ce096a1d82778e28854eaf5dd"
+    },
+    {
+      "id": "9eeaa76b-07dd-4f10-8694-7e380659e7ea",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-8:1",
+      "topicInstanceKey": "topic-8",
+      "originalTopic": "Personal Information",
+      "rowOrdinal": 1,
+      "pageIndex": 7,
+      "sourceLineStart": 294,
+      "sourceLineEnd": 297,
+      "parsedWord": "Name",
+      "normalizedPos": "NOUN",
+      "cefrLevel": "A1",
+      "pronunciation": "/neɪm/",
+      "permittedDefinition": "The word someone or something is called or known by.",
+      "sourceContentHash": "55632a92efc2786a6b6e167c75c089afa70e2b645403a58999fab3ea6331abda"
+    },
+    {
+      "id": "f3a59efd-d120-42c5-b5f5-a8c25e078b25",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-24:7",
+      "topicInstanceKey": "topic-24",
+      "originalTopic": "School",
+      "rowOrdinal": 7,
+      "pageIndex": 23,
+      "sourceLineStart": 1002,
+      "sourceLineEnd": 1002,
+      "parsedWord": "Book",
+      "normalizedPos": "NOUN",
+      "cefrLevel": "A1",
+      "pronunciation": "/bʊk/",
+      "permittedDefinition": "Printed pages bound together for reading.",
+      "sourceContentHash": "fa9971e2cb11e6840ff62599d20d807104839fc3f4c4bf12a88745fed01a1228"
+    },
+    {
+      "id": "8fd14d29-3b87-4782-871b-bb507a85d072",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-24:9",
+      "topicInstanceKey": "topic-24",
+      "originalTopic": "School",
+      "rowOrdinal": 9,
+      "pageIndex": 23,
+      "sourceLineStart": 1004,
+      "sourceLineEnd": 1004,
+      "parsedWord": "Bag",
+      "normalizedPos": "NOUN",
+      "cefrLevel": "A1",
+      "pronunciation": "/bæɡ/",
+      "permittedDefinition": "A container used to carry things.",
+      "sourceContentHash": "6501584385f2fd7d3b2acf269a33f943429eb642ff7b654b98802d1261a83ded"
+    },
+    {
+      "id": "e458cd1c-d6b0-410e-8eb3-193561f09602",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-24:10",
+      "topicInstanceKey": "topic-24",
+      "originalTopic": "School",
+      "rowOrdinal": 10,
+      "pageIndex": 23,
+      "sourceLineStart": 1005,
+      "sourceLineEnd": 1005,
+      "parsedWord": "Pen",
+      "normalizedPos": "NOUN",
+      "cefrLevel": "A1",
+      "pronunciation": "/pɛn/",
+      "permittedDefinition": "A tool for writing with ink.",
+      "sourceContentHash": "3f573f85a8fed935be3bc60637ae084944e13f25de128dd2e78dde14e9541e3b"
+    },
+    {
+      "id": "3fe41561-b46f-4cd5-b2f9-2b3748312d07",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-24:12",
+      "topicInstanceKey": "topic-24",
+      "originalTopic": "School",
+      "rowOrdinal": 12,
+      "pageIndex": 23,
+      "sourceLineStart": 1007,
+      "sourceLineEnd": 1007,
+      "parsedWord": "Eraser",
+      "normalizedPos": "NOUN",
+      "cefrLevel": "A1",
+      "pronunciation": "/ɪˈreɪ.sɚ/",
+      "permittedDefinition": "A tool for removing pencil marks.",
+      "sourceContentHash": "0366ba543bd575be742a52e6e23e21f5284c6624df0766fe35a51cff3c8e628f"
+    },
+    {
+      "id": "6ebe08dc-f001-4f89-a560-a32ae309f760",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-32:16",
+      "topicInstanceKey": "topic-32",
+      "originalTopic": "Prepositions and Determiners",
+      "rowOrdinal": 16,
+      "pageIndex": 31,
+      "sourceLineStart": 1399,
+      "sourceLineEnd": 1399,
+      "parsedWord": "This",
+      "normalizedPos": "DETERMINER",
+      "cefrLevel": "A1",
+      "pronunciation": "/ðɪs/",
+      "permittedDefinition": "Referring to something close.",
+      "sourceContentHash": "d451b7ae732b9d0f7786889260011bfbf7e72401bd69269c780e04af519ea098"
+    },
+    {
+      "id": "1422ea67-85ea-461b-9b7b-3323f7c7f2be",
+      "documentId": "352b3cb2-0ead-4364-ac2e-df426b2db407",
+      "sourceEntryKey": "topic-32:17",
+      "topicInstanceKey": "topic-32",
+      "originalTopic": "Prepositions and Determiners",
+      "rowOrdinal": 17,
+      "pageIndex": 31,
+      "sourceLineStart": 1400,
+      "sourceLineEnd": 1400,
+      "parsedWord": "That",
+      "normalizedPos": "DETERMINER",
+      "cefrLevel": "A1",
+      "pronunciation": "/ðæt/",
+      "permittedDefinition": "Referring to something far.",
+      "sourceContentHash": "4d399e6404fd3dcc2f3ed1320241610a7c9309eb3f8848b09cb9dc8be08d9681"
+    },
+    {
+      "id": "719e1a92-7e19-4995-87e0-465e1e7d9ae6",
+      "documentId": "9c22174d-abeb-461d-871f-78e0e30d3a89",
+      "sourceEntryKey": "topic-45:9",
+      "topicInstanceKey": "topic-45",
+      "originalTopic": "Assessment and Discourse",
+      "rowOrdinal": 9,
+      "pageIndex": 44,
+      "sourceLineStart": 16334,
+      "sourceLineEnd": 16334,
+      "parsedWord": "name",
+      "normalizedPos": "VERB",
+      "cefrLevel": "B2",
+      "pronunciation": "/neɪm/",
+      "permittedDefinition": "To state the name of someone or something clearly.",
+      "sourceContentHash": "74420e2bf68d35873e6a565404e8ac4b132d1010cacf33877a0849dec878116a"
+    }
+  ],
+  "mapping": [
+    {
+      "pilotId": "mg01-l1-hello",
+      "expression": "hello",
+      "authoredIpa": "/həˈloʊ/",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "sourceBlockSha256": "0d3b3f2842da067669512672791ccd6917eebbe7d58365e7259d9e7e79bf8066",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "senseIds": [
+        "7363923c-26fe-4c8c-9f60-42bf08dec8d9"
+      ],
+      "masterDefinition": [
+        "A word we say when greeting someone or starting a phone call."
+      ],
+      "masterIpa": [
+        "/hɛˈloʊ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Greeting sense matches. Master /hɛˈloʊ/ and authored /həˈloʊ/ differ; this mapping does not certify pronunciation."
+    },
+    {
+      "pilotId": "mg01-l1-name",
+      "expression": "name",
+      "authoredIpa": "/neɪm/",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "sourceBlockSha256": "312889ef051b845fc9f8648a22946d63b5acceba6e4094b3575ddaa304874a36",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "senseIds": [
+        "b6210c15-6d8e-4fe8-a5ce-86135e5ec427"
+      ],
+      "masterDefinition": [
+        "The word someone or something is called or known by."
+      ],
+      "masterIpa": [
+        "/neɪm/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select noun denoting personal name, reject homographic verb senses."
+    },
+    {
+      "pilotId": "mg01-l1-i-am",
+      "expression": "I am",
+      "authoredIpa": "/aɪ æm/",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "sourceBlockSha256": "d03f32251d3a1fbb1cb27a1a459a82945c1af1f0d0ec4ebc8c7f8c1e388915bb",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l1-you-are",
+      "expression": "you are",
+      "authoredIpa": "/ju ɑr/",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "sourceBlockSha256": "d7aae146113aedafe3dcabb79d736a5e45f3338e44c309d0bde67c9fecf625aa",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l1-from",
+      "expression": "from",
+      "authoredIpa": "/frəm/",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "sourceBlockSha256": "3d07e5377d22cdc5f8bfbf7e90bfb16fba07401501937e4f8c288d3150a267dd",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "senseIds": [
+        "f07ea45f-15ef-47e4-a352-d62823ee4e3d"
+      ],
+      "masterDefinition": [
+        "Shows the place or time where something begins."
+      ],
+      "masterIpa": [
+        "/frʌm/"
+      ],
+      "sourceId": [
+        "520e411e-7250-43b4-81ac-dc7fe3baf9bc"
+      ],
+      "masterCefr": [
+        "A2"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Origin preposition matches; source CEFR is A2 and master strong-form IPA differs from authored weak form. No Pre-A1 relabeling."
+    },
+    {
+      "pilotId": "mg01-l2-hello",
+      "expression": "hello",
+      "authoredIpa": "/həˈloʊ/",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "sourceBlockSha256": "768d8db60fbfafffc5133e5a0389dfe42afba2e49b8027673e4d215c54ef8105",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "senseIds": [
+        "7363923c-26fe-4c8c-9f60-42bf08dec8d9"
+      ],
+      "masterDefinition": [
+        "A word we say when greeting someone or starting a phone call."
+      ],
+      "masterIpa": [
+        "/hɛˈloʊ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Greeting sense matches. Master /hɛˈloʊ/ and authored /həˈloʊ/ differ; this mapping does not certify pronunciation."
+    },
+    {
+      "pilotId": "mg01-l2-name",
+      "expression": "name",
+      "authoredIpa": "/neɪm/",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "sourceBlockSha256": "c159a15e349140cf230171f38ffd8fb8f3b96a7f8911a75644399864a10320f6",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "senseIds": [
+        "b6210c15-6d8e-4fe8-a5ce-86135e5ec427"
+      ],
+      "masterDefinition": [
+        "The word someone or something is called or known by."
+      ],
+      "masterIpa": [
+        "/neɪm/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select noun denoting personal name, reject homographic verb senses."
+    },
+    {
+      "pilotId": "mg01-l2-i-am",
+      "expression": "I am",
+      "authoredIpa": "/aɪ æm/",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "sourceBlockSha256": "44629aa493a4e7d9ba1aaba0939062a8cd7ec6d36bba7714ed91578611d8ed3e",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l2-you-are",
+      "expression": "you are",
+      "authoredIpa": "/ju ɑr/",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "sourceBlockSha256": "2a154d74ddb7cc3320b415c52ca329f89651d5d0b3ef675ebdf7f9f270e483b5",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l2-from",
+      "expression": "from",
+      "authoredIpa": "/frəm/",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "sourceBlockSha256": "f5cad5ef1ae9bc3f477e94836745f7a71dbf40fd50a09401100558b1ade3b9eb",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "senseIds": [
+        "f07ea45f-15ef-47e4-a352-d62823ee4e3d"
+      ],
+      "masterDefinition": [
+        "Shows the place or time where something begins."
+      ],
+      "masterIpa": [
+        "/frʌm/"
+      ],
+      "sourceId": [
+        "520e411e-7250-43b4-81ac-dc7fe3baf9bc"
+      ],
+      "masterCefr": [
+        "A2"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Origin preposition matches; source CEFR is A2 and master strong-form IPA differs from authored weak form. No Pre-A1 relabeling."
+    },
+    {
+      "pilotId": "mg01-l3-hello",
+      "expression": "hello",
+      "authoredIpa": "/həˈloʊ/",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "sourceBlockSha256": "8cd993889a7068f2be2a7bcdf7c78a772b71f67d59bd7bf21bbfeec4b616cb22",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "senseIds": [
+        "7363923c-26fe-4c8c-9f60-42bf08dec8d9"
+      ],
+      "masterDefinition": [
+        "A word we say when greeting someone or starting a phone call."
+      ],
+      "masterIpa": [
+        "/hɛˈloʊ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Greeting sense matches. Master /hɛˈloʊ/ and authored /həˈloʊ/ differ; this mapping does not certify pronunciation."
+    },
+    {
+      "pilotId": "mg01-l3-name",
+      "expression": "name",
+      "authoredIpa": "/neɪm/",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "sourceBlockSha256": "64895713645ad02fffc8468824868c7c5ffb849a7a6272c30fa253231ba8b0fc",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "senseIds": [
+        "b6210c15-6d8e-4fe8-a5ce-86135e5ec427"
+      ],
+      "masterDefinition": [
+        "The word someone or something is called or known by."
+      ],
+      "masterIpa": [
+        "/neɪm/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select noun denoting personal name, reject homographic verb senses."
+    },
+    {
+      "pilotId": "mg01-l3-i-am",
+      "expression": "I am",
+      "authoredIpa": "/aɪ æm/",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "sourceBlockSha256": "6fef8042035425680cc4fc5953f8ecff2126edae425d50f68123e8263be78468",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l3-you-are",
+      "expression": "you are",
+      "authoredIpa": "/ju ɑr/",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "sourceBlockSha256": "adc23fea9cf9265774fb4602d41f90e267afc8e49ba7bc752b78c97ffff03331",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l3-from",
+      "expression": "from",
+      "authoredIpa": "/frəm/",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "sourceBlockSha256": "be333ba8b5857c3534ee00f303731ee516239fea5b39dd78915afe2261c19a0d",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "senseIds": [
+        "f07ea45f-15ef-47e4-a352-d62823ee4e3d"
+      ],
+      "masterDefinition": [
+        "Shows the place or time where something begins."
+      ],
+      "masterIpa": [
+        "/frʌm/"
+      ],
+      "sourceId": [
+        "520e411e-7250-43b4-81ac-dc7fe3baf9bc"
+      ],
+      "masterCefr": [
+        "A2"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Origin preposition matches; source CEFR is A2 and master strong-form IPA differs from authored weak form. No Pre-A1 relabeling."
+    },
+    {
+      "pilotId": "mg01-l4-hello",
+      "expression": "hello",
+      "authoredIpa": "/həˈloʊ/",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "sourceBlockSha256": "8a4b29aa930c265d7e33731b48b3c59c383fe18ea1e1fe416ba618a033617dc3",
+      "lexicalEntryId": "90bc95e9-49ca-4c05-8cd3-8a0ba701a9f2",
+      "senseIds": [
+        "7363923c-26fe-4c8c-9f60-42bf08dec8d9"
+      ],
+      "masterDefinition": [
+        "A word we say when greeting someone or starting a phone call."
+      ],
+      "masterIpa": [
+        "/hɛˈloʊ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Greeting sense matches. Master /hɛˈloʊ/ and authored /həˈloʊ/ differ; this mapping does not certify pronunciation."
+    },
+    {
+      "pilotId": "mg01-l4-name",
+      "expression": "name",
+      "authoredIpa": "/neɪm/",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "sourceBlockSha256": "f0fd139afa1501b03ad473ba466c452404ea1c52496bb6932b3beac9e83288e2",
+      "lexicalEntryId": "939df981-db99-4e5e-a4a4-7661084b42fd",
+      "senseIds": [
+        "b6210c15-6d8e-4fe8-a5ce-86135e5ec427"
+      ],
+      "masterDefinition": [
+        "The word someone or something is called or known by."
+      ],
+      "masterIpa": [
+        "/neɪm/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select noun denoting personal name, reject homographic verb senses."
+    },
+    {
+      "pilotId": "mg01-l4-i-am",
+      "expression": "I am",
+      "authoredIpa": "/aɪ æm/",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "sourceBlockSha256": "9b3361a1275b46244015205a452de82381cbee846a618cfd77e1f5442957118c",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l4-you-are",
+      "expression": "you are",
+      "authoredIpa": "/ju ɑr/",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "sourceBlockSha256": "34ace22ff52b7ee0b812ebb09bafd25d26406b79bb7c4bef871959e7bf05f8e5",
+      "lexicalEntryId": null,
+      "senseIds": [
+        null
+      ],
+      "masterDefinition": [
+        null
+      ],
+      "masterIpa": [
+        null
+      ],
+      "sourceId": [
+        null
+      ],
+      "masterCefr": [
+        null
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "NEEDS_EVIDENCE",
+      "relationship": "NO_EXACT_MASTER_PHRASE",
+      "rationale": "Authored grammar phrase lacks exact master entry; no ID or CEFR invented."
+    },
+    {
+      "pilotId": "mg01-l4-from",
+      "expression": "from",
+      "authoredIpa": "/frəm/",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "sourceBlockSha256": "af2634ef2d313da3085e4c93ed73808d0155e63565905630f37a0426922e9b1a",
+      "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+      "senseIds": [
+        "f07ea45f-15ef-47e4-a352-d62823ee4e3d"
+      ],
+      "masterDefinition": [
+        "Shows the place or time where something begins."
+      ],
+      "masterIpa": [
+        "/frʌm/"
+      ],
+      "sourceId": [
+        "520e411e-7250-43b4-81ac-dc7fe3baf9bc"
+      ],
+      "masterCefr": [
+        "A2"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Origin preposition matches; source CEFR is A2 and master strong-form IPA differs from authored weak form. No Pre-A1 relabeling."
+    },
+    {
+      "pilotId": "mg02-l1-pen",
+      "expression": "a pen",
+      "authoredIpa": "/ə pɛn/",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "sourceBlockSha256": "6cf3cfe68c9120989ff4b6f289fca6808871e8c15240629ad4ce09280615bda0",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "senseIds": [
+        "c3cc4c4d-9348-4279-9f89-4c13d4b5930b"
+      ],
+      "masterDefinition": [
+        "A tool for writing with ink."
+      ],
+      "masterIpa": [
+        "/pɛn/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l1-book",
+      "expression": "a book",
+      "authoredIpa": "/ə bʊk/",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "sourceBlockSha256": "32cc65ea77322c9ea525110bab646639b1f26972adb2458a52a33afa7e25f66c",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "senseIds": [
+        "679b3480-0384-4363-ab30-88feeead5e18"
+      ],
+      "masterDefinition": [
+        "Printed pages bound together for reading."
+      ],
+      "masterIpa": [
+        "/bʊk/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l1-bag",
+      "expression": "a bag",
+      "authoredIpa": "/ə bæɡ/",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "sourceBlockSha256": "94af86f67c12b02875375751f7ee9d186a633f6399534cbcbe0aa244519fe50d",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "senseIds": [
+        "3b54e42c-6efd-497c-8af6-3090f0c12611"
+      ],
+      "masterDefinition": [
+        "A container used to carry things."
+      ],
+      "masterIpa": [
+        "/bæɡ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l1-this",
+      "expression": "this",
+      "authoredIpa": "/ðɪs/",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "sourceBlockSha256": "e41273aa4e75ecf41362fec26f0629f9835101597f1f6de7bb4f38b10c72c101",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "senseIds": [
+        "016f2b38-5c0c-47c4-8035-164a2fb08e6c"
+      ],
+      "masterDefinition": [
+        "Referring to something close."
+      ],
+      "masterIpa": [
+        "/ðɪs/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Lexical meaning matches authored context; IPA remains separately bound and requires phonetic review."
+    },
+    {
+      "pilotId": "mg02-l1-that",
+      "expression": "that",
+      "authoredIpa": "/ðæt/",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "sourceBlockSha256": "566f00f96b23925c9d019bcdb38885c7a07b7920ecc2aaf7aa0a88e17b186a1d",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "senseIds": [
+        "869d6381-a61f-4b36-8609-752be281d00c"
+      ],
+      "masterDefinition": [
+        "Referring to something far."
+      ],
+      "masterIpa": [
+        "/ðæt/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select distal determiner sense, reject conjunction. Pronoun-like classroom use needs grammatical context review."
+    },
+    {
+      "pilotId": "mg02-l1-eraser",
+      "expression": "an eraser",
+      "authoredIpa": "/ən ɪˈreɪsər/",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "sourceBlockSha256": "563847bde7b3fdf1f42bd2c3dd2113c11d23b191244ef0d8828f79306419fd88",
+      "lexicalEntryId": "bd7719cd-b16b-4187-9944-58022bb12c51",
+      "senseIds": [
+        "a94137e2-3942-4280-b3dc-71be4972b264"
+      ],
+      "masterDefinition": [
+        "A tool for removing pencil marks."
+      ],
+      "masterIpa": [
+        "/ɪˈreɪ.sɚ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l2-pen",
+      "expression": "a pen",
+      "authoredIpa": "/ə pɛn/",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "sourceBlockSha256": "9429924b990bb21fd1e9748734673d105672c013209828f71eea5baadb6c7504",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "senseIds": [
+        "c3cc4c4d-9348-4279-9f89-4c13d4b5930b"
+      ],
+      "masterDefinition": [
+        "A tool for writing with ink."
+      ],
+      "masterIpa": [
+        "/pɛn/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l2-book",
+      "expression": "a book",
+      "authoredIpa": "/ə bʊk/",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "sourceBlockSha256": "35a68d8d72dd6ce9c421b0d82d27b8c00740f53002552e0316ae48b81204084c",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "senseIds": [
+        "679b3480-0384-4363-ab30-88feeead5e18"
+      ],
+      "masterDefinition": [
+        "Printed pages bound together for reading."
+      ],
+      "masterIpa": [
+        "/bʊk/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l2-bag",
+      "expression": "a bag",
+      "authoredIpa": "/ə bæɡ/",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "sourceBlockSha256": "fa4feb2c0923a18f0d18027d6813ff0c531181b5a95c6e2ca7550ea0165e0124",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "senseIds": [
+        "3b54e42c-6efd-497c-8af6-3090f0c12611"
+      ],
+      "masterDefinition": [
+        "A container used to carry things."
+      ],
+      "masterIpa": [
+        "/bæɡ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l2-this",
+      "expression": "this",
+      "authoredIpa": "/ðɪs/",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "sourceBlockSha256": "703d3e81b444b979e2e5422168bb07a57d16b3cbf66db692f6729ca504e5b7ed",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "senseIds": [
+        "016f2b38-5c0c-47c4-8035-164a2fb08e6c"
+      ],
+      "masterDefinition": [
+        "Referring to something close."
+      ],
+      "masterIpa": [
+        "/ðɪs/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Lexical meaning matches authored context; IPA remains separately bound and requires phonetic review."
+    },
+    {
+      "pilotId": "mg02-l2-that",
+      "expression": "that",
+      "authoredIpa": "/ðæt/",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "sourceBlockSha256": "acebec163bac4ae2abee9be896ba8ef32db4ff211dd1b09d3721a00e8cc6b718",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "senseIds": [
+        "869d6381-a61f-4b36-8609-752be281d00c"
+      ],
+      "masterDefinition": [
+        "Referring to something far."
+      ],
+      "masterIpa": [
+        "/ðæt/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select distal determiner sense, reject conjunction. Pronoun-like classroom use needs grammatical context review."
+    },
+    {
+      "pilotId": "mg02-l3-pen",
+      "expression": "a pen",
+      "authoredIpa": "/ə pɛn/",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "sourceBlockSha256": "c3a5ee41aecfcee7e25d49c7a6e652ef61b569e3ba652767889c93ca5433ca40",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "senseIds": [
+        "c3cc4c4d-9348-4279-9f89-4c13d4b5930b"
+      ],
+      "masterDefinition": [
+        "A tool for writing with ink."
+      ],
+      "masterIpa": [
+        "/pɛn/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l3-book",
+      "expression": "a book",
+      "authoredIpa": "/ə bʊk/",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "sourceBlockSha256": "6c48f1d4070b8a1d251a43064c96cc58c21d59a84e7248dd5c221c7be0eef8ef",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "senseIds": [
+        "679b3480-0384-4363-ab30-88feeead5e18"
+      ],
+      "masterDefinition": [
+        "Printed pages bound together for reading."
+      ],
+      "masterIpa": [
+        "/bʊk/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l3-bag",
+      "expression": "a bag",
+      "authoredIpa": "/ə bæɡ/",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "sourceBlockSha256": "9aacb9ba5ee62f0c08ac88f82d9e977ef802d133cac9b928683d6f0cc48ea03c",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "senseIds": [
+        "3b54e42c-6efd-497c-8af6-3090f0c12611"
+      ],
+      "masterDefinition": [
+        "A container used to carry things."
+      ],
+      "masterIpa": [
+        "/bæɡ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l3-this",
+      "expression": "this",
+      "authoredIpa": "/ðɪs/",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "sourceBlockSha256": "c8b90eff8b45e4449dde411785f4dce2a30bff6686cb4c06b0d6cd23a4f677e9",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "senseIds": [
+        "016f2b38-5c0c-47c4-8035-164a2fb08e6c"
+      ],
+      "masterDefinition": [
+        "Referring to something close."
+      ],
+      "masterIpa": [
+        "/ðɪs/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Lexical meaning matches authored context; IPA remains separately bound and requires phonetic review."
+    },
+    {
+      "pilotId": "mg02-l3-that",
+      "expression": "that",
+      "authoredIpa": "/ðæt/",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "sourceBlockSha256": "12501f49e522865366b13448f1af06c5ee1f11b4bd6b288c6e70aee4b731473d",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "senseIds": [
+        "869d6381-a61f-4b36-8609-752be281d00c"
+      ],
+      "masterDefinition": [
+        "Referring to something far."
+      ],
+      "masterIpa": [
+        "/ðæt/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select distal determiner sense, reject conjunction. Pronoun-like classroom use needs grammatical context review."
+    },
+    {
+      "pilotId": "mg02-l4-pen",
+      "expression": "a pen",
+      "authoredIpa": "/ə pɛn/",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "sourceBlockSha256": "2ce0e0675e7ac3c7f0a4689520fc424ab3c610eab60144ced5943ef7e0d2075b",
+      "lexicalEntryId": "0273c973-3524-4e54-baad-4e01bb9f4860",
+      "senseIds": [
+        "c3cc4c4d-9348-4279-9f89-4c13d4b5930b"
+      ],
+      "masterDefinition": [
+        "A tool for writing with ink."
+      ],
+      "masterIpa": [
+        "/pɛn/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l4-book",
+      "expression": "a book",
+      "authoredIpa": "/ə bʊk/",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "sourceBlockSha256": "62dda6e08c1a5c35c62c03a1e548598da71b41c6428d24b31c422e3a7fa5310e",
+      "lexicalEntryId": "fc596ea3-f93d-4f27-b5f9-b86124fb58dc",
+      "senseIds": [
+        "679b3480-0384-4363-ab30-88feeead5e18"
+      ],
+      "masterDefinition": [
+        "Printed pages bound together for reading."
+      ],
+      "masterIpa": [
+        "/bʊk/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l4-bag",
+      "expression": "a bag",
+      "authoredIpa": "/ə bæɡ/",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "sourceBlockSha256": "05c8556b7831a966852f2a2d67e5b286f21354e9045830114511f80afa4d554e",
+      "lexicalEntryId": "5aecc76b-8141-43a5-a061-f52324382333",
+      "senseIds": [
+        "3b54e42c-6efd-497c-8af6-3090f0c12611"
+      ],
+      "masterDefinition": [
+        "A container used to carry things."
+      ],
+      "masterIpa": [
+        "/bæɡ/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "HEADWORD_COMPONENT_ONLY",
+      "rationale": "Object noun sense matches; article and connected pronunciation are authored grammar, not master phrase provenance."
+    },
+    {
+      "pilotId": "mg02-l4-this",
+      "expression": "this",
+      "authoredIpa": "/ðɪs/",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "sourceBlockSha256": "0ab342be59d818afbfb96f4f9c14ec9e0dc4ed636869e94bf8a7b52df156d17b",
+      "lexicalEntryId": "6b1535fb-fcf3-4d76-a161-91caf8169078",
+      "senseIds": [
+        "016f2b38-5c0c-47c4-8035-164a2fb08e6c"
+      ],
+      "masterDefinition": [
+        "Referring to something close."
+      ],
+      "masterIpa": [
+        "/ðɪs/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Lexical meaning matches authored context; IPA remains separately bound and requires phonetic review."
+    },
+    {
+      "pilotId": "mg02-l4-that",
+      "expression": "that",
+      "authoredIpa": "/ðæt/",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "sourceBlockSha256": "4967362c4f69c25aad94a632b3b25875db29dbb288b57b189ffef6393575acfd",
+      "lexicalEntryId": "8f9b8af5-3738-412a-8a85-6e0225f6a547",
+      "senseIds": [
+        "869d6381-a61f-4b36-8609-752be281d00c"
+      ],
+      "masterDefinition": [
+        "Referring to something far."
+      ],
+      "masterIpa": [
+        "/ðæt/"
+      ],
+      "sourceId": [
+        "747ba5e8-2b59-4636-8739-4986a34c13db"
+      ],
+      "masterCefr": [
+        "A1"
+      ],
+      "reviewer": "Codex AI source-context review (not human)",
+      "verdict": "AI_REVIEWED",
+      "relationship": "CONTEXTUAL_SENSE_MATCH",
+      "rationale": "Select distal determiner sense, reject conjunction. Pronoun-like classroom use needs grammatical context review."
+    }
+  ],
+  "writesPerformed": 0,
+  "humanCertification": false,
+  "licensingStatus": "Database rightsStatus APPROVED with user-attested rightsBasis; legal provenance not independently authenticated."
+}
