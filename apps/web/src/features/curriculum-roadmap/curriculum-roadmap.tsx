@@ -103,7 +103,7 @@ export function CurriculumRoadmap({ roadmap, isLoading = false, error = null, on
             </ul>
             {item.activeSessionId ? (
               <Link className="secondary-action-link" href={`/sessions/${item.activeSessionId}`}>{t('resume', { title: item.title })}</Link>
-            ) : item.state === 'available' ? (
+            ) : item.state === 'available' && roadmap.targetedStartSupported === true ? (
               <TargetStart missionId={item.missionId} revisionId={item.revisionId} title={item.title} />
             ) : null}
           </article>

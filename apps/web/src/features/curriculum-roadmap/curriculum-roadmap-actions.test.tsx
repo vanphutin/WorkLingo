@@ -7,7 +7,7 @@ const {push}=vi.hoisted(()=>({push:vi.fn()}));
 vi.mock('next/navigation',()=>({useRouter:()=>({push})}));
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
 const item={missionId:'33333333-3333-4333-8333-333333333333',revisionId:'44444444-4444-4444-8444-444444444444',title:'First task',state:'available' as const,unmetPrerequisites:[],reviewDue:false,activeSessionId:null,objectives:[]};
-const roadmap={programId:'11111111-1111-4111-8111-111111111111',enrollmentId:'22222222-2222-4222-8222-222222222222',items:[item]};
+const roadmap={targetedStartSupported:true,programId:'11111111-1111-4111-8111-111111111111',enrollmentId:'22222222-2222-4222-8222-222222222222',items:[item]};
 it('starts the selected available mission with its exact revision and navigates to the stored session',async()=>{
  const create=vi.spyOn(apiClient,'createCurriculumSession').mockResolvedValue({id:'saved-session'} as never);
  render(<CurriculumRoadmap roadmap={roadmap}/>);
@@ -36,4 +36,16 @@ it('uses the selected supported duration for a targeted session',async()=>{
  fireEvent.change(screen.getByLabelText('Session duration'),{target:{value:'60'}});
  fireEvent.click(screen.getByRole('button',{name:'Start First task'}));
  await waitFor(()=>expect(create).toHaveBeenCalledWith(expect.objectContaining({durationMinutes:60})));
+});
+
+it('does not offer targeted start for an available legacy roadmap without server capability',()=>{
+ const create=vi.spyOn(apiClient,'createCurriculumSession');
+ const {targetedStartSupported: _capability,...legacy}=roadmap;
+ render(<CurriculumRoadmap roadmap={legacy}/>);
+ expect(screen.queryByRole('button',{name:'Start First task'})).not.toBeInTheDocument();
+ expect(create).not.toHaveBeenCalled();
+});
+it('does not offer targeted start when the server explicitly disables the capability',()=>{
+ render(<CurriculumRoadmap roadmap={{...roadmap,targetedStartSupported:false}}/>);
+ expect(screen.queryByRole('button',{name:'Start First task'})).not.toBeInTheDocument();
 });
