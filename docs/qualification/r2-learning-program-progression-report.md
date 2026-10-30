@@ -1,8 +1,8 @@
 # R2 Learning Program & Progression qualification
 
-Date: 2026-10-30  
-Branch: `codex/r2-learning-program-progression`  
-Base: `0f8b83ac`  
+Date: 2026-10-30
+Branch: `codex/r2-learning-program-progression`
+Base: `0f8b83ac`
 Status: **VERTICAL_SLICE_VERIFIED**
 
 The bounded R2 slice reuses the existing immutable curriculum hierarchy. A content administrator creates a generic program, attaches and publishes exact curriculum revisions, and publishes the program. An onboarded learner enrolls once with concurrency-safe idempotency; enrollment pins the published revision IDs. The server derives roadmap state and target-start capability. Required activity evidence completes the R2 activity-completion policy without creating mastery events; prerequisite completion unlocks the next mission, and a paused session remains resumable after dashboard reload.
