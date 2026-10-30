@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261030-008",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-30",
-  "updated": "2026-10-30T07:48:57.663Z",
+  "updated": "2026-10-30T08:22:34.087Z",
   "title": "Keep fake evaluation feedback valid when Beginner reference text is blank",
   "type": "bug",
   "owner": "WorkLingo owner",
@@ -57,7 +57,23 @@
     "at": "2026-10-30T07:48:57.330Z",
     "proposal_hash": "1ec2b63547ae602a85cded14b7d94e0ca424f19a476973790598f567821894a2"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "Fake provider feedback regression: RED 2 failures then GREEN 8 passes",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-finalization-review.md:38"
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec playwright test --config playwright.beginner-finalization.config.ts",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-finalization-browser.md:7"
+    },
+    {
+      "command": "Safe API units, strict typecheck/build and independent review",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-final-test-results.md:7"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-30T07:48:40.536Z",
@@ -92,6 +108,15 @@
       "from": "approved",
       "to": "implementing",
       "reason": "Execute two-file test-first correction; preserve strict schema and all earlier failed receipts.",
+      "event": "transition",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T08:22:34.087Z",
+      "actor": "WorkLingo owner delegated engineering coordinator",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Finite engineering acceptance verified against actual logs and independent review; genuine expert, phonetic, real-learner, provider-quality and deployment release gates remain open. No release promotion.",
       "event": "transition",
       "reference": null
     }

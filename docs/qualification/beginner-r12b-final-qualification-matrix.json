@@ -1,0 +1,795 @@
+{
+  "schemaVersion": "worklingo-r12b-final-qualification/1",
+  "measuredAt": "2026-10-30T08:15:32.827Z",
+  "startingHead": "36bab100a4b6a15afd28e5329fc65af08d34f392",
+  "testedCodeAndEvidenceHead": "494e83d599b3aa6aa616826116a69c3e5fa262a7",
+  "endingClosureHead": {
+    "type": "SELF_RELATIVE",
+    "resolve": "git log -1 --format=%H -- docs/qualification/beginner-r12b-finalization-report.md"
+  },
+  "branch": "codex/foundation-basic-readiness",
+  "mainMergeBase": "752c19c38e86ae72072cab9f5355c5a50dfba2e7",
+  "missionCommitsBeforeClosure": 11,
+  "releasePermitted": false,
+  "releaseStatus": "NOT_READY",
+  "finiteEngineeringStatus": "PASS_BOUNDED",
+  "counts": {
+    "lessons": 8,
+    "activities": 64,
+    "objectives": 32,
+    "lexical": 41,
+    "audio": 24,
+    "historicalDecisions": 297,
+    "qaItems": 82,
+    "oracleCases": 128,
+    "anchorRepeats": 32
+  },
+  "technicalBrowser": {
+    "journeys": 24,
+    "attempts": 192,
+    "writingEvaluated": 24,
+    "audioPlayChecks": 72,
+    "distinctWavs": 24,
+    "realObservations": 0,
+    "fullAudioListening": false,
+    "speaking": "UNSCORED_TYPED_FALLBACK"
+  },
+  "provider": {
+    "identity": "WL-R12B-LOCAL-QWEN06-CONSTRAINED-002",
+    "newStarts": 20,
+    "strictValid": 20,
+    "retries": 0,
+    "discoveryStarts": 0,
+    "metrics": {
+      "pilotVerdict": "PILOT_REVISE",
+      "requestStarts": 20,
+      "completed": 20,
+      "failed": 0,
+      "falseAcceptance": {
+        "numerator": 2,
+        "denominator": 10,
+        "rate": 0.2,
+        "confidence95": [
+          0.05668215145437705,
+          0.5098375284633498
+        ]
+      },
+      "falseRejection": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1,
+        "confidence95": [
+          0.6755924351161318,
+          1
+        ]
+      },
+      "rubricAdherence": {
+        "numerator": 10,
+        "denominator": 20,
+        "rate": 0.5,
+        "confidence95": [
+          0.29929800819821695,
+          0.700701991801783
+        ],
+        "scope": "FACTUAL_SCORE_BOUNDS_ONLY",
+        "fullRubricAdjudication": "NEEDS_EVIDENCE"
+      },
+      "anchorConsistency": {
+        "observedPairs": 4,
+        "requiredPairs": 32,
+        "pairs": [
+          {
+            "caseId": "mg01-l1-s1:AUTHORED_CORRECT",
+            "maxDimensionDifference": 0
+          },
+          {
+            "caseId": "mg01-l1-s1:WRONG_FACT",
+            "maxDimensionDifference": 0
+          },
+          {
+            "caseId": "mg01-l1-w1:AUTHORED_CORRECT",
+            "maxDimensionDifference": 0
+          },
+          {
+            "caseId": "mg01-l1-w1:WRONG_FACT",
+            "maxDimensionDifference": 0
+          }
+        ]
+      },
+      "violations": [
+        "mg01-l1-s1:AUTHORED_CORRECT",
+        "mg01-l1-s1:ALLOWED_ALTERNATIVE",
+        "mg01-l1-w1:AUTHORED_CORRECT",
+        "mg01-l1-w1:ALLOWED_ALTERNATIVE",
+        "mg01-l1-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+        "mg01-l1-s1:WRONG_FACT_WITH_INJECTION",
+        "mg01-l1-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+        "mg01-l1-w1:WRONG_FACT_WITH_INJECTION",
+        "mg01-l1-s1:AUTHORED_CORRECT:REPEAT",
+        "mg01-l1-w1:AUTHORED_CORRECT:REPEAT"
+      ],
+      "pilotPassBlockedBy": [
+        "OWNER_APPROVED_RATE_THRESHOLDS_AND_FEEDBACK_ADJUDICATION_REQUIRED"
+      ],
+      "feedbackAdjudication": "NEEDS_EVIDENCE",
+      "pronunciation": "NOT_MEASURED",
+      "readinessChanged": false
+    },
+    "usage": {
+      "inputTokens": 11398,
+      "outputTokens": 4088,
+      "unknownUsageStarts": 0
+    },
+    "actualSpend": {
+      "USD": "0",
+      "inkPoints": "0",
+      "electricity": "NOT_MEASURED"
+    }
+  },
+  "human": {
+    "expertVerified": 0,
+    "expertRequired": 82,
+    "phoneticVerified": 0,
+    "phoneticRequired": 24,
+    "realLearnerObservations": 0,
+    "realLearnerRequired": 24
+  },
+  "lessons": [
+    {
+      "lesson": "MG01-L1",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "bundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "descriptorSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "REVISE",
+      "providerCoverageNote": "Only the first20 frozen pilot rows measured.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "a43989b3-d288-4234-9143-149797cd9ffa",
+        "87e509eb-1c9b-486f-86f8-e6608daf3f1b",
+        "168e05fc-fb16-4050-ba52-792e25d5c4bd"
+      ],
+      "lessonVersionIds": [
+        "623e6ce1-1ce0-4c42-a8ba-d7c957d224a2"
+      ]
+    },
+    {
+      "lesson": "MG01-L2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "bundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "descriptorSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "6223a96d-d909-4b3b-b262-d55582c0b377",
+        "edaab29a-ed0a-433a-a9a6-7adef7a24232",
+        "db3c0085-7a6b-45fc-956c-c7aa8eede7d2"
+      ],
+      "lessonVersionIds": [
+        "e1c87005-8b4c-4c50-b74f-052da38b8176"
+      ]
+    },
+    {
+      "lesson": "MG01-L3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "bundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "descriptorSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "a088ef28-99ca-40fe-adc2-3a80e2cdd084",
+        "cb1e8f1d-453b-4dd7-9b70-4ce86ae3b4a8",
+        "940be82c-2c12-4b1f-8a0f-e54a3134cc0f"
+      ],
+      "lessonVersionIds": [
+        "b29fff04-d45a-4189-b624-d322c0e183a6"
+      ]
+    },
+    {
+      "lesson": "MG01-L4",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "bundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "descriptorSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "2e917bf0-acc7-4f30-a6a6-d26fbf1b300f",
+        "4978c9d8-6023-4865-ae38-9555358f9180",
+        "15b860be-c4f8-4bb6-b67f-ad68a33a7cfc"
+      ],
+      "lessonVersionIds": [
+        "2151727e-1f6b-40f5-9589-dd932d261cfa"
+      ]
+    },
+    {
+      "lesson": "MG02-L1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "bundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "descriptorSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "61cf40a8-1efd-43a1-8c66-0a3e42e34c0f",
+        "6586374b-5e94-41c5-b4cc-e6f91cc44362",
+        "da15bd8b-1fdb-4e75-9b68-742830fa3bda"
+      ],
+      "lessonVersionIds": [
+        "0cf2ff44-521c-4ccd-93fd-367f20becf5f"
+      ]
+    },
+    {
+      "lesson": "MG02-L2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "bundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "descriptorSha256": "9165104b738846359748fb718b98abe6a802b228235384b76534e13992bce880",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "dbf03fbe-c208-460a-b544-030a54278f47",
+        "f29d7f71-0990-4c06-87d4-f3adae34841b",
+        "f376f92c-2e8b-46a4-b130-e942eebf024e"
+      ],
+      "lessonVersionIds": [
+        "bf46150c-2ecc-4d77-ad78-086714be6ac6"
+      ]
+    },
+    {
+      "lesson": "MG02-L3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "bundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "descriptorSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "fd95b89a-7769-4aa1-9ec3-6272d286db38",
+        "c47f06bf-c114-48e9-8535-850434daacf0",
+        "19a7bf6d-b1a8-4100-9862-a24195c95159"
+      ],
+      "lessonVersionIds": [
+        "25dba97f-2830-4580-a39c-347763081418"
+      ]
+    },
+    {
+      "lesson": "MG02-L4",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "bundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "descriptorSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "technical": "PASS",
+      "activityCount": 8,
+      "objectiveCount": 4,
+      "syntheticJourneys": 3,
+      "activitySubmissions": 24,
+      "realLearnerObservations": 0,
+      "sourceStructure": "PASS",
+      "exactAudioBinding": "PASS",
+      "humanPedagogicalApproval": "NEEDS_EVIDENCE",
+      "independentPhoneticQA": "NEEDS_EVIDENCE",
+      "masterLibraryProvenance": "NEEDS_EVIDENCE",
+      "providerCalibration": "NEEDS_EVIDENCE",
+      "providerCoverageNote": "No new model scoring measurements for this lesson; do not transfer MG01-L1 evidence.",
+      "overall": "BLOCKED",
+      "sessionIds": [
+        "27c5cdf1-a0eb-4e2c-86cc-23f18aff222b",
+        "06cfca75-ae1d-4864-ae2b-90316bc400df",
+        "5c0fa7ae-63a8-4d86-b7c4-41e8fb7ace14"
+      ],
+      "lessonVersionIds": [
+        "4bbfd1a8-e471-48ad-9da3-8456bd581eb5"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "all-lessons",
+      "name": "Eight lessons fully qualified",
+      "status": "BLOCKED",
+      "reason": "All8 structurally valid; each has3 real local synthetic journeys. Expert/provider/real-human qualification incomplete."
+    },
+    {
+      "id": "provider-calibration",
+      "name": "Provider grading quality",
+      "status": "REVISE",
+      "reason": "New local20/20 strict-valid; false acceptance2/10, false rejection8/8, factual bounds10/20. Only4/32 anchor pairs. Discovery0 starts."
+    },
+    {
+      "id": "provider-budget",
+      "name": "Qualified provider cost and data handling",
+      "status": "BLOCKED",
+      "reason": "New localpilot USD0/InkPoints0; electricity unmeasured. Discovery pilot reservation160.3072 >1.5InkPoints; pricing/tokenizer/retention/entitlement unverified."
+    },
+    {
+      "id": "oracle",
+      "name": "Live-ready oracle",
+      "status": "NEEDS_EVIDENCE",
+      "reason": "128 AI source-bound decisions and32 repeats preserved; genuine independent adjudication and live-ready authorization incomplete."
+    },
+    {
+      "id": "expert-qa",
+      "name": "Content and phonetic expert QA",
+      "status": "NEEDS_EVIDENCE",
+      "reason": "82 source-bound forms ready; genuine expert0/82, independent phonetic0/24; master vocabulary IDs/snapshot unavailable."
+    },
+    {
+      "id": "real-gate-c",
+      "name": "24 valid actual learner observations",
+      "status": "NEEDS_EVIDENCE",
+      "reason": "Synthetic24/24 engineering completed. Actual participants/consent/study authority absent; real observations0/24."
+    },
+    {
+      "id": "evaluator-context",
+      "name": "Exact evaluator context and privacy",
+      "status": "PASS",
+      "reason": "Current unit/contracts verify private facts/rubric, version/cache isolation, untrusted input and learner DTO privacy."
+    },
+    {
+      "id": "durability",
+      "name": "Power-loss durability acceptance",
+      "status": "NEEDS_EVIDENCE",
+      "reason": "Process/API-fault regression passes; physical Windows/device power-loss durability not demonstrated."
+    },
+    {
+      "id": "db-browser",
+      "name": "Isolated DB and published-fixture Beginner browser integration",
+      "status": "PASS",
+      "reason": "47 migrations;24 sessions192 attempts24 evaluated writing jobs; real Next/Nest/Postgres path, exact72 audio plays. Fixtures have synthetic local publication only."
+    },
+    {
+      "id": "engineering-review",
+      "name": "No confirmed Critical/Important engineering defect in scoped delta",
+      "status": "PASS",
+      "reason": "Independent cross-review; confirmed planner, strict contract, evidence export and fake feedback defects resolved."
+    },
+    {
+      "id": "release-blockers",
+      "name": "No unresolved mandatory release blockers",
+      "status": "BLOCKED",
+      "reason": "Provider quality, real expert/learner evidence and target recovery dependencies remain."
+    },
+    {
+      "id": "regression",
+      "name": "All intended release-environment regression gates",
+      "status": "NEEDS_EVIDENCE",
+      "reason": "Bounded local full API-unit/Web-component/shared and selected isolated DB/browser checks pass; default sharedDB/complete target E2E was not run."
+    },
+    {
+      "id": "commit-audit",
+      "name": "Complete relevant commit inventory",
+      "status": "PASS",
+      "reason": "120 exact commits through494e83d plus self-relative closure121; no duplicate stable patches or graph gaps. Historical semantics attributed, not blanket recertified."
+    },
+    {
+      "id": "deployment-target",
+      "name": "Verified deployment target",
+      "status": "BLOCKED",
+      "reason": "No verified frontend/API/DB/storage/domain/CI deployment target or production configuration."
+    },
+    {
+      "id": "rollback",
+      "name": "Target-tested rollback and recovery",
+      "status": "BLOCKED",
+      "reason": "No authorized intended-target restore/rollback evidence. Local process recovery is a separate proof."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-evidence-inventory.json",
+      "sha256": "ff2e5953b85e6386213d2efbc7b88c7d8bfe4c4777d4533ec9c2b99c72b0431b"
+    },
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-contract-replay.json",
+      "sha256": "e3fc3e1b0eed573e6840af70b905c2144be3e1723e436d13c294af035ad0e126"
+    },
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-constrained-local-calibration.json",
+      "sha256": "216f85108373030628e6b8f83c6ed7c872c8fc323309110116640303a2322151"
+    },
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-content-audit.json",
+      "sha256": "f8666d5324962da9c9c1fd47499dfa423fada16f6ff90b3b04b7d2f977e92895"
+    },
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-reviewer-workbench.html",
+      "sha256": "44c7b8a57b9e52038e38b1139f5e02dfe9532631bbdb6e9b4aa2bdd8b4ae778d"
+    },
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-browser.json",
+      "sha256": "49f15dbc745e53073e8920aea52d8c07f2c86e5ba6437d8d4a360a2ea6558754"
+    },
+    {
+      "path": "docs/qualification/beginner-r12b-finalization-review.md",
+      "sha256": "e76e9bd464b4819daf70b52230a1c1e134616b1daac3958288d37eb50a9930b5"
+    }
+  ],
+  "verificationLogs": [
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\api-all-safe-final.log",
+      "sha256": "fe130d14b4cb62357524209f8087ff5ad72a9fe3c713e1486bf3ef1c01b88acd",
+      "bytes": 18351
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\api-regression-final.log",
+      "sha256": "40747ea59fff326b80b83bf551d8ec4d136b7535a221e412d308caca0601d496",
+      "bytes": 4878
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-components.log",
+      "sha256": "a8e4d4c122b5200241af9fbc513da6d0669bd497a67bcd4147cbd859b25c4046",
+      "bytes": 34220
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\shared-tests.log",
+      "sha256": "e25afd30f765ff2ff93fb7d3fc72d61cb4ae505afa5d7835ddc92b44071ba2c3",
+      "bytes": 3524
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\node-regression.log",
+      "sha256": "c039f7448a6b1de17fe4a0b1c7c33f8c7571f46beef91c8074ba3c909091c42b",
+      "bytes": 38607
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\root-regression.log",
+      "sha256": "6a07a138fbb0533765f1e97903c0d7fd1d3f1f47eee9838b3f3e58efef338ad4",
+      "bytes": 7066
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\audio-guards.log",
+      "sha256": "ebf00f5d0d9608df50b9baa6461295f5d09ec98ddb4fc8804331b9d2dc339aa4",
+      "bytes": 622
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\contract-final.log",
+      "sha256": "da1810054c9bec886e0ec6dd570e1737e00b385f104ad02f38728b8c3c64b184",
+      "bytes": 381
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\reviewer-final-fixed.log",
+      "sha256": "713318cb3725d4f3eaf5f2d596f11970129704aec94767246fb83fe2fb60520b",
+      "bytes": 3849
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\finalization-node.log",
+      "sha256": "b44bad8f2860f04a5586a0c9a54bd0dd31a3bd7feb30f066a23bc7051246d07f",
+      "bytes": 1637
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\browser-governance-final.log",
+      "sha256": "b9d4aad514bb31ef649f39b943c9ebf8ad7a6ada4ff9ae9d56198f4ee7c1ab27",
+      "bytes": 1686
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\governance-inventory-final.log",
+      "sha256": "ee1a35335705feb805257de5c6fde4cab5152fec0156821d22893b2d1e2f8e93",
+      "bytes": 567
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\frozen002-requalification.log",
+      "sha256": "cd0695268077a82dc1fa8ffb053b0c152f0e4c6aadd5cf1959b3a14feb475e75",
+      "bytes": 554
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\frozen005-governance.log",
+      "sha256": "7da13fbcb369d5622f190438ceacc627d96f98ba1caeb890913f11c2c7ac58e0",
+      "bytes": 2588
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\post-context-regression.log",
+      "sha256": "cb1f95c32ae1556c51bdd628efff35fcdb35221434d96b58287c636a1d183f5f",
+      "bytes": 7409
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\api-all-safe-attempt001.log",
+      "sha256": "ca8aa9b25b6ac4f8f06a4a6fbefbcb3ece326d620a69a4a5d68c0afd0d34c12d",
+      "bytes": 33978
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\baseline-topic-publication.log",
+      "sha256": "2963225e2bea267def1e5438677c346afd1486a3d0f6aef881aff022b9b40e8c",
+      "bytes": 7839
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\isolated-ielts-integration.log",
+      "sha256": "7d8b7aa70e51586184d6fa4499caee7262b63ceea51b8f6eeada80de4a3a9c73",
+      "bytes": 807
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\api-lint-final.log",
+      "sha256": "62f57a403f9d872e11c0ed4529f65719b0d0308144700434492057b17eee7aad",
+      "bytes": 128
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\api-typecheck-final-fixed.log",
+      "sha256": "4e29d731c1b54a8bdf0e47d662089e6d912c484c40589e02bda75644cfcbd1d0",
+      "bytes": 130
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\api-build-final.log",
+      "sha256": "19590b56250c7e505e05d0eed9763eee456e70ac8b183cc1c7d2b28d06a8c0dc",
+      "bytes": 140
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-lint.log",
+      "sha256": "a24a2da5df971d6bacd0bd7938862e38446a5f2f3f024c30f697dbb12c17bddc",
+      "bytes": 123
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-typecheck.log",
+      "sha256": "3904d895f531aee13bda0e766b88627baef3bd40f608331695d2d9e1d7e41ed1",
+      "bytes": 130
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\shared-lint.log",
+      "sha256": "bbb764b1250a34e3bef96f057dc71270797605b06192a758a67ba6ba9d969f23",
+      "bytes": 256
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\shared-typecheck.log",
+      "sha256": "4fe476509e6a3fe4249fc51f966a11b5bdff4ff37c45858cab45a73e28daed6e",
+      "bytes": 292
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-production-build.log",
+      "sha256": "748a2520cda4f740a32c4feb8afe2b60b80a176422eb7b008d7515bef3a79791",
+      "bytes": 2126
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-production-build-attempt001.log",
+      "sha256": "bf87e9b6402c6ac04882860da41bce695b297f717760b408cff7e9499d05943e",
+      "bytes": 1246
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-production-build-attempt002.log",
+      "sha256": "5093f17785b6520b1569ec34010a10f65dd1c3643fc220bfebb0e38e92d7ecb6",
+      "bytes": 447
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\worklingo-r12b-finalization-20261030\\logs\\web-production-build-attempt003.log",
+      "sha256": "0719dbd2035de9963bc1d79c2e18d1a8ed792a3d0de77b266059b3e18e7e6e8e",
+      "bytes": 394
+    }
+  ],
+  "commits": [
+    {
+      "sha": "4ce191e4d607f3a9165c784f61b75f3ec66dcc9e",
+      "subject": "chore: authorize finite R1.2b finalization and local browser qualification",
+      "files": [
+        "docs/superpowers/plans/2026-10-30-r12b-finalization.md",
+        "mandate/INDEX.md",
+        "mandate/items/MND-20261030-006-architecture-finalize-strict-local-contract-reviewer-workbench-and-real-browser-orc.md",
+        "mandate/reports/2026-10-30-r12b-finalization-authorization.md",
+        "mandate/reports/2026-10-30-r12b-finalization-proposal.json",
+        "mandate/reports/2026-10-30-r12b-finalization-scope.json"
+      ]
+    },
+    {
+      "sha": "141d98003f33e76940958075cae5abca146e78cf",
+      "subject": "fix: constrain local evaluator JSON and preserve grading pilot failure",
+      "files": [
+        "apps/api/src/ai-gateway/infrastructure/language-evaluation-chat-contract.spec.ts",
+        "apps/api/src/ai-gateway/infrastructure/language-evaluation-chat-contract.ts",
+        "apps/api/test/beginner-pilot/finalization-local-calibration.test.ts",
+        "apps/api/test/beginner-pilot/finalization-local-calibration.ts",
+        "docs/qualification/beginner-r12b-finalization-constrained-local-calibration.json",
+        "docs/qualification/beginner-r12b-finalization-constrained-local-calibration.md",
+        "docs/qualification/beginner-r12b-finalization-contract-replay.json",
+        "docs/qualification/beginner-r12b-finalization-contract-replay.md"
+      ]
+    },
+    {
+      "sha": "96e76ea02f2b861fed3fbdd8efc0d9d095779dc5",
+      "subject": "chore: authorize exact Beginner session planner correction",
+      "files": [
+        "mandate/INDEX.md",
+        "mandate/items/MND-20261030-007-bug-preserve-all-eight-activities-when-creating-beginner-learner-sessions.md",
+        "mandate/reports/2026-10-30-r12b-planner-fix-authorization.md",
+        "mandate/reports/2026-10-30-r12b-planner-fix-proposal.json",
+        "mandate/reports/2026-10-30-r12b-planner-fix-scope.json"
+      ]
+    },
+    {
+      "sha": "72a7e5d73d5d4726e1b2f5fc03cd17a8a31ffe28",
+      "subject": "feat: add source-bound expert review workbench with strict evidence export",
+      "files": [
+        "apps/api/test/beginner-pilot/expert-review-workbench.test.ts",
+        "apps/api/test/beginner-pilot/expert-review-workbench.ts",
+        "docs/qualification/beginner-r12b-finalization-content-audit.json",
+        "docs/qualification/beginner-r12b-finalization-content-audit.md",
+        "docs/qualification/beginner-r12b-finalization-reviewer-workbench.html",
+        "tools/qualification/expert-review-workbench.css",
+        "tools/qualification/expert-review-workbench.js"
+      ]
+    },
+    {
+      "sha": "46960c10d889c777606ce1a16d99e72506bfccdf",
+      "subject": "fix: preserve all eight Beginner activities in learner sessions",
+      "files": [
+        "apps/api/src/learning-sessions/application/session-creation.service.spec.ts",
+        "apps/api/src/learning-sessions/domain/session-planner.spec.ts",
+        "apps/api/src/learning-sessions/domain/session-planner.ts"
+      ]
+    },
+    {
+      "sha": "c52059817a01cddb03180903773d459c76ae2f7c",
+      "subject": "chore: authorize feedback and publication regression corrections",
+      "files": [
+        "mandate/INDEX.md",
+        "mandate/items/MND-20261030-008-bug-keep-fake-evaluation-feedback-valid-when-beginner-reference-text-is-bl.md",
+        "mandate/items/MND-20261030-009-bug-restore-publication-regression-fixture-for-beginner-ownership-checks.md",
+        "mandate/reports/2026-10-30-r12b-fake-feedback-fix-authorization.md",
+        "mandate/reports/2026-10-30-r12b-fake-feedback-fix-proposal.json",
+        "mandate/reports/2026-10-30-r12b-fake-feedback-fix-scope.json",
+        "mandate/reports/2026-10-30-r12b-publication-fixture-fix-authorization.md",
+        "mandate/reports/2026-10-30-r12b-publication-fixture-fix-proposal.json",
+        "mandate/reports/2026-10-30-r12b-publication-fixture-fix-scope.json"
+      ]
+    },
+    {
+      "sha": "6c2143dc28d6b28f964ffe75bf4e9f73d4ae3f00",
+      "subject": "fix: keep fake Beginner feedback valid for blank references",
+      "files": [
+        "apps/api/src/ai-gateway/infrastructure/fake-language-evaluation.adapter.ts",
+        "apps/api/src/ai-gateway/infrastructure/fake-provider-contract.spec.ts"
+      ]
+    },
+    {
+      "sha": "50e7d4e11f6643fbbb6079f95d02da405af2b2b5",
+      "subject": "test: restore publication ownership fixture and guard coverage",
+      "files": [
+        "apps/api/src/intermediate-topics/topic-publication.spec.ts"
+      ]
+    },
+    {
+      "sha": "123bd00323f0f07866407e6cca2a65c3b3efa27a",
+      "subject": "test: omit absent reference in strict optional feedback fixture",
+      "files": [
+        "apps/api/src/ai-gateway/infrastructure/fake-provider-contract.spec.ts"
+      ]
+    },
+    {
+      "sha": "e6ffdba73f51e8e667f43b227ecdfda6bc59f7b3",
+      "subject": "test: qualify 24 real local Beginner application journeys",
+      "files": [
+        "apps/api/test/beginner-pilot/finalization-browser-bootstrap.spec.ts",
+        "apps/api/test/beginner-pilot/finalization-browser-runtime.test.ts",
+        "apps/api/test/beginner-pilot/finalization-browser-runtime.ts",
+        "apps/api/test/beginner-pilot/finalization-browser.config.ts",
+        "apps/api/test/beginner-pilot/gate-c-browser-observations.test.ts",
+        "apps/api/test/beginner-pilot/gate-c-browser-observations.ts",
+        "apps/web/e2e/beginner-finalization.spec.ts",
+        "apps/web/playwright.beginner-finalization.config.ts",
+        "docs/qualification/beginner-r12b-finalization-browser.json",
+        "docs/qualification/beginner-r12b-finalization-browser.md"
+      ]
+    },
+    {
+      "sha": "494e83d599b3aa6aa616826116a69c3e5fa262a7",
+      "subject": "test: reconcile final evidence and exact successor governance",
+      "files": [
+        "apps/api/test/beginner-pilot/finalization-governance.test.ts",
+        "docs/qualification/beginner-r12b-finalization-evidence-inventory.json",
+        "docs/qualification/beginner-r12b-finalization-evidence-inventory.md",
+        "docs/qualification/beginner-r12b-finalization-review.md",
+        "docs/superpowers/plans/2026-10-30-r12b-finalization.md"
+      ]
+    }
+  ],
+  "merge": {
+    "performed": false,
+    "reason": "Mandatory release gates incomplete"
+  },
+  "push": {
+    "performed": false
+  },
+  "deployment": {
+    "performed": false,
+    "url": null,
+    "health": null,
+    "rollbackVerified": false
+  },
+  "cleanup": {
+    "token": "97cdae8c-6f83-4a90-8a15-4036fc7a494d",
+    "containerRemoved": true,
+    "volumeRemoved": true,
+    "cooperativeApiStop": true,
+    "status": "complete",
+    "listenerCount": 0,
+    "containerInventoryMatches": 0,
+    "volumeInventoryMatches": 0
+  },
+  "limitations": [
+    "AI and synthetic technical results are separate from expert or real learner evidence.",
+    "Manual Edge CUA stopped by URL policy; no full manual Edge journey PASS.",
+    "Typed speaking fallback exercises UI/submission, not microphone/STT/pronunciation.",
+    "Audio starts/decodes/plays briefly; full listening and intelligibility remain unverified.",
+    "Public synthetic fixture writes were confined to the owned disposable database; no production publication."
+  ]
+}

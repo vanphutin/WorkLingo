@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261030-009",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-30",
-  "updated": "2026-10-30T07:54:25.770Z",
+  "updated": "2026-10-30T08:22:38.508Z",
   "title": "Restore publication regression fixture for Beginner ownership checks",
   "type": "bug",
   "owner": "WorkLingo owner",
@@ -57,7 +57,18 @@
     "at": "2026-10-30T07:54:24.995Z",
     "proposal_hash": "026b5704f618aa199e1354dc65b5fdff6aa6e51fcc99abba6f2c915d7ce83e03"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "Baseline five failures reproduced; topic-publication focused suite 14 passes retains all original cases",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-final-test-results.md:30"
+    },
+    {
+      "command": "Broad safe API units 1160 passes; API lint/typecheck and independent fixture review",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-final-test-results.md:7"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-30T07:54:23.548Z",
@@ -92,6 +103,15 @@
       "from": "approved",
       "to": "implementing",
       "reason": "Execute baseline reproduction, fixture correction and Beginner denial assertion; no skipped or weakened tests.",
+      "event": "transition",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T08:22:38.508Z",
+      "actor": "WorkLingo owner delegated engineering coordinator",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Finite engineering acceptance verified against actual logs and independent review; genuine expert, phonetic, real-learner, provider-quality and deployment release gates remain open. No release promotion.",
       "event": "transition",
       "reference": null
     }

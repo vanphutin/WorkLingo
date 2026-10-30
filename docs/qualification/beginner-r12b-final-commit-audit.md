@@ -162,3 +162,252 @@ SKILL AUDIT
 Used: mandate-steward -> frozen authority and evidence limits; git-workflow-and-versioning -> read-only exact history and preservation; code-review-and-quality -> bounded correctness/architecture/security/performance/evidence review. review-agent instructions informed defect-first inspection; report writing is separately authorized, so this is not a claim of its strictly read-only workflow completion.
 Verification: full commit/body/path traversal and89-row order reconciliation; stable code patches; conventional tracked-diff security/PII signals; fsck and whitespace checks. Current runtime/test/build/hash gates remain coordinator-owned.
 Not used: TDD/implementation workflows because no runtime source changes; no mutation experiments in the shared checkout under explicit parent restriction. No human qualification or independent runtime certification claimed.
+
+
+## R1.2b finalization successor audit — 2026-10-30
+
+Historical text above remains byte-preserved. Actual starting36bab10was ordinal109; current tested494e83dis ordinal120. The final documentation/lifecycle closure is SELF ordinal121, resolved by `git log -1 --format=%H -- docs/qualification/beginner-r12b-finalization-report.md`.
+
+# Full read-only commit audit
+
+Exact range `752c19c38e86ae72072cab9f5355c5a50dfba2e7..494e83d599b3aa6aa616826116a69c3e5fa262a7`:120commits,0merges,linearparentcontinuity and baseline ancestry confirmed. 473 files changed, 267912 insertions(+), 203 deletions(-). Prior113anchor preserved separately.
+
+No confirmed Important finding. This bounded Git/static reconciliation does not certify all historical semantics, historical test executions, external advisory status or release readiness. Uncommitted working tree excluded. No fetch,push,staging,commit or repositoryfile edit.
+
+All108BCD inventory hashes/ordinals match actualGit; self109=36bab100a4b6a15afd28e5329fc65af08d34f392 matches. Retained audit through103 and BCD104..109 attributed inJSON. Every120actualcommit subject/body/parents/exactchangedpaths retained inJSON. Currentmission110..120 enumeratedbelow.
+
+Full120nonempty stablepatches0duplicate groups; scoped64apps/packages/tools patches0duplicate groups. Patchuniqueness is not semanticuniqueness. Sensitivepaths0. Dependency/package/lock/migration/CI changes0 acrossrange. Static addedlines8credential+10email allsynthetic/mock/privacy/guard;key/token0. Matchvalues excluded,detectorsincomplete.
+
+fsck --full exit0:137danglinglines only,zeromissing/corruptdiagnostics;objects preserved. RawoutputSHA256 0b0e3d77070cbf1a512e4cda8d08672c242f93d58d25fb54781848f8ab5cc67f. diff --check exit2:five retainedblankEOF diagnostics (old004three+006authorization/scope);mutableplan corrected. No newImportantfinding.
+
+## Commits110..120
+
+### 110. 4ce191e4d607f3a9165c784f61b75f3ec66dcc9e — chore: authorize finite R1.2b finalization and local browser qualification
+
+- A — docs/superpowers/plans/2026-10-30-r12b-finalization.md
+- M — mandate/INDEX.md
+- A — mandate/items/MND-20261030-006-architecture-finalize-strict-local-contract-reviewer-workbench-and-real-browser-orc.md
+- A — mandate/reports/2026-10-30-r12b-finalization-authorization.md
+- A — mandate/reports/2026-10-30-r12b-finalization-proposal.json
+- A — mandate/reports/2026-10-30-r12b-finalization-scope.json
+
+### 111. 141d98003f33e76940958075cae5abca146e78cf — fix: constrain local evaluator JSON and preserve grading pilot failure
+
+- A — apps/api/src/ai-gateway/infrastructure/language-evaluation-chat-contract.spec.ts
+- A — apps/api/src/ai-gateway/infrastructure/language-evaluation-chat-contract.ts
+- A — apps/api/test/beginner-pilot/finalization-local-calibration.test.ts
+- A — apps/api/test/beginner-pilot/finalization-local-calibration.ts
+- A — docs/qualification/beginner-r12b-finalization-constrained-local-calibration.json
+- A — docs/qualification/beginner-r12b-finalization-constrained-local-calibration.md
+- A — docs/qualification/beginner-r12b-finalization-contract-replay.json
+- A — docs/qualification/beginner-r12b-finalization-contract-replay.md
+
+### 112. 96e76ea02f2b861fed3fbdd8efc0d9d095779dc5 — chore: authorize exact Beginner session planner correction
+
+- M — mandate/INDEX.md
+- A — mandate/items/MND-20261030-007-bug-preserve-all-eight-activities-when-creating-beginner-learner-sessions.md
+- A — mandate/reports/2026-10-30-r12b-planner-fix-authorization.md
+- A — mandate/reports/2026-10-30-r12b-planner-fix-proposal.json
+- A — mandate/reports/2026-10-30-r12b-planner-fix-scope.json
+
+### 113. 72a7e5d73d5d4726e1b2f5fc03cd17a8a31ffe28 — feat: add source-bound expert review workbench with strict evidence export
+
+- A — apps/api/test/beginner-pilot/expert-review-workbench.test.ts
+- A — apps/api/test/beginner-pilot/expert-review-workbench.ts
+- A — docs/qualification/beginner-r12b-finalization-content-audit.json
+- A — docs/qualification/beginner-r12b-finalization-content-audit.md
+- A — docs/qualification/beginner-r12b-finalization-reviewer-workbench.html
+- A — tools/qualification/expert-review-workbench.css
+- A — tools/qualification/expert-review-workbench.js
+
+### 114. 46960c10d889c777606ce1a16d99e72506bfccdf — fix: preserve all eight Beginner activities in learner sessions
+
+- M — apps/api/src/learning-sessions/application/session-creation.service.spec.ts
+- M — apps/api/src/learning-sessions/domain/session-planner.spec.ts
+- M — apps/api/src/learning-sessions/domain/session-planner.ts
+
+### 115. c52059817a01cddb03180903773d459c76ae2f7c — chore: authorize feedback and publication regression corrections
+
+- M — mandate/INDEX.md
+- A — mandate/items/MND-20261030-008-bug-keep-fake-evaluation-feedback-valid-when-beginner-reference-text-is-bl.md
+- A — mandate/items/MND-20261030-009-bug-restore-publication-regression-fixture-for-beginner-ownership-checks.md
+- A — mandate/reports/2026-10-30-r12b-fake-feedback-fix-authorization.md
+- A — mandate/reports/2026-10-30-r12b-fake-feedback-fix-proposal.json
+- A — mandate/reports/2026-10-30-r12b-fake-feedback-fix-scope.json
+- A — mandate/reports/2026-10-30-r12b-publication-fixture-fix-authorization.md
+- A — mandate/reports/2026-10-30-r12b-publication-fixture-fix-proposal.json
+- A — mandate/reports/2026-10-30-r12b-publication-fixture-fix-scope.json
+
+### 116. 6c2143dc28d6b28f964ffe75bf4e9f73d4ae3f00 — fix: keep fake Beginner feedback valid for blank references
+
+- M — apps/api/src/ai-gateway/infrastructure/fake-language-evaluation.adapter.ts
+- M — apps/api/src/ai-gateway/infrastructure/fake-provider-contract.spec.ts
+
+### 117. 50e7d4e11f6643fbbb6079f95d02da405af2b2b5 — test: restore publication ownership fixture and guard coverage
+
+- M — apps/api/src/intermediate-topics/topic-publication.spec.ts
+
+### 118. 123bd00323f0f07866407e6cca2a65c3b3efa27a — test: omit absent reference in strict optional feedback fixture
+
+- M — apps/api/src/ai-gateway/infrastructure/fake-provider-contract.spec.ts
+
+### 119. e6ffdba73f51e8e667f43b227ecdfda6bc59f7b3 — test: qualify 24 real local Beginner application journeys
+
+- A — apps/api/test/beginner-pilot/finalization-browser-bootstrap.spec.ts
+- A — apps/api/test/beginner-pilot/finalization-browser-runtime.test.ts
+- A — apps/api/test/beginner-pilot/finalization-browser-runtime.ts
+- A — apps/api/test/beginner-pilot/finalization-browser.config.ts
+- A — apps/api/test/beginner-pilot/gate-c-browser-observations.test.ts
+- A — apps/api/test/beginner-pilot/gate-c-browser-observations.ts
+- A — apps/web/e2e/beginner-finalization.spec.ts
+- A — apps/web/playwright.beginner-finalization.config.ts
+- A — docs/qualification/beginner-r12b-finalization-browser.json
+- A — docs/qualification/beginner-r12b-finalization-browser.md
+
+### 120. 494e83d599b3aa6aa616826116a69c3e5fa262a7 — test: reconcile final evidence and exact successor governance
+
+- A — apps/api/test/beginner-pilot/finalization-governance.test.ts
+- A — docs/qualification/beginner-r12b-finalization-evidence-inventory.json
+- A — docs/qualification/beginner-r12b-finalization-evidence-inventory.md
+- A — docs/qualification/beginner-r12b-finalization-review.md
+- M — docs/superpowers/plans/2026-10-30-r12b-finalization.md
+
+## Reproduction
+
+inventory.json SHA256 `eff1c459a243e3f0442d764cb5115bc1ac9ff8767d46ef405b41044011a79234`. Exactargv,exitcode andstdout/stderrSHA256 for allcommands recorded inJSON. Runner ../commit-audit-current-run.py. Percommit metadata/diff-tree/fullbinary andscoped patches compared using git patch-id --stable. rev-list --reverse,merge-base --is-ancestor,fsck --full,diff --check allrerun. Finalclosure121needs exactdelta verification; no blanket historicalsemanticPASS.
+
+
+### Complete graph inventory through120
+
+Every subject/body/parent/path was traversed by the independent read-only audit. The table below is the complete ordinal reconciliation; original103semantic/test attribution stays with the retained audit above,104..109with BCD inventory, and110..120with current scoped review/test reports. No unexecuted per-commit test is claimed.
+
+|Ordinal|Commit|Subject|Changed path count|
+|---|---|---|---|
+|1|`f202e1975912f0e855890fa27e3c0f91c8177429`|docs: analyze Foundation and Basic program readiness|3|
+|2|`10d32a0283c61aa5af3935330b9225095003ddbc`|docs: design Beginner curriculum and versioned learning resources|3|
+|3|`f8dacc66d5a3b4aea9cc1c22da6f3d822ce4cde6`|docs: refine Beginner knowledge map and minimal video pilot|6|
+|4|`6113427bb904d5130744d2957f25e55dacbe6c0a`|docs: plan Beginner pilot and compatible resource updates|2|
+|5|`0ffaf6b9c6456f00fa7441199ad9352eb2fa86be`|docs: record human approval and exact R1.1 scope|6|
+|6|`2da434a75afe43f5f92de308a1081e86421ba464`|feat(beginner): add guarded 1.2 format and manifest contracts|15|
+|7|`8315f01aa2d36f775c105bd4e29ee7e4c696cda8`|feat(beginner): add exact-version planner and guarded evaluation|14|
+|8|`5963dbf7ed5b448b77c8a8b3b48f476a90694caf`|docs: verify Beginner R1.1 and record regression evidence|3|
+|9|`29777da3a029d366357806f4df20d7d84fdea713`|docs: record bounded R1.2a software approval|6|
+|10|`5fec9198ae2af2471ce61b4d8fffb660dc3f00d4`|feat(beginner): add scoped authoring contracts and environment gates|15|
+|11|`0b09975ec9a47c50a9a1032859edc5765bc64409`|feat(beginner): enforce scoped authoring and independent review|25|
+|12|`b6f479b80cfec546deb335984936c98bfd3172da`|feat(beginner): add planned curriculum editor and safe exact-version preview|29|
+|13|`0646bec0602d0aaf3804553bd88590bd37452148`|fix(beginner): guard resolved ownership and preserve publication evidence|4|
+|14|`959573df3a3b1c4d52549a6f195e82d94bbe73b7`|feat(beginner): add fixture-only release registry and gated test harness|14|
+|15|`fd09292df2c2c76f26ef7ea3e1ea911acb96e8f2`|fix(beginner): preserve published drafts and redact listening previews|10|
+|16|`47dab4efb54d33b207455762446185a3f516f1e5`|docs(beginner): record verification and remaining approval blockers|1|
+|17|`24756b3db8dd013046a9bdba2a1fbe79fcc9e08b`|fix: deny generic Beginner content lifecycle mutations|2|
+|18|`520acdca8b7d63deaeb3a2a8b8dd721a6bd4186b`|docs: record approved Beginner lifecycle P1 verification|7|
+|19|`e7332c28fe5359d336aff1f12c68df826d9d348f`|fix: require effective approval-root access proof|2|
+|20|`ab13782c32bdae20cbcd12005ea7dbe01b7e0fca`|test: validate isolated-run authority and privilege evidence|3|
+|21|`2b5eb0fad544d17157112d3966e1330664c2e402`|docs: record conditional Gate A safety blocker|7|
+|22|`9d50bc23ff596232c9693bc058d7fb434edda211`|docs: record existing-worker and ACL recheck blocker|1|
+|23|`8c3bc63df04309140e241e085050a0e32341f1f7`|docs: capture OS-only Beginner worker preapproval|5|
+|24|`25d2ee2b2d45945830224f993302e0af22936aef`|docs: capture worker retirement and main database audit findings|9|
+|25|`98b0e72b8dd1f42eed002b2b14802ee249e91753`|docs: verify approved temporary worker retirement|4|
+|26|`3c550947b66b66220f7e8d8303ec71c720cb5c2e`|docs: scope controlled R1.2a qualification on main database|6|
+|27|`5580c8338e4ff601d14995161e84ecc2cf1f430c`|docs: record scoped human approval for main database qualification|3|
+|28|`b5a4e0f48f8933db6a4e418eb9e9f0567aa87b11`|feat: bind controlled Beginner test capabilities to approved scope|4|
+|29|`529125693531b2722cda2e20f5e6c09a6e5fd260`|test: add guarded main database qualification harness for Beginner|19|
+|30|`613fcec48a2b40b3a3e720c6a57fc5b0534562b4`|docs: record incomplete main qualification and reviewed safety evidence|1|
+|31|`73c1a19bc78136b2746eb6d9a174be1a48574ad9`|docs: capture separate Beginner pilot content authoring scope|6|
+|32|`76c5279463da021c50d53b684e0084f33c54e5b8`|docs: permit scoped governance descendants in content baseline checks|3|
+|33|`74043b2546bb2ce523f247ab02a26f4d7c0515fe`|docs: record human approval for offline Beginner pilot authoring|3|
+|34|`6dc533b2d78fca5049170d322b0692bd58cd41e8`|feat: author MG01 introduction lesson with offline qualification|4|
+|35|`5141e372e0a0bf5fd63583191a0b6cb6d2ac209d`|feat: author MG01 name pronunciation and transfer lessons|3|
+|36|`db16a5a5b29f2ce2a8bcc9322324a2ca543f6b99`|feat: author MG02 object and quantity pilot with complete evidence matrix|6|
+|37|`478bd7cc946a236dc9cb69f03c064326dad08a7a`|fix(content): preserve Beginner response requirements and assessment evidence|11|
+|38|`1673f2ca28266f001e7d1d14514976df8b91d628`|docs(mandate): record Beginner offline qualification and remaining readiness gates|1|
+|39|`a168d487066e7681a8c64dce1480a05a595c87af`|docs(mandate): capture independent Beginner audio review and rehearsal qualification gates|15|
+|40|`cad2d781d7fd3e29aa19ec7b13381c2309742415`|docs(mandate): align Gate A with existing educational F0 East Asia resource|5|
+|41|`0ad2902514171b879b282f4f3ee5c82681d2b3ca`|docs: record matching Gate A F0 execution approval|3|
+|42|`423bc561a3e1c7f26af2cb3b170bdc16adec559d`|feat: guard offline Beginner F0 audio qualification|4|
+|43|`c3c41e6e15d12e19deb6261a743b5d8cbd1f5771`|docs: scope private Gate A storage correction and audio continuation|7|
+|44|`0c82547499eba0dd577fc265df590068f0dbbf74`|docs: record matching private storage amendment approval|3|
+|45|`0613bd69dda194f007ee61d289a9600fc040b4f6`|fix: verify private storage tree and dual audio authority|4|
+|46|`af2574aaad4588f36b5bb928471397250ea09577`|fix: isolate Windows helper modules and verify native storage|4|
+|47|`59124ec2ff412f197cc9762fd703bd71b25e3b51`|docs: verify private storage and record real F0 pilot audio|4|
+|48|`180fbc71862f38f98322e9f2bfd35ed21d00ca4b`|docs: retain accepted pilot QA and hold for international names|2|
+|49|`f6d7f5858166e49eec12e765bae446a75c029ab0`|docs: plan international Beginner names with preserved audio history|3|
+|50|`bbd8a70086933c776df83e2c3af4d78483e49500`|docs: capture exact international content revision scope|5|
+|51|`8af78a28e6c6a184f43561abe1ec47f62dbf369f`|docs: retain immutable original Beginner audio inventory|1|
+|52|`7fffee869da7d439e9cb433b5cdef9bfc9dc8c64`|feat: use international names consistently in Beginner pilot|11|
+|53|`188f2befb57b2f6d0a24b9903a508df4bb3eb517`|fix: reconcile historical audio under exact content revision approval|7|
+|54|`c740d9313cab7849a43246a2666c606d3372b159`|test: isolate active authority fixtures from completed mandates|1|
+|55|`02aaea9ff0a1635f1c18637cd1a14cc1e5ef9126`|docs: verify all24 international audio assets and close Gate A|6|
+|56|`3e57f70c3ab29e9a2cf66305771c4bc6e4f46ed8`|docs: prepare exact-version teacher review packet for eight pilot lessons|4|
+|57|`65b57c7cfbb503704dcbe02af313f527c4c1b152`|docs: amend existing Gate B scope for current source and private human evidence|6|
+|58|`ae70e47c8a8b04151d8dcd6dcf1b53fd20c8c675`|docs: record Gate B approval and owner-attested reviewer intake|6|
+|59|`1b1f87a33ca26a6eef39d6db2f624597e3aad9c0`|docs: record global reviewer claim and source-bound AI analysis|3|
+|60|`69b559e9475d08c67cb4920b13c8e0f034eabaf3`|docs: add autonomous AI review and correction dispositions|3|
+|61|`e7282c2b0341ed8c471ec3248fbc0b2f90b04adb`|docs: capture and record exact Beginner successor approvals|19|
+|62|`b93df5d8c1691777a08bc5d6212b6a7158eb8660`|test: reproduce missing Beginner evaluator task context|4|
+|63|`5ad24bff6524e05c6856471eaca1821a9a85fdc9`|fix(content): apply bounded Beginner pilot corrections and version bindings|12|
+|64|`d77a0c0251bf553b6e0275b7f6cd2f8d6282c761`|docs: implement prospective AI-led qualification with fresh bundle review|3|
+|65|`9616e7b68746814affe72a5d5c60adde3e2cbba6`|test: require dedicated isolated evaluator context configuration|2|
+|66|`cf24c8262fac9888be87cac2b5fbdae38256acba`|docs: record actual Beginner successor verification and remaining gates|1|
+|67|`ffa475cb732742a4c945f6758160bf3884084698`|fix(api): pass pinned Beginner context and guard evaluation cache replay|17|
+|68|`a4211bfdf01eccf489c3f152aca683028c0de4cd`|test: bind beginner qualification to verified evaluator context|4|
+|69|`6c6036288b245467ec9ca06ef4ab63488e443c06`|docs: preserve qualification capture and scoped execution authority|18|
+|70|`9d16acfb925c23f2f1a4570e07c02fecafbcac76`|test: prepare bounded Beginner evaluator calibration offline|5|
+|71|`747018a4c5c79104f90febef4a69973819c4170f`|test: bind independent phonetic and vocabulary QA packet|5|
+|72|`ad4a5fe5383f2d80de962aabe7ae041c17f71fc0`|test: validate calibration oracle and bounded scoring evidence|3|
+|73|`39b6e90688c38fa0ec9b04289d02e751e94639fd`|test: validate and aggregate exact independent QA dispositions|4|
+|74|`93683aae55469f10774bd70a9b5d42ddebca9fa8`|docs: capture bounded autonomous qualification engineering umbrella|6|
+|75|`bc34c55e18d3ddd70851ec80d14c968bdcb8e5db`|test: persist qualification reservations across process crashes|6|
+|76|`a7f749c88216d32a1141cfd11e43b08729681d6d`|test: journal source-bound oracle and independent QA evidence|7|
+|77|`f1b481be0e890ec74284626f4d8c4f57ff4eb7e5`|test: prepare synthetic rehearsal and isolated qualification regressions|6|
+|78|`708afdac7fca3ab8dddf7a11531dc95583e29e53`|docs: record qualification checks and remaining evidence gates|1|
+|79|`692fc11d3abd6b44072957bb1a53f63535756fe4`|fix: reject skipped pilot and malformed qualification checkpoints|3|
+|80|`93fe13a00ea143993f2b12e9f9256c1b19b39008`|fix: validate qualification journal semantics on append and recovery|2|
+|81|`aee8695a547d31a1e159c9c9cfe9fbbeb60d6d69`|fix: require fresh pricing within frozen calibration credit ceilings|2|
+|82|`5b554e9cdce98daf11236265f38d8bec73f36b5e`|docs: record qualification audit and actual release blockers|1|
+|83|`c36cf15e334def770402a3d9756f2d1d7244098d`|docs(MND-20261030-001): bind autonomous mission to finite successor scope|6|
+|84|`ba6f40d3b50b752ddcf76c90f7656f38fcdd1686`|fix(MND-20261030-001): preserve Admin drafts across edits and navigation|5|
+|85|`88d63792c1bbda984c060e5c0663701006c0731c`|fix(MND-20261030-001): verify immutable audio without write or provider effects|4|
+|86|`2dbe52e8f5984e75d571780ef227e29d032bb36d`|fix(MND-20261030-002): anchor auth CSS selectors for production compilation|5|
+|87|`3f8e981a09854554e1af2e32c851ebd598b5851a`|test(MND-20261030-001): exercise storage faults and isolate API regression|2|
+|88|`3088496b06389fccd6e4ec1eda6a6e9f82bafb86`|docs(MND-20261030-001): prepare source-bound cost oracle and learner evidence|4|
+|89|`5590b946cab8c270d444a798753aaa501a2c41b8`|fix(MND-20261030-001): reject mixed newline hash equivalence|2|
+|90|`a4685e7cd42d8dbbe949b9d5d1e8429d8bb1694c`|docs(MND-20261030-001): close autonomous engineering with explicit release blockers|8|
+|91|`6b4ec5487c57966b8ce1abe5d425239d2f26f208`|docs: authorize finite browser cost and Gate C engineering successor|6|
+|92|`2c975f84bf18d04e49ea8c3c4282a87a1ac86e94`|perf: compact validated Beginner Discovery wire metadata|8|
+|93|`da703ac83113ea8873aa4694944616e8ff9e807e`|feat: prepare consent gated Gate C timing and aggregate tools|5|
+|94|`7188c8b66f02fd737154708e71ecd32851b3bd4a`|test: isolate actual Beginner browser qualification frontend|6|
+|95|`3e120a81239e623209b3ba61889947e9a97cae86`|docs: close synthetic browser and cost engineering qualification|12|
+|96|`b9a0149913337fa65e812f9f5cbc2e6ae8b67453`|docs: authorize finite R12b external evidence closure|6|
+|97|`d33c0e7b847d5a788ffd3bcb469f7b9f7a5c073a`|test: reconcile R12b decimal costs without permitting live spend|4|
+|98|`5b50ecdbf5fe77a2424d6eabbc854da9741514b1`|test: freeze 128 source-bound AI oracle decisions|3|
+|99|`0442e10c4882b4a89eba9ae844e44e3cb7912596`|test: bind 82 QA dispositions to current source and audio|5|
+|100|`3dd61bc5e8fea10a72b9f10bb6f98ce3bb695c6a`|test: qualify isolated PostgreSQL and real Web session persistence|5|
+|101|`3d106def773b8e9157b49a294f6e935b264eff60`|docs: bind eight R12b lessons and preserve external release gates|5|
+|102|`81b08176d4b9e0382fb28a00c9c7a29f541cd0ae`|docs: close R12b engineering with explicit external evidence blockers|6|
+|103|`b08e96c2e12079d07d58b13b691a70f6f1627636`|docs: reconcile the final R12b audit receipt and whitespace result|2|
+|104|`bb7b81f79cb061663eae581a5e9c4cbf29a79f51`|chore: authorize bounded BCD offline qualification|6|
+|105|`c1742812fd0a84df4d6ec8dc8e275d347888f92b`|feat: execute source-bound offline speech qualification|4|
+|106|`4efe92d4bc6e032fcb26aa7e6425e6e449558290`|fix: reject contradictory Gate C evidence and bind sessions|6|
+|107|`2aa3228e4718de37f60a16898883a8a085b3d630`|feat: validate source-bound external expert submissions|4|
+|108|`20c12c413e0dbd3f8eb78c288f7082b181e738d4`|feat: execute zero-cost local calibration with retained failures|8|
+|109|`36bab100a4b6a15afd28e5329fc65af08d34f392`|docs: close bounded BCD engineering with explicit release blockers|9|
+|110|`4ce191e4d607f3a9165c784f61b75f3ec66dcc9e`|chore: authorize finite R1.2b finalization and local browser qualification|6|
+|111|`141d98003f33e76940958075cae5abca146e78cf`|fix: constrain local evaluator JSON and preserve grading pilot failure|8|
+|112|`96e76ea02f2b861fed3fbdd8efc0d9d095779dc5`|chore: authorize exact Beginner session planner correction|5|
+|113|`72a7e5d73d5d4726e1b2f5fc03cd17a8a31ffe28`|feat: add source-bound expert review workbench with strict evidence export|7|
+|114|`46960c10d889c777606ce1a16d99e72506bfccdf`|fix: preserve all eight Beginner activities in learner sessions|3|
+|115|`c52059817a01cddb03180903773d459c76ae2f7c`|chore: authorize feedback and publication regression corrections|9|
+|116|`6c2143dc28d6b28f964ffe75bf4e9f73d4ae3f00`|fix: keep fake Beginner feedback valid for blank references|2|
+|117|`50e7d4e11f6643fbbb6079f95d02da405af2b2b5`|test: restore publication ownership fixture and guard coverage|1|
+|118|`123bd00323f0f07866407e6cca2a65c3b3efa27a`|test: omit absent reference in strict optional feedback fixture|1|
+|119|`e6ffdba73f51e8e667f43b227ecdfda6bc59f7b3`|test: qualify 24 real local Beginner application journeys|10|
+|120|`494e83d599b3aa6aa616826116a69c3e5fa262a7`|test: reconcile final evidence and exact successor governance|5|
+
+### Final closure self receipt
+
+|Ordinal|Commit|Scope|Verification|
+|---|---|---|---|
+|121|SELF: final closure report commit|006finalreports/append-onlyaudit/plan;006..009verifiedlifecycleINDEX|1160API/936Web/294shared boundedPASS; exactscopeguard and stageddiff; no release promotion|
+
+Parent independently verified final ports0 and Docker resources absent. Current audit raw JSON SHA256 `eff1c459a243e3f0442d764cb5115bc1ac9ff8767d46ef405b41044011a79234`. All prior failed/model/browser receipts remain. Final post-commit HEAD/count/status are reported to the user; no merge/push/deploy. New closure stageddiff must be clean; whole-branch five frozen P3 EOF warnings remain.

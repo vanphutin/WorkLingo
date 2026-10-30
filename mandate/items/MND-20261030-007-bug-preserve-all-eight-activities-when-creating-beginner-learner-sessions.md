@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261030-007",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-30",
-  "updated": "2026-10-30T07:16:18.420Z",
+  "updated": "2026-10-30T08:22:29.582Z",
   "title": "Preserve all eight activities when creating Beginner learner sessions",
   "type": "bug",
   "owner": "WorkLingo owner",
@@ -57,7 +57,23 @@
     "at": "2026-10-30T07:16:17.772Z",
     "proposal_hash": "c02b4c2ad5190d7a7bdb8f9603d98f99b8febe889f8031c4ba4f7c0048bd2e5a"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "Source-bound planner/service regression: 59 focused tests and broad safe API units",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-final-test-results.md:28"
+    },
+    {
+      "command": "pnpm --filter @worklingo/web exec playwright test --config playwright.beginner-finalization.config.ts",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-finalization-browser.md:3"
+    },
+    {
+      "command": "API/Web lint, typecheck, production build and independent planner review",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-final-test-results.md:24"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-30T07:16:16.468Z",
@@ -92,6 +108,15 @@
       "from": "approved",
       "to": "implementing",
       "reason": "Execute linked finiteplan with disjointownership and testfirst; no routinedecisionquestion peractualhuman.",
+      "event": "transition",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T08:22:29.582Z",
+      "actor": "WorkLingo owner delegated engineering coordinator",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Finite engineering acceptance verified against actual logs and independent review; genuine expert, phonetic, real-learner, provider-quality and deployment release gates remain open. No release promotion.",
       "event": "transition",
       "reference": null
     }
