@@ -1,0 +1,25 @@
+{
+  "mission": "WORKLINGO-R12B-FINALIZATION-FAKE-FEEDBACK-FIX-20261030",
+  "baseline": "46960c10d889c777606ce1a16d99e72506bfccdf",
+  "dependency": "MND-20261030-006 actual browser integration",
+  "authority": "Current human finalization mission and direct browser/fix-until-pass instruction; no new external or spending scope",
+  "allowlist": {
+    "modify": [
+      "apps/api/src/ai-gateway/infrastructure/fake-language-evaluation.adapter.ts",
+      "apps/api/src/ai-gateway/infrastructure/fake-provider-contract.spec.ts"
+    ],
+    "create": [
+      "mandate/reports/2026-10-30-r12b-fake-feedback-fix-scope.json",
+      "mandate/reports/2026-10-30-r12b-fake-feedback-fix-authorization.md",
+      "mandate/reports/2026-10-30-r12b-fake-feedback-fix-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-008-bug-keep-fake-evaluation-feedback-valid-when-beginner-reference-text-is-bl.md"
+    ]
+  },
+  "expected": "For blank or absent referenceText, fake feedback uses null on incomplete response and learner response on completed response; nonblank legacy references preserved. Strict evaluation schema/rubrics unchanged.",
+  "runtime": "Reuse exact006 owned fixtures; retain failed jobs and reproduce with real stored attempt. Fresh published-audio24 journeys must include successful writing evaluation persistence; no remote requests.",
+  "preserve": "All rubric/source/audio/historical evidence bytes; production provider adapters untouched",
+  "rollback": "Revert only fake adapter correction; preserve regression and failed execution evidence"
+}

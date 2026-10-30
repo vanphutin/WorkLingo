@@ -33,8 +33,10 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261030-005](items/MND-20261030-005-architecture-complete-bcd-offline-speech-local-model-and-external-evidence-boundari.md) | Complete BCD offline speech local model and external evidence boundaries | architecture | verified | P1 | WorkLingo owner |
 | [MND-20261030-006](items/MND-20261030-006-architecture-finalize-strict-local-contract-reviewer-workbench-and-real-browser-orc.md) | Finalize strict local contract reviewer workbench and real browser orchestration | architecture | implementing | P1 | WorkLingo owner |
 | [MND-20261030-007](items/MND-20261030-007-bug-preserve-all-eight-activities-when-creating-beginner-learner-sessions.md) | Preserve all eight activities when creating Beginner learner sessions | bug | implementing | P1 | WorkLingo owner |
+| [MND-20261030-008](items/MND-20261030-008-bug-keep-fake-evaluation-feedback-valid-when-beginner-reference-text-is-bl.md) | Keep fake evaluation feedback valid when Beginner reference text is blank | bug | implementing | P1 | WorkLingo owner |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 | [MND-20261028-002](items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md) | Correct bounded Beginner pilot tasks while preserving historical source and audio evidence | learning-content | implementing | P2 | Codex |
+| [MND-20261030-009](items/MND-20261030-009-bug-restore-publication-regression-fixture-for-beginner-ownership-checks.md) | Restore publication regression fixture for Beginner ownership checks | bug | implementing | P2 | WorkLingo owner |
 
-Total: 31; active: 31; archived: 0.
+Total: 33; active: 33; archived: 0.

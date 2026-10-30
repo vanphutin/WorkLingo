@@ -1,0 +1,22 @@
+{
+  "mission": "WORKLINGO-R12B-FINALIZATION-PUBLICATION-FIXTURE-20261030",
+  "baseline": "46960c10d889c777606ce1a16d99e72506bfccdf",
+  "authority": "Current human full affected-system regression and fix-until-pass mission",
+  "allowlist": {
+    "modify": [
+      "apps/api/src/intermediate-topics/topic-publication.spec.ts"
+    ],
+    "create": [
+      "mandate/reports/2026-10-30-r12b-publication-fixture-fix-scope.json",
+      "mandate/reports/2026-10-30-r12b-publication-fixture-fix-authorization.md",
+      "mandate/reports/2026-10-30-r12b-publication-fixture-fix-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-009-bug-restore-publication-regression-fixture-for-beginner-ownership-checks.md"
+    ]
+  },
+  "expected": "Model the production missionLesson ownership read in the unit transaction fixture; retain all existing publication assertions and add a Beginner-denial assertion. No production changes.",
+  "preserve": "No relaxed assertions, no runtime guard bypass, no source/audio/provider/rubric changes",
+  "rollback": "Revert only this test fixture; retained failures remain recorded"
+}
