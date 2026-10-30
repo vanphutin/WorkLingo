@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "gate-c-tooling-verification/1",
+  "mission": "WL-R12B-BROWSER-COST-001",
+  "mandate": "MND-20261030-003",
+  "provenance": "SYNTHETIC_ENGINEERING_ONLY",
+  "actualAdults": 0,
+  "realObservations": 0,
+  "requiredObservations": 24,
+  "status": "NEEDS_HUMAN_EVIDENCE",
+  "readinessChanged": false,
+  "verification": {
+    "nodeTests": {
+      "new": 16,
+      "existingSyntheticProtocol": 15,
+      "passed": 31,
+      "failed": 0
+    },
+    "eslint": "PASS_OWNED_TWO_TS_FILES",
+    "apiTypecheck": "PASS",
+    "cliStatus": "PASS_8_EMPTY_LESSON_AGGREGATES",
+    "cliDryRun": "PASS_0_REAL_OBSERVATIONS",
+    "realStudyReader": "CURRENT_ENGINEERING_MANDATE_REJECTED",
+    "privateRecordsCreated": 0,
+    "syntheticFixtureMode": "IN_MEMORY_AND_DISPOSABLE_TEMP_WORKLINGO_R12B_BROWSER_COST_001_GATE_C_TESTS",
+    "crashRecovery": "NO_CLOCK_RESTORATION_REQUIRES_FACILITATOR_RECONCILIATION",
+    "durableExposure": "EXCLUSIVE_STARTED_FSYNC_BEFORE_ACTIVE;ORPHAN_BLOCKS_RECONCILIATION;NO_AUTO_DELETE",
+    "aggregate": "SEPARATE_NONNULL_DENOMINATORS_AND_PER_SKILL_SUCCESSES"
+  },
+  "files": [
+    {
+      "path": "apps/api/test/beginner-pilot/gate-c-session.ts",
+      "sha256": "be698f309e74f6325add6c2396bb7aa8dd445876d4019998d20326efd1519011"
+    },
+    {
+      "path": "apps/api/test/beginner-pilot/gate-c-session.test.ts",
+      "sha256": "8d0af655befbd0b64cdd5aa0cd6c49a63a70713d9d7d9a418b978cf4d2e5c2b3"
+    }
+  ],
+  "limits": [
+    "Separate verified study mandate/storage/protocol/bundle/audio hashes and genuine consent required",
+    "No actual study performed",
+    "Private filesystem permissions must be established by approved study operator",
+    "Unfinalized process state deliberately not imported; completed history validates schema and observed versions",
+    "No professional pronunciation or readiness conclusion"
+  ]
+}
