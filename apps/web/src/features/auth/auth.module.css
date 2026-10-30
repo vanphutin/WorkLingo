@@ -25,15 +25,15 @@
   background: var(--surface-secondary);
   border-block-start: 3px solid var(--color-accent);
 }
-:global(.auth-introduction) h1 {
+:global(.auth-panel):has(.content) > :global(.auth-introduction) h1 {
   margin: 1rem 0;
   font-size: clamp(1.75rem, 3vw, 2.75rem);
   line-height: 1.15;
   letter-spacing: -.04em;
   text-wrap: balance;
 }
-:global(.auth-introduction) p { margin: 0; color: var(--text-secondary); line-height: 1.75; }
-:global(.auth-introduction) :global(.eyebrow) { color: var(--color-accent); font-size: .875rem; font-weight: 650; letter-spacing: 0; text-transform: none; }
+:global(.auth-panel):has(.content) > :global(.auth-introduction) p { margin: 0; color: var(--text-secondary); line-height: 1.75; }
+:global(.auth-panel):has(.content) > :global(.auth-introduction) :global(.eyebrow) { color: var(--color-accent); font-size: .875rem; font-weight: 650; letter-spacing: 0; text-transform: none; }
 :global(.auth-panel):has(.content) > p:last-child {
   margin: 0;
   padding-block-start: 1.25rem;

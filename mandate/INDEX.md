@@ -27,8 +27,9 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261029-004](items/MND-20261029-004-learning-content-obtain-independent-exact-asset-phonetic-and-authored-vocabulary-qualif.md) | Obtain independent exact-asset phonetic and authored vocabulary qualification evidence | learning-content | implementing | P1 | Codex |
 | [MND-20261029-005](items/MND-20261029-005-architecture-bound-autonomous-beginner-qualification-engineering-with-durable-accou.md) | Bound autonomous Beginner qualification engineering with durable accounting and evidence tooling | architecture | implementing | P1 | Codex |
 | [MND-20261030-001](items/MND-20261030-001-bug-preserve-admin-drafts-and-enable-read-only-audio-verification-with-bou.md) | Preserve Admin drafts and enable read-only audio verification with bounded mission evidence | bug | implementing | P1 | Codex |
+| [MND-20261030-002](items/MND-20261030-002-bug-repair-authentication-css-module-pure-selectors-blocking-the-r12b-prod.md) | Repair authentication CSS module pure selectors blocking the R12b production build | bug | implementing | P1 | Codex |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 | [MND-20261028-002](items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md) | Correct bounded Beginner pilot tasks while preserving historical source and audio evidence | learning-content | implementing | P2 | Codex |
 
-Total: 25; active: 25; archived: 0.
+Total: 26; active: 26; archived: 0.
