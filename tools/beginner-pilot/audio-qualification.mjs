@@ -568,8 +568,11 @@ export function approvedContentDigest(content, filePath, originalExpected, actua
 
 // Only newline representation varies; whitespace, text and final newline remain bound.
 export function matchesFrozenBytes(bytes, expected) {
-  const text = bytes.toString(), lf = text.replace(/\r\n/gu, '\n');
-  return [sha(bytes), sha(lf), sha(lf.replace(/\n/gu, '\r\n'))].includes(expected);
+  if (sha(bytes) === expected) return true;
+  const lf = Buffer.from(bytes.toString().replace(/\r\n/gu, '\n'));
+  const crlf = Buffer.from(lf.toString().replace(/\n/gu, '\r\n'));
+  if (!bytes.equals(lf) && !bytes.equals(crlf)) return false;
+  return [sha(lf), sha(crlf)].includes(expected);
 }
 
 export function assertCurrentScripts(source, lesson) {

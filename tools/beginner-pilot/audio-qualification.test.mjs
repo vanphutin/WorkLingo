@@ -479,6 +479,11 @@ test('exact frozen newline variants accept LF and CRLF but reject content mutati
  for(const text of ['one\ntwo\n','one\r\ntwo\r\n'])assert.equal(feature('matchesFrozenBytes',Buffer.from(text),expected),true);
  for(const text of ['one\nchanged\n','one\ntwo',' one\ntwo\n'])assert.equal(feature('matchesFrozenBytes',Buffer.from(text),expected),false);
 });
+test('frozen newline equivalence rejects mixed LF and CRLF representations',()=>{
+ for(const expected of [hash('one\ntwo\n'),hash('one\r\ntwo\r\n')])
+  for(const text of ['one\r\ntwo\n','one\ntwo\r\n'])
+   assert.equal(feature('matchesFrozenBytes',Buffer.from(text),expected),false);
+});
 test('runtime permits verified read-only authority with frozen newline variants and finite successor only',async()=>{
  const f=authorityFixture();f.editItem('MND-20261027-002',item=>{item.status='verified';});
  const result=await feature('readAuthority',f.repository,f.effective,'verify',{io:f.io,runGit:f.runGit});assert.equal(result.status,'verified');
