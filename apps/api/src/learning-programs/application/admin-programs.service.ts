@@ -24,8 +24,14 @@ export class AdminProgramsService {
             await this.current(tx, id, expectedRevision);
             // Share locks prevent concurrent archive/rebinding while this publication validates its immutable pins.
             await tx.$queryRaw `SELECT "id" FROM "CurriculumRevision" WHERE "id" IN (${Prisma.join(curriculumRevisionIds.map(value => Prisma.sql `${value}::uuid`))}) ORDER BY "id" FOR SHARE`;
-            const rows = await tx.curriculumRevision.findMany({ where: { id: { in: curriculumRevisionIds } }, include: { mission: { include: { level: { include: { path: true } } } }, prerequisites: true, lessons: { include: { lessonVersion: { include: { lesson: { include: { missions: true } } } } } } } });
-            validateProgramPublication(id, curriculumRevisionIds, rows);
+            // Publication is rare. Shared relation locks also cover attachment
+            // insert/delete phantoms and hierarchy reparenting without requiring
+            // every existing curriculum command to follow a new lock protocol.
+            // Concurrent readers/publications remain compatible; authoring DML
+            // waits until the validated pins and audit have committed.
+            await tx.$executeRaw`LOCK TABLE "CurriculumPrerequisite", "CurriculumRevisionLesson", "LearningPath", "Lesson", "LessonVersion", "Level", "Mission", "MissionLesson" IN SHARE MODE`;
+            const lockedRows = await tx.curriculumRevision.findMany({ where: { id: { in: curriculumRevisionIds } }, include: { mission: { include: { level: { include: { path: true } } } }, prerequisites: true, lessons: { include: { lessonVersion: { include: { lesson: { include: { missions: true } } } } } } } });
+            validateProgramPublication(id, curriculumRevisionIds, lockedRows);
             return tx.learningProgram.update({ where: { id }, data: { curriculumRevisionIds, availabilityStatus: 'AVAILABLE', revision: { increment: 1 } } });
         });
     }
