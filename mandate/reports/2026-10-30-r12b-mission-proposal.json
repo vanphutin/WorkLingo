@@ -1,0 +1,49 @@
+{
+  "title": "Preserve Admin drafts and enable read-only audio verification with bounded mission evidence",
+  "type": "bug",
+  "owner": "Codex",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "l",
+  "impact": 4,
+  "problem": "Four independently reviewed P2 defects leave Admin edits vulnerable to loss and offline audio verification blocked after GateA closure; qualification evidence and full commit reconciliation need finite successor authority.",
+  "value": "Prevent author data loss and verify immutable audio without generation side effects while finishing honest offline release preparation.",
+  "scope": [
+    "Exact8modify/16create paths and CLI bookkeeping in mandate/reports/2026-10-30-r12b-mission-scope.json;baseline5b554e9.",
+    "Fix3Admin P2s,read-only audio verification,newline portability;offline reliability,cost/oracle/QA/GateC prep,regression and audit.",
+    "No source/audio/evaluator/goldens/oldmandate,env/secrets/DB/provider/study/infrastructure/readiness/release changes."
+  ],
+  "dedupe_key": "r12b:admin-draft-loss-readonly-audio:mission001:5b554e9",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-pilot-qualification-engineering.md:270",
+      "observation": "Independent review recorded four P2 defects and release evidence blockers; actual source inspection reconfirmed roots."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-30-r12b-mission-authorization.md:3",
+      "observation": "Current human mission explicitly delegates bounded successor capture/matching approval,implementation,tests,agents and reports without routine confirmation."
+    }
+  ],
+  "acceptance": [
+    "Canceled internal Path/Lesson/Unit switches preserve dirty nested/editor state;accepted switches proceed.",
+    "Literal dollar syntax remains byte-exact in authored source;edits during validation/reload are never overwritten.",
+    "Verified GateA can run genuinely read-only verify with zero credentials,lock/write/network;generation status/hash/ACL gates remain strict;LF/CRLF equivalence uses exact frozen normalized hashes.",
+    "All24WAV technical metrics and82item provenance/statuses plus128AI proposed oracle rows are reported without fabricated professional or human decisions.",
+    "Cost analysis covers20pilot/160total allcases/repeats,actual serializer and lower bounds;budget/privacy/preconditions remain failclosed.",
+    "Reliability,successor/historical scope,noenv API/Web regressions,lint,typecheck,safe builds and independent review recorded with real results and blockers.",
+    "Full commit inventory/audit and final report preserve oldmandates/history;all12release gates evaluated;no conditional release executed while any fail."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "Retain all historical assets,journals and receipts;review local source reverts only;never reset/clean/accounting erase or production change."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-30-r12b-autonomous-completion.md",
+  "sprint_reference": null,
+  "body": "## Exact scope and authority\n\nScope JSON SHA256 a409346d8795e8fc8d73e16668d9dee04dc3b65b14363b47f88b19bd95dafd24. Current human authorization:mandate/reports/2026-10-30-r12b-mission-authorization.md. Prior005scope is not broadened;this independent successor starts at5b554e9.\n\n## Boundaries\n\nNo product policy,budget,privacy,learning thresholds,source/audio/evaluator or historical approval change. No new provider/DB/study authority. AI proposals remain unadjudicated and real gate evidence remains external.\n\n## Ownership and verification\n\nweb_p2 owns4Admin files+safeWebconfig;audio_qa owns2audio tool files+QA reports;cost_oracle owns3cost/oracle reports;coordinator ownsgovernance,runtime assertions,release documentation and final audit. One writer per file. Plan defines TDD,independent review,commands and report ledger.\n\n## Rollback\n\nStop on uncertain accounting/authority;preserve journals,receipts,assets and historical decisions. Local reviewed source reverts only;no broad cleanup or production actions."
+}

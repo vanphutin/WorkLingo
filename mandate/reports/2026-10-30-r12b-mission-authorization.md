@@ -1,0 +1,15 @@
+# WL-R12B-AUTONOMOUS-001 authority and bounded successor
+
+Human source: owner message supplied through attachment `a4f42f15-8fe4-4f72-b8aa-09f117f936b1/Pasted text.txt`, received2026-10-30 Asia/Saigon. The attachment is evidence of the current conversation, not an independently authenticated signature.
+
+The owner explicitly authorizes capture of new proposals, exact allowlists/plans, autonomous ordinary technical fixes, regression tests, independent agents and local checkpoints. Section6 specifically orders resolution of the four documented P2 findings, including a successor and matching authorization. Sections3/4/7/9/13 authorize offline cost/oracle proposals, technical audio QA, reliability verification and audit/report artifacts. Section11 delegates internal implementation/test choices. This authority is sufficient for the finite technical successor below; it is not inferred from prior005approval.
+
+The successor repairs three Admin draft-preservation defects and makes the audio verification command genuinely read-only while preserving generation authority. It may add offline reports/proposals, no-env test configuration and additive current-governance/fault assertions. Frozen teaching source, audio, rubrics, evaluator, goldens, professional decisions and old mandate bodies/approvals remain unchanged. Historical current-governance assertions remain anchored to their original revision; a new validator accounts for the authorized successor.
+
+No provider request, secret/.env read, budget/endpoint/model change, DB access, learner study/recruitment/consent, readiness assertion, infrastructure creation or production modification is authorized by this engineering scope. Conditional release remains separately subject to all12owner gates. Cost cap1.5InkPoints/USD0 and20pilot/160total starts are unchanged. Real external evidence cannot be produced by code or an actor label.
+
+Design decision: preserve edits made while validation/reload is in flight using revision-aware application of responses. Use the existing shared Admin draft guard for internal switches and callback replacement for literal authored text. Audio verify gets separate read-only authority/preflight, no lock, write or transport; generation keeps its current checks. Historical LF/CRLF behavior is investigated against exact normalized hashes already frozen in the approved content transition, never a wildcard hash waiver.
+
+Execution plan: `docs/superpowers/plans/2026-10-30-r12b-autonomous-completion.md`. Frozen finite paths/baseline are in `mandate/reports/2026-10-30-r12b-mission-scope.json`. Only the coordinator writes mandate lifecycle and final reports. Agents own disjoint paths. No routine design approval is requested because the owner explicitly directs continuous execution and delegates these decisions. This overrides the generic skill plan-confirmation step.
+
+Rollback: stop on uncertainty, preserve all journals/receipts/historical assets; review local reverts of the new source commits only. No reset, clean, accounting erasure or production rollback is performed. Reports preserve AI/machine/human provenance separately.
