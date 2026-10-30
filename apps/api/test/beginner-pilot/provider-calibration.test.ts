@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import * as calibration from './provider-calibration.js';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
@@ -150,4 +152,27 @@ test('injected transport cannot start before durable reservation and failed requ
  const r=new QualificationRuntime('timeout');let calls=0;
  await assert.rejects(calibration.injectedCalibrationRequest(r,{id:'transport-test',caseId:'case',phase:'pilot',at:100000,inputTokens:1000,outputTokens:2048},{method:'POST',body,redirect:'error'},body,async()=>{calls++;assert.equal(r.recoverLedger().requests.length,1);return Response.json({model:MODEL});}),/USAGE_UNKNOWN/);
  assert.equal(calls,1);assert.equal(r.recoverLedger().requests[0]!.effectiveStatus,'UNKNOWN');assert.equal(r.recoverLedger().inputReserved,1000);
+});
+
+test('compact production wire preserves all exact private scoring context and source identities stay in service input',async()=>{
+ for(const c of goldens.cases){
+  const probe=await offlineAdapterProbe(c);
+  const content=JSON.parse(probe.bodies[0]!).messages[1].content;
+  const data=JSON.parse(content.split('\n')[1]);
+  assert.equal(data.prompt,probe.input.prompt,c.id);assert.equal(data.learnerResponse,c.response,c.id);assert.equal(data.levelCode,probe.input.levelCode,c.id);
+  assert.equal(data.beginnerContext.taskCriteria,probe.input.beginnerContext!.taskCriteria,c.id);
+  assert.deepEqual(data.beginnerContext.roleCards,probe.input.beginnerContext!.roleCards.map(card=>({text:card.text})),c.id);
+  assert.equal(data.beginnerContext.lessonVersionId,undefined);assert.ok(probe.input.beginnerContext!.lessonVersionId);
+ }
+});
+
+
+test('successor current adapter binding rejects unrelated source drift',()=>{
+ const bytes=readFileSync(resolve(calibration.ROOT,'apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts'));
+ assert.equal(typeof calibration.verifySuccessorDiscoverySource,'function');
+ assert.doesNotThrow(()=>calibration.verifySuccessorDiscoverySource(bytes));
+ const lf=bytes.toString('utf8').replace(/\r\n/g,'\n');
+ assert.doesNotThrow(()=>calibration.verifySuccessorDiscoverySource(Buffer.from(lf.replace(/\n/g,'\r\n'))));
+ assert.throws(()=>calibration.verifySuccessorDiscoverySource(Buffer.from(lf.replace('\n','\r\n'))),/SUCCESSOR_ADAPTER_DRIFT/);
+ assert.throws(()=>calibration.verifySuccessorDiscoverySource(Buffer.concat([bytes,Buffer.from('\n// unrelated drift')])) ,/SUCCESSOR_ADAPTER_DRIFT/);
 });

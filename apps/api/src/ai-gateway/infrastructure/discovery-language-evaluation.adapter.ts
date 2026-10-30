@@ -1,9 +1,29 @@
 import { z } from 'zod';
-import { LanguageEvaluationPort, type LanguageEvaluationInput } from '../domain/language-evaluation.port.js';
+import { LanguageEvaluationPort, assertBeginnerEvaluationContext, type LanguageEvaluationInput } from '../domain/language-evaluation.port.js';
 import { languageEvaluationSchema, type LanguageEvaluation } from '../domain/language-evaluation.schema.js';
 import { ProviderError } from '../domain/provider-errors.js';
 import { languageEvaluationJsonSchema, untrustedInput } from './openai-language-evaluation.adapter.js';
 import { requestProviderJson } from './provider-http-client.js';
+
+/** Discovery wire compaction only; service context/cache identity remains complete. */
+export function discoveryUntrustedInput(input: LanguageEvaluationInput): string {
+  assertBeginnerEvaluationContext(input);
+  const context = input.beginnerContext;
+  if (!context) return untrustedInput(input);
+  const serialized = JSON.stringify({
+    activityType: input.activityType,
+    learnerResponse: input.learnerResponse,
+    levelCode: input.levelCode,
+    prompt: input.prompt,
+    ...(input.referenceText ? { referenceText: input.referenceText } : {}),
+    ...(input.requiredPhrases.length ? { requiredPhrases: input.requiredPhrases } : {}),
+    rubricId: input.rubricId,
+    rubricVersion: input.rubricVersion,
+    beginnerContext: { roleCards: context.roleCards.map(card => ({ text: card.text })), taskCriteria: context.taskCriteria },
+  });
+  const safeData = serialized.replace(/[<>&]/gu, c => ({ '<': '\\u003c', '>': '\\u003e', '&': '\\u0026' }[c]!));
+  return ['<worklingo_untrusted_data>', safeData, '</worklingo_untrusted_data>'].join('\n');
+}
 
 export interface DiscoveryLanguageEvaluationConfig {
   readonly apiKey: string;
@@ -40,7 +60,7 @@ export class DiscoveryLanguageEvaluationAdapter extends LanguageEvaluationPort {
             'Never produce a final aggregate or pronunciation score.',
             'Return only valid JSON matching this schema:', JSON.stringify(languageEvaluationJsonSchema),
           ].join(' ') },
-          { role: 'user', content: untrustedInput(input) },
+          { role: 'user', content: discoveryUntrustedInput(input) },
         ],
       }),
     });

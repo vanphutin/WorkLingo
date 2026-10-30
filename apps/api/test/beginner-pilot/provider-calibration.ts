@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { QualificationRuntime, type Reservation } from './qualification-runtime.js';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync, lstatSync, realpathSync } from 'node:fs';
@@ -5,8 +6,7 @@ import { dirname, resolve, relative, isAbsolute } from 'node:path';
 import { analyzeLessonSource } from '@worklingo/content-format';
 import { buildBeginnerDraftSnapshot } from '../../src/curriculum-foundation/application/foundation-validation.js';
 import { EvaluationService } from '../../src/teacher-ai/application/evaluation.service.js';
-import { DiscoveryLanguageEvaluationAdapter } from '../../src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.js';
-import { untrustedInput } from '../../src/ai-gateway/infrastructure/openai-language-evaluation.adapter.js';
+import { DiscoveryLanguageEvaluationAdapter, discoveryUntrustedInput } from '../../src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.js';
 import type { LanguageEvaluationInput, LanguageEvaluationPort } from '../../src/ai-gateway/domain/language-evaluation.port.js';
 import type { PrismaService } from '../../src/common/database/prisma.service.js';
 import type { MasteryService } from '../../src/mastery/application/mastery.service.js';
@@ -29,9 +29,39 @@ function invariant(ok: unknown, code: string): asserts ok { if (!ok) throw new E
 const json = <T>(p: string): T => JSON.parse(readFileSync(resolve(ROOT, p), 'utf8')) as T;
 type BoundFile = { path: string; sha256: string };
 type Scope = { baseline: { files: BoundFile[]; selectedAudio: BoundFile[]; sourceBundles: unknown[]; fingerprint: string }; plan: { path: string; sha256LF: string }; allowlist: { create: string[] } };
+export function verifySuccessorDiscoverySource(bytes: Buffer): void {
+  const text = bytes.toString('utf8');
+  const uniform = !text.includes('\r') || !text.replace(/\r\n/g, '').includes('\n') && !text.replace(/\r\n/g, '').includes('\r');
+  invariant(uniform && sha(text.replace(/\r\n/g, '\n')) === 'fe5da55e7041dbab4a2dba4254ed6e46ad90c2713fd3a3711985ae478f9794be', 'SUCCESSOR_ADAPTER_DRIFT');
+}
 export function verifyBaseline(): number {
   const s = json<Scope>(PREFIX + 'a-scope.json');
-  for (const f of [...s.baseline.files, ...s.baseline.selectedAudio]) invariant(sha(readFileSync(f.path.includes(':') ? f.path : resolve(ROOT, f.path))) === f.sha256, 'FROZEN_INPUT_DRIFT:' + f.path);
+  for (const f of [...s.baseline.files, ...s.baseline.selectedAudio]) {
+    // Successor explicitly authorizes this one production change; historical authority stays byte-bound.
+    const successorPath = 'mandate/reports/2026-10-30-r12b-browser-cost-scope.json';
+    const changedAdapter = f.path === 'apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts';
+    let bytes: Buffer;
+    if (changedAdapter && existsSync(resolve(ROOT, successorPath))) {
+      const successor = json<{baseline:{head:string};allowlist:{modify:string[]}}>(successorPath);
+      invariant(successor.baseline.head === 'a4685e7cd42d8dbbe949b9d5d1e8429d8bb1694c' && successor.allowlist.modify.includes(f.path), 'SUCCESSOR_SCOPE_DENIED');
+      const mandateText = readFileSync(resolve(ROOT,'mandate/items/MND-20261030-003-architecture-isolate-synthetic-browser-qualification-and-reduce-discovery-wire-cost.md'),'utf8');
+      const parts = mandateText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u);
+      invariant(parts, 'SUCCESSOR_APPROVAL_REQUIRED');
+      const item = JSON.parse(parts[1]!) as Record<string, unknown> & {status:string;approval?:{proposal_hash:string}};
+      const schema = json<{$defs:{proposal:{properties:Record<string,unknown>}}}>('.agents/skills/mandate-steward/references/mandate.schema.json');
+      const fields = Object.keys(schema.$defs.proposal.properties).filter(key=>key!=='body');
+      const proposal = Object.fromEntries(fields.map(key=>[key,item[key]]));
+      invariant(['implementing','verified','archived'].includes(item.status) && item.approval?.proposal_hash === digest({...proposal,body:parts[2]!.trim()}), 'SUCCESSOR_APPROVAL_REQUIRED');
+      invariant(parts[2]!.includes(sha(readFileSync(resolve(ROOT,successorPath)))), 'SUCCESSOR_SCOPE_HASH_DRIFT');
+      const authority = json<{authority:{realProviderCalls:boolean}}>(successorPath);
+      invariant(authority.authority.realProviderCalls === false, 'SUCCESSOR_LIVE_CALLS_DENIED');
+      verifySuccessorDiscoverySource(readFileSync(resolve(ROOT,f.path)));
+      const historical = execFileSync('git', ['show', `${successor.baseline.head}:${f.path}`], {cwd:ROOT}).toString('utf8');
+      invariant(!historical.includes('\r'), 'HISTORICAL_LINE_ENDING_DRIFT');
+      bytes = Buffer.from(historical.replace(/\n/g, '\r\n'));
+    } else bytes = readFileSync(f.path.includes(':') ? f.path : resolve(ROOT, f.path));
+    invariant(sha(bytes) === f.sha256, 'FROZEN_INPUT_DRIFT:' + f.path);
+  }
   invariant(sha(readFileSync(resolve(ROOT, s.plan.path), 'utf8').replace(/\r\n/g, '\n')) === s.plan.sha256LF, 'PLAN_DRIFT');
   return s.baseline.files.length + s.baseline.selectedAudio.length;
 }
@@ -172,7 +202,7 @@ export async function offlineAdapterProbe(c: Golden, options: { raw?: unknown; s
     bodies.push(body); options.onStart?.(); if (options.networkError) throw new Error('MOCK_NETWORK_FAILURE'); metadata = { model: null, version: null, usage: null, requestId: null, provenance: 'MOCK_HTTP_ONLY' };
     return Response.json(options.raw ?? { choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(MOCK_EVALUATION) } }] }, { status: options.status ?? 200 });
   };
-  try { const value = await evaluateSynthetic(c, new DiscoveryLanguageEvaluationAdapter({ apiKey: 'mock-not-a-secret', baseUrl: ENDPOINT.replace('/chat/completions', ''), model: MODEL, timeoutMs: 60_000, maxOutputTokens: 2048 })); invariant(JSON.parse(bodies[0]!).messages[1].content === untrustedInput(value.input), 'SERIALIZER_DRIFT'); return { ...value, bodies, metadata }; }
+  try { const value = await evaluateSynthetic(c, new DiscoveryLanguageEvaluationAdapter({ apiKey: 'mock-not-a-secret', baseUrl: ENDPOINT.replace('/chat/completions', ''), model: MODEL, timeoutMs: 60_000, maxOutputTokens: 2048 })); invariant(JSON.parse(bodies[0]!).messages[1].content === discoveryUntrustedInput(value.input), 'SERIALIZER_DRIFT'); return { ...value, bodies, metadata }; }
   finally { globalThis.fetch = original; }
 }
 export function checkRequest(url: string, init: RequestInit, expectedBody: string): void {
