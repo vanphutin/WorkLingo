@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import { Buffer } from 'node:buffer';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { URL, fileURLToPath } from 'node:url';
@@ -294,11 +295,19 @@ test('directory identity/reparse and broad ACL races stop setup before any priva
 });
 function nativeEqual(a,b) { return path.resolve(a) === path.resolve(b); }
 
-function authorityFixture() {
+function authorityFixture({ historical = false } = {}) {
   const repository = path.resolve(fileURLToPath(new URL('../..', import.meta.url)));
-  const files = new Map(), names = fs.readdirSync(path.join(repository,'mandate/items')).filter(n => /^(?:MND-20261027-00[25]|MND-20261028-001)-/u.test(n));
-  const paths = ['mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json','mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json','mandate/reports/2026-10-28-beginner-international-names-scope.json',contentScope.archive.path,...contentScope.frozenArtifacts.map(f=>f.path),...originalScope.frozenArtifacts.map(f=>f.path),...storageScope.frozenArtifacts.map(f=>f.path),...storageScope.baseline.protectedFiles.map(f=>f.path),...names.map(n=>'mandate/items/'+n)];
+  const files = new Map(), names = fs.readdirSync(path.join(repository,'mandate/items')).filter(n => /^(?:MND-20261027-00[25]|MND-20261028-001|MND-20261030-001)-/u.test(n));
+  const paths = ['mandate/reports/2026-10-30-r12b-mission-scope.json','mandate/reports/2026-10-27-beginner-r12b-gate-a-scope.json','mandate/reports/2026-10-27-beginner-gate-a-storage-scope.json','mandate/reports/2026-10-28-beginner-international-names-scope.json',contentScope.archive.path,...contentScope.frozenArtifacts.map(f=>f.path),...originalScope.frozenArtifacts.map(f=>f.path),...storageScope.frozenArtifacts.map(f=>f.path),...storageScope.baseline.protectedFiles.map(f=>f.path),...names.map(n=>'mandate/items/'+n)];
   for (const p of paths) files.set(path.resolve(repository,p), fs.readFileSync(path.resolve(repository,p)));
+  if (historical) {
+    // Immutable content after the international-names approval, before later
+    // authorized teaching corrections; never borrow today's changed sources.
+    for (const p of [...contentScope.baseline.exactDataTransitions.map(p=>p.path), contentScope.baseline.unchangedLesson.path]) {
+      const r=spawnSync('git',['show','7fffee8:'+p],{cwd:repository});assert.equal(r.status,0);
+      files.set(path.resolve(repository,p),r.stdout);
+    }
+  }
   const editItem = (prefix, alter) => { const p=path.join(repository,'mandate/items',names.find(n=>n.startsWith(prefix))),raw=files.get(p).toString(),m=raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/u),item=JSON.parse(m[1]); alter(item); files.set(p,Buffer.from('---\n'+JSON.stringify(item)+'\n---\n'+m[2])); };
   // Model the active-execution scenario explicitly, independent of the live
   // register's later completion; production must stay closed after verification.
@@ -310,7 +319,7 @@ function authorityFixture() {
   return {repository,files,editItem,io,runGit,effective:feature('bindStorageScope',originalScope,storageScope)};
 }
 test('runtime validates both frozen mandates and permits the exact effective root after child verification', async () => {
-  const f=authorityFixture(); const result=await feature('readAuthority',f.repository,f.effective,'produce',{io:f.io,runGit:f.runGit});
+  const f=authorityFixture({historical:true}); const result=await feature('readAuthority',f.repository,f.effective,'produce',{io:f.io,runGit:f.runGit});
   assert.equal(result.proposal_hash,'0d1907e1de7161848f4fadeaedaf88cb656dff086c4fd1119c4edbc4bc376638'); assert.equal(result.storageApproval.proposal_hash,childHash);
 });
 test('runtime refuses revoked approvals, changed frozen/protected bytes, ancestry and altered effective budgets', async () => {
@@ -442,4 +451,53 @@ test('new exact-source human pilot QA unlocks expansion while old PASS remains h
  const result=await f.runner().run({all:true});assert.equal(result.calls,9);assert.equal(result.selected,3);assert.equal(result.historicalCandidates,3);
  assert.ok(f.writes.get('asset-manifest.json').candidates.filter(c=>c.selected).every(c=>c.sourceSha256===source));
  assert.deepEqual(f.writes.get('audio-qa.json').reviews.slice(0,3),oldReviews);
+});
+
+test('verified Gate A allows offline verification while production and setup remain closed', () => {
+ const a={...auth('verified'),original:{...setup().approval,status:'verified'}};
+ assert.doesNotThrow(()=>feature('assertStorageAuthority',{...a,mode:'verify'}));
+ for(const mode of ['produce','prepare'])assert.throws(()=>feature('assertStorageAuthority',{...a,mode}),/AUTHORITY/u);
+});
+test('offline verification requires no credential or fresh tariff and never writes locks or transport',async()=>{
+ const f=setup();await f.runner().run({lesson:'MG01-L1'});const before=JSON.stringify([...f.writes]);
+ f.args.approval.status='verified';f.args.key=undefined;f.args.evidence.checkedAt='2000-01-01';
+ const poison=async()=>{throw Error('FORBIDDEN_SIDE_EFFECT');};
+ for(const m of ['writeJson','writeCandidate','prepareCandidate','withLock'])f.store[m]=poison;
+ f.args.transport=poison;f.store.assertAuthority=async mode=>assert.equal(mode,'verify');
+ const r=await f.runner().run({all:true,verifyOnly:true});assert.equal(r.candidates,3);assert.equal(JSON.stringify([...f.writes]),before);
+ await assert.rejects(f.runner().run({lesson:'MG01-L1'}),/AUTHORITY/u);
+});
+test('offline verification retains source safety and cached hash checks',async()=>{
+ for(const kind of ['source','safety','bytes']){const f=setup();await f.runner().run({lesson:'MG01-L1'});f.args.approval.status='verified';f.args.key=undefined;
+ if(kind==='source')f.store.verifySource=async()=>{throw Error('SOURCE_HASH_STALE');};
+ if(kind==='safety')f.store.assertSafe=async()=>{throw Error('ROOT_ACL_UNSAFE');};
+ if(kind==='bytes')f.writes.set('takes/mg01-l1-audio-1/take-1.wav',wav({silent:true}));
+ await assert.rejects(f.runner().run({all:true,verifyOnly:true}),/SOURCE_HASH_STALE|ROOT_ACL_UNSAFE|CHECKSUM/u);}
+});
+test('exact frozen newline variants accept LF and CRLF but reject content mutation',()=>{
+ const expected=hash('one\r\ntwo\r\n');
+ for(const text of ['one\ntwo\n','one\r\ntwo\r\n'])assert.equal(feature('matchesFrozenBytes',Buffer.from(text),expected),true);
+ for(const text of ['one\nchanged\n','one\ntwo',' one\ntwo\n'])assert.equal(feature('matchesFrozenBytes',Buffer.from(text),expected),false);
+});
+test('runtime permits verified read-only authority with frozen newline variants and finite successor only',async()=>{
+ const f=authorityFixture();f.editItem('MND-20261027-002',item=>{item.status='verified';});
+ const result=await feature('readAuthority',f.repository,f.effective,'verify',{io:f.io,runGit:f.runGit});assert.equal(result.status,'verified');
+});
+test('successor verification rejects altered source, audio, approval and scope bytes',async()=>{
+ for(const kind of ['source','approval','scope']){const f=authorityFixture();f.editItem('MND-20261027-002',x=>{x.status='verified';});
+ if(kind==='source')f.files.set(path.resolve(f.repository,'content/beginner/pilot/mg01-l1.lesson.txt'),Buffer.from('changed'));
+ if(kind==='approval')f.editItem('MND-20261030-001',x=>{x.status='triaged';});
+ if(kind==='scope')f.files.set(path.resolve(f.repository,'mandate/reports/2026-10-30-r12b-mission-scope.json'),Buffer.from('{}'));
+ await assert.rejects(feature('readAuthority',f.repository,f.effective,'verify',{io:f.io,runGit:f.runGit}),/SOURCE|CHECKSUM|AUTHORITY/u);}
+});
+test('successor verifies current source snapshot without rebinding historical audio provenance',async()=>{
+ const f=setup();await f.runner().run({lesson:'MG01-L1'});f.args.approval.status='verified';f.args.approval.sourceFiles={'MG01-L1':'current-snapshot'};
+ const seen=[];f.store.verifySource=async(l,expected)=>{seen.push([l.code,expected]);};await f.runner().run({all:true,verifyOnly:true});
+ assert.deepEqual(seen[0],['MG01-L1','current-snapshot']);assert.equal(f.writes.get('asset-manifest.json').candidates[0].sourceSha256,'source-0');
+});
+test('current audio script extraction rejects changed or duplicate scripts despite a matching current snapshot',()=>{
+ const lesson={scripts:[{slug:'sample',text:'Hello.',scriptSha256:hash('Hello.')}]};
+ const source='[AUDIO_SCRIPT sample]\nspeaker: one-speaker\nscript:\n<<<\nHello.\n>>>\n[/AUDIO_SCRIPT]';
+ assert.doesNotThrow(()=>feature('assertCurrentScripts',source,lesson));
+ for(const altered of [source.replace('Hello.','Bye.'),source+'\n'+source])assert.throws(()=>feature('assertCurrentScripts',altered,lesson),/SCRIPT/u);
 });

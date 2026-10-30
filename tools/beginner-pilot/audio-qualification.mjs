@@ -22,6 +22,10 @@ const STORAGE_SID = 'S-1-5-21-3809754005-2092998575-1059868825-1001';
 const CONTENT_SCOPE = 'mandate/reports/2026-10-28-beginner-international-names-scope.json';
 const CONTENT_ID = 'MND-20261028-001';
 const CONTENT_APPROVAL = 'da36a4df8ba9a5c41c33327d9758e8be3ec164019b0f30d06db70be7ae714244';
+const SUCCESSOR_SCOPE = 'mandate/reports/2026-10-30-r12b-mission-scope.json';
+const SUCCESSOR_HASH = 'fe408098a4ee14d81f4592c383e22c7fa981751335f3c44fa8fd5540a2438716';
+const SUCCESSOR_SCOPE_HASH = 'a409346d8795e8fc8d73e16668d9dee04dc3b65b14363b47f88b19bd95dafd24';
+const SUCCESSOR_TOOLS = ['tools/beginner-pilot/audio-qualification.mjs', 'tools/beginner-pilot/audio-qualification.test.mjs'];
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const fail = code => { throw Error(code); };
 const canonical = v => Array.isArray(v) ? v.map(canonical) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map(k => [k, canonical(v[k])])) : v;
@@ -29,7 +33,7 @@ const xml = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replac
 const same = (a, b) => JSON.stringify(canonical(a)) === JSON.stringify(canonical(b));
 
 export function assertStorageAuthority({ original, child, mode }) {
-  if (original?.proposal_hash !== APPROVAL || original.status !== 'implementing'
+  if (original?.proposal_hash !== APPROVAL || !(mode === 'verify' ? ['implementing', 'verified'].includes(original.status) : original.status === 'implementing')
     || child?.proposal_hash !== STORAGE_APPROVAL || !['prepare', 'produce', 'verify'].includes(mode)
     || (mode === 'prepare' ? !['implementing', 'verified'].includes(child.status) : child.status !== 'verified')) fail('STORAGE_AUTHORITY_REQUIRED');
 }
@@ -375,11 +379,13 @@ function validateState(receipts, manifest, registry) {
 export class QualificationRunner {
   constructor(options) { Object.assign(this, options); this.busy = false; }
   preflight() { assertPreflight({ ...this, now: this.clock.now() }); }
-  async verifyCandidate(c, lesson, script) {
+  async verifyCandidate(c, lesson, script, current = false) {
     const request = requestFor(script);
     if (c.sourceSha256 !== lesson.sourceSha256 || c.scriptSha256 !== script.scriptSha256 || c.requestSha256 !== request.requestSha256) fail('CACHED_FINGERPRINT_STALE');
     const bytes = await this.store.readCandidate(c.path);
     if (sha(bytes) !== c.checksum) fail('CACHED_CHECKSUM_MISMATCH');
+    const approvedAudio = this.approval.selectedAudio?.find(a => a.slug === c.slug && path.resolve(a.path) === path.resolve(this.scope.storage.root, c.path));
+    if (this.approval.selectedAudio && current && (!approvedAudio || approvedAudio.sha256 !== sha(bytes) || approvedAudio.scriptSha256 !== script.scriptSha256)) fail('CACHED_CHECKSUM_MISMATCH');
     const measured = metricsFor(bytes, script);
     if (Object.entries(measured).some(([k, v]) => JSON.stringify(c[k]) !== JSON.stringify(v))
       || c.ssml !== request.ssml || c.countedCharacters !== request.countedCharacters
@@ -389,11 +395,14 @@ export class QualificationRunner {
   async run({ lesson, all = false, verifyOnly = false } = {}) {
     if (this.busy) fail('BUSY'); this.busy = true;
     try {
-      this.preflight(); await this.store.assertAuthority(); await this.store.assertSafe();
-      return await this.store.withLock(async () => {
+      if (verifyOnly) {
+        if (!['implementing', 'verified'].includes(this.approval?.status) || this.approval.proposal_hash !== APPROVAL) fail('AUTHORITY_REQUIRED');
+      } else this.preflight();
+      await this.store.assertAuthority(verifyOnly ? 'verify' : 'produce'); await this.store.assertSafe();
+      const execute = async () => {
         const lessons = all ? this.inventory.lessons : this.inventory.lessons.filter(l => l.code === lesson);
         if (!lessons.length || (!all && lessons.length !== 1)) fail('LESSON_UNKNOWN');
-        for (const l of this.inventory.lessons) await this.store.verifySource(l);
+        for (const l of this.inventory.lessons) await this.store.verifySource(l, verifyOnly ? this.approval.sourceFiles?.[l.sourcePath ?? l.code] : undefined);
         const savedReceipts = await this.store.readJson('requests.json', null);
         const savedManifest = await this.store.readJson('asset-manifest.json', null);
         if (savedManifest && !savedReceipts) fail('STATE_HISTORY_MISSING');
@@ -408,7 +417,7 @@ export class QualificationRunner {
         assertRetainedHistory(this.contentScope?.history, receipts, manifest, qa);
         const registry = inventoryRegistry(this.inventory, this.legacyInventory);
         validateState(receipts, manifest, registry);
-        for (const c of manifest.candidates) { const { l, s } = registry.get(c); await this.verifyCandidate(c, l, s); }
+        for (const c of manifest.candidates) { const { l, s } = registry.get(c); await this.verifyCandidate(c, l, s, registry.isCurrent(c)); }
         const pilot = this.inventory.lessons.find(l => l.code === 'MG01-L1');
         const decision = await this.store.readJson('pronunciation-decisions.json', null);
         const pilotReviewed = decision?.verdict === 'PASS' && nonempty(decision.reviewer) && Number.isFinite(Date.parse(decision.reviewedAt))
@@ -459,11 +468,12 @@ export class QualificationRunner {
         }
         for (const c of manifest.candidates) { c.current = Boolean(registry.isCurrent(c)); c.selected = c.current && Boolean(matchingReview(c, qa)); c.reviewer = c.selected ? matchingReview(c, qa).reviewer : null; }
         if (new Set(manifest.candidates.filter(c => c.selected).map(c => c.slug)).size !== manifest.candidates.filter(c => c.selected).length) fail('DUPLICATE_SELECTION');
-        if (manifest.candidates.length) await this.store.writeJson('asset-manifest.json', manifest);
+        if (!verifyOnly && manifest.candidates.length) await this.store.writeJson('asset-manifest.json', manifest);
         const selected = manifest.candidates.filter(c => c.selected).length;
         const exact24 = this.inventory.lessons.flatMap(l => l.scripts).length === 24 && this.inventory.lessons.every(l => l.scripts.every(s => manifest.candidates.filter(c => c.slug === s.slug && c.selected).length === 1));
         return { candidates: manifest.candidates.length, currentCandidates: manifest.candidates.filter(c => c.current).length, historicalCandidates: manifest.candidates.filter(c => !c.current).length, selected, calls: receipts.length, countedCharacters: receipts.reduce((n, r) => n + r.countedCharacters, 0), spendUSD: 0, contentReady: false, audioStatus: exact24 && pilotReviewed ? 'AUDIO_QA_COMPLETE_OFFLINE_ONLY' : 'HUMAN_QA_REQUIRED' };
-      });
+      };
+      return await (verifyOnly ? execute() : this.store.withLock(execute));
     } finally { this.busy = false; }
   }
 }
@@ -527,8 +537,12 @@ export class FileStore {
     this.assertPrivateDirectory(path.dirname(p), await this.readJson('run-ownership.json', null));
     await this.io.writeFile(p, bytes, { flag: 'wx' });
   }
-  async verifySource(lesson) { if (sha(await this.io.readFile(path.resolve(this.repository, lesson.sourcePath))) !== lesson.sourceSha256) fail('SOURCE_HASH_STALE'); }
-  async assertAuthority() { await readAuthority(this.repository, this.scope); }
+  async verifySource(lesson, expected = lesson.sourceSha256) {
+    const bytes = await this.io.readFile(path.resolve(this.repository, lesson.sourcePath));
+    if (sha(bytes) !== expected) fail('SOURCE_HASH_STALE');
+    if (expected !== lesson.sourceSha256) assertCurrentScripts(bytes.toString(), lesson);
+  }
+  async assertAuthority(mode = 'produce') { await readAuthority(this.repository, this.scope, mode); }
   async withLock(fn) {
     const lock = this.resolve('run-ownership.json.tmp'); let handle;
     try { handle = await this.io.open(lock, 'wx'); await handle.writeFile(JSON.stringify({ runId: RUN_ID, pid: process.pid })); } catch { fail('RUN_LOCKED'); }
@@ -552,6 +566,20 @@ export function approvedContentDigest(content, filePath, originalExpected, actua
   if (originalExpected !== before || (actualDigest !== after && !(allowBefore && actualDigest === before))) fail('CONTENT_SOURCE_TRANSITION_INVALID');
 }
 
+// Only newline representation varies; whitespace, text and final newline remain bound.
+export function matchesFrozenBytes(bytes, expected) {
+  const text = bytes.toString(), lf = text.replace(/\r\n/gu, '\n');
+  return [sha(bytes), sha(lf), sha(lf.replace(/\n/gu, '\r\n'))].includes(expected);
+}
+
+export function assertCurrentScripts(source, lesson) {
+  const blocks = [...source.replace(/\r\n/gu, '\n').matchAll(/\[AUDIO_SCRIPT ([^\]\n]+)\]\n[\s\S]*?\nscript:\n<<<\n([\s\S]*?)\n>>>\n\[\/AUDIO_SCRIPT\]/gu)];
+  for (const script of lesson.scripts) {
+    const matches = blocks.filter(b => b[1] === script.slug);
+    if (matches.length !== 1 || matches[0][2] !== script.text || sha(matches[0][2]) !== script.scriptSha256) fail('CURRENT_SCRIPT_MISMATCH');
+  }
+}
+
 export async function readAuthority(repository, scope, mode = 'produce', { io = fs, runGit = args => spawnSync('git', ['-c', `safe.directory=${repository.replaceAll('\\', '/')}`, ...args], { cwd: repository, encoding: 'utf8', windowsHide: true }) } = {}) {
   const rawOriginal = (await io.readFile(path.join(repository, SCOPE), 'utf8')).replace(/\r\n/gu, '\n');
   const rawChild = (await io.readFile(path.join(repository, STORAGE_SCOPE), 'utf8')).replace(/\r\n/gu, '\n');
@@ -567,6 +595,21 @@ export async function readAuthority(repository, scope, mode = 'produce', { io = 
     if (proposalHash(item, m[2]) !== expected || !m[2].includes(sha(rawScope)) || item.approval?.proposal_hash !== expected) fail('PROPOSAL_AUTHORITY_CHANGED');
     return { status: item.status, proposal_hash: item.approval.proposal_hash };
   };
+  let successor = false, successorFiles = new Map(), selectedAudio;
+  if (mode === 'verify') {
+    const raw = (await io.readFile(path.join(repository, SUCCESSOR_SCOPE), 'utf8')).replace(/\r\n/gu, '\n');
+    const approved = await approvalFor('MND-20261030-001', SUCCESSOR_HASH, raw), record = JSON.parse(raw);
+    if (sha(raw) !== SUCCESSOR_SCOPE_HASH || !['implementing', 'verified'].includes(approved.status)
+      || record.baseline.head !== '5b554e9cdce98daf11236265f38d8bec73f36b5e'
+      || !SUCCESSOR_TOOLS.every(p => record.allowlist.modify.includes(p))
+      || record.authority.offlineEngineering !== true || record.authority.realProviderCalls !== false || record.authority.database !== false) fail('SUCCESSOR_AUTHORITY_REQUIRED');
+    successor = true;
+    successorFiles = new Map(record.baseline.files.map(f => [f.path, f.sha256]));
+    // Unused historical test is pinned to this successor's exact baseline head;
+    // this attestation never applies to generation or to teaching/audio bytes.
+    successorFiles.set('apps/api/test/beginner-pilot/qualify-content.test.ts', 'c3583fe62cdf0a17f4087ec7042d2c9ea6bb7adf8e88a1e1d739a40701a94d8c');
+    selectedAudio = record.baseline.selectedAudio;
+  }
   const parentApproval = await approvalFor('MND-20261027-002', APPROVAL, rawOriginal), childApproval = await approvalFor(STORAGE_ID, STORAGE_APPROVAL, rawChild);
   const contentApproval = await approvalFor(CONTENT_ID, CONTENT_APPROVAL, rawContent);
   assertStorageAuthority({ original: parentApproval, child: childApproval, mode: mode === 'content-check' ? 'verify' : mode });
@@ -578,19 +621,40 @@ export async function readAuthority(repository, scope, mode = 'produce', { io = 
   for (const record of [original, amendment, content]) {
     for (const name of ['allowlist', 'baseline']) { const { fingerprint, ...v } = record[name]; if (sha(JSON.stringify(canonical(v))) !== fingerprint) fail('SCOPE_FINGERPRINT_CHANGED'); }
     for (const f of record.frozenArtifacts) {
-      const actual = sha((await io.readFile(path.resolve(repository, f.path), 'utf8')).replace(/\r\n/gu, '\n'));
+      const bytes = await io.readFile(path.resolve(repository, f.path));
+      if (successor && successorFiles.has(f.path)) {
+        if (sha(bytes) !== successorFiles.get(f.path)) fail('FROZEN_ARTIFACT_CHANGED');
+        continue;
+      }
+      const actual = sha(bytes.toString().replace(/\r\n/gu, '\n'));
       if (record === content) { if (actual !== f.sha256LF) fail('FROZEN_ARTIFACT_CHANGED'); }
       else approvedContentDigest(content, f.path, f.sha256LF, actual, { allowBefore, lf: true });
     }
     for (const f of (record.baseline.files ?? record.baseline.protectedFiles ?? record.baseline.protectedUnchangedFiles).filter(f => f.sha256)) {
-      const actual = sha(await io.readFile(path.resolve(repository, f.path)));
+      if (successor && SUCCESSOR_TOOLS.includes(f.path)) continue;
+      const bytes = await io.readFile(path.resolve(repository, f.path));
+      if (successor && successorFiles.has(f.path)) {
+        if (sha(bytes) !== successorFiles.get(f.path)) fail('PROTECTED_SOURCE_CHANGED');
+        continue;
+      }
+      const pair = content.baseline.exactDataTransitions.find(p => p.path === f.path);
+      const expected = pair?.after ?? f.sha256;
+      const actual = matchesFrozenBytes(bytes, expected) ? expected : sha(bytes);
       if (record === content) { if (actual !== f.sha256) fail('PROTECTED_SOURCE_CHANGED'); }
       else approvedContentDigest(content, f.path, f.sha256, actual, { allowBefore });
     }
     if (runGit(['merge-base', '--is-ancestor', record.baseline.head, 'HEAD']).status !== 0 || runGit(['branch', '--show-current']).stdout.trim() !== record.baseline.branch) fail('BASELINE_ANCESTRY');
   }
-  for (const pair of content.baseline.exactDataTransitions) approvedContentDigest(content, pair.path, pair.before, sha(await io.readFile(path.resolve(repository, pair.path))), { allowBefore });
-  return { ...parentApproval, storageApproval: childApproval, contentApproval };
+  for (const pair of content.baseline.exactDataTransitions) {
+    const bytes = await io.readFile(path.resolve(repository, pair.path));
+    if (successor && successorFiles.has(pair.path)) {
+      if (sha(bytes) !== successorFiles.get(pair.path)) fail('PROTECTED_SOURCE_CHANGED');
+      continue;
+    }
+    approvedContentDigest(content, pair.path, pair.before, matchesFrozenBytes(bytes, pair.after) ? pair.after : sha(bytes), { allowBefore });
+  }
+  return { ...parentApproval, storageApproval: childApproval, contentApproval,
+    ...(successor ? { selectedAudio, sourceFiles: Object.fromEntries(successorFiles) } : {}) };
 }
 
 async function main() {
@@ -609,7 +673,8 @@ async function main() {
   await store.assertSafe();
   const evidence = await store.readJson('rights-and-tariff.json', null);
   const clock = { now: () => Date.now(), sleep: ms => new Promise(resolve => setTimeout(resolve, ms)) };
-  const runner = new QualificationRunner({ scope, approval, inventory, legacyInventory, contentScope, store, evidence, key: process.env.WL_QUAL_AZURE_KEY, clock, transport: realTransport });
+  const runner = new QualificationRunner({ scope, approval, inventory, legacyInventory, contentScope, store, evidence,
+    key: args[0] === 'verify' ? undefined : process.env.WL_QUAL_AZURE_KEY, clock, transport: args[0] === 'verify' ? undefined : realTransport });
   console.log(JSON.stringify(await runner.run({ lesson: args[4], all: args.includes('--all'), verifyOnly: args[0] === 'verify' })));
 }
 
