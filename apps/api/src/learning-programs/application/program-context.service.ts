@@ -1,6 +1,6 @@
 import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
-import { activateProgramSchema, programContextSchema, type ActivateProgramInput, type ProgramContextDto } from '@worklingo/contracts';
+import { activateProgramSchema, enrollProgramSchema, programContextSchema, type ActivateProgramInput, type ProgramContextDto } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { deriveProgramAccess } from '../domain/program-availability.js';
@@ -75,6 +75,37 @@ export class ProgramContextService {
       } });
       return this.readContext(tx, learnerId);
     }, { timeout: 15_000 });
+  }
+
+  async enroll(learnerId: string, raw: unknown): Promise<ProgramContextDto> {
+    const parsed = enrollProgramSchema.safeParse(raw);
+    if (!parsed.success) throw new BadRequestException('Invalid program enrollment input.');
+    return this.database.$transaction(async tx => {
+      await tx.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
+      const profile = await tx.learnerProfile.findUnique({where:{userId:learnerId}});
+      if (!profile || profile.onboardingStatus !== 'COMPLETE') throw new ConflictException('ONBOARDING_REQUIRED');
+      const target = await tx.learningProgram.findUnique({where:{slug:parsed.data.programSlug}});
+      if (!target) throw new NotFoundException('Program not found');
+      await tx.$queryRaw`SELECT "id" FROM "LearningProgram" WHERE "id" = ${target.id}::uuid FOR UPDATE`;
+      const program = await tx.learningProgram.findUniqueOrThrow({where:{id:target.id}});
+      if (program.progressionPolicy !== 'ACTIVITY_COMPLETION' || !deriveProgramAccess(program).isSelectable) throw new UnprocessableEntityException('PROGRAM_UNAVAILABLE');
+      const current = await this.resolve(learnerId,tx);
+      const existing = await tx.learnerProgramEnrollment.findUnique({where:{learnerId_programId:{learnerId,programId:program.id}}});
+      // Concurrent duplicate replay is harmless after the first request has activated its pinned enrollment.
+      if (current.programId === program.id && existing) return this.readContext(tx,learnerId);
+      if (current.revision !== parsed.data.expectedRevision) throw new ConflictException('PROGRAM_CONTEXT_STALE');
+      let enrollment = existing;
+      if (!enrollment) {
+        const first = await tx.curriculumRevision.findUnique({where:{id:program.curriculumRevisionIds[0]!},include:{mission:{include:{level:{include:{path:true}}}}}});
+        if (!first || first.status !== 'PUBLISHED' || first.mission.status !== 'PUBLISHED' || first.mission.level.status !== 'PUBLISHED' || first.mission.level.path.status !== 'PUBLISHED' || first.mission.level.path.programId !== program.id) throw new UnprocessableEntityException('PROGRAM_CURRICULUM_UNAVAILABLE');
+        enrollment = await tx.learnerProgramEnrollment.create({data:{learnerId,programId:program.id,currentLevelId:first.mission.levelId,curriculumRevisionIds:program.curriculumRevisionIds}});
+      }
+      if (!enrollment.currentLevelId || !enrollment.curriculumRevisionIds.length) throw this.invalidContext();
+      await tx.learnerProgramEnrollment.update({where:{id:enrollment.id},data:{revision:Math.max(current.revision,enrollment.revision)+1}});
+      await tx.learnerProfile.update({where:{userId:learnerId},data:{activeProgramId:program.id}});
+      await tx.auditLog.create({data:{actorId:learnerId,action:'program.enrolled',resourceType:'LearnerProgramEnrollment',resourceId:enrollment.id,metadata:{programId:program.id,curriculumRevisionIds:enrollment.curriculumRevisionIds}}});
+      return this.readContext(tx,learnerId);
+    }, {timeout:15000});
   }
 
   async initializeIntermediate(transaction: Prisma.TransactionClient, learnerId: string, levelCode: string): Promise<void> {
