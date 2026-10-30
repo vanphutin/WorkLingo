@@ -1,0 +1,1247 @@
+{
+  "classification": "SYNTHETIC_BROWSER_TESTING",
+  "realParticipants": 0,
+  "actualGateCObservations": 0,
+  "provider": "MOCK_PROVIDER",
+  "personas": [
+    {
+      "id": "P01",
+      "profile": "Absolute beginner; guidance-heavy and intentional distractors",
+      "scenario": "Read instructions, pause/resume, replay once, test incomplete responses and draft restoration",
+      "mode": "novice",
+      "scripts": [
+        {
+          "code": "MG01-L1",
+          "objectiveOptionIndexes": [
+            1,
+            2,
+            2,
+            0,
+            1,
+            2
+          ],
+          "writingResponse": "Hello. I am Adam. I am from London.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello. I am Lucy. I am from Los Angeles. You are Leo.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L2",
+          "objectiveOptionIndexes": [
+            2,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello. I am Mia. I am from Los Angeles. M-I-A.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello. I am Emma. I am from London. E, M, M, A.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L3",
+          "objectiveOptionIndexes": [
+            2,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello, Noah. I am Eva. I am from London. You are Noah.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello, Kim. I am Sam. I am from New York. You are Kim.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L4",
+          "objectiveOptionIndexes": [
+            2,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello, Lucy. I am Ben. I am from New York. You are Lucy.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello, Jo. I am Mia. I am from London. You are Jo.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L1",
+          "objectiveOptionIndexes": [
+            2,
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "writingResponse": "This is a pen. A book, please. Two bags, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a bag. That is a book. Two pens, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L2",
+          "objectiveOptionIndexes": [
+            0,
+            1,
+            1,
+            2,
+            0,
+            1
+          ],
+          "writingResponse": "Two pens, please. A book, please. A bag, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "A pen, please. Two books, please. A bag, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L3",
+          "objectiveOptionIndexes": [
+            2,
+            1,
+            2,
+            0,
+            1,
+            2
+          ],
+          "writingResponse": "This is a book. A bag, please. Two pens, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a book. That is a bag. Two pens, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L4",
+          "objectiveOptionIndexes": [
+            1,
+            2,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello. I am Alex. I am from Osaka. You are Emma. This is a bag. Three pens, please. A book, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a pen. That is a book. Two bags, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        }
+      ],
+      "results": [
+        {
+          "lesson": "MG01-L1",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:15:29.905Z",
+          "elapsedWallMs": 30535,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L2",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:15:50.008Z",
+          "elapsedWallMs": 20100,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L3",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:16:36.850Z",
+          "elapsedWallMs": 20309,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L4",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:16:57.640Z",
+          "elapsedWallMs": 20787,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L1",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:18:19.710Z",
+          "elapsedWallMs": 18955,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L2",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:18:37.574Z",
+          "elapsedWallMs": 17860,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L3",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:19:24.640Z",
+          "elapsedWallMs": 18080,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L4",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:19:43.619Z",
+          "elapsedWallMs": 18975,
+          "viewport": {
+            "scroll": 1335,
+            "viewport": 1335
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        }
+      ],
+      "outcome": {
+        "browserWorkflowsPassed": 8,
+        "actualLearningEfficacy": "NOT_MEASURED",
+        "actualHumanGateCEvidence": 0
+      }
+    },
+    {
+      "id": "P02",
+      "profile": "Basic knowledge; weak application",
+      "scenario": "Mobile transfer using contractions, one distractor per lesson and rerecord/consent checks",
+      "mode": "application",
+      "scripts": [
+        {
+          "code": "MG01-L1",
+          "objectiveOptionIndexes": [
+            0,
+            2,
+            2,
+            0,
+            1,
+            2
+          ],
+          "writingResponse": "Hello. I'm Adam. I'm from London.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello. I am Lucy. I am from Los Angeles. You are Leo.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L2",
+          "objectiveOptionIndexes": [
+            1,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello. I'm Mia. I'm from Los Angeles. M-I-A.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello. I am Emma. I am from London. E, M, M, A.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L3",
+          "objectiveOptionIndexes": [
+            1,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello, Noah. I'm Eva. I'm from London. You are Noah.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello, Kim. I am Sam. I am from New York. You are Kim.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L4",
+          "objectiveOptionIndexes": [
+            1,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello, Lucy. I'm Ben. I'm from New York. You are Lucy.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello, Jo. I am Mia. I am from London. You are Jo.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L1",
+          "objectiveOptionIndexes": [
+            1,
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "writingResponse": "This is a pen. A book, please. Two bags, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a bag. That is a book. Two pens, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L2",
+          "objectiveOptionIndexes": [
+            2,
+            1,
+            1,
+            2,
+            0,
+            1
+          ],
+          "writingResponse": "Two pens, please. A book, please. A bag, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "A pen, please. Two books, please. A bag, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L3",
+          "objectiveOptionIndexes": [
+            1,
+            1,
+            2,
+            0,
+            1,
+            2
+          ],
+          "writingResponse": "This is a book. A bag, please. Two pens, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a book. That is a bag. Two pens, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L4",
+          "objectiveOptionIndexes": [
+            0,
+            2,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello. I'm Alex. I'm from Osaka. You are Emma. This is a bag. Three pens, please. A book, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a pen. That is a book. Two bags, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        }
+      ],
+      "results": [
+        {
+          "lesson": "MG01-L1",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:20:10.457Z",
+          "elapsedWallMs": 19554,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L2",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:20:29.804Z",
+          "elapsedWallMs": 19341,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L3",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:21:53.680Z",
+          "elapsedWallMs": 22034,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L4",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:22:12.653Z",
+          "elapsedWallMs": 18967,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L1",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:23:15.083Z",
+          "elapsedWallMs": 18824,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L2",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:23:33.854Z",
+          "elapsedWallMs": 18765,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L3",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:24:36.244Z",
+          "elapsedWallMs": 18923,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L4",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:24:55.043Z",
+          "elapsedWallMs": 18792,
+          "viewport": {
+            "scroll": 375,
+            "viewport": 375
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        }
+      ],
+      "outcome": {
+        "browserWorkflowsPassed": 8,
+        "actualLearningEfficacy": "NOT_MEASURED",
+        "actualHumanGateCEvidence": 0
+      }
+    },
+    {
+      "id": "P03",
+      "profile": "Faster acquisition; transfer/progression stress",
+      "scenario": "Desktop keyboard and mixed sentence boundaries; reload checkpoint and compare per-lesson source cards",
+      "mode": "transfer",
+      "scripts": [
+        {
+          "code": "MG01-L1",
+          "objectiveOptionIndexes": [
+            0,
+            1,
+            2,
+            0,
+            1,
+            2
+          ],
+          "writingResponse": "Hello! I am Adam! I am from London.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello. I am Lucy. I am from Los Angeles. You are Leo.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L2",
+          "objectiveOptionIndexes": [
+            1,
+            0,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello! I am Mia! I am from Los Angeles! M-I-A.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello. I am Emma. I am from London. E, M, M, A.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L3",
+          "objectiveOptionIndexes": [
+            1,
+            0,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello, Noah! I am Eva! I am from London! You are Noah.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello, Kim. I am Sam. I am from New York. You are Kim.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG01-L4",
+          "objectiveOptionIndexes": [
+            1,
+            0,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello, Lucy! I am Ben! I am from New York! You are Lucy.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "Hello, Jo. I am Mia. I am from London. You are Jo.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L1",
+          "objectiveOptionIndexes": [
+            1,
+            2,
+            0,
+            1,
+            2,
+            0
+          ],
+          "writingResponse": "This is a pen! A book, please! Two bags, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a bag. That is a book. Two pens, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L2",
+          "objectiveOptionIndexes": [
+            2,
+            0,
+            1,
+            2,
+            0,
+            1
+          ],
+          "writingResponse": "Two pens, please! A book, please! A bag, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "A pen, please. Two books, please. A bag, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L3",
+          "objectiveOptionIndexes": [
+            1,
+            0,
+            2,
+            0,
+            1,
+            2
+          ],
+          "writingResponse": "This is a book! A bag, please! Two pens, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a book. That is a bag. Two pens, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        },
+        {
+          "code": "MG02-L4",
+          "objectiveOptionIndexes": [
+            0,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "writingResponse": "Hello! I am Alex! I am from Osaka! You are Emma! This is a bag! Three pens, please! A book, please.",
+          "speakingFixture": "440Hz WebAudio MediaStream; transport/consent only, no semantic spoken language",
+          "plannedSpeakingText": "This is a pen. That is a book. Two bags, please.",
+          "checks": [
+            "blank Continue disabled",
+            "three reading submissions",
+            "three audio playback/submissions",
+            "record/stop/consent/upload",
+            "writing autosave",
+            "completion/checkpoint/progress"
+          ]
+        }
+      ],
+      "results": [
+        {
+          "lesson": "MG01-L1",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:25:46.717Z",
+          "elapsedWallMs": 37735,
+          "viewport": {
+            "viewport": 1350,
+            "scroll": 1350
+          },
+          "draftRestored": true,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L2",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:26:04.925Z",
+          "elapsedWallMs": 18208,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L3",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:26:41.558Z",
+          "elapsedWallMs": 19003,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG01-L4",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:26:59.384Z",
+          "elapsedWallMs": 17817,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L1",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:28:49.354Z",
+          "elapsedWallMs": 18906,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L2",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:29:08.075Z",
+          "elapsedWallMs": 18712,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L3",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:30:05.468Z",
+          "elapsedWallMs": 19084,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        },
+        {
+          "lesson": "MG02-L4",
+          "status": "PASS",
+          "completedAt": "2026-10-30T03:30:24.308Z",
+          "elapsedWallMs": 18826,
+          "viewport": {
+            "scroll": 1350,
+            "viewport": 1350
+          },
+          "draftRestored": null,
+          "provider": "MOCK_PROVIDER"
+        }
+      ],
+      "outcome": {
+        "browserWorkflowsPassed": 8,
+        "actualLearningEfficacy": "NOT_MEASURED",
+        "actualHumanGateCEvidence": 0
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "code": "MG01-L1",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "activities": [
+        {
+          "slug": "mg01-l1-r1",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l1-r2",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l1-r3",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l1-l1",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l1-l2",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l1-l3",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l1-s1",
+          "type": "speaking",
+          "sample": "Hello. I am Lucy. I am from Los Angeles. You are Leo."
+        },
+        {
+          "slug": "mg01-l1-w1",
+          "type": "writing",
+          "sample": "Hello. I am Adam. I am from London."
+        }
+      ]
+    },
+    {
+      "code": "MG01-L2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "activities": [
+        {
+          "slug": "mg01-l2-r1",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l2-r2",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l2-r3",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l2-l1",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l2-l2",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l2-l3",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l2-s1",
+          "type": "speaking",
+          "sample": "Hello. I am Emma. I am from London. E, M, M, A."
+        },
+        {
+          "slug": "mg01-l2-w1",
+          "type": "writing",
+          "sample": "Hello. I am Mia. I am from Los Angeles. M-I-A."
+        }
+      ]
+    },
+    {
+      "code": "MG01-L3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "activities": [
+        {
+          "slug": "mg01-l3-r1",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l3-r2",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l3-r3",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l3-l1",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l3-l2",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l3-l3",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l3-s1",
+          "type": "speaking",
+          "sample": "Hello, Kim. I am Sam. I am from New York. You are Kim."
+        },
+        {
+          "slug": "mg01-l3-w1",
+          "type": "writing",
+          "sample": "Hello, Noah. I am Eva. I am from London. You are Noah."
+        }
+      ]
+    },
+    {
+      "code": "MG01-L4",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "activities": [
+        {
+          "slug": "mg01-l4-r1",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l4-r2",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l4-r3",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l4-l1",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg01-l4-l2",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg01-l4-l3",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg01-l4-s1",
+          "type": "speaking",
+          "sample": "Hello, Jo. I am Mia. I am from London. You are Jo."
+        },
+        {
+          "slug": "mg01-l4-w1",
+          "type": "writing",
+          "sample": "Hello, Lucy. I am Ben. I am from New York. You are Lucy."
+        }
+      ]
+    },
+    {
+      "code": "MG02-L1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "activities": [
+        {
+          "slug": "mg02-l1-r1",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l1-r2",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l1-r3",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l1-l1",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l1-l2",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l1-l3",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l1-s1",
+          "type": "speaking",
+          "sample": "This is a bag. That is a book. Two pens, please."
+        },
+        {
+          "slug": "mg02-l1-w1",
+          "type": "writing",
+          "sample": "This is a pen. A book, please. Two bags, please."
+        }
+      ]
+    },
+    {
+      "code": "MG02-L2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "activities": [
+        {
+          "slug": "mg02-l2-r1",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l2-r2",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l2-r3",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l2-l1",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l2-l2",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l2-l3",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l2-s1",
+          "type": "speaking",
+          "sample": "A pen, please. Two books, please. A bag, please."
+        },
+        {
+          "slug": "mg02-l2-w1",
+          "type": "writing",
+          "sample": "Two pens, please. A book, please. A bag, please."
+        }
+      ]
+    },
+    {
+      "code": "MG02-L3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "activities": [
+        {
+          "slug": "mg02-l3-r1",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l3-r2",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l3-r3",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l3-l1",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l3-l2",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l3-l3",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l3-s1",
+          "type": "speaking",
+          "sample": "This is a book. That is a bag. Two pens, please."
+        },
+        {
+          "slug": "mg02-l3-w1",
+          "type": "writing",
+          "sample": "This is a book. A bag, please. Two pens, please."
+        }
+      ]
+    },
+    {
+      "code": "MG02-L4",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "activities": [
+        {
+          "slug": "mg02-l4-r1",
+          "type": "reading",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l4-r2",
+          "type": "reading",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l4-r3",
+          "type": "reading",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l4-l1",
+          "type": "listening",
+          "answer": "B"
+        },
+        {
+          "slug": "mg02-l4-l2",
+          "type": "listening",
+          "answer": "A"
+        },
+        {
+          "slug": "mg02-l4-l3",
+          "type": "listening",
+          "answer": "C"
+        },
+        {
+          "slug": "mg02-l4-s1",
+          "type": "speaking",
+          "sample": "This is a pen. That is a book. Two bags, please."
+        },
+        {
+          "slug": "mg02-l4-w1",
+          "type": "writing",
+          "sample": "Hello. I am Alex. I am from Osaka. You are Emma. This is a bag. Three pens, please. A book, please."
+        }
+      ]
+    }
+  ]
+}

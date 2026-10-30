@@ -66,8 +66,3 @@ export class BrowserSimulation {
   return bad(404,'SIMULATION_ROUTE_UNHANDLED');
  }
 }
-
-
-
-
-

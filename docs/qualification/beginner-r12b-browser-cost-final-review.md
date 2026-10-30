@@ -47,3 +47,15 @@ Assessment: reviewed engineering delta is acceptable after the recorded fixes; s
 SKILL AUDIT
 Used: code-review-and-quality -> five-axis review/test-first inspection and caught reversible mutation; mandate-steward -> exact successor/history/evidence boundaries; verification-before-completion -> fresh commands and explicit attribution.
 Not used: implementation/TDD workflows; reviewer made only the authorized temporary mutation/restoration and this report.
+
+## Final artifact reconciliation
+
+Independently read the final browser report, personas and results JSON after the final rerun. Final results contain 24 unique PASS persona/Lesson pairs, eight per persona. All eight P02 final rows measure viewport375/scroll375. Raw API events independently reconcile 168 successful ordinary attempts +24 successful recordings =192 activity submissions,72 successful audio reads and statuses1133x200/25x302/54x401/3x403. Raw UI observations contain425 entries; final P01/P02/P03 dashboard observations each show64 activities/attempts and8 completed sessions. The results record zero captured console errors; this is an observation-log claim, not universal absence of browser/runtime errors.
+
+Recomputed six raw artifact SHA256 values: final-events.json, ui-observations.json and all four cited screenshots match the results JSON. All eight source hashes in the personas artifact match current source; both updated Gate C code/test hashes match its verification JSON (16new/31including rehearsal). Visually inspected P02-mobile.png: narrow rendered writing flow, draft saved, Continue and explicit MOCK_PROVIDER feedback are present. The remaining screenshots were hash-checked, not independently visually certified by this reviewer.
+
+Audio evidence precision: final journey rows retain69 detailed audio state entries,20at readyState1 and49at readyState4, with playback requested and no recorded media error; three P03 first-Lesson detailed state entries are absent.72 successful WAV responses are independently evidenced by API events. This supports exercised media loading/playback controls, not a claim that all72 detailed states recorded readyState4 or that complete clips were listened to. The coordinator was notified to keep the report wording within those observations.
+
+Checked the three uncommitted browser harness code differences after7188c8b: only extra trailing blank lines were removed; no behavior changed. Broad final106Node/375API/936Web and API lint/typecheck/build results remain attributed coordinator execution, not fresh execution by this reviewer. The1417 sum is arithmetically correct and does not add the initial browser round or repeated focused tests.
+
+The report separates synthetic cookies, memory persistence,440Hz media, mock feedback and automation wall time from real authentication, DB durability, semantic speech, provider scoring and human learning evidence. No material count/hash discrepancy remains. Engineering evidence is acceptable within that finite scope; actual provider/human/privacy/power-loss/DB/deployment gates and release NOT_READY remain unchanged. No real observation or consent is inferred from the24 scripted journeys.

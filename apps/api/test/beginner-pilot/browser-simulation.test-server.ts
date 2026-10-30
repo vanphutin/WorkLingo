@@ -15,4 +15,3 @@ export function startSimulationServer(port=33311){
  server.listen(port,'127.0.0.1');return {server,simulation};
 }
 if(process.argv[1]?.endsWith('browser-simulation.test-server.ts')){const {server,simulation}=startSimulationServer();server.once('listening',()=>console.log(JSON.stringify({provenance:'SYNTHETIC_BROWSER_TESTING',api:'http://127.0.0.1:33311',frontend:'http://127.0.0.1:33310',manifest:simulation.manifest()})));}
-

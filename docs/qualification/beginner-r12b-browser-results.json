@@ -1,0 +1,2426 @@
+{
+  "classification": "SYNTHETIC_BROWSER_TESTING",
+  "provider": "MOCK_PROVIDER",
+  "startedAt": "2026-10-30T02:43:53.120Z",
+  "journeys": [
+    {
+      "persona": "P01",
+      "lesson": "MG01-L1",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:14:59.370Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/2b0e67c1-1559-4000-8000-609000fbb123/activities/30c43786-4646-4000-8000-ba61dcd90ad4/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.016969,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/2b0e67c1-1559-4000-8000-609000fbb123/activities/f616cffc-c7b0-4000-8000-60246eeb88dc/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.003639,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/2b0e67c1-1559-4000-8000-609000fbb123/activities/41ddf2b2-6409-4000-8000-ce2c500f5bea/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:15:29.905Z",
+      "elapsedWallMs": 30535
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG01-L2",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:15:29.908Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.005522,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/eaeff996-5b59-4000-8000-2714cfdc4334/activities/64b86c72-ed85-4000-8000-20c9e9b49ba6/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.011691,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/eaeff996-5b59-4000-8000-2714cfdc4334/activities/69208dc2-aed5-4000-8000-49114fdf2019/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.014324,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/eaeff996-5b59-4000-8000-2714cfdc4334/activities/8e3409f4-7702-4000-8000-e53633c5d180/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:15:50.008Z",
+      "elapsedWallMs": 20100
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG01-L3",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:16:16.541Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/f66bb1e2-a721-4000-8000-ae01366c04ac/activities/d4a3a98c-4ab2-4000-8000-1857cc07ab92/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.014548,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/f66bb1e2-a721-4000-8000-ae01366c04ac/activities/2d36dc97-dcd6-4000-8000-a69726b105f1/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.005013,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/f66bb1e2-a721-4000-8000-ae01366c04ac/activities/96b33779-8c9c-4000-8000-cfee3e03c611/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:16:36.850Z",
+      "elapsedWallMs": 20309
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG01-L4",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:16:36.853Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/77b0cc3f-2e5f-4000-8000-a8052b5f1007/activities/24835448-36c4-4000-8000-423092ddf553/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.013097,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/77b0cc3f-2e5f-4000-8000-a8052b5f1007/activities/6b90cc32-9f0c-4000-8000-ed214e5b6c41/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.013911,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/77b0cc3f-2e5f-4000-8000-a8052b5f1007/activities/c5a6b5ec-b0c4-4000-8000-beab4af95b9e/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:16:57.640Z",
+      "elapsedWallMs": 20787
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG02-L1",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:18:00.755Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/c6fe862b-f0b4-4000-8000-89a7b81ab15c/activities/bc07043f-5a5f-4000-8000-29182bc03c21/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.008965,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/c6fe862b-f0b4-4000-8000-89a7b81ab15c/activities/76f18322-fd56-4000-8000-5e4fb5396d76/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.012335,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/c6fe862b-f0b4-4000-8000-89a7b81ab15c/activities/4ced5910-9efe-4000-8000-3084821786f1/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:18:19.710Z",
+      "elapsedWallMs": 18955
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG02-L2",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:18:19.714Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/634caf3c-f688-4000-8000-b7aafe5f6a2d/activities/08933398-fb34-4000-8000-0ef45f664e1f/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.000728,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/634caf3c-f688-4000-8000-b7aafe5f6a2d/activities/5fa1bc95-420d-4000-8000-41b669335e81/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.016423,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/634caf3c-f688-4000-8000-b7aafe5f6a2d/activities/596dd859-6595-4000-8000-6689c8acd05b/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:18:37.574Z",
+      "elapsedWallMs": 17860
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG02-L3",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:19:06.560Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/721c7ee9-3dd5-4000-8000-92e066f45c09/activities/983dd2ea-5b1c-4000-8000-55fcad68e0d7/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.01452,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/721c7ee9-3dd5-4000-8000-92e066f45c09/activities/405430e3-ceee-4000-8000-6faedc3ee56f/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.008595,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/721c7ee9-3dd5-4000-8000-92e066f45c09/activities/67755067-286a-4000-8000-cf5e29a1ee0d/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:19:24.640Z",
+      "elapsedWallMs": 18080
+    },
+    {
+      "persona": "P01",
+      "lesson": "MG02-L4",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:19:24.644Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/b70069fd-4b63-4000-8000-17e1443b13ee/activities/6e898c02-834e-4000-8000-d73388fb14e5/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.015197,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/b70069fd-4b63-4000-8000-17e1443b13ee/activities/2e5d6e8f-924b-4000-8000-d0a420e9c631/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.017545,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/b70069fd-4b63-4000-8000-17e1443b13ee/activities/cb4a5a6b-ffac-4000-8000-0785ec691381/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1335,
+        "viewport": 1335
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:19:43.619Z",
+      "elapsedWallMs": 18975
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG01-L1",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:19:50.903Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/3b2668aa-f8f9-4000-8000-6731642aaa12/activities/6c676bdd-4ae4-4000-8000-96e09944e045/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.016501,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/3b2668aa-f8f9-4000-8000-6731642aaa12/activities/03784539-5b0d-4000-8000-492b57988b91/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.0085,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/3b2668aa-f8f9-4000-8000-6731642aaa12/activities/7f2311af-a2d1-4000-8000-7d7a450f4c19/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:20:10.457Z",
+      "elapsedWallMs": 19554
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG01-L2",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:20:10.463Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/8d94ca02-1e3a-4000-8000-4eb7b7ec5271/activities/bf20c225-1b46-4000-8000-63abd8449f4c/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.012454,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/8d94ca02-1e3a-4000-8000-4eb7b7ec5271/activities/72b622e9-cc2b-4000-8000-f8afdcf8064d/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.00642,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/8d94ca02-1e3a-4000-8000-4eb7b7ec5271/activities/d8770a5f-23b0-4000-8000-a791040182c1/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:20:29.804Z",
+      "elapsedWallMs": 19341
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG01-L3",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:21:31.646Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/a8502d54-ae06-4000-8000-95d4a0c92a9c/activities/e8c21abb-7ba7-4000-8000-916f4a259d6f/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.004717,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/a8502d54-ae06-4000-8000-95d4a0c92a9c/activities/6ca9ee38-4d7d-4000-8000-07cb56326cda/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.007963,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/a8502d54-ae06-4000-8000-95d4a0c92a9c/activities/bfdf562e-d941-4000-8000-e4d683fc79d0/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "touch": {
+        "height": 50.875,
+        "width": 244
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:21:53.680Z",
+      "elapsedWallMs": 22034
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG01-L4",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:21:53.686Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/c6b112ce-57eb-4000-8000-92af5bf2647d/activities/bb62cf98-14fd-4000-8000-b302dcc25713/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.001828,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/c6b112ce-57eb-4000-8000-92af5bf2647d/activities/b0c2fac0-a193-4000-8000-5c85dc04d65f/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.003192,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/c6b112ce-57eb-4000-8000-92af5bf2647d/activities/6c32588b-c5e1-4000-8000-3718a39c6338/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:22:12.653Z",
+      "elapsedWallMs": 18967
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG02-L1",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:22:56.259Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/f2604e2e-d8ca-4000-8000-1e35b0e9470e/activities/468ac7e9-8f87-4000-8000-9fb2cf39468c/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.01337,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/f2604e2e-d8ca-4000-8000-1e35b0e9470e/activities/13779fdf-251e-4000-8000-96e53bbc500f/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.004033,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/f2604e2e-d8ca-4000-8000-1e35b0e9470e/activities/5b8bb681-2e0d-4000-8000-1eadb7fedbc1/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:23:15.083Z",
+      "elapsedWallMs": 18824
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG02-L2",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:23:15.089Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/6bdf8b6a-ac3e-4000-8000-be8c09660a5f/activities/816230c2-2df5-4000-8000-7f40ab6ce8cf/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.01005,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/6bdf8b6a-ac3e-4000-8000-be8c09660a5f/activities/da3ea1ba-29f8-4000-8000-dd2364f1992b/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.018087,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/6bdf8b6a-ac3e-4000-8000-be8c09660a5f/activities/1601662a-9496-4000-8000-a16e8890019e/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:23:33.854Z",
+      "elapsedWallMs": 18765
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG02-L3",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:24:17.321Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/beb504e7-aace-4000-8000-fa058a7855dc/activities/a257c1b8-eca8-4000-8000-04b6dd9387fc/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.010855,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/beb504e7-aace-4000-8000-fa058a7855dc/activities/7696b4d6-4a16-4000-8000-f0274d2ceede/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.017059,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/beb504e7-aace-4000-8000-fa058a7855dc/activities/e249d99d-4cdf-4000-8000-7b72ee425696/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:24:36.244Z",
+      "elapsedWallMs": 18923
+    },
+    {
+      "persona": "P02",
+      "lesson": "MG02-L4",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:24:36.251Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.00059,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/bb0d9e57-2c21-4000-8000-e344bfa03569/activities/91706bf5-19b6-4000-8000-a9c18ba04138/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.003785,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/bb0d9e57-2c21-4000-8000-e344bfa03569/activities/093b83d4-c709-4000-8000-dfac21c03a2d/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.019209,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/bb0d9e57-2c21-4000-8000-e344bfa03569/activities/22571f6a-b192-4000-8000-d94db1e4daa3/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 375,
+        "viewport": 375
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:24:55.043Z",
+      "elapsedWallMs": 18792
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG01-L1",
+      "status": "PASS",
+      "elapsedWallMs": 37735,
+      "readings": 3,
+      "listening": 3,
+      "audioPlayback": true,
+      "syntheticRecording": true,
+      "consentDisabledBeforeCheck": true,
+      "rerecordResetsConsent": true,
+      "checkpointReload": true,
+      "draftRestored": true,
+      "keyboardSubmission": true,
+      "dimensions": {
+        "viewport": 1350,
+        "scroll": 1350
+      },
+      "completedAt": "2026-10-30T03:25:46.717Z"
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG01-L2",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:25:46.717Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/14a2282a-d188-4000-8000-108350c0f65b/activities/30e0855c-f321-4000-8000-1355694e0b5e/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.016697,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/14a2282a-d188-4000-8000-108350c0f65b/activities/1233c6d0-3836-4000-8000-fa1ac25e1b66/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.011854,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/14a2282a-d188-4000-8000-108350c0f65b/activities/570485a4-f77e-4000-8000-3b87072b4723/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:26:04.925Z",
+      "elapsedWallMs": 18208
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG01-L3",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:26:22.555Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/7794b2fc-5cf1-4000-8000-d904baa279d5/activities/1696d555-bbd4-4000-8000-0e3eb5a56e61/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.019466,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/7794b2fc-5cf1-4000-8000-d904baa279d5/activities/c94eee10-f2b1-4000-8000-a8c9fe555abc/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.009129,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/7794b2fc-5cf1-4000-8000-d904baa279d5/activities/6535ba49-250f-4000-8000-1172250d0a3d/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:26:41.558Z",
+      "elapsedWallMs": 19003
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG01-L4",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:26:41.567Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/82b66d2f-effd-4000-8000-32de3c0646d0/activities/71ae53a2-a6a0-4000-8000-3d0bff878ace/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.005896,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/82b66d2f-effd-4000-8000-32de3c0646d0/activities/82f02587-e450-4000-8000-d8fe31d31b80/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.013557,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/82b66d2f-effd-4000-8000-32de3c0646d0/activities/722acbcf-6186-4000-8000-d90ce6f37ec0/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:26:59.384Z",
+      "elapsedWallMs": 17817
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG02-L1",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:28:30.448Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/ca231954-1868-4000-8000-71c39cb6e553/activities/f7896bda-5cb0-4000-8000-64e204fc7758/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.000937,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/ca231954-1868-4000-8000-71c39cb6e553/activities/bfe460d0-6e8c-4000-8000-f554c06636ff/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.014732,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/ca231954-1868-4000-8000-71c39cb6e553/activities/ec5f61d1-5370-4000-8000-b7465f7c8ffd/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:28:49.354Z",
+      "elapsedWallMs": 18906
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG02-L2",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:28:49.363Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.006538,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/5b4b83c8-f06d-4000-8000-35572e5bc42d/activities/f84f4028-0e4b-4000-8000-0c2621afc7d0/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.014082,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/5b4b83c8-f06d-4000-8000-35572e5bc42d/activities/34ee4a65-ad52-4000-8000-cc841c7e749c/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.000055,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/5b4b83c8-f06d-4000-8000-35572e5bc42d/activities/510f9ea1-a123-4000-8000-1bec882c0518/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:29:08.075Z",
+      "elapsedWallMs": 18712
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG02-L3",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:29:46.384Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/c6fc5ccb-baaf-4000-8000-d27b5ed4cb0b/activities/4f0a15f2-c0ca-4000-8000-76a40a88ac3c/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.010119,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/c6fc5ccb-baaf-4000-8000-d27b5ed4cb0b/activities/4c600928-7af6-4000-8000-b7ec6842b949/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.002628,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/c6fc5ccb-baaf-4000-8000-d27b5ed4cb0b/activities/12212e2d-7087-4000-8000-0733a2cc507e/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:30:05.468Z",
+      "elapsedWallMs": 19084
+    },
+    {
+      "persona": "P03",
+      "lesson": "MG02-L4",
+      "status": "PASS",
+      "startedAt": "2026-10-30T03:30:05.482Z",
+      "readings": 3,
+      "listening": 3,
+      "steps": [
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0,
+            "error": null,
+            "paused": false,
+            "readyState": 1,
+            "src": "/api/v1/learning-sessions/7500528c-f785-4000-8000-49227f050224/activities/0cab9724-8863-4000-8000-3e6624136de2/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.014709,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/7500528c-f785-4000-8000-49227f050224/activities/197ee703-5c5f-4000-8000-190fd5039fd9/audio"
+          }
+        },
+        {
+          "skill": "listening",
+          "audio": {
+            "currentTime": 0.0121,
+            "error": null,
+            "paused": false,
+            "readyState": 4,
+            "src": "/api/v1/learning-sessions/7500528c-f785-4000-8000-49227f050224/activities/c33460ed-b7e2-4000-8000-8d37ae82a1c4/audio"
+          }
+        }
+      ],
+      "blankBlocked": true,
+      "consentDisabledBeforeCheck": true,
+      "syntheticRecording": true,
+      "dimensions": {
+        "scroll": 1350,
+        "viewport": 1350
+      },
+      "dashboardProgress": true,
+      "completedAt": "2026-10-30T03:30:24.308Z",
+      "elapsedWallMs": 18826
+    }
+  ],
+  "securityCheck": {
+    "crossPersonaSession": "403_AND_VISIBLE_PERMISSION_ERROR",
+    "retry": "ERROR_REMAINS_VISIBLE"
+  },
+  "consoleErrors": [],
+  "initialRound": {
+    "journeys": [
+      {
+        "persona": "P01",
+        "lesson": "MG01-L1",
+        "status": "PASS",
+        "completedAt": "2026-10-30T02:48:43.046Z",
+        "elapsedWallMs": 558562,
+        "readings": 3,
+        "listening": 3,
+        "audioPlayback": true,
+        "syntheticRecording": true,
+        "consentDisabledBeforeCheck": true,
+        "minWordsBlocked": false,
+        "draftRestored": true,
+        "notes": "Two deliberate objective errors; MOCK provider"
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG01-L2",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:49:43.192Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/eaeff996-5b59-4000-8000-2714cfdc4334/activities/64b86c72-ed85-4000-8000-20c9e9b49ba6/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.01501,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/eaeff996-5b59-4000-8000-2714cfdc4334/activities/69208dc2-aed5-4000-8000-49114fdf2019/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.000817,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/eaeff996-5b59-4000-8000-2714cfdc4334/activities/8e3409f4-7702-4000-8000-e53633c5d180/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:50:03.536Z",
+        "elapsedWallMs": 20344
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG01-L3",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:50:14.986Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/f66bb1e2-a721-4000-8000-ae01366c04ac/activities/d4a3a98c-4ab2-4000-8000-1857cc07ab92/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.006977,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/f66bb1e2-a721-4000-8000-ae01366c04ac/activities/2d36dc97-dcd6-4000-8000-a69726b105f1/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.012986,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/f66bb1e2-a721-4000-8000-ae01366c04ac/activities/96b33779-8c9c-4000-8000-cfee3e03c611/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:50:34.958Z",
+        "elapsedWallMs": 19972
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG01-L4",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:50:34.961Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/77b0cc3f-2e5f-4000-8000-a8052b5f1007/activities/24835448-36c4-4000-8000-423092ddf553/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.001595,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/77b0cc3f-2e5f-4000-8000-a8052b5f1007/activities/6b90cc32-9f0c-4000-8000-ed214e5b6c41/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.014439,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/77b0cc3f-2e5f-4000-8000-a8052b5f1007/activities/c5a6b5ec-b0c4-4000-8000-beab4af95b9e/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:50:54.705Z",
+        "elapsedWallMs": 19744
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG02-L1",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:51:46.861Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/c6fe862b-f0b4-4000-8000-89a7b81ab15c/activities/bc07043f-5a5f-4000-8000-29182bc03c21/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.011193,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/c6fe862b-f0b4-4000-8000-89a7b81ab15c/activities/76f18322-fd56-4000-8000-5e4fb5396d76/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.010076,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/c6fe862b-f0b4-4000-8000-89a7b81ab15c/activities/4ced5910-9efe-4000-8000-3084821786f1/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:52:07.603Z",
+        "elapsedWallMs": 20742
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG02-L2",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:52:07.607Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/634caf3c-f688-4000-8000-b7aafe5f6a2d/activities/08933398-fb34-4000-8000-0ef45f664e1f/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.006009,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/634caf3c-f688-4000-8000-b7aafe5f6a2d/activities/5fa1bc95-420d-4000-8000-41b669335e81/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.008702,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/634caf3c-f688-4000-8000-b7aafe5f6a2d/activities/596dd859-6595-4000-8000-6689c8acd05b/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:52:27.732Z",
+        "elapsedWallMs": 20125
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG02-L3",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:52:59.279Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/721c7ee9-3dd5-4000-8000-92e066f45c09/activities/983dd2ea-5b1c-4000-8000-55fcad68e0d7/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.001099,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/721c7ee9-3dd5-4000-8000-92e066f45c09/activities/405430e3-ceee-4000-8000-6faedc3ee56f/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.016986,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/721c7ee9-3dd5-4000-8000-92e066f45c09/activities/67755067-286a-4000-8000-cf5e29a1ee0d/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:53:19.253Z",
+        "elapsedWallMs": 19974
+      },
+      {
+        "persona": "P01",
+        "lesson": "MG02-L4",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:53:19.258Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/b70069fd-4b63-4000-8000-17e1443b13ee/activities/6e898c02-834e-4000-8000-d73388fb14e5/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.014362,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/b70069fd-4b63-4000-8000-17e1443b13ee/activities/2e5d6e8f-924b-4000-8000-d0a420e9c631/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.019149,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/b70069fd-4b63-4000-8000-17e1443b13ee/activities/cb4a5a6b-ffac-4000-8000-0785ec691381/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "draftRestored": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:53:38.795Z",
+        "elapsedWallMs": 19537
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG01-L1",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:54:37.826Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/3b2668aa-f8f9-4000-8000-6731642aaa12/activities/6c676bdd-4ae4-4000-8000-96e09944e045/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.012845,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/3b2668aa-f8f9-4000-8000-6731642aaa12/activities/03784539-5b0d-4000-8000-492b57988b91/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.003079,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/3b2668aa-f8f9-4000-8000-6731642aaa12/activities/7f2311af-a2d1-4000-8000-7d7a450f4c19/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 375,
+          "viewport": 375
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:54:50.804Z",
+        "elapsedWallMs": 12978
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG01-L2",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:54:50.812Z",
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/8d94ca02-1e3a-4000-8000-4eb7b7ec5271/activities/bf20c225-1b46-4000-8000-63abd8449f4c/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.009678,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/8d94ca02-1e3a-4000-8000-4eb7b7ec5271/activities/72b622e9-cc2b-4000-8000-f8afdcf8064d/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.014639,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/8d94ca02-1e3a-4000-8000-4eb7b7ec5271/activities/d8770a5f-23b0-4000-8000-a791040182c1/audio"
+            }
+          }
+        ],
+        "readings": 3,
+        "listening": 3,
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 375,
+          "viewport": 375
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:55:00.736Z",
+        "elapsedWallMs": 9924
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG01-L3",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:59:11.776Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/a8502d54-ae06-4000-8000-95d4a0c92a9c/activities/e8c21abb-7ba7-4000-8000-916f4a259d6f/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.000106,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/a8502d54-ae06-4000-8000-95d4a0c92a9c/activities/6ca9ee38-4d7d-4000-8000-07cb56326cda/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.008026,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/a8502d54-ae06-4000-8000-95d4a0c92a9c/activities/bfdf562e-d941-4000-8000-e4d683fc79d0/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "touch": {
+          "height": 50.875,
+          "width": 288
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:59:33.733Z",
+        "elapsedWallMs": 21957
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG01-L4",
+        "status": "PASS",
+        "startedAt": "2026-10-30T02:59:33.738Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/c6b112ce-57eb-4000-8000-92af5bf2647d/activities/bb62cf98-14fd-4000-8000-b302dcc25713/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.006284,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/c6b112ce-57eb-4000-8000-92af5bf2647d/activities/b0c2fac0-a193-4000-8000-5c85dc04d65f/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.013135,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/c6b112ce-57eb-4000-8000-92af5bf2647d/activities/6c32588b-c5e1-4000-8000-3718a39c6338/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1335,
+          "viewport": 1335
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T02:59:52.663Z",
+        "elapsedWallMs": 18925
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG02-L1",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:00:25.595Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/f2604e2e-d8ca-4000-8000-1e35b0e9470e/activities/468ac7e9-8f87-4000-8000-9fb2cf39468c/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.008807,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/f2604e2e-d8ca-4000-8000-1e35b0e9470e/activities/13779fdf-251e-4000-8000-96e53bbc500f/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.016825,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/f2604e2e-d8ca-4000-8000-1e35b0e9470e/activities/5b8bb681-2e0d-4000-8000-1eadb7fedbc1/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 375,
+          "viewport": 375
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:00:44.574Z",
+        "elapsedWallMs": 18979
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG02-L2",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:00:44.580Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/6bdf8b6a-ac3e-4000-8000-be8c09660a5f/activities/816230c2-2df5-4000-8000-7f40ab6ce8cf/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.000279,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/6bdf8b6a-ac3e-4000-8000-be8c09660a5f/activities/da3ea1ba-29f8-4000-8000-dd2364f1992b/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.007579,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/6bdf8b6a-ac3e-4000-8000-be8c09660a5f/activities/1601662a-9496-4000-8000-a16e8890019e/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 375,
+          "viewport": 375
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:01:03.405Z",
+        "elapsedWallMs": 18825
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG02-L3",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:01:32.958Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/beb504e7-aace-4000-8000-fa058a7855dc/activities/a257c1b8-eca8-4000-8000-04b6dd9387fc/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.008961,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/beb504e7-aace-4000-8000-fa058a7855dc/activities/7696b4d6-4a16-4000-8000-f0274d2ceede/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.018605,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/beb504e7-aace-4000-8000-fa058a7855dc/activities/e249d99d-4cdf-4000-8000-7b72ee425696/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 375,
+          "viewport": 375
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:01:53.108Z",
+        "elapsedWallMs": 20150
+      },
+      {
+        "persona": "P02",
+        "lesson": "MG02-L4",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:01:53.118Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/bb0d9e57-2c21-4000-8000-e344bfa03569/activities/91706bf5-19b6-4000-8000-a9c18ba04138/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.006427,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/bb0d9e57-2c21-4000-8000-e344bfa03569/activities/093b83d4-c709-4000-8000-dfac21c03a2d/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.004431,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/bb0d9e57-2c21-4000-8000-e344bfa03569/activities/22571f6a-b192-4000-8000-d94db1e4daa3/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 375,
+          "viewport": 375
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:02:13.230Z",
+        "elapsedWallMs": 20112
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG01-L1",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:02:51.942Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/39a667b1-2b52-4000-8000-65165f456e63/activities/e007d467-8d9a-4000-8000-b593f4bb357d/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.011264,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/39a667b1-2b52-4000-8000-65165f456e63/activities/8687bb22-835e-4000-8000-a120cad507df/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.003757,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/39a667b1-2b52-4000-8000-65165f456e63/activities/e184eda4-3ff5-4000-8000-a2736a6f9aae/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:03:11.957Z",
+        "elapsedWallMs": 20015
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG01-L2",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:03:11.967Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.07981,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/14a2282a-d188-4000-8000-108350c0f65b/activities/30e0855c-f321-4000-8000-1355694e0b5e/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.000051,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/14a2282a-d188-4000-8000-108350c0f65b/activities/1233c6d0-3836-4000-8000-fa1ac25e1b66/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.003271,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/14a2282a-d188-4000-8000-108350c0f65b/activities/570485a4-f77e-4000-8000-3b87072b4723/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:03:31.336Z",
+        "elapsedWallMs": 19369
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG01-L3",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:04:15.847Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/7794b2fc-5cf1-4000-8000-d904baa279d5/activities/1696d555-bbd4-4000-8000-0e3eb5a56e61/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.000395,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/7794b2fc-5cf1-4000-8000-d904baa279d5/activities/c94eee10-f2b1-4000-8000-a8c9fe555abc/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.013146,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/7794b2fc-5cf1-4000-8000-d904baa279d5/activities/6535ba49-250f-4000-8000-1172250d0a3d/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:04:35.227Z",
+        "elapsedWallMs": 19380
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG01-L4",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:04:35.240Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/82b66d2f-effd-4000-8000-32de3c0646d0/activities/71ae53a2-a6a0-4000-8000-3d0bff878ace/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.015774,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/82b66d2f-effd-4000-8000-32de3c0646d0/activities/82f02587-e450-4000-8000-d8fe31d31b80/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.007722,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/82b66d2f-effd-4000-8000-32de3c0646d0/activities/722acbcf-6186-4000-8000-d90ce6f37ec0/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:04:55.678Z",
+        "elapsedWallMs": 20438
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG02-L1",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:05:44.112Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/ca231954-1868-4000-8000-71c39cb6e553/activities/f7896bda-5cb0-4000-8000-64e204fc7758/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.017044,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/ca231954-1868-4000-8000-71c39cb6e553/activities/bfe460d0-6e8c-4000-8000-f554c06636ff/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.010363,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/ca231954-1868-4000-8000-71c39cb6e553/activities/ec5f61d1-5370-4000-8000-b7465f7c8ffd/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:06:03.140Z",
+        "elapsedWallMs": 19028
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG02-L2",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:06:03.149Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/5b4b83c8-f06d-4000-8000-35572e5bc42d/activities/f84f4028-0e4b-4000-8000-0c2621afc7d0/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.010865,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/5b4b83c8-f06d-4000-8000-35572e5bc42d/activities/34ee4a65-ad52-4000-8000-cc841c7e749c/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.017542,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/5b4b83c8-f06d-4000-8000-35572e5bc42d/activities/510f9ea1-a123-4000-8000-1bec882c0518/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:06:20.891Z",
+        "elapsedWallMs": 17742
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG02-L3",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:07:25.279Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/c6fc5ccb-baaf-4000-8000-d27b5ed4cb0b/activities/4f0a15f2-c0ca-4000-8000-76a40a88ac3c/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.001481,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/c6fc5ccb-baaf-4000-8000-d27b5ed4cb0b/activities/4c600928-7af6-4000-8000-b7ec6842b949/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.009616,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/c6fc5ccb-baaf-4000-8000-d27b5ed4cb0b/activities/12212e2d-7087-4000-8000-0733a2cc507e/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:07:44.309Z",
+        "elapsedWallMs": 19030
+      },
+      {
+        "persona": "P03",
+        "lesson": "MG02-L4",
+        "status": "PASS",
+        "startedAt": "2026-10-30T03:07:44.323Z",
+        "readings": 3,
+        "listening": 3,
+        "steps": [
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0,
+              "error": null,
+              "paused": false,
+              "readyState": 1,
+              "src": "/api/v1/learning-sessions/7500528c-f785-4000-8000-49227f050224/activities/0cab9724-8863-4000-8000-3e6624136de2/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.005824,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/7500528c-f785-4000-8000-49227f050224/activities/197ee703-5c5f-4000-8000-190fd5039fd9/audio"
+            }
+          },
+          {
+            "skill": "listening",
+            "audio": {
+              "currentTime": 0.00516,
+              "error": null,
+              "paused": false,
+              "readyState": 4,
+              "src": "/api/v1/learning-sessions/7500528c-f785-4000-8000-49227f050224/activities/c33460ed-b7e2-4000-8000-8d37ae82a1c4/audio"
+            }
+          }
+        ],
+        "blankBlocked": true,
+        "consentDisabledBeforeCheck": true,
+        "syntheticRecording": true,
+        "dimensions": {
+          "scroll": 1350,
+          "viewport": 1350
+        },
+        "dashboardProgress": true,
+        "completedAt": "2026-10-30T03:08:04.086Z",
+        "elapsedWallMs": 19763
+      }
+    ],
+    "securityCheck": {
+      "crossPersonaSession": "403_AND_VISIBLE_PERMISSION_ERROR",
+      "retry": "ERROR_REMAINS_VISIBLE"
+    },
+    "consoleErrors": [],
+    "observationsPath": "harness/ui-observations-round1.json"
+  },
+  "finalRegressionStartedAt": "2026-10-30T03:14:59.370Z",
+  "finalRegressionCompletedAt": "2026-10-30T03:30:24.321Z",
+  "summary": {
+    "finalJourneys": 24,
+    "finalUnique": 24,
+    "initialJourneys": 24,
+    "finalActivitySubmissions": 168,
+    "finalRecordingSubmissions": 24,
+    "finalWavReads": 72,
+    "finalUiObservations": 425,
+    "consoleErrors": 0,
+    "finalMobileJourneys": 8,
+    "realProviderStarts": 0,
+    "actualGateCObservations": 0,
+    "realAdults": 0,
+    "distinctSafeTests": 1417,
+    "testBreakdown": {
+      "node": 106,
+      "api": 375,
+      "web": 936
+    },
+    "note": "Initial and final browser rounds are separate reruns, not distinct learners; counts exclude overlapping focused test reruns."
+  },
+  "artifacts": {
+    "apiEvents": {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001/harness/final-events.json",
+      "sha256": "af38599464bbba3e641685231104c50d1435911d8368bd1d580728c2e68f59b3"
+    },
+    "uiObservations": {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001/harness/ui-observations.json",
+      "sha256": "ca8525255d01c9185293514535704f53d812e8cd828c465cfe6c5dcfcdae7121"
+    },
+    "frontendSourceRef": "a4685e7cd42d8dbbe949b9d5d1e8429d8bb1694c",
+    "harnessCodeRef": "7188c8b",
+    "persistence": "MEMORY_ONLY",
+    "screenshots": [
+      {
+        "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001/screenshots/completed.png",
+        "sha256": "6e8441fda81181d96d551278bbe3ee10afa3ec6b6a300cdc00a7cf37a3ee2519"
+      },
+      {
+        "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001/screenshots/P02-mobile.png",
+        "sha256": "a064e573e739cf84ab354af24925a2509358b9457d1125e146e7a12a29ce0dab"
+      },
+      {
+        "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001/screenshots/P01-desktop.png",
+        "sha256": "c098c92424eb90602bf6422bc4147aefa1a749460054fa3fe51a09a0375545d4"
+      },
+      {
+        "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001/screenshots/P03-transfer.png",
+        "sha256": "2a838387a9bc18c1f3e6f61f46226d8f1ac034402c5c15c86d3d5f041e47a091"
+      }
+    ]
+  }
+}

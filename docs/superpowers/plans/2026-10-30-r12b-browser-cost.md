@@ -26,36 +26,48 @@
 ## Task 1: Discovery cost (cost_oracle)
 
 Exact files: Discovery adapter/spec, provider-calibration.ts/test, new cost-benchmark.ts/test, named cost report/JSON.
-- [ ] RED: assert retained facts/criteria/level and escaping, removed redundant IDs, legacy byte equality and unchanged schedule/reservations.
-- [ ] Implement Discovery-only compact serialization after validation; preserve full response schema, model and output cap.
-- [ ] GREEN: run adapter/provider/benchmark suites, offline actual serialized 20/160 request benchmark, no tokenizer or cache savings claim.
-- [ ] Report per-request/pilot/full/worst failed-start reservation and actual spend 0; independent review then atomic commit.
+- [x] RED: assert retained facts/criteria/level and escaping, removed redundant IDs, legacy byte equality and unchanged schedule/reservations.
+- [x] Implement Discovery-only compact serialization after validation; preserve full response schema, model and output cap.
+- [x] GREEN: run adapter/provider/benchmark suites, offline actual serialized 20/160 request benchmark, no tokenizer or cache savings claim.
+- [x] Report per-request/pilot/full/worst failed-start reservation and actual spend 0; independent review then atomic commit.
 
 ## Task 2: Browser simulation and actual UI (web_p2 + coordinator)
 
 Exact files: browser-simulation.ts/test/test-server, browser-qualification.mjs supervisor, synthetic personas, browser report/results and five screenshots.
-- [ ] RED: verify actual eight source hashes/24 namespaces; canonical learner DTO redaction, session progress, draft revision, consent/multipart recording and unknown/cross-session failures.
-- [ ] Implement memory-only loopback simulation, explicit simulated auth cookie and source-bound immutable sessions; no upstream fallback.
-- [ ] Start sanitized real frontend snapshot with allowlisted environment and no env files; use CUA to perform all 24 journeys, all four skills where supported, persona-specific scripts, errors/pause/reload/drafts, responsive and progress checks.
-- [ ] Save observed UI states, timestamps, logs, requests and screenshots. Any observed product bug gets reproduction and matching finite successor before fix.
-- [ ] Independent review and safe regression, then atomic commit. Do not substitute unit tests for UI operations.
+- [x] RED: verify actual eight source hashes/24 namespaces; canonical learner DTO redaction, session progress, draft revision, consent/multipart recording and unknown/cross-session failures.
+- [x] Implement memory-only loopback simulation, explicit simulated auth cookie and source-bound immutable sessions; no upstream fallback.
+- [x] Start sanitized real frontend snapshot with allowlisted environment and no env files; use CUA to perform all 24 journeys, all four skills where supported, persona-specific scripts, errors/pause/reload/drafts, responsive and progress checks.
+- [x] Save observed UI states, timestamps, logs, requests and screenshots. Any observed product bug gets reproduction and matching finite successor before fix.
+- [x] Independent review and safe regression, then atomic commit. Do not substitute unit tests for UI operations.
 
 ## Task 3: Gate C tools (audio_qa)
 
 Exact files: gate-c-session.ts/test, operator.md, tooling-verification.json, orchestration-report.md.
-- [ ] RED: missing consent/eligibility/authority, wrong versions/order/spacing, unsafe provenance, crash timing and incomplete outcomes fail closed.
-- [ ] Implement coded events, monotonic active/wait/support/research timer, pause/resume/stop and 60-minute cap, withdrawal/defect stops, private output gate and aggregate-only public summary.
-- [ ] GREEN synthetic tests and CLI dry run/status show 0 real observations and NEEDS_HUMAN_EVIDENCE; document actual facilitator workflow without inventing evidence.
-- [ ] Independent review, exact-file commit.
+- [x] RED: missing consent/eligibility/authority, wrong versions/order/spacing, unsafe provenance, crash timing and incomplete outcomes fail closed.
+- [x] Implement coded events, monotonic active/wait/support/research timer, pause/resume/stop and 60-minute cap, withdrawal/defect stops, private output gate and aggregate-only public summary.
+- [x] GREEN synthetic tests and CLI dry run/status show 0 real observations and NEEDS_HUMAN_EVIDENCE; document actual facilitator workflow without inventing evidence.
+- [x] Independent review, exact-file commit.
 
 ## Task 4: Governance, integration and closure (coordinator)
 
-- [ ] Bind new approval/hash/scope via CLI; preserve all historical authority and protected assets.
-- [ ] Add successor governance test: verify historical tests at a4685e7, current exact delta, hashes, no unexpected files.
-- [ ] Run relevant safe no-env API/frontend suites, lint/typecheck/build as warranted; default env/DB integration remains excluded.
-- [ ] Independent integrated review of full delta, fix Important findings, verify report counts against artifacts, validate register and explicit-file commits.
-- [ ] Deliver all five requested reports, screenshot and local commit inventory. Terminal state is verified engineering with external provider/human/release gates explicit if they remain blocked.
+- [x] Bind new approval/hash/scope via CLI; preserve all historical authority and protected assets.
+- [x] Add successor governance test: verify historical tests at a4685e7, current exact delta, hashes, no unexpected files.
+- [x] Run relevant safe no-env API/frontend suites, lint/typecheck/build as warranted; default env/DB integration remains excluded.
+- [x] Independent integrated review of full delta, fix Important findings, verify report counts against artifacts, validate register and explicit-file commits.
+- [x] Deliver all five requested reports, screenshot and local commit inventory. Terminal state is verified engineering with external provider/human/release gates explicit if they remain blocked.
 
 ## Plan review
 
 The owner supplied execution method and waived routine questions. This plan reuses canonical qualification work; it does not create a competing backlog. Cost, simulation and Gate C have disjoint writers. Reviewer checks every requirement against artifacts, with the five review-focus cases covered by their owning tests. Parent performs the actual browser work and final verification.
+
+## Execution ledger — 2026-10-30
+
+- Task1 complete:2c975f8, adapter11PASS afterRED, provider60+benchmark1PASS, exact160request schedule/32repeats preserved;1291.1464full/160.3072pilotreservation,actual0.
+- Task2 complete:7188c8b plusfinalevidencecommit;actual24initial+24finalUIjourneys keptseparate,final192activities/72WAVreads/24recordings,all8P02mobile,425states;crossnamespace403visible;12harnessregressionsPASS.
+- Task3 complete:da703ac,16new+15existing31PASS;durableSTARTEDmarkerandoutcomedenominatorsfixedRED→GREEN;real0/24NEEDS_HUMAN_EVIDENCE.
+- Task4 complete:governance2PASS,fullcombinedNode106,API375,Web936=1417distinctsafechecks;APIlint/typecheck/build0;independentfourP2resolved,finalartifactreconciliationrecordedinreview. MandateCLI27valid. Final boundedengineeringverificationdoesnotpromoteexternalreadiness.
+- Ruling:keep2048outputreservation andsemanticstrings intact;metadataonly2.71%savingscannotjustifyunknownoutputtruncation/tokenizerdiscount. Costifwrong:additionalinput savingsleftunrealized,livebudgetstillblocked.
+- Ruling:realfrontendsnapshot+canonicalsourceprojectionwithmockAPIandtablocalWebAudiomedia;noDB/microphone/provider. Costifwrong:backend/phonetic/learningefficacyassuranceunproved,reportandreleasegateexplicit.
+- Ruling:genericplan/branchconfirmationstepswaivedbyexplicitcurrentownermethod/autonomy;keepbranchlocalbecausereleasegatesremain. Noextraexecutionworkspacecreatedoutsidefiniteapprovedruntimenamespace;thisplanandartifactsareledger.
+- Ruling:historicalgovernancetestsareverifiedbyte-exactata4685e7andnewdeltaevaluatedbyadditivesuccessortest;runningoldcurrent-treeallowlistwouldincorrectlyrejectauthorizednewscope. Historicalapprovalnotbroadened.
+- No deferred minor code findings were reported. Remaining external blockers are providerpricing/privacy/budget/realcalibration,humanoracle/professionalQA,actualadults/consent,currentDBintegration,power-loss,concretetargetandtestedrollback. Keepbranch/worktree;noMerge/push/deploy.

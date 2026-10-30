@@ -90,5 +90,3 @@ test('progress aggregates completed lessons of one persona and isolates other pe
  const p1=await sim.handle('GET','/api/v1/me/progress',sim.seeds[0]!.namespace);assert.equal(p1.body.completedActivities,24);assert.equal(p1.body.sessions.completed,3);
  const p2=await sim.handle('GET','/api/v1/me/progress',sim.seeds[8]!.namespace);assert.equal(p2.body.completedActivities,0);assert.equal(p2.body.sessions.completed,0);
 });
-
-
