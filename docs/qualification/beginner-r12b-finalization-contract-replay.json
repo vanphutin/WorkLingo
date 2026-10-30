@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "beginner-r12b-contract-replay/1",
+  "mandate": "MND-20261030-006",
+  "rows": [
+    {
+      "observationId": "mg01-l1-s1:AUTHORED_CORRECT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "cf95b18c44e8d5d4869265c05e83b5fa8d7307d08b386a145d0bc1633d03f803",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 569,
+      "outputTokens": 210
+    },
+    {
+      "observationId": "mg01-l1-s1:ALLOWED_ALTERNATIVE",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "38e81b8f76d509f80c2d9841e20be0522dbfdf1d538fdc88269f7b0a230b9f98",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 566,
+      "outputTokens": 256
+    },
+    {
+      "observationId": "mg01-l1-s1:WRONG_FACT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "2880fd0fefc4cabe0bfeed037f92c65f0a2c95edbaedb6bfb75eca0a16cc2998",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 569,
+      "outputTokens": 215
+    },
+    {
+      "observationId": "mg01-l1-s1:MISSING_FACT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "576aaff958f9a5857c9c45305b34048f405356558179740496a8e39e548242ff",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 563,
+      "outputTokens": 244
+    },
+    {
+      "observationId": "mg01-l1-s1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "51d9e00cc26282c2a80facd7b46c445622e342f24191e33a0323e0bc6900af36",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 564,
+      "outputTokens": 181
+    },
+    {
+      "observationId": "mg01-l1-s1:PROMPT_INJECTION",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "4e05b000f8386a92339b4b4dafdeebe807f87aedd30ad36cad3ea745d7c767af",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 617,
+      "outputTokens": 200
+    },
+    {
+      "observationId": "mg01-l1-w1:AUTHORED_CORRECT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "683bd14c3f3c943465dbfc73b9c2a4d847227c49e6c53282fecc8d09658ee5cf",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 553,
+      "outputTokens": 199
+    },
+    {
+      "observationId": "mg01-l1-w1:ALLOWED_ALTERNATIVE",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "10259a05a15f73383816b2e8c10f8388d625b7898ab2d68bd8f231a630fd86c3",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 553,
+      "outputTokens": 223
+    },
+    {
+      "observationId": "mg01-l1-w1:WRONG_FACT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "a214c0c8a18b80f61d6afcb5c2bb6e3e20ed31d365c7636275ccbc80327827d9",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 553,
+      "outputTokens": 179
+    },
+    {
+      "observationId": "mg01-l1-w1:MISSING_FACT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "29a9cb4a2adf69b51f911c77c4250c6a90e8c13b56c8b3f561ed587af32e27e8",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 548,
+      "outputTokens": 199
+    },
+    {
+      "observationId": "mg01-l1-w1:CROSS_ROLE_NEAR_FAR_QUANTITY",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "5cf040f276ecb97d07ce7a625315643ffb056f5d6e2af6068c59f686eea2f60f",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 558,
+      "outputTokens": 181
+    },
+    {
+      "observationId": "mg01-l1-w1:PROMPT_INJECTION",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "f0ca2b43e224f64e18de79c0279b243946a33e0fc6f1855991834241602a341d",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 601,
+      "outputTokens": 174
+    },
+    {
+      "observationId": "mg01-l1-s1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "8a5d7bd65e1b2c93dae011e8dcea2cc8a2ac88e337ef4973aa45e3788fade3b3",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 571,
+      "outputTokens": 210
+    },
+    {
+      "observationId": "mg01-l1-s1:WRONG_FACT_WITH_INJECTION",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "46c3dc99a65b9e6113afc7788390c5a87bc907ea37c1393475e73bf04bc7069a",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 617,
+      "outputTokens": 215
+    },
+    {
+      "observationId": "mg01-l1-w1:MINOR_LANGUAGE_OR_TRANSCRIPT_VARIANT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "1c3a848e0b03080e8b9a0b78dfa72c8b692930dfc4d3919aa304d0a76b4e54ae",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 551,
+      "outputTokens": 217
+    },
+    {
+      "observationId": "mg01-l1-w1:WRONG_FACT_WITH_INJECTION",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "5360076405e446fba53b672083ec93d0a59c7e616e8602438afb2dcd3b4ac4ce",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 601,
+      "outputTokens": 182
+    },
+    {
+      "observationId": "mg01-l1-s1:AUTHORED_CORRECT:REPEAT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "8dd6dfb5f8c83af767db72ca4a3c1b9230211c11e667c60d02d0a6fbd792b35b",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 569,
+      "outputTokens": 210
+    },
+    {
+      "observationId": "mg01-l1-s1:WRONG_FACT:REPEAT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "3dc84ee1784db35cb480067c0a786f8b8334a30328b3ca7d417c152dde3a244e",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 569,
+      "outputTokens": 215
+    },
+    {
+      "observationId": "mg01-l1-w1:AUTHORED_CORRECT:REPEAT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "6e0e91cda5d8afbe3b98b2fb6808e9c3dd62a0ccd352c0e6554cff8a0850f7d2",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 553,
+      "outputTokens": 199
+    },
+    {
+      "observationId": "mg01-l1-w1:WRONG_FACT:REPEAT",
+      "disposition": "REJECTED_UNCHANGED_JSON_CONTRACT",
+      "rawSha256": "3b7b69a4fa62508cb0812da1c3aa42dc4a3cf322bf9d4f9992ffef4743a9a392",
+      "finishReason": "stop",
+      "markdownFenced": true,
+      "inputTokens": 553,
+      "outputTokens": 179
+    }
+  ],
+  "discoveryActualStarts": 0,
+  "originalEvidenceChanged": false,
+  "originalReportSha256": "8d009489ff052153701e123363a449c19b4106d307e132baeada7c47d3e09da2",
+  "rootCause": "All20 local outputs fenced; stop reasons and output token counts rule out observed truncation. Request had no constrained-output contract. Strict parser correctly rejected.",
+  "source": "https://github.com/ggml-org/llama.cpp/blob/b12000/tools/server/server-common.cpp",
+  "remediation": "Separate nested response_format.json_schema.schema experiment; no old repair"
+}
