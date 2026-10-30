@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261030-005",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-30",
-  "updated": "2026-10-30T05:41:36.386Z",
+  "updated": "2026-10-30T06:32:50.855Z",
   "title": "Complete BCD offline speech local model and external evidence boundaries",
   "type": "architecture",
   "owner": "WorkLingo owner",
@@ -60,7 +60,13 @@
     "at": "2026-10-30T05:41:35.962Z",
     "proposal_hash": "1b98d311054acd364a2cc56c47de35662c514bb56b17737122bf753675e46bd4"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "Safe API375,serialNode179,root37,PowerShell9,currentgovernance3; APIlint/typecheck/build; exactscope/hash checks; independentreview",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-bcd-final-report.md:1"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-30T05:41:03.646Z",
@@ -104,6 +110,15 @@
       "from": "approved",
       "to": "implementing",
       "reason": "Execute exact approved additive BCD plan and one GateC hardening source; preserve external evidence and release gates.",
+      "event": "transition",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T06:32:50.855Z",
+      "actor": "Codex coordinator",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Finite005 engineering acceptance verified: actual24WAV offline attempts, separate20start local pilot with retained failures, GateC hardening/sessionkit and expertintake tested, independent review and fullhistory audit. Human qualification and release remain blocked.",
       "event": "transition",
       "reference": null
     }
