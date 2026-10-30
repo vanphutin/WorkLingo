@@ -2,9 +2,9 @@
 {
   "schema_version": 1,
   "id": "MND-20261030-004",
-  "status": "implementing",
+  "status": "verified",
   "created": "2026-10-30",
-  "updated": "2026-10-30T04:50:45.676Z",
+  "updated": "2026-10-30T05:29:21.639Z",
   "title": "Close R12b external evidence using AI and isolated qualification",
   "type": "architecture",
   "owner": "WorkLingo owner",
@@ -60,7 +60,23 @@
     "at": "2026-10-30T04:50:45.262Z",
     "proposal_hash": "7fec789653e787818cb56f1ebe0aff07f9898e19c5cdecdc93038652f2e6a558"
   },
-  "verification": [],
+  "verification": [
+    {
+      "command": "Corrected tsx Node qualification suites; processfault suite; safe API/Web/shared/root/security/PostgreSQL regression and real disposableDB/Web",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-external-evidence-closure-report.md:1"
+    },
+    {
+      "command": "Independent five-axis review and detected/restored cost mutation; source/oracle/QA exact bindings",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-evidence-closure-final-review.md:1"
+    },
+    {
+      "command": "Full main..HEAD commit audit, finite scope and security/privacy reconciliation with disclosed P3",
+      "result": "passed",
+      "reference": "docs/qualification/beginner-r12b-final-commit-audit.md:1"
+    }
+  ],
   "history": [
     {
       "at": "2026-10-30T04:50:31.997Z",
@@ -95,6 +111,15 @@
       "from": "approved",
       "to": "implementing",
       "reason": "Execute finite approved successor and linked plan; preserve frozen historical authority",
+      "event": "transition",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T05:29:21.639Z",
+      "actor": "Codex coordinator",
+      "from": "implementing",
+      "to": "verified",
+      "reason": "Finite approved004 engineering/evidence acceptance completed with explicit external blockers; no lesson qualification or release. Independent review found no Critical/Important implementation findings.",
       "event": "transition",
       "reference": null
     }
