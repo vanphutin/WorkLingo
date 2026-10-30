@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./e2e',testMatch:'beginner-finalization.spec.ts',workers:1,fullyParallel:false,retries:0,timeout:1200000,outputDir:'C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-finalization-20261030/artifacts/playwright',reporter:[['list']],use:{baseURL:'http://127.0.0.1:33443',headless:true,viewport:{width:1280,height:900},locale:'en-US',actionTimeout:60000,navigationTimeout:120000}});
