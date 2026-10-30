@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { ProviderError } from '../domain/provider-errors.js';
+import { languageEvaluationSchema } from '../domain/language-evaluation.schema.js';
 import { FakeLanguageEvaluationAdapter } from './fake-language-evaluation.adapter.js';
 import { FakeSpeechToTextAdapter } from './fake-speech-to-text.adapter.js';
 
@@ -9,6 +10,32 @@ const asciiBytes = (value: string) => Uint8Array.from(
 );
 
 describe('fake AI provider contracts', () => {
+  it.each([
+    { learnerResponse: 'Hi', expected: null },
+    { learnerResponse: 'Hello, I am Lan from the support team.', expected: 'Hello, I am Lan from the support team.' },
+  ])('returns schema-valid feedback for blank Beginner references ($learnerResponse)', async ({ learnerResponse, expected }) => {
+    for (const referenceText of ['', '   ', undefined]) {
+      const result = await new FakeLanguageEvaluationAdapter().evaluate({
+        activityType: 'writing', learnerResponse, referenceText,
+        levelCode: 'BEGINNER', prompt: 'Introduce yourself.', requiredPhrases: [],
+        rubricId: 'beginner-short-writing', rubricVersion: '1',
+      });
+      expect(languageEvaluationSchema.safeParse(result).success).toBe(true);
+      expect(result.feedback.correctedExample).toBe(expected);
+    }
+  });
+
+  it.each(['Hi', 'Hello, I am Lan from the support team.'])('preserves meaningful legacy reference bytes (%s)', async (learnerResponse) => {
+    const referenceText = '  Hello, I am Mai.  ';
+    const result = await new FakeLanguageEvaluationAdapter().evaluate({
+      activityType: 'writing', learnerResponse, referenceText,
+      levelCode: 'FOUNDATION_1', prompt: 'Introduce yourself.', requiredPhrases: [],
+      rubricId: 'foundation-workplace-writing', rubricVersion: '1',
+    });
+    expect(languageEvaluationSchema.safeParse(result).success).toBe(true);
+    expect(result.feedback.correctedExample).toBe(referenceText);
+  });
+
   it('returns deterministic production-shaped speech output', async () => {
     const provider = new FakeSpeechToTextAdapter();
     const input = {

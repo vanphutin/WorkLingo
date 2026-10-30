@@ -30,6 +30,7 @@ export class FakeLanguageEvaluationAdapter extends LanguageEvaluationPort {
       });
     }
     const response = input.learnerResponse.trim();
+    const referenceText = input.referenceText?.trim() ? input.referenceText : undefined;
     const normalizedResponse = response.toLocaleLowerCase('en-US');
     const hasRequiredPhrases = input.requiredPhrases.every((phrase) => (
       normalizedResponse.includes(phrase.toLocaleLowerCase('en-US'))
@@ -48,7 +49,7 @@ export class FakeLanguageEvaluationAdapter extends LanguageEvaluationPort {
           summary: 'Câu trả lời chưa hoàn thành đúng yêu cầu của nhiệm vụ.',
           strengths: response.length > 0 ? ['Bạn đã bắt đầu đưa ra câu trả lời.'] : [],
           improvements: ['Trả lời trực tiếp yêu cầu và dùng đầy đủ cụm từ mục tiêu.'],
-          correctedExample: input.referenceText ?? null,
+          correctedExample: referenceText ?? null,
         },
       };
     }
@@ -68,7 +69,7 @@ export class FakeLanguageEvaluationAdapter extends LanguageEvaluationPort {
         improvements: hasRequiredPhrases
           ? ['Tiếp tục luyện để câu trả lời tự nhiên hơn.']
           : ['Bổ sung đầy đủ cụm từ mục tiêu vào câu trả lời.'],
-        correctedExample: input.referenceText ?? response,
+        correctedExample: referenceText ?? response,
       },
     };
   }
