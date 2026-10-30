@@ -32,8 +32,9 @@ Canonical backlog: [Implementation roadmap](../docs/IMPLEMENTATION_ROADMAP.md).
 | [MND-20261030-004](items/MND-20261030-004-architecture-close-r12b-external-evidence-using-ai-and-isolated-qualification.md) | Close R12b external evidence using AI and isolated qualification | architecture | verified | P1 | WorkLingo owner |
 | [MND-20261030-005](items/MND-20261030-005-architecture-complete-bcd-offline-speech-local-model-and-external-evidence-boundari.md) | Complete BCD offline speech local model and external evidence boundaries | architecture | verified | P1 | WorkLingo owner |
 | [MND-20261030-006](items/MND-20261030-006-architecture-finalize-strict-local-contract-reviewer-workbench-and-real-browser-orc.md) | Finalize strict local contract reviewer workbench and real browser orchestration | architecture | implementing | P1 | WorkLingo owner |
+| [MND-20261030-007](items/MND-20261030-007-bug-preserve-all-eight-activities-when-creating-beginner-learner-sessions.md) | Preserve all eight activities when creating Beginner learner sessions | bug | implementing | P1 | WorkLingo owner |
 | [MND-20261014-001](items/MND-20261014-001-architecture-disambiguate-decision-identifiers.md) | Disambiguate decision identifiers | architecture | captured | P2 | unassigned |
 | [MND-20261026-002](items/MND-20261026-002-infrastructure-retire-only-the-owned-temporary-beginner-worker-and-preserve-main-data.md) | Retire only the owned temporary Beginner worker and preserve main database data | infrastructure | verified | P2 | Codex |
 | [MND-20261028-002](items/MND-20261028-002-learning-content-correct-bounded-beginner-pilot-tasks-while-preserving-historical-sourc.md) | Correct bounded Beginner pilot tasks while preserving historical source and audio evidence | learning-content | implementing | P2 | Codex |
 
-Total: 30; active: 30; archived: 0.
+Total: 31; active: 31; archived: 0.

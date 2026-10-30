@@ -1,0 +1,27 @@
+{
+  "mission": "WORKLINGO-R12B-FINALIZATION-PLANNER-FIX-20261030",
+  "baseline": "4ce191e",
+  "dependency": "MND-20261030-006 additivework continues independently; productionfix separated",
+  "authority": "Actualhuman finalizationattachment699f7875b3e1c02bc62e08ceaae02acd1c89cfd41748c309fd1967d11eaa304c plus directlocalbrowser/fixuntilpass instruction, recorded006authorization; no newquestion needed",
+  "allowlist": {
+    "modify": [
+      "apps/api/src/learning-sessions/application/session-creation.service.ts",
+      "apps/api/src/learning-sessions/application/session-creation.service.spec.ts",
+      "apps/api/src/learning-sessions/domain/session-planner.ts",
+      "apps/api/src/learning-sessions/domain/session-planner.spec.ts"
+    ],
+    "create": [
+      "mandate/reports/2026-10-30-r12b-planner-fix-scope.json",
+      "mandate/reports/2026-10-30-r12b-planner-fix-authorization.md",
+      "mandate/reports/2026-10-30-r12b-planner-fix-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-007-bug-preserve-all-eight-activities-when-creating-beginner-learner-sessions.md"
+    ]
+  },
+  "expected": "Dispatch WorkLingoLesson/1.2 learningmissions to existingplanBeginnerSession exactpinnedversion45min; genericlegacy/Foundation/placement/IELTS unchanged. Rejectunsupportedduration beforepersistence. Add8sourceparameterizedproductionboundaryregression with8IDsandcorrectorder; retainidempotency.",
+  "runtime": "Reuse006owneddisposableDB/API/Web, retainfailed4activitysessionreceipts beforerecreatingownedfixtures; no productiondatachange",
+  "preserve": "No source/audio/rubric/parser/schema changes; no historicaldecisions rewritten; no passingtestsweakened",
+  "rollback": "Revert twoproductionboundaryfiles only; retainregression/evidence and originalfailedreceipts; no destructive sharedhistory"
+}

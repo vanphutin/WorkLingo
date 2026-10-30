@@ -1,0 +1,49 @@
+{
+  "title": "Preserve all eight activities when creating Beginner learner sessions",
+  "type": "bug",
+  "owner": "WorkLingo owner",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "s",
+  "impact": 4,
+  "problem": "Actual isolatedP01learnerUIcreates45minuteBeginnerwithgenericplannerandonlyfouractivities: skipsreading2/3andlistening2/3. AvailabledurationgenericmayofferunsupportedBeginnerdurations.",
+  "value": "Give actuallearners all eight authoredactivities in the exact45minutepinnedBeginnerplan while preservinglegacyplans.",
+  "scope": [
+    "Finiteallowlist: mandate/reports/2026-10-30-r12b-planner-fix-scope.json SHA256 e257779abff0ef01675abccbeb42a940b620721f88fb0d7c31d4643aa5376cc8.",
+    "Dispatch learnercreation toexistingBeginnerplanner byexactformat; availabilityonly45 forvalidBeginner; preservelegacy/placement/IELTS andidempotency."
+  ],
+  "dedupe_key": "r12b:learner-session:generic-dispatch-drops-four-beginner-activities:36bab10",
+  "evidence": [
+    {
+      "kind": "code",
+      "reference": "apps/api/src/learning-sessions/application/session-creation.service.ts:72",
+      "observation": "CallsplanFoundationSessionunconditionally instead ofexistingplanBeginnerSession."
+    },
+    {
+      "kind": "code",
+      "reference": "apps/api/src/learning-sessions/domain/beginner-session-planner.ts:10",
+      "observation": "Existingdedicatedboundaryselects3reading3listening1speaking1writing45minuteexactversion."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-30-r12b-planner-fix-authorization.md:1",
+      "observation": "Actualcurrenthumanmissionauthorizesfixes fromrealbrowser; coordinatorverifiedspecificcurrentinstruction."
+    }
+  ],
+  "acceptance": [
+    "Testfirstall8sourceBeginnercreationretains8orderedIDsandexactversion45; actualpreviousfailureREDthenGREEN.",
+    "AvailabledurationvalidBeginner45only; invalidsnapshot/durationrejectbeforepersistence, genericlegacyplacementIE LTSregressionsunchanged.",
+    "Actualisolated3×8browserjourneys64assessedactivitieseachafterfix, failuresretained; no content/humangate change; lint/typecheck/build/review."
+  ],
+  "risk": {
+    "level": "medium",
+    "breaking": false,
+    "data_change": false,
+    "external_effect": false,
+    "rollback": "Revert only scopedfourlocalproduction/testfiles; retain allfailedsessionreceipts; no sharedDB/historyrewrite."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-30-r12b-finalization.md",
+  "sprint_reference": null,
+  "body": "## Observed root cause\n\nP01actual browser saw1of4activities and afterreading1 jumpedlistening1; E2Eexpectedreading2failed. SessionCreationServicecalls genericplanFoundationSession. DedicatedexactBeginnerplannerisalreadyused inAdminpreviewbutnotlearnercreation. Availabilitymustmatchactualsupported45minuteBeginnerplan, notgeneral45/60/90path.\n\n## Scope\n\nExactallowlistSHAe257779abff0ef01675abccbeb42a940b620721f88fb0d7c31d4643aa5376cc8; fourfilesonly. Addtestbeforefix, dispatchformat-specificplanner, protectlegacyandinvaliddurationbeforewrite. Existing006additiveworkandindependentmodelpilotcontinue; nonewprovidercall/content/schemachange.\n\n## Authority\n\nCoordinatorverifiedactualhumanautonomousbrowser/fixrequest; fullmissionexplicitlyallowssafeintegrationfixesandlocalcommits. Doesnotwaiveexpert/realhuman/releasegates."
+}
