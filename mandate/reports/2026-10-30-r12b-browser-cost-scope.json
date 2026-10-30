@@ -1,0 +1,78 @@
+{
+  "mission": "WL-R12B-BROWSER-COST-001",
+  "baseline": {
+    "head": "a4685e7cd42d8dbbe949b9d5d1e8429d8bb1694c",
+    "branch": "codex/foundation-basic-readiness",
+    "historicalMandates": [
+      "MND-20261029-005",
+      "MND-20261030-001",
+      "MND-20261030-002"
+    ]
+  },
+  "authority": {
+    "syntheticBrowser": true,
+    "localCommits": true,
+    "costOptimization": true,
+    "gateCTooling": true,
+    "realProviderCalls": false,
+    "realParticipants": false,
+    "database": false,
+    "envOrCredentials": false,
+    "release": false
+  },
+  "allowlist": {
+    "modify": [
+      "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts",
+      "apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.spec.ts",
+      "apps/api/test/beginner-pilot/provider-calibration.ts",
+      "apps/api/test/beginner-pilot/provider-calibration.test.ts"
+    ],
+    "create": [
+      "apps/api/test/beginner-pilot/cost-benchmark.ts",
+      "apps/api/test/beginner-pilot/cost-benchmark.test.ts",
+      "apps/api/test/beginner-pilot/browser-simulation.ts",
+      "apps/api/test/beginner-pilot/browser-simulation.test.ts",
+      "apps/api/test/beginner-pilot/browser-simulation.test-server.ts",
+      "apps/api/test/beginner-pilot/gate-c-session.ts",
+      "apps/api/test/beginner-pilot/gate-c-session.test.ts",
+      "apps/api/test/beginner-pilot/browser-cost-governance.test.ts",
+      "tools/beginner-pilot/browser-qualification.mjs",
+      "docs/superpowers/plans/2026-10-30-r12b-browser-cost.md",
+      "docs/qualification/beginner-r12b-browser-qualification-report.md",
+      "docs/qualification/beginner-r12b-synthetic-personas.json",
+      "docs/qualification/beginner-r12b-cost-engineering-report.md",
+      "docs/qualification/beginner-r12b-cost-benchmark.json",
+      "docs/qualification/beginner-r12b-gate-c-orchestration-report.md",
+      "docs/qualification/beginner-r12b-gate-c-operator.md",
+      "docs/qualification/beginner-r12b-gate-c-tooling-verification.json",
+      "docs/qualification/beginner-r12b-browser-results.json",
+      "docs/qualification/beginner-r12b-browser-cost-final-review.md",
+      "mandate/reports/2026-10-30-r12b-browser-cost-authorization.md",
+      "mandate/reports/2026-10-30-r12b-browser-cost-scope.json",
+      "mandate/reports/2026-10-30-r12b-browser-cost-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-003-architecture-isolate-synthetic-browser-qualification-and-reduce-discovery-wire-cost.md"
+    ]
+  },
+  "runtime": {
+    "root": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-browser-cost-001",
+    "boundedSubtrees": [
+      "frontend-snapshot (tracked frontend/config sources only, no .env; node_modules junctions; generated .next files)",
+      "harness (synthetic-only request/results JSON and owned logs)",
+      "gate-c-tests (synthetic timer fixtures only)",
+      "screenshots (P01-desktop.png, P02-mobile.png, P03-transfer.png, completed.png, gate-c-status.png)"
+    ],
+    "loopbackPorts": [
+      33310,
+      33311
+    ],
+    "realGateCPrivateOutput": false
+  },
+  "budget": {
+    "inkPoints": 1.5,
+    "additionalUSD": 0,
+    "liveCalls": 0
+  }
+}
