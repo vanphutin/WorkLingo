@@ -23,7 +23,7 @@ export interface LearningSessionTestContext {
   resetLearners(): Promise<void>;
 }
 
-export async function createLearningSessionTestContext(prefix: string): Promise<LearningSessionTestContext> {
+export async function createLearningSessionTestContext(prefix: string, options: { migrationConfig?: string } = {}): Promise<LearningSessionTestContext> {
   const schemaName = `${prefix}_${randomUUID().replaceAll('-', '')}`;
   const baseUrl = process.env.TEST_DATABASE_URL ??
     'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
@@ -35,7 +35,8 @@ export async function createLearningSessionTestContext(prefix: string): Promise<
   process.env.WORKLINGO_DATA_DIR = dataDirectory;
 
   const prismaCli = createRequire(path.resolve('package.json')).resolve('prisma/build/index.js');
-  const migration = spawnSync(process.execPath, [prismaCli, 'migrate', 'deploy'], {
+  const migrationArgs = [prismaCli, 'migrate', 'deploy', ...(options.migrationConfig ? ['--config', options.migrationConfig] : [])];
+  const migration = spawnSync(process.execPath, migrationArgs, {
     encoding: 'utf8', env: { ...process.env, DATABASE_URL: url.toString() }, timeout: 30_000,
   });
   if (migration.status !== 0) throw new Error(migration.stderr || migration.stdout);

@@ -10,7 +10,7 @@ import { createLearningSessionTestContext, registerLearner, type LearningSession
 
 describe('R2 actual Admin to Learner progression', () => {
   let context: LearningSessionTestContext;
-  beforeAll(async () => { context = await createLearningSessionTestContext('r2_vertical'); }, 60_000);
+  beforeAll(async () => { context = await createLearningSessionTestContext('r2_vertical', { migrationConfig: 'prisma.r2.config.ts' }); }, 60_000);
   afterAll(async () => { await context?.close(); });
 
   it('publishes two lessons, enrolls, completes without AI mastery, unlocks and resumes immutable pins', async () => {
@@ -121,4 +121,3 @@ describe('R2 actual Admin to Learner progression', () => {
     expect(await context.database.activityAttempt.count({ where: { sessionId: session.id } })).toBe(attemptIds.length);
   }, 60_000);
 });
-

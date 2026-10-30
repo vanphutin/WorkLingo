@@ -8,7 +8,7 @@ import { createLearningSessionTestContext, registerLearner } from './learning-se
 it('serves only an isolated R2 browser qualification fixture until explicit stop', async () => {
   if (process.env.WL_R2_BROWSER !== '1') throw new Error('R2_BROWSER_EXPLICIT_RUN_ONLY');
   const root = 'C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030';
-  const context = await createLearningSessionTestContext('r2_browser');
+  const context = await createLearningSessionTestContext('r2_browser', { migrationConfig: 'prisma.r2.config.ts' });
   try {
     mkdirSync(root, { recursive: true });
     const accounts = { admin: { email: `admin-${randomUUID()}@example.test`, password: 'Isolated-R2-Admin-123!' }, learner: { email: `learner-${randomUUID()}@example.test`, password: 'Isolated-R2-Learner-123!' } };
