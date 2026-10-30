@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import { test } from 'node:test';
 import * as fs from 'node:fs';
 import { resolve } from 'node:path';
-import { spawn, type ChildProcess } from 'node:child_process';
+import { execFileSync, spawn, type ChildProcess } from 'node:child_process';
 import { QualificationRuntime, type SCENARIOS, runtimePath } from './qualification-runtime.js';
 const files = ['state.json','state.pending','results.pending','review.pending','anchor.json','journal.jsonl'];
 function clean(s: typeof SCENARIOS[number]) {
@@ -181,4 +181,36 @@ test('evidence replay rechecks identifier and privacy boundaries after hash vali
   }
  }finally{fs.writeFileSync(journal,originalJournal);fs.writeFileSync(state,originalState);}
  assert.equal(r.recoverLedger().evidence.length,1);
+});
+
+for(const fault of ['disk-full-before-append','disk-full-partial-append','fsync-after-append'] as const)test(fault+' stops before transport and retains conservative recovery',()=>{
+ const scenario='rename-failure';clean(scenario);
+ const code=`
+ require(${JSON.stringify(require.resolve('tsx/cjs'))});
+ const fs=require('node:fs'),{syncBuiltinESMExports}=require('node:module');
+ const original={open:fs.openSync,write:fs.writeFileSync,sync:fs.fsyncSync};const paths=new Map();
+ fs.openSync=function(path,...args){const fd=original.open.call(fs,path,...args);paths.set(fd,String(path));return fd;};
+ fs.writeFileSync=function(fd,text,...args){
+  if(paths.get(fd)?.endsWith('journal.jsonl')&&String(text).length&&${JSON.stringify(fault)}!=='fsync-after-append'){
+   if(${JSON.stringify(fault)}==='disk-full-partial-append')original.write.call(fs,fd,String(text).slice(0,20),...args);
+   const error=Error('INJECTED_ENOSPC');error.code='ENOSPC';throw error;
+  }return original.write.call(fs,fd,text,...args);
+ };
+ fs.fsyncSync=function(fd){if(paths.get(fd)?.endsWith('journal.jsonl')&&fs.fstatSync(fd).size>0&&${JSON.stringify(fault)}==='fsync-after-append')throw Error('INJECTED_FSYNC');return original.sync.call(fs,fd);};
+ syncBuiltinESMExports();
+ const {QualificationRuntime}=require(${JSON.stringify(resolve(__dirname,'qualification-runtime.ts'))});
+ const r=new QualificationRuntime(${JSON.stringify(scenario)});let transportCalls=0;
+ (async()=>{let failure;try{await r.withAccountingLock(()=>{r.reserveRequest(${JSON.stringify(start('fault'))});transportCalls++;});}catch(e){failure=e.message;}
+ fs.openSync=original.open;fs.writeFileSync=original.write;fs.fsyncSync=original.sync;syncBuiltinESMExports();
+ let requests=null,recoveryError=null,nextError=null;
+ try{requests=r.recoverLedger().requests.map(x=>x.effectiveStatus);}catch(e){recoveryError=e.message;}
+ if(requests?.length)try{await r.withAccountingLock(()=>r.reserveRequest(${JSON.stringify(start('next',120000))}));}catch(e){nextError=e.message;}
+ console.log(JSON.stringify({failure,transportCalls,requests,recoveryError,nextError}));})().catch(()=>process.exit(9));`;
+ try{
+  const result=JSON.parse(execFileSync(process.execPath,['-e',code],{encoding:'utf8',env:{SystemRoot:process.env.SystemRoot,PATH:process.env.PATH,TEMP:process.env.TEMP}}));
+  assert.match(result.failure,/INJECTED_ENOSPC|INJECTED_FSYNC/);assert.equal(result.transportCalls,0);
+  if(fault==='disk-full-before-append')assert.deepEqual(result.requests,[]);
+  if(fault==='disk-full-partial-append')assert.match(result.recoveryError,/JOURNAL_TRUNCATED/);
+  if(fault==='fsync-after-append'){assert.deepEqual(result.requests,['UNKNOWN']);assert.match(result.nextError,/UNKNOWN_PENDING/);}
+ }finally{clean(scenario);}
 });
