@@ -1,5 +1,7 @@
 import {
   learningProgramCatalogSchema,
+  createProgramSchema, updateProgramSchema, publishProgramSchema, enrollProgramSchema, adminProgramSchema, adminProgramListSchema,
+  type CreateProgramInput, type UpdateProgramInput, type PublishProgramInput, type EnrollProgramInput,
   activateProgramSchema,
   programContextSchema,
   type ActivateProgramInput,
@@ -38,7 +40,13 @@ export class LearningProgramClient {
     return programContextSchema.parse(await (await this.request('/me/program-context', 'PUT', body)).json());
   }
 
-  private async request(path: string, method: 'GET' | 'PUT', body?: ActivateProgramInput): Promise<Response> {
+  async listPrograms() { return adminProgramListSchema.parse(await (await this.request('/admin/learning-programs', 'GET')).json()); }
+  async createProgram(input: CreateProgramInput) { return adminProgramSchema.parse(await (await this.request('/admin/learning-programs', 'POST', createProgramSchema.parse(input))).json()); }
+  async updateProgram(id: string, input: UpdateProgramInput) { return adminProgramSchema.parse(await (await this.request(`/admin/learning-programs/${z.uuid().parse(id)}`, 'PUT', updateProgramSchema.parse(input))).json()); }
+  async publishProgram(id: string, input: PublishProgramInput) { return adminProgramSchema.parse(await (await this.request(`/admin/learning-programs/${z.uuid().parse(id)}/publish`, 'POST', publishProgramSchema.parse(input))).json()); }
+  async enrollProgram(input: EnrollProgramInput): Promise<ProgramContextDto> { return programContextSchema.parse(await (await this.request('/me/program-enrollments', 'POST', enrollProgramSchema.parse(input))).json()); }
+
+  private async request(path: string, method: 'GET' | 'PUT' | 'POST', body?: object): Promise<Response> {
     let response: Response;
     try {
       response = await fetch(`${this.baseUrl}${path}`, {

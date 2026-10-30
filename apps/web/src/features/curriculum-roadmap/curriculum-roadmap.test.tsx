@@ -29,6 +29,21 @@ const roadmap: CurriculumRoadmapDto = {
 afterEach(cleanup);
 
 describe('CurriculumRoadmap', () => {
+  it.each([
+    ['en', 'Completion is based on required activities saved by the server. Mastery is assessed separately.', 'Not completed'],
+    ['vi', 'Việc hoàn thành dựa trên các hoạt động bắt buộc được lưu trên máy chủ. Mức độ thành thạo được đánh giá riêng.', 'Chưa hoàn thành'],
+  ] as const)('explains activity completion separately from mastery in %s', (locale, note, pending) => {
+    render(<LocaleProvider initialLocale={locale}><CurriculumRoadmap roadmap={{ ...roadmap, targetedStartSupported: true }} /></LocaleProvider>);
+    expect(screen.getByText(note)).toBeInTheDocument();
+    expect(screen.getByText('Clarify a request').closest('li')).toHaveTextContent(pending);
+  });
+
+  it.each([false, undefined])('preserves evaluated evidence copy for legacy capability %s', (targetedStartSupported) => {
+    render(<CurriculumRoadmap roadmap={{ ...roadmap, targetedStartSupported }} />);
+    expect(screen.getByText('Progress is based on evaluated evidence saved by the server.')).toBeInTheDocument();
+    expect(screen.getByText('Clarify a request').closest('li')).toHaveTextContent('Pending evaluation');
+  });
+
   it('localizes roadmap status and actions without translating curriculum content', () => {
     render(<LocaleProvider initialLocale="vi"><CurriculumRoadmap roadmap={roadmap} /></LocaleProvider>);
     expect(screen.getByRole('article', { name: 'Handle a workplace request' })).toHaveTextContent('Đang học');

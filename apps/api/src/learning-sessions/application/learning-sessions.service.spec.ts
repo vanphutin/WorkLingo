@@ -134,6 +134,7 @@ describe('LearningSessionsService state transitions', () => {
       learnerProfile: { findUnique: vi.fn().mockResolvedValue({ currentLevelCode: 'FOUNDATION_1', onboardingStatus: 'COMPLETE' }) },
       $transaction: vi.fn(async (work) => work({
         $queryRaw: vi.fn(),
+        learnerProgramEnrollment: { findUnique: vi.fn().mockResolvedValue({ curriculumRevisionIds: [] }) },
         learningSession: { findUnique: vi.fn().mockResolvedValue(null), findMany: vi.fn().mockResolvedValue([]) },
       })),
     } as unknown as PrismaService;

@@ -154,7 +154,15 @@ enum ProgramAvailabilityStatus {
   DISABLED
 }
 
+enum ProgramProgressionPolicy {
+  MASTERY
+  ACTIVITY_COMPLETION
+}
+
 model LearningProgram {
+  revision Int @default(1)
+  progressionPolicy ProgramProgressionPolicy @default(MASTERY)
+  curriculumRevisionIds String[] @default([]) @db.Uuid
   vocabularyBindings VocabularyCurriculumBinding[]
   vocabularyAssignments VocabularyProgramAssignment[]
   id                 String                     @id @default(uuid()) @db.Uuid
@@ -174,6 +182,7 @@ model LearningProgram {
 }
 
 model LearnerProgramEnrollment {
+  curriculumRevisionIds String[] @default([]) @db.Uuid
   id                    String                 @id @default(uuid()) @db.Uuid
   learnerId             String                 @db.Uuid
   programId             String                 @db.Uuid

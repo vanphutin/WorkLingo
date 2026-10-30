@@ -28,12 +28,13 @@ export class CurriculumEligibilityService {
       });
     }
     const context = await this.programContext.resolve(learnerId, transaction);
+    const enrollment = await transaction.learnerProgramEnrollment.findUnique({ where: { id: context.enrollmentId }, select: { curriculumRevisionIds: true } });
     const mission = await transaction.mission.findUnique({
       where: { id: missionId },
       include: {
         curriculumDefinition: { select: { id: true } },
         curriculumRevisions: {
-          where: { status: 'PUBLISHED' }, orderBy: { revision: 'desc' }, take: 1,
+          where: enrollment?.curriculumRevisionIds.length ? { id: { in: enrollment.curriculumRevisionIds } } : { status: 'PUBLISHED' }, orderBy: { revision: 'desc' }, take: 1,
           include: {
             lessons: { include: { lessonVersion: { select: { status: true } } } },
             prerequisites: { include: { prerequisiteRevision: { select: { status: true } } } },
@@ -49,13 +50,14 @@ export class CurriculumEligibilityService {
       ...(mission.level.status !== 'PUBLISHED' ? ['level_unpublished'] : []),
       ...(mission.level.path.status !== 'PUBLISHED' ? ['path_unpublished'] : []),
     ];
-    const revision = mission.curriculumRevisions[0];
+    const revision = enrollment?.curriculumRevisionIds.length ? mission.curriculumRevisions.find(item => enrollment.curriculumRevisionIds.includes(item.id)) : mission.curriculumRevisions[0];
+    if (!revision && enrollment?.curriculumRevisionIds.length) return { revisionId: null, available: false, reasons: [...hierarchyReasons, 'curriculum_not_enrolled'] };
     if (!revision) {
       return mission.curriculumDefinition
         ? { revisionId: null, available: false, reasons: [...hierarchyReasons, 'curriculum_not_published'] }
         : { revisionId: null, available: hierarchyReasons.length === 0, reasons: hierarchyReasons };
     }
-    const reasons = [...hierarchyReasons];
+    const reasons = [...hierarchyReasons, ...(revision.status !== 'PUBLISHED' ? ['curriculum_unpublished'] : [])];
     if (!revision.lessons.length) reasons.push('no_bound_lessons');
     if (revision.lessons.some((binding) => binding.lessonVersion.status !== 'PUBLISHED')) {
       reasons.push('bound_lesson_unavailable');

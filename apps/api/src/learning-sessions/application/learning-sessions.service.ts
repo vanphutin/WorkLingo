@@ -10,6 +10,8 @@ import {
 } from '@nestjs/common';
 import { Prisma, type Activity, type ActivityAttempt } from '@prisma/client';
 import {
+  createCurriculumSessionSchema,
+  type CreateCurriculumSessionInput,
   sessionDurationSchema,
   sessionPlanSchema,
   supportedSessionDurations,
@@ -85,6 +87,22 @@ export class LearningSessionsService {
 
   private async selectCurriculum(learnerId: string, transaction: Prisma.TransactionClient) {
     const context = await this.programContext.resolve(learnerId, transaction);
+    const enrollment = await transaction.learnerProgramEnrollment.findUnique({ where: { id: context.enrollmentId }, select: { curriculumRevisionIds: true } });
+    if (enrollment?.curriculumRevisionIds.length) {
+      const revisions = await transaction.curriculumRevision.findMany({ where: { id: { in: enrollment.curriculumRevisionIds } }, select: { id: true, missionId: true } });
+      const completions = await transaction.curriculumCompletion.findMany({ where: { enrollmentId: context.enrollmentId }, select: { curriculumRevisionId: true } });
+      const completed = new Set(completions.map(item => item.curriculumRevisionId));
+      const candidates = [...enrollment.curriculumRevisionIds].sort((left,right) => Number(completed.has(left)) - Number(completed.has(right)));
+      for (const revisionId of candidates) {
+        const revision = revisions.find(item => item.id === revisionId);
+        if (!revision) continue;
+        const eligibility = await this.curriculumEligibility.resolve(learnerId, revision.missionId, transaction);
+        if (!eligibility.available || eligibility.revisionId !== revisionId) continue;
+        const mission = await this.curriculum.getPublishedMissionForRevision(revisionId, transaction);
+        return { curriculumRevisionId: revisionId, mission, reviewQueue: [] };
+      }
+      throw new UnprocessableEntityException({ code: 'CURRICULUM_UNAVAILABLE', message: 'No eligible enrolled curriculum' });
+    }
     const [missions, reviewQueue, completed] = await Promise.all([
       this.curriculum.getPublishedMissionsForLevel(context.levelCode, 'learning', transaction, context.programId),
       this.mastery.getReviewQueue(learnerId, { programId: context.programId }),
@@ -179,6 +197,34 @@ export class LearningSessionsService {
       }
       throw error;
     }
+  }
+
+  async createCurriculumSession(learnerId: string, raw: CreateCurriculumSessionInput): Promise<LearningSessionDto> {
+    const parsed = createCurriculumSessionSchema.safeParse(raw);
+    if (!parsed.success) throw new BadRequestException('Invalid curriculum session input');
+    const input = parsed.data;
+    await this.requireCompletedOnboarding(learnerId);
+    return this.database.$transaction(async transaction => {
+      await transaction.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
+      const existing = await transaction.learningSession.findUnique({ where: { learnerId_clientSessionId: { learnerId, clientSessionId: input.clientSessionId } }, include: learningSessionInclude });
+      if (existing) {
+        if (existing.missionId !== input.missionId || existing.curriculumRevisionId !== input.expectedCurriculumRevisionId || existing.durationMinutes !== input.durationMinutes) throw new ConflictException({code:'IDEMPOTENCY_CONFLICT',message:'Session UUID is already associated with another target'});
+        return this.toSessionDto(existing);
+      }
+      const context = await this.programContext.resolve(learnerId, transaction);
+      const enrollment = await transaction.learnerProgramEnrollment.findUnique({ where: { id: context.enrollmentId } });
+      const program = await transaction.learningProgram.findUnique({ where: { id: context.programId } });
+      if (!enrollment?.curriculumRevisionIds.includes(input.expectedCurriculumRevisionId)) {
+        throw new ConflictException({code:'CURRICULUM_REVISION_CONFLICT',message:'Curriculum target changed'});
+      }
+      if (program?.progressionPolicy !== 'ACTIVITY_COMPLETION' || !['AVAILABLE','BETA'].includes(program.availabilityStatus)) throw new UnprocessableEntityException({code:'CURRICULUM_UNAVAILABLE',message:'Curriculum is not enrolled or available'});
+      const eligibility = await this.curriculumEligibility.resolve(learnerId, input.missionId, transaction);
+      if (eligibility.revisionId !== input.expectedCurriculumRevisionId) throw new ConflictException({code:'CURRICULUM_REVISION_CONFLICT',message:'Curriculum target changed'});
+      if (!eligibility.available) throw new UnprocessableEntityException({code:'CURRICULUM_UNAVAILABLE',message:'Curriculum is locked',reasons:eligibility.reasons});
+      const mission = await this.curriculum.getPublishedMissionForRevision(input.expectedCurriculumRevisionId, transaction);
+      if (mission.id !== input.missionId || mission.purpose !== 'learning') throw new ConflictException('Curriculum mission mismatch');
+      return this.sessionCreation.create(transaction, {clientSessionId: input.clientSessionId, curriculumRevisionId: input.expectedCurriculumRevisionId, durationMinutes: input.durationMinutes, learnerId, mission, reviewItems: []});
+    }, {timeout:15000});
   }
 
   async getSession(learnerId: string, id: string): Promise<LearningSessionDto> {

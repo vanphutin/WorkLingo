@@ -22,6 +22,8 @@ export class LearningProgramsService {
           orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }],
           select: {
             availabilityStatus: true,
+            progressionPolicy: true,
+            curriculumRevisionIds: true,
             description: true,
             iconKey: true,
             learningGoal: true,
@@ -51,6 +53,8 @@ export class LearningProgramsService {
               availabilityStatus: row.availabilityStatus,
               slug: row.slug,
               ieltsReady,
+              progressionPolicy: row.progressionPolicy,
+              curriculumRevisionIds: row.curriculumRevisionIds,
             }),
             availabilityStatus: row.availabilityStatus,
             description: row.description,

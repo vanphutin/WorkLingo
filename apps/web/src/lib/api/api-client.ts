@@ -292,6 +292,11 @@ export class ApiClient {
     );
   }
 
+  async createCurriculumSession(input: { missionId: string; expectedCurriculumRevisionId: string; durationMinutes: number; clientSessionId: string }): Promise<LearningSessionDto> {
+    const body = z.object({ missionId: z.uuid(), expectedCurriculumRevisionId: z.uuid(), durationMinutes: sessionDurationSchema, clientSessionId: z.uuid() }).strict().parse(input);
+    return this.request('/learning-sessions/curriculum', { method: 'POST', body: JSON.stringify(body) }, learningSessionDtoSchema);
+  }
+
   async getSession(id: string): Promise<LearningSessionDto> {
     return this.request(`/learning-sessions/${id}`, { method: 'GET' }, learningSessionDtoSchema);
   }

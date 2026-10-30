@@ -7,11 +7,14 @@ import { LearningProgramsService } from './application/learning-programs.service
 import { LearningProgramsController } from './learning-programs.controller.js';
 import { ProgramContextService } from './application/program-context.service.js';
 import { ProgramContextController } from './program-context.controller.js';
+import { ProgramEnrollmentController } from './program-enrollment.controller.js';
+import { AdminProgramsController } from './admin-programs.controller.js';
+import { AdminProgramsService } from './application/admin-programs.service.js';
 
 @Module({
-  controllers: [LearningProgramsController, ProgramContextController],
+  controllers: [LearningProgramsController, ProgramContextController, AdminProgramsController, ProgramEnrollmentController],
   exports: [ProgramContextService],
   imports: [DatabaseModule, CurriculumModule],
-  providers: [IeltsTopicAdminService, LearningProgramsService, ProgramContextService],
+  providers: [IeltsTopicAdminService, LearningProgramsService, ProgramContextService, AdminProgramsService],
 })
 export class LearningProgramsModule {}
