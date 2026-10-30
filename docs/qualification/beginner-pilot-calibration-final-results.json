@@ -30,49 +30,73 @@
       "path": "content/beginner/pilot/mg01-l1.lesson.txt",
       "historicalSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
       "currentSha256": "1b09580254b095af238de85207948d3f33e2f92a04c6ee4983fc969aa53dcc79",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "1b09580254b095af238de85207948d3f33e2f92a04c6ee4983fc969aa53dcc79",
+      "normalizedLFSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg01-l2.lesson.txt",
       "historicalSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
       "currentSha256": "87ef22edfc9c3ef3b0b87494f70c2e0eeea995d866b0fa13afde83b1fd86ed12",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "87ef22edfc9c3ef3b0b87494f70c2e0eeea995d866b0fa13afde83b1fd86ed12",
+      "normalizedLFSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg01-l3.lesson.txt",
       "historicalSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
       "currentSha256": "a8aaecba84a4784b35eb4e15994e072936dfcbd26b1efe0045ac69159f13f641",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "a8aaecba84a4784b35eb4e15994e072936dfcbd26b1efe0045ac69159f13f641",
+      "normalizedLFSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg01-l4.lesson.txt",
       "historicalSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
       "currentSha256": "601858408e3f15a72df13bd0d331144c39fccd6d430eaa43467de784f7dc0049",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "601858408e3f15a72df13bd0d331144c39fccd6d430eaa43467de784f7dc0049",
+      "normalizedLFSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg02-l1.lesson.txt",
       "historicalSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
       "currentSha256": "70162a73084998aa17f3456511b7947871ea10b597b331ea85d1e5c188b2d942",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "70162a73084998aa17f3456511b7947871ea10b597b331ea85d1e5c188b2d942",
+      "normalizedLFSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg02-l2.lesson.txt",
       "historicalSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
       "currentSha256": "e2e179309bfd7c2e36d289efa43ab40236aa3a36f3c67be1b9ac4ba515bd1c4d",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "e2e179309bfd7c2e36d289efa43ab40236aa3a36f3c67be1b9ac4ba515bd1c4d",
+      "normalizedLFSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg02-l3.lesson.txt",
       "historicalSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
       "currentSha256": "5bc04294b0bd77cdecfb55139d35ba576976b5ce3f8e88e4b68c14d6f5b53ce0",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "5bc04294b0bd77cdecfb55139d35ba576976b5ce3f8e88e4b68c14d6f5b53ce0",
+      "normalizedLFSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "exactLFMatch": true
     },
     {
       "path": "content/beginner/pilot/mg02-l4.lesson.txt",
       "historicalSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
       "currentSha256": "2a311a7ae7601f18f7f5bd46d1904856e5226650b417abbd82471b8fa2e9c850",
-      "exactMatch": false
+      "exactMatch": false,
+      "actualRawSha256": "2a311a7ae7601f18f7f5bd46d1904856e5226650b417abbd82471b8fa2e9c850",
+      "normalizedLFSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "exactLFMatch": true
     }
   ],
   "currentBundleRequalified": false,
@@ -230,5 +254,6 @@
       "schemaSha256": "aacf1d2bfb5c2168bb5b1f31310d3e3cb6343f3f5dc4352c3f5ec433a7ff8ec7"
     }
   },
-  "newInferenceStarts": 0
+  "newInferenceStarts": 0,
+  "sourceReconciliationInterpretation": "All eight raw checkout byte hashes differ because of CRLF serialization; replacing CRLF with LF exactly matches every historical source hash. No content drift is established. exactMatch compares raw bytes; exactLFMatch compares LF-normalized bytes. Source integrity reconciliation does not elevate qualification or readiness."
 }
