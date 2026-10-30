@@ -109,3 +109,8 @@ export const sessionAvailabilitySchema = z.object({
   defaultDurationMinutes: sessionDurationSchema,
 });
 export type SessionAvailabilityDto = z.infer<typeof sessionAvailabilitySchema>;
+
+export const createCurriculumSessionSchema = z.object({
+  missionId: z.uuid(), expectedCurriculumRevisionId: z.uuid(), durationMinutes: sessionDurationSchema, clientSessionId: z.uuid(),
+}).strict();
+export type CreateCurriculumSessionInput = z.infer<typeof createCurriculumSessionSchema>;

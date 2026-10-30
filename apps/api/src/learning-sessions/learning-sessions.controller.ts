@@ -1,3 +1,6 @@
+import { Roles } from '../auth/roles.decorator.js';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { CreateCurriculumSessionDto } from './dto/create-curriculum-session.dto.js';
 import {
   Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseUUIDPipe, Post, Put, Req, Res,
 } from '@nestjs/common';
@@ -42,6 +45,14 @@ export class LearningSessionsController {
     @Inject(ActivityDraftsService) private readonly drafts: ActivityDraftsService,
     @Inject(LearnerAudioService) private readonly audio: LearnerAudioService,
   ) {}
+
+  @Post('learning-sessions/curriculum')
+  @Roles('LEARNER')
+  @ApiOperation({summary:'Create a session for an exact enrolled curriculum revision'})
+  @ApiCreatedResponse({type:LearningSessionResponseDto})
+  createCurriculum(@Req() request: AuthenticatedRequest, @Body() input: CreateCurriculumSessionDto): Promise<LearningSessionDto> {
+    return this.sessions.createCurriculumSession(request.authUser.id, input);
+  }
 
   @Get('learning-sessions/:id/activities/:activityId/draft')
   async getDraft(
