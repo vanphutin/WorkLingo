@@ -98,7 +98,8 @@ export class CurriculumProgressService {
           objectives: progress.objectives,
         } as const;
       }));
-      return curriculumRoadmapSchema.parse({ programId: context.programId, enrollmentId: context.enrollmentId, items });
+      return curriculumRoadmapSchema.parse({ programId: context.programId, enrollmentId: context.enrollmentId,
+        targetedStartSupported: activityCompletion && enrollment.curriculumRevisionIds.length > 0, items });
     }, { isolationLevel: 'RepeatableRead', timeout: 15_000 });
   }
 

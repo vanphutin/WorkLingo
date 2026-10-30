@@ -57,6 +57,7 @@ export type CurriculumDraftDto = z.infer<typeof curriculumDraftSchema>;
 export const curriculumRoadmapSchema = z.object({
   programId: z.uuid(),
   enrollmentId: z.uuid(),
+  targetedStartSupported: z.boolean().optional(),
   items: z.array(z.object({
     missionId: z.uuid(), revisionId: z.uuid(), title: z.string(),
     state: z.enum(['locked', 'available', 'in_progress', 'completed']),

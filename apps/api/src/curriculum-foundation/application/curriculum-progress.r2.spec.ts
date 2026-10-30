@@ -23,3 +23,27 @@ describe('R2 activity completion',()=>{
  it.each(['SUBMITTED','QUEUED','PROCESSING','EVALUATION_FAILED','EVALUATED'])('completes persisted %s evidence without promoting mastery',async status=>{expect(await fixture(status)).toMatchObject({create:{policyVersion:'curriculum-activity-completion-v1'}});});
  it.each(['outside-plan','foreign','placement','incomplete'])('rejects %s evidence',async mutation=>{expect(await fixture('QUEUED',mutation)).toBeNull();});
 });
+
+describe('roadmap targeted start capability', () => {
+ it.each([
+  ['ACTIVITY_COMPLETION', [id(2)], true],
+  ['ACTIVITY_COMPLETION', [], false],
+  ['MASTERY', [id(2)], false],
+  ['MASTERY', [], false],
+ ] as const)('requires completion policy and enrollment pins: %s %j', async (progressionPolicy, pins, expected) => {
+  const db = {
+   learnerProgramEnrollment: { findUniqueOrThrow: async () => ({ curriculumRevisionIds: pins }) },
+   curriculumRevision: { findMany: async () => [] },
+   learningProgram: { findUnique: async () => ({ progressionPolicy }) },
+   $transaction: async (fn: (tx: unknown) => unknown) => fn(db),
+  };
+  const module = await Test.createTestingModule({ providers: [CurriculumProgressService,
+   { provide: PrismaService, useValue: db },
+   { provide: ProgramContextService, useValue: { resolve: async () => ({ programId: id(8), enrollmentId: id(9) }) } },
+   { provide: CurriculumEligibilityService, useValue: {} },
+  ] }).compile();
+  try {
+   expect(await module.get(CurriculumProgressService).getRoadmap(id(5))).toHaveProperty('targetedStartSupported', expected);
+  } finally { await module.close(); }
+ });
+});
