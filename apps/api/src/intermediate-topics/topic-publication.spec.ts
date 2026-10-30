@@ -23,6 +23,7 @@ function setup() {
     mutationReceipt: { findUnique: vi.fn(async () => null), create: vi.fn() },
     contentImport: { findUnique: vi.fn(async () => source), update: vi.fn(), updateMany: vi.fn() },
     intermediateTopicReview: { findUnique: vi.fn(async () => review) },
+    missionLesson: { findMany: vi.fn(async () => [{ mission: { level: { path: { program: { slug: 'intermediate' } } } } }]) },
     audioArtifact: { findMany: vi.fn(async () => [artifact]) },
     lesson: { findUnique: vi.fn(async () => ({ topicGroupId: null as string | null })), upsert: vi.fn(async () => ({ id: randomUUID(), currentPublishedVersionId: null, topicGroupId: null as string | null })), update: vi.fn() },
     lessonVersion: { aggregate: vi.fn(async () => ({ _max: { version: 0 } })),
@@ -57,6 +58,13 @@ describe('Topic publication approval gate', () => {
     const s = setup(); await s.publish();
     expect(s.snapshot().intermediateTopic).toEqual({ ...defaultTopicPlan(90), sourceContentRef: 'workplace-reading', approvedById: s.approver, approvedAt: '2026-10-19T00:00:00.000Z' });
     s.setReview(null); expect(s.snapshot().intermediateTopic).toMatchObject({ durationMinutes: 90 });
+  });
+  it('rejects generic publication of a lesson owned by Beginner before materializing a version', async () => {
+    const s = setup();
+    s.tx.missionLesson.findMany.mockResolvedValue([{ mission: { level: { path: { program: { slug: 'beginner' } } } } }]);
+    await expect(s.publish()).rejects.toMatchObject({ status: 403, response: { code: 'BEGINNER_AUTHORING_DISABLED' } });
+    expect(s.tx.lessonVersion.create).not.toHaveBeenCalled();
+    expect(s.snapshot()).toEqual({});
   });
   it('reads approval after acquiring the import lock', async () => {
     const s = setup(); s.tx.$queryRaw.mockImplementation(async () => { s.setReview(null); return []; });
