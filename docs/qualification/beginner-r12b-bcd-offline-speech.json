@@ -1,0 +1,4116 @@
+{
+  "schemaVersion": "worklingo-offline-speech/1",
+  "mission": "WORKLINGO-R12B-BCD-20261030",
+  "mandate": "MND-20261030-005",
+  "reviewerId": "WORKLINGO-AI-REVIEWER-001",
+  "authorType": "AI",
+  "createdAt": "2026-10-30T06:07:05.0683237Z",
+  "packetSha256": "9dbbd4eac3f7922d3d4d53471f636681bfa7c57ada0cb0e9a7937bdba261cd21",
+  "engine": "Windows Microsoft Speech Recognizer 8.0 en-US",
+  "recognizerId": "MS-1033-80-DESK",
+  "grammar": "Unconstrained DictationGrammar, no expected-script hints",
+  "engineAndModelFiles": [
+    {
+      "bytes": 929792,
+      "path": "C:\\Windows\\System32\\Speech\\Engines\\SR\\spsreng.dll",
+      "sha256": "e95578c47787959d5655a32a36d116e730be158829baf691cec2eb227064e551"
+    },
+    {
+      "bytes": 98304,
+      "path": "C:\\Windows\\System32\\Speech\\Engines\\SR\\spsrx.dll",
+      "sha256": "cc1ddaabda022e91c9e71711cd6d2f973ee45d8baaee95241058b7268321183c"
+    },
+    {
+      "bytes": 1515520,
+      "path": "C:\\Windows\\System32\\Speech\\Common\\sapi.dll",
+      "sha256": "a62010e17dfde9c3ab7eca929fdf5cbf1657fdb77b56a5666de6b3421aa990db"
+    },
+    {
+      "bytes": 211091968,
+      "path": "C:\\ffmpeg\\bin\\ffmpeg.exe",
+      "sha256": "74db6c184a03dba2bdfe23e1a1f41cf5a8385bc1de6a7a1b26db1dc541abef93"
+    },
+    {
+      "bytes": 6278656,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\af031033.am",
+      "sha256": "a19f89dcf8ea29451d3753bea4941843ccfee5271c0feb8f3101c57cc9506a51"
+    },
+    {
+      "bytes": 6278656,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\ai031033.am",
+      "sha256": "d550c4336aed3c726a7cd88af3ead7e4cc30494ed9318ee6ae4ac8b4c27046cb"
+    },
+    {
+      "bytes": 6278656,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\am031033.am",
+      "sha256": "750bd7d7551a9194a132ee133e65149682594b451a5ede69903368464a9062df"
+    },
+    {
+      "bytes": 31174,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\c1033dsk.fe",
+      "sha256": "2b500eb1f4ee040cc68e57315c336aa8427fd771e884b1f0b9d17b0f8aba1d3e"
+    },
+    {
+      "bytes": 58041,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.cw",
+      "sha256": "26cc527e93041fc850ef0789387ce14f358a6ef2b032595bf0a75ec491ecca48"
+    },
+    {
+      "bytes": 5668486,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.dlm",
+      "sha256": "5642db3394557d13611d1b32bf052bdc2062829f63a254ae00c6479688f75057"
+    },
+    {
+      "bytes": 857,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.ini",
+      "sha256": "b00c69200b6b72df61ffd4504332942fa38489938935bccf6f3e95eee7171a34"
+    },
+    {
+      "bytes": 247,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.mllr",
+      "sha256": "805acb91d31fb7828197cc2b6082b2c35e79bf16c689f800275f1385b684e994"
+    },
+    {
+      "bytes": 28501860,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.ngr",
+      "sha256": "c2aecd7fcf933720845de795622fdb7110675893275f197419d92b3afb7de1e2"
+    },
+    {
+      "bytes": 29468,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.phn",
+      "sha256": "3d8d376c12f794713cb7d65c03f850baefabc938fbb068cb3bb43eec3087b835"
+    },
+    {
+      "bytes": 45280,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.smp",
+      "sha256": "c8bc6eb53e78ab5792fcbef8f020a20559609a7342acdd51f927f37bc39da4bd"
+    },
+    {
+      "bytes": 19796,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\l1033.wwd",
+      "sha256": "90198e1db4174276213bb970e4da6852b3d82a422e53991e4bd484c5f47f0a12"
+    },
+    {
+      "bytes": 275612,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\p1033.dlm",
+      "sha256": "b74d713b81c7b223c09bf97c4419697672aafa55952650f65a12ffeb0765513d"
+    },
+    {
+      "bytes": 1490300,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\p1033.ngr",
+      "sha256": "b61bd8629b2bf96819ee0e518813bf85e55355acb486c7fcdfa15e0bd79fe5cc"
+    },
+    {
+      "bytes": 2738032,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\s1033.dlm",
+      "sha256": "e62b4fd1f70e3b21f7b1e6f4e84bdd10104ca12e3aeda080983831d9195d1ed7"
+    },
+    {
+      "bytes": 538124,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\s1033.ngr",
+      "sha256": "11309c4e7a2bdde54fee4047d25d3687d15761338dfdf2dbb088bf28aea18ee2"
+    },
+    {
+      "bytes": 3103260,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\t1033.dlm",
+      "sha256": "26d690d2dc22d176b3975e7ef6dbbe3d331b392be0194a4a308725b8e584f2a8"
+    },
+    {
+      "bytes": 23407328,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\t1033.ngr",
+      "sha256": "0fc2e6075cad9c7fd212bb2c24394ffae294cf44091bb2ef057e507fa22fd5eb"
+    },
+    {
+      "bytes": 720147,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\tn1033.bin",
+      "sha256": "57b2c9626940bf72e571d84e5e50a90c0abf3fade69293acb5409ed861a36dcf"
+    },
+    {
+      "bytes": 2232316,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\u1033.dlm",
+      "sha256": "1b00bb323609d68e8f3e73a597040b978b3407079719475b2ec6ac17ab603075"
+    },
+    {
+      "bytes": 543448,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\u1033.ngr",
+      "sha256": "713f52d8dc33fa07b8135ed508ff113488a9072ef7bc81f74c34910d945f1736"
+    },
+    {
+      "bytes": 34797,
+      "path": "C:\\Windows\\Speech\\Engines\\SR\\en-US\\wp1033.bin",
+      "sha256": "61541143da8a1da10b7932c8c8b481763ca8b97b64e6c7d03a855f7beb69fead"
+    }
+  ],
+  "attempts": 24,
+  "transcribed": 21,
+  "timeouts": 0,
+  "humanExpertVerified": 0,
+  "phoneticVerified": 0,
+  "paidRequests": 0,
+  "recordingMutations": 0,
+  "limitations": [
+    "ASR agreement cannot establish human phonetic verification, pronunciation accuracy, noise quality or learner intelligibility.",
+    "ASR mismatches are candidates for audition, not confirmed source defects.",
+    "Windows built-in recognizer may depend on local profile state; no profile or credential files inspected."
+  ],
+  "items": [
+    {
+      "id": "mg01-l1-audio-a",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "bundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-a/take-2.wav",
+      "audioSha256": "8ae3e7b2cabe427763bd1fc521a03e12666895f640045429aa25491bb77a7d72",
+      "script": "Hello. I am Lily. I am from New York.",
+      "scriptSha256": "83878436fa4f81390daff53d3d0dc851ba6b02175c523a67c522f9d8aa28f5c1",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 146830,
+        "durationSeconds": 6.117916666666667,
+        "clippedSamples": 0,
+        "peak": 23765,
+        "dcOffset": 0.00001006375490575836,
+        "rmsDb": -21.131972183713444,
+        "leadingBelowMinus40DbSeconds": 0.20083333333333334,
+        "trailingBelowMinus40DbSeconds": 1.0335,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l1-audio-a.16k.wav",
+      "derivedSha256": "ed996dfbec2240dce609895bb0a8c5d54f2c0223c5b389fd239f1fadffc316a2",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 97887,
+        "durationSeconds": 6.1179375,
+        "clippedSamples": 0,
+        "peak": 24002,
+        "dcOffset": 0.000010034726645104814,
+        "rmsDb": -21.133052468101607,
+        "leadingBelowMinus40DbSeconds": 0.202,
+        "trailingBelowMinus40DbSeconds": 1.035125,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:12.94277Z",
+      "elapsedSeconds": 1.6845861,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.281006366
+              }
+            ],
+            "durationSeconds": 0.85,
+            "confidence": 0.281006366,
+            "text": "Hello",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.8561369
+              },
+              {
+                "text": "am",
+                "confidence": 0.5274807
+              },
+              {
+                "text": "rarely",
+                "confidence": 0.8314799
+              }
+            ],
+            "durationSeconds": 1.05,
+            "confidence": 0.7682492,
+            "text": "I am rarely",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.5956951
+              },
+              {
+                "text": "am",
+                "confidence": 0.3573676
+              },
+              {
+                "text": "from",
+                "confidence": 0.0410964377
+              },
+              {
+                "text": "New York",
+                "confidence": 0.7008567
+              }
+            ],
+            "durationSeconds": 1.44,
+            "confidence": 0.5148719,
+            "text": "I am from New York",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello I am rarely I am from New York",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "i",
+          "am",
+          "lily",
+          "i",
+          "am",
+          "from",
+          "new",
+          "york"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "i",
+          "am",
+          "rarely",
+          "i",
+          "am",
+          "from",
+          "new",
+          "york"
+        ],
+        "referenceWords": 9,
+        "distance": 1,
+        "wer": 0.1111111111111111,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l1-audio-a.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l1-audio-a.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l1-audio-a.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "120945813fdc7491b45b5e901dec3e46b336dbea9fc0c5f7b7ffd41d7d156efc",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l1-audio-b",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "bundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-b/take-2.wav",
+      "audioSha256": "93d487acac2b997f11d418f6ac420b6069dc0417c5dcc12323594fa40021a903",
+      "script": "Hello. I am Jack. I am from London.",
+      "scriptSha256": "c59887b03b4ea040d0ee505fbd9f88570314cfcd258292724d84b865eed8ba32",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 143300,
+        "durationSeconds": 5.970833333333333,
+        "clippedSamples": 0,
+        "peak": 23765,
+        "dcOffset": 0.000014106447016202896,
+        "rmsDb": -21.384378077820458,
+        "leadingBelowMinus40DbSeconds": 0.20083333333333334,
+        "trailingBelowMinus40DbSeconds": 1.00025,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l1-audio-b.16k.wav",
+      "derivedSha256": "59261960181d4031b37d0e5823f8cc0fd28fbd9c3cad94097ae0dd2959af78d1",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 95534,
+        "durationSeconds": 5.970875,
+        "clippedSamples": 0,
+        "peak": 24002,
+        "dcOffset": 0.000014063436859684772,
+        "rmsDb": -21.385506412998858,
+        "leadingBelowMinus40DbSeconds": 0.202,
+        "trailingBelowMinus40DbSeconds": 1.0003125,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:17.8518853Z",
+      "elapsedSeconds": 1.699739,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5971017
+              }
+            ],
+            "durationSeconds": 0.85,
+            "confidence": 0.5971017,
+            "text": "Hello",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7893464
+              },
+              {
+                "text": "am",
+                "confidence": 0.86455667
+              },
+              {
+                "text": "jack",
+                "confidence": 0.6658706
+              }
+            ],
+            "durationSeconds": 1.07,
+            "confidence": 0.7250369,
+            "text": "I am jack",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.6411823
+              },
+              {
+                "text": "am",
+                "confidence": 0.6746779
+              },
+              {
+                "text": "from",
+                "confidence": 0.664741039
+              },
+              {
+                "text": "london",
+                "confidence": 0.7213948
+              }
+            ],
+            "durationSeconds": 1.3299999999999998,
+            "confidence": 0.6918207,
+            "text": "I am from London",
+            "audioPositionSeconds": 0.01
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello I am jack I am from London",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "i",
+          "am",
+          "jack",
+          "i",
+          "am",
+          "from",
+          "london"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "i",
+          "am",
+          "jack",
+          "i",
+          "am",
+          "from",
+          "london"
+        ],
+        "referenceWords": 8,
+        "distance": 0,
+        "wer": 0,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l1-audio-b.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l1-audio-b.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l1-audio-b.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "82806a0d9705a2a3fb41dae823fc75f31b4b4ac9e10b363fb286cf1cb4cc42d8",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l1-audio-c",
+      "sourcePath": "content/beginner/pilot/mg01-l1.lesson.txt",
+      "sourceSha256": "da7a962a6f49c5a37a8e6abf94f57d320095749807aee7b8087bbcea7e6834a7",
+      "bundleSha256": "bec4d025c8719fb6271fee73f42ffca2c33b53b9460c5e5e0153ab4c76f74115",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l1-audio-c/take-2.wav",
+      "audioSha256": "af0d1388dbf90ebf81ffc4a7fdc4181fce2c75fbbe7ab4b4dd9c61987b6b13c3",
+      "script": "Hello, Sam. I am Noah. You are Sam.",
+      "scriptSha256": "567f120abbf1f6ddb332eb309ad776fe08df3188b3fd87a3ac6f3aab0ea853a9",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 155350,
+        "durationSeconds": 6.472916666666666,
+        "clippedSamples": 0,
+        "peak": 23433,
+        "dcOffset": 0.000010811492949388478,
+        "rmsDb": -21.477997129444027,
+        "leadingBelowMinus40DbSeconds": 0.18645833333333334,
+        "trailingBelowMinus40DbSeconds": 1.0160416666666667,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l1-audio-c.16k.wav",
+      "derivedSha256": "4c39be07f480371449c685f1d70d1faf9af7746b53b7b7b19e87347562c38ef7",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 103567,
+        "durationSeconds": 6.4729375,
+        "clippedSamples": 0,
+        "peak": 23588,
+        "dcOffset": 0.000010781500536035851,
+        "rmsDb": -21.538768126366673,
+        "leadingBelowMinus40DbSeconds": 0.1864375,
+        "trailingBelowMinus40DbSeconds": 1.0160625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:23.0307752Z",
+      "elapsedSeconds": 1.829099,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.339282125
+              },
+              {
+                "text": "sam",
+                "confidence": 0.7465184
+              }
+            ],
+            "durationSeconds": 1.52,
+            "confidence": 0.5547042,
+            "text": "Hello Sam",
+            "audioPositionSeconds": 0.04
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7373198
+              },
+              {
+                "text": "am",
+                "confidence": 0.7842427
+              },
+              {
+                "text": "nola",
+                "confidence": 0.766336441
+              }
+            ],
+            "durationSeconds": 1.02,
+            "confidence": 0.763042033,
+            "text": "I am Nola",
+            "audioPositionSeconds": 0.06999999999999999
+          },
+          {
+            "words": [
+              {
+                "text": "you",
+                "confidence": 0.7595433
+              },
+              {
+                "text": "are",
+                "confidence": 0.500743449
+              },
+              {
+                "text": "sam",
+                "confidence": 0.8203521
+              }
+            ],
+            "durationSeconds": 1.0999999999999999,
+            "confidence": 0.751587152,
+            "text": "you are Sam",
+            "audioPositionSeconds": 0.08
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Sam I am Nola you are Sam",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "sam",
+          "i",
+          "am",
+          "noah",
+          "you",
+          "are",
+          "sam"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "sam",
+          "i",
+          "am",
+          "nola",
+          "you",
+          "are",
+          "sam"
+        ],
+        "referenceWords": 8,
+        "distance": 1,
+        "wer": 0.125,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l1-audio-c.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l1-audio-c.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l1-audio-c.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "4100a9fb0a386e5b55c1f7c86de2cadc0bf79e8a8505e7e74d7240b2d8054b44",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l2-audio-1",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "bundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-1/take-1.wav",
+      "audioSha256": "675d6eca37724d4edc0107d881e8e0dadd8acd4e3b0a03340a0b9df3ffbd060c",
+      "script": "Hello. I am Ed. E, D. I am from Hong Kong.",
+      "scriptSha256": "fb8bddcadfe32ec0de432ab05aeaaa1aff36d79f870b60a3a0d3eac9bcec9574",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 169066,
+        "durationSeconds": 7.044416666666667,
+        "clippedSamples": 0,
+        "peak": 23765,
+        "dcOffset": 0.000014899038827661978,
+        "rmsDb": -21.328669115140993,
+        "leadingBelowMinus40DbSeconds": 0.20083333333333334,
+        "trailingBelowMinus40DbSeconds": 0.979625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l2-audio-1.16k.wav",
+      "derivedSha256": "a78f29614bec8190edf28108d3f502af7089137125c441898511626785335d16",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 112711,
+        "durationSeconds": 7.0444375,
+        "clippedSamples": 0,
+        "peak": 24002,
+        "dcOffset": 0.000014886359319964334,
+        "rmsDb": -21.32993503961021,
+        "leadingBelowMinus40DbSeconds": 0.202,
+        "trailingBelowMinus40DbSeconds": 0.979625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:28.2493563Z",
+      "elapsedSeconds": 1.6128753,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5912916
+              }
+            ],
+            "durationSeconds": 0.85,
+            "confidence": 0.5912916,
+            "text": "Hello",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.8191519
+              },
+              {
+                "text": "am",
+                "confidence": 0.671116769
+              },
+              {
+                "text": "and",
+                "confidence": 0.383704
+              },
+              {
+                "text": "E.",
+                "confidence": 0.8585756
+              },
+              {
+                "text": "D.",
+                "confidence": 0.999
+              }
+            ],
+            "durationSeconds": 1.89,
+            "confidence": 0.7919828,
+            "text": "I am and ED",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7919619
+              },
+              {
+                "text": "am",
+                "confidence": 0.855874062
+              },
+              {
+                "text": "from",
+                "confidence": 0.625031
+              },
+              {
+                "text": "Hong Kong",
+                "confidence": 0.481043577
+              }
+            ],
+            "durationSeconds": 1.53,
+            "confidence": 0.587487161,
+            "text": "I am from Hong Kong",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello I am and ED I am from Hong Kong",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "i",
+          "am",
+          "ed",
+          "e",
+          "d",
+          "i",
+          "am",
+          "from",
+          "hong",
+          "kong"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "i",
+          "am",
+          "and",
+          "ed",
+          "i",
+          "am",
+          "from",
+          "hong",
+          "kong"
+        ],
+        "referenceWords": 11,
+        "distance": 3,
+        "wer": 0.2727272727272727,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l2-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l2-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l2-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "eb316da0d5edc45205c4c5fc45c5a470e703f1c7f6fcf14cfc12e39101871632",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l2-audio-2",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "bundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-2/take-1.wav",
+      "audioSha256": "f8fffa93075373cb0a05d38534219dca369b73a491890f8325b69a8fd757f5e9",
+      "script": "Hello, Tim. I am Kim. You are Tim.",
+      "scriptSha256": "aab784089f05ed8c4494035642c3e0a1e739b6c3e2d1da23c6d12865eff1d046",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 152878,
+        "durationSeconds": 6.369916666666667,
+        "clippedSamples": 0,
+        "peak": 23908,
+        "dcOffset": 0.0000100802348446351,
+        "rmsDb": -22.182919917477086,
+        "leadingBelowMinus40DbSeconds": 0.20104166666666667,
+        "trailingBelowMinus40DbSeconds": 1.0125416666666667,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l2-audio-2.16k.wav",
+      "derivedSha256": "255dcf0be4128b656fc430fb152bc1ba9eff14bbd8f6f9eff2e119c3f54fe3dd",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 101919,
+        "durationSeconds": 6.3699375,
+        "clippedSamples": 0,
+        "peak": 23440,
+        "dcOffset": 0.000010054850159808279,
+        "rmsDb": -22.184923772767572,
+        "leadingBelowMinus40DbSeconds": 0.2021875,
+        "trailingBelowMinus40DbSeconds": 1.0125625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:32.9439491Z",
+      "elapsedSeconds": 1.1039471,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.7045825
+              },
+              {
+                "text": "temp",
+                "confidence": 0.7482311
+              }
+            ],
+            "durationSeconds": 1.41,
+            "confidence": 0.724835455,
+            "text": "Hello temp",
+            "audioPositionSeconds": 0.08
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.8199423
+              },
+              {
+                "text": "am",
+                "confidence": 0.599451542
+              },
+              {
+                "text": "cam",
+                "confidence": 0.7476489
+              }
+            ],
+            "durationSeconds": 1.03,
+            "confidence": 0.739805758,
+            "text": "I am cam",
+            "audioPositionSeconds": 0.04
+          },
+          {
+            "words": [
+              {
+                "text": "your",
+                "confidence": 0.680062354
+              },
+              {
+                "text": "attempt",
+                "confidence": 0.372016728
+              }
+            ],
+            "durationSeconds": 1.07,
+            "confidence": 0.481609881,
+            "text": "your attempt",
+            "audioPositionSeconds": 0.08
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello temp I am cam your attempt",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "tim",
+          "i",
+          "am",
+          "kim",
+          "you",
+          "are",
+          "tim"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "temp",
+          "i",
+          "am",
+          "cam",
+          "your",
+          "attempt"
+        ],
+        "referenceWords": 8,
+        "distance": 5,
+        "wer": 0.625,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l2-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l2-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l2-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "37ad009468f4ff66d8bd18e0c0390ad81ee818a1a6b96b98b8c1d77b03ddc9f6",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l2-audio-3",
+      "sourcePath": "content/beginner/pilot/mg01-l2.lesson.txt",
+      "sourceSha256": "8e56913c15309b143724d927dc1fe109dc8f1e7e45193b04329ff756f7822e9b",
+      "bundleSha256": "bf2e376d7abc2930e99ab4863848d4f045453628791ac40eb5d11fdd9aecf6f1",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l2-audio-3/take-1.wav",
+      "audioSha256": "5f5df363da7d6ddd794190d11a54f69fde3d193c1be8c9bc55cf602c8c949554",
+      "script": "Hello. I am Emma. I am from New York.",
+      "scriptSha256": "4885c2c7e7a55024631050fdd4babe7eafebaae6886a7c705a88e1c32eee90f8",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 144055,
+        "durationSeconds": 6.002291666666666,
+        "clippedSamples": 0,
+        "peak": 24138,
+        "dcOffset": 0.000016509849821357295,
+        "rmsDb": -21.17911787963394,
+        "leadingBelowMinus40DbSeconds": 0.20083333333333334,
+        "trailingBelowMinus40DbSeconds": 1.0332083333333333,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l2-audio-3.16k.wav",
+      "derivedSha256": "8537df9220b3855fd51c8d1d4af5632e471fdf3dbd875ba1aa267ff93121a5bd",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 96037,
+        "durationSeconds": 6.0023125,
+        "clippedSamples": 0,
+        "peak": 24730,
+        "dcOffset": 0.00001650015352562684,
+        "rmsDb": -21.179835696131715,
+        "leadingBelowMinus40DbSeconds": 0.202,
+        "trailingBelowMinus40DbSeconds": 1.03475,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:36.3724345Z",
+      "elapsedSeconds": 1.243907,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.6079894
+              }
+            ],
+            "durationSeconds": 0.85,
+            "confidence": 0.6079894,
+            "text": "Hello",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7038503
+              },
+              {
+                "text": "am",
+                "confidence": 0.5601831
+              },
+              {
+                "text": "am",
+                "confidence": 0.5354186
+              },
+              {
+                "text": "a",
+                "confidence": 0.0973699838
+              }
+            ],
+            "durationSeconds": 0.99,
+            "confidence": 0.420828521,
+            "text": "I am am a",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.438729137
+              },
+              {
+                "text": "am",
+                "confidence": 0.33869952
+              },
+              {
+                "text": "from",
+                "confidence": 0.0776154548
+              },
+              {
+                "text": "New York",
+                "confidence": 0.759744942
+              }
+            ],
+            "durationSeconds": 1.41,
+            "confidence": 0.535821557,
+            "text": "I am from New York",
+            "audioPositionSeconds": 0.049999999999999996
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello I am am a I am from New York",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "i",
+          "am",
+          "emma",
+          "i",
+          "am",
+          "from",
+          "new",
+          "york"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "i",
+          "am",
+          "am",
+          "a",
+          "i",
+          "am",
+          "from",
+          "new",
+          "york"
+        ],
+        "referenceWords": 9,
+        "distance": 2,
+        "wer": 0.2222222222222222,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l2-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l2-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l2-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "56d5a7d132c03d7a928e7e46c677e9a0bfe234adfaff68d6ff94356e2ac9ca6d",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l3-audio-1",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "bundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-1/take-1.wav",
+      "audioSha256": "b922f7dde8115d78c2029338f6ae20e3c672337b1be9f79090108ea737bdac48",
+      "script": "Hello, Adam. I am Sam. I am from London. You are Adam.",
+      "scriptSha256": "9a9309b106886a5a503453e47629b6d63d1d10df7a6f471d51cbd5cedc1690df",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 209047,
+        "durationSeconds": 8.710291666666667,
+        "clippedSamples": 0,
+        "peak": 23766,
+        "dcOffset": 0.000007157609798125541,
+        "rmsDb": -21.79321574087912,
+        "leadingBelowMinus40DbSeconds": 0.20216666666666666,
+        "trailingBelowMinus40DbSeconds": 1.01275,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l3-audio-1.16k.wav",
+      "derivedSha256": "91b7ec9d4e71d2a7f90868d97d5feac2d18b6453fc8450d113bb3f0d829df429",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 139365,
+        "durationSeconds": 8.7103125,
+        "clippedSamples": 0,
+        "peak": 22780,
+        "dcOffset": 0.00000718043916547824,
+        "rmsDb": -21.82298388359471,
+        "leadingBelowMinus40DbSeconds": 0.2021875,
+        "trailingBelowMinus40DbSeconds": 1.01275,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:40.88441Z",
+      "elapsedSeconds": 1.2484871,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.673213243
+              },
+              {
+                "text": "adam",
+                "confidence": 0.6635663
+              }
+            ],
+            "durationSeconds": 1.51,
+            "confidence": 0.668835,
+            "text": "Hello Adam",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.678351045
+              },
+              {
+                "text": "am",
+                "confidence": 0.5155981
+              },
+              {
+                "text": "sam",
+                "confidence": 0.832075238
+              }
+            ],
+            "durationSeconds": 1.05,
+            "confidence": 0.7522897,
+            "text": "I am Sam",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7740757
+              },
+              {
+                "text": "am",
+                "confidence": 0.6214801
+              },
+              {
+                "text": "from",
+                "confidence": 0.54121995
+              },
+              {
+                "text": "london",
+                "confidence": 0.6557034
+              }
+            ],
+            "durationSeconds": 1.29,
+            "confidence": 0.6510542,
+            "text": "I am from London",
+            "audioPositionSeconds": 0.06999999999999999
+          },
+          {
+            "words": [
+              {
+                "text": "you",
+                "confidence": 0.6793865
+              },
+              {
+                "text": "are",
+                "confidence": 0.8403733
+              },
+              {
+                "text": "adam",
+                "confidence": 0.739339054
+              }
+            ],
+            "durationSeconds": 1.07,
+            "confidence": 0.7495117,
+            "text": "you are Adam",
+            "audioPositionSeconds": 0.06999999999999999
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Adam I am Sam I am from London you are Adam",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "adam",
+          "i",
+          "am",
+          "sam",
+          "i",
+          "am",
+          "from",
+          "london",
+          "you",
+          "are",
+          "adam"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "adam",
+          "i",
+          "am",
+          "sam",
+          "i",
+          "am",
+          "from",
+          "london",
+          "you",
+          "are",
+          "adam"
+        ],
+        "referenceWords": 12,
+        "distance": 0,
+        "wer": 0,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l3-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l3-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l3-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "b99f090f327ebeb60571e748b92e005bdd6b57d3431e0ad05f0b2c313a8a902a",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l3-audio-2",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "bundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-2/take-1.wav",
+      "audioSha256": "7654acb54bc421b0892ed08d00ce88a40941e733b9c52cb08ba3340ea47be4ba",
+      "script": "Hello. I am May. I am from Hong Kong.",
+      "scriptSha256": "07b825bec39dcd390a2af680c4c4fcef40515f9d044a82481c28c3e53ebd48d9",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 145771,
+        "durationSeconds": 6.073791666666667,
+        "clippedSamples": 0,
+        "peak": 23765,
+        "dcOffset": 0.00001005207835352625,
+        "rmsDb": -21.256915205399256,
+        "leadingBelowMinus40DbSeconds": 0.20083333333333334,
+        "trailingBelowMinus40DbSeconds": 0.9795833333333334,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l3-audio-2.16k.wav",
+      "derivedSha256": "b02a06507e25272215614e1ca601ad70a589564b1a19f4909cd1972d570428b4",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 97181,
+        "durationSeconds": 6.0738125,
+        "clippedSamples": 0,
+        "peak": 24002,
+        "dcOffset": 0.00001000368352610078,
+        "rmsDb": -21.257770252090793,
+        "leadingBelowMinus40DbSeconds": 0.202,
+        "trailingBelowMinus40DbSeconds": 0.979625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:44.624034Z",
+      "elapsedSeconds": 1.167738,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.621315241
+              }
+            ],
+            "durationSeconds": 0.85,
+            "confidence": 0.621315241,
+            "text": "Hello",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.837351
+              },
+              {
+                "text": "am",
+                "confidence": 0.6618865
+              },
+              {
+                "text": "a",
+                "confidence": 0.751099944
+              }
+            ],
+            "durationSeconds": 0.97,
+            "confidence": 0.750335455,
+            "text": "I am a",
+            "audioPositionSeconds": 0.04
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.435833782
+              },
+              {
+                "text": "am",
+                "confidence": 0.7679239
+              },
+              {
+                "text": "from",
+                "confidence": 0.6804382
+              },
+              {
+                "text": "Hong Kong",
+                "confidence": 0.5523123
+              }
+            ],
+            "durationSeconds": 1.53,
+            "confidence": 0.576364,
+            "text": "I am from Hong Kong",
+            "audioPositionSeconds": 0.02
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello I am a I am from Hong Kong",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "i",
+          "am",
+          "may",
+          "i",
+          "am",
+          "from",
+          "hong",
+          "kong"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "i",
+          "am",
+          "a",
+          "i",
+          "am",
+          "from",
+          "hong",
+          "kong"
+        ],
+        "referenceWords": 9,
+        "distance": 1,
+        "wer": 0.1111111111111111,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l3-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l3-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l3-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "16d82ae4fe94498132131e5218ad6936d2ea306784c3e9345dcc3092d8a662c2",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l3-audio-3",
+      "sourcePath": "content/beginner/pilot/mg01-l3.lesson.txt",
+      "sourceSha256": "f625bafa71efad86d5a87c875a7474945d2e5eb190075c5b0cd99fd2cefe8a6c",
+      "bundleSha256": "c772d5bf52b496d65a127ed120f7a98978938e7ace923339197141e8e2645b3a",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l3-audio-3/take-1.wav",
+      "audioSha256": "936e1ad40bc3f255bd366c452e23841a865ebe74d132d2a7841a1e1f0cea0ec7",
+      "script": "Hello, Jo. I am Ben. You are from Los Angeles. I am from New York.",
+      "scriptSha256": "9f960ed0f35a6500bb7b920a1be99110ddf587a3103f79110d33b3c1b8a35ea2",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 224833,
+        "durationSeconds": 9.368041666666667,
+        "clippedSamples": 0,
+        "peak": 25211,
+        "dcOffset": 0.000010972363767287832,
+        "rmsDb": -21.425459255152752,
+        "leadingBelowMinus40DbSeconds": 0.200375,
+        "trailingBelowMinus40DbSeconds": 1.0320416666666667,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l3-audio-3.16k.wav",
+      "derivedSha256": "b4fc0167dcc54d72c69dceb229c3bb03ab1d29acd541c0369ddcb4b142d42501",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 149889,
+        "durationSeconds": 9.3680625,
+        "clippedSamples": 0,
+        "peak": 25114,
+        "dcOffset": 0.000010992428016523895,
+        "rmsDb": -21.454254942152392,
+        "leadingBelowMinus40DbSeconds": 0.201125,
+        "trailingBelowMinus40DbSeconds": 1.0320625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:50.3673356Z",
+      "elapsedSeconds": 1.8298658,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.746588469
+              },
+              {
+                "text": "joe",
+                "confidence": 0.6468512
+              }
+            ],
+            "durationSeconds": 1.43,
+            "confidence": 0.698683143,
+            "text": "Hello Joe",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.681463242
+              },
+              {
+                "text": "am",
+                "confidence": 0.8633609
+              },
+              {
+                "text": "then",
+                "confidence": 0.832959
+              }
+            ],
+            "durationSeconds": 0.98,
+            "confidence": 0.8023518,
+            "text": "I am then",
+            "audioPositionSeconds": 0
+          },
+          {
+            "words": [
+              {
+                "text": "you",
+                "confidence": 0.8453909
+              },
+              {
+                "text": "are",
+                "confidence": 0.697658539
+              },
+              {
+                "text": "from",
+                "confidence": 0.5895888
+              },
+              {
+                "text": "Los Angeles",
+                "confidence": 0.6875256
+              }
+            ],
+            "durationSeconds": 1.8399999999999999,
+            "confidence": 0.6982274,
+            "text": "you are from Los Angeles",
+            "audioPositionSeconds": 0.08
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.748591244
+              },
+              {
+                "text": "am",
+                "confidence": 0.781505346
+              },
+              {
+                "text": "from",
+                "confidence": 0.0597826876
+              },
+              {
+                "text": "New York",
+                "confidence": 0.75741446
+              }
+            ],
+            "durationSeconds": 1.42,
+            "confidence": 0.6271039,
+            "text": "I am from New York",
+            "audioPositionSeconds": 0.08
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Joe I am then you are from Los Angeles I am from New York",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "jo",
+          "i",
+          "am",
+          "ben",
+          "you",
+          "are",
+          "from",
+          "los",
+          "angeles",
+          "i",
+          "am",
+          "from",
+          "new",
+          "york"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "joe",
+          "i",
+          "am",
+          "then",
+          "you",
+          "are",
+          "from",
+          "los",
+          "angeles",
+          "i",
+          "am",
+          "from",
+          "new",
+          "york"
+        ],
+        "referenceWords": 15,
+        "distance": 2,
+        "wer": 0.13333333333333333,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l3-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l3-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l3-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "4cf014d9e22ca4347289a88e0eec892792f20c71d3db507a440bd18d16fe2e92",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l4-audio-1",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "bundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-1/take-1.wav",
+      "audioSha256": "6fcbd28ee98cac68e8f5f97512e200a6d3417f85e2eb819fb395c5945b09fd95",
+      "script": "Hello, Kim. I am Leo. I am from Los Angeles.",
+      "scriptSha256": "6210ccef2685dc04b5eb4a5e285f813ef7e58ce52542b48917ad9577b173d7de",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 170830,
+        "durationSeconds": 7.117916666666667,
+        "clippedSamples": 0,
+        "peak": 24138,
+        "dcOffset": 0.00000995130650034025,
+        "rmsDb": -21.74333332419465,
+        "leadingBelowMinus40DbSeconds": 0.20254166666666668,
+        "trailingBelowMinus40DbSeconds": 1.031625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l4-audio-1.16k.wav",
+      "derivedSha256": "d789819bce96b6c6882b8a0015e8a79f224b60980fad5feaca8abc9f8e983995",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 113887,
+        "durationSeconds": 7.1179375,
+        "clippedSamples": 0,
+        "peak": 23493,
+        "dcOffset": 0.000009956725968641065,
+        "rmsDb": -21.785094739501005,
+        "leadingBelowMinus40DbSeconds": 0.2025625,
+        "trailingBelowMinus40DbSeconds": 1.031625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:05:55.8581596Z",
+      "elapsedSeconds": 1.826004,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5880624
+              },
+              {
+                "text": "camp",
+                "confidence": 0.613511145
+              }
+            ],
+            "durationSeconds": 1.45,
+            "confidence": 0.5997183,
+            "text": "Hello camp",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7643388
+              },
+              {
+                "text": "am",
+                "confidence": 0.698216736
+              },
+              {
+                "text": "leo",
+                "confidence": 0.773456454
+              }
+            ],
+            "durationSeconds": 1.06,
+            "confidence": 0.758949935,
+            "text": "I am Leo",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.6816737
+              },
+              {
+                "text": "am",
+                "confidence": 0.490441144
+              },
+              {
+                "text": "from",
+                "confidence": 0.416701585
+              },
+              {
+                "text": "Los Angeles",
+                "confidence": 0.684421539
+              }
+            ],
+            "durationSeconds": 1.7899999999999998,
+            "confidence": 0.63434,
+            "text": "I am from Los Angeles",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello camp I am Leo I am from Los Angeles",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "kim",
+          "i",
+          "am",
+          "leo",
+          "i",
+          "am",
+          "from",
+          "los",
+          "angeles"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "camp",
+          "i",
+          "am",
+          "leo",
+          "i",
+          "am",
+          "from",
+          "los",
+          "angeles"
+        ],
+        "referenceWords": 10,
+        "distance": 1,
+        "wer": 0.1,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l4-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l4-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l4-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "a066ba1a9b770d7d034ed905f85f677e641f506dad948695d3c54811f6e42a28",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l4-audio-2",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "bundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-2/take-1.wav",
+      "audioSha256": "5526e00bdca8eb0624620accecaca8704fee535877901192a5905a06973fe92f",
+      "script": "Hello. I am Adam. I am from Hong Kong.",
+      "scriptSha256": "3d2522a84195b545a1658c64f2031a40a397ce1e52732267e41805b262318f2c",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 146477,
+        "durationSeconds": 6.103208333333333,
+        "clippedSamples": 0,
+        "peak": 23765,
+        "dcOffset": 0.000010789501548771308,
+        "rmsDb": -21.689552877945793,
+        "leadingBelowMinus40DbSeconds": 0.20083333333333334,
+        "trailingBelowMinus40DbSeconds": 0.979625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l4-audio-2.16k.wav",
+      "derivedSha256": "61cdf6b1f82222aae4f338b27776b8bca487795478d48b59e5bdd15ccde1a2c6",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 97652,
+        "durationSeconds": 6.10325,
+        "clippedSamples": 0,
+        "peak": 24002,
+        "dcOffset": 0.000010716403877896766,
+        "rmsDb": -21.6903761060863,
+        "leadingBelowMinus40DbSeconds": 0.202,
+        "trailingBelowMinus40DbSeconds": 0.979625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:00.6420182Z",
+      "elapsedSeconds": 1.3314137,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5920733
+              }
+            ],
+            "durationSeconds": 0.85,
+            "confidence": 0.5920733,
+            "text": "Hello",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7190095
+              },
+              {
+                "text": "am",
+                "confidence": 0.7189617
+              },
+              {
+                "text": "adam",
+                "confidence": 0.743610442
+              }
+            ],
+            "durationSeconds": 0.97,
+            "confidence": 0.7335984,
+            "text": "I am Adam",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.716002643
+              },
+              {
+                "text": "am",
+                "confidence": 0.869195163
+              },
+              {
+                "text": "from",
+                "confidence": 0.776707053
+              },
+              {
+                "text": "Hong Kong",
+                "confidence": 0.5560576
+              }
+            ],
+            "durationSeconds": 1.5599999999999998,
+            "confidence": 0.647933245,
+            "text": "I am from Hong Kong",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello I am Adam I am from Hong Kong",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "i",
+          "am",
+          "adam",
+          "i",
+          "am",
+          "from",
+          "hong",
+          "kong"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "i",
+          "am",
+          "adam",
+          "i",
+          "am",
+          "from",
+          "hong",
+          "kong"
+        ],
+        "referenceWords": 9,
+        "distance": 0,
+        "wer": 0,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l4-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l4-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l4-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "8e43426cb6184325bfbff9ab40538c085d86934d48bc244d7f29b49e538fe940",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg01-l4-audio-3",
+      "sourcePath": "content/beginner/pilot/mg01-l4.lesson.txt",
+      "sourceSha256": "2052b9668fbc4ec1bfb01d46157f010af30913c167783ecf9716a05f16428024",
+      "bundleSha256": "a6926156c9a65ac1792c2850de99bc939edc409684351e93128d6e6574ee9f1b",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg01-l4-audio-3/take-1.wav",
+      "audioSha256": "d840c2c0cad07b5baf2660519bf34e7605d4986f4d9661880d33eb7429f34460",
+      "script": "Hello, Eva. I am Noah. You are from London. I am from Los Angeles.",
+      "scriptSha256": "83a1a5bab31a3eef4e581a23ffa3587d61bfb672e01e069ed831b03f900b88d5",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 222713,
+        "durationSeconds": 9.279708333333334,
+        "clippedSamples": 0,
+        "peak": 22750,
+        "dcOffset": 0.000020369260094549936,
+        "rmsDb": -21.420723415050155,
+        "leadingBelowMinus40DbSeconds": 0.201,
+        "trailingBelowMinus40DbSeconds": 1.031625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l4-audio-3.16k.wav",
+      "derivedSha256": "5a9ab27fb12614757d8cb56745abcb28c55bff5750cdfc1e29b0330fa2ca3d04",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 148476,
+        "durationSeconds": 9.27975,
+        "clippedSamples": 0,
+        "peak": 22520,
+        "dcOffset": 0.00002037649951896687,
+        "rmsDb": -21.4504732959406,
+        "leadingBelowMinus40DbSeconds": 0.201,
+        "trailingBelowMinus40DbSeconds": 1.031625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:06.1173724Z",
+      "elapsedSeconds": 2.1391203,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hell",
+                "confidence": 0.2660272
+              },
+              {
+                "text": "out",
+                "confidence": 0.575412869
+              },
+              {
+                "text": "eva",
+                "confidence": 0.7094456
+              }
+            ],
+            "durationSeconds": 1.39,
+            "confidence": 0.5721535,
+            "text": "Hell out Eva",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.7177333
+              },
+              {
+                "text": "am",
+                "confidence": 0.852003455
+              },
+              {
+                "text": "nola",
+                "confidence": 0.7708731
+              }
+            ],
+            "durationSeconds": 1.03,
+            "confidence": 0.772731841,
+            "text": "I am Nola",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "you",
+                "confidence": 0.7922553
+              },
+              {
+                "text": "are",
+                "confidence": 0.7477449
+              },
+              {
+                "text": "from",
+                "confidence": 0.5661277
+              },
+              {
+                "text": "london",
+                "confidence": 0.574680865
+              }
+            ],
+            "durationSeconds": 1.3399999999999999,
+            "confidence": 0.6359641,
+            "text": "you are from London",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "I",
+                "confidence": 0.48464486
+              },
+              {
+                "text": "am",
+                "confidence": 0.6808334
+              },
+              {
+                "text": "from",
+                "confidence": 0.429338068
+              },
+              {
+                "text": "Los Angeles",
+                "confidence": 0.682951868
+              }
+            ],
+            "durationSeconds": 1.78,
+            "confidence": 0.627293766,
+            "text": "I am from Los Angeles",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hell out Eva I am Nola you are from London I am from Los Angeles",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "eva",
+          "i",
+          "am",
+          "noah",
+          "you",
+          "are",
+          "from",
+          "london",
+          "i",
+          "am",
+          "from",
+          "los",
+          "angeles"
+        ],
+        "transcriptTokens": [
+          "hell",
+          "out",
+          "eva",
+          "i",
+          "am",
+          "nola",
+          "you",
+          "are",
+          "from",
+          "london",
+          "i",
+          "am",
+          "from",
+          "los",
+          "angeles"
+        ],
+        "referenceWords": 14,
+        "distance": 3,
+        "wer": 0.21428571428571427,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg01-l4-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l4-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg01-l4-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "7b2025eeab3528c55fa543af06e2117b2cb4e0645d7559cf95d88124865b9bb4",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l1-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "bundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-1/take-1.wav",
+      "audioSha256": "58a9f022f91508481c6e36a33a632f7e1f91ba8ac172042f5cac20bff6da4f9b",
+      "script": "Hello, Ben. Two books, please. A bag, please.",
+      "scriptSha256": "c729138b2e22d391a415cba30525317d0b256a9f53ea2bee9245ba1e99c7aeea",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 180763,
+        "durationSeconds": 7.531791666666667,
+        "clippedSamples": 0,
+        "peak": 23212,
+        "dcOffset": 0.000012945106785628834,
+        "rmsDb": -22.598705575387754,
+        "leadingBelowMinus40DbSeconds": 0.201375,
+        "trailingBelowMinus40DbSeconds": 1.0085,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l1-audio-1.16k.wav",
+      "derivedSha256": "e9a04550ebae63c5b4c572b6a7e3b1334c526d2f91143108b2e02c75756a282e",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 120509,
+        "durationSeconds": 7.5318125,
+        "clippedSamples": 0,
+        "peak": 23033,
+        "dcOffset": 0.000012940006198966467,
+        "rmsDb": -22.648766919290782,
+        "leadingBelowMinus40DbSeconds": 0.201375,
+        "trailingBelowMinus40DbSeconds": 1.0171875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:12.3910722Z",
+      "elapsedSeconds": 1.7206032,
+      "timeoutSeconds": 12,
+      "status": "ERROR",
+      "exitCode": 0,
+      "worker": {
+        "stage": "RECOGNIZE_FILE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.6228598
+              },
+              {
+                "text": "then",
+                "confidence": 0.5072505
+              }
+            ],
+            "durationSeconds": 1.5,
+            "confidence": 0.574766338,
+            "text": "Hello then",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.6336568
+              },
+              {
+                "text": "bucks",
+                "confidence": 0.7475506
+              },
+              {
+                "text": "please",
+                "confidence": 0.8363597
+              }
+            ],
+            "durationSeconds": 1.72,
+            "confidence": 0.7709556,
+            "text": "two bucks please",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "a",
+                "confidence": 0.07754628
+              },
+              {
+                "text": "bank",
+                "confidence": 0.241231039
+              },
+              {
+                "text": "please",
+                "confidence": 0.834849358
+              }
+            ],
+            "durationSeconds": 1.53,
+            "confidence": 0.5127356,
+            "text": "a bank please",
+            "audioPositionSeconds": 0.049999999999999996
+          }
+        ],
+        "status": "ERROR",
+        "error": "Exception calling \"Recognize\" with \"1\" argument(s): \"No audio input is supplied to this recognizer. Use the method SetInputToDefaultAudioDevice if a microphone is connected to the system, otherwise use SetInputToWaveFile, SetInputToWaveStream or SetInputToAudioStream to perform speech recognition from pre-recorded audio.\"",
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello then two bucks please a bank please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "ben",
+          "two",
+          "books",
+          "please",
+          "a",
+          "bag",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "then",
+          "two",
+          "bucks",
+          "please",
+          "a",
+          "bank",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 3,
+        "wer": 0.375,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l1-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l1-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l1-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "8e624a332bfcd247dd6a17c6f70a511600683d84badc0f508503d40444ce765c",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l1-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "bundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-2/take-1.wav",
+      "audioSha256": "807a36f2c4032f287a23c01faf43fc21fcec523b9405d7331a43f1a94d6d248a",
+      "script": "Hello, Kim. A pen, please. Two bags, please.",
+      "scriptSha256": "898df593d13351b46137ab9ba656c0d67e9c4f58c60d9a0d9a432ab0d07938af",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 183183,
+        "durationSeconds": 7.632625,
+        "clippedSamples": 0,
+        "peak": 24138,
+        "dcOffset": 0.000012123866463966362,
+        "rmsDb": -23.137526355530728,
+        "leadingBelowMinus40DbSeconds": 0.20254166666666668,
+        "trailingBelowMinus40DbSeconds": 1.028875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l1-audio-2.16k.wav",
+      "derivedSha256": "a8bc96b83979fcb8e80af44d9ea9f87264db8f2033b829d1ce8e4e908e743538",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 122122,
+        "durationSeconds": 7.632625,
+        "clippedSamples": 0,
+        "peak": 23696,
+        "dcOffset": 0.00001212536582909918,
+        "rmsDb": -23.201734279350692,
+        "leadingBelowMinus40DbSeconds": 0.2025625,
+        "trailingBelowMinus40DbSeconds": 1.0289375,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:18.0339813Z",
+      "elapsedSeconds": 1.5127288,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5794354
+              },
+              {
+                "text": "camp",
+                "confidence": 0.5388473
+              }
+            ],
+            "durationSeconds": 1.45,
+            "confidence": 0.561014652,
+            "text": "Hello camp",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "up",
+                "confidence": 0.4344492
+              },
+              {
+                "text": "and",
+                "confidence": 0.0246204063
+              },
+              {
+                "text": "please",
+                "confidence": 0.84461683
+              }
+            ],
+            "durationSeconds": 1.6099999999999999,
+            "confidence": 0.5088772,
+            "text": "up and please",
+            "audioPositionSeconds": 0.03
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.0319227874
+              },
+              {
+                "text": "bags",
+                "confidence": 0.6985167
+              },
+              {
+                "text": "please",
+                "confidence": 0.835061133
+              }
+            ],
+            "durationSeconds": 1.76,
+            "confidence": 0.670536458,
+            "text": "two bags please",
+            "audioPositionSeconds": 0.06999999999999999
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello camp up and please two bags please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "kim",
+          "a",
+          "pen",
+          "please",
+          "two",
+          "bags",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "camp",
+          "up",
+          "and",
+          "please",
+          "two",
+          "bags",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 3,
+        "wer": 0.375,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l1-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l1-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l1-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "67213cebe4a473a3e4ed9fa9c1d79bd171158a6aa48390533896ed34bafb4f18",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l1-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l1.lesson.txt",
+      "sourceSha256": "5b4fb8b342dd1d522caacd2a5b1971710d90e1a0f0057e3776bb1a6883d0a88a",
+      "bundleSha256": "f7690b8c1d10989b624a01623e8b4c1358a0d1829bd5ee46fdfd092609aea9c9",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l1-audio-3/take-1.wav",
+      "audioSha256": "934dfad4b2cbc4c5d5d87eb031f4aec053a7b355d1980f1f9d1e62f3d82ac5ad",
+      "script": "Hello, Jo. This is an eraser. A book, please.",
+      "scriptSha256": "2a28f22e93e69b95bc067dcbe283e0aac101374342932f1765f8ad647ee3738d",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 172292,
+        "durationSeconds": 7.178833333333333,
+        "clippedSamples": 0,
+        "peak": 25211,
+        "dcOffset": 0.00001317240923793255,
+        "rmsDb": -21.535406005662395,
+        "leadingBelowMinus40DbSeconds": 0.200375,
+        "trailingBelowMinus40DbSeconds": 1.0247083333333333,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l1-audio-3.16k.wav",
+      "derivedSha256": "66aaf5f5b37107f341b88fd179fff66c96db4f3e531c4dc6658145d9a17644da",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 114862,
+        "durationSeconds": 7.178875,
+        "clippedSamples": 0,
+        "peak": 25114,
+        "dcOffset": 0.000013175255364181583,
+        "rmsDb": -21.60553731793373,
+        "leadingBelowMinus40DbSeconds": 0.201125,
+        "trailingBelowMinus40DbSeconds": 1.0286875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:23.1020984Z",
+      "elapsedSeconds": 1.7410783,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.7447818
+              },
+              {
+                "text": "joe",
+                "confidence": 0.6669851
+              }
+            ],
+            "durationSeconds": 1.43,
+            "confidence": 0.708393,
+            "text": "Hello Joe",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "this",
+                "confidence": 0.8488526
+              },
+              {
+                "text": "is",
+                "confidence": 0.625950158
+              },
+              {
+                "text": "an",
+                "confidence": 0.712944448
+              },
+              {
+                "text": "array",
+                "confidence": 0.999
+              },
+              {
+                "text": "sir",
+                "confidence": 0.8045165
+              }
+            ],
+            "durationSeconds": 1.3299999999999998,
+            "confidence": 0.8326502,
+            "text": "this is an array sir",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "but",
+                "confidence": 0.00560942246
+              },
+              {
+                "text": "but",
+                "confidence": 0.6278784
+              },
+              {
+                "text": "please",
+                "confidence": 0.8352059
+              }
+            ],
+            "durationSeconds": 1.64,
+            "confidence": 0.6248458,
+            "text": "but but please",
+            "audioPositionSeconds": 0.02
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Joe this is an array sir but but please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "jo",
+          "this",
+          "is",
+          "an",
+          "eraser",
+          "a",
+          "book",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "joe",
+          "this",
+          "is",
+          "an",
+          "array",
+          "sir",
+          "but",
+          "but",
+          "please"
+        ],
+        "referenceWords": 9,
+        "distance": 5,
+        "wer": 0.5555555555555556,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l1-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l1-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l1-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "182620cec70b5acff8d61144255c64205efb55bc242b8e107124c7b89a16290e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l2-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "bundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-1/take-1.wav",
+      "audioSha256": "c68379647a9df37bb6929280edddeb262e865f2c701d94fee88880a1540cb097",
+      "script": "Hello, Mia. A pen, please. Two bags, please.",
+      "scriptSha256": "66972dc6b3d9f0a9f75f24295a5a1b5b33b9f2b20955e47ad839630f00733d7b",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 182831,
+        "durationSeconds": 7.617958333333333,
+        "clippedSamples": 0,
+        "peak": 23677,
+        "dcOffset": 0.000011632603536103698,
+        "rmsDb": -22.831887109789314,
+        "leadingBelowMinus40DbSeconds": 0.20220833333333332,
+        "trailingBelowMinus40DbSeconds": 1.028875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l2-audio-1.16k.wav",
+      "derivedSha256": "746dc21c19eb4434933efaee85f90f1a33637edf27411deb8f2acb30ec1fbd9b",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 121888,
+        "durationSeconds": 7.618,
+        "clippedSamples": 0,
+        "peak": 23680,
+        "dcOffset": 0.000011611091211168245,
+        "rmsDb": -22.89165619871019,
+        "leadingBelowMinus40DbSeconds": 0.20225,
+        "trailingBelowMinus40DbSeconds": 1.028875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:28.3305957Z",
+      "elapsedSeconds": 0.9628708,
+      "timeoutSeconds": 12,
+      "status": "ERROR",
+      "exitCode": 0,
+      "worker": {
+        "stage": "RECOGNIZE_FILE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.6145217
+              },
+              {
+                "text": "me",
+                "confidence": 0.7753236
+              },
+              {
+                "text": "a",
+                "confidence": 0.7738874
+              }
+            ],
+            "durationSeconds": 1.47,
+            "confidence": 0.6921272,
+            "text": "Hello me a",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "upend",
+                "confidence": 0.665912
+              },
+              {
+                "text": "please",
+                "confidence": 0.8535893
+              }
+            ],
+            "durationSeconds": 1.5899999999999999,
+            "confidence": 0.7559464,
+            "text": "upend please",
+            "audioPositionSeconds": 0.03
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.219251677
+              },
+              {
+                "text": "bags",
+                "confidence": 0.6796709
+              },
+              {
+                "text": "please",
+                "confidence": 0.833499849
+              }
+            ],
+            "durationSeconds": 1.75,
+            "confidence": 0.6863056,
+            "text": "two bags please",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "ERROR",
+        "error": "Exception calling \"Recognize\" with \"1\" argument(s): \"No audio input is supplied to this recognizer. Use the method SetInputToDefaultAudioDevice if a microphone is connected to the system, otherwise use SetInputToWaveFile, SetInputToWaveStream or SetInputToAudioStream to perform speech recognition from pre-recorded audio.\"",
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello me a upend please two bags please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "mia",
+          "a",
+          "pen",
+          "please",
+          "two",
+          "bags",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "me",
+          "a",
+          "upend",
+          "please",
+          "two",
+          "bags",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 2,
+        "wer": 0.25,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l2-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l2-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l2-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "a02e12ba0f7da707941cedae93f26080579f2cda2b7b5e68347467f8df3365d2",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l2-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "bundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-2/take-1.wav",
+      "audioSha256": "2359697be63242a7afbed531d701290f356bd2a995a953d985acb014a2d514ed",
+      "script": "Hello, Adam. Three books, please. A bag, please.",
+      "scriptSha256": "abe859652518b942d160f15500b5fc5bf8550754fe504d274cc3db04971d0fa3",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 182175,
+        "durationSeconds": 7.590625,
+        "clippedSamples": 0,
+        "peak": 23763,
+        "dcOffset": 0.000013306116360899548,
+        "rmsDb": -22.423699914509317,
+        "leadingBelowMinus40DbSeconds": 0.20216666666666666,
+        "trailingBelowMinus40DbSeconds": 1.0085,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l2-audio-2.16k.wav",
+      "derivedSha256": "24d6711833ea940d9b607193e60b7a6a8415c4a610cf5b91b36d80e1bf774525",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 121450,
+        "durationSeconds": 7.590625,
+        "clippedSamples": 0,
+        "peak": 22773,
+        "dcOffset": 0.000013338028525756484,
+        "rmsDb": -22.46902295990653,
+        "leadingBelowMinus40DbSeconds": 0.2021875,
+        "trailingBelowMinus40DbSeconds": 1.0143125,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:31.7850922Z",
+      "elapsedSeconds": 1.1267564,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.6620738
+              },
+              {
+                "text": "adam",
+                "confidence": 0.668693841
+              }
+            ],
+            "durationSeconds": 1.51,
+            "confidence": 0.6650554,
+            "text": "Hello Adam",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "three",
+                "confidence": 0.5160898
+              },
+              {
+                "text": "bucks",
+                "confidence": 0.7751987
+              },
+              {
+                "text": "please",
+                "confidence": 0.8281924
+              }
+            ],
+            "durationSeconds": 1.74,
+            "confidence": 0.74758327,
+            "text": "three bucks please",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "a",
+                "confidence": 0.127496049
+              },
+              {
+                "text": "bank",
+                "confidence": 0.2863721
+              },
+              {
+                "text": "please",
+                "confidence": 0.832322359
+              }
+            ],
+            "durationSeconds": 1.54,
+            "confidence": 0.532298148,
+            "text": "a bank please",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Adam three bucks please a bank please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "adam",
+          "three",
+          "books",
+          "please",
+          "a",
+          "bag",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "adam",
+          "three",
+          "bucks",
+          "please",
+          "a",
+          "bank",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 2,
+        "wer": 0.25,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l2-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l2-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l2-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "23b7f8984817e02e3f0806bf99e8c126741928bd3ba3946e0248aba381724d7d",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l2-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l2.lesson.txt",
+      "sourceSha256": "46ab7eb3f512c5f9a4177b475bbb45283b2d107cf0693d3e8cb0b3cdc234eb2a",
+      "bundleSha256": "06db374a3a4289630fd11ef8bc9cb170ed285525b94c2965d6d91b2f031cf193",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l2-audio-3/take-1.wav",
+      "audioSha256": "aa7697a2e1bb92d6857c0921c88e54c840f7a4e7b5d7cebd73bc01860c64d7b7",
+      "script": "Hello, Eva. Two pens, please. A book, please.",
+      "scriptSha256": "56ea94fec770e657f0f49686644c9ff024d230b3911e302d6178a24d9bb95fb5",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 181770,
+        "durationSeconds": 7.57375,
+        "clippedSamples": 0,
+        "peak": 24018,
+        "dcOffset": 0.000009593301502241845,
+        "rmsDb": -22.227545563877285,
+        "leadingBelowMinus40DbSeconds": 0.201,
+        "trailingBelowMinus40DbSeconds": 1.0247083333333333,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l2-audio-3.16k.wav",
+      "derivedSha256": "3df87a8ce56b379d05f20e12bd95d19d5cd225d5bda1d1ca0c20c3d6b27d12ef",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 121180,
+        "durationSeconds": 7.57375,
+        "clippedSamples": 0,
+        "peak": 24043,
+        "dcOffset": 0.000009595484087462865,
+        "rmsDb": -22.284016709233455,
+        "leadingBelowMinus40DbSeconds": 0.201,
+        "trailingBelowMinus40DbSeconds": 1.0246875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:35.9353263Z",
+      "elapsedSeconds": 1.3065327,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hell",
+                "confidence": 0.2660272
+              },
+              {
+                "text": "out",
+                "confidence": 0.576092839
+              },
+              {
+                "text": "eva",
+                "confidence": 0.7205643
+              }
+            ],
+            "durationSeconds": 1.39,
+            "confidence": 0.576326132,
+            "text": "Hell out Eva",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.8281472
+              },
+              {
+                "text": "pence",
+                "confidence": 0.5184443
+              },
+              {
+                "text": "please",
+                "confidence": 0.8499216
+              }
+            ],
+            "durationSeconds": 1.8399999999999999,
+            "confidence": 0.705694854,
+            "text": "two pence please",
+            "audioPositionSeconds": 0.02
+          },
+          {
+            "words": [
+              {
+                "text": "unblock",
+                "confidence": 0.010127048
+              },
+              {
+                "text": "please",
+                "confidence": 0.848714948
+              }
+            ],
+            "durationSeconds": 1.6099999999999999,
+            "confidence": 0.398466438,
+            "text": "unblock please",
+            "audioPositionSeconds": 0
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hell out Eva two pence please unblock please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "eva",
+          "two",
+          "pens",
+          "please",
+          "a",
+          "book",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hell",
+          "out",
+          "eva",
+          "two",
+          "pence",
+          "please",
+          "unblock",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 5,
+        "wer": 0.625,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l2-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l2-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l2-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "82685e125bbd1fc45ad55117f076b2a994a1b4ed8cc3553bb8eed48a493cb52c",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l3-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "bundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-1/take-1.wav",
+      "audioSha256": "c8774f17de346a1c5c78921dad8de97c9e6c4e86eca2f619a979c2c3a03e070d",
+      "script": "Hello, Mia. This is a bag. Two pens, please.",
+      "scriptSha256": "84fddd0d17332ce0827287c1326b097b601f2d918e77f9c02f76138d9f495c79",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 174007,
+        "durationSeconds": 7.250291666666667,
+        "clippedSamples": 0,
+        "peak": 21152,
+        "dcOffset": 0.000006890381475314212,
+        "rmsDb": -22.88012892890251,
+        "leadingBelowMinus40DbSeconds": 0.20220833333333332,
+        "trailingBelowMinus40DbSeconds": 1.0259166666666666,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l3-audio-1.16k.wav",
+      "derivedSha256": "03095fb075e03a582e98ae7bbcb55778c83de41346a839733b077a11c138c232",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 116005,
+        "durationSeconds": 7.2503125,
+        "clippedSamples": 0,
+        "peak": 21259,
+        "dcOffset": 0.000006881417254374811,
+        "rmsDb": -22.976049322747507,
+        "leadingBelowMinus40DbSeconds": 0.20225,
+        "trailingBelowMinus40DbSeconds": 1.026125,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:40.2773554Z",
+      "elapsedSeconds": 1.1889686,
+      "timeoutSeconds": 12,
+      "status": "ERROR",
+      "exitCode": 0,
+      "worker": {
+        "stage": "RECOGNIZE_FILE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.6172323
+              },
+              {
+                "text": "me",
+                "confidence": 0.7750964
+              },
+              {
+                "text": "a",
+                "confidence": 0.773315251
+              }
+            ],
+            "durationSeconds": 1.47,
+            "confidence": 0.6933272,
+            "text": "Hello me a",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "this",
+                "confidence": 0.399586529
+              },
+              {
+                "text": "is",
+                "confidence": 0.791383862
+              },
+              {
+                "text": "a",
+                "confidence": 0.720795453
+              },
+              {
+                "text": "bad",
+                "confidence": 0.128996551
+              }
+            ],
+            "durationSeconds": 1.17,
+            "confidence": 0.321832478,
+            "text": "this is a bad",
+            "audioPositionSeconds": 0.06999999999999999
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.6147817
+              },
+              {
+                "text": "pence",
+                "confidence": 0.237577021
+              },
+              {
+                "text": "please",
+                "confidence": 0.84434855
+              }
+            ],
+            "durationSeconds": 1.8099999999999998,
+            "confidence": 0.5500922,
+            "text": "two pence please",
+            "audioPositionSeconds": 0
+          }
+        ],
+        "status": "ERROR",
+        "error": "Exception calling \"Recognize\" with \"1\" argument(s): \"No audio input is supplied to this recognizer. Use the method SetInputToDefaultAudioDevice if a microphone is connected to the system, otherwise use SetInputToWaveFile, SetInputToWaveStream or SetInputToAudioStream to perform speech recognition from pre-recorded audio.\"",
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello me a this is a bad two pence please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "mia",
+          "this",
+          "is",
+          "a",
+          "bag",
+          "two",
+          "pens",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "me",
+          "a",
+          "this",
+          "is",
+          "a",
+          "bad",
+          "two",
+          "pence",
+          "please"
+        ],
+        "referenceWords": 9,
+        "distance": 4,
+        "wer": 0.4444444444444444,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l3-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l3-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l3-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "69287b1c4e8410fc6ce399d431d3d66d1de4a3ea9c435368cf1ec6c1182030c4",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l3-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "bundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-2/take-1.wav",
+      "audioSha256": "17d621b1d008ebb684438d33fbd8389c89c972eeacbd80c97e25d843a1bbeb85",
+      "script": "Hello, Jo. That is a book. A pen, please.",
+      "scriptSha256": "c0d77f2fdbcaffc0c02fcecc1c271a0d7717eb863cd7b8a9407cd2e21f5afd65",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 168057,
+        "durationSeconds": 7.002375,
+        "clippedSamples": 0,
+        "peak": 25211,
+        "dcOffset": 0.000016933327145886514,
+        "rmsDb": -22.15205577825909,
+        "leadingBelowMinus40DbSeconds": 0.200375,
+        "trailingBelowMinus40DbSeconds": 1.0279583333333333,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l3-audio-2.16k.wav",
+      "derivedSha256": "9d31132fe10e7ce6d36be3e6248f75cc5bcd292566bb7f026659fbada530502a",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 112038,
+        "durationSeconds": 7.002375,
+        "clippedSamples": 0,
+        "peak": 25114,
+        "dcOffset": 0.00001694240667786822,
+        "rmsDb": -22.182210390806226,
+        "leadingBelowMinus40DbSeconds": 0.201125,
+        "trailingBelowMinus40DbSeconds": 1.0291875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:44.2370282Z",
+      "elapsedSeconds": 2.1521384,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.7484474
+              },
+              {
+                "text": "joe",
+                "confidence": 0.6391046
+              }
+            ],
+            "durationSeconds": 1.43,
+            "confidence": 0.695928454,
+            "text": "Hello Joe",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "that",
+                "confidence": 0.8070274
+              },
+              {
+                "text": "is",
+                "confidence": 0.5865977
+              },
+              {
+                "text": "abut",
+                "confidence": 0.4323841
+              }
+            ],
+            "durationSeconds": 1.19,
+            "confidence": 0.552618444,
+            "text": "that is abut",
+            "audioPositionSeconds": 0
+          },
+          {
+            "words": [
+              {
+                "text": "upend",
+                "confidence": 0.4333789
+              },
+              {
+                "text": "please",
+                "confidence": 0.84774977
+              }
+            ],
+            "durationSeconds": 1.5899999999999999,
+            "confidence": 0.6324922,
+            "text": "upend please",
+            "audioPositionSeconds": 0.049999999999999996
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Joe that is abut upend please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "jo",
+          "that",
+          "is",
+          "a",
+          "book",
+          "a",
+          "pen",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "joe",
+          "that",
+          "is",
+          "abut",
+          "upend",
+          "please"
+        ],
+        "referenceWords": 9,
+        "distance": 5,
+        "wer": 0.5555555555555556,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l3-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l3-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l3-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "21c804d4f68eee00c598b0371e6fafbedfd5847c7c4a27001547bdbfe45e944b",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l3-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l3.lesson.txt",
+      "sourceSha256": "d226f10472ceddfcc05ccf906b2eef37eecd0914aa7f882f6484eee6b1ee5a1d",
+      "bundleSha256": "c1e44f8fb188c6c1e0f46ef4df2ff067dc4dc31cf2938a5d7f3b9155893ad4e2",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l3-audio-3/take-1.wav",
+      "audioSha256": "af649277e5166cabe4ef9e263a4ffc57e0b975f8ba00040a1eaaef62999ea6d5",
+      "script": "Hello, Adam. Three bags, please. Two books, please.",
+      "scriptSha256": "f77f714a4cc9a84884c56356c0c205040d112ceb32f0747c6469052ef47bf2e5",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 188174,
+        "durationSeconds": 7.840583333333333,
+        "clippedSamples": 0,
+        "peak": 23760,
+        "dcOffset": 0.000011147266532155745,
+        "rmsDb": -22.782168224992773,
+        "leadingBelowMinus40DbSeconds": 0.20216666666666666,
+        "trailingBelowMinus40DbSeconds": 1.022875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l3-audio-3.16k.wav",
+      "derivedSha256": "2b2f318b95891ebb7be93f33ac80936ed69e87a6f7a074f476c9e3c98cfc02cd",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 125450,
+        "durationSeconds": 7.840625,
+        "clippedSamples": 0,
+        "peak": 22774,
+        "dcOffset": 0.000011136179285821044,
+        "rmsDb": -22.849179595370998,
+        "leadingBelowMinus40DbSeconds": 0.2021875,
+        "trailingBelowMinus40DbSeconds": 1.023125,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:50.5265268Z",
+      "elapsedSeconds": 1.1600252,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.6695955
+              },
+              {
+                "text": "adam",
+                "confidence": 0.653056264
+              }
+            ],
+            "durationSeconds": 1.51,
+            "confidence": 0.662089169,
+            "text": "Hello Adam",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "three",
+                "confidence": 0.715970039
+              },
+              {
+                "text": "bags",
+                "confidence": 0.733244061
+              },
+              {
+                "text": "please",
+                "confidence": 0.83038944
+              }
+            ],
+            "durationSeconds": 1.7899999999999998,
+            "confidence": 0.7730555,
+            "text": "three bags please",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.445759356
+              },
+              {
+                "text": "bucks",
+                "confidence": 0.774541736
+              },
+              {
+                "text": "please",
+                "confidence": 0.8514628
+              }
+            ],
+            "durationSeconds": 1.76,
+            "confidence": 0.760408,
+            "text": "two bucks please",
+            "audioPositionSeconds": 0
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Adam three bags please two bucks please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "adam",
+          "three",
+          "bags",
+          "please",
+          "two",
+          "books",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "adam",
+          "three",
+          "bags",
+          "please",
+          "two",
+          "bucks",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 1,
+        "wer": 0.125,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l3-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l3-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l3-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "4a7e393d9f4e9171377a092148bfc5f2c210bcdb5731a524837e9fa76df3ac51",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l4-audio-1",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "bundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-1/take-1.wav",
+      "audioSha256": "12ea7dc2651994223c1def24c0fbbeecf578d90d0f2af177122d3f3188fcdc4b",
+      "script": "Hello, Sam. This is a pen. Three books, please.",
+      "scriptSha256": "56aaaff527f23bb66a0779b57029ca692ce21543ca3312f08e7644a4d9a0efc0",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 174762,
+        "durationSeconds": 7.28175,
+        "clippedSamples": 0,
+        "peak": 23433,
+        "dcOffset": 0.000003404462658501276,
+        "rmsDb": -22.65345732628591,
+        "leadingBelowMinus40DbSeconds": 0.18645833333333334,
+        "trailingBelowMinus40DbSeconds": 1.0335,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l4-audio-1.16k.wav",
+      "derivedSha256": "3a802a51f69c0aa9bf47b4dee47b10fbe0dac5c7917c06ff1bfb95ba606329c5",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 116508,
+        "durationSeconds": 7.28175,
+        "clippedSamples": 0,
+        "peak": 23588,
+        "dcOffset": 0.0000033810630895517902,
+        "rmsDb": -22.775846534661518,
+        "leadingBelowMinus40DbSeconds": 0.1864375,
+        "trailingBelowMinus40DbSeconds": 1.020625,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:54.7509607Z",
+      "elapsedSeconds": 1.3692832,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.34071517
+              },
+              {
+                "text": "sam",
+                "confidence": 0.7496256
+              }
+            ],
+            "durationSeconds": 1.52,
+            "confidence": 0.55702287,
+            "text": "Hello Sam",
+            "audioPositionSeconds": 0.04
+          },
+          {
+            "words": [
+              {
+                "text": "this",
+                "confidence": 0.8300756
+              },
+              {
+                "text": "is",
+                "confidence": 0.80641824
+              },
+              {
+                "text": "a",
+                "confidence": 0.01338924
+              },
+              {
+                "text": "pen",
+                "confidence": 0.769215465
+              }
+            ],
+            "durationSeconds": 1.21,
+            "confidence": 0.7283448,
+            "text": "this is a pen",
+            "audioPositionSeconds": 0.09
+          },
+          {
+            "words": [
+              {
+                "text": "three",
+                "confidence": 0.2895516
+              },
+              {
+                "text": "bucks",
+                "confidence": 0.688879967
+              },
+              {
+                "text": "please",
+                "confidence": 0.8542677
+              }
+            ],
+            "durationSeconds": 1.7899999999999998,
+            "confidence": 0.675415,
+            "text": "three bucks please",
+            "audioPositionSeconds": 0.06
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello Sam this is a pen three bucks please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "sam",
+          "this",
+          "is",
+          "a",
+          "pen",
+          "three",
+          "books",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "sam",
+          "this",
+          "is",
+          "a",
+          "pen",
+          "three",
+          "bucks",
+          "please"
+        ],
+        "referenceWords": 9,
+        "distance": 1,
+        "wer": 0.1111111111111111,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l4-audio-1.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l4-audio-1.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l4-audio-1.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "d9b0e2ca204ac06e4107947077e1709abeebd1ce87208ea2da6ecb3fcb30b7dd",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l4-audio-2",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "bundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-2/take-1.wav",
+      "audioSha256": "cb3a5a467815eda530da3e0c9f7b766935d8ed1d067b953e24310df919ae6c3e",
+      "script": "Hello, Kim. That is a bag. A book, please.",
+      "scriptSha256": "9a50a7b8316949cbd7063e3e2607a53ffdd7e0924f0f48166de7546dd6b99a78",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 169114,
+        "durationSeconds": 7.0464166666666666,
+        "clippedSamples": 0,
+        "peak": 24138,
+        "dcOffset": 0.00001576406490453555,
+        "rmsDb": -22.139572508416556,
+        "leadingBelowMinus40DbSeconds": 0.20254166666666668,
+        "trailingBelowMinus40DbSeconds": 1.0247083333333333,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l4-audio-2.16k.wav",
+      "derivedSha256": "36d909573009836932ca60be2961e0bc64e7b329d5fa574c9894da74b03bfe66",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 112743,
+        "durationSeconds": 7.0464375,
+        "clippedSamples": 0,
+        "peak": 24028,
+        "dcOffset": 0.000015791898613578004,
+        "rmsDb": -22.165791217981226,
+        "leadingBelowMinus40DbSeconds": 0.2025625,
+        "trailingBelowMinus40DbSeconds": 1.0246875,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:06:59.3555825Z",
+      "elapsedSeconds": 1.3938891,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5945738
+              },
+              {
+                "text": "camp",
+                "confidence": 0.594283462
+              }
+            ],
+            "durationSeconds": 1.45,
+            "confidence": 0.5944396,
+            "text": "Hello camp",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "that",
+                "confidence": 0.7996431
+              },
+              {
+                "text": "is",
+                "confidence": 0.8552185
+              },
+              {
+                "text": "a",
+                "confidence": 0.748085558
+              },
+              {
+                "text": "bad",
+                "confidence": 0.5704537
+              }
+            ],
+            "durationSeconds": 1.0999999999999999,
+            "confidence": 0.694377,
+            "text": "that is a bad",
+            "audioPositionSeconds": 0.049999999999999996
+          },
+          {
+            "words": [
+              {
+                "text": "bug",
+                "confidence": 0.00316332933
+              },
+              {
+                "text": "but",
+                "confidence": 0.393680483
+              },
+              {
+                "text": "please",
+                "confidence": 0.842753351
+              }
+            ],
+            "durationSeconds": 1.64,
+            "confidence": 0.555960536,
+            "text": "bug but please",
+            "audioPositionSeconds": 0.09
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello camp that is a bad bug but please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "kim",
+          "that",
+          "is",
+          "a",
+          "bag",
+          "a",
+          "book",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "camp",
+          "that",
+          "is",
+          "a",
+          "bad",
+          "bug",
+          "but",
+          "please"
+        ],
+        "referenceWords": 9,
+        "distance": 4,
+        "wer": 0.4444444444444444,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l4-audio-2.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l4-audio-2.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l4-audio-2.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "081be4ba10d26fa3c45721a8db5e66f334436467b750b842443cc158c7f93d6f",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "mg02-l4-audio-3",
+      "sourcePath": "content/beginner/pilot/mg02-l4.lesson.txt",
+      "sourceSha256": "3fac27d20494bdca2dcd5e1bcce5b8199b2378aac5ba1c904b2096285c3241bb",
+      "bundleSha256": "04b4c48f2d8c55f0ff47816f29f964a01751d2452919a7fe76f2aefb1d7406ba",
+      "audioPath": "D:/WorkLingoQualification/r12b-20261027/A/takes/mg02-l4-audio-3/take-1.wav",
+      "audioSha256": "b251363d3d4520c87b748e610da57f0e955fed8868fa68683dac5af36348dba9",
+      "script": "Hello, May. Two bags, please. A pen, please.",
+      "scriptSha256": "9d9aed7f12f691936f5cb5f3f6fcd4003c0bffd2e799beaca812f1287cbc2f6d",
+      "waveform": {
+        "sampleRate": 24000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 180713,
+        "durationSeconds": 7.529708333333334,
+        "clippedSamples": 0,
+        "peak": 23764,
+        "dcOffset": 0.000014334630610761262,
+        "rmsDb": -22.569573043562798,
+        "leadingBelowMinus40DbSeconds": 0.202625,
+        "trailingBelowMinus40DbSeconds": 1.0279583333333333,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "derivedPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l4-audio-3.16k.wav",
+      "derivedSha256": "a88fcf4afb980f8fe79d6cf5e3f71c011f1484e5e0dd71db19c10821c52c1d0b",
+      "derivedWaveform": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "bits": 16,
+        "sampleCount": 120476,
+        "durationSeconds": 7.52975,
+        "clippedSamples": 0,
+        "peak": 23777,
+        "dcOffset": 0.00001434991866248257,
+        "rmsDb": -22.626841447055533,
+        "leadingBelowMinus40DbSeconds": 0.202625,
+        "trailingBelowMinus40DbSeconds": 1.0294375,
+        "silenceThreshold": 327,
+        "auditoryOrNoiseVerdict": "NEEDS_EVIDENCE"
+      },
+      "startedAt": "2026-10-30T06:07:03.584872Z",
+      "elapsedSeconds": 1.4442024,
+      "timeoutSeconds": 12,
+      "status": "TRANSCRIBED",
+      "exitCode": 0,
+      "worker": {
+        "stage": "COMPLETE",
+        "recognizerId": "MS-1033-80-DESK",
+        "segments": [
+          {
+            "words": [
+              {
+                "text": "hello",
+                "confidence": 0.5832872
+              },
+              {
+                "text": "may",
+                "confidence": 0.82444334
+              }
+            ],
+            "durationSeconds": 1.38,
+            "confidence": 0.693081856,
+            "text": "Hello may",
+            "audioPositionSeconds": 0.06
+          },
+          {
+            "words": [
+              {
+                "text": "two",
+                "confidence": 0.5071313
+              },
+              {
+                "text": "bags",
+                "confidence": 0.7512222
+              },
+              {
+                "text": "please",
+                "confidence": 0.8406221
+              }
+            ],
+            "durationSeconds": 1.76,
+            "confidence": 0.7558126,
+            "text": "two bags please",
+            "audioPositionSeconds": 0.03
+          },
+          {
+            "words": [
+              {
+                "text": "upend",
+                "confidence": 0.2725413
+              },
+              {
+                "text": "please",
+                "confidence": 0.847110569
+              }
+            ],
+            "durationSeconds": 1.65,
+            "confidence": 0.550185561,
+            "text": "upend please",
+            "audioPositionSeconds": 0
+          }
+        ],
+        "status": "TRANSCRIBED",
+        "error": null,
+        "grammar": "DictationGrammar",
+        "settings": [
+          {
+            "name": "AdaptationOn",
+            "disabled": true
+          },
+          {
+            "name": "PersistedBackgroundAdaptation",
+            "disabled": true
+          }
+        ]
+      },
+      "transcript": "Hello may two bags please upend please",
+      "alignment": {
+        "referenceTokens": [
+          "hello",
+          "may",
+          "two",
+          "bags",
+          "please",
+          "a",
+          "pen",
+          "please"
+        ],
+        "transcriptTokens": [
+          "hello",
+          "may",
+          "two",
+          "bags",
+          "please",
+          "upend",
+          "please"
+        ],
+        "referenceWords": 8,
+        "distance": 2,
+        "wer": 0.25,
+        "interpretation": "ASR mismatch is a review candidate, not a confirmed recording defect"
+      },
+      "tracePath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/asr/mg02-l4-audio-3.trace.json",
+      "stdoutPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l4-audio-3.stdout.txt",
+      "stderrPath": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-bcd-20261030/logs/mg02-l4-audio-3.stderr.txt",
+      "phoneticDisposition": "NEEDS_EVIDENCE",
+      "humanDisposition": null,
+      "traceSha256": "ec26ab8edc5316a8229294af6cd24e6b80a2998957a8050d14b451c846f66fec",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "errors": 3,
+  "itemsWithTranscript": 24,
+  "exactNormalizedMatches": 3,
+  "mismatchCandidates": 21,
+  "timestampLimit": "System.Speech segment audio positions are segment-local observations; they are not forced alignment against the full recording.",
+  "executionSource": {
+    "runnerSha256AtRun": "0dbf41c9d82ea0310d5f12293b49231ae34112d724e151c6fb49ff3664f77869",
+    "runnerAtRunSnapshotAvailable": false,
+    "finalRunnerSha256": "58be79abf846a560da7f7d227e02c3cff48d42b446b6d68096a526439b109753",
+    "finalGuardSuite": "9/9 PASS",
+    "retrospectiveOnly": [
+      "Strict complete WAV chunk/padding consumption",
+      "Unique per-attempt trace/log paths and input SHA256/child-exit receipt validation"
+    ],
+    "actualASRRepeatedAfterGuardChanges": false,
+    "retainedEvidence": "Original24 attempts preserved; original48WAV and72trace/log hashes independently verified; final parser rechecked on those48WAV separately."
+  }
+}
