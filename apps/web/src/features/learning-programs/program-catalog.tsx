@@ -131,7 +131,10 @@ export function ProgramCatalog() {
     setIsActivating(true);
     setActivationError(null);
     try {
-      const activated = await learningProgramClient.activateProgram({ programSlug: program.slug, expectedRevision: context?.enrollment?.revision ?? null });
+      const reserved = ['beginner', 'intermediate', 'ielts', 'toeic'].includes(program.slug);
+      const activated = reserved
+        ? await learningProgramClient.activateProgram({ programSlug: program.slug, expectedRevision: context?.enrollment?.revision ?? null })
+        : await learningProgramClient.enrollProgram({ programSlug: program.slug, expectedRevision: context?.enrollment?.revision ?? 0 });
       if (activated.activeProgram?.slug !== program.slug || !activated.enrollment) {
         throw new Error('Program activation returned an inconsistent context.');
       }

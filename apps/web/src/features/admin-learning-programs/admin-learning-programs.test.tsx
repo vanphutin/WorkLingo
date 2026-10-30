@@ -1,0 +1,30 @@
+import '@testing-library/jest-dom/vitest';
+import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
+import {afterEach,expect,it,vi} from 'vitest';
+import {AdminLearningPrograms} from './admin-learning-programs';
+import {LearningProgramClient} from '../../lib/api/learning-program-client';
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+const program={id:'11111111-1111-4111-8111-111111111111',slug:'workplace-new',name:'Workplace',description:'Useful English',learningGoal:'Handle requests',proficiencyLabel:'A2',iconKey:'intermediate' as const,displayOrder:5,availabilityStatus:'IN_DEVELOPMENT' as const,revision:1,progressionPolicy:'ACTIVITY_COMPLETION' as const,curriculumRevisionIds:[]};
+it('creates metadata then publishes exact ordered curriculum revisions',async()=>{
+ vi.spyOn(LearningProgramClient.prototype,'listPrograms').mockResolvedValue({programs:[]});
+ const create=vi.spyOn(LearningProgramClient.prototype,'createProgram').mockResolvedValue(program);
+ const publish=vi.spyOn(LearningProgramClient.prototype,'publishProgram').mockResolvedValue({...program,revision:2,availabilityStatus:'AVAILABLE'});
+ render(<AdminLearningPrograms/>);
+ await screen.findByRole('heading',{name:'Learning programs'});
+ for(const [label,value] of Object.entries({'Slug':'workplace-new','Name':'Workplace','Description':'Useful English','Learning goal':'Handle requests','Proficiency label':'A2','Display order':'5'}))fireEvent.change(screen.getByLabelText(label),{target:{value}});
+ fireEvent.click(screen.getByRole('button',{name:'Create program'}));
+ await waitFor(()=>expect(create).toHaveBeenCalled());
+ fireEvent.change(await screen.findByLabelText('Curriculum revision IDs'),{target:{value:'22222222-2222-4222-8222-222222222222\n33333333-3333-4333-8333-333333333333'}});
+ fireEvent.click(screen.getByRole('button',{name:'Publish program'}));
+ await waitFor(()=>expect(publish).toHaveBeenCalledWith(program.id,expect.objectContaining({expectedRevision:1,curriculumRevisionIds:['22222222-2222-4222-8222-222222222222','33333333-3333-4333-8333-333333333333']})));
+});
+it('keeps edits and an error visible when saving fails',async()=>{
+ vi.spyOn(LearningProgramClient.prototype,'listPrograms').mockResolvedValue({programs:[program]});
+ vi.spyOn(LearningProgramClient.prototype,'updateProgram').mockRejectedValue(new Error('Stale revision. Reload first.'));
+ render(<AdminLearningPrograms/>);
+ fireEvent.click(await screen.findByRole('button',{name:'Edit Workplace'}));
+ fireEvent.change(screen.getByLabelText('Name'),{target:{value:'Edited name'}});
+ fireEvent.click(screen.getByRole('button',{name:'Save changes'}));
+ expect(await screen.findByRole('alert')).toHaveTextContent('Stale revision');
+ expect(screen.getByLabelText('Name')).toHaveValue('Edited name');
+});

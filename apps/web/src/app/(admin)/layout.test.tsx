@@ -50,7 +50,7 @@ describe('AdminLayout', () => {
       '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum', '/admin/audit',
       '/admin/operations', '/admin/analytics', '/admin/settings/audio', '/admin/settings/ai', '/dashboard',
     ]));
-    expect(destinations).toHaveLength(28);
+    expect(destinations).toHaveLength(29);
     expect(screen.getByRole('link', { name: 'Skip to administrative content' })).toHaveAttribute('href', '#admin-main-content');
     expect(replace).not.toHaveBeenCalled();
   });

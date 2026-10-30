@@ -5,6 +5,9 @@ import { curriculumRoadmapMessages } from '../../i18n/messages/curriculumRoadmap
 import { localizedError } from '../../i18n/errors';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { apiClient } from '../../lib/api/api-client';
 import type { CurriculumRoadmapDto } from '@worklingo/contracts';
 
 interface CurriculumRoadmapProps {
@@ -23,6 +26,29 @@ function explainReason(reason: string) {
   if (reason.startsWith('prerequisite_unavailable:')) return 'prerequisiteUnavailable';
   if (reason === 'bound_lesson_unavailable' || reason === 'no_bound_lessons') return 'lessonUnavailable';
   return 'programUnavailable';
+}
+
+function TargetStart({ missionId, revisionId, title }: { missionId: string; revisionId: string; title: string }) {
+  const router = useRouter();
+  const pending = useRef(false);
+  const [starting, setStarting] = useState<string | null>(null);
+  const [startError, setStartError] = useState<string | null>(null);
+  const [clientSessionIds] = useState(() => new Map<string, string>());
+  const [durationMinutes, setDurationMinutes] = useState(45);
+  const start = async () => {
+    if (pending.current) return;
+    pending.current = true;
+    setStarting(revisionId); setStartError(null);
+    const key = `${revisionId}:${durationMinutes}`;
+    let clientSessionId = clientSessionIds.get(key);
+    if (!clientSessionId) { clientSessionId = crypto.randomUUID(); clientSessionIds.set(key, clientSessionId); }
+    try {
+      const session = await apiClient.createCurriculumSession({ missionId, expectedCurriculumRevisionId: revisionId, durationMinutes, clientSessionId });
+      router.push(`/sessions/${session.id}`);
+    } catch (cause) { setStartError(cause instanceof Error ? cause.message : 'Unable to start session.'); }
+    finally { pending.current = false; setStarting(null); }
+  };
+  return <div>{startError ? <p role="alert">{startError}</p> : null}<label>Session duration<select disabled={starting !== null} value={durationMinutes} onChange={e=>setDurationMinutes(Number(e.target.value))}>{[45,60,90].map(n=><option key={n} value={n}>{n} minutes</option>)}</select></label><button type="button" className="secondary-action-link" onClick={()=>void start()} disabled={starting !== null}>{starting ? 'Starting…' : `Start ${title}`}</button></div>;
 }
 
 export function CurriculumRoadmap({ roadmap, isLoading = false, error = null, onRetry }: CurriculumRoadmapProps) {
@@ -77,6 +103,8 @@ export function CurriculumRoadmap({ roadmap, isLoading = false, error = null, on
             </ul>
             {item.activeSessionId ? (
               <Link className="secondary-action-link" href={`/sessions/${item.activeSessionId}`}>{t('resume', { title: item.title })}</Link>
+            ) : item.state === 'available' ? (
+              <TargetStart missionId={item.missionId} revisionId={item.revisionId} title={item.title} />
             ) : null}
           </article>
         ))}
