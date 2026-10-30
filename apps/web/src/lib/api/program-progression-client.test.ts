@@ -21,4 +21,3 @@ it('validates enroll input before a POST and returns server context only',async(
  await client.enrollProgram({programSlug:'workplace-new',expectedRevision:3});expect(fetcher).toHaveBeenCalledWith('/api/v1/me/program-enrollments',expect.objectContaining({method:'POST',body:JSON.stringify({programSlug:'workplace-new',expectedRevision:3})}));
  await expect(client.enrollProgram({programSlug:'beginner',expectedRevision:3})).rejects.toThrow();expect(fetcher).toHaveBeenCalledTimes(1);
 });
-

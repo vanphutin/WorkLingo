@@ -12,4 +12,3 @@ export class AdminProgramsController {
  @Put(':id') update(@Req() req:AuthenticatedRequest,@Param('id',ParseUUIDPipe) id:string,@Body() body:unknown):Promise<AdminProgramDto>{return this.programs.update(req.authUser.id,id,body);}
  @Post(':id/publish') @HttpCode(200) publish(@Req() req:AuthenticatedRequest,@Param('id',ParseUUIDPipe) id:string,@Body() body:unknown):Promise<AdminProgramDto>{return this.programs.publish(req.authUser.id,id,body);}
 }
-
