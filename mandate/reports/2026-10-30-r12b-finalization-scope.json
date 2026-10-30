@@ -1,0 +1,104 @@
+{
+  "mission": "WORKLINGO-R12B-FINALIZATION-20261030",
+  "baseline": {
+    "head": "36bab100a4b6a15afd28e5329fc65af08d34f392",
+    "branch": "codex/foundation-basic-readiness"
+  },
+  "authority": {
+    "ownerAttachmentSha256": "699f7875b3e1c02bc62e08ceaae02acd1c89cfd41748c309fd1967d11eaa304c",
+    "latestDirectInstruction": "codex có thể mở trình duyệt và thao tac như người học thật, vì ứng dụng tôi chưa deploy, nên bạn tự làm và đánh giá đạt, nếu ko đạt ban tự fix đến khi naoc đạt thì thôi, tôi giao toàn quyền cho bạn",
+    "localEngineering": true,
+    "syntheticBrowser": true,
+    "disposableDatabase": true,
+    "localCommits": true,
+    "remoteInference": false,
+    "credentialsOrProjectEnv": false,
+    "realParticipants": false,
+    "forgedExpertEvidence": false,
+    "release": "ONLY_ALL_EXISTING_MANDATORY_GATES_GENUINELY_PASS"
+  },
+  "budget": {
+    "inkPoints": "1.5",
+    "additionalUSD": "0",
+    "newLocalPilotMaximum": 20,
+    "retries": 0,
+    "inflight": 1,
+    "maxStartSeconds": 120,
+    "outputTokenCap": 2048,
+    "failedPilotStop": true
+  },
+  "allowlist": {
+    "modify": [
+      "docs/qualification/beginner-r12b-final-commit-audit.md"
+    ],
+    "create": [
+      "apps/api/src/ai-gateway/infrastructure/language-evaluation-chat-contract.ts",
+      "apps/api/src/ai-gateway/infrastructure/language-evaluation-chat-contract.spec.ts",
+      "apps/api/test/beginner-pilot/finalization-local-calibration.ts",
+      "apps/api/test/beginner-pilot/finalization-local-calibration.test.ts",
+      "apps/api/test/beginner-pilot/expert-review-workbench.ts",
+      "apps/api/test/beginner-pilot/expert-review-workbench.test.ts",
+      "apps/api/test/beginner-pilot/finalization-browser-runtime.ts",
+      "apps/api/test/beginner-pilot/finalization-browser-runtime.test.ts",
+      "apps/api/test/beginner-pilot/gate-c-browser-observations.ts",
+      "apps/api/test/beginner-pilot/gate-c-browser-observations.test.ts",
+      "apps/api/test/beginner-pilot/finalization-governance.test.ts",
+      "apps/api/test/beginner-pilot/finalization-browser.config.ts",
+      "apps/api/test/beginner-pilot/finalization-browser-bootstrap.spec.ts",
+      "apps/web/e2e/beginner-finalization.spec.ts",
+      "apps/web/playwright.beginner-finalization.config.ts",
+      "tools/qualification/expert-review-workbench.js",
+      "tools/qualification/expert-review-workbench.css",
+      "docs/qualification/beginner-r12b-finalization-contract-replay.json",
+      "docs/qualification/beginner-r12b-finalization-contract-replay.md",
+      "docs/qualification/beginner-r12b-finalization-constrained-local-calibration.json",
+      "docs/qualification/beginner-r12b-finalization-constrained-local-calibration.md",
+      "docs/qualification/beginner-r12b-finalization-content-audit.json",
+      "docs/qualification/beginner-r12b-finalization-content-audit.md",
+      "docs/qualification/beginner-r12b-finalization-browser.json",
+      "docs/qualification/beginner-r12b-finalization-browser.md",
+      "docs/qualification/beginner-r12b-finalization-evidence-inventory.json",
+      "docs/qualification/beginner-r12b-finalization-evidence-inventory.md",
+      "docs/qualification/beginner-r12b-finalization-reviewer-workbench.html",
+      "docs/qualification/beginner-r12b-finalization-report.md",
+      "docs/qualification/beginner-r12b-final-qualification-matrix.json",
+      "docs/qualification/beginner-r12b-final-test-results.md",
+      "docs/qualification/beginner-r12b-final-release-readiness.md",
+      "docs/qualification/beginner-r12b-final-blockers.md",
+      "docs/qualification/beginner-r12b-finalization-review.md",
+      "docs/superpowers/plans/2026-10-30-r12b-finalization.md",
+      "mandate/reports/2026-10-30-r12b-finalization-authorization.md",
+      "mandate/reports/2026-10-30-r12b-finalization-scope.json",
+      "mandate/reports/2026-10-30-r12b-finalization-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-006-architecture-finalize-strict-local-contract-reviewer-workbench-and-real-browser-orc.md"
+    ]
+  },
+  "runtime": {
+    "root": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-finalization-20261030",
+    "subtrees": [
+      "db",
+      "storage",
+      "frontend",
+      "logs",
+      "artifacts",
+      "model"
+    ],
+    "ports": {
+      "database": 55434,
+      "api": 33442,
+      "web": 33443,
+      "localModel": 33441
+    },
+    "postgresImage": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "sourceAssets": "Reuse only prior005 exacthashverified llama.cpp b12000 and Qwen3-0.6B-Q8_0 assets; no download or credentials",
+    "database": "New exactownedDocker container+volume only; snapshot migrations/schema; copy24readonlyWAVs and eight exactsource lessons into isolated syntheticpublishedfixtures; never productionpublication; randomprivatecredentials notlogged; environment explicit sanitized allowlist",
+    "browser": "3syntheticprofiles times8actualBeginnerlessons; automatedPlaywright plus CUA manual learnerinteraction; capture actual events and failerrors; no realhumanqualification",
+    "processes": "Ownedhiddenchildprocesses only, loopback127.0.0.1, no project.env, fakeprovider with no routing/fallback for application tests; modelseparate exact constrained protocol; stoponlyownershipverifiedresources",
+    "historicalGovernance": "Run frozen005guard at36bab10 epoch via readonlysnapshot; current006exactdelta guard; nevereditoldtests"
+  },
+  "preserve": "All baseline bytes except append-only final-commit-audit and CLIINDEX. Preserve all original20rawresponses, ASRreceipts, sources/bundles/rubrics/WAVs/decisions/thresholds. Additionalproductionfixrequires matching exactsuccessorscope. No silenthumanPASS/release."
+}
+
