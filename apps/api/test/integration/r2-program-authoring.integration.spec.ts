@@ -18,7 +18,9 @@ describe('R2 program authoring HTTP',()=>{
   const version=await context.database.lessonVersion.findFirstOrThrow({where:{status:'PUBLISHED'}});
   const activity=lessonSnapshotSchema.parse(version.parsedContent).activities.find(row=>row.skills.length)!;
   await context.database.missionLesson.create({data:{missionId:mission.id,lessonId:version.lessonId,order:1}});
-  const revision=await context.database.curriculumRevision.create({data:{missionId:mission.id,revision:1,snapshot:{category:'writing',prerequisiteRevisionIds:[],objectives:[{slug:'race',statement:'Race evidence',required:true,skills:[activity.skills[0]],evidence:[{lessonVersionId:version.id,activitySlug:activity.slug,languageBlockSlugs:[]}]}]},lessons:{create:{lessonVersionId:version.id,order:1}}}});
+  const skill=activity.skills[0];
+  if(!skill)throw new Error('Published fixture requires an evidence skill');
+  const revision=await context.database.curriculumRevision.create({data:{missionId:mission.id,revision:1,snapshot:{category:'writing',prerequisiteRevisionIds:[],objectives:[{slug:'race',statement:'Race evidence',required:true,skills:[skill],evidence:[{lessonVersionId:version.id,activitySlug:activity.slug,languageBlockSlugs:[]}]}]},lessons:{create:{lessonVersionId:version.id,order:1}}}});
   let release!:()=>void,ready!:()=>void;
   const gate=new Promise<void>(resolve=>{release=resolve;});
   const locked=new Promise<void>(resolve=>{ready=resolve;});
