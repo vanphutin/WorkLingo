@@ -54,6 +54,7 @@ function TargetStart({ missionId, revisionId, title }: { missionId: string; revi
 export function CurriculumRoadmap({ roadmap, isLoading = false, error = null, onRetry }: CurriculumRoadmapProps) {
   const t = useT('curriculumRoadmap', curriculumRoadmapMessages);
   const { locale } = useLocalePreference();
+  const activityCompletion = roadmap?.targetedStartSupported === true;
   if (isLoading) {
     return <section className="dashboard-card roadmap-panel" aria-busy="true"><p role="status">{t('loading')}</p></section>;
   }
@@ -78,7 +79,7 @@ export function CurriculumRoadmap({ roadmap, isLoading = false, error = null, on
     <section className="roadmap-panel" aria-labelledby="roadmap-heading">
       <div className="roadmap-heading-row">
         <div><span className="card-tag">{t('required')}</span><h2 id="roadmap-heading">{t('title')}</h2></div>
-        <p>{t('note')}</p>
+        <p>{activityCompletion ? t('activityCompletionNote') : t('note')}</p>
       </div>
       <div className="roadmap-grid">
         {roadmap.items.map((item) => (
@@ -97,7 +98,7 @@ export function CurriculumRoadmap({ roadmap, isLoading = false, error = null, on
               {item.objectives.map((objective) => (
                 <li key={objective.slug}>
                   <span lang="en">{objective.statement}</span>
-                  <strong>{objective.completed ? t('completed') : t('pending')}</strong>
+                  <strong>{objective.completed ? t('completed') : activityCompletion ? t('activityCompletionPending') : t('pending')}</strong>
                 </li>
               ))}
             </ul>
