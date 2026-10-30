@@ -233,6 +233,16 @@
       "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/api-typecheck-harness-final.log",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/main-merged-verification.log",
+      "bytes": 738,
+      "sha256": "6417a4e6dd8c97e48f7d514796aeb9ffdaf49e1d291249cbacd702bfa58e8068"
+    },
+    {
+      "path": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r2-20261030/main-prisma-generate.log",
+      "bytes": 541,
+      "sha256": "3f17ab2d3cd3105b022105b20cc5f226db27b7e2b136fa890d12bf65ebc41f4a"
     }
   ],
   "review": {
@@ -253,7 +263,16 @@
   "releaseReady": false,
   "cleanup": {
     "apiAndWebStopped": true,
-    "disposableDatabaseRemoval": "pending final audit",
+    "disposableContainer": "worklingo-r2-20261030",
+    "containerOwnerLabel": "r2-20261030",
+    "containerAndAnonymousVolumeRemoved": true,
+    "ports33542_33543_55447": "no listeners",
     "primaryDatabaseMutated": false
+  },
+  "mainMerge": {
+    "commit": "a00bae7ce699e2be3447112cce724673b92f0c15",
+    "tests": "21/21 PASS",
+    "productTreeMatchesReviewedBranch": true,
+    "push": "pending normal fast-forward push"
   }
 }
