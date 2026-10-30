@@ -25,39 +25,51 @@
 ## Task1: Admin draft preservation (agent web_p2)
 Files: exact four Admin component/test paths plus new apps/web/vitest.qualification.config.ts in scope.
 Consumes: AdminNavigationGuardProvider/useAdminCanNavigate and current Foundation editor registry. Produces: existing components with preserved public interfaces and later edits.
-- [ ] Add behavior regressions for canceled/accepted internal switches with real child editor; literal `$&`, dollar-backtick, `$'`, `$$`; deferred validation/reload edits.
-- [ ] Run focused Vitest with envDir:false and observe expected failures.
-- [ ] Apply minimal shared-guard/callback/revision fixes; run focused and full safe Web tests, lint/typecheck.
-- [ ] Independent review, resolve Important issues, coordinator explicit-file commit with mandate ID.
+- [x] Add behavior regressions for canceled/accepted internal switches with real child editor; literal `$&`, dollar-backtick, `$'`, `$$`; deferred validation/reload edits.
+- [x] Run focused Vitest with envDir:false and observe expected failures.
+- [x] Apply minimal shared-guard/callback/revision fixes; run focused and full safe Web tests, lint/typecheck.
+- [x] Independent review, resolve Important issues, coordinator explicit-file commit with mandate ID.
 
 ## Task2: Read-only audio verification (agent audio_qa)
 Files: tools/beginner-pilot/audio-qualification.mjs and .test.mjs; technical QA JSON/MD reports in scope.
 Consumes: current verified GateA/storage/content authority and immutable asset manifest. Produces: existing verify command with no writes, lock, credential requirement or transport.
-- [ ] RED: verified authority can verify; produce/prepare denied; poison mutation/transport methods must never run during verification; stale hash/unsafe ACL still denied.
-- [ ] Investigate pre-existing CONTENT_SOURCE_TRANSITION_INVALID against frozen beforeLF/afterLF, then add mutation and newline tests before any scoped correction.
-- [ ] GREEN: mode-aware authority/read-only preflight, skip locks/manifest writes for verify; preserve every generation gate.
-- [ ] Run full Node audio suite. Independently audit24WAV format/hash/binding/silence/clipping/duplicates and all82item states; no phonetic claim.
-- [ ] Independent review then coordinator explicit-file commit.
+- [x] RED: verified authority can verify; produce/prepare denied; poison mutation/transport methods must never run during verification; stale hash/unsafe ACL still denied.
+- [x] Investigate pre-existing CONTENT_SOURCE_TRANSITION_INVALID against frozen beforeLF/afterLF, then add mutation and newline tests before any scoped correction.
+- [x] GREEN: mode-aware authority/read-only preflight, skip locks/manifest writes for verify; preserve every generation gate.
+- [x] Run full Node audio suite. Independently audit24WAV format/hash/binding/silence/clipping/duplicates and all82item states; no phonetic claim.
+- [x] Independent review then coordinator explicit-file commit.
 
 ## Task3: Cost/oracle and study preparation (agent cost_oracle, coordinator C)
 Files: named provider cost JSON/MD,128row oracle proposal JSON,GateC readiness MD and final reports in scope. Existing source/serializer/goldens remain unchanged.
 Consumes: buildGoldens/offlineAdapterProbe/current packet/source hashes. Produces: AI_PROPOSED_NOT_ADJUDICATED rows and separate conservative costs, no provider results.
-- [ ] Measure all160actual serialized mock requests, phase input/output/overhead reservations, safe metadata-only minimization and budget lower bound. Label bytes versus exact tokens.
-- [ ] Emit128source/bundle/case-bound proposals with facts,alternatives,rejection/injection rationale/confidence/references; unresolved scalar/phonetic/source ambiguities stay NEEDS_HUMAN.
-- [ ] Check exact official pricing/privacy sources without credentials or generation; retain unverified endpoint retention/deletion/training explicitly.
-- [ ] Prepare consent/eligibility/storage/timing/session/stop checklist using existing protocol; no real data storage or sessions.
+- [x] Measure all160actual serialized mock requests, phase input/output/overhead reservations, safe metadata-only minimization and budget lower bound. Label bytes versus exact tokens.
+- [x] Emit128source/bundle/case-bound proposals with facts,alternatives,rejection/injection rationale/confidence/references; unresolved scalar/phonetic/source ambiguities stay NEEDS_HUMAN.
+- [x] Check exact official pricing/privacy sources without credentials or generation; retain unverified endpoint retention/deletion/training explicitly.
+- [x] Prepare consent/eligibility/storage/timing/session/stop checklist using existing protocol; no real data storage or sessions.
 
 ## Task4: Reliability, governance, regression and audit (coordinator)
 Files: qualification-runtime.test.ts, new autonomous-governance.test.ts, safe API regression config, release checklist and named final/audit/inventory reports in scope. Runtime implementation unchanged unless a separately reproduced defect requires a scope revision before editing.
-- [ ] Verify baseline authority/hash ancestry and exact union of old plus successor paths without editing historical tests or frozen approvals.
-- [ ] Exercise disk-full/fsync/interrupted append boundaries in existing disposable namespace; preserve fail-closed UNKNOWN consumption; no power-loss equivalence claimed.
-- [ ] Inspect safe unit/contracts configurations; run explicit no-env API legacy/parser/privacy/planner/DTO/cache/contract suites plus Web suites and build/typecheck/lint as safe. DB integration remains blocked absent an approved disposable DB.
-- [ ] Generate full per-commit table from Git with mandate/files/test/review/status evidence; inspect every commit/code path and unresolved P1/P2, no history rewrite or secret dumps.
-- [ ] Independent final review of all new changes and critical evaluator/privacy/cache/parser/release boundaries. Resolve Important findings via RED/GREEN within scope; capture exact follow-up if needed.
-- [ ] Validate register/protected hashes/diff, commit checkpoints; final report includes every workstream,commands/counts,limitations,costs and exact readiness.
+- [x] Verify baseline authority/hash ancestry and exact union of old plus successor paths without editing historical tests or frozen approvals.
+- [x] Exercise disk-full/fsync/interrupted append boundaries in existing disposable namespace; preserve fail-closed UNKNOWN consumption; no power-loss equivalence claimed.
+- [x] Inspect safe unit/contracts configurations; run explicit no-env API legacy/parser/privacy/planner/DTO/cache/contract suites plus Web suites and build/typecheck/lint as safe. DB integration remains blocked absent an approved disposable DB.
+- [x] Generate full per-commit table from Git with mandate/files/test/review/status evidence; inspect every commit/code path and unresolved P1/P2, no history rewrite or secret dumps.
+- [x] Independent final review of all new changes and critical evaluator/privacy/cache/parser/release boundaries. Resolve Important findings via RED/GREEN within scope; capture exact follow-up if needed.
+- [x] Validate register/protected hashes/diff, commit checkpoints; final report includes every workstream,commands/counts,limitations,costs and exact readiness.
 
 ## Dependency graph and terminal decision
 Tasks1/2/3 proceed independently after exact successor authorization. Task4governance spans all; final review/regression follows their integration. Live pilot requires budget+privacy+frozen adjudication+safe runtime; real QA requires qualified reviewers; GateC requires approved study governance/consent/eligible adults. Release requires all12owner gates,concrete target and tested rollback. If any is absent,do not merge/push/deploy; choose RESULT B only when all autonomous engineering completes,otherwise RESULT C with precise root cause and recovery.
 
 ## Plan rulings
 Owner explicitly supplies method/autonomy and asks not to wait for routine confirmation,overriding the skill's generic handoff confirmation. Reuse the existing linked checkout and installed dependencies;no reinstall or generic scratch directory. Technical report thresholds (silence/clipping) describe measurements only,not phonetic acceptance. Each agent owns only its named files;coordinator alone commits/registers lifecycle.
+
+## Execution closure ledger — 2026-10-30
+
+All checked tasks mean their stated offline engineering/reporting work completed; they do not mean actual provider, professional QA, Gate C, DB integration, power-loss or release acceptance. Detailed commands, evidence and limits are in docs/qualification/beginner-r12b-autonomous-final-report.md.
+
+- Task 1 complete: ba6f40d, 9 expected RED → 16 focused GREEN / full Web 936 PASS; independent cost_oracle review clean.
+- Task 2 complete: 88d6379, 60 audio PASS plus actual read-only 24-asset verify; independent web_p2 review clean. Final review P2 mixed-newline equivalence reproduced RED and fixed in 5590b94 → 61 PASS; fresh reviewer inspected the fix and ran 3 focused tests PASS.
+- Task 3 complete: 3088496, 160 actual serializer probes / 128 AI proposals / Gate C packet. Official UI prices still 800/2700, budget 1.5 unchanged; live execution blocked. Professional, human and learner counts remain zero.
+- Task 4 complete: 3f8e981 runtime 30 PASS / safe API 371 PASS; qualification 115 PASS / content 147 / contracts 147; 1807 distinct safe tests. The new build defect was captured separately in 002; 2dbe52e CSS fix → webpack and Turbopack PASS. Shared packages/API/Web lint and typecheck PASS. Full 89-commit inventory through 5590b94; final integrated AI review has no outstanding Critical/Important/P2. CLI technical closure and report checkpoint are recorded in the final report.
+- Ruling: exact raw hash or uniform LF/CRLF only; arbitrary mixed normalization rejected. Cost if wrong: verification may block an unexpected historical representation; no content mutation can be silently accepted.
+- Ruling: full required DB/browser qualification and physical power-loss proof need an external approved environment; safe unit/build checks do not substitute. Real intake implementation awaits the actual private data contract. Cost if wrong: integration/operational assurance remains incomplete, therefore NOT_READY.
+- Final: no deferred minor findings reported. RESULT B engineering complete / external evidence blocked; no merge, push, deploy, readiness promotion or accounting reset.
