@@ -67,3 +67,13 @@ describe('completion safety bounds', () => {
     expect(programPolicySchema.safeParse({ ...policy, review: { ...policy.review, scheduleVersion: 'unknown-v9' } }).success).toBe(false);
   });
 });
+
+describe('canonical UUID identity', () => {
+  it('rejects case-variant duplicate lesson pins and normalizes hierarchy references', () => {
+    const row = binding(1);
+    const lower = 'abcdefab-cdef-4abc-8abc-abcdefabcdef';
+    const lesson = { ...row.lessons[0]!, lessonVersionId: lower };
+    expect(programVersionInputSchema.safeParse({ ...input(), curriculumBindings: [{ ...row, lessons: [lesson, { ...lesson, order: 2, lessonVersionId: lower.toUpperCase() }] }] }).success).toBe(false);
+    expect(programVersionInputSchema.parse({ ...input(), curriculumBindings: [{ ...row, pathId: lower.toUpperCase() }] }).curriculumBindings[0]!.pathId).toBe(lower);
+  });
+});

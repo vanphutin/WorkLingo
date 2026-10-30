@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
+const uuid = z.uuid().transform(value => value.toLowerCase());
 const text = z.string().trim().min(1).max(200);
 const objectives = z.array(z.string().trim().min(1).max(1000)).max(100);
-const ids = z.array(z.uuid()).max(500).refine(values => new Set(values).size === values.length, 'Duplicate references');
+const ids = z.array(uuid).max(500).refine(values => new Set(values).size === values.length, 'Duplicate references');
 const uniqueText = (max: number) => z.array(text).min(1).max(max).refine(values => new Set(values).size === values.length, 'Duplicate values');
 export const programVersionStatusSchema = z.enum(['DRAFT', 'IN_REVIEW', 'APPROVED', 'PUBLISHED', 'RETIRED']);
 export const programEnrollmentStatusSchema = z.enum(['ACTIVE', 'SUSPENDED', 'COMPLETED', 'WITHDRAWN']);
@@ -24,16 +25,16 @@ export const programPolicySchema = z.object({
   }
 });
 export const programLessonSnapshotSchema = z.object({
-  lessonVersionId: z.uuid(), order: z.number().int().min(1).max(10000), title: text, objectives,
-  estimatedMinutes: z.number().int().min(1).max(100000), difficulty: text, activityIds: z.array(z.uuid()).min(1).max(500).refine(values => new Set(values).size === values.length, 'Duplicate activity references'),
-  vocabularyRefs: z.array(z.object({ lexicalEntryId: z.uuid(), senseId: z.uuid() }).strict()).max(1000).superRefine((refs, ctx) => {
+  lessonVersionId: uuid, order: z.number().int().min(1).max(10000), title: text, objectives,
+  estimatedMinutes: z.number().int().min(1).max(100000), difficulty: text, activityIds: z.array(uuid).min(1).max(500).refine(values => new Set(values).size === values.length, 'Duplicate activity references'),
+  vocabularyRefs: z.array(z.object({ lexicalEntryId: uuid, senseId: uuid }).strict()).max(1000).superRefine((refs, ctx) => {
     const keys = refs.map(ref => `${ref.lexicalEntryId}:${ref.senseId}`);
     if (new Set(keys).size !== keys.length) ctx.addIssue({ code: 'custom', message: 'Duplicate vocabulary references' });
   }),
   resourceRefs: z.array(z.object({ id: text, type: text, url: z.url().max(2000).optional() }).strict()).max(100),
 }).strict();
 export const programCurriculumBindingSchema = z.object({
-  curriculumRevisionId: z.uuid(), pathId: z.uuid(), levelId: z.uuid(), missionId: z.uuid(),
+  curriculumRevisionId: uuid, pathId: uuid, levelId: uuid, missionId: uuid,
   order: z.number().int().min(1).max(10000), title: text, objectives, required: z.boolean(), prerequisiteRevisionIds: ids,
   lessons: z.array(programLessonSnapshotSchema).min(1).max(500),
 }).strict().superRefine((value, ctx) => {
@@ -64,7 +65,7 @@ export const programVersionInputSchema = z.object(snapshot).strict().superRefine
   });
 });
 export const programVersionSchema = programVersionInputSchema.safeExtend({
-  id: z.uuid(), programId: z.uuid(), version: z.number().int().positive(), revision: z.number().int().positive(),
+  id: uuid, programId: uuid, version: z.number().int().positive(), revision: z.number().int().positive(),
   status: programVersionStatusSchema, source: z.enum(['AUTHORED', 'LEGACY_PIN_BACKFILL']),
   capturedAt: z.iso.datetime(), createdAt: z.iso.datetime(), publishedAt: z.iso.datetime().nullable(), retiredAt: z.iso.datetime().nullable(),
 }).strict();

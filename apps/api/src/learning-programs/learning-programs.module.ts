@@ -1,3 +1,7 @@
+import { AdminProgramEnrollmentsController } from './admin-program-enrollments.controller.js';
+import { ProgramEnrollmentsService } from './application/program-enrollments.service.js';
+import { ProgramVersionsController } from './program-versions.controller.js';
+import { ProgramVersionsService } from './application/program-versions.service.js';
 import { Module } from '@nestjs/common';
 
 import { CurriculumModule } from '../curriculum/curriculum.module.js';
@@ -12,9 +16,9 @@ import { AdminProgramsController } from './admin-programs.controller.js';
 import { AdminProgramsService } from './application/admin-programs.service.js';
 
 @Module({
-  controllers: [LearningProgramsController, ProgramContextController, AdminProgramsController, ProgramEnrollmentController],
+  controllers: [AdminProgramEnrollmentsController, ProgramVersionsController, LearningProgramsController, ProgramContextController, AdminProgramsController, ProgramEnrollmentController],
   exports: [ProgramContextService],
   imports: [DatabaseModule, CurriculumModule],
-  providers: [IeltsTopicAdminService, LearningProgramsService, ProgramContextService, AdminProgramsService],
+  providers: [ProgramEnrollmentsService, ProgramVersionsService, IeltsTopicAdminService, LearningProgramsService, ProgramContextService, AdminProgramsService],
 })
 export class LearningProgramsModule {}

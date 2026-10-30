@@ -37,3 +37,4 @@ export * from './beginner-authoring.contracts.ts';
 export * from './beginner-editorial-plan.ts';
 export * from './program-progression.contracts.ts';
 export * from './program-platform.contracts.ts';
+export * from './program-platform-api.contracts.ts';

@@ -1,3 +1,6 @@
+import { createHash } from 'node:crypto';
+import { ProgramEnrollmentsService } from './program-enrollments.service.js';
+import { requireProgramActor } from './program-command.js';
 import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { activateProgramSchema, enrollProgramSchema, programContextSchema, type ActivateProgramInput, type ProgramContextDto } from '@worklingo/contracts';
@@ -17,7 +20,7 @@ export interface ResolvedProgramContext {
 
 @Injectable()
 export class ProgramContextService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly database: PrismaService, @Inject(ProgramEnrollmentsService) private readonly enrollments: ProgramEnrollmentsService) {}
 
   async getContext(learnerId: string): Promise<ProgramContextDto> {
     return this.database.$transaction((tx) => this.readContext(tx, learnerId), { isolationLevel: 'RepeatableRead' });
@@ -29,6 +32,8 @@ export class ProgramContextService {
     if (!context.activeProgram || !context.enrollment?.currentLevel) {
       throw new ConflictException({ code: 'ONBOARDING_REQUIRED', message: 'Complete onboarding before learning.' });
     }
+    const status = await transaction.learnerProgramEnrollment.findUnique({ where: { id: context.enrollment.id }, select: { status: true } });
+    if (status?.status !== 'ACTIVE') throw new ConflictException('PROGRAM_ENROLLMENT_INACTIVE');
     return {
       programId: context.activeProgram.id, programSlug: context.activeProgram.slug,
       enrollmentId: context.enrollment.id, revision: context.enrollment.revision,
@@ -40,6 +45,7 @@ export class ProgramContextService {
     const parsed = activateProgramSchema.safeParse(input);
     if (!parsed.success) throw new BadRequestException('Invalid program activation input.');
     return this.database.$transaction(async (tx) => {
+      await requireProgramActor(tx, learnerId, false);
       await tx.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
       const profile = await tx.learnerProfile.findUnique({ where: { userId: learnerId } });
       if (!profile) throw new NotFoundException('Learner profile not found');
@@ -54,24 +60,29 @@ export class ProgramContextService {
       if (target.slug === 'ielts' || !deriveProgramAccess(target).isSelectable) {
         throw new UnprocessableEntityException({ code: 'PROGRAM_UNAVAILABLE', message: 'This learning program is not available yet.' });
       }
-      const current = await this.resolve(learnerId, tx);
-      if (parsed.data.expectedRevision !== current.revision) {
+      await tx.$queryRaw`SELECT "id" FROM "LearningProgram" WHERE "id"=${target.id}::uuid FOR UPDATE`;
+      const current = await this.readContext(tx, learnerId);
+      if (!current.enrollment || parsed.data.expectedRevision !== current.enrollment.revision) {
         throw new ConflictException({ code: 'PROGRAM_CONTEXT_STALE', message: 'Learning context changed. Refresh before retrying.' });
       }
-      if (target.id === current.programId) return this.readContext(tx, learnerId);
+      if (target.id === current.activeProgram?.id) {
+        const active = await tx.learnerProgramEnrollment.findUniqueOrThrow({ where: { id: current.enrollment.id } });
+        if (active.status !== 'ACTIVE') throw new ConflictException('PROGRAM_ENROLLMENT_INACTIVE');
+        return this.readContext(tx, learnerId);
+      }
       const enrollment = await tx.learnerProgramEnrollment.findUnique({
         where: { learnerId_programId: { learnerId, programId: target.id } },
         include: { currentLevel: { include: { path: true } } },
       });
-      if (!enrollment?.currentLevel || enrollment.currentLevel.path.programId !== target.id) throw this.invalidContext();
+      if (!enrollment?.currentLevel || enrollment.status !== 'ACTIVE' || enrollment.currentLevel.path.programId !== target.id) throw this.invalidContext();
       // The new active revision is higher than both contexts, so switching cannot reuse an old token.
       await tx.learnerProgramEnrollment.update({ where: { id: enrollment.id }, data: {
-        revision: Math.max(current.revision, enrollment.revision) + 1,
+        revision: Math.max(current.enrollment.revision, enrollment.revision) + 1,
       } });
       await tx.learnerProfile.update({ where: { userId: learnerId }, data: { activeProgramId: target.id } });
       await tx.auditLog.create({ data: {
         actorId: learnerId, action: 'program.context.activated', resourceType: 'LearnerProgramEnrollment', resourceId: enrollment.id,
-        metadata: { programId: target.id, enrollmentId: enrollment.id, revision: Math.max(current.revision, enrollment.revision) + 1 },
+        metadata: { programId: target.id, enrollmentId: enrollment.id, revision: Math.max(current.enrollment.revision, enrollment.revision) + 1 },
       } });
       return this.readContext(tx, learnerId);
     }, { timeout: 15_000 });
@@ -80,34 +91,9 @@ export class ProgramContextService {
   async enroll(learnerId: string, raw: unknown): Promise<ProgramContextDto> {
     const parsed = enrollProgramSchema.safeParse(raw);
     if (!parsed.success) throw new BadRequestException('Invalid program enrollment input.');
-    return this.database.$transaction(async tx => {
-      await tx.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
-      const profile = await tx.learnerProfile.findUnique({where:{userId:learnerId}});
-      if (!profile || profile.onboardingStatus !== 'COMPLETE') throw new ConflictException('ONBOARDING_REQUIRED');
-      const target = await tx.learningProgram.findUnique({where:{slug:parsed.data.programSlug}});
-      if (!target) throw new NotFoundException('Program not found');
-      await tx.$queryRaw`SELECT "id" FROM "LearningProgram" WHERE "id" = ${target.id}::uuid FOR UPDATE`;
-      const program = await tx.learningProgram.findUniqueOrThrow({where:{id:target.id}});
-      if (program.progressionPolicy !== 'ACTIVITY_COMPLETION' || !deriveProgramAccess(program).isSelectable) throw new UnprocessableEntityException('PROGRAM_UNAVAILABLE');
-      const current = await this.resolve(learnerId,tx);
-      const existing = await tx.learnerProgramEnrollment.findUnique({where:{learnerId_programId:{learnerId,programId:program.id}}});
-      // Concurrent duplicate replay is harmless after the first request has activated its pinned enrollment.
-      if (current.programId === program.id && existing) return this.readContext(tx,learnerId);
-      if (current.revision !== parsed.data.expectedRevision) throw new ConflictException('PROGRAM_CONTEXT_STALE');
-      let enrollment = existing;
-      if (!enrollment) {
-        const first = await tx.curriculumRevision.findUnique({where:{id:program.curriculumRevisionIds[0]!},include:{mission:{include:{level:{include:{path:true}}}}}});
-        if (!first || first.status !== 'PUBLISHED' || first.mission.status !== 'PUBLISHED' || first.mission.level.status !== 'PUBLISHED' || first.mission.level.path.status !== 'PUBLISHED' || first.mission.level.path.programId !== program.id) throw new UnprocessableEntityException('PROGRAM_CURRICULUM_UNAVAILABLE');
-        enrollment = await tx.learnerProgramEnrollment.create({data:{learnerId,programId:program.id,currentLevelId:first.mission.levelId,curriculumRevisionIds:program.curriculumRevisionIds}});
-      }
-      if (!enrollment.currentLevelId || !enrollment.curriculumRevisionIds.length) throw this.invalidContext();
-      await tx.learnerProgramEnrollment.update({where:{id:enrollment.id},data:{revision:Math.max(current.revision,enrollment.revision)+1}});
-      await tx.learnerProfile.update({where:{userId:learnerId},data:{activeProgramId:program.id}});
-      await tx.auditLog.create({data:{actorId:learnerId,action:'program.enrolled',resourceType:'LearnerProgramEnrollment',resourceId:enrollment.id,metadata:{programId:program.id,curriculumRevisionIds:enrollment.curriculumRevisionIds}}});
-      return this.readContext(tx,learnerId);
-    }, {timeout:15000});
+    const key = parsed.data.idempotencyKey ?? `legacy:${createHash('sha256').update(JSON.stringify(parsed.data)).digest('hex')}`;
+    return this.enrollments.enrollSelf(learnerId, parsed.data.programSlug, parsed.data.expectedRevision, key);
   }
-
   async initializeIntermediate(transaction: Prisma.TransactionClient, learnerId: string, levelCode: string): Promise<void> {
     const level = await transaction.level.findUnique({ where: { code: levelCode }, include: { path: true } });
     if (!level || level.path.programId !== INTERMEDIATE_PROGRAM_ID) throw this.invalidContext();
@@ -121,17 +107,18 @@ export class ProgramContextService {
   }
 
   private async readContext(database: Prisma.TransactionClient, learnerId: string): Promise<ProgramContextDto> {
+    await requireProgramActor(database, learnerId, false, false);
     const profile = await database.learnerProfile.findUnique({ where: { userId: learnerId }, include: { activeProgram: true } });
     if (!profile) throw new NotFoundException('Learner profile not found');
     if (profile.onboardingStatus === 'PENDING') return { activeProgram: null, enrollment: null };
     if (!profile.activeProgram) throw this.invalidContext();
     const enrollment = await database.learnerProgramEnrollment.findUnique({
       where: { learnerId_programId: { learnerId, programId: profile.activeProgram.id } },
-      include: { currentLevel: { include: { path: true } } },
+      include: { currentLevel: { include: { path: true } }, programVersion: true },
     });
     if (!enrollment?.currentLevel || enrollment.currentLevel.path.programId !== profile.activeProgram.id) throw this.invalidContext();
     return programContextSchema.parse({
-      activeProgram: { id: profile.activeProgram.id, slug: profile.activeProgram.slug, name: profile.activeProgram.name },
+      activeProgram: { id: profile.activeProgram.id, slug: profile.activeProgram.slug, name: ((enrollment.programVersion?.snapshot as { title?: string } | undefined)?.title ?? profile.activeProgram.name) },
       enrollment: { id: enrollment.id, revision: enrollment.revision, currentLevel: {
         id: enrollment.currentLevel.id, code: enrollment.currentLevel.code, name: enrollment.currentLevel.name,
       } },

@@ -1,5 +1,6 @@
 import { Inject, Injectable, Optional, ServiceUnavailableException } from '@nestjs/common';
 import {
+  programVersionInputSchema,
   learningProgramCatalogSchema,
   type LearningProgramCatalogDto,
 } from '@worklingo/contracts';
@@ -38,6 +39,8 @@ export class LearningProgramsService {
               where: { status: 'PUBLISHED' },
             },
             proficiencyLabel: true,
+            versions: { where: { status: 'PUBLISHED', source: 'AUTHORED' }, orderBy: { version: 'desc' }, take: 1, select: { snapshot: true, curriculumRevisionIds: true } },
+            _count: { select: { versions: true } },
             slug: true,
           },
           where: { availabilityStatus: { not: 'DISABLED' } },
@@ -48,27 +51,30 @@ export class LearningProgramsService {
         const ieltsReady = needsIeltsReadiness && (this.config?.get('ieltsFlow')==='v3' && this.topics ? (await readIeltsV3Readiness(database,this.topics)).ready : (await readIeltsProgramReadiness(database)).ready);
 
         return learningProgramCatalogSchema.parse({
-          programs: rows.map((row) => ({
+          programs: rows.map((row) => {
+            const selected = row.versions?.[0];
+            const release = selected ? programVersionInputSchema.parse(selected.snapshot) : null;
+            return ({
             ...deriveProgramAccess({
               availabilityStatus: row.availabilityStatus,
               slug: row.slug,
               ieltsReady,
               progressionPolicy: row.progressionPolicy,
-              curriculumRevisionIds: row.curriculumRevisionIds,
+              curriculumRevisionIds: selected?.curriculumRevisionIds ?? (row._count?.versions ? [] : row.curriculumRevisionIds),
             }),
             availabilityStatus: row.availabilityStatus,
-            description: row.description,
+            description: release?.description ?? row.description,
             iconKey: row.iconKey,
-            learningGoal: row.learningGoal,
-            name: row.name,
-            proficiencyLabel: row.proficiencyLabel,
+            learningGoal: release?.objectives.join(' ') ?? row.learningGoal,
+            name: release?.title ?? row.name,
+            proficiencyLabel: release?.proficiencyLabel ?? row.proficiencyLabel,
             publishedLevelCount: row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.reduce(
               (count, path) => count + path.levels.length,
               0,
             ),
             publishedPathCount: row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.length,
             slug: row.slug,
-          })),
+          }); }),
         });
       }, { isolationLevel: 'RepeatableRead' });
     } catch {

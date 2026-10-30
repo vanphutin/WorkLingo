@@ -3,14 +3,16 @@ import { BadRequestException, ConflictException, Inject, Injectable, NotFoundExc
 import { Prisma } from '@prisma/client';
 import { adminProgramSchema, adminProgramListSchema, createProgramSchema, updateProgramSchema, publishProgramSchema, reservedProgramSlugs, type AdminProgramDto } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
-import { validateProgramPublication } from '../domain/program-publication.js';
-const programDto = (row: unknown) => { const keys = ['id', 'slug', 'name', 'description', 'learningGoal', 'proficiencyLabel', 'iconKey', 'displayOrder', 'availabilityStatus', 'revision', 'progressionPolicy', 'curriculumRevisionIds']; return adminProgramSchema.parse(Object.fromEntries(keys.map(key => [key, (row as Record<string, unknown>)[key]]))); };
+import { captureProgramSnapshot } from './program-release-snapshot.js';
+import { jsonValue, programAudit } from './program-command.js';
+import { requireProgramActor } from './program-command.js';
+export const programDto = (row: unknown) => { const keys = ['id', 'slug', 'name', 'description', 'learningGoal', 'proficiencyLabel', 'iconKey', 'displayOrder', 'availabilityStatus', 'revision', 'progressionPolicy', 'curriculumRevisionIds']; return adminProgramSchema.parse(Object.fromEntries(keys.map(key => [key, (row as Record<string, unknown>)[key]]))); };
 @Injectable()
 export class AdminProgramsService {
     constructor(
     @Inject(PrismaService)
     private readonly database: PrismaService) { }
-    async list() { return adminProgramListSchema.parse({ programs: (await this.database.learningProgram.findMany({ orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }] })).map(programDto) }); }
+    async list(actorId: string) { return this.database.$transaction(async tx => { await requireProgramActor(tx, actorId); return adminProgramListSchema.parse({ programs: (await tx.learningProgram.findMany({ orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }] })).map(programDto) }); }); }
     async create(actorId: string, raw: unknown) { const parsed = createProgramSchema.safeParse(raw); if (!parsed.success)
         throw new BadRequestException('INVALID_PROGRAM'); const { idempotencyKey, ...metadata } = parsed.data; return this.command(actorId, 'create', idempotencyKey, null, parsed.data, async (tx) => tx.learningProgram.create({ data: { ...metadata, availabilityStatus: 'IN_DEVELOPMENT', progressionPolicy: 'ACTIVITY_COMPLETION' } })); }
     async update(actorId: string, id: string, raw: unknown) { const parsed = updateProgramSchema.safeParse(raw); if (!parsed.success)
@@ -22,16 +24,15 @@ export class AdminProgramsService {
         const { idempotencyKey, expectedRevision, curriculumRevisionIds } = parsed.data;
         return this.command(actorId, 'publish', idempotencyKey, id, parsed.data, async (tx) => {
             await this.current(tx, id, expectedRevision);
-            // Share locks prevent concurrent archive/rebinding while this publication validates its immutable pins.
-            await tx.$queryRaw `SELECT "id" FROM "CurriculumRevision" WHERE "id" IN (${Prisma.join(curriculumRevisionIds.map(value => Prisma.sql `${value}::uuid`))}) ORDER BY "id" FOR SHARE`;
-            // Publication is rare. Shared relation locks also cover attachment
-            // insert/delete phantoms and hierarchy reparenting without requiring
-            // every existing curriculum command to follow a new lock protocol.
-            // Concurrent readers/publications remain compatible; authoring DML
-            // waits until the validated pins and audit have committed.
-            await tx.$executeRaw`LOCK TABLE "CurriculumPrerequisite", "CurriculumRevisionLesson", "LearningPath", "Lesson", "LessonVersion", "Level", "Mission", "MissionLesson" IN SHARE MODE`;
-            const lockedRows = await tx.curriculumRevision.findMany({ where: { id: { in: curriculumRevisionIds } }, include: { mission: { include: { level: { include: { path: true } } } }, prerequisites: true, lessons: { include: { lessonVersion: { include: { lesson: { include: { missions: true } } } } } } } });
-            validateProgramPublication(id, curriculumRevisionIds, lockedRows);
+            const content = await captureProgramSnapshot(tx, id, curriculumRevisionIds);
+            const latest = await tx.programVersion.aggregate({ where: { programId: id }, _max: { version: true } });
+            let release = await tx.programVersion.create({ data: { programId: id, version: (latest._max.version ?? 0) + 1, snapshot: jsonValue(content), policy: jsonValue(content.policy), curriculumRevisionIds, curricula: { create: curriculumRevisionIds.map((curriculumRevisionId, index) => ({ curriculumRevisionId, order: index + 1 })) } } });
+            await programAudit(tx, actorId, 'program.versions.created', 'ProgramVersion', release.id, { programId: id, command: 'legacy-publish' });
+            for (const targetStatus of ['IN_REVIEW', 'APPROVED', 'PUBLISHED'] as const) {
+                const previousStatus = release.status;
+                release = await tx.programVersion.update({ where: { id: release.id }, data: { status: targetStatus, revision: { increment: 1 }, ...(targetStatus === 'PUBLISHED' ? { publishedAt: new Date() } : {}) } });
+                await programAudit(tx, actorId, `program.versions.${targetStatus.toLowerCase()}`, 'ProgramVersion', release.id, { previousStatus, status: targetStatus, command: 'legacy-publish' });
+            }
             return tx.learningProgram.update({ where: { id }, data: { curriculumRevisionIds, availabilityStatus: 'AVAILABLE', revision: { increment: 1 } } });
         });
     }
@@ -43,7 +44,7 @@ export class AdminProgramsService {
         const operation = 'program:' + action, requestHash = createHash('sha256').update(JSON.stringify({ id, payload })).digest('hex');
         try {
             return await this.database.$transaction(async (tx) => {
-                await tx.$queryRaw `SELECT "id" FROM "User" WHERE "id"=${actorId}::uuid FOR UPDATE`;
+                await requireProgramActor(tx, actorId);
                 if (id)
                     await tx.$queryRaw `SELECT "id" FROM "LearningProgram" WHERE "id"=${id}::uuid FOR UPDATE`;
                 const receipt = await tx.mutationReceipt.findUnique({ where: { actorId_operation_idempotencyKey: { actorId, operation, idempotencyKey: key } } });
