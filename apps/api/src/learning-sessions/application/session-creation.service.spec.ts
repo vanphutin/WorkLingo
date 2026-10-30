@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { analyzeLessonSource } from '@worklingo/content-format';
+import { buildBeginnerDraftSnapshot } from '../../curriculum-foundation/application/foundation-validation.js';
 import { ConflictException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { placementMissionFixture } from '@worklingo/test-fixtures';
@@ -5,6 +9,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { lessonSnapshotSchema, type PublishedMission } from '../../curriculum/domain/curriculum.types.js';
 import { SessionCreationService } from './session-creation.service.js';
+
+const beginnerSources = ['mg01-l1', 'mg01-l2', 'mg01-l3', 'mg01-l4', 'mg02-l1', 'mg02-l2', 'mg02-l3', 'mg02-l4'];
 
 const ids = {
   learner: '00000000-0000-4000-8000-000000000001',
@@ -145,3 +151,32 @@ describe('SessionCreationService', () => {
     await expect(service.create(transaction, input)).rejects.toBeInstanceOf(ConflictException);
   });
 });
+
+describe('Beginner session persistence boundary', () => {
+  it.each(beginnerSources)('persists every exact source activity in its plan and blocks: %s', async (source) => {
+    const mission = beginnerMission(source);
+    const create = vi.fn().mockImplementation(async ({ data }) => ({ ...storedSession(mission), ...data, blocks: data.blocks.create.map((block: object, index: number) => ({ ...block, id: ids.session, status: 'AVAILABLE', order: index + 1 })) }));
+    const transaction = { learningSession: { create, findUnique: vi.fn().mockResolvedValue(null) } } as unknown as Prisma.TransactionClient;
+    const result = await new SessionCreationService().create(transaction, { clientSessionId: ids.client, durationMinutes: 45, learnerId: ids.learner, mission, reviewItems: [] });
+    expect(result.plan.blocks.map(block => block.activityIds.length)).toEqual([3, 3, 2]);
+    expect(result.blocks.flatMap(block => block.activityIds)).toEqual(mission.lessonVersion.activities.map(activity => activity.id));
+    expect(result.lessonVersionId).toBe(mission.lessonVersion.id);
+  });
+  it('rejects invalid snapshots and mismatched duration before writing', async () => {
+    const create = vi.fn();
+    const transaction = { learningSession: { create, findUnique: vi.fn().mockResolvedValue(null) } } as unknown as Prisma.TransactionClient;
+    const mission = beginnerMission();
+    const input = { clientSessionId: ids.client, durationMinutes: 60, learnerId: ids.learner, mission, reviewItems: [] };
+    await expect(new SessionCreationService().create(transaction, input)).rejects.toThrow();
+    mission.lessonVersion.activities.pop();
+    await expect(new SessionCreationService().create(transaction, { ...input, durationMinutes: 45 })).rejects.toThrow();
+    expect(create).not.toHaveBeenCalled();
+  });
+});
+
+
+function beginnerMission(source = beginnerSources[0]!): PublishedMission {
+  const draft = analyzeLessonSource(readFileSync(resolve(process.cwd(), '../../content/beginner/pilot', source + '.lesson.txt'), 'utf8')).normalizedDraft;
+  if (!draft) throw new Error('Invalid source fixture');
+  return { id: '00000000-0000-4000-8000-000000000200', slug: source, title: source, objective: source, purpose: 'learning', levelCode: 'MG_F0', lessonVersion: { ...buildBeginnerDraftSnapshot(draft), id: '00000000-0000-4000-8000-000000000202', version: 2 } };
+}

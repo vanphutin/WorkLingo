@@ -1,3 +1,4 @@
+import { planBeginnerSession } from './beginner-session-planner.js';
 import {
   canonicalBlockTypesByDuration,
   learningSkillSchema,
@@ -49,8 +50,16 @@ function distributeActivities<T>(items: readonly T[], bucketCount: number): T[][
 }
 
 export function computeAvailableDurations(
-  mission: { readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities' | 'intermediateTopic'> },
+  mission: { readonly lessonVersion: Pick<PublishedMission['lessonVersion'], 'activities' | 'intermediateTopic'> & Partial<PublishedMission['lessonVersion']> },
 ): readonly SessionDuration[] {
+  if (mission.lessonVersion.formatVersion === 'WorkLingoLesson/1.2') {
+    try {
+      // Availability validates content only; these identities never leave this pure validation call.
+      const placeholder = '00000000-0000-4000-8000-000000000001';
+      planBeginnerSession({ mission: { ...mission, id: placeholder, purpose: 'learning', lessonVersion: { ...mission.lessonVersion, id: placeholder } } as PublishedMission, expectedLessonVersionId: placeholder, durationMinutes: 45 });
+      return [45];
+    } catch { return []; }
+  }
   if (mission.lessonVersion.intermediateTopic) {
     try {
       planTopicSession({ id: '', lessonVersion: mission.lessonVersion }, mission.lessonVersion.intermediateTopic.durationMinutes, false);
@@ -96,6 +105,10 @@ export function computeAvailableDurations(
 }
 
 export function planFoundationSession(input: PlanFoundationSessionInput): SessionPlan {
+  if (input.mission.lessonVersion.formatVersion === 'WorkLingoLesson/1.2') {
+    if (input.durationMinutes !== 45) throw new InsufficientContentForDurationError(input.durationMinutes, computeAvailableDurations(input.mission));
+    return planBeginnerSession({ mission: input.mission, expectedLessonVersionId: input.mission.lessonVersion.id, durationMinutes: 45 });
+  }
   if (input.mission.lessonVersion.intermediateTopic) return planTopicSession(input.mission, input.durationMinutes);
   if (!supportedSessionDurations.includes(input.durationMinutes as SessionDuration)) {
     throw new UnsupportedSessionDurationError(input.durationMinutes);

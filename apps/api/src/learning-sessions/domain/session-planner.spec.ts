@@ -1,9 +1,15 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { analyzeLessonSource } from '@worklingo/content-format';
+import { buildBeginnerDraftSnapshot } from '../../curriculum-foundation/application/foundation-validation.js';
 import { foundationMissionFixture } from '@worklingo/test-fixtures';
 import { sessionPlanSchema } from '@worklingo/contracts';
 import { describe, expect, it } from 'vitest';
 
 import { lessonSnapshotSchema, type PublishedMission } from '../../curriculum/domain/curriculum.types.js';
 import { computeAvailableDurations, planFoundationSession } from './session-planner.js';
+
+const beginnerSources = ['mg01-l1', 'mg01-l2', 'mg01-l3', 'mg01-l4', 'mg02-l1', 'mg02-l2', 'mg02-l3', 'mg02-l4'];
 
 // Approved Task 5 seam: published curriculum -> pure, deterministic session plan.
 function fixtureId(value: number): string {
@@ -416,3 +422,28 @@ describe('Foundation session planner', () => {
     expect(parsed.success).toBe(true);
   });
 });
+
+describe('Beginner production planning boundary', () => {
+  it.each(beginnerSources)('preserves all eight exact source activities at 45 minutes: %s', (source) => {
+    const mission = beginnerMission(source);
+    const plan = planFoundationSession({ mission, durationMinutes: 45, reviewItems: [] });
+    expect(plan.blocks.map(block => block.activityIds.length)).toEqual([3, 3, 2]);
+    expect(plan.blocks.flatMap(block => block.activityIds)).toEqual(mission.lessonVersion.activities.map(activity => activity.id));
+    expect(computeAvailableDurations(mission)).toEqual([45]);
+  });
+  it('rejects other durations and invalid Beginner inventories', () => {
+    const mission = beginnerMission();
+    expect(() => planFoundationSession({ mission, durationMinutes: 30, reviewItems: [] })).toThrow();
+    const invalid = structuredClone(mission);
+    invalid.lessonVersion.activities.pop();
+    expect(computeAvailableDurations(invalid)).toEqual([]);
+    expect(() => planFoundationSession({ mission: invalid, durationMinutes: 45, reviewItems: [] })).toThrow();
+  });
+});
+
+
+function beginnerMission(source = beginnerSources[0]!): PublishedMission {
+  const draft = analyzeLessonSource(readFileSync(resolve(process.cwd(), '../../content/beginner/pilot', source + '.lesson.txt'), 'utf8')).normalizedDraft;
+  if (!draft) throw new Error('Invalid source fixture');
+  return { id: '00000000-0000-4000-8000-000000000200', slug: source, title: source, objective: source, purpose: 'learning', levelCode: 'MG_F0', lessonVersion: { ...buildBeginnerDraftSnapshot(draft), id: '00000000-0000-4000-8000-000000000202', version: 2 } };
+}
