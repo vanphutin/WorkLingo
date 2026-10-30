@@ -1,0 +1,6 @@
+# Current human authorization: external evidence closure
+
+Source: direct owner message attachment, read in this chat on 2026-10-30, mission WL-R12B-EVIDENCE-CLOSURE-001, SHA256 recorded below after local read. The actual human message grants autonomous research, browser operation, implementation, finite successor creation, AI reviewers, disposable tests/DB, local commits and conditional release only after all15 gates pass. This note records that message; it does not authenticate invented consent or reviewer signatures.
+
+Bounded execution here: separate AI oracle128, QA82 dispositions, exact decimal cost investigation, existing process fault tests, isolated disposable DB when runtime permits, deployment inspection/specification, full history audit and all nine requested reports. Matching exact paths/runtime are in mandate/reports/2026-10-30-r12b-evidence-closure-scope.json. Historical verified003 is not broadened. Real learners require genuine eligibility/consent and private study scope; none is supplied. Provider A3 preconditions are currently false, so zero live starts. No production DB/env/credentials/secret changes, paid services, top-up, force push, merge/push/deploy with any missing gate.
+

@@ -1,0 +1,115 @@
+---
+{
+  "schema_version": 1,
+  "id": "MND-20261030-004",
+  "status": "implementing",
+  "created": "2026-10-30",
+  "updated": "2026-10-30T04:50:45.676Z",
+  "title": "Close R12b external evidence using AI and isolated qualification",
+  "type": "architecture",
+  "owner": "WorkLingo owner",
+  "priority": "P1",
+  "confidence": "high",
+  "effort": "l",
+  "impact": 4,
+  "problem": "Current R1.2b engineering checkpoint3e120a8 has no separately AI-adjudicated128oracle or final82QA dispositions; cost1291.1464 exceeds1.5; current disposableDB/deployment/human gates remain incomplete.",
+  "value": "Close available genuine evidence and engineering work with explicit AI provenance, exact accounting and disposable isolation, while preventing an unsupported release.",
+  "scope": [
+    "Exact finite allowlist/runtime in mandate/reports/2026-10-30-r12b-evidence-closure-scope.json; additive evidence only.",
+    "AI128/QA82,decimal accounting,existing process faults,disposableDB attempt,GateC/deployment/8lesson/history/finalgate reports.",
+    "Historical content/audio/goldens/policies/approvals and production code immutable; no live provider or real study without further prerequisites."
+  ],
+  "dedupe_key": "r12b:external-evidence-closure:ai128-qa82-disposable:3e120a8",
+  "evidence": [
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-r12b-browser-qualification-report.md:1",
+      "observation": "Previous checkpoint proves synthetic frontend journeys, not real learner/provider/DB qualification."
+    },
+    {
+      "kind": "document",
+      "reference": "docs/qualification/beginner-r12b-cost-benchmark.json:1",
+      "observation": "Raw full conservative reservation1291.1464 exceeds1.5; no locale reinterpretation."
+    },
+    {
+      "kind": "document",
+      "reference": "mandate/reports/2026-10-30-r12b-evidence-closure-authorization.md:1",
+      "observation": "Current actual human mission explicitly authorizes new AI adjudication,disposable tests/DB,successors and localcommits; release conditional."
+    }
+  ],
+  "acceptance": [
+    "Separate128direct-source AI decisions with exact task/source/rubric/response hashes,alternatives/negatives/injection and32repeat160schedule validation; versioned freeze status never fabricated.",
+    "All82exact QA dispositions distinguish machine/textualAI/human evidence; unifiedpacket,actual mastermapping status,source/audio hashes and honest NEEDS_EVIDENCE gaps.",
+    "Decimal-safe raw unit accounting reconciles20/160/overhead/worstcase; officialsources cited and all unknownbilling/privacy preserved; nolive budget bypass.",
+    "Existing actual processkill/concurrency/restart/partialwrite/fsync faults executed; disposableDB integration executed when cachedruntimeavailable or observedblocker+recovery reported; no env/sharedDBfallback.",
+    "Allnine requiredreports,8exactlessonbindings,15gate matrix,full95+missioncommit inventory and independentreview with meaningful safeverification; exactlocalcommits/registervalid; no unsupportedrelease."
+  ],
+  "risk": {
+    "level": "high",
+    "breaking": false,
+    "data_change": true,
+    "external_effect": true,
+    "rollback": "Revert only this successor's localcommits after review;stop/remove only exact label/identity-proven disposable resources;retain historical evidence. No production/provider/human mutation."
+  },
+  "backlog_reference": "docs/IMPLEMENTATION_ROADMAP.md",
+  "plan_reference": "docs/superpowers/plans/2026-10-30-r12b-evidence-closure.md",
+  "sprint_reference": null,
+  "approval": {
+    "actor": "WorkLingo product owner (direct human authorization)",
+    "reference": "mandate/reports/2026-10-30-r12b-evidence-closure-authorization.md:1",
+    "at": "2026-10-30T04:50:45.262Z",
+    "proposal_hash": "7fec789653e787818cb56f1ebe0aff07f9898e19c5cdecdc93038652f2e6a558"
+  },
+  "verification": [],
+  "history": [
+    {
+      "at": "2026-10-30T04:50:31.997Z",
+      "actor": "mandate-steward",
+      "from": null,
+      "to": "captured",
+      "reason": "Evidence-backed proposal captured; no implementation approval.",
+      "event": "capture",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T04:50:44.745Z",
+      "actor": "Codex coordinator",
+      "from": "captured",
+      "to": "triaged",
+      "reason": "P1 current owner mission; finite successor preserves historical approvals and genuine evidence boundaries",
+      "event": "transition",
+      "reference": null
+    },
+    {
+      "at": "2026-10-30T04:50:45.262Z",
+      "actor": "WorkLingo product owner (direct human authorization)",
+      "from": "triaged",
+      "to": "approved",
+      "reason": "Actual current mission WL-R12B-EVIDENCE-CLOSURE-001 explicitly authorizes this exact finite engineering/evidence and disposableDB scope; release remains conditional",
+      "event": "transition",
+      "reference": "mandate/reports/2026-10-30-r12b-evidence-closure-authorization.md:1"
+    },
+    {
+      "at": "2026-10-30T04:50:45.676Z",
+      "actor": "Codex coordinator",
+      "from": "approved",
+      "to": "implementing",
+      "reason": "Execute finite approved successor and linked plan; preserve frozen historical authority",
+      "event": "transition",
+      "reference": null
+    }
+  ]
+}
+---
+
+## Authority and finite successor
+
+Direct current human mission WL-R12B-EVIDENCE-CLOSURE-001 attachment SHA256 7ac5ad5c01483ffbf65168423c71d5bce3cb1a5b5b42393cb6347460784884b0 is recorded in the authorization note. Clean baseline3e120a81239e623209b3ba61889947e9a97cae86. Historical003 and earlier scopes remain frozen. Exact scope JSON SHA256 e6bebd8e37a0ce7980993b21244a7410859c0895de503f536bd6ece050f09a40.
+
+## Dedupe and design
+
+Previous003 verified synthetic browser/compaction/GateCtools; new direct-source AI adjudication,QA dispositions and disposableDB qualification are distinct new scope. Existing source/bundle/thresholds and historical human evidence unchanged. DecimalBigInt,provenance/schema/hash validation and isolated owned runtime fail closed; no provider results used to create groundtruth. Canonical roadmap/plan reused.
+
+## Limits and verification
+
+Actual adults/consent absent,expert auditory evidence absent,pricing/privacy unresolved,Dockerdaemoncurrently unavailable,deploymenttarget notestablished. These unknowns remain blockers if genuine evidence cannot be obtained. Newmission grants realstudy orchestration in principle;this technicalscope creates no actualstudy or consent. No credential/env read,no paid fallback,zero realprovider starts. Conditionalrelease cannot execute without all15gates and concrete target/rollback. Independentreview and noenvsafe checks required; physicalpowerloss never inferred from killprocess.

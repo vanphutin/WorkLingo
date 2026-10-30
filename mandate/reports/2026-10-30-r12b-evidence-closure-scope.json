@@ -1,0 +1,86 @@
+{
+  "mission": "WL-R12B-EVIDENCE-CLOSURE-001",
+  "baseline": {
+    "head": "3e120a81239e623209b3ba61889947e9a97cae86",
+    "branch": "codex/foundation-basic-readiness"
+  },
+  "authority": {
+    "aiAdjudication": true,
+    "expertQaAiDispositions": true,
+    "realParticipants": "ONLY_GENUINE_ADULTS_WITH_CONSENT_AND_SEPARATE_PRIVATE_STUDY_SCOPE",
+    "disposableDatabase": true,
+    "processFaultTests": true,
+    "localCommits": true,
+    "readOnlyOfficialBrowser": true,
+    "realProviderCalls": "BLOCKED_UNTIL_ALL_A3_PRECONDITIONS_AND_FINITE_RUNTIME_APPROVAL",
+    "release": "ONLY_ALL_15_GATES_PASS_AND_TARGET_SPECIFIED",
+    "credentialsOrEnv": false,
+    "productionData": false
+  },
+  "allowlist": {
+    "modify": [],
+    "create": [
+      "apps/api/test/beginner-pilot/oracle-adjudication.ts",
+      "apps/api/test/beginner-pilot/oracle-adjudication.test.ts",
+      "apps/api/test/beginner-pilot/qa-evidence-closure.ts",
+      "apps/api/test/beginner-pilot/qa-evidence-closure.test.ts",
+      "apps/api/test/beginner-pilot/cost-accounting-final.ts",
+      "apps/api/test/beginner-pilot/cost-accounting-final.test.ts",
+      "apps/api/test/beginner-pilot/evidence-closure-governance.test.ts",
+      "apps/api/test/beginner-pilot/disposable-db.ts",
+      "apps/api/test/beginner-pilot/disposable-db.test.ts",
+      "apps/api/test/beginner-pilot/disposable-db.config.ts",
+      "apps/api/test/beginner-pilot/disposable-db.integration.spec.ts",
+      "docs/superpowers/plans/2026-10-30-r12b-evidence-closure.md",
+      "docs/qualification/beginner-r12b-external-evidence-closure-report.md",
+      "docs/qualification/beginner-r12b-oracle-adjudication-final.json",
+      "docs/qualification/beginner-r12b-expert-qa-final.json",
+      "docs/qualification/beginner-r12b-expert-qa-final.md",
+      "docs/qualification/beginner-r12b-expert-qa-final.html",
+      "docs/qualification/beginner-r12b-gate-c-final-report.md",
+      "docs/qualification/beginner-r12b-cost-accounting-final.md",
+      "docs/qualification/beginner-r12b-cost-accounting-final.json",
+      "docs/qualification/beginner-r12b-power-loss-verification.md",
+      "docs/qualification/beginner-r12b-db-integration-report.md",
+      "docs/qualification/beginner-r12b-deployment-readiness.md",
+      "docs/qualification/beginner-r12b-final-commit-audit.md",
+      "docs/qualification/beginner-r12b-evidence-closure-final-review.md",
+      "docs/qualification/beginner-r12b-lesson-qualification-final.json",
+      "mandate/reports/2026-10-30-r12b-evidence-closure-authorization.md",
+      "mandate/reports/2026-10-30-r12b-evidence-closure-scope.json",
+      "mandate/reports/2026-10-30-r12b-evidence-closure-proposal.json"
+    ],
+    "cliBookkeeping": [
+      "mandate/INDEX.md",
+      "mandate/items/MND-20261030-004-architecture-close-r12b-external-evidence-using-ai-and-isolated-qualification.md"
+    ]
+  },
+  "runtime": {
+    "root": "C:/Users/ASUS/AppData/Local/Temp/worklingo-r12b-evidence-closure-001",
+    "boundedSubtrees": [
+      "logs",
+      "disposable-db",
+      "migration-snapshot",
+      "artifacts"
+    ],
+    "historicalFaultTests": "Existing exact .qualification-runtime/beginner-r12b/fault-tests selectors only; synthetic fixtures; never live accounting",
+    "docker": {
+      "context": "desktop-linux",
+      "startInstalledDesktopAllowed": true,
+      "container": "worklingo-r12b-evidence-closure-001",
+      "volume": "worklingo-r12b-evidence-closure-001-pgdata",
+      "database": "worklingo_r12b_evidence_closure_001",
+      "port": 55433,
+      "role": "wl_r12b_evidence_001",
+      "image": "Existing official postgres image only; inspect digest before start; no automatic image pull, compose, unrelated container action or production connection"
+    },
+    "browser": "Read-only official pricing/privacy/account quota; never credentials, purchases, model switch or provider requests"
+  },
+  "budget": {
+    "inkPoints": "1.5",
+    "additionalUSD": "0",
+    "noTopUp": true
+  },
+  "preserve": "All baseline tracked files unchanged except generated INDEX; historical scopes, approvals, policies, goldens, content, audio, production code, package/lock/schema/migrations immutable. No provider starts or real study now."
+}
+
