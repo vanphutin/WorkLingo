@@ -16,7 +16,8 @@ describe('fake AI provider contracts', () => {
   ])('returns schema-valid feedback for blank Beginner references ($learnerResponse)', async ({ learnerResponse, expected }) => {
     for (const referenceText of ['', '   ', undefined]) {
       const result = await new FakeLanguageEvaluationAdapter().evaluate({
-        activityType: 'writing', learnerResponse, referenceText,
+        activityType: 'writing', learnerResponse,
+        ...(referenceText === undefined ? {} : { referenceText }),
         levelCode: 'BEGINNER', prompt: 'Introduce yourself.', requiredPhrases: [],
         rubricId: 'beginner-short-writing', rubricVersion: '1',
       });
