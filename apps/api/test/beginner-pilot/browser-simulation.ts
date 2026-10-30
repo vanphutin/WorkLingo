@@ -1,0 +1,73 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- Dynamic mock HTTP payloads are validated at each route; never shared with production. */
+import {readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import {analyzeLessonSource} from '@worklingo/content-format';
+import {buildBeginnerDraftSnapshot} from '../../src/curriculum-foundation/application/foundation-validation.js';
+import {planBeginnerSession} from '../../src/learning-sessions/domain/beginner-session-planner.js';
+import {projectLearnerActivity} from '../../src/learning-sessions/domain/learner-activity-projection.js';
+import type {LessonSnapshot} from '../../src/curriculum/domain/curriculum.types.js';
+import type {LearnerActivityDto} from '../../src/learning-sessions/application/learning-session.types.js';
+const root=resolve(__dirname,'../../../..');
+const hash=(s:string|Buffer)=>createHash('sha256').update(s).digest('hex');
+const id=(s:string)=>{const h=hash('SYNTHETIC_BROWSER_ONLY:'+s);return `${h.slice(0,8)}-${h.slice(8,12)}-4000-8000-${h.slice(20,32)}`;};
+export interface Seed {namespace:string;persona:string;code:string;sourcePath:string;sourceSha256:string;sessionId:string;activities:LearnerActivityDto[];sessionUrl:string;snapshot:LessonSnapshot;}
+interface Attempt {id:string;learnerId:string;sessionId:string;activityId:string;clientAttemptId:string;evaluationStatus:'evaluated';score:number;feedback:string;createdAt:string;rawResponse:unknown;normalizedResponse:null;}
+interface State {seed:Seed;status:'planned'|'in_progress'|'paused'|'completed';checkpoint:number;attempts:Attempt[];drafts:Map<string,{sessionId:string;activityId:string;text:string;revision:number;updatedAt:string}>;}
+export interface Reply {status:number;body:any;headers?:Record<string,string>;}
+export class BrowserSimulation {
+ readonly seeds:Seed[]=[];readonly events:{method:string;path:string;namespace:string;status:number;at:string}[]=[];
+ private states=new Map<string,State>();private audioInventory=JSON.parse(readFileSync(resolve(root,'docs/qualification/beginner-pilot-independent-qa.json'),'utf8'));
+ constructor(){for(const persona of ['P01','P02','P03'])for(const unit of ['MG01','MG02'])for(let n=1;n<=4;n++){
+  const code=`${unit}-L${n}`,namespace=`${persona}-${code}`,sourcePath=`content/beginner/pilot/${code.toLowerCase()}.lesson.txt`,bytes=readFileSync(resolve(root,sourcePath)),analysis=analyzeLessonSource(bytes.toString());
+  if(!analysis.canPublish||!analysis.normalizedDraft)throw Error('SOURCE_INVALID:'+code);
+  const snapshot=buildBeginnerDraftSnapshot(analysis.normalizedDraft);snapshot.activities.forEach(a=>{a.id=id(namespace+':'+a.slug);});
+  const seed={namespace,persona,code,sourcePath,sourceSha256:hash(bytes),sessionId:id(namespace),activities:snapshot.activities.map(a=>projectLearnerActivity(snapshot,a.id)),sessionUrl:`/api/v1/__synthetic/${persona}/${code}`,snapshot};
+  this.seeds.push(seed);this.states.set(namespace,{seed,status:'planned',checkpoint:0,attempts:[],drafts:new Map()});
+ }}
+ manifest(){return {provenance:'SYNTHETIC_BROWSER_TESTING',provider:'MOCK_PROVIDER',authentication:'SIMULATION_ONLY_COOKIE',persistence:'MEMORY_ONLY',seeds:this.seeds.map(({snapshot:_,...s})=>s)};}
+ private session(s:State){const mission={id:id(s.seed.namespace+':mission'),slug:s.seed.code.toLowerCase(),title:s.seed.snapshot.title,objective:s.seed.snapshot.foundation!.objectives[0]!.statement,levelCode:'MG-F0',purpose:'learning' as const,lessonVersion:{...s.seed.snapshot,id:id(s.seed.namespace+':version'),version:1}};const plan=planBeginnerSession({mission,expectedLessonVersionId:mission.lessonVersion.id,durationMinutes:45});return {id:s.seed.sessionId,clientSessionId:s.seed.sessionId,lessonVersionId:mission.lessonVersion.id,purpose:'learning',durationMinutes:45,status:s.status,currentCheckpoint:s.checkpoint,mission:{id:mission.id,title:mission.title},plan,blocks:plan.blocks.map((b,i)=>({...b,id:id(s.seed.namespace+':block:'+i),status:b.activityIds.every(a=>s.attempts.some(t=>t.activityId===a))?'completed':'available'})),attempts:s.attempts};}
+ private evaluation(t:Attempt){return {attemptId:t.id,status:'evaluated',transcript:null,scores:{taskCompletion:t.score,meaningAndLogic:t.score,targetLanguage:t.score,clarity:t.score,pronunciationOrFluency:null},score:t.score,feedback:{summary:'MOCK_PROVIDER synthetic response; not learning or phonetic evidence.',strengths:[],improvements:[],correctedExample:null},retryable:false,recording:null,completedAt:t.createdAt};}
+ async handle(method:string,path:string,namespace:string,body:any={}):Promise<Reply>{const result=await this.route(method,path,namespace,body);this.events.push({method,path,namespace,status:result.status,at:new Date().toISOString()});return result;}
+ private async route(method:string,path:string,namespace:string,body:any):Promise<Reply>{
+  const ok=(body:any,status=200):Reply=>({status,body}),bad=(status:number,code:string)=>ok({code,message:code},status);
+  if(method==='GET'&&path==='/api/v1/__synthetic/manifest')return ok(this.manifest());
+  if(method==='GET'&&path==='/api/v1/__synthetic/events')return ok({provenance:'SYNTHETIC_BROWSER_TESTING',events:this.events});
+  const launch=path.match(/^\/api\/v1\/__synthetic\/(P0[123])\/(MG0[12]-L[1-4])$/);if(method==='GET'&&launch){const s=this.states.get(launch[1]+'-'+launch[2])!;return {status:302,body:{},headers:{location:'/sessions/'+s.seed.sessionId,'set-cookie':`WL_SIMULATION_ONLY=${s.seed.namespace}; Path=/; HttpOnly; SameSite=Strict`}};}
+  const s=this.states.get(namespace);if(!s)return bad(401,'SIMULATION_NAMESPACE_REQUIRED');
+  if(method==='GET'&&path==='/api/v1/me')return ok({id:id(namespace+':learner'),displayName:`SYNTHETIC ${s.seed.persona}`,email:s.seed.persona.toLowerCase()+'@example.test',locale:'en',onboardingStatus:'COMPLETE',roles:['LEARNER']});
+  if(method==='GET'&&path==='/api/v1/learning-sessions/availability'){const session=this.session(s);return ok({mission:session.mission,lessonVersionId:session.lessonVersionId,supportedDurations:[45],availableDurations:[45],defaultDurationMinutes:45});}
+  const personaStates=[...this.states.values()].filter(v=>v.seed.persona===s.seed.persona);
+  const progress={activityAttempts:personaStates.reduce((n,v)=>n+v.attempts.length,0),completedActivities:personaStates.reduce((n,v)=>n+v.checkpoint,0),currentLevelCode:'MG-F0',sessions:{completed:personaStates.filter(v=>v.status==='completed').length,inProgress:personaStates.filter(v=>v.status==='in_progress').length,paused:personaStates.filter(v=>v.status==='paused').length,planned:personaStates.filter(v=>v.status==='planned').length}};
+  const context={activeProgram:{id:id('beginner'),slug:'beginner',name:'Beginner — SYNTHETIC'},enrollment:{id:id(namespace+':enrollment'),revision:1,currentLevel:{id:id('MG-F0'),code:'MG-F0',name:'Foundation — SYNTHETIC'}}};
+  const analytics={displayName:`SYNTHETIC ${s.seed.persona}`,activeProgramSlug:'beginner',activity:[],accuracyTrend:[],skills:[],programs:[]};
+  const skill={change:null,currentAverage:null,currentSamples:0,previousAverage:null,previousSamples:0,status:'INSUFFICIENT_EVIDENCE'};
+  const engagement={consistency:{bestStreakWeeks:0,currentStreakWeeks:0},currentWeek:{completedDays:0,remainingDays:2,status:'ACTIVE',targetChangeAppliesImmediately:false,targetDays:2,timezone:'Asia/Saigon',weekStartKey:'2026-10-26'},evidenceOfProgress:{completedReviewsCount:0,completedSessions:progress.sessions.completed,distinctStudyDays:0,evaluatedBlocksCount:s.checkpoint,skills:{reading:skill,listening:skill,speaking:skill,writing:skill}}};
+  if(method==='GET'&&path==='/api/v1/me/progress')return ok(progress);
+  if(method==='GET'&&path==='/api/v1/me/program-context')return ok(context);
+  if(method==='GET'&&path==='/api/v1/me/dashboard')return ok(analytics);
+  if(method==='GET'&&path==='/api/v1/me/engagement')return ok(engagement);
+  if(method==='GET'&&path==='/api/v1/me/audio-settings')return ok({sourceId:'published-audio',browserVoiceId:null});
+  if(method==='GET'&&path==='/api/v1/learning-programs')return ok({programs:[{slug:'beginner',name:'Beginner — SYNTHETIC',description:'Synthetic browser test only',destination:'/dashboard',iconKey:'beginner',isSelectable:true,learningGoal:'Synthetic rehearsal',proficiencyLabel:'Foundation',publishedLevelCount:1,publishedPathCount:1,availabilityStatus:'BETA'}]});
+  if(method==='GET'&&path==='/api/v1/me/dashboard/overview'){const ready=(data:unknown)=>({status:'ready',data});return ok({programContext:context,progress:ready(progress),availability:ready({mission:this.session(s).mission,lessonVersionId:this.session(s).lessonVersionId,supportedDurations:[45],availableDurations:[45],defaultDurationMinutes:45}),roadmap:ready(null),analytics:ready(analytics),engagement:ready(engagement),topics:ready([])});}
+  if(method==='POST'&&path==='/api/v1/learning-sessions'){if(body.durationMinutes!==45||typeof body.clientSessionId!=='string'||!/^[0-9a-f-]{36}$/i.test(body.clientSessionId))return bad(400,'SESSION_INPUT_INVALID');return ok(this.session(s));}
+  const sessionMatch=path.match(/^\/api\/v1\/learning-sessions\/([^/]+)(?:\/(start|pause|resume))?$/);if(sessionMatch){if(sessionMatch[1]!==s.seed.sessionId)return bad(403,'CROSS_NAMESPACE_DENIED');if(method==='POST'&&sessionMatch[2]){if(s.status!=='completed')s.status=sessionMatch[2]==='pause'?'paused':'in_progress';return ok(this.session(s));}if(method==='GET'&&!sessionMatch[2])return ok(this.session(s));}
+  const activityMatch=path.match(/^\/api\/v1\/learning-sessions\/([^/]+)\/activities\/([^/]+)(?:\/(draft|audio))?$/);if(activityMatch){if(activityMatch[1]!==s.seed.sessionId)return bad(403,'CROSS_NAMESPACE_DENIED');const activity=s.seed.activities.find(a=>a.id===activityMatch[2]);if(!activity)return bad(404,'ACTIVITY_UNKNOWN');
+   if(activityMatch[3]==='draft'){if(activity.activityType!=='writing')return bad(400,'WRITING_ONLY');const prior=s.drafts.get(activity.id);if(method==='GET')return ok(prior??null);if(method==='PUT'){if(typeof body.text!=='string'||body.text.length>20000||!Number.isSafeInteger(body.expectedRevision))return bad(400,'DRAFT_INVALID');if(body.expectedRevision!==(prior?.revision??0))return bad(409,'STALE_REVISION');const draft={sessionId:s.seed.sessionId,activityId:activity.id,text:body.text,revision:(prior?.revision??0)+1,updatedAt:new Date().toISOString()};s.drafts.set(activity.id,draft);return ok(draft);}}
+   if(method==='GET'&&activityMatch[3]==='audio'){const actual=s.seed.snapshot.activities.find(a=>a.id===activity.id)!;const ref=actual.activityType==='listening'?actual.payload.questions[0]?.evidence.split(':')[0]:undefined;const item=this.audioInventory.audio.find((a:any)=>a.id===ref);if(!item)return bad(404,'AUDIO_BINDING_MISSING');try{const bytes=readFileSync(item.audioPath??item.path);if(hash(bytes)!==(item.audioSha256??item.sha256??item.checksum))return bad(409,'AUDIO_HASH_MISMATCH');return {status:200,body:bytes,headers:{'content-type':'audio/wav'}};}catch{return bad(404,'READONLY_AUDIO_UNAVAILABLE');}}
+   if(method==='GET'&&!activityMatch[3])return ok(activity);
+  }
+  const attemptMatch=path.match(/^\/api\/v1\/activities\/([^/]+)\/(attempts|recordings)$/);if(method==='POST'&&attemptMatch){const activity=s.seed.activities.find(a=>a.id===attemptMatch[1]);if(!activity||body.sessionId!==s.seed.sessionId)return bad(403,'CROSS_NAMESPACE_DENIED');if(typeof body.clientAttemptId!=='string'||!/^[0-9a-f-]{36}$/i.test(body.clientAttemptId))return bad(400,'ATTEMPT_ID_INVALID');if(attemptMatch[2]==='recordings'){if(activity.activityType!=='speaking'||body.consentAccepted!=='true'||body.consentPolicyVersion!=='recording-v1'||body.consentScope!=='teacher-ai'||!Number.isSafeInteger(body.audioBytes)||body.audioBytes<=0||!/^([a-f0-9]{64})$/.test(body.audioSha256??''))return bad(400,'RECORDING_CONSENT_OR_AUDIO_REQUIRED');body.response={kind:'recording',synthetic:true,audioSha256:body.audioSha256};}const previous=s.attempts.find(a=>a.clientAttemptId===body.clientAttemptId);if(previous)return previous.activityId===activity.id&&JSON.stringify(previous.rawResponse)===JSON.stringify(body.response)?ok(attemptMatch[2]==='recordings'?{attemptId:previous.id,recordingId:id(previous.id+':recording'),jobId:id(previous.id+':job'),status:'processing'}:previous):bad(409,'ATTEMPT_ID_REUSED');if(s.status!=='in_progress'||s.seed.activities[s.checkpoint]?.id!==activity.id)return bad(409,'CHECKPOINT_ORDER');
+
+   const response=body.response;if(activity.activityType==='reading'||activity.activityType==='listening'){const questions=activity.payload.questions as {options:unknown[]}[];if(!Array.isArray(response?.answerIndexes)||response.answerIndexes.length!==questions.length||questions.some((q:any,i:number)=>!Number.isInteger(response.answerIndexes[i])||response.answerIndexes[i]<0||response.answerIndexes[i]>=q.options.length))return bad(400,'ANSWERS_INVALID');}else if(attemptMatch[2]!=='recordings'&&(typeof response?.text!=='string'||!response.text.trim()||response.text.length>20000))return bad(400,'RESPONSE_INVALID');
+   const t:Attempt={id:id(namespace+':attempt:'+s.checkpoint),learnerId:id(namespace+':learner'),sessionId:s.seed.sessionId,activityId:activity.id,clientAttemptId:body.clientAttemptId,evaluationStatus:'evaluated',score:(()=>{const source=s.seed.snapshot.activities.find(a=>a.id===activity.id)!;return source.activityType==='reading'||source.activityType==='listening'?source.payload.questions.filter((q,i)=>q.answerIndex===response.answerIndexes[i]).length/source.payload.questions.length:.8;})(),feedback:'MOCK_PROVIDER synthetic evaluation only',createdAt:new Date().toISOString(),rawResponse:response,normalizedResponse:null};s.attempts.push(t);s.checkpoint++;if(s.checkpoint===8)s.status='completed';return attemptMatch[2]==='recordings'?ok({attemptId:t.id,recordingId:id(t.id+':recording'),jobId:id(t.id+':job'),status:'processing'}):ok(t);
+  }
+  const evaluation=path.match(/^\/api\/v1\/attempts\/([^/]+)\/evaluation(?:\/retry)?$/);if(evaluation&&(method==='GET'||method==='POST')){const t=s.attempts.find(t=>t.id===evaluation[1]);return t?ok(this.evaluation(t)):bad(403,'CROSS_NAMESPACE_DENIED');}
+  return bad(404,'SIMULATION_ROUTE_UNHANDLED');
+ }
+}
+
+
+
+
+
