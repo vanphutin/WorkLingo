@@ -66,6 +66,7 @@ model User {
   ieltsIntegratedSessions    IeltsIntegratedSession[]
   ieltsBandJourneys          IeltsBandJourney[]
   ieltsIntroductionVisits    IeltsIntroductionVisit[]
+  enrollmentEvents           EnrollmentEvent[]
   ieltsMockAttempts          IeltsMockAttempt[]
   ieltsMockReviews           IeltsMockReview[]          @relation("IeltsMockReviewReviewer")
 }
@@ -179,9 +180,16 @@ model LearningProgram {
   paths              LearningPath[]
   enrollments        LearnerProgramEnrollment[]
   activeProfiles     LearnerProfile[]
+  versions           ProgramVersion[]
 }
 
 model LearnerProgramEnrollment {
+  programVersionId      String? @db.Uuid
+  status                ProgramEnrollmentStatus @default(ACTIVE)
+  programVersion        ProgramVersion? @relation(fields: [programVersionId, programId], references: [id, programId], onDelete: Restrict)
+  events                EnrollmentEvent[]
+  progressionSnapshots  ProgressionSnapshot[]
+  reviews               ProgramReview[]
   curriculumRevisionIds String[] @default([]) @db.Uuid
   id                    String                 @id @default(uuid()) @db.Uuid
   learnerId             String                 @db.Uuid
@@ -196,6 +204,9 @@ model LearnerProgramEnrollment {
   curriculumCompletions CurriculumCompletion[]
 
   @@unique([learnerId, programId])
+  @@unique([id, programVersionId])
+  @@index([programVersionId, programId])
+  @@index([programId, status])
   @@index([programId])
   @@index([currentLevelId])
 }
@@ -496,6 +507,7 @@ enum PlacementAttemptStatus {
 }
 
 model LearningSession {
+  programReviewEvents ProgramReviewEvent[]
   id                    String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   learnerId             String                 @db.Uuid
   clientSessionId       String                 @db.Uuid
@@ -544,6 +556,7 @@ model CurriculumDefinition {
 }
 
 model CurriculumRevision {
+  programBindings ProgramVersionCurriculum[]
   id            String                     @id @default(uuid()) @db.Uuid
   missionId     String                     @db.Uuid
   revision      Int
@@ -563,6 +576,7 @@ model CurriculumRevision {
 }
 
 model CurriculumRevisionLesson {
+  programReviews ProgramReview[]
   curriculumRevisionId String             @db.Uuid
   lessonVersionId      String             @db.Uuid
   order                Int
@@ -1997,4 +2011,135 @@ model VocabularyLegacyLink {
   languageBlock   LanguageBlock @relation(fields: [languageBlockId], references: [id], onDelete: Restrict)
 
   @@index([senseId])
+}
+
+enum ProgramVersionStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  PUBLISHED
+  RETIRED
+}
+
+enum ProgramVersionSource {
+  AUTHORED
+  LEGACY_PIN_BACKFILL
+}
+
+enum ProgramEnrollmentStatus {
+  ACTIVE
+  SUSPENDED
+  COMPLETED
+  WITHDRAWN
+}
+
+model ProgramVersion {
+  id                    String                      @id @default(uuid()) @db.Uuid
+  programId             String                      @db.Uuid
+  version               Int
+  revision              Int                         @default(1)
+  status                ProgramVersionStatus        @default(DRAFT)
+  source                ProgramVersionSource        @default(AUTHORED)
+  snapshot              Json
+  policy                Json
+  curriculumRevisionIds String[]                    @default([]) @db.Uuid
+  capturedAt            DateTime                    @default(now())
+  publishedAt           DateTime?
+  retiredAt             DateTime?
+  createdAt             DateTime                    @default(now())
+  updatedAt             DateTime                    @updatedAt
+  program               LearningProgram             @relation(fields: [programId], references: [id], onDelete: Restrict)
+  curricula             ProgramVersionCurriculum[]
+  enrollments           LearnerProgramEnrollment[]
+  progressionSnapshots  ProgressionSnapshot[]
+
+  @@unique([programId, version])
+  @@unique([id, programId])
+  @@index([programId, status, version])
+}
+
+model ProgramVersionCurriculum {
+  programVersionId     String             @db.Uuid
+  curriculumRevisionId String             @db.Uuid
+  order                Int
+  programVersion       ProgramVersion     @relation(fields: [programVersionId], references: [id], onDelete: Restrict)
+  curriculumRevision   CurriculumRevision @relation(fields: [curriculumRevisionId], references: [id], onDelete: Restrict)
+
+  @@id([programVersionId, curriculumRevisionId])
+  @@unique([programVersionId, order])
+  @@index([curriculumRevisionId])
+}
+
+model EnrollmentEvent {
+  id             String                   @id @default(uuid()) @db.Uuid
+  enrollmentId   String                   @db.Uuid
+  actorId        String?                  @db.Uuid
+  type           String
+  reason         String
+  revision       Int
+  previousState  Json?
+  nextState      Json
+  createdAt      DateTime                 @default(now())
+  enrollment     LearnerProgramEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Restrict)
+  actor          User?                    @relation(fields: [actorId], references: [id], onDelete: Restrict)
+
+  @@unique([enrollmentId, revision])
+  @@index([enrollmentId, createdAt])
+  @@index([actorId])
+}
+
+model ProgressionSnapshot {
+  id               String                   @id @default(uuid()) @db.Uuid
+  enrollmentId     String                   @db.Uuid
+  programVersionId String                   @db.Uuid
+  revision         Int
+  engineVersion    String
+  policyVersion    String
+  evidence         Json
+  projection       Json
+  createdAt        DateTime                 @default(now())
+  enrollment       LearnerProgramEnrollment @relation(fields: [enrollmentId, programVersionId], references: [id, programVersionId], onDelete: Restrict)
+  programVersion   ProgramVersion           @relation(fields: [programVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([enrollmentId, revision])
+  @@index([enrollmentId, createdAt])
+  @@index([programVersionId, createdAt])
+}
+
+model ProgramReview {
+  id                   String                   @id @default(uuid()) @db.Uuid
+  enrollmentId         String                   @db.Uuid
+  curriculumRevisionId String                   @db.Uuid
+  lessonVersionId      String                   @db.Uuid
+  scheduleVersion      String
+  revision             Int                      @default(1)
+  iteration            Int                      @default(0)
+  dueAt                DateTime
+  lastCompletedAt      DateTime?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+  enrollment           LearnerProgramEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Restrict)
+  curriculumLesson     CurriculumRevisionLesson @relation(fields: [curriculumRevisionId, lessonVersionId], references: [curriculumRevisionId, lessonVersionId], onDelete: Restrict)
+  events               ProgramReviewEvent[]
+
+  @@unique([enrollmentId, curriculumRevisionId, lessonVersionId])
+  @@index([enrollmentId, dueAt])
+  @@index([curriculumRevisionId, lessonVersionId])
+}
+
+model ProgramReviewEvent {
+  id                String          @id @default(uuid()) @db.Uuid
+  reviewId          String          @db.Uuid
+  learningSessionId String?         @db.Uuid
+  revision          Int
+  type              String
+  previousState     Json?
+  nextState         Json
+  createdAt         DateTime        @default(now())
+  review            ProgramReview   @relation(fields: [reviewId], references: [id], onDelete: Restrict)
+  learningSession   LearningSession? @relation(fields: [learningSessionId], references: [id], onDelete: Restrict)
+
+  @@unique([reviewId, revision])
+  @@unique([reviewId, learningSessionId])
+  @@index([learningSessionId])
 }
