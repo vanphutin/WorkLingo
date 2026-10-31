@@ -1,0 +1,127 @@
+{
+  "provenance": "EXACT_ROWS_FROM_DISPOSABLE_CLONE_OF_READ_ONLY_MOUNTED_PRIMARY_VOLUME",
+  "candidateSha256": "dc83339985601569b70f8ab1808b10629c4b1552dcd9bc7f3e3a3e268e5decf1",
+  "supplementSha256": "e6b8b51561fd0c1e6d243859f05efd237dfeac3bb695616eba9de41952799307",
+  "source": {
+    "id": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+    "providerName": "LanGeek",
+    "title": "LanGeek A2 user-derived TXT",
+    "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-A2.pdf#worklingo-txt-sha256=a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+    "languageCode": "en",
+    "rightsStatus": "APPROVED",
+    "permissionReference": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+    "allowedUses": [
+      "EXTRACT",
+      "STORE",
+      "MODIFY",
+      "TRANSLATE",
+      "COMMERCIAL"
+    ],
+    "allowedFields": [
+      "FORM",
+      "DEFINITION",
+      "PRONUNCIATION"
+    ],
+    "attributionRequirements": "Vocabulary content from LanGeek (https://langeek.co)",
+    "revision": 2,
+    "createdAt": "2026-10-22T15:48:25.906Z",
+    "updatedAt": "2026-10-22T15:48:25.92Z",
+    "pronunciationDialect": "en-US"
+  },
+  "document": {
+    "id": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+    "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+    "cefrLevel": "A2",
+    "originalFilename": "full 5 files pdf.txt",
+    "sourceUrl": "https://help.langeek.co/wp-content/uploads/2025/12/English-wordlist-A2.pdf",
+    "sha256": "a94a32fdaf896c0110842aacf4673eb7e510587e9da13e558ecc79cd8e0bd4fb",
+    "pageCount": 50,
+    "edition": "TXT logical topic sections; locations are TXT line spans, not PDF geometry.",
+    "acquiredAt": "2026-10-22T15:48:25.935Z",
+    "sourceFormat": "TXT"
+  },
+  "occurrence": {
+    "id": "f10282ae-4527-4578-922b-e342a7301002",
+    "documentId": "2e040fea-4b37-4ba2-b2bf-19895bb98251",
+    "sourceEntryKey": "topic-9:24",
+    "topicInstanceKey": "topic-9",
+    "originalTopic": "Conjunctions and Prepositions",
+    "topicSequence": 9,
+    "rowOrdinal": 24,
+    "pageIndex": 8,
+    "printedPageNumber": null,
+    "locations": [
+      {
+        "bbox": [
+          0,
+          2097,
+          1,
+          2098
+        ],
+        "pageIndex": 8
+      }
+    ],
+    "rawWord": "from",
+    "parsedWord": "from",
+    "rawPos": "(prep.)",
+    "normalizedPos": "PREPOSITION",
+    "cefrLevel": "A2",
+    "pronunciation": "/frʌm/",
+    "permittedDefinition": "Shows the place or time where something begins.",
+    "extractionConfidence": 1,
+    "warnings": [],
+    "sourceContentHash": "6f3d32524b6c4f4922cb36a1bea2d056f2bffb9e8053a42df13b5ccfcc6b75f1",
+    "createdAt": "2026-10-22T15:48:41.929Z",
+    "sourceLineStart": 2097,
+    "sourceLineEnd": 2097
+  },
+  "resolution": {
+    "sourceEntryId": "f10282ae-4527-4578-922b-e342a7301002",
+    "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+    "senseId": "f07ea45f-15ef-47e4-a352-d62823ee4e3d",
+    "decision": "NEW_ENTRY",
+    "reviewedBy": "09b3c437-82c6-483b-983b-9511f0459f48",
+    "reviewedAt": "2026-10-22T15:51:27.008Z"
+  },
+  "entry": {
+    "id": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+    "language": "en",
+    "canonicalForm": "from",
+    "normalizedForm": "from",
+    "lemma": null,
+    "entryType": "WORD",
+    "partOfSpeech": "PREPOSITION",
+    "editorialStatus": "REVIEWED"
+  },
+  "sense": {
+    "id": "f07ea45f-15ef-47e4-a352-d62823ee4e3d",
+    "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+    "senseKey": "c627201d-d026-467b-b8a2-28c43fce07fd",
+    "definition": "Shows the place or time where something begins.",
+    "definitionLanguage": "en",
+    "translation": null,
+    "usageDomain": null,
+    "register": null,
+    "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+    "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+    "editorialStatus": "REVIEWED"
+  },
+  "pronunciation": {
+    "id": "a23e5577-72b1-47d8-86a9-822186aa19d8",
+    "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+    "dialect": "en-US",
+    "ipa": "/frʌm/",
+    "sourceId": "520e411e-7250-43b4-81ac-dc7fe3baf9bc",
+    "rightsBasis": "user-attested-LanGeek-five-PDF-email-2025-12-17-reaffirmed-2026-10-22",
+    "reviewStatus": "REVIEWED"
+  },
+  "cefr": {
+    "id": "47a96d39-7043-480f-bf99-52cd59c5d235",
+    "lexicalEntryId": "f645a610-9c89-48c8-b029-1ef6ba81a583",
+    "senseId": "f07ea45f-15ef-47e4-a352-d62823ee4e3d",
+    "sourceEntryId": "f10282ae-4527-4578-922b-e342a7301002",
+    "cefrLevel": "A2",
+    "confidence": 1,
+    "reviewStatus": "REVIEWED"
+  }
+}

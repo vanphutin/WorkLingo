@@ -1,12 +1,31 @@
 import { UnprocessableEntityException } from '@nestjs/common';
-import type { Prisma } from '@prisma/client';
-import { curriculumDefinitionInputSchema, learningProgramIconKeySchema, programVersionInputSchema, type ProgramPolicy, type ProgramVersionInput } from '@worklingo/contracts';
+import { Prisma } from '@prisma/client';
+import { curriculumDefinitionInputSchema, vocabularyCefrSchema, learningProgramIconKeySchema, programVersionInputSchema, type ProgramPolicy, type ProgramVersionInput, type ProgramLessonSnapshot } from '@worklingo/contracts';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import { requireVocabularySenses } from '../../vocabulary/vocabulary-library.service.js';
 
 export const defaultProgramPolicy: ProgramPolicy = { version: 1, sequential: { stages: true, units: true, lessons: true }, completion: { requiredActivityRatio: 1 }, mastery: { required: false, threshold: 0.8, minimumQualifiedAttempts: 1 }, retry: { maxAttempts: 3, cooldownMinutes: 0 }, remediation: { enabled: true, afterAttempts: 2 }, review: { scheduleVersion: 'program-review-v1', intervalsDays: [1, 7, 30], requiredForReadiness: false } };
 const fail = (): never => { throw new UnprocessableEntityException('PROGRAM_CURRICULUM_INVALID'); };
 const same = (left: readonly unknown[], right: readonly unknown[]) => JSON.stringify(left) === JSON.stringify(right);
+/** Canonical release attribution; caller-supplied provenance is always replaced. */
+async function resolveProgramVocabularyReferences(tx: Prisma.TransactionClient, refs: ProgramLessonSnapshot['vocabularyRefs']): Promise<ProgramLessonSnapshot['vocabularyRefs']> {
+  const senses = await requireVocabularySenses(tx, refs.map(ref => ref.senseId));
+  if (refs.some(ref => !senses.some(sense => sense.id === ref.senseId && sense.lexicalEntryId === ref.lexicalEntryId))) fail();
+  if (!senses.length) return [];
+  const [sources, associations] = await Promise.all([
+    tx.vocabularySource.findMany({ where: { id: { in: senses.map(sense => sense.sourceId!) } } }),
+    tx.lexicalCefrAssociation.findMany({ where: { lexicalEntryId: { in: senses.map(sense => sense.lexicalEntryId) }, OR: [{ senseId: null }, { senseId: { in: senses.map(sense => sense.id) } }] }, orderBy: [{ cefrLevel: 'asc' }, { sourceEntryId: 'asc' }] }),
+  ]);
+  return refs.map(ref => {
+    const sense = senses.find(sense => sense.id === ref.senseId)!;
+    const source = sources.find(source => source.id === sense.sourceId)!;
+    return { lexicalEntryId: ref.lexicalEntryId, senseId: ref.senseId, provenance: {
+      sourceId: source.id, rightsBasis: sense.rightsBasis, permissionReference: source.permissionReference!, attributionRequirements: source.attributionRequirements,
+      cefrAssociations: associations.filter(association => (association.senseId === null || association.senseId === sense.id) && association.lexicalEntryId === sense.lexicalEntryId).map(association => ({ cefrLevel: vocabularyCefrSchema.parse(association.cefrLevel), sourceEntryId: association.sourceEntryId })),
+    } };
+  });
+}
+
 async function sourceRows(tx: Prisma.TransactionClient, ids: string[]) {
   await tx.$queryRaw`SELECT "id" FROM "CurriculumRevision" WHERE "id"=ANY(${ids}::uuid[]) ORDER BY "id" FOR SHARE`;
   await tx.$executeRaw`LOCK TABLE "CurriculumPrerequisite", "CurriculumRevisionLesson", "LearningPath", "Lesson", "LessonVersion", "Level", "Mission", "MissionLesson", "Activity" IN SHARE MODE`;
@@ -16,7 +35,7 @@ export async function captureProgramSnapshot(tx: Prisma.TransactionClient, progr
   const program = await tx.learningProgram.findUniqueOrThrow({ where: { id: programId } });
   const rows = await sourceRows(tx, ids);
   if (!ids.length || rows.length !== ids.length) fail();
-  const bindings = ids.map((id, index) => {
+  const bindings: ProgramVersionInput['curriculumBindings'] = ids.map((id, index) => {
     const row = rows.find(item => item.id === id)!;
     const definition = curriculumDefinitionInputSchema.safeParse(row.snapshot);
     if (!definition.success) return fail();
@@ -26,6 +45,26 @@ export async function captureProgramSnapshot(tx: Prisma.TransactionClient, progr
       return { lessonVersionId: pin.lessonVersionId, order: lessonIndex + 1, title: lesson.data.title, objectives: definition.data.objectives.filter(item => item.evidence.some(evidence => evidence.lessonVersionId === pin.lessonVersionId)).map(item => item.statement), estimatedMinutes: 45, difficulty: program.proficiencyLabel, activityIds: lesson.data.activities.map(item => item.id), vocabularyRefs: [], resourceRefs: [] };
     }) };
   });
+  // Reuse published library bindings on any existing curriculum target. Each
+  // lesson selection is capped before rows leave SQL; never read the inventory.
+  const targets = bindings.flatMap(binding => binding.lessons.map(lesson => ({ programId, curriculumRevisionId: binding.curriculumRevisionId, pathId: binding.pathId, levelId: binding.levelId, missionId: binding.missionId, lessonVersionId: lesson.lessonVersionId })));
+  const vocabulary = await tx.$queryRaw<{ curriculumRevisionId: string; lessonVersionId: string; refs: { lexicalEntryId: string; senseId: string }[] }[]>(Prisma.sql`
+    SELECT target->>'curriculumRevisionId' AS "curriculumRevisionId",target->>'lessonVersionId' AS "lessonVersionId",COALESCE(jsonb_agg(jsonb_build_object('lexicalEntryId',v."lexicalEntryId",'senseId',v."senseId") ORDER BY v."lexicalEntryId",v."senseId") FILTER(WHERE v."senseId" IS NOT NULL),'[]'::jsonb) AS refs
+    FROM jsonb_array_elements(${JSON.stringify(targets)}::jsonb) target LEFT JOIN LATERAL (
+      SELECT DISTINCT m."lexicalEntryId",m."senseId" FROM "VocabularyCurriculumBinding" b
+      JOIN "VocabularyCollectionVersion" cv ON cv.id=b."collectionVersionId" AND cv.status='PUBLISHED'
+      JOIN "VocabularyCollectionMember" m ON m."collectionVersionId"=cv.id
+      WHERE b."programId"=(target->>'programId')::uuid OR b."pathId"=(target->>'pathId')::uuid OR b."levelId"=(target->>'levelId')::uuid
+        OR b."missionId"=(target->>'missionId')::uuid OR b."lessonVersionId"=(target->>'lessonVersionId')::uuid
+        OR b."wordBankVersionId" IN (SELECT "wordBankVersionId" FROM "LessonVersionWordBank" WHERE "lessonVersionId"=(target->>'lessonVersionId')::uuid)
+      ORDER BY m."lexicalEntryId",m."senseId" LIMIT 1001
+    ) v ON true GROUP BY target->>'curriculumRevisionId',target->>'lessonVersionId'`);
+  if (vocabulary.some(row => row.refs.length > 1000)) throw new UnprocessableEntityException('PROGRAM_VOCABULARY_SELECTION_TOO_LARGE');
+  const refs = [...new Map(vocabulary.flatMap(row => row.refs).map(ref => [ref.senseId, ref])).values()];
+  const resolved = await resolveProgramVocabularyReferences(tx, refs);
+  for (const binding of bindings) for (const lesson of binding.lessons) {
+    lesson.vocabularyRefs = (vocabulary.find(row => row.curriculumRevisionId === binding.curriculumRevisionId && row.lessonVersionId === lesson.lessonVersionId)?.refs ?? []).map(ref => resolved.find(item => item.senseId === ref.senseId)!);
+  }
   const snapshot = { title: program.name, description: program.description, objectives: bindings.flatMap(binding => binding.objectives), estimatedMinutes: bindings.reduce((sum, binding) => sum + binding.lessons.reduce((minutes, lesson) => minutes + lesson.estimatedMinutes, 0), 0), difficulty: program.proficiencyLabel, proficiencyLabel: program.proficiencyLabel, supportedLanguages: ['en'], audiences: ['adult'], catalogMetadata: { iconKey: learningProgramIconKeySchema.parse(program.iconKey), displayOrder: program.displayOrder }, policy: defaultProgramPolicy, curriculumBindings: bindings };
   return validate ? validateProgramSnapshot(tx, programId, snapshot) : snapshot;
 }
@@ -55,8 +94,7 @@ export async function validateProgramSnapshot(tx: Prisma.TransactionClient, prog
       const objectives = definition.data.objectives.filter(item => item.evidence.some(evidence => evidence.lessonVersionId === pin.lessonVersionId)).map(item => item.statement);
       if (lesson.title !== snapshot.data.title || !same(lesson.objectives, objectives) || !same(lesson.activityIds, snapshot.data.activities.map(item => item.id)) || !same(lesson.activityIds, pin.lessonVersion.activities.map(item => item.id))) fail();
       for (const resource of lesson.resourceRefs) if (resource.url && !['https:', 'http:'].includes(new URL(resource.url).protocol)) fail();
-      const senses = await requireVocabularySenses(tx, lesson.vocabularyRefs.map(ref => ref.senseId));
-      if (lesson.vocabularyRefs.some(ref => !senses.some(sense => sense.id === ref.senseId && sense.lexicalEntryId === ref.lexicalEntryId))) fail();
+      lesson.vocabularyRefs = await resolveProgramVocabularyReferences(tx, lesson.vocabularyRefs);
     }
     for (const objective of definition.data.objectives) {
       for (const evidence of objective.evidence) {

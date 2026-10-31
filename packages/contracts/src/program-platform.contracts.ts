@@ -28,7 +28,10 @@ export const programPolicySchema = z.object({
 export const programLessonSnapshotSchema = z.object({
   lessonVersionId: uuid, order: z.number().int().min(1).max(10000), title: text, objectives,
   estimatedMinutes: z.number().int().min(1).max(100000), difficulty: text, activityIds: z.array(uuid).min(1).max(500).refine(values => new Set(values).size === values.length, 'Duplicate activity references'),
-  vocabularyRefs: z.array(z.object({ lexicalEntryId: uuid, senseId: uuid }).strict()).max(1000).superRefine((refs, ctx) => {
+  vocabularyRefs: z.array(z.object({ lexicalEntryId: uuid, senseId: uuid, provenance: z.object({
+    sourceId: uuid, rightsBasis: z.string().min(1), permissionReference: z.string().min(1), attributionRequirements: z.string(),
+    cefrAssociations: z.array(z.object({ cefrLevel: z.enum(['A1', 'A2', 'B1', 'B2', 'C1', 'C2']), sourceEntryId: uuid }).strict()).max(1000),
+  }).strict().optional() }).strict()).max(1000).superRefine((refs, ctx) => {
     const keys = refs.map(ref => `${ref.lexicalEntryId}:${ref.senseId}`);
     if (new Set(keys).size !== keys.length) ctx.addIssue({ code: 'custom', message: 'Duplicate vocabulary references' });
   }),

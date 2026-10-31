@@ -23,7 +23,7 @@ export class ProgramVersionsService {
       const where = { status: 'PUBLISHED' as const, mission: { status: 'PUBLISHED' as const, purpose: 'LEARNING' as const, level: { status: 'PUBLISHED' as const, path: { programId, status: 'PUBLISHED' as const } } }, lessons: { some: {}, every: { lessonVersion: { status: 'PUBLISHED' as const } } } };
       const [rows, total] = await Promise.all([tx.curriculumRevision.findMany({ where, orderBy: [{ publishedAt: 'desc' }, { id: 'asc' }], skip: (page.page - 1) * page.limit, take: page.limit, select: { id: true } }), tx.curriculumRevision.count({ where })]);
       const items = rows.length ? (await captureProgramSnapshot(tx, programId, rows.map(row => row.id), false)).curriculumBindings : [];
-      return programAuthoringOptionsSchema.parse({ items, total, page: page.page, limit: page.limit });
+      return programAuthoringOptionsSchema.parse({ items, total, page: page.page, limit: page.limit, vocabularyLibrary: { searchPath: '/api/v1/admin/vocabulary/entries', detailPath: '/api/v1/admin/vocabulary/entries/:id', provenancePath: '/api/v1/admin/vocabulary/entries/:id/provenance' } });
     }, { timeout: 15_000 });
   }
   async listVersions(actorId: string, programId: string, raw: unknown = {}) {

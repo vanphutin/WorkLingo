@@ -207,6 +207,7 @@ model LearnerProgramEnrollment {
   @@unique([id, programVersionId])
   @@index([programVersionId, programId])
   @@index([programId, status])
+  @@index([programId, createdAt])
   @@index([programId])
   @@index([currentLevelId])
 }
