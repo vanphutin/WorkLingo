@@ -35,7 +35,7 @@ export const programLessonSnapshotSchema = z.object({
   resourceRefs: z.array(z.object({ id: text, type: text, url: z.url().max(2000).optional() }).strict()).max(100),
 }).strict();
 export const programCurriculumBindingSchema = z.object({
-  curriculumRevisionId: uuid, pathId: uuid, levelId: uuid, missionId: uuid,
+  curriculumRevisionId: uuid, pathId: uuid, levelId: uuid, missionId: uuid, pathTitle: text.optional(), levelTitle: text.optional(),
   order: z.number().int().min(1).max(10000), title: text, objectives, required: z.boolean(), prerequisiteRevisionIds: ids,
   lessons: z.array(programLessonSnapshotSchema).min(1).max(500),
 }).strict().superRefine((value, ctx) => {
