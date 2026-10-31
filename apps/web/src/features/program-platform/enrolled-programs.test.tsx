@@ -15,3 +15,12 @@ it('shows pinned release display after archive and selects the assigned active c
  expect(await screen.findByRole('heading',{name:'Pinned requests'})).toBeInTheDocument();expect(screen.getByText(/Version 3/)).toBeInTheDocument();expect(screen.getByText('Ask politely')).toBeInTheDocument();
  fireEvent.click(screen.getByRole('button',{name:'Resume session'}));await waitFor(()=>expect(activate).toHaveBeenCalledWith({programSlug:'archived-program',expectedRevision:5}));expect(push).toHaveBeenCalledWith('/dashboard');expect(refresh).toHaveBeenCalled();
 });
+it('resumes canonical IELTS in its existing IELTS destination',async()=>{
+ vi.spyOn(ProgramPlatformClient.prototype,'enrollmentsMine').mockResolvedValue({items:[{id,programId:id,programVersionId:null,status:'ACTIVE',display:{programSlug:'ielts',programName:'IELTS',release:null}}] as never,page:1,total:1,limit:25});
+ const current={activeProgram:{id,slug:'intermediate',name:'Intermediate'},enrollment:{id,revision:2,currentLevel:null}};
+ const activate=vi.spyOn(learningProgramClient,'activateProgram').mockResolvedValue(current);
+ render(<EnrolledPrograms initialContext={current}/>);
+ fireEvent.click(await screen.findByRole('button',{name:'Resume session'}));
+ expect(activate).not.toHaveBeenCalled();expect(push).toHaveBeenCalledWith('/ielts');
+ expect(screen.getByRole('link',{name:'Legacy curriculum: use the existing dashboard.'})).toHaveAttribute('href','/ielts');
+});

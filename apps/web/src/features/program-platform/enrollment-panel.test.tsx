@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest';
-import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
+import {act,cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
 import {afterEach,expect,it,vi} from 'vitest';
 import {EnrollmentPanel} from './enrollment-panel';
 import {ProgramPlatformClient} from '../../lib/api/program-platform-client';
@@ -17,4 +17,18 @@ it('uses enrollment revision for suspension and displays append only history',as
  await waitFor(()=>expect(transition).toHaveBeenCalledWith(id,id,expect.objectContaining({expectedRevision:4,targetStatus:'SUSPENDED',reason:'Requested break'})));
  fireEvent.click(screen.getByRole('button',{name:'History'}));
  expect(await screen.findByText(/Requested break/)).toBeInTheDocument();
+});
+it('resets assignment and history state on program switch and ignores the previous response',async()=>{
+ const other='22222222-2222-4222-8222-222222222222';let finish!:(value:never)=>void;
+ vi.spyOn(ProgramPlatformClient.prototype,'enrollments').mockImplementation(async programId=>({items:programId===id?[enrollment]:[],total:programId===id?1:0,page:1,limit:25}));
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[],total:0,page:1,limit:25});
+ const history=vi.spyOn(ProgramPlatformClient.prototype,'enrollmentHistory').mockResolvedValueOnce({items:[{id,enrollmentId:id,actorId:null,type:'ASSIGNED',reason:'Loaded old history',revision:1,previousState:{},nextState:{},createdAt:enrollment.createdAt}],total:1,page:1,limit:25}).mockReturnValueOnce(new Promise(resolve=>{finish=resolve;}));
+ const view=render(<EnrollmentPanel programId={id} revision={2}/>);
+ fireEvent.change(screen.getByLabelText('Learner identifier'),{target:{value:'Old learner'}});fireEvent.change(screen.getByLabelText('Reason for status change'),{target:{value:'Old reason'}});
+ fireEvent.click(await screen.findByRole('button',{name:'History'}));
+ await screen.findByText(/Loaded old history/);fireEvent.click(screen.getByRole('button',{name:'Reload'}));await waitFor(()=>expect(history).toHaveBeenCalledTimes(2));
+ view.rerender(<EnrollmentPanel programId={other} revision={8}/>);
+ expect(screen.getByLabelText('Learner identifier')).toHaveValue('');expect(screen.getByLabelText('Reason for status change')).toHaveValue('');
+ await act(async()=>finish({items:[{id,type:'ASSIGNED',reason:'Old program event',revision:1,createdAt:enrollment.createdAt}],total:1,page:1,limit:25} as never));
+ expect(screen.queryByText(/Old program event|Loaded old history/)).not.toBeInTheDocument();expect(screen.queryByRole('heading',{name:'History'})).not.toBeInTheDocument();
 });

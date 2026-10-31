@@ -132,6 +132,7 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
           setMessage('Foundation revision published successfully.');
         }
       }
+      commandKey.reset();
     } catch (cause) {
       if (cause instanceof ApiError && cause.status === 409) {
         setHasConflict(true); setError('The server has a newer revision. Your unsaved fields are preserved; refresh when ready.');

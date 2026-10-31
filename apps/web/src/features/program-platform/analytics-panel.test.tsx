@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest';
-import {cleanup,fireEvent,render,screen,within,waitFor} from '@testing-library/react';
+import {act,cleanup,fireEvent,render,screen,within,waitFor} from '@testing-library/react';
 import {afterEach,expect,it,vi} from 'vitest';
 import {AnalyticsPanel} from './analytics-panel';
 import {ProgramPlatformClient} from '../../lib/api/program-platform-client';
@@ -13,6 +13,17 @@ it('requires an explicit UTC window and displays null denominators as unknown',a
  fireEvent.change(screen.getByLabelText('From (UTC)'),{target:{value:'2026-10-01'}});fireEvent.change(screen.getByLabelText('To (UTC, exclusive)'),{target:{value:'2026-10-31'}});fireEvent.click(screen.getByRole('button',{name:'Load analytics'}));
  expect((await screen.findAllByText('Unknown')).length).toBeGreaterThan(0);expect(screen.getByText('Authoritative completion definition')).toBeInTheDocument();
  expect(analytics).toHaveBeenCalledWith(expect.any(String),expect.objectContaining({from:'2026-10-01T00:00:00.000Z',to:'2026-10-31T00:00:00.000Z'}));
+});
+it('clears the previous program query and ignores its late analytics response',async()=>{
+ let finish!:(value:never)=>void;const oldData={definitions:{completion:'Old program metric'},summary:{completionRate:null},versions:{items:[],page:1,total:0},nodes:{items:[],page:1,total:0},skills:[],retention:[],reviews:{asOf:'2026-10-31T00:00:00.000Z',scheduled:0,overdue:0,completedEventsInWindow:0},assessments:{total:0,statuses:[]}};
+ const analytics=vi.spyOn(ProgramPlatformClient.prototype,'analytics').mockResolvedValueOnce(oldData as never).mockReturnValueOnce(new Promise(resolve=>{finish=resolve;}));
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[],total:0,page:1,limit:25});
+ const view=render(<AnalyticsPanel programId="11111111-1111-4111-8111-111111111111"/>);
+ fireEvent.change(screen.getByLabelText('From (UTC)'),{target:{value:'2026-10-01'}});fireEvent.change(screen.getByLabelText('To (UTC, exclusive)'),{target:{value:'2026-10-31'}});fireEvent.click(screen.getByRole('button',{name:'Load analytics'}));
+ await screen.findByText('Old program metric');fireEvent.click(screen.getByRole('button',{name:'Load analytics'}));expect(analytics).toHaveBeenCalledTimes(2);view.rerender(<AnalyticsPanel programId="22222222-2222-4222-8222-222222222222"/>);
+ expect(screen.getByLabelText('From (UTC)')).toHaveValue('');expect(screen.getByRole('button',{name:'Load analytics'})).toBeEnabled();
+ await act(async()=>finish(oldData as never));
+ expect(screen.queryByText('Old program metric')).not.toBeInTheDocument();expect(screen.queryByRole('heading',{name:'Summary'})).not.toBeInTheDocument();
 });
 it('pages version comparisons and nodes independently without changing the UTC cohort',async()=>{
  const counts={totalEnrollments:2,cohortEnrollments:2,cohortStatus:{ACTIVE:1,SUSPENDED:1,COMPLETED:0,WITHDRAWN:0},activeLearners:1,completedEnrollments:0,withdrawnEnrollments:0,projectedEnrollments:1,activityCompletedEnrollments:0,readyEnrollments:0,unknownProjectionEnrollments:1,completionRate:0};

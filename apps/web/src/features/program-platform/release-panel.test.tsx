@@ -30,6 +30,31 @@ it('loads server draft, preserves edits and reuses command key after uncertain s
  await waitFor(()=>expect(save).toHaveBeenCalledTimes(3));
  expect(save.mock.calls[2]?.[2].idempotencyKey).not.toEqual(save.mock.calls[1]?.[2].idempotencyKey);
 });
+it('reuses a failed create key but rotates after success for an explicitly new identical draft',async()=>{
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[],total:0,page:1,limit:25});
+ vi.spyOn(ProgramPlatformClient.prototype,'options').mockResolvedValue({items:[binding],total:1,page:1,limit:25,vocabularyLibrary:{searchPath:'/api/v1/admin/vocabulary/entries',detailPath:'/api/v1/admin/vocabulary/entries/:id',provenancePath:'/api/v1/admin/vocabulary/entries/:id/provenance'}});
+ const create=vi.spyOn(ProgramPlatformClient.prototype,'create').mockRejectedValueOnce(new Error('Offline')).mockResolvedValue(draft);
+ render(<ReleasePanel program={program} onProgramChange={vi.fn()}/>);
+ fireEvent.click(await screen.findByRole('button',{name:'Add Requests'}));fireEvent.click(screen.getByRole('button',{name:'Save draft'}));
+ await screen.findByRole('alert');fireEvent.click(screen.getByRole('button',{name:'Save draft'}));await waitFor(()=>expect(create).toHaveBeenCalledTimes(2));
+ await screen.findByText('Saved.');fireEvent.click(screen.getByRole('button',{name:'New draft'}));fireEvent.click(screen.getByRole('button',{name:'Add Requests'}));fireEvent.click(screen.getByRole('button',{name:'Save draft'}));
+ await waitFor(()=>expect(create).toHaveBeenCalledTimes(3));
+ expect(create.mock.calls[0]?.[1]).toEqual(create.mock.calls[1]?.[1]);
+ expect(create.mock.calls[2]?.[1].content).toEqual(create.mock.calls[1]?.[1].content);
+ expect(create.mock.calls[2]?.[1].idempotencyKey).not.toEqual(create.mock.calls[1]?.[1].idempotencyKey);
+});
+it('makes a fresh rollback command after an acknowledged copy of the same published release',async()=>{
+ const published={...draft,status:'PUBLISHED' as const};
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[published],total:1,page:1,limit:25});
+ vi.spyOn(ProgramPlatformClient.prototype,'options').mockResolvedValue({items:[],total:0,page:1,limit:25,vocabularyLibrary:{searchPath:'/api/v1/admin/vocabulary/entries',detailPath:'/api/v1/admin/vocabulary/entries/:id',provenancePath:'/api/v1/admin/vocabulary/entries/:id/provenance'}});
+ vi.spyOn(ProgramPlatformClient.prototype,'preview').mockResolvedValue(published);
+ const rollback=vi.spyOn(ProgramPlatformClient.prototype,'rollback').mockResolvedValue({...draft,id:'22222222-2222-4222-8222-222222222222'});
+ render(<ReleasePanel program={program} onProgramChange={vi.fn()}/>);
+ fireEvent.click(await screen.findByRole('button',{name:'Version 1'}));fireEvent.click(await screen.findByRole('button',{name:'Copy release to new draft'}));await screen.findByText('Saved.');
+ fireEvent.click(screen.getByRole('button',{name:'Version 1'}));fireEvent.click(await screen.findByRole('button',{name:'Copy release to new draft'}));await waitFor(()=>expect(rollback).toHaveBeenCalledTimes(2));
+ expect(rollback.mock.calls[0]?.[1].sourceVersionId).toBe(rollback.mock.calls[1]?.[1].sourceVersionId);
+ expect(rollback.mock.calls[0]?.[1].idempotencyKey).not.toEqual(rollback.mock.calls[1]?.[1].idempotencyKey);
+});
 it('exposes explicit lifecycle transition on the exact current revision',async()=>{
  const review={...draft,status:'IN_REVIEW' as const};
  vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[review],total:1,page:1,limit:25});

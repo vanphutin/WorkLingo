@@ -14,7 +14,8 @@ function EnrollmentMetrics({metrics}:{metrics:ProgramAnalyticsDto['summary']}){
  const t=useT('programPlatform',programPlatformMessages),f=useProgramFormat();
  return <dl className="platform-metrics">{summaryCounts.map(k=><div key={k}><dt>{t(k)}</dt><dd>{metrics[k]===undefined?t('unknown'):f.number(metrics[k])}</dd></div>)}<div><dt>{t('completionRate')}</dt><dd>{metrics.completionRate==null?t('unknown'):f.percent(metrics.completionRate)}</dd></div><div><dt>{t('cohortStatus')}</dt><dd><ul>{(['ACTIVE','SUSPENDED','COMPLETED','WITHDRAWN'] as const).map(s=><li key={s}>{t(s)}: {metrics.cohortStatus?f.number(metrics.cohortStatus[s]):t('unknown')}</li>)}</ul></dd></div></dl>;
 }
-export function AnalyticsPanel({programId}:{programId:string}){
+export function AnalyticsPanel(props:{programId:string}){return <ProgramAnalyticsPanel key={props.programId} {...props}/>;}
+function ProgramAnalyticsPanel({programId}:{programId:string}){
  const t=useT('programPlatform',programPlatformMessages),definition=useT('programAnalytics',programAnalyticsMessages),{locale}=useLocalePreference(),f=useProgramFormat();
  const [from,setFrom]=useState(''),[to,setTo]=useState(''),[versionId,setVersionId]=useState(''),[data,setData]=useState<ProgramAnalyticsDto|null>(null),[versions,setVersions]=useState<ProgramVersionResponse[]>([]),[versionPage,setVersionPage]=useState(1),[versionTotal,setVersionTotal]=useState(0),[error,setError]=useState<unknown>(null),[busy,setBusy]=useState(false),[query,setQuery]=useState<ProgramAnalyticsQuery|null>(null);
  useEffect(()=>{let active=true;void client.versions(programId,{page:versionPage,limit:25}).then(v=>{if(active){setVersions(v.items);setVersionTotal(v.total);}}).catch(e=>{if(active)setError(e);});return()=>{active=false;};},[programId,versionPage]);
