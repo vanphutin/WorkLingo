@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { programEnrollmentStatusSchema } from './program-platform.contracts.ts';
+import { sessionDurationSchema } from './learning-session.contracts.ts';
 const uuid = z.uuid();
 const date = z.iso.datetime();
 export const programProgressReasonSchema = z.string().min(1).max(200);
@@ -10,6 +11,7 @@ export const programProgressItemSchema = z.object({
     state: z.enum(['locked', 'available', 'in_progress', 'completed']), eligible: z.boolean(), readinessReasons: z.array(programProgressReasonSchema), reasons: z.array(programProgressReasonSchema),
     completed: z.boolean(), completionRatio: z.number().min(0).max(1), ready: z.boolean(), mastery,
     attempts: z.number().int().nonnegative(), retryAt: date.nullable(), remediation: z.boolean(),
+    availableDurations: z.array(sessionDurationSchema).optional(), recommendedDurationMinutes: sessionDurationSchema.nullable().optional(),
     activeSessionId: uuid.nullable(), reviewDueAt: date.nullable(), reviewCompleted: z.boolean(), estimatedMinutes: z.number().nonnegative(),
 }).strict();
 const aggregate = z.object({ id: uuid, title: z.string(), itemCount: z.number().int().nonnegative(), completedCount: z.number().int().nonnegative(), ready: z.boolean() }).strict();

@@ -38,7 +38,7 @@ it('explains inactive enrollment, cooldown, retry limits and remediation', () =>
     const p = projectProgramProgress({ ...snapshot, policy }, { ...base, attempts: [low, { ...low, attemptId: id(71), sessionId: id(72) }] }, now);
     expect(p.items[0]).toMatchObject({ remediation: true, retryAt: '2026-10-31T01:00:00.000Z' });
     expect(p.items[0]?.reasons).toContain('retry_cooldown');
-    const exhausted = projectProgramProgress({ ...snapshot, policy }, { ...base, attempts: [low, { ...low, attemptId: id(71), sessionId: id(72) }, { ...low, attemptId: id(73), sessionId: id(74) }] }, '2026-10-31T02:00:00.000Z');
+    const exhausted = projectProgramProgress({ ...snapshot, policy: { ...policy, remediation: { ...policy.remediation, enabled: false } } }, { ...base, attempts: [low, { ...low, attemptId: id(71), sessionId: id(72) }, { ...low, attemptId: id(73), sessionId: id(74) }] }, '2026-10-31T02:00:00.000Z');
     expect(exhausted.items[0]?.reasons).toContain('retry_limit_reached');
     const suspended = projectProgramProgress(snapshot, { ...base, status: 'SUSPENDED' }, now);
     expect(suspended.items.every(i => i.reasons.includes('enrollment_suspended') && !i.eligible)).toBe(true);
@@ -47,4 +47,15 @@ it('uses the later attempt within a completed session even when UUID ordering is
     const earlier = { ...evidence(1, 0.2), attemptId: id(99), attemptedAt: '2026-10-30T22:00:00.000Z' };
     const later = { ...evidence(1, 1), attemptId: id(1), attemptedAt: '2026-10-30T23:00:00.000Z' };
     expect(projectProgramProgress(snapshot, { ...base, attempts: [earlier, later] }, now).items[0]?.mastery.score).toBe(1);
+});
+
+it('keeps explicit remediation actionable at the ordinary retry boundary', () => {
+    const low = evidence(1, 0.2);
+    const policy = { ...snapshot.policy, mastery: { ...snapshot.policy.mastery, required: true }, retry: { maxAttempts: 2, cooldownMinutes: 0 }, remediation: { enabled: true, afterAttempts: 2 } };
+    const attempts = [low, { ...low, attemptId: id(71), sessionId: id(72) }];
+    const progress = projectProgramProgress({ ...snapshot, policy }, { ...base, attempts }, now);
+    expect(progress.items[0]).toMatchObject({ eligible: true, remediation: true, ready: false });
+    expect(progress.nextAction).toMatchObject({ type: 'remediation', lessonVersionId: id(31) });
+    const ordinary = projectProgramProgress({ ...snapshot, policy: { ...policy, remediation: { ...policy.remediation, enabled: false } } }, { ...base, attempts }, now);
+    expect(ordinary.items[0]).toMatchObject({ eligible: false, remediation: false, reasons: ['retry_limit_reached'] });
 });

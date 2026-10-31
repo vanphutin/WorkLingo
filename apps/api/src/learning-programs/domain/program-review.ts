@@ -32,3 +32,8 @@ export function scheduleProgramReview(policy: Pick<ProgramPolicy, 'review'>, his
         return { curriculumRevisionId: row.curriculumRevisionId, lessonVersionId: row.lessonVersionId, scheduleVersion: 'program-review-v1', iteration, dueAt: new Date(Date.parse(anchor) + days * 86400000).toISOString(), reason: row.completedAt ? 'REVIEW_COMPLETION' : 'FIRST_COMPLETION' };
     });
 }
+
+/** Shared planner/scheduler membership; overlapping sessions cannot cover a new review cycle. */
+export function reviewCycleAttempts<T extends { sessionStartedAt?: string; completedAt: string }>(attempts: readonly T[], boundary: string | null, through?: string): T[] {
+    return attempts.filter(attempt => (!boundary || (attempt.completedAt > boundary && !!attempt.sessionStartedAt && attempt.sessionStartedAt >= boundary)) && (!through || attempt.completedAt <= through));
+}

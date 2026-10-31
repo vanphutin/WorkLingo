@@ -1,4 +1,4 @@
-import type { ProgramEnrollmentStatus, ProgramProgressDto, ProgramProgressItem, ProgramVersionInput } from '@worklingo/contracts';
+import type { ProgramEnrollmentStatus, ProgramProgressDto, ProgramProgressItem, ProgramVersionInput, SessionDuration } from '@worklingo/contracts';
 export interface ProgramAttemptEvidence {
     enrollmentId: string;
     programVersionId: string;
@@ -9,6 +9,7 @@ export interface ProgramAttemptEvidence {
     sessionId: string;
     skill: string;
     attemptedAt?: string;
+    sessionStartedAt?: string;
     completedAt: string;
     source: 'DETERMINISTIC' | 'AI';
     evaluationStatus: string;
@@ -27,6 +28,7 @@ export interface ProgramEvidence {
         sessionId: string;
         createdAt: string;
     }[];
+    continuations?: { curriculumRevisionId: string; lessonVersionId: string; completedActivityIds: string[]; availableDurations: SessionDuration[] }[];
     reviews: {
         curriculumRevisionId: string;
         lessonVersionId: string;
@@ -55,6 +57,7 @@ export function projectProgramProgress(snapshot: ProgramVersionInput, evidence: 
             const sessionIds = new Set(attempts.map(a => a.sessionId));
             const last = attempts.map(a => a.completedAt).sort().at(-1);
             const retryAt = last && completed && policy.mastery.required && !mastered && policy.retry.cooldownMinutes ? new Date(Date.parse(last) + policy.retry.cooldownMinutes * 60000).toISOString() : null;
+            const remediation = !ready && policy.remediation.enabled && sessionIds.size >= policy.remediation.afterAttempts;
             const reasons: string[] = [];
             if (evidence.status !== 'ACTIVE')
                 reasons.push(`enrollment_${evidence.status.toLowerCase()}`);
@@ -67,13 +70,14 @@ export function projectProgramProgress(snapshot: ProgramVersionInput, evidence: 
                 reasons.push('previous_unit_not_ready');
             if (policy.sequential.lessons && items.some(i => i.curriculumRevisionId === binding.curriculumRevisionId && !i.ready))
                 reasons.push('previous_lesson_not_ready');
-            if (completed && policy.mastery.required && !mastered && sessionIds.size >= policy.retry.maxAttempts)
+            if (completed && policy.mastery.required && !mastered && sessionIds.size >= policy.retry.maxAttempts && !remediation)
                 reasons.push('retry_limit_reached');
             if (retryAt && retryAt > now)
                 reasons.push('retry_cooldown');
             const eligible = !reasons.length;
             const resume = eligible ? evidence.resumes.filter(r => r.curriculumRevisionId === binding.curriculumRevisionId && r.lessonVersionId === lesson.lessonVersionId).sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.sessionId.localeCompare(b.sessionId))[0] : undefined;
-            items.push({ curriculumRevisionId: binding.curriculumRevisionId, pathId: binding.pathId, levelId: binding.levelId, missionId: binding.missionId, lessonVersionId: lesson.lessonVersionId, title: lesson.title, objectives: lesson.objectives, required: binding.required, order: items.length + 1, state: !eligible ? 'locked' : resume ? 'in_progress' : completed ? 'completed' : 'available', eligible, reasons, readinessReasons: [...(!completed ? ['required_activities_incomplete'] : []), ...(policy.mastery.required && !mastered ? [mastery.status === 'PENDING' ? 'mastery_pending' : mastery.status === 'UNKNOWN' ? 'mastery_unknown' : 'mastery_below_threshold'] : []), ...(policy.review.requiredForReadiness && !reviewCompleted ? ['review_completion_required'] : [])], completed, completionRatio, ready, mastery, attempts: sessionIds.size, retryAt, remediation: !ready && policy.remediation.enabled && sessionIds.size >= policy.remediation.afterAttempts, activeSessionId: resume?.sessionId ?? null, reviewDueAt: review?.dueAt ?? null, reviewCompleted, estimatedMinutes: lesson.estimatedMinutes });
+            const durations = evidence.continuations?.find(c => c.curriculumRevisionId === binding.curriculumRevisionId && c.lessonVersionId === lesson.lessonVersionId)?.availableDurations;
+            items.push({ ...(durations ? { availableDurations: durations, recommendedDurationMinutes: durations.includes(60) ? 60 : durations[0] ?? null } : {}), curriculumRevisionId: binding.curriculumRevisionId, pathId: binding.pathId, levelId: binding.levelId, missionId: binding.missionId, lessonVersionId: lesson.lessonVersionId, title: lesson.title, objectives: lesson.objectives, required: binding.required, order: items.length + 1, state: !eligible ? 'locked' : resume ? 'in_progress' : completed ? 'completed' : 'available', eligible, reasons, readinessReasons: [...(!completed ? ['required_activities_incomplete'] : []), ...(policy.mastery.required && !mastered ? [mastery.status === 'PENDING' ? 'mastery_pending' : mastery.status === 'UNKNOWN' ? 'mastery_unknown' : 'mastery_below_threshold'] : []), ...(policy.review.requiredForReadiness && !reviewCompleted ? ['review_completion_required'] : [])], completed, completionRatio, ready, mastery, attempts: sessionIds.size, retryAt, remediation, activeSessionId: resume?.sessionId ?? null, reviewDueAt: review?.dueAt ?? null, reviewCompleted, estimatedMinutes: lesson.estimatedMinutes });
         }
     }
     const required = items.filter(i => i.required);

@@ -5,7 +5,8 @@ import { completeProgramReviewSchema, programPageSchema, programProgressHistoryS
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import { projectProgramProgress, type ProgramEvidence } from '../domain/program-progression.js';
-import { scheduleProgramReview } from '../domain/program-review.js';
+import { reviewCycleAttempts, scheduleProgramReview } from '../domain/program-review.js';
+import { programSessionDurations } from '../domain/program-session-durations.js';
 import { jsonValue, parseProgramInput, programCommand, requireProgramActor } from './program-command.js';
 /** Database-only release evidence adapter; deliberately independent of session and curriculum modules. */
 @Injectable()
@@ -60,9 +61,8 @@ export class ProgramProgressService {
         if (enrollment?.programVersion?.source !== 'AUTHORED')
             return {};
         const evidence = await this.evidence(tx, enrollment, programVersionInputSchema.parse(enrollment.programVersion.snapshot));
-        const review = await tx.programReview.findUnique({ where: { enrollmentId_curriculumRevisionId_lessonVersionId: { enrollmentId: enrollment.id, curriculumRevisionId: revisionId, lessonVersionId } } });
-        const since = review ? (review.lastCompletedAt ?? review.createdAt).toISOString() : null;
-        return { programEnrollmentId: enrollment.id, programVersionId: enrollment.programVersionId!, missionTitle: programVersionInputSchema.parse(enrollment.programVersion.snapshot).curriculumBindings.find(b => b.curriculumRevisionId === revisionId)!.title, productivePairPerRespondBlock: true, completedActivityIds: [...new Set(evidence.attempts.filter(a => a.curriculumRevisionId === revisionId && a.lessonVersionId === lessonVersionId && (!since || a.completedAt > since)).map(a => a.activityId))] };
+        const continuation = evidence.continuations!.find(c => c.curriculumRevisionId === revisionId && c.lessonVersionId === lessonVersionId)!;
+        return { programEnrollmentId: enrollment.id, programVersionId: enrollment.programVersionId!, missionTitle: programVersionInputSchema.parse(enrollment.programVersion.snapshot).curriculumBindings.find(b => b.curriculumRevisionId === revisionId)!.title, productivePairPerRespondBlock: true, completedActivityIds: continuation.completedActivityIds, availableProgramDurations: continuation.availableDurations };
     }
     async forEnrollment(tx: Prisma.TransactionClient, learnerId: string, enrollmentId: string): Promise<ProgramProgressDto | null> {
         const enrollment = await tx.learnerProgramEnrollment.findFirst({ where: { id: enrollmentId, learnerId }, include: { programVersion: true } });
@@ -153,7 +153,7 @@ export class ProgramProgressService {
                 const answers = normalized && typeof normalized === 'object' && !Array.isArray(normalized) ? normalized.answerIndexes : null;
                 const verified = deterministic && Array.isArray(answers) && answers.length === activity.payload.questions.length && answers.every(Number.isInteger) && attempt.score === activity.payload.questions.filter((q, index) => answers[index] === q.answerIndex).length / activity.payload.questions.length;
                 for (const skill of activity.skills)
-                    evidence.attempts.push({ enrollmentId: enrollment.id, programVersionId: enrollment.programVersionId!, curriculumRevisionId: binding!.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, activityId: attempt.activityId, attemptId: attempt.id, sessionId: session.id, skill, attemptedAt: attempt.createdAt.toISOString(), completedAt: session.completedAt.toISOString(), source: deterministic ? 'DETERMINISTIC' : 'AI', evaluationStatus: attempt.evaluationStatus, qualification: verified && attempt.evaluationStatus === 'EVALUATED' ? 'QUALIFIED' : 'PENDING', score: verified ? attempt.score : null, evaluationVersion: deterministic ? 'deterministic-v1' : 'ai-unqualified' });
+                    evidence.attempts.push({ enrollmentId: enrollment.id, programVersionId: enrollment.programVersionId!, curriculumRevisionId: binding!.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, activityId: attempt.activityId, attemptId: attempt.id, sessionId: session.id, skill, ...(session.startedAt ? { sessionStartedAt: session.startedAt.toISOString() } : {}), attemptedAt: attempt.createdAt.toISOString(), completedAt: session.completedAt.toISOString(), source: deterministic ? 'DETERMINISTIC' : 'AI', evaluationStatus: attempt.evaluationStatus, qualification: verified && attempt.evaluationStatus === 'EVALUATED' ? 'QUALIFIED' : 'PENDING', score: verified ? attempt.score : null, evaluationVersion: deterministic ? 'deterministic-v1' : 'ai-unqualified' });
             }
         }
         evidence.reviews = reviews.map(review => {
@@ -163,6 +163,14 @@ export class ProgramProgressService {
             }).at(-1)?.learningSession?.completedAt;
             return { curriculumRevisionId: review.curriculumRevisionId, lessonVersionId: review.lessonVersionId, dueAt: review.dueAt.toISOString(), lastCompletedAt: completed?.toISOString() ?? null };
         });
+        const lessons = await tx.lessonVersion.findMany({ where: { id: { in: snapshot.curriculumBindings.flatMap(b => b.lessons.map(l => l.lessonVersionId)) } }, select: { id: true, parsedContent: true } });
+        evidence.continuations = snapshot.curriculumBindings.flatMap(binding => binding.lessons.map(lesson => {
+            const review = reviews.find(r => r.curriculumRevisionId === binding.curriculumRevisionId && r.lessonVersionId === lesson.lessonVersionId);
+            const since = review ? evidence.reviews.find(r => r.curriculumRevisionId === binding.curriculumRevisionId && r.lessonVersionId === lesson.lessonVersionId)?.lastCompletedAt ?? review.createdAt.toISOString() : null;
+            const completedActivityIds = [...new Set(reviewCycleAttempts(evidence.attempts.filter(a => a.curriculumRevisionId === binding.curriculumRevisionId && a.lessonVersionId === lesson.lessonVersionId), since).map(a => a.activityId))];
+            const content = lessonSnapshotSchema.parse(lessons.find(row => row.id === lesson.lessonVersionId)!.parsedContent);
+            return { curriculumRevisionId: binding.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, completedActivityIds, availableDurations: programSessionDurations(content.activities.filter(a => lesson.activityIds.includes(a.id)), completedActivityIds, content.intermediateTopic?.durationMinutes) };
+        }));
         return evidence;
     }
     private async project(tx: Prisma.TransactionClient, enrollment: Enrollment, snapshot: ProgramVersionInput) { return programProgressSchema.parse(projectProgramProgress(snapshot, await this.evidence(tx, enrollment, snapshot), new Date().toISOString())); }
@@ -184,6 +192,7 @@ export class ProgramProgressService {
             const attempts = evidence.attempts.filter(a => a.curriculumRevisionId === item.curriculumRevisionId && a.lessonVersionId === item.lessonVersionId);
             const sessions = [...new Set(attempts.map(a => a.sessionId))].map(id => ({ id, at: attempts.find(a => a.sessionId === id)!.completedAt })).sort((a, b) => a.at.localeCompare(b.at) || a.id.localeCompare(b.id));
             let review = await tx.programReview.findUnique({ where: { enrollmentId_curriculumRevisionId_lessonVersionId: { enrollmentId: enrollment.id, curriculumRevisionId: item.curriculumRevisionId, lessonVersionId: item.lessonVersionId } } });
+            let boundary = review ? evidence.reviews.find(r => r.curriculumRevisionId === item.curriculumRevisionId && r.lessonVersionId === item.lessonVersionId)?.lastCompletedAt ?? review.createdAt.toISOString() : null;
             for (const session of sessions) {
                 if (await tx.programReviewEvent.findFirst({ where: { reviewId: review?.id ?? '00000000-0000-4000-8000-000000000000', learningSessionId: session.id } }))
                     continue;
@@ -195,23 +204,20 @@ export class ProgramProgressService {
                     const next = scheduleProgramReview(snapshot.policy, [{ curriculumRevisionId: item.curriculumRevisionId, lessonVersionId: item.lessonVersionId, iteration: 0 }], session.at)[0]!;
                     review = await tx.programReview.create({ data: { enrollmentId: enrollment.id, curriculumRevisionId: item.curriculumRevisionId, lessonVersionId: item.lessonVersionId, scheduleVersion: next.scheduleVersion, iteration: 0, dueAt: new Date(next.dueAt) } });
                     await tx.programReviewEvent.create({ data: { reviewId: review.id, learningSessionId: session.id, revision: 1, type: 'SCHEDULED', nextState: jsonValue(review) } });
+                    boundary = review.createdAt.toISOString();
                 }
                 else {
-                    const last = review.lastCompletedAt ?? review.createdAt;
-                    if (session.at <= last.toISOString())
-                        continue;
-                    const row = await tx.learningSession.findUniqueOrThrow({ where: { id: session.id } });
-                    if (!row.startedAt || row.startedAt < last)
+                    const cycleAttempts = reviewCycleAttempts(attempts, boundary, session.at);
+                    if (!cycleAttempts.some(a => a.sessionId === session.id))
                         continue;
                     const lesson = snapshot.curriculumBindings.find(b => b.curriculumRevisionId === item.curriculumRevisionId)!.lessons.find(l => l.lessonVersionId === item.lessonVersionId)!;
-                    const cycleSessions = new Set((await tx.learningSession.findMany({ where: { id: { in: sessions.map(s => s.id) }, startedAt: { gte: last } }, select: { id: true } })).map(s => s.id));
-                    const cycleAttempts = attempts.filter(a => cycleSessions.has(a.sessionId) && a.completedAt > last.toISOString() && a.completedAt <= session.at);
                     if (new Set(cycleAttempts.map(a => a.activityId)).size / lesson.activityIds.length < snapshot.policy.completion.requiredActivityRatio)
                         continue;
                     const next = scheduleProgramReview(snapshot.policy, [{ curriculumRevisionId: item.curriculumRevisionId, lessonVersionId: item.lessonVersionId, iteration: review.iteration + 1, completedAt: session.at }], session.at)[0]!;
                     const updated = await tx.programReview.update({ where: { id: review.id }, data: { iteration: review.iteration + 1, revision: review.revision + 1, lastCompletedAt: new Date(session.at), dueAt: new Date(next.dueAt) } });
                     await tx.programReviewEvent.create({ data: { reviewId: review.id, learningSessionId: session.id, revision: updated.revision, type: 'COMPLETED', previousState: jsonValue(review), nextState: jsonValue(updated) } });
                     review = updated;
+                    boundary = session.at;
                 }
             }
         }

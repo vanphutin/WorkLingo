@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import type { ActivityAttempt, Prisma } from '@prisma/client';
 import { sessionPlanSchema, type SessionDuration } from '@worklingo/contracts';
 import { parseIeltsTopicManifest } from '@worklingo/content-format';
@@ -22,6 +22,7 @@ export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{
 export interface CreateMissionSessionInput {
   readonly programEnrollmentId?: string; readonly programVersionId?: string; readonly missionTitle?: string;
   readonly completedActivityIds?: readonly string[];
+  readonly availableProgramDurations?: readonly SessionDuration[];
   readonly topicSelection?: 'chosen' | 'random';
   readonly topicDurationFilter?: SessionDuration;
   readonly productivePairPerRespondBlock?: boolean;
@@ -67,6 +68,9 @@ export class SessionCreationService {
       return toLearningSessionDto(existing);
     }
 
+    if (input.availableProgramDurations && !input.availableProgramDurations.includes(input.durationMinutes as SessionDuration)) {
+      throw new UnprocessableEntityException({ code: 'PROGRAM_DURATION_CANNOT_COVER_PENDING_ACTIVITIES', message: 'Choose an available duration to cover the remaining required activities.', availableDurations: input.availableProgramDurations });
+    }
     const planned = planFoundationSession({
       ...(input.completedActivityIds ? {completedActivityIds: input.completedActivityIds} : {}),
       durationMinutes: input.durationMinutes,

@@ -141,8 +141,11 @@ export class LearningSessionsService {
   }
 
   async getAvailability(learnerId: string): Promise<SessionAvailabilityDto> {
-    const { mission } = await this.database.$transaction((tx) => this.selectCurriculum(learnerId, tx), { isolationLevel: 'RepeatableRead' });
-    const availableDurations = computeAvailableDurations(mission);
+    const { mission, planning } = await this.database.$transaction(async tx => {
+      const selected = await this.selectCurriculum(learnerId, tx);
+      return { ...selected, planning: await this.programProgress.planningOptions(tx, learnerId, selected.curriculumRevisionId, selected.mission.lessonVersion.id) };
+    }, { isolationLevel: 'RepeatableRead' });
+    const availableDurations = planning.availableProgramDurations ?? computeAvailableDurations(mission);
     return {
       mission: {
         id: mission.id,
@@ -151,7 +154,7 @@ export class LearningSessionsService {
       lessonVersionId: mission.lessonVersion.id,
       supportedDurations: [...supportedSessionDurations],
       availableDurations: [...availableDurations],
-      defaultDurationMinutes: mission.lessonVersion.intermediateTopic?.durationMinutes ?? 60,
+      defaultDurationMinutes: planning.availableProgramDurations ? (availableDurations.includes(60) ? 60 : availableDurations[0] ?? 60) : mission.lessonVersion.intermediateTopic?.durationMinutes ?? 60,
     };
   }
 

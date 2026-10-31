@@ -56,6 +56,17 @@ describe('R2 exact lessons, review provenance and retained releases', () => {
         const target = { missionId: mission.id, expectedCurriculumRevisionId: revision.id, durationMinutes: 60, clientSessionId: randomUUID() };
         expect((await learner.post('/api/v1/learning-sessions/curriculum').send(target).expect(409)).body.code).toBe('CURRICULUM_LESSON_SELECTION_REQUIRED');
         await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, lessonVersionId: clone.id }).expect(422);
+        const initialProgress = (await learner.get(`${url}/progress`).expect(200)).body;
+        expect(initialProgress.items[0].availableDurations).toContain(60);
+        expect(initialProgress.items[0].availableDurations).not.toContain(45);
+        const availability = (await learner.get('/api/v1/learning-sessions/availability').expect(200)).body;
+        expect(availability.availableDurations).toEqual(initialProgress.items[0].availableDurations);
+        for (const endpoint of ['/api/v1/learning-sessions', '/api/v1/learning-sessions/curriculum']) {
+            const rejected = await learner.post(endpoint).send(endpoint.endsWith('/curriculum')
+                ? { ...target, clientSessionId: randomUUID(), lessonVersionId: original.id, durationMinutes: 45 }
+                : { clientSessionId: randomUUID(), durationMinutes: 45 }).expect(422);
+            expect(rejected.body).toMatchObject({ code: 'PROGRAM_DURATION_CANNOT_COVER_PENDING_ACTIVITIES', availableDurations: initialProgress.items[0].availableDurations });
+        }
         const first = (await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, lessonVersionId: original.id }).expect(201)).body;
         await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, lessonVersionId: clone.id }).expect(409);
         const finish = async (session: typeof first) => {
@@ -74,11 +85,14 @@ describe('R2 exact lessons, review provenance and retained releases', () => {
             return attempts;
         };
         const attempts = await finish(first);
+        // An old overlapping session starts during study and finishes after review scheduling.
+        const overlap = (await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, clientSessionId: randomUUID(), lessonVersionId: original.id }).expect(201)).body;
+        await learner.post(`/api/v1/learning-sessions/${overlap.id}/start`).expect(200);
         for (let round = 0; round < 10; round++) {
             const progress = (await learner.get(`${url}/progress`).expect(200)).body;
             if (progress.items[0].completed)
                 break;
-            const extra = (await learner.post('/api/v1/learning-sessions').send({ durationMinutes: 60, clientSessionId: randomUUID() }).expect(201)).body;
+            const extra = (await learner.post('/api/v1/learning-sessions').send({ durationMinutes: progress.items[0].recommendedDurationMinutes, clientSessionId: randomUUID() }).expect(201)).body;
             expect(extra.lessonVersionId).toBe(original.id);
             await finish(extra);
         }
@@ -104,7 +118,14 @@ describe('R2 exact lessons, review provenance and retained releases', () => {
         expect((await learner.get(`/api/v1/attempts/${writing.id}/evaluation`).expect(200)).body.status).toBe('evaluated');
         expect((await learner.get(`${url}/progress`).expect(200)).body.items[0].mastery.status).toBe('PENDING');
         expect(await context.database.masteryEvent.count({ where: { attemptId: writing.id } })).toBe(0);
-        let lastReviewSession = '';
+        await finish(overlap);
+        expect((await learner.get(`${url}/reviews`).expect(200)).body.items[0].iteration).toBe(0);
+        const firstReview = (await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, clientSessionId: randomUUID(), lessonVersionId: original.id }).expect(201)).body;
+        await finish(firstReview);
+        const nextReview = (await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, clientSessionId: randomUUID(), lessonVersionId: original.id }).expect(201)).body;
+        expect(nextReview.plan.blocks.flatMap((b: {activityIds: string[]}) => b.activityIds)).toEqual(overlap.plan.blocks.flatMap((b: {activityIds: string[]}) => b.activityIds));
+        await finish(nextReview);
+        let lastReviewSession = nextReview.id as string;
         for (let round = 0; round < 10; round++) {
             if ((await learner.get(`${url}/reviews`).expect(200)).body.items[0].iteration === 1)
                 break;
