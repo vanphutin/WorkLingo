@@ -1,0 +1,43 @@
+import '@testing-library/jest-dom/vitest';
+import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
+import {afterEach,expect,it,vi} from 'vitest';
+import {ReleasePanel} from './release-panel';
+import {ProgramPlatformClient} from '../../lib/api/program-platform-client';
+import {ApiError} from '../../lib/api/api-client';
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+const id='11111111-1111-4111-8111-111111111111';
+export const program={id,slug:'workplace-new',name:'Workplace',description:'Useful English',learningGoal:'Handle requests',proficiencyLabel:'A2',iconKey:'intermediate' as const,displayOrder:5,availabilityStatus:'IN_DEVELOPMENT' as const,revision:1,progressionPolicy:'ACTIVITY_COMPLETION' as const,curriculumRevisionIds:[]};
+const policy={version:1 as const,sequential:{stages:true,units:true,lessons:true},completion:{requiredActivityRatio:1},mastery:{required:false,threshold:0.8,minimumQualifiedAttempts:1},retry:{maxAttempts:3,cooldownMinutes:0},remediation:{enabled:true,afterAttempts:2},review:{scheduleVersion:'program-review-v1' as const,intervalsDays:[1,7,30],requiredForReadiness:false}};
+const binding={curriculumRevisionId:id,pathId:id,levelId:id,missionId:id,order:1,title:'Requests',objectives:['Ask'],required:true,prerequisiteRevisionIds:[],lessons:[{lessonVersionId:id,order:1,title:'Request lesson',objectives:['Ask'],estimatedMinutes:60,difficulty:'A2',activityIds:[id],vocabularyRefs:[],resourceRefs:[]}]};
+const draft={id,programId:id,version:1,revision:3,status:'DRAFT' as const,source:'AUTHORED' as const,capturedAt:'2026-10-01T00:00:00.000Z',createdAt:'2026-10-01T00:00:00.000Z',publishedAt:null,retiredAt:null,title:'Requests release',description:'Requests',objectives:['Ask'],estimatedMinutes:60,difficulty:'A2',supportedLanguages:['en'],audiences:['adult'],policy,curriculumBindings:[binding]};
+it('loads server draft, preserves edits and reuses command key after uncertain stale failure',async()=>{
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[draft],total:1,page:1,limit:25});
+ vi.spyOn(ProgramPlatformClient.prototype,'options').mockResolvedValue({items:[],total:0,page:1,limit:25,vocabularyLibrary:{searchPath:'/api/v1/admin/vocabulary/entries',detailPath:'/api/v1/admin/vocabulary/entries/:id',provenancePath:'/api/v1/admin/vocabulary/entries/:id/provenance'}});
+ vi.spyOn(ProgramPlatformClient.prototype,'preview').mockResolvedValue(draft);
+ const save=vi.spyOn(ProgramPlatformClient.prototype,'save').mockRejectedValue(new ApiError({code:'PROGRAM_VERSION_REVISION_STALE',status:409,message:'Changed'}));
+ render(<ReleasePanel program={program} onProgramChange={vi.fn()}/>);
+ fireEvent.click(await screen.findByRole('button',{name:'Version 1'}));
+ fireEvent.change(await screen.findByLabelText('Title'),{target:{value:'Edited release'}});
+ fireEvent.click(screen.getByRole('button',{name:'Save draft'}));
+ // A stale write retains the exact user payload and key until the author deliberately reloads.
+ expect(await screen.findByRole('alert')).toBeInTheDocument();
+ expect(screen.getByLabelText('Title')).toHaveValue('Edited release');
+ fireEvent.click(screen.getByRole('button',{name:'Save draft'}));
+ await waitFor(()=>expect(save).toHaveBeenCalledTimes(2));
+ expect(save.mock.calls[0]?.[2]).toEqual(save.mock.calls[1]?.[2]);
+ fireEvent.change(screen.getByLabelText('Title'),{target:{value:'Different release'}});
+ fireEvent.click(screen.getByRole('button',{name:'Save draft'}));
+ await waitFor(()=>expect(save).toHaveBeenCalledTimes(3));
+ expect(save.mock.calls[2]?.[2].idempotencyKey).not.toEqual(save.mock.calls[1]?.[2].idempotencyKey);
+});
+it('exposes explicit lifecycle transition on the exact current revision',async()=>{
+ const review={...draft,status:'IN_REVIEW' as const};
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[review],total:1,page:1,limit:25});
+ vi.spyOn(ProgramPlatformClient.prototype,'options').mockResolvedValue({items:[],total:0,page:1,limit:25,vocabularyLibrary:{searchPath:'/api/v1/admin/vocabulary/entries',detailPath:'/api/v1/admin/vocabulary/entries/:id',provenancePath:'/api/v1/admin/vocabulary/entries/:id/provenance'}});
+ vi.spyOn(ProgramPlatformClient.prototype,'preview').mockResolvedValue(review);
+ const transition=vi.spyOn(ProgramPlatformClient.prototype,'transition').mockResolvedValue({...draft,status:'APPROVED'});
+ render(<ReleasePanel program={program} onProgramChange={vi.fn()}/>);
+ fireEvent.click(await screen.findByRole('button',{name:'Version 1'}));
+ fireEvent.click(await screen.findByRole('button',{name:'Approved'}));
+ await waitFor(()=>expect(transition).toHaveBeenCalledWith(id,id,expect.objectContaining({expectedRevision:3,targetStatus:'APPROVED',idempotencyKey:expect.any(String)})));
+});

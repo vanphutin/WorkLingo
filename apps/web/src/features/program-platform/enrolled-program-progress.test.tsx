@@ -1,0 +1,24 @@
+import '@testing-library/jest-dom/vitest';
+import {cleanup,fireEvent,render,screen,within,waitFor} from '@testing-library/react';
+import {afterEach,expect,it,vi} from 'vitest';
+import type {ProgramProgressDto} from '@worklingo/contracts';
+import {EnrolledProgramProgress} from './enrolled-program-progress';
+import {ProgramPlatformClient} from '../../lib/api/program-platform-client';
+const id='11111111-1111-4111-8111-111111111111',date='2026-10-31T03:15:00.000Z';
+vi.mock('next/navigation',()=>({useRouter:()=>({push:vi.fn()})}));
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+it('keeps suspended progress, real review events and paged history readable without mutations',async()=>{
+ const projection:ProgramProgressDto={enrollmentId:id,programVersionId:id,status:'SUSPENDED',engineVersion:'program-progression-v1',policyVersion:1,projectedAt:date,completed:false,ready:false,completionPercentage:25,mastery:{status:'UNKNOWN',score:null,qualifiedAttempts:0},evidenceDimensions:[],stages:[],units:[],items:[],estimatedRemainingMinutes:60,nextAction:{type:'wait',curriculumRevisionId:null,lessonVersionId:null,sessionId:null,reasons:['enrollment_suspended']}};
+ vi.spyOn(ProgramPlatformClient.prototype,'progress').mockResolvedValue(projection);
+ const history=vi.spyOn(ProgramPlatformClient.prototype,'history').mockResolvedValue({items:[{id,revision:4,createdAt:date,projection}],total:26,page:1,limit:25});
+ vi.spyOn(ProgramPlatformClient.prototype,'reviews').mockResolvedValue({items:[{id,enrollmentId:id,curriculumRevisionId:id,lessonVersionId:id,scheduleVersion:'program-review-v1',revision:2,iteration:1,dueAt:date,lastCompletedAt:date,due:true,events:[{id,learningSessionId:id,revision:2,type:'COMPLETED',createdAt:date}]}],total:1,page:1,limit:25});
+ const recalculate=vi.spyOn(ProgramPlatformClient.prototype,'recalculate');
+ render(<EnrolledProgramProgress enrollmentId={id}/>);
+ expect(await screen.findByText(/This enrollment is read-only/)).toBeInTheDocument();
+ expect(screen.queryByRole('button',{name:'Refresh progress'})).not.toBeInTheDocument();expect(screen.queryByRole('button',{name:'Start lesson'})).not.toBeInTheDocument();
+ const reviewSection=screen.getByRole('heading',{name:'Reviews'}).parentElement!;
+ expect(within(reviewSection).getByText(/Completed/)).toBeInTheDocument();
+ const historySection=screen.getByRole('heading',{name:'History'}).parentElement!;
+ expect(within(historySection).getByText(/Revision 4/)).toBeInTheDocument();fireEvent.click(within(historySection).getByRole('button',{name:'Next page'}));
+ await waitFor(()=>expect(history).toHaveBeenCalledWith(id,{page:2,limit:25}));expect(recalculate).not.toHaveBeenCalled();
+});

@@ -1,0 +1,20 @@
+import '@testing-library/jest-dom/vitest';
+import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
+import {afterEach,expect,it,vi} from 'vitest';
+import {EnrollmentPanel} from './enrollment-panel';
+import {ProgramPlatformClient} from '../../lib/api/program-platform-client';
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+const id='11111111-1111-4111-8111-111111111111';
+const enrollment={id,learnerId:id,programId:id,programVersionId:id,status:'ACTIVE' as const,revision:4,currentLevelId:null,curriculumRevisionIds:[],createdAt:'2026-10-01T00:00:00.000Z',updatedAt:'2026-10-01T00:00:00.000Z'};
+it('uses enrollment revision for suspension and displays append only history',async()=>{
+ vi.spyOn(ProgramPlatformClient.prototype,'enrollments').mockResolvedValue({items:[enrollment],total:1,page:1,limit:25});
+ vi.spyOn(ProgramPlatformClient.prototype,'versions').mockResolvedValue({items:[],total:0,page:1,limit:25});
+ const transition=vi.spyOn(ProgramPlatformClient.prototype,'enrollmentTransition').mockResolvedValue({...enrollment,status:'SUSPENDED',revision:5});
+ vi.spyOn(ProgramPlatformClient.prototype,'enrollmentHistory').mockResolvedValue({items:[{id,enrollmentId:id,actorId:null,type:'SUSPENDED',reason:'Requested break',revision:5,previousState:{},nextState:{},createdAt:enrollment.createdAt}],total:1,page:1,limit:25});
+ render(<EnrollmentPanel programId={id} revision={2}/>);
+ fireEvent.change(await screen.findByLabelText('Reason for status change'),{target:{value:'Requested break'}});
+ fireEvent.click(await screen.findByRole('button',{name:'Suspended'}));
+ await waitFor(()=>expect(transition).toHaveBeenCalledWith(id,id,expect.objectContaining({expectedRevision:4,targetStatus:'SUSPENDED',reason:'Requested break'})));
+ fireEvent.click(screen.getByRole('button',{name:'History'}));
+ expect(await screen.findByText(/Requested break/)).toBeInTheDocument();
+});

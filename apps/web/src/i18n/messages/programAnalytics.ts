@@ -1,0 +1,26 @@
+export const programAnalyticsMessages={
+ en:{
+  cohort:'Enrollments created in UTC [from,to); cohortStatus is their current status. totalEnrollments includes enrollments created before to. Summary includes unversioned legacy enrollments; release comparisons include pinned enrollments only.',
+  activity:'Distinct learners with a started session or submitted attempt in [from,to), matching enrollment and exact release/curriculum/mission/lesson pins. Planned-only sessions excluded.',
+  completion:'Distinct enrollments with COMPLETED or WITHDRAWN lifecycle events in [from,to), separate from activity coverage and readiness. completionRate divides completed cohort members by cohortEnrollments.',
+  projection:'Latest persisted projection created before to across enrollments created before to. Activity completion and readiness remain separate. Missing projections unknown; persisted observations can lag activity.',
+  skills:'Attempt-skill evidence from latest persisted projection, completed in [from,to), deduplicated by enrollment/attempt/skill. Only qualified evaluated scores contribute to the mean. Dimension states use latest projection; missing dimensions unknown.',
+  retention:'Enrollment-created cohort. Dn activity in [enrollment+n days,enrollment+(n+1) days). Only entire follow-up windows ending by min(to,generatedAt) enter the denominator. Immature enrollments excluded; zero denominator is unknown.',
+  nodes:'Frozen authored Level=stage, Mission=unit and exact lesson version. Latest persisted observations before to. Stage/unit completes when every bound lesson completes, ready when every lesson ready. Unknown observations excluded from completion rate denominator.',
+  review:'Current mutable schedule at generatedAt for selected enrollments created before to; overdue means dueAt <= generatedAt. Not historical backlog at to. Completed event count is historical [from,to).',
+  assessment:'Checkpoint assessment records created in [from,to) bound through exact release sessions. Recorded status counts do not infer mastery or readiness.',
+  comparison:'All selected releases including empty versions paged in ascending version order, with identical metric definitions. Legacy releases without authored nodes/evidence remain unknown.',
+ },
+ vi:{
+  cohort:'Ghi danh được tạo trong [từ, đến) theo UTC; trạng thái nhóm là trạng thái hiện tại. Tổng ghi danh gồm cả ghi danh trước thời điểm đến. Tổng quan gồm chương trình cũ chưa có phiên bản; so sánh phiên bản chỉ gồm ghi danh đã cố định phiên bản.',
+  activity:'Số người học riêng biệt đã bắt đầu buổi học hoặc nộp lần thử trong [từ, đến), khớp chính xác ghi danh, phiên bản, chương trình, nhiệm vụ và bài học. Loại trừ buổi mới chỉ lên kế hoạch.',
+  completion:'Ghi danh riêng biệt có sự kiện hoàn thành hoặc rút trong [từ, đến), tách khỏi độ bao phủ hoạt động và mức sẵn sàng. Tỷ lệ hoàn thành = thành viên nhóm đã hoàn thành / số ghi danh trong nhóm.',
+  projection:'Tiến trình đã lưu mới nhất trước thời điểm đến, của ghi danh tạo trước thời điểm đến. Hoàn thành hoạt động và mức sẵn sàng được tách riêng. Thiếu tiến trình là chưa rõ; dữ liệu đã lưu có thể chậm hơn hoạt động.',
+  skills:'Minh chứng lần thử và kỹ năng từ tiến trình đã lưu mới nhất, hoàn thành trong [từ, đến), không đếm trùng theo ghi danh/lần thử/kỹ năng. Chỉ điểm đã đánh giá đủ điều kiện được tính trung bình. Trạng thái dùng tiến trình mới nhất; thiếu chiều minh chứng là chưa rõ.',
+  retention:'Nhóm theo ngày tạo ghi danh. Hoạt động Dn thuộc [ngày ghi danh+n, ngày ghi danh+n+1). Chỉ các ghi danh đã đủ toàn bộ khoảng theo dõi trước min(đến, thời điểm tạo báo cáo) được tính vào mẫu số. Loại trừ ghi danh chưa đủ thời gian; mẫu số bằng 0 là chưa rõ.',
+  nodes:'Cấp độ đã cố định là giai đoạn, nhiệm vụ là đơn vị, bài học là phiên bản chính xác. Dùng quan sát đã lưu mới nhất trước thời điểm đến. Giai đoạn/đơn vị hoàn thành khi mọi bài hoàn thành, sẵn sàng khi mọi bài sẵn sàng. Loại quan sát chưa rõ khỏi mẫu số tỷ lệ hoàn thành.',
+  review:'Lịch ôn tập hiện tại tại thời điểm tạo báo cáo cho ghi danh tạo trước thời điểm đến; quá hạn khi hạn ôn không sau thời điểm tạo báo cáo. Không phải tồn đọng lịch sử tại thời điểm đến. Số sự kiện hoàn thành thuộc [từ, đến).',
+  assessment:'Bản ghi đánh giá tại điểm kiểm tra được tạo trong [từ, đến), gắn với buổi học thuộc đúng phiên bản. Số lượng theo trạng thái không suy ra năng lực hoặc mức sẵn sàng.',
+  comparison:'Tất cả phiên bản đã chọn, kể cả phiên bản chưa có dữ liệu, phân trang tăng dần theo số phiên bản với cùng định nghĩa chỉ số. Phiên bản cũ thiếu cấu trúc hoặc minh chứng vẫn là chưa rõ.',
+ },
+} as const;

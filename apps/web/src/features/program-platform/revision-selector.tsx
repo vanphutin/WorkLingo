@@ -1,0 +1,10 @@
+'use client';
+import type { ProgramCurriculumBinding } from '@worklingo/contracts';
+import { useT } from '../../i18n/provider';
+import { programPlatformMessages } from '../../i18n/messages/programPlatform';
+export function RevisionSelector({options,value,onChange,disabled=false}:{options:readonly ProgramCurriculumBinding[];value:readonly ProgramCurriculumBinding[];onChange:(value:ProgramCurriculumBinding[])=>void;disabled?:boolean}) {
+ const t=useT('programPlatform',programPlatformMessages);
+ const update=(items:readonly ProgramCurriculumBinding[])=>onChange(items.map((item,index)=>({...item,order:index+1})));
+ const move=(index:number,by:number)=>{const items=[...value];[items[index],items[index+by]]=[items[index+by]!,items[index]!];update(items);};
+ return <section><h3>{t('revisions')}</h3><ul>{options.filter(o=>!value.some(v=>v.curriculumRevisionId===o.curriculumRevisionId)).map(o=><li key={o.curriculumRevisionId}>{o.pathTitle} / {o.levelTitle} / {o.title} <button disabled={disabled} type="button" aria-label={`${t('add')} ${o.title}`} onClick={()=>update([...value,o])}>{t('add')}</button></li>)}</ul><h3>{t('selected')}</h3><ol>{value.map((o,index)=><li key={o.curriculumRevisionId}><strong>{o.pathTitle} / {o.levelTitle} / {o.title}</strong><small>{o.curriculumRevisionId}</small><p>{o.objectives.join(' · ')}</p><p>{t('prerequisites')}: {o.prerequisiteRevisionIds.map(id=>value.find(v=>v.curriculumRevisionId===id)?.title??id).join(', ')||'—'}</p><ul>{o.lessons.map(l=><li key={l.lessonVersionId}>{l.title} · {l.estimatedMinutes} min · {l.objectives.join(' · ')}</li>)}</ul><button type="button" disabled={disabled||index===0} aria-label={`${t('up')} ${o.title}`} onClick={()=>move(index,-1)}>{t('up')}</button><button type="button" disabled={disabled||index===value.length-1} aria-label={`${t('down')} ${o.title}`} onClick={()=>move(index,1)}>{t('down')}</button><button type="button" disabled={disabled} aria-label={`${t('remove')} ${o.title}`} onClick={()=>update(value.filter(v=>v.curriculumRevisionId!==o.curriculumRevisionId))}>{t('remove')}</button></li>)}</ol></section>;
+}
