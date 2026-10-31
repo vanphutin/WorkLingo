@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { learningProgramIconKeySchema } from './learning-program.contracts.ts';
 
 const uuid = z.uuid().transform(value => value.toLowerCase());
 const text = z.string().trim().min(1).max(200);
@@ -49,6 +50,7 @@ const snapshot = {
   title: text, description: z.string().trim().min(1).max(4000), objectives,
   estimatedMinutes: z.number().int().min(1).max(1000000), difficulty: text,
   supportedLanguages: uniqueText(20).default(['en']), audiences: uniqueText(50).default(['adult']), proficiencyLabel: text.optional(),
+  catalogMetadata: z.object({ iconKey: learningProgramIconKeySchema, displayOrder: z.number().int().min(1).max(100000) }).strict().optional(),
   policy: programPolicySchema, curriculumBindings: z.array(programCurriculumBindingSchema).min(1).max(500),
 };
 export const programVersionInputSchema = z.object(snapshot).strict().superRefine((value, ctx) => {

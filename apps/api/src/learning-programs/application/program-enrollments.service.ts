@@ -52,7 +52,7 @@ export class ProgramEnrollmentsService {
       const target = await tx.learnerProgramEnrollment.findUnique({ where: { id: enrollmentId } });
       if (!target || target.programId !== programId || (owned && target.learnerId !== actorId)) throw new NotFoundException('Enrollment not found');
       if (owned && input.targetStatus !== 'WITHDRAWN') throw new ForbiddenException('PROGRAM_FORBIDDEN');
-      await this.lockLearner(tx, target.learnerId);
+      await this.lockLearnerRows(tx, target.learnerId);
       await lockProgram(tx, programId);
       await tx.$queryRaw`SELECT "id" FROM "LearnerProgramEnrollment" WHERE "id"=${enrollmentId}::uuid FOR UPDATE`;
       const current = await tx.learnerProgramEnrollment.findUniqueOrThrow({ where: { id: enrollmentId } });
@@ -102,11 +102,14 @@ export class ProgramEnrollmentsService {
       return enrollmentHistorySchema.parse({ items: items.map(item => ({ ...item, createdAt: item.createdAt.toISOString() })), total, page: page.page, limit: page.limit });
     });
   }
-  private async lockLearner(tx: Prisma.TransactionClient, learnerId: string) {
+  private async lockLearnerRows(tx: Prisma.TransactionClient, learnerId: string) {
     await tx.$queryRaw`SELECT "id" FROM "User" WHERE "id"=${learnerId}::uuid FOR UPDATE`;
+    await tx.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId"=${learnerId}::uuid FOR UPDATE`;
+  }
+  private async lockLearner(tx: Prisma.TransactionClient, learnerId: string) {
+    await this.lockLearnerRows(tx, learnerId);
     const learner = await tx.user.findUnique({ where: { id: learnerId } });
     if (!learner || learner.role !== 'LEARNER' || learner.status !== 'ACTIVE') throw new UnprocessableEntityException('PROGRAM_LEARNER_INELIGIBLE');
-    await tx.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId"=${learnerId}::uuid FOR UPDATE`;
     const profile = await tx.learnerProfile.findUnique({ where: { userId: learnerId } });
     if (!profile || profile.onboardingStatus !== 'COMPLETE') throw new ConflictException('ONBOARDING_REQUIRED');
     return profile;

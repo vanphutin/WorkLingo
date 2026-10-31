@@ -8,6 +8,7 @@ import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { ieltsBetaFixture } from '../../src/learning-programs/application/__fixtures__/ielts-beta.js';
 import { LearningProgramsService } from '../../src/learning-programs/application/learning-programs.service.js';
 import { ProgramContextService } from '../../src/learning-programs/application/program-context.service.js';
+import { ProgramEnrollmentsService } from '../../src/learning-programs/application/program-enrollments.service.js';
 import { LearningProgramsController } from '../../src/learning-programs/learning-programs.controller.js';
 import { ProgramContextController } from '../../src/learning-programs/program-context.controller.js';
 
@@ -25,12 +26,14 @@ describe('IELTS Beta catalog and context integration', () => {
     const tx = {
       ...fixture.database,
       $queryRaw: vi.fn(async () => []),
+      user: { findUnique: vi.fn(async () => ({ id: state.profile.userId, role: 'LEARNER', status: 'ACTIVE' })) },
       learnerProfile: {
         findUnique: vi.fn(async () => state.profile),
         update: vi.fn(async ({ data }) => Object.assign(state.profile, data)),
       },
       learnerProgramEnrollment: {
         findUnique: vi.fn(async () => state.enrollment),
+        findUniqueOrThrow: vi.fn(async () => state.enrollment),
         update: vi.fn(async ({ data }) => Object.assign(state.enrollment, data)),
       },
       auditLog: { create: vi.fn(async (input) => { state.audits.push(input); return input; }) },
@@ -41,7 +44,7 @@ describe('IELTS Beta catalog and context integration', () => {
     };
     const module = await Test.createTestingModule({
       controllers: [LearningProgramsController, ProgramContextController],
-      providers: [LearningProgramsService, ProgramContextService, { provide: PrismaService, useValue: {
+      providers: [LearningProgramsService, ProgramContextService, ProgramEnrollmentsService, { provide: PrismaService, useValue: {
         ...tx, $transaction: async (callback: (database: typeof tx) => unknown) => callback(tx),
       } }],
     }).compile();
@@ -101,7 +104,7 @@ function learnerState() {
   const activeProgram = { id: randomUUID(), slug: 'intermediate', name: 'Intermediate', availabilityStatus: 'AVAILABLE' };
   return {
     profile: { userId: randomUUID(), onboardingStatus: 'COMPLETE', activeProgramId: activeProgram.id, activeProgram },
-    enrollment: { id: randomUUID(), revision: 7, currentLevel: {
+    enrollment: { id: randomUUID(), revision: 7, status: 'ACTIVE', currentLevel: {
       id: randomUUID(), code: 'FOUNDATION_3', name: 'Foundation 3', path: { programId: activeProgram.id },
     } },
     evidence: { checkpoint: { status: 'passed', canAdvance: true }, foundation: { completed: true },

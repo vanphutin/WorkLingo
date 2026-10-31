@@ -1,6 +1,6 @@
 import { UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
-import { curriculumDefinitionInputSchema, programVersionInputSchema, type ProgramPolicy, type ProgramVersionInput } from '@worklingo/contracts';
+import { curriculumDefinitionInputSchema, learningProgramIconKeySchema, programVersionInputSchema, type ProgramPolicy, type ProgramVersionInput } from '@worklingo/contracts';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import { requireVocabularySenses } from '../../vocabulary/vocabulary-library.service.js';
 
@@ -26,7 +26,7 @@ export async function captureProgramSnapshot(tx: Prisma.TransactionClient, progr
       return { lessonVersionId: pin.lessonVersionId, order: lessonIndex + 1, title: lesson.data.title, objectives: definition.data.objectives.filter(item => item.evidence.some(evidence => evidence.lessonVersionId === pin.lessonVersionId)).map(item => item.statement), estimatedMinutes: 45, difficulty: program.proficiencyLabel, activityIds: lesson.data.activities.map(item => item.id), vocabularyRefs: [], resourceRefs: [] };
     }) };
   });
-  const snapshot = { title: program.name, description: program.description, objectives: bindings.flatMap(binding => binding.objectives), estimatedMinutes: bindings.reduce((sum, binding) => sum + binding.lessons.reduce((minutes, lesson) => minutes + lesson.estimatedMinutes, 0), 0), difficulty: program.proficiencyLabel, proficiencyLabel: program.proficiencyLabel, supportedLanguages: ['en'], audiences: ['adult'], policy: defaultProgramPolicy, curriculumBindings: bindings };
+  const snapshot = { title: program.name, description: program.description, objectives: bindings.flatMap(binding => binding.objectives), estimatedMinutes: bindings.reduce((sum, binding) => sum + binding.lessons.reduce((minutes, lesson) => minutes + lesson.estimatedMinutes, 0), 0), difficulty: program.proficiencyLabel, proficiencyLabel: program.proficiencyLabel, supportedLanguages: ['en'], audiences: ['adult'], catalogMetadata: { iconKey: learningProgramIconKeySchema.parse(program.iconKey), displayOrder: program.displayOrder }, policy: defaultProgramPolicy, curriculumBindings: bindings };
   return validate ? validateProgramSnapshot(tx, programId, snapshot) : snapshot;
 }
 export async function validateProgramSnapshot(tx: Prisma.TransactionClient, programId: string, raw: unknown): Promise<ProgramVersionInput> {
@@ -66,5 +66,7 @@ export async function validateProgramSnapshot(tx: Prisma.TransactionClient, prog
       if (objective.required) for (const skill of objective.skills) if (!objective.evidence.some(evidence => snapshots.get(evidence.lessonVersionId)?.activities.some(activity => activity.slug === evidence.activitySlug && activity.skills.includes(skill)))) fail();
     }
   }
-  return content;
+  const program = await tx.learningProgram.findUniqueOrThrow({ where: { id: programId } });
+  // Presentation metadata is captured from the locked authoring program, never caller overrides.
+  return programVersionInputSchema.parse({ ...content, catalogMetadata: { iconKey: program.iconKey, displayOrder: program.displayOrder } });
 }

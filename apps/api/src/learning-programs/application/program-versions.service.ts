@@ -40,9 +40,9 @@ export class ProgramVersionsService {
     const input = parseProgramInput(programVersionCommandSchema, raw);
     return programCommand(this.database, actorId, 'versions.create', input.idempotencyKey, { programId, input }, async tx => {
       const program = await lockProgram(tx, programId, input.expectedRevision);
-      await validateProgramSnapshot(tx, programId, input.content);
+      const content = await validateProgramSnapshot(tx, programId, input.content);
       const latest = await tx.programVersion.aggregate({ where: { programId }, _max: { version: true } });
-      const row = await tx.programVersion.create({ data: { programId, version: (latest._max.version ?? 0) + 1, snapshot: jsonValue(input.content), policy: jsonValue(input.content.policy), curriculumRevisionIds: input.content.curriculumBindings.map(binding => binding.curriculumRevisionId), curricula: { create: input.content.curriculumBindings.map(binding => ({ curriculumRevisionId: binding.curriculumRevisionId, order: binding.order })) } } });
+      const row = await tx.programVersion.create({ data: { programId, version: (latest._max.version ?? 0) + 1, snapshot: jsonValue(content), policy: jsonValue(content.policy), curriculumRevisionIds: content.curriculumBindings.map(binding => binding.curriculumRevisionId), curricula: { create: content.curriculumBindings.map(binding => ({ curriculumRevisionId: binding.curriculumRevisionId, order: binding.order })) } } });
       await programAudit(tx, actorId, 'program.versions.created', 'ProgramVersion', row.id, { programId, revision: row.revision, expectedProgramRevision: program.revision });
       return programVersionDto(row);
     });
@@ -56,8 +56,8 @@ export class ProgramVersionsService {
       if (!current || current.programId !== programId) throw new NotFoundException('Program version not found');
       if (current.status !== 'DRAFT') throw new ConflictException('PROGRAM_VERSION_IMMUTABLE');
       if (current.revision !== input.expectedRevision) throw new ConflictException('PROGRAM_VERSION_REVISION_STALE');
-      await validateProgramSnapshot(tx, programId, input.content);
-      const row = await tx.programVersion.update({ where: { id: versionId }, data: { snapshot: jsonValue(input.content), policy: jsonValue(input.content.policy), curriculumRevisionIds: input.content.curriculumBindings.map(binding => binding.curriculumRevisionId), revision: { increment: 1 }, curricula: { deleteMany: {}, create: input.content.curriculumBindings.map(binding => ({ curriculumRevisionId: binding.curriculumRevisionId, order: binding.order })) } } });
+      const content = await validateProgramSnapshot(tx, programId, input.content);
+      const row = await tx.programVersion.update({ where: { id: versionId }, data: { snapshot: jsonValue(content), policy: jsonValue(content.policy), curriculumRevisionIds: content.curriculumBindings.map(binding => binding.curriculumRevisionId), revision: { increment: 1 }, curricula: { deleteMany: {}, create: content.curriculumBindings.map(binding => ({ curriculumRevisionId: binding.curriculumRevisionId, order: binding.order })) } } });
       await programAudit(tx, actorId, 'program.versions.updated', 'ProgramVersion', row.id, { previousRevision: current.revision, revision: row.revision });
       return programVersionDto(row);
     });
@@ -71,8 +71,8 @@ export class ProgramVersionsService {
       if (!current || current.programId !== programId) throw new NotFoundException('Program version not found');
       if (current.revision !== input.expectedRevision) throw new ConflictException('PROGRAM_VERSION_REVISION_STALE');
       if (!lifecycle[current.status]?.includes(input.targetStatus)) throw new ConflictException('PROGRAM_VERSION_INVALID_TRANSITION');
-      if (input.targetStatus === 'PUBLISHED') await validateProgramSnapshot(tx, programId, current.snapshot);
-      const row = await tx.programVersion.update({ where: { id: versionId }, data: { status: input.targetStatus as ProgramVersionStatus, ...(input.targetStatus === 'RETIRED' ? { retiredAt: new Date() } : { revision: { increment: 1 } }), ...(input.targetStatus === 'PUBLISHED' ? { publishedAt: new Date() } : {}) } });
+      const publishedContent = input.targetStatus === 'PUBLISHED' ? await validateProgramSnapshot(tx, programId, current.snapshot) : null;
+      const row = await tx.programVersion.update({ where: { id: versionId }, data: { status: input.targetStatus as ProgramVersionStatus, ...(input.targetStatus === 'RETIRED' ? { retiredAt: new Date() } : { revision: { increment: 1 } }), ...(input.targetStatus === 'PUBLISHED' ? { publishedAt: new Date(), snapshot: jsonValue(publishedContent!) } : {}) } });
       if (input.targetStatus === 'PUBLISHED') {
         const selected = await tx.programVersion.findFirstOrThrow({ where: { programId, status: 'PUBLISHED', source: 'AUTHORED' }, orderBy: { version: 'desc' } });
         await tx.learningProgram.update({ where: { id: programId }, data: { availabilityStatus: 'AVAILABLE', curriculumRevisionIds: selected.curriculumRevisionIds, revision: { increment: 1 } } });
@@ -105,7 +105,7 @@ export class ProgramVersionsService {
       const source = await tx.programVersion.findUnique({ where: { id: input.sourceVersionId } });
       if (!source || source.programId !== programId || source.source === 'LEGACY_PIN_BACKFILL' || !['PUBLISHED', 'RETIRED'].includes(source.status)) throw new UnprocessableEntityException('PROGRAM_VERSION_INVALID_SOURCE');
       const latest = await tx.programVersion.aggregate({ where: { programId }, _max: { version: true } });
-      const row = await tx.programVersion.create({ data: { programId, version: (latest._max.version ?? 0) + 1, snapshot: source.snapshot as Prisma.InputJsonValue, policy: source.policy as Prisma.InputJsonValue, curriculumRevisionIds: source.curriculumRevisionIds, curricula: { create: source.curriculumRevisionIds.map((id, index) => ({ curriculumRevisionId: id, order: index + 1 })) } } });
+      const row = await tx.programVersion.create({ data: { programId, version: (latest._max.version ?? 0) + 1, snapshot: jsonValue(programVersionInputSchema.parse({ ...(source.snapshot as object), catalogMetadata: { iconKey: program.iconKey, displayOrder: program.displayOrder } })), policy: source.policy as Prisma.InputJsonValue, curriculumRevisionIds: source.curriculumRevisionIds, curricula: { create: source.curriculumRevisionIds.map((id, index) => ({ curriculumRevisionId: id, order: index + 1 })) } } });
       await programAudit(tx, actorId, 'program.rollback.created', 'ProgramVersion', row.id, { sourceVersionId: source.id, sourceStatus: source.status, programRevision: program.revision });
       return programVersionDto(row);
     });
@@ -137,6 +137,7 @@ export class ProgramVersionsService {
         binding.pathId = paths.get(originalPath.id)!; binding.levelId = levels.get(originalLevel.id)!; binding.missionId = mission.id; binding.curriculumRevisionId = revisionIds.get(revision.id)!; binding.prerequisiteRevisionIds = definition.prerequisiteRevisionIds;
       }
       snapshot.title = input.name;
+      snapshot.catalogMetadata = programVersionInputSchema.parse({ ...snapshot, catalogMetadata: { iconKey: created.iconKey, displayOrder: created.displayOrder } }).catalogMetadata!;
       const draft = await tx.programVersion.create({ data: { programId: created.id, version: 1, snapshot: jsonValue(snapshot), policy: jsonValue(snapshot.policy), curriculumRevisionIds: snapshot.curriculumBindings.map(binding => binding.curriculumRevisionId), curricula: { create: snapshot.curriculumBindings.map(binding => ({ curriculumRevisionId: binding.curriculumRevisionId, order: binding.order })) } } });
       await programAudit(tx, actorId, 'program.duplicated', 'LearningProgram', created.id, { sourceProgramId, sourceVersionId: sourceVersion.id, sourceRevision: source.revision, targetVersionId: draft.id, hierarchy: { paths: Object.fromEntries(paths), levels: Object.fromEntries(levels), missions: Object.fromEntries(missions), curriculumRevisions: Object.fromEntries(revisionIds) } });
       return programDto(created);

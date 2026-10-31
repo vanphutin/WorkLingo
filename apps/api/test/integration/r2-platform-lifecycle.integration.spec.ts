@@ -225,4 +225,46 @@ describe('R2 platform release lifecycle and enrollment API', () => {
     const program = await context.database.learningProgram.findUniqueOrThrow({ where: { id: programId } });
     expect((await learner.get('/api/v1/learning-programs').expect(200)).body.programs.find((row: { slug: string }) => row.slug === program.slug).isSelectable).toBe(false);
   });
+
+  it.each(['DISABLED', 'PENDING'] as const)('manages existing pinned enrollments when target eligibility becomes %s', async state => {
+    const { programId, release, content } = await publishFixture();
+    const email = `transition-${randomUUID()}@example.test`;
+    await registerLearner(context.app, { email, displayName: 'Existing enrolled learner' });
+    const target = await context.database.user.findUniqueOrThrow({ where: { email } });
+    const base = `/api/v1/admin/learning-programs/${programId}/enrollments`;
+    const assignment = { learnerId: target.id, programVersionId: release.id, expectedRevision: 2, idempotencyKey: randomUUID() };
+    let enrollment = (await admin.post(base).send(assignment).expect(201)).body;
+    if (state === 'DISABLED') await context.database.user.update({ where: { id: target.id }, data: { status: 'DISABLED' } });
+    else await context.database.learnerProfile.update({ where: { userId: target.id }, data: { onboardingStatus: 'PENDING' } });
+    await admin.post(base).send({ ...assignment, idempotencyKey: randomUUID() }).expect(state === 'DISABLED' ? 422 : 409);
+    for (const targetStatus of ['SUSPENDED', 'ACTIVE', 'WITHDRAWN', 'ACTIVE']) {
+      enrollment = (await admin.post(`${base}/${enrollment.id}/transition`).send({ targetStatus, expectedRevision: enrollment.revision, reason: 'Admin manages existing enrollment', idempotencyKey: randomUUID() }).expect(200)).body;
+      expect(enrollment).toMatchObject({ status: targetStatus, programVersionId: release.id, curriculumRevisionIds: [content.curriculumBindings[0]!.curriculumRevisionId] });
+    }
+    expect((await admin.get(`${base}/${enrollment.id}/history`).expect(200)).body.items.map((row: { type: string }) => row.type)).toEqual(['ASSIGNED', 'SUSPENDED', 'ACTIVE', 'WITHDRAWN', 'ACTIVE']);
+  });
+
+  it('captures catalog metadata from the locked program instead of caller overrides at draft save and publication', async () => {
+    const { programId, content } = await fixture();
+    const base = `/api/v1/admin/learning-programs/${programId}`;
+    const spoofed = { ...content, catalogMetadata: { iconKey: 'toeic', displayOrder: 1 } };
+    let release = (await admin.post(`${base}/versions`).send({ content: spoofed, expectedRevision: 1, idempotencyKey: randomUUID() }).expect(201)).body;
+    expect(release.catalogMetadata.iconKey).toBe('intermediate');
+    const program = await context.database.learningProgram.findUniqueOrThrow({ where: { id: programId } });
+    expect(release.catalogMetadata.displayOrder).toBe(program.displayOrder);
+    release = (await admin.put(`${base}/versions/${release.id}`).send({ content: spoofed, expectedRevision: release.revision, idempotencyKey: randomUUID() }).expect(200)).body;
+    expect(release.catalogMetadata).toEqual({ iconKey: 'intermediate', displayOrder: program.displayOrder });
+    await admin.put(base).send({ name: program.name, description: program.description, learningGoal: program.learningGoal, proficiencyLabel: program.proficiencyLabel, iconKey: 'toeic', displayOrder: program.displayOrder + 1000, expectedRevision: 1, idempotencyKey: randomUUID() }).expect(200);
+    for (const targetStatus of ['IN_REVIEW', 'APPROVED', 'PUBLISHED']) release = (await admin.post(`${base}/versions/${release.id}/transition`).send({ targetStatus, expectedRevision: release.revision, idempotencyKey: randomUUID() }).expect(200)).body;
+    expect(release.catalogMetadata).toEqual({ iconKey: 'toeic', displayOrder: program.displayOrder + 1000 });
+  });
+
+  it('keeps release presentation immutable after optional-label publication and authoring hierarchy edits', async () => {
+    const { programId, content } = await publishFixture();
+    const program = await context.database.learningProgram.findUniqueOrThrow({ where: { id: programId } });
+    await admin.put(`/api/v1/admin/learning-programs/${programId}`).send({ name: program.name, description: program.description, learningGoal: program.learningGoal, proficiencyLabel: 'Unpublished authoring label', iconKey: 'toeic', displayOrder: program.displayOrder, expectedRevision: 2, idempotencyKey: randomUUID() }).expect(200);
+    await context.database.learningPath.update({ where: { id: content.curriculumBindings[0]!.pathId }, data: { status: 'ARCHIVED' } });
+    const published = (await learner.get('/api/v1/learning-programs').expect(200)).body.programs.find((row: { slug: string }) => row.slug === program.slug);
+    expect(published).toMatchObject({ proficiencyLabel: content.difficulty, iconKey: 'intermediate', publishedPathCount: 1, publishedLevelCount: 1 });
+  });
 });

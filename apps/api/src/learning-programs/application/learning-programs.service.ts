@@ -20,6 +20,7 @@ export class LearningProgramsService {
     try {
       return await this.database.$transaction(async (database) => {
         const rows = await database.learningProgram.findMany({
+          // Catalog placement is global merchandising; authored release presentation stays snapshot-bound.
           orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }],
           select: {
             availabilityStatus: true,
@@ -64,15 +65,15 @@ export class LearningProgramsService {
             }),
             availabilityStatus: row.availabilityStatus,
             description: release?.description ?? row.description,
-            iconKey: row.iconKey,
+            iconKey: release ? release.catalogMetadata?.iconKey ?? 'intermediate' : row.iconKey,
             learningGoal: release?.objectives.join(' ') ?? row.learningGoal,
             name: release?.title ?? row.name,
-            proficiencyLabel: release?.proficiencyLabel ?? row.proficiencyLabel,
-            publishedLevelCount: row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.reduce(
+            proficiencyLabel: release ? release.proficiencyLabel ?? release.difficulty : row.proficiencyLabel,
+            publishedLevelCount: release ? new Set(release.curriculumBindings.map(binding => binding.levelId)).size : row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.reduce(
               (count, path) => count + path.levels.length,
               0,
             ),
-            publishedPathCount: row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.length,
+            publishedPathCount: release ? new Set(release.curriculumBindings.map(binding => binding.pathId)).size : row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.length,
             slug: row.slug,
           }); }),
         });
