@@ -265,4 +265,21 @@ describe('R2 platform release lifecycle and enrollment API', () => {
     const published = (await learner.get('/api/v1/learning-programs').expect(200)).body.programs.find((row: { slug: string }) => row.slug === program.slug);
     expect(published).toMatchObject({ proficiencyLabel: content.difficulty, iconKey: 'intermediate', publishedPathCount: 1, publishedLevelCount: 1 });
   });
+  it('returns safe pinned display metadata after retirement and archive with no answer payload', async () => {
+    const {programId,release}=await publishFixture();
+    const base=`/api/v1/admin/learning-programs/${programId}`;
+    const enrollment=(await admin.post(`${base}/enrollments`).send({learnerId,programVersionId:release.id,expectedRevision:2,idempotencyKey:randomUUID()}).expect(201)).body;
+    const catalog=(await learner.get('/api/v1/learning-programs').expect(200)).body.programs.find((p:{id:string})=>p.id===programId);
+    expect(catalog.currentRelease).toMatchObject({id:release.id,version:1,title:'Release course',objectives:['Use workplace English']});
+    expect(catalog.currentRelease).not.toHaveProperty('curriculumBindings');
+    await admin.post(`${base}/versions/${release.id}/transition`).send({targetStatus:'RETIRED',expectedRevision:release.revision,idempotencyKey:randomUUID()}).expect(200);
+    await admin.post(`${base}/archive`).send({expectedRevision:2,idempotencyKey:randomUUID()}).expect(200);
+    const owned=(await learner.get('/api/v1/me/program-enrollments').expect(200)).body.items.find((row:{id:string})=>row.id===enrollment.id);
+    expect(owned.display).toMatchObject({programName:'Release course',release:{id:release.id,version:1,source:'AUTHORED',status:'RETIRED',title:'Release course'}});
+    expect(owned.display.release).not.toHaveProperty('curriculumBindings');
+    expect(owned.display.release).not.toHaveProperty('activities');
+    const other=await registerLearner(context.app,{email:`private-${randomUUID()}@example.test`,displayName:'Other'});
+    expect((await other.get('/api/v1/me/program-enrollments').expect(200)).body.items.some((row:{id:string})=>row.id===enrollment.id)).toBe(false);
+  });
+
 });

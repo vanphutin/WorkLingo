@@ -1,3 +1,4 @@
+import {releaseDisplay} from './program-display.js';
 import { ProgramProgressService } from './program-progress.service.js';
 import { ConflictException, ForbiddenException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma, LearnerProgramEnrollment } from '@prisma/client';
@@ -91,8 +92,8 @@ export class ProgramEnrollmentsService {
       await requireProgramActor(tx, actorId, !owned);
       const where = owned ? { learnerId: actorId } : { programId: programId! };
       if (!owned) await lockProgram(tx, programId!);
-      const [items, total] = await Promise.all([tx.learnerProgramEnrollment.findMany({ where, orderBy: [{ createdAt: 'asc' }, { id: 'asc' }], skip: (page.page - 1) * page.limit, take: page.limit }), tx.learnerProgramEnrollment.count({ where })]);
-      return programEnrollmentListSchema.parse({ items: items.map(enrollmentDto), total, page: page.page, limit: page.limit });
+      const [items, total] = await Promise.all([tx.learnerProgramEnrollment.findMany({ where, orderBy: [{ createdAt: 'asc' }, { id: 'asc' }], skip: (page.page - 1) * page.limit, take: page.limit, include:{program:{select:{slug:true,name:true}},programVersion:true} }), tx.learnerProgramEnrollment.count({ where })]);
+      return programEnrollmentListSchema.parse({ items: items.map(row=>({...enrollmentDto(row),display:{programSlug:row.program.slug,programName:row.program.name,release:row.programVersion?releaseDisplay(row.programVersion):null}})), total, page: page.page, limit: page.limit });
     });
   }
   async history(actorId: string, programId: string, enrollmentId: string, raw: unknown = {}, owned = false) {

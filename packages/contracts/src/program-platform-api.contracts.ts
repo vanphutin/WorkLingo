@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import {programEnrollmentDisplaySchema} from './learning-program.contracts.ts';
 import { programCurriculumBindingSchema, programVersionInputSchema, programVersionSchema, programVersionStatusSchema, programEnrollmentStatusSchema } from './program-platform.contracts.ts';
 import { createProgramSchema } from './program-progression.contracts.ts';
 const uuid = z.uuid().transform(value => value.toLowerCase());
@@ -16,7 +17,7 @@ const legacyVersionSchema = z.object({ id: uuid, programId: uuid, version: z.num
 export const programVersionResponseSchema = z.union([programVersionSchema.safeExtend({ source: z.literal('AUTHORED') }), legacyVersionSchema]);
 export const programVersionListSchema = z.object({ items: z.array(programVersionResponseSchema).max(100), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().min(1).max(100) }).strict();
 export const programAuthoringOptionsSchema = z.object({ items: z.array(programCurriculumBindingSchema).max(100), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().min(1).max(100), vocabularyLibrary: z.object({ searchPath: z.literal('/api/v1/admin/vocabulary/entries'), detailPath: z.literal('/api/v1/admin/vocabulary/entries/:id'), provenancePath: z.literal('/api/v1/admin/vocabulary/entries/:id/provenance') }).strict() }).strict();
-export const programEnrollmentSchema = z.object({ id: uuid, learnerId: uuid, programId: uuid, programVersionId: uuid.nullable(), status: programEnrollmentStatusSchema, revision: z.number().int().positive(), currentLevelId: uuid.nullable(), curriculumRevisionIds: z.array(uuid).max(500), createdAt: z.iso.datetime(), updatedAt: z.iso.datetime() }).strict();
+export const programEnrollmentSchema = z.object({ display:programEnrollmentDisplaySchema.optional(), id: uuid, learnerId: uuid, programId: uuid, programVersionId: uuid.nullable(), status: programEnrollmentStatusSchema, revision: z.number().int().positive(), currentLevelId: uuid.nullable(), curriculumRevisionIds: z.array(uuid).max(500), createdAt: z.iso.datetime(), updatedAt: z.iso.datetime() }).strict();
 export const programEnrollmentListSchema = z.object({ items: z.array(programEnrollmentSchema).max(100), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().min(1).max(100) }).strict();
 export const enrollmentHistorySchema = z.object({ items: z.array(z.object({ id: uuid, enrollmentId: uuid, actorId: uuid.nullable(), type: z.string(), reason: z.string(), revision: z.number().int().positive(), previousState: z.unknown(), nextState: z.unknown(), createdAt: z.iso.datetime() }).strict()).max(100), total: z.number().int().nonnegative(), page: z.number().int().positive(), limit: z.number().int().min(1).max(100) }).strict();
 export type ProgramEnrollmentDto = z.infer<typeof programEnrollmentSchema>;

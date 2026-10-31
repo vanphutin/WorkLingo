@@ -19,8 +19,17 @@ export const learningProgramIconKeySchema = z.enum([
 ]);
 export type LearningProgramIconKeyDto = z.infer<typeof learningProgramIconKeySchema>;
 
+/** Safe presentation projection: never includes assessment answers, rubrics or activity payloads. */
+export const programReleaseDisplaySchema = z.object({
+  id:z.uuid(),version:z.number().int().positive(),source:z.enum(['AUTHORED','LEGACY_PIN_BACKFILL']),status:z.enum(['DRAFT','IN_REVIEW','APPROVED','PUBLISHED','RETIRED']),
+  title:z.string(),description:z.string().optional(),objectives:z.array(z.string()).optional(),difficulty:z.string().optional(),estimatedMinutes:z.number().nonnegative().optional(),supportedLanguages:z.array(z.string()).optional(),audiences:z.array(z.string()).optional(),
+}).strict();
+export const programEnrollmentDisplaySchema=z.object({programSlug:z.string(),programName:z.string(),release:programReleaseDisplaySchema.nullable()}).strict();
+
 export const learningProgramCatalogItemSchema = z
   .object({
+    id: z.uuid().optional(),
+    currentRelease: programReleaseDisplaySchema.nullable().optional(),
     availabilityStatus: learningProgramAvailabilityStatusSchema,
     description: z.string().min(1),
     destination: z.enum(['/dashboard', '/ielts']).nullable(),

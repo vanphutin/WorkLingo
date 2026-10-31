@@ -1,3 +1,4 @@
+import {releaseDisplay} from './program-display.js';
 import { Inject, Injectable, Optional, ServiceUnavailableException } from '@nestjs/common';
 import {
   programVersionInputSchema,
@@ -23,6 +24,7 @@ export class LearningProgramsService {
           // Catalog placement is global merchandising; authored release presentation stays snapshot-bound.
           orderBy: [{ displayOrder: 'asc' }, { id: 'asc' }],
           select: {
+            id: true,
             availabilityStatus: true,
             progressionPolicy: true,
             curriculumRevisionIds: true,
@@ -40,7 +42,7 @@ export class LearningProgramsService {
               where: { status: 'PUBLISHED' },
             },
             proficiencyLabel: true,
-            versions: { where: { status: 'PUBLISHED', source: 'AUTHORED' }, orderBy: { version: 'desc' }, take: 1, select: { snapshot: true, curriculumRevisionIds: true } },
+            versions: { where: { status: 'PUBLISHED', source: 'AUTHORED' }, orderBy: { version: 'desc' }, take: 1, select: { id:true,version:true,source:true,status:true,snapshot: true, curriculumRevisionIds: true } },
             _count: { select: { versions: true } },
             slug: true,
           },
@@ -63,6 +65,8 @@ export class LearningProgramsService {
               progressionPolicy: row.progressionPolicy,
               curriculumRevisionIds: selected?.curriculumRevisionIds ?? (row._count?.versions ? [] : row.curriculumRevisionIds),
             }),
+            ...(row.id?{id:row.id}:{}),
+            ...(selected?{currentRelease:releaseDisplay(selected)}:{}),
             availabilityStatus: row.availabilityStatus,
             description: release?.description ?? row.description,
             iconKey: release ? release.catalogMetadata?.iconKey ?? 'intermediate' : row.iconKey,
