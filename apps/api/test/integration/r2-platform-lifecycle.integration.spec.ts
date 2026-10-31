@@ -205,11 +205,9 @@ describe('R2 platform release lifecycle and enrollment API', () => {
     await admin.post(`${base}/${assigned.id}/transition`).send({ targetStatus: 'COMPLETED', expectedRevision: resumed.revision, reason: 'Missing required evidence', idempotencyKey: randomUUID() }).expect(422);
     await context.database.curriculumCompletion.create({ data: { enrollmentId: assigned.id, curriculumRevisionId: content.curriculumBindings[0]!.curriculumRevisionId, policyVersion: 'curriculum-activity-completion-v1', evidenceSnapshot: { fixture: 'required completion evidence' } } });
     const completeInput = { targetStatus: 'COMPLETED', expectedRevision: resumed.revision, reason: 'All required curricula complete', idempotencyKey: randomUUID() };
-    const completed = (await admin.post(`${base}/${assigned.id}/transition`).send(completeInput).expect(200)).body;
-    expect((await admin.post(`${base}/${assigned.id}/transition`).send(completeInput).expect(200)).body).toEqual(completed);
-    expect(completed.status).toBe('COMPLETED');
-    const reactivated = (await admin.post(`${base}/${assigned.id}/transition`).send({ targetStatus: 'ACTIVE', expectedRevision: completed.revision, reason: 'Explicit repeat learning', idempotencyKey: randomUUID() }).expect(200)).body;
-    expect(reactivated.programVersionId).toBe(release.id);
+    // A completion row alone cannot supply authored session evidence or readiness.
+    await admin.post(`${base}/${assigned.id}/transition`).send(completeInput).expect(422);
+    expect((await learner.get(`/api/v1/me/program-enrollments/${assigned.id}/progress`).expect(200)).body.ready).toBe(false);
   });
 
   it('bounds authoring choices and excludes retired releases from new discovery', async () => {

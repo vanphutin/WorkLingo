@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../../src/learning-programs/application/program-progress.service.js';
 import { randomUUID } from 'node:crypto';
 import { type INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
@@ -44,7 +45,7 @@ describe('IELTS Beta catalog and context integration', () => {
     };
     const module = await Test.createTestingModule({
       controllers: [LearningProgramsController, ProgramContextController],
-      providers: [LearningProgramsService, ProgramContextService, ProgramEnrollmentsService, { provide: PrismaService, useValue: {
+      providers: [ProgramProgressService, LearningProgramsService, ProgramContextService, ProgramEnrollmentsService, { provide: PrismaService, useValue: {
         ...tx, $transaction: async (callback: (database: typeof tx) => unknown) => callback(tx),
       } }],
     }).compile();

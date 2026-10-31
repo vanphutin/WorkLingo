@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../../learning-programs/application/program-progress.service.js';
 import { describe, it, expect } from 'vitest';
 import { Test } from '@nestjs/testing';
 import { CurriculumProgressService } from './curriculum-progress.service.js';
@@ -14,7 +15,7 @@ async function fixture(kind='QUEUED', mutation='') {
  if(mutation==='incomplete')session.status='IN_PROGRESS';
  let receipt:unknown=null;
  const db={curriculumRevision:{findUniqueOrThrow:async()=>revision},learningSession:{findMany:async()=>[session]},learningProgram:{findUnique:async()=>({progressionPolicy:'ACTIVITY_COMPLETION'})},masteryRecord:{findMany:async()=>[]},$transaction:async(fn:(t:unknown)=>unknown)=>fn(db)};
- const module=await Test.createTestingModule({providers:[CurriculumProgressService,{provide:PrismaService,useValue:db},{provide:ProgramContextService,useValue:{}},{provide:CurriculumEligibilityService,useValue:{}}]}).compile();
+ const module=await Test.createTestingModule({providers:[{provide:ProgramProgressService,useValue:{forEnrollment:async()=>null,projectSession:async()=>false,assertSessionMutation:async()=>{},planningOptions:async()=>({})}},CurriculumProgressService,{provide:PrismaService,useValue:db},{provide:ProgramContextService,useValue:{}},{provide:CurriculumEligibilityService,useValue:{}}]}).compile();
  const service=module.get(CurriculumProgressService);
  const tx={...db,learningSession:{...db.learningSession,findUnique:async()=>({...session,curriculumRevision:{...revision,mission:{level:{path:{programId:id(8)}}}}})},learnerProgramEnrollment:{findUnique:async()=>({id:id(9),curriculumRevisionIds:[id(2)]})},curriculumCompletion:{upsert:async(input:unknown)=>{receipt=input;}}};
  await service.projectSession(id(1),tx as never);await module.close();return receipt;
@@ -37,7 +38,7 @@ describe('roadmap targeted start capability', () => {
    learningProgram: { findUnique: async () => ({ progressionPolicy }) },
    $transaction: async (fn: (tx: unknown) => unknown) => fn(db),
   };
-  const module = await Test.createTestingModule({ providers: [CurriculumProgressService,
+  const module = await Test.createTestingModule({ providers: [{provide:ProgramProgressService,useValue:{forEnrollment:async()=>null,projectSession:async()=>false,assertSessionMutation:async()=>{},planningOptions:async()=>({})}},CurriculumProgressService,
    { provide: PrismaService, useValue: db },
    { provide: ProgramContextService, useValue: { resolve: async () => ({ programId: id(8), enrollmentId: id(9) }) } },
    { provide: CurriculumEligibilityService, useValue: {} },

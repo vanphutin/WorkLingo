@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../../learning-programs/application/program-progress.service.js';
 import { Inject, Injectable } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 
@@ -15,6 +16,7 @@ export class CurriculumEligibilityService {
   constructor(
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
+    @Inject(ProgramProgressService) private readonly programProgress: ProgramProgressService,
   ) {}
 
   async resolve(
@@ -29,6 +31,11 @@ export class CurriculumEligibilityService {
     }
     const context = await this.programContext.resolve(learnerId, transaction);
     const enrollment = await transaction.learnerProgramEnrollment.findUnique({ where: { id: context.enrollmentId }, select: { curriculumRevisionIds: true } });
+    const projection = await this.programProgress.forEnrollment(transaction, learnerId, context.enrollmentId);
+    if (projection) {
+      const items = projection.items.filter(item => item.missionId === missionId);
+      return { revisionId: items[0]?.curriculumRevisionId ?? null, available: items.some(item => item.eligible), reasons: items.length ? [...new Set(items.flatMap(item => item.reasons))] : ['curriculum_not_enrolled'] };
+    }
     const mission = await transaction.mission.findUnique({
       where: { id: missionId },
       include: {

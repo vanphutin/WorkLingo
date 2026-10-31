@@ -194,6 +194,8 @@ export function planFoundationSession(input: PlanFoundationSessionInput): Sessio
 
     // Preserve ReviewScheduler's tier-aware priority order; compare source order for ties.
     matchingActivities.sort((left, right) => {
+      const completionRank = Number(input.completedActivityIds?.includes(left.id) ?? false) - Number(input.completedActivityIds?.includes(right.id) ?? false);
+      if (completionRank) return completionRank;
       const leftRank = reviewRank(left);
       const rightRank = reviewRank(right);
       if (leftRank !== rightRank) return leftRank - rightRank;

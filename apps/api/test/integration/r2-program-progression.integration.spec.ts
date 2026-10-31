@@ -63,9 +63,12 @@ describe('R2 actual Admin to Learner progression', () => {
     const enrollmentId = enrollments[0]!.body.enrollment.id as string;
     expect(await context.database.learnerProgramEnrollment.count({ where: { learnerId: learnerRow.id, programId } })).toBe(1);
     expect((await context.database.learnerProgramEnrollment.findUniqueOrThrow({ where: { id: enrollmentId } })).curriculumRevisionIds).toEqual(revisionIds);
+    const initialProgress = await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/progress`).expect(200);
+    expect(initialProgress.body.nextAction.type).toBe('learn');
+    expect(initialProgress.body.mastery).toMatchObject({status:'UNKNOWN',score:null});
     const initialRoadmap = await learner.get('/api/v1/me/curriculum-roadmap').expect(200);
     expect(initialRoadmap.body.items.map((item: { state: string }) => item.state)).toEqual(['available', 'locked']);
-    const target = { missionId: missions[0], expectedCurriculumRevisionId: revisionIds[0], durationMinutes: 45, clientSessionId: randomUUID() };
+    const target = { missionId: missions[0], expectedCurriculumRevisionId: revisionIds[0], durationMinutes: 60, clientSessionId: randomUUID() };
     await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, missionId: missions[1], expectedCurriculumRevisionId: revisionIds[1] }).expect(422);
     await learner.post('/api/v1/learning-sessions/curriculum').send({ ...target, expectedCurriculumRevisionId: randomUUID() }).expect(409);
     const starts = await Promise.all([learner.post('/api/v1/learning-sessions/curriculum').send(target), learner.post('/api/v1/learning-sessions/curriculum').send(target)]);
@@ -90,17 +93,50 @@ describe('R2 actual Admin to Learner progression', () => {
     expect((await learner.get(`/api/v1/learning-sessions/${session.id}`).expect(200)).body.status).toBe('completed');
     const progress = context.app.get(CurriculumProgressService);
     await Promise.all([progress.projectSession(session.id), progress.projectSession(session.id)]);
+    let completionProgress=await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/progress`).expect(200);
+    const firstRatio=completionProgress.body.items[0].completionRatio as number;
+    expect(firstRatio).toBeGreaterThan(0);
+    for(let round=0;!completionProgress.body.items[0].completed && round<10;round++) {
+      const extra=await learner.post('/api/v1/learning-sessions').send({durationMinutes:60,clientSessionId:randomUUID()}).expect(201);
+      expect(extra.body.lessonVersionId).toBe(version.id);
+      await learner.post(`/api/v1/learning-sessions/${extra.body.id}/start`).expect(200);
+      for(const activityId of extra.body.plan.blocks.flatMap((b:{activityIds:string[]})=>b.activityIds)) {
+        const activity=snapshot.activities.find(a=>a.id===activityId)!;
+        const response=activity.activityType==='reading'||activity.activityType==='listening'?{answerIndexes:activity.payload.questions.map(q=>q.answerIndex)}:{text:'Hello. I work with my team and help our customers.'};
+        await learner.post(`/api/v1/activities/${activityId}/attempts`).send({clientAttemptId:randomUUID(),sessionId:extra.body.id,response}).expect(201);
+      }
+      const previous=completionProgress.body.items[0].completionRatio as number;
+      completionProgress=await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/progress`).expect(200);
+      expect(completionProgress.body.items[0].completionRatio).toBeGreaterThan(previous);
+    }
     const completions = await context.database.curriculumCompletion.findMany({ where: { enrollmentId } });
     expect(completions).toHaveLength(1);
-    expect(completions[0]).toMatchObject({ curriculumRevisionId: revisionIds[0], policyVersion: 'curriculum-activity-completion-v1' });
+    expect(completions[0]).toMatchObject({ curriculumRevisionId: revisionIds[0], policyVersion: 'program-activity-completion-v1' });
     const writing = await context.database.activityAttempt.findMany({ where: { sessionId: session.id, activity: { activityType: 'writing' } } });
     expect(writing.length).toBeGreaterThan(0);
     expect(writing.every(attempt => attempt.score === null && attempt.evaluationStatus === 'QUEUED')).toBe(true);
     expect(await context.database.masteryEvent.count({ where: { learnerId: learnerRow.id, skill: { in: ['writing', 'speaking'] } } })).toBe(0);
+    const projected = await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/progress`).expect(200);
+    expect(projected.body.items[0]).toMatchObject({completed:true,ready:true,mastery:{status:'PENDING'}});
+    const reviews = await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/reviews`).expect(200);
+    expect(reviews.body.items).toHaveLength(1);
+    expect(reviews.body.items[0]).toMatchObject({iteration:0,lastCompletedAt:null});
+    const history = await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/history`).expect(200);
+    const baselineHistory=history.body.total as number;
+    expect(baselineHistory).toBeGreaterThan(0);
+    const recalc={idempotencyKey:randomUUID()};
+    const recalculated=await Promise.all([learner.post(`/api/v1/me/program-enrollments/${enrollmentId}/recalculate`).send(recalc),learner.post(`/api/v1/me/program-enrollments/${enrollmentId}/recalculate`).send(recalc)]);
+    expect(recalculated.map(r=>r.status)).toEqual([200,200]);
+    expect((await learner.get(`/api/v1/me/program-enrollments/${enrollmentId}/history`).expect(200)).body.total).toBe(baselineHistory+1);
+    const foreign = await registerLearner(context.app,{displayName:'Other',email:`other-${suffix}@example.test`});
+    await foreign.get(`/api/v1/me/program-enrollments/${enrollmentId}/progress`).expect(404);
+    await foreign.get(`/api/v1/me/program-enrollments/${enrollmentId}/history`).expect(404);
+    await foreign.get(`/api/v1/me/program-enrollments/${enrollmentId}/reviews`).expect(404);
+    await foreign.post(`/api/v1/me/program-enrollments/${enrollmentId}/recalculate`).send({idempotencyKey:randomUUID()}).expect(404);
     const after = await learner.get('/api/v1/me/curriculum-roadmap').expect(200);
     expect(after.body.items.map((item: { state: string }) => item.state)).toEqual(['completed', 'available']);
     expect(after.body.items[0].objectives.every((objective: { completed: boolean }) => objective.completed)).toBe(true);
-    const next = await learner.post('/api/v1/learning-sessions/curriculum').send({ missionId: missions[1], expectedCurriculumRevisionId: revisionIds[1], durationMinutes: 45, clientSessionId: randomUUID() }).expect(201);
+    const next = await learner.post('/api/v1/learning-sessions/curriculum').send({ missionId: missions[1], expectedCurriculumRevisionId: revisionIds[1], durationMinutes: 60, clientSessionId: randomUUID() }).expect(201);
     await learner.post(`/api/v1/learning-sessions/${next.body.id}/start`).expect(200);
     await learner.post(`/api/v1/learning-sessions/${next.body.id}/pause`).expect(200);
     expect((await learner.get('/api/v1/me/curriculum-roadmap').expect(200)).body.items[1]).toMatchObject({ state: 'in_progress', activeSessionId: next.body.id });

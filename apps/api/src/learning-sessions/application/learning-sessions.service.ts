@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../../learning-programs/application/program-progress.service.js';
 import {projectLearnerActivity} from '../domain/learner-activity-projection.js';
 import {
   BadRequestException,
@@ -61,6 +62,7 @@ interface Evaluation {
 }
 
 export interface CurrentActivitySubmission {
+  readonly curriculumRevisionId?: string | null;
   readonly activityId: string;
   readonly activityIndex: number;
   readonly activityIds: readonly string[];
@@ -80,6 +82,7 @@ export class LearningSessionsService {
     @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
     @Inject(CurriculumEligibilityService) private readonly curriculumEligibility: CurriculumEligibilityService,
     @Inject(CurriculumProgressService) private readonly curriculumProgress: CurriculumProgressService,
+    @Inject(ProgramProgressService) private readonly programProgress: ProgramProgressService,
     @Optional() @Inject(JobDispatcher) private readonly jobs?: JobDispatcher,
     @Optional() @Inject(StudyDayProjectorService) private readonly studyDayProjector?: StudyDayProjectorService,
     @Optional() @Inject(PilotMetricsService) private readonly pilotMetrics?: PilotMetricsService,
@@ -88,6 +91,13 @@ export class LearningSessionsService {
   private async selectCurriculum(learnerId: string, transaction: Prisma.TransactionClient) {
     const context = await this.programContext.resolve(learnerId, transaction);
     const enrollment = await transaction.learnerProgramEnrollment.findUnique({ where: { id: context.enrollmentId }, select: { curriculumRevisionIds: true } });
+    const projection = await this.programProgress.forEnrollment(transaction, learnerId, context.enrollmentId);
+    if (projection) {
+      const target = projection.items.find(item => item.curriculumRevisionId === projection.nextAction.curriculumRevisionId && item.lessonVersionId === projection.nextAction.lessonVersionId);
+      if (!target?.eligible) throw new UnprocessableEntityException({code:'CURRICULUM_UNAVAILABLE',reasons:projection.nextAction.reasons});
+      const mission = await this.curriculum.getEnrolledMissionForRevision(learnerId,target.curriculumRevisionId,target.lessonVersionId,transaction);
+      return {curriculumRevisionId:target.curriculumRevisionId,mission,reviewQueue:[]};
+    }
     if (enrollment?.curriculumRevisionIds.length) {
       const revisions = await transaction.curriculumRevision.findMany({ where: { id: { in: enrollment.curriculumRevisionIds } }, select: { id: true, missionId: true } });
       const completions = await transaction.curriculumCompletion.findMany({ where: { enrollmentId: context.enrollmentId }, select: { curriculumRevisionId: true } });
@@ -162,7 +172,11 @@ export class LearningSessionsService {
       where: { learnerId_clientSessionId: { learnerId, clientSessionId } },
       include: learningSessionInclude,
     });
-    if (existing) return this.toSessionDto(existing);
+    if (existing) {
+      if(existing.durationMinutes!==durationMinutes) throw new ConflictException('IDEMPOTENCY_CONFLICT');
+      await this.database.$transaction(async tx=>{await this.programProgress.assertSessionMutation(tx,learnerId,existing);});
+      return this.toSessionDto(existing);
+    }
 
     try {
       return await this.database.$transaction(async (transaction) => {
@@ -170,6 +184,7 @@ export class LearningSessionsService {
         const { curriculumRevisionId, mission, reviewQueue } = await this.selectCurriculum(learnerId, transaction);
         return this.sessionCreation.create(transaction, {
           clientSessionId, curriculumRevisionId, learnerId, mission, durationMinutes, reviewItems: reviewQueue,
+          ...await this.programProgress.planningOptions(transaction,learnerId,curriculumRevisionId,mission.lessonVersion.id),
         });
       }, { timeout: 15_000 });
     } catch (error) {
@@ -208,7 +223,8 @@ export class LearningSessionsService {
       await transaction.$queryRaw`SELECT "userId" FROM "LearnerProfile" WHERE "userId" = ${learnerId}::uuid FOR UPDATE`;
       const existing = await transaction.learningSession.findUnique({ where: { learnerId_clientSessionId: { learnerId, clientSessionId: input.clientSessionId } }, include: learningSessionInclude });
       if (existing) {
-        if (existing.missionId !== input.missionId || existing.curriculumRevisionId !== input.expectedCurriculumRevisionId || existing.durationMinutes !== input.durationMinutes) throw new ConflictException({code:'IDEMPOTENCY_CONFLICT',message:'Session UUID is already associated with another target'});
+        if (existing.missionId !== input.missionId || existing.curriculumRevisionId !== input.expectedCurriculumRevisionId || existing.durationMinutes !== input.durationMinutes || (input.lessonVersionId !== undefined && existing.lessonVersionId !== input.lessonVersionId)) throw new ConflictException({code:'IDEMPOTENCY_CONFLICT',message:'Session UUID is already associated with another target'});
+        await this.programProgress.assertSessionMutation(transaction,learnerId,existing);
         return this.toSessionDto(existing);
       }
       const context = await this.programContext.resolve(learnerId, transaction);
@@ -217,13 +233,19 @@ export class LearningSessionsService {
       if (!enrollment?.curriculumRevisionIds.includes(input.expectedCurriculumRevisionId)) {
         throw new ConflictException({code:'CURRICULUM_REVISION_CONFLICT',message:'Curriculum target changed'});
       }
-      if (program?.progressionPolicy !== 'ACTIVITY_COMPLETION' || !['AVAILABLE','BETA'].includes(program.availabilityStatus)) throw new UnprocessableEntityException({code:'CURRICULUM_UNAVAILABLE',message:'Curriculum is not enrolled or available'});
+      const authored = await this.programProgress.forEnrollment(transaction,learnerId,context.enrollmentId);
+      if (!authored && (program?.progressionPolicy !== 'ACTIVITY_COMPLETION' || !['AVAILABLE','BETA'].includes(program.availabilityStatus))) throw new UnprocessableEntityException({code:'CURRICULUM_UNAVAILABLE',message:'Curriculum is not enrolled or available'});
       const eligibility = await this.curriculumEligibility.resolve(learnerId, input.missionId, transaction);
       if (eligibility.revisionId !== input.expectedCurriculumRevisionId) throw new ConflictException({code:'CURRICULUM_REVISION_CONFLICT',message:'Curriculum target changed'});
       if (!eligibility.available) throw new UnprocessableEntityException({code:'CURRICULUM_UNAVAILABLE',message:'Curriculum is locked',reasons:eligibility.reasons});
-      const mission = await this.curriculum.getPublishedMissionForRevision(input.expectedCurriculumRevisionId, transaction);
+      if(authored && !input.lessonVersionId && authored.items.filter(item=>item.curriculumRevisionId===input.expectedCurriculumRevisionId).length>1) throw new ConflictException({code:'CURRICULUM_LESSON_SELECTION_REQUIRED',message:'Choose an exact enrolled lesson version'});
+      const lessonVersionId=input.lessonVersionId??authored?.items.find(item=>item.curriculumRevisionId===input.expectedCurriculumRevisionId)?.lessonVersionId;
+      const mission = authored && lessonVersionId
+        ? await this.curriculum.getEnrolledMissionForRevision(learnerId,input.expectedCurriculumRevisionId,lessonVersionId,transaction)
+        : await this.curriculum.getPublishedMissionForRevision(input.expectedCurriculumRevisionId,transaction,input.lessonVersionId);
+      if (authored && !authored.items.find(item=>item.curriculumRevisionId===input.expectedCurriculumRevisionId&&item.lessonVersionId===mission.lessonVersion.id)?.eligible) throw new UnprocessableEntityException('CURRICULUM_UNAVAILABLE');
       if (mission.id !== input.missionId || mission.purpose !== 'learning') throw new ConflictException('Curriculum mission mismatch');
-      return this.sessionCreation.create(transaction, {clientSessionId: input.clientSessionId, curriculumRevisionId: input.expectedCurriculumRevisionId, durationMinutes: input.durationMinutes, learnerId, mission, reviewItems: []});
+      return this.sessionCreation.create(transaction, {...await this.programProgress.planningOptions(transaction,learnerId,input.expectedCurriculumRevisionId,mission.lessonVersion.id),clientSessionId: input.clientSessionId, curriculumRevisionId: input.expectedCurriculumRevisionId, durationMinutes: input.durationMinutes, learnerId, mission, reviewItems: []});
     }, {timeout:15000});
   }
 
@@ -248,13 +270,14 @@ export class LearningSessionsService {
 
   async startSession(learnerId: string, id: string): Promise<LearningSessionDto> {
     const session = await this.findOwnedSession(learnerId, id);
+    await this.database.$transaction(async tx=>{ await this.programProgress.assertSessionMutation(tx,learnerId,session); });
     if (session.status === 'IN_PROGRESS') return this.toSessionDto(session);
     if (session.status !== 'PLANNED' && session.status !== 'PAUSED') {
       throw this.invalidTransition(session.status, 'IN_PROGRESS');
     }
-    const update = await this.database.learningSession.updateMany({
-      where: { id, learnerId, status: session.status },
-      data: { status: 'IN_PROGRESS', startedAt: session.startedAt ?? new Date() },
+    const update = await this.database.$transaction(async tx=>{
+      await this.programProgress.assertSessionMutation(tx,learnerId,session);
+      return tx.learningSession.updateMany({where:{id,learnerId,status:session.status},data:{status:'IN_PROGRESS',startedAt:session.startedAt??new Date()}});
     });
     if (update.count !== 1) {
       const latest = await this.findOwnedSession(learnerId, id);
@@ -291,10 +314,12 @@ export class LearningSessionsService {
 
   async resumeSession(learnerId: string, id: string): Promise<LearningSessionDto> {
     const session = await this.findOwnedSession(learnerId, id);
+    await this.database.$transaction(async tx=>{ await this.programProgress.assertSessionMutation(tx,learnerId,session); });
     if (session.status === 'IN_PROGRESS') return this.toSessionDto(session);
     if (session.status !== 'PAUSED') throw this.invalidTransition(session.status, 'IN_PROGRESS');
-    const update = await this.database.learningSession.updateMany({
-      where: { id, learnerId, status: 'PAUSED' }, data: { status: 'IN_PROGRESS' },
+    const update = await this.database.$transaction(async tx=>{
+      await this.programProgress.assertSessionMutation(tx,learnerId,session);
+      return tx.learningSession.updateMany({where:{id,learnerId,status:'PAUSED'},data:{status:'IN_PROGRESS'}});
     });
     if (update.count !== 1) {
       const latest = await this.findOwnedSession(learnerId, id);
@@ -323,6 +348,7 @@ export class LearningSessionsService {
     expectedType: 'speaking' | 'writing',
   ): Promise<CurrentActivitySubmission> {
     const session = await this.findOwnedSession(learnerId, sessionId);
+    await this.database.$transaction(async tx=>{ await this.programProgress.assertSessionMutation(tx,learnerId,session); });
     if (session.status !== 'IN_PROGRESS') throw this.invalidTransition(session.status, 'IN_PROGRESS');
     const plan = sessionPlanSchema.parse(session.planSnapshot);
     const activityIds = plan.blocks.flatMap((block) => block.activityIds);
@@ -342,7 +368,7 @@ export class LearningSessionsService {
       throw new BadRequestException(`Activity must be ${expectedType}`);
     }
     return {
-      activityId, activityIndex, activityIds, lessonVersionId: session.lessonVersionId,
+      curriculumRevisionId: session.curriculumRevisionId, activityId, activityIndex, activityIds, lessonVersionId: session.lessonVersionId,
       plan, sessionId: session.id,
       purpose: session.mission.purpose === 'PLACEMENT' ? 'placement' : 'learning',
     };
@@ -353,6 +379,10 @@ export class LearningSessionsService {
     learnerId: string,
     context: CurrentActivitySubmission,
   ): Promise<void> {
+    if (context.curriculumRevisionId) {
+      const session = await transaction.learningSession.findUniqueOrThrow({where:{id:context.sessionId}});
+      await this.programProgress.assertSessionMutation(transaction,learnerId,session);
+    }
     const nextCheckpoint = context.activityIndex + 1;
     const isCompleted = nextCheckpoint === context.activityIds.length;
     const completedAt = isCompleted ? new Date() : null;
@@ -392,6 +422,7 @@ export class LearningSessionsService {
     input: SubmitAttemptInput,
   ): Promise<ActivityAttemptDto> {
     const session = await this.findOwnedSession(learnerId, input.sessionId);
+    await this.database.$transaction(async tx=>{ await this.programProgress.assertSessionMutation(tx,learnerId,session); });
     const duplicate = await this.database.activityAttempt.findUnique({
       where: { learnerId_clientAttemptId: { learnerId, clientAttemptId: input.clientAttemptId } },
     });
@@ -414,6 +445,7 @@ export class LearningSessionsService {
 
     try {
       const attempt = await this.database.$transaction(async (transaction) => {
+        await this.programProgress.assertSessionMutation(transaction,learnerId,session);
         const created = await transaction.activityAttempt.create({
           data: {
             activityId,
@@ -461,7 +493,7 @@ export class LearningSessionsService {
         }
         if (evaluation.advance) {
           await this.advanceSubmittedActivity(transaction, learnerId, {
-            activityId,
+            curriculumRevisionId: session.curriculumRevisionId, activityId,
             activityIds,
             activityIndex,
             lessonVersionId: session.lessonVersionId,

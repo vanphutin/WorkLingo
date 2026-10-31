@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../../learning-programs/application/program-progress.service.js';
 import { Inject, Injectable } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import {
@@ -20,6 +21,7 @@ export class CurriculumProgressService {
     @Inject(PrismaService) private readonly database: PrismaService,
     @Inject(ProgramContextService) private readonly programContext: ProgramContextService,
     @Inject(CurriculumEligibilityService) private readonly eligibility: CurriculumEligibilityService,
+    @Inject(ProgramProgressService) private readonly programProgress: ProgramProgressService,
   ) {}
 
   async projectSession(sessionId: string, transaction?: Prisma.TransactionClient): Promise<void> {
@@ -27,6 +29,7 @@ export class CurriculumProgressService {
       await this.database.$transaction((tx) => this.projectSession(sessionId, tx), { timeout: 15_000 });
       return;
     }
+    if (await this.programProgress.projectSession(sessionId, transaction)) return;
     const session = await transaction.learningSession.findUnique({
       where: { id: sessionId },
       include: { curriculumRevision: { include: { mission: { include: { level: { include: { path: true } } } } } } },
@@ -63,6 +66,12 @@ export class CurriculumProgressService {
     return this.database.$transaction(async (tx) => {
       const context = await this.programContext.resolve(learnerId, tx);
       const enrollment = await tx.learnerProgramEnrollment.findUniqueOrThrow({ where: { id: context.enrollmentId }, select: { curriculumRevisionIds: true } });
+      const projection = await this.programProgress.forEnrollment(tx, learnerId, context.enrollmentId);
+      if (projection) return curriculumRoadmapSchema.parse({ programId: context.programId, enrollmentId: context.enrollmentId, targetedStartSupported: true, items: projection.units.map(unit => {
+        const items = projection.items.filter(item => item.curriculumRevisionId === unit.id);
+        const binding = items[0]!;
+        return { missionId: binding.missionId, revisionId: unit.id, title: unit.title, state: items.some(item => item.activeSessionId) ? 'in_progress' : unit.completedCount === unit.itemCount ? 'completed' : items.some(item => item.eligible) ? 'available' : 'locked', unmetPrerequisites: [...new Set(items.flatMap(item => item.reasons))], activeSessionId: items.find(item => item.activeSessionId)?.activeSessionId ?? null, reviewDue: items.some(item => item.reviewDueAt && item.reviewDueAt <= projection.projectedAt), objectives: items.flatMap(item => item.objectives.map((statement,index) => ({slug: `${item.lessonVersionId}-${index}`, statement, skills: [], required: item.required, completed: item.completed}))) };
+      }) });
       const revisions = await tx.curriculumRevision.findMany({
         where: { ...(enrollment.curriculumRevisionIds.length ? { id: { in: enrollment.curriculumRevisionIds } } : { status: 'PUBLISHED' }), mission: { status: 'PUBLISHED', level: { status: 'PUBLISHED', path: { programId: context.programId, status: 'PUBLISHED' } } } },
         orderBy: enrollment.curriculumRevisionIds.length ? { revision: 'asc' } : [{ missionId: 'asc' }, { revision: 'desc' }],

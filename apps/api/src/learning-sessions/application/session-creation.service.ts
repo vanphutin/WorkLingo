@@ -20,6 +20,8 @@ export type LearningSessionRecord = Prisma.LearningSessionGetPayload<{
 }>;
 
 export interface CreateMissionSessionInput {
+  readonly programEnrollmentId?: string; readonly programVersionId?: string; readonly missionTitle?: string;
+  readonly completedActivityIds?: readonly string[];
   readonly topicSelection?: 'chosen' | 'random';
   readonly topicDurationFilter?: SessionDuration;
   readonly productivePairPerRespondBlock?: boolean;
@@ -65,12 +67,14 @@ export class SessionCreationService {
       return toLearningSessionDto(existing);
     }
 
-    const basePlan = planFoundationSession({
+    const planned = planFoundationSession({
+      ...(input.completedActivityIds ? {completedActivityIds: input.completedActivityIds} : {}),
       durationMinutes: input.durationMinutes,
       mission: input.mission,
       reviewItems: input.reviewItems,
       productivePairPerRespondBlock: input.productivePairPerRespondBlock ?? false,
     });
+    const basePlan = input.programEnrollmentId && input.programVersionId && input.missionTitle ? sessionPlanSchema.parse({...planned,programEnrollmentId:input.programEnrollmentId,programVersionId:input.programVersionId,missionTitle:input.missionTitle}) : planned;
     const plan = input.topicSelection ? sessionPlanSchema.parse({ ...basePlan, topicSelection: input.topicSelection,
       ...(input.topicDurationFilter !== undefined ? { topicDurationFilter: input.topicDurationFilter } : {}) }) : basePlan;
     const created = await transaction.learningSession.create({
@@ -116,7 +120,7 @@ export function toLearningSessionDto(session: LearningSessionRecord): LearningSe
     durationMinutes: session.durationMinutes as LearningSessionDto['durationMinutes'],
     id: session.id,
     lessonVersionId: session.lessonVersionId,
-    mission: { id: session.mission.id, title: session.mission.title },
+    mission: { id: session.mission.id, title: plan.missionTitle ?? session.mission.title },
     plan,
     purpose: session.mission.purpose === 'PLACEMENT' ? 'placement' : 'learning',
     status: session.status.toLowerCase() as LearningSessionDto['status'],

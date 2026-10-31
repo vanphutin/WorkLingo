@@ -1,3 +1,4 @@
+import type { ProgramProgressService } from '../../learning-programs/application/program-progress.service.js';
 import { describe, expect, it, vi } from 'vitest';
 import { foundationMissionFixture } from '@worklingo/test-fixtures';
 
@@ -11,6 +12,7 @@ import type { ProgramContextService } from '../../learning-programs/application/
 import type { CurriculumEligibilityService } from '../../curriculum-foundation/application/curriculum-eligibility.service.js';
 import type { CurriculumProgressService } from '../../curriculum-foundation/application/curriculum-progress.service.js';
 
+const programProgress = { forEnrollment: async()=>null, assertSessionMutation: async()=>{}, planningOptions: async()=>({}) } as unknown as ProgramProgressService;
 const progress = { projectSession: vi.fn() } as unknown as CurriculumProgressService;
 
 describe('LearningSessionsService state transitions', () => {
@@ -74,7 +76,7 @@ describe('LearningSessionsService state transitions', () => {
     const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
     const service = new LearningSessionsService(
       database, {} as CurriculumService, mastery, {} as SessionCreationService, {} as ProgramContextService,
-      {} as CurriculumEligibilityService, progress, jobs,
+      {} as CurriculumEligibilityService, progress, programProgress, jobs,
     );
 
     const result = await service.submitAttempt(learnerId, writingId, {
@@ -102,7 +104,7 @@ describe('LearningSessionsService state transitions', () => {
     const database = { learningSession: { findFirst, updateMany } } as unknown as PrismaService;
     const service = new LearningSessionsService(
       database, {} as CurriculumService, {} as MasteryService, {} as SessionCreationService, {} as ProgramContextService,
-      {} as CurriculumEligibilityService, progress,
+      {} as CurriculumEligibilityService, progress, programProgress,
     );
 
     await expect(service.pauseSession(learnerId, sessionId)).rejects.toMatchObject({
@@ -117,7 +119,7 @@ describe('LearningSessionsService state transitions', () => {
   it('rejects unsupported session durations with 422 and typed code', async () => {
     const service = new LearningSessionsService(
       {} as PrismaService, {} as CurriculumService, {} as MasteryService, {} as SessionCreationService, {} as ProgramContextService,
-      {} as CurriculumEligibilityService, progress,
+      {} as CurriculumEligibilityService, progress, programProgress,
     );
     await expect(
       service.createSession('learner-id', 30, '018f06f6-4f68-7a72-9411-4bf894341234'),
@@ -175,7 +177,7 @@ describe('LearningSessionsService state transitions', () => {
 
     const programContext = { resolve: vi.fn().mockResolvedValue({ levelCode: 'FOUNDATION_1', programId: '10000000-0000-4000-8000-000000000002' }) } as unknown as ProgramContextService;
     const eligibility = { resolve: vi.fn().mockResolvedValue({ revisionId: null, available: true, reasons: [] }) } as unknown as CurriculumEligibilityService;
-    const service = new LearningSessionsService(database, curriculum, mastery, new SessionCreationService(), programContext, eligibility, progress);
+    const service = new LearningSessionsService(database, curriculum, mastery, new SessionCreationService(), programContext, eligibility, progress, programProgress);
 
     await expect(
       service.createSession(learnerId, 90, '018f06f6-4f68-7a72-9411-4bf894341234'),
@@ -196,7 +198,7 @@ it('returns only phase instructions and redacts hidden Beginner assessment data'
   const snapshot={...base,formatVersion:'WorkLingoLesson/1.2',instructions:[{slug:'guide',phase:'respond',order:0,text:'Hãy tự trả lời.'}],foundation:{category:'grammar',templateId:'pilot',templateVersion:1,objectives:[{slug:'task',statement:'Respond',skills:['speaking'],required:true}],activityObjectives:{speak:['task']},responseRubrics:{}},contentBlocks:[{id:id(2),slug:'context',type:'email',text:'Read the context.'}],wordBanks:base.wordBanks.map(b=>({...b,id:id(3),languageBlocks:b.languageBlocks.map(l=>({...l,id:id(4)}))})),activities:[{id:id(5),slug:'speak',activityType:'speaking',learningBlock:'respond',order:0,skills:['speaking'],contentReferences:['context'],languageBlockReferences:[base.wordBanks[0]!.languageBlocks[0]!.slug],payload:{prompt:'Introduce yourself.',sampleAnswer:'SECRET_SAMPLE',audioText:'SECRET_AUDIO_TRANSCRIPT',requiredPhrases:['SECRET_SAMPLE'],minWords:1,mode:'guided_response',rubricId:'beginner-guided-speaking',rubricVersion:'1'}}]};
   const plan={durationMinutes:45,missionId:id(1),lessonVersionId:id(6),blocks:[{type:'readDecode',order:1,targetMinutes:15,activityIds:[id(7)],skills:['reading']},{type:'listenReason',order:2,targetMinutes:15,activityIds:[id(8)],skills:['listening']},{type:'respond',order:3,targetMinutes:15,activityIds:[id(5)],skills:['speaking','writing']}]};
   const db={learningSession:{findFirst:async()=>({id:id(9),learnerId:id(10),planSnapshot:plan,lessonVersionId:id(6)})},lessonVersion:{findUnique:async()=>({parsedContent:snapshot})}} as unknown as PrismaService;
-  const service=new LearningSessionsService(db,{} as CurriculumService,{} as MasteryService,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress,{} as JobDispatcher);
+  const service=new LearningSessionsService(db,{} as CurriculumService,{} as MasteryService,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress,programProgress,{} as JobDispatcher);
   const dto=await service.getActivity(id(10),id(9),id(5));
   expect(dto).toHaveProperty('instructions',[{slug:'guide',phase:'respond',order:0,text:'Hãy tự trả lời.'}]);
   expect(JSON.stringify(dto)).not.toMatch(/SECRET_|sampleAnswer|rubricId|rubricVersion|answerIndex|explanation/);
@@ -210,7 +212,8 @@ it.each(['PLANNED','PAUSED'] as const)('keeps exact V1/C1 during %s after curren
  const findFirst=vi.fn(async()=>row),updateMany=vi.fn(async()=>{Object.assign(row,{status:'IN_PROGRESS'});return {count:1};});
  const database={learningSession:{findFirst,updateMany}} as unknown as PrismaService;
  const latest=vi.fn(()=>{throw Error('Unexpected latest resolver');});
- const service=new LearningSessionsService(database,{getPublishedMission:latest} as unknown as CurriculumService,{} as MasteryService,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress);
+ Object.assign(database,{$transaction:async (fn:(tx:unknown)=>unknown)=>fn(database)});
+ const service=new LearningSessionsService(database,{getPublishedMission:latest} as unknown as CurriculumService,{} as MasteryService,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress,programProgress);
  const result=status==='PLANNED'?await service.startSession(id(7),id(6)):await service.resumeSession(id(7),id(6));
  expect(result.lessonVersionId).toBe(id(2));expect(result.curriculumRevisionId).toBe(id(9));expect(result.plan).toEqual(plan);expect(latest).not.toHaveBeenCalled();
 });

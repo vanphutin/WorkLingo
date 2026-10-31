@@ -53,11 +53,12 @@ export class ProgramContextService {
         throw new ConflictException({ code: 'ONBOARDING_REQUIRED', message: 'Complete onboarding before choosing a program.' });
       }
       const target = await tx.learningProgram.findUnique({ where: { slug: parsed.data.programSlug } });
-      if (!target || target.availabilityStatus === 'DISABLED') {
+      const ownedPin = target?.progressionPolicy === 'ACTIVITY_COMPLETION' ? await tx.learnerProgramEnrollment.findFirst({where:{learnerId,programId:target.id,status:'ACTIVE',programVersion:{source:'AUTHORED',status:{in:['PUBLISHED','RETIRED']}}}}) : null;
+      if (!target || (target.availabilityStatus === 'DISABLED' && !ownedPin)) {
         throw new NotFoundException({ code: 'PROGRAM_NOT_FOUND', message: 'Learning program not found.' });
       }
       // IELTS is guided navigation over Intermediate evidence, never a generic level context.
-      if (target.slug === 'ielts' || !deriveProgramAccess(target).isSelectable) {
+      if (target.slug === 'ielts' || (!ownedPin && !deriveProgramAccess(target).isSelectable)) {
         throw new UnprocessableEntityException({ code: 'PROGRAM_UNAVAILABLE', message: 'This learning program is not available yet.' });
       }
       await tx.$queryRaw`SELECT "id" FROM "LearningProgram" WHERE "id"=${target.id}::uuid FOR UPDATE`;

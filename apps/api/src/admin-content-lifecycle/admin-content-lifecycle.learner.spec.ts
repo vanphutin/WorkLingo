@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../learning-programs/application/program-progress.service.js';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
@@ -105,7 +106,7 @@ describe('Archive compatibility with learner services', () => {
       curriculumRevision: { findUnique: vi.fn().mockResolvedValue({ status: 'PUBLISHED', lessons: [{ lessonVersion: { id: versionId, status: 'ARCHIVED' } }] }) },
       learningSession: { findFirst: vi.fn().mockResolvedValue(retainedSession()) },
     };
-    const module = await Test.createTestingModule({ providers: [CurriculumService, LearningSessionsService,
+    const module = await Test.createTestingModule({ providers: [{provide:ProgramProgressService,useValue:{forEnrollment:async()=>null,projectSession:async()=>false,assertSessionMutation:async()=>{},planningOptions:async()=>({})}},CurriculumService, LearningSessionsService,
       { provide: PrismaService, useValue: database },
       ...[MasteryService, SessionCreationService, ProgramContextService, CurriculumEligibilityService, CurriculumProgressService].map(provide => ({ provide, useValue: {} })),
     ] }).compile();

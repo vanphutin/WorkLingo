@@ -13,6 +13,7 @@ export interface ScheduledReviewItemReference {
 }
 
 export interface PlanFoundationSessionInput {
+  readonly completedActivityIds?: readonly string[];
   readonly productivePairPerRespondBlock?: boolean;
   readonly mission: PublishedMission;
   readonly durationMinutes: number;

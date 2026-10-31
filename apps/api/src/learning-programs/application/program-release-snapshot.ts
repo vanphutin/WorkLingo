@@ -20,7 +20,7 @@ export async function captureProgramSnapshot(tx: Prisma.TransactionClient, progr
     const row = rows.find(item => item.id === id)!;
     const definition = curriculumDefinitionInputSchema.safeParse(row.snapshot);
     if (!definition.success) return fail();
-    return { curriculumRevisionId: id, pathId: row.mission.level.pathId, levelId: row.mission.levelId, missionId: row.missionId, order: index + 1, title: row.mission.title, objectives: definition.data.objectives.map(item => item.statement), required: true, prerequisiteRevisionIds: definition.data.prerequisiteRevisionIds, lessons: row.lessons.map((pin, lessonIndex) => {
+    return { curriculumRevisionId: id, pathId: row.mission.level.pathId, levelId: row.mission.levelId, missionId: row.missionId, pathTitle: row.mission.level.path.name, levelTitle: row.mission.level.name, order: index + 1, title: row.mission.title, objectives: definition.data.objectives.map(item => item.statement), required: true, prerequisiteRevisionIds: definition.data.prerequisiteRevisionIds, lessons: row.lessons.map((pin, lessonIndex) => {
       const lesson = lessonSnapshotSchema.safeParse(pin.lessonVersion.parsedContent);
       if (!lesson.success) return fail();
       return { lessonVersionId: pin.lessonVersionId, order: lessonIndex + 1, title: lesson.data.title, objectives: definition.data.objectives.filter(item => item.evidence.some(evidence => evidence.lessonVersionId === pin.lessonVersionId)).map(item => item.statement), estimatedMinutes: 45, difficulty: program.proficiencyLabel, activityIds: lesson.data.activities.map(item => item.id), vocabularyRefs: [], resourceRefs: [] };
@@ -68,5 +68,5 @@ export async function validateProgramSnapshot(tx: Prisma.TransactionClient, prog
   }
   const program = await tx.learningProgram.findUniqueOrThrow({ where: { id: programId } });
   // Presentation metadata is captured from the locked authoring program, never caller overrides.
-  return programVersionInputSchema.parse({ ...content, catalogMetadata: { iconKey: program.iconKey, displayOrder: program.displayOrder } });
+  return programVersionInputSchema.parse({ ...content, curriculumBindings: content.curriculumBindings.map(binding => { const row = rows.find(item => item.id === binding.curriculumRevisionId)!; return {...binding,pathTitle:row.mission.level.path.name,levelTitle:row.mission.level.name}; }), catalogMetadata: { iconKey: program.iconKey, displayOrder: program.displayOrder } });
 }

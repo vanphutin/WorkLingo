@@ -1,3 +1,4 @@
+import { ProgramProgressService } from '../../src/learning-programs/application/program-progress.service.js';
 import { randomUUID } from 'node:crypto';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -82,7 +83,7 @@ describe('adaptive learning visibility and recurrence', () => {
     const sessions = new LearningSessionsService(
       context.database, context.app.get(CurriculumService), service, new SessionCreationService(), context.app.get(ProgramContextService),
       context.app.get(CurriculumEligibilityService),
-      context.app.get(CurriculumProgressService),
+      context.app.get(CurriculumProgressService), context.app.get(ProgramProgressService),
     );
     expect(await service.getReviewQueue(user.body.id)).toEqual([]);
     const before = await sessions.createSession(user.body.id, 60, randomUUID());

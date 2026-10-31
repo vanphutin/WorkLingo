@@ -1,3 +1,4 @@
+import type { ProgramProgressService } from '../../src/learning-programs/application/program-progress.service.js';
 import { spawnSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
@@ -62,7 +63,7 @@ describe('Explicit vocabulary meanings and topic usage', () => {
     const publication = await d.publish(fresh(await d.review()));
     const context = { resolve: async () => ({ programId: INTERMEDIATE_PROGRAM_ID, programSlug: 'intermediate', levelCode: 'FOUNDATION_1', enrollmentId: randomUUID() }) } as unknown as ProgramContextService;
     const service = new IntermediateTopicsService(db as PrismaService, new CurriculumService(db as PrismaService), context,
-      new CurriculumEligibilityService(db as PrismaService, context), new SessionCreationService());
+      new CurriculumEligibilityService(db as PrismaService, context, {forEnrollment:async()=>null} as unknown as ProgramProgressService), new SessionCreationService());
     const topics = await service.list(actorId);
     expect(topics).toEqual(expect.arrayContaining([expect.objectContaining({ lessonVersionId: publication.lessonVersionId, level: 'B1' })]));
     const topic = topics.find(item => item.lessonVersionId === publication.lessonVersionId)!;

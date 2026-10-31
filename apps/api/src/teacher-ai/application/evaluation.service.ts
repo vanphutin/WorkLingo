@@ -306,7 +306,8 @@ export class EvaluationService {
           });
         }
         if (attempt.session.mission.purpose === 'LEARNING') {
-          await this.mastery.recordAttemptEvaluation({
+          const authored = attempt.session.curriculumRevisionId ? await transaction.learnerProgramEnrollment.findFirst({where:{learnerId:attempt.learnerId,curriculumRevisionIds:{has:attempt.session.curriculumRevisionId},programVersion:{source:'AUTHORED'}}}) : null;
+          if (!authored) await this.mastery.recordAttemptEvaluation({
             attemptId,
             evaluationStatus: 'EVALUATED',
             languageBlockSlugs: activity.languageBlockReferences,

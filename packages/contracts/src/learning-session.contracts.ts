@@ -35,6 +35,7 @@ export const sessionBlockSchema = z.object({
 // A plan is a provider-free immutable reference list, not a learner activity payload.
 // Answers and rubrics remain in the backend's published curriculum snapshot.
 export const sessionPlanSchema = z.object({
+  programEnrollmentId: z.uuid().optional(), programVersionId: z.uuid().optional(), missionTitle: z.string().min(1).max(200).optional(),
   kind: z.literal('topic').optional(),
   topicSelection: z.enum(['chosen', 'random']).optional(),
   topicDurationFilter: sessionDurationSchema.optional(),
@@ -111,6 +112,6 @@ export const sessionAvailabilitySchema = z.object({
 export type SessionAvailabilityDto = z.infer<typeof sessionAvailabilitySchema>;
 
 export const createCurriculumSessionSchema = z.object({
-  missionId: z.uuid(), expectedCurriculumRevisionId: z.uuid(), durationMinutes: sessionDurationSchema, clientSessionId: z.uuid(),
+  lessonVersionId: z.uuid().optional(), missionId: z.uuid(), expectedCurriculumRevisionId: z.uuid(), durationMinutes: sessionDurationSchema, clientSessionId: z.uuid(),
 }).strict();
 export type CreateCurriculumSessionInput = z.infer<typeof createCurriculumSessionSchema>;

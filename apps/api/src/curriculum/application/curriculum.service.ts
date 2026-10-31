@@ -4,7 +4,7 @@ import { BadRequestException, ConflictException, Inject, Injectable, NotFoundExc
 import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 
-import type { MissionPurpose } from '@worklingo/contracts';
+import { programVersionInputSchema, type MissionPurpose } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { lessonSnapshotSchema, type PublishedMission } from '../domain/curriculum.types.js';
@@ -39,14 +39,29 @@ export class CurriculumService {
   async getPublishedMissionForRevision(
     revisionId: string,
     database: Pick<Prisma.TransactionClient, 'curriculumRevision'> = this.database,
+    lessonVersionId?: string,
   ): Promise<PublishedMission> {
+    return this.loadMissionForRevision(revisionId,database,lessonVersionId,false);
+  }
+
+  async getEnrolledMissionForRevision(learnerId: string, revisionId: string, lessonVersionId: string, transaction: Prisma.TransactionClient): Promise<PublishedMission> {
+    const enrollment=await transaction.learnerProgramEnrollment.findFirst({where:{learnerId,curriculumRevisionIds:{has:revisionId},status:'ACTIVE'},include:{programVersion:true}});
+    if(enrollment?.programVersion?.source!=='AUTHORED') throw new ConflictException('CURRICULUM_NOT_ENROLLED');
+    const snapshot=programVersionInputSchema.parse(enrollment.programVersion.snapshot);
+    const binding=snapshot.curriculumBindings.find(b=>b.curriculumRevisionId===revisionId&&b.lessons.some(l=>l.lessonVersionId===lessonVersionId));
+    if(!binding||enrollment.programVersion.programId!==enrollment.programId)throw new ConflictException('CURRICULUM_NOT_ENROLLED');
+    const mission=await this.loadMissionForRevision(revisionId,transaction,lessonVersionId,true);
+    if(mission.id!==binding.missionId)throw new ConflictException('CURRICULUM_NOT_ENROLLED');
+    return {...mission,title:binding.title,objective:binding.objectives.join(' ')};
+  }
+
+  private async loadMissionForRevision(revisionId:string,database:Pick<Prisma.TransactionClient,'curriculumRevision'>,lessonVersionId:string|undefined,enrolled:boolean):Promise<PublishedMission> {
     const revision = await database.curriculumRevision.findUnique({
       where: { id: revisionId },
       include: {
         mission: { include: { level: { select: { code: true } } } },
         lessons: {
           orderBy: { order: 'asc' },
-          take: 1,
           include: {
             lessonVersion: {
               include: {
@@ -59,8 +74,9 @@ export class CurriculumService {
         },
       },
     });
-    const version = revision?.lessons[0]?.lessonVersion;
-    if (!revision || revision.status !== 'PUBLISHED' || !version || version.status !== 'PUBLISHED') {
+    if (revision && !lessonVersionId && revision.lessons.length > 1) throw new ConflictException({code:'CURRICULUM_LESSON_SELECTION_REQUIRED',message:'Choose an exact enrolled lesson version'});
+    const version = (lessonVersionId ? revision?.lessons.find(binding => binding.lessonVersionId === lessonVersionId) : revision?.lessons[0])?.lessonVersion;
+    if (!revision || revision.status !== 'PUBLISHED' || !version || (version.status !== 'PUBLISHED' && !(enrolled && version.status === 'ARCHIVED'))) {
       throw new ConflictException('Published curriculum revision binding is unavailable');
     }
     return this.toPublishedMission(revision.mission, revision.mission.level.code, version);

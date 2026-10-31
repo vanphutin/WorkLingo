@@ -1,3 +1,4 @@
+import { ProgramProgressService } from './program-progress.service.js';
 import { ConflictException, ForbiddenException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma, LearnerProgramEnrollment } from '@prisma/client';
 import { assignProgramEnrollmentSchema, enrollProgramSchema, withdrawProgramEnrollmentSchema, enrollmentHistorySchema, programContextSchema, programEnrollmentListSchema, programEnrollmentSchema, programEnrollmentTransitionSchema, programPageSchema, programVersionInputSchema, type ProgramEnrollmentDto, type ProgramEnrollmentStatus } from '@worklingo/contracts';
@@ -10,7 +11,7 @@ export function enrollmentDto(row: LearnerProgramEnrollment): ProgramEnrollmentD
 const transitions: Record<ProgramEnrollmentStatus, ProgramEnrollmentStatus[]> = { ACTIVE: ['SUSPENDED', 'WITHDRAWN', 'COMPLETED'], SUSPENDED: ['ACTIVE', 'WITHDRAWN'], COMPLETED: ['ACTIVE'], WITHDRAWN: ['ACTIVE'] };
 @Injectable()
 export class ProgramEnrollmentsService {
-  constructor(@Inject(PrismaService) private readonly database: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly database: PrismaService, @Inject(ProgramProgressService) private readonly progress: ProgramProgressService) {}
   async assign(actorId: string, programId: string, raw: unknown) {
     const input = parseProgramInput(assignProgramEnrollmentSchema, raw);
     return programCommand(this.database, actorId, 'enrollments.assign', input.idempotencyKey, { programId, input }, async tx => {
@@ -64,6 +65,8 @@ export class ProgramEnrollmentsService {
         const snapshot = programVersionInputSchema.parse(version.snapshot);
         const required = snapshot.curriculumBindings.filter(binding => binding.required).map(binding => binding.curriculumRevisionId);
         if (await tx.curriculumCompletion.count({ where: { enrollmentId, curriculumRevisionId: { in: required } } }) !== required.length) throw new UnprocessableEntityException('PROGRAM_COMPLETION_EVIDENCE_REQUIRED');
+        const projection = await this.progress.forEnrollment(tx, current.learnerId, current.id);
+        if (!projection?.ready) throw new UnprocessableEntityException('PROGRAM_COMPLETION_READINESS_REQUIRED');
       }
       const updated = await tx.learnerProgramEnrollment.update({ where: { id: enrollmentId }, data: { status: input.targetStatus, revision: { increment: 1 } } });
       await this.event(tx, actorId, input.targetStatus, input.reason, current, updated);
