@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { AdminCurriculumTreeDto } from '@worklingo/contracts';
+import {apiClient} from '../../lib/api/api-client';
 import { ApiError } from '../../lib/api/api-client';
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
 import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
@@ -181,6 +182,7 @@ describe('CurriculumWorkspace', () => {
   });
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.spyOn(apiClient,'listContentImports').mockResolvedValue([]);
     vi.spyOn(adminCurriculumClient, 'getTree').mockResolvedValue(mockTree);
   });
 

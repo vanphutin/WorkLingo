@@ -1,5 +1,8 @@
 'use client';
 import { useAdminDraftGuard, useAdminCanNavigate } from '../admin-dashboard/admin-navigation-guard';
+import {AdminLink} from '../admin-dashboard/admin-navigation-guard';
+import {useT} from '../../i18n/provider';
+import {programPlatformMessages} from '../../i18n/messages/programPlatform';
 import { AdminPageHeader } from '../admin-experience/admin-patterns';
 
 import { useAdminCurriculum } from './i18n';
@@ -15,10 +18,13 @@ import type {
 import { adminCurriculumClient } from '../../lib/api/admin-curriculum-client';
 import { curriculumFoundationClient } from '../../lib/api/curriculum-foundation-client';
 import { FoundationDefinitionEditor, type PrerequisiteOption } from './foundation-definition-editor';
+import {MissionLessonPicker,loadEvidenceLessons,type EvidenceLessonOption} from './mission-lesson-picker';
+import '../program-platform/program-platform.css';
 import './curriculum.css';
 import '../admin-content/authoring-experience.css';
 
-export function CurriculumWorkspace() {
+export function CurriculumWorkspace({initialProgramId}:{initialProgramId?:string}={}) {
+  const platformT=useT('programPlatform',programPlatformMessages);
   const { t, locale, number, label, message: displayMessage } = useAdminCurriculum();
   const canNavigate = useAdminCanNavigate();
   const [tree, setTree] = useState<AdminCurriculumTreeDto | null>(null);
@@ -29,7 +35,9 @@ export function CurriculumWorkspace() {
   // Forms state
   const [isCreatingPath, setIsCreatingPath] = useState(false);
   const [pathName, setPathName] = useState('');
-  const [pathProgramId, setPathProgramId] = useState('');
+  const [pathProgramId, setPathProgramId] = useState(initialProgramId??'');
+  const [evidenceLessons,setEvidenceLessons]=useState<EvidenceLessonOption[]>([]);
+  const [lessonMissionId,setLessonMissionId]=useState<string|null>(null);
   const [pathSlug, setPathSlug] = useState('');
 
   const [activeLevelFormPathId, setActiveLevelFormPathId] = useState<string | null>(null);
@@ -260,16 +268,17 @@ export function CurriculumWorkspace() {
     if (activeFoundationMissionId === mission.id) { setActiveFoundationMissionId(null); return; }
     setIsOpeningFoundation(true); setErrorMessage(null);
     try {
-      const candidates = tree?.paths.flatMap((path) => path.levels.flatMap((level) => level.missions))
-        .filter((candidate) => candidate.id !== mission.id) ?? [];
+      const ownerPath=tree?.paths.find(path=>path.levels.some(level=>level.missions.some(item=>item.id===mission.id)));
+      const candidates=tree?.paths.filter(path=>path.program?.id===ownerPath?.program?.id).flatMap(path=>path.levels.flatMap(level=>level.missions)).filter(candidate=>candidate.id!==mission.id)??[];
       const drafts = await Promise.all(candidates.map(async (candidate) => ({
         candidate, draft: await curriculumFoundationClient.getDraft(candidate.id).catch(() => null),
       })));
       setPrerequisiteOptions(drafts.flatMap(({ candidate, draft }) => draft?.publishedRevisions
         .filter((revision) => revision.status === 'PUBLISHED')
         .map((revision) => ({ id: revision.id, label: candidate.title, title: candidate.title, revision: revision.revision })) ?? []));
+      setEvidenceLessons(await loadEvidenceLessons(mission.lessons.flatMap(l=>l.currentPublishedVersionId?[l.currentPublishedVersionId]:[])));
       setActiveFoundationMissionId(mission.id);
-    } finally { setIsOpeningFoundation(false); }
+    } catch(e){setErrorMessage(e);} finally { setIsOpeningFoundation(false); }
   };
 
   const loadTree = async () => {
@@ -586,6 +595,7 @@ export function CurriculumWorkspace() {
 
   return (
     <div className="curriculum-container authoring-experience">
+      {initialProgramId?<p><AdminLink href={`/admin/learning-programs?programId=${initialProgramId}`}>{platformT('releases')} · {tree?.programs.find(p=>p.id===initialProgramId)?.name}</AdminLink></p>:null}
       <AdminPageHeader title={t('title')} description={t('help')} actions={
         <div className="curriculum-actions">
           <button
@@ -994,6 +1004,7 @@ export function CurriculumWorkspace() {
         missionId={activeFoundationMission.id}
         missionTitle={activeFoundationMission.title}
         prerequisiteOptions={prerequisiteOptions}
+        evidenceLessons={evidenceLessons}
         onClose={() => setActiveFoundationMissionId(null)}
       /> : null}
 
@@ -1391,6 +1402,8 @@ export function CurriculumWorkspace() {
                                       </div>
                                     </div>
 
+                                    <button type="button" className="action-button action-button-secondary" onClick={()=>setLessonMissionId(current=>current===mission.id?null:mission.id)}>{t('manageLessons')}</button>
+                                    {lessonMissionId===mission.id?<MissionLessonPicker key={`${mission.id}:${mission.revision}`} mission={mission} onSaved={()=>void loadTree()}/>:null}
                                     {!isCompactView && mission.lessons.length > 0 && (
                                       <ul className="lessons-list">
                                         {mission.lessons.map((lesson) => (

@@ -1,5 +1,6 @@
 export const adminCurriculumMessages = {
   "en": {
+    "manageLessons":"Attach and order lessons",
     "title": "Curriculum Management",
     "help": "Manage learning paths, CEFR levels, and published missions with playability rules.",
     "loadingTree": "Loading curriculum tree…",
@@ -194,6 +195,7 @@ export const adminCurriculumMessages = {
     "programFolderRegion": "Program folder {name}"
   },
   "vi": {
+    "manageLessons":"Gắn và sắp xếp bài học",
     "title": "Quản lý chương trình học",
     "help": "Quản lý lộ trình, cấp độ CEFR và nhiệm vụ đã xuất bản theo quy tắc đủ điều kiện học.",
     "loadingTree": "Đang tải cây chương trình học…",

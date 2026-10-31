@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import DashboardPage from './page';
 import { intermediateTopicClient } from '../../../lib/api/intermediate-topic-client';
 import { learnerDashboardClient } from '../../../lib/api/learner-dashboard-client';
+import { programPlatformClient } from '../../../lib/api/program-platform-client';
 import { overviewFixture } from '../../../features/learner-dashboard/overview.test-fixture';
 const id = '11111111-1111-4111-8111-111111111111';
 const second = '22222222-2222-4222-8222-222222222222';
@@ -12,6 +13,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => router }));
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 describe('Topic selection independent from generic mission availability', () => {
   it('uses prefetched topics even when generic mission availability fails with 422', async () => {
+    vi.spyOn(programPlatformClient, 'enrollmentsMine').mockResolvedValue({ items: [], total: 0, page: 1, limit: 100 });
     vi.spyOn(learnerDashboardClient, 'getOverview').mockResolvedValue({ ...overviewFixture,
       roadmap: { status: 'ready', data: { programId: id, enrollmentId: id, items: [] } },
       availability: { status: 'error', error: { code: 'CURRICULUM_UNAVAILABLE', status: 422 } },

@@ -4,6 +4,13 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 import type { CurriculumRoadmapDto, DashboardOverview, EngagementSummaryDto, LearnerDashboardAnalytics, ProgramContextDto } from '@worklingo/contracts';
+import type {ProgramEnrollmentDto} from '@worklingo/contracts';
+import {programPlatformClient} from '../../../lib/api/program-platform-client';
+import {EnrolledProgramProgress} from '../../../features/program-platform/enrolled-program-progress';
+import {PlatformError} from '../../../features/program-platform/shared';
+import {useT} from '../../../i18n/provider';
+import {programPlatformMessages} from '../../../i18n/messages/programPlatform';
+import '../../../features/program-platform/program-platform.css';
 import { DashboardView } from '../../../features/learning-session/dashboard-view';
 import {
   apiClient,
@@ -16,6 +23,10 @@ import { learningProgramClient } from '../../../lib/api/learning-program-client'
 
 export default function DashboardPage() {
   const router = useRouter();
+  const platformT=useT('programPlatform',programPlatformMessages);
+  const [activeEnrollment,setActiveEnrollment]=useState<ProgramEnrollmentDto|null|undefined>(undefined);
+  const [enrollmentError,setEnrollmentError]=useState<unknown>(null);
+  const [enrollmentReload,setEnrollmentReload]=useState(0);
   const [progress, setProgress] = useState<LearnerProgressDto | null>(null);
   const [programContext, setProgramContext] = useState<ProgramContextDto | null>(null);
   const [availability, setAvailability] = useState<SessionAvailabilityDto | null>(null);
@@ -157,6 +168,14 @@ export default function DashboardPage() {
     };
   }, []);
 
+  const enrollmentId=programContext?.enrollment?.id;
+  useEffect(()=>{
+    if(!enrollmentId)return;
+    let active=true;setActiveEnrollment(undefined);setEnrollmentError(null);
+    async function find(){let page=1;while(active){const result=await programPlatformClient.enrollmentsMine({page,limit:100});const found=result.items.find(item=>item.id===enrollmentId);if(found){if(active)setActiveEnrollment(found);return;}if(page*100>=result.total){if(active)setActiveEnrollment(null);return;}page++;}}
+    void find().catch(error=>{if(active)setEnrollmentError(error);});return()=>{active=false;};
+  },[enrollmentId,enrollmentReload]);
+
   const handleUpdateTarget = async (targetDays: number) => {
     const updated = await engagementClient.updateWeeklyTarget(targetDays);
     setEngagement(updated);
@@ -167,6 +186,9 @@ export default function DashboardPage() {
     router.push(`/sessions/${session.id}`);
   };
 
+  if(enrollmentError)return <main className="program-platform"><PlatformError error={enrollmentError}/><button type="button" onClick={()=>setEnrollmentReload(v=>v+1)}>{platformT('retry')}</button></main>;
+  if(enrollmentId&&activeEnrollment===undefined)return <main><p role="status">{platformT('loading')}</p></main>;
+  if(activeEnrollment?.display?.release?.source==='AUTHORED')return <main className="program-platform"><h1>{activeEnrollment.display.release.title}</h1><p>{platformT('version',{version:activeEnrollment.display.release.version})} · {platformT(activeEnrollment.status)}</p><EnrolledProgramProgress key={activeEnrollment.id} enrollmentId={activeEnrollment.id}/></main>;
   return (
     <DashboardView
       progress={progress}

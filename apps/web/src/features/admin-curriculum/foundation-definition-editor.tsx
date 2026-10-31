@@ -1,6 +1,8 @@
 'use client';
 import {useT} from '../../i18n/provider';
 import {adminBeginnerMessages} from '../../i18n/messages/adminBeginner';
+import type {EvidenceLessonOption} from './mission-lesson-picker';
+import {useCommandKey} from '../program-platform/shared';
 import { useAdminDraftGuard } from '../admin-dashboard/admin-navigation-guard';
 
 import { useAdminCurriculum, type SystemMessage } from './i18n';
@@ -27,6 +29,7 @@ export type FoundationEditorClient=Pick<typeof curriculumFoundationClient,'getDr
  reviewDraft?:(missionId:string,command:{expectedRevision:number;idempotencyKey:string})=>Promise<{reviewHash:string;reviewKind:string}>;
 };
 interface Props {
+ readonly evidenceLessons?:readonly EvidenceLessonOption[];
  readonly client?:FoundationEditorClient;
  readonly capabilities?:Partial<Record<'save'|'validate'|'review'|'publish',boolean>>;
   readonly missionId: string;
@@ -44,7 +47,8 @@ const emptyDefinition: CurriculumDefinitionInput = {
 const skills = ['reading', 'listening', 'speaking', 'writing'] as const;
 type Objective = CurriculumDefinitionInput['objectives'][number];
 
-export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisiteOptions, onClose, client=curriculumFoundationClient, capabilities }: Props) {
+export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisiteOptions, onClose, client=curriculumFoundationClient, capabilities,evidenceLessons }: Props) {
+  const commandKey=useCommandKey();
   const tb=useT('adminBeginner',adminBeginnerMessages);
   const [reviewedRevision,setReviewedRevision]=useState<number|null>(null);
   const permit=(action:'save'|'validate'|'review'|'publish')=>capabilities?.[action]??true;
@@ -111,12 +115,12 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
     try {
       if (action === 'save') {
         const saved = await client.saveDraft(missionId, {
-          definition, expectedRevision: serverDraft?.revision ?? null, idempotencyKey: crypto.randomUUID(),
+          definition, expectedRevision: serverDraft?.revision ?? null, idempotencyKey: commandKey(`foundation-save:${missionId}`,{definition,expectedRevision:serverDraft?.revision??null}),
         });
         setServerDraft(saved); setReviewedRevision(null);setIsDirty(false); setMessage('Foundation draft saved.');
       } else {
         if (!serverDraft?.revision) throw new Error('Save the Foundation draft before validation or publication.');
-        const command = { expectedRevision: serverDraft.revision, idempotencyKey: crypto.randomUUID() };
+        const command = { expectedRevision: serverDraft.revision, idempotencyKey: commandKey(`foundation-${action}:${missionId}`,{expectedRevision:serverDraft.revision}) };
         if (action === 'validate') {
           const validated = await client.validateDraft(missionId, command);
           setServerDraft(validated); setIsDirty(false); setMessage('Foundation draft validated.');
@@ -165,9 +169,9 @@ export function FoundationDefinitionEditor({ missionId, missionTitle, prerequisi
               const prefix = index === 0 && evidenceIndex === 0 ? t('evidencePrefix') : t('evidencePrefixNumber', { number, evidence: evidenceNumber });
               return <fieldset key={evidenceIndex} className="foundation-wide foundation-evidence"><legend>{t('evidenceNumber', { number: evidenceNumber })}</legend>
                 <div className="foundation-form-grid">
-                  <label>{t('lessonVersionId')}<input aria-label={t('evidenceLesson', { prefix })} value={evidence.lessonVersionId} onChange={(event) => updateEvidence(index, evidenceIndex, { lessonVersionId: event.target.value })} /></label>
-                  <label>{t('activitySlug')}<input aria-label={t('evidenceActivity', { prefix })} value={evidence.activitySlug} onChange={(event) => updateEvidence(index, evidenceIndex, { activitySlug: event.target.value })} /></label>
-                  <label className="foundation-wide">{t('languageBlockSlugs')}<input aria-label={t('evidenceLanguageBlocks', { prefix })} value={evidence.languageBlockSlugs.join(', ')} onChange={(event) => updateEvidence(index, evidenceIndex, { languageBlockSlugs: event.target.value.split(',').map((value) => value.trim()).filter(Boolean) })} /></label>
+                  <label>{t('lessonVersionId')}{evidenceLessons?<select aria-label={t('evidenceLesson', { prefix })} value={evidence.lessonVersionId} onChange={event=>updateEvidence(index,evidenceIndex,{lessonVersionId:event.target.value,activitySlug:'',languageBlockSlugs:[]})}><option value="">&mdash;</option>{evidenceLessons.map(l=><option key={l.lessonVersionId} value={l.lessonVersionId}>{l.title}</option>)}</select>:<input aria-label={t('evidenceLesson', { prefix })} value={evidence.lessonVersionId} onChange={(event) => updateEvidence(index, evidenceIndex, { lessonVersionId: event.target.value })} />}</label>
+                  <label>{t('activitySlug')}{evidenceLessons?<select aria-label={t('evidenceActivity', { prefix })} value={evidence.activitySlug} onChange={event=>updateEvidence(index,evidenceIndex,{activitySlug:event.target.value,languageBlockSlugs:[]})}><option value="">&mdash;</option>{evidenceLessons.find(l=>l.lessonVersionId===evidence.lessonVersionId)?.activities.map(a=><option key={a.slug} value={a.slug}>{a.slug}</option>)}</select>:<input aria-label={t('evidenceActivity', { prefix })} value={evidence.activitySlug} onChange={(event) => updateEvidence(index, evidenceIndex, { activitySlug: event.target.value })} />}</label>
+                  <label className="foundation-wide">{t('languageBlockSlugs')}{evidenceLessons?<select multiple aria-label={t('evidenceLanguageBlocks', { prefix })} value={evidence.languageBlockSlugs} onChange={event=>updateEvidence(index,evidenceIndex,{languageBlockSlugs:Array.from(event.target.selectedOptions,o=>o.value)})}>{evidenceLessons.find(l=>l.lessonVersionId===evidence.lessonVersionId)?.activities.find(a=>a.slug===evidence.activitySlug)?.languageBlockReferences.map(slug=><option key={slug} value={slug}>{slug}</option>)}</select>:<input aria-label={t('evidenceLanguageBlocks', { prefix })} value={evidence.languageBlockSlugs.join(', ')} onChange={(event) => updateEvidence(index, evidenceIndex, { languageBlockSlugs: event.target.value.split(',').map((value) => value.trim()).filter(Boolean) })} />}</label>
                 </div>
                 {objective.evidence.length > 1 ? <button type="button" className="action-button action-button-danger" onClick={() => updateObjective(index, { evidence: objective.evidence.filter((_, itemIndex) => itemIndex !== evidenceIndex) })}>{t('removeEvidence', { number: evidenceNumber })}</button> : null}
               </fieldset>;

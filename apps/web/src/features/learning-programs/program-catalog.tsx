@@ -19,6 +19,8 @@ import type {
 import { learningProgramClient } from '../../lib/api/learning-program-client';
 import { ApiError } from '../../lib/api/api-client';
 import './program-catalog.css';
+import {EnrolledPrograms} from '../program-platform/enrolled-programs';
+import {programPlatformMessages} from '../../i18n/messages/programPlatform';
 
 const statusKeys = {
   AVAILABLE: 'available', BETA: 'beta', COMING_SOON: 'comingSoon', DISABLED: 'disabled', IN_DEVELOPMENT: 'inDevelopment',
@@ -80,6 +82,7 @@ function ProgramAction({ program, pending, onActivate }: {
 export function ProgramCatalog() {
   const t = useT('programs', programsMessages);
   const { locale } = useLocalePreference();
+  const platformT=useT('programPlatform',programPlatformMessages);
   const router = useRouter();
   const [catalog, setCatalog] = useState<LearningProgramCatalogDto | null>(null);
   const [context, setContext] = useState<ProgramContextDto | null>(null);
@@ -166,6 +169,7 @@ export function ProgramCatalog() {
         <p>{t('introduction')}</p>
       </header>
 
+      {!isLoading&&!hasError?<EnrolledPrograms initialContext={context}/>:null}
       {context?.activeProgram && <p>{t('active')}{' '}<strong>{programText(context.activeProgram.name, locale)}</strong></p>}
       {isActivating && <p role="status" aria-live="polite">{t('opening')}</p>}
       {activationError && <div role="alert">
@@ -224,6 +228,7 @@ export function ProgramCatalog() {
                   <dd>{formatNumber(locale, program.publishedLevelCount)}</dd>
                 </div>
               </dl>}
+              {program.currentRelease?<section><p>{platformT('version',{version:program.currentRelease.version})}</p><ul>{program.currentRelease.objectives?.map(o=><li key={o}>{o}</li>)}</ul></section>:null}
               <ProgramAction program={program} pending={isActivating || needsRefresh} onActivate={() => { void activate(program); }} />
             </li>
           ))}

@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { LearningProgramCatalogDto, ProgramContextDto } from '@worklingo/contracts';
 import { ApiError } from '../../lib/api/api-client';
 import { learningProgramClient } from '../../lib/api/learning-program-client';
+import {programPlatformClient} from '../../lib/api/program-platform-client';
 import { ProgramCatalog } from './program-catalog';
 import { LocaleProvider } from '../../i18n/provider';
 
@@ -105,6 +106,7 @@ describe('ProgramCatalog', () => {
     vi.restoreAllMocks();
     push.mockReset();
     vi.spyOn(learningProgramClient, 'getContext').mockResolvedValue(context);
+    vi.spyOn(programPlatformClient,'enrollmentsMine').mockResolvedValue({items:[],total:0,page:1,limit:25});
   });
   afterEach(cleanup);
 

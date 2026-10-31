@@ -5,13 +5,25 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { apiClient } from '../../../lib/api/api-client';
 import { intermediateTopicClient } from '../../../lib/api/intermediate-topic-client';
 import { learningProgramClient } from '../../../lib/api/learning-program-client';
+import { programPlatformClient } from '../../../lib/api/program-platform-client';
 import { dashboardFixture } from '../../../features/learner-dashboard/dashboard.test-fixtures';
 import { overviewFixture } from '../../../features/learner-dashboard/overview.test-fixture';
 import DashboardPage from './page';
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
-beforeEach(() => { vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json(overviewFixture))); });
+vi.mock('../../../features/program-platform/enrolled-program-progress', () => ({ EnrolledProgramProgress: ({ enrollmentId }: { enrollmentId: string }) => <div>Authored progress {enrollmentId}</div> }));
+beforeEach(() => { vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json(overviewFixture))); vi.spyOn(programPlatformClient, 'enrollmentsMine').mockResolvedValue({ items: [], total: 0, page: 1, limit: 100 }); });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); window.history.replaceState(null, '', '/'); });
 describe('Learner dashboard overview', () => {
+  it('routes an authored pin exclusively to its server projection and retries failed pin lookup', async () => {
+    const enrollmentId = overviewFixture.programContext.enrollment!.id;
+    vi.mocked(programPlatformClient.enrollmentsMine).mockRejectedValueOnce(new Error('Offline')).mockResolvedValueOnce({ items: [{ id: enrollmentId, display: { programName: 'Program', programSlug: 'authored', release: { id: enrollmentId, source: 'AUTHORED', status: 'RETIRED', version: 3, title: 'Pinned release' } }, programId: enrollmentId, learnerId: enrollmentId, programVersionId: enrollmentId, status: 'ACTIVE', revision: 1, currentLevelId: null, curriculumRevisionIds: [], createdAt: '2026-10-31T00:00:00.000Z', updatedAt: '2026-10-31T00:00:00.000Z' }], total: 1, page: 1, limit: 100 });
+    render(<DashboardPage />);
+    expect(await screen.findByRole('alert')).toBeVisible();
+    fireEvent.click(screen.getByRole('button', { name: 'Reload' }));
+    expect(await screen.findByRole('heading', { name: 'Pinned release' })).toBeVisible();
+    expect(screen.getByText(`Authored progress ${enrollmentId}`)).toBeVisible();
+    expect(screen.queryByRole('link', { name: 'Continue saved session' })).not.toBeInTheDocument();
+  });
   it('retries failed progress without refetching healthy sections', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(Response.json({ ...overviewFixture, progress: { status: 'error', error: { code: 'DASHBOARD_SECTION_UNAVAILABLE', status: 503 } } }));
     const retry = vi.spyOn(apiClient, 'getProgress').mockResolvedValue(overviewFixture.progress.status === 'ready' ? overviewFixture.progress.data! : null!);

@@ -36,6 +36,25 @@ describe('FoundationDefinitionEditor', () => {
   beforeEach(() => { vi.restoreAllMocks(); vi.spyOn(curriculumFoundationClient, 'getDraft').mockResolvedValue(draft); });
   afterEach(cleanup);
 
+  it('selects exact published lesson evidence without requiring UUID authoring', async () => {
+    const nextLesson = '33333333-3333-4333-8333-333333333333';
+    const save = vi.spyOn(curriculumFoundationClient, 'saveDraft').mockResolvedValue(draft);
+    render(<FoundationDefinitionEditor missionId={missionId} missionTitle="Workplace requests" prerequisiteOptions={[]} evidenceLessons={[
+      { lessonVersionId: draft.definition.objectives[0]!.evidence[0]!.lessonVersionId, title: 'Read a request', activities: [{ slug: 'read-request', languageBlockReferences: ['could-you'] }] },
+      { lessonVersionId: nextLesson, title: 'Reply to a request', activities: [{ slug: 'reply-request', languageBlockReferences: ['would-you'] }] },
+    ]} />);
+    const lesson = await screen.findByRole('combobox', { name: 'Objective evidence lesson version' });
+    fireEvent.change(lesson, { target: { value: nextLesson } });
+    const activity = screen.getByRole('combobox', { name: 'Objective evidence activity' });
+    expect(activity).toHaveValue('');
+    fireEvent.change(activity, { target: { value: 'reply-request' } });
+    const languageBlocks = screen.getByRole('listbox', { name: 'Objective evidence language blocks' });
+    (screen.getByRole('option', { name: 'would-you' }) as HTMLOptionElement).selected = true;
+    fireEvent.change(languageBlocks);
+    fireEvent.click(screen.getByRole('button', { name: /save foundation draft/i }));
+    await waitFor(() => expect(save).toHaveBeenCalledWith(missionId, expect.objectContaining({ definition: expect.objectContaining({ objectives: [expect.objectContaining({ evidence: [{ lessonVersionId: nextLesson, activitySlug: 'reply-request', languageBlockSlugs: ['would-you'] }] })] }) })));
+  });
+
   it('localizes prerequisite revision metadata without translating its authored title', async () => {
     render(<LocaleProvider initialLocale="vi"><FoundationDefinitionEditor missionId={missionId} missionTitle="Workplace requests" prerequisiteOptions={[{ id: 'prerequisite-id', label: 'English lesson · revision 2', title: 'English lesson', revision: 2 }]} /></LocaleProvider>);
     expect(await screen.findByRole('checkbox', { name: 'English lesson · bản sửa đổi 2' })).toBeInTheDocument();
