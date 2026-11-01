@@ -14,6 +14,7 @@ import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { seedFoundationCurriculum } from '../../src/curriculum/infrastructure/seed-foundation.js';
 import { ObjectStorage } from '../../src/storage/domain/object-storage.port.js';
+import { requireR2QualificationDatabase } from './r2-qualification-database.js';
 
 export interface LearningSessionTestContext {
   readonly app: INestApplication;
@@ -24,6 +25,11 @@ export interface LearningSessionTestContext {
 }
 
 export async function createLearningSessionTestContext(prefix: string, options: { migrationConfig?: string } = {}): Promise<LearningSessionTestContext> {
+  const r2Url = process.env.WL_R2_TEST_DATABASE_URL;
+  if (r2Url) {
+    requireR2QualificationDatabase(r2Url, process.env.TEST_DATABASE_URL);
+    if (options.migrationConfig && options.migrationConfig !== 'prisma.r2.config.ts') throw new Error('R2 requires no-env migration config');
+  }
   const schemaName = `${prefix}_${randomUUID().replaceAll('-', '')}`;
   const baseUrl = process.env.TEST_DATABASE_URL ??
     'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
@@ -35,7 +41,8 @@ export async function createLearningSessionTestContext(prefix: string, options: 
   process.env.WORKLINGO_DATA_DIR = dataDirectory;
 
   const prismaCli = createRequire(path.resolve('package.json')).resolve('prisma/build/index.js');
-  const migrationArgs = [prismaCli, 'migrate', 'deploy', ...(options.migrationConfig ? ['--config', options.migrationConfig] : [])];
+  const migrationConfig = r2Url ? 'prisma.r2.config.ts' : options.migrationConfig;
+  const migrationArgs = [prismaCli, 'migrate', 'deploy', ...(migrationConfig ? ['--config', migrationConfig] : [])];
   const migration = spawnSync(process.execPath, migrationArgs, {
     encoding: 'utf8', env: { ...process.env, DATABASE_URL: url.toString() }, timeout: 30_000,
   });

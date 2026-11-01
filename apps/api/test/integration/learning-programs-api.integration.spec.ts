@@ -11,12 +11,14 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { AppModule } from '../../src/app.module.js';
 import { PrismaService } from '../../src/common/database/prisma.service.js';
 import { seedContentAdmin } from '../../src/users/infrastructure/seed-content-admin.js';
+import { requireR2QualificationDatabase } from './r2-qualification-database.js';
 
 describe('Learning programs learner API integration', () => {
   const schemaName = `learning_programs_${randomUUID().replaceAll('-', '')}`;
   const baseUrl =
     process.env.TEST_DATABASE_URL ??
     'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
+  if (process.env.WL_R2_TEST_DATABASE_URL) requireR2QualificationDatabase(process.env.WL_R2_TEST_DATABASE_URL, baseUrl);
   const adminDb = new PrismaClient({ datasourceUrl: baseUrl });
   let app: INestApplication;
   let database: PrismaClient;
@@ -29,7 +31,7 @@ describe('Learning programs learner API integration', () => {
     const cli = createRequire(path.resolve('package.json')).resolve(
       'prisma/build/index.js',
     );
-    const migration = spawnSync(process.execPath, [cli, 'migrate', 'deploy'], {
+    const migration = spawnSync(process.execPath, [cli, 'migrate', 'deploy', ...(process.env.WL_R2_TEST_DATABASE_URL ? ['--config', 'prisma.r2.config.ts'] : [])], {
       encoding: 'utf8',
       env: { ...process.env, DATABASE_URL: url.toString() },
       timeout: 45_000,

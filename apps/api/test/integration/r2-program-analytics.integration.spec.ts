@@ -24,7 +24,7 @@ describe('R2 program aggregate analytics API', () => {
   }, 60000);
   afterAll(async () => { await context?.close(); });
 
-  async function fixture(requiredReview = false) {
+  async function fixture(requiredReview = false, publish = true) {
     const suffix = randomUUID();
     const program = await context.database.learningProgram.create({ data: { slug: `analytics-${suffix}`, name: 'Analytics course', description: 'Synthetic historical analytics fixture', learningGoal: 'Practice', proficiencyLabel: 'A1–A2', iconKey: 'intermediate', displayOrder: 400 + await context.database.learningProgram.count(), availabilityStatus: 'IN_DEVELOPMENT', progressionPolicy: 'ACTIVITY_COMPLETION' } });
     const path = await context.database.learningPath.create({ data: { programId: program.id, name: 'Frozen path', slug: `p-${suffix}`, status: 'PUBLISHED' } });
@@ -40,7 +40,7 @@ describe('R2 program aggregate analytics API', () => {
     content.policy.review.requiredForReadiness = requiredReview;
     const versions = [];
     for (let i = 1; i <= 2; i++) versions.push(await context.database.programVersion.create({ data: { programId: program.id, version: i, status: 'DRAFT', snapshot: { ...content, title: `Frozen release ${i}` }, policy: content.policy, curriculumRevisionIds: [revision.id], curricula: { create: { curriculumRevisionId: revision.id, order: 1 } } } }));
-    for (const v of versions) await context.database.programVersion.update({ where: { id: v.id }, data: { status: 'PUBLISHED' } });
+    if (publish) for (const v of versions) await context.database.programVersion.update({ where: { id: v.id }, data: { status: 'PUBLISHED' } });
     return { program, content, versions, revision, lesson, mission, level };
   }
 
@@ -163,6 +163,41 @@ describe('R2 program aggregate analytics API', () => {
     try { await expect(context.app.get(ProgramAnalyticsService).aggregate(disabled.id, f.program.id, { from, to })).rejects.toMatchObject({ status: 403 }); }
     finally { await context.database.user.update({ where: { id: disabled.id }, data: { status: 'ACTIVE' } }); }
   }, 60000);
+
+  it('keeps mixed sibling unit and lesson observations separate across releases', async () => {
+    const f = await fixture(false, false);
+    const secondLesson = await context.database.lesson.create({ data: { slug: `analytics-second-${randomUUID()}` } });
+    const secondVersion = await context.database.lessonVersion.create({ data: { lessonId: secondLesson.id, title: 'Sibling lesson', sourceHash: 'synthetic-analytics-sibling', version: 1, status: 'PUBLISHED', parsedContent: f.lesson.parsedContent! } });
+    const secondMission = await context.database.mission.create({ data: { levelId: f.level.id, slug: `analytics-sibling-${randomUUID()}`, title: 'Sibling unit', objective: 'Second lesson', order: 2, status: 'PUBLISHED' } });
+    await context.database.missionLesson.create({ data: { missionId: secondMission.id, lessonId: secondLesson.id, order: 1 } });
+    const secondRevision = await context.database.curriculumRevision.create({ data: { missionId: secondMission.id, revision: 1, snapshot: f.revision.snapshot!, lessons: { create: { lessonVersionId: secondVersion.id, order: 1 } } } });
+    const content = structuredClone(f.content);
+    const sibling = structuredClone(content.curriculumBindings[0]!);
+    sibling.curriculumRevisionId = secondRevision.id; sibling.missionId = secondMission.id; sibling.title = 'Sibling unit'; sibling.order = 2;
+    sibling.lessons[0]!.lessonVersionId = secondVersion.id; sibling.lessons[0]!.title = 'Sibling lesson';
+    content.curriculumBindings.push(sibling);
+    // Deliberately dated persisted observations test aggregation, not grader qualification.
+    for (const v of f.versions) {
+      await context.database.programVersion.update({ where: { id: v.id }, data: { snapshot: content, curriculumRevisionIds: [f.revision.id, secondRevision.id] } });
+      await context.database.programVersion.update({ where: { id: v.id }, data: { status: 'PUBLISHED' } });
+    }
+    const enrollment = await context.database.learnerProgramEnrollment.create({ data: { learnerId, programId: f.program.id, programVersionId: f.versions[0]!.id, curriculumRevisionIds: [f.revision.id, secondRevision.id], createdAt: new Date(from) } });
+    await context.database.progressionSnapshot.create({ data: { enrollmentId: enrollment.id, programVersionId: f.versions[0]!.id, revision: 1, engineVersion: 'program-progression-v1', policyVersion: '1', createdAt: new Date(from), evidence: {}, projection: { completed: false, ready: false, items: [
+      { curriculumRevisionId: f.revision.id, lessonVersionId: f.lesson.id, completed: true, ready: true },
+      { curriculumRevisionId: secondRevision.id, lessonVersionId: secondVersion.id, completed: false, ready: false },
+    ] } } });
+    const result = programAnalyticsSchema.parse((await admin.get(`/api/v1/admin/learning-programs/${f.program.id}/analytics`).query({ from, to }).expect(200)).body);
+    const first = result.nodes.items.filter(n => n.versionId === f.versions[0]!.id);
+    expect(first).toHaveLength(5);
+    expect(first.find(n => n.type === 'stage')).toMatchObject({ observedEnrollments: 1, completedEnrollments: 0, readyEnrollments: 0, completionRate: 0 });
+    for (const type of ['unit', 'lesson']) {
+      expect(first.find(n => n.type === type && n.curriculumRevisionId === f.revision.id)).toMatchObject({ completedEnrollments: 1, readyEnrollments: 1, completionRate: 1 });
+      expect(first.find(n => n.type === type && n.curriculumRevisionId === secondRevision.id)).toMatchObject({ completedEnrollments: 0, readyEnrollments: 0, completionRate: 0 });
+    }
+    expect(result.nodes.items.filter(n => n.versionId === f.versions[1]!.id)).toHaveLength(5);
+    expect(result.nodes.items.filter(n => n.versionId === f.versions[1]!.id).every(n => n.totalEnrollments === 0)).toBe(true);
+    expect(result.versions.items.map(v => [v.totalEnrollments, v.activityCompletedEnrollments, v.readyEnrollments])).toEqual([[1, 0, 0], [0, 0, 0]]);
+  });
 
   it('authors exact real A2 source references with immutable provenance and rejects invalid vocabulary through HTTP', async () => {
     const real = JSON.parse(readFileSync('test/fixtures/r2-vocabulary-source.json', 'utf8')) as {

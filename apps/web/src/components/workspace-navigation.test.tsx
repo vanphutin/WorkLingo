@@ -83,7 +83,10 @@ describe('WorkspaceNavigation', () => {
     fireEvent.click(trigger);
     const current = screen.getByRole('link', { name: 'Settings' });
     current.focus();
-    fireEvent.click(current, { button: 0 }); // Native keyboard activation dispatches an ordinary click.
+    // Next owns navigation in the browser; cancel jsdom's unsupported document navigation.
+    const activation = new MouseEvent('click', { button: 0, bubbles: true, cancelable: true });
+    activation.preventDefault();
+    fireEvent(current, activation);
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     expect(trigger).toHaveFocus();
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();

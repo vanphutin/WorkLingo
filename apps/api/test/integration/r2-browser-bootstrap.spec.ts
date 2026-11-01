@@ -15,6 +15,14 @@ it('serves only an isolated R2 browser qualification fixture until explicit stop
     await seedContentAdmin(context.database, accounts.admin);
     await registerLearner(context.app, { displayName: 'Synthetic R2 browser learner', ...accounts.learner });
     const version = await context.database.lessonVersion.findFirstOrThrow({ where: { status: 'PUBLISHED' } });
+    // Expose the existing synthetic seed lesson in the actual authoring picker.
+    // This is fixture inventory, not curriculum/program authoring.
+    const owner = await context.database.user.findUniqueOrThrow({ where: { email: accounts.admin.email } });
+    await context.database.contentImport.create({ data: {
+      lessonId: version.lessonId, lessonVersionId: version.id, rawSource: 'Synthetic seeded lesson inventory',
+      sourceHash: 'r2-browser-synthetic', validationHash: 'r2-browser-synthetic',
+      normalizedPreview: version.parsedContent!, status: 'PUBLISHED', createdById: owner.id, updatedById: owner.id,
+    } });
     const admin = request.agent(context.app.getHttpServer());
     await admin.post('/api/v1/auth/login').send(accounts.admin).expect(200);
     const check = await admin.get('/api/v1/admin/learning-programs').expect(200);

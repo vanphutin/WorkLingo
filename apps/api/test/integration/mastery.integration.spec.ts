@@ -8,12 +8,14 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { TestClock } from '../../src/mastery/domain/clock.port.js';
 import { MasteryService } from '../../src/mastery/application/mastery.service.js';
 import type { PrismaService } from '../../src/common/database/prisma.service.js';
+import { requireR2QualificationDatabase } from './r2-qualification-database.js';
 
 describe('Mastery & Review Scheduler Integration', () => {
   const schemaName = `mastery_int_test_${randomUUID().replaceAll('-', '')}`;
   const baseUrl =
     process.env.TEST_DATABASE_URL ??
     'postgresql://worklingo:worklingo@127.0.0.1:5432/worklingo';
+  if (process.env.WL_R2_TEST_DATABASE_URL) requireR2QualificationDatabase(process.env.WL_R2_TEST_DATABASE_URL, baseUrl);
   const adminDb = new PrismaClient({ datasourceUrl: baseUrl });
   let database: PrismaClient;
   let masteryService: MasteryService;
@@ -32,7 +34,7 @@ describe('Mastery & Review Scheduler Integration', () => {
     );
     const migration = spawnSync(
       process.execPath,
-      [cli, 'migrate', 'deploy'],
+      [cli, 'migrate', 'deploy', ...(process.env.WL_R2_TEST_DATABASE_URL ? ['--config', 'prisma.r2.config.ts'] : [])],
       {
         env: { ...process.env, DATABASE_URL: url.toString() },
         encoding: 'utf8',
