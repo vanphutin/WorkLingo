@@ -1,6 +1,6 @@
 # R2 Full Learning Program & Progression Platform — qualification report
 
-Started: 2026-10-30. Qualification: 2026-10-31 and 2026-11-01. Status: **R2 ENGINEERING QUALIFIED — INDEPENDENT REVIEW ACCEPTED; INTEGRATION RECEIPT BELOW**. No production readiness, deployment or human qualification is claimed. The final controller closure section records governance and Git integration evidence separately.
+Started: 2026-10-30. Qualification: 2026-10-31 and 2026-11-01. Status: **R2 ENGINEERING CLOSED — VERIFIED, INDEPENDENTLY REVIEWED AND INTEGRATED INTO MAIN**. No production readiness, deployment or human qualification is claimed. The final controller closure section records governance and Git integration evidence separately.
 
 ## Initial repository state
 
@@ -399,7 +399,7 @@ The real mandate CLI transitioned MND-20261030-011 from implementing to verified
 
 Pre-integration audit: main/local/remote `d7a213e779c9fd4daac70e80f1e73ad545638833`; GitHub protected=false, rulesets=[], check-runs total_count=0, commit statuses total_count=0. The combined status API returns pending because there are no submitted statuses. This is absent CI, not passing CI; no failed check/protection is bypassed. Main's modified `apps/web/next-env.d.ts` retains SHA256 `B8B3A344484B959AF5E4E3FC1A1609DAC3CB9ECE0CDEB6C145BE29BC4C491000`; `backups/` inventory is retained for comparison. Primary container remains exited since `2026-10-31T05:09:36.868121Z`.
 
-Git merge/push receipt will be appended only after those commands succeed. No production deployment or primary migration is performed. External learner, expert pronunciation and real-provider grading qualification remain DEFERRED / NOT_RUN. Remaining release work is those external gates and environment-specific operational release checks; R2 engineering completion alone does not establish production readiness.
+Git merge/push succeeded as recorded below. No production deployment or primary migration is performed. External learner, expert pronunciation and real-provider grading qualification remain DEFERRED / NOT_RUN. Remaining release work is those external gates and environment-specific operational release checks; R2 engineering completion alone does not establish production readiness.
 
 ### Final commit inventory before controller receipt commits
 
@@ -426,3 +426,25 @@ b7cd6195e9a4b344ee2e27f22ca1c38ebfdc304a fix: isolate program edits and retire a
 ```
 
 Controller-only verification/integration receipt commits follow this inventory; their exact hashes are obtained from Git and the final remote receipt. They do not alter product code.
+
+### Actual Git and merged-result receipt
+
+- Starting main: `d7a213e779c9fd4daac70e80f1e73ad545638833`.
+- Final reviewed implementation: `2f139a2d59c4931f861a66c3584b0c4523f03c41`; production/test commit `8505333d386944925e977714372f58010d87b562`.
+- Controller governance/review-record commit: `b3bc3c54aa3bab1a9ff73344c958ec9405693c22` (`docs: verify R2 engineering closure and preserve independent review`). No product changes follow the reviewed implementation.
+- `git -C D:/Projects/WorkLingo merge --ff-only codex/r2-full-learning-program-platform` succeeded from starting main to `b3bc3c5`. Main and feature committed trees match (`90f27587c480563e46ae21d331633cf190829d8e`); product directories also match the reviewed implementation.
+- Fresh checks ran in the actual merged main checkout using explicit no-env/disposable configuration: 3 files / 12 API tests PASS (9 progression/review and 3 public final-review regressions), 35 files / 176 contracts PASS; mandate valid35 and diff check PASS. Controller's mandate CLI tests also passed22/22. Logs: `controller-closure/merged-api-restored.log`, `merged-contracts.log`, `mandate-tests.log` under the stable evidence parent.
+- The first main API check passed9 pure tests and failed3 HTTP tests because main's ignored generated Prisma client was stale (96 models and no ProgramVersion). A no-I/O DMMF comparison showed the qualified worktree had102 models including ProgramVersion. `prisma generate --config prisma.r2.config.ts` under explicit disposable DATABASE_URL regenerated only the client to102 models; no migration or primary query was performed. The exact rerun passed12/12. Initial failure and generator output remain `merged-api.log` and `merged-prisma-generate.log`; no failing assertions were skipped or weakened.
+- `git -C D:/Projects/WorkLingo push origin main` succeeded normally: `d7a213e..b3bc3c5 main -> main`. Independent `git ls-remote origin refs/heads/main` and GitHub branch API both returned full SHA `b3bc3c54aa3bab1a9ff73344c958ec9405693c22`. Post-push GitHub check-runs0/statuses0; absence of CI is still explicit. No force-push/protection bypass or deployment occurred.
+- Main user next-env checksum and backups file inventory remain identical. Primary container remains exited at its original timestamp; only owned disposable schemas were mutated. This worktree is host-managed and retained; unrelated worktrees and preservation records remain untouched.
+- This reporting-only receipt commit follows the already pushed integration commit. Its own hash cannot be embedded in its content; the final response and `C:/Users/ASUS/AppData/Local/Temp/worklingo-r2full-20261030/controller-closure/final-remote-receipt.json` record the final pushed reporting tip and complete commit inventory after the second normal fast-forward push.
+
+### Evidence preservation and next milestone
+
+All12 ledger rulings, including their costs, are retained verbatim above. Controller artifacts, task reports and diff packages are copied to `C:/Users/ASUS/AppData/Local/Temp/worklingo-r2full-20261030/controller-closure/sdd-workspace/` before deleting only the current plan's ignored scratch folder. Original raw logs, fresh final-fix browser evidence and controller observations remain in their separate stable evidence locations; the overwritten old trace remains explicitly disclosed. The final remote receipt records owned-service cleanup after tests.
+
+R2's authorized engineering Definition of Done is met across A–J: program/curriculum/release management, enrollment, deterministic progression, separate completion/mastery/readiness, real-session reviews, learner UI, bounded private analytics, exact vocabulary provenance, compatibility/migration checks, actual synthetic browser journeys and independent review. No unresolved Critical/Important engineering finding remains. One nonblocking expected-logger test-hygiene Minor is deferred. No human/provider/pronunciation qualification or production readiness is inferred.
+
+Recommended next milestone is qualified learning-content expansion and human/provider calibration under a separate bounded mandate, then environment-specific migration, backup/restore and operational release gates. Beginner content may use actual A1–A2 vocabulary; missing C2 source data, legal permission authenticity and learner outcomes must not be invented. No additional roadmap sprint or deployment is silently authorized here.
+
+SKILL AUDIT — Controller closure: SDD coordinated the single fix wave and one scoped re-review; code-review-and-quality/requesting-code-review supplied independent gates; receiving-code-review and systematic-debugging guided verified findings and the stale-client diagnosis; verification-before-completion bound claims to actual outputs; Git/branch finishing preserved user work during normal integration; mandate-steward recorded the real CLI verification transition. Fresh controller checks: pure9, mergedAPI12, contracts176, mandateCLI22, register35, checksum/diff/secret and Git remote checks passed. Implementation/domain/UI skills remain attributed to their actual task reports. No new product planning, content qualification or production-release workflow was invoked by closure.

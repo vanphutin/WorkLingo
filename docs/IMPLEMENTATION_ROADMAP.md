@@ -8,7 +8,8 @@ mastery and readiness, reviews, learner roadmap and program/version analytics. E
 session/evaluation and authoritative vocabulary models remain the source of truth. Beginner may
 use original A1–A2 vocabulary; source IDs, CEFR metadata and provenance must be preserved.
 
-Scoped mandate **MND-20261030-011** has completed its implementation and independent review gates. The canonical
+Scoped mandate **MND-20261030-011** is verified; the engineering scope was merged and pushed to main
+on 2026-11-01. The canonical
 [design](superpowers/specs/2026-10-30-r2-full-learning-program-platform-design.md) and
 [execution plan](superpowers/plans/2026-10-30-r2-full-learning-program-platform.md) define the bounded
 work; the [qualification report](qualification/r2-full-learning-program-platform-final-report.md)
