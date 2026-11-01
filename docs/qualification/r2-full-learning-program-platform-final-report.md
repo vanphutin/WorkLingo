@@ -1,6 +1,6 @@
 # R2 Full Learning Program & Progression Platform — qualification report
 
-Started: 2026-10-30. Qualification: 2026-10-31; resumed final gates on 2026-11-01 after environment reset. Status: **IMPLEMENTED AND QUALIFIED LOCALLY — INDEPENDENT FINAL REVIEW / INTEGRATION PENDING**. No production readiness, deployment or human qualification is claimed. Main merge, push receipt and mandate verification remain controller-owned gates.
+Started: 2026-10-30. Qualification: 2026-10-31 and 2026-11-01. Status: **R2 ENGINEERING QUALIFIED — INDEPENDENT REVIEW ACCEPTED; INTEGRATION RECEIPT BELOW**. No production readiness, deployment or human qualification is claimed. The final controller closure section records governance and Git integration evidence separately.
 
 ## Initial repository state
 
@@ -64,11 +64,11 @@ Implemented additive architecture and exact builder decisions are in the linked 
 | G Program/version analytics | Implemented; aggregate boundaries, mixed sibling fixture and actual UI updated activity passed |
 | H Master vocabulary | Exact copied source IDs/CEFR/provenance qualified through HTTP; no primary edits |
 | I Publication/version compatibility | Immutable persistence, archived pins and newer release preserving old enrollment/preview passed |
-| J Actual DB/API/browser/regression/review | Local engineering checks below; independent Task 6/whole-branch review and integration pending |
+| J Actual DB/API/browser/regression/review | Local engineering checks below; Task 6 and whole-branch review plus the single fix re-review accepted; integration receipt recorded separately |
 
 ## Independent review and integration
 
-Read-only discovery and builder check identified four architecture gaps: hierarchy/action granularity, multi-lesson session selection, truthful legacy-pin backfill, and explicit mastery qualification provenance. All have explicit resolutions in the design. Implementation review, mission commit audit, merge and push are pending. Final commit hashes must be populated from actual Git evidence; no final hash is invented.
+Read-only discovery and builder check identified four architecture gaps: hierarchy/action granularity, multi-lesson session selection, truthful legacy-pin backfill, and explicit mastery qualification provenance. All have explicit resolutions in the design. Tasks 1–6 were reviewed independently; the whole-branch review covered all fifteen initial mission commits. Its three Important findings were fixed in one four-commit wave and verified by one scoped re-review at `2f139a2d59c4931f861a66c3584b0c4523f03c41`. No unresolved Critical/Important finding remains. The Resume Minor is addressed; expected test-logger noise is explicitly deferred and nonblocking. The [independent review record](r2-full-learning-program-platform-independent-review.md) preserves both verdicts and their verification limits. Git integration evidence follows in the final controller closure section.
 
 ### Persistence phase evidence
 
@@ -388,3 +388,41 @@ Stable evidence root: `C:/Users/ASUS/AppData/Local/Temp/worklingo-r2full-2026103
 Fresh resumed session: `cd1e1d17-9eb1-4ca7-af2a-f7423c754337`, DB `IN_PROGRESS`, checkpoint 0, curriculum `acb37c20-fe22-4bbf-ae23-b81e7b8eb4a0`, lesson `2846849b-1abd-4714-838f-26209922a732`; raw result `final-fix-resume-db.log`. The unique browser schema was closed by the explicit owned stop request and its harness cleaned it; API/Next listeners are stopped. Owned PostgreSQL remains running. Main checkout, primary database, provider keys and existing user work were untouched.
 
 The unchanged full web 978, parser 147 and full workspace build in Task 6 remain historical pre-fix evidence; they were not rerun or relabelled as fresh. Current localized API changes have the full API regression/build and real browser coverage above. Production-scale latency, exhaustive legacy journeys, real-provider grading, human/pronunciation qualification, full WCAG certification, live primary-content inspection, legal permission authenticity and deployment remain limited/deferred exactly as stated earlier. No schema migration, new dependency, grading pipeline or production action was introduced. All twelve ledger rulings remain preserved; D-040 records these fixes within the existing approved scope.
+
+## Controller final closure and integration receipt — 2026-11-01
+
+The whole-branch review covered `d7a213e779c9fd4daac70e80f1e73ad545638833..70810ebd269284ece29b9287d1883ddd10f6be10` (15 commits). Its complete fix wave is `70810eb..2f139a2` (4 commits, including documentation). The one scoped independent re-review marks all three Important findings and the Resume Minor ADDRESSED, finds no new breakage, and retains expected logger noise as the sole deferred nonblocking Minor. Both reports are preserved in [the independent review record](r2-full-learning-program-platform-independent-review.md). All earlier pending-review/integration statements above describe historical task checkpoints; this section is authoritative for final status.
+
+Controller freshly ran `pnpm --filter @worklingo/api exec vitest run --config vitest.r2.config.ts src/learning-programs/domain/program-progression.spec.ts src/learning-programs/domain/program-review.spec.ts` at `2f139a2`: 2 files / 9 PASS. Raw output is `C:/Users/ASUS/AppData/Local/Temp/worklingo-r2full-20261030/controller-closure/preintegration-pure.log`. The 39 original raw evidence inventory hashes still match. Both new migration SHA256 values remain the values recorded in the controller audit; no older migration was edited.
+
+The real mandate CLI transitioned MND-20261030-011 from implementing to verified using the observed acceptance checks and independent review references. `node .agents/skills/mandate-steward/scripts/mandate.mjs validate` then returned valid=true, count=35. Approval scope hash remains `735cdc2fa97dc18d35391312ed546974131f0e399dd61b412b835dbe44fca554`; the frozen proposal and human authorization were not rewritten.
+
+Pre-integration audit: main/local/remote `d7a213e779c9fd4daac70e80f1e73ad545638833`; GitHub protected=false, rulesets=[], check-runs total_count=0, commit statuses total_count=0. The combined status API returns pending because there are no submitted statuses. This is absent CI, not passing CI; no failed check/protection is bypassed. Main's modified `apps/web/next-env.d.ts` retains SHA256 `B8B3A344484B959AF5E4E3FC1A1609DAC3CB9ECE0CDEB6C145BE29BC4C491000`; `backups/` inventory is retained for comparison. Primary container remains exited since `2026-10-31T05:09:36.868121Z`.
+
+Git merge/push receipt will be appended only after those commands succeed. No production deployment or primary migration is performed. External learner, expert pronunciation and real-provider grading qualification remain DEFERRED / NOT_RUN. Remaining release work is those external gates and environment-specific operational release checks; R2 engineering completion alone does not establish production readiness.
+
+### Final commit inventory before controller receipt commits
+
+```text
+90246a1bc0d3f08ff0a598806373040bed4260e3 docs: scope authorized R2 full platform mission
+21b5c6f844b95c9ef57b9ab32be7c5fe5b76339e feat: persist immutable program releases and progression history
+48ab2e445874bcaf514627527a5241e1db342ddb feat: add audited program release and enrollment lifecycle
+a572990f0853bedae11c81b5d7170fcf984ed108 fix: preserve published catalog snapshots and enrollment administration
+d1d6e90477838b32b172ba649b6f8375084e4d36 feat: define deterministic pinned program progression and review rules
+21173c15524b2f8ed843faae6d6e26ff422cb3cc feat: persist owned release progression and real session review evidence
+3a5fa33f89db2896ad4625278b70921bba7cbc89 fix: keep authored continuation and remediation reachable
+4e8a51911f53922a50d7e7b00184257c2212f0b4 feat: add release-scoped program analytics and vocabulary provenance
+193ee1b3af57c4e541fb3f7350ad3526633464af feat: expose safe pinned release presentation to learners
+2bd5548041e9f85f433de8324e5d76d605544acd feat: add release enrollment analytics and learner progress panels
+bb231a7e143b6d87a9c9c0a8ec664fae89766d70 feat: connect authored program workflows to admin and learner routes
+b7cd6195e9a4b344ee2e27f22ca1c38ebfdc304a fix: isolate program edits and retire acknowledged command keys
+2acab43126a59d920dec01579b1253ccf75445ec fix: hide incomplete aggregate mastery percentages
+97f205e0135395a22bf45cb5513da300c1dc8b08 test: qualify real R2 authoring and pinned learner progression
+70810ebd269284ece29b9287d1883ddd10f6be10 docs: record R2 qualification evidence and architecture decisions
+7547e95abe1585aa65b4ee4ea68bedb125143642 fix: allow switching away from inactive program enrollments
+0bbbba0a69d9f82d749c36b726f65b0bd7b55550 fix: validate authored session coverage and assessed skill evidence
+8505333d386944925e977714372f58010d87b562 test: verify actual resume preserves the program session checkpoint
+2f139a2d59c4931f861a66c3584b0c4523f03c41 docs: record final R2 review fixes and regression evidence
+```
+
+Controller-only verification/integration receipt commits follow this inventory; their exact hashes are obtained from Git and the final remote receipt. They do not alter product code.

@@ -368,7 +368,7 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 
 ## D-040 - Authored release compatibility and assessed skill boundaries
 
-- **Status:** Accepted implementation (2026-11-01), final R2 review fixes; independent scoped re-review remains a controller gate.
+- **Status:** Accepted implementation (2026-11-01); final R2 review fixes independently accepted by the scoped re-review at `2f139a2`, with no new Critical/Important breakage.
 - **Decision:** Authored availability uses the existing pure session planner with its productive-pair policy. Before publication, simulate the same shortest-duration recommendations with uncovered activities prioritized until every pinned activity is reachable. Reject unsupported layouts with `PROGRAM_LESSON_UNPLAYABLE`, the exact lesson version, and an actionable explanation. Canonical Beginner/IELTS planning is unchanged.
 - **Evidence:** Deterministic reading/listening answers qualify only their assessed activity type. Additional instructional skill tags remain pending without a score; they still count toward activity completion. EvaluationService is unchanged.
 - **Enrollment:** Leaving an inactive selected enrollment validates its identity and context revision independently of status. The destination must still satisfy existing eligibility and release checks; inactive target enrollments require explicit reactivation and retain their pins.

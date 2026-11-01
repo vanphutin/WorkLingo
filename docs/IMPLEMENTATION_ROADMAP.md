@@ -1,6 +1,6 @@
 # WorkLingo MVP Implementation Roadmap
 
-## R2 — full learning program and progression platform (qualification, 2026-10-31)
+## R2 — full learning program and progression platform (engineering closure, 2026-11-01)
 
 The owner-authorized mission extends the existing R2 Admin → Learner vertical slice into immutable
 program releases, enrollment lifecycle/history, deterministic progression with separate completion,
@@ -8,18 +8,21 @@ mastery and readiness, reviews, learner roadmap and program/version analytics. E
 session/evaluation and authoritative vocabulary models remain the source of truth. Beginner may
 use original A1–A2 vocabulary; source IDs, CEFR metadata and provenance must be preserved.
 
-Scoped mandate **MND-20261030-011** is implementing. The canonical
+Scoped mandate **MND-20261030-011** has completed its implementation and independent review gates. The canonical
 [design](superpowers/specs/2026-10-30-r2-full-learning-program-platform-design.md) and
 [execution plan](superpowers/plans/2026-10-30-r2-full-learning-program-platform.md) define the bounded
 work; the [qualification report](qualification/r2-full-learning-program-platform-final-report.md)
 records actual progress and gates. Persistence, lifecycle/enrollment, progression/reviews, analytics,
-source vocabulary integration and Admin/Learner UI are implemented and task-reviewed through Task 5.
+source vocabulary integration and Admin/Learner UI are implemented and task-reviewed through Task 6.
 The real form-driven authoring/publication and learner completion/unlock/pause/reload/resume,
 analytics and old-version preservation journey passed against disposable Nest/PostgreSQL, with
-desktop/tablet/mobile EN/VI evidence. Final safe regressions, independent Task 6/whole-branch review,
-governance transition and main integration are tracked in the report. This entry does not mark R2
-merged or production-ready. Production deployment
-and primary database mutation are excluded. Merge/push require passing engineering gates.
+desktop/tablet/mobile EN/VI evidence. Final safe API, integration, evaluator, contracts and affected UI
+regressions passed; the whole-branch review and single final fix re-review leave no open Critical or
+Important finding. Expected test-logger noise is a deferred nonblocking Minor. The report records the
+mandate verification, authorized main integration and remote receipt. Production deployment and
+primary database mutation are excluded; human/expert/real-provider qualification remains deferred.
+Next milestone: qualified content and human/provider calibration in a separately scoped environment,
+with release operations following the existing release checklist.
 
 ## UI internationalization — 2026-10-14
 

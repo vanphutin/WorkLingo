@@ -1,6 +1,6 @@
 # Architecture
 
-## R2 platform extension — implementation and qualification (2026-10-31)
+## R2 platform extension — engineering closure (2026-11-01)
 
 The [R2 platform design](superpowers/specs/2026-10-30-r2-full-learning-program-platform-design.md)
 extends the existing Program → Path → Level → Mission → Lesson → Activity hierarchy. It does not
@@ -14,7 +14,8 @@ with available-at-capture metadata, not reconstructed historical metadata. Empty
 keep their existing flow. Authored release lifecycle, service authorization, deterministic progression,
 review orchestration, aggregate analytics and EN/VI Admin/Learner UI are implemented. The actual
 form-driven disposable Admin authoring → publication → learner completion/unlock/pause/reload/resume
-→ analytics → newer-release journey passed; independent final review and integration remain gates. The
+→ analytics → newer-release journey passed. Independent final review and its single scoped fix
+re-review leave no unresolved Critical/Important finding. The
 [qualification report](qualification/r2-full-learning-program-platform-final-report.md) carries the
 current verification status. Completion, qualified mastery and readiness are distinct projections.
 Unqualified AI results remain pending for authored R2 mastery; `EvaluationService` remains the sole
