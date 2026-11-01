@@ -366,6 +366,14 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Limits:** Retention denominators include only mature windows; qualified means exclude pending/unqualified attempts. Review backlog is CURRENT at generatedAt, explicitly distinct from historical events in the range. Responses contain aggregates, bounded pages and definitions rather than private learner identifiers or submissions.
 - **Evidence:** [Qualification](qualification/r2-full-learning-program-platform-final-report.md), including the mixed two-unit/two-lesson sibling regression and exact source provenance fixture.
 
+## D-040 - Authored release compatibility and assessed skill boundaries
+
+- **Status:** Accepted implementation (2026-11-01), final R2 review fixes; independent scoped re-review remains a controller gate.
+- **Decision:** Authored availability uses the existing pure session planner with its productive-pair policy. Before publication, simulate the same shortest-duration recommendations with uncovered activities prioritized until every pinned activity is reachable. Reject unsupported layouts with `PROGRAM_LESSON_UNPLAYABLE`, the exact lesson version, and an actionable explanation. Canonical Beginner/IELTS planning is unchanged.
+- **Evidence:** Deterministic reading/listening answers qualify only their assessed activity type. Additional instructional skill tags remain pending without a score; they still count toward activity completion. EvaluationService is unchanged.
+- **Enrollment:** Leaving an inactive selected enrollment validates its identity and context revision independently of status. The destination must still satisfy existing eligibility and release checks; inactive target enrollments require explicit reactivation and retain their pins.
+- **Verification:** Actual HTTP rejection/coverage, multi-skill learner and analytics, three inactive-state transitions and stale/target-reactivation regressions are recorded in the [qualification report](qualification/r2-full-learning-program-platform-final-report.md).
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

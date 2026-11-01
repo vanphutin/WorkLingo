@@ -344,3 +344,47 @@ b7cd6195e9a4b344ee2e27f22ca1c38ebfdc304a fix: isolate program edits and retire a
 ```
 
 All mission commits are included in the independent review range. Task 1–5 reviewed findings/fix rounds are documented above. Task 6 author self-review found/corrected misleading pending score presentation and endpoint guard comparisons, retained regression/mutation evidence, and inspected the final explicit diff. Fresh independent review and any subsequent findings are not fabricated here. Merge/push verification: NOT_RUN by qualification implementer; main/remote checks above remain checkpoint evidence only.
+
+## Final whole-branch review fix wave - 2026-11-01
+
+The independent review of `d7a213e..70810eb` returned no Critical, three Important and two Minor findings. This single implementer wave starts from clean `70810ebd269284ece29b9287d1883ddd10f6be10`; production/test head is `8505333d386944925e977714372f58010d87b562`. It addresses the three Important findings and the Resume E2E Minor. The controller owns the one scoped re-review, governance and integration; none is claimed complete here.
+
+| Finding | Final behavior and evidence |
+| --- | --- |
+| Publication admitted an unstartable lesson layout | Authored duration availability calls the canonical pure planner. Publication follows the same shortest-duration recommendation while accumulating covered activities and rejects a dead end with HTTP 422 `PROGRAM_LESSON_UNPLAYABLE`, the lesson version and corrective guidance. Both writing-in-activate and an unreachable reading activity in respond fail publication; a supported multi-skill lesson publishes, starts and reaches all pinned activities through real HTTP submissions. |
+| Reading/listening scores leaked to other skill tags | Only the comprehension activity's own assessed skill receives its verified deterministic score. Extra instructional tags remain PENDING with null score. Actual multi-skill learner progress and persisted admin analytics show zero qualified speaking/writing attempts; completion still reaches 100%. EvaluationService and canonical Beginner/IELTS planners are unchanged. |
+| Inactive selected enrollment blocked a new program | Current identity/revision is checked independently of current enrollment status. COMPLETED, SUSPENDED and WITHDRAWN generic program A can each self-enroll in new eligible B. Tests verify stale revisions fail, receipt replay is stable, A and its pins are unchanged, B pins the published release, and selecting inactive A still requires explicit reactivation. |
+| Resume E2E stopped at URL navigation | Test clicks the actual Resume session button, reads persisted `in_progress`, and verifies the checkpoint and exact plan/lesson/curriculum pins. A separate disposable SQL read confirms DB `IN_PROGRESS` at checkpoint 0. |
+| Expected unit logger emissions | Explicitly DEFERRED, nonblocking test hygiene in `safe-exception.filter.spec.ts:202` and `job-runner.service.spec.ts:128` (also transient storage-cleanup test). Expected safe logs remain visible; no production logging or failure assertion was weakened. |
+
+New commits:
+
+```text
+7547e95abe1585aa65b4ee4ea68bedb125143642 fix: allow switching away from inactive program enrollments
+0bbbba0a69d9f82d749c36b726f65b0bd7b55550 fix: validate authored session coverage and assessed skill evidence
+8505333d386944925e977714372f58010d87b562 test: verify actual resume preserves the program session checkpoint
+```
+
+Fresh checks on this final production code, using only no-env configurations and the owned loopback 55447 database:
+
+| Command / scope | Observed result |
+| --- | --- |
+| `pnpm --filter @worklingo/api exec vitest run --config vitest.r2.config.ts test/integration` | 9 files / 43 PASS, including all new HTTP regressions and isolated migration checks |
+| `pnpm --filter @worklingo/api exec vitest run --config vitest.r2.config.ts src --exclude src/teacher-ai/application/beginner-evaluator-context.spec.ts` | 167 files / 1,154 PASS |
+| `pnpm --filter @worklingo/api exec vitest run --config vitest.r2-legacy.config.ts` | 6 files / 30 PASS; explicit Foundation, IELTS study/catalog, learning sessions, mastery and legacy program seams |
+| `pnpm --filter @worklingo/api exec vitest run --config vitest.beginner-evaluator-context.config.ts` | 2 files / 60 PASS; includes unchanged EvaluationService |
+| `pnpm --filter @worklingo/contracts test` | 35 files / 176 PASS |
+| Web targeted program catalog/enrollment/admin and SessionShell; then program-platform and API clients | 4 files / 41 PASS + 10 files / 26 PASS |
+| `pnpm --filter @worklingo/web exec playwright test --config playwright.r2.config.ts` | Fresh actual form-driven journey 1/1 PASS, including Resume button; 1.3 minutes overall |
+| `pnpm --filter @worklingo/api typecheck`; `pnpm --filter @worklingo/api build`; scoped ESLint of six changed API files | PASS |
+| Secret scan; `git diff --check` | PASS; private browser manifest and generated Next route file excluded |
+
+TDD evidence: the original publication implementation returns 200 instead of 422 for both invalid layouts; the original adapter reports speaking qualifiedAttempts 1 / score 1 from reading; all three original inactive-context cases return 409 instead of 200. After fixes all pass. A deliberate mutation restoring the ACTIVE guard kills all three strengthened generic-A cases; exact restoration passes 3/3. The targeted mutation runs exclude 13 unrelated cases by `-t`; the full lifecycle file passes all 16 in the complete R2 run.
+
+Preserved non-product failures: an early target-reactivation assertion used canonical Intermediate's reserved slug and received 400; the fixture was strengthened to generic authored A/B. The first fresh browser assertion incorrectly used database enum casing `PAUSED` rather than the documented HTTP DTO `paused`; the corrected run still asserts the actual state, checkpoint, plan and pins. A web test invocation used a nonexistent `program-progress` directory and found no tests; the corrected `program-platform` run passes 26. A conservative schema-name guard rejected the first SQL probe before execution; the validated actual fixture schema was then queried. Hidden Start-Process startup was blocked by automatic command policy; the ordinary persistent exec session successfully started the same local Next service.
+
+Stable evidence root: `C:/Users/ASUS/AppData/Local/Temp/worklingo-r2full-20261030/task6-evidence/`. New raw logs are `final-fix-*.log`; full commands, outputs and self-review are in `.superpowers/sdd/2026-10-30-r2-full-learning-program-platform/final-fix-report.md` and its retained copy in the evidence root. Fresh browser screenshots, timestamped receipt (`2026-11-01T04:01:13.114Z`) and trace are in `final-fix-browser-evidence/`; first fresh failure trace/context are in `final-fix-browser-first-failure/`. Prior Task 6 screenshots and receipt were copied to `pre-final-fix-browser/` before the new run. The older shared-output Task 6 trace was overwritten by the first fresh run and was not separately retained; historical references to that path must not be interpreted as the old trace still being available. Fresh trace is explicitly `final-fix-browser-evidence/trace.zip`.
+
+Fresh resumed session: `cd1e1d17-9eb1-4ca7-af2a-f7423c754337`, DB `IN_PROGRESS`, checkpoint 0, curriculum `acb37c20-fe22-4bbf-ae23-b81e7b8eb4a0`, lesson `2846849b-1abd-4714-838f-26209922a732`; raw result `final-fix-resume-db.log`. The unique browser schema was closed by the explicit owned stop request and its harness cleaned it; API/Next listeners are stopped. Owned PostgreSQL remains running. Main checkout, primary database, provider keys and existing user work were untouched.
+
+The unchanged full web 978, parser 147 and full workspace build in Task 6 remain historical pre-fix evidence; they were not rerun or relabelled as fresh. Current localized API changes have the full API regression/build and real browser coverage above. Production-scale latency, exhaustive legacy journeys, real-provider grading, human/pronunciation qualification, full WCAG certification, live primary-content inspection, legal permission authenticity and deployment remain limited/deferred exactly as stated earlier. No schema migration, new dependency, grading pipeline or production action was introduced. All twelve ledger rulings remain preserved; D-040 records these fixes within the existing approved scope.

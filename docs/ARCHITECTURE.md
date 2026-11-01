@@ -22,10 +22,16 @@ AI grading path. No production migration/deployment is part of this mission.
 
 The server projects frozen activity coverage separately from qualified mastery and configured
 readiness. Repeated sessions prioritize uncovered activities with server-compatible durations.
+Authored release validation now runs the canonical pure planner through repeated sessions to
+require reachable coverage of every pinned activity before publication. Unsupported layouts return
+an actionable lesson-version error. Comprehension evidence qualifies only its assessed reading or
+listening type, leaving additional instructional skill tags pending. Switching away from an inactive
+enrollment checks context identity/revision without requiring the old enrollment to remain active;
+destination eligibility and explicit reactivation restrictions still apply.
 Unknown/pending overall or lesson mastery has no displayed percentage; known skill dimensions
 retain their qualified evidence. Review completion requires a later exact matching completed session.
 Analytics use aggregate-only SQL, bounded UTC half-open ranges, frozen node/version boundaries,
-mature retention windows and explicitly current review backlog. See accepted D-037–D-039 in
+mature retention windows and explicitly current review backlog. See accepted D-037–D-040 in
 [architecture decisions](DECISIONS.md). Final engineering evidence and external qualification limits
 are recorded in the report; synthetic tests do not establish human/provider qualification.
 
