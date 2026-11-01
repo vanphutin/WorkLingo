@@ -163,6 +163,12 @@ test('real UI authors, publishes, enrolls, completes, unlocks, resumes, reports 
   await resume.focus();
   await learner.keyboard.press('Enter');
   await expect(learner).toHaveURL(new RegExp(`/sessions/${pausedId}$`));
+  const pausedState = await (await learner.request.get(`/api/v1/learning-sessions/${pausedId}`)).json();
+  expect(pausedState).toMatchObject({ status: 'paused', currentCheckpoint: paused.currentCheckpoint });
+  await learner.getByRole('button', { name: 'Resume session', exact: true }).click();
+  await expect.poll(async () => (await (await learner.request.get(`/api/v1/learning-sessions/${pausedId}`)).json()).status).toBe('in_progress');
+  const resumed = await (await learner.request.get(`/api/v1/learning-sessions/${pausedId}`)).json();
+  expect(resumed).toMatchObject({ currentCheckpoint: paused.currentCheckpoint, lessonVersionId: paused.lessonVersionId, curriculumRevisionId: paused.curriculumRevisionId, plan: paused.plan });
 
   await page.getByRole('button', { name: 'Analytics', exact: true }).click();
   await page.getByLabel('From (UTC)', { exact: true }).fill(new Date(Date.now() - 86400000).toISOString().slice(0, 10));
@@ -184,6 +190,6 @@ test('real UI authors, publishes, enrolls, completes, unlocks, resumes, reports 
   expect(oldPreview).toEqual(firstRelease);
   await learner.goto('/programs');
   await expect(learner.locator('li').filter({ has: learner.getByRole('heading', { name, exact: true }) }).getByText('Pinned release: Version 1', { exact: false })).toBeVisible();
-  writeFileSync(`${root}/task6-browser-receipt.json`, JSON.stringify({ provenance: 'SYNTHETIC_REAL_UI_NEST_POSTGRES', programId: program.id, enrollmentId: originalEnrollment.id, oldRelease: firstRelease.id, completedSessions: sessions, pausedSession: pausedId, progress: actualProgress, humanParticipants: 0, realProviderCalls: 0 }, null, 2));
+  writeFileSync(`${root}/task6-browser-receipt.json`, JSON.stringify({ provenance: 'SYNTHETIC_REAL_UI_NEST_POSTGRES', capturedAt: new Date().toISOString(), programId: program.id, enrollmentId: originalEnrollment.id, oldRelease: firstRelease.id, completedSessions: sessions, pausedSession: pausedId, resumedSession: { id: pausedId, status: resumed.status, currentCheckpoint: resumed.currentCheckpoint }, progress: actualProgress, humanParticipants: 0, realProviderCalls: 0 }, null, 2));
   await learnerContext.close();
 });
