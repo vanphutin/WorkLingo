@@ -33,3 +33,10 @@ it('formats qualified score percentages and labels the server observation timest
  render(<ProgramProgressView progress={{...projection,mastery:{status:'MASTERED',score:0.8,qualifiedAttempts:2}}}/>);
  expect(screen.getByText(/80%/)).toBeInTheDocument();expect(screen.getByText(/Progress observed/)).toBeInTheDocument();
 });
+it('does not present partial qualified scores as overall mastery while other evidence is pending',()=>{
+ render(<ProgramProgressView progress={{...projection,mastery:{status:'PENDING',score:1,qualifiedAttempts:2}}}/>);
+ const metric=screen.getByText('Qualified mastery',{exact:true}).closest('div')!;
+ expect(within(metric).getByText('Pending evidence')).toBeInTheDocument();
+ expect(within(metric).queryByText(/100%/)).not.toBeInTheDocument();
+ expect(within(metric).getByText(/No qualified score/)).toBeInTheDocument();
+});
