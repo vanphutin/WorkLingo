@@ -341,6 +341,31 @@ Tài liệu này ghi các quyết định đã chốt. Mỗi quyết định m�
 - **Rollback:** Do not activate/publish the new path until its gates pass. Once versioned content exists, disable new selection without rewriting existing version-bound sessions or Foundation progress.
 - **Liên kết:** [MND-20261015-001](../mandate/items/MND-20261015-001-architecture-redesign-intermediate-learning-session-workload-and-cross-skill-separa.md), [master plan](superpowers/plans/2026-10-16-intermediate-learning-quality.md).
 
+## D-037 — Program releases pin the existing curriculum hierarchy
+
+- **Status:** Accepted implementation (2026-10-31), bounded R2 mission MND-20261030-011.
+- **Decision:** Reuse Program → Path → Level → Mission → Lesson → Activity. A numbered ProgramVersion freezes the ordered exact curriculum revisions, lesson versions, objectives, hierarchy titles, vocabulary/resource references and versioned policy. Level is the learner stage; Mission is the unit. No parallel Stage/Unit domain is introduced.
+- **Lifecycle:** DRAFT → IN_REVIEW → APPROVED → PUBLISHED → RETIRED. Optimistic revisions and receipts protect retryable edits/transitions; database guards make published release content immutable. Duplicate/rollback creates a distinct draft. Retiring, archiving or publishing newer content changes new selection while preserving enrolled version/session pins.
+- **Compatibility:** Only resolvable nonempty generic legacy pins are backfilled. Their metadata is explicitly captured compatibility data, not reconstructed historical truth. Canonical null/empty Beginner and IELTS enrollments retain their established flow and qualification gates.
+- **Consequences:** New authored enrollment never silently upgrades. Multi-lesson starts name the exact lesson version. Operational rollback disables new selection or restores designated-environment backups; no destructive automatic downgrade is shipped.
+- **Evidence:** [R2 design](superpowers/specs/2026-10-30-r2-full-learning-program-platform-design.md), [qualification](qualification/r2-full-learning-program-platform-final-report.md).
+
+## D-038 — Completion, qualified mastery and readiness remain separate
+
+- **Status:** Accepted implementation (2026-10-31).
+- **Decision:** The deterministic server engine uses frozen required activities for completion, qualified evidence for mastery and configured completion/mastery/review prerequisites for readiness. Missing evidence stays UNKNOWN; unqualified AI remains PENDING. EvaluationService remains the sole grading pipeline. Existing mastery history is retained without promoting it to qualified R2 evidence.
+- **Planning/review:** Repeated sessions prioritize uncovered activities; the server supplies compatible durations and configured retry/remediation decisions. Review scheduling is versioned product policy, with no scientific retention claim. A required review needs an actual later matching completed session; merely scheduling a date cannot satisfy it. Recalculation/history is append-only.
+- **Presentation:** Overall or lesson mastery in UNKNOWN/PENDING state displays no qualified percentage, even if the backend retains a partial qualified-subset score. Qualified reading/listening evidence is still visible per dimension; pending speaking/writing and unsupported vocabulary/grammar/pronunciation are explicit.
+- **Consequences:** A completed session may leave lesson activities unfinished; completed activity coverage can still be unready. Learner UI explains lock reasons and never unlocks locally. Synthetic/provider-fake tests establish engineering behavior only; human, phonetic and real-provider qualification remain separate.
+- **Evidence:** [Qualification and limits](qualification/r2-full-learning-program-platform-final-report.md).
+
+## D-039 — Aggregate analytics use frozen nodes and explicit time semantics
+
+- **Status:** Accepted implementation (2026-10-31).
+- **Decision:** Program/version-scoped SQL aggregates use UTC half-open ranges bounded to 180 days. Cohort membership, actual activity, lifecycle completion events and persisted progression coverage/readiness have distinct definitions. Missing projections remain unknown. Frozen Level/Mission/LessonVersion nodes retain titles and correct sibling/version boundaries after hierarchy edits or archive.
+- **Limits:** Retention denominators include only mature windows; qualified means exclude pending/unqualified attempts. Review backlog is CURRENT at generatedAt, explicitly distinct from historical events in the range. Responses contain aggregates, bounded pages and definitions rather than private learner identifiers or submissions.
+- **Evidence:** [Qualification](qualification/r2-full-learning-program-platform-final-report.md), including the mixed two-unit/two-lesson sibling regression and exact source provenance fixture.
+
 ## Các quyết định còn mở
 
 Những nội dung sau cần quyết định trong implementation planning hoặc increment tương ứng:

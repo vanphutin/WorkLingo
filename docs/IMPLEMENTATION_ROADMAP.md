@@ -1,5 +1,26 @@
 # WorkLingo MVP Implementation Roadmap
 
+## R2 — full learning program and progression platform (qualification, 2026-10-31)
+
+The owner-authorized mission extends the existing R2 Admin → Learner vertical slice into immutable
+program releases, enrollment lifecycle/history, deterministic progression with separate completion,
+mastery and readiness, reviews, learner roadmap and program/version analytics. Existing curriculum,
+session/evaluation and authoritative vocabulary models remain the source of truth. Beginner may
+use original A1–A2 vocabulary; source IDs, CEFR metadata and provenance must be preserved.
+
+Scoped mandate **MND-20261030-011** is implementing. The canonical
+[design](superpowers/specs/2026-10-30-r2-full-learning-program-platform-design.md) and
+[execution plan](superpowers/plans/2026-10-30-r2-full-learning-program-platform.md) define the bounded
+work; the [qualification report](qualification/r2-full-learning-program-platform-final-report.md)
+records actual progress and gates. Persistence, lifecycle/enrollment, progression/reviews, analytics,
+source vocabulary integration and Admin/Learner UI are implemented and task-reviewed through Task 5.
+The real form-driven authoring/publication and learner completion/unlock/pause/reload/resume,
+analytics and old-version preservation journey passed against disposable Nest/PostgreSQL, with
+desktop/tablet/mobile EN/VI evidence. Final safe regressions, independent Task 6/whole-branch review,
+governance transition and main integration are tracked in the report. This entry does not mark R2
+merged or production-ready. Production deployment
+and primary database mutation are excluded. Merge/push require passing engineering gates.
+
 ## UI internationalization — 2026-10-14
 
 Explicit user mandate: production Vietnamese / English UI across auth, learner, IELTS and Admin, preserving URLs and immutable educational data. Canonical [design](superpowers/specs/2026-10-14-i18n-design.md), [execution plan](superpowers/plans/2026-10-14-i18n.md), [developer guide](I18N.md), and original [feature verification report](I18N_IMPLEMENTATION_REPORT.md). Foundation, account/guest persistence and UI migration are implemented, with independent review fixes and feature QA. The subsequent [integration record](GIT_INTEGRATION_2026-10-15.md) records the audit fixes and combined verification; the original feature report preserves its earlier baseline. This entry does not mark release or public deployment approved.

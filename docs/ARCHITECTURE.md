@@ -1,5 +1,34 @@
 # Architecture
 
+## R2 platform extension — implementation and qualification (2026-10-31)
+
+The [R2 platform design](superpowers/specs/2026-10-30-r2-full-learning-program-platform-design.md)
+extends the existing Program → Path → Level → Mission → Lesson → Activity hierarchy. It does not
+introduce parallel Stage/Unit entities; the learner presentation maps Level and Mission to those
+terms. `ProgramVersion` stores numbered lifecycle releases and ordered exact curriculum bindings.
+Published snapshots/bindings are immutable; enrollment retains its assigned release and legacy UUID
+pins. Append-only enrollment events, progression snapshots and review events preserve history.
+
+Source `LEGACY_PIN_BACKFILL` records exact historical pins
+with available-at-capture metadata, not reconstructed historical metadata. Empty canonical enrollments
+keep their existing flow. Authored release lifecycle, service authorization, deterministic progression,
+review orchestration, aggregate analytics and EN/VI Admin/Learner UI are implemented. The actual
+form-driven disposable Admin authoring → publication → learner completion/unlock/pause/reload/resume
+→ analytics → newer-release journey passed; independent final review and integration remain gates. The
+[qualification report](qualification/r2-full-learning-program-platform-final-report.md) carries the
+current verification status. Completion, qualified mastery and readiness are distinct projections.
+Unqualified AI results remain pending for authored R2 mastery; `EvaluationService` remains the sole
+AI grading path. No production migration/deployment is part of this mission.
+
+The server projects frozen activity coverage separately from qualified mastery and configured
+readiness. Repeated sessions prioritize uncovered activities with server-compatible durations.
+Unknown/pending overall or lesson mastery has no displayed percentage; known skill dimensions
+retain their qualified evidence. Review completion requires a later exact matching completed session.
+Analytics use aggregate-only SQL, bounded UTC half-open ranges, frozen node/version boundaries,
+mature retention windows and explicitly current review backlog. See accepted D-037–D-039 in
+[architecture decisions](DECISIONS.md). Final engineering evidence and external qualification limits
+are recorded in the report; synthetic tests do not establish human/provider qualification.
+
 ## 1. Mục tiêu kiến trúc
 
 - Chạy toàn bộ ứng dụng và dữ liệu nghiệp vụ trên local trong MVP.
