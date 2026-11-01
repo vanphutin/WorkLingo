@@ -38,7 +38,8 @@ export class ProgramEnrollmentsService {
         if (current.revision !== expectedRevision) throw new ConflictException('PROGRAM_CONTEXT_STALE');
         return this.context(tx, existing, program);
       }
-      if (!current || current.status !== 'ACTIVE' || current.revision !== expectedRevision) throw new ConflictException('PROGRAM_CONTEXT_STALE');
+      // The previous selection may be inactive; its revision still guards switching context.
+      if (!current || current.revision !== expectedRevision) throw new ConflictException('PROGRAM_CONTEXT_STALE');
       const release = await tx.programVersion.findFirst({ where: { programId: program.id, status: 'PUBLISHED', source: 'AUTHORED' }, orderBy: { version: 'desc' } });
       if (!release && !existing) throw new UnprocessableEntityException('PROGRAM_RELEASE_UNAVAILABLE');
       const enrollment = existing ?? await this.assignInTransaction(tx, actorId, actorId, program, release!.id);

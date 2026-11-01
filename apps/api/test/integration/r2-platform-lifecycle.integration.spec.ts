@@ -48,6 +48,31 @@ describe('R2 platform release lifecycle and enrollment API', () => {
     return { ...fixtureRow, release };
   }
 
+  it.each(['COMPLETED', 'SUSPENDED', 'WITHDRAWN'] as const)('allows leaving a %s current enrollment with a matching context revision', async status => {
+    const previousFixture = await publishFixture();
+    const previousProgram = await context.database.learningProgram.findUniqueOrThrow({ where: { id: previousFixture.programId } });
+    const { programId, release } = await publishFixture();
+    const program = await context.database.learningProgram.findUniqueOrThrow({ where: { id: programId } });
+    const email = `inactive-${randomUUID()}@example.test`;
+    const actor = await registerLearner(context.app, { email, displayName: 'Inactive current enrollment' });
+    const initial = (await actor.get('/api/v1/me/program-context').expect(200)).body;
+    const current = (await actor.post('/api/v1/me/program-enrollments').send({ programSlug: previousProgram.slug, expectedRevision: initial.enrollment.revision, idempotencyKey: randomUUID() }).expect(200)).body;
+    const previous = await context.database.learnerProgramEnrollment.update({ where: { id: current.enrollment.id }, data: { status, revision: { increment: 1 } } });
+    const input = { programSlug: program.slug, expectedRevision: previous.revision, idempotencyKey: randomUUID() };
+    const stale = await actor.post('/api/v1/me/program-enrollments').send({ ...input, expectedRevision: previous.revision - 1, idempotencyKey: randomUUID() }).expect(409);
+    expect(JSON.stringify(stale.body)).toContain('PROGRAM_CONTEXT_STALE');
+    const selected = (await actor.post('/api/v1/me/program-enrollments').send(input).expect(200)).body;
+    expect((await actor.post('/api/v1/me/program-enrollments').send(input).expect(200)).body).toEqual(selected);
+    expect(selected.activeProgram.id).toBe(programId);
+    expect(selected.enrollment.revision).toBeGreaterThan(previous.revision);
+    const enrolled = await context.database.learnerProgramEnrollment.findUniqueOrThrow({ where: { id: selected.enrollment.id } });
+    expect(enrolled).toMatchObject({ status: 'ACTIVE', programVersionId: release.id, curriculumRevisionIds: release.curriculumBindings.map((b: { curriculumRevisionId: string }) => b.curriculumRevisionId) });
+    expect(await context.database.learnerProgramEnrollment.findUniqueOrThrow({ where: { id: previous.id } })).toEqual(previous);
+    const source = await context.database.learningProgram.findUniqueOrThrow({ where: { id: previous.programId } });
+    const reactivation = await actor.post('/api/v1/me/program-enrollments').send({ programSlug: source.slug, expectedRevision: selected.enrollment.revision, idempotencyKey: randomUUID() }).expect(409);
+    expect(JSON.stringify(reactivation.body)).toContain('PROGRAM_ENROLLMENT_REACTIVATION_REQUIRED');
+  });
+
   it('creates a source-validated immutable release through explicit review and approval', async () => {
     const { programId, content } = await fixture();
     const base = `/api/v1/admin/learning-programs/${programId}/versions`;
