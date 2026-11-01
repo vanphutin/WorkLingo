@@ -8,7 +8,7 @@ import { projectProgramProgress, type ProgramEvidence } from '../domain/program-
 import { reviewCycleAttempts, scheduleProgramReview } from '../domain/program-review.js';
 import { programSessionDurations } from '../domain/program-session-durations.js';
 import { jsonValue, parseProgramInput, programCommand, requireProgramActor } from './program-command.js';
-/** Database-only release evidence adapter; deliberately independent of session and curriculum modules. */
+/** Stored release evidence adapter; session compatibility reuses the canonical pure planner. */
 @Injectable()
 export class ProgramProgressService {
     constructor(
@@ -152,8 +152,10 @@ export class ProgramProgressService {
                 const normalized = attempt.normalizedResponse;
                 const answers = normalized && typeof normalized === 'object' && !Array.isArray(normalized) ? normalized.answerIndexes : null;
                 const verified = deterministic && Array.isArray(answers) && answers.length === activity.payload.questions.length && answers.every(Number.isInteger) && attempt.score === activity.payload.questions.filter((q, index) => answers[index] === q.answerIndex).length / activity.payload.questions.length;
-                for (const skill of activity.skills)
-                    evidence.attempts.push({ enrollmentId: enrollment.id, programVersionId: enrollment.programVersionId!, curriculumRevisionId: binding!.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, activityId: attempt.activityId, attemptId: attempt.id, sessionId: session.id, skill, ...(session.startedAt ? { sessionStartedAt: session.startedAt.toISOString() } : {}), attemptedAt: attempt.createdAt.toISOString(), completedAt: session.completedAt.toISOString(), source: deterministic ? 'DETERMINISTIC' : 'AI', evaluationStatus: attempt.evaluationStatus, qualification: verified && attempt.evaluationStatus === 'EVALUATED' ? 'QUALIFIED' : 'PENDING', score: verified ? attempt.score : null, evaluationVersion: deterministic ? 'deterministic-v1' : 'ai-unqualified' });
+                for (const skill of activity.skills) {
+                    const assessed = verified && skill === activity.activityType;
+                    evidence.attempts.push({ enrollmentId: enrollment.id, programVersionId: enrollment.programVersionId!, curriculumRevisionId: binding!.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, activityId: attempt.activityId, attemptId: attempt.id, sessionId: session.id, skill, ...(session.startedAt ? { sessionStartedAt: session.startedAt.toISOString() } : {}), attemptedAt: attempt.createdAt.toISOString(), completedAt: session.completedAt.toISOString(), source: deterministic ? 'DETERMINISTIC' : 'AI', evaluationStatus: attempt.evaluationStatus, qualification: assessed && attempt.evaluationStatus === 'EVALUATED' ? 'QUALIFIED' : 'PENDING', score: assessed ? attempt.score : null, evaluationVersion: deterministic ? 'deterministic-v1' : 'ai-unqualified' });
+                }
             }
         }
         evidence.reviews = reviews.map(review => {
@@ -169,7 +171,7 @@ export class ProgramProgressService {
             const since = review ? evidence.reviews.find(r => r.curriculumRevisionId === binding.curriculumRevisionId && r.lessonVersionId === lesson.lessonVersionId)?.lastCompletedAt ?? review.createdAt.toISOString() : null;
             const completedActivityIds = [...new Set(reviewCycleAttempts(evidence.attempts.filter(a => a.curriculumRevisionId === binding.curriculumRevisionId && a.lessonVersionId === lesson.lessonVersionId), since).map(a => a.activityId))];
             const content = lessonSnapshotSchema.parse(lessons.find(row => row.id === lesson.lessonVersionId)!.parsedContent);
-            return { curriculumRevisionId: binding.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, completedActivityIds, availableDurations: programSessionDurations(content.activities.filter(a => lesson.activityIds.includes(a.id)), completedActivityIds, content.intermediateTopic?.durationMinutes) };
+            return { curriculumRevisionId: binding.curriculumRevisionId, lessonVersionId: lesson.lessonVersionId, completedActivityIds, availableDurations: programSessionDurations({ ...content, activities: content.activities.filter(a => lesson.activityIds.includes(a.id)) }, completedActivityIds) };
         }));
         return evidence;
     }

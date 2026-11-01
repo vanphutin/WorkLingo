@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { curriculumDefinitionInputSchema, vocabularyCefrSchema, learningProgramIconKeySchema, programVersionInputSchema, type ProgramPolicy, type ProgramVersionInput, type ProgramLessonSnapshot } from '@worklingo/contracts';
 import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 import { requireVocabularySenses } from '../../vocabulary/vocabulary-library.service.js';
+import { programLessonCanComplete } from '../domain/program-session-durations.js';
 
 export const defaultProgramPolicy: ProgramPolicy = { version: 1, sequential: { stages: true, units: true, lessons: true }, completion: { requiredActivityRatio: 1 }, mastery: { required: false, threshold: 0.8, minimumQualifiedAttempts: 1 }, retry: { maxAttempts: 3, cooldownMinutes: 0 }, remediation: { enabled: true, afterAttempts: 2 }, review: { scheduleVersion: 'program-review-v1', intervalsDays: [1, 7, 30], requiredForReadiness: false } };
 const fail = (): never => { throw new UnprocessableEntityException('PROGRAM_CURRICULUM_INVALID'); };
@@ -90,6 +91,7 @@ export async function validateProgramSnapshot(tx: Prisma.TransactionClient, prog
       if (!pin || pin.lessonVersionId !== lesson.lessonVersionId || pin.lessonVersion.status !== 'PUBLISHED' || !pin.lessonVersion.lesson.missions.some(membership => membership.missionId === row.missionId)) return fail();
       const snapshot = lessonSnapshotSchema.safeParse(pin.lessonVersion.parsedContent);
       if (!snapshot.success || snapshot.data.formatVersion === 'WorkLingoLesson/1.2') return fail();
+      if (!programLessonCanComplete(snapshot.data)) throw new UnprocessableEntityException({ code: 'PROGRAM_LESSON_UNPLAYABLE', lessonVersionId: pin.lessonVersionId, message: 'Arrange lesson activities so supported program sessions can cover every activity; respond blocks require speaking and writing tasks.' });
       snapshots.set(pin.lessonVersionId, snapshot.data);
       const objectives = definition.data.objectives.filter(item => item.evidence.some(evidence => evidence.lessonVersionId === pin.lessonVersionId)).map(item => item.statement);
       if (lesson.title !== snapshot.data.title || !same(lesson.objectives, objectives) || !same(lesson.activityIds, snapshot.data.activities.map(item => item.id)) || !same(lesson.activityIds, pin.lessonVersion.activities.map(item => item.id))) fail();
