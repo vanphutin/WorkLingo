@@ -15,8 +15,8 @@ it('maps every sidebar URL to a real page and preserves the 34+14 historical inv
   }
   const actual = pages(app).map(file => '/' + path.relative(app, path.dirname(file)).split(path.sep).filter(part => part && !part.startsWith('(')).join('/')).sort();
   const inventory = JSON.parse(readFileSync(path.resolve('../../docs/admin-sidebar-ia/routes.json'), 'utf8')) as { route: string; cohort: string }[];
-  expect([...inventory.map(row => row.route), '/admin/vocabulary', '/admin/programs/beginner', '/admin/learning-programs'].sort()).toEqual(actual);
-  expect(actual).toHaveLength(51);
+  expect([...inventory.map(row => row.route), '/admin/vocabulary', '/admin/programs/beginner', '/admin/learning-programs', '/admin/assessments'].sort()).toEqual(actual);
+  expect(actual).toHaveLength(52);
   expect(inventory.filter(row => row.cohort === 'Liquid Glass 34')).toHaveLength(34);
   expect(inventory.filter(row => row.cohort === 'Additional 14')).toHaveLength(14);
   const templates = actual.map(route => new RegExp('^' + route.replaceAll('[slug]', '(intermediate|ielts)').replaceAll('[category]', '(grammar|pronunciation|vocabulary|reading|listening|speaking|writing)').replace(/\[[^\]]+\]/gu, '[^/]+') + '$'));

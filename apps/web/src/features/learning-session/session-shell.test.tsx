@@ -195,6 +195,28 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('connects retained speaking audio to assessment playback and removes it after deletion',async()=>{
+    vi.stubGlobal('fetch',vi.fn(async()=>new Response(JSON.stringify({items:[]}))));
+    const get=vi.spyOn(apiClient,'getEvaluation').mockResolvedValue({status:'evaluated',recording:{id:'00000000-0000-4000-8000-000000000006',retentionUntil:'2099-11-07T00:00:00.000Z',deletedAt:null},feedback:null,scores:null,transcript:null,score:null,completedAt:null,retryable:false} as Awaited<ReturnType<typeof apiClient.getEvaluation>>);
+    const remove=vi.spyOn(apiClient,'deleteRecording').mockResolvedValue();
+    const session=createMockSession(3);
+    session.attempts.push({id:'00000000-0000-4000-8000-000000000001',activityId:mockSpeakingActivity.id,rawResponse:{kind:'recording'},evaluationStatus:'evaluated'} as ActivityAttemptDto);
+    render(<SessionShell session={session} currentActivity={mockSpeakingActivity} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()}/>);
+    expect(await screen.findByLabelText('Your recording')).toHaveAttribute('src','/api/v1/recordings/00000000-0000-4000-8000-000000000006/audio');
+    fireEvent.click(screen.getByRole('button',{name:'Delete recording now'}));
+    await waitFor(()=>expect(screen.queryByLabelText('Your recording')).not.toBeInTheDocument());
+    get.mockRestore();remove.mockRestore();vi.unstubAllGlobals();
+  });
+  it('offers assessment history for a persisted reading response without starting inference', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({ items: [] })));
+    vi.stubGlobal('fetch', fetcher);
+    const session = createMockSession(1);
+    session.attempts.push({id:'00000000-0000-4000-8000-000000000001',activityId:mockReadingActivity.id,rawResponse:{answerIndexes:[1]},evaluationStatus:'evaluated'} as ActivityAttemptDto);
+    render(<SessionShell session={session} currentActivity={mockReadingActivity} onSubmitAttempt={vi.fn()} onPauseSession={vi.fn()} onResumeSession={vi.fn()}/>);
+    expect(await screen.findByRole('button',{name:'Assess this response'})).toBeInTheDocument();
+    expect(fetcher.mock.calls.every(call => (call as unknown as [string,RequestInit])[1]?.method !== 'POST')).toBe(true);
+    vi.unstubAllGlobals();
+  });
   it('submits unscored speaking text through the activity path and hides AI feedback expectations', async () => {
     const onSubmit=vi.fn().mockResolvedValue({id:'attempt',feedback:null,evaluationStatus:'submitted',score:null});
     render(<SessionShell session={createMockSession(3)} currentActivity={{...mockSpeakingActivity,payload:{...mockSpeakingActivity.payload,practiceMode:'unscored'}}} onSubmitAttempt={onSubmit} onPauseSession={vi.fn()} onResumeSession={vi.fn()}/>);

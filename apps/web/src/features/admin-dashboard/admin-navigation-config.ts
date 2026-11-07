@@ -36,6 +36,7 @@ export function useAdminNavigationGroups(): readonly AdminNavigationGroup[] {
     ] },
     { id: 'shared', label: t('shared'), items: [
       { href: '/admin/learning-programs', label: 'Learning programs' },
+      { href: '/admin/assessments', label: t('assessments') },
       { href: '/admin/content', label: tc('content') },
       { href: '/admin/content/new', label: t('importContent') },
       ...adminSharedDestinations.filter(item => item.href !== '/admin/content').map(({ href, label }) => ({ href, label: tc(label) })),

@@ -17,6 +17,7 @@ import type {
 import { apiClient } from '../../lib/api/api-client';
 import { ActivityRenderer, isActivityComplete } from './activity-renderer';
 import { EvaluationFeedback } from './evaluation-feedback';
+import { AssessmentPanel } from './assessment-panel';
 import { useEvaluation } from './use-evaluation';
 import { GlassSurface } from '../../components/glass-surface';
 import './session-experience.css';
@@ -129,6 +130,12 @@ export function SessionShell({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<{ cause: unknown } | null>(null);
   const [evaluationFeedback, setEvaluationFeedback] = useState<string | null>(null);
+  const [assessmentAttempt, setAssessmentAttempt] = useState<{id:string;text?:string} | null>(() => {
+    const attempt = [...(session.attempts ?? [])].reverse()[0];
+    if (!attempt) return null;
+    const raw = attempt.rawResponse as Record<string, unknown> | null;
+    return {id:attempt.id,...(typeof raw?.text === 'string'?{text:raw.text}:{})};
+  });
   const [evaluationAttemptId, setEvaluationAttemptId] = useState<string | null>(() =>
     findRestorableEvaluationAttemptId(session.attempts ?? []),
   );
@@ -140,6 +147,10 @@ export function SessionShell({
   const [recordingDeleteError, setRecordingDeleteError] = useState<{ cause: unknown } | null>(null);
   const pendingAttemptId = useRef<string | null>(null);
   const asyncEvaluation = useEvaluation(evaluationAttemptId);
+  const recording = asyncEvaluation.evaluation?.recording;
+  const assessmentAudioUrl = assessmentAttempt?.id === evaluationAttemptId && recording && !recording.deletedAt && deletedRecordingId !== recording.id
+    && (recording.retentionUntil === null || Date.parse(recording.retentionUntil) > Date.now())
+    ? `${(process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api/v1').replace(/\/+$/u, '')}/recordings/${encodeURIComponent(recording.id)}/audio` : undefined;
 
   // Sync state when activity changes
   useEffect(() => {
@@ -172,6 +183,7 @@ export function SessionShell({
       const clientAttemptId = pendingAttemptId.current ?? crypto.randomUUID();
       pendingAttemptId.current = clientAttemptId;
       const attempt = await onSubmitAttempt(currentActivity.id, payload, clientAttemptId);
+      setAssessmentAttempt({id:attempt.id,...(typeof payload.text==='string'?{text:payload.text}:{})});
       pendingAttemptId.current = null;
       const hasAsyncEvaluation =
         attempt.evaluationStatus === 'queued' ||
@@ -198,6 +210,7 @@ export function SessionShell({
     const result = await onSubmitRecording(input);
     setEvaluationFeedback(null);
     setEvaluationAttemptId(result.attemptId);
+    setAssessmentAttempt({id:result.attemptId});
     return result;
   };
 
@@ -282,7 +295,7 @@ export function SessionShell({
       </footer>
     </>
   );
-  const support = ((!isCompleted && currentActivity) || evaluationAttemptId) ? (
+  const support = ((!isCompleted && currentActivity) || evaluationAttemptId || assessmentAttempt) ? (
     <aside className="session-side-column" aria-label={t('supportAndFeedback')}>
       {/* Information and feedback collapse independently. */}
       {!isCompleted && currentActivity && <section
@@ -349,6 +362,7 @@ export function SessionShell({
         recordingDeleted={asyncEvaluation.evaluation?.recording?.id === deletedRecordingId}
         deletionError={recordingDeleteError ? localizedError(recordingDeleteError.cause, locale) : null}
       />
+      {assessmentAttempt ? <AssessmentPanel key={assessmentAttempt.id} attemptId={assessmentAttempt.id} {...(assessmentAttempt.text?{responseText:assessmentAttempt.text}:{})} {...(assessmentAudioUrl?{audioUrl:assessmentAudioUrl}:{})} /> : null}
     </aside>
   ) : null;
 

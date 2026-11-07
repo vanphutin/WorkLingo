@@ -11,6 +11,10 @@ const nav = () => screen.getByRole('navigation', { name: 'Admin workspace' });
 const group = (name: string) => within(nav()).getByRole('button', { name });
 
 describe('Contextual admin sidebar', () => {
+  it('exposes assessment audits in shared management',()=>{
+    render(<AdminNavigation/>);fireEvent.click(group('Shared management'));
+    expect(within(nav()).getByRole('link',{name:'Assessment audit'})).toHaveAttribute('href','/admin/assessments');
+  });
   it.each(['collapsed group', 'different program'])('restores visible focus at desktop breakpoint after %s', state => {
     let changed: (event: { matches: boolean }) => void = () => {};
     vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: false,
@@ -107,7 +111,7 @@ describe('Contextual admin sidebar', () => {
       ...['grammar', 'pronunciation', 'vocabulary', 'reading', 'listening', 'speaking', 'writing'].map(c => `/admin/programs/intermediate/${c}`),
       '/admin/ielts-topics', '/admin/ielts-orientation', '/admin/ielts-bridge', '/admin/ielts-integrated', '/admin/ielts-mocks', '/admin/ielts-band-curriculum',
       '/admin/content', '/admin/curriculum', '/admin/analytics', '/admin/audit', '/admin/operations', '/admin/settings/audio', '/admin/settings/ai', '/dashboard'];
-    expect(hrefs).toHaveLength(29); expect(new Set(hrefs).size).toBe(29);
+    expect(hrefs).toHaveLength(30); expect(new Set(hrefs).size).toBe(30);
     expect(hrefs).toContain('/admin/vocabulary');
     expect(hrefs).toContain('/admin/learning-programs');
     for (const href of old) expect(hrefs).toContain(href);

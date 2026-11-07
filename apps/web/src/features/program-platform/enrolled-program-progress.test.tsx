@@ -4,10 +4,12 @@ import {afterEach,expect,it,vi} from 'vitest';
 import type {ProgramProgressDto} from '@worklingo/contracts';
 import {EnrolledProgramProgress} from './enrolled-program-progress';
 import {ProgramPlatformClient} from '../../lib/api/program-platform-client';
+import {assessmentClient} from '../../lib/api/assessment-client';
 const id='11111111-1111-4111-8111-111111111111',date='2026-10-31T03:15:00.000Z';
 vi.mock('next/navigation',()=>({useRouter:()=>({push:vi.fn()})}));
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
 it('keeps suspended progress, real review events and paged history readable without mutations',async()=>{
+ vi.spyOn(assessmentClient,'mastery').mockResolvedValue({skills:[],disclosure:'Separate assessment evidence.'});
  const projection:ProgramProgressDto={enrollmentId:id,programVersionId:id,status:'SUSPENDED',engineVersion:'program-progression-v1',policyVersion:1,projectedAt:date,completed:false,ready:false,completionPercentage:25,mastery:{status:'UNKNOWN',score:null,qualifiedAttempts:0},evidenceDimensions:[],stages:[],units:[],items:[],estimatedRemainingMinutes:60,nextAction:{type:'wait',curriculumRevisionId:null,lessonVersionId:null,sessionId:null,reasons:['enrollment_suspended']}};
  vi.spyOn(ProgramPlatformClient.prototype,'progress').mockResolvedValue(projection);
  const history=vi.spyOn(ProgramPlatformClient.prototype,'history').mockResolvedValue({items:[{id,revision:4,createdAt:date,projection}],total:26,page:1,limit:25});
@@ -15,6 +17,7 @@ it('keeps suspended progress, real review events and paged history readable with
  const recalculate=vi.spyOn(ProgramPlatformClient.prototype,'recalculate');
  render(<EnrolledProgramProgress enrollmentId={id}/>);
  expect(await screen.findByText(/This enrollment is read-only/)).toBeInTheDocument();
+ expect(await screen.findByRole('heading',{name:'Skill assessment evidence'})).toBeInTheDocument();
  expect(screen.queryByRole('button',{name:'Refresh progress'})).not.toBeInTheDocument();expect(screen.queryByRole('button',{name:'Start lesson'})).not.toBeInTheDocument();
  const reviewSection=screen.getByRole('heading',{name:'Reviews'}).parentElement!;
  expect(within(reviewSection).getByText(/Completed/)).toBeInTheDocument();
