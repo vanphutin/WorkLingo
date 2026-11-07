@@ -173,31 +173,43 @@ test: verify four-skill learner and admin workflows across browser viewports
 A	apps/api/test/integration/r22-browser-bootstrap.spec.ts
 A	apps/web/e2e/r22-assessment.spec.ts
 A	apps/web/playwright.r22.config.ts
+COMMIT 91521a950739eab5b4e4cd66194e73a2024ab21e
+docs: record R22 engineering qualification review and external blockers
 
-QUALIFICATION RECEIPT GROUP (commit identity resolved by git log -- docs/qualification/r22/)
-docs/qualification/r22/ai-calibration-report.md
-docs/qualification/r22/api-documentation.md
-docs/qualification/r22/architecture-decisions.md
-docs/qualification/r22/benchmark-dataset-manifest.md
-docs/qualification/r22/browser-verification.md
+A	docs/qualification/r22/ai-calibration-report.md
+A	docs/qualification/r22/api-documentation.md
+A	docs/qualification/r22/architecture-decisions.md
+A	docs/qualification/r22/benchmark-dataset-manifest.md
+A	docs/qualification/r22/browser-verification.md
+A	docs/qualification/r22/commit-file-inventory.txt
+A	docs/qualification/r22/commit-inventory.md
+A	docs/qualification/r22/database-migration-report.md
+A	docs/qualification/r22/documentation-index.md
+A	docs/qualification/r22/evidence/r22-desktop-reading-panel.png
+A	docs/qualification/r22/evidence/r22-desktop-writing-dark.png
+A	docs/qualification/r22/evidence/r22-mobile-speaking-panel.png
+A	docs/qualification/r22/evidence/r22-tablet-admin.png
+A	docs/qualification/r22/evidence/r22-tablet-listening-panel.png
+A	docs/qualification/r22/final-acceptance-report.md
+A	docs/qualification/r22/frontend-workflow-documentation.md
+A	docs/qualification/r22/independent-review-report.md
+A	docs/qualification/r22/listening-evaluation-specification.md
+A	docs/qualification/r22/model-provider-comparison.md
+A	docs/qualification/r22/reading-evaluation-specification.md
+A	docs/qualification/r22/rubric-specification.md
+A	docs/qualification/r22/scoring-mastery-specification.md
+A	docs/qualification/r22/security-provider-data-handling.md
+A	docs/qualification/r22/speaking-evaluation-specification.md
+A	docs/qualification/r22/test-execution-report.md
+A	docs/qualification/r22/unified-evaluation-contract.md
+A	docs/qualification/r22/writing-evaluation-specification.md
+M	docs/superpowers/plans/2026-11-07-r22-assessment-engine.md
+
+FINAL DOCUMENTATION RECEIPT GROUP (self identity resolved by git log)
 docs/qualification/r22/commit-inventory.md
-docs/qualification/r22/database-migration-report.md
-docs/qualification/r22/documentation-index.md
 docs/qualification/r22/final-acceptance-report.md
-docs/qualification/r22/frontend-workflow-documentation.md
-docs/qualification/r22/independent-review-report.md
-docs/qualification/r22/listening-evaluation-specification.md
-docs/qualification/r22/model-provider-comparison.md
-docs/qualification/r22/reading-evaluation-specification.md
-docs/qualification/r22/rubric-specification.md
-docs/qualification/r22/scoring-mastery-specification.md
-docs/qualification/r22/security-provider-data-handling.md
-docs/qualification/r22/speaking-evaluation-specification.md
 docs/qualification/r22/test-execution-report.md
-docs/qualification/r22/unified-evaluation-contract.md
-docs/qualification/r22/writing-evaluation-specification.md
-docs/qualification/r22/evidence/r22-desktop-reading-panel.png
-docs/qualification/r22/evidence/r22-desktop-writing-dark.png
-docs/qualification/r22/evidence/r22-mobile-speaking-panel.png
-docs/qualification/r22/evidence/r22-tablet-admin.png
-docs/qualification/r22/evidence/r22-tablet-listening-panel.png
+docs/superpowers/plans/2026-11-07-r22-assessment-engine.md
+docs/qualification/r22/integration-receipt.md
+docs/qualification/r22/execution-ledger.md
+docs/qualification/r22/commit-file-inventory.txt

@@ -29,7 +29,7 @@ Commands, exact counts, prior failures and scope are in test-execution-report.md
 
 Baseline origin/main was fetched and verified as 66af136c9227482dd72c1d17490afdcd19bfe72f. Implementation uses codex/r22-assessment-engine in the existing isolated worktree. Explicit file staging and logical commits preserve the user's primary checkout changes to apps/web/next-env.d.ts and untracked backups/. Complete implementation inventory is in commit-inventory.md.
 
-At this acceptance checkpoint, normal fast-forward integration and push are authorized by the user's mission after all engineering gates. The final delivery will record actual local/remote readback; this paragraph does not pre-claim a completed push. No force push, shared-history rewrite, production data migration or deployment is authorized by this engineering receipt.
+Normal fast-forward integration and push completed to verified local/remote main 91521a950739eab5b4e4cd66194e73a2024ab21e after all engineering gates. See integration-receipt.md. The final delivery records the subsequently verified final documentation receipt HEAD. No force push, shared-history rewrite, primary database migration or production deployment occurred. The main checkout's Prisma Client was regenerated, but the primary database requires the reviewed additive migration before R22 activation.
 
 Provider/privacy flags remain disabled by default and qualified mastery policy sets empty. Existing runtime opt-ins are not modified. No credits were purchased, accounts topped up, limits increased or production learner data transmitted. Public provider policy research cannot establish current account quota, retention approval, endpoint operator, region or live model identity.
 

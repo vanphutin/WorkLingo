@@ -2,7 +2,7 @@
 
 Baseline: 66af136c9227482dd72c1d17490afdcd19bfe72f. Final source/test HEAD: be320e5285cbcebef993aca7586f0778b31187bd.
 
-All 20 implementation/design/test commits form a linear descendant chain of the fetched baseline. No merge-base assumption substitutes for fetch/readback. The subsequent qualification-document commits intentionally follow source verification. Their own IDs cannot be embedded in their contents; resolve them with `git log --format="%H %s" -- docs/qualification/r22/` and use the final delivered local/remote SHA.
+All 20 implementation/design/test commits plus qualification commit91521a9 form a linear descendant chain of the fetched baseline. No merge-base assumption substitutes for fetch/readback. The subsequent qualification-document commits intentionally follow source verification. Their own IDs cannot be embedded in their contents; resolve them with `git log --format="%H %s" -- docs/qualification/r22/` and use the final delivered local/remote SHA.
 
 | Commit | Purpose |
 |---|---|
@@ -33,4 +33,6 @@ Primary checkout preservation: D:/Projects/WorkLingo began on main at baseline w
 
 Audit checks: linear ancestry, explicit staged paths, `git diff --cached --check`, tracked environment/private-key scanner, credential-shaped content review, owned-DB boundaries, independent five-axis review and final test receipts. Secret scanning is deliberately narrow and does not prove the absence of every possible secret. No provider key or actual learner dataset is part of the stack.
 
-Integration is authorized only after final engineering gates. Normal fast-forward and normal push/readback will be recorded in final delivery; no pre-claimed remote SHA. Code rollback requires reviewed normal reverts respecting additive migration/history dependencies. No destructive history reset, force push or production DB rollback is implied.
+Integration completed normally at local/remote91521a9 after all engineering gates; see integration-receipt.md. The final task response records the subsequent documentation-only receipt SHA. Code rollback requires reviewed normal reverts respecting additive migration/history dependencies. No destructive history reset, force push or production DB rollback is implied.
+
+Qualification commit: 91521a950739eab5b4e4cd66194e73a2024ab21e — docs: record R22 engineering qualification review and external blockers. Final receipt commit contains integration-receipt.md, execution-ledger.md and final documentation reconciliation; resolve its exact identity with git log as above.

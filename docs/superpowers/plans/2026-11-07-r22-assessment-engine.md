@@ -77,5 +77,5 @@
 **Files:** docs/qualification/r22/ required20-document set, plan and final audit.
 - [x] Run API/web/contracts full relevant suites, security/privacy, builds/lint/typechecks, migrations and R2.1/legacy regression. Expected PASS; preserve and fix genuine failures.
 - [x] Dispatch independent whole-branch review, reproduce/fix important findings test-first; Expected no unresolved confirmed Critical/Important engineering issue.
-- [ ] Audit all commits/secrets/scope/history, commit actual evidence; integrate current main preserving user changes only after all engineering gates. Normal push/readback Expected matching SHA. Integration execution follows the engineering acceptance checkpoint.
+- [x] Audit all commits/secrets/scope/history, commit actual evidence; integrate current main preserving user changes only after all engineering gates. Normal push/readback succeeded at 91521a9; final documentation receipt follows, see integration-receipt.md.
 - [x] Record all four skill engineering and separate actual AI qualification statuses, external blockers and production restrictions without inflating evidence.
