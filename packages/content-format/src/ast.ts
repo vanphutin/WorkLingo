@@ -71,7 +71,7 @@ export interface ActivityOptionNode extends AstNode {
 
 export type LearningBlockType = 'activate' | 'read_decode' | 'listen_reason' | 'respond';
 export type ActivityType = 'reading' | 'listening' | 'speaking' | 'writing';
-export type ResponseType = 'multiple_choice' | 'short_text' | 'shadowing' | 'guided_response';
+export type ResponseType = 'multiple_choice' | 'true_false' | 'matching' | 'fill_blank' | 'short_answer' | 'open_ended' | 'short_text' | 'shadowing' | 'guided_response';
 
 export interface ActivityNode extends AstNode {
   readonly kind: 'activity';
@@ -87,6 +87,9 @@ export interface ActivityNode extends AstNode {
   readonly question?: string | undefined;
   readonly options: readonly ActivityOptionNode[];
   readonly answer?: string | undefined;
+  readonly acceptedAnswers?: readonly string[] | undefined;
+  readonly answerCaseSensitive?: boolean | undefined;
+  readonly semanticCriteria?: string | undefined;
   readonly explanation?: string | undefined;
   readonly evidence: readonly string[];
   readonly rubric?: string | undefined;

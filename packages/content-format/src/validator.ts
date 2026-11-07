@@ -35,7 +35,7 @@ const MAX_OPTIONS = 10;
 
 const VALID_LEARNING_BLOCKS = new Set(['activate', 'read_decode', 'listen_reason', 'respond']);
 const VALID_ACTIVITY_TYPES = new Set(['reading', 'listening', 'speaking', 'writing']);
-const VALID_RESPONSE_TYPES = new Set(['multiple_choice', 'short_text', 'shadowing']);
+const VALID_RESPONSE_TYPES = new Set(['multiple_choice', 'true_false', 'matching', 'fill_blank', 'short_answer', 'open_ended', 'short_text', 'shadowing']);
 const VALID_CONTENT_TYPES = new Set(['email', 'dialogue']);
 
 export function validateLessonDocument(
@@ -352,8 +352,20 @@ export function validateLessonDocument(
       }
     }
 
+    // Private authored response metadata is never inferred from the model answer.
+    const comprehension = ['reading','listening'].includes(act.activityType);
+    const newComprehension = ['true_false','matching','fill_blank','short_answer','open_ended'].includes(act.responseType);
+    if ((newComprehension && !comprehension) ||
+      (act.acceptedAnswers !== undefined && (!act.acceptedAnswers.length || act.acceptedAnswers.length > 100 || act.acceptedAnswers.some(a => !a.trim() || a.length > 1000))) ||
+      (act.semanticCriteria !== undefined && (!act.semanticCriteria.trim() || act.semanticCriteria.length > 10000)) ||
+      (act.responseType === 'open_ended' && !act.semanticCriteria?.trim()) ||
+      (['fill_blank','short_answer'].includes(act.responseType) && !act.acceptedAnswers?.length && !act.semanticCriteria?.trim()) ||
+      (['fill_blank','short_answer','open_ended'].includes(act.responseType) && (act.options.length > 0 || act.answer !== undefined)) ||
+      (act.responseType === 'true_false' && (act.options.length !== 2 || act.options[0]?.text.toLowerCase() !== 'true' || act.options[1]?.text.toLowerCase() !== 'false'))) {
+      addIssue('VAL_ASSESSMENT_REQUIRED', 'Declare valid response options or private accepted_answers/semantic_criteria for this comprehension format', 'error', act.range, `activities.${act.slug}`);
+    }
     // Response type specific validation
-    if (act.responseType === 'multiple_choice') {
+    if (['multiple_choice','true_false','matching'].includes(act.responseType)) {
       if (act.options.some(option => !option.text.trim())) {
         addIssue('VAL_EMPTY_OPTION', `Activity '${act.slug}' has an empty answer option`, 'error', act.range, `activities.${act.slug}.options`);
       }

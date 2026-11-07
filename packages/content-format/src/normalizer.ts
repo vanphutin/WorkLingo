@@ -38,6 +38,10 @@ export interface NormalizedWordBank {
 }
 
 export interface NormalizedActivityQuestion {
+  readonly responseType?: 'true_false' | 'matching' | 'fill_blank' | 'short_answer' | 'open_ended' | undefined;
+  readonly acceptedAnswers?: readonly string[] | undefined;
+  readonly answerCaseSensitive?: boolean | undefined;
+  readonly semanticCriteria?: string | undefined;
   readonly slug: string;
   readonly prompt: string;
   readonly options: readonly string[];
@@ -181,7 +185,8 @@ export function normalizeLessonDocument(
 
     if (activityType === 'reading' || activityType === 'listening') {
       const optIndex = act.options.findIndex((o) => o.label === act.answer);
-      const answerIndex = optIndex !== -1 ? optIndex : (act.answer ? act.answer.charCodeAt(0) - 65 : 0);
+      const textResponse = ['fill_blank','short_answer','open_ended'].includes(act.responseType);
+      const answerIndex = textResponse ? -1 : optIndex !== -1 ? optIndex : (act.answer ? act.answer.charCodeAt(0) - 65 : 0);
 
       payload = {
         prompt: act.prompt || act.question || 'Comprehension prompt',
@@ -191,6 +196,10 @@ export function normalizeLessonDocument(
             prompt: act.question || act.prompt || 'Question',
             options: act.options.map((o) => o.text),
             answerIndex,
+            ...(act.responseType !== 'multiple_choice' ? { responseType: act.responseType as NonNullable<NormalizedActivityQuestion['responseType']> } : {}),
+            ...(act.acceptedAnswers ? { acceptedAnswers: [...act.acceptedAnswers] } : {}),
+            ...(act.answerCaseSensitive !== undefined ? { answerCaseSensitive: act.answerCaseSensitive } : {}),
+            ...(act.semanticCriteria ? { semanticCriteria: act.semanticCriteria } : {}),
             explanation: act.explanation || 'See lesson content for explanation.',
             evidence:
               act.evidence.join('; ') ||

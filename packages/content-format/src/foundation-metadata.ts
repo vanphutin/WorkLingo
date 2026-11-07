@@ -62,7 +62,7 @@ export function validateFoundation(document: LessonDocumentNode): ContentIssue[]
       fail('VAL_UNKNOWN_OBJECTIVE', 'Declare unique references to existing lesson objectives', activity.range, `${path}.objective_refs`);
     }
     const comprehension = ['reading', 'listening'].includes(activity.activityType);
-    const validResponse = comprehension ? activity.responseType === 'multiple_choice'
+    const validResponse = comprehension ? ['multiple_choice','true_false','matching','fill_blank','short_answer','open_ended'].includes(activity.responseType)
       : activity.responseType === (activity.activityType === 'speaking' ? (document.formatVersion === 'WorkLingoLesson/1.2' ? 'guided_response' : 'shadowing') : 'short_text');
     if (!validResponse || !filled(activity.question) || !activity.contentRefs.length || !activity.languageBlockRefs.length ||
       (comprehension ? !filled(activity.explanation) || !activity.evidence.length || activity.options.some((o) => !filled(o.text))

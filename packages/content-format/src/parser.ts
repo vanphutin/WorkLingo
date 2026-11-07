@@ -590,6 +590,9 @@ export function parseLessonSource(source: string): ParseLessonResult {
           'rubric',
           'prompt',
           'answer',
+          'accepted_answers',
+          'answer_case_sensitive',
+          'semantic_criteria',
           ...(formatVersion === 'WorkLingoLesson/1.2' ? ['sample_answer', 'min_words', 'rubric_id', 'rubric_version'] : []),
           ...(['WorkLingoLesson/1.1', 'WorkLingoLesson/1.2'].includes(formatVersion) ? ['objective_refs'] : []),
         ]);
@@ -769,6 +772,11 @@ export function parseLessonSource(source: string): ParseLessonResult {
           ? scalarFields['language_block_refs'].value.split('|').map((s) => s.trim()).filter(Boolean)
           : [];
 
+        const casePolicy = scalarFields['answer_case_sensitive'];
+        if (casePolicy && !['true', 'false'].includes(casePolicy.value)) {
+          addIssue('PARSE_INVALID_VALUE', 'answer_case_sensitive must be true or false', casePolicy.range.start.offset, casePolicy.range.end.offset);
+        }
+
         activities.push({
           kind: 'activity',
           range: locator.range(actStartOffset, actEndOffset),
@@ -784,6 +792,9 @@ export function parseLessonSource(source: string): ParseLessonResult {
           question: questionText,
           options,
           answer: scalarFields['answer']?.value,
+          ...(scalarFields['accepted_answers'] ? { acceptedAnswers: scalarFields['accepted_answers'].value.split('|').map(s => s.trim()).filter(Boolean) } : {}),
+          ...(casePolicy ? { answerCaseSensitive: casePolicy.value === 'true' } : {}),
+          ...(scalarFields['semantic_criteria'] ? { semanticCriteria: scalarFields['semantic_criteria'].value } : {}),
           explanation: explanationText,
           evidence: evidenceList,
           rubric: scalarFields['rubric']?.value,
