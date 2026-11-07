@@ -5,6 +5,7 @@ import { z } from 'zod';
 export interface AppConfig {
   readonly ieltsFlow: 'legacy' | 'v3';
   readonly ai: {
+    readonly assessment?:{readonly enabled:boolean;readonly privacyVerified:boolean};
     readonly routing: {
       readonly enabled: boolean;
       readonly defaultProvider: 'discovery' | 'openai';
@@ -73,6 +74,8 @@ const optionalNonBlankString = z.preprocess(
 const optionalUrl = z.preprocess(blankAsUndefined, z.url().optional());
 
 const environmentSchema = z.object({
+  WORKLINGO_ASSESSMENT_ENABLED:z.enum(['true','false']).default('false'),
+  WORKLINGO_ASSESSMENT_PRIVACY_VERIFIED:z.enum(['true','false']).default('false'),
   WORKLINGO_IELTS_FLOW: z.enum(['legacy', 'v3']).default('legacy'),
   AI_ROUTING_ENABLED: z.enum(['true', 'false']).default('true'),
   AI_DEFAULT_PROVIDER: z.enum(['discovery', 'openai']).optional(),
@@ -242,6 +245,7 @@ export function parseAppConfig(environment: NodeJS.ProcessEnv): AppConfig {
         },
       },
       topicGenerationMaxOutputTokens: result.data.AI_LESSON_MAX_OUTPUT_TOKENS,
+      assessment:{enabled:result.data.WORKLINGO_ASSESSMENT_ENABLED==='true',privacyVerified:result.data.WORKLINGO_ASSESSMENT_PRIVACY_VERIFIED==='true'},
       draftRetentionDays: result.data.WRITING_DRAFT_RETENTION_DAYS,
       fakeEvaluationRateLimitFailures: result.data.WORKLINGO_TEST_FAKE_EVALUATION_FAILURES,
       languageEvaluation,

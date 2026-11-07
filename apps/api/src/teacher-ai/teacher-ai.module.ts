@@ -19,6 +19,8 @@ import {
   TranscribeSpeechHandler,
 } from './application/transcribe-speech.handler.js';
 import { EvaluationsController } from './evaluations.controller.js';
+import {AssessmentsController} from './assessments.controller.js';
+import {ASSESSMENT_OPTIONS,AssessmentHistoryService} from './application/assessment-history.service.js';
 
 @Injectable()
 class TeacherAiHandlerRegistration implements OnModuleInit {
@@ -35,9 +37,11 @@ class TeacherAiHandlerRegistration implements OnModuleInit {
 }
 
 @Module({
-  controllers: [EvaluationsController],
+  controllers: [EvaluationsController,AssessmentsController],
   imports: [AiGatewayModule, CurriculumFoundationModule, DatabaseModule, JobsModule, MasteryModule, StorageModule],
   providers: [
+    AssessmentHistoryService,
+    {provide:ASSESSMENT_OPTIONS,inject:[ConfigService],useFactory:(config:ConfigService<AppConfig,true>)=>({enabled:config.get('ai',{infer:true}).assessment?.enabled??false,privacyVerified:config.get('ai',{infer:true}).assessment?.privacyVerified??false,leaseMs:Math.max(60000,config.get('ai',{infer:true}).providerTimeoutMs*3)})},
     EvaluationService,
     TranscribeSpeechHandler,
     EvaluateAttemptHandler,

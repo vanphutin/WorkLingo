@@ -694,6 +694,7 @@ model SessionBlock {
 }
 
 model ActivityAttempt {
+  assessmentRuns     EvaluationRun[]
   id                 String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   learnerId          String                  @db.Uuid
   sessionId          String                  @db.Uuid
@@ -716,6 +717,29 @@ model ActivityAttempt {
   @@index([sessionId])
   @@index([activityId])
   @@index([sessionId, activityId])
+}
+
+// Append-only versioned history owned by the existing attempt/evaluation workflow.
+model EvaluationRun {
+  id             String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  attemptId      String @db.Uuid
+  requestKey     String @db.Uuid
+  previousRunId  String? @db.Uuid
+  contextHash    String
+  inputHash      String
+  status         String @default("RECEIVED")
+  generation     Int @default(1)
+  leaseUntil     DateTime?
+  result         Json?
+  audit          Json?
+  createdAt      DateTime @default(now())
+  completedAt    DateTime?
+  attempt        ActivityAttempt @relation(fields:[attemptId],references:[id],onDelete:Restrict)
+  previous       EvaluationRun? @relation("AssessmentHistory",fields:[previousRunId],references:[id],onDelete:Restrict)
+  successors     EvaluationRun[] @relation("AssessmentHistory")
+  @@unique([attemptId,requestKey])
+  @@index([attemptId,createdAt])
+  @@index([status,leaseUntil])
 }
 
 model Recording {
