@@ -54,5 +54,3 @@ describe('Beginner release validation',()=>{
   await expect(validateProgramSnapshot(tx,id(400),content)).rejects.toThrow();
  });
 });
-
-

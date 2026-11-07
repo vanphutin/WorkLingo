@@ -34,7 +34,7 @@ async function admissionCounts(){
  return {programs,paths,levels,missions,imports,lessons,versions,audio,releases,enrollments,users,audits,receipts};
 }
 class FailAfterFirstAudio extends BeginnerImportAudioStorage {
- override async put(input:PutObjectInput){await super.put(input);throw new Error('ISOLATED_STORAGE_FAILURE_AFTER_AUDIO');}
+ override async put(input:PutObjectInput):Promise<never>{await super.put(input);throw new Error('ISOLATED_STORAGE_FAILURE_AFTER_AUDIO');}
 }
 async function authorize(inventoryHash:string,dryRunHash:string,programId:string){
  const [identity]=await database.$queryRaw<{database:string;role:string;serverIdentity:string}[]>`SELECT current_database() AS database,current_user AS role,(SELECT system_identifier::text FROM pg_control_system()) AS "serverIdentity"`;
@@ -59,7 +59,7 @@ describe('official transactional Beginner admission on restored isolated primary
   expect(source.lessons.flatMap(row=>row.vocabulary).filter(row=>row.relationship==='CONTEXTUAL_SENSE_MATCH')).toHaveLength(20);
   await authorize(source.inventoryHash,dryReport.dryRun.hash,dryReport.dryRun.programId);
   const service=new BeginnerProgramImportService(database as unknown as PrismaService,new BeginnerImportAudioStorage(storageRoot));
-  for(const mutate of [(value:typeof source)=>{value.inventoryHash='changed';},(value:typeof source)=>{value.lessons[0]!.rawSource+='\nchanged';},(value:typeof source)=>{value.lessons[0]!.audio[0]!.bytes[100]^=1;}]){
+  for(const mutate of [(value:typeof source)=>{value.inventoryHash='changed';},(value:typeof source)=>{value.lessons[0]!.rawSource+='\nchanged';},(value:typeof source)=>{const bytes=value.lessons[0]!.audio[0]!.bytes;bytes[100]=bytes[100]!^1;}]){
    const changed=structuredClone(source);mutate(changed);
    await expect(service.apply(changed,dryReport.dryRun.hash,{editorId:editor.id})).rejects.toThrow();
    expect(await admissionCounts()).toEqual(before);

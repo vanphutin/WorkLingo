@@ -1,5 +1,4 @@
 import { randomUUID } from 'node:crypto';
-import { readFileSync } from 'node:fs';
 import { ValidationPipe, type INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
@@ -19,7 +18,8 @@ async function registerLearner(app:INestApplication,input:{email:string;displayN
  return agent;
 }
 
-const url = process.env.WL_R21_TEST_DATABASE_URL ?? readFileSync('C:/Users/ASUS/AppData/Local/Temp/worklingo-r21-20261107/test-database-url.txt','utf8').trim();
+const url = process.env.WL_R21_TEST_DATABASE_URL;
+if (!url) throw new Error('EXPLICIT_WL_R21_TEST_DATABASE_URL_REQUIRED');
 const target = new URL(url);
 if (`${target.hostname}:${target.port}${target.pathname}` !== '127.0.0.1:55450/worklingo_r21' || (target.searchParams.get('schema') ?? 'public') !== 'public') throw new Error('OWNED_RESTORED_R21_DATABASE_REQUIRED');
 

@@ -11,4 +11,3 @@ export function beginnerMission(): PublishedMission {
   });
   return {id:id(200),slug:'mg01',title:'Pilot',objective:'Introduce yourself',purpose:'learning',levelCode:'MG_F0',lessonVersion:{...snapshot,id:id(202),version:2}};
 }
-
