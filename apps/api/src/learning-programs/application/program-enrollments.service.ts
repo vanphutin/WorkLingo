@@ -1,10 +1,11 @@
+import { validateProgramSnapshot } from './program-release-snapshot.js';
 import {releaseDisplay} from './program-display.js';
 import { ProgramProgressService } from './program-progress.service.js';
 import { ConflictException, ForbiddenException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import type { Prisma, LearnerProgramEnrollment } from '@prisma/client';
 import { assignProgramEnrollmentSchema, enrollProgramSchema, withdrawProgramEnrollmentSchema, enrollmentHistorySchema, programContextSchema, programEnrollmentListSchema, programEnrollmentSchema, programEnrollmentTransitionSchema, programPageSchema, programVersionInputSchema, type ProgramEnrollmentDto, type ProgramEnrollmentStatus } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
-import { deriveProgramAccess } from '../domain/program-availability.js';
+import { deriveProgramAccess, hasPublishedProgramRelease } from '../domain/program-availability.js';
 import { jsonValue, lockProgram, parseProgramInput, programAudit, programCommand, requireProgramActor } from './program-command.js';
 export function enrollmentDto(row: LearnerProgramEnrollment): ProgramEnrollmentDto {
   return programEnrollmentSchema.parse({ id: row.id, learnerId: row.learnerId, programId: row.programId, programVersionId: row.programVersionId, status: row.status, revision: row.revision, currentLevelId: row.currentLevelId, curriculumRevisionIds: row.curriculumRevisionIds, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() });
@@ -120,9 +121,10 @@ export class ProgramEnrollmentsService {
     return profile;
   }
   private async assignInTransaction(tx: Prisma.TransactionClient, actorId: string, learnerId: string, program: Awaited<ReturnType<typeof lockProgram>>, versionId: string) {
-    if (!deriveProgramAccess(program).isSelectable) throw new UnprocessableEntityException('PROGRAM_UNAVAILABLE');
     const release = await tx.programVersion.findUnique({ where: { id: versionId } });
     if (!release || release.programId !== program.id || release.status !== 'PUBLISHED' || release.source !== 'AUTHORED') throw new UnprocessableEntityException('PROGRAM_RELEASE_UNAVAILABLE');
+    if (!deriveProgramAccess({...program, curriculumRevisionIds: release.curriculumRevisionIds, hasPublishedRelease: hasPublishedProgramRelease(release)}).isSelectable) throw new UnprocessableEntityException('PROGRAM_UNAVAILABLE');
+    if (program.slug === 'beginner') await validateProgramSnapshot(tx, program.id, release.snapshot);
     const existing = await tx.learnerProgramEnrollment.findUnique({ where: { learnerId_programId: { learnerId, programId: program.id } } });
     if (existing) {
       if (existing.programVersionId !== versionId) throw new ConflictException('PROGRAM_ENROLLMENT_VERSION_MISMATCH');

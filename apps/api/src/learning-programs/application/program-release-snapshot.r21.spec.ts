@@ -1,0 +1,58 @@
+import {resolve} from 'node:path';
+import {readFileSync} from 'node:fs';
+import {analyzeLessonSource} from '@worklingo/content-format';
+import {lessonSnapshotSchema} from '../../curriculum/domain/curriculum.types.js';
+import {programLessonCanComplete,programSessionDurations} from '../domain/program-session-durations.js';
+import { describe,expect,it,vi } from 'vitest';
+import type { Prisma } from '@prisma/client';
+import {ProgramContextService} from './program-context.service.js';
+import {ProgramEnrollmentsService} from './program-enrollments.service.js';
+import type {ProgramProgressService} from './program-progress.service.js';
+import {ProgramVersionsService} from './program-versions.service.js';
+import type {PrismaService} from '../../common/database/prisma.service.js';
+import {captureProgramSnapshot,validateProgramSnapshot} from './program-release-snapshot.js';
+import { beginnerMission } from './__fixtures__/beginner-r21.js';
+const id=(n:number)=>'00000000-0000-4000-8000-'+String(n).padStart(12,'0');
+describe('Beginner release validation',()=>{
+ it.each(['mg01-l1','mg01-l2','mg01-l3','mg01-l4','mg02-l1','mg02-l2','mg02-l3','mg02-l4'])('preserves all eight exact activities in the 45-minute %s source plan',code=>{
+  const source=readFileSync(resolve(__dirname,'../../../../../content/beginner/pilot/'+code+'.lesson.txt'),'utf8');
+  const result=analyzeLessonSource(source);
+  expect(result.canPublish).toBe(true);
+  const draft=result.normalizedDraft!;
+  const snapshot=lessonSnapshotSchema.parse({...draft,contentBlocks:draft.contentBlocks.map((b,i)=>({...b,id:id(800+i)})),wordBanks:draft.wordBanks.map((b,i)=>({...b,id:id(900+i),languageBlocks:b.languageBlocks.map((l,j)=>({...l,id:id(1000+i*100+j)}))})),activities:draft.activities.map((a,i)=>({...a,id:id(2000+i)}))});
+  expect(snapshot.activities).toHaveLength(8);
+  expect(programSessionDurations(snapshot,[])).toEqual([45]);
+  expect(programLessonCanComplete(snapshot)).toBe(true);
+ });
+ it('accepts the exact playable published 1.2 snapshot and rejects altered activity pins',async()=>{
+  const mission=beginnerMission(), lesson=mission.lessonVersion;
+  const row={id:id(300),missionId:mission.id,status:'PUBLISHED',snapshot:{category:'grammar',objectives:lesson.foundation!.objectives.map(o=>({...o,evidence:lesson.activities.filter(a=>a.skills.some(s=>o.skills.includes(s))).map(a=>({lessonVersionId:lesson.id,activitySlug:a.slug,languageBlockSlugs:[]}))})),prerequisiteRevisionIds:[]},prerequisites:[],mission:{id:mission.id,title:'Pilot',status:'PUBLISHED',purpose:'LEARNING',levelId:id(401),level:{name:'Foundation',status:'PUBLISHED',pathId:id(402),path:{name:'Beginner',status:'PUBLISHED',programId:id(400)}}},lessons:[{lessonVersionId:lesson.id,lessonVersion:{status:'PUBLISHED',parsedContent:lesson,activities:lesson.activities,lesson:{missions:[{missionId:mission.id}]}}}]};
+  const tx={$queryRaw:vi.fn(async()=>[]),$executeRaw:vi.fn(),learningProgram:{findUniqueOrThrow:vi.fn(async()=>({name:'Beginner',description:'Practice',proficiencyLabel:'A0',iconKey:'beginner',displayOrder:1}))},curriculumRevision:{findMany:vi.fn(async()=>[row])}} as unknown as Prisma.TransactionClient;
+  const content=await captureProgramSnapshot(tx,id(400),[row.id],false);
+  await expect(validateProgramSnapshot(tx,id(400),content)).resolves.toMatchObject({estimatedMinutes:45});
+  const now=new Date();
+  const version={id:id(500),programId:id(400),version:1,revision:1,status:'APPROVED',source:'AUTHORED',snapshot:content,policy:content.policy,curriculumRevisionIds:[row.id],capturedAt:now,createdAt:now,publishedAt:null,retiredAt:null};
+  const updateProgram=vi.fn(async()=>({}));
+  const fullTx={...tx,user:{findUnique:async()=>({status:'ACTIVE',role:'CONTENT_ADMIN'})},mutationReceipt:{findUnique:async()=>null,create:async()=>({})},auditLog:{create:async()=>({})},learningProgram:{...tx.learningProgram,findUnique:async()=>({id:id(400),slug:'beginner',progressionPolicy:'ACTIVITY_COMPLETION',revision:1}),update:updateProgram},programVersion:{findUnique:async()=>version,update:async({data}: {data:object})=>({...version,...data,revision:2}),findFirstOrThrow:async()=>({...version,status:'PUBLISHED'})}};
+  const service=new ProgramVersionsService({$transaction:async(work: (tx:unknown)=>unknown)=>work(fullTx)} as unknown as PrismaService);
+  await service.transition(id(600),id(400),version.id,{expectedRevision:1,idempotencyKey:id(601),targetStatus:'PUBLISHED'});
+  expect(updateProgram).toHaveBeenCalledWith(expect.objectContaining({data:expect.objectContaining({availabilityStatus:'BETA'})}));
+  const enrollment={id:id(700),learnerId:id(701),programId:id(400),programVersionId:version.id,status:'ACTIVE',revision:1,currentLevelId:id(401),curriculumRevisionIds:[row.id],createdAt:now,updatedAt:now};
+  const enrollmentTx={...fullTx,user:{findUnique:async({where}: {where:{id:string}})=>({status:'ACTIVE',role:where.id===id(701)?'LEARNER':'CONTENT_ADMIN'})},learnerProfile:{findUnique:async()=>({onboardingStatus:'COMPLETE'})},learnerProgramEnrollment:{findUnique:async()=>null,create:async()=>enrollment},enrollmentEvent:{create:async()=>({})},learningProgram:{...fullTx.learningProgram,findUnique:async()=>({id:id(400),slug:'beginner',progressionPolicy:'ACTIVITY_COMPLETION',availabilityStatus:'BETA',curriculumRevisionIds:[row.id],revision:1})},programVersion:{findUnique:async()=>({...version,status:'PUBLISHED'})}};
+  const enrollments=new ProgramEnrollmentsService({$transaction:async(work:(tx:unknown)=>unknown)=>work(enrollmentTx)} as unknown as PrismaService,{} as ProgramProgressService);
+  await expect(enrollments.assign(id(600),id(400),{learnerId:id(701),programVersionId:version.id,expectedRevision:1,idempotencyKey:id(702)})).resolves.toMatchObject({programVersionId:version.id,status:'ACTIVE'});
+  const target={id:id(400),slug:'beginner',name:'Beginner',progressionPolicy:'ACTIVITY_COMPLETION',availabilityStatus:'BETA',curriculumRevisionIds:[row.id],revision:1};
+  const contextEnrollment={...enrollment,currentLevel:{id:id(401),code:'MG-F0',name:'Foundation',path:{programId:target.id}},programVersion:{...version,status:'PUBLISHED'}};
+  const contextTx={...enrollmentTx,learningProgram:{findUnique:async()=>target},learnerProfile:{findUnique:async()=>({onboardingStatus:'COMPLETE',activeProgramId:target.id,activeProgram:target})},programVersion:{findFirst:async()=>({...version,status:'PUBLISHED'})},learnerProgramEnrollment:{findFirst:async()=>null,findUnique:async()=>contextEnrollment,findUniqueOrThrow:async()=>contextEnrollment}};
+  const contexts=new ProgramContextService({$transaction:async(work:(tx:unknown)=>unknown)=>work(contextTx)} as unknown as PrismaService,enrollments);
+  await expect(contexts.activate(id(701),{programSlug:'beginner',expectedRevision:1})).resolves.toMatchObject({activeProgram:{slug:'beginner'},enrollment:{id:enrollment.id}});
+  contextTx.programVersion.findFirst=async()=>({...version,status:'APPROVED'});
+  await expect(contexts.activate(id(701),{programSlug:'beginner',expectedRevision:1})).rejects.toThrow();
+  enrollmentTx.programVersion.findUnique=async()=>({...version,status:'APPROVED'});
+  await expect(enrollments.assign(id(600),id(400),{learnerId:id(701),programVersionId:version.id,expectedRevision:1,idempotencyKey:id(703)})).rejects.toThrow('PROGRAM_RELEASE_UNAVAILABLE');
+  content.curriculumBindings[0]!.lessons[0]!.activityIds.reverse();
+  await expect(validateProgramSnapshot(tx,id(400),content)).rejects.toThrow();
+ });
+});
+
+

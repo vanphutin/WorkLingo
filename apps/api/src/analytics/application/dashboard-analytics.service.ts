@@ -6,7 +6,7 @@ import {
 } from '@worklingo/contracts';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { ProgramContextService } from '../../learning-programs/application/program-context.service.js';
-import { deriveProgramAccess } from '../../learning-programs/domain/program-availability.js';
+import { deriveProgramAccess, hasPublishedProgramRelease } from '../../learning-programs/domain/program-availability.js';
 
 const DAY_MS = 86_400_000;
 
@@ -157,16 +157,31 @@ export class DashboardAnalyticsService {
           SELECT activity."activityType"::text AS skill, AVG(a.score)::float8 AS "averageScore", COUNT(*)::int AS samples
           ${evaluated} GROUP BY activity."activityType" ORDER BY skill`),
       ]);
+      const accessRows = await tx.learningProgram.findMany({
+        where: {id:{in:programs.map(program=>program.id)}},
+        select:{id:true,progressionPolicy:true,curriculumRevisionIds:true,versions:{where:{source:'AUTHORED',status:'PUBLISHED'},orderBy:{version:'desc'},take:1,select:{source:true,status:true,snapshot:true,curriculumRevisionIds:true}}},
+      });
+      const access = new Map(accessRows.map(row=>[row.id,row]));
       const daily = new Map(activity.map((day) => [day.dateKey, day]));
       return learnerDashboardAnalyticsSchema.parse({
         displayName: user.displayName, activeProgramSlug: context?.programSlug ?? null,
         activity: dates.map((dateKey) => ({ dateKey, sessions: daily.get(dateKey)?.startedSessions ?? 0, completedSessions: daily.get(dateKey)?.completedSessions ?? 0 })),
         accuracyTrend, skills,
-        programs: programs.map((program) => ({ ...program,
-          availabilityStatus: !deriveProgramAccess(program).isSelectable && (program.availabilityStatus === 'AVAILABLE' || program.availabilityStatus === 'BETA') ? 'COMING_SOON' : program.availabilityStatus,
-          completedLessons: program.enrolled ? program.completedLessons : 0,
-          completedMissions: program.enrolled ? program.completedMissions : 0,
-        })),
+        programs: programs.map((program) => {
+          const evidence = access.get(program.id);
+          const release = evidence?.versions[0];
+          const selectable = deriveProgramAccess({
+            ...program,
+            progressionPolicy: evidence?.progressionPolicy ?? '',
+            curriculumRevisionIds: release?.curriculumRevisionIds ?? evidence?.curriculumRevisionIds ?? [],
+            hasPublishedRelease: hasPublishedProgramRelease(release),
+          }).isSelectable;
+          return { ...program,
+            availabilityStatus: !selectable && (program.availabilityStatus === 'AVAILABLE' || program.availabilityStatus === 'BETA') ? 'COMING_SOON' : program.availabilityStatus,
+            completedLessons: program.enrolled ? program.completedLessons : 0,
+            completedMissions: program.enrolled ? program.completedMissions : 0,
+          };
+        }),
       });
     }, { isolationLevel: 'RepeatableRead' });
   }

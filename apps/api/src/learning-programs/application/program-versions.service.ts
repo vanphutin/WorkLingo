@@ -65,7 +65,7 @@ export class ProgramVersionsService {
   async transition(actorId: string, programId: string, versionId: string, raw: unknown) {
     const input = parseProgramInput(programVersionTransitionSchema, raw);
     return programCommand(this.database, actorId, `versions.transition.${input.targetStatus.toLowerCase()}`, input.idempotencyKey, { programId, versionId, input }, async tx => {
-      await lockProgram(tx, programId);
+      const program = await lockProgram(tx, programId);
       await tx.$queryRaw`SELECT "id" FROM "ProgramVersion" WHERE "id"=${versionId}::uuid FOR UPDATE`;
       const current = await tx.programVersion.findUnique({ where: { id: versionId } });
       if (!current || current.programId !== programId) throw new NotFoundException('Program version not found');
@@ -75,7 +75,7 @@ export class ProgramVersionsService {
       const row = await tx.programVersion.update({ where: { id: versionId }, data: { status: input.targetStatus as ProgramVersionStatus, ...(input.targetStatus === 'RETIRED' ? { retiredAt: new Date() } : { revision: { increment: 1 } }), ...(input.targetStatus === 'PUBLISHED' ? { publishedAt: new Date(), snapshot: jsonValue(publishedContent!) } : {}) } });
       if (input.targetStatus === 'PUBLISHED') {
         const selected = await tx.programVersion.findFirstOrThrow({ where: { programId, status: 'PUBLISHED', source: 'AUTHORED' }, orderBy: { version: 'desc' } });
-        await tx.learningProgram.update({ where: { id: programId }, data: { availabilityStatus: 'AVAILABLE', curriculumRevisionIds: selected.curriculumRevisionIds, revision: { increment: 1 } } });
+        await tx.learningProgram.update({ where: { id: programId }, data: { availabilityStatus: program.slug === 'beginner' ? 'BETA' : 'AVAILABLE', curriculumRevisionIds: selected.curriculumRevisionIds, revision: { increment: 1 } } });
       }
       await programAudit(tx, actorId, `program.versions.${input.targetStatus.toLowerCase()}`, 'ProgramVersion', row.id, { previousStatus: current.status, status: row.status, previousRevision: current.revision });
       return programVersionDto(row);

@@ -90,7 +90,7 @@ export async function validateProgramSnapshot(tx: Prisma.TransactionClient, prog
       const pin = row.lessons[index];
       if (!pin || pin.lessonVersionId !== lesson.lessonVersionId || pin.lessonVersion.status !== 'PUBLISHED' || !pin.lessonVersion.lesson.missions.some(membership => membership.missionId === row.missionId)) return fail();
       const snapshot = lessonSnapshotSchema.safeParse(pin.lessonVersion.parsedContent);
-      if (!snapshot.success || snapshot.data.formatVersion === 'WorkLingoLesson/1.2') return fail();
+      if (!snapshot.success) return fail();
       if (!programLessonCanComplete(snapshot.data)) throw new UnprocessableEntityException({ code: 'PROGRAM_LESSON_UNPLAYABLE', lessonVersionId: pin.lessonVersionId, message: 'Arrange lesson activities so supported program sessions can cover every activity; respond blocks require speaking and writing tasks.' });
       snapshots.set(pin.lessonVersionId, snapshot.data);
       const objectives = definition.data.objectives.filter(item => item.evidence.some(evidence => evidence.lessonVersionId === pin.lessonVersionId)).map(item => item.statement);

@@ -1,4 +1,5 @@
 import { computeAvailableDurations } from '../../learning-sessions/domain/session-planner.js';
+import { lessonSnapshotSchema } from '../../curriculum/domain/curriculum.types.js';
 
 export type CurriculumResourceType = 'PATH' | 'LEVEL' | 'MISSION';
 
@@ -143,6 +144,7 @@ export interface AssertPlayableMissionLessonsInput {
     id: string;
     status: 'DRAFT' | 'VALIDATED' | 'PUBLISHED' | 'ARCHIVED';
     currentPublishedVersion?: {
+      parsedContent?: unknown;
       activities: readonly {
         id: string;
         learningBlock: string;
@@ -176,6 +178,10 @@ export function assertPlayableMissionLessons(input: AssertPlayableMissionLessons
 
     const hasPlayableLesson = input.lessons.some((lesson) => {
       if (!lesson.currentPublishedVersion) return false;
+      const parsed = lessonSnapshotSchema.safeParse(lesson.currentPublishedVersion.parsedContent);
+      if (parsed.success && parsed.data.formatVersion === 'WorkLingoLesson/1.2') {
+        return computeAvailableDurations({ lessonVersion: parsed.data }).includes(45);
+      }
       const durations = computeAvailableDurations({
         lessonVersion: {
           activities: lesson.currentPublishedVersion

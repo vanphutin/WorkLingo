@@ -370,6 +370,10 @@ export class LearningSessionsService {
     if (activity.activityType !== expectedType) {
       throw new BadRequestException(`Activity must be ${expectedType}`);
     }
+    const version = await this.database.lessonVersion.findUnique({ where: { id: session.lessonVersionId }, select: { parsedContent: true } });
+    const snapshot = version?.parsedContent as {formatVersion?: unknown} | undefined;
+    // Recording submissions otherwise enqueue transcription before any evaluator can apply the practice policy.
+    if (snapshot?.formatVersion === 'WorkLingoLesson/1.2') throw new UnprocessableEntityException('BEGINNER_UNSCORED_PRACTICE_REQUIRED');
     return {
       curriculumRevisionId: session.curriculumRevisionId, activityId, activityIndex, activityIds, lessonVersionId: session.lessonVersionId,
       plan, sessionId: session.id,
@@ -445,6 +449,19 @@ export class LearningSessionsService {
     });
     if (!storedActivity) throw new NotFoundException('Activity not found in this session');
     const activity = this.parseActivity(storedActivity);
+    let unscoredPractice = false;
+    if (activity.activityType === 'speaking' || activity.activityType === 'writing') {
+      const version = await this.database.lessonVersion.findUnique({ where: { id: session.lessonVersionId }, select: { parsedContent: true } });
+      const raw = version?.parsedContent as {formatVersion?: unknown} | undefined;
+      if (raw?.formatVersion === 'WorkLingoLesson/1.2' || activity.payload.rubricId !== undefined) {
+        const snapshot = lessonSnapshotSchema.safeParse(version?.parsedContent);
+        const pinned = snapshot.success && snapshot.data.activities.find(item => item.id === activityId);
+        if (!snapshot.success || snapshot.data.formatVersion !== 'WorkLingoLesson/1.2' || !pinned || pinned.activityType !== activity.activityType || JSON.stringify(pinned.payload) !== JSON.stringify(activity.payload)) {
+          throw new UnprocessableEntityException('BEGINNER_ACTIVITY_PIN_INVALID');
+        }
+        unscoredPractice = true;
+      }
+    }
 
     try {
       const attempt = await this.database.$transaction(async (transaction) => {
@@ -459,7 +476,7 @@ export class LearningSessionsService {
             sessionId: session.id,
           },
         });
-        const evaluation = this.evaluate(activity, input.response);
+        const evaluation = this.evaluate(activity, input.response, unscoredPractice);
         const evaluated = await transaction.activityAttempt.update({
           where: { id: created.id },
           data: {
@@ -589,7 +606,7 @@ export class LearningSessionsService {
     });
   }
 
-  private evaluate(activity: CurriculumActivity, response: Record<string, unknown>): Evaluation {
+  private evaluate(activity: CurriculumActivity, response: Record<string, unknown>, unscoredPractice = false): Evaluation {
     if (activity.activityType === 'reading' || activity.activityType === 'listening') {
       const answerIndexes = response.answerIndexes;
       if (!Array.isArray(answerIndexes) ||
@@ -619,11 +636,11 @@ export class LearningSessionsService {
     if (typeof text !== 'string' || text.trim().length === 0) {
       throw new BadRequestException('A non-empty text response is required');
     }
-    const queued = activity.activityType === 'writing' && this.jobs !== undefined;
+    const queued = !unscoredPractice && activity.activityType === 'writing' && this.jobs !== undefined;
     return {
       advance: true,
       evaluationStatus: queued ? 'QUEUED' : 'SUBMITTED',
-      feedback: queued
+      feedback: unscoredPractice ? 'Saved as unscored practice. Completion records participation, not a qualified assessment.' : queued
         ? 'Saved. Teacher AI evaluation is queued.'
         : 'Saved. Advanced speaking and writing feedback is not available yet.',
       normalizedResponse: { text: text.trim() },

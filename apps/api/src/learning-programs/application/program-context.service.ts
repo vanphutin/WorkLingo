@@ -6,7 +6,7 @@ import type { Prisma } from '@prisma/client';
 import { activateProgramSchema, enrollProgramSchema, programContextSchema, type ActivateProgramInput, type ProgramContextDto } from '@worklingo/contracts';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
-import { deriveProgramAccess } from '../domain/program-availability.js';
+import { deriveProgramAccess, hasPublishedProgramRelease } from '../domain/program-availability.js';
 import { INTERMEDIATE_PROGRAM_ID } from '../domain/program-catalog.js';
 
 export interface ResolvedProgramContext {
@@ -57,8 +57,9 @@ export class ProgramContextService {
       if (!target || (target.availabilityStatus === 'DISABLED' && !ownedPin)) {
         throw new NotFoundException({ code: 'PROGRAM_NOT_FOUND', message: 'Learning program not found.' });
       }
+      const release = target.slug === 'beginner' && !ownedPin ? await tx.programVersion.findFirst({where:{programId:target.id,status:'PUBLISHED',source:'AUTHORED'},orderBy:{version:'desc'}}) : null;
       // IELTS is guided navigation over Intermediate evidence, never a generic level context.
-      if (target.slug === 'ielts' || (!ownedPin && !deriveProgramAccess(target).isSelectable)) {
+      if (target.slug === 'ielts' || (!ownedPin && !deriveProgramAccess({...target,hasPublishedRelease:hasPublishedProgramRelease(release),...(release ? {curriculumRevisionIds:release.curriculumRevisionIds} : {})}).isSelectable)) {
         throw new UnprocessableEntityException({ code: 'PROGRAM_UNAVAILABLE', message: 'This learning program is not available yet.' });
       }
       await tx.$queryRaw`SELECT "id" FROM "LearningProgram" WHERE "id"=${target.id}::uuid FOR UPDATE`;

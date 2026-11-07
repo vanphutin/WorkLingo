@@ -8,3 +8,9 @@ it('accepts safe owned display metadata and rejects private release payload fiel
  expect(programEnrollmentSchema.safeParse({...row,display:{...display,release:{...display.release,activities:[{answer:'secret'}]}}}).success).toBe(false);
  expect(learningProgramCatalogItemSchema.safeParse({availabilityStatus:'AVAILABLE',description:'Description',destination:'/dashboard',iconKey:'intermediate',isSelectable:true,learningGoal:'Ask',name:'Requests',proficiencyLabel:'A2',publishedLevelCount:1,publishedPathCount:1,slug:'requests',id,currentRelease:{...display.release,status:'PUBLISHED'}}).success).toBe(true);
 });
+it('accepts safe curriculum overview and rejects payload fields nested within it', async () => {
+ const {programReleaseDisplaySchema}=await import('./learning-program.contracts.ts');
+ const release={id,version:1,source:'AUTHORED',status:'PUBLISHED',title:'Beginner',lessonCount:1,activityCount:2,curriculumOverview:[{title:'Greetings',lessonCount:1,activityCount:2,estimatedMinutes:12,lessons:[{title:'Hello',estimatedMinutes:12}]}]};
+ expect(programReleaseDisplaySchema.safeParse(release).success).toBe(true);
+ expect(programReleaseDisplaySchema.safeParse({...release,curriculumOverview:[{...release.curriculumOverview[0],answer:'secret'}]}).success).toBe(false);
+});

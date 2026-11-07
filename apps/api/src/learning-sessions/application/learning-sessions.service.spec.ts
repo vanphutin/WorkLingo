@@ -1,3 +1,5 @@
+import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
+import { beginnerMission } from '../../learning-programs/application/__fixtures__/beginner-r21.js';
 import type { ProgramProgressService } from '../../learning-programs/application/program-progress.service.js';
 import { describe, expect, it, vi } from 'vitest';
 import { foundationMissionFixture } from '@worklingo/test-fixtures';
@@ -48,6 +50,7 @@ describe('LearningSessionsService state transitions', () => {
       sessionBlock: { update: vi.fn().mockResolvedValue({}) },
     };
     const database = {
+      lessonVersion: {findUnique: vi.fn(async()=>null)},
       activityAttempt: { findUnique: vi.fn().mockResolvedValue(null) },
       activity: { findFirst: vi.fn().mockResolvedValue({
         id: writingId,
@@ -92,6 +95,96 @@ describe('LearningSessionsService state transitions', () => {
     }), transaction);
     expect(mastery.recordAttemptEvaluation).not.toHaveBeenCalled();
     expect(result.evaluationStatus).toBe('queued');
+  });
+
+  it.each(['speaking','writing'] as const)('saves pinned Beginner %s as unscored practice with jobs configured', async (skill) => {
+    const learnerId = '00000000-0000-4000-8000-000000000001';
+    const sessionId = '00000000-0000-4000-8000-000000000002';
+    const writingId = '00000000-0000-4000-8000-000000000005';
+    const plan = {
+      durationMinutes: 45,
+      missionId: '00000000-0000-4000-8000-000000000010',
+      lessonVersionId: '00000000-0000-4000-8000-000000000011',
+      blocks: [
+        { type: 'readDecode', order: 1, targetMinutes: 15, activityIds: ['00000000-0000-4000-8000-000000000003'], skills: ['reading'] },
+        { type: 'listenReason', order: 2, targetMinutes: 15, activityIds: ['00000000-0000-4000-8000-000000000004'], skills: ['listening'] },
+        { type: 'respond', order: 3, targetMinutes: 15, activityIds: [writingId], skills: ['speaking', 'writing'] },
+      ],
+    };
+    const now = new Date();
+    const created = {
+      id: '00000000-0000-4000-8000-000000000006', learnerId, sessionId,
+      activityId: writingId, clientAttemptId: '00000000-0000-4000-8000-000000000007',
+      rawResponse: { text: 'I will follow up with the customer.' }, normalizedResponse: null,
+      evaluationStatus: 'SUBMITTED', score: null, feedback: null, createdAt: now, updatedAt: now,
+    };
+    const evaluated = { ...created, normalizedResponse: created.rawResponse };
+    const update = vi.fn(async ({data}) => ({...evaluated,...data}));
+    const transaction = {
+      activityAttempt: {
+        create: vi.fn().mockResolvedValue(created),
+        update,
+      },
+      activityDraft: { deleteMany: vi.fn().mockResolvedValue({ count: 1 }) },
+      learningSession: { updateMany: vi.fn().mockResolvedValue({ count: 1 }) },
+      sessionBlock: { update: vi.fn().mockResolvedValue({}) },
+    };
+    const database = {
+      lessonVersion: {findUnique: vi.fn()},
+      activityAttempt: { findUnique: vi.fn().mockResolvedValue(null) },
+      activity: { findFirst: vi.fn().mockResolvedValue({
+        id: writingId,
+        lessonVersionId: plan.lessonVersionId,
+        slug: 'write-follow-up',
+        order: 2,
+        activityType: skill,
+        learningBlock: 'respond',
+        skills: [skill],
+        contentReferences: ['email-1'],
+        languageBlockReferences: ['follow-up'],
+        payload: {
+          prompt: 'Write a follow-up.', sampleAnswer: 'I will follow up tomorrow.',
+          requiredPhrases: [], minWords: 1, rubricId:skill === 'writing' ? 'beginner-short-writing' : 'beginner-guided-speaking', rubricVersion:'1', ...(skill === 'speaking' ? {mode:'guided_response'} : {}),
+        },
+      }) },
+      learningSession: { findFirst: vi.fn().mockResolvedValue({
+        id: sessionId, learnerId, status: 'IN_PROGRESS', currentCheckpoint: 2,
+        lessonVersionId: plan.lessonVersionId, planSnapshot: plan, attempts: [], blocks: [],
+        mission: { id: plan.missionId, title: 'Workplace follow-up' },
+      }) },
+      $transaction: vi.fn(async (work) => work(transaction)),
+    } as unknown as PrismaService;
+    const rawStored = await database.activity.findFirst({where:{id:writingId}});
+    const stored = activitySchema.parse(rawStored);
+    const pinned = beginnerMission().lessonVersion;
+    pinned.activities = pinned.activities.map(a=>a.activityType === skill ? activitySchema.parse({...a,id:writingId,slug:'write-follow-up',payload:stored.payload}) : a);
+    pinned.foundation!.activityObjectives['write-follow-up'] = [skill];
+    delete pinned.foundation!.activityObjectives[skill+'-'+(skill === 'speaking' ? 6 : 7)];
+    vi.mocked(database.lessonVersion.findUnique).mockResolvedValue({parsedContent:pinned} as never);
+    const enqueue = vi.fn().mockResolvedValue({ id: 'evaluation-job' });
+    const jobs = { enqueue } as unknown as JobDispatcher;
+    const mastery = { recordAttemptEvaluation: vi.fn() } as unknown as MasteryService;
+    const service = new LearningSessionsService(
+      database, {} as CurriculumService, mastery, {} as SessionCreationService, {} as ProgramContextService,
+      {} as CurriculumEligibilityService, progress, programProgress, jobs,
+    );
+
+    const result = await service.submitAttempt(learnerId, writingId, {
+      clientAttemptId: created.clientAttemptId,
+      sessionId,
+      response: created.rawResponse,
+    });
+
+    expect(enqueue).not.toHaveBeenCalled();
+    expect(update).toHaveBeenCalledWith(expect.objectContaining({data:expect.objectContaining({evaluationStatus:'SUBMITTED',score:null,feedback:expect.stringContaining('unscored practice')})}));
+    expect(mastery.recordAttemptEvaluation).not.toHaveBeenCalled();
+    expect(result.evaluationStatus).toBe('submitted');
+    expect(result.score).toBeNull();
+    await expect(service.requireCurrentActivity(learnerId,sessionId,writingId,skill)).rejects.toThrow('BEGINNER_UNSCORED_PRACTICE_REQUIRED');
+    vi.mocked(database.lessonVersion.findUnique).mockResolvedValue({parsedContent:{...pinned,formatVersion:'WorkLingoLesson/1.1'}} as never);
+    await expect(service.submitAttempt(learnerId,writingId,{clientAttemptId:created.clientAttemptId,sessionId,response:created.rawResponse})).rejects.toThrow('BEGINNER_ACTIVITY_PIN_INVALID');
+    expect(transaction.activityAttempt.create).toHaveBeenCalledTimes(1);
+
   });
 
   it('does not overwrite a session that completed after a stale pause read', async () => {

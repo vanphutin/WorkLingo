@@ -1298,6 +1298,7 @@ export class AdminCurriculumCommandService {
       const lessonItems = current.lessons.map((ml) => ({
         currentPublishedVersion: ml.lesson.currentPublishedVersion
           ? {
+              parsedContent: ml.lesson.currentPublishedVersion.parsedContent,
               activities: ml.lesson.currentPublishedVersion.activities.map((a) => ({
                 id: a.id,
                 learningBlock: a.learningBlock,
@@ -1647,6 +1648,7 @@ export class AdminCurriculumCommandService {
       const lessonItems = lessons.map((l) => ({
         currentPublishedVersion: l.currentPublishedVersion
           ? {
+              parsedContent: l.currentPublishedVersion.parsedContent,
               activities: l.currentPublishedVersion.activities.map((a) => ({
                 id: a.id,
                 learningBlock: a.learningBlock,

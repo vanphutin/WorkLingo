@@ -29,6 +29,18 @@ describe('LearningProgramsService', () => {
     service = moduleRef.get(LearningProgramsService);
   });
 
+  it('opens only an authored published Beginner release with exact valid snapshot pins', async () => {
+    const snapshot = {title:'Beginner',description:'Practice',objectives:['Introduce yourself','Ask for help'],estimatedMinutes:45,difficulty:'A0',policy:{version:1,sequential:{stages:true,units:true,lessons:true},completion:{requiredActivityRatio:1},mastery:{required:false,threshold:0.8,minimumQualifiedAttempts:1},retry:{maxAttempts:3,cooldownMinutes:0},remediation:{enabled:true,afterAttempts:2},review:{scheduleVersion:'program-review-v1',intervalsDays:[1],requiredForReadiness:false}},curriculumBindings:[{curriculumRevisionId:'00000000-0000-4000-8000-000000000001',pathId:'00000000-0000-4000-8000-000000000002',levelId:'00000000-0000-4000-8000-000000000003',missionId:'00000000-0000-4000-8000-000000000004',order:1,title:'Unit',objectives:['Practice'],required:true,prerequisiteRevisionIds:[],lessons:[{lessonVersionId:'00000000-0000-4000-8000-000000000005',order:1,title:'Lesson',objectives:['Practice'],estimatedMinutes:45,difficulty:'A0',activityIds:['00000000-0000-4000-8000-000000000006'],vocabularyRefs:[],resourceRefs:[]}]}]};
+    const release={id:'00000000-0000-4000-8000-000000000007',version:1,status:'PUBLISHED',source:'AUTHORED',snapshot,curriculumRevisionIds:[snapshot.curriculumBindings[0]!.curriculumRevisionId]};
+    const row={...fixture.program,slug:'beginner',availabilityStatus:'BETA',progressionPolicy:'ACTIVITY_COMPLETION',curriculumRevisionIds:release.curriculumRevisionIds,versions:[release]};
+    findMany.mockResolvedValue([row]);
+    expect((await service.listCatalog()).programs[0]).toMatchObject({isSelectable:true,destination:'/dashboard',learningGoal:'Introduce yourself',currentRelease:{objectives:['Introduce yourself','Ask for help']}});
+    for (const versions of [[],[{...release,status:'APPROVED'}],[{...release,source:'LEGACY_PIN_BACKFILL'}],[{...release,curriculumRevisionIds:['wrong']} ]]) {
+      findMany.mockResolvedValue([{...row,versions}]);
+      expect((await service.listCatalog()).programs[0]!.isSelectable).toBe(false);
+    }
+  });
+
   it.each(['BETA', 'AVAILABLE'])('opens guided IELTS entry for a complete published chain with status %s', async (availabilityStatus) => {
     findMany.mockResolvedValue([{ ...fixture.program, availabilityStatus }]);
     const catalog = await service.listCatalog();

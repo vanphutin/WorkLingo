@@ -8,7 +8,7 @@ const pins = z.array(z.uuid()).min(1).max(500).refine(ids => new Set(ids).size==
 export const createProgramSchema = z.object({...metadata,slug,...command}).strict();
 export const updateProgramSchema = z.object({...metadata,expectedRevision:z.number().int().positive(),...command}).strict();
 export const publishProgramSchema = z.object({curriculumRevisionIds:pins,expectedRevision:z.number().int().positive(),...command}).strict();
-export const enrollProgramSchema = z.object({programSlug:slug,expectedRevision:z.number().int().positive(),idempotencyKey:z.string().trim().min(1).max(100).optional()}).strict();
+export const enrollProgramSchema = z.object({programSlug:z.union([z.literal('beginner'),slug]),expectedRevision:z.number().int().positive(),idempotencyKey:z.string().trim().min(1).max(100).optional()}).strict();
 export const adminProgramSchema = z.object({...metadata,id:z.uuid(),slug:z.string(),availabilityStatus:learningProgramAvailabilityStatusSchema,revision:z.number().int().positive(),progressionPolicy:z.enum(['MASTERY','ACTIVITY_COMPLETION']),curriculumRevisionIds:z.array(z.uuid())}).strict();
 export const adminProgramListSchema = z.object({programs:z.array(adminProgramSchema)}).strict();
 export type CreateProgramInput=z.infer<typeof createProgramSchema>;

@@ -20,7 +20,7 @@ export async function lockProgram(tx: Prisma.TransactionClient, programId: strin
   await tx.$queryRaw`SELECT "id" FROM "LearningProgram" WHERE "id"=${programId}::uuid FOR UPDATE`;
   const row = await tx.learningProgram.findUnique({ where: { id: programId } });
   if (!row) throw new NotFoundException('Program not found');
-  if (reservedProgramSlugs.some(slug => slug === row.slug) || row.progressionPolicy !== 'ACTIVITY_COMPLETION') throw new UnprocessableEntityException('PROGRAM_RESERVED');
+  if (reservedProgramSlugs.some(slug => slug === row.slug && slug !== 'beginner') || row.progressionPolicy !== 'ACTIVITY_COMPLETION') throw new UnprocessableEntityException('PROGRAM_RESERVED');
   if (expectedRevision !== undefined && row.revision !== expectedRevision) throw new ConflictException('PROGRAM_REVISION_STALE');
   return row;
 }

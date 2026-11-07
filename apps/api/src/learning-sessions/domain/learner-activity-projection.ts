@@ -18,6 +18,7 @@ export function projectLearnerActivity(snapshot:LessonSnapshot,activityId:string
           prompt: activity.payload.prompt,
           ...(beginner ? {} : recall ? {requiredPhraseCount:activity.payload.requiredPhrases.length} : {requiredPhrases: activity.payload.requiredPhrases}),
           minWords: activity.payload.minWords,
+          ...(beginner ? {practiceMode:'unscored'} : {}),
           ...(activity.activityType === 'speaking'
             ? {
                 mode: activity.payload.mode,

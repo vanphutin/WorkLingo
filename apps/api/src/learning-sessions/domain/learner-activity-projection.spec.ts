@@ -16,13 +16,13 @@ describe('one canonical learner-safe projection',()=>{
   if(speaking.activityType!=='speaking')throw new Error('fixture');
   speaking.payload.sampleAnswer='HIDDEN_MODEL';speaking.payload.requiredPhrases=['HIDDEN_PHRASE'];
   const response=projectLearnerActivity(s,speaking.id);
-  expect(response.payload.mode).toBe('guided_response');expect(JSON.stringify(response)).not.toMatch(/HIDDEN_MODEL|HIDDEN_PHRASE|sampleAnswer|requiredPhrases/);
+  expect(response.payload.mode).toBe('guided_response');expect(response.payload.practiceMode).toBe('unscored');expect(JSON.stringify(response)).not.toMatch(/HIDDEN_MODEL|HIDDEN_PHRASE|sampleAnswer|requiredPhrases/);
  });
  it('preserves intentional legacy shadowing without sharing Beginner answers',()=>{
   const s=buildBeginnerDraftSnapshot(analyzeLessonSource(syntheticBeginnerSource()).normalizedDraft!);
   delete s.formatVersion;delete s.instructions;
   const a=s.activities.find(a=>a.activityType==='speaking')!;if(a.activityType!=='speaking')throw new Error('fixture');a.payload.mode='shadowing';
-  expect(projectLearnerActivity(s,a.id).payload?.sampleAnswer).toBe(a.payload.sampleAnswer);
+  expect(projectLearnerActivity(s,a.id).payload?.sampleAnswer).toBe(a.payload.sampleAnswer);expect(projectLearnerActivity(s,a.id).payload.practiceMode).toBeUndefined();
  });
 });
 

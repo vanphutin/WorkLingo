@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { IeltsTopicAdminService } from '../../ielts-study/application/ielts-topic-admin.service.js';
 import { readIeltsV3Readiness } from '../../ielts-flow/domain/ielts-v3-readiness.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
-import { deriveProgramAccess } from '../domain/program-availability.js';
+import { deriveProgramAccess, hasPublishedProgramRelease } from '../domain/program-availability.js';
 import { readIeltsProgramReadiness } from './ielts-program-readiness.js';
 
 @Injectable()
@@ -62,6 +62,7 @@ export class LearningProgramsService {
               availabilityStatus: row.availabilityStatus,
               slug: row.slug,
               ieltsReady,
+              hasPublishedRelease: hasPublishedProgramRelease(selected),
               progressionPolicy: row.progressionPolicy,
               curriculumRevisionIds: selected?.curriculumRevisionIds ?? (row._count?.versions ? [] : row.curriculumRevisionIds),
             }),
@@ -70,7 +71,7 @@ export class LearningProgramsService {
             availabilityStatus: row.availabilityStatus,
             description: release?.description ?? row.description,
             iconKey: release ? release.catalogMetadata?.iconKey ?? 'intermediate' : row.iconKey,
-            learningGoal: release?.objectives.join(' ') ?? row.learningGoal,
+            learningGoal: release ? release.objectives[0] ?? release.description : row.learningGoal,
             name: release?.title ?? row.name,
             proficiencyLabel: release ? release.proficiencyLabel ?? release.difficulty : row.proficiencyLabel,
             publishedLevelCount: release ? new Set(release.curriculumBindings.map(binding => binding.levelId)).size : row.slug === 'ielts' && this.config?.get('ieltsFlow')!=='v3' ? 0 : row.paths.reduce(
