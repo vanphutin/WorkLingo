@@ -20,3 +20,23 @@ describe('side-effect-free Admin renderer mode',()=>{
   expect(screen.getByText(/Preview only/)).toBeInTheDocument();expect(fetcher).not.toHaveBeenCalled();
  });
 });
+
+it.each(['reading','listening'] as const)('renders and completes semantic %s answers without an invented option',async(skill)=>{
+ const {isActivityComplete}=await import('./activity-renderer');
+ const activity={...base,activityType:skill,skills:[skill],learningBlock:skill==='reading'?'readDecode':'listenReason',payload:{prompt:'Explain the message',questions:[{slug:'why',prompt:'Why is she writing?',responseType:'open_ended',options:[]}]}} as LearnerActivityDto;
+ const onChange=vi.fn();
+ render(<ActivityRenderer mode="admin-preview" activity={activity} value={{answerIndexes:[],answers:[]}} onChange={onChange}/>);
+ fireEvent.change(screen.getByRole('textbox',{name:/Why is she writing/}),{target:{value:'She wants help.'}});
+ expect(onChange).toHaveBeenCalledWith({answerIndexes:[-1],answers:['She wants help.']});
+ expect(isActivityComplete(activity,{answerIndexes:[-1],answers:['She wants help.']})).toBe(true);
+ expect(isActivityComplete(activity,{answerIndexes:[-1],answers:[' ']})).toBe(false);
+});
+
+it.each(['true_false','matching'] as const)('retains keyboard-native choices for %s',type=>{
+ const onChange=vi.fn();
+ const options=type==='true_false'?['True','False']:['Monday','Tuesday'];
+ const activity={...base,activityType:'reading',skills:['reading'],payload:{prompt:'Read',questions:[{slug:'q',prompt:'Choose the matching answer',responseType:type,options}]}} as LearnerActivityDto;
+ render(<ActivityRenderer mode="admin-preview" activity={activity} value={{answerIndexes:[]}} onChange={onChange}/>);
+ fireEvent.click(screen.getByRole('radio',{name:options[1]!}));
+ expect(onChange).toHaveBeenCalledWith({answerIndexes:[1]});
+});

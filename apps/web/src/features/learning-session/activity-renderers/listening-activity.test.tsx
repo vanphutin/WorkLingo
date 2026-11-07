@@ -202,3 +202,10 @@ describe('ListeningActivity', () => {
     expect(screen.getByText(/Mai: Hello\.\s+An: Good morning\./)).toBeVisible();
   });
 });
+
+it('collects a listening short answer using a labelled input and preserves choice answers',()=>{
+ const onChange=vi.fn();
+ render(<ListeningActivity activity={{...listeningActivity,content:[],payload:{prompt:'Listen',questions:[{slug:'q',prompt:'Explain the request',responseType:'short_answer',options:[]}]}}} sessionId="00000000-0000-4000-8000-000000000020" value={{answerIndexes:[],answers:[]}} onChange={onChange}/>);
+ fireEvent.change(screen.getByRole('textbox',{name:'Explain the request'}),{target:{value:'Please call tomorrow.'}});
+ expect(onChange).toHaveBeenCalledWith({answerIndexes:[-1],answers:['Please call tomorrow.']});
+});

@@ -40,3 +40,4 @@ export * from './program-platform.contracts.ts';
 export * from './program-platform-api.contracts.ts';
 export * from './program-analytics.contracts.ts';
 export * from './program-progress.contracts.ts';
+export * from './assessment.contracts.ts';

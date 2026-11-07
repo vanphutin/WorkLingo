@@ -11,6 +11,7 @@ import { ActivityWorkspace, type ActivityWorkspaceTools } from '../activity-work
 
 export interface ListeningResponseValue {
   answerIndexes: number[];
+  answers?: string[];
 }
 
 interface ListeningActivityProps {
@@ -53,6 +54,7 @@ function ListeningPractice({
       slug: string;
       prompt: string;
       options: readonly string[];
+      responseType?: string;
     }>) ?? []
   );
 
@@ -60,7 +62,15 @@ function ListeningPractice({
     if (disabled) return;
     const nextAnswers = [...value.answerIndexes];
     nextAnswers[questionIndex] = optionIndex;
-    onChange({ answerIndexes: nextAnswers });
+    onChange({ ...value, answerIndexes: nextAnswers });
+  };
+
+  const handleTextAnswer = (questionIndex: number, text: string) => {
+    if (disabled) return;
+    const answerIndexes = questions.map((question, index) =>
+      ['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '') ? -1 : (value.answerIndexes[index] ?? -1));
+    const answers = questions.map((_, index) => index === questionIndex ? text : (value.answers?.[index] ?? ''));
+    onChange({ answerIndexes, answers });
   };
 
   const audioUrl = apiClient.getActivityAudioUrl(sessionId, activity.id);
@@ -70,6 +80,7 @@ function ListeningPractice({
     (item) => item.audio?.kind === 'textPlaceholder',
   );
   const hasUnansweredQuestion = questions.some((question, index) => {
+    if (['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '')) return !value.answers?.[index]?.trim();
     const answer = value.answerIndexes[index];
     return !Number.isInteger(answer) || answer === undefined || answer < 0 || answer >= question.options.length;
   });
@@ -130,6 +141,11 @@ function ListeningPractice({
                 <legend className="question-prompt" lang="en">
                   <span className="question-number">{qIdx + 1}.</span> {question.prompt}
                 </legend>
+                {['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '') ? (
+                  <textarea aria-label={question.prompt} lang="en" maxLength={20000}
+                    className="writing-textarea" value={value.answers?.[qIdx] ?? ''} disabled={disabled}
+                    onChange={event => handleTextAnswer(qIdx, event.target.value)} />
+                ) : (
                 <div className="options-group" role="radiogroup">
                   {question.options.map((option, optIdx) => {
                     const inputId = `listen-q-${qIdx}-opt-${optIdx}`;
@@ -153,7 +169,7 @@ function ListeningPractice({
                       </label>
                     );
                   })}
-                </div>
+                </div>)}
               </fieldset>
             );
           })}

@@ -310,3 +310,29 @@ it.each(['PLANNED','PAUSED'] as const)('keeps exact V1/C1 during %s after curren
  const result=status==='PLANNED'?await service.startSession(id(7),id(6)):await service.resumeSession(id(7),id(6));
  expect(result.lessonVersionId).toBe(id(2));expect(result.curriculumRevisionId).toBe(id(9));expect(result.plan).toEqual(plan);expect(latest).not.toHaveBeenCalled();
 });
+
+describe('comprehension text submissions',()=>{
+ async function submit(question:Record<string,unknown>, response:Record<string,unknown>){
+  const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+  const activity={id:id(3),slug:'read',order:0,activityType:'reading',learningBlock:'readDecode',skills:['reading'],contentReferences:['email'],languageBlockReferences:['word'],lessonVersionId:id(2),payload:{prompt:'Read',questions:[{slug:'q',prompt:'Why?',explanation:'Private reason',evidence:'email:1',...question}]}};
+  const plan={durationMinutes:45,missionId:id(1),lessonVersionId:id(2),blocks:[{type:'readDecode',order:1,targetMinutes:15,activityIds:[id(3)],skills:['reading']},{type:'listenReason',order:2,targetMinutes:15,activityIds:[id(4)],skills:['listening']},{type:'respond',order:3,targetMinutes:15,activityIds:[id(5)],skills:['speaking','writing']}]};
+  const created={id:id(8),learnerId:id(7),sessionId:id(6),activityId:id(3),clientAttemptId:id(9),rawResponse:response,createdAt:new Date()};
+  const tx={activityAttempt:{create:async()=>created,update:async({data}:{data:Record<string,unknown>})=>({...created,...data})},learningSession:{updateMany:async()=>({count:1})},sessionBlock:{update:async()=>({})}};
+  const database={activityAttempt:{findUnique:async()=>null},activity:{findFirst:async()=>activity},learningSession:{findFirst:async()=>({id:id(6),learnerId:id(7),missionId:id(1),lessonVersionId:id(2),status:'IN_PROGRESS',currentCheckpoint:0,planSnapshot:plan,mission:{purpose:'LEARNING'},blocks:[],attempts:[]})},$transaction:async(work:(arg:typeof tx)=>unknown)=>work(tx)} as unknown as PrismaService;
+  const mastery={recordAttemptEvaluation:vi.fn()} as unknown as MasteryService;
+  const service=new LearningSessionsService(database,{} as CurriculumService,mastery,{} as SessionCreationService,{} as ProgramContextService,{} as CurriculumEligibilityService,progress,programProgress);
+  return service.submitAttempt(id(7),id(3),{sessionId:id(6),clientAttemptId:id(9),response});
+ }
+ it('persists semantic meaning as unscored participation without key matching',async()=>{
+  const result=await submit({responseType:'open_ended',semanticCriteria:'Explain the request.'},{answerIndexes:[-1],answers:['She wants to change the meeting.']});
+  expect(result.evaluationStatus).toBe('submitted');expect(result.score).toBeNull();expect(result.normalizedResponse).toEqual({answerIndexes:[-1],answers:['She wants to change the meeting.']});
+ });
+ it('uses only explicitly authored case policy for objective alternatives',async()=>{
+  const question={responseType:'fill_blank',acceptedAnswers:['Monday'],answerCaseSensitive:false};
+  expect((await submit(question,{answerIndexes:[-1],answers:['monday']})).score).toBe(1);
+  expect((await submit({...question,answerCaseSensitive:true},{answerIndexes:[-1],answers:['monday']})).score).toBe(0);
+ });
+ it('rejects missing text instead of accepting a fabricated choice index',async()=>{
+  await expect(submit({responseType:'short_answer',semanticCriteria:'Explain why.'},{answerIndexes:[0],answers:['']})).rejects.toThrow();
+ });
+});

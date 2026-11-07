@@ -614,13 +614,32 @@ export class LearningSessionsService {
           !answerIndexes.every((answer) => Number.isInteger(answer))) {
         throw new BadRequestException('One answer index is required for every question');
       }
-      const correct = activity.payload.questions.reduce(
-        (count, question, index) => count + (answerIndexes[index] === question.answerIndex ? 1 : 0),
-        0,
-      );
+      const hasText = activity.payload.questions.some(q => ['fill_blank','short_answer','open_ended'].includes(q.responseType ?? ''));
+      const answers = response.answers;
+      if (hasText && (!Array.isArray(answers) || answers.length !== activity.payload.questions.length || !answers.every(answer => typeof answer === 'string' && answer.length <= 20_000))) {
+        throw new BadRequestException('One bounded text answer is required for every question');
+      }
+      let semantic = false;
+      const correctness = activity.payload.questions.map((question, index) => {
+        const textResponse = ['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '');
+        if (!textResponse) {
+          const answer = answerIndexes[index] as number;
+          if (answer < 0 || answer >= question.options.length) throw new BadRequestException('Answer must reference an option');
+          return answer === question.answerIndex;
+        }
+        const answer = (answers as string[])[index]!.trim();
+        if (!answer || answerIndexes[index] !== -1) throw new BadRequestException('A non-empty text answer and -1 choice marker are required');
+        if (question.responseType === 'open_ended' || question.semanticCriteria) { semantic = true; return false; }
+        // Exact alternatives are objective only when the author explicitly supplies them.
+        const normalize = (value: string) => question.answerCaseSensitive === false ? value.trim().toLowerCase() : value.trim();
+        return question.acceptedAnswers?.some(accepted => normalize(accepted) === normalize(answer)) ?? false;
+      });
+      const normalizedResponse = {answerIndexes: [...answerIndexes], ...(hasText ? {answers: (answers as string[]).map(answer => answer.trim())} : {})};
+      if (semantic) return {advance:true,evaluationStatus:'SUBMITTED',feedback:'Saved. Semantic assessment is pending; this response has no score yet.',normalizedResponse,score:null};
+      const correct = correctness.filter(Boolean).length;
       const score = correct / activity.payload.questions.length;
       const missedExplanations = activity.payload.questions
-        .filter((question, index) => answerIndexes[index] !== question.answerIndex)
+        .filter((_question, index) => !correctness[index])
         .map((question) => question.explanation);
       return {
         advance: score === 1,
@@ -628,7 +647,7 @@ export class LearningSessionsService {
         feedback: score === 1
           ? 'Correct'
           : `Review: ${missedExplanations.join(' ')}`,
-        normalizedResponse: { answerIndexes: [...answerIndexes] } as Prisma.InputJsonValue,
+        normalizedResponse,
         score,
       };
     }

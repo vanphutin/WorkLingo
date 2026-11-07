@@ -8,11 +8,12 @@ export function projectLearnerActivity(snapshot:LessonSnapshot,activityId:string
       .flatMap((bank) => bank.languageBlocks)
       .filter((block) => activity.languageBlockReferences.includes(block.slug));
     const beginner=snapshot.formatVersion==='WorkLingoLesson/1.2';
+    const privateListening = activity.activityType === 'listening' && (beginner || activity.payload.questions.some(q => q.responseType !== undefined && q.responseType !== 'multiple_choice'));
     const recall = snapshot.foundation?.category === 'vocabulary' && activity.activityType === 'writing' && activity.learningBlock === 'respond';
     const payload = activity.activityType === 'reading' || activity.activityType === 'listening'
       ? {
           prompt: activity.payload.prompt,
-          questions: activity.payload.questions.map(({ options, prompt, slug }) => ({ options, prompt, slug })),
+          questions: activity.payload.questions.map(({ options, prompt, slug, responseType }) => ({ options, prompt, slug, ...(responseType ? {responseType} : {}) })),
         }
       : {
           prompt: activity.payload.prompt,
@@ -31,8 +32,8 @@ export function projectLearnerActivity(snapshot:LessonSnapshot,activityId:string
     return {
       activityType: activity.activityType,
       ...(beginner ? {instructions:(snapshot.instructions ?? []).filter(i=>i.phase===activity.learningBlock)} : {}),
-      ...(!beginner && activity.payload.audioText ? { audioText: activity.payload.audioText } : {}),
-      content:beginner&&activity.activityType==='listening'?[]:content,
+      ...(!beginner && !privateListening && activity.payload.audioText ? { audioText: activity.payload.audioText } : {}),
+      content:privateListening?[]:content,
       foundationCategory: snapshot.foundation?.category ?? null,
       id: activity.id,
       languageBlocks: recall ? [] : languageBlocks,

@@ -6,10 +6,26 @@ import { foundationCategories } from '@worklingo/content-format';
 const text = z.string().min(1);
 const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
 const skill = z.enum(['reading', 'listening', 'speaking', 'writing']);
+// Matching is authored as one left-hand prompt and its candidate right-hand options per question.
 const questionSchema = z.object({
-  slug, prompt: text, options: z.array(text).min(2), answerIndex: z.number().int().nonnegative(),
+  slug, prompt: text,
+  responseType: z.enum(['multiple_choice', 'true_false', 'matching', 'fill_blank', 'short_answer', 'open_ended']).optional(),
+  options: z.array(text).default([]), answerIndex: z.number().int().min(-1).default(-1),
+  acceptedAnswers: z.array(text).min(1).max(100).optional(),
+  answerCaseSensitive: z.boolean().optional(),
+  semanticCriteria: text.optional(),
   explanation: text, evidence: text,
-}).refine((q) => q.answerIndex < q.options.length, 'Answer must reference an option');
+}).superRefine((q, context) => {
+  const type = q.responseType ?? 'multiple_choice';
+  if (type === 'multiple_choice' || type === 'true_false' || type === 'matching') {
+    if (q.options.length < 2 || q.answerIndex < 0 || q.answerIndex >= q.options.length) context.addIssue({code:'custom',message:'Answer must reference an option'});
+    if (type === 'true_false' && (q.options.length !== 2 || q.options[0]?.toLowerCase() !== 'true' || q.options[1]?.toLowerCase() !== 'false')) context.addIssue({code:'custom',message:'True/false requires True and False options in order'});
+  } else if (type === 'open_ended') {
+    if (!q.semanticCriteria?.trim()) context.addIssue({code:'custom',message:'Open-ended answers require semantic criteria'});
+  } else if (!q.acceptedAnswers?.length && !q.semanticCriteria?.trim()) {
+    context.addIssue({code:'custom',message:'Text answers require authored alternatives or semantic criteria'});
+  }
+});
 const comprehensionPayload = z.object({ prompt: text, questions: z.array(questionSchema).min(1), audioText: text.optional() });
 const responsePayload = z.object({
   audioText: text.optional(),

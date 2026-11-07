@@ -44,43 +44,19 @@ function AdminPreviewActivity(props:ActivityRendererBase&{audioUrl?:string}){
 
 export function isActivityComplete(activity: LearnerActivityDto, value: unknown): boolean {
   switch (activity.activityType) {
-    case 'reading': {
-      const questions =
-        (activity.payload.questions as Array<{ options?: readonly unknown[] }>) ?? [];
-      const readingVal = value as ReadingResponseValue | undefined;
-      if (!readingVal || !Array.isArray(readingVal.answerIndexes)) return false;
-      if (questions.length === 0) return true;
-      return (
-        readingVal.answerIndexes.length === questions.length &&
-        questions.every((question, index) => {
-          const answerIndex = readingVal.answerIndexes[index];
-          return (
-            typeof answerIndex === 'number' &&
-            Number.isInteger(answerIndex) &&
-            answerIndex >= 0 &&
-            answerIndex < (question.options?.length ?? 0)
-          );
-        })
-      );
-    }
+    case 'reading':
     case 'listening': {
-      const questions =
-        (activity.payload.questions as Array<{ options?: readonly unknown[] }>) ?? [];
-      const listenVal = value as ListeningResponseValue | undefined;
-      if (!listenVal || !Array.isArray(listenVal.answerIndexes)) return false;
-      if (questions.length === 0) return true;
-      return (
-        listenVal.answerIndexes.length === questions.length &&
-        questions.every((question, index) => {
-          const answerIndex = listenVal.answerIndexes[index];
-          return (
-            typeof answerIndex === 'number' &&
-            Number.isInteger(answerIndex) &&
-            answerIndex >= 0 &&
-            answerIndex < (question.options?.length ?? 0)
-          );
-        })
-      );
+      const questions = (activity.payload.questions as Array<{options?: readonly unknown[];responseType?:string}>) ?? [];
+      const response = value as ReadingResponseValue | undefined;
+      if (!response || !Array.isArray(response.answerIndexes)) return false;
+      return response.answerIndexes.length === questions.length && questions.every((question,index) => {
+        if (['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '')) {
+          const answer = response.answers?.[index];
+          return response.answerIndexes[index] === -1 && typeof answer === 'string' && answer.trim().length > 0 && answer.length <= 20000;
+        }
+        const answer = response.answerIndexes[index];
+        return Number.isInteger(answer) && answer !== undefined && answer >= 0 && answer < (question.options?.length ?? 0);
+      });
     }
     case 'speaking': {
       return typeof value === 'string' && value.trim().length > 0;

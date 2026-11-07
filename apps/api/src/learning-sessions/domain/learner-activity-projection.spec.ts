@@ -32,3 +32,22 @@ it('removes referenced listening transcripts from Beginner DTO content, not only
  a.contentReferences=[s.contentBlocks[0]!.slug];s.contentBlocks[0]!.text='SECRET_LISTENING_TRANSCRIPT';
  expect(JSON.stringify(projectLearnerActivity(s,a.id))).not.toContain('SECRET_LISTENING_TRANSCRIPT');
 });
+
+it('projects semantic response controls without private accepted answers or criteria',()=>{
+ const s=buildBeginnerDraftSnapshot(analyzeLessonSource(syntheticBeginnerSource()).normalizedDraft!);
+ const a=s.activities.find(a=>a.activityType==='reading')!;
+ if(a.activityType!=='reading')throw new Error('fixture');
+ Object.assign(a.payload.questions[0]!,{responseType:'short_answer',acceptedAnswers:['PRIVATE_ANSWER'],semanticCriteria:'PRIVATE_CRITERIA'});
+ const dto=projectLearnerActivity(s,a.id);
+ expect((dto.payload.questions as Array<Record<string,unknown>>)[0]?.responseType).toBe('short_answer');
+ expect(JSON.stringify(dto)).not.toMatch(/PRIVATE_ANSWER|PRIVATE_CRITERIA|acceptedAnswers|semanticCriteria/);
+});
+
+it('keeps new semantic listening source context server-side even in legacy lessons',()=>{
+ const s=buildBeginnerDraftSnapshot(analyzeLessonSource(syntheticBeginnerSource()).normalizedDraft!);
+ delete s.formatVersion; delete s.instructions;
+ const a=s.activities.find(a=>a.activityType==='listening')!;if(a.activityType!=='listening')throw new Error('fixture');
+ Object.assign(a.payload.questions[0]!,{responseType:'open_ended',semanticCriteria:'PRIVATE_CRITERIA'});
+ a.payload.audioText='PRIVATE_TRANSCRIPT';a.contentReferences=[s.contentBlocks[0]!.slug];s.contentBlocks[0]!.text='PRIVATE_PASSAGE';
+ expect(JSON.stringify(projectLearnerActivity(s,a.id))).not.toMatch(/PRIVATE_TRANSCRIPT|PRIVATE_PASSAGE|PRIVATE_CRITERIA/);
+});

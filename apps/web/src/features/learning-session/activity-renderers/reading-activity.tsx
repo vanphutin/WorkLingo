@@ -11,6 +11,7 @@ import { VocabularyFocusPanel } from './vocabulary-focus-panel';
 
 export interface ReadingResponseValue {
   answerIndexes: number[];
+  answers?: string[];
 }
 
 interface ReadingActivityProps {
@@ -32,6 +33,7 @@ export function ReadingActivity({
       slug: string;
       prompt: string;
       options: readonly string[];
+      responseType?: string;
     }>) ?? []
   );
 
@@ -39,7 +41,15 @@ export function ReadingActivity({
     if (disabled) return;
     const nextAnswers = [...value.answerIndexes];
     nextAnswers[questionIndex] = optionIndex;
-    onChange({ answerIndexes: nextAnswers });
+    onChange({ ...value, answerIndexes: nextAnswers });
+  };
+
+  const handleTextAnswer = (questionIndex: number, text: string) => {
+    if (disabled) return;
+    const answerIndexes = questions.map((question, index) =>
+      ['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '') ? -1 : (value.answerIndexes[index] ?? -1));
+    const answers = questions.map((_, index) => index === questionIndex ? text : (value.answers?.[index] ?? ''));
+    onChange({ answerIndexes, answers });
   };
 
   return (
@@ -82,7 +92,12 @@ export function ReadingActivity({
               <legend className="question-prompt" lang="en">
                 <span className="question-number">{qIdx + 1}.</span> {question.prompt}
               </legend>
-              <div className="options-group" role="radiogroup">
+              {['fill_blank','short_answer','open_ended'].includes(question.responseType ?? '') ? (
+                  <textarea aria-label={question.prompt} lang="en" maxLength={20000}
+                    className="writing-textarea" value={value.answers?.[qIdx] ?? ''} disabled={disabled}
+                    onChange={event => handleTextAnswer(qIdx, event.target.value)} />
+                ) : (
+                <div className="options-group" role="radiogroup">
                 {question.options.map((option, optIdx) => {
                   const inputId = `q-${qIdx}-opt-${optIdx}`;
                   const isChecked = selectedOption === optIdx;
@@ -105,7 +120,7 @@ export function ReadingActivity({
                     </label>
                   );
                 })}
-              </div>
+              </div>)}
             </fieldset>
           );
         })}
