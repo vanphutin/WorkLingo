@@ -1,0 +1,203 @@
+COMMIT 87d8a2466f2912eba37e9d1857a85ed1179f0c41
+docs: define unified four-skill assessment scope and verification plan
+
+A	docs/superpowers/plans/2026-11-07-r22-assessment-engine.md
+A	docs/superpowers/specs/2026-11-07-r22-assessment-design.md
+COMMIT 3aa0181619bf504f66ee73618ea181f84d46fdb4
+feat: define versioned assessment contracts and semantic comprehension responses
+
+A	apps/api/src/curriculum/domain/curriculum.types.spec.ts
+M	apps/api/src/curriculum/domain/curriculum.types.ts
+M	apps/api/src/learning-sessions/application/learning-sessions.service.spec.ts
+M	apps/api/src/learning-sessions/application/learning-sessions.service.ts
+M	apps/api/src/learning-sessions/domain/learner-activity-projection.spec.ts
+M	apps/api/src/learning-sessions/domain/learner-activity-projection.ts
+M	apps/web/src/features/learning-session/activity-renderer.test.tsx
+M	apps/web/src/features/learning-session/activity-renderer.tsx
+M	apps/web/src/features/learning-session/activity-renderers/listening-activity.test.tsx
+M	apps/web/src/features/learning-session/activity-renderers/listening-activity.tsx
+M	apps/web/src/features/learning-session/activity-renderers/reading-activity.tsx
+A	packages/contracts/src/assessment.contracts.spec.ts
+A	packages/contracts/src/assessment.contracts.ts
+M	packages/contracts/src/index.ts
+COMMIT 60287672f540c840130e53d67dd17d58e65add1f
+feat: pin assessment context to exact lesson snapshots and skill rubrics
+
+A	apps/api/src/teacher-ai/domain/assessment-context.spec.ts
+A	apps/api/src/teacher-ai/domain/assessment-context.ts
+A	apps/api/src/teacher-ai/domain/assessment-rubrics.ts
+COMMIT 9e8f44901d9dca0fb3ca70632d27dfa8e597d474
+feat: validate assessment evidence and keep mastery separate from completion
+
+A	apps/api/src/teacher-ai/domain/assessment-mastery.spec.ts
+A	apps/api/src/teacher-ai/domain/assessment-mastery.ts
+A	apps/api/src/teacher-ai/domain/assessment-scoring.spec.ts
+A	apps/api/src/teacher-ai/domain/assessment-scoring.ts
+COMMIT d4c2d9136e7082cdd3f398a1b27dc44f1570e749
+feat: require independently evidenced assessment decisions
+
+A	apps/api/src/teacher-ai/domain/assessment-orchestrator.spec.ts
+A	apps/api/src/teacher-ai/domain/assessment-orchestrator.ts
+COMMIT ea1c721ee94075a90180adc35b0e83a2c6353752
+feat: extend existing AI adapters with strict assessment roles and observed health
+
+M	apps/api/src/ai-gateway/domain/language-evaluation.port.ts
+A	apps/api/src/ai-gateway/infrastructure/assessment-provider-wire.spec.ts
+A	apps/api/src/ai-gateway/infrastructure/assessment-provider-wire.ts
+M	apps/api/src/ai-gateway/infrastructure/discovery-language-evaluation.adapter.ts
+M	apps/api/src/ai-gateway/infrastructure/openai-language-evaluation.adapter.ts
+M	apps/api/src/ai-gateway/infrastructure/provider-http-client.ts
+M	apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.spec.ts
+M	apps/api/src/ai-gateway/infrastructure/routing-language-evaluation.adapter.ts
+COMMIT 881dfa3b38f88bb1e2f45cab6a1e22086ed4a01f
+feat: preserve acoustic evidence and secure retained recording playback
+
+M	apps/api/src/ai-gateway/domain/speech-to-text.port.ts
+M	apps/api/src/ai-gateway/infrastructure/microsoft-speech.adapter.spec.ts
+M	apps/api/src/ai-gateway/infrastructure/microsoft-speech.adapter.ts
+M	apps/api/src/media/application/recordings.service.spec.ts
+M	apps/api/src/media/application/recordings.service.ts
+A	apps/api/src/media/recordings.controller.spec.ts
+M	apps/api/src/media/recordings.controller.ts
+M	apps/api/src/teacher-ai/application/transcribe-speech.handler.spec.ts
+M	apps/api/src/teacher-ai/application/transcribe-speech.handler.ts
+A	apps/api/src/teacher-ai/domain/assessment-audio.spec.ts
+A	apps/api/src/teacher-ai/domain/assessment-audio.ts
+COMMIT 0b3d098fd56937c00703f7b70c0815e2f90e8051
+fix: bind playback and listening assessment to the same published audio
+
+M	apps/api/src/intermediate-topics/topic-audio.spec.ts
+M	apps/api/src/learning-sessions/application/learner-audio.service.spec.ts
+M	apps/api/src/learning-sessions/application/learner-audio.service.ts
+A	apps/api/src/learning-sessions/domain/listening-audio-binding.spec.ts
+A	apps/api/src/learning-sessions/domain/listening-audio-binding.ts
+COMMIT 299fd90b8456f2c53468ae38307c334bd8d3ec95
+feat: persist immutable assessment history with fenced recovery and owner APIs
+
+A	apps/api/prisma/migrations/20261107000100_versioned_assessment_history/migration.sql
+M	apps/api/prisma/schema.prisma
+M	apps/api/src/common/config/app-config.schema.spec.ts
+M	apps/api/src/common/config/app-config.schema.ts
+A	apps/api/src/teacher-ai/application/assessment-history.service.spec.ts
+A	apps/api/src/teacher-ai/application/assessment-history.service.ts
+A	apps/api/src/teacher-ai/assessments.controller.ts
+M	apps/api/src/teacher-ai/teacher-ai.module.ts
+COMMIT d3bda3be2915aa15509495680504bdaf4fbee196
+feat: show assessment feedback history and cancellable learner requests
+
+A	apps/web/src/app/(admin)/admin/assessments/page.tsx
+M	apps/web/src/app/(admin)/layout.test.tsx
+M	apps/web/src/features/admin-dashboard/admin-navigation-config.ts
+M	apps/web/src/features/admin-dashboard/admin-navigation-inventory.test.tsx
+M	apps/web/src/features/admin-dashboard/admin-sidebar.test.tsx
+A	apps/web/src/features/learning-session/assessment-admin-workspace.test.tsx
+A	apps/web/src/features/learning-session/assessment-admin-workspace.tsx
+A	apps/web/src/features/learning-session/assessment-mastery.test.tsx
+A	apps/web/src/features/learning-session/assessment-mastery.tsx
+A	apps/web/src/features/learning-session/assessment-panel.module.css
+A	apps/web/src/features/learning-session/assessment-panel.test.tsx
+A	apps/web/src/features/learning-session/assessment-panel.tsx
+M	apps/web/src/features/learning-session/session-shell.test.tsx
+M	apps/web/src/features/learning-session/session-shell.tsx
+M	apps/web/src/features/program-platform/enrolled-program-progress.test.tsx
+M	apps/web/src/features/program-platform/enrolled-program-progress.tsx
+M	apps/web/src/i18n/messages/adminNavigation.ts
+A	apps/web/src/i18n/messages/assessment.ts
+A	apps/web/src/lib/api/assessment-client.test.ts
+A	apps/web/src/lib/api/assessment-client.ts
+COMMIT e6067b2973b14184a12d28334c13b82f93488b00
+fix: close assessment evidence privacy and recovered cancellation gaps
+
+M	apps/api/src/teacher-ai/application/assessment-history.service.spec.ts
+M	apps/api/src/teacher-ai/application/assessment-history.service.ts
+M	apps/api/src/teacher-ai/domain/assessment-orchestrator.spec.ts
+M	apps/api/src/teacher-ai/domain/assessment-orchestrator.ts
+M	apps/api/src/teacher-ai/domain/assessment-scoring.spec.ts
+M	apps/api/src/teacher-ai/domain/assessment-scoring.ts
+M	apps/api/src/teacher-ai/teacher-ai.module.ts
+COMMIT edb2afc559b114c24887f4a4f8d0144ae0861100
+fix: preserve legacy speech scores alongside assessment provenance
+
+M	apps/api/src/teacher-ai/domain/foundation-rubrics.spec.ts
+M	apps/api/src/teacher-ai/domain/foundation-rubrics.ts
+M	apps/api/test/integration/placement-isolation.integration.spec.ts
+M	apps/api/test/integration/versioned-learner-audio.integration.spec.ts
+COMMIT 2e0f2cc6cc2e788fe09b3e132b1872ef0d7d5fc2
+feat: publish objective and semantic comprehension formats through source authoring
+
+M	packages/content-format/src/ast.ts
+A	packages/content-format/src/comprehension-formats.spec.ts
+M	packages/content-format/src/foundation-metadata.ts
+M	packages/content-format/src/normalizer.ts
+M	packages/content-format/src/parser.ts
+M	packages/content-format/src/validator.ts
+COMMIT 22dd19219dcca0d3111139921f20a9a4f6f2a9a6
+feat: add provenance-aware synthetic assessment benchmark tooling
+
+A	apps/api/scripts/assessment-benchmark.ts
+A	apps/api/src/teacher-ai/domain/assessment-benchmark.spec.ts
+A	apps/api/src/teacher-ai/domain/assessment-benchmark.ts
+A	content/assessment/r22/cases.v1.jsonl
+A	content/assessment/r22/references.v1.jsonl
+A	content/assessment/r22/self-test.report.json
+A	content/assessment/r22/sources.v1.json
+COMMIT 576f3400de3c065334d3485d154b2eb3b09ebcb0
+test: require isolated owned databases for assessment integration
+
+A	apps/api/test/integration/r22-owned-database.ts
+M	apps/api/vitest.config.ts
+A	apps/api/vitest.r22.config.ts
+A	apps/api/vitest.r22.legacy.config.ts
+A	apps/api/vitest.r22.unit.config.ts
+COMMIT 2af0ecf980966aab802d356110f316209e2e00dd
+test: exercise four-skill assessment and retained acoustic evidence through actual APIs
+
+A	apps/api/test/integration/r22-assessment.integration.spec.ts
+A	apps/api/test/integration/r22-recording.integration.spec.ts
+COMMIT e8ec4d5fdad1707e2e2f0b60393ffae065ef7a3b
+test: reproduce lease takeover cancellation and immutable history recovery
+
+A	apps/api/test/integration/r22-recovery.integration.spec.ts
+COMMIT 33b04f7cc3fe4b7c54191f48309528913a1d189f
+test: fence recording deletion expiry and revoked-source assessment history
+
+A	apps/api/test/integration/r22-history-retention.integration.spec.ts
+A	apps/api/test/integration/r22-recording-race.integration.spec.ts
+COMMIT d3a59399e981cf377bdd070643025ea61e243d99
+test: qualify published semantic reading and listening learner submissions
+
+A	apps/api/test/integration/r22-semantic-publication.integration.spec.ts
+COMMIT be320e5285cbcebef993aca7586f0778b31187bd
+test: verify four-skill learner and admin workflows across browser viewports
+
+A	apps/api/test/integration/r22-browser-bootstrap.spec.ts
+A	apps/web/e2e/r22-assessment.spec.ts
+A	apps/web/playwright.r22.config.ts
+
+QUALIFICATION RECEIPT GROUP (commit identity resolved by git log -- docs/qualification/r22/)
+docs/qualification/r22/ai-calibration-report.md
+docs/qualification/r22/api-documentation.md
+docs/qualification/r22/architecture-decisions.md
+docs/qualification/r22/benchmark-dataset-manifest.md
+docs/qualification/r22/browser-verification.md
+docs/qualification/r22/commit-inventory.md
+docs/qualification/r22/database-migration-report.md
+docs/qualification/r22/documentation-index.md
+docs/qualification/r22/final-acceptance-report.md
+docs/qualification/r22/frontend-workflow-documentation.md
+docs/qualification/r22/independent-review-report.md
+docs/qualification/r22/listening-evaluation-specification.md
+docs/qualification/r22/model-provider-comparison.md
+docs/qualification/r22/reading-evaluation-specification.md
+docs/qualification/r22/rubric-specification.md
+docs/qualification/r22/scoring-mastery-specification.md
+docs/qualification/r22/security-provider-data-handling.md
+docs/qualification/r22/speaking-evaluation-specification.md
+docs/qualification/r22/test-execution-report.md
+docs/qualification/r22/unified-evaluation-contract.md
+docs/qualification/r22/writing-evaluation-specification.md
+docs/qualification/r22/evidence/r22-desktop-reading-panel.png
+docs/qualification/r22/evidence/r22-desktop-writing-dark.png
+docs/qualification/r22/evidence/r22-mobile-speaking-panel.png
+docs/qualification/r22/evidence/r22-tablet-admin.png
+docs/qualification/r22/evidence/r22-tablet-listening-panel.png

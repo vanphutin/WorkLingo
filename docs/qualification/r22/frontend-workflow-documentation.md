@@ -1,0 +1,13 @@
+# Learner and admin assessment workflows
+
+Status: IMPLEMENTED; component and synthetic browser workflows TESTED / VERIFIED. See browser-verification.md and test-execution-report.md for execution boundaries. AI_QUALIFIED: BLOCKED. HUMAN_VALIDATED: NOT_RUN. Automated keyboard/native-control and viewport checks do not establish a complete accessibility certification.
+
+SessionShell keeps existing activity submission and completion. It records the persisted attempt identity and displays AssessmentPanel alongside support feedback. Reading/Listening choices use native radios; text tasks use visible question legends and labelled bounded text areas. Mixed responses maintain indexed answerIndexes/answers arrays. No new lesson or separate submission system is created.
+
+AssessmentPanel loads history, displays loading/error/empty states and offers evaluate, re-evaluate, refresh and pending cancellation. It renders nullable total, status, confidence, criterion breakdown, evidence and previous runs. Writing corrections highlight valid submitted spans with explanations. Optional retained audio supports playback and timestamp seeking; unavailable/deleted audio is not invented.
+
+The API client reuses its UUID after a failed request for the same attempt/prior-run/admin scope, and clears the key after successful completion. While an assessment POST is in flight, the panel polls history to discover a pending run and make cancellation available. Outside that operation, refresh is explicit. Generation guards reject obsolete completions after cancellation or attempt changes. Locale messages cover English/Vietnamese and status disclosures. CSS uses existing product components, keyboard-native buttons/controls and responsive layout.
+
+Admin /admin/assessments offers a labelled UUID lookup. CONTENT_ADMIN access is enforced server-side. The panel shows rubric/policy/prompt identities, actual provider metadata, submission identity and audit details, with an append-only re-evaluation action. There is no original-result edit or newly authorized override. Full submission browsing and admin correction highlighting need separate verification because the current admin lookup does not itself fetch response text/audio.
+
+Separate AssessmentMastery displays four-skill observations, gaps and review recommendations with a participation/qualification disclosure. It does not certify CEFR or silently change progression. Browser verification must cover all four real submission workflows, owner/admin authorization, null/failed/pending states, keyboard use, 390×844, tablet and desktop against actual Next/Nest/disposable PostgreSQL services.
