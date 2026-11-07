@@ -1,9 +1,11 @@
+import { createHash } from 'node:crypto';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { sessionPlanSchema } from '@worklingo/contracts';
+import { resolveListeningAudioBinding } from '../domain/listening-audio-binding.js';
 
 export interface LearnerAudioContent {
   readonly body: Buffer;
@@ -52,35 +54,17 @@ export class LearnerAudioService {
     if (!isListening && !isShadowing) {
       throw new NotFoundException('Audio is not available for this activity');
     }
-    const evidenceSlugs = isListening
-      ? activity.payload.questions
-        .map((question) => question.evidence.split(':', 1)[0])
-        .filter((slug): slug is string => Boolean(slug))
-      : [];
-    const scriptSlugs = [...new Set([
-      ...(isShadowing ? [activity.slug] : []),
-      ...activity.contentReferences,
-      ...evidenceSlugs,
-    ])];
-    const reference = await this.database.lessonVersionAudioArtifact.findFirst({
-      where: {
-        lessonVersionId: session.lessonVersionId,
-        // Every published topic script is validated against the same passage.
-        // Passage evidence uses content slugs, independently of the script slug.
-        ...(plan.kind === 'topic' ? {} : { audioScriptSlug: { in: scriptSlugs } }),
-        audioArtifact: {
-          status: 'READY',
-          adapterName: { not: 'fake-tts' },
-        },
-      },
-      include: { audioArtifact: true },
+    const reference = await resolveListeningAudioBinding(this.database, session.lessonVersionId, activity, {
+      allowSynthetic: process.env.NODE_ENV === 'test' && process.env.WORKLINGO_E2E_MODE === 'true',
     });
-    if (!reference) throw new NotFoundException('Published audio is not available');
-    const body = await this.storage.read(reference.audioArtifact.storageKey);
+    const body = await this.storage.read(reference.storageKey);
+    if (createHash('sha256').update(body).digest('hex') !== reference.checksum) {
+      throw new NotFoundException('Published audio integrity check failed');
+    }
     return {
       body,
-      byteSize: reference.audioArtifact.byteSize,
-      mimeType: reference.audioArtifact.mimeType,
+      byteSize: body.byteLength,
+      mimeType: reference.mimeType,
     };
   }
 }

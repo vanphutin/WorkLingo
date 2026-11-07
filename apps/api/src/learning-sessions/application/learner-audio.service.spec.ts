@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import type { PrismaService } from '../../common/database/prisma.service.js';
 import type { ObjectStorage } from '../../storage/domain/object-storage.port.js';
 import { describe, expect, it, vi } from 'vitest';
@@ -26,29 +27,24 @@ describe('LearnerAudioService', () => {
         id: activityId, lessonVersionId, slug: 'listen', order: 1,
         activityType: 'listening', learningBlock: 'listenReason', skills: ['listening'],
         contentReferences: ['dialogue'], languageBlockReferences: ['follow-up'],
-        payload: { prompt: 'Listen.', questions: [{
+        payload: { prompt: 'Listen.', audioText:'Hello', questions: [{
           slug: 'listen-q1', prompt: 'What next?', options: ['A', 'B'], answerIndex: 0,
           explanation: 'A', evidence: 'call-v1:1',
         }] },
       }) },
-      lessonVersionAudioArtifact: { findFirst: vi.fn().mockResolvedValue({
-        audioArtifact: { storageKey: 'generated-audio/version-n', byteSize: 3, mimeType: 'audio/wav' },
-      }) },
+      lessonVersionAudioArtifact: { findMany: vi.fn().mockResolvedValue([{lessonVersionId, audioScriptSlug:'call-v1',audioArtifactId:'audio-id',audioArtifact:{id:'audio-id',audioScriptSlug:'call-v1',scriptHash:createHash('sha256').update('Hello').digest('hex'),checksum:createHash('sha256').update('old').digest('hex'),status:'READY',adapterName:'azure-speech',contentImport:null,storageKey:'generated-audio/version-n',mimeType:'audio/wav'}}]) },
     } as unknown as PrismaService;
+    const stored = await database.activity.findFirst({where:{id:activityId}});
+    Object.assign(database,{lessonVersion:{findUnique:vi.fn().mockResolvedValue({sourceHash:'x',parsedContent:{activities:[stored]}})}});
     const storage = { read: vi.fn().mockResolvedValue(Buffer.from('old')) } as unknown as ObjectStorage;
     const service = new LearnerAudioService(database, storage);
 
     await expect(service.getActivityAudio('learner', 'session', activityId)).resolves.toMatchObject({
       body: Buffer.from('old'), byteSize: 3, mimeType: 'audio/wav',
     });
-    expect(database.lessonVersionAudioArtifact.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+    expect(database.lessonVersionAudioArtifact.findMany).toHaveBeenCalledWith(expect.objectContaining({
       where: expect.objectContaining({
         lessonVersionId,
-        audioScriptSlug: { in: expect.arrayContaining(['dialogue', 'call-v1']) },
-        audioArtifact: {
-          status: 'READY',
-          adapterName: { not: 'fake-tts' },
-        },
       }),
     }));
     expect(storage.read).toHaveBeenCalledWith('generated-audio/version-n');
@@ -80,20 +76,19 @@ describe('LearnerAudioService', () => {
           requiredPhrases: ['my name is'], minWords: 4,
         },
       }) },
-      lessonVersionAudioArtifact: { findFirst: vi.fn().mockResolvedValue({
-        audioArtifact: { storageKey: 'generated-audio/shadow-model', byteSize: 5, mimeType: 'audio/wav' },
-      }) },
+      lessonVersionAudioArtifact: { findMany: vi.fn().mockResolvedValue([{lessonVersionId,audioScriptSlug:'shadow-introduction',audioArtifactId:'audio-id',audioArtifact:{id:'audio-id',audioScriptSlug:'shadow-introduction',scriptHash:createHash('sha256').update('My name is An.').digest('hex'),checksum:createHash('sha256').update('model').digest('hex'),status:'READY',adapterName:'azure-speech',contentImport:null,storageKey:'generated-audio/shadow-model',mimeType:'audio/wav'}}]) },
     } as unknown as PrismaService;
+    const stored = await database.activity.findFirst({where:{id:activityId}});
+    Object.assign(database,{lessonVersion:{findUnique:vi.fn().mockResolvedValue({sourceHash:'x',parsedContent:{activities:[stored]}})}});
     const storage = { read: vi.fn().mockResolvedValue(Buffer.from('model')) } as unknown as ObjectStorage;
     const service = new LearnerAudioService(database, storage);
 
     await expect(service.getActivityAudio('learner', 'session', activityId)).resolves.toMatchObject({
       body: Buffer.from('model'), byteSize: 5, mimeType: 'audio/wav',
     });
-    expect(database.lessonVersionAudioArtifact.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+    expect(database.lessonVersionAudioArtifact.findMany).toHaveBeenCalledWith(expect.objectContaining({
       where: expect.objectContaining({
         lessonVersionId,
-        audioScriptSlug: { in: expect.arrayContaining(['shadow-introduction', 'dialogue']) },
       }),
     }));
   });
