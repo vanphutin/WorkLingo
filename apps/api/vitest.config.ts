@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import ts from 'typescript';
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 const workspaceEnv = fileURLToPath(new URL('../../.env', import.meta.url));
 if (existsSync(workspaceEnv)) process.loadEnvFile(workspaceEnv);
@@ -49,6 +49,8 @@ export default defineConfig({
       WORKLINGO_TTS_PROVIDER: 'fake-tts',
     },
     environment: 'node',
+    // R2.2 integration is a separate required gate using the guarded owned-DB config.
+    exclude: [...configDefaults.exclude, 'test/integration/r22-*.spec.ts'],
     // Integration suites share the local PostgreSQL instance and mutate schema data.
     // Running files concurrently makes app bootstrap and cleanup contend for the
     // same database, which causes nondeterministic hook timeouts on local machines.
