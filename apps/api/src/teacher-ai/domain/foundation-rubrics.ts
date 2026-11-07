@@ -13,6 +13,8 @@ const speechMetricsSchema = z.object({
   completeness: scoreSchema.optional(),
   fluency: scoreSchema,
   prosody: scoreSchema.optional(),
+  // Persisted R2.2 provenance is separate from the legacy numeric dimensions.
+  assessmentEvidence: z.record(z.string(), z.unknown()).optional(),
 }).strict();
 
 export interface FoundationRubric {

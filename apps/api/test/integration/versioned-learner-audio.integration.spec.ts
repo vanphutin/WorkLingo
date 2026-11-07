@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 
 import type { Prisma } from '@prisma/client';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -76,7 +76,7 @@ describe('version-bound learner audio', () => {
     const source = lessonSnapshotSchema.parse(baseVersion.parsedContent);
     const snapshot = {
       ...source,
-      activities: source.activities.map((activity) => ({ ...activity, id: randomUUID() })),
+      activities: source.activities.map((activity) => ({ ...activity, id: randomUUID(), ...(activity.activityType === 'listening' ? {payload:{...activity.payload,audioText:'Frozen version N listening script.'}} : {}) })),
       contentBlocks: source.contentBlocks.map((block) => ({ ...block, id: randomUUID() })),
     };
     const version = await context.database.lessonVersion.create({
@@ -131,10 +131,10 @@ describe('version-bound learner audio', () => {
         adapterName: 'azure-speech',
         audioScriptSlug,
         byteSize: oldObject.size,
-        checksum: randomUUID(),
+        checksum: createHash('sha256').update(Buffer.from('version-n-audio')).digest('hex'),
         contentImportId: contentImport.id,
         mimeType: 'audio/wav',
-        scriptHash: randomUUID(),
+        scriptHash: createHash('sha256').update('Frozen version N listening script.').digest('hex'),
         status: 'READY',
         storageKey: oldObject.key,
         voiceConfig: {},

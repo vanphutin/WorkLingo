@@ -24,6 +24,8 @@ const clearShadowingWav = (): Buffer => {
   buffer.writeUInt16LE(1, 22); buffer.writeUInt32LE(sampleRate, 24);
   buffer.writeUInt32LE(sampleRate * 2, 28); buffer.writeUInt16LE(2, 32);
   buffer.writeUInt16LE(16, 34); buffer.write('data', 36); buffer.writeUInt32LE(dataSize, 40);
+  // Synthetic non-silent PCM exercises transport/energy validation, never speech qualification.
+  for (let sample = 0; sample < sampleRate; sample++) buffer.writeInt16LE(Math.round(8000 * Math.sin(2 * Math.PI * 440 * sample / sampleRate)), 44 + sample * 2);
   buffer.write('worklingo-fixture:clear-shadowing', 44, 'utf8');
   return buffer;
 };

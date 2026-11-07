@@ -87,3 +87,11 @@ describe('Foundation rubrics', () => {
   });
 });
 
+
+it('preserves legacy acoustic aggregation when recording metrics also contain assessment provenance',()=>{
+ const metrics={accuracy:0.9,fluency:0.7,assessmentEvidence:{audioChecksum:'a'.repeat(64),synthetic:true,verified:false,dimensions:[]}};
+ const result=aggregateEvaluation(resolveFoundationRubric({activityType:'speaking',mode:'shadowing'}),languageEvaluation,metrics);
+ expect(result.scores.pronunciationOrFluency).toBeCloseTo(0.8);
+ expect(result.score).toBeCloseTo(0.825);
+ expect(()=>aggregateEvaluation(resolveFoundationRubric({activityType:'speaking',mode:'shadowing'}),languageEvaluation,{...metrics,accuracy:2})).toThrow('Speech metrics are required');
+});
