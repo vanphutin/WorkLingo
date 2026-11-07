@@ -4,6 +4,8 @@ import { languageEvaluationSchema, type LanguageEvaluation } from '../domain/lan
 import { ProviderError } from '../domain/provider-errors.js';
 import { languageEvaluationJsonSchema, untrustedInput } from './openai-language-evaluation.adapter.js';
 import { requestProviderJson } from './provider-http-client.js';
+import {requestAssessmentProvider,AssessmentOperations,assessmentCapabilities} from './assessment-provider-wire.js';
+import type {AssessmentProviderInput} from '../../teacher-ai/domain/assessment-orchestrator.js';
 
 /** Discovery wire compaction only; service context/cache identity remains complete. */
 export function discoveryUntrustedInput(input: LanguageEvaluationInput): string {
@@ -43,6 +45,10 @@ const refusalSignalSchema = z.object({ choices: z.array(z.object({
 })) });
 
 export class DiscoveryLanguageEvaluationAdapter extends LanguageEvaluationPort {
+  private readonly assessmentOperations=new AssessmentOperations();
+  getAssessmentCapabilities(){return assessmentCapabilities('discovery',this.config.model,'PROMPT_JSON_VALIDATED');}
+  getAssessmentHealth(){return this.assessmentOperations.snapshot();}
+  assess(input:AssessmentProviderInput,signal?:AbortSignal){return this.assessmentOperations.observe(()=>requestAssessmentProvider(this.config,input,'chat',signal));}
   constructor(private readonly config: DiscoveryLanguageEvaluationConfig) { super(); }
 
   async evaluate(input: LanguageEvaluationInput): Promise<LanguageEvaluation> {

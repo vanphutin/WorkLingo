@@ -58,3 +58,13 @@ describe('evaluation routing', () => {
     expect(outputs.map(output => output.provenance.providerModel)).toEqual(['intern-s2', 'gpt-test']);
   });
 });
+
+it('describes assessment role policy and counts unavailable roles without silently falling back',async()=>{
+ const {adapter}=router('discovery',true,new Provider(),new Provider());
+ expect(adapter.getAssessmentCapabilities()).toMatchObject({identitySource:'CONFIGURATION',name:'routing',configuredModel:null,fallbackPolicy:'NONE',rolePolicy:'PRIMARY_PREFERRED_VERIFIER_ALTERNATE_FEEDBACK_PREFERRED'});
+ const {resolveAssessmentContext}=await import('../../teacher-ai/domain/assessment-context.js');
+ const {beginnerMission}=await import('../../learning-programs/application/__fixtures__/beginner-r21.js');const mission=beginnerMission();const activity=mission.lessonVersion.activities.find(a=>a.activityType==='writing')!;
+ const context=resolveAssessmentContext({id:crypto.randomUUID(),learnerId:crypto.randomUUID(),activityId:activity.id,rawResponse:{text:'Synthetic response'},activity,session:{lessonVersionId:mission.lessonVersion.id,lessonVersion:{id:mission.lessonVersion.id,parsedContent:mission.lessonVersion},mission:{level:{code:'MG_F0'}}}},null);
+ await expect(adapter.assess({context,role:'primary'})).rejects.toMatchObject({code:'PROVIDER_UPSTREAM'});
+ expect(adapter.getAssessmentHealth()).toMatchObject({attempts:1,successes:0,failures:1,status:'DEGRADED'});
+});

@@ -3,6 +3,7 @@ import { ProviderError } from '../domain/provider-errors.js';
 const DEFAULT_MAX_RESPONSE_BYTES = 1_048_576;
 
 export interface ProviderHttpRequest {
+  readonly signal?: AbortSignal;
   readonly body: ArrayBuffer | string;
   readonly headers: Readonly<Record<string, string>>;
   readonly maxResponseBytes?: number;
@@ -65,7 +66,10 @@ const readBoundedBody = async (response: Response, maxBytes: number): Promise<Bu
 };
 
 export async function requestProviderJson(request: ProviderHttpRequest): Promise<unknown> {
+  request.signal?.throwIfAborted();
   const controller = new AbortController();
+  const cancel=()=>controller.abort(request.signal?.reason);
+  request.signal?.addEventListener('abort',cancel,{once:true});
   const timeout = setTimeout(() => controller.abort(), request.timeoutMs);
 
   try {
@@ -104,6 +108,7 @@ export async function requestProviderJson(request: ProviderHttpRequest): Promise
       code: 'PROVIDER_UPSTREAM', retryable: true, cause: error,
     });
   } finally {
+    request.signal?.removeEventListener('abort',cancel);
     clearTimeout(timeout);
   }
 }

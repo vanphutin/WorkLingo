@@ -11,6 +11,8 @@ import {
 } from '../domain/language-evaluation.schema.js';
 import { ProviderError } from '../domain/provider-errors.js';
 import { requestProviderJson } from './provider-http-client.js';
+import {requestAssessmentProvider,AssessmentOperations,assessmentCapabilities} from './assessment-provider-wire.js';
+import type {AssessmentProviderInput} from '../../teacher-ai/domain/assessment-orchestrator.js';
 
 export interface OpenAiLanguageEvaluationConfig {
   readonly apiKey: string;
@@ -88,6 +90,10 @@ export const untrustedInput = (input: LanguageEvaluationInput): string => {
 };
 
 export class OpenAiLanguageEvaluationAdapter extends LanguageEvaluationPort {
+  private readonly assessmentOperations=new AssessmentOperations();
+  getAssessmentCapabilities(){return assessmentCapabilities('openai-compatible',this.config.model,'STRICT_SCHEMA_REQUESTED');}
+  getAssessmentHealth(){return this.assessmentOperations.snapshot();}
+  assess(input:AssessmentProviderInput,signal?:AbortSignal){return this.assessmentOperations.observe(()=>requestAssessmentProvider(this.config,input,'responses',signal));}
   constructor(private readonly config: OpenAiLanguageEvaluationConfig) {
     super();
   }

@@ -1,4 +1,5 @@
 import type { LanguageEvaluation } from './language-evaluation.schema.js';
+import type {AssessmentProviderInput,AssessmentProviderResponse} from '../../teacher-ai/domain/assessment-orchestrator.js';
 
 export interface BeginnerEvaluationContextV1 {
   readonly schemaVersion: 'beginner-evaluation-context/1';
@@ -23,7 +24,30 @@ export interface LanguageEvaluationInput {
   readonly rubricVersion: string;
 }
 
+export interface AssessmentCapabilities {
+  readonly identitySource: 'CONFIGURATION';
+  readonly name: string;
+  readonly configuredModel: string | null;
+  readonly semanticSkills: readonly ('reading' | 'listening' | 'speaking' | 'writing')[];
+  readonly structuredOutput: 'STRICT_SCHEMA_REQUESTED' | 'PROMPT_JSON_VALIDATED' | 'PROVIDER_DEPENDENT';
+  readonly acousticDimensions: readonly string[];
+  readonly fallbackPolicy: 'NONE';
+  readonly rolePolicy: string;
+  readonly configuredProviders?: readonly AssessmentCapabilities[];
+}
+export interface AssessmentHealth {
+  readonly scope: 'PROCESS_LOCAL';
+  readonly status: 'UNOBSERVED' | 'HEALTHY' | 'DEGRADED';
+  /** Assessment invocations; not a billing or outbound-request counter. */
+  readonly attempts: number;
+  readonly successes: number;
+  readonly failures: number;
+  readonly recent: readonly { readonly at: string; readonly latencyMs: number; readonly outcome: 'SUCCESS' | 'FAILURE'; readonly errorCode: string | null }[];
+}
 export abstract class LanguageEvaluationPort {
+  getAssessmentCapabilities?(): AssessmentCapabilities;
+  getAssessmentHealth?(): AssessmentHealth;
+  assess?(input:AssessmentProviderInput,signal?:AbortSignal):Promise<AssessmentProviderResponse>;
   abstract evaluate(input: LanguageEvaluationInput): Promise<LanguageEvaluation>;
   evaluateWithProvenance?(input: LanguageEvaluationInput): Promise<{
     readonly evaluation: LanguageEvaluation;
