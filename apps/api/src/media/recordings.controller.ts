@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Inject,
@@ -9,15 +10,19 @@ import {
   ParseUUIDPipe,
   Post,
   Req,
+  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiAcceptedResponse, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { RecordingSubmissionResult } from '@worklingo/contracts';
+import type { Response } from 'express';
 
 import type { AuthenticatedRequest } from '../auth/authenticated-request.js';
 import { RecordingsService } from './application/recordings.service.js';
+import { sendAudioStream } from './application/audio-stream-response.js';
+import { RateLimit } from '../common/rate-limit/rate-limit.decorator.js';
 // Runtime import is required so Nest can emit DTO metadata for ValidationPipe.
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { CreateRecordingDto } from './dto/create-recording.dto.js';
@@ -85,6 +90,18 @@ export class RecordingsController {
 @Controller('recordings')
 export class RecordingControlsController {
   constructor(@Inject(RecordingsService) private readonly recordings: RecordingsService) {}
+
+  @Get(':recordingId/audio')
+  @RateLimit({ keyType: 'USER_AND_OPERATION', limit: 60, scope: 'recordings:audio', windowSeconds: 60 })
+  @ApiOperation({ summary: 'Play retained owner recording audio' })
+  async audio(
+    @Req() request: AuthenticatedRequest,
+    @Param('recordingId', ParseUUIDPipe) recordingId: string,
+    @Res() response: Response,
+  ): Promise<void> {
+    const content = await this.recordings.getOwnedAudio(request.authUser.id, recordingId);
+    sendAudioStream(response, content, request.headers.range);
+  }
 
   @Delete(':recordingId')
   @HttpCode(HttpStatus.NO_CONTENT)

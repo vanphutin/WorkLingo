@@ -148,3 +148,37 @@ describe('MicrosoftSpeechAdapter', () => {
     await expect(adapter.transcribe(input)).rejects.toMatchObject({ code, retryable });
   });
 });
+
+describe('Microsoft speech acoustic evidence', () => {
+  it('binds detailed phonemes, syllables and errors to exact submitted audio', async () => {
+    const endpoint = await startServer((_request, response) => response.end(JSON.stringify({
+      RecognitionStatus: 'Success', NBest: [{ Display: 'Hello',
+        PronunciationAssessment: { AccuracyScore: 90, FluencyScore: 80 },
+        Words: [{ Word: 'Hello', Offset: 10000, Duration: 2000000,
+          PronunciationAssessment: { AccuracyScore: 90, ErrorType: 'Mispronunciation' },
+          Phonemes: [{ Phoneme: 'h', Offset: 10000, Duration: 400000, PronunciationAssessment: { AccuracyScore: 70 } }],
+          Syllables: [{ Syllable: 'hel', Offset: 10000, Duration: 800000, PronunciationAssessment: { AccuracyScore: 85 } }],
+        }],
+      }],
+    })));
+    const result = await new MicrosoftSpeechAdapter({endpoint, key: 'synthetic', region: 'test', timeoutMs: 5000}).transcribe(input);
+    expect(result.acousticEvidence).toMatchObject({
+      audioChecksum: '9f64a747e1b97f131fabb6b447296c9b6f0201e79fb3c5356e6c77e89b6a806a',
+      dimensions: ['pronunciation', 'fluency'],
+      words: [{ word: 'Hello', offsetMs: 1, durationMs: 200, errorType: 'Mispronunciation',
+        phonemes: [{ phoneme: 'h', offsetMs: 1, durationMs: 40, accuracy: 0.7 }],
+        syllables: [{ syllable: 'hel', offsetMs: 1, durationMs: 80, accuracy: 0.85 }],
+      }],
+      unassessedDimensions: ['intelligibility', 'prosody', 'stress', 'intonation'],
+    });
+  });
+  it('does not manufacture detailed pronunciation or prosody evidence from aggregate scores', async () => {
+    const endpoint = await startServer((_request, response) => response.end(JSON.stringify({
+      RecognitionStatus: 'Success', NBest: [{ PronunciationAssessment: { AccuracyScore: 99, FluencyScore: 98 }, Words: [] }],
+    })));
+    const result = await new MicrosoftSpeechAdapter({endpoint, key: 'synthetic', region: 'test', timeoutMs: 5000}).transcribe(input);
+    expect(result.acousticEvidence?.dimensions).toEqual(['fluency']);
+    expect(result.acousticEvidence?.unassessedDimensions).toContain('pronunciation');
+    expect(result.acousticEvidence?.words).toEqual([]);
+  });
+});

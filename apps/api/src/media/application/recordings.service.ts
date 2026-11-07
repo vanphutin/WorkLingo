@@ -48,6 +48,25 @@ export class RecordingsService {
     @Inject(AUDIO_DURATION_READER) private readonly readDuration: AudioDurationReader,
   ) {}
 
+  async getOwnedAudio(learnerId: string, recordingId: string): Promise<{ body: Buffer; byteSize: number; mimeType: string }> {
+    const recording = await this.database.recording.findFirst({ where: { id: recordingId, learnerId } });
+    if (!recording || recording.learnerId !== learnerId || recording.deletedAt || recording.deletionRequestedAt ||
+      (recording.retentionUntil && recording.retentionUntil.getTime() <= Date.now())) {
+      throw new NotFoundException('Recording not found');
+    }
+    let body: Buffer;
+    try {
+      body = await this.storage.read(recording.storageKey);
+    } catch (error) {
+      if (error instanceof Error && 'code' in error && error.code === 'ENOENT') throw new NotFoundException('Recording not found');
+      throw error;
+    }
+    if (body.length !== recording.byteSize || createHash('sha256').update(body).digest('hex') !== recording.checksum) {
+      throw new NotFoundException('Recording not found');
+    }
+    return { body, byteSize: body.length, mimeType: recording.mimeType };
+  }
+
   async deleteOwned(learnerId: string, recordingId: string): Promise<void> {
     const recording = await this.database.recording.findFirst({
       where: { id: recordingId, learnerId },

@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
@@ -9,6 +10,7 @@ import { activitySchema } from '../../curriculum/domain/curriculum.types.js';
 import { JobDispatcher } from '../../jobs/domain/job-dispatcher.port.js';
 import type { ClaimedJob, JobHandler } from '../../jobs/domain/job-handler.port.js';
 import { ObjectStorage } from '../../storage/domain/object-storage.port.js';
+import { validateAssessmentAudio } from '../domain/assessment-audio.js';
 
 const payloadSchema = z.object({ attemptId: z.string().min(1), recordingId: z.string().min(1) }).strict();
 
@@ -93,18 +95,47 @@ export class TranscribeSpeechHandler implements JobHandler {
         throw new Error('A recording can only be transcribed for a speaking activity');
       }
       const audio = await this.storage.read(recording.storageKey);
+      const audioChecksum = createHash('sha256').update(audio).digest('hex');
+      if (audioChecksum !== recording.checksum) {
+        throw new ProviderError('Retained recording integrity check failed.', { code: 'INVALID_AUDIO', retryable: false });
+      }
+      let validatedDurationMs: number | undefined;
+      if (['audio/wav', 'audio/wave', 'audio/x-wav'].includes(recording.mimeType.split(';')[0]!.trim().toLowerCase())) {
+        try {
+          validatedDurationMs = validateAssessmentAudio(audio, recording.mimeType, recording.checksum).durationMs;
+        } catch {
+          throw new ProviderError('Retained PCM recording is invalid or silent.', { code: 'INVALID_AUDIO', retryable: false });
+        }
+      }
       const transcription = await this.speech.transcribe({
         audio,
         locale: this.options.locale,
         mimeType: recording.mimeType,
         referenceText: activity.payload.sampleAnswer,
       });
+      const acoustic = transcription.acousticEvidence;
+      if (acoustic && acoustic.audioChecksum !== audioChecksum) {
+        throw new ProviderError('Speech evidence does not match retained audio.', { code: 'PROVIDER_RESPONSE_INVALID', retryable: false });
+      }
+      const synthetic = transcription.provider.name.startsWith('fake');
+      const assessmentEvidence = {
+        ...acoustic,
+        audioChecksum,
+        ...(validatedDurationMs === undefined ? {} : { durationMs: validatedDurationMs }),
+        verified: !synthetic && validatedDurationMs !== undefined && acoustic !== undefined,
+        synthetic,
+        dimensions: acoustic?.dimensions ?? [],
+        providerConfidence: transcription.providerConfidence,
+        words: acoustic?.words.length ? acoustic.words : transcription.words,
+        requestId: transcription.provider.requestId,
+      };
       await this.database.recording.update({
         where: { id: recording.id },
         data: {
           providerConfigVersion: this.options.providerConfigVersion ?? '1',
           providerName: transcription.provider.name,
-          speechMetrics: transcription.pronunciation as unknown as Prisma.InputJsonValue,
+          speechMetrics: { ...transcription.pronunciation, assessmentEvidence } as unknown as Prisma.InputJsonValue,
+          ...(validatedDurationMs === undefined ? {} : { durationSeconds: validatedDurationMs / 1000 }),
           transcript: transcription.transcript,
         },
       });

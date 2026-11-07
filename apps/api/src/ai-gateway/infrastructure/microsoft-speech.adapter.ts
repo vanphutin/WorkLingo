@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { z } from 'zod';
 
 import { ProviderError } from '../domain/provider-errors.js';
@@ -16,6 +17,11 @@ export interface MicrosoftSpeechConfig {
 }
 
 const score = z.number().min(0).max(100);
+const detailAssessment = z.object({ AccuracyScore: score, ErrorType: z.string().max(100).optional() });
+const segment = {
+  Offset: z.number().nonnegative().finite(), Duration: z.number().nonnegative().finite(),
+  PronunciationAssessment: detailAssessment.optional(),
+};
 const responseSchema = z.object({
   RecognitionStatus: z.string(),
   DisplayText: z.string().optional(),
@@ -32,7 +38,9 @@ const responseSchema = z.object({
       Word: z.string().min(1),
       Offset: z.number().nonnegative(),
       Duration: z.number().nonnegative(),
-      PronunciationAssessment: z.object({ AccuracyScore: score }).optional(),
+      PronunciationAssessment: detailAssessment.optional(),
+      Phonemes: z.array(z.object({ Phoneme: z.string().min(1).max(100), ...segment })).max(1000).optional(),
+      Syllables: z.array(z.object({ Syllable: z.string().min(1).max(100), ...segment })).max(1000).optional(),
     })).default([]),
   })).optional(),
 }).passthrough();
@@ -88,7 +96,25 @@ export class MicrosoftSpeechAdapter extends SpeechToTextPort {
 
     const best = parsed.data.NBest[0];
     const pronunciation = best.PronunciationAssessment;
+    const details = (value: { Offset: number; Duration: number; PronunciationAssessment?: { AccuracyScore: number; ErrorType?: string | undefined } | undefined }) => ({
+      offsetMs: value.Offset / 10_000, durationMs: value.Duration / 10_000,
+      ...(value.PronunciationAssessment ? { accuracy: percentage(value.PronunciationAssessment.AccuracyScore) } : {}),
+      ...(value.PronunciationAssessment?.ErrorType ? { errorType: value.PronunciationAssessment.ErrorType } : {}),
+    });
+    const acousticWords = best.Words.map(word => ({
+      word: word.Word, ...details(word),
+      ...(word.Phonemes ? { phonemes: word.Phonemes.map(p => ({ phoneme: p.Phoneme, ...details(p) })) } : {}),
+      ...(word.Syllables ? { syllables: word.Syllables.map(s => ({ syllable: s.Syllable, ...details(s) })) } : {}),
+    }));
+    const detailedPronunciation = acousticWords.some(word => word.phonemes?.some(p => p.accuracy !== undefined));
     return {
+      acousticEvidence: {
+        audioChecksum: createHash('sha256').update(input.audio).digest('hex'),
+        words: acousticWords,
+        dimensions: [...(detailedPronunciation ? ['pronunciation'] : []), 'fluency'],
+        // Prosody is not enabled by this REST adapter; even an unexpected score is not proof of opt-in.
+        unassessedDimensions: [...(detailedPronunciation ? [] : ['pronunciation']), 'intelligibility', 'prosody', 'stress', 'intonation'],
+      },
       transcript: parsed.data.DisplayText ?? best.Display ?? '',
       locale: input.locale,
       words: best.Words.map((word) => ({

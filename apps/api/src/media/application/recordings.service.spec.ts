@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 
 import { describe, expect, it, vi } from 'vitest';
 
@@ -139,4 +139,29 @@ describe('RecordingsService', () => {
     expect(setup.storage.delete).toHaveBeenCalledWith('recordings/server-generated');
     expect(setup.sessions.advanceSubmittedActivity).not.toHaveBeenCalled();
   });
+});
+
+describe('RecordingsService owner playback', () => {
+  const body = Buffer.from('retained audio');
+  const recording = { id: ids.recording, learnerId: ids.learner, storageKey: 'recordings/private', deletedAt: null,
+    deletionRequestedAt: null, retentionUntil: new Date('2099-01-01'), checksum: createHash('sha256').update(body).digest('hex'), byteSize: body.length, mimeType: 'audio/webm' };
+  function setup(row: unknown = recording, bytes = body) {
+    const read = vi.fn().mockResolvedValue(bytes);
+    const findFirst = vi.fn().mockResolvedValue(row);
+    return { read, findFirst, ...createService({database: {recording: {findFirst}} as unknown as PrismaService, storage: {read}}) };
+  }
+  it('returns only owner audio with exact checksum and size', async () => {
+    const test = setup();
+    expect(await test.service.getOwnedAudio(ids.learner, ids.recording)).toEqual({body, byteSize: body.length, mimeType: 'audio/webm'});
+    expect(test.findFirst).toHaveBeenCalledWith({where: {id: ids.recording, learnerId: ids.learner}});
+  });
+  it.each([
+    ['missing', null], ['foreign', {...recording,learnerId:'other'}], ['deleted', {...recording,deletedAt:new Date()}],
+    ['deletion requested', {...recording,deletionRequestedAt:new Date()}], ['expired', {...recording,retentionUntil:new Date('2000-01-01')}],
+  ])('rejects %s audio before storage access',async(_name,row)=>{
+    const test=setup(row);await expect(test.service.getOwnedAudio(ids.learner,ids.recording)).rejects.toMatchObject({status:404});
+    expect(test.read).not.toHaveBeenCalled();
+  });
+  it('rejects tampered bytes', async()=>{const test=setup(recording,Buffer.from('tampered'));await expect(test.service.getOwnedAudio(ids.learner,ids.recording)).rejects.toMatchObject({status:404});});
+  it('rejects a size mismatch even when bytes hash matches',async()=>{const test=setup({...recording,byteSize:body.length+1});await expect(test.service.getOwnedAudio(ids.learner,ids.recording)).rejects.toMatchObject({status:404});});
 });
