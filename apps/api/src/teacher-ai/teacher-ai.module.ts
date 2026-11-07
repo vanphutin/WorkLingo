@@ -41,7 +41,7 @@ class TeacherAiHandlerRegistration implements OnModuleInit {
   imports: [AiGatewayModule, CurriculumFoundationModule, DatabaseModule, JobsModule, MasteryModule, StorageModule],
   providers: [
     AssessmentHistoryService,
-    {provide:ASSESSMENT_OPTIONS,inject:[ConfigService],useFactory:(config:ConfigService<AppConfig,true>)=>({enabled:config.get('ai',{infer:true}).assessment?.enabled??false,privacyVerified:config.get('ai',{infer:true}).assessment?.privacyVerified??false,leaseMs:Math.max(60000,config.get('ai',{infer:true}).providerTimeoutMs*3)})},
+    {provide:ASSESSMENT_OPTIONS,inject:[ConfigService],useFactory:(config:ConfigService<AppConfig,true>)=>({enabled:config.get('ai',{infer:true}).assessment?.enabled??false,privacyVerified:config.get('ai',{infer:true}).assessment?.privacyVerified??false,leaseMs:Math.max(60000,config.get('ai',{infer:true}).providerTimeoutMs*4)})},
     EvaluationService,
     TranscribeSpeechHandler,
     EvaluateAttemptHandler,

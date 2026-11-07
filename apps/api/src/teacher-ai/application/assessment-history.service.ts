@@ -147,9 +147,11 @@ export class AssessmentHistoryService {
         throw new UnprocessableEntityException(
           'ASSESSMENT_RECORDING_UNAVAILABLE',
         );
-      if (rec.transcript) {
-        context.sources = { ...context.sources, submission: rec.transcript };
-      }
+      // Upload metadata is never evidence of the learner's spoken language.
+      context.sources = {
+        ...context.sources,
+        submission: rec.transcript?.trim() ?? '',
+      };
       const metrics = rec.speechMetrics as {
         assessmentEvidence?: {
           audioChecksum?: string;
@@ -280,9 +282,13 @@ export class AssessmentHistoryService {
       orderBy: { createdAt: 'desc' },
       take: 500,
     });
-    const seen=new Set<string>();
+    const seen = new Set<string>();
     const results = rows
-      .filter(row=>{if(seen.has(row.attemptId))return false;seen.add(row.attemptId);return true;})
+      .filter((row) => {
+        if (seen.has(row.attemptId)) return false;
+        seen.add(row.attemptId);
+        return true;
+      })
       .map((r) => assessmentResultSchema.safeParse(r.result))
       .filter((r): r is { success: true; data: AssessmentResult } => r.success)
       .map((r) => r.data);
@@ -370,6 +376,7 @@ export class AssessmentHistoryService {
         adapter as AssessmentEvaluator | undefined,
         adapter as AssessmentEvaluator | undefined,
         controller.signal,
+        adapter as AssessmentEvaluator | undefined,
       );
       const { decisions, ...publicOutput } = output;
       // Generate learner prose in a separate stateless call that cannot see private reference data.
@@ -490,7 +497,9 @@ export class AssessmentHistoryService {
       return this.safe(this.result(latest, context), context);
     } finally {
       clearTimeout(deadline);
-      this.active.delete(admitted.row.id);
+      if (this.active.get(admitted.row.id) === controller) {
+        this.active.delete(admitted.row.id);
+      }
     }
   }
   async cancel(learnerId: string, runId: string) {

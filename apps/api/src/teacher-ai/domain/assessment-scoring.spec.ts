@@ -33,6 +33,32 @@ const verdict = (
   })),
 });
 describe('evidence-first skill aggregation', () => {
+  it('rejects empty quotes beyond the submitted text instead of scoring them', () => {
+    expect(() =>
+      aggregateAssessment(
+        resolveAssessmentRubric('writing'),
+        verdict('writing'),
+        [{ ...evidence[0]!, quote: '', start: 100, end: 101 }],
+        { submission: 'Hello' },
+      ),
+    ).toThrow('EVIDENCE_INVALID');
+  });
+  it('issues opaque learner evidence identifiers instead of forwarding provider IDs', () => {
+    const privateId = 'PRIVATE ANSWER: Tuesday';
+    const projected = projectLearnerAssessment(
+      {
+        evidence: [{ ...evidence[0]!, id: privateId }],
+        criteria: [
+          { evidenceIds: [privateId], rationale: 'Observable response.' },
+        ],
+      },
+      ['Tuesday'],
+    );
+    expect(JSON.stringify(projected)).not.toContain(privateId);
+    expect(projected.criteria[0]!.evidenceIds).toEqual([
+      projected.evidence[0]!.id,
+    ]);
+  });
   it('normalizes hand-checked weighted writing levels only after full evidence validation', () => {
     const result = aggregateAssessment(
       resolveAssessmentRubric('writing'),

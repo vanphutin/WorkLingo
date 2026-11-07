@@ -41,6 +41,8 @@ export function validateAssessmentEvidence(
         item.start === null ||
         item.end === null ||
         item.start >= item.end ||
+        item.end > source.length ||
+        item.quote.length === 0 ||
         source.slice(item.start, item.end) !== item.quote ||
         item.startMs !== null ||
         item.endMs !== null
@@ -133,10 +135,17 @@ export function projectLearnerAssessment<
 >(result: T, privatePhrases: readonly string[] = []) {
   const isolatedFeedback =
     result.providers?.some((p) => p.role === 'feedback') === true;
-  const evidence = result.evidence
-    .filter((x) => x.source === 'submission' || x.source === 'audio')
-    .map((x) => (x.source === 'audio' ? { ...x, quote: '' } : x));
-  const ids = new Set(evidence.map((x) => x.id));
+  const visible = result.evidence.filter(
+    (x) => x.source === 'submission' || x.source === 'audio',
+  );
+  const identifiers = new Map(
+    visible.map((x, index) => [x.id, `evidence-${index + 1}`]),
+  );
+  const evidence = visible.map((x) => ({
+    ...x,
+    id: identifiers.get(x.id)!,
+    ...(x.source === 'audio' ? { quote: '' } : {}),
+  }));
   const keys = [
     'schemaVersion',
     'id',
@@ -195,7 +204,9 @@ export function projectLearnerAssessment<
           }
         : {}),
       rationale: 'Refer to your submitted response and the linked evidence.',
-      evidenceIds: x.evidenceIds.filter((id) => ids.has(id)),
+      evidenceIds: x.evidenceIds.flatMap((id) =>
+        identifiers.has(id) ? [identifiers.get(id)!] : [],
+      ),
     })),
   };
 }
