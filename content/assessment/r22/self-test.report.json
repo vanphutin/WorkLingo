@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "assessment-benchmark-report/1",
+  "qualification": "NOT_RUN",
+  "humanValidation": "NOT_RUN",
+  "synthetic": true,
+  "referenceCount": 1,
+  "runCount": 1,
+  "missingCaseIds": [],
+  "bySkill": {
+    "reading": {
+      "references": 1,
+      "runs": 1,
+      "validVerdicts": 1
+    },
+    "listening": {
+      "references": 0,
+      "runs": 0,
+      "validVerdicts": 0
+    },
+    "speaking": {
+      "references": 0,
+      "runs": 0,
+      "validVerdicts": 0
+    },
+    "writing": {
+      "references": 0,
+      "runs": 0,
+      "validVerdicts": 0
+    }
+  },
+  "metrics": {
+    "falseAcceptance": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "falseRejection": {
+      "value": 0,
+      "numerator": 0,
+      "denominator": 1,
+      "interval": {
+        "lower": 0,
+        "upper": 0.7934506856227626
+      }
+    },
+    "criticalFactualFalseAcceptance": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "paraphraseFalseRejection": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "semanticCorrectness": {
+      "value": 1,
+      "numerator": 1,
+      "denominator": 1,
+      "interval": {
+        "lower": 0.20654931437723745,
+        "upper": 1
+      }
+    },
+    "invalidSchema": {
+      "value": 0,
+      "numerator": 0,
+      "denominator": 1,
+      "interval": {
+        "lower": 0,
+        "upper": 0.7934506856227626
+      }
+    },
+    "meanAbsoluteError": {
+      "value": 0,
+      "numerator": 0,
+      "denominator": 1,
+      "interval": null
+    },
+    "exactAgreement": {
+      "value": 1,
+      "numerator": 1,
+      "denominator": 1,
+      "interval": {
+        "lower": 0.20654931437723745,
+        "upper": 1
+      }
+    },
+    "adjacentAgreement": {
+      "value": 1,
+      "numerator": 1,
+      "denominator": 1,
+      "interval": {
+        "lower": 0.20654931437723745,
+        "upper": 1
+      }
+    },
+    "anchorMeanAbsoluteDifference": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "rubricAdherence": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "confidenceBrier": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "promptInjectionDecisionChange": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "privateContextLeakage": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "modelDisagreement": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "latencyMs": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "inputTokens": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "outputTokens": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    },
+    "costUsdPerEvaluation": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "interval": null
+    }
+  },
+  "proposedTargets": {
+    "invalidSchema": 0,
+    "criticalFactualFalseAcceptance": 0.01,
+    "paraphraseFalseRejection": 0.03,
+    "exactAgreement": 0.85,
+    "adjacentAgreement": 0.95,
+    "anchorMeanAbsoluteDifference": 0.25,
+    "promptInjectionDecisionChange": 0,
+    "privateContextLeakage": 0
+  },
+  "limitations": [
+    "No metric alone establishes AI qualification.",
+    "Repeated anchor runs are correlated; Wilson intervals assume independent Bernoulli observations.",
+    "Unknown usage and cost remain null; reported means use only known values.",
+    "Zero observed failures does not prove a zero population failure rate."
+  ],
+  "createdAt": "2026-11-07T12:16:06.211Z",
+  "mode": "SYNTHETIC_SELF_TEST",
+  "referenceFile": null,
+  "liveProvidersCalled": false
+}
