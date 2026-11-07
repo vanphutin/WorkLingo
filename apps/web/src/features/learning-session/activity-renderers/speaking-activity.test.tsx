@@ -7,6 +7,7 @@ import type * as RecorderModule from '../use-audio-recorder';
 import type * as ApiClientModule from '../../../lib/api/api-client';
 import type { LearnerActivityDto } from '../../../lib/api/api-client';
 import { apiClient } from '../../../lib/api/api-client';
+import { LocaleProvider } from '../../../i18n/provider';
 import { SpeakingActivity } from './speaking-activity';
 
 vi.mock('../use-audio-recorder', async (importOriginal) => {
@@ -42,6 +43,16 @@ const activity = {
 } satisfies LearnerActivityDto;
 
 describe('SpeakingActivity', () => {
+  it.each(['en', 'vi'] as const)('uses text practice without recording controls in %s', async (locale) => {
+    const recorder = await import('../use-audio-recorder');
+    vi.mocked(recorder.useAudioRecorder).mockReturnValue({status:'idle',blob:null,previewUrl:null,error:null,mimeType:'audio/webm',start:vi.fn(),stop:vi.fn(),discard:vi.fn(),supported:true});
+    const onChange=vi.fn();
+    render(<LocaleProvider initialLocale={locale}><SpeakingActivity activity={{...activity,payload:{prompt:'Introduce yourself.',practiceMode:'unscored'}}} sessionId="session" value="" onChange={onChange} onSubmitRecording={vi.fn()}/></LocaleProvider>);
+    fireEvent.change(screen.getByRole('textbox'), {target:{value:'My name is An.'}});
+    expect(onChange).toHaveBeenCalledWith('My name is An.');
+    expect(screen.queryByRole('button', {name:/record response|ghi âm/i})).not.toBeInTheDocument();
+    expect(screen.getByText(locale==='en'?'Unscored practice: say your answer aloud, then type what you said. Your response is saved without AI grading.':'Luyện tập không chấm điểm: nói câu trả lời, rồi nhập lại nội dung đã nói. Câu trả lời được lưu mà không chấm điểm AI.')).toBeVisible();
+  });
   afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
   it('teaches pronunciation and offers the version-bound shadowing model before recording', async () => {

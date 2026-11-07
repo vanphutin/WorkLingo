@@ -1,5 +1,7 @@
 export const programsMessages = {
   en: {
+    details: 'Program details', lessons: 'Lessons', activities: 'Activities', duration: 'Estimated minutes', objectives: 'Learning objectives', curriculum: 'Curriculum overview',
+    beginnerPractice: 'Speaking and writing are saved as unscored practice. Completion is based on activities, not a proficiency qualification.',
     ieltsBetaDescription: 'A guided IELTS practice pathway from orientation to four-skill practice and teacher-reviewed mock tests.',
     ieltsPhases: 'Orientation → Bridge → Integrated Practice → Band Pathway → Full Mock',
     available: 'Available', beta: 'Beta', comingSoon: 'Coming soon', disabled: 'Unavailable', inDevelopment: 'In development',
@@ -21,6 +23,8 @@ export const programsMessages = {
     beginnerGoalLegacy: 'Understand practical English in familiar situations.', toeicGoalLegacy: 'Strengthen listening and reading.', ieltsGoalLegacy: 'Build language evidence for IELTS preparation.',
   },
   vi: {
+    details: 'Chi tiết chương trình', lessons: 'Bài học', activities: 'Hoạt động', duration: 'Số phút dự kiến', objectives: 'Mục tiêu học tập', curriculum: 'Nội dung chương trình',
+    beginnerPractice: 'Bài nói và viết được lưu dưới dạng luyện tập không chấm điểm. Hoàn thành dựa trên hoạt động, không phải chứng nhận trình độ.',
     ieltsBetaDescription: 'Lộ trình luyện IELTS có hướng dẫn, từ định hướng đến luyện bốn kỹ năng và thi thử có giáo viên chấm.',
     ieltsPhases: 'Định hướng → Bridge → Luyện tập tích hợp → Lộ trình band → Thi thử',
     available: 'Có thể học', beta: 'Thử nghiệm', comingSoon: 'Sắp ra mắt', disabled: 'Chưa khả dụng', inDevelopment: 'Đang phát triển',

@@ -1,5 +1,7 @@
 export const learningSessionMessages = {
   "en": {
+    "speakingUnscored": "Unscored practice: say your answer aloud, then type what you said. Your response is saved without AI grading.",
+    "writingUnscored": "Unscored practice: your writing is saved without AI grading.",
     "sourceText": "Source text",
     "questionsAndResponse": "Questions and response",
     "jumpToResponse": "Go to questions",
@@ -178,6 +180,8 @@ export const learningSessionMessages = {
     "pathwayDescription": "Available steps follow your program and published learning content."
   },
   "vi": {
+    "speakingUnscored": "Luyện tập không chấm điểm: nói câu trả lời, rồi nhập lại nội dung đã nói. Câu trả lời được lưu mà không chấm điểm AI.",
+    "writingUnscored": "Luyện tập không chấm điểm: bài viết được lưu mà không chấm điểm AI.",
     "sourceText": "Văn bản nguồn",
     "questionsAndResponse": "Câu hỏi và trả lời",
     "jumpToResponse": "Đến câu hỏi",

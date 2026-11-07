@@ -134,7 +134,7 @@ export function ProgramCatalog() {
     setIsActivating(true);
     setActivationError(null);
     try {
-      const reserved = ['beginner', 'intermediate', 'ielts', 'toeic'].includes(program.slug);
+      const reserved = ['beginner', 'intermediate', 'ielts', 'toeic'].includes(program.slug) && !(program.slug === 'beginner' && program.currentRelease?.source === 'AUTHORED');
       const activated = reserved
         ? await learningProgramClient.activateProgram({ programSlug: program.slug, expectedRevision: context?.enrollment?.revision ?? null })
         : await learningProgramClient.enrollProgram({ programSlug: program.slug, expectedRevision: context?.enrollment?.revision ?? 0 });
@@ -228,7 +228,19 @@ export function ProgramCatalog() {
                   <dd>{formatNumber(locale, program.publishedLevelCount)}</dd>
                 </div>
               </dl>}
-              {program.currentRelease?<section><p>{platformT('version',{version:program.currentRelease.version})}</p><ul>{program.currentRelease.objectives?.map(o=><li key={o}>{o}</li>)}</ul></section>:null}
+              {program.currentRelease ? <details className="program-release-details">
+                <summary>{t('details')}</summary>
+                <p>{platformT('version', { version: program.currentRelease.version })}</p>
+                {program.slug === 'beginner' && program.availabilityStatus === 'BETA' ? <p>{t('beginnerPractice')}</p> : null}
+                <dl className="program-content-summary">
+                  {program.currentRelease.lessonCount !== undefined ? <div><dt>{t('lessons')}</dt><dd>{formatNumber(locale, program.currentRelease.lessonCount)}</dd></div> : null}
+                  {program.currentRelease.activityCount !== undefined ? <div><dt>{t('activities')}</dt><dd>{formatNumber(locale, program.currentRelease.activityCount)}</dd></div> : null}
+                  {program.currentRelease.estimatedMinutes !== undefined ? <div><dt>{t('duration')}</dt><dd>{formatNumber(locale, program.currentRelease.estimatedMinutes)}</dd></div> : null}
+                </dl>
+                <h3>{t('objectives')}</h3>
+                <ul>{program.currentRelease.objectives?.map(objective => <li key={objective}>{objective}</li>)}</ul>
+                {program.currentRelease.curriculumOverview?.length ? <><h3>{t('curriculum')}</h3><ol>{program.currentRelease.curriculumOverview.map((unit, index) => <li key={index}><strong>{unit.title}</strong><ol>{unit.lessons.map((lesson, lessonIndex) => <li key={lessonIndex}>{lesson.title}</li>)}</ol></li>)}</ol></> : null}
+              </details> : null}
               <ProgramAction program={program} pending={isActivating || needsRefresh} onActivate={() => { void activate(program); }} />
             </li>
           ))}

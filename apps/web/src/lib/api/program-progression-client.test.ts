@@ -17,7 +17,8 @@ it('validates admin requests and strictly parses responses on credentialed creat
  const before=fetcher.mock.calls.length;await expect(client.publishProgram(id,{curriculumRevisionIds:[],expectedRevision:1,idempotencyKey:'p'})).rejects.toThrow();expect(fetcher.mock.calls).toHaveLength(before);
 });
 it('validates enroll input before a POST and returns server context only',async()=>{
- const fetcher=vi.fn().mockResolvedValue(Response.json({activeProgram:null,enrollment:null}));vi.stubGlobal('fetch',fetcher);const client=new LearningProgramClient('/api/v1');
+ const fetcher=vi.fn().mockImplementation(async()=>Response.json({activeProgram:null,enrollment:null}));vi.stubGlobal('fetch',fetcher);const client=new LearningProgramClient('/api/v1');
  await client.enrollProgram({programSlug:'workplace-new',expectedRevision:3});expect(fetcher).toHaveBeenCalledWith('/api/v1/me/program-enrollments',expect.objectContaining({method:'POST',body:JSON.stringify({programSlug:'workplace-new',expectedRevision:3})}));
- await expect(client.enrollProgram({programSlug:'beginner',expectedRevision:3})).rejects.toThrow();expect(fetcher).toHaveBeenCalledTimes(1);
+ expect(await client.enrollProgram({programSlug:'beginner',expectedRevision:3})).toEqual({activeProgram:null,enrollment:null});expect(fetcher).toHaveBeenLastCalledWith('/api/v1/me/program-enrollments',expect.objectContaining({method:'POST',body:JSON.stringify({programSlug:'beginner',expectedRevision:3})}));
+ await expect(client.enrollProgram({programSlug:'toeic',expectedRevision:3})).rejects.toThrow();expect(fetcher).toHaveBeenCalledTimes(2);
 });

@@ -338,7 +338,7 @@ export function SessionShell({
         )}
       </section>}
       <EvaluationFeedback
-        showEmpty={!isCompleted}
+        showEmpty={!isCompleted && currentActivity?.payload.practiceMode !== 'unscored'}
         loading={evaluationAttemptId !== null && !asyncEvaluation.evaluation && !asyncEvaluation.error}
         evaluation={asyncEvaluation.evaluation}
         error={asyncEvaluation.error}

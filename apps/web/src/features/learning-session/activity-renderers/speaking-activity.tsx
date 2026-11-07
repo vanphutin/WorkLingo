@@ -95,7 +95,7 @@ export function SpeakingActivity({
 
       <PronunciationFocusPanel activity={activity} sessionId={sessionId} />
 
-      {recorder.supported ? (
+      {recorder.supported && activity.payload.practiceMode !== 'unscored' ? (
         <section className="speaking-recorder" aria-label={t('speakingRecorder')} aria-busy={isUploading}>
           <p className="recorder-status" role="status" aria-live="polite">
             {recorder.status === 'requesting' ? t('microphoneWaiting')
@@ -136,7 +136,7 @@ export function SpeakingActivity({
         </section>
       ) : (
       <div className="speaking-input-group">
-        <p className="speaking-fallback-notice">{t('recordingUnavailable')}</p>
+        <p className="speaking-fallback-notice">{t(activity.payload.practiceMode === 'unscored' ? 'speakingUnscored' : 'recordingUnavailable')}</p>
         <label htmlFor="spoken-response-input" className="speaking-label">
           {t('spokenResponse')}
         </label>

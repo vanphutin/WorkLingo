@@ -195,6 +195,14 @@ const createMockSession = (currentCheckpoint = 0): LearningSessionDto => ({
 afterEach(cleanup);
 
 describe('SessionShell and Activity Renderers', () => {
+  it('submits unscored speaking text through the activity path and hides AI feedback expectations', async () => {
+    const onSubmit=vi.fn().mockResolvedValue({id:'attempt',feedback:null,evaluationStatus:'submitted',score:null});
+    render(<SessionShell session={createMockSession(3)} currentActivity={{...mockSpeakingActivity,payload:{...mockSpeakingActivity.payload,practiceMode:'unscored'}}} onSubmitAttempt={onSubmit} onPauseSession={vi.fn()} onResumeSession={vi.fn()}/>);
+    fireEvent.change(screen.getByRole('textbox'), {target:{value:'My name is An.'}});
+    fireEvent.click(screen.getByRole('button', {name:'Continue'}));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(mockSpeakingActivity.id,{text:'My name is An.'},expect.any(String)));
+    expect(screen.queryByText('Submit a written or spoken response to receive AI feedback here.')).not.toBeInTheDocument();
+  });
   it('does not invent a source panel for an activity without source text', () => {
     render(<ActivityRenderer activity={{ ...mockReadingActivity, content: [{ slug: 'empty', text: '  ' }] }} value={{ answerIndexes: [] }} onChange={vi.fn()} sessionId="no-source" />);
     expect(screen.queryByRole('region', { name: 'Source text' })).not.toBeInTheDocument();

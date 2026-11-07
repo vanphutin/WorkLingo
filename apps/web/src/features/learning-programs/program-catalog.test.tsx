@@ -75,6 +75,26 @@ const catalog: LearningProgramCatalogDto = {
 };
 
 describe('ProgramCatalog', () => {
+  it('enrolls an authored Beginner release before opening its roadmap', async () => {
+    vi.spyOn(learningProgramClient,'getCatalog').mockResolvedValue({programs:[{...catalog.programs[0]!,availabilityStatus:'BETA',isSelectable:true,destination:'/dashboard',currentRelease:{id:'10000000-0000-4000-8000-000000000001',version:1,source:'AUTHORED',status:'PUBLISHED',title:'Beginner'}}]});
+    const enrolled={...context,activeProgram:{...context.activeProgram!,slug:'beginner',name:'Beginner'}};
+    const enroll=vi.spyOn(learningProgramClient,'enrollProgram').mockResolvedValue(enrolled);
+    vi.spyOn(learningProgramClient,'activateProgram').mockResolvedValue(context);
+    render(<ProgramCatalog/>);
+    fireEvent.click(await screen.findByRole('button',{name:'Open Beginner program'}));
+    await waitFor(()=>expect(enroll).toHaveBeenCalledWith({programSlug:'beginner',expectedRevision:1}));
+    expect(push).toHaveBeenCalledWith('/dashboard');
+  });
+  it.each(['en', 'vi'] as const)('offers snapshot detail before enrollment and explains unscored Beginner Beta in %s', async (locale) => {
+    vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue({programs:[{...catalog.programs[0]!,availabilityStatus:'BETA',isSelectable:true,destination:'/dashboard',currentRelease:{id:'10000000-0000-4000-8000-000000000001',version:1,source:'AUTHORED',status:'PUBLISHED',title:'Beginner',objectives:['Introduce yourself'],estimatedMinutes:25,lessonCount:1,activityCount:2,curriculumOverview:[{title:'Greetings',lessonCount:1,activityCount:2,estimatedMinutes:12,lessons:[{title:'Hello',estimatedMinutes:12}]}]}}]});
+    render(<LocaleProvider initialLocale={locale}><ProgramCatalog /></LocaleProvider>);
+    const detail=await screen.findByText(locale==='en'?'Program details':'Chi tiết chương trình');
+    fireEvent.click(detail);
+    expect(screen.getByText('Greetings')).toBeInTheDocument();
+    expect(screen.getByText('Hello')).toBeInTheDocument();
+    expect(screen.getByText(locale==='en'?'Speaking and writing are saved as unscored practice. Completion is based on activities, not a proficiency qualification.':'Bài nói và viết được lưu dưới dạng luyện tập không chấm điểm. Hoàn thành dựa trên hoạt động, không phải chứng nhận trình độ.')).toBeInTheDocument();
+    expect(push).not.toHaveBeenCalled();
+  });
   it('opens IELTS Beta without replacing the Intermediate enrollment or showing fictional level counts', async () => {
     const ielts = catalog.programs.find(program => program.slug === 'ielts')!;
     vi.spyOn(learningProgramClient, 'getCatalog').mockResolvedValue({ programs: [

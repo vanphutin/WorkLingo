@@ -40,6 +40,12 @@ const activity: LearnerActivityDto = {
 };
 
 describe('WritingActivity', () => {
+  it('discloses unscored practice without promising AI grading', async () => {
+    vi.mocked(apiClient.getActivityDraft).mockResolvedValue(null);
+    render(<WritingActivity activity={{...activity,payload:{...activity.payload,practiceMode:'unscored'}}} sessionId="session" value="Hello" onChange={vi.fn()}/>);
+    expect(screen.getByText('Unscored practice: your writing is saved without AI grading.')).toBeVisible();
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Draft saved'));
+  });
   beforeEach(() => {
     vi.mocked(apiClient.getActivityDraft).mockReset();
     vi.mocked(apiClient.saveActivityDraft).mockReset();

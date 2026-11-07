@@ -249,3 +249,9 @@
 .program-active-label { color: var(--primary); font-weight: 650; font-size: .875rem; }
 .program-goal { padding-block-start: 1rem; border-block-start: 1px solid var(--border); color: var(--text-secondary); }
 .program-catalog-page :is(a, button) { scroll-margin-block: 1rem; }
+.program-release-details { color: var(--foreground); line-height: 1.6; }
+.program-release-details summary { min-height: 2.75rem; align-content: center; cursor: pointer; color: var(--primary); font-weight: 650; }
+.program-release-details summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.program-release-details[open] > * + * { margin-block-start: .75rem; }
+.program-release-details h3 { font-size: 1rem; }
+.program-release-details :is(ol, ul) { padding-inline-start: 1.5rem; }

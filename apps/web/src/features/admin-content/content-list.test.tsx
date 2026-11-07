@@ -141,6 +141,8 @@ describe('ContentList', () => {
     await screen.findByRole('alert');
     fireEvent.click(screen.getByRole('button', { name: 'Reload list' }));
     const archive = await screen.findByRole('button', { name: 'Archive lesson: Lesson One' });
+    // The new row can render before reload's finally clears the mutation lock.
+    await waitFor(() => expect(archive).toBeEnabled());
     expect(adminContentLifecycleClient.remove).toHaveBeenCalledTimes(1);
     fireEvent.click(archive);
     await waitFor(() => expect(adminContentLifecycleClient.remove).toHaveBeenCalledTimes(2));

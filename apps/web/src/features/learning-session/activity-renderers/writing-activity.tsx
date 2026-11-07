@@ -123,6 +123,7 @@ export function WritingActivity({
         </h2>
       </div>
 
+      {activity.payload.practiceMode === 'unscored' ? <p>{t('writingUnscored')}</p> : null}
       <section className="writing-rubric-box" aria-label={t('writingGuidelines')}>
           <h3 className="section-subtitle">{t('writingGoals')}</h3>
           <p className="rubric-text">{t('writingMinimum', { count: minWords })}</p>
