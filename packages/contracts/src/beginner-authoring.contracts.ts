@@ -32,7 +32,18 @@ const beginnerPermissionV2Schema=beginnerPermissionV1Schema.extend({
 }).strict().superRefine((v,c)=>{
  if(v.actions.some(a=>a==='approve-release'||a==='schema-setup'))c.addIssue({code:'custom',message:'Controlled main tests cannot grant release/schema authority'});
 });
-export const beginnerPermissionSchema=z.union([beginnerPermissionV1Schema,beginnerPermissionV2Schema]);
+// Operator-owned R2 program admission is distinct from historical fixture authority.
+export const beginnerProgramImportPermissionSchema=z.object({
+ schemaVersion:z.literal(3),mode:z.literal('PROGRAM_IMPORT'),approvalId:z.string().regex(/^[a-zA-Z0-9_-]{1,100}$/u),
+ environmentId:z.string().min(1).max(100),runId:z.string().regex(/^[a-f0-9]{12}$/u),programId:id,
+ database:beginnerPermissionV1Schema.shape.database,
+ storageRoot:z.string().min(1),registryRoot:z.string().min(1),approvalRoot:z.string().min(1),ownedTempRoot:z.string().min(1),
+ actions:z.array(z.enum(['read','author','validate','review','publish'])).min(1),
+ issuedAt:z.iso.datetime(),expiresAt:z.iso.datetime(),revoked:z.literal(false),
+ approvedBy:z.string().min(1),authorizationSource:z.string().min(1),
+ sourceInventoryHash:hash,backupHash:hash,dryRunHash:hash,recordHash:hash,
+}).strict();
+export const beginnerPermissionSchema=z.union([beginnerPermissionV1Schema,beginnerPermissionV2Schema,beginnerProgramImportPermissionSchema]);
 export type BeginnerPermission=z.infer<typeof beginnerPermissionSchema>;
 export const beginnerReleaseEnvelopeSchema=z.object({
  schemaVersion:z.literal(1),state:z.enum(['TEST_PUBLISHED','APPROVED_RELEASE']),

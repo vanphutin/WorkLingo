@@ -6,6 +6,7 @@ import { accessSync,constants,lstatSync,readFileSync,realpathSync } from 'node:f
 import path from 'node:path';
 import { tmpdir,platform } from 'node:os';
 import { beginnerPermissionSchema,beginnerMainBinding,type BeginnerPermission } from '@worklingo/contracts';
+import { readProgramImportPermission, validateProgramImportPermission, verifyProgramImportTarget } from './beginner-program-permission.js';
 
 export const controlledMainWorktree=path.resolve('C:/Users/ASUS/.codex/worktrees/vocabulary-master-library/WorkLingo');
 export const controlledMainScopeFile=path.join(controlledMainWorktree,'mandate/reports/2026-10-26-beginner-main-db-scope.json');
@@ -57,6 +58,7 @@ function canonical(value:unknown):unknown {
 }
 export function hashBeginnerRecord(value:unknown):string{return createHash('sha256').update(JSON.stringify(canonical(value))).digest('hex');}
 export function validateBeginnerPermission(input:unknown,now=Date.now()):BeginnerPermission {
+ if(input&&typeof input==='object'&&'schemaVersion'in input&&input.schemaVersion===3)return validateProgramImportPermission(input,now);
  const p=beginnerPermissionSchema.safeParse(input);
  if(!p.success)throw new Error('BEGINNER_PERMISSION_REQUIRED');
  const {recordHash,...record}=p.data;
@@ -103,6 +105,7 @@ export function assertReadonlyApprovalPathSync(root:string):void{
 }
 export function preflightBeginnerEnvironment(input:unknown,databaseUrl:string):BeginnerPermission {
  const p=validateBeginnerPermission(input);let url:URL;
+ if(p.schemaVersion===3)throw new Error('BEGINNER_IMPORT_PREFLIGHT_REQUIRED');
  if((p.schemaVersion===2&&(process.env.NODE_ENV!=='test'||process.env.WORKLINGO_BEGINNER_MAIN_TEST!=='1'||process.env.WORKLINGO_BEGINNER_ISOLATED_TEST==='1'))||(p.schemaVersion===1&&process.env.WORKLINGO_BEGINNER_MAIN_TEST==='1'))throw new Error('BEGINNER_RUNTIME_MODE_MISMATCH');
  try{url=new URL(databaseUrl);}catch{throw new Error('BEGINNER_ENVIRONMENT_MISMATCH');}
  const parameters=[...url.searchParams];
@@ -127,6 +130,7 @@ export function preflightBeginnerEnvironment(input:unknown,databaseUrl:string):B
 }
 /** Operator-owned read-only records only. No endpoint writes this store. */
 export function readApprovedBeginnerPermissionSync():BeginnerPermission|null{
+ const programImport=readProgramImportPermission();if(programImport)return programImport;
  const root=process.env.WORKLINGO_BEGINNER_APPROVAL_ROOT,id=process.env.WORKLINGO_BEGINNER_PERMISSION_ID;
  if(!root||!id)return null;
  if(!/^[a-zA-Z0-9_-]{1,100}$/u.test(id))throw new Error('BEGINNER_PERMISSION_REQUIRED');
@@ -152,6 +156,7 @@ export async function verifyNoForeignBeginnerClients(tx:Prisma.TransactionClient
  if(rows[0]?.count!==0)throw Error('BEGINNER_FOREIGN_CLIENT');
 }
 export async function verifyBeginnerDatabaseIdentity(tx:Prisma.TransactionClient,permission:BeginnerPermission):Promise<void>{
+ if(permission.schemaVersion===3){await verifyProgramImportTarget(tx,permission);return;}
  if(process.env.NODE_ENV!=='test'||(permission.schemaVersion===1?process.env.WORKLINGO_BEGINNER_ISOLATED_TEST!=='1':process.env.WORKLINGO_BEGINNER_MAIN_TEST!=='1'||process.env.WORKLINGO_BEGINNER_ISOLATED_TEST==='1'))throw new Error('BEGINNER_ISOLATED_TEST_REQUIRED');
  const url=process.env.TEST_DATABASE_URL;
  if(!url||process.env.DATABASE_URL!==url)throw new Error('BEGINNER_ENVIRONMENT_MISMATCH');
